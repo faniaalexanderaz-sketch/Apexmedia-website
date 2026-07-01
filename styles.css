@@ -1,6 +1,6 @@
 /* =============================================================
    APEXMEDIA — landing one-page
-   Type: Inter (sans) + Instrument Serif italic (accent word)
+   Type: Inter (sans) + Playfair Display italic 800 (accent word)
    Font caricati via <link> in index.html (no @import render-blocking)
    ============================================================= */
 
@@ -164,14 +164,16 @@ main { position: relative; z-index: 10; }
 }
 #hero .headline { font-size: clamp(42px, 7.4vw, 88px); }
 
-/* accent word: Instrument Serif italic, oro, STESSA dimensione del titolo */
+/* accent word: Playfair Display italic bold, oro — deve risaltare con forza */
 .accent {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-weight: 400;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 800;          /* tratto deciso (Instrument Serif ha solo 400) */
   font-style: italic;
   letter-spacing: 0;
   color: var(--yellow);
-  font-size: 1em;      /* stessa dimensione del resto della headline */
+  font-size: 1.12em;         /* +12%: risalta anche in scala */
+  /* più corpo al tratto + luminosità percepita superiore al bianco del titolo */
+  text-shadow: 0 0 1px #FFD84D, 0 0 4px rgba(255,216,77,.3);
 }
 
 /* ---------- Body / lede ---------- */
