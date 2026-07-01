@@ -1,0 +1,425 @@
+/* =============================================================
+   APEXMEDIA — landing one-page
+   Type: Inter (sans) + Instrument Serif italic (accent word)
+   Font caricati via <link> in index.html (no @import render-blocking)
+   ============================================================= */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg:        #070A12;   /* neutro */
+  --violet:    #5B2EFF;   /* primario */
+  --violet-bg: #1B0B2E;
+  --blue:      #2F6BFF;   /* tech */
+  --blue-bg:   #0A1B3D;
+  --yellow:    #FFD84D;   /* conversione: solo accent + CTA */
+  --text:      #F5F5F7;
+  --muted:     #A1A1AA;
+
+  --line:  rgba(245,245,247,.10);
+  --glass: rgba(255,255,255,.045);
+  --glass-strong: rgba(255,255,255,.07);
+
+  --maxw: 1320px;
+  --pad:  clamp(20px, 5vw, 88px);
+  --col:  min(45vw, 620px);      /* colonna testo desktop: max 45% viewport */
+
+  --radius: 12px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* =============================================================
+   BACKGROUND STAGE — fixed stack + left scrim
+   ============================================================= */
+.stage { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+
+.bg-layer {
+  position: absolute; inset: 0;
+  opacity: 0;
+  will-change: transform, opacity;
+  transform: translateZ(0) scale(1.06);
+  background: var(--bg);
+}
+.bg-layer[data-bg="1"] { background: #0c0a14; }
+.bg-layer[data-bg="2"] { background: var(--violet-bg); }
+.bg-layer[data-bg="3"] { background: var(--blue-bg); }
+.bg-layer[data-bg="5"] { background: #0d0a16; }
+
+.bg-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 72% center;   /* tiene il soggetto (a destra) in vista */
+}
+
+/* Sezione 5: gradiente diagonale viola → blu, nessuna foto */
+.bg-layer--gradient {
+  background:
+    radial-gradient(120% 90% at 85% 15%, rgba(91,46,255,.55), transparent 60%),
+    linear-gradient(125deg, var(--violet) 0%, #3a2bd6 42%, var(--blue) 100%);
+}
+
+/* Overlay leggibilità: scuro a sinistra, trasparente a destra
+   (i dettagli delle foto stanno sulla destra → restano liberi) */
+.stage-scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(100deg,
+      rgba(7,10,18,.94) 0%,
+      rgba(7,10,18,.78) 26%,
+      rgba(7,10,18,.34) 52%,
+      rgba(7,10,18,0)   74%),
+    linear-gradient(to top, rgba(7,10,18,.55), transparent 28%);
+}
+
+/* =============================================================
+   HEADER
+   ============================================================= */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  padding: 18px var(--pad);
+  background: linear-gradient(to bottom, rgba(7,10,18,.7), transparent);
+  backdrop-filter: saturate(140%) blur(2px);
+}
+
+.brand { display: inline-flex; align-items: center; gap: 10px; }
+.brand-mark { display: block; filter: drop-shadow(0 0 10px rgba(255,216,77,.35)); }
+.brand-word {
+  font-weight: 700; font-size: 18px; letter-spacing: -.01em;
+  color: var(--text);
+}
+
+/* =============================================================
+   PANELS / LAYOUT
+   ============================================================= */
+main { position: relative; z-index: 10; }
+
+.panel {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: clamp(130px, 18vh, 200px) var(--pad) clamp(120px, 16vh, 180px);
+}
+
+.panel-inner { width: 100%; max-width: var(--maxw); margin: 0 auto; }
+
+/* colonna testo: sempre a sinistra, max 45% su desktop */
+.panel-inner > * { max-width: var(--col); }
+.panel-inner--wide > * { max-width: min(52vw, 720px); } /* servizi: serve più aria */
+
+/* ---------- Eyebrow ---------- */
+.eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 22px;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.eyebrow::before {
+  content: ""; width: 22px; height: 1px; background: var(--yellow);
+  display: inline-block;
+}
+
+/* ---------- Headlines ---------- */
+.headline {
+  font-weight: 700;
+  font-size: clamp(38px, 6.4vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  text-transform: lowercase;
+  color: var(--text);
+  margin: 0 0 26px;
+  text-wrap: balance;
+}
+#hero .headline { font-size: clamp(42px, 7.4vw, 88px); }
+
+/* accent word: Instrument Serif italic, oro */
+.accent {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0;
+  color: var(--yellow);
+  font-size: 1.06em;   /* il serif rende più piccolo: lieve compensazione */
+}
+
+/* ---------- Body / lede ---------- */
+.lede {
+  font-size: clamp(17px, 1.25vw, 19px);
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 36px;
+}
+
+/* =============================================================
+   CTA
+   ============================================================= */
+.cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: inherit; font-weight: 600; font-size: 16px;
+  text-transform: lowercase;
+  line-height: 1;
+  padding: 15px 22px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .18s var(--ease), box-shadow .25s var(--ease), background .2s var(--ease);
+  will-change: transform;
+}
+.cta svg { flex: 0 0 auto; }
+
+.cta--primary {
+  background: var(--yellow);
+  color: #1a1305;
+  box-shadow: 0 8px 30px rgba(255,216,77,.22);
+}
+.cta--primary:hover { transform: translateY(-2px); box-shadow: 0 12px 38px rgba(255,216,77,.34); }
+
+/* header CTA: glass, discreto */
+.cta--header {
+  background: var(--glass);
+  color: var(--text);
+  border-color: var(--line);
+  backdrop-filter: blur(10px) saturate(130%);
+  padding: 12px 18px;
+}
+.cta--header .wa-glyph { color: #25D366; }
+.cta--header:hover { background: var(--glass-strong); transform: translateY(-1px); }
+
+/* CTA su gradiente (sez. 5): bianco solido, testo viola */
+.cta--invert { background: #fff; color: var(--violet); }
+.cta--invert:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,0,0,.28); }
+
+.cta--block { width: 100%; justify-content: center; padding: 17px 22px; }
+
+/* CTA flottante (mobile) */
+.cta--float {
+  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 40;
+  display: none;                 /* mostrata via media query mobile */
+  justify-content: center;
+  background: var(--yellow); color: #1a1305;
+  padding: 16px 22px;
+  box-shadow: 0 10px 34px rgba(0,0,0,.45), 0 6px 20px rgba(255,216,77,.28);
+}
+.cta--float .wa-glyph { color: #128C3E; }
+
+.scroll-hint {
+  position: absolute; left: var(--pad); bottom: 34px;
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted);
+}
+.scroll-hint::after {
+  content: ""; display: block; width: 1px; height: 26px; margin-top: 10px;
+  background: linear-gradient(var(--yellow), transparent);
+  animation: hint 1.8s var(--ease) infinite;
+}
+@keyframes hint { 0%,100%{ transform: scaleY(.5); transform-origin: top; opacity:.5 } 50%{ transform: scaleY(1); opacity:1 } }
+
+/* =============================================================
+   SEZIONE 3 — Servizi
+   ============================================================= */
+.services { list-style: none; margin: 8px 0 38px; padding: 0; display: grid; gap: 4px; }
+.service {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 18px 16px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition: background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+}
+.service:hover {
+  background: var(--glass);
+  border-color: var(--line);
+  transform: translateX(4px);
+}
+.service-icon {
+  flex: 0 0 auto; width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: rgba(91,46,255,.14);
+  border: 1px solid rgba(91,46,255,.34);
+  color: var(--yellow);
+}
+.service-icon svg { width: 22px; height: 22px; }
+.service-title { margin: 2px 0 4px; font-size: 18px; font-weight: 600; color: var(--text); }
+.service-desc { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+
+/* =============================================================
+   SEZIONE 4 — Risultati (stats)
+   ============================================================= */
+.stats {
+  margin: 8px 0 40px; padding: 0;
+  display: grid; gap: 30px;
+}
+.stat { border-left: 2px solid rgba(255,216,77,.5); padding-left: 18px; }
+.stat-num {
+  font-weight: 700;
+  font-size: clamp(48px, 6vw, 64px);
+  line-height: 1;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.stat-label { margin: 8px 0 0; font-size: 16px; color: var(--muted); max-width: 320px; }
+
+/* =============================================================
+   SEZIONE 5 — Perché (su gradiente)
+   ============================================================= */
+.panel--on-gradient .eyebrow { color: rgba(255,255,255,.85); }
+.panel--on-gradient .eyebrow::before { background: #fff; }
+.panel--on-gradient .headline { color: #fff; }
+.panel--on-gradient .accent { color: var(--yellow); }
+
+.reasons { list-style: none; margin: 8px 0 38px; padding: 0; display: grid; gap: 22px; }
+.reason { padding-left: 18px; border-left: 2px solid rgba(255,255,255,.35); }
+.reason-title { margin: 0 0 4px; font-size: clamp(19px, 2.1vw, 23px); font-weight: 600; color: #fff; }
+.reason-desc { margin: 0; font-size: 16px; color: rgba(255,255,255,.82); }
+
+/* =============================================================
+   SEZIONE 6 — Form
+   ============================================================= */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px) saturate(130%);
+}
+.lead-form {
+  max-width: 460px;
+  padding: 26px;
+  border-radius: 18px;
+  display: grid; gap: 16px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.45);
+}
+.field { display: grid; gap: 7px; }
+.field label { font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--text); }
+.field input {
+  font-family: inherit; font-size: 16px; color: var(--text);
+  background: rgba(7,10,18,.5);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 13px 14px;
+  min-height: 48px;            /* touch target */
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.field input::placeholder { color: #6b6b76; }
+.field input:focus {
+  outline: none;
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255,216,77,.18);
+}
+.form-error {
+  margin: -2px 0 0; font-size: 14px; color: #ff9d9d;
+}
+.form-note { margin: 4px 0 0; font-size: 13px; color: var(--muted); text-align: center; }
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+.site-footer {
+  position: relative; z-index: 10;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  padding: 34px var(--pad);
+}
+.footer-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px 24px; flex-wrap: wrap;
+}
+.site-footer .brand-word { font-size: 16px; }
+.footer-meta { font-size: 14px; color: var(--muted); }
+
+/* =============================================================
+   REVEAL — fallback IntersectionObserver (.in aggiunta da JS)
+   ============================================================= */
+.reveal { opacity: 0; transform: translateY(22px); }
+.reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+/* stagger leggero tra elementi della stessa colonna */
+.panel-inner > .reveal.in { transition-delay: var(--d, 0ms); }
+
+/* Enhancement nativo: animation-timeline: view() dove supportato.
+   Attivo solo se l'html ha .has-vt (impostata da JS) → niente doppio sistema. */
+@supports (animation-timeline: view()) {
+  .has-vt .reveal {
+    opacity: 0;
+    animation: revealUp linear both;
+    animation-timeline: view();
+    animation-range: entry 6% cover 30%;
+  }
+  .has-vt .reveal.in { transition: none; } /* l'IO non interferisce */
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================================
+   RESPONSIVE — mobile
+   ============================================================= */
+@media (max-width: 820px) {
+  :root { --col: 100%; }
+
+  /* mobile: il testo copre tutta la larghezza → veil più deciso per leggibilità */
+  .stage-scrim {
+    background:
+      linear-gradient(180deg, rgba(7,10,18,.88) 0%, rgba(7,10,18,.74) 50%, rgba(7,10,18,.84) 100%),
+      linear-gradient(100deg, rgba(7,10,18,.5) 0%, rgba(7,10,18,.12) 62%, transparent 88%);
+  }
+  .bg-img { object-position: 68% center; }
+
+  .cta--header { display: none; }     /* su mobile diventa il bottone flottante */
+  .cta--float { display: inline-flex; }
+
+  .panel {
+    align-items: flex-start;
+    padding: clamp(104px, 16vh, 140px) var(--pad) 132px;  /* spazio per CTA flottante */
+  }
+  .panel-inner > *, .panel-inner--wide > * { max-width: 100%; }
+
+  .scroll-hint { display: none; }
+  .lead-form { max-width: 100%; padding: 22px; }
+  .site-footer { padding-bottom: 104px; }   /* spazio per la CTA flottante */
+}
+
+@media (max-width: 820px) and (min-width: 521px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+}
+
+/* =============================================================
+   REDUCED MOTION
+   ============================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .has-vt .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .scroll-hint::after { animation: none; }
+  .cta { transition: none; }
+  .bg-layer { transition: none; }
+}

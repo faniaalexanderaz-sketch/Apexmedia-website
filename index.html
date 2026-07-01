@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>APEXMEDIA — smettila di pubblicare, inizia a convertire</title>
+  <meta name="description" content="Gestione social, advertising e lead generation per aziende che vogliono clienti, non solo visualizzazioni. Metodo data-driven, un solo referente." />
+
+  <!-- Social preview -->
+  <meta property="og:title" content="APEXMEDIA — inizia a convertire" />
+  <meta property="og:description" content="Social, advertising e lead generation orientati ai clienti, non alle visualizzazioni." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="public/images/01-reception.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================= -->
+  <!-- BACKGROUND STAGE — fixed stack, crossfades on scroll (JS)     -->
+  <!-- ============================================================= -->
+  <div class="stage" aria-hidden="true">
+    <div class="bg-layer" data-bg="0">
+      <img class="bg-img" src="public/images/01-reception.png"
+           alt="" width="1706" height="960" fetchpriority="high" decoding="async" />
+    </div>
+    <div class="bg-layer" data-bg="1">
+      <img class="bg-img" data-src="public/images/02-studio.png"
+           alt="" width="1706" height="960" loading="lazy" decoding="async" />
+    </div>
+    <div class="bg-layer" data-bg="2">
+      <img class="bg-img" data-src="public/images/04-meeting.png"
+           alt="" width="1706" height="960" loading="lazy" decoding="async" />
+    </div>
+    <div class="bg-layer" data-bg="3">
+      <img class="bg-img" data-src="public/images/03-dashboard.png"
+           alt="" width="1706" height="960" loading="lazy" decoding="async" />
+    </div>
+    <!-- Sezione 5: nessuna foto, gradiente diagonale viola → blu -->
+    <div class="bg-layer bg-layer--gradient" data-bg="4"></div>
+    <div class="bg-layer" data-bg="5">
+      <img class="bg-img" data-src="public/images/05-portfolio.png"
+           alt="" width="1706" height="960" loading="lazy" decoding="async" />
+    </div>
+    <!-- Overlay leggibilità: gradiente scuro solo da sinistra -->
+    <div class="stage-scrim"></div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- HEADER — logo + CTA sticky (desktop)                          -->
+  <!-- ============================================================= -->
+  <header class="site-header">
+    <a class="brand" href="#hero" aria-label="APEXMEDIA, vai all'inizio">
+      <svg class="brand-mark" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <path d="M13 3 L23 22 L17.5 22 L13 12.5 L8.5 22 L3 22 Z" fill="url(#apexGold)" />
+        <defs>
+          <linearGradient id="apexGold" x1="3" y1="3" x2="23" y2="22" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFE89A" /><stop offset="1" stop-color="#FFD84D" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-word">apexmedia</span>
+    </a>
+
+    <a class="cta cta--header"
+       href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
+       target="_blank" rel="noopener noreferrer">
+      <svg class="wa-glyph" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.5.8 1 1.3 1.7 1.8.3.2.6.4.9.5.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.5 0 .9Z"/>
+      </svg>
+      <span>richiedi una consulenza</span>
+    </a>
+  </header>
+
+  <main>
+
+    <!-- ===================== SEZIONE 1 — HERO ===================== -->
+    <section class="panel" id="hero" data-section="0">
+      <div class="panel-inner">
+        <p class="eyebrow reveal">social · advertising · lead generation</p>
+        <h1 class="headline reveal">smettila di pubblicare. inizia a <em class="accent">convertire</em></h1>
+        <p class="lede reveal">Gestione social, advertising e lead generation per aziende che vogliono clienti, non solo visualizzazioni.</p>
+        <a class="cta cta--primary reveal"
+           href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
+           target="_blank" rel="noopener noreferrer">
+          <span>richiedi una consulenza</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <span class="scroll-hint reveal" aria-hidden="true">scorri</span>
+    </section>
+
+    <!-- =================== SEZIONE 2 — CHI SIAMO ================== -->
+    <section class="panel" id="chi-siamo" data-section="1">
+      <div class="panel-inner">
+        <p class="eyebrow reveal">chi siamo</p>
+        <h2 class="headline reveal">non un'agenzia social. un team di <em class="accent">crescita</em></h2>
+        <p class="lede reveal">Ogni contenuto, ogni campagna, ogni euro investito ha un solo obiettivo: portare clienti veri al tuo business. Lavoriamo con un metodo data-driven, non a sensazione.</p>
+        <a class="cta cta--primary reveal"
+           href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
+           target="_blank" rel="noopener noreferrer">
+          <span>richiedi una consulenza</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== SEZIONE 3 — SERVIZI =================== -->
+    <section class="panel" id="servizi" data-section="2">
+      <div class="panel-inner panel-inner--wide">
+        <p class="eyebrow reveal">servizi</p>
+        <h2 class="headline reveal">cosa facciamo, <em class="accent">concretamente</em></h2>
+
+        <ul class="services reveal">
+          <li class="service">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8 15.8 6.2M8.2 13.2l7.6 4.6"/></svg>
+            </span>
+            <div class="service-body">
+              <h3 class="service-title">Social Media Management</h3>
+              <p class="service-desc">Gestione strategica dei tuoi canali, contenuti pensati per convertire</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+            </span>
+            <div class="service-body">
+              <h3 class="service-title">Meta &amp; TikTok Advertising</h3>
+              <p class="service-desc">Campagne ottimizzate per generare contatti qualificati, non solo click</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"/></svg>
+            </span>
+            <div class="service-body">
+              <h3 class="service-title">Lead Generation</h3>
+              <p class="service-desc">Funnel su misura per trasformare l'attenzione in clienti reali</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c.7 3.6 2.2 5.1 5.8 5.8-3.6.7-5.1 2.2-5.8 5.8-.7-3.6-2.2-5.1-5.8-5.8 3.6-.7 5.1-2.2 5.8-5.8Z"/><path d="M18.5 14.5c.3 1.6 1 2.3 2.6 2.6-1.6.3-2.3 1-2.6 2.6-.3-1.6-1-2.3-2.6-2.6 1.6-.3 2.3-1 2.6-2.6Z"/></svg>
+            </span>
+            <div class="service-body">
+              <h3 class="service-title">Branding</h3>
+              <p class="service-desc">Identità visiva che comunica valore prima ancora di parlare</p>
+            </div>
+          </li>
+          <li class="service">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="m11 13 2.5 2.5L11 18"/></svg>
+            </span>
+            <div class="service-body">
+              <h3 class="service-title">Siti Web &amp; Funnel</h3>
+              <p class="service-desc">Pagine progettate per convertire, non solo per essere belle</p>
+            </div>
+          </li>
+        </ul>
+
+        <a class="cta cta--primary reveal"
+           href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
+           target="_blank" rel="noopener noreferrer">
+          <span>richiedi una consulenza</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- =================== SEZIONE 4 — RISULTATI ================== -->
+    <section class="panel" id="risultati" data-section="3">
+      <div class="panel-inner">
+        <p class="eyebrow reveal">risultati</p>
+        <h2 class="headline reveal">i <em class="accent">numeri</em> parlano più di noi</h2>
+
+        <dl class="stats reveal">
+          <div class="stat">
+            <dt class="stat-num">8.7x</dt>
+            <dd class="stat-label">ROI medio sulle campagne advertising</dd>
+          </div>
+          <div class="stat">
+            <dt class="stat-num">150+</dt>
+            <dd class="stat-label">aziende seguite in tutta Italia</dd>
+          </div>
+          <div class="stat">
+            <dt class="stat-num">24M+</dt>
+            <dd class="stat-label">reach generato per i nostri clienti</dd>
+          </div>
+        </dl>
+
+        <a class="cta cta--primary reveal"
+           href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
+           target="_blank" rel="noopener noreferrer">
+          <span>richiedi una consulenza</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============= SEZIONE 5 — PERCHÉ APEXMEDIA (gradiente) ===== -->
+    <section class="panel panel--on-gradient" id="perche" data-section="4">
+      <div class="panel-inner">
+        <p class="eyebrow reveal">perché apexmedia</p>
+        <h2 class="headline reveal">perché <em class="accent">scegliere</em> noi</h2>
+
+        <ul class="reasons reveal">
+          <li class="reason">
+            <h3 class="reason-title">Trasparenza totale</h3>
+            <p class="reason-desc">Report chiari, niente metriche di vanità</p>
+          </li>
+          <li class="reason">
+            <h3 class="reason-title">Metodo, non improvvisazione</h3>
+            <p class="reason-desc">Strategia data-driven su ogni euro speso</p>
+          </li>
+          <li class="reason">
+            <h3 class="reason-title">Un solo referente</h3>
+            <p class="reason-desc">Parli sempre con chi gestisce davvero il tuo progetto</p>
+          </li>
+        </ul>
+
+        <a class="cta cta--invert reveal"
+           href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
+           target="_blank" rel="noopener noreferrer">
+          <span>richiedi una consulenza</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============= SEZIONE 6 — PORTFOLIO + CTA FINALE ========== -->
+    <section class="panel" id="portfolio" data-section="5">
+      <div class="panel-inner">
+        <p class="eyebrow reveal">portfolio</p>
+        <h2 class="headline reveal">i risultati dei nostri <em class="accent">clienti</em></h2>
+        <p class="lede reveal">Ogni progetto è diverso. Parliamo del tuo.</p>
+
+        <form class="lead-form glass reveal" id="leadForm" novalidate>
+          <div class="field">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" type="text" autocomplete="name"
+                   placeholder="Come ti chiami" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email"
+                   placeholder="nome@azienda.it" required />
+          </div>
+          <div class="field">
+            <label for="telefono">Telefono</label>
+            <input id="telefono" name="telefono" type="tel" autocomplete="tel"
+                   placeholder="+39 ___ _______" required />
+          </div>
+          <p class="form-error" id="formError" role="alert" aria-live="polite" hidden>
+            Compila nome, email e telefono per continuare su WhatsApp.
+          </p>
+          <button class="cta cta--primary cta--block" type="submit">
+            <svg class="wa-glyph" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.5.8 1 1.3 1.7 1.8.3.2.6.4.9.5.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.5 0 .9Z"/>
+            </svg>
+            <span>prenota la tua consulenza gratuita</span>
+          </button>
+          <p class="form-note">Ti rispondiamo su WhatsApp, di solito entro un'ora lavorativa.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="brand" href="#hero" aria-label="APEXMEDIA, torna su">
+        <svg class="brand-mark" width="22" height="22" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <path d="M13 3 L23 22 L17.5 22 L13 12.5 L8.5 22 L3 22 Z" fill="#FFD84D" />
+        </svg>
+        <span class="brand-word">apexmedia</span>
+      </a>
+      <span class="footer-meta">social, advertising &amp; lead generation · Italia</span>
+    </div>
+  </footer>
+
+  <!-- CTA flottante — mobile only -->
+  <a class="cta cta--float"
+     href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
+     target="_blank" rel="noopener noreferrer" aria-label="Richiedi una consulenza gratuita su WhatsApp">
+    <svg class="wa-glyph" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6c-.2.2-.3.4-.1.7.5.8 1 1.3 1.7 1.8.3.2.6.4.9.5.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.5 0 .9Z"/>
+    </svg>
+    <span>richiedi una consulenza</span>
+  </a>
+
+  <script src="main.js"></script>
+</body>
+</html>
