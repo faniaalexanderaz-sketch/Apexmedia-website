@@ -41,8 +41,16 @@
   <!-- ============================================================= -->
   <header class="site-header">
     <a class="brand" href="#hero" aria-label="APEXMEDIA, vai all'inizio">
-      <img class="brand-logo" src="public/images/logo.png" alt="APEXMEDIA"
-           height="38" fetchpriority="high" decoding="async" />
+      <svg class="brand-mark" width="30" height="32" viewBox="0 0 30 32" fill="none" aria-hidden="true">
+        <path d="M15 3 L27.5 29 L2.5 29 Z" stroke="url(#apexGold)" stroke-width="2.6" stroke-linejoin="round"/>
+        <path d="M15 13.5 L20 24 L10 24 Z" fill="url(#apexGold)" opacity="0.9"/>
+        <defs>
+          <linearGradient id="apexGold" x1="2" y1="3" x2="28" y2="29" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFE89A" /><stop offset="1" stop-color="#FFD84D" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-word">APEXMEDIA</span>
     </a>
 
     <a class="cta cta--header"
