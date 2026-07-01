@@ -71,33 +71,27 @@
   updateStage();
 
   /* =============================================================
-     2) LAZY-LOAD reale — carica la foto quando la sua sezione
-        si avvicina (~1.5 viewport). La prima (hero) è già caricata.
+     2) LAZY-LOAD reale — imposta il background-image del layer quando
+        la sua sezione si avvicina (~1.5 viewport). La prima (hero) è
+        già caricata via CSS.
      ============================================================= */
-  const lazyImgs = Array.from(document.querySelectorAll('.bg-img[data-src]'));
-  if ('IntersectionObserver' in window && lazyImgs.length) {
-    const loadImg = (img) => {
-      if (img.dataset.src) {
-        img.src = img.dataset.src;
-        img.removeAttribute('data-src');
-      }
-    };
+  const loadLayer = (layer) => {
+    const src = layer.dataset.bgSrc;
+    if (src) {
+      layer.style.backgroundImage = "url('" + src + "')";
+      layer.removeAttribute('data-bg-src');
+    }
+  };
+  const lazyLayers = Array.from(document.querySelectorAll('.bg-layer[data-bg-src]'));
+  if ('IntersectionObserver' in window && lazyLayers.length) {
     const lazyIO = new IntersectionObserver((entries, obs) => {
       entries.forEach((e) => {
-        if (e.isIntersecting) {
-          const layer = e.target;
-          const img = layer.querySelector('.bg-img[data-src]');
-          if (img) loadImg(img);
-          obs.unobserve(layer);
-        }
+        if (e.isIntersecting) { loadLayer(e.target); obs.unobserve(e.target); }
       });
     }, { rootMargin: '150% 0px 150% 0px' });
-
-    layers.forEach((layer) => {
-      if (layer.querySelector('.bg-img[data-src]')) lazyIO.observe(layer);
-    });
+    lazyLayers.forEach((layer) => lazyIO.observe(layer));
   } else {
-    lazyImgs.forEach((img) => { img.src = img.dataset.src; });
+    lazyLayers.forEach(loadLayer);
   }
 
   /* =============================================================

@@ -23,28 +23,15 @@
   <!-- BACKGROUND STAGE — fixed stack, crossfades on scroll (JS)     -->
   <!-- ============================================================= -->
   <div class="stage" aria-hidden="true">
-    <div class="bg-layer" data-bg="0">
-      <img class="bg-img" src="public/images/01-reception.png"
-           alt="" width="1706" height="960" fetchpriority="high" decoding="async" />
-    </div>
-    <div class="bg-layer" data-bg="1">
-      <img class="bg-img" data-src="public/images/02-studio.png"
-           alt="" width="1706" height="960" loading="lazy" decoding="async" />
-    </div>
-    <div class="bg-layer" data-bg="2">
-      <img class="bg-img" data-src="public/images/04-meeting.png"
-           alt="" width="1706" height="960" loading="lazy" decoding="async" />
-    </div>
-    <div class="bg-layer" data-bg="3">
-      <img class="bg-img" data-src="public/images/03-dashboard.png"
-           alt="" width="1706" height="960" loading="lazy" decoding="async" />
-    </div>
+    <!-- Immagini come background CSS (percorso relativo, nessun base64).
+         La prima è caricata subito (CSS); le altre in lazy via data-bg-src. -->
+    <div class="bg-layer" data-bg="0"></div>                                              <!-- 01-reception → Hero -->
+    <div class="bg-layer" data-bg="1" data-bg-src="public/images/02-studio.png"></div>    <!-- 02-studio → Chi siamo -->
+    <div class="bg-layer" data-bg="2" data-bg-src="public/images/04-meeting.png"></div>   <!-- 04-meeting → Servizi -->
+    <div class="bg-layer" data-bg="3" data-bg-src="public/images/03-dashboard.png"></div> <!-- 03-dashboard → Risultati -->
     <!-- Sezione 5: nessuna foto, gradiente diagonale viola → blu -->
     <div class="bg-layer bg-layer--gradient" data-bg="4"></div>
-    <div class="bg-layer" data-bg="5">
-      <img class="bg-img" data-src="public/images/05-portfolio.png"
-           alt="" width="1706" height="960" loading="lazy" decoding="async" />
-    </div>
+    <div class="bg-layer" data-bg="5" data-bg-src="public/images/05-portfolio.png"></div> <!-- 05-portfolio → Portfolio -->
     <!-- Overlay leggibilità: gradiente scuro solo da sinistra -->
     <div class="stage-scrim"></div>
   </div>
@@ -54,15 +41,8 @@
   <!-- ============================================================= -->
   <header class="site-header">
     <a class="brand" href="#hero" aria-label="APEXMEDIA, vai all'inizio">
-      <svg class="brand-mark" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-        <path d="M13 3 L23 22 L17.5 22 L13 12.5 L8.5 22 L3 22 Z" fill="url(#apexGold)" />
-        <defs>
-          <linearGradient id="apexGold" x1="3" y1="3" x2="23" y2="22" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#FFE89A" /><stop offset="1" stop-color="#FFD84D" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <span class="brand-word">apexmedia</span>
+      <img class="brand-logo" src="public/images/logo.png" alt="APEXMEDIA"
+           height="38" fetchpriority="high" decoding="async" />
     </a>
 
     <a class="cta cta--header"

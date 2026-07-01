@@ -63,18 +63,17 @@ a { color: inherit; text-decoration: none; }
   opacity: 0;
   will-change: transform, opacity;
   transform: translateZ(0) scale(1.06);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-size: cover;
+  background-position: 72% center;   /* tiene il soggetto (a destra) in vista */
+  background-repeat: no-repeat;
 }
-.bg-layer[data-bg="1"] { background: #0c0a14; }
-.bg-layer[data-bg="2"] { background: var(--violet-bg); }
-.bg-layer[data-bg="3"] { background: var(--blue-bg); }
-.bg-layer[data-bg="5"] { background: #0d0a16; }
-
-.bg-img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: 72% center;   /* tiene il soggetto (a destra) in vista */
-}
+/* colore di fallback coerente per ogni sezione, finché la foto non è caricata */
+.bg-layer[data-bg="0"] { background-color: #08060e; background-image: url('public/images/01-reception.png'); }
+.bg-layer[data-bg="1"] { background-color: #0c0a14; }
+.bg-layer[data-bg="2"] { background-color: var(--violet-bg); }
+.bg-layer[data-bg="3"] { background-color: var(--blue-bg); }
+.bg-layer[data-bg="5"] { background-color: #0d0a16; }
 
 /* Sezione 5: gradiente diagonale viola → blu, nessuna foto */
 .bg-layer--gradient {
@@ -113,6 +112,12 @@ a { color: inherit; text-decoration: none; }
 .brand-word {
   font-weight: 700; font-size: 18px; letter-spacing: -.01em;
   color: var(--text);
+}
+/* logo ufficiale nell'header: sticky con l'header, leggibile su qualsiasi sfondo */
+.brand-logo {
+  display: block;
+  height: 38px; width: auto;
+  filter: drop-shadow(0 1px 6px rgba(0,0,0,.6));  /* resta visibile anche sopra la sezione gradiente */
 }
 
 /* =============================================================
@@ -160,14 +165,14 @@ main { position: relative; z-index: 10; }
 }
 #hero .headline { font-size: clamp(42px, 7.4vw, 88px); }
 
-/* accent word: Instrument Serif italic, oro */
+/* accent word: Instrument Serif italic, oro, STESSA dimensione del titolo */
 .accent {
   font-family: 'Instrument Serif', Georgia, serif;
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0;
   color: var(--yellow);
-  font-size: 1.06em;   /* il serif rende più piccolo: lieve compensazione */
+  font-size: 1em;      /* stessa dimensione del resto della headline */
 }
 
 /* ---------- Body / lede ---------- */
@@ -394,7 +399,8 @@ main { position: relative; z-index: 10; }
       linear-gradient(180deg, rgba(7,10,18,.88) 0%, rgba(7,10,18,.74) 50%, rgba(7,10,18,.84) 100%),
       linear-gradient(100deg, rgba(7,10,18,.5) 0%, rgba(7,10,18,.12) 62%, transparent 88%);
   }
-  .bg-img { object-position: 68% center; }
+  .bg-layer { background-position: 68% center; }
+  .brand-logo { height: 32px; }       /* logo un filo più compatto su mobile */
 
   .cta--header { display: none; }     /* su mobile diventa il bottone flottante */
   .cta--float { display: inline-flex; }
