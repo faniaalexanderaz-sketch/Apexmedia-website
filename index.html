@@ -14,7 +14,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@1,700;1,800;1,900&display=swap" />
+  <link rel="preload" as="image" href="public/images/01-reception.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@1,800&display=swap" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -25,13 +26,13 @@
   <div class="stage" aria-hidden="true">
     <!-- Immagini come background CSS (percorso relativo, nessun base64).
          La prima è caricata subito (CSS); le altre in lazy via data-bg-src. -->
-    <div class="bg-layer" data-bg="0"></div>                                              <!-- 01-reception → Hero -->
-    <div class="bg-layer" data-bg="1" data-bg-src="public/images/02-studio.png"></div>    <!-- 02-studio → Chi siamo -->
-    <div class="bg-layer" data-bg="2" data-bg-src="public/images/04-meeting.png"></div>   <!-- 04-meeting → Servizi -->
-    <div class="bg-layer" data-bg="3" data-bg-src="public/images/03-dashboard.png"></div> <!-- 03-dashboard → Risultati -->
+    <div class="bg-layer" data-bg="0"></div>                                               <!-- 01-reception → Hero -->
+    <div class="bg-layer" data-bg="1" data-bg-src="public/images/02-studio.webp"></div>    <!-- 02-studio → Chi siamo -->
+    <div class="bg-layer" data-bg="2" data-bg-src="public/images/04-meeting.webp"></div>   <!-- 04-meeting → Servizi -->
+    <div class="bg-layer" data-bg="3" data-bg-src="public/images/03-dashboard.webp"></div> <!-- 03-dashboard → Risultati -->
     <!-- Sezione 5: nessuna foto, gradiente diagonale viola → blu -->
     <div class="bg-layer bg-layer--gradient" data-bg="4"></div>
-    <div class="bg-layer" data-bg="5" data-bg-src="public/images/05-portfolio.png"></div> <!-- 05-portfolio → Portfolio -->
+    <div class="bg-layer" data-bg="5" data-bg-src="public/images/05-portfolio.webp"></div> <!-- 05-portfolio → Portfolio -->
     <!-- Overlay leggibilità: gradiente scuro solo da sinistra -->
     <div class="stage-scrim"></div>
   </div>

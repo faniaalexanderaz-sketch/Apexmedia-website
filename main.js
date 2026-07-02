@@ -1,157 +1,178 @@
 /* =============================================================
    APEXMEDIA — interazioni
-   1) Walkthrough: crossfade scale+opacity tra background (rAF, GPU)
-   2) Lazy-load reale delle immagini (IntersectionObserver)
+   1) Camera walkthrough: dolly-forward con inerzia (damped follow)
+   2) Lazy-load dei background (IntersectionObserver)
    3) Reveal: animation-timeline: view() dove supportato, IO fallback
    4) Form → costruzione dinamica link WhatsApp + window.open
    ============================================================= */
 (function () {
   'use strict';
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const sections = Array.from(document.querySelectorAll('.panel[data-section]'));
-  const layers = Array.from(document.querySelectorAll('.bg-layer[data-bg]'));
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.panel[data-section]'));
+  var layers = Array.prototype.slice.call(document.querySelectorAll('.bg-layer[data-bg]'));
+  var n = Math.min(sections.length, layers.length);
 
-  /* ---------- smoothstep ---------- */
-  const smoothstep = (a, b, x) => {
-    const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-    return t * t * (3 - 2 * t);
-  };
+  /* smootherstep: accelerazione/decelerazione dolce ai capi (C2-continua) */
+  function smootherstep(a, b, x) {
+    var t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+    return t * t * t * (t * (t * 6 - 15) + 10);
+  }
 
   /* =============================================================
-     1) WALKTHROUGH — il driver principale, affidabile ovunque
-     Per ogni sezione calcola p = scostamento del suo centro dal
-     centro viewport (in unità di viewport). p=0 → a fuoco.
-     - opacity: piena al centro, sfuma verso i bordi (smoothstep)
-     - scale:  in arrivo parte più grande e "avanza" a 1.0;
-               in uscita scende sotto 1.0 e "recede".
-     Solo transform/opacity. z-index pilotato dall'opacità.
-     ============================================================= */
-  function updateStage() {
-    const vh = window.innerHeight;
-    const vpCenter = vh / 2;
+     1) CAMERA — fisica del walkthrough
+     Per ogni sezione, p = scostamento del suo centro dal centro
+     viewport (in viewport-unit). p=1 sotto (in arrivo), 0 a fuoco,
+     -1 sopra (attraversata).
 
-    for (let i = 0; i < sections.length; i++) {
-      const r = sections[i].getBoundingClientRect();
-      const center = r.top + r.height / 2;
-      let p = (center - vpCenter) / vh;          // <0 sopra (uscita), >0 sotto (entrata)
+     Dolly-forward: la scena CRESCE mentre la si attraversa
+       scale(p) = 1.045 − p·0.045   →  0.99 lontana · 1.045 a fuoco
+                                       · ~1.10 mentre la superi
+     (come camminare in avanti: la stanza si avvicina, ti supera).
+
+     Inerzia: i valori correnti inseguono i target con damping
+     esponenziale (1 − e^(−k·dt)) → la camera ha massa, accelera
+     e decelera come una steadicam, mai agganciata 1:1 allo scroll.
+     Solo transform/opacity, z-index pilotato dall'opacità.
+     ============================================================= */
+  var K = 7.2;                 // rigidità del follow (più alto = più reattivo)
+  var EPS = 0.0006;
+  var cur = [], tgt = [];
+  for (var i = 0; i < n; i++) {
+    cur.push({ o: i === 0 ? 1 : 0, s: 1.045, y: 0 });
+    tgt.push({ o: i === 0 ? 1 : 0, s: 1.045, y: 0 });
+  }
+
+  function computeTargets() {
+    var vh = window.innerHeight;
+    var vpCenter = vh / 2;
+    for (var i = 0; i < n; i++) {
+      var r = sections[i].getBoundingClientRect();
+      var p = (r.top + r.height / 2 - vpCenter) / vh;
       p = Math.max(-1.2, Math.min(1.2, p));
-
-      const layer = layers[i];
-      const opacity = 1 - smoothstep(0.12, 0.92, Math.abs(p));
-
-      let scale, ty;
-      if (reduceMotion) {
-        scale = 1; ty = 0;
-      } else if (p >= 0) {                        // in arrivo: avvicinamento a fuoco
-        scale = 1 + p * 0.10;
-        ty = p * 1.5;                             // micro-parallasse (vh%)
-      } else {                                    // in uscita: si allontana
-        scale = 1 + p * 0.06;                     // p<0 → <1.0
-        ty = p * 1.5;
-      }
-
-      layer.style.opacity = opacity.toFixed(3);
-      layer.style.transform = 'translate3d(0,' + ty.toFixed(2) + 'vh,0) scale(' + scale.toFixed(4) + ')';
-      layer.style.zIndex = String(Math.round(opacity * 1000));
+      tgt[i].o = 1 - smootherstep(0.10, 0.88, Math.abs(p));
+      if (reduceMotion) { tgt[i].s = 1; tgt[i].y = 0; }
+      else { tgt[i].s = 1.045 - p * 0.045; tgt[i].y = p * 2.0; }
     }
   }
 
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(() => { updateStage(); ticking = false; });
+  function apply(i) {
+    var c = cur[i];
+    var l = layers[i];
+    l.style.opacity = c.o.toFixed(4);
+    l.style.transform = 'translate3d(0,' + c.y.toFixed(3) + 'vh,0) scale(' + c.s.toFixed(4) + ')';
+    l.style.zIndex = String(Math.round(c.o * 1000));
+  }
+
+  var running = false;
+  var lastT = 0;
+
+  function tick(now) {
+    var dt = Math.min(0.05, (now - lastT) / 1000) || 0.016;
+    lastT = now;
+    computeTargets();
+    var settled = true;
+    var k = reduceMotion ? 1 : 1 - Math.exp(-K * dt);
+    for (var i = 0; i < n; i++) {
+      var c = cur[i], t = tgt[i];
+      c.o += (t.o - c.o) * k;
+      c.s += (t.s - c.s) * k;
+      c.y += (t.y - c.y) * k;
+      if (Math.abs(t.o - c.o) > EPS || Math.abs(t.s - c.s) > EPS || Math.abs(t.y - c.y) > 0.01) settled = false;
+      apply(i);
+    }
+    if (settled) { running = false; return; }
+    requestAnimationFrame(tick);
+  }
+
+  function wake() {
+    if (!running) {
+      running = true;
+      lastT = performance.now();
+      requestAnimationFrame(tick);
     }
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  window.addEventListener('orientationchange', onScroll, { passive: true });
-  window.addEventListener('load', updateStage);
-  updateStage();
+
+  window.addEventListener('scroll', wake, { passive: true });
+  window.addEventListener('resize', wake, { passive: true });
+  window.addEventListener('orientationchange', wake, { passive: true });
+  window.addEventListener('load', wake);
+  // primo frame: allinea subito senza inerzia
+  computeTargets();
+  for (var j = 0; j < n; j++) { cur[j].o = tgt[j].o; cur[j].s = tgt[j].s; cur[j].y = tgt[j].y; apply(j); }
+  wake();
 
   /* =============================================================
-     2) LAZY-LOAD reale — imposta il background-image del layer quando
-        la sua sezione si avvicina (~1.5 viewport). La prima (hero) è
-        già caricata via CSS.
+     2) LAZY-LOAD — imposta il background del layer quando la sua
+        sezione si avvicina (~1.5 viewport). La prima è già in CSS.
      ============================================================= */
-  const loadLayer = (layer) => {
-    const src = layer.dataset.bgSrc;
+  function loadLayer(layer) {
+    var src = layer.getAttribute('data-bg-src');
     if (src) {
       layer.style.backgroundImage = "url('" + src + "')";
       layer.removeAttribute('data-bg-src');
     }
-  };
-  const lazyLayers = Array.from(document.querySelectorAll('.bg-layer[data-bg-src]'));
+  }
+  var lazyLayers = Array.prototype.slice.call(document.querySelectorAll('.bg-layer[data-bg-src]'));
   if ('IntersectionObserver' in window && lazyLayers.length) {
-    const lazyIO = new IntersectionObserver((entries, obs) => {
-      entries.forEach((e) => {
+    var lazyIO = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (e) {
         if (e.isIntersecting) { loadLayer(e.target); obs.unobserve(e.target); }
       });
     }, { rootMargin: '150% 0px 150% 0px' });
-    lazyLayers.forEach((layer) => lazyIO.observe(layer));
+    lazyLayers.forEach(function (l) { lazyIO.observe(l); });
   } else {
     lazyLayers.forEach(loadLayer);
   }
 
   /* =============================================================
-     3) REVEAL — usa lo scroll-timeline nativo dove c'è;
-        altrimenti IntersectionObserver. Mai entrambi insieme.
+     3) REVEAL — scroll-timeline nativo dove c'è, IO altrimenti.
      ============================================================= */
-  const supportsViewTimeline =
-    !reduceMotion &&
-    typeof CSS !== 'undefined' && CSS.supports && CSS.supports('animation-timeline: view()');
+  var supportsVT = !reduceMotion && typeof CSS !== 'undefined' &&
+    CSS.supports && CSS.supports('animation-timeline: view()');
 
-  if (supportsViewTimeline) {
-    document.documentElement.classList.add('has-vt'); // CSS gestisce i reveal
+  if (supportsVT) {
+    document.documentElement.classList.add('has-vt');
   } else if (!reduceMotion && 'IntersectionObserver' in window) {
-    // stagger leggero tra elementi figli diretti del medesimo blocco
-    document.querySelectorAll('.panel-inner').forEach((inner) => {
-      inner.querySelectorAll(':scope > .reveal').forEach((el, idx) => {
-        el.style.setProperty('--d', (idx * 80) + 'ms');
+    document.querySelectorAll('.panel-inner').forEach(function (inner) {
+      inner.querySelectorAll(':scope > .reveal').forEach(function (el, idx) {
+        el.style.setProperty('--d', (idx * 90) + 'ms');
       });
     });
-    const revealIO = new IntersectionObserver((entries, obs) => {
-      entries.forEach((e) => {
+    var revealIO = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach((el) => revealIO.observe(el));
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealIO.observe(el); });
   } else {
-    document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
   }
 
   /* =============================================================
      4) FORM → WhatsApp
-        Costruisce dinamicamente il link wa.me con i dati inseriti
-        e apre WhatsApp (app su mobile, Web su desktop).
      ============================================================= */
-  const PHONE = '393515940685';
-  const form = document.getElementById('leadForm');
-  const errEl = document.getElementById('formError');
+  var PHONE = '393515940685';
+  var form = document.getElementById('leadForm');
+  var errEl = document.getElementById('formError');
 
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      const nome = form.nome.value.trim();
-      const email = form.email.value.trim();
-      const tel = form.telefono.value.trim();
-
+      var nome = form.nome.value.trim();
+      var email = form.email.value.trim();
+      var tel = form.telefono.value.trim();
       if (!nome || !email || !tel) {
         if (errEl) errEl.hidden = false;
-        const firstEmpty = !nome ? form.nome : !email ? form.email : form.telefono;
-        firstEmpty.focus();
+        (!nome ? form.nome : !email ? form.email : form.telefono).focus();
         return;
       }
       if (errEl) errEl.hidden = true;
-
-      const msg = 'Ciao, mi chiamo ' + nome + ', vorrei prenotare una consulenza. ' +
-                  'Email: ' + email + ', Tel: ' + tel;
-      const url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg);
-      window.open(url, '_blank', 'noopener,noreferrer');
+      var msg = 'Ciao, mi chiamo ' + nome + ', vorrei prenotare una consulenza. ' +
+                'Email: ' + email + ', Tel: ' + tel;
+      window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg),
+                  '_blank', 'noopener,noreferrer');
     });
-
-    // nascondi l'errore appena l'utente corregge
     form.addEventListener('input', function () {
       if (errEl && !errEl.hidden) errEl.hidden = true;
     });
