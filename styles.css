@@ -6,16 +6,18 @@
 
 /* ---------- Design tokens ---------- */
 :root {
-  /* palette */
-  --bg:        #070A12;
-  --violet:    #5B2EFF;
-  --violet-bg: #1B0B2E;
-  --blue:      #2F6BFF;
-  --blue-bg:   #0A1B3D;
-  --gold:      #FFD84D;   /* dettaglio luxury + parola accent */
-  --orange:    #FF8A3C;   /* accento strategico di conversione */
+  /* palette — nero premium · viola profondo · blu elegante · oro champagne · arancio micro-accento */
+  --bg:        #06080F;
+  --violet:    #5A2EE6;
+  --violet-deep: #1A0A33;
+  --blue:      #1E4FD8;
+  --blue-deep: #081536;
+  --gold:      #E7C568;   /* oro champagne: luxury, mai canarino */
+  --gold-hi:   #F5E3A8;
+  --gold-deep: #C39B3F;
+  --orange:    #FF8A3C;   /* solo micro-accento strategico (bloom hover) */
   --text:      #F5F5F7;
-  --muted:     #A6A6B2;
+  --muted:     #AFAFBC;
 
   --line:  rgba(245,245,247,.09);
   --glass: rgba(255,255,255,.04);
@@ -27,8 +29,9 @@
   --col:  min(44vw, 600px);          /* colonna testo desktop */
 
   /* forma */
-  --r-ctrl: 12px;                    /* controlli: bottoni, input */
-  --r-card: 20px;                    /* superfici: card, form */
+  --r-ctrl: 12px;                    /* input, chip */
+  --r-pill: 999px;                   /* bottoni */
+  --r-card: 20px;                    /* superfici */
 
   /* moto */
   --ease:     cubic-bezier(.22,.61,.36,1);
@@ -38,13 +41,18 @@
 
   /* ombre coerenti */
   --shadow-card: 0 30px 80px rgba(0,0,0,.5);
-  --shadow-cta:  inset 0 1px 0 rgba(255,255,255,.38),
-                 0 1px 2px rgba(0,0,0,.35),
-                 0 10px 32px rgba(255,150,60,.28);
-  --shadow-cta-hover: inset 0 1px 0 rgba(255,255,255,.45),
-                 0 2px 4px rgba(0,0,0,.35),
-                 0 16px 44px rgba(255,150,60,.4);
+  --shadow-cta:  inset 0 1px 0 rgba(255,255,255,.45),
+                 inset 0 -1px 0 rgba(120,80,20,.25),
+                 0 1px 2px rgba(0,0,0,.4),
+                 0 10px 32px rgba(231,197,104,.22);
+  --shadow-cta-hover: inset 0 1px 0 rgba(255,255,255,.55),
+                 inset 0 -1px 0 rgba(120,80,20,.25),
+                 0 2px 5px rgba(0,0,0,.4),
+                 0 18px 48px rgba(231,197,104,.3),
+                 0 8px 30px rgba(255,138,60,.16);
 }
+
+::selection { background: rgba(231,197,104,.9); color: #241703; }
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -89,13 +97,17 @@ a, button, input { touch-action: manipulation; }
 /* =============================================================
    BACKGROUND STAGE — camera stack + scrim + vignetta + grana
    ============================================================= */
-.stage { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+.stage {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden;
+  perspective: 1200px;               /* la prospettiva che rende reale il dolly */
+  will-change: transform;            /* respiro steadicam (JS) */
+}
 
 .bg-layer {
-  position: absolute; inset: -1px;   /* evita hairline ai bordi in scala */
+  position: absolute; inset: -12%;   /* overscan: copre il frame lungo tutta la corsa Z */
   opacity: 0;
   will-change: transform, opacity;
-  transform: translateZ(0) scale(1.045);
+  transform: translateZ(0);
   background-color: var(--bg);
   background-size: cover;
   background-position: 70% center;   /* soggetto a destra, più aria a sinistra */
@@ -104,20 +116,22 @@ a, button, input { touch-action: manipulation; }
 /* fallback tonale per sezione, finché la foto non è caricata */
 .bg-layer[data-bg="0"] { background-color: #08060e; background-image: url('public/images/01-reception.webp'); }
 .bg-layer[data-bg="1"] { background-color: #0c0a14; }
-.bg-layer[data-bg="2"] { background-color: var(--violet-bg); }
-.bg-layer[data-bg="3"] { background-color: var(--blue-bg); }
+.bg-layer[data-bg="2"] { background-color: var(--violet-deep); }
+.bg-layer[data-bg="3"] { background-color: var(--blue-deep); }
 .bg-layer[data-bg="5"] { background-color: #0d0a16; }
 
-/* Sezione 5: gradiente diagonale viola → blu, nessuna foto */
+/* Sezione 5: gradiente diagonale viola profondo → blu, morbido e sofisticato */
 .bg-layer--gradient {
   background:
-    radial-gradient(120% 90% at 85% 15%, rgba(91,46,255,.5), transparent 60%),
-    linear-gradient(125deg, var(--violet) 0%, #3a2bd6 42%, var(--blue) 100%);
+    radial-gradient(120% 90% at 85% 12%, rgba(122,80,255,.4), transparent 58%),
+    radial-gradient(90% 80% at 12% 95%, rgba(10,20,80,.55), transparent 60%),
+    linear-gradient(128deg, #3C15B0 0%, #2A1DC6 46%, var(--blue) 100%);
 }
 
 /* Scrim di leggibilità (sinistra) + vignetta da lente */
 .stage-scrim {
   position: absolute; inset: 0;
+  z-index: 600;                      /* sopra i layer (JS: 0–500), sotto la grana */
   background:
     radial-gradient(130% 105% at 50% 42%, transparent 58%, rgba(4,6,12,.45) 100%),
     linear-gradient(100deg,
@@ -136,7 +150,7 @@ a, button, input { touch-action: manipulation; }
   opacity: .05;
   mix-blend-mode: overlay;
   pointer-events: none;
-  z-index: 1001;                     /* sopra ogni layer, sotto il contenuto */
+  z-index: 650;                      /* sopra scrim e layer, dentro lo stage */
 }
 
 /* =============================================================
@@ -153,7 +167,7 @@ a, button, input { touch-action: manipulation; }
 }
 
 .brand { display: inline-flex; align-items: center; gap: 11px; }
-.brand-mark { display: block; filter: drop-shadow(0 0 10px rgba(255,216,77,.35)); }
+.brand-mark { display: block; filter: drop-shadow(0 0 10px rgba(231,197,104,.35)); }
 .brand-word {
   font-weight: 700; font-size: 18px; letter-spacing: -.01em;
   color: var(--text);
@@ -192,7 +206,7 @@ main { position: relative; z-index: 10; }
 }
 .eyebrow::before {
   content: ""; width: 28px; height: 1px;
-  background: linear-gradient(90deg, var(--gold), rgba(255,216,77,.25));
+  background: linear-gradient(90deg, var(--gold), rgba(231,197,104,.25));
   display: inline-block;
 }
 
@@ -217,7 +231,7 @@ main { position: relative; z-index: 10; }
   letter-spacing: 0;
   color: var(--gold);
   font-size: 1.12em;
-  text-shadow: 0 0 1px var(--gold), 0 2px 22px rgba(255,170,60,.32);
+  text-shadow: 0 0 1px var(--gold), 0 2px 22px rgba(231,197,104,.35);
 }
 
 /* ---------- Body / lede ---------- */
@@ -230,16 +244,18 @@ main { position: relative; z-index: 10; }
 }
 
 /* =============================================================
-   CTA — oro luxury → arancio strategico
+   CTA — pillola champagne, sheen metallico, profondità reale
    ============================================================= */
 .cta {
+  position: relative;
+  overflow: hidden;                  /* contiene lo sheen */
   display: inline-flex; align-items: center; gap: 10px;
   font-family: inherit; font-weight: 600; font-size: 15px;
-  letter-spacing: .01em;
+  letter-spacing: .015em;
   text-transform: lowercase;
   line-height: 1;
-  padding: 15px 24px;
-  border-radius: var(--r-ctrl);
+  padding: 16px 28px;
+  border-radius: var(--r-pill);
   border: 1px solid transparent;
   cursor: pointer;
   transition: transform var(--t-1) var(--ease-out),
@@ -247,15 +263,29 @@ main { position: relative; z-index: 10; }
               background-color var(--t-1) var(--ease);
   will-change: transform;
 }
-.cta svg { flex: 0 0 auto; }
-.cta:active { transform: translateY(0) scale(.985); }
+.cta svg { flex: 0 0 auto; transition: transform var(--t-2) var(--ease-out); }
+.cta:hover svg:last-child { transform: translateX(3px); }
+.cta:active { transform: translateY(0) scale(.97); transition-duration: 80ms; }
 
 .cta--primary {
-  background: linear-gradient(135deg, #FFE07A 0%, #FFC24D 45%, var(--orange) 100%);
-  color: #2A1604;
+  background: linear-gradient(160deg, var(--gold-hi) 0%, var(--gold) 48%, var(--gold-deep) 100%);
+  color: #241703;
   box-shadow: var(--shadow-cta);
 }
 .cta--primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-cta-hover); }
+
+/* sheen: riflesso che scorre sul metallo al passaggio del mouse */
+.cta--primary::after, .cta--float::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.5) 50%, transparent 62%);
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+.cta--primary:hover::after, .cta--float:hover::after {
+  transform: translateX(130%);
+  transition: transform .7s var(--ease-out);
+}
 
 /* header CTA: glass, discreto */
 .cta--header {
@@ -269,14 +299,14 @@ main { position: relative; z-index: 10; }
 .cta--header .wa-glyph { color: #25D366; }
 .cta--header:hover { background: var(--glass-strong); transform: translateY(-1px); }
 
-/* CTA su gradiente (sez. 5): bianco solido, testo viola */
+/* CTA su gradiente (sez. 5): bianco solido, testo viola profondo */
 .cta--invert {
-  background: #fff; color: var(--violet);
-  box-shadow: 0 1px 2px rgba(0,0,0,.25), 0 10px 30px rgba(10,10,40,.3);
+  background: #fff; color: #3C15B0;
+  box-shadow: inset 0 -1px 0 rgba(60,21,176,.12), 0 1px 2px rgba(0,0,0,.25), 0 12px 34px rgba(8,10,40,.35);
 }
-.cta--invert:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(0,0,0,.25), 0 16px 40px rgba(10,10,40,.4); }
+.cta--invert:hover { transform: translateY(-2px); box-shadow: inset 0 -1px 0 rgba(60,21,176,.12), 0 2px 5px rgba(0,0,0,.25), 0 18px 44px rgba(8,10,40,.45); }
 
-.cta--block { width: 100%; justify-content: center; padding: 17px 24px; }
+.cta--block { width: 100%; justify-content: center; padding: 17px 26px; }
 
 /* CTA flottante (mobile) */
 .cta--float {
@@ -285,9 +315,9 @@ main { position: relative; z-index: 10; }
   z-index: 40;
   display: none;
   justify-content: center;
-  background: linear-gradient(135deg, #FFE07A 0%, #FFC24D 45%, var(--orange) 100%);
-  color: #2A1604;
-  padding: 16px 22px;
+  background: linear-gradient(160deg, var(--gold-hi) 0%, var(--gold) 48%, var(--gold-deep) 100%);
+  color: #241703;
+  padding: 17px 24px;
   box-shadow: 0 10px 34px rgba(0,0,0,.5), var(--shadow-cta);
 }
 .cta--float .wa-glyph { color: #14803A; }
@@ -335,8 +365,8 @@ main { position: relative; z-index: 10; }
   transition: box-shadow var(--t-2) var(--ease-out), color var(--t-1) var(--ease);
 }
 .service:hover .service-icon {
-  color: #FFE07A;
-  box-shadow: 0 0 24px rgba(255,193,77,.18);
+  color: var(--gold-hi);
+  box-shadow: 0 0 24px rgba(231,197,104,.2);
 }
 .service-icon svg { width: 21px; height: 21px; }
 .service-title { margin: 1px 0 4px; font-size: 17px; font-weight: 600; letter-spacing: -.01em; color: var(--text); }
@@ -346,14 +376,18 @@ main { position: relative; z-index: 10; }
    SEZIONE 4 — Risultati (stats)
    ============================================================= */
 .stats { margin: 6px 0 42px; padding: 0; display: grid; gap: 32px; }
-.stat { border-left: 2px solid rgba(255,216,77,.5); padding-left: 20px; }
+.stat { border-left: 2px solid rgba(231,197,104,.55); padding-left: 20px; }
 .stat-num {
   font-weight: 700;
   font-size: clamp(44px, 4.6vw, 60px);
   line-height: 1;
   letter-spacing: -.03em;
   font-variant-numeric: tabular-nums;
-  color: var(--text);
+  /* gradiente argenteo: numerali che leggono "inciso", non piatto */
+  background: linear-gradient(180deg, #FFFFFF 20%, #C9C9DC 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .stat-label { margin: 9px 0 0; font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 320px; }
 
@@ -374,8 +408,11 @@ main { position: relative; z-index: 10; }
    SEZIONE 6 — Form
    ============================================================= */
 .glass {
-  background: rgba(10,13,24,.55);
-  border: 1px solid rgba(255,255,255,.09);
+  /* hairline sfumata oro→viola: doppio background su border-box */
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(10,13,24,.6), rgba(10,13,24,.6)) padding-box,
+    linear-gradient(160deg, rgba(231,197,104,.4), rgba(255,255,255,.07) 40%, rgba(90,46,230,.3)) border-box;
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
@@ -401,7 +438,7 @@ main { position: relative; z-index: 10; }
 .field input:focus {
   outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(255,216,77,.16);
+  box-shadow: 0 0 0 3px rgba(231,197,104,.18);
 }
 .form-error { margin: -2px 0 0; font-size: 14px; color: #ff9d9d; }
 .form-note { margin: 5px 0 0; font-size: 13px; color: var(--muted); text-align: center; }
@@ -457,13 +494,13 @@ main { position: relative; z-index: 10; }
   /* mobile: testo full-width → veil più deciso */
   .stage-scrim {
     background:
-      radial-gradient(140% 110% at 50% 40%, transparent 55%, rgba(4,6,12,.5) 100%),
-      linear-gradient(180deg, rgba(7,10,18,.88) 0%, rgba(7,10,18,.78) 50%, rgba(7,10,18,.86) 100%),
-      linear-gradient(100deg, rgba(7,10,18,.5) 0%, rgba(7,10,18,.12) 62%, transparent 88%);
+      radial-gradient(140% 110% at 50% 40%, transparent 58%, rgba(4,6,12,.42) 100%),
+      linear-gradient(180deg, rgba(7,10,18,.82) 0%, rgba(7,10,18,.62) 50%, rgba(7,10,18,.78) 100%),
+      linear-gradient(100deg, rgba(7,10,18,.45) 0%, rgba(7,10,18,.1) 62%, transparent 88%);
   }
   /* sicurezza di lettura sopra le zone luminose delle foto */
   .headline, .lede { text-shadow: 0 1px 14px rgba(7,10,18,.55); }
-  .bg-layer { background-position: 66% center; }
+  .bg-layer { background-position: 66% center; inset: -8%; }
   .site-header { padding: 14px var(--pad); }
   .site-header .brand-mark { width: 26px; height: 28px; }
   .site-header .brand-word { font-size: 15px; }

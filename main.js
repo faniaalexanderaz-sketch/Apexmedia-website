@@ -20,27 +20,37 @@
   }
 
   /* =============================================================
-     1) CAMERA — fisica del walkthrough
+     1) CAMERA — geometria prospettica reale + respiro steadicam
      Per ogni sezione, p = scostamento del suo centro dal centro
-     viewport (in viewport-unit). p=1 sotto (in arrivo), 0 a fuoco,
-     -1 sopra (attraversata).
+     viewport. p=1 sotto (lontana), 0 a fuoco, -1 sopra (superata).
 
-     Dolly-forward: la scena CRESCE mentre la si attraversa
-       scale(p) = 1.045 − p·0.045   →  0.99 lontana · 1.045 a fuoco
-                                       · ~1.10 mentre la superi
-     (come camminare in avanti: la stanza si avvicina, ti supera).
+     Dolly su asse Z: i layer si muovono in profondità dentro una
+     prospettiva vera (perspective sul palcoscenico, CSS).
+       z(p) = −p·Z  →  lontana dietro il fuoco · a fuoco a z=0
+                        · ti passa accanto crescendo oltre
+     La scala emerge dalla prospettiva: crescita NON lineare, che
+     accelera avvicinandosi — la firma fisica di una camera reale,
+     impossibile da ottenere con scale() lineare.
 
-     Inerzia: i valori correnti inseguono i target con damping
-     esponenziale (1 − e^(−k·dt)) → la camera ha massa, accelera
-     e decelera come una steadicam, mai agganciata 1:1 allo scroll.
-     Solo transform/opacity, z-index pilotato dall'opacità.
+     Respiro steadicam: deriva impercettibile e continua (±3px,
+     ~8s) applicata al palcoscenico anche a scroll fermo — la
+     presenza dell'operatore. Disattivata con reduced-motion.
+
+     Inerzia: damping esponenziale (1 − e^(−k·dt)) — la camera ha
+     massa, accelera e decelera, mai agganciata 1:1 allo scroll.
      ============================================================= */
-  var K = 7.2;                 // rigidità del follow (più alto = più reattivo)
-  var EPS = 0.0006;
+  var stage = document.querySelector('.stage');
+  var isMobile = window.matchMedia('(max-width: 820px)').matches;
+  /* il fuoco sta DIETRO il piano prospettico: con l'overscan CSS,
+     a fuoco l'immagine copre appena il frame (~1.05) e la corsa Z
+     si sviluppa attorno a quel punto — mai sovra-ingrandita */
+  var ZBASE = isMobile ? -140 : -200;   // profondità del punto di fuoco (px)
+  var ZTRAVEL = isMobile ? 140 : 210;   // corsa del dolly (px)
+  var K = 6.8;                          // rigidità del follow
   var cur = [], tgt = [];
   for (var i = 0; i < n; i++) {
-    cur.push({ o: i === 0 ? 1 : 0, s: 1.045, y: 0 });
-    tgt.push({ o: i === 0 ? 1 : 0, s: 1.045, y: 0 });
+    cur.push({ o: i === 0 ? 1 : 0, z: ZBASE, y: 0 });
+    tgt.push({ o: i === 0 ? 1 : 0, z: ZBASE, y: 0 });
   }
 
   function computeTargets() {
@@ -50,9 +60,9 @@
       var r = sections[i].getBoundingClientRect();
       var p = (r.top + r.height / 2 - vpCenter) / vh;
       p = Math.max(-1.2, Math.min(1.2, p));
-      tgt[i].o = 1 - smootherstep(0.10, 0.88, Math.abs(p));
-      if (reduceMotion) { tgt[i].s = 1; tgt[i].y = 0; }
-      else { tgt[i].s = 1.045 - p * 0.045; tgt[i].y = p * 2.0; }
+      tgt[i].o = 1 - smootherstep(0.14, 0.86, Math.abs(p));
+      if (reduceMotion) { tgt[i].z = ZBASE; tgt[i].y = 0; }
+      else { tgt[i].z = ZBASE - p * ZTRAVEL; tgt[i].y = p * 1.6; }
     }
   }
 
@@ -60,47 +70,44 @@
     var c = cur[i];
     var l = layers[i];
     l.style.opacity = c.o.toFixed(4);
-    l.style.transform = 'translate3d(0,' + c.y.toFixed(3) + 'vh,0) scale(' + c.s.toFixed(4) + ')';
-    l.style.zIndex = String(Math.round(c.o * 1000));
+    l.style.transform = 'translate3d(0,' + c.y.toFixed(3) + 'vh,' + c.z.toFixed(2) + 'px)';
+    l.style.zIndex = String(Math.round(c.o * 500));
   }
 
-  var running = false;
   var lastT = 0;
 
   function tick(now) {
     var dt = Math.min(0.05, (now - lastT) / 1000) || 0.016;
     lastT = now;
     computeTargets();
-    var settled = true;
     var k = reduceMotion ? 1 : 1 - Math.exp(-K * dt);
     for (var i = 0; i < n; i++) {
       var c = cur[i], t = tgt[i];
       c.o += (t.o - c.o) * k;
-      c.s += (t.s - c.s) * k;
+      c.z += (t.z - c.z) * k;
       c.y += (t.y - c.y) * k;
-      if (Math.abs(t.o - c.o) > EPS || Math.abs(t.s - c.s) > EPS || Math.abs(t.y - c.y) > 0.01) settled = false;
       apply(i);
     }
-    if (settled) { running = false; return; }
+    // respiro steadicam: la camera non è mai perfettamente ferma
+    if (!reduceMotion && stage) {
+      var dx = Math.sin(now * 0.00013) * 3;
+      var dy = Math.cos(now * 0.00010) * 2.4;
+      stage.style.transform = 'translate3d(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px,0)';
+    }
     requestAnimationFrame(tick);
   }
 
-  function wake() {
-    if (!running) {
-      running = true;
-      lastT = performance.now();
-      requestAnimationFrame(tick);
-    }
-  }
+  window.addEventListener('resize', function () {
+    isMobile = window.matchMedia('(max-width: 820px)').matches;
+    ZBASE = isMobile ? -140 : -200;
+    ZTRAVEL = isMobile ? 140 : 210;
+  }, { passive: true });
 
-  window.addEventListener('scroll', wake, { passive: true });
-  window.addEventListener('resize', wake, { passive: true });
-  window.addEventListener('orientationchange', wake, { passive: true });
-  window.addEventListener('load', wake);
-  // primo frame: allinea subito senza inerzia
+  // primo frame: allinea subito senza inerzia, poi loop continuo
   computeTargets();
-  for (var j = 0; j < n; j++) { cur[j].o = tgt[j].o; cur[j].s = tgt[j].s; cur[j].y = tgt[j].y; apply(j); }
-  wake();
+  for (var j = 0; j < n; j++) { cur[j].o = tgt[j].o; cur[j].z = tgt[j].z; cur[j].y = tgt[j].y; apply(j); }
+  lastT = performance.now();
+  requestAnimationFrame(tick);
 
   /* =============================================================
      2) LAZY-LOAD — imposta il background del layer quando la sua
