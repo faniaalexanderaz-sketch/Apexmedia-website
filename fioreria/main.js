@@ -23,7 +23,9 @@
       'Verde Silenzio':      '',
       'Ora Dorata':          '',
       'Piccola Poesia':      '',
-      'Domenica al Centro':  ''
+      'Domenica al Centro':  '',
+      'Prima Fioritura':     '',
+      'Il Mazzo del Sabato': ''
     }
   };
 
@@ -193,7 +195,7 @@
     if (e.key === 'Escape' && !elCart.hidden) closeCart();
   });
 
-  document.querySelectorAll('.card').forEach(function (card) {
+  document.querySelectorAll('[data-nome]').forEach(function (card) {
     var nome = card.getAttribute('data-nome');
     var prezzo = parseInt(card.getAttribute('data-prezzo'), 10);
     card.querySelector('.add').addEventListener('click', function () { add(nome, prezzo); });
