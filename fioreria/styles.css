@@ -551,3 +551,136 @@ a, button, input { touch-action: manipulation; }
   .btn, .card { transition: none; }
   .cart { animation: none; }
 }
+
+/* =============================================================
+   AGGIUNTE — checkout, suoni, esito ordine, micro-botanica
+   ============================================================= */
+
+/* nav: azioni raggruppate + toggle suoni */
+.nav-actions { display: inline-flex; align-items: center; gap: 10px; }
+.sound-btn {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  color: var(--salvia);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color var(--t-1) ease, border-color var(--t-1) ease, background-color var(--t-1) ease;
+}
+.sound-btn:hover { color: var(--bosco); border-color: rgba(46,75,58,.3); background: rgba(46,75,58,.04); }
+.sound-btn .sound-slash { display: none; }
+.sound-btn.sound-off .sound-wave { display: none; }
+.sound-btn.sound-off .sound-slash { display: block; }
+
+/* bottone in attesa (avvio checkout) */
+.btn-wait { opacity: .75; pointer-events: none; }
+
+/* rametto decorativo accanto ai titoli di sezione */
+.section-head { position: relative; }
+.head-sprig {
+  position: absolute; right: 6%; top: -14px;
+  width: 54px; height: auto;
+  opacity: .8;
+  pointer-events: none;
+}
+
+/* foglie che planano nell'atelier */
+.atelier { position: relative; overflow: hidden; }
+.foglie { position: absolute; inset: 0; pointer-events: none; }
+.fg { position: absolute; top: -20px; opacity: 0; }
+.fg1 { left: 28%; animation: plana 24s linear infinite 3s; }
+.fg2 { left: 62%; animation: plana 30s linear infinite 12s; }
+
+/* hover card: il bouquet si inclina appena, come sfiorato */
+.card .bq { transition: transform .7s var(--ease-out); transform-origin: 50% 92%; }
+.card:hover .bq { transform: rotate(1.8deg); }
+
+/* =============================================================
+   PAGINE ESITO — ordine completato / pagamento annullato
+   ============================================================= */
+.pagina-esito {
+  min-height: 100svh;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(80% 60% at 80% 10%, rgba(233,240,228,.8), transparent 60%),
+    radial-gradient(60% 50% at 12% 90%, rgba(244,237,220,.7), transparent 60%),
+    var(--paper);
+  padding: 40px var(--pad);
+}
+.esito { max-width: 560px; text-align: center; }
+.esito .display { font-size: clamp(32px, 4.4vw, 48px); }
+.esito .lede { margin-left: auto; margin-right: auto; margin-bottom: 26px; }
+.esito .eyebrow::before { display: none; }
+
+.esito-art { margin: 0 auto 10px; width: min(230px, 56vw); }
+.esito-art-sm { width: 110px; margin-bottom: 4px; }
+
+/* l'animazione dello sbocciare: steli che crescono, corolle che si aprono */
+.cresce {
+  transform-box: view-box;
+  transform-origin: var(--pivot, 120px 236px);
+  animation: cresci 1.4s var(--ease-out) both;
+}
+.c2 { animation-delay: .25s; }
+.c3 { animation-delay: .45s; }
+@keyframes cresci {
+  from { transform: scale(.4); opacity: 0; }
+  60%  { opacity: 1; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.sboccia {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sboccia 1s var(--ease-out) both;
+}
+.b1 { animation-delay: .9s; }
+.b2 { animation-delay: 1.15s; }
+.b3 { animation-delay: 1.4s; }
+@keyframes sboccia {
+  from { transform: scale(0); }
+  70%  { transform: scale(1.12); }
+  to   { transform: scale(1); }
+}
+
+.riepilogo {
+  margin: 8px auto 22px;
+  max-width: 380px;
+  text-align: left;
+  background: rgba(255,255,255,.72);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px 22px;
+  backdrop-filter: blur(4px);
+}
+.riepilogo-titolo {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500; font-size: 17px; color: var(--ink);
+  margin: 0 0 10px;
+}
+.riepilogo-lista { list-style: none; margin: 0 0 12px; padding: 0; }
+.riepilogo-lista li {
+  display: flex; justify-content: space-between; gap: 14px;
+  font-size: 14.5px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ri-nome { color: var(--ink); }
+.ri-prezzo { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.riepilogo-totale {
+  display: flex; justify-content: space-between;
+  font-size: 15px; color: var(--ink);
+}
+.riepilogo-totale strong {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 20px; font-weight: 500;
+}
+
+.esito-nota { font-size: 13.5px; margin: 0 0 22px; }
+.esito-azioni { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cresce, .sboccia, .fg { animation: none !important; opacity: 1; transform: none; }
+  .fg { display: none; }
+  .card .bq { transition: none; }
+}

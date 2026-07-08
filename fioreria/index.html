@@ -7,7 +7,8 @@
   <meta name="description" content="Bouquet freschi composti a mano nel nostro atelier e consegnati in città in giornata. La bottega di fiori del centro, dal 1962." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Figtree:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Figtree:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Figtree:wght@400;500;600&display=swap" /></noscript>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -73,11 +74,16 @@
       <a href="#atelier">L'atelier</a>
       <a href="#consegna">Consegna</a>
     </nav>
-    <button class="cart-btn" id="cartBtn" aria-label="Apri il carrello">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M8.5 8a3.5 3.5 0 1 1 7 0"/></svg>
-      <span>Carrello</span>
-      <span class="cart-count" id="cartCount" hidden>0</span>
-    </button>
+    <div class="nav-actions">
+      <button class="sound-btn" id="soundBtn" aria-pressed="true" aria-label="Suoni delle interazioni">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5Z"/><path class="sound-wave" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="sound-slash" d="M4 4l16 16"/></svg>
+      </button>
+      <button class="cart-btn" id="cartBtn" aria-label="Apri il carrello">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M8.5 8a3.5 3.5 0 1 1 7 0"/></svg>
+        <span>Carrello</span>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+    </div>
   </header>
 
   <main id="inizio">
@@ -141,6 +147,9 @@
     <!-- ================= COLLEZIONE ================= -->
     <section class="collezione" id="collezione">
       <div class="section-head">
+        <svg class="head-sprig" viewBox="0 0 60 130" aria-hidden="true">
+          <g class="sway sw2" style="--pivot:30px 126px"><use href="#sprig" transform="translate(30,124) scale(.9)" style="--s:#9CAF94; --l:#D6E2CC"/></g>
+        </svg>
         <p class="eyebrow reveal">La collezione di oggi</p>
         <h2 class="display reveal">Scegli il tuo <em>bouquet</em></h2>
         <p class="section-note reveal">Composizioni del giorno, finché ci sono fiori. Domani, altre.</p>
@@ -297,6 +306,10 @@
 
     <!-- ================= ATELIER ================= -->
     <section class="atelier" id="atelier">
+      <div class="foglie" aria-hidden="true">
+        <svg class="fg fg1" width="22" height="12" viewBox="-14 -6 28 12"><ellipse rx="12" ry="4.6" fill="#C9DBBE"/></svg>
+        <svg class="fg fg2" width="18" height="10" viewBox="-14 -6 28 12"><ellipse rx="12" ry="4.6" fill="#E4CFC9"/></svg>
+      </div>
       <div class="atelier-inner">
         <figure class="atelier-art reveal" aria-hidden="true">
           <svg viewBox="0 0 260 300" class="bq">
@@ -382,7 +395,7 @@
     <div class="cart-foot" id="cartFoot" hidden>
       <div class="cart-total"><span>Totale</span><strong id="cartTotal">€ 0</strong></div>
       <a class="btn btn-primary btn-lg" id="cartOrder" href="#">Procedi all'ordine</a>
-      <p class="cart-note">Ti risponderemo via email per confermare consegna e biglietto.</p>
+      <p class="cart-note">Pagamento sicuro con carta, Apple Pay o Google Pay · consegna in città</p>
     </div>
   </aside>
 
