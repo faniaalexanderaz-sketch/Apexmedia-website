@@ -49,7 +49,7 @@
   }
 
   /* ---------- Parallasse hero ---------- */
-  var art = document.getElementById('heroArt');
+  var art = document.querySelector('.hero-img');
   if (art && !reduceMotion) {
     var ticking = false;
     window.addEventListener('scroll', function () {
@@ -57,7 +57,7 @@
         ticking = true;
         requestAnimationFrame(function () {
           var y = Math.min(window.scrollY, window.innerHeight);
-          art.style.transform = 'translate3d(0,' + (y * 0.12).toFixed(1) + 'px,0)';
+          art.style.transform = 'translate3d(0,' + (y * 0.1).toFixed(1) + 'px,0) scale(1.06)';
           ticking = false;
         });
       }
@@ -127,33 +127,66 @@
   var elToast = document.getElementById('toast');
   var toastTimer = null;
 
-  function euro(n) { return '€ ' + n; }
+  function euro(n) {
+    return '€ ' + (Number.isInteger(n) ? n : n.toFixed(2).replace('.', ','));
+  }
   function salva() { localStorage.setItem('afc-cart', JSON.stringify(cart)); }
+
+  /* coupon attivo (codice applicato nel carrello) */
+  function couponAttivo() {
+    var code = localStorage.getItem('afc-coupon-attivo');
+    if (!code || typeof AFC === 'undefined') return null;
+    return AFC.couponValido(code);
+  }
+
+  function totali() {
+    var sub = cart.reduce(function (s, r) { return s + r.prezzo * r.qty; }, 0);
+    var c = couponAttivo();
+    var sconto = c ? Math.round(sub * c.pct) / 100 : 0;
+    return { sub: sub, coupon: c, sconto: sconto, tot: Math.round((sub - sconto) * 100) / 100 };
+  }
 
   function render() {
     var items = cart.length;
-    var totale = cart.reduce(function (s, r) { return s + r.prezzo * r.qty; }, 0);
+    var t = totali();
     var pezzi = cart.reduce(function (s, r) { return s + r.qty; }, 0);
 
     elCount.hidden = pezzi === 0;
     elCount.textContent = pezzi;
     elEmpty.style.display = items ? 'none' : '';
     elFoot.hidden = !items;
-    elTotal.textContent = euro(totale);
+
+    /* riga sconto nel totale */
+    var lblTot = elTotal.previousElementSibling;
+    if (t.coupon) {
+      lblTot.innerHTML = 'Totale <em class="tot-sconto">coupon ' + t.coupon.codice + ' −' + t.coupon.pct + '%</em>';
+      elTotal.innerHTML = '<s>' + euro(t.sub) + '</s> ' + euro(t.tot);
+    } else {
+      lblTot.textContent = 'Totale';
+      elTotal.textContent = euro(t.tot);
+    }
 
     elList.innerHTML = '';
     cart.forEach(function (r, idx) {
       var li = document.createElement('li');
       li.className = 'cart-item';
       li.innerHTML =
-        '<div><div class="cart-item-name"></div>' +
-        '<div class="cart-item-qty">' + r.qty + ' × ' + euro(r.prezzo) + '</div></div>' +
+        '<div class="cart-item-info"><div class="cart-item-name"></div>' +
+        '<div class="stepper"><button class="step-btn meno" aria-label="Riduci quantità">−</button>' +
+        '<span class="step-n">' + r.qty + '</span>' +
+        '<button class="step-btn piu" aria-label="Aumenta quantità">+</button></div></div>' +
         '<span class="cart-item-price">' + euro(r.prezzo * r.qty) + '</span>' +
         '<button class="cart-item-remove" aria-label="Rimuovi dal carrello">×</button>';
       li.querySelector('.cart-item-name').textContent = r.nome;
-      li.querySelector('.cart-item-remove').addEventListener('click', function () {
+      li.querySelector('.meno').addEventListener('click', function () {
         if (r.qty > 1) r.qty -= 1; else cart.splice(idx, 1);
         salva(); render();
+      });
+      li.querySelector('.piu').addEventListener('click', function () {
+        r.qty += 1; salva(); render();
+      });
+      li.querySelector('.cart-item-remove').addEventListener('click', function () {
+        cart.splice(idx, 1); salva(); render();
       });
       elList.appendChild(li);
     });
@@ -235,6 +268,13 @@
     e.preventDefault();
     if (!cart.length) return;
     salva();
+    var t = totali();
+    localStorage.setItem('afc-ordine-pending', JSON.stringify({
+      items: cart, totale: t.tot,
+      sconto: t.coupon ? t.coupon.pct : 0,
+      coupon: t.coupon ? t.coupon.codice : null,
+      data: new Date().toISOString()
+    }));
     elOrder.classList.add('btn-wait');
     elOrder.textContent = 'Un momento…';
 
@@ -274,6 +314,126 @@
       if (e.key === 'Enter' || e.key === ' ') checkout(e);
     });
   }
+
+  /* =============================================================
+     COUPON nel carrello — campo codice sopra il totale
+     ============================================================= */
+  (function () {
+    if (!elFoot || typeof AFC === 'undefined') return;
+    var box = document.createElement('div');
+    box.className = 'coupon-box';
+    box.innerHTML =
+      '<label class="sr-only" for="couponInput">Codice sconto</label>' +
+      '<input id="couponInput" type="text" placeholder="Hai un codice sconto?" autocomplete="off" />' +
+      '<button class="btn btn-ghost btn-sm" id="couponApplica" type="button">Applica</button>' +
+      '<p class="coupon-msg" id="couponMsg" role="status" hidden></p>';
+    elFoot.insertBefore(box, elFoot.firstChild);
+    var input = box.querySelector('#couponInput');
+    var msg = box.querySelector('#couponMsg');
+
+    var attivo = couponAttivo();
+    if (attivo) { input.value = attivo.codice; }
+
+    box.querySelector('#couponApplica').addEventListener('click', function () {
+      var code = input.value.trim().toUpperCase();
+      if (!code) return;
+      if (!AFC.utenteCorrente()) {
+        msg.textContent = 'Accedi al tuo account per usare i coupon.';
+        msg.hidden = false; return;
+      }
+      var c = AFC.couponValido(code);
+      if (!c) {
+        msg.textContent = 'Codice non valido o già utilizzato.';
+        msg.hidden = false;
+        localStorage.removeItem('afc-coupon-attivo');
+      } else {
+        msg.textContent = c.descrizione + ' — applicato ✓';
+        msg.hidden = false;
+        localStorage.setItem('afc-coupon-attivo', code);
+      }
+      render();
+    });
+  })();
+
+  /* =============================================================
+     WISHLIST — cuore su card e banner
+     ============================================================= */
+  (function () {
+    if (typeof AFC === 'undefined') return;
+    document.querySelectorAll('[data-nome]').forEach(function (el) {
+      var nome = el.getAttribute('data-nome');
+      var foto = el.querySelector('.card-photo, .banner-foto');
+      if (!foto) return;
+      var heart = document.createElement('button');
+      heart.className = 'heart';
+      heart.setAttribute('aria-label', 'Salva nei preferiti');
+      heart.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 20.5C7 16.6 3.5 13.4 3.5 9.8 3.5 7.2 5.5 5.2 8 5.2c1.6 0 3.1.8 4 2.1.9-1.3 2.4-2.1 4-2.1 2.5 0 4.5 2 4.5 4.6 0 3.6-3.5 6.8-8.5 10.7Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+      if (AFC.inWishlist(nome)) heart.classList.add('salvato');
+      heart.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var r = AFC.toggleWishlist(nome);
+        if (r.richiedeLogin) {
+          toast('Accedi per salvare i preferiti — tocca il profilo in alto');
+          return;
+        }
+        heart.classList.toggle('salvato', r.salvato);
+        heart.classList.remove('pop'); void heart.offsetWidth; heart.classList.add('pop');
+        if (r.salvato) { toast('«' + nome + '» salvato nei preferiti ♥'); suonoAggiunta(); }
+      });
+      foto.appendChild(heart);
+    });
+  })();
+
+  /* =============================================================
+     RECENSIONI — rating sintetico sulle card (dati bottega)
+     ============================================================= */
+  (function () {
+    var RATING = {
+      'Mattino in Bottega':  ['4,9', 31],
+      'Domenica al Centro':  ['5,0', 18],
+      "Lettera d'Aprile":    ['4,8', 24],
+      'Verde Silenzio':      ['4,9', 12],
+      'Ora Dorata':          ['4,8', 16],
+      'Piccola Poesia':      ['4,9', 27],
+      'Prima Fioritura':     ['5,0', 6],
+      'Il Mazzo del Sabato': ['4,9', 44]
+    };
+    document.querySelectorAll('[data-nome]').forEach(function (el) {
+      var r = RATING[el.getAttribute('data-nome')];
+      if (!r) return;
+      var riga = document.createElement('p');
+      riga.className = 'rating';
+      riga.innerHTML = '<span class="stelle" aria-hidden="true">★★★★★</span> ' +
+        '<span>' + r[0] + '</span> <span class="rating-n">(' + r[1] + ' recensioni)</span>';
+      riga.setAttribute('aria-label', 'Valutazione ' + r[0] + ' su 5, ' + r[1] + ' recensioni');
+      var dopo = el.querySelector('.card-name, .banner-body .display');
+      if (dopo) dopo.insertAdjacentElement('afterend', riga);
+    });
+  })();
+
+  /* =============================================================
+     NEWSLETTER — footer
+     ============================================================= */
+  (function () {
+    var form = document.getElementById('newsForm');
+    if (!form || typeof AFC === 'undefined') return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = document.getElementById('newsEmail').value;
+      var r = AFC.iscriviNewsletter(email);
+      var ok = document.getElementById('newsOk');
+      if (r.errore) { toast(r.errore); return; }
+      form.hidden = true;
+      ok.hidden = false;
+      suonoAggiunta();
+    });
+  })();
+
+  /* account: pallino oro se loggato */
+  (function () {
+    var btn = document.getElementById('accountBtn');
+    if (btn && typeof AFC !== 'undefined' && AFC.utenteCorrente()) btn.classList.add('loggato');
+  })();
 
   render();
 })();
