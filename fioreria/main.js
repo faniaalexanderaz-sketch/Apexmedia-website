@@ -267,6 +267,11 @@
   function checkout(e) {
     e.preventDefault();
     if (!cart.length) return;
+    if (stripePronto() && typeof AFC_COOKIE !== 'undefined' && AFC_COOKIE.stato() !== 'accettato') {
+      toast('Accetta i cookie per procedere al pagamento sicuro con Stripe.');
+      AFC_COOKIE.richiedi(function () {});
+      return;
+    }
     salva();
     var t = totali();
     localStorage.setItem('afc-ordine-pending', JSON.stringify({
@@ -294,6 +299,7 @@
         successUrl: urlBase() + 'ordine-completato.html',
         cancelUrl: urlBase() + 'pagamento-annullato.html',
         shippingAddressCollection: { allowedCountries: ['IT'] },
+        allowPromotionCodes: true,
         locale: 'it'
       });
     }).then(function (res) {
@@ -434,6 +440,10 @@
     var btn = document.getElementById('accountBtn');
     if (btn && typeof AFC !== 'undefined' && AFC.utenteCorrente()) btn.classList.add('loggato');
   })();
+
+  /* API esposta per il catalogo (catalogo.js): aggiungere al carrello e
+     aprire il drawer da fuori questa IIFE, senza duplicare la logica. */
+  window.AFC_CART = { add: add, openCart: openCart, render: render };
 
   render();
 })();
