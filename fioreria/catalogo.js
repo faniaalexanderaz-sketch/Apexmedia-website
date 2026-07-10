@@ -49,6 +49,26 @@
     });
   });
 
+  /* le card "Scegli per occasione" filtrano allo stesso modo */
+  document.querySelectorAll('.occ-card[data-occ]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      applica(el.getAttribute('data-occ'));
+    });
+  });
+
+  /* nastro recensioni: duplica le card per il loop continuo (i cloni
+     sono decorativi, nascosti agli screen reader) */
+  (function () {
+    var track = document.querySelector('.rec-track');
+    if (!track || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var originali = Array.prototype.slice.call(track.children);
+    originali.forEach(function (c) {
+      var clone = c.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+  })();
+
   /* =============================================================
      2) SCHEDA PRODOTTO — modale
      ============================================================= */
