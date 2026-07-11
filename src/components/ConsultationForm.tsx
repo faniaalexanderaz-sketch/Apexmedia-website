@@ -34,15 +34,25 @@ export default function ConsultationForm() {
 
     setStatus("submitting");
     try {
-      const res = await fetch("/api/contact", {
+      // Netlify Forms: POST url-encoded alla pagina stessa con form-name
+      const res = await fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, business, city, contact, service, budget, goal, message }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "consulenza",
+          name,
+          business,
+          city,
+          contact,
+          service,
+          budget,
+          goal,
+          message,
+        }).toString(),
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        setServerError(data?.error ?? "Invio non riuscito. Riprova.");
+        setServerError("Invio non riuscito. Riprova.");
         setStatus("error");
         return;
       }
@@ -67,7 +77,14 @@ export default function ConsultationForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+    <form
+      name="consulenza"
+      data-netlify="true"
+      onSubmit={handleSubmit}
+      noValidate
+      className="flex flex-col gap-4"
+    >
+      <input type="hidden" name="form-name" value="consulenza" />
       <Field label="Nome *" name="name" error={errors.name} required />
       <Field label="Nome attività / brand *" name="business" error={errors.business} required />
       <Field label="Città" name="city" />
