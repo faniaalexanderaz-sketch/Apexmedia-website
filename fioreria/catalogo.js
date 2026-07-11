@@ -56,6 +56,13 @@
     });
   });
 
+  /* le voci del menu hamburger filtrano allo stesso modo */
+  document.querySelectorAll('.menu-voce[data-menu-cat]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      applica(el.getAttribute('data-menu-cat'));
+    });
+  });
+
   /* nastro recensioni: duplica le card per il loop continuo (i cloni
      sono decorativi, nascosti agli screen reader) */
   (function () {

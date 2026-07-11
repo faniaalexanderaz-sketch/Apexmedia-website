@@ -32,7 +32,7 @@
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-label', 'Preferenze cookie');
     box.innerHTML =
-      '<p class="cookie-testo">Usiamo cookie <strong>tecnici</strong>, indispensabili per far funzionare carrello e account, e — solo se accetti — i cookie di <strong>Stripe</strong> necessari per il pagamento sicuro con carta. Nessun cookie di profilazione o pubblicità. <a href="cookie-policy.html">Scopri di più</a></p>' +
+      '<p class="cookie-testo">Usiamo cookie <strong>tecnici</strong>, indispensabili per far funzionare carrello e account, e — solo se accetti — quelli del <strong>circuito di pagamento</strong> quando paghi con carta, PayPal, Apple Pay o Google Pay. Nessun cookie di profilazione o pubblicità. <a href="cookie-policy.html">Scopri di più</a></p>' +
       '<div class="cookie-azioni">' +
         '<button class="btn btn-ghost btn-sm" type="button" id="cookieRifiuta">Rifiuta</button>' +
         '<button class="btn btn-primary btn-sm" type="button" id="cookieAccetta">Accetta</button>' +

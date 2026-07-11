@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Completa l'ordine — Antica Fioreria del Centro</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="pagina-account pagina-checkout">
+
+  <header class="nav">
+    <a class="brand" href="index.html" aria-label="Antica Fioreria del Centro, torna alla home">
+      <svg class="brand-sprig" width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
+        <path d="M11 22C11 14 11 8 11 2" stroke="#2E4B3A" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M11 14C6 13 3 9.5 2.6 5.5C7 6 10.4 9 11 14Z" fill="#9CAF94"/>
+        <path d="M11 9.5C15.4 8.6 18.4 5.5 19.4 1.6C15 2 11.8 5 11 9.5Z" fill="#C2A45C"/>
+      </svg>
+      <span class="brand-name">Antica Fioreria <em>del Centro</em></span>
+    </a>
+    <a class="btn btn-ghost btn-sm" href="index.html?carrello=1">← Torna al carrello</a>
+  </header>
+
+  <main class="checkout">
+
+    <!-- indicatore passi -->
+    <ol class="passi-co" aria-label="Avanzamento dell'ordine">
+      <li class="passo-co fatto"><span aria-hidden="true">✓</span> Carrello</li>
+      <li class="passo-co attivo" id="passoConsegna">Consegna</li>
+      <li class="passo-co" id="passoPagamento">Pagamento</li>
+    </ol>
+
+    <!-- riepilogo ordine (sempre visibile, compatto su mobile) -->
+    <details class="riep" id="riep" open>
+      <summary>
+        <span class="riep-titolo">Riepilogo dell'ordine</span>
+        <strong class="riep-tot" id="riepTot">€ 0</strong>
+      </summary>
+      <ul class="riep-lista" id="riepLista"></ul>
+      <p class="riep-sconto" id="riepSconto" hidden></p>
+      <p class="riep-nota">Consegna ad Alessandria inclusa nel prezzo.</p>
+    </details>
+
+    <!-- vuoto -->
+    <section class="co-vuoto" id="coVuoto" hidden>
+      <h1 class="display">Il carrello è <em>vuoto</em>.</h1>
+      <p class="body-text">Scegli prima un bouquet dalla collezione di oggi.</p>
+      <a class="btn btn-primary btn-lg" href="index.html#shop">Vai alla collezione</a>
+    </section>
+
+    <!-- ============ 1 · EXTRA ============ -->
+    <section class="co-sez" id="sezExtra">
+      <h1 class="display co-titolo">Aggiungi un extra per <em>fare la differenza</em></h1>
+      <div class="extra-griglia" id="extraGriglia">
+        <article class="extra-card" data-extra="Vaso in vetro" data-prezzo="10">
+          <figure class="extra-art" aria-hidden="true">
+            <svg viewBox="0 0 80 80"><path d="M28 14h24v8c0 4-2 7-2 12v26a6 6 0 0 1-6 6H36a6 6 0 0 1-6-6V34c0-5-2-8-2-12v-8Z" fill="none" stroke="#7E9478" stroke-width="2.4" stroke-linejoin="round"/><path d="M30 30h20" stroke="#9CAF94" stroke-width="2" stroke-linecap="round"/></svg>
+          </figure>
+          <div class="extra-info">
+            <h2>Vaso in vetro</h2>
+            <p>Trasparente, semplice, pronto per il bouquet.</p>
+            <span class="extra-prezzo">€ 10</span>
+          </div>
+          <button class="extra-piu" type="button" aria-label="Aggiungi il vaso in vetro all'ordine">+</button>
+        </article>
+        <article class="extra-card" data-extra="Biglietto scritto a mano" data-prezzo="5">
+          <figure class="extra-art" aria-hidden="true">
+            <svg viewBox="0 0 80 80"><rect x="16" y="24" width="48" height="34" rx="4" fill="none" stroke="#7E9478" stroke-width="2.4"/><path d="M16 28l24 16 24-16" fill="none" stroke="#9CAF94" stroke-width="2.2" stroke-linejoin="round"/></svg>
+          </figure>
+          <div class="extra-info">
+            <h2>Biglietto scritto a mano</h2>
+            <p>Le tue parole, la nostra penna stilografica.</p>
+            <span class="extra-prezzo">€ 5</span>
+          </div>
+          <button class="extra-piu" type="button" aria-label="Aggiungi il biglietto scritto a mano all'ordine">+</button>
+        </article>
+        <article class="extra-card" data-extra="Cioccolatini artigianali" data-prezzo="8">
+          <figure class="extra-art" aria-hidden="true">
+            <svg viewBox="0 0 80 80"><rect x="18" y="26" width="44" height="30" rx="5" fill="none" stroke="#7E9478" stroke-width="2.4"/><path d="M33 26v30M47 26v30M18 41h44" stroke="#9CAF94" stroke-width="2"/></svg>
+          </figure>
+          <div class="extra-info">
+            <h2>Cioccolatini artigianali</h2>
+            <p>Otto praline della cioccolateria qui accanto.</p>
+            <span class="extra-prezzo">€ 8</span>
+          </div>
+          <button class="extra-piu" type="button" aria-label="Aggiungi i cioccolatini artigianali all'ordine">+</button>
+        </article>
+        <article class="extra-card" data-extra="Candela botanica" data-prezzo="12">
+          <figure class="extra-art" aria-hidden="true">
+            <svg viewBox="0 0 80 80"><rect x="26" y="32" width="28" height="28" rx="4" fill="none" stroke="#7E9478" stroke-width="2.4"/><path d="M40 32v-7" stroke="#9CAF94" stroke-width="2.2" stroke-linecap="round"/><path d="M40 18c3 3 3 5 0 7-3-2-3-4 0-7Z" fill="#C2A45C"/></svg>
+          </figure>
+          <div class="extra-info">
+            <h2>Candela botanica</h2>
+            <p>Cera di soia, profumo di fresia e foglie verdi.</p>
+            <span class="extra-prezzo">€ 12</span>
+          </div>
+          <button class="extra-piu" type="button" aria-label="Aggiungi la candela botanica all'ordine">+</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 2 · CONSEGNA ============ -->
+    <section class="co-sez" id="sezConsegna">
+      <h2 class="display co-titolo">Dove <em>consegniamo</em>?</h2>
+      <form class="co-form" id="formConsegna" novalidate>
+        <div class="co-riga">
+          <div class="field">
+            <label for="coNome">Nome di chi riceve</label>
+            <input id="coNome" type="text" autocomplete="name" required />
+            <p class="field-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="coTel">Telefono <span class="hint">(per il fattorino)</span></label>
+            <input id="coTel" type="tel" autocomplete="tel" inputmode="tel" required />
+            <p class="field-err" hidden></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="coVia">Via e numero civico</label>
+          <input id="coVia" type="text" autocomplete="street-address" placeholder="es. Via Emilio Faà di Bruno 6" required />
+          <p class="field-err" hidden></p>
+        </div>
+        <div class="co-riga co-riga-cap">
+          <div class="field">
+            <label for="coCap">CAP</label>
+            <input id="coCap" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="15121" required />
+            <p class="field-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="coCitta">Città</label>
+            <input id="coCitta" type="text" autocomplete="address-level2" value="Alessandria" required />
+            <p class="field-err" hidden></p>
+          </div>
+        </div>
+        <div class="co-riga">
+          <div class="field">
+            <label for="coData">Giorno di consegna</label>
+            <input id="coData" type="date" required />
+            <p class="field-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="coEmail">La tua email <span class="hint">(per la conferma)</span></label>
+            <input id="coEmail" type="email" autocomplete="email" required />
+            <p class="field-err" hidden></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="coMsg">Messaggio per il biglietto <span class="hint">(facoltativo)</span></label>
+          <textarea id="coMsg" rows="3" placeholder="Scrivi qui le parole che consegneremo con i fiori…"></textarea>
+        </div>
+        <button class="btn btn-primary btn-lg" type="submit" id="vaiPagamento">Continua al pagamento</button>
+      </form>
+    </section>
+
+    <!-- ============ 3 · PAGAMENTO ============ -->
+    <section class="co-sez" id="sezPagamento" hidden>
+      <h2 class="display co-titolo">Modalità di <em>pagamento</em></h2>
+
+      <div class="pag-metodi" role="radiogroup" aria-label="Scegli come pagare">
+        <label class="pag-metodo attivo">
+          <input type="radio" name="metodo" value="carta" checked />
+          <span class="pag-nome">Carta di credito o debito</span>
+          <span class="pag-loghi" aria-hidden="true"><i>VISA</i><i>MC</i><i>AMEX</i></span>
+        </label>
+        <label class="pag-metodo">
+          <input type="radio" name="metodo" value="paypal" />
+          <span class="pag-nome">PayPal</span>
+          <span class="pag-loghi" aria-hidden="true"><i class="pp">PayPal</i></span>
+        </label>
+        <label class="pag-metodo">
+          <input type="radio" name="metodo" value="applepay" />
+          <span class="pag-nome">Apple Pay</span>
+          <span class="pag-loghi" aria-hidden="true"><i class="nero"> Pay</i></span>
+        </label>
+        <label class="pag-metodo">
+          <input type="radio" name="metodo" value="googlepay" />
+          <span class="pag-nome">Google Pay</span>
+          <span class="pag-loghi" aria-hidden="true"><i>G Pay</i></span>
+        </label>
+      </div>
+
+      <form class="co-form" id="formCarta" novalidate>
+        <div class="field">
+          <label for="ccNome">Nome del titolare</label>
+          <input id="ccNome" type="text" autocomplete="cc-name" placeholder="Come scritto sulla carta" />
+          <p class="field-err" hidden></p>
+        </div>
+        <div class="field">
+          <label for="ccNumero">Numero di carta</label>
+          <input id="ccNumero" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" maxlength="23" />
+          <p class="field-err" hidden></p>
+        </div>
+        <div class="co-riga">
+          <div class="field">
+            <label for="ccScadenza">Data di scadenza</label>
+            <input id="ccScadenza" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5" />
+            <p class="field-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="ccCvv">Codice di sicurezza</label>
+            <input id="ccCvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="CVV" maxlength="4" />
+            <p class="field-err" hidden></p>
+          </div>
+        </div>
+      </form>
+
+      <p class="form-msg" id="pagMsg" role="alert" hidden></p>
+
+      <button class="btn btn-primary btn-lg btn-paga" type="button" id="btnPaga">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        <span id="btnPagaTesto">Paga</span>
+      </button>
+      <button class="link-btn" type="button" id="tornaConsegna">← Torna alla consegna</button>
+
+      <p class="pag-note">Convalidando l'ordine dichiari di aver letto e accettato le <a href="termini.html" target="_blank" rel="noopener">Condizioni di vendita</a> e l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>. I dati della carta non vengono mai salvati.</p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="cookie.js"></script>
+  <script src="auth.js"></script>
+  <script src="checkout.js"></script>
+</body>
+</html>

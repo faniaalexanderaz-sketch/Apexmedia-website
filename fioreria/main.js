@@ -2,32 +2,11 @@
    ANTICA FIORERIA DEL CENTRO — interazioni
    1) Scroll reveal + parallasse hero
    2) Carrello persistente (localStorage)
-   3) Checkout Stripe (client-only) con modalità demo
+   3) Checkout in-sito (checkout.html)
    4) Suoni discreti opzionali (WebAudio, nessun file)
    ============================================================= */
 (function () {
   'use strict';
-
-  /* =============================================================
-     CONFIGURAZIONE STRIPE — inserisci qui le tue chiavi.
-     Dashboard Stripe → Sviluppatori → Chiavi API (pk_live_… o pk_test_…)
-     e per ogni bouquet crea un Prodotto con Prezzo → copia il price_…
-     Richiede: Impostazioni → Checkout → abilita "Client-only integration".
-     Finché la chiave è vuota, il checkout gira in MODALITÀ DEMO.
-     ============================================================= */
-  var STRIPE = {
-    publishableKey: '',                  // es. 'pk_live_...'
-    prices: {
-      'Mattino in Bottega':  '',         // es. 'price_1ABC...'
-      "Lettera d'Aprile":    '',
-      'Verde Silenzio':      '',
-      'Ora Dorata':          '',
-      'Piccola Poesia':      '',
-      'Domenica al Centro':  '',
-      'Prima Fioritura':     '',
-      'Il Mazzo del Sabato': ''
-    }
-  };
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -241,74 +220,14 @@
   }
 
   /* =============================================================
-     3) CHECKOUT — Stripe Checkout (client-only), demo se non configurato
+     3) CHECKOUT — tutto sul sito: il carrello porta a checkout.html
+     (extra, indirizzo di consegna e pagamento in un'unica pagina)
      ============================================================= */
-  function stripePronto() {
-    return STRIPE.publishableKey &&
-      cart.every(function (r) { return STRIPE.prices[r.nome]; });
-  }
-
-  function caricaStripeJs() {
-    return new Promise(function (resolve, reject) {
-      if (window.Stripe) return resolve();
-      var s = document.createElement('script');
-      s.src = 'https://js.stripe.com/v3/';
-      s.onload = resolve;
-      s.onerror = function () { reject(new Error('Stripe.js non raggiungibile')); };
-      document.head.appendChild(s);
-    });
-  }
-
-  function urlBase() {
-    // pagina corrente senza il nome file → funziona in root o sottocartella
-    return location.origin + location.pathname.replace(/[^/]*$/, '');
-  }
-
   function checkout(e) {
     e.preventDefault();
     if (!cart.length) return;
-    if (stripePronto() && typeof AFC_COOKIE !== 'undefined' && AFC_COOKIE.stato() !== 'accettato') {
-      toast('Accetta i cookie per procedere al pagamento sicuro con Stripe.');
-      AFC_COOKIE.richiedi(function () {});
-      return;
-    }
     salva();
-    var t = totali();
-    localStorage.setItem('afc-ordine-pending', JSON.stringify({
-      items: cart, totale: t.tot,
-      sconto: t.coupon ? t.coupon.pct : 0,
-      coupon: t.coupon ? t.coupon.codice : null,
-      data: new Date().toISOString()
-    }));
-    elOrder.classList.add('btn-wait');
-    elOrder.textContent = 'Un momento…';
-
-    if (!stripePronto()) {
-      // MODALITÀ DEMO: simula l'esito positivo del pagamento
-      setTimeout(function () { location.href = urlBase() + 'ordine-completato.html?demo=1'; }, 600);
-      return;
-    }
-
-    caricaStripeJs().then(function () {
-      var stripe = window.Stripe(STRIPE.publishableKey);
-      return stripe.redirectToCheckout({
-        lineItems: cart.map(function (r) {
-          return { price: STRIPE.prices[r.nome], quantity: r.qty };
-        }),
-        mode: 'payment',
-        successUrl: urlBase() + 'ordine-completato.html',
-        cancelUrl: urlBase() + 'pagamento-annullato.html',
-        shippingAddressCollection: { allowedCountries: ['IT'] },
-        allowPromotionCodes: true,
-        locale: 'it'
-      });
-    }).then(function (res) {
-      if (res && res.error) throw res.error;
-    }).catch(function (err) {
-      elOrder.classList.remove('btn-wait');
-      elOrder.textContent = 'Procedi all’ordine';
-      toast('Il pagamento non è partito: ' + (err && err.message ? err.message : 'riprova tra poco.'));
-    });
+    location.href = 'checkout.html';
   }
 
   if (elOrder) {
@@ -320,6 +239,44 @@
       if (e.key === 'Enter' || e.key === ' ') checkout(e);
     });
   }
+
+  /* =============================================================
+     MENU CATEGORIE — drawer da sinistra (hamburger in nav)
+     ============================================================= */
+  (function () {
+    var btn = document.getElementById('menuBtn');
+    var menu = document.getElementById('menu');
+    var scrim = document.getElementById('menuScrim');
+    var close = document.getElementById('menuClose');
+    if (!btn || !menu || !scrim) return;
+
+    function apri() {
+      menu.hidden = false; scrim.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      close.focus();
+    }
+    function chiudi() {
+      menu.hidden = true; scrim.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      btn.focus();
+    }
+    btn.addEventListener('click', apri);
+    close.addEventListener('click', chiudi);
+    scrim.addEventListener('click', chiudi);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) chiudi();
+    });
+    /* ogni voce chiude il menu (il filtro lo applica catalogo.js) */
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        menu.hidden = true; scrim.hidden = true;
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
 
   /* =============================================================
      COUPON nel carrello — campo codice sopra il totale

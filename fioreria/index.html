@@ -61,6 +61,9 @@
 
   <!-- ================= NAV ================= -->
   <header class="nav">
+    <button class="menu-btn" id="menuBtn" aria-label="Apri il menu delle categorie" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
     <a class="brand" href="#inizio" aria-label="Antica Fioreria del Centro, torna all'inizio">
       <svg class="brand-sprig" width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
         <path d="M11 22C11 14 11 8 11 2" stroke="#2E4B3A" stroke-width="1.6" stroke-linecap="round"/>
@@ -194,7 +197,7 @@
       </ul>
 
       <!-- recensioni: nastro a scorrimento lento continuo -->
-      <div class="rec-nastro" aria-label="Le recensioni dei nostri clienti">
+      <div class="rec-nastro" id="recensioni" aria-label="Le recensioni dei nostri clienti">
         <div class="rec-track">
           <figure class="rec-card">
             <figcaption><span class="rec-avatar" style="--av:#E4CFC9">MR</span><span class="rec-chi"><strong>Martina R.</strong><span class="rec-stelle" aria-label="5 stelle su 5">★★★★★</span></span></figcaption>
@@ -563,7 +566,7 @@
         <li class="passo reveal">
           <span class="passo-n">3</span>
           <h3 class="passo-t">Arriva fresco, a mano</h3>
-          <p class="passo-d">Consegna in bicicletta in tutto il centro, con il tuo biglietto scritto a penna.</p>
+          <p class="passo-d">Consegna a mano in tutta Alessandria, con il tuo biglietto scritto a penna.</p>
         </li>
       </ol>
     </section>
@@ -576,30 +579,73 @@
       </div>
     </section>
 
+    <!-- ================= FAQ ================= -->
+    <section class="faq" id="faq">
+      <div class="section-head">
+        <p class="eyebrow reveal">Bisogno d'aiuto?</p>
+        <h2 class="display reveal">Domande <em>frequenti</em></h2>
+      </div>
+      <div class="faq-lista">
+        <details class="faq-item reveal">
+          <summary>Consegnate davvero in giornata?</summary>
+          <p>Sì: se ordini entro le 13:00 il bouquet parte lo stesso giorno. Oltre quell'orario, consegniamo il giorno lavorativo successivo. Puoi anche ritirarlo gratis in bottega, in via Emilio Faà di Bruno 6 ad Alessandria.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>In quali zone consegnate?</summary>
+          <p>Consegniamo ad Alessandria e nei dintorni. Se abiti fuori zona, scrivici prima di ordinare: ti diciamo subito se riusciamo ad arrivare da te.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Quanto durano i fiori?</summary>
+          <p>I fiori li scegliamo al mercato la mattina stessa: in media durano dai 7 ai 12 giorni. Nel bouquet trovi sempre il sacchetto di nutrimento e due righe su come tenerli al meglio.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Posso aggiungere un biglietto o un vaso?</summary>
+          <p>Sì: prima del pagamento puoi aggiungere un biglietto scritto a mano, un vaso in vetro o altri piccoli extra. Il messaggio lo scrivi tu, la penna la mettiamo noi.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Come posso pagare?</summary>
+          <p>Direttamente sul sito con carta di credito o debito, PayPal, Apple Pay o Google Pay. Il pagamento è protetto e non conserviamo mai i dati della tua carta.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>E se il bouquet arriva rovinato?</summary>
+          <p>Scrivici entro 24 ore con una foto: lo sostituiamo o ti rimborsiamo. I fiori freschi non si possono restituire per legge (sono beni deperibili), ma se qualcosa non va rimediamo noi. Trovi tutto nelle <a href="termini.html">condizioni di vendita</a>.</p>
+        </details>
+      </div>
+    </section>
+
   </main>
 
   <!-- ================= FOOTER ================= -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="brand-name">Antica Fioreria <em>del Centro</em></span>
-        <p class="footer-line">Bottega di fiori dal 1962</p>
-      </div>
-      <div class="footer-col">
-        <p class="footer-line">Piazza del Centro 4</p>
-        <p class="footer-line">martedì – domenica · 8:30–19:30</p>
-      </div>
-      <div class="footer-col">
-        <p class="footer-line"><a href="mailto:ordini@anticafioreriadelcentro.it">ordini@anticafioreriadelcentro.it</a></p>
-        <p class="footer-line"><a href="tel:+390600000000">06 0000 0000</a></p>
-        <p class="footer-line"><a href="account.html">Il mio account</a></p>
-      </div>
-      <div class="footer-col footer-legale">
-        <p class="footer-line"><a href="privacy.html">Privacy</a></p>
-        <p class="footer-line"><a href="cookie-policy.html">Cookie</a></p>
-        <p class="footer-line"><a href="termini.html">Condizioni di vendita</a></p>
-      </div>
-      <div class="footer-col footer-news">
+      <details class="footer-fisar" open>
+        <summary>La bottega</summary>
+        <div class="footer-fisar-corpo">
+          <p class="footer-line">Antica Fioreria del Centro</p>
+          <p class="footer-line">Via Emilio Faà di Bruno 6, Alessandria</p>
+          <p class="footer-line">martedì – domenica · 8:30–19:30</p>
+          <p class="footer-line"><a href="tel:+390600000000">06 0000 0000</a></p>
+          <p class="footer-line"><a href="mailto:ordini@anticafioreriadelcentro.it">ordini@anticafioreriadelcentro.it</a></p>
+        </div>
+      </details>
+      <details class="footer-fisar" open>
+        <summary>Bisogno d'aiuto?</summary>
+        <div class="footer-fisar-corpo">
+          <p class="footer-line"><a href="#faq">Domande frequenti</a></p>
+          <p class="footer-line"><a href="#consegna">Come funziona la consegna</a></p>
+          <p class="footer-line"><a href="account.html">Il mio account</a></p>
+          <p class="footer-line"><a href="mailto:ordini@anticafioreriadelcentro.it">Scrivici, rispondiamo noi</a></p>
+        </div>
+      </details>
+      <details class="footer-fisar" open>
+        <summary>Informazioni</summary>
+        <div class="footer-fisar-corpo">
+          <p class="footer-line"><a href="privacy.html">Privacy</a></p>
+          <p class="footer-line"><a href="cookie-policy.html">Cookie</a></p>
+          <p class="footer-line"><a href="termini.html">Condizioni di vendita</a></p>
+        </div>
+      </details>
+      <div class="footer-fisar footer-news">
         <p class="footer-news-titolo">La newsletter della bottega</p>
         <p class="footer-line">Nuovi bouquet, stagioni e promozioni. Una mail ogni tanto, mai spam.</p>
         <form class="news-form" id="newsForm" novalidate>
@@ -610,7 +656,59 @@
         <p class="news-ok" id="newsOk" role="status" hidden>Benvenuta nella newsletter — a presto, tra i fiori ✓</p>
       </div>
     </div>
+
+    <div class="footer-recensioni">
+      <a href="#recensioni" id="vaiRecensioni">
+        <span class="footer-stelle" aria-hidden="true">★★★★★</span>
+        Leggi le recensioni dei nostri clienti — <strong>4,9 su 5</strong>
+      </a>
+    </div>
+
+    <div class="footer-pagamenti">
+      <p>Pagamenti 100% sicuri</p>
+      <ul aria-label="Metodi di pagamento accettati">
+        <li>VISA</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>G Pay</li>
+      </ul>
+    </div>
+
+    <p class="footer-firma">Antica Fioreria <em>del Centro</em> · fiori legati a mano dal 1962</p>
   </footer>
+
+  <!-- ================= MENU CATEGORIE (drawer) ================= -->
+  <div class="menu-scrim" id="menuScrim" hidden></div>
+  <nav class="menu" id="menu" aria-label="Menu categorie" hidden>
+    <div class="menu-head">
+      <span class="menu-titolo">Sfoglia la bottega</span>
+      <button class="menu-close" id="menuClose" aria-label="Chiudi il menu">×</button>
+    </div>
+    <div class="menu-corpo">
+      <a class="menu-voce menu-evidenza" href="#shop" data-menu-cat="tutti">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+        Consegna oggi ad Alessandria
+      </a>
+      <p class="menu-gruppo">Per occasione</p>
+      <a class="menu-voce" href="#shop" data-menu-cat="compleanno">Compleanno</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="anniversario">Anniversario</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="matrimonio">Matrimonio</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="laurea">Laurea</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="sanvalentino">San Valentino</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="mamma">Festa della Mamma</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="condoglianze">Condoglianze</a>
+      <p class="menu-gruppo">Per tipo</p>
+      <a class="menu-voce" href="#shop" data-menu-cat="rose">Rose</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="bouquet">Bouquet</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="stagione">Fiori di stagione</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="piante">Piante</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="premium">Bouquet Premium</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="regali">Regali floreali</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="novita">Novità</a>
+      <p class="menu-gruppo">La bottega</p>
+      <a class="menu-voce" href="#atelier">L'atelier</a>
+      <a class="menu-voce" href="#consegna">La consegna</a>
+      <a class="menu-voce" href="#faq">Domande frequenti</a>
+      <a class="menu-voce" href="account.html">Il mio account</a>
+    </div>
+  </nav>
 
   <!-- ================= CARRELLO (drawer) ================= -->
   <div class="cart-scrim" id="cartScrim" hidden></div>
@@ -624,7 +722,7 @@
     <div class="cart-foot" id="cartFoot" hidden>
       <div class="cart-total"><span>Totale</span><strong id="cartTotal">€ 0</strong></div>
       <a class="btn btn-primary btn-lg" id="cartOrder" href="#">Procedi all'ordine</a>
-      <p class="cart-note">Pagamento sicuro con carta, Apple Pay o Google Pay · consegna in città</p>
+      <p class="cart-note">Pagamento sicuro con carta, PayPal, Apple Pay o Google Pay · consegna ad Alessandria</p>
     </div>
   </aside>
 
