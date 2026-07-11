@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050505;
+  --surface: #0c0c0e;
+  --surface-raised: #131316;
+  --foreground: #f4f2ec;
+  --muted: #a6a3ab;
+  --gold: #cda44f;
+  --gold-bright: #e8c579;
+  --violet: #8f7cf0;
+  --violet-bright: #a996ff;
+  --hairline: rgba(244, 242, 236, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-violet: var(--violet);
+  --color-violet-bright: var(--violet-bright);
+  --color-hairline: var(--hairline);
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-jakarta);
+}
+
+* {
+  border-color: var(--hairline);
+}
+
+html {
+  background: var(--background);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--gold);
+  color: #08070a;
+}
+
+/* fixed, pointer-events-none grain overlay per performance guardrails */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.bg-mesh {
+  background-image:
+    radial-gradient(ellipse 60% 50% at 15% 10%, rgba(207, 168, 90, 0.16), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 20%, rgba(143, 124, 240, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(143, 124, 240, 0.08), transparent 65%);
+}
