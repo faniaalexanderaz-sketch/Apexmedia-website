@@ -189,7 +189,7 @@
       li.querySelector('.ordine-righe').textContent = righe;
       li.querySelector('button').addEventListener('click', function () {
         localStorage.setItem('afc-cart', JSON.stringify(o.items));
-        location.href = 'index.html?carrello=1#shop';
+        location.href = 'index.html?carrello=1';
       });
       lista.appendChild(li);
     });
