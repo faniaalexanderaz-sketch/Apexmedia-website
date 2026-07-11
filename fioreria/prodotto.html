@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bouquet — Antica Fioreria del Centro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="pagina-shop">
+
+  <header class="nav">
+    <a class="brand" href="index.html" aria-label="Antica Fioreria del Centro, torna alla home">
+      <svg class="brand-sprig" width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
+        <path d="M11 22C11 14 11 8 11 2" stroke="#2E4B3A" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M11 14C6 13 3 9.5 2.6 5.5C7 6 10.4 9 11 14Z" fill="#9CAF94"/>
+        <path d="M11 9.5C15.4 8.6 18.4 5.5 19.4 1.6C15 2 11.8 5 11 9.5Z" fill="#C2A45C"/>
+      </svg>
+      <span class="brand-name">Antica Fioreria <em>del Centro</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Sezioni">
+      <a href="collezione.html">Collezione</a>
+      <a href="index.html#atelier">L'atelier</a>
+      <a href="index.html#consegna">Consegna</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="account-btn" href="account.html" aria-label="Il mio account" id="accountBtn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-3.6 3.9-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
+      </a>
+      <button class="cart-btn" id="cartBtn" aria-label="Apri il carrello">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M8.5 8a3.5 3.5 0 1 1 7 0"/></svg>
+        <span>Carrello</span>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="prodotto">
+    <nav class="briciole" aria-label="Percorso">
+      <a href="index.html">Home</a> <span aria-hidden="true">›</span>
+      <a href="collezione.html">Collezione</a> <span aria-hidden="true">›</span>
+      <span id="brNome">…</span>
+    </nav>
+
+    <article class="prodotto-scheda">
+      <figure class="prodotto-foto">
+        <span class="badge" id="pBadge" hidden></span>
+        <img id="pFoto" alt="" width="900" height="1125" />
+        <button class="heart" id="pCuore" aria-label="Salva nei preferiti" hidden>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 20.5C7 16.6 3.5 13.4 3.5 9.8 3.5 7.2 5.5 5.2 8 5.2c1.6 0 3.1.8 4 2.1.9-1.3 2.4-2.1 4-2.1 2.5 0 4.5 2 4.5 4.6 0 3.6-3.5 6.8-8.5 10.7Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        </button>
+      </figure>
+
+      <div class="prodotto-info">
+        <h1 class="display" id="pNome">…</h1>
+        <p class="rating" id="pRating"></p>
+        <p class="prodotto-prezzo">
+          <s id="pPrezzoPieno" hidden></s>
+          <strong id="pPrezzo">€ 0</strong>
+          <span class="sconto-xl" id="pSconto" hidden>risparmi il 30%</span>
+        </p>
+        <p class="prodotto-desc" id="pDesc"></p>
+
+        <div class="taglie-blocco">
+          <p class="pm-label">Taglia</p>
+          <div class="taglie" id="taglie" role="radiogroup" aria-label="Scegli la taglia"></div>
+          <p class="taglia-nota" id="tagliaNota"></p>
+        </div>
+
+        <div class="prodotto-riga">
+          <div class="pm-blocco">
+            <p class="pm-label" id="qtyLbl">Quantità</p>
+            <div class="stepper" aria-labelledby="qtyLbl">
+              <button class="step-btn" type="button" id="qMeno" aria-label="Riduci quantità">−</button>
+              <span class="step-n" id="qN">1</span>
+              <button class="step-btn" type="button" id="qPiu" aria-label="Aumenta quantità">+</button>
+            </div>
+          </div>
+          <p class="avail" id="pAvail"><i class="dot"></i><span></span></p>
+        </div>
+
+        <p class="pm-consegna">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+          Ordina entro le 13:00: consegna oggi ad Alessandria · ritiro gratuito in bottega
+        </p>
+
+        <div class="card-actions prodotto-azioni">
+          <button class="btn btn-primary" id="pCompra" type="button">Acquista subito</button>
+          <button class="btn btn-ghost" id="pAggiungi" type="button">Aggiungi al carrello</button>
+        </div>
+      </div>
+    </article>
+
+    <section class="correlati" id="correlatiSez" hidden>
+      <h2 class="display correlati-titolo">Potrebbero <em>piacerti</em></h2>
+      <div class="prod-griglia" id="correlati"></div>
+    </section>
+  </main>
+
+  <!-- ================= CARRELLO (drawer) ================= -->
+  <div class="cart-scrim" id="cartScrim" hidden></div>
+  <aside class="cart" id="cart" aria-label="Carrello" hidden>
+    <div class="cart-head">
+      <h2 class="cart-title">Il tuo carrello</h2>
+      <button class="cart-close" id="cartClose" aria-label="Chiudi il carrello">×</button>
+    </div>
+    <ul class="cart-list" id="cartList"></ul>
+    <p class="cart-empty" id="cartEmpty">Il carrello è vuoto.<br/>Lasciati ispirare dalla collezione di oggi.</p>
+    <div class="cart-foot" id="cartFoot" hidden>
+      <div class="cart-total"><span>Totale</span><strong id="cartTotal">€ 0</strong></div>
+      <a class="btn btn-primary btn-lg" id="cartOrder" href="#">Procedi all'ordine</a>
+      <p class="cart-note">Pagamento sicuro con carta, PayPal, Apple Pay o Google Pay · consegna ad Alessandria</p>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="cookie.js"></script>
+  <script src="auth.js"></script>
+  <script src="main.js"></script>
+  <script src="prodotti.js"></script>
+  <script src="prodotto.js"></script>
+</body>
+</html>
