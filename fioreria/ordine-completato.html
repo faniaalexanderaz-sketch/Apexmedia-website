@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grazie per il tuo ordine — Antica Fioreria del Centro</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="pagina-esito">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <g id="bloom">
+        <g fill="var(--p, #F3E4E2)">
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(72)"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(144)"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(216)"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(288)"/>
+        </g>
+        <circle r="8.5" fill="var(--c, #E4C6BE)"/>
+      </g>
+      <g id="sprig">
+        <path d="M0 0C3-40 3-80 0-118" fill="none" stroke="var(--s, #7E9478)" stroke-width="2.4" stroke-linecap="round"/>
+        <g fill="var(--l, #B9CBAF)">
+          <ellipse rx="14" ry="5.5" transform="translate(-11,-24) rotate(-38)"/>
+          <ellipse rx="14" ry="5.5" transform="translate(12,-42) rotate(34)"/>
+          <ellipse rx="13" ry="5" transform="translate(-11,-62) rotate(-38)"/>
+          <ellipse rx="12" ry="4.6" transform="translate(11,-80) rotate(34)"/>
+          <ellipse rx="10" ry="4" transform="translate(-8,-98) rotate(-36)"/>
+        </g>
+      </g>
+    </defs>
+  </svg>
+
+  <main class="esito">
+    <figure class="esito-art" aria-hidden="true">
+      <!-- il bouquet sboccia: steli, poi corolle in sequenza -->
+      <svg viewBox="0 0 240 260" class="bq">
+        <g class="cresce c1" style="--pivot:120px 236px">
+          <use href="#sprig" transform="translate(120,230) scale(1.15)" style="--s:#7E9478; --l:#C5D5BB"/>
+        </g>
+        <g class="cresce c2" style="--pivot:120px 236px">
+          <path d="M120 232C112 186 96 158 80 134" class="stelo"/>
+          <g class="sboccia b1"><use href="#bloom" transform="translate(76,122) rotate(-10)" style="--p:#F2DCD7; --c:#DFB9AF"/></g>
+        </g>
+        <g class="cresce c3" style="--pivot:120px 236px">
+          <path d="M120 232C126 180 138 150 156 126" class="stelo"/>
+          <g class="sboccia b2"><use href="#bloom" transform="translate(162,114) rotate(12) scale(1.2)" style="--p:#F8F1DD; --c:#CBA95C"/></g>
+        </g>
+        <g class="cresce c2" style="--pivot:120px 236px">
+          <path d="M120 232C118 196 116 176 114 158" class="stelo"/>
+          <g class="sboccia b3"><use href="#bloom" transform="translate(114,146) scale(.85)" style="--p:#FBF7EE; --c:#E4D3A8"/></g>
+        </g>
+        <path d="M102 238C114 232 126 232 138 238" fill="none" stroke="#C2A45C" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </figure>
+
+    <p class="eyebrow">Ordine confermato</p>
+    <h1 class="display">Grazie per il tuo <em>ordine</em>.</h1>
+    <p class="lede">I fiori sono già in acqua. Li legheremo solo al momento di partire, così arrivano freschi come in bottega.</p>
+
+    <div class="riepilogo" id="riepilogo" hidden>
+      <h2 class="riepilogo-titolo">Il tuo acquisto</h2>
+      <ul class="riepilogo-lista" id="riepilogoLista"></ul>
+      <div class="riepilogo-totale"><span>Totale</span><strong id="riepilogoTotale"></strong></div>
+    </div>
+
+    <p class="esito-nota">Riceverai l'email di conferma di Stripe con i dettagli di pagamento e consegna.</p>
+    <a class="btn btn-primary btn-lg" href="index.html">Torna alla fioreria</a>
+  </main>
+
+  <script src="cookie.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    (function () {
+      /* riepilogo: dall'ordine pending (con sconto) o dal carrello */
+      var ordine = null;
+      try { ordine = JSON.parse(localStorage.getItem('afc-ordine-pending')); } catch (e) {}
+      if (!ordine) {
+        var cart = [];
+        try { cart = JSON.parse(localStorage.getItem('afc-cart') || '[]'); } catch (e) {}
+        if (cart.length) {
+          ordine = {
+            items: cart,
+            totale: cart.reduce(function (s, r) { return s + r.prezzo * r.qty; }, 0),
+            sconto: 0, coupon: null, data: new Date().toISOString()
+          };
+        }
+      }
+
+      if (ordine && ordine.items.length) {
+        var lista = document.getElementById('riepilogoLista');
+        ordine.items.forEach(function (r) {
+          var li = document.createElement('li');
+          li.innerHTML = '<span class="ri-nome"></span><span class="ri-prezzo">' +
+            r.qty + ' × € ' + r.prezzo + '</span>';
+          li.querySelector('.ri-nome').textContent = r.nome;
+          lista.appendChild(li);
+        });
+        var t = ordine.totale;
+        var tot = '€ ' + (Number.isInteger(t) ? t : t.toFixed(2).replace('.', ','));
+        if (ordine.sconto) tot += ' (coupon −' + ordine.sconto + '%)';
+        document.getElementById('riepilogoTotale').textContent = tot;
+        document.getElementById('riepilogo').hidden = false;
+
+        /* registra nello storico dell'account e consuma il coupon */
+        if (typeof AFC !== 'undefined' && AFC.utenteCorrente()) {
+          AFC.registraOrdine(ordine);
+          if (ordine.coupon) AFC.segnaCouponUsato(ordine.coupon);
+        }
+      }
+
+      /* ordine concluso: si riparte puliti */
+      localStorage.removeItem('afc-cart');
+      localStorage.removeItem('afc-ordine-pending');
+      localStorage.removeItem('afc-coupon-attivo');
+    })();
+  </script>
+</body>
+</html>

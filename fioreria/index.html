@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Antica Fioreria del Centro — fiori legati a mano, ogni mattina</title>
+  <meta name="description" content="Bouquet freschi composti a mano nel nostro atelier e consegnati in città in giornata. La bottega di fiori del centro, dal 1962." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#shop">salta allo shop</a>
+
+  <!-- ================= LIBRERIA BOTANICA (SVG defs) ================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- peonia stilizzata: 5 petali organici + cuore -->
+      <g id="bloom">
+        <g fill="var(--p, #F3E4E2)">
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(72)"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(144)"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(216)"/>
+          <path d="M0-30C14-28 22-14 20 2C18 16 8 26 0 26C-8 26-18 16-20 2C-22-14-14-28 0-30Z" transform="rotate(288)"/>
+        </g>
+        <circle r="8.5" fill="var(--c, #E4C6BE)"/>
+      </g>
+      <!-- tulipano a coppa -->
+      <g id="tulip">
+        <path d="M-16-4C-20-28-9-40 0-40C9-40 20-28 16-4C10 6 -10 6 -16-4Z" fill="var(--p, #F3E4E2)"/>
+        <path d="M-6-38C-2-30 -2-12 -4-2C-9-4 -14-10 -15-18C-15-28 -11-35 -6-38Z" fill="var(--c, #E4C6BE)" opacity=".55"/>
+      </g>
+      <!-- rametto di foglie -->
+      <g id="sprig">
+        <path d="M0 0C3-40 3-80 0-118" fill="none" stroke="var(--s, #7E9478)" stroke-width="2.4" stroke-linecap="round"/>
+        <g fill="var(--l, #B9CBAF)">
+          <ellipse rx="14" ry="5.5" transform="translate(-11,-24) rotate(-38)"/>
+          <ellipse rx="14" ry="5.5" transform="translate(12,-42) rotate(34)"/>
+          <ellipse rx="13" ry="5" transform="translate(-11,-62) rotate(-38)"/>
+          <ellipse rx="12" ry="4.6" transform="translate(11,-80) rotate(34)"/>
+          <ellipse rx="10" ry="4" transform="translate(-8,-98) rotate(-36)"/>
+        </g>
+      </g>
+      <!-- nebbiolina (gypsophila) -->
+      <g id="gyps">
+        <g fill="none" stroke="var(--s, #8FA789)" stroke-width="1.7" stroke-linecap="round">
+          <path d="M0 0C-1-16 -8-26 -14-34"/><path d="M0 0C1-18 6-30 12-40"/><path d="M0 0C0-20 -1-34 2-48"/>
+        </g>
+        <g fill="var(--g, #FFFFFF)" stroke="var(--s, #8FA789)" stroke-width="1.4">
+          <circle cx="-14" cy="-34" r="4"/><circle cx="12" cy="-40" r="4.6"/><circle cx="2" cy="-48" r="3.6"/>
+        </g>
+      </g>
+      <!-- petalo che plana -->
+      <path id="petalo" d="M0-9C6-7 9-2 7 4C5 9 -1 10 -5 7C-9 3 -8-5 0-9Z"/>
+    </defs>
+  </svg>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav">
+    <button class="menu-btn" id="menuBtn" aria-label="Apri il menu delle categorie" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <a class="brand" href="#inizio" aria-label="Antica Fioreria del Centro, torna all'inizio">
+      <svg class="brand-sprig" width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
+        <path d="M11 22C11 14 11 8 11 2" stroke="#2E4B3A" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M11 14C6 13 3 9.5 2.6 5.5C7 6 10.4 9 11 14Z" fill="#9CAF94"/>
+        <path d="M11 9.5C15.4 8.6 18.4 5.5 19.4 1.6C15 2 11.8 5 11 9.5Z" fill="#C2A45C"/>
+      </svg>
+      <span class="brand-name">Antica Fioreria <em>del Centro</em></span>
+    </a>
+    <nav class="nav-links" aria-label="Sezioni">
+      <a href="#shop">Collezione</a>
+      <a href="#atelier">L'atelier</a>
+      <a href="#consegna">Consegna</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="sound-btn" id="soundBtn" aria-pressed="true" aria-label="Suoni delle interazioni">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19V5Z"/><path class="sound-wave" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="sound-slash" d="M4 4l16 16"/></svg>
+      </button>
+      <a class="account-btn" href="account.html" aria-label="Il mio account" id="accountBtn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-3.6 3.9-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
+      </a>
+      <button class="cart-btn" id="cartBtn" aria-label="Apri il carrello">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M8.5 8a3.5 3.5 0 1 1 7 0"/></svg>
+        <span>Carrello</span>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="inizio">
+
+    <!-- ============ CATEGORIE — slider orizzontale ============ -->
+    <nav class="categorie" aria-label="Categorie">
+      <div class="cat-track">
+        <a class="cat-item" href="#shop" data-cat="rose">
+          <span class="cat-foto"><img src="foto/cat-rose.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Rose</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="bouquet">
+          <span class="cat-foto"><img src="foto/cat-bouquet.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Bouquet</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="stagione">
+          <span class="cat-foto"><img src="foto/cat-stagione.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Fiori di stagione</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="compleanno">
+          <span class="cat-foto"><img src="foto/cat-compleanno.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Compleanno</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="anniversario">
+          <span class="cat-foto"><img src="foto/cat-anniversario.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Anniversario</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="laurea">
+          <span class="cat-foto"><img src="foto/cat-laurea.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Laurea</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="matrimonio">
+          <span class="cat-foto"><img src="foto/cat-matrimonio.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Matrimonio</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="piante">
+          <span class="cat-foto"><img src="foto/cat-piante.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Piante</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="regali">
+          <span class="cat-foto"><img src="foto/cat-regali.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Regali floreali</span>
+        </a>
+        <a class="cat-item" href="#shop" data-cat="novita">
+          <span class="cat-foto"><img src="foto/cat-novita.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Novità</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- ================= HERO — testo e foto separati, niente riquadro sovrapposto ================= -->
+    <section class="hero-split">
+      <div class="hero-copy">
+        <p class="eyebrow hero-eyebrow reveal">Legati a mano · dal 1962</p>
+        <h1 class="display hero-titolo reveal">Fiori freschi, consegnati <em>oggi</em>.</h1>
+        <p class="hero-sub reveal">Bouquet composti a mano ogni mattina nel nostro atelier, con i fiori scelti al mercato di stagione.</p>
+        <a class="btn btn-primary btn-lg reveal" href="#shop">Scopri la collezione</a>
+        <ul class="hero-fiducia reveal">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>Consegna in giornata</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21C7 17.6 3.5 14.4 3.5 10.4 3.5 7.8 5.6 5.8 8.1 5.8c1.6 0 3 .8 3.9 2 .9-1.2 2.3-2 3.9-2 2.5 0 4.6 2 4.6 4.6 0 4-3.5 7.2-8.5 10.6Z"/></svg>Fiori scelti a mano</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2.4"/><path d="M3 10.5h18"/></svg>Pagamento sicuro</li>
+        </ul>
+      </div>
+      <figure class="hero-photo reveal">
+        <img src="foto/hero.jpg"
+             alt="Bouquet di fiori freschi in luce naturale"
+             fetchpriority="high" width="900" height="1000"
+             onerror="this.classList.add('no-foto')" />
+      </figure>
+    </section>
+
+    <!-- ================= FASCIA FIDUCIA ================= -->
+    <section class="fiducia" aria-label="Perché scegliere la nostra bottega">
+      <ul class="fiducia-riga">
+        <li class="fiducia-item reveal">
+          <span class="fiducia-stelle" aria-hidden="true">★★★★★</span>
+          <strong>4,9 / 5</strong>
+          <span>recensioni verificate</span>
+        </li>
+        <li class="fiducia-item reveal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21C7 17.6 3.5 14.4 3.5 10.4 3.5 7.8 5.6 5.8 8.1 5.8c1.6 0 3 .8 3.9 2 .9-1.2 2.3-2 3.9-2 2.5 0 4.6 2 4.6 4.6 0 4-3.5 7.2-8.5 10.6Z"/></svg>
+          <strong>2.500+</strong>
+          <span>bouquet consegnati</span>
+        </li>
+        <li class="fiducia-item reveal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+          <strong>In giornata</strong>
+          <span>se ordini entro le 13:00</span>
+        </li>
+        <li class="fiducia-item reveal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4-3 7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 3 8 7 11Z"/><path d="M12 22V11"/><path d="M12 14c-1.8-.4-3-1.6-3.4-3.4M12 12c1.8-.4 3-1.6 3.4-3.4"/></svg>
+          <strong>Freschi ogni mattina</strong>
+          <span>scelti al mercato dei fiori</span>
+        </li>
+        <li class="fiducia-item reveal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <strong>Pagamenti sicuri</strong>
+          <span>carta, Apple Pay, Google Pay</span>
+        </li>
+        <li class="fiducia-item reveal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 1 16 0v4a2 2 0 0 1-2 2h-2v-6h4M4 12v4a2 2 0 0 0 2 2h2v-6H4"/></svg>
+          <strong>Siamo in bottega</strong>
+          <span>una voce vera, non un bot</span>
+        </li>
+      </ul>
+
+      <!-- recensioni: nastro a scorrimento lento continuo -->
+      <div class="rec-nastro" id="recensioni" aria-label="Le recensioni dei nostri clienti">
+        <div class="rec-track">
+          <figure class="rec-card">
+            <figcaption><span class="rec-avatar" style="--av:#E4CFC9">MR</span><span class="rec-chi"><strong>Martina R.</strong><span class="rec-stelle" aria-label="5 stelle su 5">★★★★★</span></span></figcaption>
+            <blockquote>Ordinato alle 11, consegnato alle 16 con un biglietto scritto a mano. Mia madre l'ha fotografato prima ancora di metterlo in acqua.</blockquote>
+          </figure>
+          <figure class="rec-card">
+            <figcaption><span class="rec-avatar" style="--av:#C9DBBE">GT</span><span class="rec-chi"><strong>Giulio T.</strong><span class="rec-stelle" aria-label="5 stelle su 5">★★★★★</span></span></figcaption>
+            <blockquote>Non capisco niente di fiori: ho raccontato l'occasione al telefono e hanno pensato a tutto loro. Bouquet perfetto.</blockquote>
+          </figure>
+          <figure class="rec-card">
+            <figcaption><span class="rec-avatar" style="--av:#F4EDDC">EM</span><span class="rec-chi"><strong>Elena M.</strong><span class="rec-stelle" aria-label="5 stelle su 5">★★★★★</span></span></figcaption>
+            <blockquote>Le peonie sono durate undici giorni. Undici. Mai successo con i fiori del supermercato.</blockquote>
+          </figure>
+          <figure class="rec-card">
+            <figcaption><span class="rec-avatar" style="--av:#DCE6F0">FP</span><span class="rec-chi"><strong>Francesca P.</strong><span class="rec-stelle" aria-label="5 stelle su 5">★★★★★</span></span></figcaption>
+            <blockquote>Il mazzo del sabato è diventato la mia abitudine preferita: ogni settimana una sorpresa diversa sul tavolo della cucina.</blockquote>
+          </figure>
+          <figure class="rec-card">
+            <figcaption><span class="rec-avatar" style="--av:#EAD9E2">AD</span><span class="rec-chi"><strong>Andrea D.</strong><span class="rec-stelle" aria-label="5 stelle su 5">★★★★★</span></span></figcaption>
+            <blockquote>Anniversario salvato in extremis: ordine alle 12:40, fiori a casa prima di cena. Servizio da grande città, cortesia da bottega.</blockquote>
+          </figure>
+          <figure class="rec-card">
+            <figcaption><span class="rec-avatar" style="--av:#D9E4D2">SC</span><span class="rec-chi"><strong>Sofia C.</strong><span class="rec-stelle" aria-label="5 stelle su 5">★★★★★</span></span></figcaption>
+            <blockquote>Per la laurea di mia sorella hanno composto qualcosa che sembrava uscito da un editoriale. Foto ancora in cornice.</blockquote>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCEGLI PER OCCASIONE ================= -->
+    <section class="occasioni" id="occasioni">
+      <div class="section-head">
+        <p class="eyebrow reveal">Prima di tutto, l'occasione</p>
+        <h2 class="display reveal">Scegli per <em>occasione</em></h2>
+      </div>
+      <div class="occ-griglia">
+        <a class="occ-card reveal" href="#shop" data-occ="compleanno">
+          <img src="foto/cat-compleanno.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Compleanno</span>
+            <span class="occ-desc">Colore e allegria per il giorno giusto</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="anniversario">
+          <img src="foto/cat-anniversario.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Anniversario</span>
+            <span class="occ-desc">Toni caldi per gli anni insieme</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="matrimonio">
+          <img src="foto/cat-matrimonio.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Matrimonio</span>
+            <span class="occ-desc">Dal bouquet della sposa ai tavoli</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="laurea">
+          <img src="foto/cat-laurea.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Laurea</span>
+            <span class="occ-desc">Il traguardo merita fiori veri</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="sanvalentino">
+          <img src="foto/cat-rose.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">San Valentino</span>
+            <span class="occ-desc">Rose rosse, senza mezze misure</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="mamma">
+          <img src="foto/occ-mamma.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Festa della Mamma</span>
+            <span class="occ-desc">Petali morbidi, come un grazie</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="piante">
+          <img src="foto/cat-piante.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Piante</span>
+            <span class="occ-desc">Verde che resta, anche dopo</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="premium">
+          <img src="foto/p-limitata.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Bouquet Premium</span>
+            <span class="occ-desc">Le composizioni più ricche della bottega</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="stagione">
+          <img src="foto/cat-stagione.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Fiori di stagione</span>
+            <span class="occ-desc">Quello che il mercato offre oggi</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+        <a class="occ-card reveal" href="#shop" data-occ="condoglianze">
+          <img src="foto/occ-condoglianze.jpg" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add('no-foto')" />
+          <span class="occ-velo" aria-hidden="true"></span>
+          <span class="occ-testo">
+            <span class="occ-nome">Condoglianze</span>
+            <span class="occ-desc">Composizioni sobrie, consegnate con discrezione</span>
+            <span class="occ-freccia" aria-hidden="true">→</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- separatore botanico -->
+    <div class="divisore" aria-hidden="true">
+      <svg width="26" height="28" viewBox="0 0 22 24" fill="none">
+        <path d="M11 22C11 14 11 8 11 2" stroke="#9CAF94" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M11 14C6 13 3 9.5 2.6 5.5C7 6 10.4 9 11 14Z" fill="#C9DBBE"/>
+        <path d="M11 9.5C15.4 8.6 18.4 5.5 19.4 1.6C15 2 11.8 5 11 9.5Z" fill="#E7D9AE"/>
+      </svg>
+    </div>
+
+    <!-- ================= CATALOGO — griglia unica, filtrabile per categoria ================= -->
+    <section class="shop-sez" id="shop">
+      <div class="section-head">
+        <p class="eyebrow reveal">Le scelte di chi ci conosce</p>
+        <h2 class="display reveal">I più <em>venduti</em></h2>
+      </div>
+
+      <div class="filtri reveal" role="group" aria-label="Filtra per categoria">
+        <button class="filtro attivo" type="button" data-filtro="tutti" aria-pressed="true">Tutti</button>
+        <button class="filtro" type="button" data-filtro="rose" aria-pressed="false">Rose</button>
+        <button class="filtro" type="button" data-filtro="bouquet" aria-pressed="false">Bouquet</button>
+        <button class="filtro" type="button" data-filtro="stagione" aria-pressed="false">Fiori di stagione</button>
+        <button class="filtro" type="button" data-filtro="compleanno" aria-pressed="false">Compleanno</button>
+        <button class="filtro" type="button" data-filtro="anniversario" aria-pressed="false">Anniversario</button>
+        <button class="filtro" type="button" data-filtro="laurea" aria-pressed="false">Laurea</button>
+        <button class="filtro" type="button" data-filtro="matrimonio" aria-pressed="false">Matrimonio</button>
+        <button class="filtro" type="button" data-filtro="piante" aria-pressed="false">Piante</button>
+        <button class="filtro" type="button" data-filtro="regali" aria-pressed="false">Regali floreali</button>
+        <button class="filtro" type="button" data-filtro="novita" aria-pressed="false">Novità</button>
+      </div>
+
+      <ul class="grid" id="catalogoGrid">
+        <li class="card prod reveal" data-nome="Mattino in Bottega" data-prezzo="38" data-cat="bouquet stagione mamma">
+          <figure class="card-photo"><span class="badge">Più venduto</span>
+            <img src="foto/p-mattino.jpg" alt="Bouquet Mattino in Bottega" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Mattino in Bottega</h3>
+            <p class="card-desc">Ranuncoli cipria, fiori di campo e salvia appena colta.</p>
+            <div class="card-meta">
+              <span class="price">€ 38</span>
+              <span class="avail"><i class="dot"></i>Disponibile oggi</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+        <li class="card prod reveal" data-nome="Domenica al Centro" data-prezzo="48" data-cat="bouquet anniversario mamma">
+          <figure class="card-photo"><span class="badge">Più venduto</span>
+            <img src="foto/p-domenica.jpg" alt="Bouquet Domenica al Centro" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Domenica al Centro</h3>
+            <p class="card-desc">Tre peonie piene nei toni della domenica mattina.</p>
+            <div class="card-meta">
+              <span class="price">€ 48</span>
+              <span class="avail avail-low"><i class="dot"></i>Ultimi 2 di oggi</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+        <li class="card prod reveal" data-nome="Lettera d'Aprile" data-prezzo="32" data-cat="bouquet stagione">
+          <figure class="card-photo">
+            <img src="foto/p-lettera.jpg" alt="Bouquet Lettera d'Aprile" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Lettera d'Aprile</h3>
+            <p class="card-desc">Tulipani rosa cipria in tre altezze, con verde leggero.</p>
+            <div class="card-meta">
+              <span class="price">€ 32</span>
+              <span class="avail"><i class="dot"></i>Disponibile oggi</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+        <li class="card prod reveal" data-nome="Verde Silenzio" data-prezzo="29" data-cat="bouquet regali condoglianze">
+          <figure class="card-photo"><span class="badge">Nuovo</span>
+            <img src="foto/p-verde.jpg" alt="Bouquet Verde Silenzio" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Verde Silenzio</h3>
+            <p class="card-desc">Eucalipto, nebbiolina e una sola peonia bianca.</p>
+            <div class="card-meta">
+              <span class="price">€ 29</span>
+              <span class="avail"><i class="dot"></i>Disponibile oggi</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+        <li class="card prod reveal" data-nome="Ora Dorata" data-prezzo="42" data-cat="bouquet anniversario premium">
+          <figure class="card-photo"><span class="badge">Nuovo</span>
+            <img src="foto/p-oradorata.jpg" alt="Bouquet Ora Dorata" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Ora Dorata</h3>
+            <p class="card-desc">Toni miele e champagne, per la luce del tardo pomeriggio.</p>
+            <div class="card-meta">
+              <span class="price">€ 42</span>
+              <span class="avail"><i class="dot"></i>Disponibile oggi</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+        <li class="card prod reveal" data-nome="Piccola Poesia" data-prezzo="26" data-cat="rose regali sanvalentino">
+          <figure class="card-photo"><span class="badge">Nuovo</span>
+            <img src="foto/p-poesia.jpg" alt="Bouquet Piccola Poesia" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Piccola Poesia</h3>
+            <p class="card-desc">Nebbiolina a nuvola e una rosa chiara al centro.</p>
+            <div class="card-meta">
+              <span class="price">€ 26</span>
+              <span class="avail"><i class="dot"></i>Disponibile oggi</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+        <li class="card prod reveal" data-nome="Prima Fioritura" data-prezzo="65" data-cat="bouquet novita premium">
+          <figure class="card-photo"><span class="badge badge-oro">Edizione limitata</span>
+            <img src="foto/p-limitata.jpg" alt="Bouquet Prima Fioritura, edizione limitata" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Prima Fioritura</h3>
+            <p class="card-desc">Le primissime peonie della stagione, dal nostro coltivatore in Liguria — 20 pezzi.</p>
+            <div class="card-meta">
+              <span class="price">€ 65</span>
+              <span class="avail"><i class="dot"></i>Disponibile oggi</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+        <li class="card prod reveal" data-nome="Il Mazzo del Sabato" data-prezzo="34" data-cat="bouquet stagione novita">
+          <figure class="card-photo"><span class="badge">Della settimana</span>
+            <img src="foto/p-settimana.jpg" alt="Il Mazzo del Sabato, bouquet della settimana" loading="lazy" width="800" height="1000" onerror="this.classList.add('no-foto')" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-name">Il Mazzo del Sabato</h3>
+            <p class="card-desc">Composizione diversa ogni settimana: questa volta dalie, astri e verde d'ulivo.</p>
+            <div class="card-meta">
+              <span class="price">€ 34</span>
+              <span class="avail"><i class="dot"></i>Fino a domenica</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm buy">Acquista subito</button>
+              <button class="btn btn-ghost btn-sm add">Aggiungi al carrello</button>
+              <button class="link-btn dettagli" type="button">Vedi dettagli</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <p class="catalogo-vuoto" id="catalogoVuoto" hidden>Presto nuovi bouquet in questa categoria — torna a trovarci a breve, oppure <a href="#atelier">raccontaci cosa cerchi</a>.</p>
+    </section>
+
+    <!-- ================= COMPOSIZIONI PERSONALIZZATE ================= -->
+    <section class="personalizzate">
+      <figure class="pers-foto" aria-hidden="true">
+        <img src="foto/personalizzate.jpg" alt="" loading="lazy" width="1600" height="900" onerror="this.classList.add('no-foto')" />
+      </figure>
+      <div class="pers-card reveal">
+        <p class="eyebrow">Su misura</p>
+        <h2 class="display">Composizioni <em>personalizzate</em></h2>
+        <p class="body-text">Raccontaci l'occasione, i colori, la persona. Componiamo il bouquet insieme a te, in bottega o al telefono.</p>
+        <a class="btn btn-primary" href="mailto:ordini@anticafioreriadelcentro.it?subject=Composizione%20personalizzata">Racconta la tua idea</a>
+      </div>
+    </section>
+
+    <!-- ================= ATELIER ================= -->
+    <section class="atelier" id="atelier">
+      <div class="foglie" aria-hidden="true">
+        <svg class="fg fg1" width="22" height="12" viewBox="-14 -6 28 12"><ellipse rx="12" ry="4.6" fill="#C9DBBE"/></svg>
+        <svg class="fg fg2" width="18" height="10" viewBox="-14 -6 28 12"><ellipse rx="12" ry="4.6" fill="#E4CFC9"/></svg>
+      </div>
+      <div class="atelier-inner">
+        <figure class="atelier-art reveal" aria-hidden="true">
+          <svg viewBox="0 0 260 300" class="bq">
+            <g class="sway sw2" style="--pivot:130px 264px"><use href="#sprig" transform="translate(130,258) scale(1.3)" style="--s:#7E9478; --l:#C5D5BB"/></g>
+            <g class="sway sw1" style="--pivot:130px 264px"><path d="M130 260C120 208 104 176 86 150" class="stelo"/><use href="#bloom" transform="translate(80,136) rotate(-12) scale(1.2)" style="--p:#F6E8E4; --c:#DFB9AF"/></g>
+            <g class="sway sw3" style="--pivot:130px 264px"><path d="M130 260C136 204 150 172 170 144" class="stelo"/><use href="#tulip" transform="translate(176,138) rotate(18) scale(1.2)" style="--p:#E3EDDD; --c:#AEC5A4"/></g>
+            <g class="sway sw2" style="--pivot:130px 264px"><use href="#gyps" transform="translate(128,216) scale(1.3)"/></g>
+            <path d="M112 266C124 260 136 260 148 266" fill="none" stroke="#C2A45C" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </figure>
+        <div class="atelier-copy">
+          <p class="eyebrow reveal">L'atelier</p>
+          <h2 class="display reveal">Due mani, <em>un mazzo</em> alla volta.</h2>
+          <p class="body-text reveal">Alle sei siamo al mercato dei fiori: si sceglie gambo per gambo, mai a cassette. In bottega ogni bouquet nasce su un unico banco di legno — carta, spago e il tempo che serve.</p>
+          <p class="body-text reveal">Niente composizioni in serie: quello che vedi oggi domani non c'è più. È il bello dei fiori veri.</p>
+          <a class="btn btn-ghost reveal" href="#shop">Guarda i bouquet di oggi</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONSEGNA ================= -->
+    <section class="consegna" id="consegna">
+      <div class="section-head">
+        <p class="eyebrow reveal">La consegna</p>
+        <h2 class="display reveal">Dalla bottega alla <em>tua porta</em></h2>
+      </div>
+      <ol class="passi">
+        <li class="passo reveal">
+          <span class="passo-n">1</span>
+          <h3 class="passo-t">Scegli il bouquet</h3>
+          <p class="passo-d">Ordina online entro le 13:00 — o passa in bottega a vederli dal vivo.</p>
+        </li>
+        <li class="passo reveal">
+          <span class="passo-n">2</span>
+          <h3 class="passo-t">Lo componiamo in giornata</h3>
+          <p class="passo-d">I fiori restano in acqua fino all'ultimo: si lega il mazzo solo quando parte.</p>
+        </li>
+        <li class="passo reveal">
+          <span class="passo-n">3</span>
+          <h3 class="passo-t">Arriva fresco, a mano</h3>
+          <p class="passo-d">Consegna a mano in tutta Alessandria, con il tuo biglietto scritto a penna.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ================= INVITO FINALE ================= -->
+    <section class="invito">
+      <div class="invito-inner">
+        <h2 class="display reveal">Un bouquet dice quello che le parole <em>non sanno dire</em>.</h2>
+        <a class="btn btn-primary btn-lg reveal" href="#shop">Acquista il tuo bouquet</a>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="faq" id="faq">
+      <div class="section-head">
+        <p class="eyebrow reveal">Bisogno d'aiuto?</p>
+        <h2 class="display reveal">Domande <em>frequenti</em></h2>
+      </div>
+      <div class="faq-lista">
+        <details class="faq-item reveal">
+          <summary>Consegnate davvero in giornata?</summary>
+          <p>Sì: se ordini entro le 13:00 il bouquet parte lo stesso giorno. Oltre quell'orario, consegniamo il giorno lavorativo successivo. Puoi anche ritirarlo gratis in bottega, in via Emilio Faà di Bruno 6 ad Alessandria.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>In quali zone consegnate?</summary>
+          <p>Consegniamo ad Alessandria e nei dintorni. Se abiti fuori zona, scrivici prima di ordinare: ti diciamo subito se riusciamo ad arrivare da te.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Quanto durano i fiori?</summary>
+          <p>I fiori li scegliamo al mercato la mattina stessa: in media durano dai 7 ai 12 giorni. Nel bouquet trovi sempre il sacchetto di nutrimento e due righe su come tenerli al meglio.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Posso aggiungere un biglietto o un vaso?</summary>
+          <p>Sì: prima del pagamento puoi aggiungere un biglietto scritto a mano, un vaso in vetro o altri piccoli extra. Il messaggio lo scrivi tu, la penna la mettiamo noi.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Come posso pagare?</summary>
+          <p>Direttamente sul sito con carta di credito o debito, PayPal, Apple Pay o Google Pay. Il pagamento è protetto e non conserviamo mai i dati della tua carta.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>E se il bouquet arriva rovinato?</summary>
+          <p>Scrivici entro 24 ore con una foto: lo sostituiamo o ti rimborsiamo. I fiori freschi non si possono restituire per legge (sono beni deperibili), ma se qualcosa non va rimediamo noi. Trovi tutto nelle <a href="termini.html">condizioni di vendita</a>.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <details class="footer-fisar" open>
+        <summary>La bottega</summary>
+        <div class="footer-fisar-corpo">
+          <p class="footer-line">Antica Fioreria del Centro</p>
+          <p class="footer-line">Via Emilio Faà di Bruno 6, Alessandria</p>
+          <p class="footer-line">martedì – domenica · 8:30–19:30</p>
+          <p class="footer-line"><a href="tel:+390600000000">06 0000 0000</a></p>
+          <p class="footer-line"><a href="mailto:ordini@anticafioreriadelcentro.it">ordini@anticafioreriadelcentro.it</a></p>
+        </div>
+      </details>
+      <details class="footer-fisar" open>
+        <summary>Bisogno d'aiuto?</summary>
+        <div class="footer-fisar-corpo">
+          <p class="footer-line"><a href="#faq">Domande frequenti</a></p>
+          <p class="footer-line"><a href="#consegna">Come funziona la consegna</a></p>
+          <p class="footer-line"><a href="account.html">Il mio account</a></p>
+          <p class="footer-line"><a href="mailto:ordini@anticafioreriadelcentro.it">Scrivici, rispondiamo noi</a></p>
+        </div>
+      </details>
+      <details class="footer-fisar" open>
+        <summary>Informazioni</summary>
+        <div class="footer-fisar-corpo">
+          <p class="footer-line"><a href="privacy.html">Privacy</a></p>
+          <p class="footer-line"><a href="cookie-policy.html">Cookie</a></p>
+          <p class="footer-line"><a href="termini.html">Condizioni di vendita</a></p>
+        </div>
+      </details>
+      <div class="footer-fisar footer-news">
+        <p class="footer-news-titolo">La newsletter della bottega</p>
+        <p class="footer-line">Nuovi bouquet, stagioni e promozioni. Una mail ogni tanto, mai spam.</p>
+        <form class="news-form" id="newsForm" novalidate>
+          <label class="sr-only" for="newsEmail">La tua email</label>
+          <input id="newsEmail" type="email" autocomplete="email" placeholder="la-tua@email.it" required />
+          <button class="btn btn-primary btn-sm" type="submit">Iscrivimi</button>
+        </form>
+        <p class="news-ok" id="newsOk" role="status" hidden>Benvenuta nella newsletter — a presto, tra i fiori ✓</p>
+      </div>
+    </div>
+
+    <div class="footer-recensioni">
+      <a href="#recensioni" id="vaiRecensioni">
+        <span class="footer-stelle" aria-hidden="true">★★★★★</span>
+        Leggi le recensioni dei nostri clienti — <strong>4,9 su 5</strong>
+      </a>
+    </div>
+
+    <div class="footer-pagamenti">
+      <p>Pagamenti 100% sicuri</p>
+      <ul aria-label="Metodi di pagamento accettati">
+        <li>VISA</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>G Pay</li>
+      </ul>
+    </div>
+
+    <p class="footer-firma">Antica Fioreria <em>del Centro</em> · fiori legati a mano dal 1962</p>
+  </footer>
+
+  <!-- ================= MENU CATEGORIE (drawer) ================= -->
+  <div class="menu-scrim" id="menuScrim" hidden></div>
+  <nav class="menu" id="menu" aria-label="Menu categorie" hidden>
+    <div class="menu-head">
+      <span class="menu-titolo">Sfoglia la bottega</span>
+      <button class="menu-close" id="menuClose" aria-label="Chiudi il menu">×</button>
+    </div>
+    <div class="menu-corpo">
+      <a class="menu-voce menu-evidenza" href="#shop" data-menu-cat="tutti">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+        Consegna oggi ad Alessandria
+      </a>
+      <p class="menu-gruppo">Per occasione</p>
+      <a class="menu-voce" href="#shop" data-menu-cat="compleanno">Compleanno</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="anniversario">Anniversario</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="matrimonio">Matrimonio</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="laurea">Laurea</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="sanvalentino">San Valentino</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="mamma">Festa della Mamma</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="condoglianze">Condoglianze</a>
+      <p class="menu-gruppo">Per tipo</p>
+      <a class="menu-voce" href="#shop" data-menu-cat="rose">Rose</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="bouquet">Bouquet</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="stagione">Fiori di stagione</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="piante">Piante</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="premium">Bouquet Premium</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="regali">Regali floreali</a>
+      <a class="menu-voce" href="#shop" data-menu-cat="novita">Novità</a>
+      <p class="menu-gruppo">La bottega</p>
+      <a class="menu-voce" href="#atelier">L'atelier</a>
+      <a class="menu-voce" href="#consegna">La consegna</a>
+      <a class="menu-voce" href="#faq">Domande frequenti</a>
+      <a class="menu-voce" href="account.html">Il mio account</a>
+    </div>
+  </nav>
+
+  <!-- ================= CARRELLO (drawer) ================= -->
+  <div class="cart-scrim" id="cartScrim" hidden></div>
+  <aside class="cart" id="cart" aria-label="Carrello" hidden>
+    <div class="cart-head">
+      <h2 class="cart-title">Il tuo carrello</h2>
+      <button class="cart-close" id="cartClose" aria-label="Chiudi il carrello">×</button>
+    </div>
+    <ul class="cart-list" id="cartList"></ul>
+    <p class="cart-empty" id="cartEmpty">Il carrello è vuoto.<br/>Lasciati ispirare dalla collezione di oggi.</p>
+    <div class="cart-foot" id="cartFoot" hidden>
+      <div class="cart-total"><span>Totale</span><strong id="cartTotal">€ 0</strong></div>
+      <a class="btn btn-primary btn-lg" id="cartOrder" href="#">Procedi all'ordine</a>
+      <p class="cart-note">Pagamento sicuro con carta, PayPal, Apple Pay o Google Pay · consegna ad Alessandria</p>
+    </div>
+  </aside>
+
+  <!-- ================= SCHEDA PRODOTTO (modale) ================= -->
+  <div class="modale-scrim" id="prodottoScrim" hidden></div>
+  <div class="modale-prodotto" id="prodottoModale" role="dialog" aria-modal="true" aria-labelledby="pmNome" hidden>
+    <button class="modale-chiudi" id="prodottoChiudi" aria-label="Chiudi scheda prodotto">×</button>
+    <figure class="pm-foto">
+      <img id="pmFoto" src="" alt="" />
+    </figure>
+    <div class="pm-corpo">
+      <p class="pm-badge" id="pmBadge" hidden></p>
+      <h2 class="display" id="pmNome"></h2>
+      <p class="rating" id="pmRating" hidden></p>
+      <p class="pm-prezzo" id="pmPrezzo"></p>
+      <p class="pm-desc" id="pmDesc"></p>
+
+      <div class="pm-riga">
+        <div class="pm-blocco">
+          <span class="pm-label" id="pmFormatoLbl">Formato</span>
+          <div class="segment" role="group" aria-labelledby="pmFormatoLbl" id="pmFormato">
+            <button class="seg-btn attivo" type="button" data-formato="standard" aria-pressed="true">Standard</button>
+            <button class="seg-btn" type="button" data-formato="grande" aria-pressed="false">Grande +30%</button>
+          </div>
+        </div>
+        <div class="pm-blocco">
+          <span class="pm-label" id="pmQtyLbl">Quantità</span>
+          <div class="stepper" aria-labelledby="pmQtyLbl">
+            <button class="step-btn" type="button" id="pmMeno" aria-label="Riduci quantità">−</button>
+            <span class="step-n" id="pmQty">1</span>
+            <button class="step-btn" type="button" id="pmPiu" aria-label="Aumenta quantità">+</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="pm-consegna">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+        Consegna in giornata se ordini entro le 13:00 · ritiro gratuito in bottega disponibile
+      </p>
+
+      <div class="card-actions pm-azioni">
+        <button class="btn btn-primary" id="pmCompra" type="button">Acquista subito</button>
+        <button class="btn btn-ghost" id="pmAggiungi" type="button">Aggiungi al carrello</button>
+      </div>
+
+      <div class="pm-correlati" id="pmCorrelatiBox" hidden>
+        <p class="pm-corr-titolo">Potrebbero piacerti anche</p>
+        <div class="pm-corr-lista" id="pmCorrelati"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- CTA mobile sempre visibile -->
+  <a class="btn btn-primary mobile-cta" href="#shop">Acquista il tuo bouquet</a>
+
+  <script src="cookie.js"></script>
+  <script src="auth.js"></script>
+  <script src="main.js"></script>
+  <script src="catalogo.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Il mio account — Antica Fioreria del Centro</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="pagina-account">
+
+  <header class="nav">
+    <a class="brand" href="index.html" aria-label="Antica Fioreria del Centro, torna alla home">
+      <svg class="brand-sprig" width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
+        <path d="M11 22C11 14 11 8 11 2" stroke="#2E4B3A" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M11 14C6 13 3 9.5 2.6 5.5C7 6 10.4 9 11 14Z" fill="#9CAF94"/>
+        <path d="M11 9.5C15.4 8.6 18.4 5.5 19.4 1.6C15 2 11.8 5 11 9.5Z" fill="#C2A45C"/>
+      </svg>
+      <span class="brand-name">Antica Fioreria <em>del Centro</em></span>
+    </a>
+    <a class="btn btn-ghost btn-sm" href="index.html">← Torna alla fioreria</a>
+  </header>
+
+  <main class="account">
+
+    <!-- ================= ACCESSO / REGISTRAZIONE ================= -->
+    <section class="auth" id="vistaAuth" hidden>
+
+      <!-- welcome bonus -->
+      <div class="bonus" role="note">
+        <span class="bonus-fiore" aria-hidden="true">✦</span>
+        <p>Crea gratuitamente il tuo account e ricevi subito il <strong>10% di sconto</strong> sul primo ordine.</p>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-tabs" role="tablist">
+          <button class="auth-tab" id="tabAccedi" role="tab" aria-selected="true">Accedi</button>
+          <button class="auth-tab" id="tabRegistrati" role="tab" aria-selected="false">Crea account</button>
+        </div>
+
+        <!-- LOGIN -->
+        <form class="auth-form" id="formLogin" novalidate>
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" name="email" type="email" autocomplete="email" required />
+            <p class="field-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="loginPass">Password</label>
+            <div class="pass-wrap">
+              <input id="loginPass" name="password" type="password" autocomplete="current-password" required />
+              <button type="button" class="pass-toggle" aria-label="Mostra password">👁</button>
+            </div>
+            <p class="field-err" hidden></p>
+          </div>
+          <p class="form-msg" id="loginMsg" role="alert" hidden></p>
+          <button class="btn btn-primary btn-lg" type="submit">Accedi</button>
+          <button class="link-btn" type="button" id="apriRecupero">Password dimenticata?</button>
+        </form>
+
+        <!-- REGISTRAZIONE -->
+        <form class="auth-form" id="formRegistra" hidden novalidate>
+          <div class="field">
+            <label for="regNome">Nome e cognome</label>
+            <input id="regNome" name="nome" type="text" autocomplete="name" required />
+            <p class="field-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="regEmail">Email</label>
+            <input id="regEmail" name="email" type="email" autocomplete="email" required />
+            <p class="field-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="regPass">Password <span class="hint">(minimo 8 caratteri)</span></label>
+            <div class="pass-wrap">
+              <input id="regPass" name="password" type="password" autocomplete="new-password" minlength="8" required />
+              <button type="button" class="pass-toggle" aria-label="Mostra password">👁</button>
+            </div>
+            <p class="field-err" hidden></p>
+          </div>
+          <label class="check">
+            <input type="checkbox" id="regPrivacy" required />
+            <span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati per gestire account e ordini. <em>(obbligatorio)</em></span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="regNews" checked />
+            <span>Voglio ricevere la newsletter: nuovi bouquet, stagioni e promozioni. <em>(facoltativo)</em></span>
+          </label>
+          <p class="form-msg" id="regMsg" role="alert" hidden></p>
+          <button class="btn btn-primary btn-lg" type="submit">Crea il mio account</button>
+        </form>
+
+        <!-- RECUPERO PASSWORD -->
+        <form class="auth-form" id="formRecupero" hidden novalidate>
+          <h2 class="auth-sub">Recupera la password</h2>
+          <div class="field">
+            <label for="recEmail">La tua email</label>
+            <input id="recEmail" type="email" autocomplete="email" required />
+          </div>
+          <div class="recupero-step2" hidden>
+            <p class="demo-note">Codice di verifica (in produzione arriva via email): <strong id="recCodice"></strong></p>
+            <div class="field">
+              <label for="recInput">Codice di verifica</label>
+              <input id="recInput" type="text" inputmode="numeric" autocomplete="one-time-code" />
+            </div>
+            <div class="field">
+              <label for="recNuova">Nuova password</label>
+              <input id="recNuova" type="password" autocomplete="new-password" minlength="8" />
+            </div>
+          </div>
+          <p class="form-msg" id="recMsg" role="alert" hidden></p>
+          <button class="btn btn-primary btn-lg" type="submit" id="recAzione">Invia codice</button>
+          <button class="link-btn" type="button" id="chiudiRecupero">Torna all'accesso</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= DASHBOARD ================= -->
+    <section class="dash" id="vistaDash" hidden>
+      <header class="dash-head">
+        <p class="eyebrow">Il mio account</p>
+        <h1 class="display">Bentornata, <em id="dashNome">—</em></h1>
+      </header>
+
+      <nav class="dash-nav" aria-label="Sezioni account">
+        <button class="dash-tab attivo" data-pannello="pAccount">Il mio account</button>
+        <button class="dash-tab" data-pannello="pOrdini">Ordini</button>
+        <button class="dash-tab" data-pannello="pWishlist">Wishlist</button>
+        <button class="dash-tab" data-pannello="pCoupon">Coupon</button>
+        <button class="dash-tab" data-pannello="pIndirizzi">Indirizzi</button>
+        <button class="dash-tab" data-pannello="pNews">Newsletter</button>
+        <button class="dash-tab dash-esci" id="btnEsci">Esci</button>
+      </nav>
+
+      <!-- profilo + privacy -->
+      <div class="pannello" id="pAccount">
+        <form class="dash-form" id="formProfilo">
+          <h2 class="pannello-titolo">I miei dati</h2>
+          <div class="field"><label for="proNome">Nome e cognome</label><input id="proNome" type="text" autocomplete="name" /></div>
+          <div class="field"><label for="proTel">Telefono</label><input id="proTel" type="tel" autocomplete="tel" placeholder="+39 …" /></div>
+          <div class="field"><label>Email</label><input id="proEmail" type="email" disabled /></div>
+          <label class="check">
+            <input type="checkbox" id="proMarketing" />
+            <span>Acconsento all'uso dei miei dati per comunicazioni promozionali personalizzate.</span>
+          </label>
+          <button class="btn btn-primary" type="submit">Salva modifiche</button>
+          <p class="form-msg ok" id="proMsg" hidden>Modifiche salvate ✓</p>
+        </form>
+      </div>
+
+      <!-- ordini -->
+      <div class="pannello" id="pOrdini" hidden>
+        <h2 class="pannello-titolo">I miei ordini</h2>
+        <ul class="ordini" id="listaOrdini"></ul>
+        <p class="vuoto" id="ordiniVuoto">Non hai ancora ordini. <a href="index.html#shop">Scegli il tuo primo bouquet →</a></p>
+      </div>
+
+      <!-- wishlist -->
+      <div class="pannello" id="pWishlist" hidden>
+        <h2 class="pannello-titolo">I bouquet che ami</h2>
+        <ul class="wl-lista" id="listaWishlist"></ul>
+        <p class="vuoto" id="wlVuoto">La wishlist è vuota. Tocca il cuore su un bouquet per salvarlo qui.</p>
+      </div>
+
+      <!-- coupon -->
+      <div class="pannello" id="pCoupon" hidden>
+        <h2 class="pannello-titolo">I miei coupon</h2>
+        <ul class="coupon-lista" id="listaCoupon"></ul>
+      </div>
+
+      <!-- indirizzi -->
+      <div class="pannello" id="pIndirizzi" hidden>
+        <h2 class="pannello-titolo">Indirizzi di consegna</h2>
+        <ul class="ind-lista" id="listaIndirizzi"></ul>
+        <form class="dash-form" id="formIndirizzo">
+          <div class="field"><label for="indEt">Etichetta <span class="hint">(es. Casa, Ufficio)</span></label><input id="indEt" type="text" required /></div>
+          <div class="field"><label for="indVia">Via e numero civico</label><input id="indVia" type="text" autocomplete="street-address" required /></div>
+          <div class="ind-riga">
+            <div class="field"><label for="indCap">CAP</label><input id="indCap" type="text" inputmode="numeric" autocomplete="postal-code" required /></div>
+            <div class="field"><label for="indCitta">Città</label><input id="indCitta" type="text" autocomplete="address-level2" required /></div>
+          </div>
+          <button class="btn btn-ghost" type="submit">Aggiungi indirizzo</button>
+        </form>
+      </div>
+
+      <!-- newsletter -->
+      <div class="pannello" id="pNews" hidden>
+        <h2 class="pannello-titolo">Newsletter</h2>
+        <p class="body-text">Nuovi bouquet, offerte, festività e collezioni stagionali — una mail ogni tanto, mai spam.</p>
+        <label class="check check-grande">
+          <input type="checkbox" id="newsToggle" />
+          <span>Sono iscritta alla newsletter</span>
+        </label>
+        <p class="form-msg ok" id="newsMsg" hidden></p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="cookie.js"></script>
+  <script src="auth.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>
