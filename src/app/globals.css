@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --surface: #0c0c0e;
-  --surface-raised: #131316;
-  --foreground: #f4f2ec;
-  --muted: #a6a3ab;
-  --gold: #cda44f;
-  --gold-bright: #e8c579;
-  --violet: #8f7cf0;
-  --violet-bright: #a996ff;
-  --hairline: rgba(244, 242, 236, 0.08);
+  --background: #060308;
+  --surface: #0d0a13;
+  --surface-raised: #15101d;
+  --foreground: #f7f5fb;
+  --muted: #a29dae;
+  --violet: #8b6df6;
+  --violet-bright: #ad97ff;
+  --blue: #5b9bf5;
+  --blue-bright: #7fb4ff;
+  --orange: #f5a623;
+  --orange-bright: #ffbe4d;
+  --hairline: rgba(247, 245, 251, 0.09);
 }
 
 @theme inline {
@@ -19,13 +21,17 @@
   --color-surface-raised: var(--surface-raised);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --color-gold: var(--gold);
-  --color-gold-bright: var(--gold-bright);
   --color-violet: var(--violet);
   --color-violet-bright: var(--violet-bright);
+  --color-blue: var(--blue);
+  --color-blue-bright: var(--blue-bright);
+  --color-orange: var(--orange);
+  --color-orange-bright: var(--orange-bright);
   --color-hairline: var(--hairline);
-  --font-display: var(--font-bricolage);
+  --font-display: var(--font-baloo);
+  --font-accent: var(--font-playfair);
   --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-jetbrains);
 }
 
 * {
@@ -47,9 +53,19 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
 }
 
+em, i, .accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  letter-spacing: 0.2em;
+}
+
 ::selection {
-  background: var(--gold);
-  color: #08070a;
+  background: var(--orange);
+  color: #0a0710;
 }
 
 /* fixed, pointer-events-none grain overlay per performance guardrails */
@@ -65,7 +81,21 @@ h1, h2, h3, h4 {
 
 .bg-mesh {
   background-image:
-    radial-gradient(ellipse 60% 50% at 15% 10%, rgba(207, 168, 90, 0.16), transparent 60%),
-    radial-gradient(ellipse 55% 45% at 85% 20%, rgba(143, 124, 240, 0.18), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(143, 124, 240, 0.08), transparent 65%);
+    radial-gradient(ellipse 55% 45% at 20% 0%, rgba(139, 109, 246, 0.22), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 15%, rgba(91, 155, 245, 0.16), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 50% 100%, rgba(245, 166, 35, 0.1), transparent 65%);
+}
+
+.text-gradient-vb {
+  background-image: linear-gradient(100deg, var(--violet-bright), var(--blue-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-price {
+  background-image: linear-gradient(160deg, var(--blue-bright), var(--violet-bright) 60%, #fff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

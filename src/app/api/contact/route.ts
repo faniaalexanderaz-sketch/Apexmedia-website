@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
 
@@ -9,24 +7,34 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Richiesta non valida." }, { status: 400 });
   }
 
-  const { name, email, message } = body as Record<string, unknown>;
+  const { name, business, city, contact, service, budget, goal, message } =
+    body as Record<string, unknown>;
 
   if (typeof name !== "string" || name.trim().length < 2) {
     return NextResponse.json({ error: "Il nome inserito non è valido." }, { status: 400 });
   }
 
-  if (typeof email !== "string" || !emailPattern.test(email)) {
-    return NextResponse.json({ error: "L'indirizzo email inserito non è valido." }, { status: 400 });
-  }
-
-  if (typeof message !== "string" || message.trim().length < 10) {
+  if (typeof business !== "string" || business.trim().length < 2) {
     return NextResponse.json(
-      { error: "Il messaggio deve contenere almeno 10 caratteri." },
+      { error: "Inserisci il nome della tua attività o brand." },
       { status: 400 },
     );
   }
 
-  console.log("Nuova richiesta di contatto Apex Media:", { name, email, message });
+  if (typeof service !== "string" || service.trim().length < 2) {
+    return NextResponse.json({ error: "Indica il servizio di tuo interesse." }, { status: 400 });
+  }
+
+  console.log("Nuova richiesta di consulenza Apex Media:", {
+    name,
+    business,
+    city,
+    contact,
+    service,
+    budget,
+    goal,
+    message,
+  });
 
   return NextResponse.json({ ok: true });
 }

@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <defs>
-    <linearGradient id="apex-gold" x1="0" y1="48" x2="24" y2="0">
-      <stop offset="0" stop-color="#cda44f" />
-      <stop offset="1" stop-color="#e8c579" />
+    <linearGradient id="apex-orange" x1="0" y1="48" x2="24" y2="0">
+      <stop offset="0" stop-color="#e8871e" />
+      <stop offset="1" stop-color="#ffbe4d" />
     </linearGradient>
     <linearGradient id="apex-violet" x1="24" y1="0" x2="48" y2="48">
-      <stop offset="0" stop-color="#a996ff" />
-      <stop offset="1" stop-color="#8f7cf0" />
+      <stop offset="0" stop-color="#ad97ff" />
+      <stop offset="1" stop-color="#8b6df6" />
     </linearGradient>
   </defs>
-  <rect width="48" height="48" rx="10" fill="#050505" />
-  <path d="M20 6L6 40H16L20 31L24 40H29L20 6Z" fill="url(#apex-gold)" />
+  <rect width="48" height="48" rx="10" fill="#060308" />
+  <path d="M20 6L6 40H16L20 31L24 40H29L20 6Z" fill="url(#apex-orange)" />
   <path d="M27 17L18 40H29L32 31L36 40H42L27 17Z" fill="url(#apex-violet)" />
 </svg>

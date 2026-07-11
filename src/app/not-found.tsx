@@ -14,7 +14,7 @@ export default function NotFound() {
           Torna alla home o scrivici direttamente.
         </p>
         <div className="mt-8 flex justify-center gap-4">
-          <Button href="/">Torna alla home</Button>
+          <Button href="/" variant="primary">Torna alla home</Button>
         </div>
       </div>
     </section>
