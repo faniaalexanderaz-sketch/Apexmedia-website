@@ -223,7 +223,7 @@
        Se non è ancora configurata (funzione assente, chiave mancante,
        errore di rete) l'ordine resta comunque registrato e si passa
        in modalità demo, senza bloccare mai il cliente. */
-    fetch('/.netlify/functions/create-checkout-session', {
+    fetch('/api/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

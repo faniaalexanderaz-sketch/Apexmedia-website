@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/ordine-completato", "destination": "/ordine-completato.html" },
+    { "source": "/pagamento-annullato", "destination": "/pagamento-annullato.html" }
+  ]
+}
