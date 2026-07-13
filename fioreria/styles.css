@@ -2009,3 +2009,25 @@ img.no-foto { opacity: 0; }
   .taglie { grid-template-columns: repeat(4, 1fr); }
   .correlati .prod-griglia { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* =============================================================
+   CHECKOUT — pannello di conferma prima del pagamento reale
+   ============================================================= */
+.pag-riepilogo {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+  background: var(--botanico);
+  display: grid; gap: 14px;
+}
+.pag-riepilogo-testo { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+.pag-metodi-badge { display: flex; flex-wrap: wrap; gap: 8px; }
+.pag-metodi-badge span {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .03em;
+  color: var(--bosco);
+  background: #FFFFFF;
+  border: 1px solid rgba(46,75,58,.16);
+  border-radius: 7px;
+  padding: 5px 11px;
+}

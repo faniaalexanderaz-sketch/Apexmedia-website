@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/ordine-completato"
+  to = "/ordine-completato.html"
+  status = 200
+
+[[redirects]]
+  from = "/pagamento-annullato"
+  to = "/pagamento-annullato.html"
+  status = 200

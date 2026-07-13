@@ -158,55 +158,14 @@
 
     <!-- ============ 3 · PAGAMENTO ============ -->
     <section class="co-sez" id="sezPagamento" hidden>
-      <h2 class="display co-titolo">Modalità di <em>pagamento</em></h2>
+      <h2 class="display co-titolo">Pronta per il <em>pagamento</em></h2>
 
-      <div class="pag-metodi" role="radiogroup" aria-label="Scegli come pagare">
-        <label class="pag-metodo attivo">
-          <input type="radio" name="metodo" value="carta" checked />
-          <span class="pag-nome">Carta di credito o debito</span>
-          <span class="pag-loghi" aria-hidden="true"><i>VISA</i><i>MC</i><i>AMEX</i></span>
-        </label>
-        <label class="pag-metodo">
-          <input type="radio" name="metodo" value="paypal" />
-          <span class="pag-nome">PayPal</span>
-          <span class="pag-loghi" aria-hidden="true"><i class="pp">PayPal</i></span>
-        </label>
-        <label class="pag-metodo">
-          <input type="radio" name="metodo" value="applepay" />
-          <span class="pag-nome">Apple Pay</span>
-          <span class="pag-loghi" aria-hidden="true"><i class="nero"> Pay</i></span>
-        </label>
-        <label class="pag-metodo">
-          <input type="radio" name="metodo" value="googlepay" />
-          <span class="pag-nome">Google Pay</span>
-          <span class="pag-loghi" aria-hidden="true"><i>G Pay</i></span>
-        </label>
+      <div class="pag-riepilogo">
+        <p class="pag-riepilogo-testo">Tutto pronto: al passo successivo entri nella pagina di pagamento protetta, dove scegli tu come pagare.</p>
+        <div class="pag-metodi-badge" aria-hidden="true">
+          <span>Carta</span><span>PayPal</span><span> Pay</span><span>G Pay</span>
+        </div>
       </div>
-
-      <form class="co-form" id="formCarta" novalidate>
-        <div class="field">
-          <label for="ccNome">Nome del titolare</label>
-          <input id="ccNome" type="text" autocomplete="cc-name" placeholder="Come scritto sulla carta" />
-          <p class="field-err" hidden></p>
-        </div>
-        <div class="field">
-          <label for="ccNumero">Numero di carta</label>
-          <input id="ccNumero" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" maxlength="23" />
-          <p class="field-err" hidden></p>
-        </div>
-        <div class="co-riga">
-          <div class="field">
-            <label for="ccScadenza">Data di scadenza</label>
-            <input id="ccScadenza" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5" />
-            <p class="field-err" hidden></p>
-          </div>
-          <div class="field">
-            <label for="ccCvv">Codice di sicurezza</label>
-            <input id="ccCvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="CVV" maxlength="4" />
-            <p class="field-err" hidden></p>
-          </div>
-        </div>
-      </form>
 
       <p class="form-msg" id="pagMsg" role="alert" hidden></p>
 
@@ -216,7 +175,7 @@
       </button>
       <button class="link-btn" type="button" id="tornaConsegna">← Torna alla consegna</button>
 
-      <p class="pag-note">Convalidando l'ordine dichiari di aver letto e accettato le <a href="termini.html" target="_blank" rel="noopener">Condizioni di vendita</a> e l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>. I dati della carta non vengono mai salvati.</p>
+      <p class="pag-note">Il pagamento avviene sulla pagina protetta del circuito di pagamento: non gestiamo né vediamo mai il numero della tua carta. Convalidando dichiari di aver letto e accettato le <a href="termini.html" target="_blank" rel="noopener">Condizioni di vendita</a> e l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>.</p>
     </section>
   </main>
 
