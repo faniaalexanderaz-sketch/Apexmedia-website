@@ -397,15 +397,56 @@ a, button, input { touch-action: manipulation; }
   gap: clamp(34px, 6vw, 90px);
   align-items: center;
 }
-.atelier-art {
-  margin: 0; max-width: 380px;
-  background: rgba(255,255,255,.65);
-  border: 1px solid rgba(46,75,58,.1);
-  border-radius: 30px;
-  padding: 34px 30px 0;
+.atelier-foto { margin: 0; }
+.atelier-foto a {
+  position: relative;
+  display: block;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: #FFFFFF;
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(6px);
+  transition: transform var(--t-2) var(--ease-out), box-shadow var(--t-2) var(--ease-out);
 }
+.atelier-foto a::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid rgba(46,75,58,.08);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.atelier-foto img {
+  display: block; width: 100%; height: auto;
+  transition: transform .7s var(--ease-out);
+}
+.atelier-foto a:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.atelier-foto a:hover img { transform: scale(1.04); }
+.atelier-foto figcaption {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 13px; color: var(--muted);
+}
+.atelier-foto figcaption em {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic; font-size: 14.5px;
+  color: var(--ink);
+}
+
+/* i tre numeri del mestiere */
+.atelier-punti {
+  list-style: none;
+  margin: 6px 0 26px; padding: 18px 0 0;
+  border-top: 1px solid rgba(46,75,58,.12);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.atelier-punti li { display: grid; gap: 2px; align-content: start; }
+.atelier-punti strong {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600; font-size: 22px;
+  color: var(--bosco);
+  font-variant-numeric: tabular-nums;
+}
+.atelier-punti span { font-size: 12.5px; line-height: 1.4; color: var(--muted); }
 
 /* =============================================================
    CONSEGNA — banda botanica, 3 passi (sequenza reale)
@@ -669,7 +710,8 @@ a, button, input { touch-action: manipulation; }
   .card-desc { min-height: 0; }
 
   .atelier-inner { grid-template-columns: 1fr; }
-  .atelier-art { max-width: 280px; margin: 0 auto; }
+  .atelier-punti { gap: 10px; }
+  .atelier-punti strong { font-size: 19px; }
 
   .passi { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; gap: 18px; }
