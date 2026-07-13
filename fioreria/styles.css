@@ -1,4 +1,37 @@
 /* =============================================================
+   FONT — serviti dal sito (niente richieste a Google: più veloce
+   e conforme GDPR). Fraunces variabile (opsz+wght) + Figtree.
+   ============================================================= */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/fraunces-latin-full-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/fraunces-latin-full-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('fonts/figtree-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('fonts/figtree-latin-wght-italic.woff2') format('woff2');
+}
+
+/* =============================================================
    ANTICA FIORERIA DEL CENTRO — boutique floreale
    Type: Fraunces (serif display) + Figtree (sans)
    Identità interamente illustrata: cutout botanici che respirano
@@ -44,7 +77,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--muted);
-  font-family: 'Manrope', system-ui, sans-serif;
+  font-family: 'Figtree', system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -76,7 +109,7 @@ a, button, input { touch-action: manipulation; }
    TIPOGRAFIA
    ============================================================= */
 .display {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600;
   font-size: clamp(36px, 4.8vw, 62px);
   line-height: 1.08;
@@ -213,7 +246,7 @@ a, button, input { touch-action: manipulation; }
 .brand-sprig { flex: 0 0 auto; }
 .brand-logo { display: block; height: 52px; width: auto; }
 .brand-name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 21px; font-weight: 600; letter-spacing: .01em;
   color: var(--ink); white-space: nowrap;
 }
@@ -325,7 +358,7 @@ a, button, input { touch-action: manipulation; }
 
 .card-body { padding: 20px 22px 22px; }
 .card-name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 24px; letter-spacing: 0;
   color: var(--ink); margin: 0 0 6px;
 }
@@ -336,7 +369,7 @@ a, button, input { touch-action: manipulation; }
   margin: 0 0 16px;
 }
 .price {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 24px; font-weight: 600; color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
@@ -394,13 +427,13 @@ a, button, input { touch-action: manipulation; }
   backdrop-filter: blur(4px);
 }
 .passo-n {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-style: italic; font-weight: 300;
   font-size: 34px; color: var(--gold);
   display: block; margin-bottom: 10px;
 }
 .passo-t {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 20px; color: var(--ink);
   margin: 0 0 8px;
 }
@@ -430,7 +463,7 @@ a, button, input { touch-action: manipulation; }
 .footer-fisar summary {
   list-style: none; cursor: default; pointer-events: none;
   display: flex; align-items: center; justify-content: space-between;
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 21px; color: #FAFAF7;
   padding: 0 0 10px;
 }
@@ -445,7 +478,7 @@ a, button, input { touch-action: manipulation; }
 .footer-line a { color: rgba(250,250,247,.85); }
 .footer-line a:hover { color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
 .footer-news-titolo {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 21px; color: #FAFAF7;
   margin: 0 0 4px;
 }
@@ -497,7 +530,7 @@ a, button, input { touch-action: manipulation; }
   font-size: 13px; color: rgba(250,250,247,.55);
 }
 .footer-firma em {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-style: italic;
 }
 
@@ -531,7 +564,7 @@ a, button, input { touch-action: manipulation; }
 @keyframes cartIn { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
 
 .cart-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.cart-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 24px; color: var(--ink); margin: 0; }
+.cart-title { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; color: var(--ink); margin: 0; }
 .cart-close {
   width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid var(--line); background: #fff;
@@ -546,7 +579,7 @@ a, button, input { touch-action: manipulation; }
   padding: 14px 2px;
   border-bottom: 1px solid var(--line);
 }
-.cart-item-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 19px; font-weight: 600; color: var(--ink); }
+.cart-item-name { font-family: 'Fraunces', Georgia, serif; font-size: 19px; font-weight: 600; color: var(--ink); }
 .cart-item-qty { font-size: 13px; color: var(--muted); }
 .cart-item-price { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
 .cart-item-remove {
@@ -558,7 +591,7 @@ a, button, input { touch-action: manipulation; }
 .cart-empty { text-align: center; margin: auto 0; font-size: 15.5px; }
 .cart-foot { border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 12px; }
 .cart-total { display: flex; justify-content: space-between; font-size: 16px; color: var(--ink); }
-.cart-total strong { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; }
+.cart-total strong { font-family: 'Fraunces', Georgia, serif; font-size: 22px; }
 .cart-note { font-size: 12.5px; text-align: center; margin: 0; }
 
 /* toast */
@@ -727,7 +760,7 @@ a, button, input { touch-action: manipulation; }
   backdrop-filter: blur(4px);
 }
 .riepilogo-titolo {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 17px; color: var(--ink);
   margin: 0 0 10px;
 }
@@ -745,7 +778,7 @@ a, button, input { touch-action: manipulation; }
   font-size: 15px; color: var(--ink);
 }
 .riepilogo-totale strong {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 20px; font-weight: 500;
 }
 
@@ -1159,7 +1192,7 @@ img.no-foto { opacity: 0; }
 
 .auth-form { display: grid; gap: 16px; }
 .auth-sub {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 26px; color: var(--ink); margin: 0 0 4px;
 }
 .hint { font-weight: 400; color: var(--muted); font-size: 12px; }
@@ -1256,7 +1289,7 @@ img.no-foto { opacity: 0; }
   box-shadow: var(--shadow-soft);
 }
 .pannello-titolo {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 26px; color: var(--ink);
   margin: 0 0 18px;
 }
@@ -1284,7 +1317,7 @@ img.no-foto { opacity: 0; }
   border: 1px solid var(--line); border-radius: 14px;
   padding: 12px 16px;
 }
-.wl-nome { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 19px; color: var(--ink); }
+.wl-nome { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 19px; color: var(--ink); }
 .wl-azioni { display: inline-flex; align-items: center; gap: 8px; }
 .wl-togli {
   width: 36px; height: 36px;
@@ -1371,7 +1404,7 @@ img.no-foto { opacity: 0; }
   border-radius: var(--r-pill); padding: 6px 13px;
 }
 .pm-corpo .display { margin: 0; font-size: clamp(24px, 2.6vw, 32px); }
-.pm-prezzo { margin: 0; font-size: 22px; font-weight: 700; color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; }
+.pm-prezzo { margin: 0; font-size: 22px; font-weight: 700; color: var(--ink); font-family: 'Fraunces', Georgia, serif; }
 .pm-desc { margin: 0; font-size: 14.5px; line-height: 1.6; }
 .pm-riga { display: flex; flex-wrap: wrap; gap: 22px; }
 .pm-blocco { display: grid; gap: 8px; }
@@ -1458,7 +1491,7 @@ img.no-foto { opacity: 0; }
 .fiducia-item svg { color: var(--salvia); margin-bottom: 4px; }
 .fiducia-stelle { color: var(--gold); font-size: 15px; letter-spacing: .12em; margin-bottom: 2px; }
 .fiducia-item strong {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 19px; color: var(--ink);
   line-height: 1.15;
 }
@@ -1554,7 +1587,7 @@ img.no-foto { opacity: 0; }
   display: grid; gap: 2px;
 }
 .occ-nome {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: clamp(19px, 1.7vw, 23px);
   color: #FDFDF9; line-height: 1.15;
 }
@@ -1613,7 +1646,7 @@ img.no-foto { opacity: 0; }
 .pagina-legale h1 { margin: 0 0 8px; }
 .pagina-legale .agg { margin: 0 0 40px; font-size: 13px; color: var(--muted); }
 .pagina-legale h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 24px; color: var(--ink);
   margin: 36px 0 12px;
 }
@@ -1655,7 +1688,7 @@ img.no-foto { opacity: 0; }
   border-bottom: 1px solid var(--line);
 }
 .menu-titolo {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 22px; color: var(--ink);
 }
 .menu-close {
@@ -1751,7 +1784,7 @@ img.no-foto { opacity: 0; }
 .riep summary::-webkit-details-marker { display: none; }
 .riep-titolo { font-weight: 700; font-size: 14.5px; color: var(--bosco); }
 .riep-tot {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 24px; color: var(--ink);
 }
 .riep-lista { list-style: none; margin: 14px 0 0; padding: 12px 0 0; border-top: 1px solid rgba(46,75,58,.14); display: grid; gap: 7px; }
@@ -1890,7 +1923,7 @@ img.no-foto { opacity: 0; }
 .prod-mini:hover .prod-mini-nome { color: var(--bosco); }
 .prod-mini-nome {
   margin-top: 8px;
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 18.5px; line-height: 1.2;
   color: var(--ink);
   transition: color var(--t-1) ease;
@@ -1949,7 +1982,7 @@ img.no-foto { opacity: 0; }
   display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
 }
 .prodotto-prezzo strong {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-weight: 700; font-size: 32px; color: var(--ink);
 }
 .prodotto-prezzo s { font-size: 18px; color: var(--muted); }
@@ -2024,3 +2057,11 @@ img.no-foto { opacity: 0; }
   border-radius: 7px;
   padding: 5px 11px;
 }
+
+/* =============================================================
+   RIFINITURA TIPOGRAFICA — Fraunces + Figtree
+   ============================================================= */
+.display { font-optical-sizing: auto; letter-spacing: -0.015em; }
+.pass-toggle svg { display: block; }
+.pass-toggle .occhio-barra { display: none; }
+.pass-toggle.attivo .occhio-barra { display: block; }
