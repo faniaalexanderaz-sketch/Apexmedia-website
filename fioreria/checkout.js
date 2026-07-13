@@ -241,7 +241,6 @@
       if (!data || !data.url) throw new Error('Risposta senza URL di pagamento');
       location.href = data.url;
     }).catch(function (err) {
-      alert('DIAGNOSTICA TEMPORANEA — errore pagamento: ' + (err && err.message ? err.message : 'sconosciuto'));
       demo(err && err.message);
     });
   });

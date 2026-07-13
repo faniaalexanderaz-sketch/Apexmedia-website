@@ -67,7 +67,7 @@ module.exports = async function handler(req, res) {
     var session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: lineItems,
-      payment_method_types: ['card', 'paypal'],
+      payment_method_types: ['card'],
       locale: 'it',
       customer_email: emailCliente,
       success_url: origin + '/ordine-completato.html?sessione={CHECKOUT_SESSION_ID}',
