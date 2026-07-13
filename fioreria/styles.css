@@ -573,9 +573,6 @@ a, button, input { touch-action: manipulation; }
 }
 @keyframes toastIn { from { transform: translate(-50%, 12px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
 
-/* CTA mobile */
-.mobile-cta { display: none; }
-
 /* =============================================================
    REVEAL
    ============================================================= */
@@ -613,14 +610,7 @@ a, button, input { touch-action: manipulation; }
 
   .passi { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; gap: 18px; }
-
-  .mobile-cta {
-    display: inline-flex;
-    position: fixed; left: 16px; right: 16px;
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-    z-index: 60;
-  }
-  .footer { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  .footer { padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
   .scroll-hint { display: none; }
 }
 
