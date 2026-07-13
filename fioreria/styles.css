@@ -865,13 +865,14 @@ img.no-foto { opacity: 0; }
   border-radius: var(--r-card);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 2;
+  background: #FFFFFF;
 }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-photo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
 @media (max-width: 860px) {
   .hero-split { grid-template-columns: 1fr; gap: 22px; margin-top: 8px; }
-  .hero-photo { order: -1; aspect-ratio: 16 / 11; }
+  .hero-photo { order: -1; aspect-ratio: 3 / 2; }
   .hero-sub { max-width: none; }
 }
 
