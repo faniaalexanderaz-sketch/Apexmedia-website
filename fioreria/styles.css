@@ -461,40 +461,50 @@ a, button, input { touch-action: manipulation; }
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(20px, 3vw, 40px);
 }
+/* timeline: tre tappe con medaglione, numero d'oro e filo che le unisce */
 .passo {
-  background: rgba(255,255,255,.78);
-  border: 1px solid rgba(46,75,58,.1);
-  border-radius: var(--r-card);
-  padding: 30px 28px 28px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 1px 3px rgba(46,75,58,.04), 0 12px 28px rgba(46,75,58,.06);
-  transition: transform var(--t-2) var(--ease-out), box-shadow var(--t-2) var(--ease-out);
+  position: relative;
+  text-align: center;
+  padding: 0 clamp(6px, 1.5vw, 22px);
 }
-.passo:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 2px 5px rgba(46,75,58,.06), 0 20px 44px rgba(46,75,58,.1);
+.passo:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 34px;
+  left: calc(-50% + 52px);
+  right: calc(50% + 52px);
+  height: 1px;
+  background: linear-gradient(to right, rgba(194,164,92,.15), var(--gold), rgba(194,164,92,.15));
+}
+.passo-icona {
+  position: relative;
+  width: 68px; height: 68px;
+  margin: 0 auto 18px;
+  display: grid; place-items: center;
+  color: var(--bosco);
+  background: #FFFFFF;
+  border: 1px solid rgba(46,75,58,.13);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(46,75,58,.06), 0 10px 22px rgba(46,75,58,.08);
 }
 .passo-n {
+  position: absolute; top: -5px; right: -5px;
+  width: 25px; height: 25px;
+  display: grid; place-items: center;
   font-family: 'Fraunces', Georgia, serif;
-  font-style: italic; font-weight: 300;
-  font-size: 34px; color: var(--gold);
-  display: block; margin-bottom: 14px;
-  line-height: 1;
-}
-/* filo d'oro sotto il numero: il passo è un punto su una linea */
-.passo-n::after {
-  content: '';
-  display: block;
-  width: 30px; height: 1px;
-  margin-top: 12px;
-  background: linear-gradient(to right, var(--gold), rgba(194,164,92,.15));
+  font-style: italic; font-weight: 500;
+  font-size: 13.5px; line-height: 1;
+  color: #FDFDF9;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(138,107,36,.35);
 }
 .passo-t {
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 20px; color: var(--ink);
   margin: 0 0 8px;
 }
-.passo-d { font-size: 15px; margin: 0; }
+.passo-d { font-size: 15px; margin: 0 auto; max-width: 32ch; }
 
 /* =============================================================
    INVITO FINALE
@@ -713,7 +723,13 @@ a, button, input { touch-action: manipulation; }
   .atelier-punti { gap: 10px; }
   .atelier-punti strong { font-size: 19px; }
 
-  .passi { grid-template-columns: 1fr; }
+  .passi { grid-template-columns: 1fr; gap: 38px; }
+  .passo:not(:first-child)::before {
+    top: -31px;
+    left: 50%; right: auto;
+    width: 1px; height: 24px;
+    background: linear-gradient(to bottom, rgba(194,164,92,.15), var(--gold));
+  }
   .footer-inner { grid-template-columns: 1fr; gap: 18px; }
   .footer { padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
   .scroll-hint { display: none; }
@@ -923,17 +939,19 @@ img.no-foto { opacity: 0; }
 .cat-item:nth-child(even) .cat-foto { animation: cat-float 4.6s ease-in-out infinite alternate -2s; }
 .cat-item:hover .cat-foto { animation-play-state: paused; }
 
-/* ---------- Hero — testo e foto affiancati, niente riquadro sovrapposto ---------- */
+/* ---------- Hero — foto a tutta larghezza (stile boutique), testo sotto ---------- */
 .hero-split {
-  display: grid;
-  grid-template-columns: 1.05fr .95fr;
-  align-items: center;
-  gap: clamp(28px, 4vw, 64px);
-  max-width: var(--maxw);
-  margin: clamp(18px, 4vh, 40px) auto 0;
-  padding: 8px var(--pad) 0;
+  display: block;
+  max-width: none;
+  margin: clamp(10px, 2vh, 20px) 0 0;
+  padding: 0;
 }
-.hero-copy { display: grid; justify-items: start; gap: 14px; }
+.hero-copy {
+  display: grid; justify-items: start; gap: 14px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(28px, 4.5vh, 46px) var(--pad) 0;
+}
 .hero-eyebrow { margin: 0; }
 .hero-titolo {
   margin: 0;
@@ -960,24 +978,23 @@ img.no-foto { opacity: 0; }
 .hero-photo {
   position: relative;
   margin: 0;
-  border-radius: var(--r-card);
+  width: 100%;
+  height: clamp(300px, 52vh, 560px);
   overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  aspect-ratio: 3 / 2;
   background: #FFFFFF;
+  border-top: 1px solid rgba(46,75,58,.07);
+  border-bottom: 1px solid rgba(46,75,58,.07);
 }
-.hero-photo::after {
-  content: '';
-  position: absolute; inset: 0;
-  border: 1px solid rgba(46,75,58,.08);
-  border-radius: inherit;
-  pointer-events: none;
+.hero-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 26%;
+  display: block;
 }
-.hero-photo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
 @media (max-width: 860px) {
-  .hero-split { grid-template-columns: 1fr; gap: 22px; margin-top: 8px; }
-  .hero-photo { order: -1; aspect-ratio: 3 / 2; }
+  .hero-split { margin-top: 6px; }
+  .hero-photo { height: clamp(230px, 36vh, 340px); }
   .hero-sub { max-width: none; }
 }
 
