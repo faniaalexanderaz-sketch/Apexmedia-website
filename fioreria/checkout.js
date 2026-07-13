@@ -2,12 +2,13 @@
    ANTICA FIORERIA DEL CENTRO — checkout in-sito
    Extra → Consegna → Pagamento, tutto su questa pagina.
 
-   NOTA ONESTA: la schermata di pagamento è completa e convalida
-   i dati come un vero terminale, ma per INCASSARE davvero serve
-   collegare un fornitore di pagamenti (Stripe, Nexi, PayPal…):
-   nessun sito può addebitare una carta da solo, senza un
-   circuito alle spalle. Finché non è collegato, l'esito del
-   pagamento viene simulato e l'ordine registrato normalmente.
+   Il pagamento vero avviene tramite una funzione serverless
+   (netlify/functions/create-checkout-session.js) che crea al volo
+   una sessione di pagamento per l'importo esatto del carrello —
+   nessun prodotto da registrare uno per uno. Finché la funzione
+   non è online (Netlify Functions + chiave segreta configurati),
+   il pagamento gira in MODALITÀ DEMO: l'ordine si registra lo
+   stesso ma nessun addebito reale viene tentato.
    ============================================================= */
 (function () {
   'use strict';
@@ -183,109 +184,64 @@
   });
 
   /* ---------- pagamento ---------- */
-  var formCarta = document.getElementById('formCarta');
-  var ccNumero = document.getElementById('ccNumero');
-  var ccScadenza = document.getElementById('ccScadenza');
-
-  /* formattazione live: spazi ogni 4 cifre, slash nella scadenza */
-  ccNumero.addEventListener('input', function () {
-    var v = ccNumero.value.replace(/\D/g, '').slice(0, 19);
-    ccNumero.value = v.replace(/(.{4})/g, '$1 ').trim();
-  });
-  ccScadenza.addEventListener('input', function () {
-    var v = ccScadenza.value.replace(/\D/g, '').slice(0, 4);
-    ccScadenza.value = v.length > 2 ? v.slice(0, 2) + '/' + v.slice(2) : v;
-  });
-
-  /* metodo selezionato: evidenzia e mostra/nasconde i campi carta */
-  var metodi = document.querySelectorAll('.pag-metodo input');
-  function metodoScelto() {
-    return document.querySelector('.pag-metodo input:checked').value;
-  }
-  metodi.forEach(function (r) {
-    r.addEventListener('change', function () {
-      document.querySelectorAll('.pag-metodo').forEach(function (m) {
-        m.classList.toggle('attivo', m.contains(r) && r.checked);
-      });
-      formCarta.hidden = metodoScelto() !== 'carta';
-    });
-  });
-
-  function luhn(num) {
-    var s = 0, alt = false;
-    for (var i = num.length - 1; i >= 0; i--) {
-      var d = parseInt(num[i], 10);
-      if (alt) { d *= 2; if (d > 9) d -= 9; }
-      s += d; alt = !alt;
-    }
-    return s % 10 === 0;
-  }
-
-  function validaCarta() {
-    var errori = 0;
-    var nome = document.getElementById('ccNome');
-    var cvv = document.getElementById('ccCvv');
-    var num = ccNumero.value.replace(/\s/g, '');
-
-    errori += segnaErrore(nome, nome.value.trim().length < 3 ? 'Il nome come scritto sulla carta.' : '');
-    errori += segnaErrore(ccNumero, (num.length < 13 || !luhn(num)) ? 'Controlla il numero: non risulta valido.' : '');
-
-    var sc = ccScadenza.value.split('/');
-    var scOk = sc.length === 2 && /^\d{2}$/.test(sc[0]) && /^\d{2}$/.test(sc[1]);
-    if (scOk) {
-      var mese = parseInt(sc[0], 10), anno = 2000 + parseInt(sc[1], 10);
-      var ora = new Date();
-      scOk = mese >= 1 && mese <= 12 &&
-        (anno > ora.getFullYear() || (anno === ora.getFullYear() && mese >= ora.getMonth() + 1));
-    }
-    errori += segnaErrore(ccScadenza, !scOk ? 'Scadenza MM/AA, nel futuro.' : '');
-    errori += segnaErrore(cvv, !/^\d{3,4}$/.test(cvv.value) ? 'Le 3 o 4 cifre sul retro.' : '');
-    return errori === 0;
-  }
-
   var btnPaga = document.getElementById('btnPaga');
   var pagMsg = document.getElementById('pagMsg');
 
   btnPaga.addEventListener('click', function () {
     pagMsg.hidden = true;
-    var metodo = metodoScelto();
-    if (metodo === 'carta' && !validaCarta()) {
-      pagMsg.textContent = 'Controlla i dati della carta qui sopra.';
-      pagMsg.hidden = false;
-      return;
-    }
-
     btnPaga.disabled = true;
     btnPaga.classList.add('btn-wait');
-    document.getElementById('btnPagaTesto').textContent =
-      metodo === 'carta' ? 'Pagamento in corso…' : 'Apertura di ' +
-      (metodo === 'paypal' ? 'PayPal' : metodo === 'applepay' ? 'Apple Pay' : 'Google Pay') + '…';
+    document.getElementById('btnPagaTesto').textContent = 'Un momento…';
 
     var t = totali();
+    var consegna = {
+      nome: document.getElementById('coNome').value.trim(),
+      telefono: document.getElementById('coTel').value.trim(),
+      via: document.getElementById('coVia').value.trim(),
+      cap: document.getElementById('coCap').value.trim(),
+      citta: document.getElementById('coCitta').value.trim(),
+      giorno: dataInput.value,
+      messaggio: document.getElementById('coMsg').value.trim(),
+      email: document.getElementById('coEmail').value.trim()
+    };
     var ordine = {
       items: cart,
       totale: t.tot,
       sconto: t.coupon ? t.coupon.pct : 0,
       coupon: t.coupon ? t.coupon.codice : null,
-      metodo: metodo,
-      consegna: {
-        nome: document.getElementById('coNome').value.trim(),
-        telefono: document.getElementById('coTel').value.trim(),
-        via: document.getElementById('coVia').value.trim(),
-        cap: document.getElementById('coCap').value.trim(),
-        citta: document.getElementById('coCitta').value.trim(),
-        giorno: dataInput.value,
-        messaggio: document.getElementById('coMsg').value.trim(),
-        email: document.getElementById('coEmail').value.trim()
-      },
+      consegna: consegna,
       data: new Date().toISOString()
     };
     localStorage.setItem('afc-ordine-pending', JSON.stringify(ordine));
 
-    /* esito del pagamento (simulato finché non è collegato un
-       fornitore di pagamenti reale) */
-    setTimeout(function () {
-      location.href = 'ordine-completato.html';
-    }, 1400);
+    function demo(motivo) {
+      if (motivo) console.warn('Checkout in modalità demo: ' + motivo);
+      setTimeout(function () { location.href = 'ordine-completato.html?demo=1'; }, 700);
+    }
+
+    /* prova il pagamento reale tramite la funzione serverless.
+       Se non è ancora configurata (funzione assente, chiave mancante,
+       errore di rete) l'ordine resta comunque registrato e si passa
+       in modalità demo, senza bloccare mai il cliente. */
+    fetch('/.netlify/functions/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: cart.map(function (r) { return { nome: r.nome, prezzo: r.prezzo, qty: r.qty }; }),
+        totale: t.tot,
+        email: consegna.email,
+        consegna: consegna
+      })
+    }).then(function (res) {
+      if (!res.ok) return res.json().catch(function () { return {}; }).then(function (d) {
+        throw new Error(d.error || ('HTTP ' + res.status));
+      });
+      return res.json();
+    }).then(function (data) {
+      if (!data || !data.url) throw new Error('Risposta senza URL di pagamento');
+      location.href = data.url;
+    }).catch(function (err) {
+      demo(err && err.message);
+    });
   });
 })();

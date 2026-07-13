@@ -1,0 +1,8 @@
+{
+  "name": "antica-fioreria-del-centro",
+  "private": true,
+  "description": "Sito e funzione di pagamento della Antica Fioreria del Centro",
+  "dependencies": {
+    "stripe": "^17.0.0"
+  }
+}
