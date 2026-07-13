@@ -107,12 +107,12 @@
   var passoCon = document.getElementById('passoConsegna');
   var passoPag = document.getElementById('passoPagamento');
 
-  /* data minima = oggi; consegna in giornata entro le 13 */
+  /* data minima = domani: il corriere consegna in 24/48 ore */
   var oggi = new Date();
   var dataInput = document.getElementById('coData');
   function isoData(d) { return d.toISOString().slice(0, 10); }
   var minima = new Date(oggi);
-  if (oggi.getHours() >= 13) minima.setDate(minima.getDate() + 1);
+  minima.setDate(minima.getDate() + 1);
   dataInput.min = isoData(minima);
   dataInput.value = isoData(minima);
 
@@ -124,7 +124,7 @@
     if (u.indirizzi && u.indirizzi.length) {
       document.getElementById('coVia').value = u.indirizzi[0].via || '';
       document.getElementById('coCap').value = u.indirizzi[0].cap || '';
-      document.getElementById('coCitta').value = u.indirizzi[0].citta || 'Alessandria';
+      document.getElementById('coCitta').value = u.indirizzi[0].citta || '';
     }
   }
 

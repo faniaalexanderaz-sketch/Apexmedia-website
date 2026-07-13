@@ -27,9 +27,9 @@ var AFC_PRODOTTI = [
     cat: ['bouquet', 'stagione', 'mamma'],
     badge: 'Più venduto',
     rating: ['4,9', 31],
-    avail: 'Disponibile oggi',
-    desc: 'Ranuncoli cipria, fiori di campo e salvia appena colta.',
-    descLunga: 'Il bouquet con cui apriamo la bottega ogni mattina: ranuncoli color cipria, fiori di campo scelti al banco e salvia fresca che profuma appena la muovi. È il mazzo che regali quando vuoi dire "ho pensato a te presto, stamattina".'
+    avail: 'Spedizione in 24/48h',
+    desc: 'Ranuncoli cipria, fiori di campo e salvia in seta.',
+    descLunga: 'Ranuncoli color cipria, fiori di campo e salvia in tessuto di alta gamma, montati a mano sul nostro banco di legno. La luce del mattino in una composizione che resta così, giorno dopo giorno, senza un filo d\'acqua.'
   },
   {
     slug: 'domenica',
@@ -39,10 +39,10 @@ var AFC_PRODOTTI = [
     cat: ['bouquet', 'anniversario', 'mamma'],
     badge: 'Più venduto',
     rating: ['5,0', 18],
-    avail: 'Ultimi 2 di oggi',
+    avail: 'Ultimi 2 disponibili',
     availBassa: true,
     desc: 'Tre peonie piene nei toni della domenica mattina.',
-    descLunga: 'Tre peonie piene e morbide, legate con verde leggero nei toni caldi della domenica mattina. È la nostra composizione più amata per gli anniversari: poche parole, fiori giusti.'
+    descLunga: 'Tre peonie piene e morbide in real touch, con verde leggero nei toni caldi della domenica mattina. La nostra composizione più amata per gli anniversari: sembra appena colta, e lo sembrerà anche l\'anno prossimo.'
   },
   {
     slug: 'lettera',
@@ -52,9 +52,9 @@ var AFC_PRODOTTI = [
     cat: ['bouquet', 'stagione'],
     badge: null,
     rating: ['4,8', 24],
-    avail: 'Disponibile oggi',
+    avail: 'Spedizione in 24/48h',
     desc: 'Tulipani rosa cipria in tre altezze, con verde leggero.',
-    descLunga: 'Tulipani rosa cipria disposti su tre altezze, come una frase scritta a mano. Un bouquet semplice e luminoso, perfetto da lasciare sul tavolo di qualcuno senza biglietto: si spiega da solo.'
+    descLunga: 'Tulipani rosa cipria su tre altezze, come una frase scritta a mano. Semplice e luminosa, perfetta sul tavolo dell\'ingresso: non chiede acqua, solo uno sguardo ogni tanto.'
   },
   {
     slug: 'verde',
@@ -64,7 +64,7 @@ var AFC_PRODOTTI = [
     cat: ['bouquet', 'regali', 'condoglianze'],
     badge: 'Nuovo',
     rating: ['4,9', 12],
-    avail: 'Disponibile oggi',
+    avail: 'Spedizione in 24/48h',
     desc: 'Eucalipto, nebbiolina e una sola peonia bianca.',
     descLunga: 'Eucalipto, nebbiolina a nuvola e una sola peonia bianca al centro. Una composizione sobria e gentile, pensata per i momenti in cui servono presenza e discrezione più che colore.'
   },
@@ -76,7 +76,7 @@ var AFC_PRODOTTI = [
     cat: ['bouquet', 'anniversario', 'premium'],
     badge: 'Nuovo',
     rating: ['4,8', 16],
-    avail: 'Disponibile oggi',
+    avail: 'Spedizione in 24/48h',
     desc: 'Toni miele e champagne, per la luce del tardo pomeriggio.',
     descLunga: 'Toni miele, champagne e crema, come la luce dorata del tardo pomeriggio. Un bouquet caldo ed elegante che sta benissimo sulle tavole apparecchiate e nelle foto di famiglia.'
   },
@@ -88,7 +88,7 @@ var AFC_PRODOTTI = [
     cat: ['rose', 'regali', 'sanvalentino'],
     badge: 'Nuovo',
     rating: ['4,9', 27],
-    avail: 'Disponibile oggi',
+    avail: 'Spedizione in 24/48h',
     desc: 'Nebbiolina a nuvola e una rosa chiara al centro.',
     descLunga: 'Una nuvola di nebbiolina con una sola rosa chiara al centro: il regalo piccolo che non sbaglia mai. Sta in una mano, costa poco, dice tantissimo.'
   },
@@ -101,9 +101,9 @@ var AFC_PRODOTTI = [
     badge: 'Edizione limitata',
     badgeOro: true,
     rating: ['5,0', 6],
-    avail: 'Disponibile oggi',
-    desc: 'Le primissime peonie della stagione, dal nostro coltivatore in Liguria — 20 pezzi.',
-    descLunga: 'Le primissime peonie della stagione, arrivate stanotte dal nostro coltivatore in Liguria. Ne componiamo solo 20: quando finiscono, se ne riparla l\'anno prossimo. Il bouquet per le occasioni che non si ripetono.'
+    avail: 'Spedizione in 24/48h',
+    desc: 'La composizione più ricca della bottega, numerata — solo 20 pezzi.',
+    descLunga: 'La composizione più ricca della collezione: peonie, dalie e bacche in materiali di pregio, montata a mano e numerata pezzo per pezzo. Ne realizziamo solo 20: quando finiscono, finiscono.'
   },
   {
     slug: 'settimana',
@@ -113,9 +113,9 @@ var AFC_PRODOTTI = [
     cat: ['bouquet', 'stagione', 'novita'],
     badge: 'Della settimana',
     rating: ['4,9', 44],
-    avail: 'Fino a domenica',
-    desc: 'Composizione diversa ogni settimana: questa volta dalie, astri e verde d\'ulivo.',
-    descLunga: 'Ogni settimana una composizione diversa, con il meglio del mercato a un prezzo gentile. Questa settimana: dalie, astri e verde d\'ulivo. È l\'abitudine più bella che puoi prenderti.'
+    avail: 'Serie stagionale',
+    desc: 'La composizione della stagione: dalie, astri e verde d\'ulivo.',
+    descLunga: 'Ogni stagione una composizione nuova, a un prezzo gentile. Questa stagione: dalie, astri e verde d\'ulivo. Il modo più semplice per rinnovare casa senza pensarci più.'
   }
 ];
 
