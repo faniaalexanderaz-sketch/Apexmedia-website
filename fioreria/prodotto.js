@@ -132,7 +132,7 @@
       a.innerHTML =
         '<span class="prod-mini-foto">' +
           (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '') +
-          '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="875" onerror="this.classList.add(\'no-foto\')" />' +
+          '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="560" onerror="this.classList.add(\'no-foto\')" />' +
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
         '<span class="prod-mini-prezzo">da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0])) + '</span>' +

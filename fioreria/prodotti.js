@@ -6,7 +6,7 @@
    il 30% in meno del doppio — da qui il "risparmi il 30%".
    ============================================================= */
 var AFC_TAGLIE = [
-  { id: 'S',  nome: 'S',  fattore: 0.75, nota: 'Un pensiero: 5–7 steli' },
+  { id: 'S',  nome: 'S',  fattore: 0.75, nota: 'Un pensiero: composizione raccolta' },
   { id: 'M',  nome: 'M',  fattore: 1,    nota: 'Il formato classico della bottega' },
   { id: 'L',  nome: 'L',  fattore: 1.5,  nota: 'Abbondante, per fare scena' },
   { id: 'XL', nome: 'XL', fattore: 1.4,  doppio: true, nota: 'Il doppio dei fiori della M' }
@@ -20,102 +20,115 @@ function afcValoreXL(prezzoM) { return prezzoM * 2; }
 
 var AFC_PRODOTTI = [
   {
-    slug: 'mattino',
-    nome: 'Mattino in Bottega',
-    prezzo: 38,
-    foto: 'foto/p-mattino.jpg',
-    cat: ['bouquet', 'stagione', 'mamma'],
+    slug: 'vendemmia',
+    nome: 'Vendemmia Toscana',
+    prezzo: 72,
+    foto: 'foto/p-vendemmia.jpg',
+    cat: ['stagione', 'premium', 'regali'],
     badge: 'Più venduto',
-    rating: ['4,9', 31],
+    rating: ['4,9', 34],
     avail: 'Spedizione in 24/48h',
-    desc: 'Ranuncoli cipria, fiori di campo e salvia in seta.',
-    descLunga: 'Ranuncoli color cipria, fiori di campo e salvia in tessuto di alta gamma, montati a mano sul nostro banco di legno. La luce del mattino in una composizione che resta così, giorno dopo giorno, senza un filo d\'acqua.'
+    desc: 'Dalie bordeaux, melograni e mini zucche in un\'anfora dipinta a mano.',
+    descLunga: 'Un\'anfora in ceramica dipinta a mano, decorata a motivi floreali come le trovi nelle botteghe di campagna toscane, colma di dalie color bordeaux, rose ambrate, melograni, fichi e mini zucche tra foglie di quercia e ulivo. È la composizione che porti in tavola quando l\'autunno va festeggiato, non subito: un centrotavola importante che non appassisce mai, pensato per restare protagonista da ottobre a Natale.'
   },
   {
-    slug: 'domenica',
-    nome: 'Domenica al Centro',
-    prezzo: 48,
-    foto: 'foto/p-domenica.jpg',
-    cat: ['bouquet', 'anniversario', 'mamma'],
+    slug: 'agrumi',
+    nome: 'Giardino di Agrumi',
+    prezzo: 58,
+    foto: 'foto/p-agrumi.jpg',
+    cat: ['bouquet', 'mamma', 'stagione'],
+    badge: 'Nuovo',
+    rating: ['4,9', 21],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rose bianche, orchidee e limoni veri al tatto, in un\'urna in marmo.',
+    descLunga: 'Rose bianche, orchidee, ranuncoli gialli e ciuffi di limoni e kumquat real touch, composti in un\'urna in marmo bianco venato. Profuma di agrumeto anche se non profuma affatto: la luce e il colore di un pomeriggio in Costiera, fermi per sempre sul tuo tavolo. Il regalo giusto per chi ama il giallo limone più del rosa.'
+  },
+  {
+    slug: 'romanza',
+    nome: 'Romanza in Rosa',
+    prezzo: 64,
+    foto: 'foto/p-romanza.jpg',
+    cat: ['anniversario', 'matrimonio', 'mamma'],
     badge: 'Più venduto',
-    rating: ['5,0', 18],
-    avail: 'Ultimi 2 disponibili',
-    availBassa: true,
-    desc: 'Tre peonie piene nei toni della domenica mattina.',
-    descLunga: 'Tre peonie piene e morbide in real touch, con verde leggero nei toni caldi della domenica mattina. La nostra composizione più amata per gli anniversari: sembra appena colta, e lo sembrerà anche l\'anno prossimo.'
-  },
-  {
-    slug: 'lettera',
-    nome: "Lettera d'Aprile",
-    prezzo: 32,
-    foto: 'foto/p-lettera.jpg',
-    cat: ['bouquet', 'stagione'],
-    badge: null,
-    rating: ['4,8', 24],
+    rating: ['5,0', 27],
     avail: 'Spedizione in 24/48h',
-    desc: 'Tulipani rosa cipria in tre altezze, con verde leggero.',
-    descLunga: 'Tulipani rosa cipria su tre altezze, come una frase scritta a mano. Semplice e luminosa, perfetta sul tavolo dell\'ingresso: non chiede acqua, solo uno sguardo ogni tanto.'
+    desc: 'Peonie cipria e rose tea in un\'urna di porcellana bordata d\'oro.',
+    descLunga: 'Peonie color cipria, rose tea e ortensie bianche, morbide come un\'acquerello, composte in un\'urna di porcellana crema con bordure dorate e rilievi decorati. La nostra composizione più scelta per gli anniversari e i regali importanti: romantica senza essere stucchevole, elegante anche vista da lontano su una mensola o un tavolo d\'ingresso.'
   },
   {
-    slug: 'verde',
-    nome: 'Verde Silenzio',
-    prezzo: 29,
-    foto: 'foto/p-verde.jpg',
-    cat: ['bouquet', 'regali', 'condoglianze'],
-    badge: 'Nuovo',
-    rating: ['4,9', 12],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Eucalipto, nebbiolina e una sola peonia bianca.',
-    descLunga: 'Eucalipto, nebbiolina a nuvola e una sola peonia bianca al centro. Una composizione sobria e gentile, pensata per i momenti in cui servono presenza e discrezione più che colore.'
-  },
-  {
-    slug: 'oradorata',
-    nome: 'Ora Dorata',
-    prezzo: 42,
-    foto: 'foto/p-oradorata.jpg',
-    cat: ['bouquet', 'anniversario', 'premium'],
-    badge: 'Nuovo',
-    rating: ['4,8', 16],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Toni miele e champagne, per la luce del tardo pomeriggio.',
-    descLunga: 'Toni miele, champagne e crema, come la luce dorata del tardo pomeriggio. Un bouquet caldo ed elegante che sta benissimo sulle tavole apparecchiate e nelle foto di famiglia.'
-  },
-  {
-    slug: 'poesia',
-    nome: 'Piccola Poesia',
-    prezzo: 26,
-    foto: 'foto/p-poesia.jpg',
-    cat: ['rose', 'regali', 'sanvalentino'],
-    badge: 'Nuovo',
-    rating: ['4,9', 27],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Nebbiolina a nuvola e una rosa chiara al centro.',
-    descLunga: 'Una nuvola di nebbiolina con una sola rosa chiara al centro: il regalo piccolo che non sbaglia mai. Sta in una mano, costa poco, dice tantissimo.'
-  },
-  {
-    slug: 'limitata',
-    nome: 'Prima Fioritura',
-    prezzo: 65,
-    foto: 'foto/p-limitata.jpg',
-    cat: ['bouquet', 'novita', 'premium'],
+    slug: 'positano',
+    nome: 'Riflessi di Positano',
+    prezzo: 68,
+    foto: 'foto/p-positano.jpg',
+    cat: ['premium', 'novita', 'regali'],
     badge: 'Edizione limitata',
     badgeOro: true,
-    rating: ['5,0', 6],
+    rating: ['4,9', 9],
     avail: 'Spedizione in 24/48h',
-    desc: 'La composizione più ricca della bottega, numerata — solo 20 pezzi.',
-    descLunga: 'La composizione più ricca della collezione: peonie, dalie e bacche in materiali di pregio, montata a mano e numerata pezzo per pezzo. Ne realizziamo solo 20: quando finiscono, finiscono.'
+    desc: 'Ortensie turchesi, orchidee e conchiglie in un vaso di vetro ondulato.',
+    descLunga: 'Ortensie color turchese, orchidee bianche, foglie di palma e un tocco di conchiglie e perle, composte in un vaso di vetro colorato dalle forme morbide, come modellato dall\'acqua. Un pezzo scenografico pensato per chi ama il mare più dei fiori classici: perfetto in un ingresso, in un bagno importante o su una consolle vista finestra. Edizione limitata, pochi pezzi disponibili.'
   },
   {
-    slug: 'settimana',
-    nome: 'Il Mazzo del Sabato',
-    prezzo: 34,
-    foto: 'foto/p-settimana.jpg',
-    cat: ['bouquet', 'stagione', 'novita'],
-    badge: 'Della settimana',
-    rating: ['4,9', 44],
-    avail: 'Serie stagionale',
-    desc: 'La composizione della stagione: dalie, astri e verde d\'ulivo.',
-    descLunga: 'Ogni stagione una composizione nuova, a un prezzo gentile. Questa stagione: dalie, astri e verde d\'ulivo. Il modo più semplice per rinnovare casa senza pensarci più.'
+    slug: 'frutteto',
+    nome: 'Frutteto in Fiore',
+    prezzo: 70,
+    foto: 'foto/p-frutteto.jpg',
+    cat: ['premium', 'matrimonio', 'regali'],
+    badge: 'Nuovo',
+    rating: ['4,8', 14],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Orchidee, rose bianche e grappoli d\'uva in un vaso scultoreo in travertino.',
+    descLunga: 'Orchidee bianche, rose, ortensie e calle si intrecciano a grappoli d\'uva, fichi, carciofi e mele verdi real touch, in un vaso scultoreo bicolore in marmo e travertino. Una composizione abbondante e scenografica, ispirata alle nature morte italiane: perfetta per un ricevimento, un ingresso importante o come regalo a chi ha già tutto.'
+  },
+  {
+    slug: 'velluto',
+    nome: 'Notte di Velluto',
+    prezzo: 85,
+    foto: 'foto/p-velluto.jpg',
+    cat: ['premium', 'novita'],
+    badge: 'Edizione limitata',
+    badgeOro: true,
+    rating: ['5,0', 8],
+    avail: 'Ultimi pezzi',
+    availBassa: true,
+    desc: 'Rose nere, orchidee viola e dettagli dorati in un vaso scultoreo nero e oro.',
+    descLunga: 'Rose nere, dalie bordeaux, orchidee viola e rose champagne, tra foglie scure e ramage dorato, in un vaso scultoreo nero con venature d\'oro colato. La composizione più audace della collezione: drammatica, quasi teatrale, pensata per chi vuole stupire davvero — un compleanno importante, un\'inaugurazione, un regalo che si ricorda. Numero di pezzi limitato.'
+  },
+  {
+    slug: 'raccolto',
+    nome: 'Cesto del Raccolto',
+    prezzo: 54,
+    foto: 'foto/p-raccolto.jpg',
+    cat: ['regali', 'stagione', 'novita'],
+    rating: ['4,8', 19],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rose color miele, stecche di cannella e mini zucche in un cesto di vimini.',
+    descLunga: 'Rose color miele, ortensie, orchidee gialle, stecche di cannella, fette d\'arancia essiccate e mini zucche, raccolte in un cesto di vimini con tanto di manico. Il formato più informale e conviviale della collezione: si regala com\'è, senza bisogno di un vaso, ed è perfetto per un tavolo di cucina, una cesta di benvenuto o un pensiero per chi cambia casa.'
+  },
+  {
+    slug: 'cristalli',
+    nome: 'Cristalli di Viola',
+    prezzo: 82,
+    foto: 'foto/p-cristalli.jpg',
+    cat: ['premium', 'anniversario', 'novita'],
+    badge: 'Edizione limitata',
+    badgeOro: true,
+    rating: ['5,0', 11],
+    avail: 'Ultimi pezzi',
+    availBassa: true,
+    desc: 'Ortensie viola, orchidee e perle in un vaso di cristallo intagliato.',
+    descLunga: 'Ortensie viola e blu, orchidee, rose bianche e foglie argentate, punteggiate di perle e bacche brinate, in un vaso di cristallo dalle linee sinuose. Una composizione preziosa, quasi gioiello, per chi cerca qualcosa di davvero fuori dal comune: perfetta per un anniversario importante o per arredare uno spazio che deve lasciare il segno.'
+  },
+  {
+    slug: 'scrigno',
+    nome: 'Scrigno di Borgogna',
+    prezzo: 76,
+    foto: 'foto/p-scrigno.jpg',
+    cat: ['premium', 'regali', 'stagione'],
+    rating: ['4,9', 16],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rose bordeaux, peonie bianche e grappoli d\'uva in un baule intagliato.',
+    descLunga: 'Rose color bordeaux, peonie bianche, orchidee scure, grappoli d\'uva e fichi tra rami di ulivo, composti sopra un baule in legno intagliato con serratura in ottone. Una composizione importante, quasi un pezzo d\'arredamento a sé: ideale per una sala importante, un regalo aziendale o chi ama i fiori come oggetti da collezione più che come bouquet.'
   }
 ];
 
