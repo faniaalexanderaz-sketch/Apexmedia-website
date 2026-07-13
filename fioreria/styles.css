@@ -252,9 +252,10 @@ a, button, input { touch-action: manipulation; }
 }
 .brand-name em { font-style: italic; font-weight: 500; color: var(--bosco); }
 
-.nav-links { display: flex; gap: 28px; }
+.nav-links { display: flex; gap: 30px; }
 .nav-links a {
-  font-size: 14.5px; font-weight: 500; color: var(--muted);
+  font-size: 14px; font-weight: 550; letter-spacing: .02em;
+  color: var(--muted);
   padding: 6px 2px;
   border-bottom: 1px solid transparent;
   transition: color var(--t-1) ease, border-color var(--t-1) ease;
@@ -420,17 +421,32 @@ a, button, input { touch-action: manipulation; }
   gap: clamp(20px, 3vw, 40px);
 }
 .passo {
-  background: rgba(255,255,255,.72);
+  background: rgba(255,255,255,.78);
   border: 1px solid rgba(46,75,58,.1);
   border-radius: var(--r-card);
-  padding: 28px 26px;
+  padding: 30px 28px 28px;
   backdrop-filter: blur(4px);
+  box-shadow: 0 1px 3px rgba(46,75,58,.04), 0 12px 28px rgba(46,75,58,.06);
+  transition: transform var(--t-2) var(--ease-out), box-shadow var(--t-2) var(--ease-out);
+}
+.passo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 5px rgba(46,75,58,.06), 0 20px 44px rgba(46,75,58,.1);
 }
 .passo-n {
   font-family: 'Fraunces', Georgia, serif;
   font-style: italic; font-weight: 300;
   font-size: 34px; color: var(--gold);
-  display: block; margin-bottom: 10px;
+  display: block; margin-bottom: 14px;
+  line-height: 1;
+}
+/* filo d'oro sotto il numero: il passo è un punto su una linea */
+.passo-n::after {
+  content: '';
+  display: block;
+  width: 30px; height: 1px;
+  margin-top: 12px;
+  background: linear-gradient(to right, var(--gold), rgba(194,164,92,.15));
 }
 .passo-t {
   font-family: 'Fraunces', Georgia, serif;
@@ -444,6 +460,7 @@ a, button, input { touch-action: manipulation; }
    ============================================================= */
 .invito { padding: clamp(100px, 14vh, 170px) var(--pad); }
 .invito-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+.invito-fregio { display: block; margin: 0 auto 26px; }
 .invito .display { margin-bottom: 34px; }
 
 /* =============================================================
@@ -457,15 +474,16 @@ a, button, input { touch-action: manipulation; }
 .footer-inner {
   max-width: var(--maxw); margin: 0 auto;
   display: grid; grid-template-columns: 1.2fr 1fr .8fr 1.3fr;
-  gap: 30px;
+  gap: 36px 44px;
 }
 .footer-fisar { border: none; }
 .footer-fisar summary {
   list-style: none; cursor: default; pointer-events: none;
   display: flex; align-items: center; justify-content: space-between;
-  font-family: 'Fraunces', Georgia, serif;
-  font-weight: 600; font-size: 21px; color: #FAFAF7;
-  padding: 0 0 10px;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(250,250,247,.55);
+  padding: 0 0 14px;
 }
 .footer-fisar summary::-webkit-details-marker { display: none; }
 .footer-fisar summary::after {
@@ -474,13 +492,22 @@ a, button, input { touch-action: manipulation; }
   font-size: 16px; color: rgba(250,250,247,.6);
   transition: transform var(--t-2) var(--ease-out);
 }
-.footer-line { font-size: 14.5px; margin: 6px 0 0; color: rgba(250,250,247,.75); }
+.footer-line { font-size: 14.5px; margin: 8px 0 0; color: rgba(250,250,247,.75); }
+.footer-fisar-corpo .footer-line:first-child { margin-top: 0; }
+.footer-bottega {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600; font-size: 19px;
+  color: #FAFAF7;
+  margin-bottom: 4px;
+}
+.footer-bottega em { font-style: italic; font-weight: 500; color: rgba(250,250,247,.85); }
 .footer-line a { color: rgba(250,250,247,.85); }
 .footer-line a:hover { color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
 .footer-news-titolo {
-  font-family: 'Fraunces', Georgia, serif;
-  font-weight: 600; font-size: 21px; color: #FAFAF7;
-  margin: 0 0 4px;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(250,250,247,.55);
+  margin: 0 0 14px;
 }
 .footer .news-form input {
   background: rgba(250,250,247,.08);
@@ -517,21 +544,24 @@ a, button, input { touch-action: manipulation; }
   display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
 }
 .footer-pagamenti li {
-  font-size: 11.5px; font-weight: 700; letter-spacing: .04em;
-  color: var(--bosco);
-  background: #FAFAF7;
-  border-radius: 6px;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em;
+  color: rgba(250,250,247,.85);
+  border: 1px solid rgba(250,250,247,.26);
+  border-radius: 8px;
   padding: 6px 12px;
 }
 .footer-firma {
   max-width: var(--maxw);
-  margin: 34px auto 0;
+  margin: 40px auto 0;
   text-align: center;
-  font-size: 13px; color: rgba(250,250,247,.55);
+  font-size: 13px; letter-spacing: .02em;
+  color: rgba(250,250,247,.55);
 }
 .footer-firma em {
   font-family: 'Fraunces', Georgia, serif;
   font-style: italic;
+  font-size: 14px;
+  color: rgba(250,250,247,.7);
 }
 
 @media (max-width: 720px) {
@@ -886,12 +916,20 @@ img.no-foto { opacity: 0; }
 }
 .hero-fiducia svg { flex: 0 0 auto; color: var(--salvia); }
 .hero-photo {
+  position: relative;
   margin: 0;
   border-radius: var(--r-card);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
   aspect-ratio: 3 / 2;
   background: #FFFFFF;
+}
+.hero-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid rgba(46,75,58,.08);
+  border-radius: inherit;
+  pointer-events: none;
 }
 .hero-photo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
@@ -1488,8 +1526,22 @@ img.no-foto { opacity: 0; }
   border-left: 1px solid rgba(46,75,58,.1);
 }
 .fiducia-item:first-child { border-left: none; }
-.fiducia-item svg { color: var(--salvia); margin-bottom: 4px; }
-.fiducia-stelle { color: var(--gold); font-size: 15px; letter-spacing: .12em; margin-bottom: 2px; }
+/* medaglione: icona bosco su tondo bianco, come un timbro della bottega */
+.fiducia-item svg {
+  box-sizing: content-box;
+  padding: 10px;
+  margin-bottom: 8px;
+  color: var(--bosco);
+  background: #FFFFFF;
+  border: 1px solid rgba(46,75,58,.12);
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(46,75,58,.05), 0 6px 14px rgba(46,75,58,.06);
+}
+.fiducia-stelle {
+  color: var(--gold); font-size: 15px; letter-spacing: .12em;
+  height: 42px; display: flex; align-items: center;
+  margin-bottom: 8px;
+}
 .fiducia-item strong {
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 19px; color: var(--ink);
@@ -1675,7 +1727,10 @@ img.no-foto { opacity: 0; }
   padding: 18px 2px;
   font-size: 16px; font-weight: 600; color: var(--ink);
   cursor: pointer;
+  transition: color var(--t-1) ease;
 }
+.faq-item summary:hover { color: var(--bosco); }
+.faq-item summary:hover::after { border-color: var(--salvia); background: var(--botanico); }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::after {
   content: '+';
@@ -1855,6 +1910,15 @@ img.no-foto { opacity: 0; }
   overflow: hidden;
   background: #FFFFFF;
   box-shadow: 0 1px 3px rgba(46,75,58,.06), 0 10px 24px rgba(46,75,58,.08);
+  transition: transform var(--t-2) var(--ease-out), box-shadow var(--t-2) var(--ease-out);
+}
+/* filetto sottile sopra la foto: separa il bianco della foto dal fondo */
+.prod-mini-foto::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid rgba(46,75,58,.08);
+  border-radius: inherit;
+  pointer-events: none;
 }
 .prod-mini-foto img {
   position: absolute; inset: 0;
@@ -1862,16 +1926,23 @@ img.no-foto { opacity: 0; }
   transition: transform .7s var(--ease-out);
 }
 .prod-mini-foto .badge { top: 10px; left: 10px; padding: 5px 10px; font-size: 10.5px; }
+.prod-mini:hover .prod-mini-foto {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 5px rgba(46,75,58,.08), 0 18px 40px rgba(46,75,58,.13);
+}
 .prod-mini:hover .prod-mini-foto img { transform: scale(1.05); }
 .prod-mini:hover .prod-mini-nome { color: var(--bosco); }
 .prod-mini-nome {
-  margin-top: 8px;
+  margin-top: 10px;
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 600; font-size: 18.5px; line-height: 1.2;
   color: var(--ink);
   transition: color var(--t-1) ease;
 }
-.prod-mini-prezzo { font-size: 14px; font-weight: 700; color: var(--bosco); }
+.prod-mini-prezzo {
+  font-size: 14px; font-weight: 700; color: var(--bosco);
+  font-variant-numeric: tabular-nums;
+}
 .prod-mini-stelle { font-size: 12px; color: var(--gold); font-weight: 600; }
 
 @media (max-width: 980px) { .prod-griglia { grid-template-columns: repeat(3, 1fr); } }
@@ -1911,9 +1982,17 @@ img.no-foto { opacity: 0; }
   background: #FFFFFF;
   box-shadow: var(--shadow-soft);
 }
+.prodotto-foto::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid rgba(46,75,58,.08);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
 .prodotto-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.prodotto-foto .badge { top: 16px; left: 16px; }
-.prodotto-foto .heart { position: absolute; top: 14px; right: 14px; }
+.prodotto-foto .badge { top: 16px; left: 16px; z-index: 2; }
+.prodotto-foto .heart { position: absolute; top: 14px; right: 14px; z-index: 2; }
 
 .prodotto-info { display: grid; gap: 14px; align-content: start; }
 .prodotto-info .display { margin: 0; font-size: clamp(28px, 3.4vw, 40px); }
