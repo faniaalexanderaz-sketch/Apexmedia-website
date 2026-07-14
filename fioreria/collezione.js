@@ -32,18 +32,24 @@
     });
   }
 
+  var scorte = {};
+
   function disegnaGriglia(attiva) {
     griglia.innerHTML = '';
     var visibili = 0;
     AFC_PRODOTTI.forEach(function (p) {
       if (attiva !== 'tutti' && p.cat.indexOf(attiva) === -1) return;
       visibili += 1;
+      var esaurito = scorte[p.slug] === 0;
       var a = document.createElement('a');
-      a.className = 'prod-mini';
+      a.className = 'prod-mini' + (esaurito ? ' prod-mini-esaurito' : '');
       a.href = 'prodotto.html?p=' + p.slug;
+      var badgeHtml = esaurito
+        ? '<span class="badge badge-esaurito">Esaurito</span>'
+        : (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '');
       a.innerHTML =
         '<span class="prod-mini-foto">' +
-          (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '') +
+          badgeHtml +
           '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="560" onerror="this.classList.add(\'no-foto\')" />' +
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
@@ -58,6 +64,10 @@
   var attiva = catAttiva();
   disegnaFiltri(attiva);
   disegnaGriglia(attiva);
+
+  fetch('/api/stock').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (d && d.scorte) { scorte = d.scorte; disegnaGriglia(attiva); }
+  }).catch(function () {});
 
   /* titolo dinamico per la categoria */
   if (attiva !== 'tutti') {

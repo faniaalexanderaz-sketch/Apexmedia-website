@@ -10,6 +10,16 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- 0) Visita pagina (anonima, per il pannello interno) ---------- */
+  try {
+    var datiVisita = JSON.stringify({ percorso: location.pathname });
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/track', new Blob([datiVisita], { type: 'application/json' }));
+    } else {
+      fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: datiVisita, keepalive: true }).catch(function () {});
+    }
+  } catch (e) {}
+
   /* ---------- 1) Reveal ---------- */
   if (!reduceMotion && 'IntersectionObserver' in window) {
     document.querySelectorAll('.section-head, .hero-copy, .atelier-copy').forEach(function (blk) {
@@ -179,10 +189,10 @@
     toastTimer = setTimeout(function () { elToast.hidden = true; }, 2600);
   }
 
-  function add(nome, prezzo) {
+  function add(nome, prezzo, slug) {
     var found = cart.find(function (r) { return r.nome === nome; });
     if (found) found.qty += 1;
-    else cart.push({ nome: nome, prezzo: prezzo, qty: 1 });
+    else cart.push({ nome: nome, prezzo: prezzo, qty: 1, slug: slug || null });
     render();
     suonoAggiunta();
     toast('«' + nome + '» aggiunto al carrello');

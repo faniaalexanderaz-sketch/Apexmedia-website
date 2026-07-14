@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pannello bottega — Antica Fioreria del Centro</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="pagina-account">
+
+  <header class="nav">
+    <a class="brand" href="index.html" aria-label="Antica Fioreria del Centro, torna alla home">
+      <img class="brand-logo" src="foto/logo-orizzontale.jpg" alt="Antica Fioreria del Centro" />
+    </a>
+    <a class="btn btn-ghost btn-sm" href="index.html">← Torna alla fioreria</a>
+  </header>
+
+  <main class="account">
+
+    <!-- ================= ACCESSO ================= -->
+    <section class="auth" id="vistaAccesso">
+      <div class="auth-card">
+        <form class="auth-form" id="formAccesso" novalidate>
+          <h2 class="auth-sub">Pannello della bottega</h2>
+          <div class="field">
+            <label for="adminPass">Password</label>
+            <input id="adminPass" type="password" autocomplete="current-password" required />
+            <p class="field-err" hidden></p>
+          </div>
+          <p class="form-msg" id="accessoMsg" role="alert" hidden></p>
+          <button class="btn btn-primary btn-lg" type="submit">Entra</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= PANNELLO ================= -->
+    <section class="dash" id="vistaPannello" hidden>
+      <header class="dash-head">
+        <p class="eyebrow">Riservato</p>
+        <h1 class="display">Il tuo <em>pannello</em></h1>
+      </header>
+
+      <nav class="dash-nav" aria-label="Sezioni pannello">
+        <button class="dash-tab attivo" data-pannello="pVisite">Visite</button>
+        <button class="dash-tab" data-pannello="pScorte">Scorte</button>
+        <button class="dash-tab" data-pannello="pOrdini">Ordini</button>
+      </nav>
+
+      <div class="pannello" id="pVisite">
+        <h2 class="pannello-titolo">Chi passa in bottega online</h2>
+        <div class="admin-stat-riga">
+          <div class="admin-stat"><strong id="visiteOggi">—</strong><span>visite oggi</span></div>
+          <div class="admin-stat"><strong id="visiteSettimana">—</strong><span>ultimi 7 giorni</span></div>
+          <div class="admin-stat"><strong id="visiteTotali">—</strong><span>da sempre</span></div>
+        </div>
+      </div>
+
+      <div class="pannello" id="pScorte" hidden>
+        <h2 class="pannello-titolo">Scorte delle composizioni</h2>
+        <p class="body-text">Il numero si abbassa da solo a ogni pagamento andato a buon fine. Puoi correggerlo a mano dopo un rifornimento.</p>
+        <table class="admin-tabella" id="tabellaScorte">
+          <thead><tr><th>Composizione</th><th>Pezzi</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="pannello" id="pOrdini" hidden>
+        <h2 class="pannello-titolo">Ultimi ordini</h2>
+        <ul class="admin-ordini" id="listaOrdiniAdmin"></ul>
+        <p class="vuoto" id="ordiniAdminVuoto" hidden>Ancora nessun ordine registrato.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="prodotti.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

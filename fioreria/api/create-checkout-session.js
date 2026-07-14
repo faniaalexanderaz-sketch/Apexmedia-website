@@ -9,6 +9,7 @@
    mai nel sito.
    ============================================================= */
 const Stripe = require('stripe');
+const { sql, assicuraSchema } = require('./_db');
 
 const EMAIL_OK = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -41,8 +42,15 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    // controllo scorte: chi ha slug lo trova esaurito viene bloccato prima di Stripe
+    await assicuraSchema();
+    var scorteAttuali = {};
+    var righeScorte = (await sql`SELECT slug, quantita FROM prodotti_scorte`);
+    righeScorte.forEach(function (r) { scorteAttuali[r.slug] = r.quantita; });
+
     var stripe = Stripe(process.env.STRIPE_SECRET_KEY);
     var origin = req.headers.origin || ('https://' + req.headers.host);
+    var scorteRichieste = {};
 
     var lineItems = items.map(function (r) {
       var nome = String(r.nome || 'Bouquet').slice(0, 120);
@@ -50,6 +58,14 @@ module.exports = async function handler(req, res) {
       var qty = Math.max(1, Math.min(20, parseInt(r.qty, 10) || 1));
       if (!isFinite(prezzo) || prezzo < 100 || prezzo > 100000) {
         throw new Error('Importo non valido per "' + nome + '"');
+      }
+      var slug = typeof r.slug === 'string' ? r.slug.slice(0, 40) : null;
+      if (slug) {
+        scorteRichieste[slug] = (scorteRichieste[slug] || 0) + qty;
+        if (Object.prototype.hasOwnProperty.call(scorteAttuali, slug) &&
+            scorteRichieste[slug] > scorteAttuali[slug]) {
+          throw new Error('«' + nome + '» non è più disponibile in questa quantità');
+        }
       }
       return {
         quantity: qty,
@@ -64,6 +80,12 @@ module.exports = async function handler(req, res) {
     var consegna = body.consegna || {};
     var emailCliente = EMAIL_OK.test(body.email || '') ? body.email : undefined;
 
+    // elenco compatto slug:quantità, letto dal webhook per scalare le scorte
+    var articoliCompatti = JSON.stringify(
+      items.filter(function (r) { return typeof r.slug === 'string'; })
+           .map(function (r) { return [r.slug.slice(0, 40), Math.max(1, Math.min(20, parseInt(r.qty, 10) || 1))]; })
+    ).slice(0, 480);
+
     var session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: lineItems,
@@ -73,6 +95,7 @@ module.exports = async function handler(req, res) {
       success_url: origin + '/ordine-completato.html?sessione={CHECKOUT_SESSION_ID}',
       cancel_url: origin + '/pagamento-annullato.html',
       metadata: {
+        articoli: articoliCompatti,
         nome_ricevente: String(consegna.nome || '').slice(0, 200),
         telefono: String(consegna.telefono || '').slice(0, 60),
         via: String(consegna.via || '').slice(0, 200),

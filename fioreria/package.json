@@ -3,6 +3,7 @@
   "private": true,
   "description": "Sito e funzione di pagamento della Antica Fioreria del Centro",
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "stripe": "^17.0.0"
   }
 }

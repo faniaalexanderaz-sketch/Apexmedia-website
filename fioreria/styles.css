@@ -1145,6 +1145,13 @@ img.no-foto { opacity: 0; }
   backdrop-filter: blur(4px);
 }
 .badge-oro { color: #8A6B24; border-color: rgba(194,164,92,.45); }
+.badge-esaurito { color: #9B4A3F; background: rgba(255,255,255,.96); border-color: rgba(155,74,63,.35); }
+
+/* card esaurita: foto smorzata, resta comunque consultabile */
+.prod-mini-esaurito .prod-mini-foto img { opacity: .5; filter: grayscale(.3); }
+.prod-mini-esaurito .prod-mini-prezzo { color: var(--muted); }
+
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
 /* ---------- Banner (edizione limitata / settimana) ---------- */
 .banner {
@@ -1482,6 +1489,55 @@ img.no-foto { opacity: 0; }
 .dash-form { display: grid; gap: 16px; max-width: 460px; }
 .vuoto { font-size: 15px; }
 .vuoto a { color: var(--bosco); font-weight: 600; }
+
+/* ---------- pannello interno (admin) ---------- */
+.admin-stat-riga {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.admin-stat {
+  background: var(--botanico);
+  border-radius: 16px;
+  padding: 18px 16px;
+  text-align: center;
+  display: grid; gap: 4px;
+}
+.admin-stat strong {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600; font-size: 28px; color: var(--bosco);
+  font-variant-numeric: tabular-nums;
+}
+.admin-stat span { font-size: 12.5px; color: var(--muted); }
+
+.admin-tabella { width: 100%; border-collapse: collapse; }
+.admin-tabella th {
+  text-align: left; font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--muted); padding: 0 10px 10px; border-bottom: 1px solid var(--line);
+}
+.admin-tabella td { padding: 10px; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+.admin-input-scorta {
+  width: 72px; padding: 8px 10px;
+  border: 1px solid var(--line); border-radius: 10px;
+  font-size: 14.5px; font-variant-numeric: tabular-nums;
+}
+
+.admin-ordini { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.admin-ordine {
+  border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px;
+}
+.admin-ordine-riga1 {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+}
+.admin-ordine-riga1 strong {
+  font-family: 'Fraunces', Georgia, serif; font-size: 18px; color: var(--ink);
+}
+.admin-ordine-riga1 span { font-size: 12.5px; color: var(--muted); }
+.admin-ordine-articoli { margin: 8px 0 4px; font-size: 14px; color: var(--ink); }
+.admin-ordine-consegna { margin: 0; font-size: 12.5px; color: var(--muted); }
+
+@media (max-width: 560px) {
+  .admin-stat-riga { grid-template-columns: 1fr; }
+}
 
 /* ordini */
 .ordini { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }

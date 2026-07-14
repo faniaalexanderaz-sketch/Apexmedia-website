@@ -91,12 +91,32 @@
 
   dipingiPrezzo();
 
+  /* ---------- scorte in tempo reale ---------- */
+  fetch('/api/stock').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.scorte || !Object.prototype.hasOwnProperty.call(d.scorte, prod.slug)) return;
+    var rimasti = d.scorte[prod.slug];
+    if (rimasti <= 0) {
+      var b = document.getElementById('pBadge');
+      b.textContent = 'Esaurito';
+      b.classList.remove('badge-oro');
+      b.classList.add('badge-esaurito');
+      b.hidden = false;
+      avail.querySelector('span').textContent = 'Al momento esaurito — torna presto';
+      avail.classList.add('avail-low');
+      document.getElementById('pAggiungi').disabled = true;
+      document.getElementById('pCompra').disabled = true;
+    } else if (rimasti <= 5) {
+      avail.querySelector('span').textContent = 'Ultimi ' + rimasti + ' pezzi disponibili';
+      avail.classList.add('avail-low');
+    }
+  }).catch(function () {});
+
   /* ---------- carrello ---------- */
   function nomeCompleto() { return prod.nome + ' (' + taglia.nome + ')'; }
 
   function aggiungi() {
     if (typeof AFC_CART === 'undefined') return;
-    for (var i = 0; i < qty; i++) AFC_CART.add(nomeCompleto(), prezzoCorrente());
+    for (var i = 0; i < qty; i++) AFC_CART.add(nomeCompleto(), prezzoCorrente(), prod.slug);
   }
   document.getElementById('pAggiungi').addEventListener('click', aggiungi);
   document.getElementById('pCompra').addEventListener('click', function () {

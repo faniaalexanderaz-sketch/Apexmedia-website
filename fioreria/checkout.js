@@ -227,7 +227,7 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        items: cart.map(function (r) { return { nome: r.nome, prezzo: r.prezzo, qty: r.qty }; }),
+        items: cart.map(function (r) { return { nome: r.nome, prezzo: r.prezzo, qty: r.qty, slug: r.slug }; }),
         totale: t.tot,
         email: consegna.email,
         consegna: consegna
