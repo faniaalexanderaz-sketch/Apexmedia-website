@@ -952,7 +952,18 @@ img.no-foto { opacity: 0; }
   margin: 0 auto;
   padding: clamp(28px, 4.5vh, 46px) var(--pad) 0;
 }
-.hero-eyebrow { margin: 0; }
+/* etichetta a pillola: verde chiaro del tema, scritta verde bosco, centrata */
+.hero-eyebrow {
+  margin: 0;
+  justify-self: center;
+  text-align: center;
+  color: var(--bosco);
+  background: var(--botanico);
+  border: 1px solid rgba(46,75,58,.1);
+  border-radius: var(--r-pill);
+  padding: 9px 18px;
+}
+.hero-eyebrow::before { display: none; }
 .hero-titolo {
   margin: 0;
   font-size: clamp(32px, 4vw, 50px);
