@@ -92,9 +92,9 @@
   dipingiPrezzo();
 
   /* ---------- scorte in tempo reale ---------- */
-  fetch('/api/stock').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
-    if (!d || !d.scorte || !Object.prototype.hasOwnProperty.call(d.scorte, prod.slug)) return;
-    var rimasti = d.scorte[prod.slug];
+  function mostraScorte(rimasti) {
+    var pScorte = document.getElementById('pScorte');
+    var pScorteTesto = document.getElementById('pScorteTesto');
     if (rimasti <= 0) {
       var b = document.getElementById('pBadge');
       b.textContent = 'Esaurito';
@@ -105,10 +105,44 @@
       avail.classList.add('avail-low');
       document.getElementById('pAggiungi').disabled = true;
       document.getElementById('pCompra').disabled = true;
-    } else if (rimasti <= 5) {
-      avail.querySelector('span').textContent = 'Ultimi ' + rimasti + ' pezzi disponibili';
-      avail.classList.add('avail-low');
+      pScorte.hidden = true;
+    } else {
+      pScorteTesto.textContent = rimasti + (rimasti === 1 ? ' pezzo rimasto' : ' pezzi rimasti');
+      pScorte.hidden = false;
+      pScorte.classList.toggle('prodotto-scorte-poche', rimasti <= 5);
+      if (rimasti <= 5) {
+        avail.querySelector('span').textContent = 'Ultimi ' + rimasti + ' pezzi disponibili';
+        avail.classList.add('avail-low');
+      }
     }
+  }
+
+  fetch('/api/stock').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.scorte) return;
+    if (Object.prototype.hasOwnProperty.call(d.scorte, prod.slug)) {
+      mostraScorte(d.scorte[prod.slug]);
+    }
+    document.querySelectorAll('#correlati .prod-mini[data-slug]').forEach(function (card) {
+      var slug = card.getAttribute('data-slug');
+      if (!Object.prototype.hasOwnProperty.call(d.scorte, slug)) return;
+      var rimasti = d.scorte[slug];
+      var elScorte = card.querySelector('.prod-mini-scorte');
+      if (rimasti <= 0) {
+        card.classList.add('prod-mini-esaurito');
+        var badge = card.querySelector('.badge');
+        if (badge) { badge.textContent = 'Esaurito'; badge.className = 'badge badge-esaurito'; }
+        else {
+          var span = document.createElement('span');
+          span.className = 'badge badge-esaurito';
+          span.textContent = 'Esaurito';
+          card.querySelector('.prod-mini-foto').prepend(span);
+        }
+        if (elScorte) elScorte.hidden = true;
+      } else if (elScorte) {
+        elScorte.querySelector('span').textContent = rimasti + ' rimasti';
+        elScorte.hidden = false;
+      }
+    });
   }).catch(function () {});
 
   /* ---------- carrello ---------- */
@@ -149,13 +183,17 @@
       var a = document.createElement('a');
       a.className = 'prod-mini';
       a.href = 'prodotto.html?p=' + p.slug;
+      a.setAttribute('data-slug', p.slug);
       a.innerHTML =
         '<span class="prod-mini-foto">' +
           (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '') +
           '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="560" onerror="this.classList.add(\'no-foto\')" />' +
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
-        '<span class="prod-mini-prezzo">da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0])) + '</span>' +
+        '<span class="prod-mini-riga">' +
+          '<span class="prod-mini-prezzo">da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0])) + '</span>' +
+          '<span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>' +
+        '</span>' +
         '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';
       a.querySelector('.prod-mini-nome').textContent = p.nome;
       griglia.appendChild(a);

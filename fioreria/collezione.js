@@ -40,20 +40,28 @@
     AFC_PRODOTTI.forEach(function (p) {
       if (attiva !== 'tutti' && p.cat.indexOf(attiva) === -1) return;
       visibili += 1;
-      var esaurito = scorte[p.slug] === 0;
+      var conosciuta = Object.prototype.hasOwnProperty.call(scorte, p.slug);
+      var rimasti = scorte[p.slug];
+      var esaurito = conosciuta && rimasti === 0;
       var a = document.createElement('a');
       a.className = 'prod-mini' + (esaurito ? ' prod-mini-esaurito' : '');
       a.href = 'prodotto.html?p=' + p.slug;
       var badgeHtml = esaurito
         ? '<span class="badge badge-esaurito">Esaurito</span>'
         : (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '');
+      var scorteHtml = (conosciuta && !esaurito)
+        ? '<span class="prod-mini-scorte"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span>' + rimasti + ' rimasti</span></span>'
+        : '';
       a.innerHTML =
         '<span class="prod-mini-foto">' +
           badgeHtml +
           '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="560" onerror="this.classList.add(\'no-foto\')" />' +
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
-        '<span class="prod-mini-prezzo">da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0])) + '</span>' +
+        '<span class="prod-mini-riga">' +
+          '<span class="prod-mini-prezzo">da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0])) + '</span>' +
+          scorteHtml +
+        '</span>' +
         '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';
       a.querySelector('.prod-mini-nome').textContent = p.nome;
       griglia.appendChild(a);
