@@ -1,0 +1,569 @@
+<!doctype html>
+<html
+  lang="it"
+  data-composition-variables='[
+    {"id":"brandName","type":"string","label":"Nome del centro","default":"Essenza d&apos;Oriente"},
+    {"id":"accent","type":"color","label":"Colore accento","default":"#D8B98C"},
+    {"id":"ctaText","type":"string","label":"Testo CTA","default":"Prenota il tuo momento di benessere"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Reel Essenza d'Oriente — Shiatsu e Riflessologia</title>
+    <script src="assets/js/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Marcellus";
+        font-style: normal;
+        font-weight: 400;
+        src: url("assets/fonts/marcellus-latin.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122;
+      }
+      @font-face {
+        font-family: "Marcellus";
+        font-style: normal;
+        font-weight: 400;
+        src: url("assets/fonts/marcellus.woff2") format("woff2");
+        unicode-range: U+0100-02BA, U+1E00-1E9F, U+2C60-2C7F;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #10160f;
+      }
+      body { font-family: "Montserrat", sans-serif; color: #f6f1e7; }
+
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #10160f;
+      }
+
+      video.footage {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #v1 { z-index: 1; } #v2 { z-index: 2; } #v3 { z-index: 3; }
+      #v4 { z-index: 4; } #v5 { z-index: 5; } #v6 { z-index: 6; }
+      #v7 { z-index: 7; } #v8 { z-index: 8; } #v9 { z-index: 9; }
+
+      /* ---- persistent grade layers ---- */
+      #scrim {
+        position: absolute; inset: 0; z-index: 10;
+        background:
+          linear-gradient(180deg, rgba(10, 14, 10, 0.44) 0%, rgba(10, 14, 10, 0.16) 14%, rgba(10, 14, 10, 0) 30%),
+          linear-gradient(0deg, rgba(10, 14, 10, 0.48) 0%, rgba(10, 14, 10, 0.16) 16%, rgba(10, 14, 10, 0) 34%);
+      }
+      #vignette {
+        position: absolute; inset: 0; z-index: 11;
+        background: radial-gradient(120% 100% at 50% 46%, rgba(8, 12, 9, 0) 52%, rgba(8, 12, 9, 0.32) 100%);
+      }
+      #grain {
+        position: absolute; z-index: 12;
+        width: 160%; height: 160%; left: -30%; top: -30%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+        opacity: 0.05;
+        mix-blend-mode: overlay;
+      }
+      #frameline {
+        position: absolute;
+        left: 42px; right: 42px; top: 42px; bottom: 42px;
+        border: 1px solid rgba(246, 241, 231, 0.15);
+        border-radius: 2px;
+      }
+      #progress-track {
+        position: absolute;
+        left: 84px; right: 84px; bottom: 96px; height: 3px;
+        background: rgba(246, 241, 231, 0.18);
+        border-radius: 2px;
+      }
+      #progress-fill {
+        display: block;
+        width: 100%; height: 100%;
+        background: var(--accent, #d8b98c);
+        border-radius: 2px;
+        transform-origin: left center;
+      }
+
+      /* ---- hook (big opening type) ---- */
+      #hook {
+        position: absolute; z-index: 15;
+        left: 84px; right: 84px; top: 330px;
+        display: flex; flex-direction: column;
+        align-items: center; text-align: center;
+        gap: 26px;
+      }
+      #hook .h-kicker {
+        font-size: 27px; font-weight: 700;
+        letter-spacing: 0.5em; text-transform: uppercase;
+        color: #ecd5ae;
+        text-shadow: 0 2px 20px rgba(10, 14, 10, 0.75);
+      }
+      #hook .h-main {
+        font-family: "Marcellus", serif;
+        font-size: 116px; line-height: 1.05;
+        color: #f6f1e7;
+        text-shadow: 0 4px 34px rgba(10, 14, 10, 0.7);
+      }
+      #hook .h-main .k { color: #ecd5ae; }
+      #hook .h-sub {
+        font-family: "Marcellus", serif;
+        font-size: 62px; line-height: 1.1;
+        color: rgba(246, 241, 231, 0.94);
+        text-shadow: 0 3px 28px rgba(10, 14, 10, 0.7);
+      }
+      #hook .h-rule {
+        width: 110px; height: 2px;
+        background: var(--accent, #d8b98c);
+        transform-origin: center;
+      }
+
+      /* ---- treatment cards ---- */
+      .txt {
+        position: absolute; z-index: 15;
+        max-width: 780px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        top: 178px;
+      }
+      .txt.left { left: 84px; align-items: flex-start; }
+      .txt.right { right: 84px; align-items: flex-end; text-align: right; }
+      .txt.left::before {
+        content: "";
+        position: absolute; z-index: -1;
+        top: -80px; bottom: -80px; left: -1000px; right: -200px;
+        background: linear-gradient(90deg,
+          rgba(10, 14, 10, 0.78) 0%, rgba(10, 14, 10, 0.7) 58%,
+          rgba(10, 14, 10, 0.42) 80%, rgba(10, 14, 10, 0) 100%);
+      }
+      .txt.right::before {
+        content: "";
+        position: absolute; z-index: -1;
+        top: -80px; bottom: -80px; right: -1000px; left: -200px;
+        background: linear-gradient(270deg,
+          rgba(10, 14, 10, 0.78) 0%, rgba(10, 14, 10, 0.7) 58%,
+          rgba(10, 14, 10, 0.42) 80%, rgba(10, 14, 10, 0) 100%);
+      }
+      .meta-row { display: flex; align-items: center; gap: 18px; }
+      .idx {
+        font-size: 20px; font-weight: 700;
+        letter-spacing: 0.28em;
+        color: rgba(246, 241, 231, 0.92);
+        white-space: nowrap; flex-shrink: 0;
+      }
+      .rule {
+        display: block; width: 80px; height: 2px;
+        background: var(--accent, #d8b98c);
+        transform-origin: left center; flex-shrink: 0;
+      }
+      .kicker {
+        font-size: 24px; font-weight: 700;
+        letter-spacing: 0.3em; line-height: 1.7;
+        text-transform: uppercase;
+        color: #ecd5ae;
+        text-shadow: 0 2px 18px rgba(10, 14, 10, 0.55);
+      }
+      .headline {
+        font-family: "Marcellus", serif;
+        font-size: 62px; font-weight: 400;
+        line-height: 1.16;
+        color: #f6f1e7;
+        text-shadow: 0 3px 30px rgba(10, 14, 10, 0.55);
+      }
+      .headline .line { display: block; }
+      .chip {
+        display: flex; align-items: center; justify-content: center;
+        width: 100px; height: 100px;
+        border: 1.5px solid rgba(246, 241, 231, 0.42);
+        border-radius: 50%;
+        color: var(--accent, #d8b98c);
+        background: rgba(10, 14, 10, 0.22);
+      }
+      .chip svg { width: 58px; height: 58px; }
+      .chip svg * {
+        fill: none; stroke: currentColor;
+        stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+      }
+
+      /* ---- captions (VO-synced) ---- */
+      .cap {
+        position: absolute; z-index: 16;
+        left: 70px; right: 70px; bottom: 430px;
+        display: flex; justify-content: center;
+      }
+      .cap .pill {
+        display: inline-block;
+        max-width: 880px;
+        padding: 22px 40px;
+        background: rgba(8, 12, 9, 0.78);
+        border-radius: 26px;
+        font-size: 41px; font-weight: 700;
+        line-height: 1.4;
+        text-align: center;
+        color: #f6f1e7;
+        letter-spacing: 0.01em;
+      }
+      .cap .kw { display: inline-block; color: #f6f1e7; }
+
+      /* ---- end card ---- */
+      #endcard {
+        position: absolute; inset: 0; z-index: 20;
+        background: radial-gradient(130% 90% at 50% 38%, #1d271d 0%, #131a13 55%, #0d120c 100%);
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 32px;
+        padding: 140px 100px;
+        text-align: center;
+        opacity: 0;
+      }
+      #end-ghost {
+        position: absolute;
+        top: 11%; left: 50%;
+        width: 1600px; height: 420px;
+        margin-left: -800px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='420'%3E%3Ctext x='800' y='300' text-anchor='middle' font-family='Georgia, serif' font-size='280' fill='%23f6f1e7' fill-opacity='0.05'%3Eessenza%3C/text%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      #end-rings {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 1240px; height: 1240px;
+        margin: -620px 0 0 -620px;
+        border: 1px solid rgba(216, 185, 140, 0.16);
+        border-radius: 50%;
+      }
+      #end-rings::after {
+        content: "";
+        position: absolute; inset: 110px;
+        border: 1px solid rgba(216, 185, 140, 0.1);
+        border-radius: 50%;
+      }
+      #end-mark {
+        width: 160px; height: 160px;
+        border: 1.5px solid rgba(216, 185, 140, 0.75);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--accent, #d8b98c);
+      }
+      #end-mark svg { width: 88px; height: 88px; }
+      #end-mark svg * {
+        fill: none; stroke: currentColor;
+        stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+      }
+      #end-kicker {
+        font-size: 21px; font-weight: 700;
+        letter-spacing: 0.42em; text-transform: uppercase;
+        color: rgba(246, 241, 231, 0.62);
+      }
+      #end-brand {
+        font-family: "Marcellus", serif;
+        font-size: 96px; line-height: 1.08;
+        color: #f6f1e7;
+      }
+      #end-rule { width: 120px; height: 2px; background: var(--accent, #d8b98c); transform-origin: center; }
+      #end-cta {
+        font-family: "Marcellus", serif;
+        font-size: 45px; line-height: 1.35;
+        max-width: 780px;
+        color: rgba(246, 241, 231, 0.94);
+      }
+      #end-pill {
+        margin-top: 8px;
+        padding: 25px 52px;
+        border: 1.5px solid var(--accent, #d8b98c);
+        border-radius: 999px;
+        font-size: 24px; font-weight: 700;
+        letter-spacing: 0.24em; text-transform: uppercase;
+        color: var(--accent, #d8b98c);
+      }
+      #end-foot {
+        margin-top: 6px;
+        font-size: 19px; font-weight: 400;
+        letter-spacing: 0.3em; text-transform: uppercase;
+        color: rgba(246, 241, 231, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="33"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- footage: cuts on VO phrase boundaries; crossfades at section changes -->
+      <video id="v1" class="footage clip" src="assets/video/schiena-wide2.mp4"
+        data-start="0" data-duration="3.7" data-track-index="0" muted playsinline preload="metadata"></video>
+      <video id="v2" class="footage clip" src="assets/video/massaggio-02.mp4"
+        data-start="3" data-duration="3.5" data-track-index="1" data-media-start="1"
+        muted playsinline preload="metadata"></video>
+      <video id="v3" class="footage clip" src="assets/video/massaggio-01.mp4"
+        data-start="6.5" data-duration="4.2" data-track-index="0" muted playsinline preload="metadata"></video>
+      <video id="v4" class="footage clip" src="assets/video/piedi-wide.mp4"
+        data-start="10" data-duration="3.2" data-track-index="1" muted playsinline preload="metadata"></video>
+      <video id="v5" class="footage clip" src="assets/video/piedi-close.mp4"
+        data-start="13.2" data-duration="3" data-track-index="0" muted playsinline preload="metadata"></video>
+      <video id="v6" class="footage clip" src="assets/video/piedi-grip.mp4"
+        data-start="16.2" data-duration="3.5" data-track-index="1" muted playsinline preload="metadata"></video>
+      <video id="v7" class="footage clip" src="assets/video/massaggio-05.mp4"
+        data-start="19" data-duration="3.5" data-track-index="0" muted playsinline preload="metadata"></video>
+      <video id="v8" class="footage clip" src="assets/video/massaggio-04.mp4"
+        data-start="22.5" data-duration="4.2" data-track-index="1" muted playsinline preload="metadata"></video>
+      <video id="v9" class="footage clip" src="assets/video/massaggio-03.mp4"
+        data-start="26" data-duration="2.6" data-track-index="0" muted playsinline preload="metadata"></video>
+
+      <!-- persistent layers -->
+      <div id="scrim" class="clip" data-start="0" data-duration="33" data-track-index="2"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="33" data-track-index="3"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="33" data-track-index="4"></div>
+      <div id="furniture" class="clip" data-start="0" data-duration="33" data-track-index="5"
+        style="position: absolute; inset: 0; z-index: 13">
+        <div id="frameline"></div>
+        <div id="progress-track"><span id="progress-fill"></span></div>
+      </div>
+
+      <!-- hook: "A volte il corpo parla prima delle parole" -->
+      <div id="hook" class="clip" data-start="0" data-duration="3.3" data-track-index="6">
+        <div class="h-kicker">A volte</div>
+        <div class="h-main">il <span class="k">corpo</span> parla</div>
+        <span class="h-rule"></span>
+        <div class="h-sub">prima delle parole</div>
+      </div>
+
+      <!-- card 1: Shiatsu (VO 3.4–10) -->
+      <div id="card1" class="txt left clip" data-start="3.8" data-duration="5.8" data-track-index="6">
+        <div class="meta-row">
+          <span class="idx">01</span>
+          <span class="rule"></span>
+          <span class="kicker">Massaggio Shiatsu</span>
+        </div>
+        <h1 class="headline">
+          <span class="line">Scioglie le tensioni</span>
+          <span class="line">profonde</span>
+        </h1>
+        <div class="chip">
+          <svg viewBox="0 0 64 64">
+            <circle class="draw" cx="32" cy="36" r="5" />
+            <path class="draw" d="M18 36 a14 14 0 0 1 28 0" />
+            <path class="draw" d="M10 36 a22 22 0 0 1 44 0" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- card 2: Riflessologia (VO 10–19) -->
+      <div id="card2" class="txt right clip" data-start="10.7" data-duration="7.8" data-track-index="6">
+        <div class="meta-row">
+          <span class="idx">02</span>
+          <span class="rule"></span>
+          <span class="kicker">Riflessologia Plantare</span>
+        </div>
+        <h1 class="headline">
+          <span class="line">Stimola l'equilibrio</span>
+          <span class="line">del corpo</span>
+        </h1>
+        <div class="chip">
+          <svg viewBox="0 0 64 64">
+            <ellipse class="draw" cx="30" cy="40" rx="13" ry="16" />
+            <circle class="draw" cx="18" cy="18" r="4" />
+            <circle class="draw" cx="28" cy="14" r="4.5" />
+            <circle class="draw" cx="39" cy="15" r="4" />
+            <circle class="draw" cx="48" cy="20" r="3.5" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- captions, VO-synced -->
+      <div id="b1" class="cap clip" data-start="3" data-duration="1.72" data-track-index="7">
+        <span class="pill">Con il massaggio <span class="kw kw1">Shiatsu</span></span>
+      </div>
+      <div id="b2" class="cap clip" data-start="4.72" data-duration="2.28" data-track-index="7">
+        <span class="pill">aiutiamo a sciogliere<br />le <span class="kw kw1">tensioni profonde</span></span>
+      </div>
+      <div id="b3" class="cap clip" data-start="7" data-duration="3" data-track-index="7">
+        <span class="pill">e a ritrovare una sensazione<br />di <span class="kw kw1">benessere autentico</span></span>
+      </div>
+      <div id="b5" class="cap clip" data-start="10" data-duration="2.06" data-track-index="7">
+        <span class="pill">La <span class="kw kw1">riflessologia plantare</span></span>
+      </div>
+      <div id="b6" class="cap clip" data-start="12.06" data-duration="2.94" data-track-index="7">
+        <span class="pill">stimola i punti collegati<br />a tutto il corpo</span>
+      </div>
+      <div id="b7" class="cap clip" data-start="15" data-duration="4" data-track-index="7">
+        <span class="pill">favorendo <span class="kw kw1">equilibrio</span>, <span class="kw kw2">leggerezza</span><br />e <span class="kw kw3">rilassamento</span></span>
+      </div>
+      <div id="b8" class="cap clip" data-start="19" data-duration="2.09" data-track-index="7">
+        <span class="pill">Ogni trattamento è pensato</span>
+      </div>
+      <div id="b9" class="cap clip" data-start="21.09" data-duration="2.1" data-track-index="7">
+        <span class="pill">per farti <span class="kw kw1">rallentare</span>, <span class="kw kw2">respirare</span></span>
+      </div>
+      <div id="b10" class="cap clip" data-start="23.19" data-duration="2.81" data-track-index="7">
+        <span class="pill">e prenderti finalmente<br /><span class="kw kw1">cura di te</span></span>
+      </div>
+
+      <!-- end card (VO cita il brand a 27.0) -->
+      <div id="endcard" class="clip" data-start="26.8" data-duration="6.2" data-track-index="8">
+        <div id="end-ghost" data-layout-allow-overflow></div>
+        <div id="end-rings" data-layout-allow-overflow></div>
+        <div id="end-mark">
+          <svg viewBox="0 0 64 64">
+            <path class="draw" d="M32 12 C40 23 40 36 32 45 C24 36 24 23 32 12 Z" />
+            <path class="draw" d="M12 27 C17 41 23 47 32 49 C24 48 16 42 12 27 Z" />
+            <path class="draw" d="M52 27 C47 41 41 47 32 49 C40 48 48 42 52 27 Z" />
+          </svg>
+        </div>
+        <div id="end-kicker">Centro Olistico · Alessandria</div>
+        <div id="end-brand" data-var-text="brandName">Essenza d'Oriente</div>
+        <div id="end-rule"></div>
+        <div id="end-cta" data-var-text="ctaText">Prenota il tuo momento di benessere</div>
+        <div id="end-pill">Messaggio diretto · Link in bio</div>
+        <div id="end-foot">Shiatsu · Riflessologia plantare · Massaggi</div>
+      </div>
+
+      <!-- audio -->
+      <audio id="vo" src="assets/audio/vo.m4a"
+        data-start="0" data-duration="33" data-track-index="10" data-volume="1" preload="metadata"></audio>
+      <audio id="bgm" src="assets/audio/bgm-spa.m4a"
+        data-start="0" data-duration="33" data-track-index="11" data-volume="0.9" preload="metadata"></audio>
+      <audio id="wh1" src="assets/audio/whoosh.mp3"
+        data-start="2.85" data-duration="1.2" data-track-index="12" data-volume="0.14" preload="metadata"></audio>
+      <audio id="wh2" src="assets/audio/whoosh.mp3"
+        data-start="9.85" data-duration="1.2" data-track-index="12" data-volume="0.14" preload="metadata"></audio>
+      <audio id="wh3" src="assets/audio/whoosh.mp3"
+        data-start="18.85" data-duration="1.2" data-track-index="12" data-volume="0.14" preload="metadata"></audio>
+      <audio id="chime" src="assets/audio/chime.mp3"
+        data-start="26.9" data-duration="2.5" data-track-index="13" data-volume="0.3" preload="metadata"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ---------- ken-burns (scale only; punch-in on hard cuts) ---------- */
+      const kb = [
+        { el: "#v1", from: 1.04, to: 1.12, o: "50% 35%", t: 0,    d: 3.7, e: "none" },
+        { el: "#v2", from: 1.1,  to: 1.03, o: "45% 40%", t: 3.0,  d: 3.5, e: "power1.out" },
+        { el: "#v3", from: 1.11, to: 1.03, o: "50% 55%", t: 6.5,  d: 4.2, e: "power2.out" },
+        { el: "#v4", from: 1.03, to: 1.1,  o: "40% 30%", t: 10.0, d: 3.2, e: "none" },
+        { el: "#v5", from: 1.12, to: 1.04, o: "50% 60%", t: 13.2, d: 3.0, e: "power2.out" },
+        { el: "#v6", from: 1.1,  to: 1.03, o: "45% 55%", t: 16.2, d: 3.5, e: "power2.out" },
+        { el: "#v7", from: 1.02, to: 1.08, o: "45% 35%", t: 19.0, d: 3.5, e: "none" },
+        { el: "#v8", from: 1.08, to: 1.02, o: "55% 35%", t: 22.5, d: 4.2, e: "power1.out" },
+        { el: "#v9", from: 1.03, to: 1.07, o: "50% 45%", t: 26.0, d: 2.6, e: "none" },
+      ];
+      kb.forEach(({ el, from, to, o, t, d, e }) => {
+        tl.fromTo(el, { scale: from, transformOrigin: o }, { scale: to, duration: d, ease: e }, t);
+      });
+
+      /* ---------- soft crossfades at section changes (hard cuts elsewhere) ---------- */
+      [
+        { at: 3.0,  inc: "#v2", out: "#v1" },
+        { at: 10.0, inc: "#v4", out: "#v3" },
+        { at: 19.0, inc: "#v7", out: "#v6" },
+        { at: 26.0, inc: "#v9", out: "#v8" },
+      ].forEach(({ at, inc, out }) => {
+        tl.to(out, { filter: "blur(9px)", duration: 0.7, ease: "power1.in" }, at);
+        tl.fromTo(inc, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.inOut" }, at);
+        tl.fromTo(inc, { filter: "blur(12px)" },
+          { filter: "blur(0px)", duration: 0.9, ease: "power1.out" }, at + 0.05);
+      });
+
+      /* ---------- persistent furniture ---------- */
+      tl.fromTo("#progress-fill", { scaleX: 0 }, { scaleX: 1, duration: 33, ease: "none" }, 0);
+      tl.fromTo("#frameline", { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "sine.out" }, 0.3);
+      tl.fromTo("#grain", { x: 0, y: 0 }, { x: -40, y: 30, duration: 33, ease: "none" }, 0);
+
+      /* ---------- hook: staggered on spoken words ---------- */
+      tl.fromTo("#hook .h-kicker", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.12);
+      tl.fromTo("#hook .h-main", { opacity: 0, y: 34, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 0.6);
+      tl.fromTo("#hook .h-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.out" }, 1.2);
+      tl.fromTo("#hook .h-sub", { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 1.5);
+      tl.to("#hook", { opacity: 0, y: -18, duration: 0.45, ease: "power1.in" }, 2.8);
+
+      /* ---------- treatment cards ---------- */
+      function cardIn(group, at) {
+        tl.fromTo(group + " .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.out" }, at);
+        tl.fromTo(group + " .idx", { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, at + 0.05);
+        tl.fromTo(group + " .kicker", { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, at + 0.15);
+        tl.fromTo(group + " .headline .line", { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: 0.75, ease: "power3.out", stagger: 0.12 }, at + 0.25);
+        tl.fromTo(group + " .chip", { opacity: 0, scale: 0.7 },
+          { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.4)" }, at + 0.5);
+        tl.fromTo(group + " .chip .draw",
+          { strokeDasharray: 210, strokeDashoffset: 210 },
+          { strokeDashoffset: 0, duration: 1.2, ease: "power1.inOut", stagger: 0.1 }, at + 0.6);
+      }
+      function cardOut(group, endAt) {
+        tl.to(group, { opacity: 0, y: -14, duration: 0.45, ease: "power1.in" }, endAt - 0.47);
+      }
+      cardIn("#card1", 3.8);  cardOut("#card1", 9.6);
+      cardIn("#card2", 10.7); cardOut("#card2", 18.5);
+
+      /* ---------- captions: pop in, keyword tints gold at the spoken instant ---------- */
+      const caps = [
+        { id: "#b1",  s: 3.0,   e: 4.72,  kw: [["kw1", 4.12]] },
+        { id: "#b2",  s: 4.72,  e: 7.0,   kw: [["kw1", 6.33]] },
+        { id: "#b3",  s: 7.0,   e: 10.0,  kw: [["kw1", 8.63]] },
+        { id: "#b5",  s: 10.0,  e: 12.06, kw: [["kw1", 10.25]] },
+        { id: "#b6",  s: 12.06, e: 15.0,  kw: [] },
+        { id: "#b7",  s: 15.0,  e: 19.0,  kw: [["kw1", 15.75], ["kw2", 16.76], ["kw3", 17.67]] },
+        { id: "#b8",  s: 19.0,  e: 21.09, kw: [] },
+        { id: "#b9",  s: 21.09, e: 23.19, kw: [["kw1", 21.15], ["kw2", 22.33]] },
+        { id: "#b10", s: 23.19, e: 26.0,  kw: [["kw1", 25.0]] },
+      ];
+      caps.forEach(({ id, s, e, kw }) => {
+        tl.fromTo(id + " .pill",
+          { opacity: 0, y: 16, scale: 0.965 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: "power2.out" }, s + 0.02);
+        tl.to(id + " .pill", { opacity: 0, y: -10, duration: 0.24, ease: "power1.in" }, e - 0.26);
+        kw.forEach(([cls, at]) => {
+          tl.to(id + " ." + cls, { color: "#ecd5ae", duration: 0.28, ease: "sine.out" }, at);
+          tl.to(id + " ." + cls,
+            { scale: 1.07, duration: 0.16, ease: "power1.out", yoyo: true, repeat: 1 }, at);
+        });
+      });
+
+      /* ---------- end card ---------- */
+      const E = 26.8;
+      tl.to("#endcard", { opacity: 1, duration: 1.0, ease: "sine.inOut" }, E);
+      tl.fromTo("#end-mark", { opacity: 0, scale: 0.72 },
+        { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.3)" }, E + 0.5);
+      tl.fromTo("#end-mark .draw",
+        { strokeDasharray: 190, strokeDashoffset: 190 },
+        { strokeDashoffset: 0, duration: 1.3, ease: "power1.inOut", stagger: 0.14 }, E + 0.6);
+      tl.fromTo("#end-kicker", { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, E + 0.8);
+      tl.fromTo("#end-brand", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" }, E + 0.95);
+      tl.fromTo("#end-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.out" }, E + 1.2);
+      tl.fromTo("#end-cta", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, E + 1.35);
+      tl.fromTo("#end-pill", { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.65, ease: "back.out(1.2)" }, E + 1.7);
+      tl.fromTo("#end-foot", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.out" }, E + 2.0);
+      tl.fromTo("#end-rings", { scale: 0.96, opacity: 0 },
+        { scale: 1.05, opacity: 1, duration: 6.2, ease: "sine.out" }, E);
+      tl.fromTo("#end-ghost", { x: -36 }, { x: 36, duration: 6.2, ease: "none" }, E);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
