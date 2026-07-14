@@ -1357,6 +1357,16 @@ img.no-foto { opacity: 0; }
 .bonus strong { color: #8A6B24; }
 .bonus-fiore { color: var(--gold); font-size: 20px; }
 
+/* link discreto verso il pannello interno, sotto la card di accesso */
+.auth-riservato {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  max-width: 560px; margin: 22px auto 0;
+  font-size: 12.5px; color: var(--muted);
+  opacity: .75;
+  transition: opacity var(--t-1) ease, color var(--t-1) ease;
+}
+.auth-riservato:hover { opacity: 1; color: var(--bosco); }
+
 /* card autenticazione */
 .auth-card {
   max-width: 560px; margin: 0 auto;
