@@ -1,2 +1,5 @@
 __pycache__/
 node_modules/
+
+# Intermediate/reproducible render artifacts from video editing
+my-video/assets/work/
