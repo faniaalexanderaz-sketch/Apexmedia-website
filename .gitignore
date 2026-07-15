@@ -3,3 +3,8 @@ node_modules/
 
 # Intermediate/reproducible render artifacts from video editing
 my-video/assets/work/
+my-video/assets/v2/raw/
+my-video/assets/v2/graded/
+my-video/assets/v2/work/*.mp4
+my-video/assets/v2/work/*.jpg
+my-video/assets/v2/work/*.txt

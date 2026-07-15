@@ -1,0 +1,135 @@
+[Script Info]
+Title: Essenza d'Oriente v2 - Premium Captions
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: CapBox,DejaVu Sans,58,&H00FFFFFF,&H00FFFFFF,&H00000000,&H55000000,1,0,0,0,100,100,0.5,0,3,14,0,2,70,70,320,1
+Style: CapOutline,DejaVu Sans,60,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0.5,0,1,9,3,2,70,70,320,1
+Style: Title,DejaVu Sans,34,&H0068C5E7,&H0068C5E7,&H00000000,&H70000000,1,0,0,0,100,100,3,0,3,10,0,8,60,60,140,1
+Style: TitleIn,DejaVu Sans,34,&H0068C5E7,&H0068C5E7,&H00000000,&H70000000,1,0,0,0,100,100,3,0,3,10,0,8,60,60,140,1
+Style: TitleOut,DejaVu Sans,34,&H0068C5E7,&H0068C5E7,&H00000000,&H70000000,1,0,0,0,100,100,3,0,3,10,0,8,60,60,140,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:00.15,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}Lo{\c&H00FFFFFF\fscx100\fscy100} sapevi che ogni
+Dialogue: 0,0:00:00.15,0:00:00.49,CapBox,,0,0,0,,{\fad(40,40)}Lo {\c&H0068C5E7\fscx108\fscy108}sapevi{\c&H00FFFFFF\fscx100\fscy100} che ogni
+Dialogue: 0,0:00:00.49,0:00:00.69,CapBox,,0,0,0,,{\fad(40,40)}Lo sapevi {\c&H0068C5E7\fscx108\fscy108}che{\c&H00FFFFFF\fscx100\fscy100} ogni
+Dialogue: 0,0:00:00.69,0:00:00.93,CapBox,,0,0,0,,{\fad(40,40)}Lo sapevi che {\c&H0068C5E7\fscx108\fscy108}ogni{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:00.93,0:00:01.23,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}punto{\c&H00FFFFFF\fscx100\fscy100} del piede
+Dialogue: 0,0:00:01.23,0:00:01.42,CapBox,,0,0,0,,{\fad(40,40)}punto {\c&H0068C5E7\fscx108\fscy108}del{\c&H00FFFFFF\fscx100\fscy100} piede
+Dialogue: 0,0:00:01.42,0:00:01.72,CapBox,,0,0,0,,{\fad(40,40)}punto del {\c&H0068C5E7\fscx108\fscy108}piede{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:01.72,0:00:02.16,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}racconta{\c&H00FFFFFF\fscx100\fscy100} una parte
+Dialogue: 0,0:00:02.16,0:00:02.35,CapBox,,0,0,0,,{\fad(40,40)}racconta {\c&H0068C5E7\fscx108\fscy108}una{\c&H00FFFFFF\fscx100\fscy100} parte
+Dialogue: 0,0:00:02.35,0:00:02.65,CapBox,,0,0,0,,{\fad(40,40)}racconta una {\c&H0068C5E7\fscx108\fscy108}parte{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:02.65,0:00:02.85,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}del{\c&H00FFFFFF\fscx100\fscy100} tuo corpo?
+Dialogue: 0,0:00:02.85,0:00:03.04,CapBox,,0,0,0,,{\fad(40,40)}del {\c&H0068C5E7\fscx108\fscy108}tuo{\c&H00FFFFFF\fscx100\fscy100} corpo?
+Dialogue: 0,0:00:03.04,0:00:03.38,CapBox,,0,0,0,,{\fad(40,40)}del tuo {\c&H0068C5E7\fscx108\fscy108}corpo?{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:04.37,0:00:04.42,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}È{\c&H00FFFFFF\fscx100\fscy100} una mappa antica:
+Dialogue: 0,0:00:04.42,0:00:04.52,CapBox,,0,0,0,,{\fad(40,40)}È {\c&H0068C5E7\fscx108\fscy108}una{\c&H00FFFFFF\fscx100\fscy100} mappa antica:
+Dialogue: 0,0:00:04.52,0:00:04.67,CapBox,,0,0,0,,{\fad(40,40)}È una {\c&H0068C5E7\fscx108\fscy108}mappa{\c&H00FFFFFF\fscx100\fscy100} antica:
+Dialogue: 0,0:00:04.67,0:00:04.87,CapBox,,0,0,0,,{\fad(40,40)}È una mappa {\c&H0068C5E7\fscx108\fscy108}antica:{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:04.87,0:00:05.09,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}talloni,{\c&H00FFFFFF\fscx100\fscy100} arco, dita
+Dialogue: 0,0:00:05.09,0:00:05.24,CapBox,,0,0,0,,{\fad(40,40)}talloni, {\c&H0068C5E7\fscx108\fscy108}arco,{\c&H00FFFFFF\fscx100\fscy100} dita
+Dialogue: 0,0:00:05.24,0:00:05.37,CapBox,,0,0,0,,{\fad(40,40)}talloni, arco, {\c&H0068C5E7\fscx108\fscy108}dita{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:05.37,0:00:05.42,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}—{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:06.07,0:00:06.30,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}ogni{\c&H00FFFFFF\fscx100\fscy100} zona è collegata
+Dialogue: 0,0:00:06.30,0:00:06.54,CapBox,,0,0,0,,{\fad(40,40)}ogni {\c&H0068C5E7\fscx108\fscy108}zona{\c&H00FFFFFF\fscx100\fscy100} è collegata
+Dialogue: 0,0:00:06.54,0:00:06.63,CapBox,,0,0,0,,{\fad(40,40)}ogni zona {\c&H0068C5E7\fscx108\fscy108}è{\c&H00FFFFFF\fscx100\fscy100} collegata
+Dialogue: 0,0:00:06.63,0:00:07.10,CapBox,,0,0,0,,{\fad(40,40)}ogni zona è {\c&H0068C5E7\fscx108\fscy108}collegata{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:07.10,0:00:07.19,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}a{\c&H00FFFFFF\fscx100\fscy100} un organo, a una
+Dialogue: 0,0:00:07.19,0:00:07.33,CapBox,,0,0,0,,{\fad(40,40)}a {\c&H0068C5E7\fscx108\fscy108}un{\c&H00FFFFFF\fscx100\fscy100} organo, a una
+Dialogue: 0,0:00:07.33,0:00:07.70,CapBox,,0,0,0,,{\fad(40,40)}a un {\c&H0068C5E7\fscx108\fscy108}organo,{\c&H00FFFFFF\fscx100\fscy100} a una
+Dialogue: 0,0:00:07.70,0:00:07.80,CapBox,,0,0,0,,{\fad(40,40)}a un organo, {\c&H0068C5E7\fscx108\fscy108}a{\c&H00FFFFFF\fscx100\fscy100} una
+Dialogue: 0,0:00:07.80,0:00:07.98,CapBox,,0,0,0,,{\fad(40,40)}a un organo, a {\c&H0068C5E7\fscx108\fscy108}una{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:07.98,0:00:08.40,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}tensione{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:09.16,0:00:09.37,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}che{\c&H00FFFFFF\fscx100\fscy100} porti dentro
+Dialogue: 0,0:00:09.37,0:00:09.68,CapBox,,0,0,0,,{\fad(40,40)}che {\c&H0068C5E7\fscx108\fscy108}porti{\c&H00FFFFFF\fscx100\fscy100} dentro
+Dialogue: 0,0:00:09.68,0:00:10.05,CapBox,,0,0,0,,{\fad(40,40)}che porti {\c&H0068C5E7\fscx108\fscy108}dentro{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:10.05,0:00:10.36,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}senza{\c&H00FFFFFF\fscx100\fscy100} saperlo...
+Dialogue: 0,0:00:10.36,0:00:10.93,CapBox,,0,0,0,,{\fad(40,40)}senza {\c&H0068C5E7\fscx108\fscy108}saperlo...{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:11.42,0:00:11.51,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}La{\c&H00FFFFFF\fscx100\fscy100} riflessologia
+Dialogue: 0,0:00:11.51,0:00:11.93,CapBox,,0,0,0,,{\fad(40,40)}La {\c&H0068C5E7\fscx108\fscy108}riflessologia{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:11.93,0:00:12.21,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}plantare{\c&H00FFFFFF\fscx100\fscy100} lavora
+Dialogue: 0,0:00:12.21,0:00:12.42,CapBox,,0,0,0,,{\fad(40,40)}plantare {\c&H0068C5E7\fscx108\fscy108}lavora{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:12.42,0:00:12.51,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}su{\c&H00FFFFFF\fscx100\fscy100} questi punti
+Dialogue: 0,0:00:12.51,0:00:12.72,CapBox,,0,0,0,,{\fad(40,40)}su {\c&H0068C5E7\fscx108\fscy108}questi{\c&H00FFFFFF\fscx100\fscy100} punti
+Dialogue: 0,0:00:12.72,0:00:12.90,CapBox,,0,0,0,,{\fad(40,40)}su questi {\c&H0068C5E7\fscx108\fscy108}punti{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:12.90,0:00:13.03,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}con{\c&H00FFFFFF\fscx100\fscy100} pressioni precise,
+Dialogue: 0,0:00:13.03,0:00:13.33,CapBox,,0,0,0,,{\fad(40,40)}con {\c&H0068C5E7\fscx108\fscy108}pressioni{\c&H00FFFFFF\fscx100\fscy100} precise,
+Dialogue: 0,0:00:13.33,0:00:13.60,CapBox,,0,0,0,,{\fad(40,40)}con pressioni {\c&H0068C5E7\fscx108\fscy108}precise,{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:14.72,0:00:15.48,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}sciogliendo{\c&H00FFFFFF\fscx100\fscy100} i blocchi
+Dialogue: 0,0:00:15.48,0:00:15.61,CapBox,,0,0,0,,{\fad(40,40)}sciogliendo {\c&H0068C5E7\fscx108\fscy108}i{\c&H00FFFFFF\fscx100\fscy100} blocchi
+Dialogue: 0,0:00:15.61,0:00:16.11,CapBox,,0,0,0,,{\fad(40,40)}sciogliendo i {\c&H0068C5E7\fscx108\fscy108}blocchi{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:16.48,0:00:16.59,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}e{\c&H00FFFFFF\fscx100\fscy100} restituendo energia
+Dialogue: 0,0:00:16.59,0:00:17.24,CapBox,,0,0,0,,{\fad(40,40)}e {\c&H0068C5E7\fscx108\fscy108}restituendo{\c&H00FFFFFF\fscx100\fscy100} energia
+Dialogue: 0,0:00:17.24,0:00:17.67,CapBox,,0,0,0,,{\fad(40,40)}e restituendo {\c&H0068C5E7\fscx108\fscy108}energia{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:17.67,0:00:17.78,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}a{\c&H00FFFFFF\fscx100\fscy100} tutto il corpo...
+Dialogue: 0,0:00:17.78,0:00:18.10,CapBox,,0,0,0,,{\fad(40,40)}a {\c&H0068C5E7\fscx108\fscy108}tutto{\c&H00FFFFFF\fscx100\fscy100} il corpo...
+Dialogue: 0,0:00:18.10,0:00:18.26,CapBox,,0,0,0,,{\fad(40,40)}a tutto {\c&H0068C5E7\fscx108\fscy108}il{\c&H00FFFFFF\fscx100\fscy100} corpo...
+Dialogue: 0,0:00:18.26,0:00:18.75,CapBox,,0,0,0,,{\fad(40,40)}a tutto il {\c&H0068C5E7\fscx108\fscy108}corpo...{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:19.35,0:00:19.51,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}Il{\c&H00FFFFFF\fscx100\fscy100} collo, invece,
+Dialogue: 0,0:00:19.51,0:00:19.89,CapOutline,,0,0,0,,{\fad(40,40)}Il {\c&H0068C5E7\fscx108\fscy108}collo,{\c&H00FFFFFF\fscx100\fscy100} invece,
+Dialogue: 0,0:00:19.89,0:00:20.32,CapOutline,,0,0,0,,{\fad(40,40)}Il collo, {\c&H0068C5E7\fscx108\fscy108}invece,{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:20.32,0:00:20.43,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}è{\c&H00FFFFFF\fscx100\fscy100} dove accumuli
+Dialogue: 0,0:00:20.43,0:00:20.70,CapOutline,,0,0,0,,{\fad(40,40)}è {\c&H0068C5E7\fscx108\fscy108}dove{\c&H00FFFFFF\fscx100\fscy100} accumuli
+Dialogue: 0,0:00:20.70,0:00:21.19,CapOutline,,0,0,0,,{\fad(40,40)}è dove {\c&H0068C5E7\fscx108\fscy108}accumuli{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:21.19,0:00:21.35,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}lo{\c&H00FFFFFF\fscx100\fscy100} stress della
+Dialogue: 0,0:00:21.35,0:00:21.73,CapOutline,,0,0,0,,{\fad(40,40)}lo {\c&H0068C5E7\fscx108\fscy108}stress{\c&H00FFFFFF\fscx100\fscy100} della
+Dialogue: 0,0:00:21.73,0:00:22.06,CapOutline,,0,0,0,,{\fad(40,40)}lo stress {\c&H0068C5E7\fscx108\fscy108}della{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:22.06,0:00:22.71,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}giornata...{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:23.68,0:00:23.75,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}il{\c&H00FFFFFF\fscx100\fscy100} trapezio teso
+Dialogue: 0,0:00:23.75,0:00:23.97,CapOutline,,0,0,0,,{\fad(40,40)}il {\c&H0068C5E7\fscx108\fscy108}trapezio{\c&H00FFFFFF\fscx100\fscy100} teso
+Dialogue: 0,0:00:23.97,0:00:24.09,CapOutline,,0,0,0,,{\fad(40,40)}il trapezio {\c&H0068C5E7\fscx108\fscy108}teso{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:24.09,0:00:24.16,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}ti{\c&H00FFFFFF\fscx100\fscy100} dice di rallentare...
+Dialogue: 0,0:00:24.16,0:00:24.28,CapOutline,,0,0,0,,{\fad(40,40)}ti {\c&H0068C5E7\fscx108\fscy108}dice{\c&H00FFFFFF\fscx100\fscy100} di rallentare...
+Dialogue: 0,0:00:24.28,0:00:24.35,CapOutline,,0,0,0,,{\fad(40,40)}ti dice {\c&H0068C5E7\fscx108\fscy108}di{\c&H00FFFFFF\fscx100\fscy100} rallentare...
+Dialogue: 0,0:00:24.35,0:00:24.68,CapOutline,,0,0,0,,{\fad(40,40)}ti dice di {\c&H0068C5E7\fscx108\fscy108}rallentare...{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:25.13,0:00:25.27,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}Il{\c&H00FFFFFF\fscx100\fscy100} massaggio shiatsu
+Dialogue: 0,0:00:25.27,0:00:25.74,CapOutline,,0,0,0,,{\fad(40,40)}Il {\c&H0068C5E7\fscx108\fscy108}massaggio{\c&H00FFFFFF\fscx100\fscy100} shiatsu
+Dialogue: 0,0:00:25.74,0:00:26.12,CapOutline,,0,0,0,,{\fad(40,40)}Il massaggio {\c&H0068C5E7\fscx108\fscy108}shiatsu{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:26.12,0:00:26.55,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}scioglie{\c&H00FFFFFF\fscx100\fscy100} quei blocchi
+Dialogue: 0,0:00:26.55,0:00:26.79,CapOutline,,0,0,0,,{\fad(40,40)}scioglie {\c&H0068C5E7\fscx108\fscy108}quei{\c&H00FFFFFF\fscx100\fscy100} blocchi
+Dialogue: 0,0:00:26.79,0:00:27.16,CapOutline,,0,0,0,,{\fad(40,40)}scioglie quei {\c&H0068C5E7\fscx108\fscy108}blocchi{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:28.06,0:00:28.18,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}e{\c&H00FFFFFF\fscx100\fscy100} riattiva la circolazione
+Dialogue: 0,0:00:28.18,0:00:28.73,CapOutline,,0,0,0,,{\fad(40,40)}e {\c&H0068C5E7\fscx108\fscy108}riattiva{\c&H00FFFFFF\fscx100\fscy100} la circolazione
+Dialogue: 0,0:00:28.73,0:00:28.91,CapOutline,,0,0,0,,{\fad(40,40)}e riattiva {\c&H0068C5E7\fscx108\fscy108}la{\c&H00FFFFFF\fscx100\fscy100} circolazione
+Dialogue: 0,0:00:28.91,0:00:29.69,CapOutline,,0,0,0,,{\fad(40,40)}e riattiva la {\c&H0068C5E7\fscx108\fscy108}circolazione{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:29.69,0:00:30.48,CapOutline,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}cervicale...{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:31.53,0:00:31.81,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}Due{\c&H00FFFFFF\fscx100\fscy100} trattamenti,
+Dialogue: 0,0:00:31.81,0:00:32.69,CapBox,,0,0,0,,{\fad(40,40)}Due {\c&H0068C5E7\fscx108\fscy108}trattamenti,{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:32.69,0:00:32.89,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}un{\c&H00FFFFFF\fscx100\fscy100} solo obiettivo:
+Dialogue: 0,0:00:32.89,0:00:33.23,CapBox,,0,0,0,,{\fad(40,40)}un {\c&H0068C5E7\fscx108\fscy108}solo{\c&H00FFFFFF\fscx100\fscy100} obiettivo:
+Dialogue: 0,0:00:33.23,0:00:33.98,CapBox,,0,0,0,,{\fad(40,40)}un solo {\c&H0068C5E7\fscx108\fscy108}obiettivo:{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:34.57,0:00:34.88,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}il{\c&H00FFFFFF\fscx100\fscy100} tuo equilibrio,
+Dialogue: 0,0:00:34.88,0:00:35.28,CapBox,,0,0,0,,{\fad(40,40)}il {\c&H0068C5E7\fscx108\fscy108}tuo{\c&H00FFFFFF\fscx100\fscy100} equilibrio,
+Dialogue: 0,0:00:35.28,0:00:36.51,CapBox,,0,0,0,,{\fad(40,40)}il tuo {\c&H0068C5E7\fscx108\fscy108}equilibrio,{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:37.48,0:00:38.07,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}dalla{\c&H00FFFFFF\fscx100\fscy100} testa ai piedi...
+Dialogue: 0,0:00:38.07,0:00:38.66,CapBox,,0,0,0,,{\fad(40,40)}dalla {\c&H0068C5E7\fscx108\fscy108}testa{\c&H00FFFFFF\fscx100\fscy100} ai piedi...
+Dialogue: 0,0:00:38.66,0:00:38.95,CapBox,,0,0,0,,{\fad(40,40)}dalla testa {\c&H0068C5E7\fscx108\fscy108}ai{\c&H00FFFFFF\fscx100\fscy100} piedi...
+Dialogue: 0,0:00:38.95,0:00:39.84,CapBox,,0,0,0,,{\fad(40,40)}dalla testa ai {\c&H0068C5E7\fscx108\fscy108}piedi...{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:40.70,0:00:41.02,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}Prenota{\c&H00FFFFFF\fscx100\fscy100} il tuo momento
+Dialogue: 0,0:00:41.02,0:00:41.13,CapBox,,0,0,0,,{\fad(40,40)}Prenota {\c&H0068C5E7\fscx108\fscy108}il{\c&H00FFFFFF\fscx100\fscy100} tuo momento
+Dialogue: 0,0:00:41.13,0:00:41.29,CapBox,,0,0,0,,{\fad(40,40)}Prenota il {\c&H0068C5E7\fscx108\fscy108}tuo{\c&H00FFFFFF\fscx100\fscy100} momento
+Dialogue: 0,0:00:41.29,0:00:41.60,CapBox,,0,0,0,,{\fad(40,40)}Prenota il tuo {\c&H0068C5E7\fscx108\fscy108}momento{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:42.24,0:00:42.37,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}da{\c&H00FFFFFF\fscx100\fscy100} Essenza d'Oriente.
+Dialogue: 0,0:00:42.37,0:00:42.73,CapBox,,0,0,0,,{\fad(40,40)}da {\c&H0068C5E7\fscx108\fscy108}Essenza{\c&H00FFFFFF\fscx100\fscy100} d'Oriente.
+Dialogue: 0,0:00:42.73,0:00:43.22,CapBox,,0,0,0,,{\fad(40,40)}da Essenza {\c&H0068C5E7\fscx108\fscy108}d'Oriente.{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 0,0:00:44.32,0:00:44.70,CapBox,,0,0,0,,{\fad(40,40)}{\c&H0068C5E7\fscx108\fscy108}Il{\c&H00FFFFFF\fscx100\fscy100} link è in bio.
+Dialogue: 0,0:00:44.70,0:00:45.34,CapBox,,0,0,0,,{\fad(40,40)}Il {\c&H0068C5E7\fscx108\fscy108}link{\c&H00FFFFFF\fscx100\fscy100} è in bio.
+Dialogue: 0,0:00:45.34,0:00:45.59,CapBox,,0,0,0,,{\fad(40,40)}Il link {\c&H0068C5E7\fscx108\fscy108}è{\c&H00FFFFFF\fscx100\fscy100} in bio.
+Dialogue: 0,0:00:45.59,0:00:45.97,CapBox,,0,0,0,,{\fad(40,40)}Il link è {\c&H0068C5E7\fscx108\fscy108}in{\c&H00FFFFFF\fscx100\fscy100} bio.
+Dialogue: 0,0:00:45.97,0:00:46.61,CapBox,,0,0,0,,{\fad(40,40)}Il link è in {\c&H0068C5E7\fscx108\fscy108}bio.{\c&H00FFFFFF\fscx100\fscy100}
+Dialogue: 1,0:00:01.20,0:00:01.70,TitleIn,,0,0,0,,{\fad(250,0)}RIFLESSOLOGIA PLANTARE
+Dialogue: 1,0:00:01.70,0:00:18.30,Title,,0,0,0,,RIFLESSOLOGIA PLANTARE
+Dialogue: 1,0:00:18.30,0:00:18.70,TitleOut,,0,0,0,,{\fad(0,300)}RIFLESSOLOGIA PLANTARE
+Dialogue: 1,0:00:19.50,0:00:20.00,TitleIn,,0,0,0,,{\fad(250,0)}MASSAGGIO CERVICALE
+Dialogue: 1,0:00:20.00,0:00:30.60,Title,,0,0,0,,MASSAGGIO CERVICALE
+Dialogue: 1,0:00:30.60,0:00:31.00,TitleOut,,0,0,0,,{\fad(0,300)}MASSAGGIO CERVICALE
+Dialogue: 1,0:00:31.50,0:00:32.00,TitleIn,,0,0,0,,{\fad(250,0)}EQUILIBRIO TOTALE
+Dialogue: 1,0:00:32.00,0:00:39.60,Title,,0,0,0,,EQUILIBRIO TOTALE
+Dialogue: 1,0:00:39.60,0:00:40.00,TitleOut,,0,0,0,,{\fad(0,300)}EQUILIBRIO TOTALE
