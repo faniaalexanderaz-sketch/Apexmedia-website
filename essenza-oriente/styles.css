@@ -39,8 +39,8 @@
 :root {
   /* palette dal materiale marketing reale (flyer + logo) —
      il verde lime della vetrina fisica è volutamente escluso */
-  --pergamena: #F6F2E7;
-  --pergamena-scura: #EFE9D9;
+  --pergamena: #ECF3E4;   /* verde salvia chiarissimo, dal fondo del logo */
+  --pergamena-scura: #DFEAD4;
   --bosco: #2C5138;
   --bosco-scuro: #22402C;
   --ink: #2A3A2E;
@@ -144,7 +144,7 @@ h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
   position: sticky; top: 0; z-index: 60;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 10px var(--pad);
-  background: rgba(246,242,231,.92);
+  background: rgba(236,243,228,.92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--linea);
 }
@@ -176,7 +176,7 @@ h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
   display: none;
   gap: 10px;
   padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom, 0px));
-  background: rgba(246,242,231,.96);
+  background: rgba(236,243,228,.96);
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--linea);
 }
