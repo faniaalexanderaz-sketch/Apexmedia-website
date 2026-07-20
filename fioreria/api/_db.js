@@ -8,19 +8,24 @@ const { neon } = require('@neondatabase/serverless');
 
 const sql = neon(process.env.DATABASE_URL);
 
-/* scorte iniziali: usate solo per popolare la tabella la prima
-   volta che viene letta, se è ancora vuota. Da quel momento in poi
-   il valore vero vive solo nel database. */
+/* scorte iniziali: ogni slug qui sotto viene inserito una sola
+   volta (ON CONFLICT DO NOTHING), la prima volta che compare in
+   questo elenco — così si può cambiare catalogo ed espandere
+   questa lista senza toccare le quantità già in uso nel database. */
 const SCORTE_INIZIALI = {
-  vendemmia: 18,
-  agrumi: 22,
-  romanza: 25,
-  positano: 6,
-  frutteto: 16,
-  velluto: 3,
-  raccolto: 20,
-  cristalli: 4,
-  scrigno: 14
+  provenza: 16,
+  esotico: 10,
+  'cesta-primavera': 18,
+  'cesta-maggio': 15,
+  orto: 20,
+  'sole-campagna': 17,
+  'cascata-dorata': 8,
+  'cuore-rose': 20,
+  'sole-agrumi': 16,
+  'gatto-giardiniere': 6,
+  'pannello-verde': 5,
+  tiffany: 4,
+  'cappello-fiorito': 9
 };
 
 let schemaPronto = null;
@@ -52,13 +57,13 @@ async function assicuraSchema() {
       creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
     )`;
 
-    const esistenti = await sql`SELECT slug FROM prodotti_scorte`;
-    if (esistenti.length === 0) {
-      for (const slug of Object.keys(SCORTE_INIZIALI)) {
-        await sql`INSERT INTO prodotti_scorte (slug, quantita)
-                   VALUES (${slug}, ${SCORTE_INIZIALI[slug]})
-                   ON CONFLICT (slug) DO NOTHING`;
-      }
+    // ON CONFLICT DO NOTHING rende l'inserimento sicuro anche se la
+    // tabella ha già righe di un catalogo precedente: aggiunge solo
+    // gli slug nuovi, senza mai toccare le quantità già esistenti.
+    for (const slug of Object.keys(SCORTE_INIZIALI)) {
+      await sql`INSERT INTO prodotti_scorte (slug, quantita)
+                 VALUES (${slug}, ${SCORTE_INIZIALI[slug]})
+                 ON CONFLICT (slug) DO NOTHING`;
     }
   })();
   return schemaPronto;

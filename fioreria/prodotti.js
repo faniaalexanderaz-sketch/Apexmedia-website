@@ -4,6 +4,8 @@
    è la taglia M; le altre taglie derivano dai fattori qui sotto.
    XL contiene il doppio dei fiori della M: vale 2×M ma si paga
    il 30% in meno del doppio — da qui il "risparmi il 30%".
+   Gli articoli con tagliaUnica: true (decorazioni/oggettistica)
+   non hanno taglie: si vendono in un formato unico.
    ============================================================= */
 var AFC_TAGLIE = [
   { id: 'S',  nome: 'S',  fattore: 0.75, nota: 'Un pensiero: composizione raccolta' },
@@ -20,115 +22,159 @@ function afcValoreXL(prezzoM) { return prezzoM * 2; }
 
 var AFC_PRODOTTI = [
   {
-    slug: 'vendemmia',
-    nome: 'Vendemmia Toscana',
-    prezzo: 72,
-    foto: 'foto/p-vendemmia.jpg',
-    cat: ['stagione', 'premium', 'regali', 'autunno'],
-    badge: 'Più venduto',
-    rating: ['4,9', 34],
+    slug: 'provenza',
+    nome: 'Brezza di Provenza',
+    prezzo: 78,
+    foto: 'foto/p-provenza.jpg',
+    cat: ['stagione', 'regali', 'estate'],
+    rating: ['4,8', 12],
     avail: 'Spedizione in 24/48h',
-    desc: 'Dalie bordeaux, melograni e mini zucche in un\'anfora dipinta a mano.',
-    descLunga: 'Un\'anfora in ceramica dipinta a mano, decorata a motivi floreali come le trovi nelle botteghe di campagna toscane, colma di dalie color bordeaux, rose ambrate, melograni, fichi e mini zucche tra foglie di quercia e ulivo. È la composizione che porti in tavola quando l\'autunno va festeggiato, non subito: un centrotavola importante che non appassisce mai, pensato per restare protagonista da ottobre a Natale.'
+    desc: 'Lisianthus viola e giallo, lavanda e limoni veri al tatto, in un\'urna bianca scolpita.',
+    descLunga: 'Lisianthus color prugna e giallo miele, spighe dorate, lavanda e piccoli limoni real touch, composti in un\'urna di ceramica bianca dalle decorazioni scolpite a mano. Un tripudio di colore che profuma di Provenza anche senza profumare affatto: perfetta su un tavolo luminoso o come regalo per chi ama i colori vivaci.'
   },
   {
-    slug: 'agrumi',
-    nome: 'Giardino di Agrumi',
-    prezzo: 58,
-    foto: 'foto/p-agrumi.jpg',
-    cat: ['bouquet', 'mamma', 'stagione', 'estate'],
-    badge: 'Nuovo',
-    rating: ['4,9', 21],
+    slug: 'esotico',
+    nome: 'Giardino Esotico',
+    prezzo: 88,
+    foto: 'foto/p-esotico.jpg',
+    cat: ['premium', 'novita', 'regali'],
+    badge: 'Novità',
+    rating: ['5,0', 9],
     avail: 'Spedizione in 24/48h',
-    desc: 'Rose bianche, orchidee e limoni veri al tatto, in un\'urna in marmo.',
-    descLunga: 'Rose bianche, orchidee, ranuncoli gialli e ciuffi di limoni e kumquat real touch, composti in un\'urna in marmo bianco venato. Profuma di agrumeto anche se non profuma affatto: la luce e il colore di un pomeriggio in Costiera, fermi per sempre sul tuo tavolo. Il regalo giusto per chi ama il giallo limone più del rosa.'
+    desc: 'Calle bianche e arancio, orchidea e foglie tropicali, in un vaso di vetro avvolto in raso.',
+    descLunga: 'Calle bianche, arancio e corallo si intrecciano a un\'orchidea Phalaenopsis, un fiore di carciofo ornamentale e ampie foglie tropicali venate, raccolte in un vaso di vetro cilindrico avvolto in un drappo di raso chiaro. Una composizione scenografica e insolita, per chi cerca qualcosa di diverso dal solito bouquet: perfetta in un ingresso importante o come regalo a chi ama distinguersi.'
   },
   {
-    slug: 'romanza',
-    nome: 'Romanza in Rosa',
-    prezzo: 64,
-    foto: 'foto/p-romanza.jpg',
-    cat: ['anniversario', 'matrimonio', 'mamma', 'primavera'],
-    badge: 'Più venduto',
-    rating: ['5,0', 27],
+    slug: 'cesta-primavera',
+    nome: 'Cesta di Primavera',
+    prezzo: 74,
+    foto: 'foto/p-cesta-primavera.jpg',
+    cat: ['bouquet', 'regali', 'primavera', 'mamma'],
+    rating: ['4,9', 15],
     avail: 'Spedizione in 24/48h',
-    desc: 'Peonie cipria e rose tea in un\'urna di porcellana bordata d\'oro.',
-    descLunga: 'Peonie color cipria, rose tea e ortensie bianche, morbide come un\'acquerello, composte in un\'urna di porcellana crema con bordure dorate e rilievi decorati. La nostra composizione più scelta per gli anniversari e i regali importanti: romantica senza essere stucchevole, elegante anche vista da lontano su una mensola o un tavolo d\'ingresso.'
+    desc: 'Peonie rosa e margherite viola, in una cesta intrecciata con manico.',
+    descLunga: 'Peonie rosa carico, margherite viola e lilla tra foglie di felce, raccolte in una graziosa cesta di bambù intrecciato con manico — pronta da regalare così com\'è, senza bisogno di un vaso. Il formato più informale e conviviale della collezione: perfetta per una visita, un compleanno o un pensiero portato a mano.'
   },
   {
-    slug: 'positano',
-    nome: 'Riflessi di Positano',
-    prezzo: 68,
-    foto: 'foto/p-positano.jpg',
-    cat: ['premium', 'novita', 'regali', 'limitata', 'estate'],
-    badge: 'Edizione limitata',
-    badgeOro: true,
-    rating: ['4,9', 9],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Ortensie turchesi, orchidee e conchiglie in un vaso di vetro ondulato.',
-    descLunga: 'Ortensie color turchese, orchidee bianche, foglie di palma e un tocco di conchiglie e perle, composte in un vaso di vetro colorato dalle forme morbide, come modellato dall\'acqua. Un pezzo scenografico pensato per chi ama il mare più dei fiori classici: perfetto in un ingresso, in un bagno importante o su una consolle vista finestra. Edizione limitata, pochi pezzi disponibili.'
-  },
-  {
-    slug: 'frutteto',
-    nome: 'Frutteto in Fiore',
-    prezzo: 70,
-    foto: 'foto/p-frutteto.jpg',
-    cat: ['premium', 'matrimonio', 'regali', 'autunno'],
-    badge: 'Nuovo',
-    rating: ['4,8', 14],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Orchidee, rose bianche e grappoli d\'uva in un vaso scultoreo in travertino.',
-    descLunga: 'Orchidee bianche, rose, ortensie e calle si intrecciano a grappoli d\'uva, fichi, carciofi e mele verdi real touch, in un vaso scultoreo bicolore in marmo e travertino. Una composizione abbondante e scenografica, ispirata alle nature morte italiane: perfetta per un ricevimento, un ingresso importante o come regalo a chi ha già tutto.'
-  },
-  {
-    slug: 'velluto',
-    nome: 'Notte di Velluto',
-    prezzo: 85,
-    foto: 'foto/p-velluto.jpg',
-    cat: ['premium', 'novita', 'limitata', 'inverno'],
-    badge: 'Edizione limitata',
-    badgeOro: true,
-    rating: ['5,0', 8],
-    avail: 'Ultimi pezzi',
-    availBassa: true,
-    desc: 'Rose nere, orchidee viola e dettagli dorati in un vaso scultoreo nero e oro.',
-    descLunga: 'Rose nere, dalie bordeaux, orchidee viola e rose champagne, tra foglie scure e ramage dorato, in un vaso scultoreo nero con venature d\'oro colato. La composizione più audace della collezione: drammatica, quasi teatrale, pensata per chi vuole stupire davvero — un compleanno importante, un\'inaugurazione, un regalo che si ricorda. Numero di pezzi limitato.'
-  },
-  {
-    slug: 'raccolto',
-    nome: 'Cesto del Raccolto',
-    prezzo: 54,
-    foto: 'foto/p-raccolto.jpg',
-    cat: ['regali', 'stagione', 'novita', 'autunno'],
-    rating: ['4,8', 19],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Rose color miele, stecche di cannella e mini zucche in un cesto di vimini.',
-    descLunga: 'Rose color miele, ortensie, orchidee gialle, stecche di cannella, fette d\'arancia essiccate e mini zucche, raccolte in un cesto di vimini con tanto di manico. Il formato più informale e conviviale della collezione: si regala com\'è, senza bisogno di un vaso, ed è perfetto per un tavolo di cucina, una cesta di benvenuto o un pensiero per chi cambia casa.'
-  },
-  {
-    slug: 'cristalli',
-    nome: 'Cristalli di Viola',
-    prezzo: 82,
-    foto: 'foto/p-cristalli.jpg',
-    cat: ['premium', 'anniversario', 'novita', 'limitata', 'inverno'],
-    badge: 'Edizione limitata',
-    badgeOro: true,
-    rating: ['5,0', 11],
-    avail: 'Ultimi pezzi',
-    availBassa: true,
-    desc: 'Ortensie viola, orchidee e perle in un vaso di cristallo intagliato.',
-    descLunga: 'Ortensie viola e blu, orchidee, rose bianche e foglie argentate, punteggiate di perle e bacche brinate, in un vaso di cristallo dalle linee sinuose. Una composizione preziosa, quasi gioiello, per chi cerca qualcosa di davvero fuori dal comune: perfetta per un anniversario importante o per arredare uno spazio che deve lasciare il segno.'
-  },
-  {
-    slug: 'scrigno',
-    nome: 'Scrigno di Borgogna',
+    slug: 'cesta-maggio',
+    nome: 'Cesta di Maggio',
     prezzo: 76,
-    foto: 'foto/p-scrigno.jpg',
-    cat: ['premium', 'regali', 'stagione', 'autunno'],
-    rating: ['4,9', 16],
+    foto: 'foto/p-cesta-maggio.jpg',
+    cat: ['bouquet', 'matrimonio', 'primavera'],
+    rating: ['4,8', 11],
     avail: 'Spedizione in 24/48h',
-    desc: 'Rose bordeaux, peonie bianche e grappoli d\'uva in un baule intagliato.',
-    descLunga: 'Rose color bordeaux, peonie bianche, orchidee scure, grappoli d\'uva e fichi tra rami di ulivo, composti sopra un baule in legno intagliato con serratura in ottone. Una composizione importante, quasi un pezzo d\'arredamento a sé: ideale per una sala importante, un regalo aziendale o chi ama i fiori come oggetti da collezione più che come bouquet.'
+    desc: 'Calle viola, rose crema e mughetto, in una cesta intrecciata con manico.',
+    descLunga: 'Calle viola intense, rose color crema e delicati steli di mughetto, tra fili d\'erba e lavanda, raccolti in una cesta di bambù intrecciato con manico. Elegante e romantica, è la composizione giusta per un matrimonio in primavera o per chi ama i toni sfumati tra il viola e il crema.'
+  },
+  {
+    slug: 'orto',
+    nome: 'L\'Orto in Casa',
+    prezzo: 85,
+    foto: 'foto/p-orto.jpg',
+    cat: ['regali', 'novita', 'autunno'],
+    badge: 'Novità',
+    rating: ['5,0', 7],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Peperoni, cipollotto, cipolla e peperoncini veri al tatto, su un tagliere in legno.',
+    descLunga: 'Un peperone giallo, cipollotti, una cipolla dorata, peperoncini piccanti, foglie di insalata e piccoli pomodorini, tutti realizzati real touch, composti su un tagliere in legno naturale con un tocco di cannella e iuta. Un centrotavola originale e sorprendente per la cucina o la sala da pranzo: sembra appena raccolto dall\'orto, ma resta così per sempre.'
+  },
+  {
+    slug: 'sole-campagna',
+    nome: 'Sole di Campagna',
+    prezzo: 72,
+    foto: 'foto/p-sole-campagna.jpg',
+    cat: ['stagione', 'regali', 'estate'],
+    rating: ['4,7', 10],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Girasole e margherite lilla su una fetta di legno naturale, con fiocco giallo.',
+    descLunga: 'Un grande girasole al centro, circondato da margherite lilla e bianche, rose color crema e rametti di verde, appoggiato su una fetta di legno grezzo con un fiocco di raso giallo. Un piccolo centrotavola solare, perfetto per portare l\'estate in tavola tutto l\'anno.'
+  },
+  {
+    slug: 'cascata-dorata',
+    nome: 'Cascata Dorata',
+    prezzo: 90,
+    foto: 'foto/p-cascata-dorata.jpg',
+    cat: ['premium', 'novita', 'estate', 'inverno'],
+    badge: 'Novità',
+    rating: ['5,0', 6],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Orchidee oncidium gialle, calle e orchidea bianca, in un vaso di vetro con drappo di raso.',
+    descLunga: 'Rami di orchidea Oncidium color oro che ricadono come una cascata, calle bianche e una sfumata in arancio, un cuore di orchidea Phalaenopsis bianca, in un vaso di vetro verde avvolto in un drappo di raso chiaro. La composizione più alta e scenografica della collezione: perfetta per un ingresso importante o per un regalo che lascia il segno.'
+  },
+  {
+    slug: 'cuore-rose',
+    nome: 'Cuore di Rose',
+    prezzo: 76,
+    foto: 'foto/p-cuore-rose.jpg',
+    cat: ['anniversario', 'mamma', 'regali'],
+    badge: 'Più venduto',
+    rating: ['4,9', 18],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rose e peonie rosa cipria, anemone, in un vaso verde con nastro e dettagli a cuore.',
+    descLunga: 'Rose inglesi color cipria, peonie e un anemone dai toni rosa antico, raccolti in un piccolo vaso verde smeraldo con perline in rilievo, impreziositi da un nastro viola e un tocco di stoffa a cuoricini. Romantica e delicata, è la composizione ideale per San Valentino, un anniversario o semplicemente per dire "ti penso".'
+  },
+  {
+    slug: 'sole-agrumi',
+    nome: 'Sole e Agrumi',
+    prezzo: 82,
+    foto: 'foto/p-sole-agrumi.jpg',
+    cat: ['stagione', 'regali', 'autunno'],
+    rating: ['4,8', 13],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Girasoli, limoni e mele veri al tatto, con iuta, in un vaso verde scolpito.',
+    descLunga: 'Girasoli dorati, piccole rose color miele, limoni e mele real touch tra foglie lucide e un fiocco di iuta grezza, composti in un vaso verde scolpito a foglie. Allegra e abbondante, è la composizione perfetta per la cucina, un regalo di benvenuto o per chi ama i colori caldi della campagna.'
+  },
+
+  /* ---------- decorazioni / oggettistica — formato unico, no taglie ---------- */
+  {
+    slug: 'gatto-giardiniere',
+    nome: 'Gatto Giardiniere',
+    prezzo: 45,
+    tagliaUnica: true,
+    foto: 'foto/p-vaso-gatto.jpg',
+    cat: ['decorazioni', 'regali', 'novita'],
+    badge: 'Novità',
+    rating: ['5,0', 5],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Un simpatico gatto ricoperto di muschio sintetico, accanto a un cestino con ortensia bianca.',
+    descLunga: 'Un gatto scultoreo interamente ricoperto di muschio sintetico verde, seduto accanto a un piccolo cestino di vimini con un\'ortensia bianca real touch. Un pezzo d\'arredo originale e simpatico, perfetto per un davanzale, un ingresso o come regalo a chi ama gli oggetti fuori dal comune. Il vaso a forma di gatto è l\'oggetto in vendita; l\'ortensia lo accompagna.'
+  },
+  {
+    slug: 'pannello-verde',
+    nome: 'Pannello Verde Verticale',
+    prezzo: 68,
+    tagliaUnica: true,
+    foto: 'foto/p-pannello-verde.jpg',
+    cat: ['decorazioni', 'novita'],
+    badge: 'Novità',
+    rating: ['4,7', 4],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Pannello decorativo verticale in verde stabilizzato, per una parete sempre in fiore.',
+    descLunga: 'Un pannello verticale ricoperto di muschi e licheni stabilizzati in diverse tonalità di verde, con rami decorativi intrecciati. Si appoggia o si appende, e trasforma una parete spoglia in un piccolo angolo di giardino verticale, senza bisogno di luce, acqua o manutenzione.'
+  },
+  {
+    slug: 'tiffany',
+    nome: 'Tiffany',
+    prezzo: 58,
+    tagliaUnica: true,
+    foto: 'foto/p-tiffany.jpg',
+    cat: ['decorazioni', 'regali'],
+    rating: ['4,9', 6],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Quadro con fiori e foglie pressate sotto vetro, cornice color acqua.',
+    descLunga: 'Una composizione di fiori e foglie dai toni verde-azzurro, pressata e racchiusa sotto vetro in una cornice in legno dipinta color acqua. Un piccolo quadro botanico da appendere o appoggiare, che porta in casa la delicatezza di un giardino d\'altri tempi.'
+  },
+  {
+    slug: 'cappello-fiorito',
+    nome: 'Cappello Fiorito',
+    prezzo: 36,
+    tagliaUnica: true,
+    foto: 'foto/p-cappello.jpg',
+    cat: ['decorazioni', 'regali'],
+    rating: ['4,8', 8],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Cappello di paglia con rosa lilla e fiori di campo applicati.',
+    descLunga: 'Un cappello a tesa larga in paglia naturale, decorato con una grande rosa color lilla, fiori di campo e un nastro con scritte vintage. Un accessorio scenografico, perfetto da appendere in un ingresso country-chic o da regalare a chi ama lo stile boho.'
   }
 ];
 
@@ -136,7 +182,6 @@ var AFC_CATEGORIE = [
   ['tutti', 'Tutti'],
   ['novita', 'Novità'],
   ['premium', 'Bouquet Premium'],
-  ['limitata', 'Edizioni limitate'],
   ['stagione', 'Fiori di stagione'],
   ['regali', 'Regali floreali'],
   ['anniversario', 'Anniversario'],
@@ -146,7 +191,8 @@ var AFC_CATEGORIE = [
   ['primavera', 'Primavera'],
   ['estate', 'Estate'],
   ['autunno', 'Autunno'],
-  ['inverno', 'Inverno']
+  ['inverno', 'Inverno'],
+  ['decorazioni', 'Decorazioni']
 ];
 
 function afcProdotto(slug) {

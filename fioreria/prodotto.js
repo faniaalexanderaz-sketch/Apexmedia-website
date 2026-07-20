@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  var m = location.search.match(/[?&]p=([a-z]+)/);
+  var m = location.search.match(/[?&]p=([a-z-]+)/);
   var prod = m ? afcProdotto(m[1]) : null;
   if (!prod) { location.replace('collezione.html'); return; }
 
@@ -17,6 +17,8 @@
 
   var taglia = AFC_TAGLIE[1]; // parte dalla M
   var qty = 1;
+  var TAGLIA_UNICA = { id: 'U', nome: 'Unica', fattore: 1, nota: 'Formato unico da collezione' };
+  if (prod.tagliaUnica) taglia = TAGLIA_UNICA;
 
   /* ---------- riempi la scheda ---------- */
   document.title = prod.nome + ' — Antica Fioreria del Centro';
@@ -66,25 +68,29 @@
     document.getElementById('qN').textContent = String(qty);
   }
 
-  AFC_TAGLIE.forEach(function (t) {
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'taglia-btn' + (t.id === taglia.id ? ' attiva' : '');
-    btn.setAttribute('role', 'radio');
-    btn.setAttribute('aria-checked', String(t.id === taglia.id));
-    btn.innerHTML = '<strong>' + t.nome + '</strong><span>' + euro(afcPrezzoTaglia(prod.prezzo, t)) + '</span>' +
-      (t.doppio ? '<em class="taglia-badge">−30%</em>' : '');
-    btn.addEventListener('click', function () {
-      taglia = t;
-      boxTaglie.querySelectorAll('.taglia-btn').forEach(function (x) {
-        var on = x === btn;
-        x.classList.toggle('attiva', on);
-        x.setAttribute('aria-checked', String(on));
+  if (prod.tagliaUnica) {
+    document.querySelector('.taglie-blocco').hidden = true;
+  } else {
+    AFC_TAGLIE.forEach(function (t) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'taglia-btn' + (t.id === taglia.id ? ' attiva' : '');
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-checked', String(t.id === taglia.id));
+      btn.innerHTML = '<strong>' + t.nome + '</strong><span>' + euro(afcPrezzoTaglia(prod.prezzo, t)) + '</span>' +
+        (t.doppio ? '<em class="taglia-badge">−30%</em>' : '');
+      btn.addEventListener('click', function () {
+        taglia = t;
+        boxTaglie.querySelectorAll('.taglia-btn').forEach(function (x) {
+          var on = x === btn;
+          x.classList.toggle('attiva', on);
+          x.setAttribute('aria-checked', String(on));
+        });
+        dipingiPrezzo();
       });
-      dipingiPrezzo();
+      boxTaglie.appendChild(btn);
     });
-    boxTaglie.appendChild(btn);
-  });
+  }
 
   document.getElementById('qMeno').addEventListener('click', function () { if (qty > 1) { qty -= 1; dipingiPrezzo(); } });
   document.getElementById('qPiu').addEventListener('click', function () { if (qty < 12) { qty += 1; dipingiPrezzo(); } });
@@ -146,7 +152,7 @@
   }).catch(function () {});
 
   /* ---------- carrello ---------- */
-  function nomeCompleto() { return prod.nome + ' (' + taglia.nome + ')'; }
+  function nomeCompleto() { return prod.tagliaUnica ? prod.nome : prod.nome + ' (' + taglia.nome + ')'; }
 
   function aggiungi() {
     if (typeof AFC_CART === 'undefined') return;
@@ -191,7 +197,7 @@
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
         '<span class="prod-mini-riga">' +
-          '<span class="prod-mini-prezzo">da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0])) + '</span>' +
+          '<span class="prod-mini-prezzo">' + (p.tagliaUnica ? euro(p.prezzo) : 'da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
           '<span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>' +
         '</span>' +
         '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';
