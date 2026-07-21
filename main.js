@@ -44,8 +44,8 @@
   /* il fuoco sta DIETRO il piano prospettico: con l'overscan CSS,
      a fuoco l'immagine copre appena il frame (~1.05) e la corsa Z
      si sviluppa attorno a quel punto — mai sovra-ingrandita */
-  var ZBASE = isMobile ? -140 : -200;   // profondità del punto di fuoco (px)
-  var ZTRAVEL = isMobile ? 140 : 210;   // corsa del dolly (px)
+  var ZBASE = isMobile ? -150 : -215;   // profondità del punto di fuoco (px)
+  var ZTRAVEL = isMobile ? 150 : 245;   // corsa del dolly (px) — un filo più profonda
   var K = 6.8;                          // rigidità del follow
   var cur = [], tgt = [];
   for (var i = 0; i < n; i++) {
@@ -99,8 +99,8 @@
 
   window.addEventListener('resize', function () {
     isMobile = window.matchMedia('(max-width: 820px)').matches;
-    ZBASE = isMobile ? -140 : -200;
-    ZTRAVEL = isMobile ? 140 : 210;
+    ZBASE = isMobile ? -150 : -215;
+    ZTRAVEL = isMobile ? 150 : 245;
   }, { passive: true });
 
   // primo frame: allinea subito senza inerzia, poi loop continuo
@@ -130,6 +130,32 @@
     lazyLayers.forEach(function (l) { lazyIO.observe(l); });
   } else {
     lazyLayers.forEach(loadLayer);
+  }
+
+  /* =============================================================
+     2b) HERO VIDEO — camera-walk (Seedance). Carica la sorgente,
+        e mette in pausa quando la Hero è fuori vista (batteria/CPU).
+        Su reduced-motion resta il poster fermo (nessun autoplay).
+     ============================================================= */
+  var heroVideo = document.querySelector('.bg-video');
+  if (heroVideo) {
+    var vsrc = heroVideo.getAttribute('data-hero-video') || '';
+    var validSrc = /^https?:\/\//.test(vsrc);
+    if (validSrc && !reduceMotion) {
+      heroVideo.src = vsrc;
+      var tryPlay = function () { var p = heroVideo.play(); if (p && p.catch) p.catch(function () {}); };
+      heroVideo.addEventListener('canplay', tryPlay, { once: true });
+      tryPlay();
+      // pausa quando la Hero esce dal viewport
+      var heroPanel = document.getElementById('hero');
+      if (heroPanel && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) tryPlay(); else heroVideo.pause();
+          });
+        }, { threshold: 0.05 }).observe(heroPanel);
+      }
+    }
   }
 
   /* =============================================================

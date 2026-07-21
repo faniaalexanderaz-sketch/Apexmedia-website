@@ -114,18 +114,23 @@ a, button, input { touch-action: manipulation; }
   background-repeat: no-repeat;
 }
 /* fallback tonale per sezione, finché la foto non è caricata */
-.bg-layer[data-bg="0"] { background-color: #08060e; background-image: url('public/images/01-reception.webp'); }
+.bg-layer[data-bg="0"] { background-color: #08060e; }
 .bg-layer[data-bg="1"] { background-color: #0c0a14; }
 .bg-layer[data-bg="2"] { background-color: var(--violet-deep); }
 .bg-layer[data-bg="3"] { background-color: var(--blue-deep); }
+.bg-layer[data-bg="4"] { background-color: #0b0a12; }
 .bg-layer[data-bg="5"] { background-color: #0d0a16; }
+.bg-layer[data-bg="6"] { background-color: #0d0a16; }
 
-/* Sezione 5: gradiente diagonale viola profondo → blu, morbido e sofisticato */
-.bg-layer--gradient {
-  background:
-    radial-gradient(120% 90% at 85% 12%, rgba(122,80,255,.4), transparent 58%),
-    radial-gradient(90% 80% at 12% 95%, rgba(10,20,80,.55), transparent 60%),
-    linear-gradient(128deg, #3C15B0 0%, #2A1DC6 46%, var(--blue) 100%);
+/* Layer 0 — video camera-walk (Seedance): riempie il layer e segue il dolly Z.
+   Il poster (immagine reception) resta visibile finché il video non parte. */
+.bg-layer--video { background-size: cover; background-position: 70% center; }
+.bg-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 70% center;
+  pointer-events: none;
 }
 
 /* Scrim di leggibilità (sinistra) + vignetta da lente */
@@ -392,7 +397,34 @@ main { position: relative; z-index: 10; }
 .stat-label { margin: 9px 0 0; font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 320px; }
 
 /* =============================================================
-   SEZIONE 5 — Perché (su gradiente)
+   SEZIONE 5 — Stack & Produzione (chips)
+   ============================================================= */
+.stack-list {
+  list-style: none; margin: 6px 0 40px; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 10px;
+  max-width: min(52vw, 640px);
+}
+.stack-list li {
+  font-size: 14px; font-weight: 600; letter-spacing: .01em;
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: var(--r-pill);
+  background: var(--glass);
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--glass), var(--glass)) padding-box,
+    linear-gradient(140deg, rgba(231,197,104,.45), rgba(255,255,255,.06) 45%, rgba(90,46,230,.4)) border-box;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  transition: transform var(--t-1) var(--ease-out), box-shadow var(--t-2) var(--ease-out);
+}
+.stack-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px rgba(231,197,104,.18);
+}
+
+/* =============================================================
+   SEZIONE 6 — Perché (testo chiaro su scena scura)
    ============================================================= */
 .panel--on-gradient .eyebrow { color: rgba(255,255,255,.85); }
 .panel--on-gradient .eyebrow::before { background: linear-gradient(90deg, #fff, rgba(255,255,255,.25)); }
