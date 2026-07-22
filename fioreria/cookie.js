@@ -12,7 +12,7 @@
   /* ID del contenitore Google Tag Manager — SOSTITUIRE con quello vero
      (es. "GTM-ABC1234") non appena creato su tagmanager.google.com.
      Finché resta questo valore, nessuno script si carica. */
-  var GTM_ID = 'GTM-XXXXXXX';
+  var GTM_ID = 'GTM-5JS4GCQ9';
 
   function stato() {
     var v = localStorage.getItem(KEY);
