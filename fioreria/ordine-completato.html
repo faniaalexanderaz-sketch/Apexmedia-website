@@ -67,7 +67,7 @@
       <div class="riepilogo-totale"><span>Totale</span><strong id="riepilogoTotale"></strong></div>
     </div>
 
-    <p class="esito-nota">Riceverai l'email di conferma di Stripe con i dettagli di pagamento e consegna.</p>
+    <p class="esito-nota">Riceverai a breve un'email di conferma con il riepilogo del tuo ordine.</p>
     <a class="btn btn-primary btn-lg" href="index.html">Torna alla fioreria</a>
   </main>
 
@@ -109,6 +109,23 @@
         if (typeof AFC !== 'undefined' && AFC.utenteCorrente()) {
           AFC.registraOrdine(ordine);
           if (ordine.coupon) AFC.segnaCouponUsato(ordine.coupon);
+        }
+
+        /* evento di acquisto per Google Ads/Analytics (via Tag Manager) —
+           parte solo se l'utente ha accettato i cookie di misurazione */
+        if (typeof AFC_COOKIE !== 'undefined') {
+          var m = location.search.match(/[?&]sessione=([^&]+)/);
+          AFC_COOKIE.dataLayerPush({
+            event: 'purchase',
+            ecommerce: {
+              transaction_id: m ? m[1] : String(Date.now()),
+              value: t,
+              currency: 'EUR',
+              items: ordine.items.map(function (r) {
+                return { item_name: r.nome, price: r.prezzo, quantity: r.qty };
+              })
+            }
+          });
         }
       }
 

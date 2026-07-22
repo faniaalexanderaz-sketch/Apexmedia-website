@@ -7,6 +7,8 @@
    ============================================================= */
 const Stripe = require('stripe');
 const { sql, assicuraSchema } = require('./_db');
+const { inviaEmail } = require('./_email');
+const { afcProdotto } = require('../prodotti');
 
 module.exports.config = { api: { bodyParser: false } };
 
@@ -88,8 +90,58 @@ module.exports = async function handler(req, res) {
         ${meta.messaggio || null}
       )`;
 
+    // email di conferma: se RESEND_API_KEY non è configurata, inviaEmail
+    // non fa nulla — non deve mai far fallire il webhook
+    var emailCliente = sessione.customer_details ? sessione.customer_details.email : null;
+    if (emailCliente) {
+      try {
+        await inviaEmail({
+          to: emailCliente,
+          subject: 'Il tuo ordine è confermato — Antica Fioreria del Centro',
+          html: emailConfermaOrdine(sessione, articoli, meta)
+        });
+      } catch (err) {
+        console.error('Invio email conferma fallito:', err.message);
+      }
+    }
+
     res.status(200).send('ok');
   } catch (err) {
     res.status(500).send('Errore: ' + err.message);
   }
 };
+
+/* ---------- testo dell'email di conferma ---------- */
+function euro(centesimi) {
+  return '€ ' + (centesimi / 100).toFixed(2).replace('.', ',');
+}
+
+function emailConfermaOrdine(sessione, articoli, meta) {
+  var righeArticoli = articoli.map(function (a) {
+    var slug = a[0], qty = a[1];
+    var prod = afcProdotto(slug);
+    var nome = prod ? prod.nome : slug;
+    return '<tr>' +
+      '<td style="padding:10px 0;border-bottom:1px solid #ECE8E1;color:#24352B;font-size:15px;">' + nome + '</td>' +
+      '<td style="padding:10px 0;border-bottom:1px solid #ECE8E1;color:#5A6B5E;font-size:15px;text-align:right;">× ' + qty + '</td>' +
+      '</tr>';
+  }).join('');
+
+  var indirizzo = [meta.nome_ricevente, meta.via, [meta.cap, meta.citta].filter(Boolean).join(' ')]
+    .filter(Boolean).join('<br/>');
+
+  var numeroOrdine = String(sessione.id || '').slice(-8).toUpperCase();
+
+  return '' +
+    '<div style="font-family:Georgia,serif;max-width:520px;margin:0 auto;padding:32px 24px;background:#FAFAF7;">' +
+    '  <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9CAF94;margin:0 0 6px;">Ordine confermato</p>' +
+    '  <h1 style="font-size:26px;color:#24352B;margin:0 0 18px;">Grazie di cuore!</h1>' +
+    '  <p style="font-size:15px;line-height:1.6;color:#5A6B5E;margin:0 0 22px;">Il tuo ordine <strong>#' + numeroOrdine + '</strong> è confermato e lo stiamo già preparando con cura in bottega. Arriverà in 24/48 ore lavorative.</p>' +
+    '  <table style="width:100%;border-collapse:collapse;margin:0 0 18px;">' + righeArticoli + '</table>' +
+    '  <p style="font-size:17px;font-weight:bold;color:#24352B;text-align:right;margin:0 0 26px;">Totale: ' + euro(sessione.amount_total || 0) + '</p>' +
+    (indirizzo ? '  <p style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9CAF94;margin:0 0 6px;">Consegna a</p>' +
+      '  <p style="font-size:15px;line-height:1.5;color:#24352B;margin:0 0 26px;">' + indirizzo + '</p>' : '') +
+    '  <p style="font-size:13px;line-height:1.6;color:#5A6B5E;margin:0;">Per qualsiasi domanda sul tuo ordine, rispondi pure a questa email o scrivici a <a href="mailto:ordini@anticafioreriadelcentro.it" style="color:#2E4B3A;">ordini@anticafioreriadelcentro.it</a>.</p>' +
+    '  <p style="font-size:13px;color:#9CAF94;margin:26px 0 0;">Antica Fioreria del Centro · dal 1953</p>' +
+    '</div>';
+}

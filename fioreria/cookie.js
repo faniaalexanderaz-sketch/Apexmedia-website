@@ -1,17 +1,35 @@
 /* =============================================================
    ANTICA FIORERIA DEL CENTRO — consenso cookie
    Cookie tecnici (carrello/account, sempre attivi) + cookie di
-   terze parti di Stripe (solo al pagamento, solo se accettati).
-   Nessun cookie di profilazione o pubblicità sul sito.
+   terze parti di Stripe (pagamento) e Google (misurazione e
+   pubblicità) — questi ultimi due solo se l'utente accetta.
    ============================================================= */
 (function () {
   'use strict';
   var KEY = 'afc-cookie-consent';
   var box = null;
 
+  /* ID del contenitore Google Tag Manager — SOSTITUIRE con quello vero
+     (es. "GTM-ABC1234") non appena creato su tagmanager.google.com.
+     Finché resta questo valore, nessuno script si carica. */
+  var GTM_ID = 'GTM-XXXXXXX';
+
   function stato() {
     var v = localStorage.getItem(KEY);
     return v === 'accettato' || v === 'rifiutato' ? v : null;
+  }
+
+  /* carica Google Tag Manager SOLO dopo il consenso — mai prima */
+  var gtmCaricato = false;
+  function caricaGTM() {
+    if (gtmCaricato || GTM_ID.indexOf('XXXX') !== -1) return;
+    gtmCaricato = true;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+    document.head.appendChild(s);
   }
 
   function nascondi() {
@@ -22,6 +40,7 @@
   function imposta(v, dopo) {
     localStorage.setItem(KEY, v);
     nascondi();
+    if (v === 'accettato') caricaGTM();
     if (typeof dopo === 'function') dopo();
   }
 
@@ -32,7 +51,7 @@
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-label', 'Preferenze cookie');
     box.innerHTML =
-      '<p class="cookie-testo">Usiamo cookie <strong>tecnici</strong>, indispensabili per far funzionare carrello e account, e — solo se accetti — quelli del <strong>circuito di pagamento</strong> quando paghi con carta, Apple Pay o Google Pay. Nessun cookie di profilazione o pubblicità. <a href="cookie-policy.html">Scopri di più</a></p>' +
+      '<p class="cookie-testo">Usiamo cookie <strong>tecnici</strong>, indispensabili per far funzionare carrello e account, e — solo se accetti — quelli del <strong>circuito di pagamento</strong> e quelli di <strong>misurazione e pubblicità</strong> (Google), per capire come va il sito e mostrare annunci più utili. <a href="cookie-policy.html">Scopri di più</a></p>' +
       '<div class="cookie-azioni">' +
         '<button class="btn btn-ghost btn-sm" type="button" id="cookieRifiuta">Rifiuta</button>' +
         '<button class="btn btn-primary btn-sm" type="button" id="cookieAccetta">Accetta</button>' +
@@ -46,9 +65,15 @@
   /* al primo accesso, mostra subito */
   if (!stato()) crea();
 
-  /* API usata da main.js prima di caricare Stripe.js */
+  /* se il consenso è già stato dato in una visita precedente, carica
+     subito GTM senza aspettare un nuovo click */
+  if (stato() === 'accettato') caricaGTM();
+
+  /* API usata da main.js prima di caricare Stripe.js, e da altre
+     pagine per sapere se può far partire un evento di conversione */
   window.AFC_COOKIE = {
     stato: stato,
-    richiedi: function (dopoScelta) { crea(dopoScelta); }
+    richiedi: function (dopoScelta) { crea(dopoScelta); },
+    dataLayerPush: function (obj) { if (stato() === 'accettato') { caricaGTM(); window.dataLayer = window.dataLayer || []; window.dataLayer.push(obj); } }
   };
 })();

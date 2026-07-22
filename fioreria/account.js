@@ -94,6 +94,13 @@
     msgForm($('regMsg'), '');
     apriDashboard(r.user);
     toast('Account creato: il coupon BENVENUTO10 è tuo ✦');
+    try {
+      fetch('/api/invia-benvenuto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: r.user.email })
+      }).catch(function () {});
+    } catch (e) {}
   });
 
   /* ---------- recupero password ---------- */

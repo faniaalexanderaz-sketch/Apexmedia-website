@@ -417,3 +417,9 @@ function afcProdotto(slug) {
   }
   return null;
 }
+
+/* esportato solo lato server (Node/Vercel): il browser ignora questo blocco,
+   così le funzioni API possono riusare lo stesso catalogo senza duplicarlo */
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { AFC_PRODOTTI: AFC_PRODOTTI, AFC_TAGLIE: AFC_TAGLIE, afcProdotto: afcProdotto };
+}

@@ -384,6 +384,18 @@
     });
   })();
 
+  /* richiede l'invio dell'email di benvenuto con BENVENUTO10 (server-side,
+     non blocca mai il sito: se l'email non parte, l'iscrizione resta comunque valida) */
+  function richiediEmailBenvenuto(email) {
+    try {
+      fetch('/api/invia-benvenuto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   /* =============================================================
      NEWSLETTER — footer
      ============================================================= */
@@ -399,6 +411,7 @@
       form.hidden = true;
       ok.hidden = false;
       suonoAggiunta();
+      richiediEmailBenvenuto(email);
     });
   })();
 
@@ -468,6 +481,7 @@
       document.getElementById('newsPopForm').hidden = true;
       document.getElementById('newsPopOk').hidden = false;
       localStorage.setItem('afc-news-pop-visto', '1');
+      richiediEmailBenvenuto(campo.value);
       clearTimeout(timer);
       setTimeout(function () { chiudi(false); }, 2200);
     });
