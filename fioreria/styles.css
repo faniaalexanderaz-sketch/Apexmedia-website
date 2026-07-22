@@ -1064,22 +1064,27 @@ img.no-foto { opacity: 0; }
   display: grid; justify-items: start; gap: 18px;
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: clamp(32px, 5vh, 54px) var(--pad) 0;
+  padding: clamp(18px, 2.6vh, 30px) var(--pad) 0;
 }
-/* etichetta a pillola: avorio, sottile, tracciatura ampia — da maison */
+/* etichetta a pillola in vetro smerigliato, coerente coi filtri categoria */
 .hero-eyebrow {
   margin: 0;
   justify-self: center;
   text-align: center;
   display: inline-flex; align-items: center; justify-content: center;
-  height: 37px;
+  height: 39px;
   padding: 0 30px;
   font-size: 10.5px; font-weight: 600; letter-spacing: .22em;
   color: #234734;
-  background: #F5F4EE;
-  border: 1px solid #D8D6CC;
+  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
+  border: 1px solid rgba(255,255,255,.65);
   border-radius: var(--r-pill);
-  box-shadow: none;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.85),
+    0 1px 2px rgba(46,75,58,.05),
+    0 8px 20px rgba(46,75,58,.08);
 }
 .hero-eyebrow::before { display: none; }
 /* la pillola entra con un puro fade, senza salire */
@@ -1180,7 +1185,7 @@ img.no-foto { opacity: 0; }
   position: relative;
   margin: 0;
   width: 100%;
-  height: clamp(340px, 60vh, 660px);
+  height: clamp(380px, 66vh, 720px);
   overflow: hidden;
   background: #FFFFFF;
   border-top: 1px solid rgba(46,75,58,.07);
@@ -1195,7 +1200,9 @@ img.no-foto { opacity: 0; }
 
 @media (max-width: 860px) {
   .hero-split { margin-top: 6px; }
-  .hero-photo { height: clamp(260px, 44vh, 420px); }
+  /* proporzione identica alla foto: riempie tutta la larghezza senza
+     alcun bordo bianco sopra/sotto, invece dell'altezza fissa di prima */
+  .hero-photo { height: auto; aspect-ratio: 1900 / 1418; }
   .hero-sub { max-width: none; }
 }
 
