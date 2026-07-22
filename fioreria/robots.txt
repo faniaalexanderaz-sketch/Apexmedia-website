@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /account.html
+Disallow: /admin.html
+Disallow: /checkout.html
+Disallow: /ordine-completato.html
+Disallow: /pagamento-annullato.html
+Disallow: /api/
+
+Sitemap: https://anticafioreria.vercel.app/sitemap.xml

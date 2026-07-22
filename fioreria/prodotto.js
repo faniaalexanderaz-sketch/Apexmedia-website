@@ -36,6 +36,59 @@
   document.getElementById('pNome').textContent = prod.nome;
   document.getElementById('pDesc').textContent = prod.descLunga;
 
+  /* ---------- SEO: meta tag e dati strutturati per questo prodotto ---------- */
+  (function () {
+    var urlAssoluta = location.origin + location.pathname + location.search;
+    var fotoAssoluta = location.origin + '/' + prod.foto;
+    var descBreve = prod.desc || prod.descLunga;
+
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', descBreve);
+
+    var mappa = {
+      'meta[property="og:title"]': prod.nome + ' — Antica Fioreria del Centro',
+      'meta[property="og:description"]': descBreve,
+      'meta[property="og:image"]': fotoAssoluta
+    };
+    Object.keys(mappa).forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (el) el.setAttribute('content', mappa[sel]);
+    });
+    var ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', urlAssoluta);
+    else {
+      var nuovo = document.createElement('meta');
+      nuovo.setAttribute('property', 'og:url');
+      nuovo.setAttribute('content', urlAssoluta);
+      document.head.appendChild(nuovo);
+    }
+
+    var canonica = document.createElement('link');
+    canonica.setAttribute('rel', 'canonical');
+    canonica.setAttribute('href', urlAssoluta);
+    document.head.appendChild(canonica);
+
+    var prezzoBase = prod.tagliaUnica ? prod.prezzo : afcPrezzoTaglia(prod.prezzo, AFC_TAGLIE[0]);
+    var jsonLd = document.createElement('script');
+    jsonLd.type = 'application/ld+json';
+    jsonLd.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: prod.nome,
+      description: descBreve,
+      image: fotoAssoluta,
+      brand: { '@type': 'Brand', name: 'Antica Fioreria del Centro' },
+      offers: {
+        '@type': 'Offer',
+        url: urlAssoluta,
+        priceCurrency: 'EUR',
+        price: prezzoBase,
+        availability: 'https://schema.org/InStock'
+      }
+    });
+    document.head.appendChild(jsonLd);
+  })();
+
   var foto = document.getElementById('pFoto');
   foto.onerror = function () { foto.classList.add('no-foto'); };
   foto.src = prod.foto;
