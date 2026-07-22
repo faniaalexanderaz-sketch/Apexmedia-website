@@ -24,7 +24,8 @@ var AFC_PRODOTTI = [
   {
     slug: 'provenza',
     nome: 'Brezza di Provenza',
-    prezzo: 78,
+    prezzo: 75,
+    tagliaFoto: 'M',
     foto: 'foto/p-provenza.jpg',
     cat: ['stagione', 'regali', 'estate'],
     rating: ['4,8', 12],
@@ -33,21 +34,9 @@ var AFC_PRODOTTI = [
     descLunga: 'Lisianthus color prugna e giallo miele, spighe dorate, lavanda e piccoli limoni real touch, composti in un\'urna di ceramica bianca dalle decorazioni scolpite a mano. Un tripudio di colore che profuma di Provenza anche senza profumare affatto: perfetta su un tavolo luminoso o come regalo per chi ama i colori vivaci.'
   },
   {
-    slug: 'esotico',
-    nome: 'Giardino Esotico',
-    prezzo: 88,
-    foto: 'foto/p-esotico.jpg',
-    cat: ['premium', 'novita', 'regali'],
-    badge: 'Novità',
-    rating: ['5,0', 9],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Calle bianche e arancio, orchidea e foglie tropicali, in un vaso di vetro avvolto in raso.',
-    descLunga: 'Calle bianche, arancio e corallo si intrecciano a un\'orchidea Phalaenopsis, un fiore di carciofo ornamentale e ampie foglie tropicali venate, raccolte in un vaso di vetro cilindrico avvolto in un drappo di raso chiaro. Una composizione scenografica e insolita, per chi cerca qualcosa di diverso dal solito bouquet: perfetta in un ingresso importante o come regalo a chi ama distinguersi.'
-  },
-  {
     slug: 'cesta-primavera',
     nome: 'Cesta di Primavera',
-    prezzo: 74,
+    prezzo: 56,
     foto: 'foto/p-cesta-primavera.jpg',
     cat: ['bouquet', 'regali', 'primavera', 'mamma'],
     rating: ['4,9', 15],
@@ -58,7 +47,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'cesta-maggio',
     nome: 'Cesta di Maggio',
-    prezzo: 76,
+    prezzo: 38,
     foto: 'foto/p-cesta-maggio.jpg',
     cat: ['bouquet', 'matrimonio', 'primavera'],
     rating: ['4,8', 11],
@@ -69,7 +58,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'orto',
     nome: 'L\'Orto in Casa',
-    prezzo: 85,
+    prezzo: 78,
     foto: 'foto/p-orto.jpg',
     cat: ['regali', 'novita', 'autunno'],
     badge: 'Novità',
@@ -81,7 +70,8 @@ var AFC_PRODOTTI = [
   {
     slug: 'sole-campagna',
     nome: 'Sole di Campagna',
-    prezzo: 72,
+    prezzo: 59,
+    tagliaFoto: 'S',
     foto: 'foto/p-sole-campagna.jpg',
     cat: ['stagione', 'regali', 'estate'],
     rating: ['4,7', 10],
@@ -90,23 +80,12 @@ var AFC_PRODOTTI = [
     descLunga: 'Un grande girasole al centro, circondato da margherite lilla e bianche, rose color crema e rametti di verde, appoggiato su una fetta di legno grezzo con un fiocco di raso giallo. Un piccolo centrotavola solare, perfetto per portare l\'estate in tavola tutto l\'anno.'
   },
   {
-    slug: 'cascata-dorata',
-    nome: 'Cascata Dorata',
-    prezzo: 90,
-    foto: 'foto/p-cascata-dorata.jpg',
-    cat: ['premium', 'novita', 'estate', 'inverno'],
-    badge: 'Novità',
-    rating: ['5,0', 6],
-    avail: 'Spedizione in 24/48h',
-    desc: 'Orchidee oncidium gialle, calle e orchidea bianca, in un vaso di vetro con drappo di raso.',
-    descLunga: 'Rami di orchidea Oncidium color oro che ricadono come una cascata, calle bianche e una sfumata in arancio, un cuore di orchidea Phalaenopsis bianca, in un vaso di vetro verde avvolto in un drappo di raso chiaro. La composizione più alta e scenografica della collezione: perfetta per un ingresso importante o per un regalo che lascia il segno.'
-  },
-  {
     slug: 'cuore-rose',
     nome: 'Cuore di Rose',
     prezzo: 76,
+    tagliaFoto: 'S',
     foto: 'foto/p-cuore-rose.jpg',
-    cat: ['anniversario', 'mamma', 'regali'],
+    cat: ['anniversario', 'mamma', 'regali', 'inverno'],
     badge: 'Più venduto',
     rating: ['4,9', 18],
     avail: 'Spedizione in 24/48h',
@@ -116,7 +95,8 @@ var AFC_PRODOTTI = [
   {
     slug: 'sole-agrumi',
     nome: 'Sole e Agrumi',
-    prezzo: 82,
+    prezzo: 72,
+    tagliaFoto: 'M',
     foto: 'foto/p-sole-agrumi.jpg',
     cat: ['stagione', 'regali', 'autunno'],
     rating: ['4,8', 13],
@@ -129,7 +109,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'gatto-giardiniere',
     nome: 'Gatto Giardiniere',
-    prezzo: 45,
+    prezzo: 65,
     tagliaUnica: true,
     foto: 'foto/p-vaso-gatto.jpg',
     cat: ['decorazioni', 'regali', 'novita'],
@@ -141,21 +121,24 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'pannello-verde',
-    nome: 'Pannello Verde Verticale',
-    prezzo: 68,
-    tagliaUnica: true,
+    nome: 'Giardino Verticale',
+    prezzo: 75,
+    taglie: [
+      { id: '1', nome: '1 pezzo', prezzo: 75,  nota: 'Un pannello singolo, da appoggiare o appendere' },
+      { id: '2', nome: '2 pezzi', prezzo: 140, nota: 'Coppia di pannelli: parete verde più ampia, a prezzo ridotto' }
+    ],
     foto: 'foto/p-pannello-verde.jpg',
     cat: ['decorazioni', 'novita'],
     badge: 'Novità',
     rating: ['4,7', 4],
     avail: 'Spedizione in 24/48h',
-    desc: 'Pannello decorativo verticale in verde stabilizzato, per una parete sempre in fiore.',
-    descLunga: 'Un pannello verticale ricoperto di muschi e licheni stabilizzati in diverse tonalità di verde, con rami decorativi intrecciati. Si appoggia o si appende, e trasforma una parete spoglia in un piccolo angolo di giardino verticale, senza bisogno di luce, acqua o manutenzione.'
+    desc: 'Giardino verticale in verde stabilizzato, per una parete sempre in fiore.',
+    descLunga: 'Un giardino verticale ricoperto di muschi e licheni stabilizzati in diverse tonalità di verde, con rami decorativi intrecciati. Si appoggia o si appende, e trasforma una parete spoglia in un piccolo angolo di verde, senza bisogno di luce, acqua o manutenzione. Disponibile in formato singolo o in coppia, per comporre una parete più ampia.'
   },
   {
     slug: 'tiffany',
     nome: 'Tiffany',
-    prezzo: 58,
+    prezzo: 75,
     tagliaUnica: true,
     foto: 'foto/p-tiffany.jpg',
     cat: ['decorazioni', 'regali'],
@@ -167,7 +150,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'cappello-fiorito',
     nome: 'Cappello Fiorito',
-    prezzo: 36,
+    prezzo: 35,
     tagliaUnica: true,
     foto: 'foto/p-cappello.jpg',
     cat: ['decorazioni', 'regali'],
@@ -181,7 +164,6 @@ var AFC_PRODOTTI = [
 var AFC_CATEGORIE = [
   ['tutti', 'Tutti'],
   ['novita', 'Novità'],
-  ['premium', 'Bouquet Premium'],
   ['stagione', 'Fiori di stagione'],
   ['regali', 'Regali floreali'],
   ['anniversario', 'Anniversario'],

@@ -2357,6 +2357,13 @@ img.no-foto { opacity: 0; }
 .prodotto-scorte svg { color: var(--gold); flex: 0 0 auto; }
 .prodotto-scorte-poche { color: #8A6B24; }
 .prodotto-scorte-poche svg { color: #8A6B24; }
+.prodotto-taglia-foto {
+  margin: -2px 0 0;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--muted);
+}
+.prodotto-taglia-foto svg { color: var(--salvia); flex: 0 0 auto; }
+.prodotto-taglia-foto strong { color: var(--ink); font-weight: 700; }
 .prodotto-desc { margin: 0; font-size: 15px; line-height: 1.7; }
 
 .taglie-blocco { display: grid; gap: 8px; }

@@ -14,12 +14,10 @@ const sql = neon(process.env.DATABASE_URL);
    questa lista senza toccare le quantità già in uso nel database. */
 const SCORTE_INIZIALI = {
   provenza: 16,
-  esotico: 10,
   'cesta-primavera': 18,
   'cesta-maggio': 15,
   orto: 20,
   'sole-campagna': 17,
-  'cascata-dorata': 8,
   'cuore-rose': 20,
   'sole-agrumi': 16,
   'gatto-giardiniere': 6,

@@ -15,10 +15,17 @@
     return '€ ' + (Number.isInteger(n) ? n : n.toFixed(2).replace('.', ','));
   }
 
-  var taglia = AFC_TAGLIE[1]; // parte dalla M
+  /* alcune referenze hanno taglie proprie con prezzo fisso (es. "1 pezzo" /
+     "2 pezzi"): in quel caso si usano quelle al posto di S/M/L/XL */
+  var listaTaglie = prod.taglie || AFC_TAGLIE;
+  var taglia = prod.taglie ? prod.taglie[0] : AFC_TAGLIE[1]; // di norma parte dalla M
   var qty = 1;
   var TAGLIA_UNICA = { id: 'U', nome: 'Unica', fattore: 1, nota: 'Formato unico da collezione' };
   if (prod.tagliaUnica) taglia = TAGLIA_UNICA;
+
+  function prezzoTaglia(t) {
+    return t.prezzo != null ? t.prezzo : afcPrezzoTaglia(prod.prezzo, t);
+  }
 
   /* ---------- riempi la scheda ---------- */
   document.title = prod.nome + ' — Antica Fioreria del Centro';
@@ -46,11 +53,17 @@
   avail.querySelector('span').textContent = prod.avail;
   if (prod.availBassa) avail.classList.add('avail-low');
 
+  /* taglia della composizione fotografata (solo dove indicata) */
+  if (prod.tagliaFoto) {
+    document.getElementById('pTagliaFotoVal').textContent = prod.tagliaFoto;
+    document.getElementById('pTagliaFoto').hidden = false;
+  }
+
   /* ---------- taglie ---------- */
   var boxTaglie = document.getElementById('taglie');
   var nota = document.getElementById('tagliaNota');
 
-  function prezzoCorrente() { return afcPrezzoTaglia(prod.prezzo, taglia); }
+  function prezzoCorrente() { return prezzoTaglia(taglia); }
 
   function dipingiPrezzo() {
     var pieno = document.getElementById('pPrezzoPieno');
@@ -71,13 +84,14 @@
   if (prod.tagliaUnica) {
     document.querySelector('.taglie-blocco').hidden = true;
   } else {
-    AFC_TAGLIE.forEach(function (t) {
+    if (prod.taglie) boxTaglie.style.gridTemplateColumns = 'repeat(' + listaTaglie.length + ', 1fr)';
+    listaTaglie.forEach(function (t) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'taglia-btn' + (t.id === taglia.id ? ' attiva' : '');
       btn.setAttribute('role', 'radio');
       btn.setAttribute('aria-checked', String(t.id === taglia.id));
-      btn.innerHTML = '<strong>' + t.nome + '</strong><span>' + euro(afcPrezzoTaglia(prod.prezzo, t)) + '</span>' +
+      btn.innerHTML = '<strong>' + t.nome + '</strong><span>' + euro(prezzoTaglia(t)) + '</span>' +
         (t.doppio ? '<em class="taglia-badge">−30%</em>' : '');
       btn.addEventListener('click', function () {
         taglia = t;
@@ -197,7 +211,7 @@
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
         '<span class="prod-mini-riga">' +
-          '<span class="prod-mini-prezzo">' + (p.tagliaUnica ? euro(p.prezzo) : 'da ' + euro(afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
+          '<span class="prod-mini-prezzo">' + (p.tagliaUnica ? euro(p.prezzo) : 'da ' + euro(p.taglie ? p.taglie[0].prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
           '<span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>' +
         '</span>' +
         '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';
