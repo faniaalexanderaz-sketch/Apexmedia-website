@@ -467,7 +467,7 @@ body.promo-attiva .categorie { padding-top: calc(72px + 18px + var(--promo-h, 44
 }
 .atelier-mini-foto img {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%; height: 100%; object-fit: contain;
   transition: transform .7s var(--ease-out);
 }
 .atelier-mini:hover .atelier-mini-foto {
@@ -1759,7 +1759,7 @@ img.no-foto { opacity: 0; }
   cursor: pointer; z-index: 2;
 }
 .pm-foto { margin: 0; background: var(--ivory); min-height: 320px; position: relative; }
-.pm-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pm-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .pm-corpo { padding: clamp(22px, 3vw, 40px); display: grid; gap: 14px; align-content: start; }
 .pm-badge {
   justify-self: start; margin: 0;
@@ -1799,7 +1799,7 @@ img.no-foto { opacity: 0; }
   background: none; border: none; padding: 0; cursor: pointer; font-family: inherit;
 }
 .pm-corr-foto { display: block; width: 100%; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--ivory); }
-.pm-corr-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pm-corr-foto img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .pm-corr-nome { font-size: 12.5px; font-weight: 600; color: var(--ink); line-height: 1.3; }
 .pm-corr-prezzo { font-size: 12px; color: var(--muted); }
 
@@ -2248,7 +2248,7 @@ img.no-foto { opacity: 0; }
 }
 .prod-mini-foto img {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%; height: 100%; object-fit: contain;
   transition: transform .7s var(--ease-out);
 }
 .prod-mini-foto .badge { top: 10px; left: 10px; padding: 5px 10px; font-size: 10.5px; }
@@ -2325,7 +2325,7 @@ img.no-foto { opacity: 0; }
   pointer-events: none;
   z-index: 1;
 }
-.prodotto-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.prodotto-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .prodotto-foto .badge { top: 16px; left: 16px; z-index: 2; }
 .prodotto-foto .heart { position: absolute; top: 14px; right: 14px; z-index: 2; }
 
