@@ -402,6 +402,77 @@
     });
   })();
 
+  /* =============================================================
+     BARRA SCONTO PRIMO ORDINE — sopra la nav, richiudibile
+     ============================================================= */
+  (function () {
+    var bar = document.getElementById('promoBar');
+    if (!bar) return;
+    if (localStorage.getItem('afc-promo-chiusa') === '1') { bar.remove(); return; }
+    document.body.classList.add('promo-attiva');
+    function misura() {
+      document.documentElement.style.setProperty('--promo-h', bar.offsetHeight + 'px');
+    }
+    misura();
+    window.addEventListener('resize', misura);
+    var chiudi = document.getElementById('promoBarChiudi');
+    if (chiudi) chiudi.addEventListener('click', function () {
+      bar.remove();
+      document.body.classList.remove('promo-attiva');
+      localStorage.setItem('afc-promo-chiusa', '1');
+    });
+  })();
+
+  /* =============================================================
+     POPUP NEWSLETTER — sconto di benvenuto (10s o exit-intent)
+     ============================================================= */
+  (function () {
+    var pop = document.getElementById('newsPop');
+    var scrimPop = document.getElementById('newsPopScrim');
+    if (!pop || !scrimPop || typeof AFC === 'undefined') return;
+    if (localStorage.getItem('afc-news-pop-visto') === '1') return;
+    if (AFC.utenteCorrente()) return;
+
+    var mostrato = false;
+    function apri() {
+      if (mostrato) return;
+      mostrato = true;
+      pop.hidden = false; scrimPop.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function chiudi(ricorda) {
+      pop.hidden = true; scrimPop.hidden = true;
+      document.body.style.overflow = '';
+      if (ricorda) localStorage.setItem('afc-news-pop-visto', '1');
+    }
+
+    var timer = setTimeout(apri, 10000);
+
+    if (matchMedia('(min-width: 900px)').matches) {
+      document.addEventListener('mouseout', function (e) {
+        if (!e.relatedTarget && e.clientY <= 0) apri();
+      });
+    }
+
+    document.getElementById('newsPopChiudi').addEventListener('click', function () { chiudi(true); });
+    scrimPop.addEventListener('click', function () { chiudi(true); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !pop.hidden) chiudi(true);
+    });
+
+    document.getElementById('newsPopForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var campo = document.getElementById('newsPopEmail');
+      var r = AFC.iscriviNewsletter(campo.value);
+      if (r.errore) { campo.focus(); return; }
+      document.getElementById('newsPopForm').hidden = true;
+      document.getElementById('newsPopOk').hidden = false;
+      localStorage.setItem('afc-news-pop-visto', '1');
+      clearTimeout(timer);
+      setTimeout(function () { chiudi(false); }, 2200);
+    });
+  })();
+
   /* account: pallino oro se loggato */
   (function () {
     var btn = document.getElementById('accountBtn');

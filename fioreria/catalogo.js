@@ -17,3 +17,33 @@
     track.appendChild(clone);
   });
 })();
+
+/* scorte live per "Le più scelte" */
+(function () {
+  var carte = document.querySelectorAll('#piuScelte .prod-mini[data-slug]');
+  if (!carte.length) return;
+  fetch('/api/stock').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.scorte) return;
+    carte.forEach(function (card) {
+      var slug = card.getAttribute('data-slug');
+      if (!Object.prototype.hasOwnProperty.call(d.scorte, slug)) return;
+      var rimasti = d.scorte[slug];
+      var elScorte = card.querySelector('.prod-mini-scorte');
+      if (rimasti <= 0) {
+        card.classList.add('prod-mini-esaurito');
+        var badge = card.querySelector('.badge');
+        if (badge) { badge.textContent = 'Esaurito'; badge.className = 'badge badge-esaurito'; }
+        else {
+          var span = document.createElement('span');
+          span.className = 'badge badge-esaurito';
+          span.textContent = 'Esaurito';
+          card.querySelector('.prod-mini-foto').prepend(span);
+        }
+        if (elScorte) elScorte.hidden = true;
+      } else if (elScorte) {
+        elScorte.querySelector('span').textContent = rimasti + ' rimasti';
+        elScorte.hidden = false;
+      }
+    });
+  }).catch(function () {});
+})();

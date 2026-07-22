@@ -9,6 +9,12 @@
 </head>
 <body>
 
+  <!-- ================= BARRA SCONTO PRIMO ORDINE ================= -->
+  <div class="promo-bar" id="promoBar" role="note">
+    <span>Primo ordine? <strong>−10%</strong> con il codice <code>BENVENUTO10</code></span>
+    <button class="promo-bar-chiudi" id="promoBarChiudi" aria-label="Chiudi il messaggio">×</button>
+  </div>
+
   <a class="skip-link" href="#occasioni">salta alle categorie</a>
 
   <!-- ================= LIBRERIA BOTANICA (SVG defs) ================= -->
@@ -139,6 +145,10 @@
         <p class="eyebrow hero-eyebrow reveal">Composizioni floreali artificiali</p>
         <h1 class="display hero-titolo reveal">La bellezza dei fiori... <em>senza tempo</em>.</h1>
         <p class="hero-sub reveal">Bottega di Alessandria dal 1953. Le nostre creazioni uniscono la sapienza artigianale di sempre a materiali che durano una vita.</p>
+        <p class="hero-badge-riga reveal">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.6 5.2 6v5c0 4.5 2.9 7.6 6.8 9.4 3.9-1.8 6.8-4.9 6.8-9.4V6L12 3.6Z"/><path d="m9.3 11.7 1.9 2 3.5-3.8"/></svg>
+          <span>Da € 78 · Spedizione 24/48h inclusa in tutta Italia · Reso gratuito 14 giorni</span>
+        </p>
         <a class="btn btn-primary btn-hero reveal" href="collezione.html">Esplora le composizioni<svg class="btn-freccia" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15.5"/><path d="m13.5 6 6 6-6 6"/></svg></a>
         <ul class="hero-fiducia">
           <li class="reveal">
@@ -157,6 +167,63 @@
             <span>Acquista con metodi di pagamento protetti.</span>
           </li>
         </ul>
+      </div>
+    </section>
+
+    <!-- ================= LE PIÙ SCELTE ================= -->
+    <section class="shop-sez piu-scelte" id="piuScelte" aria-label="Le composizioni più scelte">
+      <div class="section-head">
+        <p class="eyebrow reveal">I preferiti di sempre</p>
+        <h2 class="display reveal">Le più <em>scelte</em></h2>
+      </div>
+      <div class="prod-griglia">
+        <a class="prod-mini reveal" href="prodotto.html?p=cascata-dorata" data-slug="cascata-dorata">
+          <span class="prod-mini-foto">
+            <span class="badge">Novità</span>
+            <img src="foto/p-cascata-dorata.jpg" alt="Cascata Dorata" loading="lazy" width="700" height="560" onerror="this.classList.add('no-foto')" />
+          </span>
+          <span class="prod-mini-nome">Cascata Dorata</span>
+          <span class="prod-mini-riga">
+            <span class="prod-mini-prezzo">€ 90</span>
+            <span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>
+          </span>
+          <span class="prod-mini-stelle" aria-label="Valutazione 5,0 su 5">★ 5,0</span>
+        </a>
+        <a class="prod-mini reveal" href="prodotto.html?p=esotico" data-slug="esotico">
+          <span class="prod-mini-foto">
+            <span class="badge">Novità</span>
+            <img src="foto/p-esotico.jpg" alt="Giardino Esotico" loading="lazy" width="700" height="560" onerror="this.classList.add('no-foto')" />
+          </span>
+          <span class="prod-mini-nome">Giardino Esotico</span>
+          <span class="prod-mini-riga">
+            <span class="prod-mini-prezzo">€ 88</span>
+            <span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>
+          </span>
+          <span class="prod-mini-stelle" aria-label="Valutazione 5,0 su 5">★ 5,0</span>
+        </a>
+        <a class="prod-mini reveal" href="prodotto.html?p=orto" data-slug="orto">
+          <span class="prod-mini-foto">
+            <span class="badge">Novità</span>
+            <img src="foto/p-orto.jpg" alt="L'Orto in Casa" loading="lazy" width="700" height="560" onerror="this.classList.add('no-foto')" />
+          </span>
+          <span class="prod-mini-nome">L'Orto in Casa</span>
+          <span class="prod-mini-riga">
+            <span class="prod-mini-prezzo">€ 85</span>
+            <span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>
+          </span>
+          <span class="prod-mini-stelle" aria-label="Valutazione 5,0 su 5">★ 5,0</span>
+        </a>
+        <a class="prod-mini reveal" href="prodotto.html?p=provenza" data-slug="provenza">
+          <span class="prod-mini-foto">
+            <img src="foto/p-provenza.jpg" alt="Brezza di Provenza" loading="lazy" width="700" height="560" onerror="this.classList.add('no-foto')" />
+          </span>
+          <span class="prod-mini-nome">Brezza di Provenza</span>
+          <span class="prod-mini-riga">
+            <span class="prod-mini-prezzo">€ 78</span>
+            <span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>
+          </span>
+          <span class="prod-mini-stelle" aria-label="Valutazione 4,8 su 5">★ 4,8</span>
+        </a>
       </div>
     </section>
 
@@ -234,19 +301,19 @@
       </div>
       <div class="cat-track">
         <a class="cat-item" href="collezione.html?cat=primavera">
-          <span class="cat-foto"><img src="foto/p-cesta-maggio.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-cesta-primavera.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Primavera</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=estate">
-          <span class="cat-foto"><img src="foto/p-provenza.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-sole-campagna.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Estate</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=autunno">
-          <span class="cat-foto"><img src="foto/p-orto.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-sole-agrumi.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Autunno</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=inverno">
-          <span class="cat-foto"><img src="foto/p-cascata-dorata.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-cuore-rose.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Inverno</span>
         </a>
       </div>
@@ -496,6 +563,22 @@
 
   <!-- toast -->
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- ================= POPUP NEWSLETTER — sconto di benvenuto ================= -->
+  <div class="news-pop-scrim" id="newsPopScrim" hidden></div>
+  <div class="news-pop" id="newsPop" role="dialog" aria-modal="true" aria-labelledby="newsPopTitolo" hidden>
+    <button class="news-pop-chiudi" id="newsPopChiudi" aria-label="Chiudi">×</button>
+    <p class="news-pop-eyebrow">Prima di andare via</p>
+    <h2 class="news-pop-titolo" id="newsPopTitolo">Il 10% è tuo</h2>
+    <p class="news-pop-testo">Iscriviti alla newsletter della bottega e ricevi il codice <strong>BENVENUTO10</strong>, valido sul tuo primo ordine.</p>
+    <form class="news-pop-form" id="newsPopForm" novalidate>
+      <label class="sr-only" for="newsPopEmail">La tua email</label>
+      <input id="newsPopEmail" type="email" autocomplete="email" placeholder="la-tua@email.it" required />
+      <button class="btn btn-primary" type="submit">Ricevi il codice</button>
+    </form>
+    <p class="news-pop-ok" id="newsPopOk" role="status" hidden>Fatto — il codice <strong>BENVENUTO10</strong> è tuo ✓</p>
+    <p class="news-pop-nota">Una mail ogni tanto, mai spam. Puoi disiscriverti quando vuoi.</p>
+  </div>
 
   <script src="cookie.js"></script>
   <script src="auth.js"></script>
