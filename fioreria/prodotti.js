@@ -158,6 +158,240 @@ var AFC_PRODOTTI = [
     avail: 'Spedizione in 24/48h',
     desc: 'Cappello di paglia con rosa lilla e fiori di campo applicati.',
     descLunga: 'Un cappello a tesa larga in paglia naturale, decorato con una grande rosa color lilla, fiori di campo e un nastro con scritte vintage. Un accessorio scenografico, perfetto da appendere in un ingresso country-chic o da regalare a chi ama lo stile boho.'
+  },
+
+  /* ---------- nuovi arrivi ---------- */
+  {
+    slug: 'autunno-in-tavola',
+    nome: 'Autunno in Tavola',
+    prezzo: 75,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 60,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 75,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 113, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 105, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-autunno-in-tavola.jpg',
+    cat: ['stagione', 'autunno', 'regali'],
+    rating: ['4,7', 6],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Peperone, funghi e mela veri al tatto, con fiore lilla a sfera e spighe dorate, su vassoio in ceramica.',
+    descLunga: 'Un peperone giallo lucido, funghetti e una mela rossa real touch, accanto a un fiore lilla a sfera vellutata, ortensie rosse e spighe di avena dorate, composti su un vassoio ovale in ceramica marrone. Un centrotavola caldo e materico che porta l\'autunno in casa senza mai appassire.'
+  },
+  {
+    slug: 'bosco-di-rose',
+    nome: 'Bosco di Rose',
+    prezzo: 78,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 62,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 117, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 109, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-bosco-di-rose.jpg',
+    cat: ['anniversario', 'regali', 'mamma'],
+    rating: ['4,9', 9],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rose rosse e bordeaux con ortensie color malva, su una fetta di legno naturale.',
+    descLunga: 'Rose rosse e bordeaux di diverse sfumature, aperte tra ortensie color malva e fogliame verde, raccolte in una composizione compatta su una fetta di legno grezzo. Un pensiero romantico e senza tempo, perfetto per un anniversario o per dire "ti voglio bene" senza troppe parole.'
+  },
+  {
+    slug: 'trittico-di-rose',
+    nome: 'Trittico di Rose',
+    prezzo: 85,
+    tagliaUnica: true,
+    foto: 'foto/p-trittico-di-rose.jpg',
+    cat: ['regali', 'anniversario', 'decorazioni'],
+    badge: 'Novità',
+    rating: ['4,9', 5],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Tre piccole composizioni di rose rosse e crema, vendute insieme: coppa, spilla e piattino.',
+    descLunga: 'Un trittico pensato per essere regalato o esposto insieme: una coppa di vetro con rose rosse e crema e nastro a cuoricini, una spilla-decorazione con rosa rossa e foglie autunnali, e un piattino con rose rosse, rosa cipria e bacche. Il prezzo comprende tutti e tre i pezzi, ciascuno perfetto anche da solo su una mensola diversa.'
+  },
+  {
+    slug: 'agrumi-oro',
+    nome: 'Agrumi d\'Oro',
+    prezzo: 80,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 64,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 120, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 112, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-agrumi-oro.jpg',
+    cat: ['stagione', 'autunno', 'regali'],
+    rating: ['4,8', 7],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Limone, melagrana, rosa rossa e tulipani gialli con cannella, su piatto bianco smerlato.',
+    descLunga: 'Un grande limone e una melagrana real touch, una rosa rossa vellutata e tulipani gialli aperti, tra bacche, rametti di cannella e fiori color avorio, composti su un piatto bianco dal bordo smerlato. Una composizione solare, perfetta come centrotavola d\'autunno.'
+  },
+  {
+    slug: 'casetta-welcome',
+    nome: 'Casetta "Welcome"',
+    prezzo: 73,
+    tagliaUnica: true,
+    foto: 'foto/p-casetta-welcome.jpg',
+    cat: ['decorazioni', 'regali'],
+    badge: 'Novità',
+    rating: ['4,8', 4],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Casetta per uccellini in legno con cartello "Welcome" e tulipani rosa alla base.',
+    descLunga: 'Una casetta per uccellini in legno naturale, col tetto a punta legato con corda di iuta e un piccolo uccellino dipinto sull\'ingresso, un cartello "Welcome" inciso e un cuscino di tulipani rosa e fiori bianchi alla base. Un pezzo d\'arredo country-chic per un balcone, un ingresso o un davanzale: si espone così com\'è, senza annaffiature.'
+  },
+  {
+    slug: 'mezzanotte-in-fiore',
+    nome: 'Mezzanotte in Fiore',
+    prezzo: 82,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 65,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 82,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 123, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 115, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-mezzanotte-in-fiore.jpg',
+    cat: ['premium', 'novita', 'regali'],
+    badge: 'Novità',
+    rating: ['4,9', 4],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rose nere e bianche tra spirali d\'argento e cardo verde, su piatto specchiato.',
+    descLunga: 'Rose vellutate nere e rose bianche avorio, incorniciate da eleganti spirali metalliche color argento, cardo verde e foglie d\'edera, su un piatto dal riflesso specchiato. Una composizione moderna e di forte carattere, per chi cerca qualcosa di diverso dal solito bouquet — perfetta per un regalo scenografico o per un tavolo di design.'
+  },
+  {
+    slug: 'cristallo-autunno',
+    nome: 'Cristallo d\'Autunno',
+    prezzo: 78,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 62,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 117, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 109, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-cristallo-autunno.jpg',
+    cat: ['autunno', 'anniversario', 'regali'],
+    rating: ['4,8', 6],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rose rosse e bianche, foglie ambrate e coda di coniglio, in una coppa di vetro.',
+    descLunga: 'Rose rosse e bianche aperte tra foglie color ambra, cardo verde e morbide code di coniglio, composte in una coppa di vetro su base svasata, con un nastro a cuoricini rossi. Elegante e luminosa, porta un tocco d\'autunno romantico su qualsiasi tavolo o mensola.'
+  },
+  {
+    slug: 'nautilus-ambra',
+    nome: 'Nautilus d\'Ambra',
+    prezzo: 76,
+    taglie: [
+      { id: 'S', nome: 'S', prezzo: 61, nota: 'Crisantemi ragno color avorio, composizione raccolta' },
+      { id: 'M', nome: 'M', prezzo: 76, nota: 'Rose e mughetto, più abbondante' }
+    ],
+    foto: 'foto/p-nautilus-ambra.jpg',
+    cat: ['regali', 'anniversario'],
+    rating: ['4,7', 3],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Vaso in vetro ambrato a spirale: taglia S con crisantemi ragno avorio, taglia M con rose e mughetto.',
+    descLunga: 'Un vaso in vetro ambrato dalla forma a spirale, come una conchiglia di nautilus. Nella taglia S accoglie crisantemi ragno color avorio e foglie scure; nella taglia M si arricchisce di rose giallo-rosa, mughetto bianco e bacche verdi, per una composizione più abbondante. Stesso vaso, la stessa cura artigianale, due modi diversi di viverlo.'
+  },
+  {
+    slug: 'malva-lavanda',
+    nome: 'Malva e Lavanda',
+    prezzo: 79,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 63,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 119, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 111, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-malva-lavanda.jpg',
+    cat: ['primavera', 'anniversario', 'regali'],
+    rating: ['4,8', 5],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Ranuncolo malva, lavanda e orchidea screziata, in vaso argento martellato.',
+    descLunga: 'Ranuncoli color malva, spighe di lavanda, fiori bianchi a spruzzo e un\'orchidea screziata viola, composti in un vaso argento dalla superficie martellata con un anello decorativo. Una palette delicata tra il malva e il lavanda, per un regalo elegante e mai scontato.'
+  },
+  {
+    slug: 'bonsai-premium',
+    nome: 'Pino Bonsai Premium',
+    prezzo: 385,
+    tagliaUnica: true,
+    foto: 'foto/p-bonsai-premium.jpg',
+    cat: ['decorazioni', 'premium'],
+    rating: ['5,0', 2],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Grande bonsai di pino, alto 1,70 m e largo 1,50 m, con rose bianche tra i rami. Pezzo unico di altissima qualità.',
+    descLunga: 'Un bonsai di pino artificiale di grandi dimensioni — alto circa 1,70 m e largo 1,50 m — dal tronco intrecciato e nodoso, legato con corda naturale alla base in muschio, con rose bianche e felci che spuntano discretamente tra i rami. Realizzato con una cura fuori dal comune, ramo per ramo, per un effetto realistico che si nota solo da vicino. Un pezzo d\'arredo importante per un ingresso, uno studio o una hall: la presenza scenica di un albero vero, senza bisogno di luce né di annaffiature.'
+  },
+  {
+    slug: 'pettirosso-in-fiore',
+    nome: 'Pettirosso in Fiore',
+    prezzo: 80,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 64,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 120, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 112, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-pettirosso-in-fiore.jpg',
+    cat: ['primavera', 'regali'],
+    rating: ['4,8', 4],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Calle bianche, amarillide arancio, rosa e orchidee, in vaso con pettirosso dipinto.',
+    descLunga: 'Calle bianche e un\'amarillide color arancio si aprono accanto a una rosa e delicate orchidee bianche, in un vaso di ceramica decorato con un pettirosso dipinto a mano. Fresca e luminosa, è la composizione giusta per augurare buona primavera o per un regalo di benvenuto.'
+  },
+  {
+    slug: 'zaffiro-lavanda',
+    nome: 'Zaffiro e Lavanda',
+    prezzo: 79,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 63,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 119, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 111, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-zaffiro-lavanda.jpg',
+    cat: ['premium', 'regali', 'anniversario'],
+    badge: 'Novità',
+    rating: ['4,9', 3],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Rosa blu notte, lavanda e fiori rosa cipria, su piatto vintage con fiocco blu.',
+    descLunga: 'Una rosa color blu notte, rara e sorprendente, circondata da lavanda, fiori rosa cipria e foglie argentate, composta su un piatto ovale dal decoro floreale vintage e chiusa da un grande fiocco blu zaffiro. Una composizione fuori dal comune per chi ama i colori insoliti e i regali che si notano.'
+  },
+  {
+    slug: 'dame-fiorite',
+    nome: 'Le Dame Fiorite',
+    prezzo: 91,
+    foto: 'foto/p-dame-fiorite.jpg',
+    cat: ['regali', 'decorazioni'],
+    badge: 'Novità',
+    rating: ['4,9', 4],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Coppia di vasi a testa di dama in ceramica dipinta a mano, con tulipani bianchi e ranuncoli rosa.',
+    descLunga: 'Due vasi in ceramica a forma di testa di dama, dipinti a mano con dettagli diversi — una con fiocchi rossi a pois, l\'altra con collo arancio a pois neri — riempiti l\'una di tulipani bianchi, l\'altra di ranuncoli rosa e fiori di campo. Si vendono in coppia, per essere esposte insieme su una mensola o un comò. Nella foto sono raffigurate in taglia M.'
+  },
+  {
+    slug: 'pinguino-panda',
+    nome: 'Pinguino e Panda Platino',
+    prezzo: 22,
+    tagliaUnica: true,
+    foto: 'foto/p-pinguino-panda.jpg',
+    cat: ['decorazioni', 'regali'],
+    rating: ['4,7', 3],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Coppia di statuine in ceramica argentata: un pinguino e un panda.',
+    descLunga: 'Una coppia di piccole statuine in ceramica smaltata color platino, un pinguino e un panda dal design essenziale e moderno. Un tocco decorativo minimal da abbinare a una composizione floreale o da regalare così com\'è.'
+  },
+  {
+    slug: 'borsa-lavanda',
+    nome: 'Borsa di Lavanda',
+    prezzo: 81,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 65,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 81,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 122, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 113, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-borsa-lavanda.jpg',
+    cat: ['regali', 'primavera', 'mamma'],
+    rating: ['4,8', 6],
+    avail: 'Spedizione in 24/48h',
+    desc: 'Borsa in paglia ricamata a paillettes, con rose rosa, ortensia lilla e lavanda.',
+    descLunga: 'Una borsa intrecciata in paglia naturale, impreziosita da un ricamo a paillettes nei toni del lilla e del malva, colma di rose rosa, un\'ortensia color malva e lavanda. Un\'idea regalo originale, doppiamente utile: si può tenere in vista come composizione o svuotare e usare come borsa vera.'
   }
 ];
 

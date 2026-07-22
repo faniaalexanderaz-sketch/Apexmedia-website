@@ -23,7 +23,22 @@ const SCORTE_INIZIALI = {
   'gatto-giardiniere': 6,
   'pannello-verde': 5,
   tiffany: 4,
-  'cappello-fiorito': 9
+  'cappello-fiorito': 9,
+  'autunno-in-tavola': 8,
+  'bosco-di-rose': 10,
+  'trittico-di-rose': 6,
+  'agrumi-oro': 9,
+  'casetta-welcome': 5,
+  'mezzanotte-in-fiore': 5,
+  'cristallo-autunno': 8,
+  'nautilus-ambra': 7,
+  'malva-lavanda': 8,
+  'bonsai-premium': 2,
+  'pettirosso-in-fiore': 9,
+  'zaffiro-lavanda': 5,
+  'dame-fiorite': 6,
+  'pinguino-panda': 12,
+  'borsa-lavanda': 9
 };
 
 let schemaPronto = null;

@@ -18,7 +18,10 @@
   /* alcune referenze hanno taglie proprie con prezzo fisso (es. "1 pezzo" /
      "2 pezzi"): in quel caso si usano quelle al posto di S/M/L/XL */
   var listaTaglie = prod.taglie || AFC_TAGLIE;
-  var taglia = prod.taglie ? prod.taglie[0] : AFC_TAGLIE[1]; // di norma parte dalla M
+  // di norma si parte dalla M: se le taglie personalizzate ne hanno più di due
+  // (S/M/L/XL) la M è la seconda; se sono solo due (es. "1 pezzo"/"2 pezzi") si
+  // parte dalla prima
+  var taglia = prod.taglie ? (prod.taglie.length > 2 ? prod.taglie[1] : prod.taglie[0]) : AFC_TAGLIE[1];
   var qty = 1;
   var TAGLIA_UNICA = { id: 'U', nome: 'Unica', fattore: 1, nota: 'Formato unico da collezione' };
   if (prod.tagliaUnica) taglia = TAGLIA_UNICA;
