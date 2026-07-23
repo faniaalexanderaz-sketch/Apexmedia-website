@@ -93,7 +93,7 @@
     if (r.errore) { msgForm($('regMsg'), r.errore); return; }
     msgForm($('regMsg'), '');
     apriDashboard(r.user);
-    toast('Account creato: il coupon BENVENUTO10 è tuo ✦');
+    toast('Account creato: il coupon BENVENUTO20 è tuo ✦');
     try {
       fetch('/api/invia-benvenuto', {
         method: 'POST',

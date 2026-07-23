@@ -384,7 +384,7 @@
     });
   })();
 
-  /* richiede l'invio dell'email di benvenuto con BENVENUTO10 (server-side,
+  /* richiede l'invio dell'email di benvenuto con BENVENUTO20 (server-side,
      non blocca mai il sito: se l'email non parte, l'iscrizione resta comunque valida) */
   function richiediEmailBenvenuto(email) {
     try {
