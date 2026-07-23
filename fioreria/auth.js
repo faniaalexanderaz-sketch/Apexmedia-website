@@ -60,7 +60,7 @@ var AFC = (function () {
       indirizzi: [],
       ordini: [],
       wishlist: [],
-      coupon: [{ codice: 'BENVENUTO20', descrizione: '20% di benvenuto sul primo ordine', pct: 20, usato: false }],
+      coupon: [{ codice: 'BENVENUTO10', descrizione: '10% di benvenuto sul primo ordine', pct: 10, usato: false }],
       newsletter: !!consensi.newsletter,
       privacyMarketing: !!consensi.marketing,
       creato: new Date().toISOString()
