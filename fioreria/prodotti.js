@@ -6,6 +6,10 @@
    il 30% in meno del doppio — da qui il "risparmi il 30%".
    Gli articoli con tagliaUnica: true (decorazioni/oggettistica)
    non hanno taglie: si vendono in un formato unico.
+   Campo opzionale "galleria": array di foto in più (oltre a "foto",
+   che resta la copertina su card/collezione) da scorrere nella
+   pagina del singolo prodotto, es. galleria: [p.foto, 'foto/x-2.jpg'].
+   Se assente, la pagina prodotto mostra solo "foto".
    ============================================================= */
 var AFC_TAGLIE = [
   { id: 'S',  nome: 'S',  fattore: 0.75, nota: 'Un pensiero: composizione raccolta' },

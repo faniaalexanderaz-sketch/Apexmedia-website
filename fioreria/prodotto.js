@@ -89,10 +89,57 @@
     document.head.appendChild(jsonLd);
   })();
 
-  var foto = document.getElementById('pFoto');
-  foto.onerror = function () { foto.classList.add('no-foto'); };
-  foto.src = prod.foto;
-  foto.alt = 'Bouquet ' + prod.nome;
+  /* ---------- galleria foto: una o più immagini, scorrevoli ---------- */
+  (function () {
+    var elenco = prod.galleria && prod.galleria.length ? prod.galleria : [prod.foto];
+    var track = document.getElementById('pfTrack');
+    var dotsBox = document.getElementById('pfDots');
+    var prevBtn = document.getElementById('pfPrev');
+    var nextBtn = document.getElementById('pfNext');
+
+    elenco.forEach(function (src, i) {
+      var img = document.createElement('img');
+      img.className = 'pf-slide';
+      img.src = src;
+      img.alt = prod.nome + (elenco.length > 1 ? ' — foto ' + (i + 1) : '');
+      img.loading = i === 0 ? 'eager' : 'lazy';
+      img.onerror = function () { img.classList.add('no-foto'); };
+      track.appendChild(img);
+    });
+
+    if (elenco.length <= 1) return;
+
+    var dots = elenco.map(function (_, i) {
+      var b = document.createElement('button');
+      b.className = 'pf-dot' + (i === 0 ? ' attivo' : '');
+      b.setAttribute('aria-label', 'Vai alla foto ' + (i + 1));
+      b.addEventListener('click', function () { vaiA(i); });
+      dotsBox.appendChild(b);
+      return b;
+    });
+    dotsBox.hidden = false;
+    prevBtn.hidden = false;
+    nextBtn.hidden = false;
+
+    function indiceCorrente() {
+      return Math.round(track.scrollLeft / track.clientWidth);
+    }
+    function vaiA(i) {
+      i = Math.max(0, Math.min(elenco.length - 1, i));
+      track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    }
+    function aggiornaDots() {
+      var i = indiceCorrente();
+      dots.forEach(function (d, di) { d.classList.toggle('attivo', di === i); });
+    }
+    var timerScroll = null;
+    track.addEventListener('scroll', function () {
+      clearTimeout(timerScroll);
+      timerScroll = setTimeout(aggiornaDots, 80);
+    });
+    prevBtn.addEventListener('click', function () { vaiA(indiceCorrente() - 1); });
+    nextBtn.addEventListener('click', function () { vaiA(indiceCorrente() + 1); });
+  })();
 
   if (prod.badge) {
     var b = document.getElementById('pBadge');
