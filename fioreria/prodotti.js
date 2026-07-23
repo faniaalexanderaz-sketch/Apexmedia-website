@@ -10,6 +10,8 @@
    che resta la copertina su card/collezione) da scorrere nella
    pagina del singolo prodotto, es. galleria: [p.foto, 'foto/x-2.jpg'].
    Se assente, la pagina prodotto mostra solo "foto".
+   Campo opzionale "sconto": percentuale dei Saldi Estivi (20 o 15).
+   Se assente il prodotto resta a prezzo pieno (es. borsa-lavanda).
    ============================================================= */
 var AFC_TAGLIE = [
   { id: 'S',  nome: 'S',  fattore: 0.75, nota: 'Un pensiero: composizione raccolta' },
@@ -24,11 +26,18 @@ function afcPrezzoTaglia(prezzoM, taglia) {
 /* valore pieno della XL (2 × M): serve per mostrare quanto risparmi */
 function afcValoreXL(prezzoM) { return prezzoM * 2; }
 
+/* Saldi Estivi: sconto percentuale opzionale per prodotto (campo "sconto").
+   Applicato sul prezzo già calcolato per la taglia scelta. */
+function afcPrezzoScontato(prezzo, prod) {
+  return (prod && prod.sconto) ? Math.round(prezzo * (1 - prod.sconto / 100)) : prezzo;
+}
+
 var AFC_PRODOTTI = [
   {
     slug: 'provenza',
     nome: 'Brezza di Provenza',
     prezzo: 75,
+    sconto: 20,
     tagliaFoto: 'M',
     foto: 'foto/p-provenza.jpg',
     cat: ['stagione', 'regali', 'estate'],
@@ -41,6 +50,7 @@ var AFC_PRODOTTI = [
     slug: 'cesta-primavera',
     nome: 'Cesta di Primavera',
     prezzo: 56,
+    sconto: 20,
     foto: 'foto/p-cesta-primavera.jpg',
     cat: ['bouquet', 'regali', 'primavera', 'mamma'],
     rating: ['4,9', 15],
@@ -52,6 +62,7 @@ var AFC_PRODOTTI = [
     slug: 'cesta-maggio',
     nome: 'Cesta di Maggio',
     prezzo: 38,
+    sconto: 20,
     foto: 'foto/p-cesta-maggio.jpg',
     cat: ['bouquet', 'matrimonio', 'primavera'],
     rating: ['4,8', 11],
@@ -63,6 +74,7 @@ var AFC_PRODOTTI = [
     slug: 'orto',
     nome: 'L\'Orto in Casa',
     prezzo: 78,
+    sconto: 20,
     foto: 'foto/p-orto.jpg',
     cat: ['regali', 'novita', 'autunno'],
     badge: 'Novità',
@@ -75,6 +87,7 @@ var AFC_PRODOTTI = [
     slug: 'sole-campagna',
     nome: 'Sole di Campagna',
     prezzo: 59,
+    sconto: 20,
     tagliaFoto: 'S',
     foto: 'foto/p-sole-campagna.jpg',
     cat: ['stagione', 'regali', 'estate'],
@@ -87,6 +100,7 @@ var AFC_PRODOTTI = [
     slug: 'cuore-rose',
     nome: 'Cuore di Rose',
     prezzo: 76,
+    sconto: 20,
     tagliaFoto: 'S',
     foto: 'foto/p-cuore-rose.jpg',
     cat: ['anniversario', 'mamma', 'regali', 'inverno'],
@@ -100,6 +114,7 @@ var AFC_PRODOTTI = [
     slug: 'sole-agrumi',
     nome: 'Sole e Agrumi',
     prezzo: 72,
+    sconto: 20,
     tagliaFoto: 'M',
     foto: 'foto/p-sole-agrumi.jpg',
     cat: ['stagione', 'regali', 'autunno'],
@@ -114,6 +129,7 @@ var AFC_PRODOTTI = [
     slug: 'gatto-giardiniere',
     nome: 'Gatto Giardiniere',
     prezzo: 65,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-vaso-gatto.jpg',
     cat: ['decorazioni', 'regali', 'novita'],
@@ -127,6 +143,7 @@ var AFC_PRODOTTI = [
     slug: 'pannello-verde',
     nome: 'Giardino Verticale',
     prezzo: 75,
+    sconto: 15,
     taglie: [
       { id: '1', nome: '1 pezzo', prezzo: 75,  nota: 'Un pannello singolo, da appoggiare o appendere' },
       { id: '2', nome: '2 pezzi', prezzo: 140, nota: 'Coppia di pannelli: parete verde più ampia, a prezzo ridotto' }
@@ -143,6 +160,7 @@ var AFC_PRODOTTI = [
     slug: 'tiffany',
     nome: 'Tiffany',
     prezzo: 75,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-tiffany.jpg',
     cat: ['decorazioni', 'regali'],
@@ -155,6 +173,7 @@ var AFC_PRODOTTI = [
     slug: 'cappello-fiorito',
     nome: 'Cappello Fiorito',
     prezzo: 35,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-cappello.jpg',
     cat: ['decorazioni', 'regali'],
@@ -169,6 +188,7 @@ var AFC_PRODOTTI = [
     slug: 'autunno-in-tavola',
     nome: 'Autunno in Tavola',
     prezzo: 75,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 60,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 75,  nota: 'Il formato classico della bottega' },
@@ -187,6 +207,7 @@ var AFC_PRODOTTI = [
     slug: 'bosco-di-rose',
     nome: 'Bosco di Rose',
     prezzo: 78,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 62,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
@@ -204,6 +225,7 @@ var AFC_PRODOTTI = [
     slug: 'trittico-di-rose',
     nome: 'Trittico di Rose',
     prezzo: 85,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-trittico-di-rose.jpg',
     cat: ['regali', 'anniversario', 'decorazioni'],
@@ -217,6 +239,7 @@ var AFC_PRODOTTI = [
     slug: 'agrumi-oro',
     nome: 'Agrumi d\'Oro',
     prezzo: 80,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 64,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
@@ -235,6 +258,7 @@ var AFC_PRODOTTI = [
     slug: 'casetta-welcome',
     nome: 'Casetta "Welcome"',
     prezzo: 73,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-casetta-welcome.jpg',
     cat: ['decorazioni', 'regali'],
@@ -248,6 +272,7 @@ var AFC_PRODOTTI = [
     slug: 'mezzanotte-in-fiore',
     nome: 'Mezzanotte in Fiore',
     prezzo: 82,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 65,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 82,  nota: 'Il formato classico della bottega' },
@@ -267,6 +292,7 @@ var AFC_PRODOTTI = [
     slug: 'cristallo-autunno',
     nome: 'Cristallo d\'Autunno',
     prezzo: 78,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 62,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
@@ -285,6 +311,7 @@ var AFC_PRODOTTI = [
     slug: 'nautilus-ambra',
     nome: 'Nautilus d\'Ambra',
     prezzo: 76,
+    sconto: 20,
     taglie: [
       { id: 'S', nome: 'S', prezzo: 61, nota: 'Crisantemi ragno color avorio, composizione raccolta' },
       { id: 'M', nome: 'M', prezzo: 76, nota: 'Rose e mughetto, più abbondante' }
@@ -301,6 +328,7 @@ var AFC_PRODOTTI = [
     slug: 'malva-lavanda',
     nome: 'Malva e Lavanda',
     prezzo: 79,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 63,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
@@ -319,6 +347,7 @@ var AFC_PRODOTTI = [
     slug: 'bonsai-premium',
     nome: 'Pino Bonsai Premium',
     prezzo: 385,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-bonsai-premium.jpg',
     cat: ['decorazioni', 'premium'],
@@ -331,6 +360,7 @@ var AFC_PRODOTTI = [
     slug: 'pettirosso-in-fiore',
     nome: 'Pettirosso in Fiore',
     prezzo: 80,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 64,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
@@ -349,6 +379,7 @@ var AFC_PRODOTTI = [
     slug: 'zaffiro-lavanda',
     nome: 'Zaffiro e Lavanda',
     prezzo: 79,
+    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 63,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
@@ -368,6 +399,7 @@ var AFC_PRODOTTI = [
     slug: 'dame-fiorite',
     nome: 'Le Dame Fiorite',
     prezzo: 91,
+    sconto: 15,
     foto: 'foto/p-dame-fiorite.jpg',
     cat: ['regali', 'decorazioni'],
     badge: 'Novità',
@@ -380,6 +412,7 @@ var AFC_PRODOTTI = [
     slug: 'pinguino-panda',
     nome: 'Pinguino e Panda Platino',
     prezzo: 22,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-pinguino-panda.jpg',
     cat: ['decorazioni', 'regali'],
@@ -432,5 +465,5 @@ function afcProdotto(slug) {
 /* esportato solo lato server (Node/Vercel): il browser ignora questo blocco,
    così le funzioni API possono riusare lo stesso catalogo senza duplicarlo */
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { AFC_PRODOTTI: AFC_PRODOTTI, AFC_TAGLIE: AFC_TAGLIE, afcProdotto: afcProdotto };
+  module.exports = { AFC_PRODOTTI: AFC_PRODOTTI, AFC_TAGLIE: AFC_TAGLIE, afcProdotto: afcProdotto, afcPrezzoScontato: afcPrezzoScontato };
 }

@@ -29,6 +29,9 @@
   function prezzoTaglia(t) {
     return t.prezzo != null ? t.prezzo : afcPrezzoTaglia(prod.prezzo, t);
   }
+  function prezzoTagliaScontato(t) {
+    return afcPrezzoScontato(prezzoTaglia(t), prod);
+  }
 
   /* ---------- riempi la scheda ---------- */
   document.title = prod.nome + ' — Antica Fioreria del Centro';
@@ -68,7 +71,7 @@
     canonica.setAttribute('href', urlAssoluta);
     document.head.appendChild(canonica);
 
-    var prezzoBase = prod.tagliaUnica ? prod.prezzo : afcPrezzoTaglia(prod.prezzo, AFC_TAGLIE[0]);
+    var prezzoBase = afcPrezzoScontato(prod.tagliaUnica ? prod.prezzo : afcPrezzoTaglia(prod.prezzo, AFC_TAGLIE[0]), prod);
     var jsonLd = document.createElement('script');
     jsonLd.type = 'application/ld+json';
     jsonLd.textContent = JSON.stringify({
@@ -166,15 +169,21 @@
   var boxTaglie = document.getElementById('taglie');
   var nota = document.getElementById('tagliaNota');
 
-  function prezzoCorrente() { return prezzoTaglia(taglia); }
+  function prezzoCorrente() { return prezzoTagliaScontato(taglia); }
 
   function dipingiPrezzo() {
     var pieno = document.getElementById('pPrezzoPieno');
     var sconto = document.getElementById('pSconto');
     document.getElementById('pPrezzo').textContent = euro(prezzoCorrente() * qty);
-    if (taglia.doppio) {
+    if (prod.sconto) {
+      pieno.textContent = euro(prezzoTaglia(taglia) * qty);
+      pieno.hidden = false;
+      sconto.textContent = 'Saldi estivi −' + prod.sconto + '%';
+      sconto.hidden = false;
+    } else if (taglia.doppio) {
       pieno.textContent = euro(afcValoreXL(prod.prezzo) * qty);
       pieno.hidden = false;
+      sconto.textContent = 'risparmi il 30%';
       sconto.hidden = false;
     } else {
       pieno.hidden = true;
@@ -194,8 +203,8 @@
       btn.className = 'taglia-btn' + (t.id === taglia.id ? ' attiva' : '');
       btn.setAttribute('role', 'radio');
       btn.setAttribute('aria-checked', String(t.id === taglia.id));
-      btn.innerHTML = '<strong>' + t.nome + '</strong><span>' + euro(prezzoTaglia(t)) + '</span>' +
-        (t.doppio ? '<em class="taglia-badge">−30%</em>' : '');
+      btn.innerHTML = '<strong>' + t.nome + '</strong><span>' + euro(prezzoTagliaScontato(t)) + '</span>' +
+        (t.doppio ? '<em class="taglia-badge">−30%</em>' : (prod.sconto ? '<em class="taglia-badge">−' + prod.sconto + '%</em>' : ''));
       btn.addEventListener('click', function () {
         taglia = t;
         boxTaglie.querySelectorAll('.taglia-btn').forEach(function (x) {
@@ -307,6 +316,12 @@
       a.className = 'prod-mini';
       a.href = 'prodotto.html?p=' + p.slug;
       a.setAttribute('data-slug', p.slug);
+      var unica = p.tagliaUnica || (p.taglie && p.taglie.length === 1);
+      var base = p.taglie ? p.taglie[0].prezzo : (unica ? p.prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]));
+      var finale = afcPrezzoScontato(base, p);
+      var prezzoHtml = p.sconto
+        ? '<span class="prezzo-blocco"><s class="prod-mini-prezzo-pieno">' + euro(base) + '</s><span class="prod-mini-prezzo">' + (unica ? '' : 'da ') + euro(finale) + '</span></span>'
+        : '<span class="prod-mini-prezzo">' + (unica ? '' : 'da ') + euro(base) + '</span>';
       a.innerHTML =
         '<span class="prod-mini-foto">' +
           (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '') +
@@ -314,7 +329,7 @@
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
         '<span class="prod-mini-riga">' +
-          '<span class="prod-mini-prezzo">' + ((p.tagliaUnica || (p.taglie && p.taglie.length === 1)) ? euro(p.taglie ? p.taglie[0].prezzo : p.prezzo) : 'da ' + euro(p.taglie ? p.taglie[0].prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
+          prezzoHtml +
           '<span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>' +
         '</span>' +
         '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';
