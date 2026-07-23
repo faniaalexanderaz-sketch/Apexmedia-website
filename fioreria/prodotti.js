@@ -176,6 +176,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 105, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-autunno-in-tavola.jpg',
+    galleria: ['foto/p-autunno-in-tavola.jpg', 'foto/p-autunno-in-tavola-2.jpg', 'foto/p-autunno-in-tavola-3.jpg'],
     cat: ['stagione', 'autunno', 'regali'],
     rating: ['4,7', 6],
     avail: 'Spedizione in 48/72h',
@@ -223,6 +224,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 112, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-agrumi-oro.jpg',
+    galleria: ['foto/p-agrumi-oro.jpg', 'foto/p-agrumi-oro-2.jpg', 'foto/p-agrumi-oro-3.jpg'],
     cat: ['stagione', 'autunno', 'regali'],
     rating: ['4,8', 7],
     avail: 'Spedizione in 48/72h',
@@ -253,6 +255,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 115, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-mezzanotte-in-fiore.jpg',
+    galleria: ['foto/p-mezzanotte-in-fiore.jpg', 'foto/p-mezzanotte-in-fiore-2.jpg', 'foto/p-mezzanotte-in-fiore-3.jpg'],
     cat: ['premium', 'novita', 'regali'],
     badge: 'Novità',
     rating: ['4,9', 4],
@@ -271,6 +274,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 109, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-cristallo-autunno.jpg',
+    galleria: ['foto/p-cristallo-autunno.jpg', 'foto/p-cristallo-autunno-2.jpg', 'foto/p-cristallo-autunno-3.jpg'],
     cat: ['autunno', 'anniversario', 'regali'],
     rating: ['4,8', 6],
     avail: 'Spedizione in 48/72h',
@@ -286,6 +290,7 @@ var AFC_PRODOTTI = [
       { id: 'M', nome: 'M', prezzo: 76, nota: 'Rose e mughetto, più abbondante' }
     ],
     foto: 'foto/p-nautilus-ambra.jpg',
+    galleria: ['foto/p-nautilus-ambra.jpg', 'foto/p-nautilus-ambra-2.jpg', 'foto/p-nautilus-ambra-3.jpg'],
     cat: ['regali', 'anniversario'],
     rating: ['4,7', 3],
     avail: 'Spedizione in 48/72h',
@@ -303,6 +308,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 111, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-malva-lavanda.jpg',
+    galleria: ['foto/p-malva-lavanda.jpg', 'foto/p-malva-lavanda-2.jpg', 'foto/p-malva-lavanda-3.jpg'],
     cat: ['primavera', 'anniversario', 'regali'],
     rating: ['4,8', 5],
     avail: 'Spedizione in 48/72h',
@@ -332,6 +338,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 112, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-pettirosso-in-fiore.jpg',
+    galleria: ['foto/p-pettirosso-in-fiore.jpg', 'foto/p-pettirosso-in-fiore-2.jpg', 'foto/p-pettirosso-in-fiore-3.jpg'],
     cat: ['primavera', 'regali'],
     rating: ['4,8', 4],
     avail: 'Spedizione in 48/72h',
@@ -349,6 +356,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 111, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-zaffiro-lavanda.jpg',
+    galleria: ['foto/p-zaffiro-lavanda.jpg', 'foto/p-zaffiro-lavanda-2.jpg', 'foto/p-zaffiro-lavanda-3.jpg'],
     cat: ['premium', 'regali', 'anniversario'],
     badge: 'Novità',
     rating: ['4,9', 3],
@@ -391,6 +399,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 113, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-borsa-lavanda.jpg',
+    galleria: ['foto/p-borsa-lavanda.jpg', 'foto/p-borsa-lavanda-2.jpg', 'foto/p-borsa-lavanda-3.jpg'],
     cat: ['regali', 'primavera', 'mamma'],
     rating: ['4,8', 6],
     avail: 'Spedizione in 48/72h',
