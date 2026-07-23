@@ -59,7 +59,7 @@
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
         '<span class="prod-mini-riga">' +
-          '<span class="prod-mini-prezzo">' + (p.tagliaUnica ? euro(p.prezzo) : 'da ' + euro(p.taglie ? p.taglie[0].prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
+          '<span class="prod-mini-prezzo">' + ((p.tagliaUnica || (p.taglie && p.taglie.length === 1)) ? euro(p.taglie ? p.taglie[0].prezzo : p.prezzo) : 'da ' + euro(p.taglie ? p.taglie[0].prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
           scorteHtml +
         '</span>' +
         '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';

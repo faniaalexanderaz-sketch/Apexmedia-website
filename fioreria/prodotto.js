@@ -314,7 +314,7 @@
         '</span>' +
         '<span class="prod-mini-nome"></span>' +
         '<span class="prod-mini-riga">' +
-          '<span class="prod-mini-prezzo">' + (p.tagliaUnica ? euro(p.prezzo) : 'da ' + euro(p.taglie ? p.taglie[0].prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
+          '<span class="prod-mini-prezzo">' + ((p.tagliaUnica || (p.taglie && p.taglie.length === 1)) ? euro(p.taglie ? p.taglie[0].prezzo : p.prezzo) : 'da ' + euro(p.taglie ? p.taglie[0].prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]))) + '</span>' +
           '<span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>' +
         '</span>' +
         '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';
