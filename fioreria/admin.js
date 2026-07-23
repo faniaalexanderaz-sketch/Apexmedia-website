@@ -117,8 +117,7 @@
     lista.innerHTML = '';
     $('ordiniAdminVuoto').hidden = ordini.length > 0;
     ordini.forEach(function (o) {
-      var articoli = [];
-      try { articoli = JSON.parse(o.articoli); } catch (e) {}
+      var articoli = Array.isArray(o.articoli) ? o.articoli : [];
       var righeArticoli = articoli.map(function (a) {
         return nomeProdotto(a[0]) + ' ×' + a[1];
       }).join(', ');
