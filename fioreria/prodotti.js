@@ -29,7 +29,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-provenza.jpg',
     cat: ['stagione', 'regali', 'estate'],
     rating: ['4,8', 12],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Lisianthus viola e giallo, lavanda e limoni veri al tatto, in un\'urna bianca scolpita.',
     descLunga: 'Lisianthus color prugna e giallo miele, spighe dorate, lavanda e piccoli limoni real touch, composti in un\'urna di ceramica bianca dalle decorazioni scolpite a mano. Un tripudio di colore che profuma di Provenza anche senza profumare affatto: perfetta su un tavolo luminoso o come regalo per chi ama i colori vivaci.'
   },
@@ -40,7 +40,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-cesta-primavera.jpg',
     cat: ['bouquet', 'regali', 'primavera', 'mamma'],
     rating: ['4,9', 15],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Peonie rosa e margherite viola, in una cesta intrecciata con manico.',
     descLunga: 'Peonie rosa carico, margherite viola e lilla tra foglie di felce, raccolte in una graziosa cesta di bambù intrecciato con manico — pronta da regalare così com\'è, senza bisogno di un vaso. Il formato più informale e conviviale della collezione: perfetta per una visita, un compleanno o un pensiero portato a mano.'
   },
@@ -51,7 +51,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-cesta-maggio.jpg',
     cat: ['bouquet', 'matrimonio', 'primavera'],
     rating: ['4,8', 11],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Calle viola, rose crema e mughetto, in una cesta intrecciata con manico.',
     descLunga: 'Calle viola intense, rose color crema e delicati steli di mughetto, tra fili d\'erba e lavanda, raccolti in una cesta di bambù intrecciato con manico. Elegante e romantica, è la composizione giusta per un matrimonio in primavera o per chi ama i toni sfumati tra il viola e il crema.'
   },
@@ -63,7 +63,7 @@ var AFC_PRODOTTI = [
     cat: ['regali', 'novita', 'autunno'],
     badge: 'Novità',
     rating: ['5,0', 7],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Peperoni, cipollotto, cipolla e peperoncini veri al tatto, su un tagliere in legno.',
     descLunga: 'Un peperone giallo, cipollotti, una cipolla dorata, peperoncini piccanti, foglie di insalata e piccoli pomodorini, tutti realizzati real touch, composti su un tagliere in legno naturale con un tocco di cannella e iuta. Un centrotavola originale e sorprendente per la cucina o la sala da pranzo: sembra appena raccolto dall\'orto, ma resta così per sempre.'
   },
@@ -75,7 +75,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-sole-campagna.jpg',
     cat: ['stagione', 'regali', 'estate'],
     rating: ['4,7', 10],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Girasole e margherite lilla su una fetta di legno naturale, con fiocco giallo.',
     descLunga: 'Un grande girasole al centro, circondato da margherite lilla e bianche, rose color crema e rametti di verde, appoggiato su una fetta di legno grezzo con un fiocco di raso giallo. Un piccolo centrotavola solare, perfetto per portare l\'estate in tavola tutto l\'anno.'
   },
@@ -88,7 +88,7 @@ var AFC_PRODOTTI = [
     cat: ['anniversario', 'mamma', 'regali', 'inverno'],
     badge: 'Più venduto',
     rating: ['4,9', 18],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Rose e peonie rosa cipria, anemone, in un vaso verde con nastro e dettagli a cuore.',
     descLunga: 'Rose inglesi color cipria, peonie e un anemone dai toni rosa antico, raccolti in un piccolo vaso verde smeraldo con perline in rilievo, impreziositi da un nastro viola e un tocco di stoffa a cuoricini. Romantica e delicata, è la composizione ideale per San Valentino, un anniversario o semplicemente per dire "ti penso".'
   },
@@ -100,7 +100,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-sole-agrumi.jpg',
     cat: ['stagione', 'regali', 'autunno'],
     rating: ['4,8', 13],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Girasoli, limoni e mele veri al tatto, con iuta, in un vaso verde scolpito.',
     descLunga: 'Girasoli dorati, piccole rose color miele, limoni e mele real touch tra foglie lucide e un fiocco di iuta grezza, composti in un vaso verde scolpito a foglie. Allegra e abbondante, è la composizione perfetta per la cucina, un regalo di benvenuto o per chi ama i colori caldi della campagna.'
   },
@@ -115,7 +115,7 @@ var AFC_PRODOTTI = [
     cat: ['decorazioni', 'regali', 'novita'],
     badge: 'Novità',
     rating: ['5,0', 5],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Un simpatico gatto ricoperto di muschio sintetico, accanto a un cestino con ortensia bianca.',
     descLunga: 'Un gatto scultoreo interamente ricoperto di muschio sintetico verde, seduto accanto a un piccolo cestino di vimini con un\'ortensia bianca real touch. Un pezzo d\'arredo originale e simpatico, perfetto per un davanzale, un ingresso o come regalo a chi ama gli oggetti fuori dal comune. Il vaso a forma di gatto è l\'oggetto in vendita; l\'ortensia lo accompagna.'
   },
@@ -131,7 +131,7 @@ var AFC_PRODOTTI = [
     cat: ['decorazioni', 'novita'],
     badge: 'Novità',
     rating: ['4,7', 4],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Giardino verticale in verde stabilizzato, per una parete sempre in fiore.',
     descLunga: 'Un giardino verticale ricoperto di muschi e licheni stabilizzati in diverse tonalità di verde, con rami decorativi intrecciati. Si appoggia o si appende, e trasforma una parete spoglia in un piccolo angolo di verde, senza bisogno di luce, acqua o manutenzione. Disponibile in formato singolo o in coppia, per comporre una parete più ampia.'
   },
@@ -143,7 +143,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-tiffany.jpg',
     cat: ['decorazioni', 'regali'],
     rating: ['4,9', 6],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Quadro con fiori e foglie pressate sotto vetro, cornice color acqua.',
     descLunga: 'Una composizione di fiori e foglie dai toni verde-azzurro, pressata e racchiusa sotto vetro in una cornice in legno dipinta color acqua. Un piccolo quadro botanico da appendere o appoggiare, che porta in casa la delicatezza di un giardino d\'altri tempi.'
   },
@@ -155,7 +155,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-cappello.jpg',
     cat: ['decorazioni', 'regali'],
     rating: ['4,8', 8],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Cappello di paglia con rosa lilla e fiori di campo applicati.',
     descLunga: 'Un cappello a tesa larga in paglia naturale, decorato con una grande rosa color lilla, fiori di campo e un nastro con scritte vintage. Un accessorio scenografico, perfetto da appendere in un ingresso country-chic o da regalare a chi ama lo stile boho.'
   },
@@ -174,7 +174,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-autunno-in-tavola.jpg',
     cat: ['stagione', 'autunno', 'regali'],
     rating: ['4,7', 6],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Peperone, funghi e mela veri al tatto, con fiore lilla a sfera e spighe dorate, su vassoio in ceramica.',
     descLunga: 'Un peperone giallo lucido, funghetti e una mela rossa real touch, accanto a un fiore lilla a sfera vellutata, ortensie rosse e spighe di avena dorate, composti su un vassoio ovale in ceramica marrone. Un centrotavola caldo e materico che porta l\'autunno in casa senza mai appassire.'
   },
@@ -191,7 +191,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-bosco-di-rose.jpg',
     cat: ['anniversario', 'regali', 'mamma'],
     rating: ['4,9', 9],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Rose rosse e bordeaux con ortensie color malva, su una fetta di legno naturale.',
     descLunga: 'Rose rosse e bordeaux di diverse sfumature, aperte tra ortensie color malva e fogliame verde, raccolte in una composizione compatta su una fetta di legno grezzo. Un pensiero romantico e senza tempo, perfetto per un anniversario o per dire "ti voglio bene" senza troppe parole.'
   },
@@ -204,7 +204,7 @@ var AFC_PRODOTTI = [
     cat: ['regali', 'anniversario', 'decorazioni'],
     badge: 'Novità',
     rating: ['4,9', 5],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Tre piccole composizioni di rose rosse e crema, vendute insieme: coppa, spilla e piattino.',
     descLunga: 'Un trittico pensato per essere regalato o esposto insieme: una coppa di vetro con rose rosse e crema e nastro a cuoricini, una spilla-decorazione con rosa rossa e foglie autunnali, e un piattino con rose rosse, rosa cipria e bacche. Il prezzo comprende tutti e tre i pezzi, ciascuno perfetto anche da solo su una mensola diversa.'
   },
@@ -221,7 +221,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-agrumi-oro.jpg',
     cat: ['stagione', 'autunno', 'regali'],
     rating: ['4,8', 7],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Limone, melagrana, rosa rossa e tulipani gialli con cannella, su piatto bianco smerlato.',
     descLunga: 'Un grande limone e una melagrana real touch, una rosa rossa vellutata e tulipani gialli aperti, tra bacche, rametti di cannella e fiori color avorio, composti su un piatto bianco dal bordo smerlato. Una composizione solare, perfetta come centrotavola d\'autunno.'
   },
@@ -234,7 +234,7 @@ var AFC_PRODOTTI = [
     cat: ['decorazioni', 'regali'],
     badge: 'Novità',
     rating: ['4,8', 4],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Casetta per uccellini in legno con cartello "Welcome" e tulipani rosa alla base.',
     descLunga: 'Una casetta per uccellini in legno naturale, col tetto a punta legato con corda di iuta e un piccolo uccellino dipinto sull\'ingresso, un cartello "Welcome" inciso e un cuscino di tulipani rosa e fiori bianchi alla base. Un pezzo d\'arredo country-chic per un balcone, un ingresso o un davanzale: si espone così com\'è, senza annaffiature.'
   },
@@ -252,7 +252,7 @@ var AFC_PRODOTTI = [
     cat: ['premium', 'novita', 'regali'],
     badge: 'Novità',
     rating: ['4,9', 4],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Rose nere e bianche tra spirali d\'argento e cardo verde, su piatto specchiato.',
     descLunga: 'Rose vellutate nere e rose bianche avorio, incorniciate da eleganti spirali metalliche color argento, cardo verde e foglie d\'edera, su un piatto dal riflesso specchiato. Una composizione moderna e di forte carattere, per chi cerca qualcosa di diverso dal solito bouquet — perfetta per un regalo scenografico o per un tavolo di design.'
   },
@@ -269,7 +269,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-cristallo-autunno.jpg',
     cat: ['autunno', 'anniversario', 'regali'],
     rating: ['4,8', 6],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Rose rosse e bianche, foglie ambrate e coda di coniglio, in una coppa di vetro.',
     descLunga: 'Rose rosse e bianche aperte tra foglie color ambra, cardo verde e morbide code di coniglio, composte in una coppa di vetro su base svasata, con un nastro a cuoricini rossi. Elegante e luminosa, porta un tocco d\'autunno romantico su qualsiasi tavolo o mensola.'
   },
@@ -284,7 +284,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-nautilus-ambra.jpg',
     cat: ['regali', 'anniversario'],
     rating: ['4,7', 3],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Vaso in vetro ambrato a spirale: taglia S con crisantemi ragno avorio, taglia M con rose e mughetto.',
     descLunga: 'Un vaso in vetro ambrato dalla forma a spirale, come una conchiglia di nautilus. Nella taglia S accoglie crisantemi ragno color avorio e foglie scure; nella taglia M si arricchisce di rose giallo-rosa, mughetto bianco e bacche verdi, per una composizione più abbondante. Stesso vaso, la stessa cura artigianale, due modi diversi di viverlo.'
   },
@@ -301,7 +301,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-malva-lavanda.jpg',
     cat: ['primavera', 'anniversario', 'regali'],
     rating: ['4,8', 5],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Ranuncolo malva, lavanda e orchidea screziata, in vaso argento martellato.',
     descLunga: 'Ranuncoli color malva, spighe di lavanda, fiori bianchi a spruzzo e un\'orchidea screziata viola, composti in un vaso argento dalla superficie martellata con un anello decorativo. Una palette delicata tra il malva e il lavanda, per un regalo elegante e mai scontato.'
   },
@@ -313,7 +313,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-bonsai-premium.jpg',
     cat: ['decorazioni', 'premium'],
     rating: ['5,0', 2],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Grande bonsai di pino, alto 1,70 m e largo 1,50 m, con rose bianche tra i rami. Pezzo unico di altissima qualità.',
     descLunga: 'Un bonsai di pino artificiale di grandi dimensioni — alto circa 1,70 m e largo 1,50 m — dal tronco intrecciato e nodoso, legato con corda naturale alla base in muschio, con rose bianche e felci che spuntano discretamente tra i rami. Realizzato con una cura fuori dal comune, ramo per ramo, per un effetto realistico che si nota solo da vicino. Un pezzo d\'arredo importante per un ingresso, uno studio o una hall: la presenza scenica di un albero vero, senza bisogno di luce né di annaffiature.'
   },
@@ -330,7 +330,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-pettirosso-in-fiore.jpg',
     cat: ['primavera', 'regali'],
     rating: ['4,8', 4],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Calle bianche, amarillide arancio, rosa e orchidee, in vaso con pettirosso dipinto.',
     descLunga: 'Calle bianche e un\'amarillide color arancio si aprono accanto a una rosa e delicate orchidee bianche, in un vaso di ceramica decorato con un pettirosso dipinto a mano. Fresca e luminosa, è la composizione giusta per augurare buona primavera o per un regalo di benvenuto.'
   },
@@ -348,7 +348,7 @@ var AFC_PRODOTTI = [
     cat: ['premium', 'regali', 'anniversario'],
     badge: 'Novità',
     rating: ['4,9', 3],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Rosa blu notte, lavanda e fiori rosa cipria, su piatto vintage con fiocco blu.',
     descLunga: 'Una rosa color blu notte, rara e sorprendente, circondata da lavanda, fiori rosa cipria e foglie argentate, composta su un piatto ovale dal decoro floreale vintage e chiusa da un grande fiocco blu zaffiro. Una composizione fuori dal comune per chi ama i colori insoliti e i regali che si notano.'
   },
@@ -360,7 +360,7 @@ var AFC_PRODOTTI = [
     cat: ['regali', 'decorazioni'],
     badge: 'Novità',
     rating: ['4,9', 4],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Coppia di vasi a testa di dama in ceramica dipinta a mano, con tulipani bianchi e ranuncoli rosa.',
     descLunga: 'Due vasi in ceramica a forma di testa di dama, dipinti a mano con dettagli diversi — una con fiocchi rossi a pois, l\'altra con collo arancio a pois neri — riempiti l\'una di tulipani bianchi, l\'altra di ranuncoli rosa e fiori di campo. Si vendono in coppia, per essere esposte insieme su una mensola o un comò. Nella foto sono raffigurate in taglia M.'
   },
@@ -372,7 +372,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-pinguino-panda.jpg',
     cat: ['decorazioni', 'regali'],
     rating: ['4,7', 3],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Coppia di statuine in ceramica argentata: un pinguino e un panda.',
     descLunga: 'Una coppia di piccole statuine in ceramica smaltata color platino, un pinguino e un panda dal design essenziale e moderno. Un tocco decorativo minimal da abbinare a una composizione floreale o da regalare così com\'è.'
   },
@@ -389,7 +389,7 @@ var AFC_PRODOTTI = [
     foto: 'foto/p-borsa-lavanda.jpg',
     cat: ['regali', 'primavera', 'mamma'],
     rating: ['4,8', 6],
-    avail: 'Spedizione in 24/48h',
+    avail: 'Spedizione in 48/72h',
     desc: 'Borsa in paglia ricamata a paillettes, con rose rosa, ortensia lilla e lavanda.',
     descLunga: 'Una borsa intrecciata in paglia naturale, impreziosita da un ricamo a paillettes nei toni del lilla e del malva, colma di rose rosa, un\'ortensia color malva e lavanda. Un\'idea regalo originale, doppiamente utile: si può tenere in vista come composizione o svuotare e usare come borsa vera.'
   }

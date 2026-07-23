@@ -107,12 +107,12 @@
   var passoCon = document.getElementById('passoConsegna');
   var passoPag = document.getElementById('passoPagamento');
 
-  /* data minima = domani: il corriere consegna in 24/48 ore */
+  /* data minima = tra due giorni: il corriere consegna in 48/72 ore */
   var oggi = new Date();
   var dataInput = document.getElementById('coData');
   function isoData(d) { return d.toISOString().slice(0, 10); }
   var minima = new Date(oggi);
-  minima.setDate(minima.getDate() + 1);
+  minima.setDate(minima.getDate() + 2);
   dataInput.min = isoData(minima);
   dataInput.value = isoData(minima);
 
