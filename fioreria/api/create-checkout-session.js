@@ -52,13 +52,21 @@ module.exports = async function handler(req, res) {
     var origin = req.headers.origin || ('https://' + req.headers.host);
     var scorteRichieste = {};
 
+    // coupon (es. BENVENUTO10): percentuale di sconto applicata all'importo
+    // effettivamente addebitato, così Stripe incassa esattamente il "Paga €X"
+    // mostrato al cliente. Il sistema coupon è lato dispositivo, quindi la
+    // percentuale è limitata prudenzialmente per contenere eventuali abusi.
+    var scontoCoupon = Math.max(0, Math.min(20, parseInt(body.couponPct, 10) || 0));
+
     var lineItems = items.map(function (r) {
       var nome = String(r.nome || 'Bouquet').slice(0, 120);
-      var prezzo = Math.round(Number(r.prezzo) * 100); // in centesimi
+      var prezzoPieno = Math.round(Number(r.prezzo) * 100); // in centesimi
       var qty = Math.max(1, Math.min(20, parseInt(r.qty, 10) || 1));
-      if (!isFinite(prezzo) || prezzo < 100 || prezzo > 100000) {
+      if (!isFinite(prezzoPieno) || prezzoPieno < 100 || prezzoPieno > 100000) {
         throw new Error('Importo non valido per "' + nome + '"');
       }
+      var prezzo = Math.round(prezzoPieno * (1 - scontoCoupon / 100));
+      if (prezzo < 50) prezzo = 50; // minimo consentito da Stripe per EUR (0,50 €)
       var slug = typeof r.slug === 'string' ? r.slug.slice(0, 40) : null;
       if (slug) {
         scorteRichieste[slug] = (scorteRichieste[slug] || 0) + qty;
@@ -102,7 +110,8 @@ module.exports = async function handler(req, res) {
         cap: String(consegna.cap || '').slice(0, 20),
         citta: String(consegna.citta || '').slice(0, 100),
         giorno_consegna: String(consegna.giorno || '').slice(0, 20),
-        messaggio: String(consegna.messaggio || '').slice(0, 400)
+        messaggio: String(consegna.messaggio || '').slice(0, 400),
+        coupon: String(body.coupon || '').slice(0, 40)
       }
     });
 

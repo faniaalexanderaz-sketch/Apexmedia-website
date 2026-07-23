@@ -12,9 +12,9 @@ module.exports = async function handler(req, res) {
   }
   try {
     await assicuraSchema();
-    const { rows } = await sql`SELECT slug, quantita FROM prodotti_scorte`;
+    const righe = await sql`SELECT slug, quantita FROM prodotti_scorte`;
     const scorte = {};
-    rows.forEach((r) => { scorte[r.slug] = r.quantita; });
+    righe.forEach((r) => { scorte[r.slug] = r.quantita; });
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ scorte });
   } catch (err) {

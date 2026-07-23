@@ -411,8 +411,8 @@ var AFC_PRODOTTI = [
   {
     slug: 'pinguino-panda',
     nome: 'Pinguino e Panda Platino',
-    prezzo: 1,
-    /* TEST: prezzo temporaneamente abbassato per verificare acquisto/email, poi torna a 22 */
+    prezzo: 22,
+    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-pinguino-panda.jpg',
     cat: ['decorazioni', 'regali'],

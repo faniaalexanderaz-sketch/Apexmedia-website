@@ -229,6 +229,8 @@
       body: JSON.stringify({
         items: cart.map(function (r) { return { nome: r.nome, prezzo: r.prezzo, qty: r.qty, slug: r.slug }; }),
         totale: t.tot,
+        couponPct: t.coupon ? t.coupon.pct : 0,
+        coupon: t.coupon ? t.coupon.codice : '',
         email: consegna.email,
         consegna: consegna
       })
