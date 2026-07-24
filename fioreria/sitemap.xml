@@ -103,6 +103,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://anticafioreria.vercel.app/prodotto.html?p=girasoli-cannella</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://anticafioreria.vercel.app/prodotto.html?p=bosco-di-rose</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>

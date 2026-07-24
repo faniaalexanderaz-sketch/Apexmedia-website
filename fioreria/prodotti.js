@@ -185,6 +185,20 @@ var AFC_PRODOTTI = [
 
   /* ---------- nuovi arrivi ---------- */
   {
+    slug: 'girasoli-cannella',
+    nome: 'Girasoli e Cannella',
+    prezzo: 76,
+    sconto: 20,
+    foto: 'foto/p-girasoli-cannella.jpg',
+    galleria: ['foto/p-girasoli-cannella.jpg', 'foto/p-girasoli-cannella-2.jpg', 'foto/p-girasoli-cannella-3.jpg'],
+    cat: ['stagione', 'autunno', 'regali', 'novita'],
+    badge: 'Novità',
+    rating: ['4,8', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Girasoli, rosa gialla e limone vero al tatto, con cannella e cardo secco, su piattino verde smerlato con fiocco di iuta.',
+    descLunga: 'Grandi girasoli dai petali dorati si aprono accanto a una rosa gialla e a un limone real touch, tra bastoncini di cannella veri, cardo secco viola e spighe dorate, il tutto raccolto su un piattino verde smerlato e chiuso da un fiocco di iuta grezza. Una composizione calda e materica che profuma d\'autunno anche senza profumare — perfetta come centrotavola o come regalo per chi ama i toni caldi della stagione.'
+  },
+  {
     slug: 'autunno-in-tavola',
     nome: 'Autunno in Tavola',
     prezzo: 75,
