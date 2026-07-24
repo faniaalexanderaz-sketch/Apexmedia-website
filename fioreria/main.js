@@ -128,12 +128,12 @@
     return AFC.couponValido(code);
   }
 
-  /* spedizione assicurata: 12€ se il carrello ha solo pacchi S/M, 15€ se
-     contiene anche solo un pacco L/XL (un unico invio, tariffa più alta) */
+  /* spedizione assicurata: tariffa più alta tra gli articoli nel carrello
+     (12€ S/M, 15€ L/XL, o una tariffa fissa per prodotti speciali come
+     il bonsai) — un unico invio, si paga la tariffa più alta presente */
   function spedizioneCorrente() {
     if (!cart.length) return 0;
-    var haLXL = cart.some(function (r) { return r.tier === 'lxl'; });
-    return haLXL ? 15 : 12;
+    return cart.reduce(function (max, r) { return Math.max(max, r.spedizione || 12); }, 0);
   }
 
   function totali() {
@@ -203,10 +203,10 @@
     toastTimer = setTimeout(function () { elToast.hidden = true; }, 2600);
   }
 
-  function add(nome, prezzo, slug, tier) {
+  function add(nome, prezzo, slug, costoSpedizione) {
     var found = cart.find(function (r) { return r.nome === nome; });
     if (found) found.qty += 1;
-    else cart.push({ nome: nome, prezzo: prezzo, qty: 1, slug: slug || null, tier: tier || 'sm' });
+    else cart.push({ nome: nome, prezzo: prezzo, qty: 1, slug: slug || null, spedizione: costoSpedizione || 12 });
     render();
     suonoAggiunta();
     toast('«' + nome + '» aggiunto al carrello');

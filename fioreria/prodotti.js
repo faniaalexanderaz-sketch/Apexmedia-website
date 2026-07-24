@@ -36,12 +36,18 @@ function afcPrezzoScontato(prezzo, prod) {
    determinata dalla taglia scelta. Le taglie "L"/"XL"/"2" (Giardino
    Verticale in coppia) sono pacchi grandi; tutto il resto è S/M. Per i
    prodotti a taglia unica (senza oggetto taglia) si usa il campo
-   opzionale "spedizioneTier" sul prodotto (default 'sm'). */
+   opzionale "spedizioneTier" sul prodotto (default 'sm'). Il campo
+   opzionale "spedizioneFissa" sul prodotto forza un costo specifico
+   (es. il bonsai, troppo grande e pesante per la tariffa L/XL normale). */
 var AFC_SPEDIZIONE = { sm: 12, lxl: 15 };
 function afcSpedizioneTier(prod, taglia) {
   if (taglia && (taglia.id === 'L' || taglia.id === 'XL' || taglia.id === '2')) return 'lxl';
   if (!taglia && prod && prod.spedizioneTier === 'lxl') return 'lxl';
   return 'sm';
+}
+function afcSpedizioneCosto(prod, taglia) {
+  if (prod && prod.spedizioneFissa) return prod.spedizioneFissa;
+  return AFC_SPEDIZIONE[afcSpedizioneTier(prod, taglia)];
 }
 
 var AFC_PRODOTTI = [
@@ -430,10 +436,10 @@ var AFC_PRODOTTI = [
   {
     slug: 'bonsai-premium',
     nome: 'Pino Bonsai Premium',
-    prezzo: 385,
+    prezzo: 2176,
     sconto: 15,
     tagliaUnica: true,
-    spedizioneTier: 'lxl',
+    spedizioneFissa: 50,
     foto: 'foto/p-bonsai-premium.jpg',
     cat: ['decorazioni', 'premium'],
     rating: ['5,0', 2],

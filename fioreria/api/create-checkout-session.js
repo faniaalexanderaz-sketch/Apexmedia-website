@@ -86,8 +86,9 @@ module.exports = async function handler(req, res) {
     });
 
     // spedizione assicurata: 12€ (pacchi S/M) o 15€ (pacchi L/XL), mai scontata dal coupon
+    var TARIFFE_SPEDIZIONE = [12, 15, 50]; // S/M, L/XL, tariffa fissa (es. bonsai)
     var spedizioneEuro = Number(body.spedizione);
-    if (spedizioneEuro !== 12 && spedizioneEuro !== 15) spedizioneEuro = 0;
+    if (TARIFFE_SPEDIZIONE.indexOf(spedizioneEuro) === -1) spedizioneEuro = 0;
     if (spedizioneEuro > 0) {
       lineItems.push({
         quantity: 1,

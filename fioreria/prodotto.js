@@ -195,9 +195,9 @@
     nota.textContent = taglia.nota + (taglia.doppio ? ' — vale ' + euro(afcValoreXL(prod.prezzo)) + ', lo paghi ' + euro(prezzoCorrente()) + '.' : '');
     document.getElementById('qN').textContent = String(qty);
 
-    var tierAttuale = afcSpedizioneTier(prod, prod.tagliaUnica ? null : taglia);
+    var costoSpedizioneAttuale = afcSpedizioneCosto(prod, prod.tagliaUnica ? null : taglia);
     document.getElementById('pmConsegnaTesto').textContent =
-      'Spedizione assicurata in 48/72 ore (€ ' + AFC_SPEDIZIONE[tierAttuale] + ') · ritiro gratuito in bottega ad Alessandria';
+      'Spedizione assicurata in 48/72 ore (€ ' + costoSpedizioneAttuale + ') · ritiro gratuito in bottega ad Alessandria';
   }
 
   if (prod.tagliaUnica) {
@@ -289,8 +289,8 @@
 
   function aggiungi() {
     if (typeof AFC_CART === 'undefined') return;
-    var tier = afcSpedizioneTier(prod, prod.tagliaUnica ? null : taglia);
-    for (var i = 0; i < qty; i++) AFC_CART.add(nomeCompleto(), prezzoCorrente(), prod.slug, tier);
+    var costoSpedizione = afcSpedizioneCosto(prod, prod.tagliaUnica ? null : taglia);
+    for (var i = 0; i < qty; i++) AFC_CART.add(nomeCompleto(), prezzoCorrente(), prod.slug, costoSpedizione);
   }
   document.getElementById('pAggiungi').addEventListener('click', aggiungi);
   document.getElementById('pCompra').addEventListener('click', function () {
