@@ -247,21 +247,14 @@
         <p>Scegli data e ora, ricevi conferma immediata.</p>
       </div>
       <div class="prenota-cornice">
-        <script src="https://widget.treatwell.it/common/venue-menu/javascript/widget-button.js?v1"></script>
-        <script>
-        (function() {
-          var link = document.createElement("link");
-          link.type = "text/css";
-          link.href = "https://widget.treatwell.it/common/venue-menu/css/widget-button.css";
-          link.rel = "stylesheet";
-          link.media = "screen";
-          document.getElementsByTagName("head")[0].appendChild(link);
-        })();
-        </script>
-        <div
-          id="wahanda-online-booking-widget-iframe"
-          data-widget-url="https://widget.treatwell.it/salone/532986/menu/"
-        ></div>
+        <iframe
+          id="treatwellFrame"
+          class="treatwell-frame"
+          src="https://widget.treatwell.it/salone/532986/menu/"
+          title="Prenota il tuo trattamento — calendario Treatwell"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
       <div class="prenota-alt">
         <p>Preferisci prenotare al telefono o su WhatsApp?</p>
