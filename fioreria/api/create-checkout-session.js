@@ -85,6 +85,20 @@ module.exports = async function handler(req, res) {
       };
     });
 
+    // spedizione assicurata: 12€ (pacchi S/M) o 15€ (pacchi L/XL), mai scontata dal coupon
+    var spedizioneEuro = Number(body.spedizione);
+    if (spedizioneEuro !== 12 && spedizioneEuro !== 15) spedizioneEuro = 0;
+    if (spedizioneEuro > 0) {
+      lineItems.push({
+        quantity: 1,
+        price_data: {
+          currency: 'eur',
+          unit_amount: spedizioneEuro * 100,
+          product_data: { name: 'Spedizione assicurata' }
+        }
+      });
+    }
+
     var consegna = body.consegna || {};
     var emailCliente = EMAIL_OK.test(body.email || '') ? body.email : undefined;
 
@@ -111,7 +125,8 @@ module.exports = async function handler(req, res) {
         citta: String(consegna.citta || '').slice(0, 100),
         giorno_consegna: String(consegna.giorno || '').slice(0, 20),
         messaggio: String(consegna.messaggio || '').slice(0, 400),
-        coupon: String(body.coupon || '').slice(0, 40)
+        coupon: String(body.coupon || '').slice(0, 40),
+        spedizione: String(spedizioneEuro)
       }
     });
 

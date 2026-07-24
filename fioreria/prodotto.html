@@ -109,7 +109,11 @@
 
         <p class="pm-consegna">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 16.3V7.6c0-.6.4-1 1-1h9.3c.6 0 1 .4 1 1v8.7"/><path d="M14.1 9.8h3.1l2.7 3.1c.2.2.3.5.3.8v2.6h-1.9"/><path d="M8.7 16.3h5.4M2.8 16.3h1.4"/><circle cx="6.5" cy="16.6" r="1.9"/><circle cx="16.4" cy="16.6" r="1.9"/></svg>
-          Spedizione in 48/72 ore in tutta Italia · ritiro gratuito in bottega ad Alessandria
+          <span id="pmConsegnaTesto">Spedizione assicurata in 48/72 ore · ritiro gratuito in bottega ad Alessandria</span>
+        </p>
+        <p class="pm-fragile" id="pmFragile" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7l-9-5Z"/><path d="M12 8v5M12 16.2v.1"/></svg>
+          Base in ceramica/vetro: pacco contrassegnato fragile e imballato con cura extra
         </p>
 
         <div class="card-actions prodotto-azioni">
@@ -135,9 +139,10 @@
     <ul class="cart-list" id="cartList"></ul>
     <p class="cart-empty" id="cartEmpty">Il carrello è vuoto.<br/>Lasciati ispirare dalla collezione di oggi.</p>
     <div class="cart-foot" id="cartFoot" hidden>
+      <p class="cart-spedizione" id="cartSpedizione"></p>
       <div class="cart-total"><span>Totale</span><strong id="cartTotal">€ 0</strong></div>
       <a class="btn btn-primary btn-lg" id="cartOrder" href="#">Procedi all'ordine</a>
-      <p class="cart-note">Pagamento sicuro con carta, Apple Pay o Google Pay · spedizione in tutta Italia</p>
+      <p class="cart-note">Pagamento sicuro con carta, Apple Pay o Google Pay · spedizione assicurata in tutta Italia</p>
     </div>
   </aside>
 

@@ -102,6 +102,11 @@
           li.querySelector('.ri-nome').textContent = r.nome;
           lista.appendChild(li);
         });
+        if (ordine.spedizione) {
+          var liSped = document.createElement('li');
+          liSped.innerHTML = '<span class="ri-nome">Spedizione assicurata</span><span class="ri-prezzo">€ ' + ordine.spedizione + '</span>';
+          lista.appendChild(liSped);
+        }
         var t = ordine.totale;
         var tot = '€ ' + (Number.isInteger(t) ? t : t.toFixed(2).replace('.', ','));
         if (ordine.sconto) tot += ' (coupon −' + ordine.sconto + '%)';

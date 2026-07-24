@@ -131,13 +131,18 @@ function emailConfermaOrdine(sessione, articoli, meta) {
     .filter(Boolean).join('<br/>');
 
   var numeroOrdine = String(sessione.id || '').slice(-8).toUpperCase();
+  var spedizioneEuro = parseInt(meta.spedizione, 10) || 0;
+  var rigaSpedizione = spedizioneEuro
+    ? '<tr><td style="padding:10px 0;color:#5A6B5E;font-size:14px;">Spedizione assicurata</td>' +
+      '<td style="padding:10px 0;color:#5A6B5E;font-size:14px;text-align:right;">€ ' + spedizioneEuro + ',00</td></tr>'
+    : '';
 
   return '' +
     '<div style="font-family:Georgia,serif;max-width:520px;margin:0 auto;padding:32px 24px;background:#FAFAF7;">' +
     '  <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9CAF94;margin:0 0 6px;">Ordine confermato</p>' +
     '  <h1 style="font-size:26px;color:#24352B;margin:0 0 18px;">Grazie di cuore!</h1>' +
     '  <p style="font-size:15px;line-height:1.6;color:#5A6B5E;margin:0 0 22px;">Il tuo ordine <strong>#' + numeroOrdine + '</strong> è confermato e lo stiamo già preparando con cura in bottega. Arriverà in 48/72 ore lavorative.</p>' +
-    '  <table style="width:100%;border-collapse:collapse;margin:0 0 18px;">' + righeArticoli + '</table>' +
+    '  <table style="width:100%;border-collapse:collapse;margin:0 0 18px;">' + righeArticoli + rigaSpedizione + '</table>' +
     '  <p style="font-size:17px;font-weight:bold;color:#24352B;text-align:right;margin:0 0 26px;">Totale: ' + euro(sessione.amount_total || 0) + '</p>' +
     (indirizzo ? '  <p style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9CAF94;margin:0 0 6px;">Consegna a</p>' +
       '  <p style="font-size:15px;line-height:1.5;color:#24352B;margin:0 0 26px;">' + indirizzo + '</p>' : '') +

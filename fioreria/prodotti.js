@@ -32,10 +32,23 @@ function afcPrezzoScontato(prezzo, prod) {
   return (prod && prod.sconto) ? Math.round(prezzo * (1 - prod.sconto / 100)) : prezzo;
 }
 
+/* Spedizione assicurata: 12€ per pacchi S/M, 15€ per pacchi L/XL —
+   determinata dalla taglia scelta. Le taglie "L"/"XL"/"2" (Giardino
+   Verticale in coppia) sono pacchi grandi; tutto il resto è S/M. Per i
+   prodotti a taglia unica (senza oggetto taglia) si usa il campo
+   opzionale "spedizioneTier" sul prodotto (default 'sm'). */
+var AFC_SPEDIZIONE = { sm: 12, lxl: 15 };
+function afcSpedizioneTier(prod, taglia) {
+  if (taglia && (taglia.id === 'L' || taglia.id === 'XL' || taglia.id === '2')) return 'lxl';
+  if (!taglia && prod && prod.spedizioneTier === 'lxl') return 'lxl';
+  return 'sm';
+}
+
 var AFC_PRODOTTI = [
   {
     slug: 'provenza',
     nome: 'Brezza di Provenza',
+    fragile: true,
     prezzo: 75,
     sconto: 20,
     taglie: [
@@ -198,6 +211,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'tiffany',
     nome: 'Tiffany',
+    fragile: true,
     prezzo: 75,
     sconto: 15,
     taglie: [
@@ -252,6 +266,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'autunno-in-tavola',
     nome: 'Autunno in Tavola',
+    fragile: true,
     prezzo: 79,
     sconto: 20,
     taglie: [
@@ -277,7 +292,7 @@ var AFC_PRODOTTI = [
       { id: 'S',  nome: 'S',  prezzo: 60,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
       { id: 'L',  nome: 'L',  prezzo: 106, nota: 'Abbondante, per fare scena' },
-      { id: 'XL', nome: 'XL', prezzo: 188, nota: 'Il formato più grande, per un\'occasione importante' }
+      { id: 'XL', nome: 'XL', prezzo: 131, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-bosco-di-rose.jpg',
     cat: ['anniversario', 'regali', 'mamma'],
@@ -289,6 +304,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'trittico-di-rose',
     nome: 'Trittico di Rose',
+    fragile: true,
     prezzo: 100,
     sconto: 15,
     tagliaUnica: true,
@@ -336,6 +352,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'mezzanotte-in-fiore',
     nome: 'Mezzanotte in Fiore',
+    fragile: true,
     prezzo: 82,
     sconto: 20,
     taglie: [
@@ -356,6 +373,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'cristallo-autunno',
     nome: 'Cristallo d\'Autunno',
+    fragile: true,
     prezzo: 78,
     sconto: 20,
     taglie: [
@@ -375,6 +393,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'nautilus-ambra',
     nome: 'Nautilus d\'Ambra',
+    fragile: true,
     prezzo: 76,
     sconto: 20,
     taglie: [
@@ -414,6 +433,7 @@ var AFC_PRODOTTI = [
     prezzo: 385,
     sconto: 15,
     tagliaUnica: true,
+    spedizioneTier: 'lxl',
     foto: 'foto/p-bonsai-premium.jpg',
     cat: ['decorazioni', 'premium'],
     rating: ['5,0', 2],
@@ -424,6 +444,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'pettirosso-in-fiore',
     nome: 'Pettirosso in Fiore',
+    fragile: true,
     prezzo: 80,
     sconto: 20,
     taglie: [
@@ -463,6 +484,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'dame-fiorite',
     nome: 'Le Dame Fiorite',
+    fragile: true,
     prezzo: 91,
     sconto: 15,
     foto: 'foto/p-dame-fiorite.jpg',
@@ -476,6 +498,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'pinguino-panda',
     nome: 'Pinguino e Panda Platino',
+    fragile: true,
     prezzo: 22,
     sconto: 15,
     tagliaUnica: true,

@@ -883,6 +883,7 @@ body.promo-attiva .categorie { padding-top: calc(72px + 18px + var(--promo-h, 44
 
 .cart-empty { text-align: center; margin: auto 0; font-size: 15.5px; }
 .cart-foot { border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 12px; }
+.cart-spedizione { margin: 0 0 6px; font-size: 12.5px; color: var(--muted); text-align: right; }
 .cart-total { display: flex; justify-content: space-between; font-size: 16px; color: var(--ink); }
 .cart-total strong { font-family: 'Fraunces', Georgia, serif; font-size: 22px; }
 .cart-note { font-size: 12.5px; text-align: center; margin: 0; }
@@ -1986,6 +1987,11 @@ img.no-foto { opacity: 0; }
   margin: 0; font-size: 13px; color: var(--bosco); font-weight: 600;
 }
 .pm-consegna svg { flex: 0 0 auto; }
+.pm-fragile {
+  display: flex; align-items: center; gap: 9px;
+  margin: 6px 0 0; font-size: 12.5px; color: var(--muted); font-weight: 600;
+}
+.pm-fragile svg { flex: 0 0 auto; color: var(--gold); }
 .pm-azioni { margin-top: 4px; }
 .pm-azioni .btn { flex: 1; }
 
@@ -2318,6 +2324,7 @@ img.no-foto { opacity: 0; }
 .riep-lista li { display: flex; justify-content: space-between; gap: 14px; font-size: 14px; }
 .riep-nome { color: var(--ink); font-weight: 500; }
 .riep-sconto { margin: 10px 0 0; font-size: 13.5px; font-weight: 600; color: var(--bosco); }
+.riep-spedizione { margin: 6px 0 0; font-size: 13px; color: var(--ink); }
 .riep-nota { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); }
 
 .co-vuoto { text-align: center; padding: 60px 0; display: grid; gap: 14px; justify-items: center; }

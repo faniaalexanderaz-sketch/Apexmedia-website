@@ -45,11 +45,19 @@
     if (!code || typeof AFC === 'undefined') return null;
     return AFC.couponValido(code);
   }
+  /* spedizione assicurata: 12€ se il carrello ha solo pacchi S/M, 15€ se
+     contiene anche solo un pacco L/XL (un unico invio, tariffa più alta) */
+  function spedizioneCorrente() {
+    if (!cart.length) return 0;
+    var haLXL = cart.some(function (r) { return r.tier === 'lxl'; });
+    return haLXL ? 15 : 12;
+  }
   function totali() {
     var sub = cart.reduce(function (s, r) { return s + r.prezzo * r.qty; }, 0);
     var c = coupon();
     var sconto = c ? Math.round(sub * c.pct) / 100 : 0;
-    return { sub: sub, coupon: c, sconto: sconto, tot: Math.round((sub - sconto) * 100) / 100 };
+    var spedizione = spedizioneCorrente();
+    return { sub: sub, coupon: c, sconto: sconto, spedizione: spedizione, tot: Math.round((sub - sconto) * 100) / 100 + spedizione };
   }
   function riepilogo() {
     var lista = document.getElementById('riepLista');
@@ -68,6 +76,8 @@
     } else {
       elSconto.hidden = true;
     }
+    var elSped = document.getElementById('riepSpedizione');
+    if (elSped) elSped.textContent = 'Spedizione assicurata: ' + euro(t.spedizione);
     document.getElementById('riepTot').textContent = euro(t.tot);
     document.getElementById('btnPagaTesto').textContent = 'Paga ' + euro(t.tot);
   }
@@ -207,6 +217,7 @@
     var ordine = {
       items: cart,
       totale: t.tot,
+      spedizione: t.spedizione,
       sconto: t.coupon ? t.coupon.pct : 0,
       coupon: t.coupon ? t.coupon.codice : null,
       consegna: consegna,
@@ -229,6 +240,7 @@
       body: JSON.stringify({
         items: cart.map(function (r) { return { nome: r.nome, prezzo: r.prezzo, qty: r.qty, slug: r.slug }; }),
         totale: t.tot,
+        spedizione: t.spedizione,
         couponPct: t.coupon ? t.coupon.pct : 0,
         coupon: t.coupon ? t.coupon.codice : '',
         email: consegna.email,

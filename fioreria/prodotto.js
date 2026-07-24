@@ -159,6 +159,9 @@
   avail.querySelector('span').textContent = prod.avail;
   if (prod.availBassa) avail.classList.add('avail-low');
 
+  /* nota fragile: solo per le composizioni con base in ceramica/vetro */
+  if (prod.fragile) document.getElementById('pmFragile').hidden = false;
+
   /* taglia della composizione fotografata (solo dove indicata) */
   if (prod.tagliaFoto) {
     document.getElementById('pTagliaFotoVal').textContent = prod.tagliaFoto;
@@ -191,6 +194,10 @@
     }
     nota.textContent = taglia.nota + (taglia.doppio ? ' — vale ' + euro(afcValoreXL(prod.prezzo)) + ', lo paghi ' + euro(prezzoCorrente()) + '.' : '');
     document.getElementById('qN').textContent = String(qty);
+
+    var tierAttuale = afcSpedizioneTier(prod, prod.tagliaUnica ? null : taglia);
+    document.getElementById('pmConsegnaTesto').textContent =
+      'Spedizione assicurata in 48/72 ore (€ ' + AFC_SPEDIZIONE[tierAttuale] + ') · ritiro gratuito in bottega ad Alessandria';
   }
 
   if (prod.tagliaUnica) {
@@ -282,7 +289,8 @@
 
   function aggiungi() {
     if (typeof AFC_CART === 'undefined') return;
-    for (var i = 0; i < qty; i++) AFC_CART.add(nomeCompleto(), prezzoCorrente(), prod.slug);
+    var tier = afcSpedizioneTier(prod, prod.tagliaUnica ? null : taglia);
+    for (var i = 0; i < qty; i++) AFC_CART.add(nomeCompleto(), prezzoCorrente(), prod.slug, tier);
   }
   document.getElementById('pAggiungi').addEventListener('click', aggiungi);
   document.getElementById('pCompra').addEventListener('click', function () {
