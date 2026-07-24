@@ -57,4 +57,33 @@
       window.dataLayer.push({ event: 'click_widget_prenotazione' });
     }
   });
+
+  /* ---------- menu a scomparsa (hamburger) ---------- */
+  var menuBtn = document.getElementById('menuBtn');
+  var menuDrawer = document.getElementById('menuDrawer');
+  var menuScrim = document.getElementById('menuScrim');
+  var menuChiudi = document.getElementById('menuChiudi');
+  if (menuBtn && menuDrawer && menuScrim) {
+    function apriMenu() {
+      menuDrawer.hidden = false;
+      menuScrim.hidden = false;
+      document.body.classList.add('menu-aperto');
+      menuBtn.setAttribute('aria-expanded', 'true');
+    }
+    function chiudiMenu() {
+      menuDrawer.hidden = true;
+      menuScrim.hidden = true;
+      document.body.classList.remove('menu-aperto');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+    menuBtn.addEventListener('click', apriMenu);
+    menuScrim.addEventListener('click', chiudiMenu);
+    if (menuChiudi) menuChiudi.addEventListener('click', chiudiMenu);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menuDrawer.hidden) chiudiMenu();
+    });
+    menuDrawer.addEventListener('click', function (e) {
+      if (e.target.closest('a')) chiudiMenu();
+    });
+  }
 })();

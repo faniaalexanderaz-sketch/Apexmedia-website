@@ -107,6 +107,50 @@ const LOTO = '<svg width="34" height="20" viewBox="0 0 34 20" fill="currentColor
 
 const ICONA_TEL = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>';
 const ICONA_WA = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg>';
+const ICONA_HAMBURGER = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+
+/* elenco completo dei trattamenti per il menu a scomparsa — durata/prezzo
+   brevi, coerenti con la griglia della home. "Pedicure" non ha una pagina
+   dedicata, quindi punta alla sezione trattamenti della home. */
+const MENU_TRATTAMENTI = [
+  { file: 'massaggio-oli-essenziali.html', nome: 'Massaggio Oli Essenziali', info: 'Cervicale e schiena · 60 min · 60 €' },
+  { file: 'tuina-shiatsu.html', nome: 'Tuina Shiatsu', info: '50 min · 50 €' },
+  { file: 'massaggio-spa.html', nome: 'Massaggio Spa', info: 'Corpo completo · 90 min · 90 €' },
+  { file: 'riflessologia-plantare.html', nome: 'Riflessologia Plantare', info: '40 min 35 € · 60 min 50 €' },
+  { file: 'coppettazione.html', nome: 'Coppettazione', info: 'Cupping · 25 €' },
+  { file: 'gua-sha.html', nome: 'Gua Sha', info: '25 €' },
+  { file: 'pulizia-orecchie.html', nome: 'Pulizia delle Orecchie', info: 'Con micro-telecamera · 25 €' },
+  { file: null, nome: 'Pedicure', info: '35 €' }
+];
+
+/* drawer del menu: "base" è il prefisso per raggiungere la home e le
+   pagine sorelle — '../' dentro trattamenti/, '' in radice. */
+function menuDrawer(base) {
+  const voci = MENU_TRATTAMENTI.map((t) => {
+    const href = t.file ? base + t.file : base + 'index.html#trattamenti';
+    return `      <li><a href="${href}"><span class="menu-tratt-nome">${t.nome}</span><span class="menu-tratt-info">${t.info}</span></a></li>`;
+  }).join('\n');
+  return `<div class="menu-scrim" id="menuScrim" hidden></div>
+  <aside class="menu-drawer" id="menuDrawer" hidden aria-label="Menu del sito">
+    <div class="menu-drawer-testa">
+      <span class="marchio-nome">Essenza d'Oriente</span>
+      <button class="menu-chiudi" id="menuChiudi" aria-label="Chiudi il menu">×</button>
+    </div>
+    <nav class="menu-sezioni">
+      <a href="${base}index.html#trattamenti">Trattamenti</a>
+      <a href="${base}index.html#prenota">Prenota</a>
+      <a href="${base}index.html#dove">Dove siamo</a>
+    </nav>
+    <p class="menu-titolo">I nostri trattamenti</p>
+    <ul class="menu-tratt-lista">
+${voci}
+    </ul>
+    <div class="menu-drawer-cta">
+      <a class="btn btn-prenota" href="${base}index.html#prenota">Prenota ora</a>
+      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </aside>`;
+}
 
 function pagina(t, altri) {
   const altriLink = altri.map(a => `<a href="${a.file}">${a.nome}</a>`).join('\n        ');
@@ -157,10 +201,13 @@ function pagina(t, altri) {
   <!-- End Google Tag Manager (noscript) -->
 
   <header class="top">
-    <a class="marchio" href="../index.html">
-      <span class="marchio-nome">Essenza d'Oriente</span>
-      <span class="marchio-sotto">Centro Olistico</span>
-    </a>
+    <div class="top-inizio">
+      <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer">${ICONA_HAMBURGER}</button>
+      <a class="marchio" href="../index.html">
+        <span class="marchio-nome">Essenza d'Oriente</span>
+        <span class="marchio-sotto">Centro Olistico</span>
+      </a>
+    </div>
     <nav class="top-nav" aria-label="Sezioni">
       <a href="../index.html#trattamenti">Trattamenti</a>
       <a href="#prenota">Prenota</a>
@@ -171,6 +218,8 @@ function pagina(t, altri) {
       <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">${ICONA_WA} WhatsApp</a>
     </div>
   </header>
+
+  ${menuDrawer('../')}
 
   <div class="barra-mobile" role="navigation" aria-label="Contatti rapidi">
     <a class="btn btn-chiama" href="tel:+393317153533">${ICONA_TEL} Chiama</a>
@@ -215,21 +264,14 @@ function pagina(t, altri) {
         <p>Scegli data e ora, ricevi conferma immediata.</p>
       </div>
       <div class="prenota-cornice">
-        <script src="https://widget.treatwell.it/common/venue-menu/javascript/widget-button.js?v1"></script>
-        <script>
-        (function() {
-          var link = document.createElement("link");
-          link.type = "text/css";
-          link.href = "https://widget.treatwell.it/common/venue-menu/css/widget-button.css";
-          link.rel = "stylesheet";
-          link.media = "screen";
-          document.getElementsByTagName("head")[0].appendChild(link);
-        })();
-        </script>
-        <div
-          id="wahanda-online-booking-widget-iframe"
-          data-widget-url="https://widget.treatwell.it/salone/532986/menu/"
-        ></div>
+        <iframe
+          id="treatwellFrame"
+          class="treatwell-frame"
+          src="https://widget.treatwell.it/salone/532986/menu/"
+          title="Prenota il tuo trattamento — calendario Treatwell"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
       <div class="prenota-alt">
         <p>Preferisci prenotare al telefono o su WhatsApp?</p>

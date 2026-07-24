@@ -64,10 +64,15 @@
 
   <!-- ============ 1. HEADER STICKY ============ -->
   <header class="top">
-    <a class="marchio" href="#inizio">
-      <span class="marchio-nome">Essenza d'Oriente</span>
-      <span class="marchio-sotto">Centro Olistico</span>
-    </a>
+    <div class="top-inizio">
+      <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <a class="marchio" href="#inizio">
+        <span class="marchio-nome">Essenza d'Oriente</span>
+        <span class="marchio-sotto">Centro Olistico</span>
+      </a>
+    </div>
     <nav class="top-nav" aria-label="Sezioni della pagina">
       <a href="#trattamenti">Trattamenti</a>
       <a href="#prenota">Prenota</a>
@@ -84,6 +89,34 @@
       </a>
     </div>
   </header>
+
+  <div class="menu-scrim" id="menuScrim" hidden></div>
+  <aside class="menu-drawer" id="menuDrawer" hidden aria-label="Menu del sito">
+    <div class="menu-drawer-testa">
+      <span class="marchio-nome">Essenza d'Oriente</span>
+      <button class="menu-chiudi" id="menuChiudi" aria-label="Chiudi il menu">×</button>
+    </div>
+    <nav class="menu-sezioni">
+      <a href="#trattamenti">Trattamenti</a>
+      <a href="#prenota">Prenota</a>
+      <a href="#dove">Dove siamo</a>
+    </nav>
+    <p class="menu-titolo">I nostri trattamenti</p>
+    <ul class="menu-tratt-lista">
+      <li><a href="trattamenti/massaggio-oli-essenziali.html"><span class="menu-tratt-nome">Massaggio Oli Essenziali</span><span class="menu-tratt-info">Cervicale e schiena · 60 min · 60 €</span></a></li>
+      <li><a href="trattamenti/tuina-shiatsu.html"><span class="menu-tratt-nome">Tuina Shiatsu</span><span class="menu-tratt-info">50 min · 50 €</span></a></li>
+      <li><a href="trattamenti/massaggio-spa.html"><span class="menu-tratt-nome">Massaggio Spa</span><span class="menu-tratt-info">Corpo completo · 90 min · 90 €</span></a></li>
+      <li><a href="trattamenti/riflessologia-plantare.html"><span class="menu-tratt-nome">Riflessologia Plantare</span><span class="menu-tratt-info">40 min 35 € · 60 min 50 €</span></a></li>
+      <li><a href="trattamenti/coppettazione.html"><span class="menu-tratt-nome">Coppettazione</span><span class="menu-tratt-info">Cupping · 25 €</span></a></li>
+      <li><a href="trattamenti/gua-sha.html"><span class="menu-tratt-nome">Gua Sha</span><span class="menu-tratt-info">25 €</span></a></li>
+      <li><a href="trattamenti/pulizia-orecchie.html"><span class="menu-tratt-nome">Pulizia delle Orecchie</span><span class="menu-tratt-info">Con micro-telecamera · 25 €</span></a></li>
+      <li><a href="#trattamenti"><span class="menu-tratt-nome">Pedicure</span><span class="menu-tratt-info">35 €</span></a></li>
+    </ul>
+    <div class="menu-drawer-cta">
+      <a class="btn btn-prenota" href="#prenota">Prenota ora</a>
+      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </aside>
 
   <!-- barra fissa mobile: chiama / whatsapp sempre a portata di pollice -->
   <div class="barra-mobile" role="navigation" aria-label="Contatti rapidi">
