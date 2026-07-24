@@ -136,23 +136,23 @@
     <nav class="categorie" aria-label="Categorie">
       <div class="cat-track">
         <a class="cat-item" href="collezione.html?cat=novita">
-          <span class="cat-foto"><img src="foto/p-pannello-verde.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-girasoli-cannella.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Novità</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=decorazioni">
-          <span class="cat-foto"><img src="foto/p-vaso-gatto.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-dame-fiorite.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Decorazioni</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=stagione">
-          <span class="cat-foto"><img src="foto/p-sole-agrumi.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-autunno-in-tavola.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Fiori di stagione</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=regali">
-          <span class="cat-foto"><img src="foto/p-orto.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-pettirosso-in-fiore.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Regali floreali</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=anniversario">
-          <span class="cat-foto"><img src="foto/p-cuore-rose.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-bosco-di-rose.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Anniversario</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=matrimonio">
@@ -160,26 +160,28 @@
           <span class="cat-nome">Matrimonio</span>
         </a>
         <a class="cat-item" href="collezione.html?cat=mamma">
-          <span class="cat-foto"><img src="foto/p-cesta-primavera.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-borsa-lavanda.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Festa della Mamma</span>
         </a>
         <a class="cat-item" href="collezione.html">
-          <span class="cat-foto"><img src="foto/p-sole-campagna.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-foto"><img src="foto/p-zaffiro-lavanda.jpg" alt="" loading="lazy" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Tutta la collezione</span>
         </a>
       </div>
     </nav>
 
-    <!-- ================= HERO — testo e foto separati, niente riquadro sovrapposto ================= -->
+    <!-- ================= HERO — la vetrina fa da sfondo, il testo ci vive sopra ================= -->
     <section class="hero-split">
-      <figure class="hero-photo">
-        <img src="foto/hero.jpg"
-             alt="Composizioni floreali artificiali della bottega"
-             fetchpriority="high" width="1600" height="1067"
-             onerror="this.classList.add('no-foto')" />
-      </figure>
+      <div class="hero-sfondo" aria-hidden="true">
+        <picture>
+          <!-- quando ci sarà la versione verticale 9:16, basta aggiungere qui:
+               <source media="(max-width: 860px)" srcset="foto/hero-verticale.jpg" /> -->
+          <img src="foto/hero.jpg" alt="" fetchpriority="high"
+               onerror="this.classList.add('no-foto')" />
+        </picture>
+      </div>
       <div class="hero-copy">
-        <p class="eyebrow hero-eyebrow reveal">Composizioni floreali artificiali</p>
+        <p class="hero-eyebrow reveal"><span>Composizioni floreali artificiali</span></p>
         <h1 class="display hero-titolo reveal">La bellezza dei fiori... <em>senza tempo</em>.</h1>
         <p class="hero-sub reveal">Bottega di Alessandria dal 1953. Le nostre creazioni uniscono la sapienza artigianale di sempre a materiali che durano una vita.</p>
         <p class="hero-badge-riga reveal">

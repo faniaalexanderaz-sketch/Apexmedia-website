@@ -1137,7 +1137,7 @@ body.promo-attiva .categorie { padding-top: calc(72px + 18px + var(--promo-h, 44
 
 /* fallback elegante finché una foto non è caricata */
 img.no-foto { opacity: 0; }
-.cat-foto, .card-photo, .banner-foto, .hero-photo, .pers-foto, .occ-card {
+.cat-foto, .card-photo, .banner-foto, .hero-sfondo, .pers-foto, .occ-card {
   background:
     radial-gradient(80% 80% at 30% 25%, #F2E9E4, transparent 70%),
     linear-gradient(160deg, #EFF3E9, #E4EDDD 55%, #F4EDDC);
@@ -1192,54 +1192,91 @@ img.no-foto { opacity: 0; }
 .cat-item:hover .cat-foto { animation-play-state: paused; }
 
 /* ---------- Hero — foto a tutta larghezza (stile boutique), testo sotto ---------- */
+/* La vetrina della bottega non è più un blocco separato: sta dietro al testo,
+   molto attenuata, e sfuma nel colore della pagina sopra e sotto. */
 .hero-split {
+  position: relative;
   display: block;
   max-width: none;
-  margin: clamp(10px, 2vh, 20px) 0 0;
+  margin: 0;
   padding: 0;
+  isolation: isolate;
+  border-bottom: 1px solid rgba(194,164,92,.4);
+}
+.hero-sfondo {
+  position: absolute; inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+.hero-sfondo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  display: block;
+  opacity: .34;
+}
+/* velo che schiarisce il centro e fonde i bordi con lo sfondo della pagina:
+   il testo resta perfettamente leggibile senza appesantire la foto */
+.hero-sfondo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, var(--paper) 0%, rgba(242,246,236,.55) 22%, rgba(242,246,236,.5) 78%, var(--paper) 100%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(250,250,247,.72), transparent 70%);
 }
 .hero-copy {
-  display: grid; justify-items: start; gap: 18px;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: clamp(18px, 2.6vh, 30px) var(--pad) 0;
-}
-/* etichetta a pillola in vetro smerigliato, coerente coi filtri categoria */
-.hero-eyebrow {
-  position: relative;
-  margin: 0;
-  justify-self: center;
+  display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 18px;
   text-align: center;
-  display: inline-flex; align-items: center; justify-content: center;
-  height: 42px;
-  padding: 0 32px;
-  font-size: 10.5px; font-weight: 700; letter-spacing: .24em;
-  color: #234734;
-  background: linear-gradient(165deg, rgba(255,255,255,.8), rgba(255,255,255,.38) 55%, rgba(244,237,220,.5));
-  border: 1px solid rgba(255,255,255,.7);
-  border-radius: var(--r-pill);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  box-shadow:
-    inset 0 1.5px 0 rgba(255,255,255,.95),
-    inset 0 -8px 14px rgba(255,255,255,.15),
-    0 1px 2px rgba(46,75,58,.06),
-    0 10px 26px rgba(46,75,58,.1),
-    0 0 0 1px rgba(194,164,92,.16);
+  max-width: 780px;
+  margin: 0 auto;
+  padding: clamp(44px, 8vh, 96px) var(--pad) clamp(40px, 7vh, 84px);
 }
-.hero-eyebrow::before { display: none; }
-/* la pillola entra con un puro fade, senza salire */
+.hero-copy > * { min-width: 0; }
+/* etichetta: due filetti d'oro e un piccolo fiore, come su una carta da lettere
+   della bottega — al posto della pillola in vetro di prima */
+.hero-eyebrow {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  margin: 0;
+  width: 100%; max-width: 460px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--bosco);
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(194,164,92,.75));
+}
+.hero-eyebrow::after { background: linear-gradient(90deg, rgba(194,164,92,.75), transparent); }
+.hero-eyebrow span {
+  flex: 0 0 auto;
+  position: relative;
+  padding-top: 16px;
+}
+/* piccolo rombo dorato sopra la scritta, firma discreta */
+.hero-eyebrow span::before {
+  content: '';
+  position: absolute; top: 2px; left: 50%;
+  width: 7px; height: 7px;
+  margin-left: -3.5px;
+  transform: rotate(45deg);
+  background: var(--gold);
+  opacity: .85;
+}
+/* l'etichetta entra con un puro fade, senza salire */
 .hero-eyebrow.reveal { transform: none; }
 .hero-titolo {
   margin: 4px 0 0;
-  font-size: clamp(32px, 4vw, 50px);
+  font-size: clamp(36px, 5vw, 58px);
   color: var(--ink);
 }
 .hero-titolo em { color: var(--bosco); font-style: italic; }
 .hero-sub {
   margin: 0;
   font-size: 16.5px;
-  max-width: 42ch;
+  max-width: 46ch;
   color: var(--muted);
 }
 
@@ -1263,16 +1300,18 @@ img.no-foto { opacity: 0; }
 }
 .btn-hero:hover .btn-freccia { transform: translateX(4px); }
 
-/* le tre promesse: card bianche, bordo appena percettibile */
+/* le tre promesse: card bianche, bordo appena percettibile.
+   Escono dalla colonna stretta del testo per restare larghe e leggibili. */
 .hero-fiducia {
   list-style: none;
   margin: clamp(18px, 3vh, 30px) 0 0; padding: 0;
-  width: 100%;
+  width: min(var(--maxw), calc(100vw - var(--pad) * 2));
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(12px, 1.6vw, 20px);
 }
 .hero-fiducia li {
   display: grid; justify-items: start; align-content: start; gap: 7px;
+  text-align: left;
   padding: clamp(20px, 2.4vw, 28px) clamp(18px, 2vw, 26px);
   background: #FFFFFF;
   border: 1px solid #ECE8E1;
@@ -1322,29 +1361,13 @@ img.no-foto { opacity: 0; }
   .hero-badge-riga svg { margin-top: 1px; }
 }
 
-.hero-photo {
-  position: relative;
-  margin: 0;
-  width: 100%;
-  height: clamp(380px, 66vh, 720px);
-  overflow: hidden;
-  background: #FFFFFF;
-  border-top: 1px solid rgba(194,164,92,.55);
-  border-bottom: 1px solid rgba(194,164,92,.55);
-}
-.hero-photo img {
-  width: 100%; height: 100%;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-}
-
 @media (max-width: 860px) {
-  .hero-split { margin-top: 6px; }
-  /* proporzione identica alla foto: riempie tutta la larghezza senza
-     alcun bordo bianco sopra/sotto, invece dell'altezza fissa di prima */
-  .hero-photo { height: auto; aspect-ratio: 1900 / 1418; }
+  .hero-copy { padding: clamp(38px, 7vh, 64px) var(--pad) clamp(34px, 6vh, 56px); }
   .hero-sub { max-width: none; }
+  /* su schermo stretto la foto viene ritagliata molto: la alleggerisco
+     ancora un po' perché non disturbi la lettura del titolo */
+  .hero-sfondo img { opacity: .28; }
+  .hero-eyebrow { gap: 10px; font-size: 9.5px; letter-spacing: .2em; }
 }
 
 /* ---------- Filtri catalogo ---------- */
