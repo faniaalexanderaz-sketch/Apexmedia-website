@@ -1213,16 +1213,16 @@ img.no-foto { opacity: 0; }
   object-fit: cover;
   object-position: center 42%;
   display: block;
-  opacity: .34;
+  opacity: .56;
 }
 /* velo che schiarisce il centro e fonde i bordi con lo sfondo della pagina:
-   il testo resta perfettamente leggibile senza appesantire la foto */
+   il testo resta leggibile senza appesantire troppo la foto */
 .hero-sfondo::after {
   content: '';
   position: absolute; inset: 0;
   background:
-    linear-gradient(180deg, var(--paper) 0%, rgba(242,246,236,.55) 22%, rgba(242,246,236,.5) 78%, var(--paper) 100%),
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(250,250,247,.72), transparent 70%);
+    linear-gradient(180deg, var(--paper) 0%, rgba(242,246,236,.32) 22%, rgba(242,246,236,.28) 78%, var(--paper) 100%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(250,250,247,.5), transparent 70%);
 }
 .hero-copy {
   display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 18px;
@@ -1366,7 +1366,7 @@ img.no-foto { opacity: 0; }
   .hero-sub { max-width: none; }
   /* su schermo stretto la foto viene ritagliata molto: la alleggerisco
      ancora un po' perché non disturbi la lettura del titolo */
-  .hero-sfondo img { opacity: .28; }
+  .hero-sfondo img { opacity: .48; }
   .hero-eyebrow { gap: 10px; font-size: 9.5px; letter-spacing: .2em; }
 }
 
