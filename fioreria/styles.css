@@ -1275,7 +1275,11 @@ img.no-foto { opacity: 0; }
 .hero-titolo em { color: var(--bosco); font-style: italic; }
 .hero-sub {
   margin: 0;
-  font-size: 16.5px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17.5px;
+  letter-spacing: .003em;
   max-width: 46ch;
   color: var(--muted);
 }
@@ -1376,6 +1380,9 @@ img.no-foto { opacity: 0; }
      verso il centro/basso dove sta il testo */
   .hero-sfondo img { opacity: .6; object-position: center 18%; }
   .hero-eyebrow { gap: 10px; font-size: 9.5px; letter-spacing: .2em; }
+  /* il badge/CTA/card scendono un po' più in basso, per non coprire
+     il logo della bottega visibile nella foto */
+  .hero-badge-riga { margin-top: 46px; }
 }
 
 /* ---------- Filtri catalogo ---------- */
