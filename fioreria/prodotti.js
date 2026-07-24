@@ -38,6 +38,12 @@ var AFC_PRODOTTI = [
     nome: 'Brezza di Provenza',
     prezzo: 75,
     sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 56,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 75,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 106, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 138, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
     tagliaFoto: 'M',
     foto: 'foto/p-provenza.jpg',
     cat: ['stagione', 'regali', 'estate'],
@@ -49,8 +55,11 @@ var AFC_PRODOTTI = [
   {
     slug: 'cesta-primavera',
     nome: 'Cesta di Primavera',
-    prezzo: 56,
+    prezzo: 60,
     sconto: 20,
+    taglie: [
+      { id: 'L', nome: 'L', prezzo: 60, nota: 'Formato generoso, unica taglia disponibile' }
+    ],
     foto: 'foto/p-cesta-primavera.jpg',
     cat: ['bouquet', 'regali', 'primavera', 'mamma'],
     rating: ['4,9', 15],
@@ -61,8 +70,11 @@ var AFC_PRODOTTI = [
   {
     slug: 'cesta-maggio',
     nome: 'Cesta di Maggio',
-    prezzo: 38,
+    prezzo: 43,
     sconto: 20,
+    taglie: [
+      { id: 'M', nome: 'M', prezzo: 43, nota: 'Formato classico, unica taglia disponibile' }
+    ],
     foto: 'foto/p-cesta-maggio.jpg',
     cat: ['bouquet', 'matrimonio', 'primavera'],
     rating: ['4,8', 11],
@@ -75,6 +87,12 @@ var AFC_PRODOTTI = [
     nome: 'L\'Orto in Casa',
     prezzo: 78,
     sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 59,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 106, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 138, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
     foto: 'foto/p-orto.jpg',
     galleria: ['foto/p-orto.jpg', 'foto/p-orto-2.jpg', 'foto/p-orto-3.jpg'],
     cat: ['regali', 'novita', 'autunno'],
@@ -87,8 +105,14 @@ var AFC_PRODOTTI = [
   {
     slug: 'sole-campagna',
     nome: 'Sole di Campagna',
-    prezzo: 59,
+    prezzo: 69,
     sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 48,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 69,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 94,  nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 131, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
     tagliaFoto: 'S',
     foto: 'foto/p-sole-campagna.jpg',
     galleria: ['foto/p-sole-campagna.jpg', 'foto/p-sole-campagna-2.jpg', 'foto/p-sole-campagna-3.jpg'],
@@ -101,8 +125,14 @@ var AFC_PRODOTTI = [
   {
     slug: 'cuore-rose',
     nome: 'Cuore di Rose',
-    prezzo: 76,
+    prezzo: 85,
     sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 69,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 85,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 106, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 138, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
     tagliaFoto: 'S',
     foto: 'foto/p-cuore-rose.jpg',
     cat: ['anniversario', 'mamma', 'regali', 'inverno'],
@@ -115,8 +145,14 @@ var AFC_PRODOTTI = [
   {
     slug: 'sole-agrumi',
     nome: 'Sole e Agrumi',
-    prezzo: 72,
+    prezzo: 80,
     sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 58,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 105, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 138, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
     tagliaFoto: 'M',
     foto: 'foto/p-sole-agrumi.jpg',
     cat: ['stagione', 'regali', 'autunno'],
@@ -130,7 +166,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'gatto-giardiniere',
     nome: 'Gatto Giardiniere',
-    prezzo: 65,
+    prezzo: 92,
     sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-vaso-gatto.jpg',
@@ -145,11 +181,11 @@ var AFC_PRODOTTI = [
   {
     slug: 'pannello-verde',
     nome: 'Giardino Verticale',
-    prezzo: 75,
+    prezzo: 100,
     sconto: 15,
     taglie: [
-      { id: '1', nome: '1 pezzo', prezzo: 75,  nota: 'Un pannello singolo, da appoggiare o appendere' },
-      { id: '2', nome: '2 pezzi', prezzo: 140, nota: 'Coppia di pannelli: parete verde più ampia, a prezzo ridotto' }
+      { id: '1', nome: '1 pezzo', prezzo: 100, nota: 'Un pannello singolo, da appoggiare o appendere' },
+      { id: '2', nome: '2 pezzi', prezzo: 165, nota: 'Coppia di pannelli: parete verde più ampia, a prezzo ridotto' }
     ],
     foto: 'foto/p-pannello-verde.jpg',
     cat: ['decorazioni', 'novita'],
@@ -164,7 +200,9 @@ var AFC_PRODOTTI = [
     nome: 'Tiffany',
     prezzo: 75,
     sconto: 15,
-    tagliaUnica: true,
+    taglie: [
+      { id: 'M', nome: 'M', prezzo: 75, nota: 'Formato classico, unica taglia disponibile' }
+    ],
     foto: 'foto/p-tiffany.jpg',
     galleria: ['foto/p-tiffany.jpg', 'foto/p-tiffany-2.jpg', 'foto/p-tiffany-3.jpg'],
     cat: ['decorazioni', 'regali'],
@@ -176,9 +214,12 @@ var AFC_PRODOTTI = [
   {
     slug: 'cappello-fiorito',
     nome: 'Cappello Fiorito',
-    prezzo: 35,
+    prezzo: 38,
     sconto: 15,
-    tagliaUnica: true,
+    taglie: [
+      { id: 'S', nome: 'S', prezzo: 38, nota: 'Un pensiero: versione più raccolta' },
+      { id: 'M', nome: 'M', prezzo: 49, nota: 'Il formato classico della bottega' }
+    ],
     foto: 'foto/p-cappello.jpg',
     cat: ['decorazioni', 'regali'],
     rating: ['4,8', 8],
@@ -191,8 +232,14 @@ var AFC_PRODOTTI = [
   {
     slug: 'girasoli-cannella',
     nome: 'Girasoli e Cannella',
-    prezzo: 76,
+    prezzo: 80,
     sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 58,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 106, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 138, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
     foto: 'foto/p-girasoli-cannella.jpg',
     galleria: ['foto/p-girasoli-cannella.jpg', 'foto/p-girasoli-cannella-2.jpg', 'foto/p-girasoli-cannella-3.jpg'],
     cat: ['stagione', 'autunno', 'regali', 'novita'],
@@ -205,13 +252,13 @@ var AFC_PRODOTTI = [
   {
     slug: 'autunno-in-tavola',
     nome: 'Autunno in Tavola',
-    prezzo: 75,
+    prezzo: 79,
     sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 60,  nota: 'Un pensiero: composizione raccolta' },
-      { id: 'M',  nome: 'M',  prezzo: 75,  nota: 'Il formato classico della bottega' },
-      { id: 'L',  nome: 'L',  prezzo: 113, nota: 'Abbondante, per fare scena' },
-      { id: 'XL', nome: 'XL', prezzo: 105, doppio: true, nota: 'Il doppio dei fiori della M' }
+      { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 109, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 138, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-autunno-in-tavola.jpg',
     galleria: ['foto/p-autunno-in-tavola.jpg', 'foto/p-autunno-in-tavola-2.jpg', 'foto/p-autunno-in-tavola-3.jpg'],
@@ -224,13 +271,13 @@ var AFC_PRODOTTI = [
   {
     slug: 'bosco-di-rose',
     nome: 'Bosco di Rose',
-    prezzo: 78,
+    prezzo: 80,
     sconto: 20,
     taglie: [
-      { id: 'S',  nome: 'S',  prezzo: 62,  nota: 'Un pensiero: composizione raccolta' },
-      { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
-      { id: 'L',  nome: 'L',  prezzo: 117, nota: 'Abbondante, per fare scena' },
-      { id: 'XL', nome: 'XL', prezzo: 109, doppio: true, nota: 'Il doppio dei fiori della M' }
+      { id: 'S',  nome: 'S',  prezzo: 60,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 106, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 188, nota: 'Il formato più grande, per un\'occasione importante' }
     ],
     foto: 'foto/p-bosco-di-rose.jpg',
     cat: ['anniversario', 'regali', 'mamma'],
@@ -242,7 +289,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'trittico-di-rose',
     nome: 'Trittico di Rose',
-    prezzo: 85,
+    prezzo: 100,
     sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-trittico-di-rose.jpg',
@@ -256,13 +303,13 @@ var AFC_PRODOTTI = [
   {
     slug: 'agrumi-oro',
     nome: 'Agrumi d\'Oro',
-    prezzo: 80,
+    prezzo: 83,
     sconto: 20,
     taglie: [
-      { id: 'S',  nome: 'S',  prezzo: 64,  nota: 'Un pensiero: composizione raccolta' },
-      { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
-      { id: 'L',  nome: 'L',  prezzo: 120, nota: 'Abbondante, per fare scena' },
-      { id: 'XL', nome: 'XL', prezzo: 112, doppio: true, nota: 'Il doppio dei fiori della M' }
+      { id: 'S',  nome: 'S',  prezzo: 68,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 83,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 104, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 134, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-agrumi-oro.jpg',
     galleria: ['foto/p-agrumi-oro.jpg', 'foto/p-agrumi-oro-2.jpg', 'foto/p-agrumi-oro-3.jpg'],

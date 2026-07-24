@@ -39,7 +39,7 @@
 
 :root {
   /* palette — chiara, calda, botanica */
-  --paper:     #FAFAF7;   /* bianco caldo (base) */
+  --paper:     #F2F6EC;   /* verde salvia chiarissimo (base) */
   --ivory:     #F4F1E8;   /* avorio / beige chiarissimo */
   --botanico:  #E9F0E4;   /* verde botanico molto chiaro */
   --salvia:    #9CAF94;   /* verde salvia */
@@ -75,7 +75,11 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    radial-gradient(ellipse 1100px 700px at 12% -6%, rgba(156,175,148,.20), transparent 60%),
+    radial-gradient(ellipse 900px 620px at 100% 18%, rgba(194,164,92,.10), transparent 58%),
+    radial-gradient(ellipse 1000px 900px at 50% 115%, rgba(156,175,148,.16), transparent 62%),
+    var(--paper);
   color: var(--muted);
   font-family: 'Figtree', system-ui, sans-serif;
   font-weight: 400;
@@ -83,6 +87,19 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+}
+
+/* motivo botanico discreto, fisso su tutta la pagina: rametti radi in
+   verde salvia molto tenue, sotto ai contenuti, non cliccabile. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='none' stroke='%239CAF94' stroke-width='1.6' stroke-linecap='round' opacity='0.35'%3E%3Cpath d='M28 40c4-14 2-24-6-32'/%3E%3Cpath d='M24 20c6 2 10 0 14-6'/%3E%3Cpath d='M22 30c-6 1-10-1-13-6'/%3E%3Cpath d='M190 150c-4 14-2 24 6 32'/%3E%3Cpath d='M194 170c-6-2-10 0-14 6'/%3E%3Cpath d='M196 160c6-1 10 1 13 6'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 220px 220px;
 }
 
 /* grana finissima su tutta la pagina: dà profondità "carta pregiata"
