@@ -89,19 +89,6 @@ body {
   overflow-x: hidden;
 }
 
-/* motivo botanico discreto, fisso su tutta la pagina: rametti radi in
-   verde salvia molto tenue, sotto ai contenuti, non cliccabile. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: .5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='none' stroke='%239CAF94' stroke-width='1.6' stroke-linecap='round' opacity='0.35'%3E%3Cpath d='M28 40c4-14 2-24-6-32'/%3E%3Cpath d='M24 20c6 2 10 0 14-6'/%3E%3Cpath d='M22 30c-6 1-10-1-13-6'/%3E%3Cpath d='M190 150c-4 14-2 24 6 32'/%3E%3Cpath d='M194 170c-6-2-10 0-14 6'/%3E%3Cpath d='M196 160c6-1 10 1 13 6'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 220px 220px;
-}
-
 /* grana finissima su tutta la pagina: dà profondità "carta pregiata"
    senza disturbare la lettura. Fissa, non cliccabile, sotto ai contenuti. */
 body::after {
