@@ -363,7 +363,11 @@ body.menu-aperto { overflow: hidden; }
   font-size: 19px; line-height: 1.45; font-weight: 500;
   color: var(--ink);
 }
-.recensione figcaption { font-size: 13px; font-weight: 700; color: var(--testo); }
+.recensione figcaption {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; color: var(--testo);
+}
+.google-g { flex: 0 0 auto; display: inline-block; }
 .recensione .stelle { display: block; margin-bottom: 8px; }
 .link-google {
   font-size: 14.5px; font-weight: 700; color: var(--bosco);
