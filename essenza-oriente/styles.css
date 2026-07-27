@@ -94,11 +94,18 @@ h2 { font-size: clamp(28px, 5.4vw, 40px); font-weight: 600; }
 h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
 
 .etichetta {
-  display: block;
-  font-size: 11.5px; font-weight: 700; letter-spacing: .24em;
+  display: inline-flex; align-items: center;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--oro);
-  margin: 0 0 12px;
+  color: #8A6D25;
+  background: rgba(255,255,255,.5);
+  border: 1px solid rgba(185,154,69,.4);
+  border-radius: 999px;
+  padding: 6px 16px;
+  margin: 0 0 14px;
+  backdrop-filter: blur(8px) saturate(160%);
+  -webkit-backdrop-filter: blur(8px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 12px rgba(44,81,56,.06);
 }
 
 /* ---------- bottoni ---------- */
@@ -126,11 +133,14 @@ h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
 .btn-prenota:hover { background: var(--bosco-scuro); transform: translateY(-2px); }
 
 .btn-chiama {
-  background: transparent;
+  background: rgba(255,255,255,.45);
   color: var(--bosco);
-  border-color: rgba(44,81,56,.4);
+  border-color: rgba(185,154,69,.4);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 12px rgba(44,81,56,.05);
 }
-.btn-chiama:hover { background: rgba(44,81,56,.06); }
+.btn-chiama:hover { background: rgba(255,255,255,.75); transform: translateY(-2px); }
 
 .btn-wa {
   background: var(--whatsapp);
@@ -154,14 +164,17 @@ h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
   flex: 0 0 auto;
   width: 42px; height: 42px;
   border-radius: 999px;
-  border: 1px solid var(--linea);
-  background: #FFFFFF;
+  border: 1px solid rgba(185,154,69,.4);
+  background: rgba(255,255,255,.55);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 12px rgba(44,81,56,.07);
   color: var(--bosco);
   cursor: pointer;
   padding: 0;
-  transition: background-color .18s ease, border-color .18s ease;
+  transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
 }
-.menu-btn:hover { background: var(--salvia); border-color: var(--salvia-scura); }
+.menu-btn:hover { background: rgba(255,255,255,.8); border-color: var(--salvia-scura); transform: translateY(-1px); }
 .marchio { display: grid; line-height: 1.1; text-decoration: none; }
 .marchio-nome {
   font-family: var(--serif);
@@ -294,8 +307,15 @@ body.menu-aperto { overflow: hidden; }
 .hero-sub { font-size: 17px; margin: 0 0 8px; }
 .hero-prova {
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 14.5px; font-weight: 700; color: var(--ink);
+  font-size: 14px; font-weight: 700; color: var(--ink);
   margin: 0 0 22px;
+  background: rgba(255,255,255,.5);
+  border: 1px solid rgba(185,154,69,.35);
+  border-radius: 999px;
+  padding: 8px 16px 8px 14px;
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 14px rgba(44,81,56,.06);
 }
 .stelle { color: var(--oro); letter-spacing: .1em; font-size: 15px; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -315,12 +335,14 @@ body.menu-aperto { overflow: hidden; }
 /* ---------- prova sociale ---------- */
 .badge-google {
   display: inline-flex; align-items: center; gap: 12px;
-  background: #FFFFFF;
-  border: 1px solid var(--linea);
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(185,154,69,.4);
   border-radius: 999px;
   padding: 12px 24px;
   font-weight: 700; color: var(--ink);
-  box-shadow: 0 1px 3px rgba(44,81,56,.06);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 6px 18px rgba(44,81,56,.07);
 }
 .recensioni-griglia {
   display: grid; grid-template-columns: 1fr 1fr;
@@ -379,10 +401,24 @@ body.menu-aperto { overflow: hidden; }
   font-size: 10.5px; font-weight: 700; letter-spacing: .14em;
   text-transform: uppercase;
   color: #8A6D25;
-  background: var(--pergamena);
+  background: rgba(255,255,255,.75);
   border: 1px solid var(--oro-chiaro);
   border-radius: 999px;
   padding: 3px 12px;
+  backdrop-filter: blur(6px) saturate(160%);
+  -webkit-backdrop-filter: blur(6px) saturate(160%);
+}
+.tratt-icona {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 42px; height: 42px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  color: var(--bosco);
+  background: linear-gradient(160deg, rgba(255,255,255,.8), rgba(255,255,255,.35));
+  border: 1px solid rgba(185,154,69,.4);
+  backdrop-filter: blur(8px) saturate(160%);
+  -webkit-backdrop-filter: blur(8px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 6px 16px rgba(44,81,56,.1);
 }
 .tratt h3 { margin: 0; }
 .tratt-riga {
