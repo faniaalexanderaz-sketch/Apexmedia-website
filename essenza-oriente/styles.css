@@ -400,44 +400,44 @@ body.menu-aperto { overflow: hidden; }
 
 /* ---------- trattamenti ---------- */
 .tratt-griglia {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 880px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 920px; margin: 0 auto;
 }
 .tratt {
   position: relative;
-  display: grid; gap: 6px; align-content: start;
+  display: grid; gap: 3px; align-content: start;
   background: rgba(255,255,255,.7);
   border: 1px solid rgba(255,255,255,.6);
-  border-radius: 22px;
-  padding: 0 24px 22px;
+  border-radius: 16px;
+  padding: 0 13px 13px;
   overflow: hidden;
   backdrop-filter: blur(14px) saturate(160%);
   -webkit-backdrop-filter: blur(14px) saturate(160%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 3px rgba(44,81,56,.06), 0 18px 34px -12px rgba(44,81,56,.22);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 3px rgba(44,81,56,.06), 0 12px 24px -10px rgba(44,81,56,.22);
   transition: transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s ease;
 }
 .tratt:hover {
-  transform: translateY(-5px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 4px rgba(44,81,56,.08), 0 26px 46px -14px rgba(44,81,56,.3);
+  transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 4px rgba(44,81,56,.08), 0 18px 32px -10px rgba(44,81,56,.3);
 }
 .tratt-primario {
   border-color: rgba(185,154,69,.6);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 3px rgba(44,81,56,.06), 0 20px 38px -12px rgba(185,154,69,.32);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 3px rgba(44,81,56,.06), 0 14px 26px -10px rgba(185,154,69,.32);
 }
 .tratt-primario:hover {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 4px rgba(44,81,56,.08), 0 28px 50px -14px rgba(185,154,69,.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 4px rgba(44,81,56,.08), 0 20px 36px -10px rgba(185,154,69,.4);
 }
 .tratt-primario::before {
-  content: 'Il più richiesto';
-  position: absolute; top: 14px; right: 14px; z-index: 2;
-  font-size: 10px; font-weight: 700; letter-spacing: .12em;
+  content: 'Top';
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  font-size: 8.5px; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase;
   color: #6B5219;
   background: rgba(255,255,255,.85);
   border: 1px solid var(--oro-chiaro);
   border-radius: 999px;
-  padding: 4px 11px;
+  padding: 3px 8px;
   backdrop-filter: blur(6px) saturate(160%);
   -webkit-backdrop-filter: blur(6px) saturate(160%);
   box-shadow: 0 3px 10px rgba(44,81,56,.14);
@@ -446,16 +446,18 @@ body.menu-aperto { overflow: hidden; }
    un piccolo loto in filigrana tiene comunque un aspetto curato.
    ".tratt-foto-box" resta senza overflow, per lasciare l'icona
    tonda uscire leggermente sopra il bordo della foto; il ritaglio
-   vero e proprio (angoli, sfumatura) sta su ".tratt-foto-clip". */
+   vero e proprio (angoli, sfumatura) sta su ".tratt-foto-clip".
+   Quando ci sono due foto, ".tratt-foto-track" le mette una accanto
+   all'altra e si scorre con swipe (scroll-snap, senza bisogno di JS). */
 .tratt-foto-box {
   position: relative;
-  margin: 0 -24px 36px;
+  margin: 0 -13px 18px;
 }
 .tratt-foto-clip {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 22px 22px 0 0;
+  border-radius: 16px 16px 0 0;
   background:
     radial-gradient(120% 140% at 20% 0%, rgba(255,255,255,.5), transparent 60%),
     linear-gradient(155deg, var(--salvia) 0%, var(--pergamena-scura) 55%, var(--oro-chiaro) 130%);
@@ -463,18 +465,25 @@ body.menu-aperto { overflow: hidden; }
 .tratt-foto-clip::after {
   content: '';
   position: absolute; inset: 0;
-  background: center/60px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 20' fill='%232C5138' opacity='.14'%3E%3Cpath d='M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z'/%3E%3Cpath d='M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z'/%3E%3Cpath d='M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z'/%3E%3C/svg%3E") no-repeat;
+  background: center/34px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 20' fill='%232C5138' opacity='.14'%3E%3Cpath d='M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z'/%3E%3Cpath d='M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z'/%3E%3Cpath d='M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z'/%3E%3C/svg%3E") no-repeat;
   opacity: .8;
 }
 .tratt-foto-box.foto-ok .tratt-foto-clip::after { display: none; }
-.tratt-foto-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.tratt-icona-flottante {
-  position: absolute; left: 20px; bottom: -22px; z-index: 3;
-  width: 48px; height: 48px;
-  margin-bottom: 0;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 3px 6px rgba(44,81,56,.12), 0 12px 22px rgba(44,81,56,.18);
+.tratt-foto-track {
+  display: flex; height: 100%; width: 100%;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-.tratt-icona-flottante svg { width: 22px; height: 22px; }
+.tratt-foto-track::-webkit-scrollbar { display: none; }
+.tratt-foto-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; display: block; }
+.tratt-icona-flottante {
+  position: absolute; left: 10px; bottom: -14px; z-index: 3;
+  width: 32px; height: 32px;
+  margin-bottom: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 3px 6px rgba(44,81,56,.12), 0 8px 16px rgba(44,81,56,.18);
+}
+.tratt-icona-flottante svg { width: 15px; height: 15px; }
 .tratt-icona {
   display: inline-flex; align-items: center; justify-content: center;
   width: 42px; height: 42px;
@@ -488,29 +497,34 @@ body.menu-aperto { overflow: hidden; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 6px 16px rgba(44,81,56,.1);
 }
 .tratt h3 {
-  margin: 0;
-  font-size: 21px;
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.2;
   letter-spacing: -.005em;
 }
 .tratt-riga {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 6px;
+  flex-wrap: wrap;
 }
-.tratt-durata { font-size: 13px; font-style: italic; color: var(--testo); }
+.tratt-durata { font-size: 10.5px; font-style: italic; color: var(--testo); }
 .tratt-prezzo {
   font-family: var(--serif);
-  font-size: 26px; font-weight: 700; color: var(--bosco);
+  font-size: 17px; font-weight: 700; color: var(--bosco);
   font-variant-numeric: tabular-nums;
 }
-.tratt-cta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-.tratt-cta .btn { padding: 11px 18px; min-height: 44px; font-size: 13.5px; }
+.tratt-cta { display: grid; gap: 6px; margin-top: 8px; }
+.tratt-cta .btn { padding: 8px 12px; min-height: 36px; font-size: 11.5px; width: 100%; }
 .tratt-piu {
-  font-size: 13.5px; font-weight: 700; color: var(--testo);
+  font-size: 11px; font-weight: 700; color: var(--testo);
   text-decoration: none;
   border-bottom: 1px solid var(--oro-chiaro);
   padding-bottom: 1px;
+  justify-self: start;
 }
 .tratt-piu:hover { color: var(--bosco); }
-@media (max-width: 700px) { .tratt-griglia { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .tratt-griglia { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
 
 /* ---------- prenotazione / widget ---------- */
 .prenota-cornice {
@@ -588,7 +602,14 @@ body.menu-aperto { overflow: hidden; }
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(44,81,56,.08), 0 26px 54px -14px rgba(44,81,56,.28);
 }
-.foto-tratt-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.foto-tratt-track {
+  display: flex; height: 100%; width: 100%;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.foto-tratt-track::-webkit-scrollbar { display: none; }
+.foto-tratt-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; display: block; }
 .foto-segnaposto {
   display: grid; place-items: center;
   position: absolute; inset: 0;

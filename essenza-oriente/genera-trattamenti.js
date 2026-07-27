@@ -236,8 +236,12 @@ function pagina(t, altri) {
 
     <div class="foto-tratt">
       <div class="foto-tratt-box">
-        <img class="foto-tratt-img" src="../foto/tratt-${t.file.replace('.html', '')}.jpg" alt="${t.nome} — Essenza d'Oriente, Alessandria" loading="lazy"
-             onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
+        <div class="foto-tratt-track">
+          <img class="foto-tratt-img" src="../foto/tratt-${t.file.replace('.html', '')}.jpg" alt="${t.nome} — Essenza d'Oriente, Alessandria" loading="lazy"
+               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
+          <img class="foto-tratt-img" src="../foto/tratt-${t.file.replace('.html', '')}-2.jpg" alt="${t.nome} — Essenza d'Oriente, Alessandria" loading="lazy"
+               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
+        </div>
         <div class="foto-segnaposto" role="img" aria-label="Foto del trattamento ${t.nome} in arrivo">[FOTO TRATTAMENTO DA INSERIRE]</div>
       </div>
     </div>
