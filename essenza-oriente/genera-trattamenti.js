@@ -27,7 +27,7 @@ const TRATTAMENTI = [
     file: 'tuina-shiatsu.html',
     nome: 'Tuina Shiatsu',
     titoloSeo: 'Massaggio Tuina Shiatsu ad Alessandria — Essenza d\'Oriente',
-    descSeo: 'Tuina e Shiatsu ad Alessandria: pressioni e manipolazioni lungo i meridiani. 50 minuti, 50 €. 5,0★ su Google, 76 recensioni. Aperti tutti i giorni.',
+    descSeo: 'Tuina e Shiatsu ad Alessandria: pressioni e manipolazioni lungo i meridiani. 50 minuti, 50 €. 5,0★ su Google, 86 recensioni. Aperti tutti i giorni.',
     h1: 'Tuina Shiatsu ad Alessandria',
     sotto: 'Tecniche orientali · 50 minuti',
     prezzo: '50 €', durata: '50 min',
@@ -53,7 +53,7 @@ const TRATTAMENTI = [
     file: 'coppettazione.html',
     nome: 'Coppettazione',
     titoloSeo: 'Coppettazione (Cupping) ad Alessandria — Essenza d\'Oriente',
-    descSeo: 'Coppettazione ad Alessandria: tecnica tradizionale cinese con coppe a effetto ventosa, 25 €. 5,0★ su Google, 76 recensioni. Aperti tutti i giorni.',
+    descSeo: 'Coppettazione ad Alessandria: tecnica tradizionale cinese con coppe a effetto ventosa, 25 €. 5,0★ su Google, 86 recensioni. Aperti tutti i giorni.',
     h1: 'Coppettazione ad Alessandria',
     sotto: 'Cupping — tecnica tradizionale cinese',
     prezzo: '25 €', durata: 'Seduta breve',
@@ -79,7 +79,7 @@ const TRATTAMENTI = [
     file: 'massaggio-spa.html',
     nome: 'Massaggio Spa',
     titoloSeo: 'Massaggio Spa Corpo Completo ad Alessandria — Essenza d\'Oriente',
-    descSeo: 'Massaggio spa rilassante di corpo completo ad Alessandria: 90 minuti, 90 €. 5,0★ su Google, 76 recensioni. Aperti tutti i giorni fino alle 22:30.',
+    descSeo: 'Massaggio spa rilassante di corpo completo ad Alessandria: 90 minuti, 90 €. 5,0★ su Google, 86 recensioni. Aperti tutti i giorni fino alle 22:30.',
     h1: 'Massaggio Spa ad Alessandria',
     sotto: 'Corpo completo · 90 minuti',
     prezzo: '90 €', durata: '90 min',
@@ -235,7 +235,11 @@ function pagina(t, altri) {
     </section>
 
     <div class="foto-tratt">
-      <div class="foto-segnaposto" role="img" aria-label="Foto del trattamento ${t.nome} in arrivo">[FOTO TRATTAMENTO DA INSERIRE]</div>
+      <div class="foto-tratt-box">
+        <img class="foto-tratt-img" src="../foto/tratt-${t.file.replace('.html', '')}.jpg" alt="${t.nome} — Essenza d'Oriente, Alessandria" loading="lazy"
+             onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
+        <div class="foto-segnaposto" role="img" aria-label="Foto del trattamento ${t.nome} in arrivo">[FOTO TRATTAMENTO DA INSERIRE]</div>
+      </div>
     </div>
 
     <section class="sez">
@@ -295,7 +299,7 @@ function pagina(t, altri) {
     <p class="fondo-nome">Essenza d'Oriente</p>
     <p class="fondo-cinese" lang="zh">东方之<span class="cuore">♥</span>养生馆</p>
     <p>Via San Lorenzo 46, 15121 Alessandria · <a href="tel:+393317153533">331 715 3533</a></p>
-    <p class="fondo-legale">P.IVA [DA FORNIRE] · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
+    <p class="fondo-legale">P.IVA 14409690964 · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
   </footer>
 
   <script src="../script.js"></script>
