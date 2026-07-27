@@ -518,18 +518,17 @@ var AFC_PRODOTTI = [
   {
     slug: 'borsa-lavanda',
     nome: 'Borsa di Lavanda',
-    prezzo: 75,
+    prezzo: 95,
     taglie: [
-      { id: 'XL', nome: 'XL', prezzo: 75, nota: 'Formato generoso, unica taglia disponibile — scontata del 20%' }
+      { id: 'XL', nome: 'XL', prezzo: 95, nota: 'Formato generoso, unica taglia disponibile' }
     ],
     foto: 'foto/p-borsa-lavanda.jpg',
     galleria: ['foto/p-borsa-lavanda.jpg', 'foto/p-borsa-lavanda-2.jpg', 'foto/p-borsa-lavanda-3.jpg'],
     cat: ['regali', 'primavera', 'mamma'],
-    badge: '-20%',
     rating: ['4,8', 6],
     avail: 'Spedizione in 48/72h',
-    desc: 'Borsa in paglia ricamata a paillettes, con rose rosa, ortensia lilla e lavanda. Solo in taglia XL, scontata del 20%.',
-    descLunga: 'Una borsa intrecciata in paglia naturale, impreziosita da un ricamo a paillettes nei toni del lilla e del malva, colma di rose rosa, un\'ortensia color malva e lavanda. Un\'idea regalo originale, doppiamente utile: si può tenere in vista come composizione o svuotare e usare come borsa vera. Disponibile solo nel formato XL, il più generoso, scontato del 20%.'
+    desc: 'Borsa in paglia ricamata a paillettes, con rose rosa, ortensia lilla e lavanda. Solo in taglia XL.',
+    descLunga: 'Una borsa intrecciata in paglia naturale, impreziosita da un ricamo a paillettes nei toni del lilla e del malva, colma di rose rosa, un\'ortensia color malva e lavanda. Un\'idea regalo originale, doppiamente utile: si può tenere in vista come composizione o svuotare e usare come borsa vera. Disponibile solo nel formato XL, il più generoso.'
   }
 ];
 
