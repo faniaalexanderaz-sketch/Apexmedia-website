@@ -2017,6 +2017,15 @@ img.no-foto { opacity: 0; }
   margin: 6px 0 0; font-size: 12.5px; color: var(--muted); font-weight: 600;
 }
 .pm-fragile svg { flex: 0 0 auto; color: var(--gold); }
+.pm-artigianale {
+  display: flex; align-items: flex-start; gap: 9px;
+  margin: 10px 0 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 13px; line-height: 1.5;
+  color: var(--muted);
+}
+.pm-artigianale svg { flex: 0 0 auto; margin-top: 2px; color: var(--salvia); }
 .pm-azioni { margin-top: 4px; }
 .pm-azioni .btn { flex: 1; }
 
