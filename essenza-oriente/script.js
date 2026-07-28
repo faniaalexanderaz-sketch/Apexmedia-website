@@ -63,6 +63,19 @@
     }
   });
 
+  /* ---------- card trattamento cliccabile ----------
+     Tutta la card porta alla pagina del trattamento (foto compresa),
+     non solo il piccolo link "Scopri di più". I link/bottoni dentro
+     la card (Prenota, Scopri di più) continuano a funzionare come
+     sempre: si naviga dalla card solo se il click non è già dentro
+     un link o un bottone. */
+  document.querySelectorAll('.tratt[data-href]').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) return;
+      window.location.href = card.getAttribute('data-href');
+    });
+  });
+
   /* ---------- menu a scomparsa (hamburger) ---------- */
   var menuBtn = document.getElementById('menuBtn');
   var menuDrawer = document.getElementById('menuDrawer');
