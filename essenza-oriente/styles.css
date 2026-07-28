@@ -48,6 +48,18 @@
   font-style: normal; font-weight: 400 700; font-display: swap;
   src: url('fonts/jost-latin-wght-normal.woff2') format('woff2');
 }
+/* accento particolare per il sottotitolo della hero: un corsivo
+   editoriale, diverso sia da Cormorant che da Italiana */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic; font-weight: 400; font-display: swap;
+  src: url('fonts/instrument-serif-latin-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url('fonts/instrument-serif-latin-400-normal.woff2') format('woff2');
+}
 
 :root {
   /* palette dal materiale marketing reale (flyer + logo) —
@@ -134,8 +146,14 @@ h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 12px rgba(44,81,56,.06);
 }
 
-/* ---------- bottoni ---------- */
+/* ---------- bottoni: vetro + 3D ----------
+   Ogni bottone ha un riflesso lucido in alto (::before) che dà
+   profondità, un bordo chiaro che simula lo spessore del vetro
+   e un'ombra colorata coerente con lo sfondo del bottone stesso. */
 .btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   font-family: var(--sans); font-weight: 700; font-size: 15.5px;
   letter-spacing: .015em;
@@ -145,35 +163,79 @@ h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, background .2s ease;
 }
-.btn:active { transform: scale(.98); }
+.btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.08) 42%, rgba(255,255,255,0) 60%);
+  pointer-events: none;
+}
+.btn > * { position: relative; z-index: 2; }
+.btn:active { transform: scale(.97); }
 .btn svg { flex: 0 0 auto; }
 
 .btn-prenota {
-  background: var(--bosco);
+  background: linear-gradient(180deg, #3E6B49 0%, var(--bosco) 55%, var(--bosco-scuro) 100%);
   color: #FDFCF7;
-  /* alone caldo, come luce di candela — firma discreta del brand */
-  box-shadow: 0 1px 2px rgba(34,64,44,.3), 0 10px 26px rgba(185,154,69,.28);
+  border-color: rgba(255,255,255,.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 -3px 5px rgba(15,26,18,.3),
+    0 2px 4px rgba(20,36,25,.35),
+    0 16px 30px -6px rgba(185,154,69,.45);
 }
-.btn-prenota:hover { background: var(--bosco-scuro); transform: translateY(-2px); }
+.btn-prenota:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -3px 5px rgba(15,26,18,.3),
+    0 3px 6px rgba(20,36,25,.4),
+    0 22px 40px -6px rgba(185,154,69,.55);
+}
 
 .btn-chiama {
-  background: rgba(255,255,255,.45);
+  background: linear-gradient(180deg, rgba(255,255,255,.85) 0%, rgba(233,220,180,.55) 100%);
   color: var(--bosco);
-  border-color: rgba(185,154,69,.4);
+  border-color: rgba(185,154,69,.55);
   backdrop-filter: blur(10px) saturate(160%);
   -webkit-backdrop-filter: blur(10px) saturate(160%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 12px rgba(44,81,56,.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 -2px 4px rgba(185,154,69,.18),
+    0 2px 4px rgba(44,81,56,.06),
+    0 14px 26px -8px rgba(185,154,69,.35);
 }
-.btn-chiama:hover { background: rgba(255,255,255,.75); transform: translateY(-2px); }
+.btn-chiama:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(233,220,180,.7) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -2px 4px rgba(185,154,69,.2),
+    0 3px 6px rgba(44,81,56,.08),
+    0 18px 34px -8px rgba(185,154,69,.42);
+}
 
 .btn-wa {
-  background: var(--whatsapp);
+  background: linear-gradient(180deg, #2FDB79 0%, var(--whatsapp) 55%, #148246 100%);
   color: #FFFFFF;
-  box-shadow: 0 1px 2px rgba(0,0,0,.15), 0 8px 20px rgba(31,168,85,.3);
+  border-color: rgba(255,255,255,.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -3px 5px rgba(6,50,25,.3),
+    0 2px 4px rgba(6,50,25,.3),
+    0 16px 30px -6px rgba(31,168,85,.5);
 }
-.btn-wa:hover { filter: brightness(1.05); transform: translateY(-2px); }
+.btn-wa:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.4),
+    inset 0 -3px 5px rgba(6,50,25,.3),
+    0 3px 6px rgba(6,50,25,.35),
+    0 22px 40px -6px rgba(31,168,85,.6);
+}
 
 /* ---------- header sticky ---------- */
 .top {
@@ -367,8 +429,20 @@ body.menu-aperto { overflow: hidden; }
   color: var(--bosco);
 }
 .hero-marchio-mini em { font-style: normal; color: var(--oro); }
-.hero h1 { margin-bottom: 12px; font-family: 'Italiana', var(--serif); font-weight: 400; letter-spacing: -.01em; }
-.hero-sub { font-size: 17px; margin: 0 0 8px; font-family: 'Jost', var(--sans); }
+.hero h1 {
+  margin-bottom: 12px;
+  font-family: 'Italiana', var(--serif); font-weight: 400; letter-spacing: -.01em;
+  /* Italiana esiste solo in un peso: la ispessisco leggermente con
+     un filo di contorno, invece del grassetto finto del browser
+     che la deformerebbe */
+  -webkit-text-stroke: .5px currentColor;
+  text-stroke: .5px currentColor;
+}
+.hero-sub {
+  font-size: 19px; line-height: 1.5; margin: 0 0 8px;
+  font-family: 'Instrument Serif', var(--serif); font-style: italic; font-weight: 400;
+  color: var(--ink);
+}
 .hero-prova {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 14px; font-weight: 700; color: var(--ink);
@@ -412,7 +486,7 @@ body.menu-aperto { overflow: hidden; }
      "premium", mentre la foto resta visibile sopra e ai bordi */
   .hero-copy {
     text-align: center;
-    background: rgba(255,255,255,.72);
+    background: rgba(255,255,255,.66);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
     border: 1px solid rgba(255,255,255,.6);
