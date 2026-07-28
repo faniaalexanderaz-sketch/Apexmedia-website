@@ -162,6 +162,10 @@ function pagina(t, altri) {
   <title>${t.titoloSeo}</title>
   <meta name="description" content="${t.descSeo}" />
   <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="../favicon-180.png" />
 
   <!-- Google Tag Manager: si carica da cookie.js SOLO dopo il consenso
        dell'utente dal banner cookie, mai prima -->
