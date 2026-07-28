@@ -797,8 +797,27 @@ body.menu-aperto { overflow: hidden; }
 .prenota-alt .btn { margin: 0 5px 8px; }
 
 /* ---------- chi siamo ---------- */
-.chi { text-align: center; }
+/* foto ambientale dietro ad alcune sezioni: sfumata ai bordi per
+   fondersi col resto del sito, un velo chiaro sopra per leggibilità */
+.sez-foto-sfondo {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+.sez-foto-sfondo picture, .sez-foto-sfondo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.sez-foto-sfondo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--pergamena) 0%, rgba(236,243,228,.68) 14%, rgba(236,243,228,.5) 50%, rgba(236,243,228,.68) 86%, var(--pergamena) 100%);
+}
+.chi { position: relative; overflow: hidden; text-align: center; }
+.chi .sez-inner { position: relative; z-index: 1; }
 .chi p { max-width: 56ch; margin: 0 auto; font-size: 16.5px; }
+.sez-prenota-foto { position: relative; overflow: hidden; }
+.sez-prenota-foto .sez-testa,
+.sez-prenota-foto .prenota-cornice,
+.sez-prenota-foto .prenota-alt { position: relative; z-index: 1; }
 
 /* ---------- mappa e contatti ---------- */
 .mappa-griglia {
