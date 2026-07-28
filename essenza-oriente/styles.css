@@ -467,7 +467,7 @@ body.menu-aperto { overflow: hidden; }
 }
 @media (max-width: 820px) {
   .hero { overflow: hidden; padding-top: 0; }
-  .hero-inner { grid-template-columns: 1fr; padding-top: clamp(210px, 62vw, 310px); padding-bottom: 18px; }
+  .hero-inner { grid-template-columns: 1fr; padding-top: clamp(128px, 36vw, 180px); padding-bottom: 18px; }
   .hero-foto { display: none; }
   .hero-sfondo-mobile {
     display: block;
@@ -497,7 +497,7 @@ body.menu-aperto { overflow: hidden; }
   .hero-eyebrow { font-size: 9.5px; letter-spacing: .14em; padding: 8px 14px; white-space: nowrap; }
   .hero-marchio-mini {
     display: block;
-    position: absolute; left: 50%; top: clamp(88px, 26vw, 128px); z-index: 1;
+    position: absolute; left: 50%; top: clamp(56px, 16vw, 78px); z-index: 1;
     transform: translateX(-50%);
     margin: 0;
     color: #FFFFFF;
@@ -520,37 +520,55 @@ body.menu-aperto { overflow: hidden; }
   -webkit-backdrop-filter: blur(10px) saturate(160%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 6px 18px rgba(44,81,56,.07);
 }
+/* striscia scorrevole, piccola e veloce da leggere — le recensioni
+   contano ma non devono occupare mezza pagina: card di vetro,
+   compatte, una via l'altra con swipe (scroll-snap, niente JS) */
 .recensioni-griglia {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin: 26px 0 18px;
+  display: flex;
+  gap: 12px;
+  margin: 22px 0 14px;
+  padding: 4px 4px 10px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-padding-left: 4px;
 }
-.recensioni-griglia-4 { max-width: 900px; margin-left: auto; margin-right: auto; }
+.recensioni-griglia::-webkit-scrollbar { display: none; }
+.recensioni-griglia-4 { max-width: 900px; margin-left: auto; margin-right: auto; justify-content: center; }
 .recensione {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 216px;
   margin: 0;
-  background: #FFFFFF;
-  border: 1px solid var(--linea);
-  border-radius: var(--r);
-  padding: 22px 24px;
-  box-shadow: 0 1px 3px rgba(44,81,56,.05), 0 12px 28px rgba(44,81,56,.06);
+  text-align: left;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 16px;
+  padding: 14px 16px;
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 1px 3px rgba(44,81,56,.05), 0 10px 22px -8px rgba(44,81,56,.16);
 }
 .recensione blockquote {
-  margin: 0 0 12px;
-  font-family: var(--serif);
-  font-size: 19px; line-height: 1.45; font-weight: 500;
+  margin: 0 0 8px;
+  font-family: 'Instrument Serif', var(--serif);
+  font-style: italic;
+  font-size: 15px; line-height: 1.4; font-weight: 400;
   color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
 }
 .recensione figcaption {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 13px; font-weight: 700; color: var(--testo);
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Jost', var(--sans);
+  font-size: 10.5px; font-weight: 600; letter-spacing: .01em; color: var(--testo);
 }
 .google-g { flex: 0 0 auto; display: inline-block; }
-.recensione .stelle { display: block; margin-bottom: 8px; }
+.recensione .stelle { display: block; margin-bottom: 5px; font-size: 11px; }
 .link-google {
   font-size: 14.5px; font-weight: 700; color: var(--bosco);
   text-underline-offset: 3px;
 }
-@media (max-width: 700px) { .recensioni-griglia { grid-template-columns: 1fr; } }
 
 /* ---------- vantaggio orari ---------- */
 .orari { text-align: center; }
