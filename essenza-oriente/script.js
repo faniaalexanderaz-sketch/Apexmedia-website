@@ -18,7 +18,12 @@
 (function () {
   'use strict';
 
-  window.dataLayer = window.dataLayer || [];
+  /* gli eventi passano da EO_COOKIE.push (definita in cookie.js):
+     se l'utente non ha ancora accettato i cookie di misurazione,
+     l'evento viene scartato invece di essere accodato */
+  function traccia(obj) {
+    if (window.EO_COOKIE) window.EO_COOKIE.push(obj);
+  }
 
   /* ---------- click_chiama + click_whatsapp ----------
      Delegato sul documento: copre anche bottoni ripetuti
@@ -28,9 +33,9 @@
     if (!a) return;
     var href = a.getAttribute('href') || '';
     if (href.indexOf('tel:') === 0) {
-      window.dataLayer.push({ event: 'click_chiama' });
+      traccia({ event: 'click_chiama' });
     } else if (href.indexOf('https://wa.me/') === 0 || href.indexOf('wa.me/') === 0) {
-      window.dataLayer.push({ event: 'click_whatsapp' });
+      traccia({ event: 'click_whatsapp' });
     }
   });
 
@@ -54,7 +59,7 @@
         (attivo.closest('#wahanda-online-booking-widget-iframe') ||
          (attivo.src || '').indexOf('treatwell') !== -1)) {
       widgetGiaTracciato = true;
-      window.dataLayer.push({ event: 'click_widget_prenotazione' });
+      traccia({ event: 'click_widget_prenotazione' });
     }
   });
 

@@ -163,13 +163,8 @@ function pagina(t, altri) {
   <meta name="description" content="${t.descSeo}" />
   <link rel="stylesheet" href="../styles.css" />
 
-  <!-- Google Tag Manager — sostituire GTM-KVSX5PF5 con l'ID reale -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-KVSX5PF5');</script>
-  <!-- End Google Tag Manager -->
+  <!-- Google Tag Manager: si carica da cookie.js SOLO dopo il consenso
+       dell'utente dal banner cookie, mai prima -->
 
   <script type="application/ld+json">
   {
@@ -194,12 +189,7 @@ function pagina(t, altri) {
   }
   </script>
 </head>
-<body class="pagina-tratt">
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KVSX5PF5"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
+<body class="pagina-tratt" data-base="../">
   <header class="top">
     <div class="top-inizio">
       <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer">${ICONA_HAMBURGER}</button>
@@ -306,6 +296,7 @@ function pagina(t, altri) {
     <p class="fondo-legale">P.IVA 14409690964 · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
   </footer>
 
+  <script src="../cookie.js"></script>
   <script src="../script.js"></script>
 </body>
 </html>

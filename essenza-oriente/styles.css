@@ -926,8 +926,101 @@ body.menu-aperto { overflow: hidden; }
 }
 .altri-tratt a:hover { border-color: var(--salvia-scura); background: var(--salvia); }
 
+/* ---------- FAQ ---------- */
+.faq-lista { max-width: 720px; margin: 0 auto; display: grid; gap: 10px; }
+.faq-voce {
+  background: rgba(255,255,255,.6);
+  border: 1px solid rgba(185,154,69,.35);
+  border-radius: 14px;
+  padding: 4px 20px;
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 3px rgba(44,81,56,.05);
+}
+.faq-voce summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px 0;
+  font-family: var(--serif); font-weight: 600; font-size: 17px; color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.faq-voce summary::-webkit-details-marker { display: none; }
+.faq-voce summary::after {
+  content: '+';
+  flex: 0 0 auto;
+  font-size: 20px; font-weight: 400; color: var(--oro);
+  transition: transform .2s ease;
+}
+.faq-voce[open] summary::after { transform: rotate(45deg); }
+.faq-voce p { margin: 0 0 18px; font-size: 15px; line-height: 1.6; color: var(--testo); }
+
+/* ---------- social ---------- */
+.social-riquadro { text-align: center; }
+.social-testo {
+  margin: 0 0 20px;
+  font-family: 'Instrument Serif', var(--serif); font-style: italic; font-size: 19px;
+  color: var(--ink);
+}
+.social-riga { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.social-icona {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(185,154,69,.4);
+  color: var(--bosco);
+  font-weight: 700; font-size: 14px;
+  text-decoration: none;
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 12px rgba(44,81,56,.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.social-icona:hover { transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 10px 22px rgba(44,81,56,.14); }
+
+/* ---------- banner cookie ---------- */
+.cookie-banner {
+  position: fixed; left: 14px; right: 14px; bottom: 14px; z-index: 200;
+  max-width: 640px; margin: 0 auto;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(185,154,69,.4);
+  border-radius: 20px;
+  padding: 20px 22px;
+  display: grid; gap: 14px;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 4px 12px rgba(44,81,56,.1), 0 24px 48px -12px rgba(44,81,56,.28);
+  animation: cookie-in .3s ease both;
+}
+@keyframes cookie-in { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.cookie-testo { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--testo); }
+.cookie-testo a { color: var(--bosco); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.cookie-azioni { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+.btn-cookie-accetta,
+.btn-cookie-rifiuta {
+  padding: 11px 22px; min-height: 42px; font-size: 14px;
+}
+.btn-cookie-accetta {
+  background: linear-gradient(180deg, #3E6B49 0%, var(--bosco) 55%, var(--bosco-scuro) 100%);
+  color: #FDFCF7;
+  border-color: rgba(255,255,255,.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -3px 5px rgba(15,26,18,.3), 0 2px 4px rgba(20,36,25,.35), 0 10px 20px -6px rgba(185,154,69,.4);
+}
+.btn-cookie-accetta:hover { transform: translateY(-2px); }
+.btn-cookie-rifiuta {
+  background: rgba(255,255,255,.5);
+  color: var(--testo);
+  border-color: rgba(44,81,56,.25);
+}
+.btn-cookie-rifiuta:hover { background: rgba(255,255,255,.8); transform: translateY(-2px); }
+@media (max-width: 480px) {
+  .cookie-azioni { flex-direction: column-reverse; }
+  .cookie-azioni .btn { width: 100%; }
+}
+
 /* ---------- accessibilità: riduci movimento ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .btn { transition: none; }
+  .cookie-banner { animation: none; }
 }
