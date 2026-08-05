@@ -100,6 +100,19 @@ const TRATTAMENTI = [
     benefici: 'Pulizia delicata e accurata, sensazione di leggerezza e comfort auricolare, momento di profondo relax grazie al tocco calibrato degli strumenti tradizionali e alla fase finale con il piumino.',
     svolgimento: 'Si resta comodamente seduti mentre l\'operatore lavora con calma, alternando gli strumenti secondo necessità, fino alla fase finale di stimolazione con il piumino.',
     avviso: 'Questo è un servizio di pulizia e benessere estetico, non un trattamento medico. In caso di problemi specifici alle orecchie (dolore, infezioni, perdita di udito) è bene rivolgersi a un medico otorinolaringoiatra.'
+  },
+  {
+    file: 'pedicure.html',
+    nome: 'Pedicure',
+    titoloSeo: 'Pedicure in Stile Tradizionale Cinese ad Alessandria — Essenza d\'Oriente',
+    descSeo: 'Pedicure in stile tradizionale cinese (xiūjiǎo) ad Alessandria: ammollo, cura di calli e duroni con strumenti dedicati, rifinitura delle unghie. 35 €.',
+    h1: 'Pedicure ad Alessandria',
+    sotto: 'Cura del piede in stile tradizionale cinese',
+    prezzo: '35 €', durata: 'Seduta breve',
+    cosa: 'Un servizio di cura del piede ispirato alla tradizione cinese dello xiūjiǎo (修脚, letteralmente "rifinire il piede"), un\'arte antica e molto radicata in Cina — storicamente celebre a Pechino, dove è riconosciuta come patrimonio culturale — incentrata più sulla cura precisa del piede che sulla sola estetica dello smalto. Il piede viene prima ammorbidito con un ammollo caldo, poi l\'operatore lavora con piccoli strumenti dedicati e ben affilati per rifinire con precisione calli, duroni e unghie, prestando particolare attenzione ai bordi e agli angoli più delicati.',
+    benefici: 'Piedi visibilmente più lisci e curati, sensazione di leggerezza dopo la rimozione di calli e pelle indurita, unghie rifinite con precisione.',
+    svolgimento: 'Si comincia con un ammollo rilassante, seguito dalla cura vera e propria di calli, duroni e unghie con gli strumenti dedicati, fino alla rifinitura finale.',
+    avviso: 'Questo è un servizio di cura estetica del piede, non un trattamento medico podologico. In caso di condizioni specifiche (diabete, infezioni, problemi circolatori) è bene consultare prima un podologo o un medico.'
   }
 ];
 
@@ -120,7 +133,7 @@ const MENU_TRATTAMENTI = [
   { file: 'coppettazione.html', nome: 'Coppettazione', info: 'Cupping · 25 €' },
   { file: 'gua-sha.html', nome: 'Gua Sha', info: '25 €' },
   { file: 'pulizia-orecchie.html', nome: 'Pulizia delle Orecchie', info: 'Tecnica tradizionale cinese · 25 €' },
-  { file: null, nome: 'Pedicure', info: '35 €' }
+  { file: 'pedicure.html', nome: 'Pedicure', info: 'Stile tradizionale cinese · 35 €' }
 ];
 
 /* drawer del menu: "base" è il prefisso per raggiungere la home e le
