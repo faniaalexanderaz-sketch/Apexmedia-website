@@ -161,6 +161,22 @@ function pagina(t, altri) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${t.titoloSeo}</title>
   <meta name="description" content="${t.descSeo}" />
+  <link rel="canonical" href="https://essenzadoriente.it/trattamenti/${t.file}" />
+
+  <!-- Open Graph / Twitter Card: senza questi tag Google, WhatsApp e
+       Facebook non hanno nessuna immagine da mostrare nell'anteprima
+       del link, e appare solo testo. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://essenzadoriente.it/trattamenti/${t.file}" />
+  <meta property="og:title" content="${t.h1} — Essenza d'Oriente" />
+  <meta property="og:description" content="${t.descSeo}" />
+  <meta property="og:image" content="https://essenzadoriente.it/foto/tratt-${t.file.replace('.html', '')}.jpg" />
+  <meta property="og:locale" content="it_IT" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${t.h1} — Essenza d'Oriente" />
+  <meta name="twitter:description" content="${t.descSeo}" />
+  <meta name="twitter:image" content="https://essenzadoriente.it/foto/tratt-${t.file.replace('.html', '')}.jpg" />
+
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
@@ -177,6 +193,8 @@ function pagina(t, altri) {
     "name": "${t.nome}",
     "serviceType": "${t.nome}",
     "areaServed": "Alessandria",
+    "image": "https://essenzadoriente.it/foto/tratt-${t.file.replace('.html', '')}.jpg",
+    "url": "https://essenzadoriente.it/trattamenti/${t.file}",
     "provider": {
       "@type": "HealthAndBeautyBusiness",
       "name": "Essenza d'Oriente",
