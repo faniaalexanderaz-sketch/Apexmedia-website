@@ -91,14 +91,14 @@ const TRATTAMENTI = [
   {
     file: 'pulizia-orecchie.html',
     nome: 'Pulizia delle Orecchie',
-    titoloSeo: 'Pulizia delle Orecchie con Micro-telecamera ad Alessandria — Essenza d\'Oriente',
-    descSeo: 'Pulizia orecchie professionale ad Alessandria con micro-telecamera: vedi tutto in tempo reale. 25 €. 5,0★ su Google. Aperti 7/7 fino alle 22:30.',
+    titoloSeo: 'Pulizia delle Orecchie in Stile Tradizionale Cinese ad Alessandria — Essenza d\'Oriente',
+    descSeo: 'Pulizia orecchie in stile tradizionale cinese (cǎi ěr) ad Alessandria: strumenti dedicati in bambù e metallo, piuma per la fase finale. 25 €. 5,0★ su Google.',
     h1: 'Pulizia delle Orecchie ad Alessandria',
-    sotto: 'Con micro-telecamera, in tempo reale',
+    sotto: 'Tecnica tradizionale cinese',
     prezzo: '25 €', durata: 'Seduta breve',
-    cosa: 'Un servizio di pulizia auricolare eseguito con strumentazione moderna e visibile: una micro-telecamera (otoscopio) collegata a uno schermo permette all\'operatore — e spesso anche a te — di vedere in tempo reale l\'interno dell\'orecchio durante la pulizia. Si utilizzano bastoncini di legno dedicati per la rimozione manuale del cerume in eccesso e una pompetta ad aria per completare la pulizia in modo delicato. Non si utilizzano in alcun modo fuoco o candele auricolari: è una tecnica diversa e più controllata, diventata popolare anche sui social proprio per la componente visiva e rilassante della seduta.',
-    benefici: 'Pulizia visibile e controllata passo dopo passo, sensazione di leggerezza e comfort auricolare, esperienza rilassante grazie alla delicatezza degli strumenti utilizzati.',
-    svolgimento: 'Si resta comodamente seduti mentre l\'operatore mostra sullo schermo cosa sta facendo durante tutta la seduta.',
+    cosa: 'Un servizio di pulizia auricolare eseguito secondo la tecnica tradizionale cinese nota come cǎi ěr (采耳, letteralmente "raccogliere l\'orecchio"), una pratica diffusa da secoli in Cina — celebre in particolare nella tradizione delle case da tè di Chengdu, nel Sichuan. Non si utilizza alcuna micro-telecamera: l\'operatore lavora con un piccolo set di strumenti dedicati, tra cui cucchiaini e bastoncini in bambù o metallo di forme e lunghezze diverse per la rimozione delicata del cerume, piccole pinzette per i residui più visibili e, nella fase finale, un morbido piumino che sfiora e vibra leggermente all\'interno dell\'orecchio, regalando una tipica sensazione di leggerezza e relax.',
+    benefici: 'Pulizia delicata e accurata, sensazione di leggerezza e comfort auricolare, momento di profondo relax grazie al tocco calibrato degli strumenti tradizionali e alla fase finale con il piumino.',
+    svolgimento: 'Si resta comodamente seduti mentre l\'operatore lavora con calma, alternando gli strumenti secondo necessità, fino alla fase finale di stimolazione con il piumino.',
     avviso: 'Questo è un servizio di pulizia e benessere estetico, non un trattamento medico. In caso di problemi specifici alle orecchie (dolore, infezioni, perdita di udito) è bene rivolgersi a un medico otorinolaringoiatra.'
   }
 ];
@@ -119,7 +119,7 @@ const MENU_TRATTAMENTI = [
   { file: 'riflessologia-plantare.html', nome: 'Riflessologia Plantare', info: '40 min 35 € · 60 min 50 €' },
   { file: 'coppettazione.html', nome: 'Coppettazione', info: 'Cupping · 25 €' },
   { file: 'gua-sha.html', nome: 'Gua Sha', info: '25 €' },
-  { file: 'pulizia-orecchie.html', nome: 'Pulizia delle Orecchie', info: 'Con micro-telecamera · 25 €' },
+  { file: 'pulizia-orecchie.html', nome: 'Pulizia delle Orecchie', info: 'Tecnica tradizionale cinese · 25 €' },
   { file: null, nome: 'Pedicure', info: '35 €' }
 ];
 

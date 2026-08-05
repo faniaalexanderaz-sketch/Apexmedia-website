@@ -76,6 +76,33 @@
     });
   });
 
+  /* ---------- sezione orari: giorno corrente + badge "aperti ora" ----------
+     Il centro è aperto tutti i giorni 9:30–22:30: calcoliamo lo stato
+     in base all'orario locale del visitatore, niente di hardcoded. */
+  var orariGiorni = document.getElementById('orariGiorni');
+  var orariLiveTesto = document.getElementById('orariLiveTesto');
+  var orariLive = document.getElementById('orariLive');
+  if (orariGiorni) {
+    var oggi = new Date();
+    var voceOggi = orariGiorni.querySelector('[data-giorno="' + oggi.getDay() + '"]');
+    if (voceOggi) voceOggi.setAttribute('data-oggi', '');
+  }
+  if (orariLiveTesto && orariLive) {
+    var ora = new Date();
+    var minutiOra = ora.getHours() * 60 + ora.getMinutes();
+    var aperto = minutiOra >= 9 * 60 + 30 && minutiOra < 22 * 60 + 30;
+    if (aperto) {
+      orariLiveTesto.textContent = 'Aperti ora';
+    } else {
+      orariLiveTesto.textContent = 'Apriamo alle 9:30';
+      orariLive.style.background = 'rgba(217,198,140,.14)';
+      orariLive.style.borderColor = 'rgba(217,198,140,.45)';
+      orariLive.style.color = 'var(--oro-chiaro)';
+      var pallino = orariLive.querySelector('.orari-live-pallino');
+      if (pallino) { pallino.style.background = 'var(--oro-chiaro)'; pallino.style.animation = 'none'; }
+    }
+  }
+
   /* ---------- menu a scomparsa (hamburger) ---------- */
   var menuBtn = document.getElementById('menuBtn');
   var menuDrawer = document.getElementById('menuDrawer');

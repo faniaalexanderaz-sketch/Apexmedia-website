@@ -145,96 +145,145 @@ h3 { font-size: clamp(21px, 4vw, 25px); font-weight: 600; }
   -webkit-backdrop-filter: blur(8px) saturate(160%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 12px rgba(44,81,56,.06);
 }
+/* pillola dedicata alla sezione trattamenti: più scolpita, con un
+   piccolo nucleo dorato incassato invece del semplice bordo chiaro */
+.etichetta-listino {
+  gap: 7px;
+  font-family: 'Jost', var(--sans);
+  color: #6B5219;
+  background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(233,220,180,.5));
+  border-color: rgba(185,154,69,.55);
+  padding: 7px 18px 7px 14px;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.9),
+    inset 0 -2px 4px rgba(185,154,69,.18),
+    0 6px 16px -6px rgba(185,154,69,.4);
+}
+.etichetta-listino::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFF3D4, var(--oro) 75%);
+  box-shadow: 0 0 6px rgba(185,154,69,.7);
+}
 
-/* ---------- bottoni: vetro + 3D ----------
-   Ogni bottone ha un riflesso lucido in alto (::before) che dà
-   profondità, un bordo chiaro che simula lo spessore del vetro
-   e un'ombra colorata coerente con lo sfondo del bottone stesso. */
+/* ---------- bottoni: pillole 3D con luce interna ----------
+   Costruzione a più strati, come un oggetto fisico lavorato:
+   - ::before = riflesso lucido superiore (lo spessore del vetro)
+   - ::after  = un piccolo "filamento" di luce calda che vive dentro
+     la pillola (un radial-gradient morbido, sempre acceso, che si
+     accende leggermente di più in hover) — è la "luce all'interno"
+   Il font passa a 'Jost' (geometrico, scolpito) invece del Lato
+   generico, con tracking leggero per un effetto più inciso. */
 .btn {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  font-family: var(--sans); font-weight: 700; font-size: 15.5px;
-  letter-spacing: .015em;
-  padding: 15px 28px;
+  font-family: 'Jost', var(--sans); font-weight: 600; font-size: 15px;
+  letter-spacing: .04em;
+  padding: 15px 30px;
   min-height: 50px;
   border-radius: 999px;
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, background .2s ease;
+  transform: translateZ(0);
+  transition:
+    transform .55s cubic-bezier(.16,1,.3,1),
+    box-shadow .55s cubic-bezier(.16,1,.3,1),
+    background .4s ease;
 }
 .btn::before {
   content: '';
   position: absolute; inset: 0;
   z-index: 1;
   border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.08) 42%, rgba(255,255,255,0) 60%);
+  background: linear-gradient(180deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,.1) 40%, rgba(255,255,255,0) 58%);
   pointer-events: none;
 }
+/* la "luce interna": un alone caldo che parte dal centro-alto della
+   pillola, come una fonte di luce incastonata dentro il materiale */
+.btn::after {
+  content: '';
+  position: absolute; z-index: 1; pointer-events: none;
+  width: 130%; height: 220%; left: -15%; top: -140%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
+  opacity: .5;
+  mix-blend-mode: soft-light;
+  transition: opacity .5s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
+}
+.btn:hover::after { opacity: .85; transform: translateY(6%); }
 .btn > * { position: relative; z-index: 2; }
-.btn:active { transform: scale(.97); }
+.btn:active { transform: scale(.965) translateZ(0); transition-duration: .12s; }
 .btn svg { flex: 0 0 auto; }
 
 .btn-prenota {
   background: linear-gradient(180deg, #3E6B49 0%, var(--bosco) 55%, var(--bosco-scuro) 100%);
   color: #FDFCF7;
-  border-color: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.2);
+  text-shadow: 0 1px 1px rgba(15,26,18,.25);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.3),
-    inset 0 -3px 5px rgba(15,26,18,.3),
+    inset 0 1.5px 0 rgba(255,255,255,.4),
+    inset 0 -4px 7px rgba(15,26,18,.35),
+    inset 0 0 16px rgba(217,198,140,.16),
     0 2px 4px rgba(20,36,25,.35),
-    0 16px 30px -6px rgba(185,154,69,.45);
+    0 18px 32px -8px rgba(185,154,69,.5);
 }
 .btn-prenota:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) translateZ(0);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.35),
-    inset 0 -3px 5px rgba(15,26,18,.3),
+    inset 0 1.5px 0 rgba(255,255,255,.45),
+    inset 0 -4px 7px rgba(15,26,18,.35),
+    inset 0 0 22px rgba(217,198,140,.26),
     0 3px 6px rgba(20,36,25,.4),
-    0 22px 40px -6px rgba(185,154,69,.55);
+    0 26px 44px -8px rgba(185,154,69,.6);
 }
 
 .btn-chiama {
-  background: linear-gradient(180deg, rgba(255,255,255,.85) 0%, rgba(233,220,180,.55) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(233,220,180,.58) 100%);
   color: var(--bosco);
   border-color: rgba(185,154,69,.55);
   backdrop-filter: blur(10px) saturate(160%);
   -webkit-backdrop-filter: blur(10px) saturate(160%);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    inset 0 -2px 4px rgba(185,154,69,.18),
+    inset 0 1.5px 0 rgba(255,255,255,.95),
+    inset 0 -3px 5px rgba(185,154,69,.2),
+    inset 0 0 14px rgba(255,255,255,.5),
     0 2px 4px rgba(44,81,56,.06),
-    0 14px 26px -8px rgba(185,154,69,.35);
+    0 16px 30px -8px rgba(185,154,69,.4);
 }
 .btn-chiama:hover {
-  transform: translateY(-3px);
-  background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(233,220,180,.7) 100%);
+  transform: translateY(-3px) translateZ(0);
+  background: linear-gradient(180deg, rgba(255,255,255,.97) 0%, rgba(233,220,180,.74) 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.95),
-    inset 0 -2px 4px rgba(185,154,69,.2),
+    inset 0 1.5px 0 rgba(255,255,255,1),
+    inset 0 -3px 5px rgba(185,154,69,.24),
+    inset 0 0 20px rgba(255,255,255,.65),
     0 3px 6px rgba(44,81,56,.08),
-    0 18px 34px -8px rgba(185,154,69,.42);
+    0 20px 38px -8px rgba(185,154,69,.48);
 }
 
 .btn-wa {
   background: linear-gradient(180deg, #2FDB79 0%, var(--whatsapp) 55%, #148246 100%);
   color: #FFFFFF;
   border-color: rgba(255,255,255,.2);
+  text-shadow: 0 1px 1px rgba(6,50,25,.25);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.35),
-    inset 0 -3px 5px rgba(6,50,25,.3),
+    inset 0 1.5px 0 rgba(255,255,255,.4),
+    inset 0 -4px 6px rgba(6,50,25,.3),
+    inset 0 0 16px rgba(120,255,180,.18),
     0 2px 4px rgba(6,50,25,.3),
-    0 16px 30px -6px rgba(31,168,85,.5);
+    0 18px 32px -8px rgba(31,168,85,.55);
 }
 .btn-wa:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) translateZ(0);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.4),
-    inset 0 -3px 5px rgba(6,50,25,.3),
+    inset 0 1.5px 0 rgba(255,255,255,.45),
+    inset 0 -4px 6px rgba(6,50,25,.3),
+    inset 0 0 22px rgba(120,255,180,.28),
     0 3px 6px rgba(6,50,25,.35),
-    0 22px 40px -6px rgba(31,168,85,.6);
+    0 26px 44px -8px rgba(31,168,85,.65);
 }
 
 /* ---------- header sticky ---------- */
@@ -578,79 +627,160 @@ body.menu-aperto { overflow: hidden; }
   text-underline-offset: 3px;
 }
 
-/* ---------- vantaggio orari ---------- */
-.orari { position: relative; overflow: hidden; }
-/* due aloni di luce molto tenui, per dare profondità a questa
-   sezione senza aggiungere una foto */
+/* ---------- vantaggio orari ----------
+   Sezione volutamente "fuori sistema" rispetto al resto del sito:
+   fondo scuro (invece del pergamena chiaro), tipografia Jost/Italiana
+   al posto del Cormorant Garamond usato ovunque altrove, e una scheda
+   costruita a "doppio bordo" (cornice esterna + nucleo interno) con
+   indicatore "aperto ora" calcolato via JS in tempo reale. */
+.orari {
+  position: relative; overflow: hidden;
+  background: linear-gradient(165deg, var(--bosco-scuro) 0%, var(--bosco) 55%, #1C3624 100%);
+}
 .orari::before {
   content: '';
   position: absolute; inset: 0; z-index: 0;
   background:
-    radial-gradient(480px 380px at 8% 20%, rgba(217,198,140,.28), transparent 65%),
-    radial-gradient(520px 420px at 95% 85%, rgba(159,184,148,.4), transparent 65%);
+    radial-gradient(560px 420px at 10% 12%, rgba(217,198,140,.22), transparent 62%),
+    radial-gradient(520px 460px at 96% 90%, rgba(159,184,148,.16), transparent 62%);
+}
+/* grana leggerissima, fissa, solo su questa sezione (mai su elementi
+   che scorrono: rispetta la guardrail "no blur/noise su scroll") */
+.orari::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  opacity: .05; mix-blend-mode: overlay; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .orari-riquadro {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1.1fr .9fr;
-  gap: clamp(28px, 5vw, 56px);
+  display: grid; grid-template-columns: 1fr .92fr;
+  gap: clamp(30px, 5vw, 64px);
   align-items: center;
   text-align: left;
 }
-.orari-testo h2 { margin-bottom: 10px; }
+.orari-testo .etichetta {
+  color: var(--oro-chiaro);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(217,198,140,.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 4px 12px rgba(0,0,0,.2);
+}
+.orari-testo h2 {
+  margin-bottom: 12px;
+  font-family: 'Jost', var(--sans);
+  font-weight: 700; letter-spacing: -.01em;
+  color: #FBF8EF;
+  font-size: clamp(26px, 5vw, 38px);
+  text-wrap: balance;
+}
 .orari-testo p {
   margin: 0; font-size: 17px; line-height: 1.6;
-  font-family: 'Instrument Serif', var(--serif); font-style: italic; color: var(--ink);
+  font-family: 'Instrument Serif', var(--serif); font-style: italic;
+  color: rgba(253,252,247,.78);
 }
+/* scheda "doppio bordo": guscio esterno translucido + nucleo interno
+   con il proprio bordo luce, come una pillola metallica incassata */
 .orari-scheda {
-  background: rgba(255,255,255,.6);
-  border: 1px solid rgba(185,154,69,.4);
-  border-radius: 22px;
-  padding: 30px clamp(24px, 4vw, 40px);
+  position: relative;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 28px;
+  padding: 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 30px 60px -18px rgba(0,0,0,.5);
+}
+.orari-scheda-nucleo {
+  position: relative;
   text-align: center;
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 6px rgba(44,81,56,.06), 0 24px 48px -14px rgba(44,81,56,.2);
+  background: linear-gradient(175deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  padding: 28px clamp(20px, 4vw, 34px) 26px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -20px 30px -20px rgba(0,0,0,.4);
+}
+.orari-scheda-nucleo::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(280px 160px at 50% -10%, rgba(217,198,140,.22), transparent 70%);
+  pointer-events: none;
+}
+.orari-scheda-nucleo > * { position: relative; z-index: 1; }
+/* indicatore live: pallino animato, testo aggiornato via JS
+   (script.js calcola se il centro è aperto adesso, 9:30–22:30) */
+.orari-live {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 0 0 16px;
+  padding: 7px 15px 7px 12px;
+  border-radius: 999px;
+  background: rgba(76,193,120,.14);
+  border: 1px solid rgba(94,222,140,.45);
+  font-family: 'Jost', var(--sans);
+  font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: #A9F0C4;
+}
+.orari-live-pallino {
+  position: relative;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #4FE28A;
+  box-shadow: 0 0 0 0 rgba(79,226,138,.6);
+  animation: orari-pulse 2.2s cubic-bezier(.4,0,.6,1) infinite;
+}
+@keyframes orari-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(79,226,138,.55); }
+  70%  { box-shadow: 0 0 0 9px rgba(79,226,138,0); }
+  100% { box-shadow: 0 0 0 0 rgba(79,226,138,0); }
 }
 .orari-ore {
   display: flex; align-items: baseline; justify-content: center; gap: 12px;
   margin: 0;
-  font-family: 'Italiana', var(--serif);
-  font-size: clamp(32px, 6vw, 44px);
-  color: var(--bosco);
-  -webkit-text-stroke: .4px currentColor;
-}
-.orari-ore em { font-style: normal; color: var(--oro); font-size: .7em; }
-.orari-ore-nota {
-  margin: 4px 0 18px;
   font-family: 'Jost', var(--sans);
-  font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--testo);
+  font-weight: 700; letter-spacing: -.02em;
+  font-size: clamp(34px, 6.4vw, 48px);
+  color: #FBF8EF;
 }
+.orari-ore em { font-style: normal; color: var(--oro-chiaro); font-size: .55em; font-weight: 400; }
+.orari-ore-nota {
+  margin: 6px 0 22px;
+  font-family: 'Jost', var(--sans);
+  font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(253,252,247,.55);
+}
+/* fila giorni: non più 7 lettere identiche, ma pillole con il nome
+   breve del giorno — quello corrente è evidenziato in oro */
 .orari-giorni {
-  list-style: none; display: flex; justify-content: center; gap: 6px;
-  margin: 0 0 20px; padding: 0;
+  list-style: none; display: flex; justify-content: center; gap: 5px;
+  margin: 0 0 22px; padding: 0; flex-wrap: wrap;
 }
 .orari-giorni li {
   display: grid; place-items: center;
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(160deg, #3E6B49, var(--bosco));
-  color: #FDFCF7;
+  min-width: 34px; height: 34px;
+  padding: 0 4px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(253,252,247,.72);
   font-family: 'Jost', var(--sans);
-  font-size: 12px; font-weight: 700;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 4px 10px rgba(44,81,56,.25);
+  font-size: 11.5px; font-weight: 600; letter-spacing: .02em;
+  transition: transform .3s cubic-bezier(.16,1,.3,1);
+}
+.orari-giorni li[data-oggi] {
+  background: linear-gradient(160deg, var(--oro-chiaro), var(--oro));
+  border-color: rgba(255,255,255,.3);
+  color: #2A2306;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 6px 16px -4px rgba(185,154,69,.6);
+  transform: translateY(-2px);
 }
 .orari-badge {
-  display: inline-flex; align-items: center; gap: 7px;
+  display: inline-flex; align-items: center; gap: 8px;
   margin: 0;
-  padding: 8px 16px;
+  padding: 9px 18px;
   border-radius: 999px;
-  background: linear-gradient(100deg, rgba(255,255,255,.8), rgba(217,198,140,.45), rgba(159,184,148,.4), rgba(255,255,255,.8));
-  border: 1px solid rgba(185,154,69,.5);
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(217,198,140,.4);
   font-family: 'Jost', var(--sans);
-  font-size: 11.5px; font-weight: 600; color: #6B5219;
+  font-size: 11.5px; font-weight: 600; color: var(--oro-chiaro);
 }
-.orari-badge svg { color: var(--oro); flex: 0 0 auto; }
+.orari-badge svg { color: var(--oro-chiaro); flex: 0 0 auto; }
 @media (max-width: 780px) {
   .orari-riquadro { grid-template-columns: 1fr; text-align: center; }
   .orari-testo { text-align: center; }
@@ -665,31 +795,38 @@ body.menu-aperto { overflow: hidden; }
 .tratt {
   position: relative;
   display: grid; gap: 3px; align-content: start;
-  background: rgba(255,255,255,.7);
+  background: rgba(255,255,255,.74);
   border: 1.5px solid rgba(212,180,110,.5);
-  border-radius: 16px;
-  padding: 0 13px 13px;
+  border-radius: 20px;
+  padding: 0 14px 15px;
   overflow: hidden;
   backdrop-filter: blur(14px) saturate(160%);
   -webkit-backdrop-filter: blur(14px) saturate(160%);
+  /* pila di ombre: una di contatto stretta, una ambientale larga e
+     un anello interno che simula lo spessore reale del materiale —
+     stesso principio "double-bezel" usato sui bottoni */
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.8),
-    inset 0 0 0 1px rgba(255,255,255,.3),
-    0 1px 3px rgba(44,81,56,.06),
-    0 14px 28px -10px rgba(44,81,56,.24);
-  transition: transform .28s cubic-bezier(.2,.7,.3,1), box-shadow .28s ease, border-color .28s ease;
+    inset 0 1.5px 0 rgba(255,255,255,.9),
+    inset 0 0 0 1px rgba(255,255,255,.35),
+    inset 0 -12px 20px -18px rgba(44,81,56,.3),
+    0 1px 2px rgba(44,81,56,.05),
+    0 3px 8px -2px rgba(44,81,56,.1),
+    0 22px 38px -14px rgba(44,81,56,.32);
+  transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s cubic-bezier(.16,1,.3,1), border-color .4s ease;
 }
 .tratt[data-href] { cursor: pointer; }
 .tratt:hover {
-  transform: translateY(-6px);
-  border-color: rgba(212,180,110,.85);
+  transform: translateY(-8px) scale(1.012);
+  border-color: rgba(212,180,110,.9);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.85),
-    inset 0 0 0 1px rgba(255,255,255,.35),
-    0 2px 4px rgba(44,81,56,.1),
-    0 28px 46px -12px rgba(44,81,56,.4);
+    inset 0 1.5px 0 rgba(255,255,255,.95),
+    inset 0 0 0 1px rgba(255,255,255,.4),
+    inset 0 -12px 20px -18px rgba(44,81,56,.26),
+    0 2px 3px rgba(44,81,56,.08),
+    0 6px 14px -4px rgba(44,81,56,.14),
+    0 36px 58px -16px rgba(44,81,56,.46);
 }
-.tratt:active { transform: translateY(-2px); }
+.tratt:active { transform: translateY(-3px) scale(1); }
 .tratt-primario {
   border-color: rgba(185,154,69,.9);
   box-shadow:
@@ -730,13 +867,13 @@ body.menu-aperto { overflow: hidden; }
    all'altra e si scorre con swipe (scroll-snap, senza bisogno di JS). */
 .tratt-foto-box {
   position: relative;
-  margin: 0 -13px 18px;
+  margin: 0 -14px 18px;
 }
 .tratt-foto-clip {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 16px 16px 0 0;
+  border-radius: 20px 20px 0 0;
   box-shadow: inset 0 -26px 30px -22px rgba(20,36,25,.55), inset 0 1px 0 rgba(255,255,255,.4);
   background:
     radial-gradient(120% 140% at 20% 0%, rgba(255,255,255,.5), transparent 60%),
@@ -790,31 +927,44 @@ body.menu-aperto { overflow: hidden; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 6px 16px rgba(44,81,56,.1);
 }
 .tratt h3 {
-  margin: 6px 0 0;
+  margin: 6px 0 2px;
   font-size: 14px;
   line-height: 1.2;
   letter-spacing: -.005em;
 }
+/* riga prezzo/durata: separata dal resto con una linea sottile e
+   più spazio, per farla leggere a colpo d'occhio */
 .tratt-riga {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 6px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
   flex-wrap: wrap;
+  margin: 6px 0 2px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(185,154,69,.35);
 }
-.tratt-durata { font-size: 10.5px; font-style: italic; color: var(--testo); }
+.tratt-durata {
+  font-family: 'Jost', var(--sans);
+  font-size: 10px; font-weight: 600; letter-spacing: .03em;
+  font-style: normal; color: var(--testo);
+}
 .tratt-prezzo {
-  font-family: var(--serif);
-  font-size: 17px; font-weight: 700; color: var(--bosco);
+  font-family: 'Italiana', var(--serif);
+  font-size: 21px; font-weight: 400; color: var(--bosco);
+  -webkit-text-stroke: .3px currentColor;
   font-variant-numeric: tabular-nums;
 }
-.tratt-cta { display: grid; gap: 6px; margin-top: 8px; }
-.tratt-cta .btn { padding: 8px 12px; min-height: 36px; font-size: 11.5px; width: 100%; }
+.tratt-cta { display: grid; gap: 8px; margin-top: 10px; }
+.tratt-cta .btn { padding: 9px 12px; min-height: 38px; font-size: 12px; width: 100%; letter-spacing: .03em; }
 .tratt-piu {
-  font-size: 11px; font-weight: 700; color: var(--testo);
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: 'Jost', var(--sans);
+  font-size: 11.5px; font-weight: 600; letter-spacing: .01em; color: var(--bosco);
   text-decoration: none;
-  border-bottom: 1px solid var(--oro-chiaro);
-  padding-bottom: 1px;
+  border-bottom: 1.5px solid var(--oro);
+  padding-bottom: 2px;
   justify-self: start;
+  transition: gap .25s cubic-bezier(.16,1,.3,1), color .2s ease;
 }
-.tratt-piu:hover { color: var(--bosco); }
+.tratt-piu:hover { gap: 7px; color: var(--oro); }
 @media (max-width: 640px) {
   .tratt-griglia { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
@@ -1002,32 +1152,79 @@ body.menu-aperto { overflow: hidden; }
 .altri-tratt a:hover { transform: translateY(-2px); border-color: rgba(185,154,69,.7); box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 8px 18px rgba(44,81,56,.12); }
 
 /* ---------- FAQ ---------- */
-.faq-lista { max-width: 720px; margin: 0 auto; display: grid; gap: 10px; }
+.faq-lista { max-width: 720px; margin: 0 auto; display: grid; gap: 12px; }
 .faq-voce {
-  background: rgba(255,255,255,.6);
+  position: relative;
+  background: rgba(255,255,255,.65);
   border: 1px solid rgba(185,154,69,.35);
-  border-radius: 14px;
-  padding: 4px 20px;
+  border-radius: 18px;
+  padding: 4px 22px;
+  overflow: hidden;
   backdrop-filter: blur(12px) saturate(160%);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 3px rgba(44,81,56,.05);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.85),
+    inset 0 0 0 1px rgba(255,255,255,.25),
+    0 1px 3px rgba(44,81,56,.05),
+    0 12px 22px -14px rgba(44,81,56,.2);
+  transition: box-shadow .4s cubic-bezier(.16,1,.3,1), border-color .4s ease, background .4s ease;
+}
+.faq-voce[open] {
+  border-color: rgba(185,154,69,.6);
+  background: rgba(255,255,255,.78);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.9),
+    inset 0 0 0 1px rgba(255,255,255,.3),
+    0 2px 4px rgba(44,81,56,.06),
+    0 22px 40px -16px rgba(44,81,56,.28);
 }
 .faq-voce summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 16px 0;
+  display: flex; align-items: center; gap: 14px;
+  padding: 17px 0;
   font-family: var(--serif); font-weight: 600; font-size: 17px; color: var(--ink);
   cursor: pointer;
   list-style: none;
 }
 .faq-voce summary::-webkit-details-marker { display: none; }
-.faq-voce summary::after {
-  content: '+';
+.faq-icona {
+  display: grid; place-items: center;
   flex: 0 0 auto;
-  font-size: 20px; font-weight: 400; color: var(--oro);
-  transition: transform .2s ease;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  color: var(--bosco);
+  background: linear-gradient(160deg, rgba(255,255,255,.9), rgba(233,220,180,.5));
+  border: 1px solid rgba(185,154,69,.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 4px 10px rgba(44,81,56,.1);
+  transition: transform .4s cubic-bezier(.16,1,.3,1), background .3s ease;
 }
-.faq-voce[open] summary::after { transform: rotate(45deg); }
-.faq-voce p { margin: 0 0 18px; font-size: 15px; line-height: 1.6; color: var(--testo); }
+.faq-voce[open] .faq-icona {
+  background: linear-gradient(160deg, #3E6B49, var(--bosco));
+  color: #FDFCF7;
+  transform: scale(1.06);
+}
+.faq-testo { flex: 1 1 auto; }
+/* marker +/- ricostruito con due barre, che ruotano a 90° in "×" */
+.faq-voce summary { position: relative; padding-right: 30px; }
+.faq-voce summary::before {
+  content: '';
+  position: absolute; right: 0; top: 50%;
+  width: 15px; height: 1.6px;
+  border-radius: 1px;
+  background: var(--oro);
+  transform: translateY(-50%);
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.faq-voce summary::after {
+  content: '';
+  position: absolute; right: 6.7px; top: 50%;
+  width: 1.6px; height: 15px;
+  border-radius: 1px;
+  background: var(--oro);
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.faq-voce[open] summary::after { transform: translateY(-50%) rotate(90deg); }
+.faq-voce p { margin: 0 0 20px; padding-left: 50px; font-size: 15px; line-height: 1.6; color: var(--testo); }
 
 /* ---------- social ---------- */
 .social-riquadro { text-align: center; }
