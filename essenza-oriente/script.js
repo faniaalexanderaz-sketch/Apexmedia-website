@@ -76,6 +76,36 @@
     });
   });
 
+  /* ---------- recensioni: scorrimento continuo e lento (marquee) ----------
+     Duplichiamo le card via JS invece che nell'HTML: il markup resta
+     con una sola copia (più facile da aggiornare), e il loop CSS
+     (-50%) risulta perfetto perché il set duplicato ha esattamente
+     la stessa larghezza dell'originale. Se l'utente preferisce
+     "riduci movimento" il JS non parte: resta lo swipe manuale. */
+  var recensioniTrack = document.getElementById('recensioniTrack');
+  var vuoleMenoMovimento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (recensioniTrack && !vuoleMenoMovimento) {
+    var carteOriginali = Array.prototype.slice.call(recensioniTrack.children);
+    carteOriginali.forEach(function (carta) {
+      var clone = carta.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      recensioniTrack.appendChild(clone);
+    });
+    recensioniTrack.classList.add('marquee-attivo');
+    /* touch: metti in pausa mentre l'utente scorre col dito, riprendi dopo */
+    var timerRipresa;
+    recensioniTrack.addEventListener('touchstart', function () {
+      recensioniTrack.classList.add('scorrimento-in-pausa');
+      clearTimeout(timerRipresa);
+    }, { passive: true });
+    recensioniTrack.addEventListener('touchend', function () {
+      clearTimeout(timerRipresa);
+      timerRipresa = setTimeout(function () {
+        recensioniTrack.classList.remove('scorrimento-in-pausa');
+      }, 2500);
+    }, { passive: true });
+  }
+
   /* ---------- sezione orari: giorno corrente + badge "aperti ora" ----------
      Il centro è aperto tutti i giorni 9:30–22:30: calcoliamo lo stato
      in base all'orario locale del visitatore, niente di hardcoded. */

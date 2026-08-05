@@ -577,22 +577,48 @@ body.menu-aperto { overflow: hidden; }
   -webkit-backdrop-filter: blur(10px) saturate(160%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 6px 18px rgba(44,81,56,.07);
 }
-/* striscia scorrevole, piccola e veloce da leggere — le recensioni
-   contano ma non devono occupare mezza pagina: card di vetro,
-   compatte, una via l'altra con swipe (scroll-snap, niente JS) */
+/* striscia a scorrimento continuo e lento (marquee): le card
+   scorrono da sole verso sinistra in loop infinito, sempre
+   leggibili — niente più righe ferme in attesa di uno swipe.
+   Il set di card viene duplicato via JS (script.js) per ottenere
+   un loop perfettamente senza cuciture; qui basta animare -50%. */
+.recensioni-viewport {
+  margin: 22px auto 14px;
+  max-width: 1000px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
 .recensioni-griglia {
   display: flex;
   gap: 12px;
-  margin: 22px 0 14px;
+  width: max-content;
   padding: 4px 4px 10px;
+}
+/* attivato via JS (script.js) solo dopo aver duplicato le card:
+   così, se il JS non parte, la striscia resta semplicemente
+   scorrevole a swipe invece di lasciare metà spazio vuoto */
+.recensioni-griglia.marquee-attivo {
+  animation: recensioni-scorri 46s linear infinite;
+}
+/* pausa su hover/focus (desktop) e mentre l'utente tocca (mobile):
+   la lettura resta sempre possibile */
+.recensioni-viewport:hover .recensioni-griglia.marquee-attivo,
+.recensioni-viewport:focus-within .recensioni-griglia.marquee-attivo,
+.recensioni-griglia.marquee-attivo.scorrimento-in-pausa {
+  animation-play-state: paused;
+}
+.recensioni-griglia:not(.marquee-attivo) {
   overflow-x: auto;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  scroll-padding-left: 4px;
 }
-.recensioni-griglia::-webkit-scrollbar { display: none; }
-.recensioni-griglia-4 { max-width: 900px; margin-left: auto; margin-right: auto; justify-content: center; }
+.recensioni-griglia:not(.marquee-attivo)::-webkit-scrollbar { display: none; }
+@keyframes recensioni-scorri {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 .recensione {
   flex: 0 0 auto;
   scroll-snap-align: start;
@@ -1295,4 +1321,5 @@ body.menu-aperto { overflow: hidden; }
   html { scroll-behavior: auto; }
   .btn { transition: none; }
   .cookie-banner { animation: none; }
+  .recensioni-griglia.marquee-attivo { animation: none; }
 }
