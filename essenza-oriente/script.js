@@ -76,6 +76,37 @@
     });
   });
 
+  /* ---------- hero: leggero parallax sulla foto ----------
+     Solo su desktop (dove la foto è a tutto bordo) e solo mentre la
+     hero è visibile: un IntersectionObserver accende/spegne un rAF
+     loop, così non giriamo calcoli inutili quando l'utente ha già
+     scrollato oltre. Anima solo `transform` (GPU-safe), mai `top`. */
+  var heroFotoImg = document.getElementById('heroFotoImg');
+  var vuoleMenoMovimentoHero = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var schermoDesktopHero = window.matchMedia && window.matchMedia('(min-width: 821px)').matches;
+  if (heroFotoImg && !vuoleMenoMovimentoHero && schermoDesktopHero) {
+    var heroInView = false;
+    var heroRafInCorso = false;
+    function aggiornaParallaxHero() {
+      heroRafInCorso = false;
+      if (!heroInView) return;
+      var offset = Math.min(40, window.scrollY * 0.08);
+      heroFotoImg.style.transform = 'translateY(' + offset + 'px)';
+      requestAnimationFrame(aggiornaParallaxHero);
+      heroRafInCorso = true;
+    }
+    var heroObserver = new IntersectionObserver(function (entries) {
+      heroInView = entries[0].isIntersecting;
+      if (heroInView) {
+        heroFotoImg.style.willChange = 'transform';
+        if (!heroRafInCorso) { heroRafInCorso = true; requestAnimationFrame(aggiornaParallaxHero); }
+      } else {
+        heroFotoImg.style.willChange = 'auto';
+      }
+    });
+    heroObserver.observe(document.querySelector('.hero'));
+  }
+
   /* ---------- recensioni: scorrimento continuo e lento (marquee) ----------
      Duplichiamo le card via JS invece che nell'HTML: il markup resta
      con una sola copia (più facile da aggiornare), e il loop CSS
