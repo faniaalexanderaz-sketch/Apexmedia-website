@@ -392,24 +392,56 @@
     </section>
 
     <!-- ============ 8. MAPPA E CONTATTI ============ -->
-    <section class="sez" id="dove">
+    <section class="sez dove-sez" id="dove">
       <div class="sez-testa">
-        <span class="etichetta">Dove siamo</span>
+        <span class="etichetta etichetta-dove">Dove siamo</span>
         <h2>Vieni a trovarci</h2>
+        <p>Nel cuore di Alessandria, a due passi dal centro storico.</p>
       </div>
-      <div class="mappa-griglia">
-        <div class="mappa-frame">
-          <iframe
-            src="https://www.google.com/maps?q=Via+San+Lorenzo+46,+15121+Alessandria&output=embed"
-            title="Mappa: Essenza d'Oriente, Via San Lorenzo 46, Alessandria"
-            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="dove-griglia">
+        <div class="mappa-scheda">
+          <div class="mappa-scheda-nucleo">
+            <div class="mappa-frame">
+              <iframe
+                src="https://www.google.com/maps?q=Via+San+Lorenzo+46,+15121+Alessandria&output=embed"
+                title="Mappa: Essenza d'Oriente, Via San Lorenzo 46, Alessandria"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <a class="mappa-cta" href="https://www.google.com/maps/dir/?api=1&destination=44.9118135,8.6137538" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-7-7 18-2.5-7.5L3 11Z"/></svg>
+              Come arrivare
+            </a>
+          </div>
         </div>
-        <div class="contatti">
-          <p><strong>Indirizzo</strong><br />Via San Lorenzo 46, 15121 Alessandria (AL)</p>
-          <p><strong>Telefono</strong><br /><a href="tel:+393317153533">331 715 3533</a></p>
-          <p><strong>WhatsApp</strong><br /><a href="https://wa.me/393317153533" target="_blank" rel="noopener">Scrivici su WhatsApp</a></p>
-          <p><strong>Orari</strong><br />Tutti i giorni, 9:30 – 22:30</p>
-          <p><a href="https://www.google.com/maps/dir/?api=1&destination=44.9118135,8.6137538" target="_blank" rel="noopener">Come arrivare →</a></p>
+        <div class="contatti-griglia">
+          <div class="contatto-scheda">
+            <span class="contatto-icona" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></svg></span>
+            <span class="contatto-testo">
+              <span class="contatto-label">Indirizzo</span>
+              <span class="contatto-valore">Via San Lorenzo 46<br />15121 Alessandria (AL)</span>
+            </span>
+          </div>
+          <a class="contatto-scheda contatto-link" href="tel:+393317153533">
+            <span class="contatto-icona" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span>
+            <span class="contatto-testo">
+              <span class="contatto-label">Telefono</span>
+              <span class="contatto-valore">331 715 3533</span>
+            </span>
+          </a>
+          <a class="contatto-scheda contatto-link" href="https://wa.me/393317153533" target="_blank" rel="noopener">
+            <span class="contatto-icona" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg></span>
+            <span class="contatto-testo">
+              <span class="contatto-label">WhatsApp</span>
+              <span class="contatto-valore">Scrivici in chat</span>
+            </span>
+          </a>
+          <div class="contatto-scheda">
+            <span class="contatto-icona" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.3 2"/></svg></span>
+            <span class="contatto-testo">
+              <span class="contatto-label">Orari</span>
+              <span class="contatto-valore">Tutti i giorni<br />9:30 – 22:30</span>
+            </span>
+          </div>
         </div>
       </div>
     </section>
