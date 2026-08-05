@@ -1037,7 +1037,10 @@ body.menu-aperto { overflow: hidden; }
   height: 1300px;
 }
 @media (max-width: 700px) {
-  .treatwell-frame { height: 1700px; }
+  /* leggermente più basso di prima (era 1700px): meno "muro bianco"
+     da scorrere su schermi piccoli prima di arrivare a calendario e
+     conferma, senza tagliare i passaggi del widget */
+  .treatwell-frame { height: 1450px; }
 }
 .prenota-alt { text-align: center; margin-top: 26px; }
 .prenota-alt p { margin: 0 0 12px; font-weight: 700; color: var(--ink); }
@@ -1071,10 +1074,30 @@ body.menu-aperto { overflow: hidden; }
   color: #FBF8EF;
 }
 .chi p { max-width: 56ch; margin: 0 auto; font-size: 16.5px; color: rgba(253,252,247,.82); }
+/* "Prenota il tuo trattamento": stesso trattamento scuro di "Orari"
+   e "Chi siamo", ma applicato con più leggerezza — la foto resta
+   ben visibile, solo un velo verde scuro in più invece del bianco
+   quasi opaco di prima. Il riquadro bianco del widget Treatwell
+   (.prenota-cornice) NON viene toccato: deve restare perfettamente
+   leggibile e utilizzabile così com'è. */
 .sez-prenota-foto { position: relative; overflow: hidden; }
 .sez-prenota-foto .sez-testa,
 .sez-prenota-foto .prenota-cornice,
 .sez-prenota-foto .prenota-alt { position: relative; z-index: 1; }
+.sez-prenota-foto .sez-foto-sfondo::after {
+  background: linear-gradient(180deg, rgba(20,36,25,.5) 0%, rgba(28,54,36,.28) 40%, rgba(20,36,25,.58) 100%);
+}
+.sez-prenota-foto .sez-testa h2 {
+  font-family: 'Jost', var(--sans); font-weight: 700; letter-spacing: -.01em;
+  color: #FBF8EF;
+}
+.sez-prenota-foto .sez-testa p {
+  color: rgba(253,252,247,.85);
+}
+.sez-prenota-foto .prenota-alt p {
+  font-family: 'Jost', var(--sans); font-weight: 600; letter-spacing: .01em;
+  color: rgba(253,252,247,.9);
+}
 
 /* ---------- mappa e contatti ---------- */
 .mappa-griglia {
