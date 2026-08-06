@@ -221,7 +221,11 @@ main { position: relative; z-index: 10; }
   margin: 0 0 26px;
   text-wrap: balance;
 }
-#hero .headline { font-size: clamp(38px, 5.8vw, 76px); }
+#hero .headline { font-size: clamp(38px, 5.8vw, 76px); text-wrap: normal; }
+
+/* char/word wrappers created by SplitText: inherit sizing, clip descenders cleanly */
+#hero .headline .word { display: inline-block; }
+#hero .headline .char { display: inline-block; will-change: transform, opacity; }
 
 /* accent word: Playfair Display italic 800, oro con bloom caldo */
 .accent {
@@ -470,6 +474,16 @@ main { position: relative; z-index: 10; }
 }
 .panel-inner > .reveal.in { transition-delay: var(--d, 0ms); }
 
+/* =============================================================
+   HERO — entrata gestita da GSAP/SplitText (hero-animation.js).
+   Stato iniziale nascosto via CSS per evitare flash prima del JS;
+   .hero-in è il fallback statico (no-GSAP, reduced-motion, no-JS
+   dopo timeout) che rivela tutto senza animazione.
+   ============================================================= */
+.hero-el { opacity: 0; transform: translateY(26px); }
+.hero-el.hero-in { opacity: 1; transform: none; }
+#hero .headline.hero-el { transform: none; } /* i char animano singolarmente */
+
 /* Enhancement nativo dove supportato (attivato da JS con .has-vt) */
 @supports (animation-timeline: view()) {
   .has-vt .reveal {
@@ -529,6 +543,7 @@ main { position: relative; z-index: 10; }
    ============================================================= */
 @media (prefers-reduced-motion: reduce) {
   .reveal, .has-vt .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .hero-el { opacity: 1 !important; transform: none !important; }
   .scroll-hint::after { animation: none; }
   .cta, .service, .service-icon { transition: none; }
   .bg-layer { transition: none; }

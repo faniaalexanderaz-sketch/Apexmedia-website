@@ -71,17 +71,17 @@
     <!-- ===================== SEZIONE 1 — HERO ===================== -->
     <section class="panel" id="hero" data-section="0">
       <div class="panel-inner">
-        <p class="eyebrow reveal">social · advertising · lead generation</p>
-        <h1 class="headline reveal">smettila di pubblicare. inizia a <em class="accent">convertire</em></h1>
-        <p class="lede reveal">Gestione social, advertising e lead generation per aziende che vogliono clienti, non solo visualizzazioni.</p>
-        <a class="cta cta--primary reveal"
+        <p class="eyebrow hero-el" data-hero="eyebrow">social · advertising · lead generation</p>
+        <h1 class="headline hero-el" data-hero="headline">smettila di pubblicare. inizia a <em class="accent">convertire</em></h1>
+        <p class="lede hero-el" data-hero="lede">Gestione social, advertising e lead generation per aziende che vogliono clienti, non solo visualizzazioni.</p>
+        <a class="cta cta--primary hero-el" data-hero="cta"
            href="https://wa.me/393515940685?text=Ciao%2C%20ho%20visto%20il%20sito%20e%20vorrei%20richiedere%20una%20consulenza%20gratuita%20con%20APEXMEDIA"
            target="_blank" rel="noopener noreferrer">
           <span>richiedi una consulenza</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
-      <span class="scroll-hint reveal" aria-hidden="true">scorri</span>
+      <span class="scroll-hint hero-el" data-hero="hint" aria-hidden="true">scorri</span>
     </section>
 
     <!-- =================== SEZIONE 2 — CHI SIAMO ================== -->
@@ -288,6 +288,9 @@
     <span>richiedi una consulenza</span>
   </a>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="hero-animation.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
