@@ -1,0 +1,26 @@
+{
+  "name": "apexmedia-audit-gratuito",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Landing page campagna 'Il sito che vi costa clienti' — Apex Media",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.0",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "autoprefixer": "10.4.19",
+    "postcss": "8.5.26",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.5.2"
+  }
+}

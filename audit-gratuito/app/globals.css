@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #070a12;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  ::selection {
+    background-color: #ffd84d;
+    color: #1b0b2e;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ffd84d;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .tri-stripe {
+    height: 3px;
+    width: 64px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #5b2eff 0%, #2f6bff 52%, #ffd84d 100%);
+  }
+
+  .tri-stripe-full {
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(91, 46, 255, 0) 0%,
+      #5b2eff 20%,
+      #2f6bff 55%,
+      #ffd84d 85%,
+      rgba(255, 216, 77, 0) 100%
+    );
+  }
+
+  .cta-yellow {
+    background-color: #ffd84d;
+    color: #1b0b2e;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  }
+
+  .cta-yellow:hover {
+    background-color: #ffe37a;
+  }
+
+  .cta-yellow:active {
+    background-color: #f2c832;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
