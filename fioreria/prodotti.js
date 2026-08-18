@@ -344,7 +344,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'casetta-welcome',
     nome: 'Casetta "Welcome"',
-    prezzo: 82,
+    prezzo: 97,
     sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-casetta-welcome.jpg',
@@ -400,11 +400,11 @@ var AFC_PRODOTTI = [
     slug: 'nautilus-ambra',
     nome: 'Nautilus d\'Ambra',
     fragile: true,
-    prezzo: 79,
+    prezzo: 99,
     sconto: 20,
     taglie: [
-      { id: 'S', nome: 'S', prezzo: 61, nota: 'Protea, composizione raccolta' },
-      { id: 'M', nome: 'M', prezzo: 79, nota: 'Rose e mughetto, più abbondante' }
+      { id: 'S', nome: 'S', prezzo: 76, nota: 'Protea, composizione raccolta' },
+      { id: 'M', nome: 'M', prezzo: 99, nota: 'Rose e mughetto, più abbondante' }
     ],
     foto: 'foto/p-nautilus-ambra.jpg',
     galleria: ['foto/p-nautilus-ambra.jpg', 'foto/p-nautilus-ambra-2.jpg', 'foto/p-nautilus-ambra-3.jpg'],
