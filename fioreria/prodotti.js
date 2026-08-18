@@ -451,10 +451,10 @@ var AFC_PRODOTTI = [
     slug: 'pettirosso-in-fiore',
     nome: 'Pettirosso in Fiore',
     fragile: true,
-    prezzo: 120,
+    prezzo: 156,
     sconto: 20,
     taglie: [
-      { id: 'L', nome: 'L', prezzo: 120, nota: 'Formato generoso, unica taglia disponibile' }
+      { id: 'L', nome: 'L', prezzo: 156, nota: 'Formato generoso, unica taglia disponibile' }
     ],
     foto: 'foto/p-pettirosso-in-fiore.jpg',
     galleria: ['foto/p-pettirosso-in-fiore.jpg', 'foto/p-pettirosso-in-fiore-2.jpg', 'foto/p-pettirosso-in-fiore-3.jpg'],
