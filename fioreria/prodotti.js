@@ -451,15 +451,11 @@ var AFC_PRODOTTI = [
     slug: 'pettirosso-in-fiore',
     nome: 'Pettirosso in Fiore',
     fragile: true,
-    prezzo: 80,
+    prezzo: 120,
     sconto: 20,
     taglie: [
-      { id: 'S',  nome: 'S',  prezzo: 64,  nota: 'Un pensiero: composizione raccolta' },
-      { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
-      { id: 'L',  nome: 'L',  prezzo: 120, nota: 'Abbondante, per fare scena' },
-      { id: 'XL', nome: 'XL', prezzo: 112, doppio: true, nota: 'Il doppio dei fiori della M' }
+      { id: 'L', nome: 'L', prezzo: 120, nota: 'Formato generoso, unica taglia disponibile' }
     ],
-    tagliaFoto: 'L',
     foto: 'foto/p-pettirosso-in-fiore.jpg',
     galleria: ['foto/p-pettirosso-in-fiore.jpg', 'foto/p-pettirosso-in-fiore-2.jpg', 'foto/p-pettirosso-in-fiore-3.jpg'],
     cat: ['primavera', 'regali'],
