@@ -185,7 +185,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'gatto-giardiniere',
     nome: 'Gatto Giardiniere',
-    prezzo: 92,
+    prezzo: 99,
     sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-vaso-gatto.jpg',
@@ -417,13 +417,13 @@ var AFC_PRODOTTI = [
   {
     slug: 'malva-lavanda',
     nome: 'Malva e Lavanda',
-    prezzo: 79,
+    prezzo: 65,
     sconto: 20,
     taglie: [
-      { id: 'S',  nome: 'S',  prezzo: 63,  nota: 'Un pensiero: composizione raccolta' },
-      { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
-      { id: 'L',  nome: 'L',  prezzo: 119, nota: 'Abbondante, per fare scena' },
-      { id: 'XL', nome: 'XL', prezzo: 111, doppio: true, nota: 'Il doppio dei fiori della M' }
+      { id: 'S',  nome: 'S',  prezzo: 54,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 65,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 85,  nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 110, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-malva-lavanda.jpg',
     galleria: ['foto/p-malva-lavanda.jpg', 'foto/p-malva-lavanda-2.jpg', 'foto/p-malva-lavanda-3.jpg'],
@@ -502,15 +502,19 @@ var AFC_PRODOTTI = [
     slug: 'pinguino-panda',
     nome: 'Pinguino e Panda Platino',
     fragile: true,
-    prezzo: 22,
+    prezzo: 26,
     sconto: 15,
-    tagliaUnica: true,
+    taglie: [
+      { id: 'pinguino', nome: 'Pinguino', prezzo: 26, nota: 'Solo la statuina del pinguino' },
+      { id: 'panda',    nome: 'Panda',    prezzo: 26, nota: 'Solo la statuina del panda' },
+      { id: 'coppia',   nome: 'Coppia',   prezzo: 52, nota: 'Pinguino e panda insieme' }
+    ],
     foto: 'foto/p-pinguino-panda.jpg',
     cat: ['decorazioni', 'regali'],
     rating: ['4,7', 3],
     avail: 'Spedizione in 48/72h',
-    desc: 'Coppia di statuine in ceramica argentata: un pinguino e un panda.',
-    descLunga: 'Una coppia di piccole statuine in ceramica smaltata color platino, un pinguino e un panda dal design essenziale e moderno. Un tocco decorativo minimal da abbinare eventualmente anche a una composizione floreale.'
+    desc: 'Statuine in ceramica argentata: un pinguino e un panda, acquistabili separati o in coppia.',
+    descLunga: 'Piccole statuine in ceramica smaltata color platino, un pinguino e un panda dal design essenziale e moderno. Si acquistano separatamente oppure in coppia. Un tocco decorativo minimal da abbinare eventualmente anche a una composizione floreale.'
   },
   {
     slug: 'borsa-lavanda',
