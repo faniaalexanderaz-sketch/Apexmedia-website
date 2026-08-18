@@ -69,7 +69,7 @@ var AFC_PRODOTTI = [
     rating: ['4,8', 12],
     avail: 'Spedizione in 48/72h',
     desc: 'Lisianthus viola e giallo, lavanda e limoni veri al tatto, in un\'urna bianca scolpita.',
-    descLunga: 'Lisianthus color prugna e giallo miele, spighe dorate, lavanda e piccoli limoni real touch, composti in un\'urna di ceramica bianca dalle decorazioni scolpite a mano. Un tripudio di colore che profuma di Provenza anche senza profumare affatto: perfetta su un tavolo luminoso o come regalo per chi ama i colori vivaci.'
+    descLunga: 'Lisianthus color prugna e giallo miele, spighe dorate, lavanda e piccoli limoni real touch, composti in un vaso di ceramica bianca dalle decorazioni scolpite a mano. Un tripudio di colore che profuma di Provenza anche senza profumare affatto: perfetta su un tavolo luminoso o come regalo per chi ama i colori vivaci.'
   },
   {
     slug: 'cesta-primavera',
@@ -194,8 +194,8 @@ var AFC_PRODOTTI = [
     badge: 'Novità',
     rating: ['5,0', 5],
     avail: 'Spedizione in 48/72h',
-    desc: 'Un simpatico gatto ricoperto di muschio sintetico, accanto a un cestino con ortensia bianca.',
-    descLunga: 'Un gatto scultoreo interamente ricoperto di muschio sintetico verde, seduto accanto a un piccolo cestino di vimini con un\'ortensia bianca real touch. Un pezzo d\'arredo originale e simpatico, perfetto per un davanzale, un ingresso o come regalo a chi ama gli oggetti fuori dal comune. Il vaso a forma di gatto è l\'oggetto in vendita; l\'ortensia lo accompagna.'
+    desc: 'Un simpatico gatto ricoperto di muschio sintetico, accanto a un vaso di cotto con ortensia bianca.',
+    descLunga: 'Un gatto scultoreo interamente ricoperto di muschio sintetico verde, seduto accanto a un piccolo vaso di cotto con un\'ortensia bianca real touch. Un pezzo d\'arredo originale e simpatico, perfetto per un davanzale, un ingresso o come regalo a chi ama gli oggetti fuori dal comune. Il vaso a forma di gatto è l\'oggetto in vendita; l\'ortensia lo accompagna.'
   },
   {
     slug: 'pannello-verde',
@@ -229,7 +229,7 @@ var AFC_PRODOTTI = [
     rating: ['4,9', 6],
     avail: 'Spedizione in 48/72h',
     desc: 'Quadro con fiori e foglie pressate sotto vetro, cornice color acqua.',
-    descLunga: 'Una composizione di fiori e foglie dai toni verde-azzurro, pressata e racchiusa sotto vetro in una cornice in legno dipinta color acqua. Un piccolo quadro botanico da appendere o appoggiare, che porta in casa la delicatezza di un giardino d\'altri tempi.'
+    descLunga: 'Una composizione di fiori e foglie dai toni verde-azzurro, in una cornice in legno dipinta color acqua. Un piccolo quadro botanico da appendere o appoggiare, che porta in casa la delicatezza di un giardino d\'altri tempi.'
   },
   {
     slug: 'cappello-fiorito',
@@ -291,7 +291,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'bosco-di-rose',
-    nome: 'Bosco di Rose',
+    nome: 'Bosco di Rose di Sapone',
     prezzo: 80,
     sconto: 20,
     taglie: [
@@ -353,7 +353,7 @@ var AFC_PRODOTTI = [
     rating: ['4,8', 4],
     avail: 'Spedizione in 48/72h',
     desc: 'Casetta per uccellini in legno con cartello "Welcome" e tulipani rosa alla base.',
-    descLunga: 'Una casetta per uccellini in legno naturale, col tetto a punta legato con corda di iuta e un piccolo uccellino dipinto sull\'ingresso, un cartello "Welcome" inciso e un cuscino di tulipani rosa e fiori bianchi alla base. Un pezzo d\'arredo country-chic per un balcone, un ingresso o un davanzale: si espone così com\'è, senza annaffiature.'
+    descLunga: 'Una casetta per uccellini in legno naturale, col tetto a punta legato con corda di iuta e un piccolo uccellino in stoffa a rilievo sull\'ingresso, un cartello "Welcome" inciso e un bouquet di tulipani rosa e fiori bianchi alla base. Un pezzo d\'arredo country-chic per un balcone, un ingresso o un davanzale: si espone così com\'è, senza annaffiature.'
   },
   {
     slug: 'mezzanotte-in-fiore',
@@ -403,7 +403,7 @@ var AFC_PRODOTTI = [
     prezzo: 76,
     sconto: 20,
     taglie: [
-      { id: 'S', nome: 'S', prezzo: 61, nota: 'Crisantemi ragno color avorio, composizione raccolta' },
+      { id: 'S', nome: 'S', prezzo: 61, nota: 'Protea, composizione raccolta' },
       { id: 'M', nome: 'M', prezzo: 76, nota: 'Rose e mughetto, più abbondante' }
     ],
     foto: 'foto/p-nautilus-ambra.jpg',
@@ -411,8 +411,8 @@ var AFC_PRODOTTI = [
     cat: ['regali', 'anniversario'],
     rating: ['4,7', 3],
     avail: 'Spedizione in 48/72h',
-    desc: 'Vaso in vetro ambrato a spirale: taglia S con crisantemi ragno avorio, taglia M con rose e mughetto.',
-    descLunga: 'Un vaso in vetro ambrato dalla forma a spirale, come una conchiglia di nautilus. Nella taglia S accoglie crisantemi ragno color avorio e foglie scure; nella taglia M si arricchisce di rose giallo-rosa, mughetto bianco e bacche verdi, per una composizione più abbondante. Stesso vaso, la stessa cura artigianale, due modi diversi di viverlo.'
+    desc: 'Vaso in vetro ambrato a spirale: taglia S con protea, taglia M con rose e mughetto.',
+    descLunga: 'Un vaso in vetro ambrato dalla forma a spirale, come una conchiglia di nautilus. Nella taglia S accoglie protea e foglie scure; nella taglia M si arricchisce di rose giallo-rosa, mughetto bianco e bacche verdi, per una composizione più abbondante. Stesso vaso, la stessa cura artigianale, due modi diversi di viverlo.'
   },
   {
     slug: 'malva-lavanda',
@@ -459,6 +459,7 @@ var AFC_PRODOTTI = [
       { id: 'L',  nome: 'L',  prezzo: 120, nota: 'Abbondante, per fare scena' },
       { id: 'XL', nome: 'XL', prezzo: 112, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
+    tagliaFoto: 'L',
     foto: 'foto/p-pettirosso-in-fiore.jpg',
     galleria: ['foto/p-pettirosso-in-fiore.jpg', 'foto/p-pettirosso-in-fiore-2.jpg', 'foto/p-pettirosso-in-fiore-3.jpg'],
     cat: ['primavera', 'regali'],
@@ -513,7 +514,7 @@ var AFC_PRODOTTI = [
     rating: ['4,7', 3],
     avail: 'Spedizione in 48/72h',
     desc: 'Coppia di statuine in ceramica argentata: un pinguino e un panda.',
-    descLunga: 'Una coppia di piccole statuine in ceramica smaltata color platino, un pinguino e un panda dal design essenziale e moderno. Un tocco decorativo minimal da abbinare a una composizione floreale o da regalare così com\'è.'
+    descLunga: 'Una coppia di piccole statuine in ceramica smaltata color platino, un pinguino e un panda dal design essenziale e moderno. Un tocco decorativo minimal da abbinare eventualmente anche a una composizione floreale.'
   },
   {
     slug: 'borsa-lavanda',
