@@ -344,7 +344,7 @@ var AFC_PRODOTTI = [
   {
     slug: 'casetta-welcome',
     nome: 'Casetta "Welcome"',
-    prezzo: 73,
+    prezzo: 82,
     sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-casetta-welcome.jpg',
