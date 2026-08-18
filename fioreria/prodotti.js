@@ -89,10 +89,10 @@ var AFC_PRODOTTI = [
   {
     slug: 'cesta-maggio',
     nome: 'Cesta di Maggio',
-    prezzo: 43,
+    prezzo: 53,
     sconto: 20,
     taglie: [
-      { id: 'M', nome: 'M', prezzo: 43, nota: 'Formato classico, unica taglia disponibile' }
+      { id: 'M', nome: 'M', prezzo: 53, nota: 'Formato classico, unica taglia disponibile' }
     ],
     foto: 'foto/p-cesta-maggio.jpg',
     cat: ['bouquet', 'matrimonio', 'primavera'],
