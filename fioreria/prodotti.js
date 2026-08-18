@@ -400,11 +400,11 @@ var AFC_PRODOTTI = [
     slug: 'nautilus-ambra',
     nome: 'Nautilus d\'Ambra',
     fragile: true,
-    prezzo: 76,
+    prezzo: 79,
     sconto: 20,
     taglie: [
       { id: 'S', nome: 'S', prezzo: 61, nota: 'Protea, composizione raccolta' },
-      { id: 'M', nome: 'M', prezzo: 76, nota: 'Rose e mughetto, più abbondante' }
+      { id: 'M', nome: 'M', prezzo: 79, nota: 'Rose e mughetto, più abbondante' }
     ],
     foto: 'foto/p-nautilus-ambra.jpg',
     galleria: ['foto/p-nautilus-ambra.jpg', 'foto/p-nautilus-ambra-2.jpg', 'foto/p-nautilus-ambra-3.jpg'],
