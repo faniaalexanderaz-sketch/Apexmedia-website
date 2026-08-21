@@ -676,6 +676,54 @@ var AFC_PRODOTTI = [
     avail: 'Spedizione in 48/72h',
     desc: 'Rose gialle e spighe di lavanda, in una brocca di ceramica bianca dal fascino rustico.',
     descLunga: 'Piccole rose gialle dai petali arrotolati si aprono tra spighe di lavanda viola e foglie verde scuro, raccolte in una brocca di ceramica bianca smaltata dal fascino un po\' vissuto, con tanto di manico. Un bouquet allegro e informale, che porta il sole di maggio anche nelle giornate più grigie.'
+  },
+  {
+    slug: 'nodo-girasoli',
+    nome: 'Nodo di Girasoli',
+    taglie: [
+      { id: 'M', nome: 'M', prezzo: 48, nota: 'Formato classico, unica taglia disponibile' }
+    ],
+    foto: 'foto/p-nodo-girasoli.jpg',
+    cat: ['novita', 'decorazioni', 'regali', 'estate'],
+    badge: 'Novità',
+    rating: ['4,8', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Bottiglia in ceramica dipinta a girasoli, legata con corda di iuta al collo, colma di rose gialle a boccioli pieni.',
+    descLunga: 'Una bottiglia in ceramica dal corpo dipinto interamente a girasoli su fondo verde salvia, stretta al collo da una corda di iuta annodata, da cui sboccia un folto mazzo di rose gialle a boccioli pieni tra larghe foglie verde scuro. Un tocco pittorico e conviviale, perfetto per una cucina di campagna o per chi ama i vasi che raccontano una storia. Disponibile solo in taglia M.'
+  },
+  {
+    slug: 'brezza-conchiglie',
+    nome: 'Brezza di Conchiglie',
+    prezzo: 54,
+    sconto: 15,
+    tagliaUnica: true,
+    foto: 'foto/p-brezza-conchiglie.jpg',
+    cat: ['decorazioni', 'regali', 'estate'],
+    badge: 'Novità',
+    rating: ['4,9', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Corona intrecciata di conchiglie naturali nei toni del bianco e del tortora, con perle e rametti di corallo.',
+    descLunga: 'Una corona interamente composta da conchiglie naturali — capesante, chiocciole, frammenti di corallo bianco e legno alla deriva — nei toni tenui del bianco, del tortora e del rosa conchiglia, punteggiata da piccole perle. Una ghirlanda che profuma di vacanza anche fuori stagione, perfetta su una porta d\'estate, in bagno o su una parete in stile marino.'
+  },
+  {
+    slug: 'regina-capo',
+    nome: 'La Regina del Capo',
+    fragile: true,
+    prezzo: 92,
+    sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 72,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 92,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 138, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 129, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-regina-capo.jpg',
+    cat: ['premium', 'regali', 'anniversario'],
+    badge: 'Novità',
+    rating: ['4,9', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Una maestosa protea rosa, ortensie color malva e una rosa rossa vellutata, su un\'elegante alzata in vetro verde smeraldo.',
+    descLunga: 'Una grande protea color rosa cipria — la "regina" dei fiori sudafricani — si apre al centro di ortensie color malva, una rosa rossa vellutata e delicati fiori lilla a spruzzo, tra larghe foglie tropicali, il tutto sollevato su un\'alzata in vetro verde smeraldo dal bordo dorato. Una composizione scenografica e rara, pensata per chi ama i fiori che non si vedono tutti i giorni.'
   }
 ];
 
