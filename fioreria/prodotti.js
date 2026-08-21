@@ -538,7 +538,7 @@ var AFC_PRODOTTI = [
     nome: 'Le Anfore del Sole',
     tagliaUnica: true,
     prezzo: 43,
-    foto: 'foto/p-anfore-sole.jpg',
+    foto: 'foto/p-anfore-sole.png',
     cat: ['novita', 'decorazioni', 'regali', 'estate'],
     badge: 'Novità',
     rating: ['5,0', 2],
@@ -552,7 +552,7 @@ var AFC_PRODOTTI = [
     taglie: [
       { id: 'M', nome: 'M', prezzo: 39, nota: 'Formato classico, unica taglia disponibile' }
     ],
-    foto: 'foto/p-ampolla-girasoli.jpg',
+    foto: 'foto/p-ampolla-girasoli.png',
     cat: ['novita', 'decorazioni', 'regali', 'estate'],
     badge: 'Novità',
     rating: ['4,9', 2],
@@ -568,7 +568,7 @@ var AFC_PRODOTTI = [
     taglie: [
       { id: 'M', nome: 'M', prezzo: 44, nota: 'Formato classico, unica taglia disponibile' }
     ],
-    foto: 'foto/p-scrigno-rose-sapone.jpg',
+    foto: 'foto/p-scrigno-rose-sapone.png',
     cat: ['novita', 'decorazioni', 'regali', 'anniversario'],
     badge: 'Novità',
     rating: ['5,0', 3],
@@ -586,7 +586,7 @@ var AFC_PRODOTTI = [
       { id: 'M', nome: 'M', prezzo: 68, nota: 'Il formato classico della bottega' },
       { id: 'L', nome: 'L', prezzo: 89, nota: 'Abbondante, con grandi limoni, rose gialle e fiocco di raso, per fare scena' }
     ],
-    foto: 'foto/p-trionfo-agrumi.jpg',
+    foto: 'foto/p-trionfo-agrumi.png',
     cat: ['novita', 'decorazioni', 'regali', 'estate'],
     badge: 'Novità',
     rating: ['4,9', 2],
