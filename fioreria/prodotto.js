@@ -326,23 +326,7 @@
       a.className = 'prod-mini';
       a.href = 'prodotto.html?p=' + p.slug;
       a.setAttribute('data-slug', p.slug);
-      var unica = p.tagliaUnica || (p.taglie && p.taglie.length === 1);
-      var base = p.taglie ? p.taglie[0].prezzo : (unica ? p.prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]));
-      var finale = afcPrezzoScontato(base, p);
-      var prezzoHtml = p.sconto
-        ? '<span class="prezzo-blocco"><s class="prod-mini-prezzo-pieno">' + euro(base) + '</s><span class="prod-mini-prezzo">' + (unica ? '' : 'da ') + euro(finale) + '</span></span>'
-        : '<span class="prod-mini-prezzo">' + (unica ? '' : 'da ') + euro(base) + '</span>';
-      a.innerHTML =
-        '<span class="prod-mini-foto">' +
-          (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '') +
-          '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="560" onerror="this.classList.add(\'no-foto\')" />' +
-        '</span>' +
-        '<span class="prod-mini-nome"></span>' +
-        '<span class="prod-mini-riga">' +
-          prezzoHtml +
-          '<span class="prod-mini-scorte" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span></span></span>' +
-        '</span>' +
-        '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">★ ' + p.rating[0] + '</span>';
+      a.innerHTML = AFC_CARD.markup(p);
       a.querySelector('.prod-mini-nome').textContent = p.nome;
       griglia.appendChild(a);
     });

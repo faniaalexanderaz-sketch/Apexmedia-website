@@ -511,5 +511,54 @@
      aprire il drawer da fuori questa IIFE, senza duplicare la logica. */
   window.AFC_CART = { add: add, openCart: openCart, render: render };
 
+  /* Card prodotto condivisa: stessa resa in collezione, correlati e
+     "Le più scelte" della home. Restituisce solo l'innerHTML: il nome
+     va scritto con textContent da chi la usa, per non passare mai testo
+     del catalogo dentro innerHTML.
+     opts: { esaurito: bool, rimasti: number|undefined } */
+  function cardProdotto(p, opts) {
+    opts = opts || {};
+    var esaurito = !!opts.esaurito;
+    var mostraScorte = typeof opts.rimasti === 'number' && !esaurito;
+
+    var unica = p.tagliaUnica || (p.taglie && p.taglie.length === 1);
+    var base = p.taglie ? p.taglie[0].prezzo : (unica ? p.prezzo : afcPrezzoTaglia(p.prezzo, AFC_TAGLIE[0]));
+    var finale = afcPrezzoScontato(base, p);
+    var da = unica ? '' : 'da ';
+
+    var badgeHtml = esaurito
+      ? '<span class="badge badge-esaurito">Esaurito</span>'
+      : (p.badge ? '<span class="badge' + (p.badgeOro ? ' badge-oro' : '') + '">' + p.badge + '</span>' : '');
+    var scontoHtml = (p.sconto && !esaurito)
+      ? '<span class="prod-mini-sconto">−' + p.sconto + '%</span>' : '';
+    var prezzoHtml = p.sconto
+      ? '<s class="prod-mini-prezzo-pieno">' + euro(base) + '</s><span class="prod-mini-prezzo">' + da + euro(finale) + '</span>'
+      : '<span class="prod-mini-prezzo">' + da + euro(base) + '</span>';
+    var scorteHtml = mostraScorte
+      ? '<span class="prod-mini-scorte"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span>' + opts.rimasti + ' rimasti</span></span>'
+      : '';
+
+    return '' +
+      '<span class="prod-mini-foto">' +
+        badgeHtml + scontoHtml +
+        '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="560" onerror="this.classList.add(\'no-foto\')" />' +
+      '</span>' +
+      '<span class="prod-mini-corpo">' +
+        '<span class="prod-mini-nome"></span>' +
+        '<span class="prod-mini-stelle" aria-label="Valutazione ' + p.rating[0] + ' su 5">' +
+          '<span class="prod-mini-stelle-ic" aria-hidden="true">★★★★★</span>' +
+          '<span class="prod-mini-stelle-n">' + p.rating[0] + '</span>' +
+        '</span>' +
+        '<span class="prod-mini-riga">' +
+          '<span class="prod-mini-prezzo-box">' + prezzoHtml + '</span>' +
+          scorteHtml +
+        '</span>' +
+        '<span class="prod-mini-cta">Scopri la composizione <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>' +
+      '</span>';
+  }
+
+  /* usata da collezione.js e prodotto.js (correlati) */
+  window.AFC_CARD = { markup: cardProdotto };
+
   render();
 })();
