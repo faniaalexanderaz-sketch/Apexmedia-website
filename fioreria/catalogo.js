@@ -1,23 +1,9 @@
 /* =============================================================
    ANTICA FIORERIA DEL CENTRO — home
-   Nastro recensioni + le due vetrine di prodotti ("Le più scelte"
-   e la vetrina dell'atelier), costruite dal catalogo con la stessa
-   card di collezione e correlati.
+   Le due vetrine di prodotti ("Le più scelte" e la vetrina
+   dell'atelier), costruite dal catalogo con la stessa card di
+   collezione e correlati.
    ============================================================= */
-(function () {
-  'use strict';
-
-  /* nastro recensioni: duplica le card per il loop continuo (i cloni
-     sono decorativi, nascosti agli screen reader) */
-  var track = document.querySelector('.rec-track');
-  if (!track || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var originali = Array.prototype.slice.call(track.children);
-  originali.forEach(function (c) {
-    var clone = c.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-  });
-})();
 
 /* Vetrine della home costruite dal catalogo.
    Prima erano quattro card scritte a mano per vetrina, con prezzi

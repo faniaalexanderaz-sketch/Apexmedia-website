@@ -2090,7 +2090,7 @@ img.no-foto { opacity: 0; }
     inset 0 -5px 12px rgba(46,75,58,.09),
     0 6px 16px rgba(46,75,58,.1);
 }
-.fiducia-stelle svg { display: block; overflow: visible; width: 15px; height: 15px; }
+.fiducia-stelle svg { display: block; overflow: visible; width: 14px; height: 14px; }
 .fiducia-item:hover .fiducia-stelle { transform: translateY(-2px) scale(1.04); }
 
 .fiducia-item strong {
@@ -2117,7 +2117,9 @@ img.no-foto { opacity: 0; }
   .fiducia-item { padding: 18px 8px 16px; border-radius: 16px; }
   .fiducia-ic, .fiducia-stelle { width: 66px; height: 66px; }
   .fiducia-ic svg { width: 46px; height: 46px; }
-  .fiducia-stelle svg { width: 21px; height: 21px; }
+  /* 5 stelle a 21px + margini sfondavano un cerchio di 66px: qui ci
+     stanno con margine (5×12 + 4×1 gap = 64px) */
+  .fiducia-stelle svg { width: 12px; height: 12px; }
   .fiducia-item strong { font-size: 17px; }
   .fiducia-item span:last-child { font-size: 12px; }
 }
