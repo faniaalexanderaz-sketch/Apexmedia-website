@@ -99,6 +99,27 @@
       </g>
       <!-- petalo che plana -->
       <path id="petalo" d="M0-9C6-7 9-2 7 4C5 9 -1 10 -5 7C-9 3 -8-5 0-9Z"/>
+
+      <!-- stella dorata in rilievo: sfumatura + riflesso + ombra propria,
+           per le valutazioni premium (non più il glifo ★ piatto).
+           Punte a 36° esatti (raggio esterno 11, interno 4.3) — un
+           pentagramma vero, non una forma abbozzata. -->
+      <linearGradient id="starGold" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#F6DFA0"/>
+        <stop offset=".45" stop-color="#D9AF56"/>
+        <stop offset="1" stop-color="#9C7A34"/>
+      </linearGradient>
+      <filter id="starDepth" x="-60%" y="-60%" width="220%" height="220%">
+        <feDropShadow dx="0" dy="1.1" stdDeviation="1.1" flood-color="#6B4F1E" flood-opacity=".55"/>
+      </filter>
+      <clipPath id="starClip">
+        <path d="M0-11 2.53-3.48 10.46-3.4 4.09 1.33 6.47 8.9 0 4.3-6.47 8.9-4.09 1.33-10.46-3.4-2.53-3.48Z"/>
+      </clipPath>
+      <symbol id="star3d" viewBox="-12 -12 24 24">
+        <path filter="url(#starDepth)" fill="url(#starGold)" stroke="#7C5E28" stroke-width=".4" stroke-linejoin="round"
+          d="M0-11 2.53-3.48 10.46-3.4 4.09 1.33 6.47 8.9 0 4.3-6.47 8.9-4.09 1.33-10.46-3.4-2.53-3.48Z"/>
+        <ellipse cx="-2.6" cy="-4.4" rx="3.4" ry="4.6" fill="#FFFFFF" opacity=".45" clip-path="url(#starClip)" transform="rotate(-18 -2.6 -4.4)"/>
+      </symbol>
     </defs>
   </svg>
 
@@ -247,32 +268,106 @@
     <section class="fiducia" aria-label="Perché scegliere la nostra bottega">
       <ul class="fiducia-riga">
         <li class="fiducia-item reveal">
-          <span class="fiducia-stelle" aria-hidden="true">★★★★★</span>
+          <span class="fiducia-stelle" role="img" aria-label="Valutazione 4,9 su 5">
+            <svg width="27" height="27" viewBox="-12 -12 24 24" aria-hidden="true"><use href="#star3d"/></svg>
+            <svg width="27" height="27" viewBox="-12 -12 24 24" aria-hidden="true"><use href="#star3d"/></svg>
+            <svg width="27" height="27" viewBox="-12 -12 24 24" aria-hidden="true"><use href="#star3d"/></svg>
+            <svg width="27" height="27" viewBox="-12 -12 24 24" aria-hidden="true"><use href="#star3d"/></svg>
+            <svg width="27" height="27" viewBox="-12 -12 24 24" aria-hidden="true"><use href="#star3d"/></svg>
+          </span>
           <strong>4,9 / 5</strong>
           <span>recensioni verificate</span>
         </li>
         <li class="fiducia-item reveal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="4.8" r="1.4"/><circle cx="12" cy="3.9" r="1.4"/><circle cx="15" cy="4.8" r="1.4"/><path d="M9.3 6.1 8.6 10.8M12 5.3v5.5M14.7 6.1l.7 4.7"/><path d="M7.8 10.8h8.4l-1.5 8.4H9.3l-1.5-8.4Z"/></svg>
+          <span class="fiducia-ic" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56">
+              <defs>
+                <linearGradient id="fdBasket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3C99A"/><stop offset="1" stop-color="#B98F55"/></linearGradient>
+                <linearGradient id="fdBasketRim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3E0BE"/><stop offset="1" stop-color="#CBA46A"/></linearGradient>
+              </defs>
+              <ellipse cx="32" cy="54.5" rx="16" ry="3.4" fill="#2E4B3A" opacity=".14"/>
+              <path d="M16 34h32l-3.4 18a3 3 0 0 1-3 2.5H22.4a3 3 0 0 1-3-2.5Z" fill="url(#fdBasket)" stroke="#9C7A48" stroke-width=".7"/>
+              <path d="M18.4 39h27.2M19.6 45.4h24.8" stroke="#9C7A48" stroke-width="1" opacity=".5"/>
+              <rect x="14" y="30.4" width="36" height="6" rx="3" fill="url(#fdBasketRim)" stroke="#A98550" stroke-width=".7"/>
+              <use href="#bloom" transform="translate(24,27) scale(.34)" style="--p:#F3E4E2; --c:#C2A45C"/>
+              <use href="#bloom" transform="translate(33,24) scale(.4)" style="--p:#E9C7A0; --c:#B4863F"/>
+              <use href="#bloom" transform="translate(41,28.5) scale(.3)" style="--p:#DCE8D6; --c:#7E9478"/>
+              <use href="#sprig" transform="translate(32,29) scale(.2)" style="--s:#4A6E55; --l:#8FAE86"/>
+            </svg>
+          </span>
           <strong>2.500+</strong>
           <span>composizioni vendute</span>
         </li>
         <li class="fiducia-item reveal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 16.3V7.6c0-.6.4-1 1-1h9.3c.6 0 1 .4 1 1v8.7"/><path d="M14.1 9.8h3.1l2.7 3.1c.2.2.3.5.3.8v2.6h-1.9"/><path d="M8.7 16.3h5.4M2.8 16.3h1.4"/><circle cx="6.5" cy="16.6" r="1.9"/><circle cx="16.4" cy="16.6" r="1.9"/></svg>
+          <span class="fiducia-ic" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56">
+              <defs>
+                <linearGradient id="fdClockFace" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF7EC"/><stop offset="1" stop-color="#E6DCC0"/></linearGradient>
+                <linearGradient id="fdClockRim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FA073"/><stop offset="1" stop-color="#2E4B3A"/></linearGradient>
+              </defs>
+              <ellipse cx="32" cy="55.5" rx="15" ry="3.2" fill="#2E4B3A" opacity=".14"/>
+              <rect x="27" y="6" width="10" height="5" rx="1.6" fill="url(#fdClockRim)"/>
+              <path d="M24 9.5 20 5.5M40 9.5l4-4" stroke="#2E4B3A" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <circle cx="32" cy="34" r="20" fill="url(#fdClockRim)"/>
+              <circle cx="32" cy="34" r="16.4" fill="url(#fdClockFace)"/>
+              <path d="M32 22v12l8 5" stroke="#2E4B3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="32" cy="34" r="2" fill="#C2A45C"/>
+              <circle cx="32" cy="17.6" r="1.4" fill="#FFFFFF" opacity=".85"/>
+            </svg>
+          </span>
           <strong>48/72 ore</strong>
           <span>spedizione in tutta Italia</span>
         </li>
         <li class="fiducia-item reveal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9.5" r="2.1"/><path d="M12 7.4c-1.2-.9-1.2-3 0-3.9 1.2.9 1.2 3 0 3.9Z"/><path d="M14.1 9.5c.9-1.2 3-1.2 3.9 0-.9 1.2-3 1.2-3.9 0Z"/><path d="M9.9 9.5c-.9-1.2-3-1.2-3.9 0 .9 1.2 3 1.2 3.9 0Z"/><path d="M12 11.6V20"/><path d="M12 16.8c-1.8-.2-3-1.3-3.4-3.1 1.8.2 3 1.3 3.4 3.1Z"/></svg>
+          <span class="fiducia-ic" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56">
+              <defs>
+                <linearGradient id="fdLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB37E"/><stop offset="1" stop-color="#3F6449"/></linearGradient>
+                <linearGradient id="fdLeafPot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDF3E8"/><stop offset="1" stop-color="#C7D8BF"/></linearGradient>
+              </defs>
+              <ellipse cx="32" cy="55.5" rx="14" ry="3.2" fill="#2E4B3A" opacity=".14"/>
+              <path d="M32 12c9 6 13 15 9 25-3 7.5-9.4 11-16.6 9.4C17.6 44.6 15 36 20 27 23.6 20.4 28 15.4 32 12Z" fill="url(#fdLeaf)"/>
+              <path d="M32 15c-3.6 4-6.6 8.6-8 13.4M32 15c1.4 8 1 16.4-2.4 23.6" stroke="#FFFFFF" stroke-width="1.1" opacity=".4" fill="none"/>
+              <path d="M32 15v33" stroke="#2E4B3A" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+              <rect x="24" y="46" width="16" height="9" rx="2" fill="url(#fdLeafPot)" stroke="#AEC3A5" stroke-width=".7"/>
+              <path d="M24.8 47h14.4v2H24.8Z" fill="#FFFFFF" opacity=".5"/>
+            </svg>
+          </span>
           <strong>Belle per sempre</strong>
           <span>niente acqua, nessuna cura</span>
         </li>
         <li class="fiducia-item reveal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.6 5.2 6v5c0 4.5 2.9 7.6 6.8 9.4 3.9-1.8 6.8-4.9 6.8-9.4V6L12 3.6Z"/><path d="m9.3 11.7 1.9 2 3.5-3.8"/></svg>
+          <span class="fiducia-ic" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56">
+              <defs>
+                <linearGradient id="fdShield" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FA073"/><stop offset="1" stop-color="#2E4B3A"/></linearGradient>
+                <linearGradient id="fdShieldHi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A9C39D"/><stop offset="1" stop-color="#4A6E55"/></linearGradient>
+              </defs>
+              <ellipse cx="32" cy="55.5" rx="14" ry="3.2" fill="#2E4B3A" opacity=".14"/>
+              <path d="M32 8 47 13.4v11.2c0 12-6.6 20.4-15 24.4-8.4-4-15-12.4-15-24.4V13.4Z" fill="url(#fdShield)"/>
+              <path d="M32 11.4 44.4 15.7v9c0 9.9-5.3 16.7-12.4 20.3-7.1-3.6-12.4-10.4-12.4-20.3v-9Z" fill="url(#fdShieldHi)"/>
+              <path d="M32 8 47 13.4v6.2c-5.8-.8-11.1-3.6-15-8Z" fill="#FFFFFF" opacity=".2"/>
+              <path d="m25.4 24.6 4.6 4.6 8.6-9.2" stroke="#F6F9F3" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
           <strong>Pagamenti sicuri</strong>
           <span>carta, Apple Pay, Google Pay</span>
         </li>
         <li class="fiducia-item reveal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 7 3.6-3.9c.4-.4.9-.6 1.5-.6h8.8c.6 0 1.1.2 1.5.6L21.5 7"/><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M14.6 21v-3.5a2 2 0 0 0-2-2h-1.2a2 2 0 0 0-2 2V21"/><path d="M2.5 7h19"/><path d="M21.5 7v2.6a2.1 2.1 0 0 1-2.1 2.1c-.8 0-1.5-.4-1.9-1-.4.6-1.1 1-1.9 1s-1.5-.4-1.9-1c-.4.6-1.1 1-1.9 1s-1.5-.4-1.9-1c-.4.6-1.1 1-1.9 1s-1.5-.4-1.9-1c-.4.6-1.1 1-1.9 1a2.1 2.1 0 0 1-2.1-2.1V7"/></svg>
+          <span class="fiducia-ic" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56">
+              <defs>
+                <linearGradient id="fdBell" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E7C4"/><stop offset="1" stop-color="#C2A45C"/></linearGradient>
+                <linearGradient id="fdBellBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7DCC0"/><stop offset="1" stop-color="#B99F6E"/></linearGradient>
+              </defs>
+              <ellipse cx="32" cy="53.5" rx="15" ry="3.2" fill="#2E4B3A" opacity=".14"/>
+              <rect x="17" y="46" width="30" height="7" rx="3.4" fill="url(#fdBellBase)" stroke="#A6875A" stroke-width=".7"/>
+              <path d="M32 15c9 0 14.6 7 14.6 17v9.2H17.4V32c0-10 5.6-17 14.6-17Z" fill="url(#fdBell)" stroke="#9A7C43" stroke-width=".7"/>
+              <path d="M20 32c0-8 4.6-13.6 10.4-15.6-6.8 3-9.8 9.4-9.8 17Z" fill="#FFFFFF" opacity=".35"/>
+              <circle cx="32" cy="43.6" r="2.6" fill="#8A6B24"/>
+              <circle cx="32" cy="12.4" r="2.2" fill="#C2A45C"/>
+            </svg>
+          </span>
           <strong>Siamo in bottega</strong>
           <span>una voce vera, non un bot</span>
         </li>
