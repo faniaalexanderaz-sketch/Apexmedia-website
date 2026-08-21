@@ -530,6 +530,69 @@ var AFC_PRODOTTI = [
     avail: 'Spedizione in 48/72h',
     desc: 'Borsa in paglia ricamata a paillettes, con rose rosa, ortensia lilla e lavanda. Solo in taglia XL.',
     descLunga: 'Una borsa intrecciata in paglia naturale, impreziosita da un ricamo a paillettes nei toni del lilla e del malva, colma di rose rosa, un\'ortensia color malva e lavanda. Un\'idea regalo originale, doppiamente utile: si può tenere in vista come composizione o svuotare e usare come borsa vera. Disponibile solo nel formato XL, il più generoso.'
+  },
+
+  /* ---------- anfore e ampolle in ceramica, coppia pezzo unico ---------- */
+  {
+    slug: 'anfore-sole',
+    nome: 'Le Anfore del Sole',
+    tagliaUnica: true,
+    prezzo: 43,
+    foto: 'foto/p-anfore-sole.jpg',
+    cat: ['novita', 'decorazioni', 'regali', 'estate'],
+    badge: 'Novità',
+    rating: ['5,0', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Coppia di anfore in ceramica stile "olive oil", colme di ranuncoli real touch giallo oro e arancio. Pezzo unico, venduto in taglia unica.',
+    descLunga: 'Due anfore in ceramica rustica dal collo rosa antico e dal corpo color avorio, decorate come vecchi vasi da olio con tanto di ramo d\'ulivo stampato, colme di ranuncoli real touch dai petali fitti e vellutati: una tutta giallo oro, l\'altra sfumata dal giallo all\'arancio, tra foglie verde scuro. Pensate per stare insieme, sullo stesso ripiano o ai lati di un ingresso, portano il calore della campagna tutto l\'anno. Questa composizione è un pezzo unico: la coppia di anfore si vende come unico formato, senza altre taglie disponibili.'
+  },
+  {
+    slug: 'ampolla-girasoli',
+    nome: 'Ampolla di Girasoli',
+    taglie: [
+      { id: 'M', nome: 'M', prezzo: 39, nota: 'Formato classico, unica taglia disponibile' }
+    ],
+    foto: 'foto/p-ampolla-girasoli.jpg',
+    cat: ['novita', 'decorazioni', 'regali', 'estate'],
+    badge: 'Novità',
+    rating: ['4,9', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Ampolla in ceramica con girasoli dipinti a mano, con un bouquet di ranuncoli real touch giallo e arancio.',
+    descLunga: 'Un\'ampolla slanciata in ceramica color avorio, dipinta a mano con girasoli che risalgono dalla base al collo, da cui sboccia un bouquet asimmetrico di ranuncoli real touch: alcuni giallo pieno, altri sfumati d\'arancio ai bordi, tra foglie verde scuro lucide. Un tocco solare e informale, perfetto per una cucina o un davanzale luminoso. Disponibile solo in taglia M, il formato in cui è stata pensata questa composizione.'
+  },
+
+  /* ---------- rose di sapone / scatole regalo ---------- */
+  {
+    slug: 'scrigno-rose-sapone',
+    nome: 'Scrigno di Rose di Sapone',
+    taglie: [
+      { id: 'M', nome: 'M', prezzo: 44, nota: 'Formato classico, unica taglia disponibile' }
+    ],
+    foto: 'foto/p-scrigno-rose-sapone.jpg',
+    cat: ['novita', 'decorazioni', 'regali', 'anniversario'],
+    badge: 'Novità',
+    rating: ['5,0', 3],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Rose di sapone gialle e rosse in una scatola cilindrica con base in velluto rosso e farfalla dorata con strass.',
+    descLunga: 'Non fiori veri, ma rose di sapone: petali profumati modellati a forma di rosa, qui composti in un cerchio di rose gialle che racchiude un cuore di rose rosse, dentro una scatola cilindrica trasparente con base rivestita in velluto rosso e una farfalla dorata impreziosita da strass a coronare il tutto. Un\'idea regalo che unisce l\'eleganza di un bouquet alla praticità di una saponetta profumata, pronta da esporre o da usare. Disponibile solo in taglia M.'
+  },
+
+  /* ---------- alzate in vetro con agrumi ---------- */
+  {
+    slug: 'trionfo-agrumi',
+    nome: 'Trionfo di Agrumi',
+    taglie: [
+      { id: 'S', nome: 'S', prezzo: 45, nota: 'Un pensiero: composizione raccolta, con lime, mandarini e rose bianche' },
+      { id: 'M', nome: 'M', prezzo: 68, nota: 'Il formato classico della bottega' },
+      { id: 'L', nome: 'L', prezzo: 89, nota: 'Abbondante, con grandi limoni, rose gialle e fiocco di raso, per fare scena' }
+    ],
+    foto: 'foto/p-trionfo-agrumi.jpg',
+    cat: ['novita', 'decorazioni', 'regali', 'estate'],
+    badge: 'Novità',
+    rating: ['4,9', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Limoni, lime e mandarini real touch con rose, alstroemeria e fiori secchi, su un\'elegante alzata in vetro.',
+    descLunga: 'Grandi limoni e rose color giallo miele nella versione più abbondante, piccoli lime e mandarini con rose color avorio e un cordoncino dorato in quella più raccolta: due anime della stessa composizione, entrambe arricchite da alstroemeria, banksia e fiori secchi color panna, su una raffinata alzata in vetro stile cake stand. Un centrotavola luminoso che profuma di agrumeto, perfetto per una tavola estiva o come regalo per chi ama gli allestimenti curati nei dettagli.'
   }
 ];
 
