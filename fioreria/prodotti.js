@@ -600,16 +600,17 @@ var AFC_PRODOTTI = [
   {
     slug: 'fiamma-tropicale',
     nome: 'Fiamma Tropicale',
-    prezzo: 68,
     sconto: 15,
-    tagliaUnica: true,
+    taglie: [
+      { id: 'XL', nome: 'XL', prezzo: 159, nota: 'Pianta adulta, pezzo unico: unica taglia disponibile' }
+    ],
     foto: 'foto/p-fiamma-tropicale.jpg',
     cat: ['decorazioni', 'regali', 'novita'],
     badge: 'Novità',
     rating: ['4,8', 3],
     avail: 'Spedizione in 48/72h',
-    desc: 'Bromelia rossa dalle foglie a fiamma, in vaso nero opaco: una pianta esotica sempre in fiore.',
-    descLunga: 'Una bromelia dalle foglie coriacee color rosso fuoco, disposte a raggiera come una fiamma immobile, sopra un folto ciuffo di foglie verde smeraldo, in un semplice vaso nero opaco. Una pianta esotica dal grande impatto scenico, perfetta per un salotto o un ufficio: non chiede luce diretta né annaffiature, solo un posto in vista.'
+    desc: 'Guzmania rossa dalle foglie a fiamma, in vaso nero opaco: una pianta esotica sempre in fiore.',
+    descLunga: 'Una guzmania dalle foglie coriacee color rosso fuoco, disposte a raggiera come una fiamma immobile, sopra un folto ciuffo di foglie verde smeraldo, in un semplice vaso nero opaco. Una pianta esotica dal grande impatto scenico, perfetta per un salotto o un ufficio: non chiede luce diretta né annaffiature, solo un posto in vista. Disponibile solo in taglia XL, pezzo unico.'
   },
   {
     slug: 'nuvola-di-petali',
@@ -642,12 +643,12 @@ var AFC_PRODOTTI = [
     badge: 'Novità',
     rating: ['4,9', 3],
     avail: 'Spedizione in 48/72h',
-    desc: 'Angioletto in resina effetto pietra, addormentato accanto a un piccolo vaso con rosa rossa e bacche.',
-    descLunga: 'Un angioletto scolpito in resina effetto pietra antica, raccolto in un sonno silenzioso accanto a un piccolo vaso decorato a rilievo, da cui sboccia una rosa rossa vellutata tra bacche scarlatte e foglie verdi. Un pensiero delicato e senza tempo, adatto a un ricordo caro o a un angolo raccolto della casa.'
+    desc: 'Angioletto in granito al 100%, addormentato accanto a un piccolo vaso con rosa rossa e bacche.',
+    descLunga: 'Un angioletto scolpito in granito al 100%, dalla superficie ruvida e naturale, raccolto in un sonno silenzioso accanto a un piccolo vaso decorato a rilievo, da cui sboccia una rosa rossa vellutata tra bacche scarlatte e foglie verdi. Un pensiero delicato e senza tempo, adatto a un ricordo caro o a un angolo raccolto della casa.'
   },
   {
-    slug: 'coroncine-autunno',
-    nome: 'Coroncine d\'Autunno',
+    slug: 'coroncina-autunno',
+    nome: 'Coroncina d\'Autunno',
     prezzo: 48,
     sconto: 15,
     tagliaUnica: true,
@@ -656,8 +657,8 @@ var AFC_PRODOTTI = [
     badge: 'Novità',
     rating: ['4,8', 4],
     avail: 'Spedizione in 48/72h',
-    desc: 'Coppia di coroncine di fiori secchi nei toni del bordeaux, del senape e del lavanda, con nastro dorato.',
-    descLunga: 'Due piccole coroncine di fiori secchi ed essiccati — statice, elicriso e bacche — nei toni caldi del bordeaux, del senape e del lavanda polveroso, chiuse da un nastro dorato. Si vendono in coppia: appese insieme creano un piccolo angolo d\'autunno, separate diventano due pensieri da regalare a persone diverse.'
+    desc: 'Coroncina di fiori secchi nei toni del bordeaux, del senape e del lavanda, con nastro dorato.',
+    descLunga: 'Una piccola coroncina di fiori secchi ed essiccati — statice, elicriso e bacche — nei toni caldi del bordeaux, del senape e del lavanda polveroso, chiusa da un nastro dorato. La foto ne mostra due affiancate solo per mostrare il dettaglio della lavorazione: il prodotto in vendita è una singola coroncina, perfetta da appendere a una porta o da regalare come piccolo pensiero d\'autunno.'
   },
   {
     slug: 'brocca-maggio',
