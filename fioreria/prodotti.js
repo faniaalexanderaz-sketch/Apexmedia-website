@@ -594,6 +594,136 @@ var AFC_PRODOTTI = [
     avail: 'Spedizione in 48/72h',
     desc: 'Limoni e lime real touch con tulipani gialli, rose, alstroemeria e fiori secchi, su un\'elegante alzata in vetro.',
     descLunga: 'Grandi limoni e tulipani gialli nella versione più abbondante, piccoli lime e rose color avorio con un cordoncino dorato in quella più raccolta: due anime della stessa composizione, entrambe arricchite da alstroemeria, banksia e fiori secchi color panna, su una raffinata alzata in vetro stile cake stand. Un centrotavola luminoso che profuma di agrumeto, perfetto per una tavola estiva o come regalo per chi ama gli allestimenti curati nei dettagli.'
+  },
+
+  /* ---------- ultimi arrivi ---------- */
+  {
+    slug: 'fiamma-tropicale',
+    nome: 'Fiamma Tropicale',
+    prezzo: 68,
+    sconto: 15,
+    tagliaUnica: true,
+    foto: 'foto/p-fiamma-tropicale.jpg',
+    cat: ['decorazioni', 'regali', 'novita'],
+    badge: 'Novità',
+    rating: ['4,8', 3],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Bromelia rossa dalle foglie a fiamma, in vaso nero opaco: una pianta esotica sempre in fiore.',
+    descLunga: 'Una bromelia dalle foglie coriacee color rosso fuoco, disposte a raggiera come una fiamma immobile, sopra un folto ciuffo di foglie verde smeraldo, in un semplice vaso nero opaco. Una pianta esotica dal grande impatto scenico, perfetta per un salotto o un ufficio: non chiede luce diretta né annaffiature, solo un posto in vista.'
+  },
+  {
+    slug: 'nuvola-di-petali',
+    nome: 'Nuvola di Petali',
+    fragile: true,
+    prezzo: 72,
+    sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 54,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 72,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 98,  nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 129, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-nuvola-di-petali.jpg',
+    cat: ['stagione', 'regali', 'primavera'],
+    badge: 'Novità',
+    rating: ['4,7', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Ortensie color salvia e malva, rose cipria e fiori rosa a sfera, in una coppa di vetro su stelo.',
+    descLunga: 'Ortensie nei toni del salvia e del malva si aprono accanto a rose color cipria e piccoli fiori rosa a sfera, raccolti in un\'elegante coppa di vetro trasparente su base a calice. Una nuvola di petali pastello che sembra sospesa, perfetta su una consolle o un tavolo da pranzo per un tocco romantico e mai scontato.'
+  },
+  {
+    slug: 'sonno-angelo',
+    nome: 'Il Sonno dell\'Angelo',
+    prezzo: 58,
+    sconto: 15,
+    tagliaUnica: true,
+    foto: 'foto/p-angelo-rosa.jpg',
+    cat: ['decorazioni', 'regali', 'anniversario'],
+    badge: 'Novità',
+    rating: ['4,9', 3],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Angioletto in resina effetto pietra, addormentato accanto a un piccolo vaso con rosa rossa e bacche.',
+    descLunga: 'Un angioletto scolpito in resina effetto pietra antica, raccolto in un sonno silenzioso accanto a un piccolo vaso decorato a rilievo, da cui sboccia una rosa rossa vellutata tra bacche scarlatte e foglie verdi. Un pensiero delicato e senza tempo, adatto a un ricordo caro o a un angolo raccolto della casa.'
+  },
+  {
+    slug: 'coroncine-autunno',
+    nome: 'Coroncine d\'Autunno',
+    prezzo: 48,
+    sconto: 15,
+    tagliaUnica: true,
+    foto: 'foto/p-coroncine-autunno.jpg',
+    cat: ['decorazioni', 'autunno', 'regali'],
+    badge: 'Novità',
+    rating: ['4,8', 4],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Coppia di coroncine di fiori secchi nei toni del bordeaux, del senape e del lavanda, con nastro dorato.',
+    descLunga: 'Due piccole coroncine di fiori secchi ed essiccati — statice, elicriso e bacche — nei toni caldi del bordeaux, del senape e del lavanda polveroso, chiuse da un nastro dorato. Si vendono in coppia: appese insieme creano un piccolo angolo d\'autunno, separate diventano due pensieri da regalare a persone diverse.'
+  },
+  {
+    slug: 'brocca-maggio',
+    nome: 'Brocca di Maggio',
+    prezzo: 62,
+    sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 48,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 62,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 84,  nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 110, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-brocca-lavanda.jpg',
+    cat: ['primavera', 'stagione', 'regali'],
+    rating: ['4,8', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Rose gialle e spighe di lavanda, in una brocca di ceramica bianca dal fascino rustico.',
+    descLunga: 'Piccole rose gialle dai petali arrotolati si aprono tra spighe di lavanda viola e foglie verde scuro, raccolte in una brocca di ceramica bianca smaltata dal fascino un po\' vissuto, con tanto di manico. Un bouquet allegro e informale, che porta il sole di maggio anche nelle giornate più grigie.'
+  },
+  {
+    slug: 'nodo-girasoli',
+    nome: 'Nodo di Girasoli',
+    taglie: [
+      { id: 'M', nome: 'M', prezzo: 48, nota: 'Formato classico, unica taglia disponibile' }
+    ],
+    foto: 'foto/p-nodo-girasoli.jpg',
+    cat: ['novita', 'decorazioni', 'regali', 'estate'],
+    badge: 'Novità',
+    rating: ['4,8', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Bottiglia in ceramica dipinta a girasoli, legata con corda di iuta al collo, colma di rose gialle a boccioli pieni.',
+    descLunga: 'Una bottiglia in ceramica dal corpo dipinto interamente a girasoli su fondo verde salvia, stretta al collo da una corda di iuta annodata, da cui sboccia un folto mazzo di rose gialle a boccioli pieni tra larghe foglie verde scuro. Un tocco pittorico e conviviale, perfetto per una cucina di campagna o per chi ama i vasi che raccontano una storia. Disponibile solo in taglia M.'
+  },
+  {
+    slug: 'brezza-conchiglie',
+    nome: 'Brezza di Conchiglie',
+    prezzo: 54,
+    sconto: 15,
+    tagliaUnica: true,
+    foto: 'foto/p-brezza-conchiglie.jpg',
+    cat: ['decorazioni', 'regali', 'estate'],
+    badge: 'Novità',
+    rating: ['4,9', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Corona intrecciata di conchiglie naturali nei toni del bianco e del tortora, con perle e rametti di corallo.',
+    descLunga: 'Una corona interamente composta da conchiglie naturali — capesante, chiocciole, frammenti di corallo bianco e legno alla deriva — nei toni tenui del bianco, del tortora e del rosa conchiglia, punteggiata da piccole perle. Una ghirlanda che profuma di vacanza anche fuori stagione, perfetta su una porta d\'estate, in bagno o su una parete in stile marino.'
+  },
+  {
+    slug: 'regina-capo',
+    nome: 'La Regina del Capo',
+    fragile: true,
+    prezzo: 92,
+    sconto: 20,
+    taglie: [
+      { id: 'S',  nome: 'S',  prezzo: 72,  nota: 'Un pensiero: composizione raccolta' },
+      { id: 'M',  nome: 'M',  prezzo: 92,  nota: 'Il formato classico della bottega' },
+      { id: 'L',  nome: 'L',  prezzo: 138, nota: 'Abbondante, per fare scena' },
+      { id: 'XL', nome: 'XL', prezzo: 129, doppio: true, nota: 'Il doppio dei fiori della M' }
+    ],
+    foto: 'foto/p-regina-capo.jpg',
+    cat: ['premium', 'regali', 'anniversario'],
+    badge: 'Novità',
+    rating: ['4,9', 2],
+    avail: 'Spedizione in 48/72h',
+    desc: 'Una maestosa protea rosa, ortensie color malva e una rosa rossa vellutata, su un\'elegante alzata in vetro verde smeraldo.',
+    descLunga: 'Una grande protea color rosa cipria — la "regina" dei fiori sudafricani — si apre al centro di ortensie color malva, una rosa rossa vellutata e delicati fiori lilla a spruzzo, tra larghe foglie tropicali, il tutto sollevato su un\'alzata in vetro verde smeraldo dal bordo dorato. Una composizione scenografica e rara, pensata per chi ama i fiori che non si vedono tutti i giorni.'
   }
 ];
 
