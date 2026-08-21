@@ -86,7 +86,16 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+}
+
+/* Lo scorrimento è solo verticale: mai una striscia bianca laterale.
+   Il blocco va sull'elemento radice, non su body: su Safari iOS
+   `overflow-x: hidden` sul body non ferma il trascinamento col dito.
+   Dove è supportato si usa `clip`, che a differenza di `hidden` non
+   crea un contenitore di scorrimento e non rompe le nav in sticky. */
+html { overflow-x: hidden; }
+@supports (overflow-x: clip) {
+  html { overflow-x: clip; }
 }
 
 /* grana finissima su tutta la pagina: dà profondità "carta pregiata"
@@ -1657,8 +1666,11 @@ img.no-foto { opacity: 0; }
 .step-n { min-width: 30px; text-align: center; font-weight: 600; font-size: 14px; color: var(--ink); }
 
 /* ---------- newsletter footer ---------- */
+/* minmax(0, 1fr) e non 1fr: la traccia `1fr` non scende sotto la
+   larghezza intrinseca dell'input (~20 caratteri), e su schermi
+   stretti il form restava largo 311px sfondando la pagina. */
 .news-form {
-  display: grid; grid-template-columns: 1fr auto; gap: 8px;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px;
   margin-top: 12px;
 }
 .news-form input {
@@ -1668,6 +1680,7 @@ img.no-foto { opacity: 0; }
   border-radius: var(--r-pill);
   padding: 12px 18px;
   min-height: 46px;
+  min-width: 0;
 }
 .news-form input:focus { outline: none; border-color: var(--salvia); box-shadow: 0 0 0 3px rgba(156,175,148,.2); }
 .news-ok { margin: 12px 0 0; font-size: 14px; font-weight: 600; color: var(--bosco); }
@@ -2637,7 +2650,7 @@ img.no-foto { opacity: 0; }
 .piu-scelte::before {
   content: '';
   position: absolute; z-index: -1;
-  inset: -30px -6vw auto -6vw;
+  inset: -30px 0 auto 0;
   height: 440px;
   background:
     radial-gradient(46% 100% at 12% 0%, rgba(194,164,92,.12), transparent 65%),
