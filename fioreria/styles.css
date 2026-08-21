@@ -350,8 +350,7 @@ body.promo-attiva .categorie { padding-top: calc(72px + 18px + var(--promo-h, 44
 .prezzo-blocco {
   display: inline-flex; align-items: baseline; gap: 5px;
 }
-.prod-mini-prezzo-pieno,
-.atelier-mini-prezzo-pieno {
+.prod-mini-prezzo-pieno {
   color: var(--muted);
   font-weight: 500;
   font-size: .82em;
@@ -546,56 +545,7 @@ body.promo-attiva .categorie { padding-top: calc(72px + 18px + var(--promo-h, 44
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(14px, 1.8vw, 20px);
 }
-.atelier-mini {
-  display: grid; gap: 3px;
-}
-.atelier-mini-foto {
-  position: relative;
-  display: block;
-  aspect-ratio: 1 / 1;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #FFFFFF;
-  box-shadow: 0 1px 3px rgba(46,75,58,.06), 0 10px 24px rgba(46,75,58,.08);
-  transition: transform var(--t-2) var(--ease-out), box-shadow var(--t-2) var(--ease-out);
-}
-.atelier-mini-foto::after {
-  content: '';
-  position: absolute; inset: 0;
-  border: 1px solid rgba(194,164,92,.55);
-  border-radius: inherit;
-  pointer-events: none;
-}
-.atelier-mini-foto img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: contain;
-  transition: transform .7s var(--ease-out);
-}
-.atelier-mini:hover .atelier-mini-foto {
-  transform: translateY(-3px);
-  box-shadow: 0 2px 5px rgba(46,75,58,.08), 0 18px 40px rgba(46,75,58,.13);
-}
-.atelier-mini:hover .atelier-mini-foto img { transform: scale(1.05); }
-.atelier-mini-nome {
-  margin-top: 9px;
-  font-family: 'Fraunces', Georgia, serif;
-  font-weight: 600; font-size: 15px; line-height: 1.2;
-  color: var(--ink);
-}
-.atelier-mini-riga {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-}
-.atelier-mini-prezzo {
-  font-family: 'Fraunces', Georgia, serif;
-  font-weight: 600; font-size: 14.5px;
-  color: var(--gold);
-  font-variant-numeric: tabular-nums;
-}
-.atelier-mini-scorte {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 11px; font-weight: 600; color: var(--muted);
-}
-.atelier-mini-scorte svg { color: var(--gold); flex: 0 0 auto; }
+/* la vetrina usa la card prodotto condivisa (.prod-mini) */
 
 /* i tre numeri del mestiere */
 .atelier-punti {
@@ -677,50 +627,68 @@ body.promo-attiva .categorie { padding-top: calc(72px + 18px + var(--promo-h, 44
 
 /* fascia con i dettagli concreti della spedizione: vetro smerigliato,
    coerente coi filtri e i pulsanti */
+/* ---------- fascia spedizioni: quattro schede con icona in rilievo ---------- */
 .spedizione-info {
   list-style: none; margin: clamp(46px, 6vh, 74px) auto 0; padding: 0;
   max-width: var(--maxw);
   display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 1.8vw, 22px);
+}
+.sped-card {
+  position: relative;
+  display: grid; justify-items: center; text-align: center;
   gap: 14px;
+  padding: 30px 20px 26px;
+  background: linear-gradient(168deg, #FFFFFF 0%, var(--ivory) 100%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--t-2) var(--ease-out), box-shadow var(--t-2) var(--ease-out), border-color var(--t-2) ease;
 }
-.spedizione-info li {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 18px 16px;
-  background: linear-gradient(180deg, rgba(255,255,255,.66), rgba(255,255,255,.32));
-  border: 1px solid rgba(255,255,255,.62);
-  border-radius: 18px;
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.8),
-    0 1px 2px rgba(46,75,58,.04),
-    0 8px 18px rgba(46,75,58,.06);
+.sped-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+  border-color: rgba(194,164,92,.5);
 }
-.spedizione-ic {
-  flex: 0 0 auto;
-  width: 36px; height: 36px;
+/* il piedistallo su cui posa l'icona: incavo chiaro con luce dall'alto */
+.sped-ic {
   display: grid; place-items: center;
-  color: var(--bosco);
-  background: rgba(255,255,255,.7);
-  border: 1px solid rgba(194,164,92,.3);
+  width: 92px; height: 92px;
   border-radius: 50%;
+  background:
+    radial-gradient(72% 72% at 32% 22%, #FFFFFF, rgba(255,255,255,0) 70%),
+    linear-gradient(165deg, var(--botanico), var(--champagne));
+  border: 1px solid rgba(194,164,92,.34);
+  box-shadow:
+    inset 0 2px 5px rgba(255,255,255,.9),
+    inset 0 -5px 12px rgba(46,75,58,.09),
+    0 8px 20px rgba(46,75,58,.1);
+  transition: transform var(--t-2) var(--ease-out);
 }
-.spedizione-info strong {
-  display: block;
+.sped-ic svg { display: block; overflow: visible; }
+.sped-card:hover .sped-ic { transform: translateY(-3px) scale(1.04); }
+.sped-testo { display: grid; gap: 4px; }
+.sped-testo strong {
   font-family: 'Fraunces', Georgia, serif;
-  font-weight: 600; font-size: 14.5px; color: var(--ink);
-  margin-bottom: 2px;
+  font-variation-settings: 'opsz' 30;
+  font-weight: 600; font-size: 16.5px; color: var(--ink);
+  letter-spacing: -.006em;
 }
-.spedizione-info li > span:last-child span {
-  display: block;
-  font-size: 12.5px; line-height: 1.4; color: var(--muted);
+.sped-testo span {
+  font-size: 13px; line-height: 1.5; color: var(--muted);
+  max-width: 24ch; margin: 0 auto;
 }
 
 @media (max-width: 900px) {
   .spedizione-info { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 560px) {
-  .spedizione-info { grid-template-columns: 1fr; }
+  .spedizione-info { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .sped-card { padding: 22px 12px 20px; border-radius: 18px; gap: 11px; }
+  .sped-ic { width: 72px; height: 72px; }
+  .sped-ic svg { width: 48px; height: 48px; }
+  .sped-testo strong { font-size: 14.5px; }
+  .sped-testo span { font-size: 12px; }
 }
 
 /* =============================================================

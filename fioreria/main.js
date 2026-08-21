@@ -33,8 +33,13 @@
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    /* l'osservatore parte una volta sola al caricamento: le card costruite
+       dopo (catalogo.js) devono potersi iscrivere, altrimenti resterebbero
+       invisibili per sempre a opacity 0 */
+    window.AFC_REVEAL = { observe: function (el) { io.observe(el); } };
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+    window.AFC_REVEAL = { observe: function (el) { el.classList.add('in'); } };
   }
 
   /* ---------- Parallasse hero ---------- */
