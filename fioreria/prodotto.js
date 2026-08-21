@@ -15,6 +15,8 @@
     return '€ ' + (Number.isInteger(n) ? n : n.toFixed(2).replace('.', ','));
   }
 
+  var ICONA_SCONTO = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.4h6.5a1 1 0 0 1 1 1v6.5a1 1 0 0 1-.3.7L9.5 20.9a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.4L12.3 2.7a1 1 0 0 1 .3-.3Z"/><circle cx="17" cy="7" r="1.3" fill="currentColor" stroke="none"/></svg>';
+
   /* alcune referenze hanno taglie proprie con prezzo fisso (es. "1 pezzo" /
      "2 pezzi"): in quel caso si usano quelle al posto di S/M/L/XL */
   var listaTaglie = prod.taglie || AFC_TAGLIE;
@@ -152,7 +154,7 @@
   }
 
   document.getElementById('pRating').innerHTML =
-    '<span class="stelle" aria-hidden="true">★★★★★</span> <span>' + prod.rating[0] +
+    '<span class="stelle" aria-hidden="true">★★★★★</span> <span class="rating-num">' + prod.rating[0] +
     '</span> <span class="rating-n">(' + prod.rating[1] + ' recensioni)</span>';
 
   var avail = document.getElementById('pAvail');
@@ -181,12 +183,12 @@
     if (prod.sconto) {
       pieno.textContent = euro(prezzoTaglia(taglia) * qty);
       pieno.hidden = false;
-      sconto.textContent = 'Saldi estivi −' + prod.sconto + '%';
+      sconto.innerHTML = ICONA_SCONTO + '<span>Saldi estivi −' + prod.sconto + '%</span>';
       sconto.hidden = false;
     } else if (taglia.doppio) {
       pieno.textContent = euro(afcValoreXL(prod.prezzo) * qty);
       pieno.hidden = false;
-      sconto.textContent = 'risparmi il 30%';
+      sconto.innerHTML = ICONA_SCONTO + '<span>risparmi il 30%</span>';
       sconto.hidden = false;
     } else {
       pieno.hidden = true;

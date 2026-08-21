@@ -73,16 +73,19 @@
 
       <div class="prodotto-info">
         <h1 class="display" id="pNome">…</h1>
-        <p class="rating" id="pRating"></p>
-        <p class="prodotto-prezzo">
-          <s id="pPrezzoPieno" hidden></s>
-          <strong id="pPrezzo">€ 0</strong>
-          <span class="sconto-xl" id="pSconto" hidden>risparmi il 30%</span>
-        </p>
-        <p class="prodotto-scorte" id="pScorte" hidden>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg>
-          <span id="pScorteTesto"></span>
-        </p>
+
+        <div class="prodotto-acquisto-box">
+          <p class="rating" id="pRating"></p>
+          <p class="prodotto-prezzo">
+            <s id="pPrezzoPieno" hidden></s>
+            <strong id="pPrezzo">€ 0</strong>
+            <span class="sconto-xl" id="pSconto" hidden>risparmi il 30%</span>
+          </p>
+          <p class="prodotto-scorte" id="pScorte" hidden>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg>
+            <span id="pScorteTesto"></span>
+          </p>
+        </div>
         <p class="prodotto-taglia-foto" id="pTagliaFoto" hidden>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10.2" r="1.7"/><path d="m6 18 4.6-4.6a1.5 1.5 0 0 1 2.1 0L18 18.6"/></svg>
           Taglia mostrata in foto: <strong id="pTagliaFotoVal"></strong>

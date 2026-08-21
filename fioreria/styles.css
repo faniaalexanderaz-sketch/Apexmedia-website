@@ -2546,6 +2546,66 @@ img.no-foto { opacity: 0; }
   .prod-mini-nome { font-size: 16px; }
 }
 
+/* ---------- "Le più scelte": card in riquadro, non più foto nude ---------- */
+.piu-scelte { position: relative; }
+.piu-scelte::before {
+  content: '';
+  position: absolute; z-index: -1;
+  inset: -30px -6vw auto -6vw;
+  height: 440px;
+  background:
+    radial-gradient(46% 100% at 12% 0%, rgba(194,164,92,.12), transparent 65%),
+    radial-gradient(42% 100% at 88% 12%, rgba(156,175,148,.20), transparent 65%);
+  pointer-events: none;
+}
+.piu-scelte .prod-griglia { gap: clamp(16px, 2.2vw, 26px); }
+.piu-scelte .prod-mini {
+  background: linear-gradient(168deg, #FFFFFF 0%, var(--ivory) 100%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 12px 12px 18px;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--t-2) var(--ease-out), box-shadow var(--t-2) var(--ease-out), border-color var(--t-2) ease;
+}
+.piu-scelte .prod-mini:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+  border-color: rgba(194,164,92,.5);
+}
+.piu-scelte .prod-mini-foto { box-shadow: none; border-radius: 15px; }
+.piu-scelte .prod-mini-foto::after { border-radius: 15px; }
+.pms-sconto {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  font-size: 11px; font-weight: 800; letter-spacing: .02em;
+  color: #FAFAF7;
+  background: linear-gradient(135deg, #D4B36A, #A6853F);
+  border-radius: var(--r-pill);
+  padding: 5px 10px;
+  box-shadow: 0 2px 7px rgba(138,107,36,.35);
+}
+.piu-scelte .prod-mini-nome { margin-top: 14px; padding: 0 4px; }
+.pms-stelle {
+  display: flex; align-items: baseline; gap: 6px;
+  padding: 0 4px; margin-top: 2px;
+}
+.pms-stelle-ic { color: var(--gold); letter-spacing: .1em; font-size: 12px; }
+.pms-stelle-n { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 13px; color: var(--ink); }
+.piu-scelte .prod-mini-riga { padding: 0 4px; margin-top: 9px; }
+.pms-cta {
+  display: flex; align-items: center; gap: 5px;
+  padding: 0 4px; margin-top: 11px;
+  font-size: 12.5px; font-weight: 700; color: var(--bosco);
+  opacity: 0; transform: translateX(-5px);
+  transition: opacity var(--t-2) var(--ease-out), transform var(--t-2) var(--ease-out);
+}
+.pms-cta svg { transition: transform var(--t-2) var(--ease-out); }
+.piu-scelte .prod-mini:hover .pms-cta { opacity: 1; transform: translateX(0); }
+.piu-scelte .prod-mini:hover .pms-cta svg { transform: translateX(3px); }
+@media (max-width: 640px) {
+  .piu-scelte .prod-mini { padding: 10px 10px 14px; border-radius: 18px; }
+  .pms-cta { display: none; }
+}
+
 /* =============================================================
    PAGINA PRODOTTO
    ============================================================= */
@@ -2646,7 +2706,34 @@ img.no-foto { opacity: 0; }
 
 .prodotto-info { display: grid; gap: 14px; align-content: start; }
 .prodotto-info .display { margin: 0; font-size: clamp(28px, 3.4vw, 40px); }
-.prodotto-info .rating { margin: -4px 0 0; }
+
+/* ---------- riquadro con valutazione, prezzo, sconto e scorte ---------- */
+.prodotto-acquisto-box {
+  display: grid; gap: 10px;
+  background: linear-gradient(170deg, #FFFFFF 0%, var(--ivory) 100%);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 20px 22px;
+  box-shadow: var(--shadow-soft);
+}
+.prodotto-acquisto-box .rating,
+.prodotto-acquisto-box .prodotto-prezzo,
+.prodotto-acquisto-box .prodotto-scorte { margin: 0; }
+.prodotto-info .rating {
+  display: flex; align-items: center; gap: 8px;
+}
+.prodotto-info .stelle {
+  font-size: 17px;
+  letter-spacing: .07em;
+  background: linear-gradient(135deg, #E7C878, #A6853F);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(138,107,36,.22));
+}
+.prodotto-info .rating-num {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700; font-size: 15px; color: var(--ink);
+}
 .prodotto-prezzo {
   margin: 0;
   display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
@@ -2657,15 +2744,17 @@ img.no-foto { opacity: 0; }
 }
 .prodotto-prezzo s { font-size: 18px; color: var(--muted); }
 .sconto-xl {
-  font-size: 12px; font-weight: 700; letter-spacing: .03em;
-  color: #8A6B24;
-  background: var(--champagne);
-  border: 1px solid rgba(194,164,92,.4);
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 800; letter-spacing: .02em;
+  text-transform: uppercase;
+  color: #FAFAF7;
+  background: linear-gradient(135deg, #D9B978, #A6853F);
   border-radius: var(--r-pill);
-  padding: 4px 11px;
+  padding: 7px 13px 7px 10px;
+  box-shadow: 0 3px 10px rgba(138,107,36,.35);
 }
+.sconto-xl svg { flex: 0 0 auto; }
 .prodotto-scorte {
-  margin: -2px 0 0;
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 13px; font-weight: 600; color: var(--muted);
 }
