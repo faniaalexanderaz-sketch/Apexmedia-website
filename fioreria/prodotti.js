@@ -532,19 +532,20 @@ var AFC_PRODOTTI = [
     descLunga: 'Una borsa intrecciata in paglia naturale, impreziosita da un ricamo a paillettes nei toni del lilla e del malva, colma di rose rosa, un\'ortensia color malva e lavanda. Un\'idea regalo originale, doppiamente utile: si può tenere in vista come composizione o svuotare e usare come borsa vera. Disponibile solo nel formato XL, il più generoso.'
   },
 
-  /* ---------- anfore e ampolle in ceramica, coppia pezzo unico ---------- */
+  /* ---------- anfore e ampolle in ceramica ---------- */
   {
-    slug: 'anfore-sole',
-    nome: 'Le Anfore del Sole',
-    tagliaUnica: true,
-    prezzo: 43,
+    slug: 'anfora-sole',
+    nome: 'L\'Anfora del Sole',
+    taglie: [
+      { id: 'M', nome: 'M', prezzo: 43, nota: 'Formato classico, unica taglia disponibile' }
+    ],
     foto: 'foto/p-anfore-sole.png',
     cat: ['novita', 'decorazioni', 'regali', 'estate'],
     badge: 'Novità',
     rating: ['5,0', 2],
     avail: 'Spedizione in 48/72h',
-    desc: 'Coppia di anfore in ceramica stile "olive oil", colme di ranuncoli real touch giallo oro e arancio. Pezzo unico, venduto in taglia unica.',
-    descLunga: 'Due anfore in ceramica rustica dal collo rosa antico e dal corpo color avorio, decorate come vecchi vasi da olio con tanto di ramo d\'ulivo stampato, colme di ranuncoli real touch dai petali fitti e vellutati: una tutta giallo oro, l\'altra sfumata dal giallo all\'arancio, tra foglie verde scuro. Pensate per stare insieme, sullo stesso ripiano o ai lati di un ingresso, portano il calore della campagna tutto l\'anno. Questa composizione è un pezzo unico: la coppia di anfore si vende come unico formato, senza altre taglie disponibili.'
+    desc: 'Anfora in ceramica stile "olive oil", colma di ranuncoli real touch giallo oro o arancio. Venduta singolarmente, non in coppia.',
+    descLunga: 'Un\'anfora in ceramica rustica dal collo rosa antico e dal corpo color avorio, decorata come un vecchio vaso da olio con tanto di ramo d\'ulivo stampato, colma di ranuncoli real touch dai petali fitti e vellutati, nella variante giallo oro oppure in quella sfumata dal giallo all\'arancio, tra foglie verde scuro. La foto ne mostra due affiancate solo per far vedere entrambe le varianti di colore disponibili: il prodotto in vendita è una singola anfora, non una coppia, disponibile solo in taglia M.'
   },
   {
     slug: 'anfora-girasoli',
