@@ -547,18 +547,18 @@ var AFC_PRODOTTI = [
     descLunga: 'Due anfore in ceramica rustica dal collo rosa antico e dal corpo color avorio, decorate come vecchi vasi da olio con tanto di ramo d\'ulivo stampato, colme di ranuncoli real touch dai petali fitti e vellutati: una tutta giallo oro, l\'altra sfumata dal giallo all\'arancio, tra foglie verde scuro. Pensate per stare insieme, sullo stesso ripiano o ai lati di un ingresso, portano il calore della campagna tutto l\'anno. Questa composizione è un pezzo unico: la coppia di anfore si vende come unico formato, senza altre taglie disponibili.'
   },
   {
-    slug: 'ampolla-girasoli',
-    nome: 'Ampolla di Girasoli',
+    slug: 'anfora-girasoli',
+    nome: 'Anfora di Girasoli',
     taglie: [
       { id: 'M', nome: 'M', prezzo: 39, nota: 'Formato classico, unica taglia disponibile' }
     ],
-    foto: 'foto/p-ampolla-girasoli.png',
+    foto: 'foto/p-anfora-girasoli.png',
     cat: ['novita', 'decorazioni', 'regali', 'estate'],
     badge: 'Novità',
     rating: ['4,9', 2],
     avail: 'Spedizione in 48/72h',
-    desc: 'Ampolla in ceramica con girasoli dipinti a mano, con un bouquet di ranuncoli real touch giallo e arancio.',
-    descLunga: 'Un\'ampolla slanciata in ceramica color avorio, dipinta a mano con girasoli che risalgono dalla base al collo, da cui sboccia un bouquet asimmetrico di ranuncoli real touch: alcuni giallo pieno, altri sfumati d\'arancio ai bordi, tra foglie verde scuro lucide. Un tocco solare e informale, perfetto per una cucina o un davanzale luminoso. Disponibile solo in taglia M, il formato in cui è stata pensata questa composizione.'
+    desc: 'Anfora in ceramica dipinta a mano con girasoli, con un bouquet di ranuncoli real touch giallo e arancio.',
+    descLunga: 'Un\'anfora slanciata in ceramica color avorio, interamente dipinta a mano con girasoli che risalgono dalla base al collo, da cui sboccia un bouquet asimmetrico di ranuncoli real touch: alcuni giallo pieno, altri sfumati d\'arancio ai bordi, tra foglie verde scuro lucide. Ogni anfora è decorata a mano, un tocco solare e informale, perfetto per una cucina o un davanzale luminoso. Disponibile solo in taglia M, il formato in cui è stata pensata questa composizione.'
   },
 
   /* ---------- rose di sapone / scatole regalo ---------- */
@@ -582,17 +582,17 @@ var AFC_PRODOTTI = [
     slug: 'trionfo-agrumi',
     nome: 'Trionfo di Agrumi',
     taglie: [
-      { id: 'S', nome: 'S', prezzo: 45, nota: 'Un pensiero: composizione raccolta, con lime, mandarini e rose bianche' },
+      { id: 'S', nome: 'S', prezzo: 45, nota: 'Un pensiero: composizione raccolta, con lime e rose bianche' },
       { id: 'M', nome: 'M', prezzo: 68, nota: 'Il formato classico della bottega' },
-      { id: 'L', nome: 'L', prezzo: 89, nota: 'Abbondante, con grandi limoni, rose gialle e fiocco di raso, per fare scena' }
+      { id: 'L', nome: 'L', prezzo: 89, nota: 'Abbondante, con grandi limoni, tulipani gialli e fiocco di raso, per fare scena' }
     ],
     foto: 'foto/p-trionfo-agrumi.png',
     cat: ['novita', 'decorazioni', 'regali', 'estate'],
     badge: 'Novità',
     rating: ['4,9', 2],
     avail: 'Spedizione in 48/72h',
-    desc: 'Limoni, lime e mandarini real touch con rose, alstroemeria e fiori secchi, su un\'elegante alzata in vetro.',
-    descLunga: 'Grandi limoni e rose color giallo miele nella versione più abbondante, piccoli lime e mandarini con rose color avorio e un cordoncino dorato in quella più raccolta: due anime della stessa composizione, entrambe arricchite da alstroemeria, banksia e fiori secchi color panna, su una raffinata alzata in vetro stile cake stand. Un centrotavola luminoso che profuma di agrumeto, perfetto per una tavola estiva o come regalo per chi ama gli allestimenti curati nei dettagli.'
+    desc: 'Limoni e lime real touch con tulipani gialli, rose, alstroemeria e fiori secchi, su un\'elegante alzata in vetro.',
+    descLunga: 'Grandi limoni e tulipani gialli nella versione più abbondante, piccoli lime e rose color avorio con un cordoncino dorato in quella più raccolta: due anime della stessa composizione, entrambe arricchite da alstroemeria, banksia e fiori secchi color panna, su una raffinata alzata in vetro stile cake stand. Un centrotavola luminoso che profuma di agrumeto, perfetto per una tavola estiva o come regalo per chi ama gli allestimenti curati nei dettagli.'
   }
 ];
 
