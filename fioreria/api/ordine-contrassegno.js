@@ -165,7 +165,7 @@ function emailConfermaContrassegno(idOrdine, articoli, totaleCentesimi, spedizio
     '  <p style="font-size:14px;color:#8A6A2A;background:#FBF3E4;border-radius:8px;padding:10px 14px;margin:0 0 26px;">Pagamento alla consegna: tieni pronto l\'importo in contanti o con carta per il corriere.</p>' +
     (indirizzo ? '  <p style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9CAF94;margin:0 0 6px;">Consegna a</p>' +
       '  <p style="font-size:15px;line-height:1.5;color:#24352B;margin:0 0 26px;">' + indirizzo + '</p>' : '') +
-    '  <p style="font-size:13px;line-height:1.6;color:#5A6B5E;margin:0;">Per qualsiasi domanda sul tuo ordine, rispondi pure a questa email o scrivici a <a href="mailto:ordini@anticafioreriadelcentro.it" style="color:#2E4B3A;">ordini@anticafioreriadelcentro.it</a>.</p>' +
+    '  <p style="font-size:13px;line-height:1.6;color:#5A6B5E;margin:0;">Per qualsiasi domanda sul tuo ordine, rispondi pure a questa email o scrivici a <a href="mailto:info@anticafioreriadelcentro.it" style="color:#2E4B3A;">info@anticafioreriadelcentro.it</a>.</p>' +
     '  <p style="font-size:13px;color:#9CAF94;margin:26px 0 0;">Antica Fioreria del Centro · dal 1953</p>' +
     '</div>';
 }

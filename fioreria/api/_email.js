@@ -4,7 +4,7 @@
    RESEND_API_KEY non è configurata, non fa nulla (nessun errore):
    così il sito continua a funzionare anche prima di collegare
    l'email. RESEND_FROM è l'indirizzo mittente, es.
-   "Antica Fioreria del Centro <ordini@anticafioreriadelcentro.it>"
+   "Antica Fioreria del Centro <info@anticafioreriadelcentro.it>"
    — finché il dominio non è verificato su Resend, usa il loro
    indirizzo di prova (onboarding@resend.dev).
    ============================================================= */
