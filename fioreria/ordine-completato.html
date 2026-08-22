@@ -62,6 +62,7 @@
 
     <p class="eyebrow">Ordine confermato</p>
     <h1 class="display">Grazie per il tuo <em>ordine</em>.</h1>
+    <p class="esito-numero-ordine" id="esitoNumeroOrdine" hidden></p>
     <p class="lede">La tua composizione viene imballata con cura e affidata al corriere: in 48/72 ore è da te, perfetta come in bottega.</p>
 
     <div class="riepilogo" id="riepilogo" hidden>
@@ -95,6 +96,12 @@
       var mNumero = location.search.match(/[?&]numero=([^&]+)/);
       if (mSessione) numeroOrdine = decodeURIComponent(mSessione[1]).slice(-8).toUpperCase();
       else if (mNumero) numeroOrdine = decodeURIComponent(mNumero[1]);
+
+      if (numeroOrdine) {
+        var elNumero = document.getElementById('esitoNumeroOrdine');
+        elNumero.textContent = 'Ordine #' + numeroOrdine;
+        elNumero.hidden = false;
+      }
 
       /* riepilogo: dall'ordine pending (con sconto) o dal carrello */
       var ordine = null;
@@ -160,13 +167,14 @@
         }
       }
 
-      /* bottone "Traccia il tuo ordine": serve il numero e l'email usata
-         per l'ordine — se manca uno dei due meglio non mostrarlo che
-         mandare a una ricerca già destinata a fallire */
-      var emailOrdine = ordine && ordine.consegna ? ordine.consegna.email : null;
-      if (numeroOrdine && emailOrdine) {
+      /* bottone "Traccia il tuo ordine": basta il numero per mostrarlo —
+         se abbiamo anche l'email dell'ordine la precompiliamo, altrimenti
+         il cliente la scrive lui nella pagina di ricerca */
+      if (numeroOrdine) {
+        var emailOrdine = ordine && ordine.consegna ? ordine.consegna.email : null;
         var linkTraccia = document.getElementById('linkTraccia');
-        linkTraccia.href = 'traccia-ordine.html?numero=' + encodeURIComponent(numeroOrdine) + '&email=' + encodeURIComponent(emailOrdine);
+        linkTraccia.href = 'traccia-ordine.html?numero=' + encodeURIComponent(numeroOrdine) +
+          (emailOrdine ? '&email=' + encodeURIComponent(emailOrdine) : '');
         linkTraccia.hidden = false;
       }
 

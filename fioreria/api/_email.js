@@ -16,9 +16,13 @@
        es. "Antica Fioreria del Centro" (default se assente)
    ============================================================= */
 async function inviaEmail({ to, subject, html }) {
-  var apiKey = process.env.SENDGRID_API_KEY;
-  var mittente = process.env.SENDGRID_FROM;
-  var nomeMittente = process.env.SENDGRID_FROM_NOME || 'Antica Fioreria del Centro';
+  // le variabili d'ambiente incollate da telefono a volte portano dentro
+  // uno spazio o un ritorno a capo di troppo (es. copiando da Note): una
+  // chiave con un carattere così dentro manda in errore la richiesta HTTP
+  // ("invalid header value") senza che si capisca perché — la ripuliamo qui.
+  var apiKey = (process.env.SENDGRID_API_KEY || '').replace(/\s+/g, '');
+  var mittente = (process.env.SENDGRID_FROM || '').replace(/[\r\n]+/g, '').trim();
+  var nomeMittente = (process.env.SENDGRID_FROM_NOME || 'Antica Fioreria del Centro').replace(/[\r\n]+/g, '').trim();
   if (!apiKey || !mittente || !to) return { inviata: false };
 
   try {
