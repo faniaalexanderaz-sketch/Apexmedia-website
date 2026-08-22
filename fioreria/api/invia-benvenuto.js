@@ -2,7 +2,7 @@
    ANTICA FIORERIA DEL CENTRO — email di benvenuto con BENVENUTO10
    Chiamata dal sito quando qualcuno si iscrive dal popup newsletter
    o crea un account. Non blocca mai il flusso del sito: se manca
-   RESEND_API_KEY o qualcosa va storto, risponde comunque 200.
+   SENDGRID_API_KEY o qualcosa va storto, risponde comunque 200.
    ============================================================= */
 const { inviaEmail } = require('./_email');
 

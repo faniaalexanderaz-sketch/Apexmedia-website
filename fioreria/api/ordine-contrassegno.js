@@ -107,7 +107,7 @@ module.exports = async function handler(req, res) {
         ${messaggio}
       )`;
 
-    // email di conferma: se RESEND_API_KEY non è configurata, inviaEmail
+    // email di conferma: se SENDGRID_API_KEY non è configurata, inviaEmail
     // non fa nulla — non deve mai far fallire la registrazione dell'ordine
     if (emailCliente) {
       try {

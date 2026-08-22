@@ -90,7 +90,7 @@ module.exports = async function handler(req, res) {
         ${meta.messaggio || null}
       )`;
 
-    // email di conferma: se RESEND_API_KEY non è configurata, inviaEmail
+    // email di conferma: se SENDGRID_API_KEY non è configurata, inviaEmail
     // non fa nulla — non deve mai far fallire il webhook
     var emailCliente = sessione.customer_details ? sessione.customer_details.email : null;
     if (emailCliente) {

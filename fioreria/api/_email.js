@@ -1,35 +1,48 @@
 /* =============================================================
-   ANTICA FIORERIA DEL CENTRO — invio email (Resend)
+   ANTICA FIORERIA DEL CENTRO — invio email (SendGrid)
    Un unico punto da cui tutte le funzioni mandano email. Se
-   RESEND_API_KEY non è configurata, non fa nulla (nessun errore):
+   SENDGRID_API_KEY non è configurata, non fa nulla (nessun errore):
    così il sito continua a funzionare anche prima di collegare
-   l'email. RESEND_FROM è l'indirizzo mittente, es.
-   "Antica Fioreria del Centro <info@anticafioreriadelcentro.it>"
-   — finché il dominio non è verificato su Resend, usa il loro
-   indirizzo di prova (onboarding@resend.dev).
+   l'email.
+
+   SendGrid richiede solo la verifica di un "Single Sender" (un
+   indirizzo email confermato con un click, senza record DNS) —
+   niente dominio da verificare. Configurazione su Vercel:
+     SENDGRID_API_KEY = la chiave creata in SendGrid (Settings →
+       API Keys, permesso "Mail Send")
+     SENDGRID_FROM = l'indirizzo verificato in Settings → Sender
+       Authentication → Single Sender, es. "info@anticafioreriadelcentro.it"
+     SENDGRID_FROM_NOME (opzionale) = nome mittente mostrato,
+       es. "Antica Fioreria del Centro" (default se assente)
    ============================================================= */
 async function inviaEmail({ to, subject, html }) {
-  var apiKey = process.env.RESEND_API_KEY;
-  var mittente = process.env.RESEND_FROM || 'Antica Fioreria del Centro <onboarding@resend.dev>';
-  if (!apiKey || !to) return { inviata: false };
+  var apiKey = process.env.SENDGRID_API_KEY;
+  var mittente = process.env.SENDGRID_FROM;
+  var nomeMittente = process.env.SENDGRID_FROM_NOME || 'Antica Fioreria del Centro';
+  if (!apiKey || !mittente || !to) return { inviata: false };
 
   try {
-    var risposta = await fetch('https://api.resend.com/emails', {
+    var risposta = await fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + apiKey,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ from: mittente, to: [to], subject: subject, html: html })
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: to }] }],
+        from: { email: mittente, name: nomeMittente },
+        subject: subject,
+        content: [{ type: 'text/html', value: html }]
+      })
     });
     if (!risposta.ok) {
       var testo = await risposta.text();
-      console.error('Resend errore:', risposta.status, testo);
+      console.error('SendGrid errore:', risposta.status, testo);
       return { inviata: false };
     }
     return { inviata: true };
   } catch (err) {
-    console.error('Resend errore:', err.message);
+    console.error('SendGrid errore:', err.message);
     return { inviata: false };
   }
 }
