@@ -74,30 +74,46 @@ Ti piace quella che vedi? Scrivici in DM per prezzo e disponibilità: ti aiutiam
 
 ---
 
-## Brand 2 — Essenza Oriente
+## Brand 2 — Essenza d'Oriente (Centro Olistico)
 
-Centro di benessere/estetica orientale (es. massaggi, trattamenti ispirati
-alla medicina/estetica orientale).
+Centro olistico di benessere/estetica orientale (massaggi, trattamenti
+manuali, medicina tradizionale orientale).
 
-**Status: profilo brand incompleto.** Prima di rispondere a messaggi reali
-per questa azienda, servono ancora questi dati — chiedili al cliente se
-mancano e non inventarli:
-- Indirizzo e città
-- Orari di apertura
-- Telefono/WhatsApp
-- Elenco trattamenti/servizi principali e fascia prezzo
+**Verified facts**
+- Indirizzo: Via San Lorenzo 46, Alessandria
+- Orari: tutti i giorni (7/7), 9:30–22:30
+- Telefono / WhatsApp: 331 715 3533
+
+**Listino prezzi**
+| Trattamento | Durata | Prezzo |
+|---|---|---|
+| Massaggio Spa | 90 min | 90€ |
+| Massaggio Oli Essenziali (cervicale e schiena) | 60 min | 60€ |
+| Tuina Shiatsu | 50 min | 50€ |
+| Massaggio Plantare | 60 min | 50€ |
+| Massaggio Plantare | 40 min | 35€ |
+| Pedicure | — | 35€ |
+| Coppettazione | — | 25€ |
+| Gua Sha | — | 25€ |
+| Pulizia delle orecchie | — | 25€ |
+
+**Ancora da confermare** (chiedi al cliente se serve, non inventare):
 - Politiche di prenotazione/cancellazione
 - Eventuali promozioni o pacchetti ricorrenti
 
 **Tone of voice**: elegante e curato (stesso registro raffinato di Antica
-Fioreria) — frasi ben scritte, emoji usate con parsimonia, mai tono da
-saldo/urlato. Adatta il lessico al benessere/estetica (relax, cura di sé,
-trattamento su misura) invece che ai fiori.
+Fioreria) — frasi ben scritte, emoji usate con parsimonia (🌿🤍✨), mai tono da
+saldo/urlato. Lessico da benessere/estetica (relax, cura di sé, trattamento
+su misura, riequilibrio) invece che floreale.
 
-Finché i dati sopra non sono forniti, per domande che li richiedono (dove
-siete, prezzi, orari, disponibilità) rispondi con una bozza che lascia un
-segnaposto chiaro e chiedi al cliente il dato mancante, invece di scrivere
-un numero o indirizzo plausibile ma non verificato.
+**Common scenarios**
+- *"Dove siete?"* → indirizzo + orari (aperti 7/7, 9:30–22:30), invito a
+  prenotare via WhatsApp/telefono.
+- *Richiesta prezzo/durata trattamento* → usa il listino sopra; se il
+  trattamento richiesto non è in listino, chiedi al cliente prima di
+  rispondere.
+- *Richiesta prenotazione* → invita a scrivere giorno/orario preferito e
+  conferma via WhatsApp al 331 715 3533.
 
 ---
 
