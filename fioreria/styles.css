@@ -1832,8 +1832,63 @@ img.no-foto { opacity: 0; }
   border: 1px solid rgba(194,164,92,.34);
   border-radius: 999px; padding: 3px 9px;
 }
-.admin-ordine-articoli { margin: 8px 0 4px; font-size: 14px; color: var(--ink); }
+.admin-ordine-numero { margin: 4px 0 0; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--muted); }
+.admin-ordine-articoli { margin: 6px 0 4px; font-size: 14px; color: var(--ink); }
 .admin-ordine-consegna { margin: 0; font-size: 12.5px; color: var(--muted); }
+.admin-ordine-stato { margin-top: 10px; }
+.admin-stato-select {
+  width: 100%;
+  padding: 9px 12px;
+  font-family: 'Figtree', system-ui, sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--bosco);
+  background: var(--botanico);
+  border: 1px solid rgba(46,75,58,.16);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* =============================================================
+   TRACCIA IL TUO ORDINE — ricerca e cronologia stato
+   ============================================================= */
+.traccia-risultato { margin-top: 22px; }
+.traccia-riepilogo { margin-top: 28px; }
+.traccia-nuova-ricerca { margin-top: 18px; }
+
+.traccia-timeline {
+  list-style: none; margin: 8px 0 0; padding: 0;
+  display: flex; justify-content: space-between;
+}
+.traccia-step {
+  position: relative;
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  text-align: center;
+}
+.traccia-step:not(:last-child)::after {
+  content: "";
+  position: absolute; top: 8px; left: 50%; width: 100%; height: 2px;
+  background: var(--line); z-index: 0;
+}
+.traccia-step.fatto:not(:last-child)::after { background: var(--gold); }
+.traccia-punto {
+  position: relative; z-index: 1;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #FFFFFF; border: 2px solid var(--line);
+  transition: background-color var(--t-1) ease, border-color var(--t-1) ease, box-shadow var(--t-1) ease;
+}
+.traccia-step.fatto .traccia-punto { background: var(--gold); border-color: var(--gold); }
+.traccia-step.attivo .traccia-punto {
+  background: var(--bosco); border-color: var(--bosco);
+  box-shadow: 0 0 0 4px rgba(46,75,58,.15);
+}
+.traccia-testo { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.traccia-step.fatto .traccia-testo, .traccia-step.attivo .traccia-testo { color: var(--ink); }
+
+@media (max-width: 560px) {
+  .traccia-timeline { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .traccia-step { flex-direction: row; align-items: center; text-align: left; gap: 12px; }
+  .traccia-step:not(:last-child)::after { top: 50%; left: 8px; width: 2px; height: 100%; }
+}
 
 @media (max-width: 560px) {
   .admin-stat-riga { grid-template-columns: 1fr; }

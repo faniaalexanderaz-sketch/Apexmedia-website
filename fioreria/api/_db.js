@@ -70,6 +70,16 @@ async function assicuraSchema() {
       creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
     )`;
 
+    // numero_ordine: le ultime 8 cifre di sessione_stripe, maiuscole — lo
+    // stesso numero già mostrato nell'email di conferma, usato per la
+    // ricerca dalla pagina "Traccia il tuo ordine" (più veloce di uno
+    // sottostringa su sessione_stripe a ogni ricerca).
+    // stato: aggiornato a mano dal pannello admin, non da un corriere reale.
+    await sql`ALTER TABLE ordini ADD COLUMN IF NOT EXISTS numero_ordine TEXT`;
+    await sql`ALTER TABLE ordini ADD COLUMN IF NOT EXISTS stato TEXT NOT NULL DEFAULT 'ricevuto'`;
+    await sql`UPDATE ordini SET numero_ordine = UPPER(RIGHT(sessione_stripe, 8)) WHERE numero_ordine IS NULL`;
+    await sql`CREATE INDEX IF NOT EXISTS ordini_numero_ordine_idx ON ordini (numero_ordine)`;
+
     // ON CONFLICT DO NOTHING rende l'inserimento sicuro anche se la
     // tabella ha già righe di un catalogo precedente: aggiunge solo
     // gli slug nuovi, senza mai toccare le quantità già esistenti.

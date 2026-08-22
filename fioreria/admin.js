@@ -112,6 +112,13 @@
     });
   }
 
+  var STATI_ORDINE = [
+    { valore: 'ricevuto', etichetta: 'Ricevuto' },
+    { valore: 'in_preparazione', etichetta: 'In preparazione' },
+    { valore: 'spedito', etichetta: 'Spedito' },
+    { valore: 'consegnato', etichetta: 'Consegnato' }
+  ];
+
   function disegnaOrdini(ordini) {
     var lista = $('listaOrdiniAdmin');
     lista.innerHTML = '';
@@ -126,15 +133,41 @@
       li.className = 'admin-ordine';
       var data = new Date(o.creato_il).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
       var contrassegno = typeof o.sessione_stripe === 'string' && o.sessione_stripe.indexOf('COD-') === 0;
+      var numero = o.numero_ordine || (typeof o.sessione_stripe === 'string' ? o.sessione_stripe.slice(-8).toUpperCase() : '');
       li.innerHTML =
         '<div class="admin-ordine-riga1"><strong>' + euro(o.totale_centesimi) + '</strong>' +
         (contrassegno ? '<span class="admin-ordine-tag">Contrassegno</span>' : '') +
         '<span>' + data + '</span></div>' +
+        '<p class="admin-ordine-numero">Ordine #' + numero + '</p>' +
         '<p class="admin-ordine-articoli"></p>' +
         '<p class="admin-ordine-consegna"></p>';
       li.querySelector('.admin-ordine-articoli').textContent = righeArticoli || '—';
       var consegna = [o.nome_ricevente, o.via, o.cap, o.citta, o.telefono].filter(Boolean).join(' · ');
       li.querySelector('.admin-ordine-consegna').textContent = (o.email ? o.email + ' — ' : '') + consegna;
+
+      var righeStato = document.createElement('div');
+      righeStato.className = 'admin-ordine-stato';
+      var selectStato = document.createElement('select');
+      selectStato.className = 'admin-stato-select';
+      STATI_ORDINE.forEach(function (s) {
+        var opt = document.createElement('option');
+        opt.value = s.valore; opt.textContent = s.etichetta;
+        if (s.valore === o.stato) opt.selected = true;
+        selectStato.appendChild(opt);
+      });
+      selectStato.addEventListener('change', function () {
+        fetch('/api/admin-ordine-stato', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: o.id, stato: selectStato.value })
+        }).then(function (res) {
+          if (!res.ok) throw new Error();
+          toast('Stato dell\'ordine #' + numero + ' aggiornato');
+        }).catch(function () { toast('Non sono riuscita a salvare, riprova'); });
+      });
+      righeStato.appendChild(selectStato);
+      li.appendChild(righeStato);
+
       lista.appendChild(li);
     });
   }

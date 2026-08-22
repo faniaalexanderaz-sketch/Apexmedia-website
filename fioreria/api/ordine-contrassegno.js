@@ -11,6 +11,7 @@
 const { sql, assicuraSchema } = require('./_db');
 const { inviaEmail } = require('./_email');
 const { afcProdotto } = require('../prodotti');
+const { emailConfermaOrdine, rigaArticolo, rigaExtra } = require('./_email-template');
 
 const EMAIL_OK = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const COSTO_CONTRASSEGNO_CENT = 1500; // € 15, fisso per tutti
@@ -76,7 +77,6 @@ module.exports = async function handler(req, res) {
 
     // il contrassegno sostituisce la spedizione assicurata (12/15€): non si
     // paga due volte, quindi qui non si aggiunge mai — solo il sovrapprezzo fisso
-    var spedizioneEuro = 0;
     totaleCentesimi += COSTO_CONTRASSEGNO_CENT;
 
     var consegna = body.consegna || {};
@@ -89,13 +89,15 @@ module.exports = async function handler(req, res) {
     }
 
     var idOrdine = 'COD-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+    var numeroOrdine = idOrdine.slice(-8).toUpperCase();
     var messaggio = (String(consegna.messaggio || '').slice(0, 360) +
       ' [Pagamento: contrassegno alla consegna, +€15]').trim().slice(0, 400);
 
     await sql`INSERT INTO ordini
-      (sessione_stripe, email, articoli, totale_centesimi, nome_ricevente, telefono, via, cap, citta, messaggio)
+      (sessione_stripe, numero_ordine, email, articoli, totale_centesimi, nome_ricevente, telefono, via, cap, citta, messaggio)
       VALUES (
         ${idOrdine},
+        ${numeroOrdine},
         ${emailCliente},
         ${JSON.stringify(articoliDaScalare)},
         ${totaleCentesimi},
@@ -111,61 +113,36 @@ module.exports = async function handler(req, res) {
     // non fa nulla — non deve mai far fallire la registrazione dell'ordine
     if (emailCliente) {
       try {
+        var righeArticoli = articoliDaScalare.map(function (a) {
+          var prod = afcProdotto(a[0]);
+          return rigaArticolo(prod ? prod.nome : a[0], a[1]);
+        }).join('');
+
+        var righeExtra = rigaExtra('Contrassegno alla consegna (spedizione inclusa)', '€ 15,00');
+
+        var indirizzoHtml = [consegna.nome, consegna.via, [consegna.cap, consegna.citta].filter(Boolean).join(' ')]
+          .filter(Boolean).join('<br/>') || null;
+
         await inviaEmail({
           to: emailCliente,
           subject: 'Il tuo ordine è confermato — Antica Fioreria del Centro',
-          html: emailConfermaContrassegno(idOrdine, articoliDaScalare, totaleCentesimi, spedizioneEuro, consegna)
+          html: emailConfermaOrdine({
+            numeroOrdine: numeroOrdine,
+            email: emailCliente,
+            righeArticoli: righeArticoli,
+            righeExtra: righeExtra,
+            totaleCentesimi: totaleCentesimi,
+            avviso: 'Pagamento alla consegna: tieni pronto l\'importo in contanti o con carta per il corriere.',
+            indirizzoHtml: indirizzoHtml
+          })
         });
       } catch (err) {
         console.error('Invio email conferma fallito:', err.message);
       }
     }
 
-    res.status(200).json({ ok: true, ordine: idOrdine });
+    res.status(200).json({ ok: true, ordine: idOrdine, numeroOrdine: numeroOrdine });
   } catch (err) {
     res.status(500).json({ error: err.message || 'Errore imprevisto' });
   }
 };
-
-/* ---------- testo dell'email di conferma ---------- */
-function euro(centesimi) {
-  return '€ ' + (centesimi / 100).toFixed(2).replace('.', ',');
-}
-
-function emailConfermaContrassegno(idOrdine, articoli, totaleCentesimi, spedizioneEuro, consegna) {
-  var righeArticoli = articoli.map(function (a) {
-    var slug = a[0], qty = a[1];
-    var prod = afcProdotto(slug);
-    var nome = prod ? prod.nome : slug;
-    return '<tr>' +
-      '<td style="padding:10px 0;border-bottom:1px solid #ECE8E1;color:#24352B;font-size:15px;">' + nome + '</td>' +
-      '<td style="padding:10px 0;border-bottom:1px solid #ECE8E1;color:#5A6B5E;font-size:15px;text-align:right;">× ' + qty + '</td>' +
-      '</tr>';
-  }).join('');
-
-  var indirizzo = [consegna.nome, consegna.via, [consegna.cap, consegna.citta].filter(Boolean).join(' ')]
-    .filter(Boolean).join('<br/>');
-
-  var numeroOrdine = idOrdine.slice(-8).toUpperCase();
-  var rigaSpedizione = spedizioneEuro
-    ? '<tr><td style="padding:10px 0;color:#5A6B5E;font-size:14px;">Spedizione assicurata</td>' +
-      '<td style="padding:10px 0;color:#5A6B5E;font-size:14px;text-align:right;">€ ' + spedizioneEuro + ',00</td></tr>'
-    : '';
-  var rigaContrassegno =
-    '<tr><td style="padding:10px 0;color:#5A6B5E;font-size:14px;">Contrassegno alla consegna</td>' +
-    '<td style="padding:10px 0;color:#5A6B5E;font-size:14px;text-align:right;">€ 15,00</td></tr>';
-
-  return '' +
-    '<div style="font-family:Georgia,serif;max-width:520px;margin:0 auto;padding:32px 24px;background:#FAFAF7;">' +
-    '  <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9CAF94;margin:0 0 6px;">Ordine confermato</p>' +
-    '  <h1 style="font-size:26px;color:#24352B;margin:0 0 18px;">Grazie di cuore!</h1>' +
-    '  <p style="font-size:15px;line-height:1.6;color:#5A6B5E;margin:0 0 22px;">Il tuo ordine <strong>#' + numeroOrdine + '</strong> è confermato e lo stiamo già preparando con cura in bottega. Arriverà in 48/72 ore lavorative.</p>' +
-    '  <table style="width:100%;border-collapse:collapse;margin:0 0 18px;">' + righeArticoli + rigaSpedizione + rigaContrassegno + '</table>' +
-    '  <p style="font-size:17px;font-weight:bold;color:#24352B;text-align:right;margin:0 0 10px;">Totale: ' + euro(totaleCentesimi) + '</p>' +
-    '  <p style="font-size:14px;color:#8A6A2A;background:#FBF3E4;border-radius:8px;padding:10px 14px;margin:0 0 26px;">Pagamento alla consegna: tieni pronto l\'importo in contanti o con carta per il corriere.</p>' +
-    (indirizzo ? '  <p style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9CAF94;margin:0 0 6px;">Consegna a</p>' +
-      '  <p style="font-size:15px;line-height:1.5;color:#24352B;margin:0 0 26px;">' + indirizzo + '</p>' : '') +
-    '  <p style="font-size:13px;line-height:1.6;color:#5A6B5E;margin:0;">Per qualsiasi domanda sul tuo ordine, rispondi pure a questa email o scrivici a <a href="mailto:info@anticafioreriadelcentro.it" style="color:#2E4B3A;">info@anticafioreriadelcentro.it</a>.</p>' +
-    '  <p style="font-size:13px;color:#9CAF94;margin:26px 0 0;">Antica Fioreria del Centro · dal 1953</p>' +
-    '</div>';
-}

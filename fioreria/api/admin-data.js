@@ -21,8 +21,8 @@ module.exports = async function handler(req, res) {
     var scorte = (await sql`SELECT slug, quantita FROM prodotti_scorte ORDER BY slug`);
 
     var ordini = (await sql`
-      SELECT id, sessione_stripe, email, articoli, totale_centesimi,
-             nome_ricevente, telefono, via, cap, citta, messaggio, creato_il
+      SELECT id, sessione_stripe, numero_ordine, email, articoli, totale_centesimi,
+             nome_ricevente, telefono, via, cap, citta, messaggio, stato, creato_il
       FROM ordini ORDER BY creato_il DESC LIMIT 100`);
 
     var visiteOggi = (await sql`

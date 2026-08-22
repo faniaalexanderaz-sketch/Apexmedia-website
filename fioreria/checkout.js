@@ -294,8 +294,9 @@
           throw new Error(d.error || ('HTTP ' + res.status));
         });
         return res.json();
-      }).then(function () {
-        location.href = 'ordine-completato.html?contrassegno=1';
+      }).then(function (data) {
+        var numero = data && data.numeroOrdine ? '&numero=' + encodeURIComponent(data.numeroOrdine) : '';
+        location.href = 'ordine-completato.html?contrassegno=1' + numero;
       }).catch(function (err) {
         demo(err && err.message);
       });
