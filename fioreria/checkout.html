@@ -37,6 +37,7 @@
       <ul class="riep-lista" id="riepLista"></ul>
       <p class="riep-sconto" id="riepSconto" hidden></p>
       <p class="riep-spedizione" id="riepSpedizione"></p>
+      <p class="riep-spedizione" id="riepContrassegno" hidden></p>
       <p class="riep-nota">Spedizione assicurata in tutta Italia · pacchi con base in ceramica o vetro contrassegnati fragili e imballati con cura extra.</p>
     </details>
 
@@ -156,10 +157,35 @@
       <h2 class="display co-titolo">Pronta per il <em>pagamento</em></h2>
 
       <div class="pag-riepilogo">
-        <p class="pag-riepilogo-testo">Tutto pronto: al passo successivo entri nella pagina di pagamento protetta, dove scegli tu come pagare.</p>
-        <div class="pag-metodi-badge" aria-hidden="true">
-          <span>Carta</span><span> Pay</span><span>G Pay</span>
-        </div>
+        <p class="pag-riepilogo-testo">Scegli come vuoi pagare: online e protetto, oppure in contanti o con carta direttamente al corriere.</p>
+      </div>
+
+      <div class="pag-metodi" role="radiogroup" aria-label="Metodo di pagamento">
+        <button class="pag-metodo selezionato" type="button" id="metodoOnline" role="radio" aria-checked="true">
+          <span class="pag-metodo-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="13" rx="2.5"/><path d="M2 10.5h20"/></svg>
+          </span>
+          <span class="pag-metodo-testo">
+            <strong>Paga online ora</strong>
+            <span>Pagamento protetto, addebito immediato</span>
+          </span>
+          <span class="pag-metodi-badge" aria-hidden="true">
+            <span>Carta</span><span> Pay</span><span>G Pay</span>
+          </span>
+          <span class="pag-metodo-radio" aria-hidden="true"></span>
+        </button>
+
+        <button class="pag-metodo" type="button" id="metodoContrassegno" role="radio" aria-checked="false">
+          <span class="pag-metodo-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M16.5 5.5H9.8a3.3 3.3 0 0 0 0 6.6h4.4a3.3 3.3 0 0 1 0 6.6H6.5"/></svg>
+          </span>
+          <span class="pag-metodo-testo">
+            <strong>Contrassegno alla consegna</strong>
+            <span>Paghi il corriere in contanti o con carta</span>
+          </span>
+          <span class="pag-metodo-prezzo">+ € 15</span>
+          <span class="pag-metodo-radio" aria-hidden="true"></span>
+        </button>
       </div>
 
       <p class="form-msg" id="pagMsg" role="alert" hidden></p>
@@ -170,7 +196,8 @@
       </button>
       <button class="link-btn" type="button" id="tornaConsegna">← Torna alla consegna</button>
 
-      <p class="pag-note">Il pagamento avviene sulla pagina protetta del circuito di pagamento: non gestiamo né vediamo mai il numero della tua carta. Convalidando dichiari di aver letto e accettato le <a href="termini.html" target="_blank" rel="noopener">Condizioni di vendita</a> e l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>.</p>
+      <p class="pag-note" id="pagNoteOnline">Il pagamento avviene sulla pagina protetta del circuito di pagamento: non gestiamo né vediamo mai il numero della tua carta. Convalidando dichiari di aver letto e accettato le <a href="termini.html" target="_blank" rel="noopener">Condizioni di vendita</a> e l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>.</p>
+      <p class="pag-note" id="pagNoteContrassegno" hidden>Con il contrassegno paghi il corriere alla consegna, in contanti o con carta: per questo servizio si aggiungono € 15 fissi, indipendentemente dall'ordine. Convalidando dichiari di aver letto e accettato le <a href="termini.html" target="_blank" rel="noopener">Condizioni di vendita</a> e l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>.</p>
     </section>
   </main>
 

@@ -70,7 +70,7 @@
       <div class="riepilogo-totale"><span>Totale</span><strong id="riepilogoTotale"></strong></div>
     </div>
 
-    <p class="esito-nota">Riceverai a breve un'email di conferma con il riepilogo del tuo ordine.</p>
+    <p class="esito-nota" id="esitoNota">Riceverai a breve un'email di conferma con il riepilogo del tuo ordine.</p>
     <a class="btn btn-primary btn-lg" href="index.html">Torna alla fioreria</a>
   </main>
 
@@ -78,6 +78,12 @@
   <script src="auth.js"></script>
   <script>
     (function () {
+      /* contrassegno: nota diversa, si paga il corriere alla consegna */
+      if (/[?&]contrassegno=1(&|$)/.test(location.search)) {
+        document.getElementById('esitoNota').textContent =
+          'Pagamento alla consegna: tieni pronto l’importo indicato in contanti o con carta per il corriere. Riceverai comunque un’email di conferma con il riepilogo del tuo ordine.';
+      }
+
       /* riepilogo: dall'ordine pending (con sconto) o dal carrello */
       var ordine = null;
       try { ordine = JSON.parse(localStorage.getItem('afc-ordine-pending')); } catch (e) {}
@@ -106,6 +112,11 @@
           var liSped = document.createElement('li');
           liSped.innerHTML = '<span class="ri-nome">Spedizione assicurata</span><span class="ri-prezzo">€ ' + ordine.spedizione + '</span>';
           lista.appendChild(liSped);
+        }
+        if (ordine.contrassegno) {
+          var liCod = document.createElement('li');
+          liCod.innerHTML = '<span class="ri-nome">Contrassegno alla consegna</span><span class="ri-prezzo">€ ' + ordine.contrassegno + '</span>';
+          lista.appendChild(liCod);
         }
         var t = ordine.totale;
         var tot = '€ ' + (Number.isInteger(t) ? t : t.toFixed(2).replace('.', ','));

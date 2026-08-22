@@ -16,6 +16,9 @@
   var cart = [];
   try { cart = JSON.parse(localStorage.getItem('afc-cart') || '[]'); } catch (e) { cart = []; }
 
+  var COSTO_CONTRASSEGNO = 15; // fisso, uguale per tutti gli ordini
+  var contrassegno = false;
+
   var elToast = document.getElementById('toast');
   var toastTimer = null;
   function toast(msg) {
@@ -57,7 +60,11 @@
     var c = coupon();
     var sconto = c ? Math.round(sub * c.pct) / 100 : 0;
     var spedizione = spedizioneCorrente();
-    return { sub: sub, coupon: c, sconto: sconto, spedizione: spedizione, tot: Math.round((sub - sconto) * 100) / 100 + spedizione };
+    var extraContrassegno = contrassegno ? COSTO_CONTRASSEGNO : 0;
+    return {
+      sub: sub, coupon: c, sconto: sconto, spedizione: spedizione, contrassegno: extraContrassegno,
+      tot: Math.round((sub - sconto) * 100) / 100 + spedizione + extraContrassegno
+    };
   }
   function riepilogo() {
     var lista = document.getElementById('riepLista');
@@ -78,10 +85,38 @@
     }
     var elSped = document.getElementById('riepSpedizione');
     if (elSped) elSped.textContent = 'Spedizione assicurata: ' + euro(t.spedizione);
+    var elContrassegno = document.getElementById('riepContrassegno');
+    if (elContrassegno) {
+      elContrassegno.textContent = 'Contrassegno alla consegna: ' + euro(t.contrassegno);
+      elContrassegno.hidden = !t.contrassegno;
+    }
     document.getElementById('riepTot').textContent = euro(t.tot);
-    document.getElementById('btnPagaTesto').textContent = 'Paga ' + euro(t.tot);
+    document.getElementById('btnPagaTesto').textContent = contrassegno
+      ? 'Conferma l\'ordine — ' + euro(t.tot) + ' alla consegna'
+      : 'Paga ' + euro(t.tot);
   }
   riepilogo();
+
+  /* ---------- metodo di pagamento: online (default) o contrassegno ---------- */
+  var metodoOnline = document.getElementById('metodoOnline');
+  var metodoContrassegno = document.getElementById('metodoContrassegno');
+  var pagNoteOnline = document.getElementById('pagNoteOnline');
+  var pagNoteContrassegno = document.getElementById('pagNoteContrassegno');
+
+  function selezionaMetodo(cod) {
+    contrassegno = cod;
+    metodoOnline.classList.toggle('selezionato', !cod);
+    metodoOnline.setAttribute('aria-checked', String(!cod));
+    metodoContrassegno.classList.toggle('selezionato', cod);
+    metodoContrassegno.setAttribute('aria-checked', String(cod));
+    pagNoteOnline.hidden = cod;
+    pagNoteContrassegno.hidden = !cod;
+    riepilogo();
+  }
+  if (metodoOnline && metodoContrassegno) {
+    metodoOnline.addEventListener('click', function () { selezionaMetodo(false); });
+    metodoContrassegno.addEventListener('click', function () { selezionaMetodo(true); });
+  }
 
   /* ---------- extra ---------- */
   document.querySelectorAll('.extra-card').forEach(function (card) {
@@ -218,6 +253,8 @@
       items: cart,
       totale: t.tot,
       spedizione: t.spedizione,
+      contrassegno: t.contrassegno,
+      metodoPagamento: contrassegno ? 'contrassegno' : 'online',
       sconto: t.coupon ? t.coupon.pct : 0,
       coupon: t.coupon ? t.coupon.codice : null,
       consegna: consegna,
@@ -227,7 +264,37 @@
 
     function demo(motivo) {
       if (motivo) console.warn('Checkout in modalità demo: ' + motivo);
-      setTimeout(function () { location.href = 'ordine-completato.html?demo=1'; }, 700);
+      setTimeout(function () {
+        location.href = 'ordine-completato.html?demo=1' + (contrassegno ? '&contrassegno=1' : '');
+      }, 700);
+    }
+
+    /* contrassegno: niente Stripe, si registra subito l'ordine (scorte,
+       email di conferma) tramite la funzione dedicata — il pagamento
+       vero avviene di persona al corriere alla consegna */
+    if (contrassegno) {
+      fetch('/api/ordine-contrassegno', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map(function (r) { return { nome: r.nome, prezzo: r.prezzo, qty: r.qty, slug: r.slug }; }),
+          spedizione: t.spedizione,
+          couponPct: t.coupon ? t.coupon.pct : 0,
+          coupon: t.coupon ? t.coupon.codice : '',
+          email: consegna.email,
+          consegna: consegna
+        })
+      }).then(function (res) {
+        if (!res.ok) return res.json().catch(function () { return {}; }).then(function (d) {
+          throw new Error(d.error || ('HTTP ' + res.status));
+        });
+        return res.json();
+      }).then(function () {
+        location.href = 'ordine-completato.html?contrassegno=1';
+      }).catch(function (err) {
+        demo(err && err.message);
+      });
+      return;
     }
 
     /* prova il pagamento reale tramite la funzione serverless.

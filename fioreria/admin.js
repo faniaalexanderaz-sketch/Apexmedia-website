@@ -125,8 +125,11 @@
       var li = document.createElement('li');
       li.className = 'admin-ordine';
       var data = new Date(o.creato_il).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      var contrassegno = typeof o.sessione_stripe === 'string' && o.sessione_stripe.indexOf('COD-') === 0;
       li.innerHTML =
-        '<div class="admin-ordine-riga1"><strong>' + euro(o.totale_centesimi) + '</strong><span>' + data + '</span></div>' +
+        '<div class="admin-ordine-riga1"><strong>' + euro(o.totale_centesimi) + '</strong>' +
+        (contrassegno ? '<span class="admin-ordine-tag">Contrassegno</span>' : '') +
+        '<span>' + data + '</span></div>' +
         '<p class="admin-ordine-articoli"></p>' +
         '<p class="admin-ordine-consegna"></p>';
       li.querySelector('.admin-ordine-articoli').textContent = righeArticoli || '—';
