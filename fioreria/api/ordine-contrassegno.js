@@ -74,11 +74,9 @@ module.exports = async function handler(req, res) {
       }
     });
 
-    // spedizione assicurata: stesse tariffe del pagamento online, mai scontata
-    var TARIFFE_SPEDIZIONE = [12, 15, 50];
-    var spedizioneEuro = Number(body.spedizione);
-    if (TARIFFE_SPEDIZIONE.indexOf(spedizioneEuro) === -1) spedizioneEuro = 0;
-    totaleCentesimi += spedizioneEuro * 100;
+    // il contrassegno sostituisce la spedizione assicurata (12/15€): non si
+    // paga due volte, quindi qui non si aggiunge mai — solo il sovrapprezzo fisso
+    var spedizioneEuro = 0;
     totaleCentesimi += COSTO_CONTRASSEGNO_CENT;
 
     var consegna = body.consegna || {};

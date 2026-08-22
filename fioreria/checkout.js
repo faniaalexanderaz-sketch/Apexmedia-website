@@ -59,7 +59,9 @@
     var sub = cart.reduce(function (s, r) { return s + r.prezzo * r.qty; }, 0);
     var c = coupon();
     var sconto = c ? Math.round(sub * c.pct) / 100 : 0;
-    var spedizione = spedizioneCorrente();
+    // col contrassegno la spedizione assicurata (12/15€) non si aggiunge:
+    // il sovrapprezzo di €15 la sostituisce, non si paga due volte
+    var spedizione = contrassegno ? 0 : spedizioneCorrente();
     var extraContrassegno = contrassegno ? COSTO_CONTRASSEGNO : 0;
     return {
       sub: sub, coupon: c, sconto: sconto, spedizione: spedizione, contrassegno: extraContrassegno,
@@ -84,10 +86,13 @@
       elSconto.hidden = true;
     }
     var elSped = document.getElementById('riepSpedizione');
-    if (elSped) elSped.textContent = 'Spedizione assicurata: ' + euro(t.spedizione);
+    if (elSped) {
+      elSped.hidden = !!contrassegno;
+      if (!contrassegno) elSped.textContent = 'Spedizione assicurata: ' + euro(t.spedizione);
+    }
     var elContrassegno = document.getElementById('riepContrassegno');
     if (elContrassegno) {
-      elContrassegno.textContent = 'Contrassegno alla consegna: ' + euro(t.contrassegno);
+      elContrassegno.textContent = 'Contrassegno alla consegna (spedizione inclusa): ' + euro(t.contrassegno);
       elContrassegno.hidden = !t.contrassegno;
     }
     document.getElementById('riepTot').textContent = euro(t.tot);
