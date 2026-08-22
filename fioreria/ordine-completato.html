@@ -167,16 +167,17 @@
         }
       }
 
-      /* bottone "Traccia il tuo ordine": basta il numero per mostrarlo —
-         se abbiamo anche l'email dell'ordine la precompiliamo, altrimenti
-         il cliente la scrive lui nella pagina di ricerca */
-      if (numeroOrdine) {
-        var emailOrdine = ordine && ordine.consegna ? ordine.consegna.email : null;
-        var linkTraccia = document.getElementById('linkTraccia');
-        linkTraccia.href = 'traccia-ordine.html?numero=' + encodeURIComponent(numeroOrdine) +
-          (emailOrdine ? '&email=' + encodeURIComponent(emailOrdine) : '');
-        linkTraccia.hidden = false;
-      }
+      /* bottone "Traccia il tuo ordine": sempre visibile dopo un ordine,
+         account o no. Se abbiamo numero ed email li precompiliamo nel
+         link; altrimenti si apre la pagina di ricerca vuota e il
+         cliente inserisce i dati a mano (li trova nell'email di conferma) */
+      var emailOrdine = ordine && ordine.consegna ? ordine.consegna.email : null;
+      var linkTraccia = document.getElementById('linkTraccia');
+      var parametriTraccia = [];
+      if (numeroOrdine) parametriTraccia.push('numero=' + encodeURIComponent(numeroOrdine));
+      if (emailOrdine) parametriTraccia.push('email=' + encodeURIComponent(emailOrdine));
+      linkTraccia.href = 'traccia-ordine.html' + (parametriTraccia.length ? '?' + parametriTraccia.join('&') : '');
+      linkTraccia.hidden = false;
 
       /* ordine concluso: si riparte puliti */
       localStorage.removeItem('afc-cart');
