@@ -120,7 +120,8 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 3. Aperti tutti i giorni fino alle 22:30. Parcheggio comodo, ambiente curato, staff qualificato in tecniche orientali.
 4. Basta cercare, hai trovato il posto giusto. Prenota ora e goditi un massaggio su misura per te.
 
-**Percorso finale annuncio:** `essenzadoriente.it/trattamenti/massaggio-spa`
+**URL finale (da incollare nel campo "URL finale" dell'annuncio — SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/massaggio-spa.html`
+**Percorso visualizzato (campo separato, facoltativo, mai con https://):** `trattamenti/massaggio-spa`
 
 ---
 
@@ -158,7 +159,8 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info e disponibilità.
 4. Riscopri l'energia con un trattamento mirato ai piedi. Conferma immediata della prenotazione.
 
-**Percorso finale annuncio:** `essenzadoriente.it/trattamenti/riflessologia-plantare`
+**URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/riflessologia-plantare.html`
+**Percorso visualizzato (mai con https://):** `trattamenti/riflessologia-plantare`
 
 ---
 
@@ -197,7 +199,8 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info.
 4. Scopri le tecniche orientali che rilassano corpo e mente. Conferma immediata della prenotazione.
 
-**Percorso finale annuncio:** `essenzadoriente.it/trattamenti/tuina-shiatsu`
+**URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/tuina-shiatsu.html`
+**Percorso visualizzato (mai con https://):** `trattamenti/tuina-shiatsu`
 
 ---
 
@@ -238,7 +241,8 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info.
 4. Prova il trattamento che tutti cercano. Conferma immediata della prenotazione online.
 
-**Percorso finale annuncio:** `essenzadoriente.it/trattamenti/gua-sha`
+**URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/gua-sha.html`
+**Percorso visualizzato (mai con https://):** `trattamenti/gua-sha`
 
 ---
 
@@ -277,7 +281,8 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info.
 4. Prenditi cura di te con un trattamento professionale. Conferma immediata della prenotazione.
 
-**Percorso finale annuncio:** `essenzadoriente.it/trattamenti/pedicure`
+**URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/pedicure.html`
+**Percorso visualizzato (mai con https://):** `trattamenti/pedicure`
 
 ---
 
@@ -316,7 +321,8 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info e disponibilità.
 4. Il centro olistico scelto da centinaia di clienti soddisfatti. Conferma immediata della prenotazione.
 
-**Percorso finale annuncio:** `essenzadoriente.it`
+**URL finale (SEMPRE con https://):** `https://essenzadoriente.it/`
+**Percorso visualizzato (mai con https://):** *(lascia vuoto per il gruppo Brand)*
 
 ---
 
@@ -362,11 +368,11 @@ Attiva gli annunci solo quando c'è probabilità reale di prenotazione/chiamata:
 
 - **Estensione di chiamata:** +39 331 715 3533 — attiva solo in orario apertura (9:30–22:30)
 - **Estensione di posizione:** collega il profilo Google Business Profile dell'attività (Via San Lorenzo 46, Alessandria)
-- **Sitelink (4, con descrizione da 2 righe ciascuno):**
-  1. Titolo: "Prenota ora" → link `essenzadoriente.it/#prenota` · Riga 1: "Calendario online sempre aggiornato" · Riga 2: "Conferma immediata in 1 minuto"
-  2. Titolo: "I nostri trattamenti" → link `essenzadoriente.it/#trattamenti` · Riga 1: "Massaggi, riflessologia, shiatsu, gua sha" · Riga 2: "Prezzi sempre in chiaro"
-  3. Titolo: "Recensioni 5,0★" → link `essenzadoriente.it/#recensioni` (o home) · Riga 1: "106 recensioni verificate su Google" · Riga 2: "Il centro più apprezzato di Alessandria"
-  4. Titolo: "Come raggiungerci" → link `essenzadoriente.it/#dove-siamo` (o home) · Riga 1: "Via San Lorenzo 46, Alessandria" · Riga 2: "Parcheggio comodo nei dintorni"
+- **Sitelink (4, con descrizione da 2 righe ciascuno — URL SEMPRE con https://):**
+  1. Titolo: "Prenota ora" → link `https://essenzadoriente.it/#prenota` · Riga 1: "Calendario online sempre aggiornato" · Riga 2: "Conferma immediata in 1 minuto"
+  2. Titolo: "I nostri trattamenti" → link `https://essenzadoriente.it/#trattamenti` · Riga 1: "Massaggi, riflessologia, shiatsu, gua sha" · Riga 2: "Prezzi sempre in chiaro"
+  3. Titolo: "Recensioni 5,0★" → link `https://essenzadoriente.it/#recensioni` (o home) · Riga 1: "106 recensioni verificate su Google" · Riga 2: "Il centro più apprezzato di Alessandria"
+  4. Titolo: "Come raggiungerci" → link `https://essenzadoriente.it/#dove-siamo` (o home) · Riga 1: "Via San Lorenzo 46, Alessandria" · Riga 2: "Parcheggio comodo nei dintorni"
 - **Callout (snippet extra, incolla tutti e 8):**
   ```
   5,0★ – 106 recensioni
@@ -450,10 +456,10 @@ Per ciascun gruppo (sezione 4 di questo file):
 2. Imposta il **CPC max** indicato per quel gruppo (se sei in "Massimizza clic" con limite).
 3. Aggiungi le **keyword**: nel campo apposito, incolla l'elenco così come è scritto (con le virgolette e le parentesi quadre incluse — Google riconosce automaticamente il tipo di corrispondenza).
 4. Crea l'annuncio: **"+" Nuovo annuncio → Annuncio adattabile della rete di ricerca**.
-   - URL finale: incolla la landing indicata per quel gruppo.
+   - **URL finale:** incolla esattamente la riga "URL finale" del gruppo, completa di `https://` — se manca il protocollo, Google mostra l'avviso giallo di "URL non sicuro"/errore e non ti fa salvare l'annuncio.
    - Titoli: incolla tutti e 15 i titoli, uno per campo (Google ne aggiunge automaticamente altri campi se servono).
    - Descrizioni: incolla tutte e 4.
-   - Percorso visualizzato: incolla quanto indicato in "Percorso finale annuncio".
+   - Percorso visualizzato: incolla la riga "Percorso visualizzato" del gruppo (questo campo NON vuole `https://`, è solo testo cosmetico che appare dopo il dominio nell'annuncio — non è un link cliccabile a sé).
 5. Ripeti per gli altri 5 gruppi.
 
 **Passo 7 — Keyword negative**
