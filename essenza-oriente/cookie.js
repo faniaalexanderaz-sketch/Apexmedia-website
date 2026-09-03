@@ -41,10 +41,22 @@
     if (box) { box.remove(); box = null; }
   }
 
+  /* sblocca il Google tag (gtag.js, in head) solo dopo l'accettazione:
+     di default parte con 'denied' per restare conformi al GDPR */
+  function aggiornaConsensoGtag() {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
+  }
+
   function imposta(v) {
     localStorage.setItem(KEY, v);
     nascondi();
-    if (v === 'accettato') caricaGTM();
+    if (v === 'accettato') { caricaGTM(); aggiornaConsensoGtag(); }
   }
 
   /* percorso base: '' in radice, '../' dentro trattamenti/ */
@@ -68,7 +80,7 @@
   }
 
   if (!stato()) crea();
-  if (stato() === 'accettato') caricaGTM();
+  if (stato() === 'accettato') { caricaGTM(); aggiornaConsensoGtag(); }
 
   /* usata da script.js per gli eventi di conversione: se il consenso
      non è ancora stato dato (o è stato rifiutato), l'evento non
