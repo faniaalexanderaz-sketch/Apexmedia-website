@@ -97,11 +97,21 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 "massaggio alessandria"
 [massaggio alessandria]
 "centro massaggi alessandria"
+[centro massaggi alessandria]
 "massaggi decontratturanti alessandria"
 "massaggio rilassante alessandria"
+"massaggio decontratturante alessandria"
 "dove fare un massaggio ad alessandria"
 "massaggio schiena alessandria"
+"massaggio cervicale alessandria"
 "centro benessere alessandria"
+"massaggio corpo alessandria"
+"massaggio anti stress alessandria"
+"miglior centro massaggi alessandria"
+"massaggio vicino a me"
+"quanto costa un massaggio ad alessandria"
+"prezzo massaggio alessandria"
+"centro massaggi zona alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri — vanno nel campo "Titoli" dell'annuncio, MAI nel campo keyword):**
@@ -141,6 +151,16 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 [riflessologia plantare alessandria]
 "massaggio piedi alessandria"
 "riflessologia plantare vicino a me"
+"centro riflessologia alessandria"
+"riflessologia plantare prezzo"
+"quanto costa riflessologia plantare"
+"massaggio ai piedi alessandria"
+"riflessologia plantare benefici alessandria"
+"dove fare riflessologia plantare alessandria"
+"trattamento piedi alessandria"
+"riflessologia plantare zona alessandria"
+"massaggio plantare rilassante"
+"riflessologia cinese alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -179,8 +199,17 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 "shiatsu alessandria"
 [shiatsu alessandria]
 "tuina alessandria"
+[tuina alessandria]
 "massaggio cinese alessandria"
 "medicina tradizionale cinese alessandria"
+"massaggio shiatsu vicino a me"
+"tuina shiatsu prezzo"
+"centro shiatsu alessandria"
+"massaggio giapponese alessandria"
+"pressione punti energetici alessandria"
+"massaggio meridiani alessandria"
+"shiatsu benefici alessandria"
+"dove fare shiatsu alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -221,8 +250,17 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 "gua sha alessandria"
 [gua sha alessandria]
 "coppettazione alessandria"
+[coppettazione alessandria]
 "trattamento viso gua sha alessandria"
 "coppette cinesi massaggio alessandria"
+"gua sha viso prezzo"
+"cupping alessandria"
+"gua sha corpo alessandria"
+"coppettazione cinese alessandria"
+"dove fare gua sha alessandria"
+"trattamento drenante viso alessandria"
+"coppettazione benefici alessandria"
+"gua sha vicino a me"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -262,7 +300,15 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 [pedicure alessandria]
 "pedicure estetica alessandria"
 "pulizia orecchie alessandria"
+[pulizia orecchie alessandria]
 "centro estetico orientale alessandria"
+"pedicure prezzo alessandria"
+"dove fare pedicure alessandria"
+"pedicure curativa alessandria"
+"pulizia cerume orecchie alessandria"
+"pedicure vicino a me"
+"centro pedicure zona alessandria"
+"trattamento piedi estetico alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -301,8 +347,15 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 "essenza d'oriente alessandria"
 [essenza d'oriente]
 "essenza d'oriente"
+"essenza d'oriente via san lorenzo"
 "prenotare massaggio alessandria oggi"
 "centro olistico alessandria aperto"
+"centro benessere orientale alessandria"
+"essenza d'oriente recensioni"
+"essenza d'oriente orari"
+"essenza d'oriente prenotazione"
+"miglior centro olistico alessandria"
+"centro massaggi aperto la domenica alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -380,16 +433,19 @@ Attiva gli annunci solo quando c'è probabilità reale di prenotazione/chiamata:
   2. Titolo: "I nostri trattamenti" → link `https://essenzadoriente.it/#trattamenti` · Riga 1: "Massaggi, riflessologia, shiatsu, gua sha" · Riga 2: "Prezzi sempre in chiaro"
   3. Titolo: "Recensioni 5,0★" → link `https://essenzadoriente.it/#recensioni` (o home) · Riga 1: "106 recensioni verificate su Google" · Riga 2: "Il centro più apprezzato di Alessandria"
   4. Titolo: "Come raggiungerci" → link `https://essenzadoriente.it/#dove-siamo` (o home) · Riga 1: "Via San Lorenzo 46, Alessandria" · Riga 2: "Parcheggio comodo nei dintorni"
-- **Callout (snippet extra, incolla tutti e 8):**
+- **Callout (Google Ads ne chiede almeno 4, limite 25 caratteri ciascuno — questi 4 sono già verificati, incollali così come sono):**
   ```
-  5,0★ – 106 recensioni
-  Aperti 7/7
-  Prenotazione online in 1 minuto
-  Conferma immediata
-  Parcheggio comodo
-  Prezzi sempre in chiaro
-  Staff qualificato
-  Trattamenti orientali autentici
+  5,0 su Google (13)
+  106 Recensioni (14)
+  Aperti 7/7 (10)
+  Prenotazione Online (19)
+  ```
+  Se lo spazio te lo permette (Google a volte ne accetta anche più di 4), aggiungi anche questi, sempre ≤25 caratteri:
+  ```
+  Conferma Immediata (18)
+  Parcheggio Comodo (17)
+  Prezzi Chiari (13)
+  Staff Qualificato (17)
   ```
 - **Snippet strutturato — tipo "Servizi":**
   ```
