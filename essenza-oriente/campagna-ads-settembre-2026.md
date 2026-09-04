@@ -64,7 +64,7 @@ Campagna: "Essenza d'Oriente – Ricerca Locale Alessandria"
 ├─ Offerta: prime 7 gg "Massimizza clic" con CPC max €1,20 → dal giorno 8, se ci sono almeno 10-15 conversioni tracciate, passa a "Massimizza conversioni"
 ├─ Budget: €15/giorno (budget standard, non accelerato)
 ├─ Rete: solo Google (no partner di ricerca)
-├─ Località: Alessandria + raggio 12 km (Spinetta Marengo, Valle San Bartolomeo, Litta Parodi, ecc.)
+├─ Località: come impostato in campagna — raggio ~40 km su Alessandria + un secondo raggio ~20 km a nord (copre tutta la provincia di Alessandria, incluse Asti e Novi Ligure, esclude Genova/Milano/Torino)
 ├─ Lingua: Italiano
 ├─ Programmazione annunci: vedi sezione 6
 └─ Estensioni: vedi sezione 7
@@ -79,6 +79,10 @@ Ripartizione budget indicativa sui 6 gruppi (€15/giorno totali): il sistema la
 **Regola pratica:** se dopo 10 giorni un gruppo non genera click a CPC ragionevole, sposta il suo budget (via CPC max) sul Gruppo 1 e 2, che sono i più caldi.
 
 Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RSA completo (15 titoli + 4 descrizioni — Google ne testa da solo le combinazioni migliori, tu incollali tutti).
+
+**Attenzione — due errori comuni da evitare:**
+- **Non copiare i simboli `` ` `` (apice inverso) che vedi intorno agli URL in questo PDF** — servono solo per evidenziare il testo, non fanno parte del link vero. Se li incolli insieme all'URL, Google Ads dà errore "caratteri non ammessi". Copia solo da `https://` fino alla fine, senza gli apici.
+- **Il campo "URL finale" a livello di singola parola chiave è facoltativo**: lascialo vuoto. Basta l'URL finale impostato nell'annuncio (quello del gruppo), non serve ripeterlo per ogni keyword.
 
 **Attenzione a non confondere le 3 caselle diverse dentro un gruppo di annunci:**
 - **Parole chiave** (scheda "Parole chiave" del gruppo di annunci) → è dove incolli l'elenco con virgolette `"..."` e parentesi quadre `[...]`. Servono a far apparire l'annuncio quando qualcuno cerca quei termini su Google. NON vanno scritte dentro l'annuncio.
@@ -98,21 +102,19 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 [massaggio alessandria]
 "centro massaggi alessandria"
 [centro massaggi alessandria]
-"massaggi decontratturanti alessandria"
-"massaggio rilassante alessandria"
-"massaggio decontratturante alessandria"
-"dove fare un massaggio ad alessandria"
-"massaggio schiena alessandria"
-"massaggio cervicale alessandria"
+"massaggi alessandria"
 "centro benessere alessandria"
-"massaggio corpo alessandria"
-"massaggio anti stress alessandria"
-"miglior centro massaggi alessandria"
+"massaggio decontratturante"
+"massaggio rilassante"
+"massaggio schiena"
+"massaggio cervicale"
+"massaggio corpo"
+"massaggio anti stress"
 "massaggio vicino a me"
-"quanto costa un massaggio ad alessandria"
+"miglior centro massaggi alessandria"
 "prezzo massaggio alessandria"
-"centro massaggi zona alessandria"
 ```
+> Nota: alcune keyword qui sopra NON hanno "alessandria" (es. "massaggio decontratturante"). È voluto: sono termini con più ricerche, e il targeting geografico a 12km attorno ad Alessandria (sezione 3) fa comunque in modo che l'annuncio appaia solo a chi cerca da quella zona. Se le tenevi tutte con "alessandria" incollato, restavano troppo di nicchia e Google le segnava "basso volume di ricerca" (nessuno le cerca lì per lì).
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri — vanno nel campo "Titoli" dell'annuncio, MAI nel campo keyword):**
 1. Massaggio Alessandria (21)
@@ -149,18 +151,14 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 ```
 "riflessologia plantare alessandria"
 [riflessologia plantare alessandria]
+"riflessologia plantare"
 "massaggio piedi alessandria"
+"massaggio piedi"
 "riflessologia plantare vicino a me"
 "centro riflessologia alessandria"
 "riflessologia plantare prezzo"
-"quanto costa riflessologia plantare"
-"massaggio ai piedi alessandria"
-"riflessologia plantare benefici alessandria"
-"dove fare riflessologia plantare alessandria"
 "trattamento piedi alessandria"
-"riflessologia plantare zona alessandria"
 "massaggio plantare rilassante"
-"riflessologia cinese alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -198,18 +196,14 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 ```
 "shiatsu alessandria"
 [shiatsu alessandria]
+"shiatsu"
 "tuina alessandria"
 [tuina alessandria]
 "massaggio cinese alessandria"
-"medicina tradizionale cinese alessandria"
+"massaggio shiatsu"
 "massaggio shiatsu vicino a me"
-"tuina shiatsu prezzo"
 "centro shiatsu alessandria"
 "massaggio giapponese alessandria"
-"pressione punti energetici alessandria"
-"massaggio meridiani alessandria"
-"shiatsu benefici alessandria"
-"dove fare shiatsu alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -249,17 +243,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 ```
 "gua sha alessandria"
 [gua sha alessandria]
+"gua sha"
 "coppettazione alessandria"
 [coppettazione alessandria]
-"trattamento viso gua sha alessandria"
-"coppette cinesi massaggio alessandria"
-"gua sha viso prezzo"
+"coppettazione"
 "cupping alessandria"
-"gua sha corpo alessandria"
-"coppettazione cinese alessandria"
-"dove fare gua sha alessandria"
+"gua sha viso"
 "trattamento drenante viso alessandria"
-"coppettazione benefici alessandria"
 "gua sha vicino a me"
 ```
 
@@ -298,17 +288,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 ```
 "pedicure alessandria"
 [pedicure alessandria]
-"pedicure estetica alessandria"
+"pedicure estetica"
 "pulizia orecchie alessandria"
 [pulizia orecchie alessandria]
+"pulizia orecchie"
 "centro estetico orientale alessandria"
 "pedicure prezzo alessandria"
-"dove fare pedicure alessandria"
-"pedicure curativa alessandria"
-"pulizia cerume orecchie alessandria"
 "pedicure vicino a me"
-"centro pedicure zona alessandria"
-"trattamento piedi estetico alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -347,15 +333,11 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 "essenza d'oriente alessandria"
 [essenza d'oriente]
 "essenza d'oriente"
-"essenza d'oriente via san lorenzo"
-"prenotare massaggio alessandria oggi"
-"centro olistico alessandria aperto"
-"centro benessere orientale alessandria"
 "essenza d'oriente recensioni"
 "essenza d'oriente orari"
-"essenza d'oriente prenotazione"
+"centro olistico alessandria"
+"centro benessere orientale alessandria"
 "miglior centro olistico alessandria"
-"centro massaggi aperto la domenica alessandria"
 ```
 
 **Titoli (15, ognuno verificato ≤ 30 caratteri):**
@@ -501,7 +483,7 @@ Segui l'ordine esatto, non saltare passaggi.
 6. Reti: **deseleziona "Rete Display"** e **deseleziona "Includi partner di ricerca Google"** (spendono peggio con budget piccoli).
 
 **Passo 3 — Località, lingua, budget, offerta**
-1. Località: seleziona **"Inserisci un'altra posizione"** → cerca "Alessandria, AL" → imposta un **raggio di 12 km**.
+1. Località: hai già impostato un raggio più ampio del previsto (~40 km su Alessandria + un secondo raggio ~20 km più a nord, che copre tutta la provincia inclusi Asti e Novi Ligure, senza arrivare a Genova/Milano/Torino) — va bene così, anzi aiuta le keyword più generiche (sezione 4) ad avere volume di ricerca reale invece di restare "basso volume".
 2. Opzioni di località (link "Opzioni di località"): scegli **"Presenza: persone che si trovano nelle zone target"** (non "interesse"), altrimenti paghi click di gente lontana solo interessata all'argomento.
 3. Lingue: **Italiano**.
 4. Budget: **€15 al giorno**, tipo "Standard".
