@@ -80,6 +80,13 @@ Ripartizione budget indicativa sui 6 gruppi (€15/giorno totali): il sistema la
 
 Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RSA completo (15 titoli + 4 descrizioni — Google ne testa da solo le combinazioni migliori, tu incollali tutti).
 
+**Attenzione a non confondere le 3 caselle diverse dentro un gruppo di annunci:**
+- **Parole chiave** (scheda "Parole chiave" del gruppo di annunci) → è dove incolli l'elenco con virgolette `"..."` e parentesi quadre `[...]`. Servono a far apparire l'annuncio quando qualcuno cerca quei termini su Google. NON vanno scritte dentro l'annuncio.
+- **Titoli** (dentro "Crea annuncio") → massimo **30 caratteri ciascuno**. Ho già controllato al carattere tutti quelli sotto, sono già pronti così come sono, incollali uno per campo senza modificarli.
+- **Descrizioni** (sempre dentro "Crea annuncio") → massimo **90 caratteri ciascuna**. Anche queste già verificate.
+
+Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta caratteri di controllo — non fa parte del testo, non incollarlo.
+
 ---
 
 ### Gruppo 1 — Massaggi generici (il più cercato, priorità massima)
@@ -97,28 +104,28 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 "centro benessere alessandria"
 ```
 
-**Titoli (15):**
-1. Massaggio ad Alessandria
-2. Essenza d'Oriente Centro Olistico
-3. 5,0★ su Google – 106 Recensioni
-4. Prenota Online in 1 Minuto
-5. Massaggio Decontratturante Professionale
-6. Massaggio Rilassante ad Alessandria
-7. Aperti 7/7 fino alle 22:30
-8. Via San Lorenzo 46, Alessandria
-9. Conferma Immediata, Nessuna Attesa
-10. Riflessologia, Shiatsu, Gua Sha e Altro
-11. Prezzi Sempre Chiari, Nessuna Sorpresa
-12. Scrivici su WhatsApp, Risposta Subito
-13. Centro Massaggi più Recensito di Alessandria
-14. Rilassati Dopo una Giornata Intensa
-15. Trattamenti Orientali Autentici
+**Titoli (15, ognuno verificato ≤ 30 caratteri — vanno nel campo "Titoli" dell'annuncio, MAI nel campo keyword):**
+1. Massaggio Alessandria (21)
+2. Essenza d'Oriente (17)
+3. 5,0 Stelle su Google (20)
+4. Prenota Online Subito (21)
+5. Massaggio Decontratturante (26)
+6. Massaggio Rilassante (20)
+7. Aperti 7/7 fino alle 22:30 (26)
+8. Via San Lorenzo 46 (18)
+9. Conferma Immediata (18)
+10. Riflessologia e Shiatsu (23)
+11. Prezzi Sempre Chiari (20)
+12. Scrivici su WhatsApp (20)
+13. 106 Recensioni Google (21)
+14. Rilassati Oggi Stesso (21)
+15. Trattamenti Orientali (21)
 
-**Descrizioni (4):**
-1. Centro olistico nel cuore di Alessandria. Massaggi decontratturanti, riflessologia, shiatsu. Prezzi chiari, prenota in un minuto.
-2. 5,0★ su Google con 106 recensioni. Scegli il trattamento, prenota online o scrivici su WhatsApp: risposta immediata.
-3. Aperti tutti i giorni fino alle 22:30. Parcheggio comodo, ambiente curato, staff qualificato in tecniche orientali.
-4. Basta cercare, hai trovato il posto giusto. Prenota ora e goditi un massaggio su misura per te.
+**Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
+1. Centro olistico ad Alessandria: massaggi, riflessologia, shiatsu. Prezzi chiari. (80)
+2. 5,0 stelle su Google, 106 recensioni. Prenota online o scrivici su WhatsApp. (76)
+3. Aperti tutti i giorni fino alle 22:30. Staff qualificato, parcheggio comodo. (76)
+4. Hai trovato il posto giusto. Prenota ora il tuo massaggio su misura. (68)
 
 **URL finale (da incollare nel campo "URL finale" dell'annuncio — SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/massaggio-spa.html`
 **Percorso visualizzato (campo separato, facoltativo, mai con https://):** `trattamenti/massaggio-spa`
@@ -136,28 +143,28 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 "riflessologia plantare vicino a me"
 ```
 
-**Titoli (15):**
-1. Riflessologia Plantare ad Alessandria
-2. Essenza d'Oriente Centro Olistico
-3. 5,0★ su Google – 106 Recensioni
-4. Prenota Online in 1 Minuto
-5. Massaggio Piedi Professionale
-6. Riduce Stress e Tensioni Muscolari
-7. Aperti 7/7 fino alle 22:30
-8. Via San Lorenzo 46, Alessandria
-9. Conferma Immediata, Nessuna Attesa
-10. Tecnica Orientale Autentica
-11. Prezzi Sempre Chiari, Nessuna Sorpresa
-12. Scrivici su WhatsApp, Risposta Subito
-13. Il Centro più Recensito di Alessandria
-14. Un Momento Tutto per Te
-15. Benessere che Parte dai Piedi
+**Titoli (15, ognuno verificato ≤ 30 caratteri):**
+1. Riflessologia Plantare (22)
+2. Essenza d'Oriente (17)
+3. 5,0 Stelle su Google (20)
+4. Prenota Online Subito (21)
+5. Massaggio Piedi Alessandria (27)
+6. Riduce Stress e Tensioni (24)
+7. Aperti 7/7 fino alle 22:30 (26)
+8. Via San Lorenzo 46 (18)
+9. Conferma Immediata (18)
+10. Tecnica Orientale Autentica (27)
+11. Prezzi Sempre Chiari (20)
+12. Scrivici su WhatsApp (20)
+13. 106 Recensioni Google (21)
+14. Un Momento Per Te (17)
+15. Benessere dai Piedi (19)
 
-**Descrizioni (4):**
-1. Riflessologia plantare praticata da mani esperte. Allevia stanchezza e tensioni. Prenota online in un minuto.
-2. 5,0★ su Google con 106 recensioni. Trattamento rilassante per corpo e mente, prezzi sempre in chiaro.
-3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info e disponibilità.
-4. Riscopri l'energia con un trattamento mirato ai piedi. Conferma immediata della prenotazione.
+**Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
+1. Riflessologia plantare praticata da mani esperte. Prenota online in un minuto. (78)
+2. 5,0 stelle su Google, 106 recensioni. Trattamento rilassante, prezzi chiari. (76)
+3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
+4. Riscopri energia con un trattamento mirato ai piedi. Conferma immediata. (72)
 
 **URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/riflessologia-plantare.html`
 **Percorso visualizzato (mai con https://):** `trattamenti/riflessologia-plantare`
@@ -176,28 +183,28 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 "medicina tradizionale cinese alessandria"
 ```
 
-**Titoli (15):**
-1. Shiatsu e Tuina ad Alessandria
-2. Essenza d'Oriente Centro Olistico
-3. 5,0★ su Google – 106 Recensioni
-4. Prenota Online in 1 Minuto
-5. Massaggio Tradizionale Cinese
-6. Tecnica Orientale Autentica
-7. Aperti 7/7 fino alle 22:30
-8. Via San Lorenzo 46, Alessandria
-9. Conferma Immediata, Nessuna Attesa
-10. Riequilibra Corpo ed Energia
-11. Prezzi Sempre Chiari, Nessuna Sorpresa
-12. Scrivici su WhatsApp, Risposta Subito
-13. Il Centro più Recensito di Alessandria
-14. Praticanti Esperti in Medicina Orientale
-15. Un Trattamento Diverso dal Solito
+**Titoli (15, ognuno verificato ≤ 30 caratteri):**
+1. Shiatsu e Tuina Alessandria (27)
+2. Essenza d'Oriente (17)
+3. 5,0 Stelle su Google (20)
+4. Prenota Online Subito (21)
+5. Massaggio Tradiz. Cinese (24)
+6. Tecnica Orientale Autentica (27)
+7. Aperti 7/7 fino alle 22:30 (26)
+8. Via San Lorenzo 46 (18)
+9. Conferma Immediata (18)
+10. Riequilibra Corpo e Energia (27)
+11. Prezzi Sempre Chiari (20)
+12. Scrivici su WhatsApp (20)
+13. 106 Recensioni Google (21)
+14. Esperti in Medicina Orient. (27)
+15. Un Trattamento Diverso (22)
 
-**Descrizioni (4):**
-1. Shiatsu e Tuina praticati da esperti in medicina tradizionale cinese. Prenota online in un minuto.
-2. 5,0★ su Google con 106 recensioni. Trattamento autentico per riequilibrare corpo ed energia.
-3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info.
-4. Scopri le tecniche orientali che rilassano corpo e mente. Conferma immediata della prenotazione.
+**Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
+1. Shiatsu e Tuina, esperti in medicina tradizionale cinese. Prenota online. (73)
+2. 5,0 stelle su Google, 106 recensioni. Trattamento autentico e rilassante. (73)
+3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
+4. Scopri le tecniche orientali che rilassano corpo e mente. Prenota ora. (70)
 
 **URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/tuina-shiatsu.html`
 **Percorso visualizzato (mai con https://):** `trattamenti/tuina-shiatsu`
@@ -218,28 +225,28 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 "coppette cinesi massaggio alessandria"
 ```
 
-**Titoli (15):**
-1. Gua Sha e Coppettazione ad Alessandria
-2. Essenza d'Oriente Centro Olistico
-3. 5,0★ su Google – 106 Recensioni
-4. Prenota Online in 1 Minuto
-5. Trattamento Viso e Corpo Orientale
-6. Tecnica Antica, Risultati Visibili
-7. Aperti 7/7 fino alle 22:30
-8. Via San Lorenzo 46, Alessandria
-9. Conferma Immediata, Nessuna Attesa
-10. Drena, Rilassa, Ringiovanisce
-11. Prezzi Sempre Chiari, Nessuna Sorpresa
-12. Scrivici su WhatsApp, Risposta Subito
-13. Il Centro più Recensito di Alessandria
-14. Il Trattamento del Momento
-15. Praticanti Esperti in Terapie Orientali
+**Titoli (15, ognuno verificato ≤ 30 caratteri):**
+1. Gua Sha Alessandria (19)
+2. Essenza d'Oriente (17)
+3. 5,0 Stelle su Google (20)
+4. Prenota Online Subito (21)
+5. Coppettazione Alessandria (25)
+6. Tecnica Antica Orientale (24)
+7. Aperti 7/7 fino alle 22:30 (26)
+8. Via San Lorenzo 46 (18)
+9. Conferma Immediata (18)
+10. Drena e Rilassa (15)
+11. Prezzi Sempre Chiari (20)
+12. Scrivici su WhatsApp (20)
+13. 106 Recensioni Google (21)
+14. Il Trattamento del Momento (26)
+15. Viso e Corpo Curati (19)
 
-**Descrizioni (4):**
-1. Gua Sha e Coppettazione: le tecniche orientali di tendenza per viso e corpo. Prenota online in un minuto.
-2. 5,0★ su Google con 106 recensioni. Trattamenti drenanti e rilassanti, prezzi sempre in chiaro.
-3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info.
-4. Prova il trattamento che tutti cercano. Conferma immediata della prenotazione online.
+**Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
+1. Gua Sha e Coppettazione: tecniche orientali di tendenza. Prenota online. (72)
+2. 5,0 stelle su Google, 106 recensioni. Trattamenti drenanti, prezzi chiari. (74)
+3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
+4. Prova il trattamento che tutti cercano. Conferma immediata online. (66)
 
 **URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/gua-sha.html`
 **Percorso visualizzato (mai con https://):** `trattamenti/gua-sha`
@@ -258,28 +265,28 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 "centro estetico orientale alessandria"
 ```
 
-**Titoli (15):**
-1. Pedicure ad Alessandria
-2. Essenza d'Oriente Centro Olistico
-3. 5,0★ su Google – 106 Recensioni
-4. Prenota Online in 1 Minuto
-5. Pedicure Estetica Professionale
-6. Cura dei Piedi Curata nei Dettagli
-7. Aperti 7/7 fino alle 22:30
-8. Via San Lorenzo 46, Alessandria
-9. Conferma Immediata, Nessuna Attesa
-10. Anche Pulizia Orecchie e Trattamenti Orientali
-11. Prezzi Sempre Chiari, Nessuna Sorpresa
-12. Scrivici su WhatsApp, Risposta Subito
-13. Il Centro più Recensito di Alessandria
-14. Piedi Curati, Sempre in Ordine
-15. Un Momento di Cura Solo per Te
+**Titoli (15, ognuno verificato ≤ 30 caratteri):**
+1. Pedicure Alessandria (20)
+2. Essenza d'Oriente (17)
+3. 5,0 Stelle su Google (20)
+4. Prenota Online Subito (21)
+5. Pedicure Estetica (17)
+6. Cura dei Piedi nei Dettagli (27)
+7. Aperti 7/7 fino alle 22:30 (26)
+8. Via San Lorenzo 46 (18)
+9. Conferma Immediata (18)
+10. Anche Pulizia Orecchie (22)
+11. Prezzi Sempre Chiari (20)
+12. Scrivici su WhatsApp (20)
+13. 106 Recensioni Google (21)
+14. Piedi Sempre in Ordine (22)
+15. Un Momento Solo per Te (22)
 
-**Descrizioni (4):**
-1. Pedicure estetica professionale ad Alessandria. Anche pulizia orecchie e trattamenti orientali. Prenota online.
-2. 5,0★ su Google con 106 recensioni. Cura del corpo con attenzione ai dettagli, prezzi sempre in chiaro.
-3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info.
-4. Prenditi cura di te con un trattamento professionale. Conferma immediata della prenotazione.
+**Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
+1. Pedicure estetica professionale ad Alessandria. Anche pulizia orecchie. (71)
+2. 5,0 stelle su Google, 106 recensioni. Cura del corpo, prezzi chiari. (68)
+3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
+4. Prenditi cura di te con un trattamento professionale. Prenota ora. (66)
 
 **URL finale (SEMPRE con https://):** `https://essenzadoriente.it/trattamenti/pedicure.html`
 **Percorso visualizzato (mai con https://):** `trattamenti/pedicure`
@@ -298,28 +305,28 @@ Ogni gruppo qui sotto ha: nome, CPC max, landing page, keyword, e un annuncio RS
 "centro olistico alessandria aperto"
 ```
 
-**Titoli (15):**
-1. Essenza d'Oriente Alessandria
-2. Il Tuo Centro Olistico di Fiducia
-3. 5,0★ su Google – 106 Recensioni
-4. Prenota Online in 1 Minuto
-5. Massaggi, Riflessologia, Shiatsu, Gua Sha
-6. Aperti 7/7 fino alle 22:30
-7. Via San Lorenzo 46, Alessandria
-8. Conferma Immediata, Nessuna Attesa
-9. Il Centro più Recensito di Alessandria
-10. Chiama o Scrivi su WhatsApp
-11. Prezzi Sempre Chiari, Nessuna Sorpresa
-12. Tutti i Trattamenti in un Solo Posto
-13. Prenota il Tuo Momento di Relax
-14. Staff Qualificato in Tecniche Orientali
-15. Torna a Sentirti Bene
+**Titoli (15, ognuno verificato ≤ 30 caratteri):**
+1. Essenza d'Oriente (17)
+2. Centro Olistico Alessandria (27)
+3. 5,0 Stelle su Google (20)
+4. Prenota Online Subito (21)
+5. Massaggi e Riflessologia (24)
+6. Aperti 7/7 fino alle 22:30 (26)
+7. Via San Lorenzo 46 (18)
+8. Conferma Immediata (18)
+9. 106 Recensioni Google (21)
+10. Chiama o Scrivi WhatsApp (24)
+11. Prezzi Sempre Chiari (20)
+12. Tutti i Trattamenti Insieme (27)
+13. Il Tuo Momento di Relax (23)
+14. Staff Qualificato (17)
+15. Torna a Sentirti Bene (21)
 
-**Descrizioni (4):**
-1. Essenza d'Oriente: centro olistico ad Alessandria con 5,0★ e 106 recensioni. Prenota online in un minuto.
-2. Massaggi, riflessologia, shiatsu, gua sha, coppettazione, pedicure. Tutto in un unico centro di fiducia.
-3. Aperti tutti i giorni fino alle 22:30 in centro ad Alessandria. Scrivici su WhatsApp per info e disponibilità.
-4. Il centro olistico scelto da centinaia di clienti soddisfatti. Conferma immediata della prenotazione.
+**Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
+1. Essenza d'Oriente: centro olistico con 5,0 stelle e 106 recensioni. (67)
+2. Massaggi, riflessologia, shiatsu, gua sha, coppettazione, pedicure. (67)
+3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
+4. Il centro scelto da centinaia di clienti soddisfatti. Prenota ora. (66)
 
 **URL finale (SEMPRE con https://):** `https://essenzadoriente.it/`
 **Percorso visualizzato (mai con https://):** *(lascia vuoto per il gruppo Brand)*
