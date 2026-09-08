@@ -186,6 +186,7 @@ function pagina(t, altri) {
   <script>
     gtag('js', new Date());
     gtag('config', 'G-5XJQW3HMLL');
+    gtag('config', 'AW-17997395114');
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
