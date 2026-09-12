@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Pannello interno — Arabesque</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 40px var(--pad); }
+  .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  .kpi div { border: 1px solid var(--linea); border-radius: var(--r-card); padding: 20px; background: var(--nero-2); }
+  .kpi b { display: block; font-family: 'Bodoni Moda', serif; font-size: 30px; color: var(--oro); }
+  .kpi span { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--grigio); }
+  .ordine { border: 1px solid var(--linea); border-radius: var(--r-card); padding: 18px; margin-bottom: 10px; background: var(--nero-2); }
+  .ordine-testa { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .ordine-testa b { font-family: 'Bodoni Moda', serif; font-size: 19px; }
+  .ordine p { font-size: 13.5px; color: var(--grigio-2); margin-top: 8px; }
+  .ordine select { width: auto; padding: 8px 34px 8px 12px; font-size: 12.5px; background-position: calc(100% - 16px) 16px, calc(100% - 10px) 16px; }
+  .tag { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--linea-2); border-radius: var(--r-pill); padding: 4px 9px; color: var(--grigio-2); }
+  @media (max-width: 760px) { .kpi { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <a class="logo" href="index.html" style="padding:0">Arabesque<small>pannello interno</small></a>
+
+  <div id="login" style="max-width:380px;margin-top:40px">
+    <h1 style="font-size:30px;margin-bottom:18px">Accesso</h1>
+    <label class="campo" for="pw"><span>Password</span><input type="password" id="pw" autocomplete="current-password" /></label>
+    <button class="btn btn-primario btn-blocco" id="btnEntra">Entra</button>
+    <p class="campo-errore" id="errLogin" hidden></p>
+  </div>
+
+  <div id="pannello" hidden style="margin-top:34px">
+    <div class="kpi" id="kpi"></div>
+    <h2 style="font-size:24px;margin-bottom:16px">Ordini recenti</h2>
+    <div id="ordini"></div>
+  </div>
+</div>
+
+<script>
+function carica() {
+  fetch('/api/admin-data').then(function (r) {
+    if (!r.ok) throw new Error('auth');
+    return r.json();
+  }).then(function (d) {
+    document.getElementById('login').hidden = true;
+    document.getElementById('pannello').hidden = false;
+    document.getElementById('kpi').innerHTML =
+      '<div><b>' + d.ordiniSettimana + '</b><span>Ordini 7 giorni</span></div>' +
+      '<div><b>€ ' + (d.incassoSettimana / 100).toFixed(0) + '</b><span>Incasso 7 giorni</span></div>' +
+      '<div><b>' + d.visiteOggi + '</b><span>Visite 24h</span></div>' +
+      '<div><b>' + d.iscritti + '</b><span>Iscritti newsletter</span></div>';
+
+    var stati = ['ricevuto', 'in preparazione', 'spedito', 'consegnato', 'annullato'];
+    document.getElementById('ordini').innerHTML = d.ordini.map(function (o) {
+      var art = (o.articoli || []).map(function (a) { return a.qty + '× ' + (a.nome || a.slug); }).join(' · ');
+      return '<div class="ordine">' +
+        '<div class="ordine-testa">' +
+          '<div><b>' + o.numero_ordine + '</b> <span class="tag">' + o.consegna + '</span> <span class="tag">' + o.pagamento + '</span></div>' +
+          '<div style="display:flex;gap:12px;align-items:center">' +
+            '<b style="font-size:17px">€ ' + (o.totale_centesimi / 100).toFixed(2) + '</b>' +
+            '<select data-ordine="' + o.numero_ordine + '">' +
+              stati.map(function (s) { return '<option' + (s === o.stato ? ' selected' : '') + '>' + s + '</option>'; }).join('') +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<p>' + art + '</p>' +
+        '<p>' + [o.nome, o.telefono, o.email].filter(Boolean).join(' · ') + '</p>' +
+        (o.consegna === 'corriere' ? '<p>' + [o.via, o.cap, o.citta].filter(Boolean).join(', ') + '</p>' : '') +
+        (o.note ? '<p><i>Note: ' + o.note + '</i></p>' : '') +
+        '<p style="color:var(--grigio);font-size:12px">' + new Date(o.creato_il).toLocaleString('it-IT') + '</p>' +
+      '</div>';
+    }).join('') || '<p style="color:var(--grigio)">Nessun ordine registrato.</p>';
+  }).catch(function () {
+    document.getElementById('login').hidden = false;
+  });
+}
+
+document.getElementById('btnEntra').addEventListener('click', function () {
+  fetch('/api/admin-login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: document.getElementById('pw').value })
+  }).then(function (r) {
+    if (!r.ok) throw new Error('ko');
+    carica();
+  }).catch(function () {
+    var e = document.getElementById('errLogin');
+    e.textContent = 'Password errata, oppure il pannello non è ancora configurato su Vercel.';
+    e.hidden = false;
+  });
+});
+
+document.addEventListener('change', function (e) {
+  var s = e.target.closest('[data-ordine]');
+  if (!s) return;
+  fetch('/api/admin-ordine-stato', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ numero: s.dataset.ordine, stato: s.value })
+  });
+});
+
+carica();
+</script>
+</body>
+</html>

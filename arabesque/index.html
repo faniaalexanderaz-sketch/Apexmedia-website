@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arabesque Busalla — abbigliamento uomo e donna dalla XS alla 6XL</title>
+<meta name="description" content="Boutique multimarca a Busalla (GE): abbigliamento uomo e donna dalla XS alla 6XL, linea curvy dedicata. Spedizione in tutta Italia in 24/48h e ritiro gratuito in negozio." />
+<link rel="canonical" href="https://arabesque-busalla.vercel.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Arabesque Busalla" />
+<meta property="og:title" content="Arabesque Busalla — stile che veste ogni corporatura" />
+<meta property="og:description" content="Abbigliamento uomo e donna dalla XS alla 6XL. Boutique a Busalla, spedizione in tutta Italia, ritiro gratuito in negozio." />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:url" content="https://arabesque-busalla.vercel.app/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0B0B0C" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ClothingStore",
+  "name": "Arabesque Abbigliamento",
+  "url": "https://arabesque-busalla.vercel.app/",
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Vittorio Veneto 154",
+    "postalCode": "16012",
+    "addressLocality": "Busalla",
+    "addressRegion": "GE",
+    "addressCountry": "IT"
+  },
+  "areaServed": "IT",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Carta di credito, PayPal, Apple Pay, Google Pay, Contrassegno"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Fino a che taglia arrivate?", "acceptedAnswer": { "@type": "Answer", "text": "Dalla XS alla 6XL. La linea curvy è tagliata su misure calibrate, non è una taglia normale ingrandita." } },
+    { "@type": "Question", "name": "Posso ritirare in negozio?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, il ritiro in negozio a Busalla è gratuito e l'ordine è pronto entro 24 ore lavorative." } },
+    { "@type": "Question", "name": "Come funzionano i resi?", "acceptedAnswer": { "@type": "Answer", "text": "Hai 14 giorni per il reso. Se passi in negozio il cambio taglia è immediato e senza costi." } }
+  ]
+}
+</script>
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+
+<!--PROMO-->
+<div class="promo-bar" id="promoBar" role="note">
+  <span><strong>Spedizione gratuita</strong> sopra 79 € · Primo ordine <strong>−10%</strong> con <code>BENVENUTO10</code></span>
+  <button class="promo-bar-chiudi" id="promoBarChiudi" aria-label="Chiudi il messaggio">×</button>
+</div>
+<!--/PROMO-->
+
+<!--NAV-->
+<header class="nav">
+  <div class="nav-in">
+    <nav class="nav-link-gruppo solo-desktop" aria-label="Categorie">
+      <a class="nav-link" href="donna.html">Donna</a>
+      <a class="nav-link" href="uomo.html">Uomo</a>
+      <a class="nav-link evidenza" href="curvy.html">Curvy XS–6XL</a>
+      <a class="nav-link" href="donna.html?filtro=novita">Novità</a>
+    </nav>
+    <button class="icona-btn solo-mobile" data-apri="menu" aria-label="Apri il menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+
+    <a class="logo" href="index.html">Arabesque<small>Busalla</small></a>
+
+    <div class="nav-azioni">
+      <a class="icona-btn solo-desktop" href="negozio.html" aria-label="Il negozio di Busalla">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+      </a>
+      <a class="icona-btn" href="traccia-ordine.html" aria-label="Traccia il tuo ordine">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h13v10H3zM16 10h3.5L21 13v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+      </a>
+      <button class="icona-btn" data-apri="carrello" aria-label="Apri il carrello">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="badge" data-badge-carrello hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+<!--/NAV-->
+
+<main id="contenuto">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-fallback" aria-hidden="true"></div>
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-velo" aria-hidden="true"></div>
+    <div class="hero-in wrap">
+      <div class="hero-testo">
+        <p class="eyebrow">Boutique multimarca · Busalla</p>
+        <h1>Stile che veste <em>ogni</em> corporatura.<br />Dalla XS alla 6XL.</h1>
+        <p class="hero-sub">Selezione uomo e donna scelta capo per capo in negozio. Ora anche online, con spedizione in tutta Italia in 24/48 ore e ritiro gratuito a Busalla.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primario" href="donna.html">Collezione donna</a>
+          <a class="btn btn-fantasma" href="uomo.html">Collezione uomo</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true"><span></span>Scorri</div>
+  </section>
+
+  <!-- ================= FIDUCIA ================= -->
+  <section class="fiducia" aria-label="Perché comprare da Arabesque">
+    <div class="fiducia-griglia">
+      <div class="fiducia-voce">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h13v10H3zM16 10h3.5L21 13v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+        <div><b>Spedizione 24/48h</b><small>Gratuita sopra 79 €</small></div>
+      </div>
+      <div class="fiducia-voce">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        <div><b>Reso in 14 giorni</b><small>Cambio taglia immediato in negozio</small></div>
+      </div>
+      <div class="fiducia-voce">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <div><b>Ritiro in negozio</b><small>Gratuito, pronto in 24h a Busalla</small></div>
+      </div>
+      <div class="fiducia-voce">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>
+        <div><b>Consiglio taglia</b><small>Ti rispondiamo su WhatsApp</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CATEGORIE ================= -->
+  <section class="sez sez-bordo">
+    <div class="wrap">
+      <div class="sez-testa reveal">
+        <p class="eyebrow">Le collezioni</p>
+        <h2>Scegli da dove partire</h2>
+      </div>
+      <div class="cat-griglia">
+        <a class="cat-card reveal" href="donna.html">
+          <span class="cat-foto"></span>
+          <span class="cat-card-velo"></span>
+          <span class="cat-card-testo">
+            <h3>Donna</h3>
+            <p>Capispalla, abiti, maglieria e camicie</p>
+            <span class="cat-card-arrow">Scopri <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+        <a class="cat-card reveal" href="uomo.html">
+          <span class="cat-foto"></span>
+          <span class="cat-card-velo"></span>
+          <span class="cat-card-testo">
+            <h3>Uomo</h3>
+            <p>Giacche, camicie, maglieria e pantaloni</p>
+            <span class="cat-card-arrow">Scopri <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+        <a class="cat-card reveal" href="curvy.html">
+          <span class="cat-tag">XS → 6XL</span>
+          <span class="cat-foto"></span>
+          <span class="cat-card-velo"></span>
+          <span class="cat-card-testo">
+            <h3>Curvy</h3>
+            <p>Taglie calibrate, tagliate sulle misure reali</p>
+            <span class="cat-card-arrow">Scopri <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PIÙ VENDUTI ================= -->
+  <section class="sez sez-bordo" id="piu-venduti">
+    <div class="wrap">
+      <div class="sez-testa reveal">
+        <p class="eyebrow">Selezione della settimana</p>
+        <h2>I capi che escono per primi</h2>
+        <p>Passa il mouse su un capo e scegli la taglia: va nel carrello senza cambiare pagina.</p>
+      </div>
+      <div class="prod-griglia" id="grigliaPiuVenduti"></div>
+      <div style="text-align:center;margin-top:44px">
+        <a class="link-freccia" href="donna.html">Vedi tutta la collezione</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CURVY ================= -->
+  <section class="curvy">
+    <div class="curvy-in">
+      <div class="reveal">
+        <p class="eyebrow">La nostra differenza</p>
+        <h2>Taglie calibrate,<br />non taglie ingrandite.</h2>
+        <p class="curvy-scala">XS <em>→</em> 6XL</p>
+        <p>In negozio abbiamo una vetrina interamente dedicata alle taglie calibrate. Non prendiamo un capo normale per allargarlo: scegliamo modelli tagliati sulle spalle, sui fianchi e sulle maniche reali di chi li indossa.</p>
+        <ul class="curvy-elenco">
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Vestibilità dichiarata capo per capo, in centimetri</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Prezzi uguali a quelli delle taglie standard</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Provi in negozio, cambi taglia sul momento</li>
+        </ul>
+        <a class="btn btn-oro" href="curvy.html">Scopri la linea curvy</a>
+      </div>
+      <div class="curvy-foto reveal" id="curvyFoto"></div>
+    </div>
+  </section>
+
+  <!-- ================= LOOKBOOK ================= -->
+  <section class="sez sez-bordo">
+    <div class="wrap">
+      <div class="sez-testa centro reveal">
+        <p class="eyebrow centro">Lookbook</p>
+        <h2>Tre outfit già pronti</h2>
+        <p>Il lavoro che facciamo in negozio, fatto anche qui: capi che stanno bene insieme. Aggiungi l'intero look in un clic.</p>
+      </div>
+      <div class="look-griglia" id="grigliaLook"></div>
+    </div>
+  </section>
+
+  <!-- ================= NEGOZIO ================= -->
+  <section class="sez sez-bordo sez-scura">
+    <div class="wrap negozio-in">
+      <div class="negozio-foto reveal" id="negozioFoto"></div>
+      <div class="reveal">
+        <p class="eyebrow">Il negozio</p>
+        <h2>Siamo a Busalla,<br />a due minuti dalla stazione.</h2>
+        <ul class="negozio-dati">
+          <li>
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <div><b data-cfg="indirizzo">Via Vittorio Veneto 154</b><small data-cfg="citta">16012 Busalla (GE)</small></div>
+          </li>
+          <li>
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <div><b>Orari</b><ul id="orariLista" class="orari"></ul></div>
+          </li>
+          <li>
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 3.2 2 2 0 0 1 4 1h2a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L7.1 8.6a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+            <div><b data-cfg="telefono">010 000 0000</b><small>Chiamaci per disponibilità e misure</small></div>
+          </li>
+        </ul>
+        <div class="hero-cta">
+          <a class="btn btn-primario" data-cfg-map target="_blank" rel="noopener" href="#">Indicazioni stradali</a>
+          <a class="btn btn-fantasma" data-cfg-tel href="#">Chiama il negozio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RECENSIONI =================
+       TODO-CLIENTE: sostituire con recensioni Google reali
+       (testo, nome, mese). Nessuna recensione inventata. -->
+  <section class="sez sez-bordo">
+    <div class="wrap">
+      <div class="sez-testa centro reveal">
+        <p class="eyebrow centro">Dicono di noi</p>
+        <h2>Le persone di Busalla</h2>
+      </div>
+      <div class="rec-griglia">
+        <figure class="rec-card reveal">
+          <p class="rec-stelle" aria-label="5 stelle su 5">★★★★★</p>
+          <blockquote>« Inserire qui una recensione reale dei clienti. »</blockquote>
+          <figcaption>Nome Cliente — mese anno</figcaption>
+        </figure>
+        <figure class="rec-card reveal">
+          <p class="rec-stelle" aria-label="5 stelle su 5">★★★★★</p>
+          <blockquote>« Inserire qui una recensione reale dei clienti. »</blockquote>
+          <figcaption>Nome Cliente — mese anno</figcaption>
+        </figure>
+        <figure class="rec-card reveal">
+          <p class="rec-stelle" aria-label="5 stelle su 5">★★★★★</p>
+          <blockquote>« Inserire qui una recensione reale dei clienti. »</blockquote>
+          <figcaption>Nome Cliente — mese anno</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NEWSLETTER ================= -->
+  <section class="sez">
+    <div class="wrap">
+      <div class="news reveal">
+        <p class="eyebrow centro">−10% sul primo ordine</p>
+        <h2>Gli arrivi, prima di tutti</h2>
+        <p>Una mail quando arriva la collezione nuova e quando partono i saldi. Niente altro.</p>
+        <form class="news-form" data-newsletter>
+          <input type="email" name="email" placeholder="La tua email" aria-label="La tua email" required />
+          <button type="submit" class="btn btn-oro">Ricevi il codice</button>
+        </form>
+        <p class="news-nota">Iscrivendoti accetti la <a href="privacy.html">privacy policy</a>. Ti cancelli quando vuoi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="sez sez-bordo" id="faq">
+    <div class="wrap">
+      <div class="sez-testa centro reveal">
+        <p class="eyebrow centro">Domande frequenti</p>
+        <h2>Prima di ordinare</h2>
+      </div>
+      <div class="faq-lista">
+        <div class="faq-voce">
+          <button class="faq-q" aria-expanded="false">Fino a che taglia arrivate?</button>
+          <div class="faq-r"><p>Dalla XS alla 6XL. La linea curvy non è una taglia normale ingrandita: sono modelli tagliati su misure calibrate. Su ogni scheda prodotto trovi le taglie disponibili in tempo reale e la vestibilità dichiarata.</p></div>
+        </div>
+        <div class="faq-voce">
+          <button class="faq-q" aria-expanded="false">Non so quale taglia scegliere. Come faccio?</button>
+          <div class="faq-r"><p>Scrivici su WhatsApp con altezza, peso e la taglia che porti di solito in un capo simile: ti rispondiamo noi, non un risponditore automatico. È lo stesso consiglio che daremmo in negozio.</p></div>
+        </div>
+        <div class="faq-voce">
+          <button class="faq-q" aria-expanded="false">Quanto costa la spedizione?</button>
+          <div class="faq-r"><p>6,90 € in tutta Italia, gratuita sopra 79 € di ordine. Consegna in 24/48 ore lavorative. Il ritiro in negozio a Busalla è sempre gratuito e l'ordine è pronto entro 24 ore.</p></div>
+        </div>
+        <div class="faq-voce">
+          <button class="faq-q" aria-expanded="false">Come funzionano i resi e i cambi taglia?</button>
+          <div class="faq-r"><p>Hai 14 giorni dalla consegna. Se passi in negozio il cambio taglia è immediato e senza costi; per il reso a mezzo corriere ti mandiamo le istruzioni via email.</p></div>
+        </div>
+        <div class="faq-voce">
+          <button class="faq-q" aria-expanded="false">Come posso pagare?</button>
+          <div class="faq-r"><p>Carta, PayPal, Apple Pay e Google Pay tramite pagamento sicuro. In alternativa contrassegno alla consegna (+4 €) oppure pagamento in negozio al ritiro.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!--FOOTER-->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-griglia">
+      <div class="footer-intro">
+        <a class="logo" href="index.html" style="padding:0">Arabesque<small>Busalla</small></a>
+        <p>Boutique multimarca uomo e donna a Busalla. Dalla XS alla 6XL, con la stessa cura per ogni taglia.</p>
+        <div class="footer-social">
+          <a data-cfg-fb href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+          <a data-cfg-ig href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a data-cfg-wa data-cfg-wa-testo="Buongiorno, vi scrivo dal sito." href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Collezioni</h4>
+        <ul>
+          <li><a href="donna.html">Donna</a></li>
+          <li><a href="uomo.html">Uomo</a></li>
+          <li><a href="curvy.html">Curvy XS–6XL</a></li>
+          <li><a href="donna.html?filtro=saldi">Saldi</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Servizio clienti</h4>
+        <ul>
+          <li><a href="traccia-ordine.html">Traccia il tuo ordine</a></li>
+          <li><a href="resi-spedizioni.html">Spedizioni e resi</a></li>
+          <li><a href="negozio.html">Il negozio</a></li>
+          <li><a data-cfg-wa href="#" target="_blank" rel="noopener">Consiglio taglia su WhatsApp</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Informazioni</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="cookie-policy.html">Cookie policy</a></li>
+          <li><a href="termini.html">Termini e condizioni</a></li>
+          <li><a data-cfg-map href="#" target="_blank" rel="noopener">Dove siamo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-basso">
+      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span> · P. IVA <span data-cfg="piva">TODO-CLIENTE</span> · <span data-cfg="indirizzoCompleto"></span></p>
+      <div class="pagamenti">
+        <span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Contrassegno</span>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--/FOOTER-->
+
+<!--DRAWERS-->
+<a class="wa-float" data-cfg-wa href="#" target="_blank" rel="noopener">
+  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>
+  <span>Consiglio taglia</span>
+</a>
+
+<div class="velo" id="velo"></div>
+
+<aside class="drawer sinistra" id="drawerMenu" aria-hidden="true" aria-label="Menu">
+  <div class="drawer-testa">
+    <h2>Menu</h2>
+    <button class="chiudi" data-chiudi aria-label="Chiudi il menu">×</button>
+  </div>
+  <div class="drawer-corpo">
+    <ul class="menu-lista">
+      <li><a href="donna.html">Donna</a></li>
+      <li><a href="uomo.html">Uomo</a></li>
+      <li><a class="oro" href="curvy.html">Curvy XS–6XL</a></li>
+      <li><a href="donna.html?filtro=novita">Novità</a></li>
+      <li><a href="donna.html?filtro=saldi">Saldi</a></li>
+    </ul>
+    <div class="menu-extra">
+      <a href="negozio.html">Il negozio di Busalla</a>
+      <a href="traccia-ordine.html">Traccia il tuo ordine</a>
+      <a href="resi-spedizioni.html">Spedizioni e resi</a>
+      <a data-cfg-wa href="#" target="_blank" rel="noopener">Consiglio taglia su WhatsApp</a>
+    </div>
+  </div>
+</aside>
+
+<aside class="drawer" id="drawerCarrello" aria-hidden="true" aria-label="Carrello">
+  <div class="drawer-testa">
+    <h2>Il tuo carrello</h2>
+    <button class="chiudi" data-chiudi aria-label="Chiudi il carrello">×</button>
+  </div>
+  <div class="drawer-corpo" id="carrelloCorpo"></div>
+  <div class="drawer-piede" id="carrelloPiede"></div>
+</aside>
+<!--/DRAWERS-->
+
+<script src="config.js"></script>
+<script src="prodotti.js"></script>
+<script src="main.js"></script>
+<script src="cookie.js"></script>
+<script>
+/* ---- contenuti dinamici della home ---- */
+(function () {
+  var anno = document.getElementById('annoCorrente');
+  if (anno) anno.textContent = new Date().getFullYear();
+
+  /* riquadri editoriali per le sezioni senza foto reale */
+  function slot(nodo, monogramma, etichetta) {
+    if (nodo) nodo.innerHTML = ARB.boxFoto('foto/' + etichetta + '.webp', etichetta, monogramma, etichetta);
+  }
+  document.querySelectorAll('.cat-card').forEach(function (c) {
+    var titolo = c.querySelector('h3').textContent;
+    var box = c.querySelector('.cat-foto');
+    if (box) box.outerHTML = ARB.boxFoto('foto/cat-' + titolo.toLowerCase() + '.webp', titolo, 'A', titolo);
+  });
+  slot(document.getElementById('curvyFoto'), 'A', 'curvy');
+  slot(document.getElementById('negozioFoto'), 'A', 'negozio');
+
+  /* più venduti: novità e capi in saldo, prima i disponibili */
+  var scelti = ARB_PRODOTTI.filter(function (p) {
+    return p.sconto || (p.linea || []).indexOf('novita') !== -1;
+  }).slice(0, 8);
+  document.getElementById('grigliaPiuVenduti').innerHTML = scelti.map(function (p) {
+    return ARB.cardProdotto(p);
+  }).join('');
+
+  /* lookbook: tre outfit completi */
+  var LOOK = [
+    { nome: 'Sera in città', capi: ['blazer-notte', 'camicia-seta', 'gonna-pelle'] },
+    { nome: 'Ufficio, lunedì', capi: ['cappotto-lana-uomo', 'camicia-oxford', 'chino-slim'] },
+    { nome: 'Curvy, tutti i giorni', capi: ['cardigan-lungo-curvy', 'camicia-oversize-curvy', 'palazzo-curvy'] }
+  ];
+  document.getElementById('grigliaLook').innerHTML = LOOK.map(function (l, i) {
+    var capi = l.capi.map(arbProdotto).filter(Boolean);
+    var tot = capi.reduce(function (t, p) { return t + arbPrezzoFinale(p); }, 0);
+    return '<article class="look-card reveal">' +
+      ARB.boxFoto('foto/look-' + (i + 1) + '.webp', l.nome, 'A', 'Look ' + (i + 1)) +
+      '<div class="look-card-corpo">' +
+        '<h3>' + l.nome + '</h3>' +
+        '<ul class="look-card-capi">' + capi.map(function (p) {
+          return '<li><b>' + p.nome + '</b><span>' + arbEuro(arbPrezzoFinale(p)) + '</span></li>';
+        }).join('') + '</ul>' +
+        '<div class="look-tot"><span>Look completo</span><b>' + arbEuro(tot) + '</b></div>' +
+        '<button class="btn btn-fantasma btn-blocco btn-piccolo" data-look="' + i + '">Aggiungi il look</button>' +
+      '</div>' +
+    '</article>';
+  }).join('');
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-look]');
+    if (!b) return;
+    var l = LOOK[parseInt(b.dataset.look, 10)];
+    var aggiunti = 0;
+    l.capi.forEach(function (slug) {
+      var p = arbProdotto(slug);
+      if (!p) return;
+      var disp = (p.taglie || []).filter(function (t) { return t.stock > 0; });
+      var media = disp[Math.floor(disp.length / 2)] || disp[0];
+      if (media) { ARB.aggiungi(slug, media.id); aggiunti++; }
+    });
+    if (aggiunti) ARB.toast('Look aggiunto — controlla le taglie nel carrello');
+  });
+
+  ARB.reveal();
+})();
+</script>
+</body>
+</html>
