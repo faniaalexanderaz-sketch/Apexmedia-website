@@ -1,0 +1,9 @@
+{
+  "name": "arabesque-busalla",
+  "private": true,
+  "description": "Sito e-commerce di Arabesque Abbigliamento — Busalla (GE)",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "stripe": "^17.0.0"
+  }
+}
