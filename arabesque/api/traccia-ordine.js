@@ -27,6 +27,7 @@ module.exports = async function handler(req, res) {
       data: righe[0].creato_il
     });
   } catch (err) {
+    if (err.codice === 'DB_ASSENTE') { res.status(501).json({ error: 'Tracciamento non ancora attivo su questo sito' }); return; }
     res.status(500).json({ error: 'Servizio non disponibile' });
   }
 };

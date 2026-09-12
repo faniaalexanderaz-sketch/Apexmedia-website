@@ -6,11 +6,29 @@
    ============================================================= */
 const { neon } = require('@neondatabase/serverless');
 
-const sql = neon(process.env.DATABASE_URL);
+/* La connessione si apre alla prima query, non al caricamento del file:
+   senza DATABASE_URL le funzioni rispondono con un errore leggibile
+   invece di andare in crash all'avvio (utile finché il database non è
+   collegato: il sito resta navigabile e la cassa passa in dimostrativo). */
+let client = null;
+function sql(pezzi, ...valori) {
+  if (!process.env.DATABASE_URL) {
+    const e = new Error('Database non ancora configurato');
+    e.codice = 'DB_ASSENTE';
+    throw e;
+  }
+  if (!client) client = neon(process.env.DATABASE_URL);
+  return client(pezzi, ...valori);
+}
 
 let schemaPronto = null;
 
 async function assicuraSchema() {
+  if (!process.env.DATABASE_URL) {
+    const e = new Error('Database non ancora configurato');
+    e.codice = 'DB_ASSENTE';
+    throw e;
+  }
   if (schemaPronto) return schemaPronto;
   schemaPronto = (async () => {
     await sql`CREATE TABLE IF NOT EXISTS ordini (

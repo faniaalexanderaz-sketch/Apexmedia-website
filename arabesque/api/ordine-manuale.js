@@ -75,6 +75,7 @@ module.exports = async function handler(req, res) {
 
     res.status(200).json({ numeroOrdine: numero });
   } catch (err) {
+    if (err.codice === 'DB_ASSENTE') { res.status(501).json({ error: 'Ordini non ancora attivi su questo sito' }); return; }
     console.error('ordine-manuale', err.message);
     res.status(500).json({ error: 'Non riusciamo a registrare l\'ordine in questo momento' });
   }
