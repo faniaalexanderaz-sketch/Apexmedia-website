@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<title>Apex Media — Fattura</title>
+<link rel="stylesheet" href="apex-media-tokens.css" />
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #E9E9EE; }
+  body { font-family: var(--apex-font-body); color: var(--apex-text); }
+
+  /* ---- FOGLIO A4 ---- */
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 24px auto;
+    background: var(--apex-surface);
+    padding: 16mm 14mm 14mm 14mm;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 24px rgba(10,10,20,.12);
+  }
+  @media print {
+    body { background: #fff; }
+    .sheet { margin: 0; box-shadow: none; }
+  }
+
+  /* ---- CAMPI COMPILABILI ---- */
+  .field {
+    border: 1px solid var(--apex-border);
+    border-radius: 6px;
+    background: #fff;
+    padding: 7px 10px;
+    font-size: 11.3px;
+    color: var(--apex-text);
+    min-height: 30px;
+  }
+  .field.sm { padding: 5px 8px; min-height: 24px; }
+  .field[contenteditable]:empty:before {
+    content: attr(data-placeholder);
+    color: var(--apex-text-faint);
+  }
+  label.tag {
+    display: block;
+    font-family: var(--apex-font-body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--apex-text-muted);
+    margin: 0 0 5px;
+  }
+
+  /* ---- HEADER ---- */
+  .header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 46px; height: 46px; border-radius: 10px; flex: 0 0 auto;
+    background: var(--apex-black);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .brand-name { font-family: var(--apex-font-display); font-weight: 700; font-size: 19px; letter-spacing: .01em; color: var(--apex-text); line-height: 1.1; }
+  .brand-sub { font-size: 9px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--apex-text-muted); margin-top: 3px; }
+
+  .doc-meta { text-align: right; }
+  .doc-title { font-family: var(--apex-font-display); font-weight: 700; font-size: 28px; color: var(--apex-text); letter-spacing: .02em; margin: 0 0 10px; }
+  .doc-meta-row { display: flex; gap: 10px; justify-content: flex-end; }
+  .doc-meta-row .cell { width: 118px; }
+
+  .gradient-bar { height: 4px; width: 100%; margin: 16px 0 22px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--apex-purple) 0%, var(--apex-blue) 55%, var(--apex-yellow) 100%); }
+
+  /* ---- DA / A ---- */
+  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel { background: #F7F7FA; border: 1px solid var(--apex-border); border-radius: 10px; padding: 16px 18px; }
+  .panel .tag { color: var(--apex-purple); }
+  .panel h3 { font-family: var(--apex-font-display); font-size: 14px; margin: 0 0 2px; color: var(--apex-text); }
+  .panel .muted { color: var(--apex-text-muted); font-size: 11px; margin: 0 0 10px; }
+  .panel .row { margin-bottom: 10px; }
+  .panel .row:last-child { margin-bottom: 0; }
+  .panel strong { font-weight: 600; }
+  .panel .contact { font-size: 11.3px; margin: 2px 0; }
+
+  /* ---- OGGETTO ---- */
+  .subject { margin-top: 22px; }
+
+  /* ---- SEZIONE TITOLO ---- */
+  .section-title { margin-top: 26px; margin-bottom: 10px; }
+  .section-title .rule { height: 3px; width: 46px; border-radius: 2px; margin-bottom: 8px;
+    background: linear-gradient(90deg, var(--apex-purple), var(--apex-blue)); }
+  .section-title h2 { font-family: var(--apex-font-display); font-size: 15px; margin: 0; color: var(--apex-text); }
+
+  /* ---- TABELLA SERVIZI ---- */
+  table.items { width: 100%; border-collapse: collapse; }
+  table.items thead th {
+    background: var(--apex-tint-purple);
+    color: var(--apex-purple);
+    font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    text-align: left; padding: 9px 10px;
+  }
+  table.items thead th.num { text-align: right; }
+  table.items thead tr :first-child { border-radius: 6px 0 0 6px; }
+  table.items thead tr :last-child { border-radius: 0 6px 6px 0; }
+  table.items td { padding: 6px 10px; vertical-align: top; }
+  table.items td .field { width: 100%; }
+  table.items td.price .field { background: var(--apex-tint-yellow); border-color: #F0E2B8; text-align: right; }
+  table.items col.desc { width: 46%; }
+  table.items col.qty { width: 18%; }
+  table.items col.unit { width: 17%; }
+  table.items col.total { width: 19%; }
+
+  /* ---- TOTALI ---- */
+  .totals { margin-top: 4px; display: flex; justify-content: flex-end; }
+  .totals-box { width: 60%; }
+  .totals-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 4px; font-size: 11.3px; }
+  .totals-row .lbl { color: var(--apex-text-soft); }
+  .totals-row .field { width: 130px; text-align: right; }
+  .totals-row.grand {
+    margin-top: 4px;
+    background: var(--apex-tint-yellow);
+    border: 1px solid var(--apex-yellow);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .totals-row.grand .lbl { font-family: var(--apex-font-display); font-weight: 700; font-size: 13px; color: var(--apex-text); text-transform: uppercase; letter-spacing: .04em; }
+  .totals-row.grand .field { background: transparent; border: none; font-family: var(--apex-font-display); font-weight: 700; font-size: 17px; width: auto; }
+
+  /* ---- NOTA FISCALE ---- */
+  .fiscal-note { margin-top: 14px; font-size: 10px; color: var(--apex-text-muted); font-style: italic; }
+  .fiscal-note .field { font-style: normal; }
+
+  /* ---- DETTAGLI OPERATIVI ---- */
+  .ops { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 10px; }
+  .ops .panel-lite { border: 1px solid var(--apex-border); border-radius: 10px; padding: 13px 14px; }
+  .ops .tag { color: var(--apex-blue); }
+
+  /* ---- FOOTER ---- */
+  .foot { margin-top: auto; padding-top: 18px; }
+  .foot hr { border: none; border-top: 1px solid var(--apex-border); margin: 0 0 10px; }
+  .foot-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .foot-left { font-size: 9px; color: var(--apex-text-faint); max-width: 65%; line-height: 1.5; }
+  .foot-right { font-size: 10px; font-weight: 700; color: var(--apex-text); text-align: right; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="46" height="46" viewBox="0 0 46 46">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#5B2EFF"/>
+              <stop offset="55%" stop-color="#2F6BFF"/>
+              <stop offset="100%" stop-color="#FFD84D"/>
+            </linearGradient>
+          </defs>
+          <polygon points="23,9 34,34 12,34" fill="url(#g1)"/>
+          <polygon points="23,9 28,34 18,34" fill="#ffffff" opacity=".18"/>
+        </svg>
+      </span>
+      <div>
+        <div class="brand-name">APEX MEDIA</div>
+        <div class="brand-sub">Performance Marketing Agency</div>
+      </div>
+    </div>
+
+    <div class="doc-meta">
+      <div class="doc-title">FATTURA</div>
+      <div class="doc-meta-row">
+        <div class="cell">
+          <label class="tag">N.</label>
+          <div class="field sm" contenteditable="true"></div>
+        </div>
+        <div class="cell">
+          <label class="tag">Data emissione</label>
+          <div class="field sm" contenteditable="true"></div>
+        </div>
+        <div class="cell">
+          <label class="tag">Scadenza</label>
+          <div class="field sm" contenteditable="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gradient-bar"></div>
+
+  <!-- DA / A -->
+  <div class="parties">
+    <div class="panel">
+      <label class="tag">Da</label>
+      <h3>Apex Media</h3>
+      <p class="muted">Alessandria, Piemonte</p>
+
+      <div class="row">
+        <label class="tag">Referenti</label>
+        <p class="contact"><strong>Fania Alexander</strong> · 351 594 0685</p>
+        <p class="contact"><strong>Federico Delfino</strong> · 333 701 8993</p>
+        <p class="contact">studio@infoapex.eu</p>
+      </div>
+
+      <div class="row">
+        <label class="tag">P.IVA</label>
+        <div class="field sm" contenteditable="true" data-placeholder="—"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <label class="tag">A</label>
+      <div class="row">
+        <label class="tag">Nome cliente / Ragione sociale</label>
+        <div class="field sm" contenteditable="true"></div>
+      </div>
+      <div class="row">
+        <label class="tag">P.IVA / Codice fiscale cliente</label>
+        <div class="field sm" contenteditable="true"></div>
+      </div>
+      <div class="row">
+        <label class="tag">Indirizzo</label>
+        <div class="field sm" contenteditable="true"></div>
+      </div>
+      <div class="row">
+        <label class="tag">Email</label>
+        <div class="field sm" contenteditable="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OGGETTO -->
+  <div class="subject">
+    <label class="tag" style="color:var(--apex-purple)">Oggetto della fattura</label>
+    <div class="field" contenteditable="true" data-placeholder="Rif. Preventivo N. / descrizione sintetica del servizio"></div>
+  </div>
+
+  <!-- SERVIZI -->
+  <div class="section-title">
+    <div class="rule"></div>
+    <h2>Servizi fatturati</h2>
+  </div>
+
+  <table class="items">
+    <colgroup>
+      <col class="desc"><col class="qty"><col class="unit"><col class="total">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Servizio</th>
+        <th>Periodo / Quantità</th>
+        <th class="num">Prezzo unitario</th>
+        <th class="num">Importo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td class="price"><div class="field sm" contenteditable="true"></div></td>
+      </tr>
+      <tr>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td class="price"><div class="field sm" contenteditable="true"></div></td>
+      </tr>
+      <tr>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td class="price"><div class="field sm" contenteditable="true"></div></td>
+      </tr>
+      <tr>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td><div class="field sm" contenteditable="true"></div></td>
+        <td class="price"><div class="field sm" contenteditable="true"></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOTALI -->
+  <div class="totals">
+    <div class="totals-box">
+      <div class="totals-row">
+        <span class="lbl">Imponibile</span>
+        <div class="field sm" contenteditable="true"></div>
+      </div>
+      <div class="totals-row">
+        <span class="lbl">IVA (%)</span>
+        <div class="field sm" contenteditable="true"></div>
+      </div>
+      <div class="totals-row grand">
+        <span class="lbl">Totale</span>
+        <div class="field" contenteditable="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fiscal-note">
+    <div class="field sm" contenteditable="true" data-placeholder="Eventuale dicitura fiscale (es. regime forfettario, esenzione IVA, ecc.)"></div>
+  </div>
+
+  <!-- DETTAGLI OPERATIVI -->
+  <div class="section-title">
+    <div class="rule"></div>
+    <h2>Dettagli pagamento</h2>
+  </div>
+
+  <div class="ops">
+    <div class="panel-lite">
+      <label class="tag">Modalità di pagamento</label>
+      <div class="field sm" contenteditable="true"></div>
+    </div>
+    <div class="panel-lite">
+      <label class="tag">IBAN</label>
+      <div class="field sm" contenteditable="true"></div>
+    </div>
+    <div class="panel-lite">
+      <label class="tag">Note</label>
+      <div class="field sm" contenteditable="true"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <hr>
+    <div class="foot-row">
+      <div class="foot-left">Documento generato da Apex Media. Per qualsiasi chiarimento sulla fattura contattare i referenti indicati in alto.</div>
+      <div class="foot-right">Apex Media — Alessandria, Piemonte</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
