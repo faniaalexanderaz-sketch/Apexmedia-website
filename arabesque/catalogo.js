@@ -75,9 +75,9 @@
       '<div class="wrap filtri-in">' +
         '<div class="filtri-taglie" role="group" aria-label="Filtra per taglia">' +
           '<span class="filtri-eti">Taglia</span>' +
-          '<button type="button" class="chip-t' + (stato.taglia ? '' : ' scelta') + '" data-taglia="">Tutte</button>' +
+          '<button type="button" class="chip-f' + (stato.taglia ? '' : ' scelta') + '" data-taglia="">Tutte</button>' +
           taglieDisponibili.map(function (t) {
-            return '<button type="button" class="chip-t' + (stato.taglia === t ? ' scelta' : '') + '" data-taglia="' + t + '">' + t + '</button>';
+            return '<button type="button" class="chip-f' + (stato.taglia === t ? ' scelta' : '') + '" data-taglia="' + t + '">' + t + '</button>';
           }).join('') +
         '</div>' +
         '<div class="filtri-select">' +
@@ -115,7 +115,7 @@
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('.chip-t');
+    var t = e.target.closest('.chip-f');
     if (!t) return;
     stato.taglia = t.dataset.taglia;
     renderFiltri();

@@ -12,7 +12,7 @@
 <meta property="og:title" content="Il negozio di Busalla — Arabesque Abbigliamento" />
 <meta property="og:description" content="Arabesque Abbigliamento, Via Vittorio Veneto 154 a Busalla (GE): abbigliamento uomo e donna dalla XS alla 6XL, a due minuti dalla stazione." />
 <meta property="og:locale" content="it_IT" />
-<meta name="theme-color" content="#0B0B0C" />
+<meta name="theme-color" content="#08080A" />
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="styles.css" />
@@ -21,113 +21,106 @@
 
 <a class="skip-link" href="#contenuto">Salta al contenuto</a>
 
-<!--PROMO-->
-<div class="promo-bar" id="promoBar" role="note">
-  <span><strong>Spedizione gratuita</strong> sopra 79 € · Primo ordine <strong>−10%</strong> con <code>BENVENUTO10</code></span>
-  <button class="promo-bar-chiudi" id="promoBarChiudi" aria-label="Chiudi il messaggio">×</button>
-</div>
-<!--/PROMO-->
-
 <!--NAV-->
-<header class="nav">
-  <div class="nav-in">
-    <nav class="nav-link-gruppo solo-desktop" aria-label="Categorie">
-      <a class="nav-link" href="donna.html">Donna</a>
-      <a class="nav-link" href="uomo.html">Uomo</a>
-      <a class="nav-link evidenza" href="curvy.html">Curvy XS–6XL</a>
-      <a class="nav-link" href="donna.html?filtro=novita">Novità</a>
+<header class="isola">
+  <div class="isola-in">
+    <nav class="nav-voci solo-grande" aria-label="Collezioni">
+      <a class="nav-voce" href="donna.html">Donna</a>
+      <a class="nav-voce" href="uomo.html">Uomo</a>
+      <a class="nav-voce oro" href="curvy.html">Curvy XS–6XL</a>
+      <a class="nav-voce" href="negozio.html">Il negozio</a>
     </nav>
-    <button class="icona-btn solo-mobile" data-apri="menu" aria-label="Apri il menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <button class="burger solo-piccolo" data-menu aria-label="Apri il menu" aria-expanded="false">
+      <span></span><span></span>
     </button>
 
-    <a class="logo" href="index.html">Arabesque<small>Busalla</small></a>
+    <a class="marchio" href="index.html"><b>Arabesque</b><small>Busalla</small></a>
 
     <div class="nav-azioni">
-      <a class="icona-btn solo-desktop" href="negozio.html" aria-label="Il negozio di Busalla">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+      <button class="ic-btn solo-grande" data-menu aria-label="Apri il menu">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+      <a class="ic-btn" href="traccia-ordine.html" aria-label="Traccia il tuo ordine">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 7h13v10H3zM16 10h3.5L21 13v4h-5z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17.5" cy="18" r="1.5"/></svg>
       </a>
-      <a class="icona-btn" href="traccia-ordine.html" aria-label="Traccia il tuo ordine">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h13v10H3zM16 10h3.5L21 13v4h-5z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
-      </a>
-      <button class="icona-btn" data-apri="carrello" aria-label="Apri il carrello">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="badge" data-badge-carrello hidden>0</span>
+      <button class="ic-btn" data-apri="carrello" aria-label="Apri il carrello">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="pallino" data-pallino hidden>0</span>
       </button>
     </div>
   </div>
 </header>
+
+<div class="sipario" id="sipario" aria-hidden="true">
+  <ul class="sipario-voci">
+    <li><a href="donna.html">Donna <em>01</em></a></li>
+    <li><a href="uomo.html">Uomo <em>02</em></a></li>
+    <li><a href="curvy.html">Curvy <em>XS — 6XL</em></a></li>
+    <li><a href="donna.html?filtro=novita">Novità <em>03</em></a></li>
+    <li><a href="donna.html?filtro=saldi">Saldi <em>04</em></a></li>
+    <li><a href="negozio.html">Il negozio <em>Busalla</em></a></li>
+  </ul>
+  <div class="sipario-piede">
+    <a href="traccia-ordine.html">Traccia il tuo ordine</a>
+    <a href="resi-spedizioni.html">Spedizioni e resi</a>
+    <a data-cfg-wa href="#" target="_blank" rel="noopener">Consiglio taglia su WhatsApp</a>
+    <a data-cfg-map href="#" target="_blank" rel="noopener">Via Vittorio Veneto 154, Busalla</a>
+  </div>
+</div>
 <!--/NAV-->
 
 <main id="contenuto">
 
-  <section class="pagina-testa">
+  <section class="testata">
     <div class="wrap">
       <p class="briciole"><a href="index.html">Home</a> · Il negozio</p>
-      <p class="eyebrow">Busalla, Valle Scrivia</p>
-      <h1>Vieni a provarli.<br />Siamo qui da sempre.</h1>
+      <p class="occhiello">Busalla · Valle Scrivia</p>
+      <h1>Vieni a provarli.<br />Siamo qui <span class="corsivo" style="color:var(--oro-luce)">da sempre</span>.</h1>
       <p class="intro">Online trovi una selezione. In negozio c'è tutto il resto, e c'è chi ti dice la verità sulla taglia. A due minuti a piedi dalla stazione di Busalla.</p>
     </div>
   </section>
 
-  <section class="sez">
-    <div class="wrap negozio-in">
-      <div class="negozio-foto reveal" id="negozioFotoGrande"></div>
-      <div class="reveal">
+  <section class="sez-stretta">
+    <div class="wrap split">
+      <div class="guscio entra"><div class="nucleo"><div class="split-foto" id="fotoNegozioGrande"></div></div></div>
+      <div class="entra r1">
         <ul class="negozio-dati">
-          <li>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-            <div><b data-cfg="indirizzo"></b><small data-cfg="citta"></small></div>
-          </li>
-          <li>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-            <div><b>Orari di apertura</b><ul id="orariLista" class="orari"></ul></div>
-          </li>
-          <li>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 3.2 2 2 0 0 1 4 1h2a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L7.1 8.6a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
-            <div><b data-cfg="telefono"></b><small>Chiamaci per disponibilità, misure e per farti mettere un capo da parte</small></div>
-          </li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <div><b data-cfg="indirizzo"></b><small data-cfg="citta"></small></div></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <div><b>Orari di apertura</b><ul id="orariLista" class="orari"></ul></div></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 3.2 2 2 0 0 1 4 1h2a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L7.1 8.6a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
+            <div><b data-cfg="telefono"></b><small>Chiamaci per disponibilità, misure e per farti mettere un capo da parte</small></div></li>
         </ul>
-        <div class="hero-cta">
-          <a class="btn btn-primario" data-cfg-map target="_blank" rel="noopener" href="#">Apri in Google Maps</a>
-          <a class="btn btn-fantasma" data-cfg-wa href="#" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+        <div class="hero-azioni" style="opacity:1;transform:none">
+          <a class="btn btn-primario" data-cfg-map target="_blank" rel="noopener" href="#">Apri in Google Maps <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn btn-filo" data-cfg-wa href="#" target="_blank" rel="noopener">Scrivici su WhatsApp <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sez sez-bordo sez-scura">
-    <div class="wrap">
-      <div class="curvy-tre">
-        <div class="reveal">
-          <span class="num">01</span><h3>Ordina online, ritiri qui</h3>
-          <p>Scegli "ritiro in negozio" alla cassa: nessun costo di spedizione e il capo è pronto entro 24 ore. Provi, e se la taglia non va la cambi sul momento.</p>
-        </div>
-        <div class="reveal">
-          <span class="num">02</span><h3>Te lo teniamo da parte</h3>
-          <p>Hai visto un capo online e vuoi provarlo prima di comprarlo? Chiamaci: lo mettiamo da parte per 48 ore, senza impegno.</p>
-        </div>
-        <div class="reveal">
-          <span class="num">03</span><h3>Modifiche e orli</h3>
-          <p>Accorciamo cinture e sistemiamo gli orli sulla tua misura. Chiedi in cassa quando ritiri.</p>
-        </div>
-      </div>
+  <section class="sez chiara">
+    <div class="wrap tre-motivi">
+      <div class="entra"><span class="num">01</span><h3>Ordina online, ritiri qui</h3><p>Scegli "ritiro in negozio" alla cassa: nessun costo di spedizione e il capo è pronto entro 24 ore. Provi, e se la taglia non va la cambi sul momento.</p></div>
+      <div class="entra r1"><span class="num">02</span><h3>Te lo teniamo da parte</h3><p>Hai visto un capo online e vuoi provarlo prima di comprarlo? Chiamaci: lo mettiamo da parte per 48 ore, senza impegno.</p></div>
+      <div class="entra r2"><span class="num">03</span><h3>Modifiche e orli</h3><p>Accorciamo cinture e sistemiamo gli orli sulla tua misura. Chiedi in cassa quando ritiri.</p></div>
     </div>
   </section>
 
 </main>
 
 <!--FOOTER-->
-<footer class="footer">
+<footer class="piede">
   <div class="wrap">
-    <div class="footer-griglia">
-      <div class="footer-intro">
-        <a class="logo" href="index.html" style="padding:0">Arabesque<small>Busalla</small></a>
+    <div class="piede-griglia">
+      <div class="piede-intro">
+        <a class="marchio" href="index.html" style="align-items:flex-start"><b>Arabesque</b><small>Busalla</small></a>
         <p>Boutique multimarca uomo e donna a Busalla. Dalla XS alla 6XL, con la stessa cura per ogni taglia.</p>
-        <div class="footer-social">
-          <a data-cfg-fb href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
-          <a data-cfg-ig href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-          <a data-cfg-wa data-cfg-wa-testo="Buongiorno, vi scrivo dal sito." href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></a>
+        <div class="piede-social">
+          <a data-cfg-fb href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+          <a data-cfg-ig href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a data-cfg-wa href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></a>
         </div>
       </div>
       <div>
@@ -145,7 +138,7 @@
           <li><a href="traccia-ordine.html">Traccia il tuo ordine</a></li>
           <li><a href="resi-spedizioni.html">Spedizioni e resi</a></li>
           <li><a href="negozio.html">Il negozio</a></li>
-          <li><a data-cfg-wa href="#" target="_blank" rel="noopener">Consiglio taglia su WhatsApp</a></li>
+          <li><a data-cfg-wa href="#" target="_blank" rel="noopener">Consiglio taglia</a></li>
         </ul>
       </div>
       <div>
@@ -158,53 +151,31 @@
         </ul>
       </div>
     </div>
-    <div class="footer-basso">
+    <div class="piede-basso">
       <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span> · P. IVA <span data-cfg="piva">TODO-CLIENTE</span> · <span data-cfg="indirizzoCompleto"></span></p>
-      <div class="pagamenti">
-        <span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Contrassegno</span>
-      </div>
+      <div class="pagamenti"><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Contrassegno</span></div>
     </div>
   </div>
 </footer>
 <!--/FOOTER-->
 
 <!--DRAWERS-->
-<a class="wa-float" data-cfg-wa href="#" target="_blank" rel="noopener">
-  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>
+<div class="grana" aria-hidden="true"></div>
+
+<a class="wa" data-cfg-wa href="#" target="_blank" rel="noopener">
+  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>
   <span>Consiglio taglia</span>
 </a>
 
 <div class="velo" id="velo"></div>
 
-<aside class="drawer sinistra" id="drawerMenu" aria-hidden="true" aria-label="Menu">
-  <div class="drawer-testa">
-    <h2>Menu</h2>
-    <button class="chiudi" data-chiudi aria-label="Chiudi il menu">×</button>
-  </div>
-  <div class="drawer-corpo">
-    <ul class="menu-lista">
-      <li><a href="donna.html">Donna</a></li>
-      <li><a href="uomo.html">Uomo</a></li>
-      <li><a class="oro" href="curvy.html">Curvy XS–6XL</a></li>
-      <li><a href="donna.html?filtro=novita">Novità</a></li>
-      <li><a href="donna.html?filtro=saldi">Saldi</a></li>
-    </ul>
-    <div class="menu-extra">
-      <a href="negozio.html">Il negozio di Busalla</a>
-      <a href="traccia-ordine.html">Traccia il tuo ordine</a>
-      <a href="resi-spedizioni.html">Spedizioni e resi</a>
-      <a data-cfg-wa href="#" target="_blank" rel="noopener">Consiglio taglia su WhatsApp</a>
-    </div>
-  </div>
-</aside>
-
-<aside class="drawer" id="drawerCarrello" aria-hidden="true" aria-label="Carrello">
-  <div class="drawer-testa">
+<aside class="cassetto" id="cassettoCarrello" aria-hidden="true" aria-label="Carrello">
+  <div class="cassetto-testa">
     <h2>Il tuo carrello</h2>
     <button class="chiudi" data-chiudi aria-label="Chiudi il carrello">×</button>
   </div>
-  <div class="drawer-corpo" id="carrelloCorpo"></div>
-  <div class="drawer-piede" id="carrelloPiede"></div>
+  <div class="cassetto-corpo" id="carrelloCorpo"></div>
+  <div class="cassetto-piede" id="carrelloPiede"></div>
 </aside>
 <!--/DRAWERS-->
 
@@ -213,8 +184,7 @@
 <script src="main.js"></script>
 <script src="cookie.js"></script>
 <script>
-var n=document.getElementById('negozioFotoGrande'); if(n) n.innerHTML = ARB.boxFoto('foto/negozio.webp','Il negozio di Busalla','A','Foto del negozio');
+var n=document.getElementById('fotoNegozioGrande'); if(n) n.innerHTML = ARB.boxFoto('foto/negozio.webp','Il negozio di Busalla','A','Foto del negozio');
 </script>
-<script>(function(){var a=document.getElementById('annoCorrente');if(a)a.textContent=new Date().getFullYear();})();</script>
 </body>
 </html>

@@ -47,9 +47,9 @@
 
   /* ---------- galleria ---------- */
   function galleria() {
-    var principale = '<div class="pdp-foto-grande">' + ARB.boxFoto(arbFoto(p, 1), p.nome, 'A', p.sottocategoria) + '</div>';
+    var principale = '<div class="pdp-grande">' + ARB.boxFoto(arbFoto(p, 1), p.nome, 'A', p.sottocategoria) + '</div>';
     var mini = [2, 3].map(function (n) {
-      return '<div class="pdp-foto-mini">' + ARB.boxFoto(arbFoto(p, n), p.nome + ' — dettaglio ' + n, 'A', '') + '</div>';
+      return '<div class="pdp-mini-box">' + ARB.boxFoto(arbFoto(p, n), p.nome + ' — dettaglio ' + n, 'A', '') + '</div>';
     }).join('');
     return '<div class="pdp-galleria">' + principale + '<div class="pdp-mini">' + mini + '</div></div>';
   }
@@ -70,12 +70,12 @@
     return '<div class="pdp-info">' +
       '<p class="briciole"><a href="index.html">Home</a> · <a href="' + (p.categoria === 'uomo' ? 'uomo.html' : (p.categoria === 'accessori' ? 'donna.html' : 'donna.html')) + '">' +
         (p.categoria.charAt(0).toUpperCase() + p.categoria.slice(1)) + '</a> · ' + p.nome + '</p>' +
-      '<p class="prod-card-brand">' + arbBrand() + '</p>' +
+      '<p class="capo-casa">' + arbBrand() + '</p>' +
       '<h1>' + p.nome + '</h1>' +
       '<p class="pdp-prezzo">' +
-        (p.sconto ? '<span class="prezzo-pieno">' + arbEuro(p.prezzo) + '</span>' : '') +
-        '<span class="prezzo-ora' + (p.sconto ? ' in-saldo' : '') + '">' + arbEuro(finale) + '</span>' +
-        (p.sconto ? '<span class="pdp-risparmi">risparmi ' + arbEuro(p.prezzo - finale) + '</span>' : '') +
+        (p.sconto ? '<span class="prezzo-vecchio">' + arbEuro(p.prezzo) + '</span>' : '') +
+        '<span class="prezzo-ora' + (p.sconto ? ' saldo' : '') + '">' + arbEuro(finale) + '</span>' +
+        (p.sconto ? '<span class="tag oro">risparmi ' + arbEuro(p.prezzo - finale) + '</span>' : '') +
       '</p>' +
       '<p class="pdp-descrizione">' + p.descrizione + '</p>' +
 
@@ -90,9 +90,9 @@
 
       '<div class="pdp-azioni">' +
         (esaurito
-          ? '<button class="btn btn-fantasma btn-blocco" id="btnAvvisami">Avvisami quando torna</button>'
+          ? '<button class="btn btn-filo btn-blocco" id="btnAvvisami">Avvisami quando torna</button>'
           : '<button class="btn btn-primario btn-blocco" id="btnCarrello">Aggiungi al carrello</button>') +
-        '<a class="btn btn-fantasma btn-blocco" href="checkout.html?ritiro=1" id="btnRitiro">Ritira gratis in negozio a Busalla</a>' +
+        '<a class="btn btn-filo btn-blocco" href="checkout.html?ritiro=1" id="btnRitiro">Ritira gratis in negozio a Busalla</a>' +
       '</div>' +
 
       '<ul class="pdp-trust">' +
@@ -127,12 +127,12 @@
 
   /* ---------- guida taglie (drawer) ---------- */
   var drawer = document.createElement('aside');
-  drawer.className = 'drawer';
+  drawer.className = 'cassetto';
   drawer.id = 'drawerTaglie';
   drawer.setAttribute('aria-hidden', 'true');
-  drawer.innerHTML = '<div class="drawer-testa"><h2>Guida alle taglie</h2>' +
+  drawer.innerHTML = '<div class="cassetto-testa"><h2>Guida alle taglie</h2>' +
     '<button class="chiudi" data-chiudi aria-label="Chiudi">×</button></div>' +
-    '<div class="drawer-corpo">' +
+    '<div class="cassetto-corpo">' +
       '<p style="color:var(--grigio-2);font-size:14.5px">Misura un capo che ti sta bene, appoggiato sul letto, e confronta i centimetri. È più affidabile della taglia scritta in etichetta.</p>' +
       '<div class="tabella-taglie" style="margin-top:20px"><table><thead><tr><th>Taglia</th><th>Torace</th><th>Vita</th></tr></thead><tbody>' +
         '<tr><td>XS</td><td>82 – 86</td><td>62 – 66</td></tr>' +
@@ -230,9 +230,9 @@
     ARB.reveal(sezioni);
   }
   function blocco(titolo, elenco) {
-    return '<section class="sez sez-bordo"><div class="wrap">' +
-      '<div class="sez-testa reveal"><h2>' + titolo + '</h2></div>' +
-      '<div class="prod-griglia">' + elenco.map(function (x) { return ARB.cardProdotto(x); }).join('') + '</div>' +
+    return '<section class="sez filo-sopra"><div class="wrap">' +
+      '<div class="sez-testa entra"><h2>' + titolo + '</h2></div>' +
+      '<div class="griglia-capi">' + elenco.map(function (x) { return ARB.cardProdotto(x); }).join('') + '</div>' +
     '</div></section>';
   }
 

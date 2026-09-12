@@ -28,9 +28,28 @@ si può mostrare al cliente prima di collegare Stripe.
 | `admin.html` | Pannello interno: ordini, incasso, visite, stato ordine |
 | `prodotti.js` | **Il catalogo**: unica fonte dati di tutto il sito |
 | `config.js` | Dati del negozio (telefono, WhatsApp, orari, P. IVA) |
-| `styles.css` | Design system "Nero Couture" |
-| `main.js` | Nav, carrello, card prodotto, hero WebGL, FAQ |
+| `styles.css` | Design system "Editorial Luxury" (nero ↔ panna) |
+| `main.js` | Isola di navigazione, sipario, carrello, schede capo, seta WebGL, 3D |
+| `home.js` | Contenuti dinamici della home: passerella, lookbook, hero |
 | `api/*` | Funzioni serverless (Stripe, ordini, email, admin) |
+
+## Sistema tipografico
+
+Sette famiglie, ognuna con un mestiere preciso — servite dal sito, nessuna chiamata esterna
+(velocità e conformità GDPR):
+
+| Carattere | Dove vive |
+|---|---|
+| Bodoni Moda | titoli, nomi dei capi, voci del menu |
+| Instrument Serif | corsivi editoriali e accenti nei titoli |
+| Geist | interfaccia, testo corrente, bottoni |
+| Archivo (asse width) | manifesti e numeri giganti (scala XS→6XL) |
+| Oswald | ticker, etichette, badge, micro-navigazione |
+| JetBrains Mono | dati: prezzi, taglie, numeri d'ordine, riferimenti |
+| Italiana | occhielli di sezione e logotipo |
+
+La regola: **un ruolo per carattere**. Se un testo nuovo non rientra in nessuno di questi ruoli,
+va in Geist. Mescolarli fuori dai ruoli è l'unico modo per rovinare il sistema.
 
 ## Aggiungere o modificare un capo
 
