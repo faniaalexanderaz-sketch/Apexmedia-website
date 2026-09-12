@@ -12,7 +12,7 @@
   if (!radice) return;
 
   if (!p) {
-    radice.innerHTML = '<div class="wrap vuoto"><h2>Capo non trovato</h2>' +
+    radice.innerHTML = '<div class="wrap vuoto"><h1>Capo non trovato</h1>' +
       '<p>Il capo che cerchi non è più online.</p>' +
       '<p style="margin-top:20px"><a class="btn btn-primario" href="donna.html">Torna alla collezione</a></p></div>';
     return;

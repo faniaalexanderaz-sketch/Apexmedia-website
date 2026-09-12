@@ -17,7 +17,7 @@
 
   if (!cart.length) {
     document.getElementById('cassa').innerHTML =
-      '<div class="wrap vuoto"><h2>Il carrello è vuoto</h2>' +
+      '<div class="wrap vuoto"><h1>Il carrello è vuoto</h1>' +
       '<p>Aggiungi un capo e torna qui: la cassa ti aspetta.</p>' +
       '<p style="margin-top:22px"><a class="btn btn-primario" href="donna.html">Vai alla collezione</a></p></div>';
     return;
