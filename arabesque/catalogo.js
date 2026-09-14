@@ -114,19 +114,65 @@
     if (pannello) pannello.innerHTML = corpoFiltri;
   }
 
+  /* 6 — inserti editoriali: rompono la fila e portano un messaggio
+     commerciale dove l'attenzione è già alta. Mai due nella stessa
+     schermata: per questo la distanza minima è di sei capi. */
+  var INSERTI = [
+    { dopo: 6, html: '<div class="inserto scuro entra">' +
+        '<p class="occhiello">La nostra differenza</p>' +
+        '<p class="inserto-citazione">La 5XL costa quanto la M.</p>' +
+        '<p>Taglie calibrate, non taglie ingrandite. Stesso prezzo, stessa cura.</p>' +
+        '<a class="btn btn-primario btn-piccolo" href="curvy.html">Vedi la linea curvy</a></div>' },
+    { dopo: 14, html: '<div class="inserto entra">' +
+        '<p class="occhiello">Camerino a distanza</p>' +
+        '<h3>Dubbio sulla taglia?</h3>' +
+        '<p>Scrivici altezza, peso e la taglia che porti di solito: ti rispondiamo noi dal negozio.</p>' +
+        '<a class="btn btn-oro btn-piccolo" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp</a></div>' },
+    { dopo: 22, html: '<div class="inserto entra">' +
+        '<p class="occhiello">A Busalla</p>' +
+        '<h3>Ordina online, ritiri qui</h3>' +
+        '<p>Nessun costo di spedizione, pronto entro 24 ore. Provi e cambi taglia sul momento.</p>' +
+        '<a class="btn btn-filo btn-piccolo" href="negozio.html">Il negozio</a></div>' }
+  ];
+
+  /* 8 — scheletri mentre la griglia si ricostruisce */
+  function scheletri(n) {
+    var uno = '<div class="capo scheletro-capo">' +
+      '<div class="scheletro sk-foto"></div>' +
+      '<div class="scheletro sk-riga corta"></div>' +
+      '<div class="scheletro sk-riga"></div></div>';
+    return new Array(n).fill(uno).join('');
+  }
+
+  var primoGiro = true;
   function render() {
     var out = applica();
-    griglia.innerHTML = out.map(function (p) { return ARB.cardProdotto(p); }).join('');
+
+    if (primoGiro) { griglia.innerHTML = scheletri(8); primoGiro = false; }
+
+    var pezzi = [];
+    out.forEach(function (p, i) {
+      pezzi.push(ARB.cardProdotto(p));
+      INSERTI.forEach(function (ins) { if (ins.dopo === i + 1) pezzi.push(ins.html); });
+    });
+    griglia.innerHTML = pezzi.join('');
     var conta = document.getElementById('conta');
     if (conta) conta.textContent = out.length + (out.length === 1 ? ' capo' : ' capi');
     var vuoto = document.getElementById('vuoto');
     if (vuoto) vuoto.hidden = out.length > 0;
-    ARB.reveal(griglia);
+    if (!out.length) griglia.innerHTML = '';
+    ARB.riaggancia(griglia);
+    ARB.config();
     ARB.evento('view_item_list', { item_list_name: document.title, items: out.slice(0, 12).map(function (x) { return { item_id: x.slug, item_name: x.nome, price: arbPrezzoFinale(x) }; }) });
     url();
   }
 
   document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-azzera-filtri]')) {
+      stato.taglia = ''; stato.sotto = ''; stato.filtro = ''; stato.disponibili = true;
+      renderFiltri(); render();
+      return;
+    }
     var t = e.target.closest('.chip-f');
     if (!t) return;
     stato.taglia = t.dataset.taglia;

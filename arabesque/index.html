@@ -163,7 +163,7 @@
         <h1>Stile che veste <em>ogni</em> corporatura.<br />Dalla XS alla 6XL.</h1>
         <p class="hero-sotto">Uomo e donna, scelti capo per capo in negozio. Provati, misurati e spediti in 24/48 ore — o ritirati gratis a due passi dalla stazione.</p>
         <div class="hero-azioni">
-          <a class="btn btn-primario btn-grande" href="donna.html">Scopri la collezione
+          <a class="btn btn-cta" href="donna.html">Scopri la collezione
             <span class="cerchio"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
           <a class="btn btn-filo btn-grande" href="curvy.html">Linea curvy
@@ -177,7 +177,15 @@
         </ul>
       </div>
 
-      <div class="hero-foto" id="heroFoto"></div>
+      <div class="hero-strati" id="heroStrati" aria-hidden="true">
+        <div class="strato strato-fondo" data-parallasse="0.25" id="stratoFondo"></div>
+        <div class="strato strato-capo" data-parallasse="0.6" id="stratoCapo"></div>
+        <div class="strato strato-ui" data-parallasse="1">
+          <a class="pillola prezzo" id="pillolaPrezzo" href="#"></a>
+          <span class="pillola taglie">XS <b>→</b> 6XL</span>
+          <span class="pillola colore"><i style="background:#0B0B0C"></i> Nero</span>
+        </div>
+      </div>
     </div>
 
     <!-- il primo capo comprabile, senza scrollare -->
@@ -214,34 +222,32 @@
     </div>
   </section>
 
-  <!-- ================= CATEGORIE ================= -->
+  <!-- ================= CATEGORIE — griglia editoriale ================= -->
   <section class="sez">
-    <div class="wrap">
-      <div class="sez-testa entra" style="margin-bottom:clamp(30px,3.6vw,52px)">
+    <div class="griglia12">
+      <div class="span4 entra-lato" style="position:sticky;top:calc(var(--nav-h) + var(--s-5));align-self:start">
         <p class="occhiello">Le collezioni</p>
-        <h2>Tre porte d'ingresso,<br />una sola cura.</h2>
+        <h2>Tre porte<br />d'ingresso,<br />una sola cura.</h2>
+        <p style="color:var(--grafite);margin-top:var(--s-3);max-width:34ch">Ogni capo passa dalle nostre mani prima di arrivare qui. Le taglie che vedi sono quelle che abbiamo davvero in negozio.</p>
+        <a class="link-linea" style="margin-top:var(--s-4)" href="donna.html">Tutta la collezione
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
-      <div class="trittico">
-        <a class="tri-card entra" href="donna.html">
+      <div class="da6 a12 trittico-editoriale">
+        <a class="tri-card entra" data-tilt="5" href="donna.html">
           <span class="tri-num">01</span><span class="tri-foto"></span><span class="tri-velo"></span>
-          <span class="tri-testo">
-            <h3>Donna</h3><p>Capispalla, abiti, maglieria, camicie</p>
-            <span class="link-linea">Scopri <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </span>
+          <span class="tri-testo"><h3>Donna</h3><p>Capispalla, abiti, maglieria, camicie</p>
+            <span class="link-linea">Scopri <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
         </a>
-        <a class="tri-card entra r1" href="uomo.html">
-          <span class="tri-num">02</span><span class="tri-foto"></span><span class="tri-velo"></span>
-          <span class="tri-testo">
-            <h3>Uomo</h3><p>Giacche, camicie, maglieria, pantaloni</p>
-            <span class="link-linea">Scopri <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </span>
+        <a class="tri-card entra alta" data-tilt="5" href="curvy.html">
+          <span class="tri-num">02</span><span class="tag oro tri-tag">XS → 6XL</span><span class="tri-foto"></span><span class="tri-velo"></span>
+          <span class="tri-testo"><h3>Curvy</h3><p>Taglie calibrate, tagliate sulle misure vere</p>
+            <span class="link-linea">Scopri <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
         </a>
-        <a class="tri-card entra r2" href="curvy.html">
-          <span class="tri-num">03</span><span class="tag oro tri-tag">XS → 6XL</span><span class="tri-foto"></span><span class="tri-velo"></span>
-          <span class="tri-testo">
-            <h3>Curvy</h3><p>Taglie calibrate, tagliate sulle misure vere</p>
-            <span class="link-linea">Scopri <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </span>
+        <a class="tri-card entra" data-tilt="5" href="uomo.html">
+          <span class="tri-num">03</span><span class="tri-foto"></span><span class="tri-velo"></span>
+          <span class="tri-testo"><h3>Uomo</h3><p>Giacche, camicie, maglieria, pantaloni</p>
+            <span class="link-linea">Scopri <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>
         </a>
       </div>
     </div>
@@ -278,11 +284,11 @@
           <li><b>02</b><span>Prezzi identici a quelli delle taglie standard</span></li>
           <li><b>03</b><span>Provi in negozio e cambi taglia sul momento</span></li>
         </ul>
-        <a class="btn btn-primario" href="curvy.html">Scopri la linea curvy
+        <a class="btn btn-cta" href="curvy.html">Scopri la linea curvy
           <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </div>
-      <div class="guscio entra r1"><div class="nucleo"><div class="split-foto" id="fotoCurvy"></div></div></div>
+      <div class="guscio entra-lato destra sfora-destra" data-parallasse="0.2"><div class="nucleo"><div class="split-foto" id="fotoCurvy"></div></div></div>
     </div>
   </section>
 
@@ -320,7 +326,7 @@
   <!-- ================= NEGOZIO (notte) ================= -->
   <section class="sez notte">
     <div class="wrap split">
-      <div class="guscio entra"><div class="nucleo"><div class="split-foto" id="fotoNegozio"></div></div></div>
+      <div class="guscio entra-lato sfora-sinistra" data-parallasse="0.2"><div class="nucleo"><div class="split-foto" id="fotoNegozio"></div></div></div>
       <div class="entra r1">
         <p class="occhiello">Il negozio</p>
         <h2>Siamo a Busalla,<br />a due minuti dalla stazione.</h2>
@@ -532,6 +538,7 @@
 <script src="prodotti.js"></script>
 <script src="main.js"></script>
 <script src="cookie.js"></script>
+<script src="movimento.js"></script>
 <script src="home.js"></script>
 </body>
 </html>

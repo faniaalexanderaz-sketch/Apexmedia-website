@@ -64,9 +64,9 @@ Misurate con Chromium su rete 4G simulata e processore rallentato 4×, **senza f
 
 | Pagina | LCP | CLS | Peso |
 |---|---|---|---|
-| Home | 692 ms | 0 | 374 KB |
-| Catalogo | 536 ms | 0 | 287 KB |
-| Scheda capo | 672 ms | 0 | 294 KB |
+| Home | 856 ms | 0 | 411 KB |
+| Catalogo | 704 ms | 0 | 412 KB |
+| Scheda capo | 900 ms | 0 | 336 KB |
 
 Budget da non superare: LCP < 2,0 s · CLS < 0,05 · CSS < 110 KB · JS < 90 KB.
 
@@ -109,6 +109,29 @@ Tutto avviene in `prodotti.js`. Un capo è un oggetto:
 
 Una taglia con `0` pezzi appare barrata e non si può comprare. Il capo con tutte le taglie a zero
 mostra "Esaurito" e il pulsante "Avvisami quando torna".
+
+## Il sistema di movimento e le dieci aggiunte di design
+
+| # | Aggiunta | Dove vive |
+|---|---|---|
+| 1 | Griglia editoriale a 12 colonne con rotture e sfori | `.griglia12`, `.sfora-destra` — home, sezione categorie |
+| 2 | Scala tipografica modulare (1.25) e ritmo su 8px | `--t-1…--t-9`, `--s-1…--s-8` |
+| 3 | Hero a tre strati con parallasse | `.hero-strati`, `movimento.js` → `parallasse()` |
+| 4 | Transizioni di pagina native (View Transitions) | `@view-transition`, `movimento.js` → `transizioni()` |
+| 5 | Racconto del capo a scorrimento agganciato | `prodotto.js` → sezione `.racconto`, sagome generate |
+| 6 | Inserti editoriali nella griglia prodotti | `catalogo.js` → `INSERTI` |
+| 7 | Nota cromatica per sezione | `body[data-sezione]` → `--accento` |
+| 8 | Scheletri, stato vuoto curato, miniatura che vola | `.scheletro`, `.vuoto-curato`, `movimento.js` → `vola()` |
+| 9 | Anteprima rapida dal catalogo | `movimento.js` → `apriSbircia()` |
+| 10 | Direzione artistica dei segnaposto per categoria | `main.js` → `SEGNI`, `.foto-vuota.v-*` |
+
+**Movimento:** entrate 3D scaglionate (il ritardo lo calcola la posizione nella griglia, non una
+classe scritta a mano), inclinazione al mouse sulle schede, barra di avanzamento della lettura,
+CTA che respira una volta quando entra in vista. Tutto su `transform` e `opacity`: CLS resta 0.
+`prefers-reduced-motion` spegne ogni animazione.
+
+**Pulsanti:** pillola con icona annidata, riflesso che attraversa al passaggio, sollevamento e
+pressione. La classe `.btn-cta` è la chiamata all'azione principale — una sola per schermata.
 
 ## Cosa fa il sito, in concreto
 

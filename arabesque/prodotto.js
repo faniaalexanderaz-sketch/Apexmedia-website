@@ -278,6 +278,99 @@
 
   if (p.tagliaUnica) selezionaTaglia(p.taglie[0].id);
 
+
+  /* ---------- 5 — il racconto del capo, a scorrimento agganciato ----------
+     Tre fermate: il tessuto, come veste, come portarlo. La scena resta
+     ferma e cambia mentre il testo scorre: lo scroll diventa il
+     telecomando della storia. La silhouette che si allarga dalla XS alla
+     6XL è la dimostrazione visiva del posizionamento del negozio. */
+  var abbinamenti = ARB_PRODOTTI.filter(function (x) {
+    return x.slug !== p.slug && x.categoria === p.categoria && x.sottocategoria !== p.sottocategoria;
+  }).slice(0, 3);
+
+  /* La sagoma non è disegnata a mano: è generata dalle misure, così le
+     tre taglie restano matematicamente coerenti fra loro. s = mezza
+     spalla, h = mezzo fondo, m = larghezza manica. È un cappotto
+     stilizzato, non un corpo: racconta il capo, non chi lo indossa. */
+  function sagoma(s, h, m) {
+    var c = 100;                       /* asse centrale */
+    return [
+      'M', c - s, 44,                  /* spalla sinistra */
+      'L', c - s - m, 62,              /* attacco manica */
+      'L', c - s - m - 2, 148,         /* polso */
+      'L', c - s - m + 12, 150,
+      'L', c - s + 4, 74,              /* rientro sotto l'ascella */
+      'L', c - h, 196,                 /* fianco fino al fondo */
+      'L', c + h, 196,                 /* fondo */
+      'L', c + s - 4, 74,
+      'L', c + s + m - 12, 150,
+      'L', c + s + m + 2, 148,
+      'L', c + s + m, 62,
+      'L', c + s, 44,                  /* spalla destra */
+      'L', c + 13, 50,                 /* revers destro */
+      'L', c, 72,                      /* incrocio del doppiopetto */
+      'L', c - 13, 50,                 /* revers sinistro */
+      'Z'
+    ].join(' ');
+  }
+  var SAGOME = {
+    xs:  sagoma(26, 30, 11),
+    m:   sagoma(31, 37, 13),
+    xxl: sagoma(38, 50, 16)
+  };
+  function silhouette(id, d, opacita) {
+    return '<path id="' + id + '" d="' + d + '" fill="currentColor" fill-opacity=".14" ' +
+           'stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" opacity="' + opacita + '"/>';
+  }
+
+  var racconto = document.createElement('section');
+  racconto.className = 'sez racconto crema';
+  racconto.innerHTML = '<div class="wrap racconto-in">' +
+    '<div class="racconto-scena">' +
+      '<div class="scena-strato viva" data-scena="0">' +
+        '<svg viewBox="0 0 200 200" width="70%" aria-hidden="true">' +
+          '<defs><pattern id="trama" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">' +
+            '<rect width="14" height="14" fill="none"/>' +
+            '<path d="M0 7h14M7 0v14" stroke="currentColor" stroke-width="1.1" opacity=".38"/>' +
+          '</pattern></defs>' +
+          '<rect x="10" y="10" width="180" height="180" rx="14" fill="url(#trama)" color="var(--accento)"/>' +
+          '<rect x="10" y="10" width="180" height="180" rx="14" fill="none" stroke="var(--filo-2)"/>' +
+        '</svg>' +
+        '<p class="scena-eti">' + p.materiali + '</p>' +
+      '</div>' +
+      '<div class="scena-strato" data-scena="1">' +
+        '<svg class="silhouette" viewBox="0 0 200 220" aria-hidden="true" style="color:var(--accento)">' +
+          silhouette('sagXS', SAGOME.xs, '1') +
+          silhouette('sagM', SAGOME.m, '0') +
+          silhouette('sagXXL', SAGOME.xxl, '0') +
+        '</svg>' +
+        '<p class="scena-eti" id="scenaTaglia">XS</p>' +
+      '</div>' +
+      '<div class="scena-strato" data-scena="2">' +
+        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:82%">' +
+          abbinamenti.map(function (x) {
+            return '<a href="prodotto.html?p=' + x.slug + '" style="border-radius:12px;overflow:hidden;aspect-ratio:3/4;border:1px solid var(--filo);display:block">' +
+              ARB.boxFoto(arbFoto(x, 1), x.nome, ARB.segnoDi(x).m, '', ARB.segnoDi(x).v) + '</a>';
+          }).join('') +
+        '</div>' +
+        '<p class="scena-eti">Tre abbinamenti che facciamo in negozio</p>' +
+      '</div>' +
+    '</div>' +
+    '<div class="racconto-fermate">' +
+      '<div class="fermata viva" data-fermata="0"><span class="num">01 — Il tessuto</span>' +
+        '<h3>' + p.materiali.split(',')[0] + '</h3>' +
+        '<p>' + p.materiali + '. Lo scegliamo toccandolo, non leggendo una scheda: è la parte del lavoro che non si vede da una foto.</p></div>' +
+      '<div class="fermata" data-fermata="1"><span class="num">02 — Come veste</span>' +
+        '<h3>' + p.vestibilita.split('—')[0].trim() + '</h3>' +
+        '<p>Dalla XS alla 6XL cambia il taglio, non solo la misura: spalle, fianchi e maniche sono disegnati per ogni corporatura. Scorri e guarda come cambia.</p></div>' +
+      '<div class="fermata" data-fermata="2"><span class="num">03 — Come portarlo</span>' +
+        '<h3>Tre modi, uno per occasione</h3>' +
+        '<p>Gli stessi abbinamenti che proponiamo in camerino. Toccali per vedere il capo intero.</p></div>' +
+    '</div>' +
+  '</div>';
+
+
+
   /* ---------- correlati ---------- */
   var completa = ARB_PRODOTTI.filter(function (x) {
     return x.slug !== p.slug && x.categoria === p.categoria && x.sottocategoria !== p.sottocategoria;
@@ -289,8 +382,51 @@
     sezioni.innerHTML =
       (completa.length ? blocco('Completa il look', completa, 'crema') : '') +
       (simili.length ? blocco('Ti potrebbe piacere', simili, '') : '');
-    ARB.reveal(sezioni);
+    ARB.riaggancia(sezioni);
   }
+
+  var contenitore = document.getElementById('pdpCorrelati');
+  if (contenitore && abbinamenti.length === 3) {
+    contenitore.appendChild(racconto);
+    var scene = racconto.querySelectorAll('.scena-strato');
+    var fermate = racconto.querySelectorAll('.fermata');
+    var sagome = { 0: 'sagXS', 1: 'sagM', 2: 'sagXXL' };
+    if ('IntersectionObserver' in window) {
+      /* la fermata al centro dello schermo comanda la scena */
+      var occhio = new IntersectionObserver(function (voci) {
+        voci.forEach(function (v) {
+          if (!v.isIntersecting) return;
+          var n = +v.target.dataset.fermata;
+          fermate.forEach(function (f) { f.classList.toggle('viva', +f.dataset.fermata === n); });
+          scene.forEach(function (sc) { sc.classList.toggle('viva', +sc.dataset.scena === n); });
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      fermate.forEach(function (f) { occhio.observe(f); });
+
+      /* dentro la seconda fermata la sagoma cresce dalla XS alla 6XL */
+      var eti = racconto.querySelector('#scenaTaglia');
+      var nomi = ['XS', 'M', '6XL'];
+      var idSagome = ['sagXS', 'sagM', 'sagXXL'];
+      var attesa = null;
+      window.addEventListener('scroll', function () {
+        if (attesa) return;
+        attesa = requestAnimationFrame(function () {
+          attesa = null;
+          var f = racconto.querySelector('[data-fermata="1"]');
+          if (!f || !f.classList.contains('viva')) return;
+          var r = f.getBoundingClientRect();
+          var quanto = Math.min(1, Math.max(0, (window.innerHeight / 2 - r.top) / Math.max(1, r.height)));
+          var indice = quanto < 0.34 ? 0 : (quanto < 0.67 ? 1 : 2);
+          idSagome.forEach(function (id, i) {
+            var el = racconto.querySelector('#' + id);
+            if (el) el.setAttribute('opacity', i === indice ? '1' : '0');
+          });
+          if (eti) eti.textContent = nomi[indice];
+        });
+      }, { passive: true });
+    }
+  }
+
   function blocco(titolo, elenco, classe) {
     return '<section class="sez-stretta ' + classe + '"><div class="wrap">' +
       '<div class="sez-testa entra" style="margin-bottom:28px"><h2>' + titolo + '</h2></div>' +
@@ -298,5 +434,5 @@
     '</div></section>';
   }
 
-  ARB.reveal(radice);
+  ARB.riaggancia(radice);
 })();

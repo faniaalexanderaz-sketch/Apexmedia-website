@@ -19,7 +19,7 @@
 <link rel="preload" href="fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-linea="curvy">
+<body data-linea="curvy" data-sezione="curvy">
 
 <a class="skip-link" href="#contenuto">Salta al contenuto</a>
 
@@ -162,9 +162,14 @@
     <div class="wrap">
       <p class="conta" id="conta"></p>
       <div class="griglia-capi" id="griglia"></div>
-      <div class="vuoto" id="vuoto" hidden>
+      <div class="vuoto-curato" id="vuoto" hidden>
+        <p class="segno">A</p>
         <h2>Nessun capo con questi filtri</h2>
-        <p>Prova a togliere un filtro: la collezione curvy si aggiorna ogni settimana.</p>
+        <p>La collezione curvy si aggiorna ogni settimana. Togli un filtro oppure chiedi cosa è appena arrivato.</p>
+        <div class="vuoto-azioni">
+          <button class="btn btn-primario btn-senza-icona" data-azzera-filtri>Togli i filtri</button>
+          <a class="btn btn-filo btn-senza-icona" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp</a>
+        </div>
       </div>
     </div>
   </section>
@@ -203,7 +208,7 @@
             <h3>Non sei sicura della taglia?</h3>
             <p>Scrivici su WhatsApp altezza, peso e la taglia che porti di solito: ti rispondiamo noi dal negozio, come faremmo in camerino. In due minuti, senza impegno.</p>
           </div>
-          <a class="btn btn-primario" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn btn-cta" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         </div>
       </div>
     </div>
@@ -304,6 +309,7 @@
 <script src="prodotti.js"></script>
 <script src="main.js"></script>
 <script src="cookie.js"></script>
+<script src="movimento.js"></script>
 <script src="catalogo.js"></script>
 <script>
 

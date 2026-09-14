@@ -106,9 +106,23 @@
   /* =============================================================
      FOTO E SCHEDA CAPO
      ============================================================= */
+  /* la composizione del riquadro cambia per categoria: finché mancano
+     le foto vere il catalogo non sembra una fila di caselle uguali */
+  var SEGNI = {
+    donna:     { m: 'A',        v: 'v-donna' },
+    uomo:      { m: 'AB',       v: 'v-uomo' },
+    curvy:     { m: 'XS→6XL',   v: 'v-curvy' },
+    accessori: { m: '✦',        v: 'v-accessori' }
+  };
+  function segnoDi(p) {
+    if (!p) return SEGNI.donna;
+    if ((p.linea || []).indexOf('curvy') !== -1) return SEGNI.curvy;
+    return SEGNI[p.categoria] || SEGNI.donna;
+  }
+
   function boxFoto(src, alt, monogramma, etichetta, classe) {
     return '<span class="foto ' + (classe || '') + '">' +
-      '<span class="foto-vuota" aria-hidden="true">' +
+      '<span class="foto-vuota ' + (classe && classe.indexOf('v-') === 0 ? classe : '') + '" aria-hidden="true">' +
         '<span class="foto-vuota-m">' + (monogramma || 'A') + '</span>' +
         '<span class="foto-vuota-t">' + (etichetta || 'Arabesque') + '</span>' +
       '</span>' +
@@ -137,9 +151,11 @@
         (t.stock > 0 ? '' : ' disabled') + ' aria-label="Aggiungi ' + p.nome + ' taglia ' + t.id + '">' + t.id + '</button>';
     }).join('');
 
+    var segno = segnoDi(p);
     return '<article class="capo entra">' +
-      '<a class="capo-foto" href="prodotto.html?p=' + p.slug + '" aria-label="' + p.nome + '">' +
-        badge + boxFoto(arbFoto(p, 1), p.nome, 'A', p.sottocategoria) +
+      '<a class="capo-foto" href="prodotto.html?p=' + p.slug + '" aria-label="' + p.nome + '" data-tilt="4">' +
+        badge + boxFoto(arbFoto(p, 1), p.nome, segno.m, p.sottocategoria, segno.v) +
+        (esaurito ? '' : '<button type="button" class="sbircia-btn" data-sbircia="' + p.slug + '">Guarda</button>') +
       '</a>' +
       '<button type="button" class="capo-cuore' + (inWish ? ' attivo' : '') + '" data-wish="' + p.slug + '" aria-label="Salva tra i preferiti">' +
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="' + (inWish ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.5"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>' +
@@ -558,7 +574,19 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', avvia);
   else avvia();
 
+  /* le griglie costruite a runtime chiedono di riagganciare il movimento */
+  function riaggancia(radice) {
+    osserva(radice);
+    if (window.ARB_MOVIMENTO) {
+      ARB_MOVIMENTO.scagliona();
+      ARB_MOVIMENTO.inclina(radice);
+      ARB_MOVIMENTO.respiro();
+    }
+  }
+
   window.ARB = {
+    riaggancia: riaggancia,
+    segnoDi: segnoDi,
     cardProdotto: cardProdotto, boxFoto: boxFoto, aggiungi: aggiungiAlCarrello,
     leggiCart: leggiCart, scriviCart: scriviCart, totale: totaleCarrello,
     sconto: scontoCoupon, coupon: leggiCoupon, avviso: avviso, toast: avviso,

@@ -11,12 +11,17 @@
     if (n) n.innerHTML = ARB.boxFoto('foto/' + file + '.webp', etichetta, 'A', etichetta);
   }
 
-  /* ---- hero: foto del capo di punta + etichetta prezzo ---- */
+  /* ---- hero a strati: fondo, capo, interfaccia che fluttua ---- */
   var punta = arbProdotto('cappotto-milano');
-  var heroFoto = document.getElementById('heroFoto');
-  if (heroFoto && punta) {
-    heroFoto.innerHTML = ARB.boxFoto(arbFoto(punta, 1), punta.nome, 'A', 'Collezione autunno') +
-      '<a class="eti" href="prodotto.html?p=' + punta.slug + '"><b>' + punta.nome + '</b> ' + arbEuro(arbPrezzoFinale(punta)) + '</a>';
+  var fondo = document.getElementById('stratoFondo');
+  var capo = document.getElementById('stratoCapo');
+  var pillolaPrezzo = document.getElementById('pillolaPrezzo');
+  if (fondo && punta) {
+    fondo.innerHTML = ARB.boxFoto('foto/hero-fondo.webp', 'Tessuto', '', 'Collezione autunno / inverno', 'v-donna');
+    capo.innerHTML = '<div style="width:72%;aspect-ratio:3/4;border-radius:var(--r-l);overflow:hidden;box-shadow:var(--ombra-3)">' +
+      ARB.boxFoto(arbFoto(punta, 1), punta.nome, ARB.segnoDi(punta).m, punta.sottocategoria, ARB.segnoDi(punta).v) + '</div>';
+    pillolaPrezzo.href = 'prodotto.html?p=' + punta.slug;
+    pillolaPrezzo.innerHTML = '<b>' + punta.nome + '</b> ' + arbEuro(arbPrezzoFinale(punta));
   }
 
   /* ---- riquadri delle sezioni ---- */
@@ -110,5 +115,5 @@
   }
 
   ARB.config();
-  ARB.reveal();
+  ARB.riaggancia();
 })();

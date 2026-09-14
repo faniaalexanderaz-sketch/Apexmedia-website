@@ -399,7 +399,7 @@ body.menu-aperto .burger span:nth-child(2) { transform: rotate(-45deg); }
 .hero-in {
   display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
   gap: clamp(26px, 4vw, 72px); align-items: center;
-  padding-block: clamp(38px, 5vw, 76px) clamp(30px, 4vw, 56px);
+  padding-block: clamp(30px, 3.6vw, 54px) clamp(22px, 2.6vw, 38px);
 }
 .hero-testo { max-width: 620px; }
 .hero h1 { font-size: clamp(34px, 4.4vw, 62px); line-height: 1.02; }
@@ -944,3 +944,386 @@ select { appearance: none; background-image: linear-gradient(45deg, transparent 
    si sposta sotto il dito quando l'errore compare o sparisce */
 .campo-errore { min-height: 18px; }
 .campo-errore[hidden] { display: block !important; visibility: hidden; }
+
+/* =============================================================
+   MOVIMENTO PREMIUM — entrate in scena sull'asse Z
+   Solo transform e opacity: nessun ricalcolo di layout, CLS zero.
+   ============================================================= */
+.entra {
+  opacity: 0;
+  transform: perspective(1200px) rotateX(6deg) translate3d(0, 46px, -70px);
+  transform-origin: 50% 100%;
+  transition: opacity 900ms var(--e-soft), transform 1100ms var(--e-soft);
+  will-change: transform, opacity;
+}
+.entra.dentro { opacity: 1; transform: none; will-change: auto; }
+
+/* variante laterale per i blocchi editoriali affiancati */
+.entra-lato { opacity: 0; transform: perspective(1200px) rotateY(-7deg) translate3d(-40px, 0, -60px); transition: opacity 950ms var(--e-soft), transform 1150ms var(--e-soft); }
+.entra-lato.dentro { opacity: 1; transform: none; }
+.entra-lato.destra { transform: perspective(1200px) rotateY(7deg) translate3d(40px, 0, -60px); }
+.entra-lato.destra.dentro { transform: none; }
+
+/* titoli che salgono da dietro una maschera */
+.riga-maschera { display: block; overflow: hidden; }
+.riga-maschera > span { display: block; transform: translateY(105%) rotateX(35deg); transform-origin: 50% 0; opacity: 0; transition: transform 1050ms var(--e-soft), opacity 700ms var(--e-soft); }
+.dentro > .riga-maschera > span, .riga-maschera.dentro > span { transform: none; opacity: 1; }
+
+/* inclinazione 3D al passaggio del mouse */
+[data-tilt] { transform-style: preserve-3d; transition: transform 700ms var(--e-soft); }
+[data-tilt] > * { transform: translateZ(0); }
+
+/* profondità sulle schede capo */
+.capo-foto { transform-style: preserve-3d; transition: transform 700ms var(--e-soft), box-shadow 520ms var(--e-soft); }
+.capo:hover .capo-foto { transform: translateY(-6px); box-shadow: var(--ombra-3); }
+.capo-info { transition: transform 600ms var(--e-soft); }
+.capo:hover .capo-info { transform: translateY(-2px); }
+
+/* parallasse leggera sulle foto grandi */
+.parallasse { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .entra, .entra-lato, .riga-maschera > span { opacity: 1 !important; transform: none !important; transition: none !important; }
+  [data-tilt] { transform: none !important; }
+}
+
+/* =============================================================
+   PULSANTI — presenza, profondità, riflesso che passa
+   ============================================================= */
+.btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  font-weight: 600; letter-spacing: .08em;
+  box-shadow: 0 1px 2px rgba(22,21,15,.06), 0 6px 18px rgba(22,21,15,.08);
+}
+/* il riflesso che attraversa il pulsante al passaggio */
+.btn::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.30) 48%, transparent 66%);
+  transform: translateX(-120%);
+  transition: transform 900ms var(--e-soft);
+}
+.btn:hover::before { transform: translateX(120%); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 3px 6px rgba(22,21,15,.08), 0 16px 34px rgba(22,21,15,.16); }
+.btn:active { transform: translateY(0) scale(.985); box-shadow: 0 1px 2px rgba(22,21,15,.10); }
+.btn .cerchio { position: relative; overflow: hidden; }
+.btn .cerchio svg { transition: transform 560ms var(--e-soft); }
+.btn:hover .cerchio svg { transform: translateX(2px); }
+
+.btn-filo { box-shadow: 0 1px 2px rgba(22,21,15,.04); }
+.btn-filo::before { background: linear-gradient(105deg, transparent 30%, rgba(22,21,15,.06) 48%, transparent 66%); }
+.notte .btn-filo::before { background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.14) 48%, transparent 66%); }
+
+/* la CTA principale: più grande, con alone caldo che respira */
+.btn-cta {
+  padding: 18px 18px 18px 34px; font-size: 14.5px; min-height: 62px;
+  background: var(--inchiostro); color: var(--carta);
+  box-shadow: 0 2px 4px rgba(22,21,15,.10), 0 18px 40px rgba(22,21,15,.20), 0 0 0 0 var(--oro-velo);
+}
+.btn-cta .cerchio { width: 40px; height: 40px; background: var(--oro); color: #fff; }
+.btn-cta:hover { background: #000; box-shadow: 0 4px 8px rgba(22,21,15,.12), 0 24px 54px rgba(22,21,15,.26), 0 0 0 8px var(--oro-velo); }
+.btn-cta::after {
+  content: ''; position: absolute; inset: -2px; border-radius: inherit; z-index: -2;
+  background: linear-gradient(120deg, var(--oro), transparent 40%, transparent 60%, var(--oro));
+  opacity: 0; transition: opacity 620ms var(--e-soft);
+}
+.btn-cta:hover::after { opacity: .5; }
+.notte .btn-cta { background: var(--carta); color: var(--inchiostro); }
+.notte .btn-cta .cerchio { background: var(--oro); color: #fff; }
+.notte .btn-cta:hover { background: #fff; }
+
+/* pulsante d'oro: per le azioni secondarie che devono comunque vedersi */
+.btn-oro { box-shadow: 0 2px 4px rgba(168,132,44,.22), 0 14px 30px rgba(168,132,44,.24); }
+.btn-oro:hover { box-shadow: 0 4px 8px rgba(168,132,44,.26), 0 20px 44px rgba(168,132,44,.32); }
+
+/* micro-pulsazione, una volta sola, quando la CTA entra in vista */
+@keyframes respiro {
+  0%, 100% { box-shadow: 0 2px 4px rgba(22,21,15,.10), 0 18px 40px rgba(22,21,15,.20), 0 0 0 0 rgba(168,132,44,.32); }
+  50%      { box-shadow: 0 2px 4px rgba(22,21,15,.10), 0 18px 40px rgba(22,21,15,.20), 0 0 0 12px rgba(168,132,44,0); }
+}
+.btn-cta.respira { animation: respiro 2.2s var(--e-soft) 1; }
+@media (prefers-reduced-motion: reduce) { .btn-cta.respira { animation: none; } .btn::before { display: none; } }
+
+/* le chip taglia reagiscono al tocco */
+.chip-taglia, .taglia-box, .colore-chip, .chip-f { transition: transform 320ms var(--e-soft), background 300ms, color 300ms, border-color 300ms, box-shadow 320ms; }
+.chip-taglia:hover:not([disabled]), .chip-f:hover { transform: translateY(-2px); }
+.taglia-box:hover:not([disabled]) { box-shadow: var(--ombra-1); }
+.colore-chip:hover { transform: translateY(-2px); }
+
+/* link con freccia: la linea si riempie */
+.link-linea { position: relative; }
+.link-linea::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -1px; height: 1px; background: var(--oro); transition: right 620ms var(--e-soft); }
+.link-linea:hover::after { right: 0; }
+
+/* barra di avanzamento della lettura, sottile, in alto */
+.avanzamento { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: linear-gradient(90deg, var(--oro), var(--oro-luce)); z-index: 70; pointer-events: none; }
+
+/* =============================================================
+   2 — SCALA TIPOGRAFICA MODULARE (rapporto 1.25) E RITMO SU 8
+   Le dimensioni non sono più scelte a occhio: stanno tutte in
+   relazione matematica fra loro. L'occhio non lo nota, lo sente.
+   ============================================================= */
+:root {
+  --t-1: clamp(11px, .74vw, 12px);      /* micro etichette */
+  --t-2: clamp(12.5px, .86vw, 13.5px);  /* dati, didascalie */
+  --t-3: clamp(14px, 1vw, 15px);        /* testo piccolo */
+  --t-4: clamp(16px, 1.16vw, 17px);     /* corpo */
+  --t-5: clamp(18px, 1.45vw, 21px);     /* corpo grande */
+  --t-6: clamp(22px, 2vw, 27px);        /* h3 */
+  --t-7: clamp(27px, 3vw, 42px);        /* h2 piccolo */
+  --t-8: clamp(32px, 4.1vw, 56px);      /* h2 */
+  --t-9: clamp(38px, 5.4vw, 76px);      /* h1 */
+
+  /* ritmo verticale: ogni spazio è un multiplo di 8 */
+  --s-1: 8px;  --s-2: 16px; --s-3: 24px; --s-4: 32px;
+  --s-5: 48px; --s-6: 64px; --s-7: 96px; --s-8: 128px;
+
+  /* 7 — nota cromatica per sezione: cambia solo l'accento */
+  --accento: var(--oro);
+  --accento-velo: var(--oro-velo);
+}
+body[data-sezione="donna"]  { --accento: #A8562C; --accento-velo: rgba(168,86,44,.10); }
+body[data-sezione="uomo"]   { --accento: #2F4058; --accento-velo: rgba(47,64,88,.10); }
+body[data-sezione="curvy"]  { --accento: #A8842C; --accento-velo: rgba(168,132,44,.10); }
+
+/* l'accento vive solo su tre cose: occhiello, numero di sezione, filo attivo */
+body[data-sezione] .occhiello { color: var(--accento); }
+body[data-sezione] .tre-motivi .num { color: var(--accento); }
+body[data-sezione] .nav-voce[aria-current="page"]::after { right: 0; background: var(--accento); }
+body[data-sezione] .chip-f.scelta { background: var(--accento); border-color: var(--accento); }
+body[data-sezione] .capo-casa { color: var(--accento); }
+body[data-sezione] .link-taglie { color: var(--accento); }
+
+h1 { font-size: var(--t-9); }
+h2 { font-size: var(--t-8); }
+h3 { font-size: var(--t-6); }
+.testata h1 { font-size: var(--t-9); }
+.hero h1 { font-size: clamp(32px, 4.2vw, 60px); }
+.pdp-info h1 { font-size: var(--t-8); }
+.sez-testa p { font-size: var(--t-5); }
+.testata .intro { font-size: var(--t-5); }
+body { font-size: var(--t-4); }
+
+/* =============================================================
+   1 — GRIGLIA EDITORIALE A 12 COLONNE CON ROTTURE PROGRAMMATE
+   Tre soli schemi: centrato, asimmetrico, sforo. Niente di più:
+   è la ripetizione della regola che crea il ritmo da rivista.
+   ============================================================= */
+.griglia12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 28px);
+  max-width: var(--maxw); margin-inline: auto; padding-inline: var(--pad);
+}
+.da1  { grid-column-start: 1; }  .da2 { grid-column-start: 2; }
+.da3  { grid-column-start: 3; }  .da5 { grid-column-start: 5; }
+.da6  { grid-column-start: 6; }  .da7 { grid-column-start: 7; }
+.a6   { grid-column-end: 7; }    .a7  { grid-column-end: 8; }
+.a8   { grid-column-end: 9; }    .a12 { grid-column-end: -1; }
+.span4 { grid-column: span 4; } .span5 { grid-column: span 5; }
+.span6 { grid-column: span 6; } .span7 { grid-column: span 7; }
+.span8 { grid-column: span 8; } .span12 { grid-column: 1 / -1; }
+
+/* lo sforo: l'immagine esce dal contenitore verso un lato */
+.sfora-destra { margin-right: calc(var(--pad) * -1); }
+.sfora-sinistra { margin-left: calc(var(--pad) * -1); }
+@media (max-width: 900px) {
+  .griglia12 > * { grid-column: 1 / -1 !important; }
+  .sfora-destra, .sfora-sinistra { margin-inline: 0; }
+}
+
+/* =============================================================
+   3 — HERO A STRATI: profondità vera, non una foto piatta
+   ============================================================= */
+.hero-strati { position: relative; aspect-ratio: 4/3.05; perspective: 1400px; }
+.strato { position: absolute; inset: 0; will-change: transform; }
+.strato-fondo { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--ombra-3); }
+.strato-capo { display: grid; place-items: center; }
+.strato-ui { pointer-events: none; }
+.strato-ui > * { pointer-events: auto; position: absolute; }
+.pillola {
+  background: rgba(255,255,255,.96); border-radius: var(--r-pill);
+  padding: 11px 18px; box-shadow: var(--ombra-2);
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-dati); font-size: var(--t-2);
+  backdrop-filter: blur(8px);
+}
+.pillola b { font-family: var(--f-display); font-weight: 600; font-size: var(--t-3); }
+.pillola.prezzo { left: 6%; bottom: 9%; }
+.pillola.taglie { right: 5%; top: 11%; }
+.pillola.colore { right: 12%; bottom: 16%; padding: 9px 15px 9px 9px; }
+.pillola.colore i { width: 20px; height: 20px; border-radius: 50%; display: block; border: 1px solid var(--filo-2); }
+@media (max-width: 960px) { .hero-strati { aspect-ratio: 16/12; } .pillola { font-size: 11px; padding: 8px 13px; } }
+
+/* =============================================================
+   8 — STATI INTERMEDI: scheletri, vuoti, conferme
+   ============================================================= */
+.scheletro { border-radius: var(--r-l); background: var(--carta-2); position: relative; overflow: hidden; }
+.scheletro::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.75) 50%, transparent 80%);
+  transform: translateX(-100%); animation: scorri-luce 1.4s infinite;
+}
+@keyframes scorri-luce { to { transform: translateX(100%); } }
+.scheletro-capo { display: flex; flex-direction: column; gap: 12px; }
+.scheletro-capo .sk-foto { aspect-ratio: 3/4; }
+.scheletro-capo .sk-riga { height: 12px; border-radius: 6px; }
+.scheletro-capo .sk-riga.corta { width: 46%; }
+@media (prefers-reduced-motion: reduce) { .scheletro::after { animation: none; } }
+
+.vuoto-curato { text-align: center; padding: clamp(50px, 7vw, 90px) 0; }
+.vuoto-curato .segno { font-family: var(--f-moda); font-size: clamp(60px, 9vw, 110px); color: var(--carta-3); line-height: 1; }
+.vuoto-curato h2 { margin: var(--s-3) 0 var(--s-2); }
+.vuoto-curato p { color: var(--grafite); max-width: 44ch; margin-inline: auto; }
+.vuoto-azioni { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: var(--s-4); }
+
+/* la miniatura che vola verso il carrello */
+.volante {
+  position: fixed; z-index: 121; border-radius: 10px; overflow: hidden;
+  pointer-events: none; box-shadow: var(--ombra-3);
+  transition: transform 780ms cubic-bezier(.4,0,.2,1), opacity 780ms var(--e-soft);
+}
+
+/* =============================================================
+   6 — INSERTI EDITORIALI NELLA GRIGLIA PRODOTTI
+   ============================================================= */
+.inserto {
+  grid-column: span 2; display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(22px, 2.4vw, 34px); border-radius: var(--r-l);
+  background: var(--carta-2); border: 1px solid var(--filo);
+  min-height: 100%;
+}
+.inserto.scuro { background: var(--notte); color: var(--carta); border-color: transparent; }
+.inserto.scuro h3, .inserto.scuro p { color: var(--carta); }
+.inserto .occhiello { margin-bottom: var(--s-2); }
+.inserto.scuro .occhiello { color: var(--oro-luce); }
+.inserto h3 { font-size: var(--t-6); }
+.inserto p { color: var(--grafite); font-size: var(--t-3); margin-top: var(--s-2); }
+.inserto.scuro p { color: rgba(251,250,247,.74); }
+.inserto .btn { margin-top: var(--s-3); align-self: flex-start; }
+.inserto-citazione { font-family: var(--f-display); font-weight: 600; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.08; letter-spacing: -.02em; }
+@media (max-width: 820px) { .inserto { grid-column: span 2; } }
+
+/* capo in evidenza: occupa due colonne */
+.capo.grande { grid-column: span 2; }
+.capo.grande .capo-foto { aspect-ratio: 16/11; }
+@media (max-width: 820px) { .capo.grande { grid-column: span 2; } .capo.grande .capo-foto { aspect-ratio: 3/4; } }
+
+/* =============================================================
+   9 — ANTEPRIMA RAPIDA
+   ============================================================= */
+.sbircia-btn {
+  position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 4;
+  background: rgba(251,250,247,.96); border: 1px solid var(--filo);
+  border-radius: var(--r-m); padding: 11px; box-shadow: var(--ombra-1);
+  font-family: var(--f-ticker); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 420ms var(--e-soft), transform 520ms var(--e-soft), background 300ms;
+}
+.capo:hover .sbircia-btn { opacity: 1; transform: none; }
+.sbircia-btn:hover { background: var(--inchiostro); color: var(--carta); border-color: var(--inchiostro); }
+@media (hover: none) { .sbircia-btn { display: none; } }
+
+.sbircia {
+  position: fixed; left: 50%; top: 50%; z-index: 96;
+  transform: translate(-50%, -48%) scale(.97); opacity: 0; pointer-events: none;
+  width: min(920px, calc(100% - 28px)); max-height: 88vh; overflow-y: auto;
+  background: var(--carta); border-radius: var(--r-xl); box-shadow: var(--ombra-3);
+  transition: opacity 420ms var(--e-soft), transform 560ms var(--e-soft);
+}
+.sbircia.aperta { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+.sbircia-in { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(20px, 2.6vw, 40px); padding: clamp(20px, 2.4vw, 34px); }
+.sbircia-foto { aspect-ratio: 3/4; border-radius: var(--r-l); overflow: hidden; border: 1px solid var(--filo); }
+.sbircia-chiudi { position: absolute; top: 14px; right: 14px; z-index: 3; width: 42px; height: 42px; border-radius: 50%; background: var(--carta); border: 1px solid var(--filo); display: grid; place-items: center; box-shadow: var(--ombra-1); }
+@media (max-width: 760px) { .sbircia-in { grid-template-columns: 1fr; } .sbircia-foto { aspect-ratio: 16/11; } }
+
+/* =============================================================
+   5 — RACCONTO DEL CAPO (scorrimento agganciato)
+   ============================================================= */
+.racconto { position: relative; }
+.racconto-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 64px); align-items: start; }
+.racconto-scena { position: sticky; top: calc(var(--nav-h) + var(--s-5)); aspect-ratio: 4/5; border-radius: var(--r-xl); overflow: hidden; background: var(--carta-2); border: 1px solid var(--filo); display: grid; place-items: center; }
+.racconto-fermate { display: grid; }
+.fermata { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; opacity: .28; transition: opacity 620ms var(--e-soft); }
+.fermata.viva { opacity: 1; }
+.fermata h3 { font-size: var(--t-7); margin-bottom: var(--s-2); }
+.fermata p { color: var(--grafite); max-width: 46ch; }
+.fermata .num { font-family: var(--f-dati); font-size: var(--t-2); color: var(--accento); display: block; margin-bottom: var(--s-2); }
+.silhouette { width: 78%; max-width: 400px; }
+.silhouette path { transition: d 900ms var(--e-soft), opacity 620ms var(--e-soft); }
+.scena-strato { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transition: opacity 700ms var(--e-soft); }
+.scena-strato.viva { opacity: 1; }
+.scena-eti { position: absolute; left: 0; right: 0; bottom: 22px; text-align: center; font-family: var(--f-dati); font-size: var(--t-2); color: var(--fumo); }
+@media (max-width: 900px) {
+  .racconto-in { grid-template-columns: 1fr; }
+  .racconto-scena { position: sticky; top: calc(var(--nav-h) + 8px); aspect-ratio: 16/11; }
+  .fermata { min-height: 52vh; opacity: 1; }
+}
+
+/* =============================================================
+   4 — TRANSIZIONI DI PAGINA NATIVE
+   La foto cliccata si espande nella scheda e si ricontrae al
+   ritorno. Dove il browser non le supporta, navigazione normale.
+   ============================================================= */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: sfuma-via 260ms var(--e-soft) both; }
+::view-transition-new(root) { animation: sfuma-dentro 380ms var(--e-soft) both; }
+@keyframes sfuma-via { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes sfuma-dentro { from { opacity: 0; transform: translateY(10px); } }
+::view-transition-group(capo-in-volo) { animation-duration: 620ms; animation-timing-function: cubic-bezier(.32,.72,0,1); }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+/* =============================================================
+   10 — DIREZIONE ARTISTICA DEI SEGNAPOSTO (e poi delle foto)
+   Ogni categoria ha una composizione sua: il catalogo non è una
+   fila di caselle identiche nemmeno prima degli scatti.
+   Quando arrivano le foto vere valgono questi formati:
+     3:4 catalogo · 4:5 editoriale · 16:9 fascia
+   ============================================================= */
+.foto-vuota.v-uomo { background: radial-gradient(ellipse 80% 60% at 50% 84%, rgba(47,64,88,.12), transparent 60%), repeating-linear-gradient(62deg, rgba(22,21,15,.022) 0 2px, transparent 2px 12px), linear-gradient(200deg, #F2EFE7, #E6E1D5); }
+.foto-vuota.v-uomo .foto-vuota-m { font-family: var(--f-moda); letter-spacing: .3em; font-size: clamp(26px, 3.4vw, 44px); color: rgba(47,64,88,.34); }
+.foto-vuota.v-curvy { background: radial-gradient(ellipse 70% 70% at 50% 30%, rgba(168,132,44,.2), transparent 62%), linear-gradient(150deg, #F7F1E2, #EBE2CE); }
+.foto-vuota.v-curvy .foto-vuota-m { font-family: var(--f-manifesto); font-weight: 600; font-stretch: 112%; font-size: clamp(20px, 2.4vw, 32px); letter-spacing: -.02em; color: rgba(140,114,56,.5); }
+.foto-vuota.v-accessori { background: radial-gradient(circle at 50% 45%, rgba(168,132,44,.18), transparent 58%), linear-gradient(180deg, #F6F3EC, #E9E4D8); }
+.foto-vuota.v-accessori .foto-vuota-m { font-size: clamp(26px, 3vw, 40px); color: rgba(168,132,44,.46); }
+.foto-vuota.v-donna .foto-vuota-m { font-style: italic; }
+
+/* regole di taglio per quando arrivano gli scatti veri */
+.capo-foto img { object-position: 50% 22%; }          /* i capi si leggono dall'alto */
+.capo-foto img[data-taglio="basso"] { object-position: 50% 70%; }
+.hero-strati img, .split-foto img { object-position: 50% 35%; }
+
+/* il trittico dentro la griglia editoriale: una scheda più alta rompe la fila */
+.trittico-editoriale { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.trittico-editoriale .tri-card { aspect-ratio: 3/4.1; }
+.trittico-editoriale .tri-card.alta { margin-top: clamp(24px, 4vw, 64px); aspect-ratio: 3/4.6; }
+@media (max-width: 900px) {
+  .trittico-editoriale { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+  .trittico-editoriale .tri-card.alta { margin-top: 0; aspect-ratio: 3/4.1; }
+}
+
+/* lo sforo esce dal contenitore ma non dalla pagina: la sezione taglia
+   (clip non crea un contenitore di scorrimento, lo sticky continua a vivere) */
+.sez:has(.sfora-destra), .sez:has(.sfora-sinistra), .notte { overflow: clip; }
+
+/* la composizione dell'hero si accorcia dove lo schermo è basso o stretto:
+   il primo capo comprabile deve restare a portata di pollice */
+@media (max-width: 1320px) { .hero-strati { aspect-ratio: 4/2.85; } }
+@media (max-width: 960px) {
+  .hero-strati { aspect-ratio: 16/9.5; }
+  .hero-prove { gap: 8px 18px; margin-top: 20px; }
+  .hero-azioni { margin-top: 22px; }
+  .hero-riga { padding-bottom: 26px; }
+}
+@media (max-height: 780px) and (min-width: 960px) {
+  .hero-strati { aspect-ratio: 4/2.6; }
+  .hero-in { padding-block: 22px 18px; }
+}
+@media (max-height: 800px) and (min-width: 960px) {
+  .hero h1 { font-size: clamp(28px, 3.3vw, 46px); }
+  .hero-sotto { margin-top: 14px; font-size: var(--t-4); }
+  .hero-azioni { margin-top: 20px; }
+  .hero-prove { margin-top: 16px; }
+  .hero-riga-testa { margin-bottom: 12px; }
+}
