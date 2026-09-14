@@ -409,17 +409,9 @@ body.menu-aperto .burger span:nth-child(2) { transform: rotate(-45deg); }
 .hero-prove { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 26px; }
 .hero-prove li { list-style: none; display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--grafite); }
 .hero-prove svg { color: var(--oro); flex: 0 0 auto; }
-.hero-foto { position: relative; border-radius: var(--r-xl); overflow: hidden; aspect-ratio: 4/3.4; box-shadow: var(--ombra-3); }
-.hero-foto .eti {
-  position: absolute; left: 18px; bottom: 18px; z-index: 3;
-  background: rgba(251,250,247,.94); border-radius: var(--r-pill);
-  padding: 9px 16px; display: flex; align-items: center; gap: 10px;
-  font-family: var(--f-dati); font-size: 12.5px; box-shadow: var(--ombra-1);
-}
-.hero-foto .eti b { font-family: var(--f-display); font-weight: 600; font-size: 14px; }
 @media (max-width: 960px) {
   .hero-in { grid-template-columns: 1fr; padding-block: 26px 22px; }
-  .hero-foto { aspect-ratio: 16/11; order: -1; }
+  .hero-strati { order: -1; margin-bottom: 28px; }
 }
 
 /* riga prodotti sotto l'hero: il primo capo comprabile senza scrollare */
@@ -1146,13 +1138,25 @@ body { font-size: var(--t-4); }
   display: flex; align-items: center; gap: 10px;
   font-family: var(--f-dati); font-size: var(--t-2);
   backdrop-filter: blur(8px);
+  max-width: 78%; white-space: nowrap; overflow: hidden;
 }
-.pillola b { font-family: var(--f-display); font-weight: 600; font-size: var(--t-3); }
+.pillola b { font-family: var(--f-display); font-weight: 600; font-size: var(--t-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pillola.prezzo { left: 6%; bottom: 9%; }
 .pillola.taglie { right: 5%; top: 11%; }
 .pillola.colore { right: 12%; bottom: 16%; padding: 9px 15px 9px 9px; }
 .pillola.colore i { width: 20px; height: 20px; border-radius: 50%; display: block; border: 1px solid var(--filo-2); }
-@media (max-width: 960px) { .hero-strati { aspect-ratio: 16/12; } .pillola { font-size: 11px; padding: 8px 13px; } }
+
+/* su schermi piccoli tre pillole in equilibrio sono un rischio di
+   collisione col testo: ne resta una sola, il prezzo, leggibile */
+@media (max-width: 960px) {
+  .hero-strati { aspect-ratio: 16/12; }
+  .pillola.taglie, .pillola.colore { display: none; }
+  .pillola.prezzo {
+    left: 50%; right: auto; bottom: 14px; transform: translateX(-50%);
+    max-width: calc(100% - 28px); font-size: 12px; padding: 10px 16px;
+  }
+  .pillola.prezzo b { max-width: 60vw; }
+}
 
 /* =============================================================
    8 — STATI INTERMEDI: scheletri, vuoti, conferme
@@ -1327,3 +1331,9 @@ body { font-size: var(--t-4); }
   .hero-prove { margin-top: 16px; }
   .hero-riga-testa { margin-bottom: 12px; }
 }
+
+/* la card del capo nell'hero si adatta sempre al proprio contenitore:
+   dimensionata sull'altezza, mai può eccedere lo strato che la ospita */
+.strato-capo-carta { height: 84%; width: auto; }
+.hero-strati { overflow: hidden; }
+@media (max-width: 960px) { .strato-capo-carta { height: 80%; } }

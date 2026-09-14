@@ -18,7 +18,7 @@
   var pillolaPrezzo = document.getElementById('pillolaPrezzo');
   if (fondo && punta) {
     fondo.innerHTML = ARB.boxFoto('foto/hero-fondo.webp', 'Tessuto', '', 'Collezione autunno / inverno', 'v-donna');
-    capo.innerHTML = '<div style="width:72%;aspect-ratio:3/4;border-radius:var(--r-l);overflow:hidden;box-shadow:var(--ombra-3)">' +
+    capo.innerHTML = '<div class="strato-capo-carta" style="aspect-ratio:3/4;border-radius:var(--r-l);overflow:hidden;box-shadow:var(--ombra-3)">' +
       ARB.boxFoto(arbFoto(punta, 1), punta.nome, ARB.segnoDi(punta).m, punta.sottocategoria, ARB.segnoDi(punta).v) + '</div>';
     pillolaPrezzo.href = 'prodotto.html?p=' + punta.slug;
     pillolaPrezzo.innerHTML = '<b>' + punta.nome + '</b> ' + arbEuro(arbPrezzoFinale(punta));
