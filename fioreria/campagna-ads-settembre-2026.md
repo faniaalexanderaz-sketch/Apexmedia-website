@@ -29,7 +29,7 @@ Se dopo 30 giorni il ROAS è ≥ 3, fase 2: porta Shopping a €12/giorno e aggi
 - **Storia:** bottega di Alessandria **dal 1953** ← elemento di fiducia forte, va in ogni annuncio
 - **Indirizzo:** Via Emilio Faà di Bruno 6, Alessandria (AL) — aperti mar-dom 8:30–19:30
 - **Telefono / WhatsApp:** +39 327 337 0547
-- **Sito:** https://anticafioreria.vercel.app/
+- **Sito:** https://anticafioreriadelcentro.it/
 - **Spedizione:** assicurata in tutta Italia in **48/72h** — €12 formati S/M, €15 formati L/XL
 - **Reso:** **gratuito entro 14 giorni**
 - **Pagamenti:** carta, Apple Pay, Google Pay, **contrassegno** (+€15) — il contrassegno è un'arma di conversione enorme su un pubblico 45+ che non si fida a pagare online
@@ -42,15 +42,15 @@ Se dopo 30 giorni il ROAS è ≥ 3, fase 2: porta Shopping a €12/giorno e aggi
 
 | Pagina | URL |
 |---|---|
-| Home | `https://anticafioreria.vercel.app/` |
-| Collezione completa | `https://anticafioreria.vercel.app/collezione.html` |
-| Novità | `https://anticafioreria.vercel.app/collezione.html?cat=novita` |
-| Regali floreali | `https://anticafioreria.vercel.app/collezione.html?cat=regali` |
-| Decorazioni | `https://anticafioreria.vercel.app/collezione.html?cat=decorazioni` |
-| Anniversario | `https://anticafioreria.vercel.app/collezione.html?cat=anniversario` |
-| Autunno | `https://anticafioreria.vercel.app/collezione.html?cat=autunno` |
-| Bouquet | `https://anticafioreria.vercel.app/collezione.html?cat=bouquet` |
-| Singolo prodotto | `https://anticafioreria.vercel.app/prodotto.html?p=SLUG` (es. `?p=provenza`) |
+| Home | `https://anticafioreriadelcentro.it/` |
+| Collezione completa | `https://anticafioreriadelcentro.it/collezione.html` |
+| Novità | `https://anticafioreriadelcentro.it/collezione.html?cat=novita` |
+| Regali floreali | `https://anticafioreriadelcentro.it/collezione.html?cat=regali` |
+| Decorazioni | `https://anticafioreriadelcentro.it/collezione.html?cat=decorazioni` |
+| Anniversario | `https://anticafioreriadelcentro.it/collezione.html?cat=anniversario` |
+| Autunno | `https://anticafioreriadelcentro.it/collezione.html?cat=autunno` |
+| Bouquet | `https://anticafioreriadelcentro.it/collezione.html?cat=bouquet` |
+| Singolo prodotto | `https://anticafioreriadelcentro.it/prodotto.html?p=SLUG` (es. `?p=provenza`) |
 
 **Regola:** ogni gruppo di annunci punta alla categoria giusta, **mai alla home**. Chi cerca "regalo floreale" deve atterrare sulla pagina dei regali, non su una home da esplorare. Coerenza annuncio → landing = conversion rate più alto e CPC più basso (Google premia la pertinenza).
 
@@ -123,8 +123,8 @@ Merchant Center → **Prodotti → Feed → "+" → Google Sheets → "Genera un
 | `id` | lo slug del prodotto | `provenza` |
 | `title` | vedi formula sotto | `Brezza di Provenza — Composizione floreale artificiale con lisianthus e lavanda` |
 | `description` | la descrizione lunga già presente sul sito | *(copia da `prodotti.js`, campo `descLunga`)* |
-| `link` | URL della pagina prodotto | `https://anticafioreria.vercel.app/prodotto.html?p=provenza` |
-| `image_link` | URL assoluto della foto | `https://anticafioreria.vercel.app/foto/p-provenza.jpg` |
+| `link` | URL della pagina prodotto | `https://anticafioreriadelcentro.it/prodotto.html?p=provenza` |
+| `image_link` | URL assoluto della foto | `https://anticafioreriadelcentro.it/foto/p-provenza.jpg` |
 | `availability` | `in stock` | `in stock` |
 | `price` | prezzo formato M con valuta | `75 EUR` |
 | `sale_price` | prezzo scontato, se il prodotto è in saldo | `60 EUR` |
@@ -183,7 +183,7 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(27)") è la conta ca
 ---
 
 ### Gruppo 1 — Fiori artificiali (generico, il più cercato — ATTIVO dal giorno 1)
-**CPC max iniziale:** €0,60 · **Landing:** `https://anticafioreria.vercel.app/collezione.html`
+**CPC max iniziale:** €0,60 · **Landing:** `https://anticafioreriadelcentro.it/collezione.html`
 
 **Keyword** (crea sia la versione "a frase" tra virgolette sia quella "esatta" tra parentesi quadre):
 ```
@@ -227,13 +227,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(27)") è la conta ca
 3. Saldi fino al -20% e -10% sul primo ordine con BENVENUTO10. Scopri la collezione. (81)
 4. Carta, Apple Pay, Google Pay o contrassegno. Imballo assicurato in tutta Italia. (80)
 
-**URL finale (SEMPRE con https://):** `https://anticafioreria.vercel.app/collezione.html`
+**URL finale (SEMPRE con https://):** `https://anticafioreriadelcentro.it/collezione.html`
 **Percorso visualizzato (campo separato, mai con https://):** `collezione`
 
 ---
 
 ### Gruppo 2 — Regali floreali e occasioni (in PAUSA, accendi dal giorno 10)
-**CPC max:** €0,60 · **Landing:** `https://anticafioreria.vercel.app/collezione.html?cat=regali`
+**CPC max:** €0,60 · **Landing:** `https://anticafioreriadelcentro.it/collezione.html?cat=regali`
 
 **Keyword:**
 ```
@@ -276,13 +276,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(27)") è la conta ca
 3. Composizioni artigianali dal 1953: un regalo che resta in casa per anni, non giorni. (84)
 4. -10% sul primo ordine con BENVENUTO10. Paghi con carta o alla consegna. (71)
 
-**URL finale (SEMPRE con https://):** `https://anticafioreria.vercel.app/collezione.html?cat=regali`
+**URL finale (SEMPRE con https://):** `https://anticafioreriadelcentro.it/collezione.html?cat=regali`
 **Percorso visualizzato (mai con https://):** `regali-floreali`
 
 ---
 
 ### Gruppo 3 — Decorazioni e centrotavola per la casa (in PAUSA, accendi dal giorno 10)
-**CPC max:** €0,50 · **Landing:** `https://anticafioreria.vercel.app/collezione.html?cat=decorazioni`
+**CPC max:** €0,50 · **Landing:** `https://anticafioreriadelcentro.it/collezione.html?cat=decorazioni`
 
 **Keyword:**
 ```
@@ -323,13 +323,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(27)") è la conta ca
 3. Spedizione assicurata in 48/72h in tutta Italia. Reso gratuito entro 14 giorni. (79)
 4. Saldi fino al -20% sulla collezione. Paghi con carta o alla consegna. (69)
 
-**URL finale (SEMPRE con https://):** `https://anticafioreria.vercel.app/collezione.html?cat=decorazioni`
+**URL finale (SEMPRE con https://):** `https://anticafioreriadelcentro.it/collezione.html?cat=decorazioni`
 **Percorso visualizzato (mai con https://):** `decorazioni`
 
 ---
 
 ### Gruppo 4 — Brand (CPC bassissimo, protezione del nome — ATTIVO dal giorno 1)
-**CPC max:** €0,25 · **Landing:** `https://anticafioreria.vercel.app/`
+**CPC max:** €0,25 · **Landing:** `https://anticafioreriadelcentro.it/`
 
 Serve a non farsi rubare da altri chi cerca già il negozio per nome, e costa pochissimo (pochi centesimi a click) perché sei l'unico pertinente.
 
@@ -367,7 +367,7 @@ Serve a non farsi rubare da altri chi cerca già il negozio per nome, e costa po
 3. Carta, Apple Pay, Google Pay o contrassegno. Reso gratuito entro 14 giorni. (75)
 4. Saldi fino al -20% e -10% sul primo ordine con il codice BENVENUTO10. (69)
 
-**URL finale (SEMPRE con https://):** `https://anticafioreria.vercel.app/`
+**URL finale (SEMPRE con https://):** `https://anticafioreriadelcentro.it/`
 **Percorso visualizzato:** *(lascia vuoto per il gruppo Brand)*
 
 ---
@@ -476,10 +476,10 @@ Rivedi il **rapporto "Termini di ricerca"** ogni 3-4 giorni e aggiungi negative 
 ## 7. Estensioni annuncio (obbligatorie, aumentano CTR e Quality Score) — testo pronto
 
 - **Sitelink (4, con 2 righe di descrizione ciascuno — URL SEMPRE con https://):**
-  1. Titolo: "Tutta la collezione" → `https://anticafioreria.vercel.app/collezione.html` · Riga 1: "Oltre 30 composizioni fatte a mano" · Riga 2: "Filtra per occasione e stagione"
-  2. Titolo: "Idee regalo" → `https://anticafioreria.vercel.app/collezione.html?cat=regali` · Riga 1: "Rose, cuori e scrigni floreali" · Riga 2: "Confezione curata, arriva pronto"
-  3. Titolo: "Novità" → `https://anticafioreria.vercel.app/collezione.html?cat=novita` · Riga 1: "Gli ultimi pezzi usciti dalla bottega" · Riga 2: "Quantità limitate"
-  4. Titolo: "Consegna e resi" → `https://anticafioreria.vercel.app/#consegna` · Riga 1: "Spedizione assicurata in 48/72h" · Riga 2: "Reso gratuito entro 14 giorni"
+  1. Titolo: "Tutta la collezione" → `https://anticafioreriadelcentro.it/collezione.html` · Riga 1: "Oltre 30 composizioni fatte a mano" · Riga 2: "Filtra per occasione e stagione"
+  2. Titolo: "Idee regalo" → `https://anticafioreriadelcentro.it/collezione.html?cat=regali` · Riga 1: "Rose, cuori e scrigni floreali" · Riga 2: "Confezione curata, arriva pronto"
+  3. Titolo: "Novità" → `https://anticafioreriadelcentro.it/collezione.html?cat=novita` · Riga 1: "Gli ultimi pezzi usciti dalla bottega" · Riga 2: "Quantità limitate"
+  4. Titolo: "Consegna e resi" → `https://anticafioreriadelcentro.it/#consegna` · Riga 1: "Spedizione assicurata in 48/72h" · Riga 2: "Reso gratuito entro 14 giorni"
 
 - **Callout (Google ne chiede almeno 4, limite 25 caratteri — questi sono già verificati):**
   ```
@@ -502,7 +502,7 @@ Rivedi il **rapporto "Termini di ricerca"** ogni 3-4 giorni e aggiungi negative 
   ```
 
 - **Estensione promozione** (potentissima su e-commerce, usala):
-  Tipo di promozione: **Codice promozionale** · Codice: `BENVENUTO10` · Sconto: **10%** · Su: "Ordini" · Occasione: *(nessuna)* · Date: tutta la durata della campagna · URL: `https://anticafioreria.vercel.app/collezione.html`
+  Tipo di promozione: **Codice promozionale** · Codice: `BENVENUTO10` · Sconto: **10%** · Su: "Ordini" · Occasione: *(nessuna)* · Date: tutta la durata della campagna · URL: `https://anticafioreriadelcentro.it/collezione.html`
 
 - **Estensione prezzo** (tipo "Categorie di prodotti") — 4 voci, prezzi reali dal catalogo:
   ```
@@ -610,7 +610,7 @@ Segui l'ordine esatto, non saltare passaggi.
 
 **Passo 3 — Crea la CAMPAGNA B (Ricerca)**
 1. **"+" Nuova campagna → Obiettivo: Vendite → Tipo: Ricerca**.
-2. Come raggiungere l'obiettivo: spunta solo **"Visite al sito web"** e inserisci `https://anticafioreria.vercel.app/`.
+2. Come raggiungere l'obiettivo: spunta solo **"Visite al sito web"** e inserisci `https://anticafioreriadelcentro.it/`.
 3. Nome: `AFC – Ricerca Italia`.
 4. Reti: **deseleziona "Rete Display"** e **deseleziona "Includi partner di ricerca Google"**.
 5. Località: Italia, opzione **"Presenza"**. Lingua: **Italiano**. Budget: **€3/giorno**, tipo Standard.
@@ -657,7 +657,7 @@ Quando tutte le caselle sono spuntate, pubblica. Segna la data di inizio: da lì
 
 Il traffico a pagamento amplifica quello che il sito già fa. Se il sito converte all'1% invece che al 2%, con €270 stai regalando metà budget. In ordine di impatto:
 
-1. **Dominio vero al posto di `anticafioreria.vercel.app`.** Un indirizzo `.vercel.app` su una pagina in cui si inserisce una carta di credito fa esitare chiunque: sembra un sito di prova. Costa ~€12/anno e si collega a Vercel in 10 minuti. **Questo è il singolo intervento con più impatto sul tasso di conversione dell'intera lista**, e va fatto prima del lancio (così il dominio va anche nel feed e negli annunci).
+1. **Allinea tutto il sito al dominio `anticafioreriadelcentro.it`.** Il dominio è già stato acquistato, ma dentro il codice del sito ci sono ancora **42 riferimenti** al vecchio indirizzo `.vercel.app` (canonical, sitemap, tag Open Graph, link nelle email di benvenuto). Vanno sostituiti tutti, e il vecchio indirizzo deve reindirizzare (301) al nuovo. Perché conta per la campagna: **l'URL finale degli annunci deve stare sullo stesso dominio verificato in Merchant Center**, altrimenti i prodotti vengono rifiutati; e due indirizzi vivi per lo stesso sito spaccano in due il ranking organico. È il primo intervento da fare, prima del feed e prima del lancio.
 2. **Recensioni con nome e voto in alto nella pagina prodotto.** Il nastro recensioni oggi sta in fondo alla home: chi arriva dall'annuncio sulla scheda prodotto non lo vede mai. Spostane 2-3 sotto il pulsante d'acquisto.
 3. **Spedizione gratuita sopra una soglia** (es. €99, sopra lo scontrino medio attuale). Oggi €12 di spedizione su un ordine da €60 è un +20% che si vede al momento peggiore. Una soglia gratis alza lo scontrino medio invece di abbassare il margine.
 4. **Rassicurazioni accanto al pulsante d'acquisto, non in fondo:** "Reso gratuito 14 giorni · Spedizione assicurata 48/72h · Paghi anche alla consegna". Tre righe che tolgono tre paure, nel punto esatto in cui nascono.
