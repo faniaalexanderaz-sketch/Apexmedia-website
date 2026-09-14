@@ -35,6 +35,7 @@
 
   <div id="pannello" hidden style="margin-top:34px">
     <div class="kpi" id="kpi"></div>
+    <div id="imbuto"></div>
     <h2 style="font-size:24px;margin-bottom:16px">Ordini recenti</h2>
     <div id="ordini"></div>
   </div>
@@ -48,11 +49,37 @@ function carica() {
   }).then(function (d) {
     document.getElementById('login').hidden = true;
     document.getElementById('pannello').hidden = false;
+    var f = d.imbuto || {};
+    var conv = f.visite ? ((f.acquisti / f.visite) * 100).toFixed(2) : '0.00';
+    var abbandono = f.cassa ? (100 - (f.acquisti / f.cassa) * 100).toFixed(0) : '0';
+    var medio = d.ordiniSettimana ? (d.incassoSettimana / 100 / d.ordiniSettimana).toFixed(0) : '0';
+
     document.getElementById('kpi').innerHTML =
       '<div><b>' + d.ordiniSettimana + '</b><span>Ordini 7 giorni</span></div>' +
       '<div><b>€ ' + (d.incassoSettimana / 100).toFixed(0) + '</b><span>Incasso 7 giorni</span></div>' +
-      '<div><b>' + d.visiteOggi + '</b><span>Visite 24h</span></div>' +
-      '<div><b>' + d.iscritti + '</b><span>Iscritti newsletter</span></div>';
+      '<div><b>€ ' + medio + '</b><span>Scontrino medio</span></div>' +
+      '<div><b>' + conv + '%</b><span>Conversione 7 giorni</span></div>';
+
+    document.getElementById('imbuto').innerHTML =
+      '<h2 style="font-size:22px;margin:34px 0 16px">L\'imbuto, ultimi 7 giorni</h2>' +
+      '<div class="kpi">' +
+        '<div><b>' + (f.visite || 0) + '</b><span>Pagine viste</span></div>' +
+        '<div><b>' + (f.carrello || 0) + '</b><span>Aggiunte al carrello</span></div>' +
+        '<div><b>' + (f.cassa || 0) + '</b><span>Casse iniziate</span></div>' +
+        '<div><b>' + (f.acquisti || 0) + '</b><span>Acquisti</span></div>' +
+      '</div>' +
+      '<p style="color:var(--fumo);font-family:var(--f-dati);font-size:12.5px;margin-top:12px">' +
+        'Abbandono cassa: <b style="color:var(--allerta)">' + abbandono + '%</b> · ' +
+        'Contatti WhatsApp: ' + (f.whatsapp || 0) + ' · Guide taglie aperte: ' + (f.guidaTaglie || 0) + ' · ' +
+        'Ritiro in negozio scelto: ' + (f.ritiro || 0) + ' · Ricerche: ' + (f.ricerche || 0) + '</p>' +
+      '<p style="color:var(--fumo);font-family:var(--f-dati);font-size:12.5px;margin-top:8px">' +
+        'Carrelli lasciati a metà (7gg): <b>' + (d.carrelliAperti || 0) + '</b> · ' +
+        'Richieste "avvisami quando torna" (30gg): <b>' + (d.daRiordinare || 0) + '</b> — è la lista della spesa per il riordino.</p>' +
+      ((d.prenotazioni && d.prenotazioni.length) ?
+        '<h2 style="font-size:20px;margin:30px 0 12px">Capi prenotati da provare in negozio</h2>' +
+        d.prenotazioni.map(function (p) {
+          return '<div class="ordine"><b>' + p.dettaglio + '</b><p>' + p.email + ' · ' + new Date(p.creato_il).toLocaleString('it-IT') + '</p></div>';
+        }).join('') : '');
 
     var stati = ['ricevuto', 'in preparazione', 'spedito', 'consegnato', 'annullato'];
     document.getElementById('ordini').innerHTML = d.ordini.map(function (o) {

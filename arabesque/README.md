@@ -28,10 +28,47 @@ si può mostrare al cliente prima di collegare Stripe.
 | `admin.html` | Pannello interno: ordini, incasso, visite, stato ordine |
 | `prodotti.js` | **Il catalogo**: unica fonte dati di tutto il sito |
 | `config.js` | Dati del negozio (telefono, WhatsApp, orari, P. IVA) |
-| `styles.css` | Design system "Editorial Luxury" (nero ↔ panna) |
+| `styles.css` | Design system "Galleria chiara" (carta, inchiostro, oro) |
 | `main.js` | Isola di navigazione, sipario, carrello, schede capo, seta WebGL, 3D |
 | `home.js` | Contenuti dinamici della home: passerella, lookbook, hero |
 | `api/*` | Funzioni serverless (Stripe, ordini, email, admin) |
+
+## Stato dei dieci interventi (piano in `PROMPT-V2-CHIARO.md`)
+
+| # | Intervento | Stato |
+|---|---|---|
+| 1 | Ribaltamento cromatico verso il chiaro | ✅ fatto |
+| 2 | Home riordinata per la conversione | ✅ fatto |
+| 3 | Catalogo completo (80-120 capi) | ⏸ attende listino e foto del cliente |
+| 4 | Scheda prodotto che chiude la vendita | ✅ fatto |
+| 5 | Cassa a pagina unica con pagamenti espressi | ✅ fatto |
+| 6 | Ricerca istantanea e navigazione | ✅ fatto |
+| 7 | Prova sociale onesta | ✅ fatto (recensioni nascoste finché non sono vere) |
+| 8 | Velocità e mobile | ✅ fatto e misurato |
+| 9 | Misurazione e imbuto | ✅ fatto (mancano gli ID di GA4 e Meta) |
+| 10 | Contenuti veri e SEO locale | ⏸ attende foto e dati del cliente |
+
+## Palette
+
+```
+--carta #FBFAF7 · --carta-2 #F4F1EA · --carta-3 #EAE5DA · --bianco #FFFFFF
+--inchiostro #16150F · --grafite #5C5850 · --fumo #8C8780
+--oro #A8842C (leggibile su chiaro) · --oro-luce #D9BE7E (solo su scuro)
+--notte #14131A (tre soli blocchi: manifesto taglie, negozio, piè di pagina)
+```
+
+## Prestazioni misurate
+
+Misurate con Chromium su rete 4G simulata e processore rallentato 4×, **senza foto reali**
+(caricando le foto il peso cresce: usare AVIF/WebP e `srcset` come indicato sotto).
+
+| Pagina | LCP | CLS | Peso |
+|---|---|---|---|
+| Home | 692 ms | 0 | 374 KB |
+| Catalogo | 536 ms | 0 | 287 KB |
+| Scheda capo | 672 ms | 0 | 294 KB |
+
+Budget da non superare: LCP < 2,0 s · CLS < 0,05 · CSS < 110 KB · JS < 90 KB.
 
 ## Sistema tipografico
 
@@ -73,10 +110,25 @@ Tutto avviene in `prodotti.js`. Un capo è un oggetto:
 Una taglia con `0` pezzi appare barrata e non si può comprare. Il capo con tutte le taglie a zero
 mostra "Esaurito" e il pulsante "Avvisami quando torna".
 
+## Cosa fa il sito, in concreto
+
+- **Ricerca istantanea** (icona in alto, o `/` da tastiera): cerca per nome, categoria, colore e taglia.
+- **Stima di consegna vera**: calcolata dal giorno e dall'ora, esclusi weekend e festivi italiani.
+  "Ordina entro le 15:00 e parte oggi" compare solo quando è vero.
+- **Cassa a pagina unica**: pagamenti espressi in cima, tre blocchi in sequenza, riepilogo sempre
+  visibile, provincia compilata dal CAP, errori che spiegano come si risolvono.
+- **Carrello abbandonato**: email e contenuto salvati appena il cliente inserisce l'indirizzo
+  (tabella `carrelli_aperti`: da lì parte il recupero).
+- **Prenota in negozio**: il cliente fa mettere da parte un capo per 48 ore; arriva una mail al
+  negozio e una a lui.
+- **Pannello interno con imbuto**: visite → carrello → cassa → acquisti, abbandono cassa,
+  scontrino medio, richieste "avvisami quando torna" (la lista della spesa per il riordino).
+
 ## Foto (TODO-ASSET)
 
-Le foto vanno nella cartella `foto/` in **WebP**, ritagliate **3:4** (consigliato 900 × 1200 px,
-sotto i 200 KB). I nomi seguono lo slug del capo:
+Le foto vanno nella cartella `foto/` in **WebP** (o AVIF), ritagliate **3:4** (consigliato
+900 × 1200 px, sotto i 200 KB). I nomi seguono lo slug del capo — la scheda prodotto ne usa
+fino a quattro:
 
 ```
 foto/cappotto-milano-1.webp    ← copertina (card e catalogo)

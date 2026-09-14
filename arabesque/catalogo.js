@@ -16,6 +16,12 @@
 
   var stato = { taglia: '', sotto: '', ordina: 'consigliati', disponibili: true, filtro: '' };
 
+  /* se torni indietro dalla scheda prodotto ritrovi i filtri come li avevi */
+  try {
+    var memoria = JSON.parse(sessionStorage.getItem(ARB.LS_FILTRI + ':' + location.pathname) || 'null');
+    if (memoria && !location.search) stato = Object.assign(stato, memoria);
+  } catch (e) {}
+
   var q = new URLSearchParams(location.search);
   ['taglia', 'sotto', 'ordina', 'filtro'].forEach(function (k) {
     if (q.get(k)) stato[k] = q.get(k);
@@ -56,6 +62,7 @@
     if (!stato.disponibili) p.set('disponibili', '0');
     var s = p.toString();
     history.replaceState(null, '', s ? '?' + s : location.pathname);
+    try { sessionStorage.setItem(ARB.LS_FILTRI + ':' + location.pathname, JSON.stringify(stato)); } catch (e) {}
   }
 
   function renderFiltri() {
@@ -71,8 +78,7 @@
     var sottocat = [];
     tutti.forEach(function (p) { if (sottocat.indexOf(p.sottocategoria) === -1) sottocat.push(p.sottocategoria); });
 
-    box.innerHTML =
-      '<div class="wrap filtri-in">' +
+    var corpoFiltri =
         '<div class="filtri-taglie" role="group" aria-label="Filtra per taglia">' +
           '<span class="filtri-eti">Taglia</span>' +
           '<button type="button" class="chip-f' + (stato.taglia ? '' : ' scelta') + '" data-taglia="">Tutte</button>' +
@@ -99,8 +105,13 @@
             '<option value="prezzo-giu"' + (stato.ordina === 'prezzo-giu' ? ' selected' : '') + '>Prezzo decrescente</option>' +
             '<option value="sconto"' + (stato.ordina === 'sconto' ? ' selected' : '') + '>Sconto maggiore</option>' +
           '</select>' +
-        '</div>' +
-      '</div>';
+        '</div>';
+
+    box.innerHTML = '<div class="wrap filtri-in">' +
+      '<button type="button" class="btn btn-filo btn-piccolo btn-senza-icona filtri-apri" data-apri-filtri>Filtra e ordina</button>' +
+      corpoFiltri + '</div>';
+    var pannello = document.getElementById('filtriPannelloCorpo');
+    if (pannello) pannello.innerHTML = corpoFiltri;
   }
 
   function render() {
@@ -111,6 +122,7 @@
     var vuoto = document.getElementById('vuoto');
     if (vuoto) vuoto.hidden = out.length > 0;
     ARB.reveal(griglia);
+    ARB.evento('view_item_list', { item_list_name: document.title, items: out.slice(0, 12).map(function (x) { return { item_id: x.slug, item_name: x.nome, price: arbPrezzoFinale(x) }; }) });
     url();
   }
 
@@ -118,6 +130,7 @@
     var t = e.target.closest('.chip-f');
     if (!t) return;
     stato.taglia = t.dataset.taglia;
+    ARB.evento('filter_applied', { filtro: 'taglia', valore: stato.taglia });
     renderFiltri();
     render();
   });
@@ -126,6 +139,7 @@
     else if (e.target.id === 'fOrdina') stato.ordina = e.target.value;
     else if (e.target.id === 'fFiltro') stato.filtro = e.target.value;
     else return;
+    ARB.evento('filter_applied', { filtro: e.target.id, valore: e.target.value });
     render();
   });
 

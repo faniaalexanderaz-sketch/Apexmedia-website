@@ -1,42 +1,58 @@
 /* =============================================================
    ARABESQUE BUSALLA — regia della home
-   Riempie le zone dinamiche: schede sospese dell'hero, passerella,
-   lookbook, scala delle taglie che si accende allo scroll.
+   Riempie le zone dinamiche e tiene l'ordine commerciale:
+   prima i capi comprabili, poi il racconto.
    ============================================================= */
 (function () {
   'use strict';
 
-  /* ---- riquadri delle sezioni ---- */
   function slot(id, file, etichetta) {
     var n = document.getElementById(id);
     if (n) n.innerHTML = ARB.boxFoto('foto/' + file + '.webp', etichetta, 'A', etichetta);
   }
+
+  /* ---- hero: foto del capo di punta + etichetta prezzo ---- */
+  var punta = arbProdotto('cappotto-milano');
+  var heroFoto = document.getElementById('heroFoto');
+  if (heroFoto && punta) {
+    heroFoto.innerHTML = ARB.boxFoto(arbFoto(punta, 1), punta.nome, 'A', 'Collezione autunno') +
+      '<a class="eti" href="prodotto.html?p=' + punta.slug + '"><b>' + punta.nome + '</b> ' + arbEuro(arbPrezzoFinale(punta)) + '</a>';
+  }
+
+  /* ---- riquadri delle sezioni ---- */
   slot('fotoCurvy', 'curvy', 'Linea curvy');
   slot('fotoNegozio', 'negozio', 'Il negozio');
-
+  slot('megaFotoDonna', 'cat-donna', 'Donna');
+  slot('megaFotoCurvy', 'curvy', 'Curvy');
+  slot('megaFotoUomo', 'cat-uomo', 'Uomo');
+  slot('megaFotoNegozio', 'negozio', 'Negozio');
   document.querySelectorAll('.tri-card').forEach(function (c) {
     var titolo = c.querySelector('h3').textContent;
     var box = c.querySelector('.tri-foto');
     if (box) box.outerHTML = ARB.boxFoto('foto/cat-' + titolo.toLowerCase() + '.webp', titolo, 'A', titolo);
   });
 
-  /* ---- hero: tre capi sospesi ---- */
-  var vetrina = ['cappotto-milano', 'giubbotto-genova', 'cappotto-boucle-curvy'];
-  vetrina.forEach(function (slug, i) {
-    var n = document.getElementById('cascata' + (i + 1));
-    var p = arbProdotto(slug);
-    if (!n || !p) return;
-    n.innerHTML = ARB.boxFoto(arbFoto(p, 1), p.nome, 'A', p.sottocategoria) +
-      '<span class="hero-scheda-eti">' + p.sottocategoria + '<b>' + arbEuro(arbPrezzoFinale(p)) + '</b></span>';
-  });
+  /* ---- riga sotto l'hero: quattro capi, subito comprabili ---- */
+  var riga = document.getElementById('rigaHero');
+  if (riga) {
+    var primi = ARB_PRODOTTI.filter(function (p) { return p.sconto && arbDisponibile(p); }).slice(0, 4);
+    riga.innerHTML = primi.map(function (p) { return ARB.cardProdotto(p); }).join('');
+    ARB.evento('view_item_list', { item_list_name: 'hero', items: primi.map(function (p) { return { item_id: p.slug, item_name: p.nome, price: arbPrezzoFinale(p) }; }) });
+  }
 
-  /* ---- passerella: novità e saldi ---- */
+  /* ---- più venduti ---- */
+  var venduti = document.getElementById('grigliaVenduti');
+  if (venduti) {
+    var scelti = ARB_PRODOTTI.filter(function (p) { return arbDisponibile(p); }).slice(0, 8);
+    venduti.innerHTML = scelti.map(function (p) { return ARB.cardProdotto(p); }).join('');
+  }
+
+  /* ---- novità nella passerella ---- */
   var pista = document.getElementById('pista');
   if (pista) {
-    var scelti = ARB_PRODOTTI.filter(function (p) {
-      return p.sconto || (p.linea || []).indexOf('novita') !== -1;
-    }).slice(0, 10);
-    pista.innerHTML = scelti.map(function (p) { return ARB.cardProdotto(p); }).join('');
+    var novita = ARB_PRODOTTI.filter(function (p) { return (p.linea || []).indexOf('novita') !== -1; });
+    if (novita.length < 6) novita = novita.concat(ARB_PRODOTTI.filter(function (p) { return novita.indexOf(p) === -1; }).slice(0, 8 - novita.length));
+    pista.innerHTML = novita.slice(0, 10).map(function (p) { return ARB.cardProdotto(p); }).join('');
   }
 
   /* ---- lookbook ---- */
@@ -59,14 +75,13 @@
               return '<li><b>' + p.nome + '</b><span>' + arbEuro(arbPrezzoFinale(p)) + '</span></li>';
             }).join('') + '</ul>' +
             '<div class="look-somma"><span>Look completo</span><b>' + arbEuro(tot) + '</b></div>' +
-            '<button class="btn btn-scuro btn-blocco btn-piccolo" data-look="' + i + '">Aggiungi il look' +
+            '<button class="btn btn-primario btn-blocco btn-piccolo" data-look="' + i + '">Aggiungi il look' +
               '<span class="cerchio"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>' +
           '</div>' +
         '</div>' +
       '</article>';
     }).join('');
   }
-
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-look]');
     if (!b) return;
@@ -88,13 +103,12 @@
     new IntersectionObserver(function (voci, io) {
       if (!voci[0].isIntersecting) return;
       io.disconnect();
-      var span = scala.querySelectorAll('span');
-      span.forEach(function (s, i) {
-        setTimeout(function () { s.classList.add(i >= 5 ? 'oro' : 'viva'); }, 90 * i);
+      scala.querySelectorAll('span').forEach(function (s, i) {
+        setTimeout(function () { s.classList.add(i >= 4 ? 'oro' : 'viva'); }, 85 * i);
       });
     }, { threshold: .4 }).observe(scala);
   }
 
+  ARB.config();
   ARB.reveal();
-  ARB.inclina();
 })();

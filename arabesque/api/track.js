@@ -9,9 +9,11 @@ module.exports = async function handler(req, res) {
   var body = req.body || {};
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
   var percorso = String(body.percorso || '/').slice(0, 200);
+  var evento = String(body.evento || 'page_view').slice(0, 40);
+  var valore = body.valore === null || body.valore === undefined ? null : Number(body.valore);
   try {
     await assicuraSchema();
-    await sql`INSERT INTO visite (percorso) VALUES (${percorso})`;
+    await sql`INSERT INTO visite (percorso, evento, valore) VALUES (${percorso}, ${evento}, ${valore})`;
     res.status(204).end();
   } catch (err) { res.status(500).end(); }
 };

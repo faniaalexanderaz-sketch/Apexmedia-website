@@ -12,9 +12,11 @@
 <meta property="og:title" content="Abbigliamento donna a Busalla — Arabesque | XS–6XL" />
 <meta property="og:description" content="Collezione donna Arabesque: capispalla, abiti, maglieria e camicie dalla XS alla 6XL. Spedizione in 24/48h, ritiro gratuito in negozio a Busalla." />
 <meta property="og:locale" content="it_IT" />
-<meta name="theme-color" content="#08080A" />
+<meta name="theme-color" content="#FBFAF7" />
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preload" href="fonts/bodoni-moda-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-categoria="donna">
@@ -22,31 +24,87 @@
 <a class="skip-link" href="#contenuto">Salta al contenuto</a>
 
 <!--NAV-->
-<header class="isola">
-  <div class="isola-in">
+<div class="annuncio" id="annuncio" role="note">
+  <span>Spedizione <b>gratuita</b> sopra 79 € · Primo ordine <b>−10%</b> con <code>BENVENUTO10</code></span>
+  <button class="annuncio-chiudi" id="annuncioChiudi" aria-label="Chiudi l'annuncio">×</button>
+</div>
+
+<header class="testata-sito">
+  <div class="testata-in">
     <nav class="nav-voci solo-grande" aria-label="Collezioni">
-      <a class="nav-voce" href="donna.html">Donna</a>
-      <a class="nav-voce" href="uomo.html">Uomo</a>
+      <a class="nav-voce" href="donna.html" data-mega="megaDonna" aria-expanded="false">Donna</a>
+      <a class="nav-voce" href="uomo.html" data-mega="megaUomo" aria-expanded="false">Uomo</a>
       <a class="nav-voce oro" href="curvy.html">Curvy XS–6XL</a>
       <a class="nav-voce" href="negozio.html">Il negozio</a>
     </nav>
-    <button class="burger solo-piccolo" data-menu aria-label="Apri il menu" aria-expanded="false">
-      <span></span><span></span>
-    </button>
+    <button class="burger solo-piccolo" data-menu aria-label="Apri il menu" aria-expanded="false"><span></span><span></span></button>
 
     <a class="marchio" href="index.html"><b>Arabesque</b><small>Busalla</small></a>
 
     <div class="nav-azioni">
-      <button class="ic-btn solo-grande" data-menu aria-label="Apri il menu">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 8h16M4 16h16"/></svg>
+      <button class="ic-btn" data-apri="cerca" aria-label="Cerca nel sito">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       </button>
-      <a class="ic-btn" href="traccia-ordine.html" aria-label="Traccia il tuo ordine">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 7h13v10H3zM16 10h3.5L21 13v4h-5z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17.5" cy="18" r="1.5"/></svg>
+      <a class="ic-btn solo-grande" href="traccia-ordine.html" aria-label="Traccia il tuo ordine">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h13v10H3zM16 10h3.5L21 13v4h-5z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17.5" cy="18" r="1.5"/></svg>
       </a>
       <button class="ic-btn" data-apri="carrello" aria-label="Apri il carrello">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="pallino" data-pallino hidden>0</span>
       </button>
+    </div>
+  </div>
+
+  <div class="mega" id="megaDonna">
+    <div class="mega-in">
+      <div>
+        <h4>Capi</h4>
+        <ul>
+          <li><a href="donna.html?sotto=capispalla">Capispalla</a></li>
+          <li><a href="donna.html?sotto=abiti">Abiti</a></li>
+          <li><a href="donna.html?sotto=maglieria">Maglieria</a></li>
+          <li><a href="donna.html?sotto=camicie">Camicie e bluse</a></li>
+          <li><a href="donna.html?sotto=pantaloni">Pantaloni</a></li>
+          <li><a href="donna.html?sotto=gonne">Gonne</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Selezioni</h4>
+        <ul>
+          <li><a href="donna.html?filtro=novita">Novità</a></li>
+          <li><a href="donna.html?filtro=saldi">In saldo</a></li>
+          <li><a href="donna.html?filtro=cerimonia">Cerimonia</a></li>
+          <li><a href="curvy.html">Curvy XS–6XL</a></li>
+        </ul>
+      </div>
+      <a class="mega-foto" href="donna.html?filtro=novita" id="megaFotoDonna"><span class="eti">Novità della settimana</span></a>
+      <a class="mega-foto" href="curvy.html" id="megaFotoCurvy"><span class="eti">Taglie calibrate</span></a>
+    </div>
+  </div>
+
+  <div class="mega" id="megaUomo">
+    <div class="mega-in">
+      <div>
+        <h4>Capi</h4>
+        <ul>
+          <li><a href="uomo.html?sotto=capispalla">Capispalla</a></li>
+          <li><a href="uomo.html?sotto=giacche">Giacche</a></li>
+          <li><a href="uomo.html?sotto=camicie">Camicie</a></li>
+          <li><a href="uomo.html?sotto=maglieria">Maglieria</a></li>
+          <li><a href="uomo.html?sotto=pantaloni">Pantaloni</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Selezioni</h4>
+        <ul>
+          <li><a href="uomo.html?filtro=novita">Novità</a></li>
+          <li><a href="uomo.html?filtro=saldi">In saldo</a></li>
+          <li><a href="uomo.html?filtro=cerimonia">Cerimonia</a></li>
+          <li><a href="uomo.html?taglia=4XL">Taglie forti</a></li>
+        </ul>
+      </div>
+      <a class="mega-foto" href="uomo.html?filtro=novita" id="megaFotoUomo"><span class="eti">Novità uomo</span></a>
+      <a class="mega-foto" href="negozio.html" id="megaFotoNegozio"><span class="eti">Il negozio di Busalla</span></a>
     </div>
   </div>
 </header>
@@ -81,6 +139,11 @@
   </section>
 
   <section class="filtri" id="filtri"></section>
+  <div class="filtri-pannello" id="filtriPannello">
+    <h3>Filtra</h3>
+    <div id="filtriPannelloCorpo"></div>
+    <button class="btn btn-primario btn-blocco btn-senza-icona" data-chiudi style="margin-top:20px">Vedi i risultati</button>
+  </div>
 
   <section class="sez-stretta">
     <div class="wrap">
@@ -102,7 +165,7 @@
             <h3>Non sei sicura della taglia?</h3>
             <p>Scrivici su WhatsApp altezza, peso e la taglia che porti di solito: ti rispondiamo noi dal negozio, come faremmo in camerino. In due minuti, senza impegno.</p>
           </div>
-          <a class="btn btn-oro" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="btn btn-primario" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         </div>
       </div>
     </div>
@@ -166,6 +229,26 @@
   <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>
   <span>Consiglio taglia</span>
 </a>
+
+<nav class="barra-giu" aria-label="Navigazione rapida">
+  <div class="barra-giu-in">
+    <a href="index.html"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+    <button data-apri="cerca"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Cerca</button>
+    <a href="donna.html"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 7h16l-1.5 13H5.5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Capi</a>
+    <a href="negozio.html"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Negozio</a>
+    <button data-apri="carrello"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>Carrello<span class="pallino" data-pallino hidden>0</span></button>
+  </div>
+</nav>
+
+<div class="cerca-velo" id="cercaVelo"></div>
+<div class="cerca" id="cerca" role="dialog" aria-label="Cerca">
+  <div class="cerca-campo">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input type="search" id="cercaInput" placeholder="Cerca un capo, una taglia, un colore…" aria-label="Cerca nel catalogo" autocomplete="off" />
+    <button class="cerca-chiudi" data-chiudi-cerca>ESC</button>
+  </div>
+  <div class="cerca-corpo" id="cercaCorpo"></div>
+</div>
 
 <div class="velo" id="velo"></div>
 

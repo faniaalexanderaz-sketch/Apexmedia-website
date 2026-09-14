@@ -58,9 +58,29 @@ async function assicuraSchema() {
       percorso TEXT NOT NULL,
       creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
     )`;
+    await sql`ALTER TABLE visite ADD COLUMN IF NOT EXISTS evento TEXT NOT NULL DEFAULT 'page_view'`;
+    await sql`ALTER TABLE visite ADD COLUMN IF NOT EXISTS valore NUMERIC`;
+    await sql`CREATE INDEX IF NOT EXISTS visite_evento_idx ON visite (evento, creato_il)`;
 
     await sql`CREATE TABLE IF NOT EXISTS iscritti (
       email TEXT PRIMARY KEY,
+      creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
+    )`;
+
+    await sql`CREATE TABLE IF NOT EXISTS carrelli_aperti (
+      id SERIAL PRIMARY KEY,
+      email TEXT NOT NULL,
+      articoli JSONB NOT NULL,
+      totale_centesimi INTEGER NOT NULL DEFAULT 0,
+      recuperato BOOLEAN NOT NULL DEFAULT false,
+      creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
+    )`;
+
+    await sql`CREATE TABLE IF NOT EXISTS prenotazioni (
+      id SERIAL PRIMARY KEY,
+      email TEXT NOT NULL,
+      slug TEXT NOT NULL,
+      dettaglio TEXT,
       creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
     )`;
 

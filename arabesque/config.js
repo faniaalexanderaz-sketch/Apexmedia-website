@@ -20,6 +20,15 @@ var ARB_CONFIG = {
   instagram: 'https://www.instagram.com/',             /* TODO-CLIENTE */
   facebook: 'https://www.facebook.com/Arabesque.Busalla/',
   mappa: 'https://maps.google.com/?q=Via+Vittorio+Veneto+154+Busalla+GE',
+  /* le recensioni compaiono sul sito solo quando ce ne sono di vere:
+     metti true dopo aver inserito i testi reali nella home (TODO-CLIENTE) */
+  recensioniAttive: false,
+
+  /* misurazione: si attivano da sole quando i codici sono inseriti
+     e solo dopo il consenso ai cookie di statistica (TODO-CLIENTE) */
+  ga4: '',            /* es. 'G-XXXXXXXXXX' */
+  metaPixel: '',      /* es. '123456789012345' */
+
   orari: [
     { giorni: 'Lunedì', ore: 'Chiuso' },                      /* TODO-CLIENTE */
     { giorni: 'Martedì – Sabato', ore: '9:30 – 12:30 · 15:30 – 19:30' }, /* TODO-CLIENTE */
