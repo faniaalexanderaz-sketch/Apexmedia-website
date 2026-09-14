@@ -98,7 +98,12 @@
       return;
     }
     var io = new IntersectionObserver(function (voci) {
-      voci.forEach(function (v) { if (v.isIntersecting) { v.target.classList.add('dentro'); io.unobserve(v.target); } });
+      voci.forEach(function (v) {
+        if (!v.isIntersecting) return;
+        v.target.classList.add('dentro');
+        io.unobserve(v.target);
+        if (window.ARB_MOVIMENTO) ARB_MOVIMENTO.alloScoperto(v.target);
+      });
     }, { rootMargin: '0px 0px -5% 0px', threshold: .05 });
     nodi.forEach(function (n) { io.observe(n); });
   }
@@ -166,7 +171,7 @@
         '<h3 class="capo-nome"><a href="prodotto.html?p=' + p.slug + '">' + p.nome + '</a></h3>' +
         '<p class="capo-prezzo">' +
           (p.sconto ? '<span class="prezzo-vecchio">' + arbEuro(p.prezzo) + '</span>' : '') +
-          '<span class="prezzo-ora' + (p.sconto ? ' saldo' : '') + '">' + arbEuro(finale) + '</span>' +
+          '<span class="prezzo-ora' + (p.sconto ? ' saldo' : '') + '" data-prezzo="' + finale + '">' + arbEuro(finale) + '</span>' +
         '</p>' +
         '<p class="capo-scala">' + arbRangeTaglie(p) + '</p>' +
         (pochi ? '<p class="capo-pochi">Ultimi ' + pochi + ' pezzi</p>' : '') +
@@ -415,8 +420,13 @@
       var w = leggiWishlist(), k = w.indexOf(wish.dataset.wish);
       if (k === -1) { w.push(wish.dataset.wish); avviso('Salvato tra i preferiti'); } else { w.splice(k, 1); }
       try { localStorage.setItem(LS_WISH, JSON.stringify(w)); } catch (err) {}
-      wish.classList.toggle('attivo', k === -1);
-      var svg = wish.querySelector('svg'); if (svg) svg.setAttribute('fill', k === -1 ? 'currentColor' : 'none');
+      /* lo stesso capo può comparire più volte nella pagina (riga hero,
+         più venduti, vetrina): tutti i suoi cuori dicono la stessa cosa */
+      document.querySelectorAll('[data-wish="' + wish.dataset.wish + '"]').forEach(function (b) {
+        b.classList.toggle('attivo', k === -1);
+        var svg = b.querySelector('svg');
+        if (svg) svg.setAttribute('fill', k === -1 ? 'currentColor' : 'none');
+      });
       return;
     }
     var q = e.target.closest('[data-qta]');
@@ -554,7 +564,9 @@
       if (!b) return;
       var pista = document.querySelector(b.dataset.pista || '.passerella-pista');
       if (!pista) return;
-      var passo = pista.firstElementChild ? pista.firstElementChild.getBoundingClientRect().width + 16 : 300;
+      if (pista.prendiComando) pista.prendiComando();
+      var prima = pista.querySelector('.vetrina-fila > *') || pista.firstElementChild;
+      var passo = prima ? prima.getBoundingClientRect().width + 16 : 300;
       pista.scrollBy({ left: b.dataset.scorri === 'avanti' ? passo : -passo, behavior: 'smooth' });
     });
   }
@@ -581,6 +593,7 @@
       ARB_MOVIMENTO.scagliona();
       ARB_MOVIMENTO.inclina(radice);
       ARB_MOVIMENTO.respiro();
+      ARB_MOVIMENTO.vetrina(radice);
     }
   }
 
