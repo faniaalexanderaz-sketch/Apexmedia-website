@@ -48,7 +48,7 @@ function emailBenvenuto() {
     '    <span style="display:inline-block;background:#2E4B3A;color:#FAFAF7;font-size:20px;font-weight:bold;letter-spacing:.06em;padding:14px 28px;border-radius:999px;">BENVENUTO10</span>' +
     '  </p>' +
     '  <p style="font-size:14px;line-height:1.6;color:#5A6B5E;margin:0 0 26px;">Applicalo nel carrello prima di pagare (serve un account gratuito, che puoi creare in un minuto).</p>' +
-    '  <p style="font-size:13px;line-height:1.6;color:#5A6B5E;margin:0;"><a href="https://anticafioreria.vercel.app/collezione.html" style="color:#2E4B3A;">Sfoglia la collezione →</a></p>' +
+    '  <p style="font-size:13px;line-height:1.6;color:#5A6B5E;margin:0;"><a href="https://anticafioreriadelcentro.it/collezione.html" style="color:#2E4B3A;">Sfoglia la collezione →</a></p>' +
     '  <p style="font-size:13px;color:#9CAF94;margin:26px 0 0;">Antica Fioreria del Centro · dal 1953</p>' +
     '</div>';
 }
