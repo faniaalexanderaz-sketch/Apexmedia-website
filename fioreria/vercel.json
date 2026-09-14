@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "anticafioreria.vercel.app" }],
+      "destination": "https://anticafioreriadelcentro.it/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/ordine-completato", "destination": "/ordine-completato.html" },
     { "source": "/pagamento-annullato", "destination": "/pagamento-annullato.html" }

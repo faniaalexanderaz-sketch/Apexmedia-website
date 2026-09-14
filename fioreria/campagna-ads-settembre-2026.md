@@ -653,11 +653,11 @@ Quando tutte le caselle sono spuntate, pubblica. Segna la data di inizio: da lì
 
 ---
 
-## 12. Prima di spendere il primo euro: 5 fix sul sito che valgono più della campagna
+## 12. Prima di spendere il primo euro: 5 fix sul sito che valgono più della campagna (1 già fatto)
 
 Il traffico a pagamento amplifica quello che il sito già fa. Se il sito converte all'1% invece che al 2%, con €270 stai regalando metà budget. In ordine di impatto:
 
-1. **Allinea tutto il sito al dominio `anticafioreriadelcentro.it`.** Il dominio è già stato acquistato, ma dentro il codice del sito ci sono ancora **42 riferimenti** al vecchio indirizzo `.vercel.app` (canonical, sitemap, tag Open Graph, link nelle email di benvenuto). Vanno sostituiti tutti, e il vecchio indirizzo deve reindirizzare (301) al nuovo. Perché conta per la campagna: **l'URL finale degli annunci deve stare sullo stesso dominio verificato in Merchant Center**, altrimenti i prodotti vengono rifiutati; e due indirizzi vivi per lo stesso sito spaccano in due il ranking organico. È il primo intervento da fare, prima del feed e prima del lancio.
+1. **✅ Fatto — dominio allineato a `anticafioreriadelcentro.it`.** I 42 riferimenti al vecchio indirizzo `.vercel.app` (canonical, sitemap, tag Open Graph, link nelle email di benvenuto) sono stati sostituiti in `index.html`, `collezione.html`, `prodotto.html`, `sitemap.xml` e `api/invia-benvenuto.js`. È stato aggiunto anche il **redirect 301** dal vecchio dominio `.vercel.app` verso `anticafioreriadelcentro.it` in `vercel.json`: chi ha ancora salvato o cliccato il vecchio link non trova una pagina di errore, atterra comunque sul sito giusto. **Resta da fare solo un passaggio fuori dal codice, in pannello Vercel:** collegare il dominio `anticafioreriadelcentro.it` al progetto (Vercel → progetto → Settings → Domains → Add) se non è già collegato, altrimenti il redirect non ha un dominio di destinazione attivo su cui atterrare.
 2. **Recensioni con nome e voto in alto nella pagina prodotto.** Il nastro recensioni oggi sta in fondo alla home: chi arriva dall'annuncio sulla scheda prodotto non lo vede mai. Spostane 2-3 sotto il pulsante d'acquisto.
 3. **Spedizione gratuita sopra una soglia** (es. €99, sopra lo scontrino medio attuale). Oggi €12 di spedizione su un ordine da €60 è un +20% che si vede al momento peggiore. Una soglia gratis alza lo scontrino medio invece di abbassare il margine.
 4. **Rassicurazioni accanto al pulsante d'acquisto, non in fondo:** "Reso gratuito 14 giorni · Spedizione assicurata 48/72h · Paghi anche alla consegna". Tre righe che tolgono tre paure, nel punto esatto in cui nascono.
