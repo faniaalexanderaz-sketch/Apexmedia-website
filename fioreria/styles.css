@@ -2573,6 +2573,43 @@ img.no-foto { opacity: 0; }
 .piu-scelte-cta { text-align: center; margin-top: clamp(28px, 4vw, 40px); }
 
 /* ---------------------------------------------------------------
+   PERCORSO — "Per la tua casa" / "Per un regalo": due blocchi che
+   segmentano subito i due pubblici con bisogni opposti (arredo vs
+   occasione), ciascuno con una mini-vetrina reale del catalogo.
+   --------------------------------------------------------------- */
+.percorso-griglia {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 3.4vw, 44px);
+}
+.percorso-blocco {
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: clamp(20px, 2.6vw, 32px);
+  box-shadow: var(--shadow-soft);
+}
+.percorso-testa { margin-bottom: 20px; }
+.percorso-testa h3 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(21px, 2.2vw, 25px);
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.percorso-testa p { color: var(--muted); margin: 0; font-size: 15px; line-height: 1.5; }
+.prod-griglia-percorso { grid-template-columns: repeat(2, 1fr); margin-bottom: 22px; }
+.percorso-cta { width: 100%; justify-content: center; }
+
+@media (max-width: 860px) {
+  .percorso-griglia { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .prod-griglia-percorso { gap: 10px; }
+}
+
+/* ---------------------------------------------------------------
    CARD PRODOTTO — resa unica in home ("Le più scelte"), collezione
    e correlati: riquadro in rilievo, foto incorniciata, valutazione
    a stelle, prezzo dentro la sua targhetta.
