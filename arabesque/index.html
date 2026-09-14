@@ -45,7 +45,7 @@
 <link rel="preload" href="fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-pagina="home">
 
 <a class="skip-link" href="#contenuto">Salta al contenuto</a>
 
@@ -160,7 +160,7 @@
     <div class="wrap hero-in">
       <div class="hero-testo">
         <p class="occhiello">Boutique multimarca · Busalla</p>
-        <h1>Stile che veste <em>ogni</em> corporatura.<br />Dalla XS alla 6XL.</h1>
+        <h1>Stile che veste <em>ogni</em> corporatura.<br /><span class="si-accende">Dalla XS alla 6XL.</span></h1>
         <p class="hero-sotto">Uomo e donna, scelti capo per capo in negozio. Provati, misurati e spediti in 24/48 ore — o ritirati gratis a due passi dalla stazione.</p>
         <div class="hero-azioni">
           <a class="btn btn-cta" href="donna.html">Scopri la collezione
@@ -281,7 +281,7 @@
         <p style="max-width:52ch">In negozio abbiamo una vetrina dedicata solo alle taglie calibrate. Non prendiamo un capo normale per allargarlo: scegliamo modelli con spalle, fianchi e maniche disegnati per chi li indossa davvero.</p>
         <ul class="elenco-segni" style="margin-top:28px">
           <li><b>01</b><span>Vestibilità dichiarata capo per capo, in centimetri</span></li>
-          <li><b>02</b><span>Prezzi identici a quelli delle taglie standard</span></li>
+          <li><b>02</b><span><span class="si-accende">Un 5XL costa quanto una M</span> — prezzi identici alle taglie standard</span></li>
           <li><b>03</b><span>Provi in negozio e cambi taglia sul momento</span></li>
         </ul>
         <a class="btn btn-cta" href="curvy.html">Scopri la linea curvy
@@ -308,7 +308,7 @@
         </button>
       </div>
     </div>
-    <div class="passerella-pista" id="pista"></div>
+    <div class="passerella-pista vetrina" id="pista"></div>
   </section>
 
   <!-- ================= LOOKBOOK ================= -->
@@ -387,6 +387,27 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ================= VETRINA CURVY (scorre da sola) ================= -->
+  <section class="sez">
+    <div class="wrap passerella-guida entra">
+      <div class="sez-testa" style="margin:0">
+        <p class="occhiello">Dalla 2XL alla 6XL</p>
+        <h2>Le taglie che raramente si trovano</h2>
+      </div>
+      <div class="passerella-frecce solo-grande">
+        <button class="freccia" data-scorri="indietro" data-pista="#pistaCurvy" aria-label="Scorri indietro">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="freccia" data-scorri="avanti" data-pista="#pistaCurvy" aria-label="Scorri avanti">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="passerella-pista vetrina" id="pistaCurvy"></div>
+    <p class="wrap" style="margin-top:26px"><a class="link-linea" href="curvy.html">Vedi tutta la linea curvy
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
   </section>
 
   <!-- ================= FAQ ================= -->

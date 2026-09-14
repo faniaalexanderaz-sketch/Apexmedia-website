@@ -1337,3 +1337,83 @@ body { font-size: var(--t-4); }
 .strato-capo-carta { height: 84%; width: auto; }
 .hero-strati { overflow: hidden; }
 @media (max-width: 960px) { .strato-capo-carta { height: 80%; } }
+
+/* =============================================================
+   VETRINA VIVA — la passerella che scorre da sola
+   Due file identiche affiancate: quando la prima esce a sinistra
+   la seconda è già al suo posto, quindi il giro non ha scatti.
+   Si anima solo transform: nessun ricalcolo di layout.
+   ============================================================= */
+.vetrina { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: none; }
+.vetrina > .vetrina-fila { display: flex; gap: 16px; flex: 0 0 auto; }
+.vetrina > .vetrina-fila > * { flex: 0 0 clamp(230px, 25vw, 310px); scroll-snap-align: none; }
+/* la velocità la decide la durata, calcolata in JS sulla larghezza reale */
+.vetrina.corre .vetrina-fila {
+  animation: vetrina-scorre var(--vetrina-durata, 40s) linear infinite;
+  will-change: transform;
+}
+@keyframes vetrina-scorre { to { transform: translate3d(-100%, 0, 0); } }
+
+/* ferma da sola: sotto il puntatore (altrimenti non si clicca un capo)
+   e quando la fascia non è in vista (il telefono non scalda per niente) */
+.vetrina.corre:hover .vetrina-fila,
+.vetrina.corre:focus-within .vetrina-fila,
+.vetrina.corre.fuori-vista .vetrina-fila { animation-play-state: paused; }
+
+/* appena l'utente prende il comando la fila torna una pista normale.
+   Niente scroll-snap: lo spostamento dell'animazione viene travasato
+   nello scroll, e un aggancio obbligato lo riporterebbe a zero
+   spostando il capo proprio mentre lo si sta cliccando. */
+.vetrina.presa > .vetrina-fila { animation: none; will-change: auto; }
+.vetrina.presa { scroll-snap-type: none; }
+
+/* al tocco la card sotto il dito si solleva: lo stesso linguaggio
+   del :hover desktop, portato al trascinamento */
+.vetrina .capo.sotto-dito { transform: translateY(-4px) scale(1.02); transition: transform 260ms var(--e-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vetrina.corre .vetrina-fila { animation: none; will-change: auto; }
+}
+
+/* =============================================================
+   LA PAROLA CHE SI ACCENDE — massimo tre in tutto il sito
+   Il titolo entra in inchiostro, un istante dopo la frase che
+   vende davvero passa all'oro e si sottolinea da sinistra.
+   ============================================================= */
+.si-accende {
+  position: relative; display: inline-block;
+  color: inherit;
+  transition: color 520ms var(--e-soft);
+}
+.si-accende::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -.08em; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro-luce));
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 620ms var(--e-soft) 120ms;
+}
+.si-accende.acceso { color: var(--oro); }
+.si-accende.acceso::after { transform: scaleX(1); }
+.notte .si-accende.acceso { color: var(--oro-luce); }
+
+@media (prefers-reduced-motion: reduce) {
+  .si-accende { color: var(--oro); transition: none; }
+  .si-accende::after { transform: scaleX(1); transition: none; }
+  .notte .si-accende { color: var(--oro-luce); }
+}
+
+/* =============================================================
+   MICRO-SEGNALI DI VITA
+   ============================================================= */
+/* il monogramma del segnaposto respira una volta quando entra in vista */
+.foto-vuota-m.viva { animation: monogramma-respira 1.6s var(--e-soft) 1; }
+@keyframes monogramma-respira {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  45%      { transform: scale(1.045); opacity: .78; }
+}
+
+/* la barra di lettura porta un bagliore in coda invece di un filo piatto */
+.avanzamento { box-shadow: 0 0 12px 1px rgba(168,132,44,.55), 0 0 3px rgba(217,190,126,.9); }
+
+@media (prefers-reduced-motion: reduce) {
+  .foto-vuota-m.viva { animation: none; }
+}

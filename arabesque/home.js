@@ -52,13 +52,27 @@
     venduti.innerHTML = scelti.map(function (p) { return ARB.cardProdotto(p); }).join('');
   }
 
-  /* ---- novità nella passerella ---- */
-  var pista = document.getElementById('pista');
-  if (pista) {
-    var novita = ARB_PRODOTTI.filter(function (p) { return (p.linea || []).indexOf('novita') !== -1; });
-    if (novita.length < 6) novita = novita.concat(ARB_PRODOTTI.filter(function (p) { return novita.indexOf(p) === -1; }).slice(0, 8 - novita.length));
-    pista.innerHTML = novita.slice(0, 10).map(function (p) { return ARB.cardProdotto(p); }).join('');
+  /* ---- novità: la vetrina che scorre da sola ---- */
+  function riempiVetrina(id, capi) {
+    var pista = document.getElementById(id);
+    if (!pista || !capi.length) return;
+    pista.innerHTML = '<div class="vetrina-fila">' +
+      capi.map(function (p) { return ARB.cardProdotto(p); }).join('') + '</div>';
   }
+
+  var novita = ARB_PRODOTTI.filter(function (p) { return (p.linea || []).indexOf('novita') !== -1 && arbDisponibile(p); });
+  if (novita.length < 6) {
+    novita = novita.concat(ARB_PRODOTTI.filter(function (p) {
+      return novita.indexOf(p) === -1 && arbDisponibile(p);
+    }).slice(0, 8 - novita.length));
+  }
+  riempiVetrina('pista', novita.slice(0, 10));
+
+  /* ---- le taglie che raramente si trovano: la curvy in vetrina ---- */
+  var curvy = ARB_PRODOTTI.filter(function (p) {
+    return (p.linea || []).indexOf('curvy') !== -1 && arbDisponibile(p);
+  });
+  riempiVetrina('pistaCurvy', curvy.slice(0, 10));
 
   /* ---- lookbook ---- */
   var LOOK = [

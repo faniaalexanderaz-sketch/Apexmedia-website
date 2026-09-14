@@ -272,11 +272,210 @@
     }
   }
 
+
+  /* ---------------------------------------------------------
+     VETRINA VIVA: la fila di capi scorre da sola.
+     Due file identiche: quando la prima esce a sinistra la
+     seconda è già al suo posto, il giro non ha stacchi.
+     Si ferma sotto il puntatore, fuori vista e al primo tocco.
+     --------------------------------------------------------- */
+  var VELOCITA = 52;   /* px al secondo: si legge prezzo e nome senza rincorrerli */
+
+  function vetrina(radice) {
+    (radice || document).querySelectorAll('.vetrina:not([data-vetrina-attiva])').forEach(function (v) {
+      var fila = v.querySelector('.vetrina-fila');
+      if (!fila || !fila.children.length) return;
+      v.dataset.vetrinaAttiva = '1';
+
+      /* su schermi molto larghi pochi capi non bastano a coprire la
+         fascia: si ripetono finché la fila è più larga del contenitore,
+         altrimenti nel giro comparirebbe un vuoto */
+      var originali = [].slice.call(fila.children);
+      var giri = 0;
+      while (fila.getBoundingClientRect().width < v.getBoundingClientRect().width && giri < 4) {
+        originali.forEach(function (n) { fila.appendChild(n.cloneNode(true)); });
+        giri++;
+      }
+
+      if (ridotto) return;   /* fila ferma e leggibile, nient'altro: nessuna copia */
+
+      /* la copia serve solo agli occhi: per lo screen reader non esiste */
+      var copia = fila.cloneNode(true);
+      copia.setAttribute('aria-hidden', 'true');
+      copia.querySelectorAll('a, button, input').forEach(function (n) { n.tabIndex = -1; });
+      v.appendChild(copia);
+
+
+      function misura() {
+        var largo = fila.getBoundingClientRect().width;
+        if (largo < 40) return;
+        v.style.setProperty('--vetrina-durata', Math.round(largo / VELOCITA) + 's');
+      }
+      misura();
+      v.classList.add('corre');
+      if ('ResizeObserver' in window) new ResizeObserver(misura).observe(fila);
+
+      /* le card di una fascia che scorre entrano insieme con la fascia:
+         osservarle una per una mentre si muovono farebbe lampeggiare
+         mezza fila ad ogni giro */
+      function scopri() {
+        v.querySelectorAll('.entra:not(.dentro)').forEach(function (n) {
+          n.style.transitionDelay = '';
+          n.classList.add('dentro');
+          alloScoperto(n);
+        });
+      }
+
+      /* fuori vista l'animazione dorme: niente calore sprecato sul telefono */
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (voci) {
+          var dentro = voci[0].isIntersecting;
+          v.classList.toggle('fuori-vista', !dentro);
+          if (dentro) scopri();
+        }, { threshold: 0 }).observe(v);
+      } else {
+        scopri();
+      }
+
+      /* primo tocco: l'utente prende il comando e la fila torna
+         una pista da trascinare. Congeliamo la posizione esatta
+         travasando lo spostamento dell'animazione nello scroll. */
+      function prendi() {
+        if (v.classList.contains('presa')) return;
+        var tr = getComputedStyle(fila).transform;
+        var spostato = 0;
+        try { if (tr && tr !== 'none') spostato = -(new DOMMatrix(tr).m41 || 0); } catch (e) {}
+        v.classList.remove('corre');
+        v.classList.add('presa');
+        v.scrollLeft = spostato;
+        /* se il contenitore non può scorrere fin lì teniamo il resto
+           sulla fila: il capo sotto il dito non si sposta di un pixel */
+        var resto = spostato - v.scrollLeft;
+        fila.style.transform = resto ? 'translate3d(' + (-resto) + 'px,0,0)' : '';
+      }
+      v.addEventListener('pointerdown', prendi, true);   /* prima del trascinamento, che legge scrollLeft */
+      v.addEventListener('wheel', prendi, { passive: true });
+      v.addEventListener('keydown', prendi);
+      v.prendiComando = prendi;
+
+      /* al tocco la card sotto il dito si solleva e la segue mentre
+         trascina: lo stesso linguaggio del :hover desktop.
+         Servono gli eventi touch, non i pointer: appena parte lo
+         scorrimento nativo il browser annulla il pointer e il
+         sollevamento cadrebbe subito. */
+      if (tocco) {
+        var sollevata = null;
+        function solleva(t) {
+          if (!t) return;
+          var sotto = document.elementFromPoint(t.clientX, t.clientY);
+          var c = sotto && sotto.closest ? sotto.closest('.capo') : null;
+          if (c === sollevata) return;
+          if (sollevata) sollevata.classList.remove('sotto-dito');
+          sollevata = c;
+          if (c) c.classList.add('sotto-dito');
+        }
+        function posa() {
+          if (sollevata) sollevata.classList.remove('sotto-dito');
+          sollevata = null;
+        }
+        v.addEventListener('touchstart', function (e) { solleva(e.touches[0]); }, { passive: true });
+        v.addEventListener('touchmove', function (e) { solleva(e.touches[0]); }, { passive: true });
+        ['touchend', 'touchcancel'].forEach(function (ev) {
+          v.addEventListener(ev, posa, { passive: true });
+        });
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     LA PAROLA CHE SI ACCENDE — rara e mirata, mai decorativa.
+     Una sola volta per visita: al ritorno in cima non si ripete.
+     --------------------------------------------------------- */
+  function accendi(n, ritardo) {
+    if (!n) return;
+    if (ridotto) { n.classList.add('acceso'); return; }
+    setTimeout(function () { n.classList.add('acceso'); }, ritardo || 0);
+  }
+
+  function accensioni() {
+    var hero = document.querySelector('.hero .si-accende');
+    if (hero) {
+      var gia = false;
+      try { gia = sessionStorage.getItem('arb-accensione') === 'fatta'; } catch (e) {}
+      if (gia) hero.classList.add('acceso');
+      else {
+        accendi(hero, 750);
+        try { sessionStorage.setItem('arb-accensione', 'fatta'); } catch (e) {}
+      }
+    }
+    /* nel manifesto curvy l'accensione viaggia con la scala taglie:
+       stesso osservatore, nessun secondo osservatore da pagare */
+    var manifesto = document.querySelector('.notte .si-accende');
+    if (manifesto && 'IntersectionObserver' in window) {
+      var scala = document.getElementById('scalaTaglie') || manifesto;
+      new IntersectionObserver(function (voci, io) {
+        if (!voci[0].isIntersecting) return;
+        io.disconnect();
+        accendi(manifesto, 900);
+      }, { threshold: .4 }).observe(scala);
+    } else if (manifesto) {
+      manifesto.classList.add('acceso');
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Il prezzo conta verso l'alto quando la card entra in vista:
+     l'occhio ci si posa sopra proprio mentre decide.
+     --------------------------------------------------------- */
+  function contaPrezzo(n) {
+    if (ridotto || !n || n.dataset.contato) return;
+    /* solo in home: nel catalogo l'utente confronta prezzi fermi,
+       un numero che sale gli toglie il punto di riferimento */
+    if (document.body.dataset.pagina !== 'home') return;
+    n.dataset.contato = '1';
+    var finale = parseFloat(n.dataset.prezzo);
+    if (!isFinite(finale) || finale <= 0) return;
+    /* blocchiamo la larghezza sul testo finale: il numero cresce,
+       la card non balla */
+    n.style.display = 'inline-block';
+    n.style.minWidth = n.getBoundingClientRect().width + 'px';
+    var t0 = 0;
+    function passo(t) {
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / 500);
+      var e = 1 - Math.pow(1 - k, 3);
+      n.textContent = arbEuro(finale * e);
+      if (k < 1) requestAnimationFrame(passo);
+    }
+    n.textContent = arbEuro(0);
+    requestAnimationFrame(passo);
+  }
+
+  /* ---------------------------------------------------------
+     Il monogramma dei segnaposto respira una volta: un segno di
+     vita finché non arrivano le foto vere.
+     --------------------------------------------------------- */
+  function respiroMonogramma(card) {
+    if (ridotto || !card) return;
+    var m = card.querySelector('.foto-vuota-m');
+    if (m && !m.classList.contains('viva')) m.classList.add('viva');
+  }
+
+  /* main.js chiama questo per ogni nodo .entra che entra in vista:
+     un solo osservatore per tutto, come già faceva. */
+  function alloScoperto(n) {
+    if (!n) return;
+    contaPrezzo(n.querySelector('.prezzo-ora[data-prezzo]'));
+    respiroMonogramma(n);
+  }
+
   /* ---------------------------------------------------------
      Avvio
      --------------------------------------------------------- */
   function avvia() {
     scaglionaSimili();
+    vetrina();
+    accensioni();
     inclina();
     parallasse();
     avanzamento();
@@ -287,5 +486,9 @@
   else avvia();
 
   /* le griglie costruite da JS chiedono un secondo passaggio */
-  window.ARB_MOVIMENTO = { scagliona: scaglionaSimili, inclina: inclina, respiro: respiroCTA, vola: vola, sbircia: apriSbircia };
+  window.ARB_MOVIMENTO = {
+    scagliona: scaglionaSimili, inclina: inclina, respiro: respiroCTA,
+    vola: vola, sbircia: apriSbircia,
+    vetrina: vetrina, accensioni: accensioni, alloScoperto: alloScoperto
+  };
 })();
