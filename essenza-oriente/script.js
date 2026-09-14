@@ -137,30 +137,26 @@
     }, { passive: true });
   }
 
-  /* ---------- sezione orari: giorno corrente + badge "aperti ora" ----------
-     Il centro è aperto tutti i giorni 9:30–22:30: calcoliamo lo stato
-     in base all'orario locale del visitatore, niente di hardcoded. */
-  var orariGiorni = document.getElementById('orariGiorni');
-  var orariLiveTesto = document.getElementById('orariLiveTesto');
-  var orariLive = document.getElementById('orariLive');
-  if (orariGiorni) {
-    var oggi = new Date();
-    var voceOggi = orariGiorni.querySelector('[data-giorno="' + oggi.getDay() + '"]');
-    if (voceOggi) voceOggi.setAttribute('data-oggi', '');
-  }
-  if (orariLiveTesto && orariLive) {
+  /* ---------- hero: stato di apertura in tempo reale ----------
+     La sezione "orari" a tutto schermo e' stata rimossa: occupava uno
+     schermo intero fra l'utente e la prenotazione per dire una cosa
+     sola. L'informazione resta, ma come riga viva sotto la CTA: se
+     siamo aperti adesso, prenotare sembra qualcosa che si puo' fare
+     subito — ed e' esattamente il messaggio che serve li'. */
+  var APRE = 9 * 60 + 30, CHIUDE = 22 * 60 + 30;
+  var heroNota = document.getElementById('heroNota');
+  var heroNotaTesto = document.getElementById('heroNotaTesto');
+  function centroAperto() {
     var ora = new Date();
-    var minutiOra = ora.getHours() * 60 + ora.getMinutes();
-    var aperto = minutiOra >= 9 * 60 + 30 && minutiOra < 22 * 60 + 30;
-    if (aperto) {
-      orariLiveTesto.textContent = 'Aperti ora';
+    var m = ora.getHours() * 60 + ora.getMinutes();
+    return m >= APRE && m < CHIUDE;
+  }
+  if (heroNota && heroNotaTesto) {
+    if (centroAperto()) {
+      heroNotaTesto.innerHTML = 'Aperti ora fino alle 22:30 &middot; prenoti in meno di un minuto';
     } else {
-      orariLiveTesto.textContent = 'Apriamo alle 9:30';
-      orariLive.style.background = 'rgba(217,198,140,.14)';
-      orariLive.style.borderColor = 'rgba(217,198,140,.45)';
-      orariLive.style.color = 'var(--oro-chiaro)';
-      var pallino = orariLive.querySelector('.orari-live-pallino');
-      if (pallino) { pallino.style.background = 'var(--oro-chiaro)'; pallino.style.animation = 'none'; }
+      heroNota.classList.add('chiuso');
+      heroNotaTesto.innerHTML = 'Chiusi ora, riapriamo alle 9:30 &middot; puoi prenotare comunque online';
     }
   }
 
@@ -259,7 +255,7 @@
     fascia.innerHTML =
       '<span class="ribbon-offerta-testo">' +
         '<svg width="12" height="12" viewBox="0 0 34 20" fill="currentColor" aria-hidden="true"><path d="M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z"/><path d="M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z"/><path d="M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z"/></svg>' +
-        '<strong>Offerta Primo Accesso:</strong> Riflessologia Plantare a 25&nbsp;€ invece di 35&nbsp;€' +
+        '<strong>Primo accesso:</strong> Riflessologia 25&nbsp;€ anziché 35&nbsp;€' +
       '</span>' +
       '<span class="ribbon-offerta-conto">Scade tra <span id="ribbonOffertaConto"></span></span>' +
       '<a class="ribbon-offerta-cta" href="' + OFFERTA_WA_HREF + '" target="_blank" rel="noopener">Scrivici su WhatsApp</a>' +
@@ -275,4 +271,188 @@
   }
   aggiornaContiOfferta();
   setInterval(aggiornaContiOfferta, 60000);
+
+  /* =============================================================
+     SCELTA DEL TRATTAMENTO — il pezzo centrale della revisione
+     =============================================================
+     Prima ogni bottone "Prenota" scaricava l'utente sullo stesso menu
+     generico di Treatwell, dove doveva ricercare da capo il trattamento
+     che aveva appena scelto. Due volte lo stesso lavoro: e' li' che si
+     perdevano le prenotazioni.
+
+     Ora la scelta fatta una volta sola (nei chip della hero o su una
+     card del listino) viaggia fino alla sezione di prenotazione, dove
+     viene mostrata a chiare lettere e precaricata nel messaggio
+     WhatsApp. Il widget Treatwell resta cross-origin — non possiamo
+     pilotarlo dall'esterno — ma l'utente arriva sapendo cosa cercare,
+     e chi preferisce scrivere ha gia' il messaggio pronto.
+     ============================================================= */
+  var WA_BASE = 'https://wa.me/393317153533?text=';
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.hero-chip[data-tratt]'));
+  var prenotaScelta = document.getElementById('prenotaScelta');
+  var prenotaSceltaNome = document.getElementById('prenotaSceltaNome');
+  var prenotaSceltaInfo = document.getElementById('prenotaSceltaInfo');
+  var prenotaSceltaCambia = document.getElementById('prenotaSceltaCambia');
+  var prenotaWa = document.getElementById('prenotaWa');
+  var heroCtaSub = document.getElementById('heroCtaSub');
+
+  /* il testo arriva da attributi HTML che contengono entita' (&euro;,
+     &middot;): questo le converte una volta sola in caratteri veri */
+  function decodifica(testo) {
+    var d = document.createElement('textarea');
+    d.innerHTML = testo || '';
+    return d.value;
+  }
+
+  function messaggioWa(nome) {
+    if (!nome) return "Ciao! Vorrei prenotare un trattamento, quando avete disponibilit\u00e0?";
+    return 'Ciao! Vorrei prenotare: ' + nome + '. Quando avete disponibilit\u00e0?';
+  }
+
+  function scegliTrattamento(nome, info, evidenziaChip) {
+    if (!prenotaScelta) return;
+    prenotaSceltaNome.textContent = nome;
+    prenotaSceltaInfo.textContent = decodifica(info);
+    prenotaScelta.hidden = false;
+    if (prenotaWa) prenotaWa.href = WA_BASE + encodeURIComponent(messaggioWa(nome));
+    if (heroCtaSub) heroCtaSub.textContent = nome + ' · scegli data e ora';
+    chips.forEach(function (c) {
+      c.setAttribute('aria-pressed', String(evidenziaChip && c.dataset.tratt === nome));
+    });
+    traccia({ event: 'scelta_trattamento', trattamento: nome });
+  }
+
+  function azzeraScelta() {
+    if (!prenotaScelta) return;
+    prenotaScelta.hidden = true;
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+    if (prenotaWa) prenotaWa.href = WA_BASE + encodeURIComponent(messaggioWa(null));
+    if (heroCtaSub) heroCtaSub.innerHTML = 'Scegli data e ora &middot; conferma immediata';
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var gia = chip.getAttribute('aria-pressed') === 'true';
+      if (gia) { azzeraScelta(); return; }
+      scegliTrattamento(chip.dataset.tratt, chip.dataset.info, true);
+    });
+  });
+
+  if (prenotaSceltaCambia) {
+    prenotaSceltaCambia.addEventListener('click', function () {
+      azzeraScelta();
+      var hero = document.getElementById('heroScelta');
+      if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
+  /* i "Prenota" delle card del listino passano dalla stessa strada */
+  document.querySelectorAll('.tratt[data-tratt] .tratt-prenota').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.tratt');
+      scegliTrattamento(card.dataset.tratt, card.dataset.info, true);
+    });
+  });
+
+  /* Se l'offerta Primo Accesso e' scaduta, il chip della hero non puo'
+     continuare a promettere 25 € mentre la sezione offerta sparisce:
+     torna al prezzo di listino. */
+  if (!offertaResiduo()) {
+    var chipOfferta = document.querySelector('.hero-chip[data-offerta]');
+    if (chipOfferta) {
+      chipOfferta.classList.remove('hero-chip-offerta');
+      chipOfferta.dataset.info = '40 min · 35 € — 60 min · 50 €';
+      var infoEl = chipOfferta.querySelector('.hero-chip-info');
+      if (infoEl) infoEl.textContent = '35 € · 40 min';
+    }
+  }
+
+  /* ---------- comparsa progressiva in scroll ----------
+     Un solo observer per tutti i blocchi, che si disiscrive appena
+     l'elemento e' comparso: zero lavoro durante lo scroll successivo.
+     Se il browser non lo supporta (o l'utente vuole meno movimento)
+     tutto resta semplicemente visibile. */
+  var daRivelare = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window) || vuoleMenoMovimento) {
+    document.documentElement.classList.add('no-reveal');
+  } else {
+    var osservatore = new IntersectionObserver(function (voci) {
+      voci.forEach(function (voce) {
+        if (!voce.isIntersecting) return;
+        voce.target.classList.add('in-vista');
+        osservatore.unobserve(voce.target);
+      });
+    }, { rootMargin: '250px 0px 250px 0px', threshold: 0 });
+    daRivelare.forEach(function (el) { osservatore.observe(el); });
+
+    /* RETE DI SICUREZZA: un blocco che per qualunque motivo non passa
+       mai dall'observer (lo scroll l'ha scavalcato, il browser si
+       comporta diversamente) resterebbe a opacita' zero per sempre —
+       cioe' contenuto che il cliente non vede mai. Questo giro mostra
+       tutto cio' che *dovrebbe* gia' essere visibile, senza toccare
+       quello che sta piu' in basso: l'animazione di comparsa resta
+       intatta per chi scorre, ma niente puo' restare invisibile. */
+    function recuperaSaltati() {
+      daRivelare.forEach(function (el) {
+        if (el.classList.contains('in-vista')) return;
+        if (el.getBoundingClientRect().top < window.innerHeight) {
+          el.classList.add('in-vista');
+          osservatore.unobserve(el);
+        }
+      });
+    }
+    window.addEventListener('load', recuperaSaltati);
+    setTimeout(recuperaSaltati, 2500);
+    window.addEventListener('scroll', function () {
+      clearTimeout(window.__eoRecupero);
+      window.__eoRecupero = setTimeout(recuperaSaltati, 400);
+    }, { passive: true });
+  }
+
+  /* ---------- card trattamento: inclinazione 3D col puntatore ----------
+     Solo dove ha senso: serve un puntatore fine (mouse) e nessuna
+     richiesta di ridurre il movimento. L'angolo e' volutamente piccolo
+     (max 7°) — deve dare materialita' alla card, non far ballare il
+     listino. Scriviamo solo transform e due variabili CSS, quindi il
+     browser non ricalcola mai il layout. */
+  var puntatoreFine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (puntatoreFine && !vuoleMenoMovimento) {
+    document.querySelectorAll('.tratt').forEach(function (card) {
+      var lucido = document.createElement('span');
+      lucido.className = 'tratt-lucido';
+      lucido.setAttribute('aria-hidden', 'true');
+      card.appendChild(lucido);
+
+      var rect = null, rafAttivo = false, ultimoX = 0, ultimoY = 0;
+
+      function applica() {
+        rafAttivo = false;
+        if (!rect) return;
+        var px = (ultimoX - rect.left) / rect.width;
+        var py = (ultimoY - rect.top) / rect.height;
+        var rotY = (px - .5) * 14;   /* max ±7° */
+        var rotX = (.5 - py) * 10;   /* max ±5° */
+        card.style.transform =
+          'perspective(1400px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateY(-6px)';
+        card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      }
+
+      card.addEventListener('pointerenter', function () {
+        rect = card.getBoundingClientRect();
+        card.classList.add('tilt-attivo');
+        card.style.willChange = 'transform';
+      });
+      card.addEventListener('pointermove', function (e) {
+        ultimoX = e.clientX; ultimoY = e.clientY;
+        if (!rafAttivo) { rafAttivo = true; requestAnimationFrame(applica); }
+      });
+      card.addEventListener('pointerleave', function () {
+        card.classList.remove('tilt-attivo');
+        card.style.transform = '';
+        card.style.willChange = 'auto';
+        rect = null;
+      });
+    });
+  }
 })();

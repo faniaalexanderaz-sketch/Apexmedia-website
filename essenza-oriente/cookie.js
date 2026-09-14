@@ -69,7 +69,7 @@
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-label', 'Preferenze cookie');
     box.innerHTML =
-      '<p class="cookie-testo">Usiamo cookie <strong>tecnici</strong>, sempre attivi e indispensabili per far funzionare il sito, e — solo se accetti — cookie di <strong>misurazione</strong> (Google) per capire come va il sito. <a href="' + base + 'cookie.html">Scopri di più</a></p>' +
+      '<p class="cookie-testo">Cookie <strong>tecnici</strong> sempre attivi; quelli di <strong>misurazione</strong> (Google) solo se accetti. <a href="' + base + 'cookie.html">Dettagli</a></p>' +
       '<div class="cookie-azioni">' +
         '<button class="btn btn-cookie-rifiuta" type="button" id="cookieRifiuta">Rifiuta</button>' +
         '<button class="btn btn-cookie-accetta" type="button" id="cookieAccetta">Accetta</button>' +
