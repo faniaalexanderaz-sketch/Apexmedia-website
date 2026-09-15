@@ -26,7 +26,7 @@ var ARB_CONFIG = {
   whatsapp: '',            /* TODO-CLIENTE: numero WhatsApp del negozio, es. '393401234567' */
   email: 'arabesque@arabesqueabbigliamento.it',
   piva: '03095960104',
-  instagram: '',           /* TODO-CLIENTE: URL completo del profilo, non la home di Instagram */
+  instagram: 'https://www.instagram.com/arabesque.busalla',
   /* ------------------------------------------------------------------ */
 
   facebook: 'https://www.facebook.com/Arabesque.Busalla/',
