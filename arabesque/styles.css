@@ -35,6 +35,8 @@
 
   /* --- oro leggibile su chiaro --- */
   --oro:        #A8842C;
+  --oro-testo:  #8A6C1F;   /* stesso oro, tono leggibile: 4,7:1 su carta.
+                              i testi piccoli usano questo, filetti e decori l'oro chiaro */
   --oro-luce:   #D9BE7E;
   --oro-velo:   rgba(168,132,44,.10);
 
@@ -134,12 +136,12 @@ h3 { font-size: clamp(19px, 2vw, 26px); line-height: 1.18; }
 
 .occhiello {
   font-family: var(--f-moda);
-  font-size: clamp(12.5px, 1.2vw, 14px);
-  letter-spacing: .4em; text-transform: uppercase;
-  color: var(--oro); margin: 0 0 18px;
+  font-size: clamp(13px, 1.2vw, 14.5px);
+  letter-spacing: .26em; text-transform: uppercase;
+  color: var(--oro-testo); margin: 0 0 18px;
   display: flex; align-items: center; gap: 13px;
 }
-.occhiello::before { content:''; width: 30px; height: 1px; background: currentColor; opacity: .6; }
+.occhiello::before { content:''; width: 30px; height: 1px; background: var(--oro); opacity: .8; }
 .occhiello.centro { justify-content: center; }
 .occhiello.sola::before { display: none; }
 
@@ -502,7 +504,7 @@ body.menu-aperto .burger span:nth-child(2) { transform: rotate(-45deg); }
 .chip-taglia:hover:not([disabled]) { background: var(--inchiostro); color: var(--carta); border-color: var(--inchiostro); }
 .chip-taglia[disabled] { opacity: .32; text-decoration: line-through; cursor: not-allowed; }
 .capo-info { padding: 15px 3px 0; }
-.capo-casa { font-family: var(--f-ticker); font-size: 10px; letter-spacing: .26em; text-transform: uppercase; color: var(--oro); }
+.capo-casa { font-family: var(--f-ticker); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--oro-testo); }
 .capo-nome { font-family: var(--f-display); font-weight: 600; font-size: 18px; line-height: 1.2; margin-top: 6px; letter-spacing: -.015em; }
 .capo-prezzo { margin-top: 8px; display: flex; align-items: baseline; gap: 10px; font-family: var(--f-dati); font-size: 15px; }
 .prezzo-vecchio { color: var(--fumo); text-decoration: line-through; font-size: 12.5px; }
@@ -515,7 +517,10 @@ body.menu-aperto .burger span:nth-child(2) { transform: rotate(-45deg); }
 .foto { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; background: var(--carta-2); }
 .foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
 .foto-vuota {
-  position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+  /* align-content: center tiene monogramma e nota vicini: senza, le due
+     righe implicite si spartiscono l'altezza e la nota finisce in fondo */
+  position: absolute; inset: 0; display: grid; place-items: center;
+  align-content: center; text-align: center;
   background:
     radial-gradient(ellipse 90% 70% at 50% 16%, rgba(168,132,44,.14), transparent 62%),
     repeating-linear-gradient(118deg, rgba(22,21,15,.022) 0 2px, transparent 2px 11px),
@@ -523,10 +528,30 @@ body.menu-aperto .burger span:nth-child(2) { transform: rotate(-45deg); }
 }
 .foto-vuota::after { content:''; position: absolute; inset: 13px; border: 1px solid rgba(168,132,44,.26); }
 .foto-vuota-m { font-family: var(--f-moda); font-size: clamp(38px, 5.6vw, 68px); color: rgba(168,132,44,.42); line-height: 1; letter-spacing: .1em; }
-.foto-vuota-t { position: absolute; bottom: 22px; left: 0; right: 0; font-family: var(--f-ticker); font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: rgba(22,21,15,.34); }
-.notte .foto-vuota { background: radial-gradient(ellipse 90% 70% at 50% 16%, rgba(217,190,126,.16), transparent 62%), repeating-linear-gradient(118deg, rgba(251,250,247,.03) 0 2px, transparent 2px 11px), linear-gradient(168deg, #24232C, #16151C); }
-.notte .foto-vuota-m { color: rgba(217,190,126,.36); }
-.notte .foto-vuota-t { color: rgba(251,250,247,.3); }
+.foto-vuota-t { position: absolute; bottom: 20px; left: 0; right: 0; font-family: var(--f-ticker); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: rgba(22,21,15,.62); }
+.notte .foto-vuota { background: radial-gradient(ellipse 90% 70% at 50% 16%, rgba(217,190,126,.20), transparent 62%), repeating-linear-gradient(118deg, rgba(251,250,247,.045) 0 2px, transparent 2px 11px), linear-gradient(168deg, #35323F, #24222E); }
+.notte .foto-vuota-m { color: rgba(217,190,126,.58); }
+.notte .foto-vuota::after { border-color: rgba(217,190,126,.32); }
+.notte .foto-vuota-t { color: rgba(251,250,247,.66); }
+.foto-vuota { gap: 14px; }
+/* dice perché il riquadro è lì: "in arrivo" invece di "vuoto" */
+.foto-vuota-nota {
+  font-family: var(--f-ticker); font-size: 10.5px; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(22,21,15,.66);
+  padding: 5px 11px; border-radius: 999px;
+  background: rgba(251,250,247,.72); border: 1px solid rgba(168,132,44,.3);
+}
+.notte .foto-vuota-nota { color: rgba(251,250,247,.8); background: rgba(20,19,26,.5); border-color: rgba(217,190,126,.32); }
+/* lo sfondo dell'hero e le miniature non sono "la foto del capo":
+   ripetere lì la nota la trasformerebbe in rumore */
+/* la nota vale solo dove manca la foto di un CAPO. Sulle tessere di
+   navigazione e sui fondali si scontrerebbe con il titolo e diventerebbe
+   rumore: lì il riquadro è una superficie, non un prodotto assente. */
+.strato-fondo .foto-vuota-nota, .cerca-voce .mini .foto-vuota-nota,
+.pdp-mini-b .foto-vuota-nota, .pdp-barra-foto .foto-vuota-nota,
+.tri-card .foto-vuota-nota, .mega-foto .foto-vuota-nota { display: none; }
+/* nei riquadri piccoli anche monogramma ed etichetta vanno ridotti */
+.pdp-mini-b .foto-vuota-t, .pdp-barra-foto .foto-vuota-t, .cerca-voce .mini .foto-vuota-t { display: none; }
 .tri-card .foto-vuota-t { display: none; }
 
 /* =============================================================
@@ -1315,9 +1340,13 @@ body { font-size: var(--t-4); }
    il primo capo comprabile deve restare a portata di pollice */
 @media (max-width: 1320px) { .hero-strati { aspect-ratio: 4/2.85; } }
 @media (max-width: 960px) {
-  .hero-strati { aspect-ratio: 16/9.5; }
-  .hero-prove { gap: 8px 18px; margin-top: 20px; }
-  .hero-azioni { margin-top: 22px; }
+  /* Il 16/9.5 rendeva l'immagine del capo alta ~200px: una fessura in cui
+     non si riconosce niente. Un capo si giudica in verticale. Qui la
+     composizione prende un'altezza vera ma legata al viewport, così su
+     telefoni bassi non spinge la prima card fuori dal pollice. */
+  .hero-strati { aspect-ratio: auto; height: min(46svh, 380px); margin-bottom: 20px; }
+  .hero-prove { gap: 8px 18px; margin-top: 18px; }
+  .hero-azioni { margin-top: 20px; }
   .hero-riga { padding-bottom: 26px; }
 }
 @media (max-height: 780px) and (min-width: 960px) {
@@ -1336,7 +1365,7 @@ body { font-size: var(--t-4); }
    dimensionata sull'altezza, mai può eccedere lo strato che la ospita */
 .strato-capo-carta { height: 84%; width: auto; }
 .hero-strati { overflow: hidden; }
-@media (max-width: 960px) { .strato-capo-carta { height: 80%; } }
+@media (max-width: 960px) { .strato-capo-carta { height: 88%; } }
 
 /* =============================================================
    VETRINA VIVA — la passerella che scorre da sola
@@ -1417,3 +1446,39 @@ body { font-size: var(--t-4); }
 @media (prefers-reduced-motion: reduce) {
   .foto-vuota-m.viva { animation: none; }
 }
+
+/* =============================================================
+   DATI DEL NEGOZIO NON ANCORA CONFERMATI
+   config.js (nella testa) marca <html> con senza-telefono,
+   senza-whatsapp, senza-email, senza-piva, senza-instagram.
+   Qui gli elementi che li conterrebbero non vengono proprio
+   disegnati: niente numeri finti e niente salto di layout.
+   Appena il dato entra in config.js tutto ricompare da solo.
+   ============================================================= */
+.senza-telefono [data-cfg-tel],
+.senza-instagram [data-cfg-ig],
+.senza-whatsapp a.wa { display: none !important; }
+.senza-telefono [data-cfg-blocco]:has([data-cfg="telefono"]),
+.senza-piva [data-cfg-blocco]:has([data-cfg="piva"]),
+.senza-email [data-cfg-blocco]:has([data-cfg="email"]) { display: none !important; }
+
+/* =============================================================
+   SPAZIO PRENOTATO PER I BLOCCHI COSTRUITI DA JS
+   Catalogo e scheda capo nascono come contenitori vuoti: il piè di
+   pagina veniva disegnato a metà schermo e poi spinto giù di quasi
+   un'intera videata quando il JS riempiva (CLS misurato: 0,92 sulla
+   scheda, 0,91 sul catalogo — budget 0,05).
+   :empty vale solo finché il contenitore è vuoto: appena il JS
+   inserisce le card la regola smette da sola di applicarsi.
+   ============================================================= */
+/* la barra dei filtri nasce vuota e cresce quando il JS la costruisce:
+   175px di salto che spingono giù tutta la griglia sotto gli occhi di
+   chi sta già leggendo. Qui l'altezza è prenotata in anticipo. */
+#filtri:empty { min-height: 168px; display: block; }
+@media (min-width: 760px) { #filtri:empty { min-height: 104px; } }
+.conta:empty { min-height: 20px; display: block; }
+
+#pdp:empty { min-height: 118vh; }
+#griglia:empty { min-height: 150vh; }
+#rigaHero:empty, #grigliaVenduti:empty { min-height: 74vh; }
+#pista:empty, #pistaCurvy:empty, #filaLook:empty { min-height: 52vh; }

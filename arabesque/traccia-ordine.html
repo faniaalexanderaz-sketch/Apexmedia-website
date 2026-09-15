@@ -17,6 +17,9 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preload" href="fonts/bodoni-moda-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/italiana-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<script src="config.js"></script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -191,7 +194,7 @@
       </div>
     </div>
     <div class="piede-basso">
-      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span> · P. IVA <span data-cfg="piva">TODO-CLIENTE</span> · <span data-cfg="indirizzoCompleto"></span></p>
+      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span><span data-cfg-blocco> · P. IVA <span data-cfg="piva"></span></span> · <span data-cfg="indirizzoCompleto"></span></p>
       <div class="pagamenti"><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Contrassegno</span></div>
     </div>
   </div>
@@ -238,7 +241,6 @@
 </aside>
 <!--/DRAWERS-->
 
-<script src="config.js"></script>
 <script src="prodotti.js"></script>
 <script src="main.js"></script>
 <script src="cookie.js"></script>

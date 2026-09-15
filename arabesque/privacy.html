@@ -17,6 +17,9 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preload" href="fonts/bodoni-moda-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/italiana-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<script src="config.js"></script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -132,7 +135,7 @@
   <section class="testata"><div class="wrap"><p class="briciole"><a href="index.html">Home</a> · Privacy</p><h1>Privacy policy</h1></div></section>
   <section class="sez-stretta"><div class="wrap testo-lungo">
     <h2>Titolare del trattamento</h2>
-    <p><span data-cfg="insegna"></span>, <span data-cfg="indirizzoCompleto"></span> — P. IVA <span data-cfg="piva"></span>. Email: <span data-cfg="email"></span>.</p>
+    <p><span data-cfg="insegna"></span>, <span data-cfg="indirizzoCompleto"></span><span data-cfg-blocco> — P. IVA <span data-cfg="piva"></span></span>.<span data-cfg-blocco> Email: <span data-cfg="email"></span>.</span></p>
     <h2>Quali dati raccogliamo</h2>
     <ul>
       <li><b>Dati d'ordine</b>: nome, email, telefono, indirizzo di spedizione, contenuto dell'ordine.</li>
@@ -151,8 +154,8 @@
     <h2>A chi comunichiamo i dati</h2>
     <p>Solo a fornitori necessari al servizio: corriere, fornitore del sistema di pagamento, servizio di invio email, fornitore di hosting. Nessuna cessione a terzi per finalità commerciali.</p>
     <h2>I tuoi diritti</h2>
-    <p>Puoi chiedere accesso, rettifica, cancellazione, limitazione e portabilità dei dati, e opporti al trattamento, scrivendo a <span data-cfg="email"></span>. Puoi inoltre proporre reclamo al Garante per la protezione dei dati personali.</p>
-    <p class="nota-legale">TODO-CLIENTE: questo testo è una base operativa e va verificato dal consulente legale/privacy del cliente prima della pubblicazione, inserendo ragione sociale, P. IVA, titolare del trattamento e fornitori effettivamente utilizzati.</p>
+    <p>Puoi chiedere accesso, rettifica, cancellazione, limitazione e portabilità dei dati, e opporti al trattamento, scrivendo a <span data-cfg="email" data-cfg-fallback="uno dei contatti che trovi nella pagina Il negozio"></span>. Puoi inoltre proporre reclamo al Garante per la protezione dei dati personali.</p>
+    <!-- NOTA INTERNA (non visibile al cliente) — TODO-CLIENTE: questo testo è una base operativa e va verificato dal consulente legale/privacy del cliente prima della pubblicazione, inserendo ragione sociale, P. IVA, titolare del trattamento e fornitori effettivamente utilizzati. -->
   </div></section>
 
 </main>
@@ -199,7 +202,7 @@
       </div>
     </div>
     <div class="piede-basso">
-      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span> · P. IVA <span data-cfg="piva">TODO-CLIENTE</span> · <span data-cfg="indirizzoCompleto"></span></p>
+      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span><span data-cfg-blocco> · P. IVA <span data-cfg="piva"></span></span> · <span data-cfg="indirizzoCompleto"></span></p>
       <div class="pagamenti"><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Contrassegno</span></div>
     </div>
   </div>
@@ -246,7 +249,6 @@
 </aside>
 <!--/DRAWERS-->
 
-<script src="config.js"></script>
 <script src="prodotti.js"></script>
 <script src="main.js"></script>
 <script src="cookie.js"></script>

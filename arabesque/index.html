@@ -43,6 +43,9 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preload" href="fonts/bodoni-moda-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/italiana-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<script src="config.js"></script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-pagina="home">
@@ -339,9 +342,9 @@
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
             <div><b>Orari</b><ul id="orariLista" class="orari"></ul></div>
           </li>
-          <li>
+          <li data-cfg-blocco>
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 3.2 2 2 0 0 1 4 1h2a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L7.1 8.6a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
-            <div><b data-cfg="telefono">010 000 0000</b><small>Chiamaci per disponibilità, misure e per farti mettere un capo da parte</small></div>
+            <div><b data-cfg="telefono"></b><small>Chiamaci per disponibilità, misure e per farti mettere un capo da parte</small></div>
           </li>
         </ul>
         <div class="hero-azioni" style="margin-top:0">
@@ -508,7 +511,7 @@
       </div>
     </div>
     <div class="piede-basso">
-      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span> · P. IVA <span data-cfg="piva">TODO-CLIENTE</span> · <span data-cfg="indirizzoCompleto"></span></p>
+      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span><span data-cfg-blocco> · P. IVA <span data-cfg="piva"></span></span> · <span data-cfg="indirizzoCompleto"></span></p>
       <div class="pagamenti"><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Contrassegno</span></div>
     </div>
   </div>
@@ -555,7 +558,6 @@
 </aside>
 <!--/DRAWERS-->
 
-<script src="config.js"></script>
 <script src="prodotti.js"></script>
 <script src="main.js"></script>
 <script src="cookie.js"></script>

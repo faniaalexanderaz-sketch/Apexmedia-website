@@ -17,6 +17,9 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preload" href="fonts/bodoni-moda-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/italiana-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<script src="config.js"></script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -137,7 +140,7 @@
     <p>Se accetti, usiamo strumenti di statistica per capire quali capi e quali pagine interessano di più, in forma aggregata. Non vengono attivati finché non premi "Accetta tutti".</p>
     <h2>Come cambiare idea</h2>
     <p>Puoi cancellare i dati del sito dalle impostazioni del tuo browser: al ritorno ti verrà richiesto di nuovo il consenso.</p>
-    <p class="nota-legale">TODO-CLIENTE: questo testo è una base operativa e va verificato dal consulente legale/privacy del cliente prima della pubblicazione, inserendo ragione sociale, P. IVA, titolare del trattamento e fornitori effettivamente utilizzati.</p>
+    <!-- NOTA INTERNA (non visibile al cliente) — TODO-CLIENTE: questo testo è una base operativa e va verificato dal consulente legale/privacy del cliente prima della pubblicazione, inserendo ragione sociale, P. IVA, titolare del trattamento e fornitori effettivamente utilizzati. -->
   </div></section>
 
 </main>
@@ -184,7 +187,7 @@
       </div>
     </div>
     <div class="piede-basso">
-      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span> · P. IVA <span data-cfg="piva">TODO-CLIENTE</span> · <span data-cfg="indirizzoCompleto"></span></p>
+      <p>© <span id="annoCorrente">2026</span> <span data-cfg="insegna">Arabesque Abbigliamento</span><span data-cfg-blocco> · P. IVA <span data-cfg="piva"></span></span> · <span data-cfg="indirizzoCompleto"></span></p>
       <div class="pagamenti"><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>Contrassegno</span></div>
     </div>
   </div>
@@ -231,7 +234,6 @@
 </aside>
 <!--/DRAWERS-->
 
-<script src="config.js"></script>
 <script src="prodotti.js"></script>
 <script src="main.js"></script>
 <script src="cookie.js"></script>
