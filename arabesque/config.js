@@ -21,12 +21,12 @@ var ARB_CONFIG = {
   provincia: 'GE',
 
   /* --- TODO-CLIENTE: da compilare, finché sono vuoti non si vedono --- */
-  telefonoVisibile: '',   /* es. '010 964 1234' — come si legge in pagina */
-  telefono: '',           /* es. '+390109641234' — per il link tel: */
-  whatsapp: '',           /* es. '393401234567' — solo cifre, con prefisso 39 */
-  email: '',              /* es. 'info@arabesquebusalla.it' */
-  piva: '',               /* obbligatoria nel piè di pagina e nei termini */
-  instagram: '',          /* URL completo del profilo, non la home di Instagram */
+  telefonoVisibile: '010 964 0827',
+  telefono: '+390109640827',
+  whatsapp: '',            /* TODO-CLIENTE: numero WhatsApp del negozio, es. '393401234567' */
+  email: 'arabesque@arabesqueabbigliamento.it',
+  piva: '03095960104',
+  instagram: '',           /* TODO-CLIENTE: URL completo del profilo, non la home di Instagram */
   /* ------------------------------------------------------------------ */
 
   facebook: 'https://www.facebook.com/Arabesque.Busalla/',
@@ -41,10 +41,9 @@ var ARB_CONFIG = {
   ga4: '',            /* es. 'G-XXXXXXXXXX' */
   metaPixel: '',      /* es. '123456789012345' */
 
-  /* TODO-CLIENTE: confermare gli orari reali prima della pubblicazione */
   orari: [
     { giorni: 'Lunedì', ore: 'Chiuso' },
-    { giorni: 'Martedì – Sabato', ore: '9:30 – 12:30 · 15:30 – 19:30' },
+    { giorni: 'Martedì – Sabato', ore: '9:00 – 12:30 · 15:30 – 19:30' },
     { giorni: 'Domenica', ore: 'Chiuso' }
   ]
 };

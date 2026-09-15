@@ -561,6 +561,13 @@
     while ((n = cam.nextNode())) {
       if (n.textContent.indexOf('WhatsApp') === -1) continue;
       if (n.parentElement && n.parentElement.closest('script, style')) continue;
+      /* le label dei bottoni [data-cfg-wa] ("Scrivici su WhatsApp", "Chiedi
+         su WhatsApp") le riscrive dirottaSuNegozio con un testo pensato per
+         un bottone breve. Se le tocca anche questa passata generica, che
+         gira PRIMA su tutto il body, il testo diventa il frammento di una
+         frase a metà ("Scrivici o passa in negozio, dicci") e poi
+         dirottaSuNegozio non trova più "WhatsApp" da riscrivere. */
+      if (n.parentElement && n.parentElement.closest('[data-cfg-wa]')) continue;
       var t = n.textContent;
       FRASI_SENZA_WA.forEach(function (r) { t = t.replace(r[0], r[1]); });
       if (t !== n.textContent) n.textContent = t;
