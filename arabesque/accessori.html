@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Il negozio di Busalla — Arabesque Abbigliamento</title>
-<meta name="description" content="Arabesque Abbigliamento, Via Vittorio Veneto 154 a Busalla (GE): abbigliamento uomo e donna dalla XS alla 6XL, a due minuti dalla stazione." />
-<link rel="canonical" href="https://arabesque-busalla.vercel.app/negozio.html" />
+<title>Accessori a Busalla — Arabesque | Sciarpe, borse, cinture</title>
+<meta name="description" content="Accessori Arabesque: sciarpe, borse in pelle e cinture scelte per completare un outfit. Spedizione in 24/48h, ritiro gratuito in negozio a Busalla." />
+<link rel="canonical" href="https://arabesque-busalla.vercel.app/accessori.html" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Arabesque Busalla" />
-<meta property="og:title" content="Il negozio di Busalla — Arabesque Abbigliamento" />
-<meta property="og:description" content="Arabesque Abbigliamento, Via Vittorio Veneto 154 a Busalla (GE): abbigliamento uomo e donna dalla XS alla 6XL, a due minuti dalla stazione." />
+<meta property="og:title" content="Accessori a Busalla — Arabesque | Sciarpe, borse, cinture" />
+<meta property="og:description" content="Accessori Arabesque: sciarpe, borse in pelle e cinture scelte per completare un outfit. Spedizione in 24/48h, ritiro gratuito in negozio a Busalla." />
 <meta property="og:locale" content="it_IT" />
 <meta name="theme-color" content="#FBFAF7" />
 
@@ -22,7 +22,7 @@
 <script src="config.js"></script>
 <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-categoria="accessori" data-sezione="accessori">
 
 <a class="skip-link" href="#contenuto">Salta al contenuto</a>
 
@@ -136,38 +136,48 @@
 
   <section class="testata">
     <div class="wrap">
-      <p class="briciole"><a href="index.html">Home</a> · Il negozio</p>
-      <p class="occhiello">Busalla · Valle Scrivia</p>
-      <h1>Vieni a provarli.<br />Siamo qui <span class="corsivo" style="color:var(--oro-luce)">da sempre</span>.</h1>
-      <p class="intro">Online trovi una selezione. In negozio c'è tutto il resto, e c'è chi ti dice la verità sulla taglia. A due minuti a piedi dalla stazione di Busalla.</p>
+      <p class="briciole"><a href="index.html">Home</a> · Accessori</p>
+      <p class="occhiello">Il tocco finale</p>
+      <h1>Accessori</h1>
+      <p class="intro">Sciarpe, borse in pelle e cinture scelte per completare un outfit — non riempire uno scaffale. Pochi pezzi, buoni materiali, taglia unica.</p>
     </div>
   </section>
 
+  <section class="filtri" id="filtri"></section>
+  <div class="filtri-pannello" id="filtriPannello">
+    <h3>Filtra</h3>
+    <div id="filtriPannelloCorpo"></div>
+    <button class="btn btn-primario btn-blocco btn-senza-icona" data-chiudi style="margin-top:20px">Vedi i risultati</button>
+  </div>
+
   <section class="sez-stretta">
-    <div class="wrap split">
-      <div class="guscio entra"><div class="nucleo"><div class="split-foto" id="fotoNegozioGrande"></div></div></div>
-      <div class="entra r1">
-        <ul class="negozio-dati">
-          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-            <div><b data-cfg="indirizzo"></b><small data-cfg="citta"></small></div></li>
-          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-            <div><b>Orari di apertura</b><ul id="orariLista" class="orari"></ul></div></li>
-          <li data-cfg-blocco><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 3.2 2 2 0 0 1 4 1h2a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L7.1 8.6a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9z"/></svg>
-            <div><b data-cfg="telefono"></b><small>Chiamaci per disponibilità, misure e per farti mettere un capo da parte</small></div></li>
-        </ul>
-        <div class="hero-azioni" style="opacity:1;transform:none">
-          <a class="btn btn-primario" data-cfg-map target="_blank" rel="noopener" href="#">Apri in Google Maps <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-          <a class="btn btn-filo" data-cfg-wa href="#" target="_blank" rel="noopener">Scrivici su WhatsApp <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <div class="wrap">
+      <p class="conta" id="conta"></p>
+      <div class="griglia-capi" id="griglia"></div>
+      <div class="vuoto-curato" id="vuoto" hidden>
+        <p class="segno">A</p>
+        <h2>Nessun capo con questi filtri</h2>
+        <p>Online c'è una selezione: in negozio, a Busalla, c'è tutto il resto. Togli un filtro oppure chiedi a noi.</p>
+        <div class="vuoto-azioni">
+          <button class="btn btn-primario btn-senza-icona" data-azzera-filtri>Togli i filtri</button>
+          <a class="btn btn-filo btn-senza-icona" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sez crema">
-    <div class="wrap tre-motivi">
-      <div class="entra"><span class="num">01</span><h3>Ordina online, ritiri qui</h3><p>Scegli "ritiro in negozio" alla cassa: nessun costo di spedizione e il capo è pronto entro 24 ore. Provi, e se la taglia non va la cambi sul momento.</p></div>
-      <div class="entra r1"><span class="num">02</span><h3>Te lo teniamo da parte</h3><p>Hai visto un capo online e vuoi provarlo prima di comprarlo? Chiamaci: lo mettiamo da parte per 48 ore, senza impegno.</p></div>
-      <div class="entra r2"><span class="num">03</span><h3>Modifiche e orli</h3><p>Accorciamo cinture e sistemiamo gli orli sulla tua misura. Chiedi in cassa quando ritiri.</p></div>
+  <section class="sez-stretta">
+    <div class="wrap">
+      <div class="guscio entra">
+        <div class="nucleo fascia-aiuto">
+          <div>
+            <p class="occhiello">Un dubbio prima di ordinare?</p>
+            <h3>Te lo teniamo da parte</h3>
+            <p>Scrivici o passa in negozio: controlliamo la disponibilità del colore che vuoi e te lo mettiamo da parte per 48 ore, senza impegno.</p>
+          </div>
+          <a class="btn btn-cta" data-cfg-wa href="#" target="_blank" rel="noopener">Chiedi su WhatsApp <span class="cerchio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -267,8 +277,6 @@
 <script src="main.js"></script>
 <script src="cookie.js"></script>
 <script src="movimento.js"></script>
-<script>
-var n=document.getElementById('fotoNegozioGrande'); if(n) n.innerHTML = ARB.boxFoto('foto/negozio.webp','Il negozio di Busalla','A','Foto del negozio');
-</script>
+<script src="catalogo.js"></script>
 </body>
 </html>

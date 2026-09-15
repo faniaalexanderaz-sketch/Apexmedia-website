@@ -179,7 +179,8 @@
         '<tr><td>4XL</td><td>123 – 128</td><td>107 – 112</td></tr>' +
         '<tr><td>5XL</td><td>129 – 134</td><td>113 – 118</td></tr>' +
         '<tr><td>6XL</td><td>135 – 140</td><td>119 – 124</td></tr>' +
-      '</tbody></table><p class="nota-tabella">Valori in centimetri, indicativi. TODO-CLIENTE: tabella reale dei capi trattati.</p></div>' +
+      /* TODO-CLIENTE: sostituire con la tabella taglie reale dei capi trattati. */
+      '</tbody></table><p class="nota-tabella">Valori in centimetri, indicativi: in negozio misuriamo il capo con te.</p></div>' +
       '<a class="btn btn-primario btn-blocco" data-cfg-wa data-cfg-wa-testo="Buongiorno, ho un dubbio sulla taglia di: ' + p.nome + '" href="#" target="_blank" rel="noopener" style="margin-top:22px">Chiedi a noi su WhatsApp</a>' +
     '</div>';
   document.body.appendChild(drawer);

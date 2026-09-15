@@ -14,6 +14,11 @@
     linea: document.body.dataset.linea || ''
   };
 
+  /* una sciarpa non è un "capo": il contatore e il filtro restano
+     accurati anche sulla pagina accessori, unica categoria non-abbigliamento */
+  var UNITA = { accessori: ['pezzo', 'pezzi', 'Tutti gli accessori'] };
+  var unita = UNITA[base.categoria] || ['capo', 'capi', 'Tutti i capi'];
+
   var stato = { taglia: '', sotto: '', ordina: 'consigliati', disponibili: true, filtro: '' };
 
   /* se torni indietro dalla scheda prodotto ritrovi i filtri come li avevi */
@@ -88,7 +93,7 @@
         '</div>' +
         '<div class="filtri-select">' +
           '<select id="fSotto" aria-label="Tipo di capo">' +
-            '<option value="">Tutti i capi</option>' +
+            '<option value="">' + unita[2] + '</option>' +
             sottocat.map(function (s) {
               return '<option value="' + s + '"' + (stato.sotto === s ? ' selected' : '') + '>' + s.charAt(0).toUpperCase() + s.slice(1) + '</option>';
             }).join('') +
@@ -157,7 +162,7 @@
     });
     griglia.innerHTML = pezzi.join('');
     var conta = document.getElementById('conta');
-    if (conta) conta.textContent = out.length + (out.length === 1 ? ' capo' : ' capi');
+    if (conta) conta.textContent = out.length + ' ' + (out.length === 1 ? unita[0] : unita[1]);
     var vuoto = document.getElementById('vuoto');
     if (vuoto) vuoto.hidden = out.length > 0;
     if (!out.length) griglia.innerHTML = '';

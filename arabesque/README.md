@@ -59,16 +59,27 @@ si può mostrare al cliente prima di collegare Stripe.
 
 ## Prestazioni misurate
 
-Misurate con Chromium su rete 4G simulata e processore rallentato 4×, **senza foto reali**
-(caricando le foto il peso cresce: usare AVIF/WebP e `srcset` come indicato sotto).
+Misurate con Chromium a 390 px su rete 4G simulata (1,6 Mbps, 150 ms) e processore rallentato
+4×, **senza foto reali** (caricando le foto il peso cresce: usare AVIF/WebP e `srcset` come
+indicato sotto).
 
 | Pagina | LCP | CLS | Peso |
 |---|---|---|---|
-| Home | 856 ms | 0 | 411 KB |
-| Catalogo | 704 ms | 0 | 412 KB |
-| Scheda capo | 900 ms | 0 | 336 KB |
+| Home | 1.960 ms | 0,017 | 453 KB |
+| Catalogo | 1.852 ms | 0,003 | 437 KB |
+| Scheda capo | 2.060 ms | 0 | 360 KB |
 
 Budget da non superare: LCP < 2,0 s · CLS < 0,05 · CSS < 110 KB · JS < 90 KB.
+Oggi: CSS 95 KB, JS della home ~82 KB. **La scheda capo sta 60 ms sopra il budget LCP**: il
+prossimo intervento è ridurre Oswald (27,8 KB per sole etichette maiuscole: un sottoinsieme
+pesa 18 KB).
+
+> I valori indicati in precedenza in questa tabella (856/704/900 ms, CLS 0) non erano
+> riproducibili. La misura reale prima degli interventi del 15/09 era LCP 1.832/1.728/1.936 ms
+> e **CLS 0,112 / 0,557 / 0,919**: catalogo e scheda capo nascevano come contenitori vuoti e
+> il piè di pagina veniva spinto giù di quasi una videata quando il JS riempiva. Sistemato
+> prenotando lo spazio (`#pdp:empty`, `#griglia:empty`, `#filtri:empty` in `styles.css`) e
+> precaricando i due caratteri che riflavano il testo sopra la piega (Italiana e Oswald).
 
 ## Sistema tipografico
 
@@ -163,7 +174,11 @@ foto/curvy.webp  foto/negozio.webp
 ```
 
 **Finché un file non esiste il sito non si rompe**: al suo posto compare il riquadro editoriale con
-il monogramma. Appena carichi la foto, appare da sola. Nessuna immagine di repertorio è stata
+il monogramma e la dicitura **"Foto in arrivo"** — un rettangolo muto si legge come "sito
+abbandonato", la stessa superficie con una riga che spiega si legge come "collezione in
+caricamento". La dicitura non compare sulle tessere di navigazione, sulle miniature e sul
+fondale dell'hero, dove il riquadro è una superficie e non un prodotto assente. Appena carichi
+la foto, appare da sola. Nessuna immagine di repertorio è stata
 inserita: le foto devono essere quelle reali dei capi del negozio.
 
 ## Messa online (Vercel)
@@ -186,12 +201,24 @@ Le tabelle del database si creano da sole al primo utilizzo: nessuna migrazione 
 
 ## TODO-CLIENTE — dati da farsi confermare prima della pubblicazione
 
+**Come funziona adesso:** in `config.js` un campo non confermato resta **vuoto** (`''`). Il
+sito non scrive mai un valore di comodo: `config.js` sta nella testa del documento e marca
+`<html>` con `senza-telefono`, `senza-whatsapp`, `senza-email`, `senza-piva`,
+`senza-instagram`; gli elementi che conterrebbero quel dato non vengono proprio disegnati
+(niente numero finto, niente salto di layout). I link "Chiedi su WhatsApp" non spariscono:
+diventano "Contatta il negozio" e portano a `negozio.html`. **Appena scrivi il dato vero in
+`config.js` tutto ricompare da solo**: nessun'altra modifica da fare.
+
+Finché mancano, al cliente non appaiono: il numero di telefono e il bottone "Chiama il
+negozio", il bollino fisso WhatsApp, l'icona Instagram, la riga della P. IVA nel piè di pagina.
+
 Tutti concentrati in `config.js`, tranne dove indicato:
 
 - [ ] Numero di telefono del negozio e **numero WhatsApp**
 - [ ] Email di contatto
 - [ ] **P. IVA / ragione sociale** (obbligatoria nel footer e nei termini)
-- [ ] Orari di apertura reali
+- [ ] Orari di apertura reali — *gli orari attuali sono plausibili ma non confermati e sono
+      visibili*: è l'unico dato non verificato che il sito mostra, va confermato per primo
 - [ ] Link Instagram
 - [ ] Marchi trattati → funzione `arbBrand()` in `prodotti.js` (ora: "Selezione Arabesque")
 - [ ] Listino, nomi e disponibilità reali dei capi → `prodotti.js`

@@ -427,29 +427,10 @@
      Il prezzo conta verso l'alto quando la card entra in vista:
      l'occhio ci si posa sopra proprio mentre decide.
      --------------------------------------------------------- */
-  function contaPrezzo(n) {
-    if (ridotto || !n || n.dataset.contato) return;
-    /* solo in home: nel catalogo l'utente confronta prezzi fermi,
-       un numero che sale gli toglie il punto di riferimento */
-    if (document.body.dataset.pagina !== 'home') return;
-    n.dataset.contato = '1';
-    var finale = parseFloat(n.dataset.prezzo);
-    if (!isFinite(finale) || finale <= 0) return;
-    /* blocchiamo la larghezza sul testo finale: il numero cresce,
-       la card non balla */
-    n.style.display = 'inline-block';
-    n.style.minWidth = n.getBoundingClientRect().width + 'px';
-    var t0 = 0;
-    function passo(t) {
-      if (!t0) t0 = t;
-      var k = Math.min(1, (t - t0) / 500);
-      var e = 1 - Math.pow(1 - k, 3);
-      n.textContent = arbEuro(finale * e);
-      if (k < 1) requestAnimationFrame(passo);
-    }
-    n.textContent = arbEuro(0);
-    requestAnimationFrame(passo);
-  }
+  /* Il prezzo NON si anima. Un numero che sale da 0,00 fa leggere per
+     qualche frame un prezzo che non è quello vero (misurato: 150,50 al
+     posto di 151,20) e ritarda l'unica informazione su cui il cliente
+     decide. Rimosso di proposito: era estetica che costava conversione. */
 
   /* ---------------------------------------------------------
      Il monogramma dei segnaposto respira una volta: un segno di
@@ -465,7 +446,6 @@
      un solo osservatore per tutto, come già faceva. */
   function alloScoperto(n) {
     if (!n) return;
-    contaPrezzo(n.querySelector('.prezzo-ora[data-prezzo]'));
     respiroMonogramma(n);
   }
 

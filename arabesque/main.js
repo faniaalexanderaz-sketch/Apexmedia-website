@@ -91,7 +91,11 @@
   }
 
   function osserva(radice) {
-    var nodi = (radice || document).querySelectorAll('.entra:not(.dentro)');
+    /* .entra-lato va osservato come .entra: senza questo restava a
+       opacity:0 per sempre e tre blocchi della home (il titolo delle
+       collezioni e i due pannelli delle sezioni scure) non comparivano
+       mai — è il "buco" che si vedeva nelle sezioni notte. */
+    var nodi = (radice || document).querySelectorAll('.entra:not(.dentro), .entra-lato:not(.dentro)');
     if (!nodi.length) return;
     if (ridotto || !('IntersectionObserver' in window)) {
       nodi.forEach(function (n) { n.classList.add('dentro'); });
@@ -125,11 +129,16 @@
     return SEGNI[p.categoria] || SEGNI.donna;
   }
 
+  /* Il riquadro di cortesia deve dire perché è lì. Un rettangolo muto
+     si legge come "sito abbandonato"; "Foto in arrivo" si legge come
+     "negozio che sta caricando la collezione" — stesso pixel, fiducia
+     opposta. Sparisce da solo appena il file foto/<slug>-1.webp esiste. */
   function boxFoto(src, alt, monogramma, etichetta, classe) {
     return '<span class="foto ' + (classe || '') + '">' +
-      '<span class="foto-vuota ' + (classe && classe.indexOf('v-') === 0 ? classe : '') + '" aria-hidden="true">' +
-        '<span class="foto-vuota-m">' + (monogramma || 'A') + '</span>' +
-        '<span class="foto-vuota-t">' + (etichetta || 'Arabesque') + '</span>' +
+      '<span class="foto-vuota ' + (classe && classe.indexOf('v-') === 0 ? classe : '') + '">' +
+        '<span class="foto-vuota-m" aria-hidden="true">' + (monogramma || 'A') + '</span>' +
+        '<span class="foto-vuota-nota">Foto in arrivo</span>' +
+        '<span class="foto-vuota-t" aria-hidden="true">' + (etichetta || 'Arabesque') + '</span>' +
       '</span>' +
       '<img src="' + src + '" alt="' + String(alt).replace(/"/g, '&quot;') + '" loading="lazy" decoding="async" onerror="this.remove()">' +
     '</span>';
@@ -506,6 +515,65 @@
   });
 
   /* ---------------- dati del negozio ---------------- */
+
+  /* Un dato non ancora confermato dal cliente è vuoto in config.js.
+     Non lo scriviamo mai a schermo con un valore di comodo: togliamo
+     l'elemento. Un numero di telefono finto costa più di un numero
+     assente — il cliente lo prova, non risponde nessuno, se ne va. */
+  function spegni(n) {
+    if (!n) return;
+    var blocco = n.closest('[data-cfg-blocco]') || n;
+    blocco.hidden = true;
+  }
+
+  /* i link a WhatsApp sono chiamate all'azione vere (vuoto del catalogo,
+     consiglio taglia, pagamento annullato): se il numero manca non li
+     cancelliamo, li dirottiamo sulla pagina che ha tutti i contatti. */
+  function dirottaSuNegozio(n) {
+    if (n.classList.contains('wa')) { spegni(n); return; }  /* il bollino fisso non ha senso senza numero */
+    n.href = 'negozio.html';
+    n.removeAttribute('target');
+    n.childNodes.forEach(function (t) {
+      if (t.nodeType === 3 && /whatsapp/i.test(t.textContent)) {
+        t.textContent = t.textContent.replace(/(scrivici|chiedi|consiglio taglia)\s+su\s+whatsapp/i, 'Contatta il negozio')
+                                     .replace(/whatsapp/i, 'Contatti');
+      }
+    });
+    if (/whatsapp/i.test(n.getAttribute('aria-label') || '')) n.setAttribute('aria-label', 'Contatti del negozio');
+  }
+
+  /* Se il numero WhatsApp non c'è, non basta dirottare i bottoni: il testo
+     intorno continua a prometterlo ("scrivici su WhatsApp"). Promessa che
+     il sito non può mantenere = fiducia persa. Qui le poche frasi che lo
+     nominano diventano vere. Appena il numero entra in config.js questa
+     funzione non gira più e il testo originale torna da solo. */
+  var FRASI_SENZA_WA = [
+    [/Rispondiamo noi, dal negozio, su WhatsApp/g, 'Rispondiamo noi, dal negozio'],
+    [/Ti rispondiamo su WhatsApp/g,                'Ti rispondiamo dal negozio'],
+    [/[Ss]crivici su WhatsApp con /g,              'Scrivici o passa in negozio con '],
+    [/[Ss]crivici su WhatsApp /g,                  'Scrivici o passa in negozio, dicci '],
+    [/[Ss]crivici su WhatsApp/g,                   'passa in negozio o chiamaci'],
+    [/su WhatsApp/g,                               'dal negozio']
+  ];
+  function allineaTestiSenzaWhatsapp(radice) {
+    var cam = document.createTreeWalker(radice || document.body, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = cam.nextNode())) {
+      if (n.textContent.indexOf('WhatsApp') === -1) continue;
+      if (n.parentElement && n.parentElement.closest('script, style')) continue;
+      /* le label dei bottoni [data-cfg-wa] ("Scrivici su WhatsApp", "Chiedi
+         su WhatsApp") le riscrive dirottaSuNegozio con un testo pensato per
+         un bottone breve. Se le tocca anche questa passata generica, che
+         gira PRIMA su tutto il body, il testo diventa il frammento di una
+         frase a metà ("Scrivici o passa in negozio, dicci") e poi
+         dirottaSuNegozio non trova più "WhatsApp" da riscrivere. */
+      if (n.parentElement && n.parentElement.closest('[data-cfg-wa]')) continue;
+      var t = n.textContent;
+      FRASI_SENZA_WA.forEach(function (r) { t = t.replace(r[0], r[1]); });
+      if (t !== n.textContent) n.textContent = t;
+    }
+  }
+
   function applicaConfig() {
     if (typeof ARB_CONFIG === 'undefined') return;
     var c = ARB_CONFIG;
@@ -515,12 +583,26 @@
       indirizzoCompleto: c.indirizzo + ', ' + c.cap + ' ' + c.citta + ' (' + c.provincia + ')',
       piva: c.piva, insegna: c.insegna
     };
-    document.querySelectorAll('[data-cfg]').forEach(function (n) { var v = testi[n.dataset.cfg]; if (v) n.textContent = v; });
-    document.querySelectorAll('[data-cfg-tel]').forEach(function (n) { n.href = 'tel:' + c.telefono; });
+    /* data-cfg-fallback: dove il dato manca ma la frase deve reggere
+       (testi legali, istruzioni per i resi) si scrive un ripiego onesto
+       invece di lasciare un buco nella frase. */
+    document.querySelectorAll('[data-cfg]').forEach(function (n) {
+      var v = testi[n.dataset.cfg];
+      if (v) n.textContent = v;
+      else if (n.dataset.cfgFallback) n.textContent = n.dataset.cfgFallback;
+      else spegni(n);
+    });
+    document.querySelectorAll('[data-cfg-tel]').forEach(function (n) {
+      if (c.telefono) n.href = 'tel:' + c.telefono; else spegni(n);
+    });
     document.querySelectorAll('[data-cfg-map]').forEach(function (n) { n.href = c.mappa; });
-    document.querySelectorAll('[data-cfg-ig]').forEach(function (n) { n.href = c.instagram; });
     document.querySelectorAll('[data-cfg-fb]').forEach(function (n) { n.href = c.facebook; });
+    document.querySelectorAll('[data-cfg-ig]').forEach(function (n) {
+      if (c.instagram) n.href = c.instagram; else spegni(n);
+    });
+    if (!c.whatsapp) allineaTestiSenzaWhatsapp();
     document.querySelectorAll('[data-cfg-wa]').forEach(function (n) {
+      if (!c.whatsapp) { dirottaSuNegozio(n); return; }
       n.href = 'https://wa.me/' + c.whatsapp + '?text=' + encodeURIComponent(n.dataset.cfgWa || 'Buongiorno, vorrei un consiglio sulla taglia.');
     });
     document.querySelectorAll('#orariLista').forEach(function (l) {

@@ -37,22 +37,27 @@
     if (box) box.outerHTML = ARB.boxFoto('foto/cat-' + titolo.toLowerCase() + '.webp', titolo, 'A', titolo);
   });
 
-  /* ---- riga sotto l'hero: quattro capi, subito comprabili ---- */
+  /* Lo stesso cappotto mostrato quattro volte come fosse ogni volta un
+     capo diverso non è varietà: è un catalogo che sembra più vuoto di
+     quanto sia (misurato: 25 riquadri prodotto in home per 18 capi
+     distinti, prima di questa modifica). Ogni vetrina pesca solo tra i
+     capi non ancora usati da quelle sopra: hero → curvy → novità. Il
+     lookbook resta fuori apposta: sono uscite curate a mano — lo stesso
+     capo, in un outfit, è un'informazione nuova (con cosa lo abbino),
+     non una ripetizione. */
+  var usati = {};
+  function segna(lista) { lista.forEach(function (p) { usati[p.slug] = true; }); return lista; }
+  function nonUsati(lista) { return lista.filter(function (p) { return !usati[p.slug]; }); }
+
+  /* ---- riga sotto l'hero: quattro capi in saldo, subito comprabili ---- */
   var riga = document.getElementById('rigaHero');
+  var primi = segna(ARB_PRODOTTI.filter(function (p) { return p.sconto && arbDisponibile(p); }).slice(0, 4));
   if (riga) {
-    var primi = ARB_PRODOTTI.filter(function (p) { return p.sconto && arbDisponibile(p); }).slice(0, 4);
     riga.innerHTML = primi.map(function (p) { return ARB.cardProdotto(p); }).join('');
     ARB.evento('view_item_list', { item_list_name: 'hero', items: primi.map(function (p) { return { item_id: p.slug, item_name: p.nome, price: arbPrezzoFinale(p) }; }) });
   }
 
-  /* ---- più venduti ---- */
-  var venduti = document.getElementById('grigliaVenduti');
-  if (venduti) {
-    var scelti = ARB_PRODOTTI.filter(function (p) { return arbDisponibile(p); }).slice(0, 8);
-    venduti.innerHTML = scelti.map(function (p) { return ARB.cardProdotto(p); }).join('');
-  }
-
-  /* ---- novità: la vetrina che scorre da sola ---- */
+  /* ---- vetrine che scorrono da sole ---- */
   function riempiVetrina(id, capi) {
     var pista = document.getElementById(id);
     if (!pista || !capi.length) return;
@@ -60,19 +65,19 @@
       capi.map(function (p) { return ARB.cardProdotto(p); }).join('') + '</div>';
   }
 
-  var novita = ARB_PRODOTTI.filter(function (p) { return (p.linea || []).indexOf('novita') !== -1 && arbDisponibile(p); });
-  if (novita.length < 6) {
-    novita = novita.concat(ARB_PRODOTTI.filter(function (p) {
-      return novita.indexOf(p) === -1 && arbDisponibile(p);
-    }).slice(0, 8 - novita.length));
-  }
-  riempiVetrina('pista', novita.slice(0, 10));
-
-  /* ---- le taglie che raramente si trovano: la curvy in vetrina ---- */
-  var curvy = ARB_PRODOTTI.filter(function (p) {
+  /* ---- le taglie che raramente si trovano: subito dopo il manifesto curvy ---- */
+  var curvy = segna(nonUsati(ARB_PRODOTTI.filter(function (p) {
     return (p.linea || []).indexOf('curvy') !== -1 && arbDisponibile(p);
-  });
+  })));
   riempiVetrina('pistaCurvy', curvy.slice(0, 10));
+
+  /* ---- novità: solo ciò che è davvero nuovo. Non si riempie più con
+     capi non-novità per sembrare più grande — se sono pochi, sono pochi:
+     è la differenza tra un'etichetta vera e una gonfiata. ---- */
+  var novita = segna(nonUsati(ARB_PRODOTTI.filter(function (p) {
+    return (p.linea || []).indexOf('novita') !== -1 && arbDisponibile(p);
+  })));
+  riempiVetrina('pista', novita.slice(0, 10));
 
   /* ---- lookbook ---- */
   var LOOK = [
