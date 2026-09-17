@@ -20,8 +20,12 @@ const QUI = dirname(fileURLToPath(import.meta.url));
 /* Dati mittente Apex Media. Cambiarli qui, non nel template. */
 const MITTENTE = {
   email: "apex.info.studio@gmail.com",
-  tel: "+39 351 594 0685",
-  telRaw: "+393515940685",
+  sitoUrl: "https://infoapex.eu",
+  sitoLabel: "infoapex.eu",
+  tel1: "+39 351 594 0685",      // Alexander
+  tel1Raw: "+393515940685",
+  tel2: "+39 333 701 8993",      // Federico Delfino
+  tel2Raw: "+393337018993",
   whatsapp: "393515940685",
 };
 
@@ -81,8 +85,12 @@ function componi(p) {
     CHIUSURA: CHIUSURA(p),
     FIRMA_NOME,
     ATTIVITA: p.attivita,
-    TEL: MITTENTE.tel,
-    TEL_RAW: MITTENTE.telRaw,
+    TEL1: MITTENTE.tel1,
+    TEL1_RAW: MITTENTE.tel1Raw,
+    TEL2: MITTENTE.tel2,
+    TEL2_RAW: MITTENTE.tel2Raw,
+    SITO_URL: MITTENTE.sitoUrl,
+    SITO_LABEL: MITTENTE.sitoLabel,
     EMAIL_MITTENTE: MITTENTE.email,
   };
 
