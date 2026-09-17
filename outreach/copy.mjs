@@ -70,7 +70,9 @@ export const OFFERTA = (p) =>
 
 export const ALLEGATO = () =>
   `Nell'allegato trova la nostra presentazione: cosa facciamo con social, sito e advertising, ` +
-  `e i tre livelli con i prezzi in chiaro. Così sa già tutto prima ancora di parlarmi.`;
+  `e i tre livelli con i prezzi in chiaro — da 300 € al mese. ` +
+  `<strong>Si parte con tre mesi, pagati un mese alla volta</strong>: nessun anticipo, e dopo il ` +
+  `terzo si rinnova di mese in mese. Così sa già tutto prima ancora di parlarmi.`;
 
 export const CTA_TESTO = "Voglio vedere la demo";
 

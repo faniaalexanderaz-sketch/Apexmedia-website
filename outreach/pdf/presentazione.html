@@ -2,223 +2,290 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<title>Apex Media — Presentazione</title>
+<title>Apex Media — Servizi e piani</title>
 <!-- font scaricati in locale: Chromium headless non raggiunge Google Fonts dietro il proxy -->
 <link href="font.css" rel="stylesheet">
 <style>
   @page { size: A4; margin: 0; }
   :root{
-    --bg:#06080F; --ink:#F5F5F7; --muted:#A9A9B8; --dim:#6E6E80;
-    --gold:#E7C568; --gold-hi:#F5E3A8; --gold-deep:#C39B3F;
-    --line:rgba(245,245,247,.10); --card:rgba(255,255,255,.035);
+    --ink:#15152A;          /* titoli */
+    --testo:#3F3F4E;        /* corpo */
+    --grigio:#8A8A98;       /* etichette */
+    --viola:#7C3AED;
+    --viola-scuro:#5B21B6;
+    --lavanda:#F7F6FD;      /* box */
+    --crema:#FDFBF0;        /* box nota */
+    --ambra:#D9A408;
+    --verde:#2E7D51;
+    --rosso:#C0392B;
+    --bordo:#E8E6F2;
+    --riga:#E5E5EC;
+    --scuro:#14142B;
+    --oro:#E7C568;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{ font-family:'Inter',"Liberation Sans","DejaVu Sans",sans-serif;
-        background:var(--bg); color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .pagina{ width:210mm; height:297mm; padding:18mm 16mm; position:relative;
-           overflow:hidden; page-break-after:always; background:var(--bg); }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Inter',"Liberation Sans","DejaVu Sans",Helvetica,Arial,sans-serif;
+        background:#fff; color:var(--testo);
+        -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  .pagina{ width:210mm; height:297mm; padding:20mm 18mm 16mm; position:relative;
+           overflow:hidden; page-break-after:always; background:#fff; }
   .pagina:last-child{ page-break-after:auto; }
 
-  /* filetto oro in testa a ogni pagina */
-  .pagina::before{ content:""; position:absolute; top:0; left:0; right:0; height:3mm;
-    background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-hi),var(--gold-deep)); }
+  /* ---------- intestazione marchio ---------- */
+  .testata{ display:flex; justify-content:space-between; align-items:center; }
+  .logo{ display:flex; align-items:center; gap:3.5mm; }
+  .logo .quadro{ width:9mm; height:9mm; border-radius:2.4mm; background:var(--scuro);
+                 color:#C4A5FF; font-size:12pt; font-weight:800;
+                 display:flex; align-items:center; justify-content:center; }
+  .logo .nome{ font-size:11.5pt; font-weight:800; letter-spacing:.20em; color:var(--ink); }
+  .testata .qualifica{ font-size:7pt; font-weight:600; letter-spacing:.22em;
+                       color:var(--grigio); text-transform:uppercase; }
 
-  .marchio{ font-size:11pt; font-weight:800; letter-spacing:.20em; }
-  .marchio span{ color:var(--gold); }
-  .occhiello{ font-size:7.5pt; font-weight:700; letter-spacing:.20em; text-transform:uppercase;
-              color:var(--gold-deep); }
-  .piedino{ position:absolute; left:16mm; right:16mm; bottom:12mm;
-            display:flex; justify-content:space-between; align-items:center;
-            font-size:7.5pt; color:var(--dim); border-top:1px solid var(--line); padding-top:4mm; }
+  /* ---------- tipografia ---------- */
+  .occhiello{ font-size:7.5pt; font-weight:800; letter-spacing:.20em; text-transform:uppercase;
+              color:var(--viola); }
+  h1{ font-size:27pt; line-height:1.18; font-weight:800; color:var(--ink); letter-spacing:-.022em; }
+  h1 .leggero{ display:block; font-weight:400; color:#6E6E7E; font-size:20pt; letter-spacing:-.012em; }
+  h2{ font-size:19pt; line-height:1.25; font-weight:800; color:var(--ink);
+      letter-spacing:-.02em; margin-top:2.5mm; }
+  .barra{ width:26mm; height:1.3mm; border-radius:2mm; margin:4.5mm 0 6mm;
+          background:linear-gradient(90deg, var(--viola-scuro), var(--viola) 45%, #F0A868); }
+  p{ font-size:9.8pt; line-height:1.68; color:var(--testo); }
+  p + p{ margin-top:3.5mm; }
+  strong{ color:var(--ink); font-weight:700; }
 
-  /* ---------- copertina ---------- */
-  .cover{ display:flex; flex-direction:column; justify-content:space-between;
-         padding-bottom:24mm; }  /* i contatti non devono stare a filo del taglio */
-  .cover .alone{ position:absolute; width:150mm; height:150mm; right:-55mm; top:-45mm;
-    background:radial-gradient(circle, rgba(90,46,230,.30) 0%, rgba(30,79,216,.14) 42%, transparent 68%); }
-  .cover .alone2{ position:absolute; width:120mm; height:120mm; left:-50mm; bottom:-40mm;
-    background:radial-gradient(circle, rgba(231,197,104,.16) 0%, transparent 65%); }
-  .cover h1{ font-size:34pt; line-height:1.06; font-weight:800; letter-spacing:-.025em; }
-  .cover h1 em{ font-family:'Playfair Display',Georgia,serif; font-style:italic; font-weight:700;
-                color:var(--gold); }
-  .cover .sub{ font-size:12pt; line-height:1.55; color:var(--muted); max-width:135mm; margin-top:7mm; }
-  .chips{ display:flex; gap:3mm; margin-top:10mm; flex-wrap:wrap; }
-  .chip{ font-size:8.5pt; font-weight:600; color:var(--ink); border:1px solid var(--line);
-         background:var(--card); border-radius:100px; padding:2.4mm 5mm; }
+  /* ---------- riga di statistiche ---------- */
+  .stat{ display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin:6.5mm 0; }
+  .stat .c{ border:1px solid var(--bordo); border-radius:3mm; background:var(--lavanda);
+            padding:5mm 3mm; text-align:center; }
+  .stat .n{ font-size:17pt; font-weight:800; letter-spacing:-.02em; }
+  .stat .e{ font-size:7pt; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+            color:var(--grigio); margin-top:1.5mm; }
+  .n.viola{ color:var(--viola); } .n.verde{ color:var(--verde); } .n.rosso{ color:var(--rosso); }
 
-  /* ---------- titoli interni ---------- */
-  h2{ font-size:22pt; line-height:1.14; font-weight:800; letter-spacing:-.02em; margin-top:3mm; }
-  h2 em{ font-family:'Playfair Display',Georgia,serif; font-style:italic; font-weight:700; color:var(--gold); }
-  .intro{ font-size:10.5pt; line-height:1.6; color:var(--muted); max-width:150mm; margin-top:5mm; }
+  /* ---------- citazione ---------- */
+  .cit{ background:var(--lavanda); border-left:1.1mm solid var(--viola); border-radius:0 3mm 3mm 0;
+        padding:5mm 6mm; margin:6mm 0; }
+  .cit p{ font-size:9.3pt; line-height:1.65; font-style:italic; color:#4B4B5C; }
 
-  /* ---------- pilastri ---------- */
-  .pilastri{ display:grid; grid-template-columns:repeat(3,1fr); gap:5mm; margin-top:9mm; }
-  .pil{ background:var(--card); border:1px solid var(--line); border-radius:4mm; padding:6mm 5mm; }
-  .pil .n{ font-size:8pt; font-weight:800; color:var(--gold-deep); letter-spacing:.14em; }
-  .pil h3{ font-size:12pt; font-weight:700; margin:2.5mm 0 2mm; }
-  .pil p{ font-size:9pt; line-height:1.55; color:var(--muted); }
+  /* ---------- riquadro nota ---------- */
+  .nota{ background:var(--crema); border:1px solid #F2E9C8; border-radius:3mm;
+         padding:5mm 6mm; margin:6mm 0; }
+  .nota .t{ font-size:9.3pt; font-weight:700; color:var(--ink); margin-bottom:2.5mm;
+            display:flex; align-items:center; gap:2.5mm; }
+  .nota .t::before{ content:""; width:2mm; height:2mm; border-radius:50%; background:var(--ambra); }
+  .nota p{ font-size:9.2pt; line-height:1.62; }
 
-  /* ---------- metodo ---------- */
-  .metodo{ margin-top:10mm; }
-  .passo{ display:flex; gap:6mm; padding:5mm 0; border-top:1px solid var(--line); }
-  .passo:last-child{ border-bottom:1px solid var(--line); }
-  .passo .num{ font-size:18pt; font-weight:800; color:var(--gold); min-width:14mm; line-height:1; }
-  .passo h4{ font-size:11pt; font-weight:700; margin-bottom:1.5mm; }
-  .passo p{ font-size:9pt; line-height:1.55; color:var(--muted); }
+  /* ---------- due colonne ---------- */
+  .due{ display:grid; grid-template-columns:1fr 1fr; gap:4.5mm; margin:6mm 0; }
+  .box{ background:var(--lavanda); border:1px solid var(--bordo); border-radius:3mm; padding:5mm 5.5mm; }
+  .box .t{ font-size:9.3pt; font-weight:700; color:var(--ink); margin-bottom:2.5mm;
+           display:flex; align-items:center; gap:2.5mm; }
+  .box .t::before{ content:""; width:2mm; height:2mm; border-radius:50%; background:var(--viola); }
+  .box p{ font-size:9pt; line-height:1.6; }
+  .largo{ grid-column:1 / -1; }
 
-  /* ---------- pacchetti ---------- */
-  .piani{ display:grid; grid-template-columns:repeat(3,1fr); gap:4.5mm; margin-top:8mm; }
-  .piano{ background:var(--card); border:1px solid var(--line); border-radius:4mm;
-          padding:6mm 4.5mm; display:flex; flex-direction:column; position:relative; }
-  .piano.top{ border-color:rgba(231,197,104,.55);
-              background:linear-gradient(180deg, rgba(231,197,104,.10), rgba(255,255,255,.03)); }
-  .badge{ position:absolute; top:-3mm; left:50%; transform:translateX(-50%);
-          background:var(--gold); color:#241703; font-size:7pt; font-weight:800;
-          letter-spacing:.12em; text-transform:uppercase; padding:1.4mm 4mm; border-radius:100px; }
-  .piano .nome{ font-size:13pt; font-weight:800; letter-spacing:-.01em; }
-  .piano .per{ font-size:8pt; color:var(--gold-deep); font-weight:700; margin-top:1mm;
-               letter-spacing:.06em; text-transform:uppercase; }
-  .piano .desc{ font-size:8.5pt; line-height:1.5; color:var(--muted); margin-top:3mm; min-height:13mm; }
-  .prezzo{ margin-top:2mm; padding-top:4mm; border-top:1px solid var(--line); }
-  .prezzo .cifra{ font-size:26pt; font-weight:800; letter-spacing:-.03em; }
-  .prezzo .cifra small{ font-size:11pt; font-weight:700; color:var(--gold); vertical-align:top; }
-  .prezzo .mese{ font-size:8.5pt; color:var(--dim); font-weight:600; }
-  .piano ul{ list-style:none; margin-top:4.5mm; }
-  .piano li{ font-size:8.5pt; line-height:1.45; color:var(--ink); padding:1.9mm 0 1.9mm 5mm;
-             position:relative; border-bottom:1px solid rgba(245,245,247,.05); }
-  .piano li::before{ content:"›"; position:absolute; left:0; color:var(--gold); font-weight:800; }
+  /* ---------- piani ---------- */
+  .piani{ display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin:6mm 0 0; }
+  .piano{ border:1px solid var(--bordo); border-radius:3.5mm; padding:5.5mm 4.5mm;
+          position:relative; background:#fff; }
+  .piano.top{ border-color:#CDB4FE; background:var(--lavanda); }
+  .tag{ position:absolute; top:-2.6mm; left:4.5mm; background:var(--viola); color:#fff;
+        font-size:6.4pt; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+        padding:1.1mm 3mm; border-radius:100px; }
+  .piano .nome{ font-size:12pt; font-weight:800; color:var(--ink); letter-spacing:-.01em; }
+  .piano .per{ font-size:6.8pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+               color:var(--viola); margin-top:1.2mm; }
+  .piano .desc{ font-size:8.3pt; line-height:1.5; margin-top:3mm; min-height:14mm; }
+  .piano .prezzo{ border-top:1px solid var(--riga); margin-top:2mm; padding-top:3.5mm; }
+  .piano .cifra{ font-size:22pt; font-weight:800; color:var(--ink); letter-spacing:-.03em; }
+  .piano .cifra small{ font-size:11pt; color:var(--viola); vertical-align:top; font-weight:700; }
+  .piano .mese{ font-size:7.6pt; color:var(--grigio); font-weight:600; }
+  .piano ul{ list-style:none; margin-top:4mm; }
+  .piano li{ font-size:8.2pt; line-height:1.45; color:var(--testo);
+             padding:1.7mm 0 1.7mm 4.2mm; position:relative; border-bottom:1px solid #F0EFF6; }
+  .piano li::before{ content:""; position:absolute; left:0; top:3.1mm;
+                     width:1.6mm; height:1.6mm; border-radius:50%; background:var(--viola); }
 
+  /* ---------- condizioni ---------- */
+  .cond{ display:grid; grid-template-columns:repeat(2,1fr); gap:3mm 7mm; margin-top:6mm; }
+  .v{ font-size:8.6pt; line-height:1.5; padding-left:4.5mm; position:relative; }
+  .v::before{ content:"✓"; position:absolute; left:0; color:var(--viola); font-weight:800; font-size:7.6pt; }
+  .v b{ color:var(--ink); font-weight:700; }
 
-  /* ---------- incluso in tutti i piani ---------- */
-  .incluso{ margin-top:9mm; border:1px solid var(--line); border-radius:4mm;
-            padding:6.5mm 6mm; background:var(--card); }
-  .incluso .tit{ font-size:9.5pt; font-weight:800; letter-spacing:.02em; margin-bottom:4.5mm; }
-  .incluso .tit span{ color:var(--gold); }
-  .griglia{ display:grid; grid-template-columns:repeat(2,1fr); gap:3.5mm 7mm; }
-  .voce{ font-size:8.8pt; line-height:1.5; color:var(--muted); padding-left:5mm; position:relative; }
-  .voce::before{ content:"✓"; position:absolute; left:0; color:var(--gold); font-weight:800; font-size:8pt; }
-  .voce b{ color:var(--ink); font-weight:600; }
-  .chiusa{ margin-top:8mm; border-left:3px solid var(--gold); padding:1mm 0 1mm 6mm; }
-  .chiusa p{ font-size:11pt; line-height:1.5; font-weight:500; }
-  .chiusa p em{ font-family:'Playfair Display',Georgia,serif; font-style:italic; color:var(--gold); }
+  /* ---------- barra scura ---------- */
+  .fascia{ background:var(--scuro); border-radius:3.5mm; padding:6mm 7mm; margin-top:7mm;
+           display:flex; justify-content:space-between; align-items:center; gap:6mm; }
+  .fascia .et{ font-size:7pt; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+               color:var(--oro); }
+  .fascia .ti{ font-size:10.5pt; font-weight:700; color:#fff; margin-top:2mm; }
+  .fascia .ds{ font-size:8.2pt; color:#A9A9BE; margin-top:1.5mm; }
+  .fascia .dx{ text-align:right; white-space:nowrap; }
+  .fascia .dx .g{ font-size:17pt; font-weight:800; color:var(--oro); letter-spacing:-.02em; }
+  .fascia .dx .p{ font-size:7.6pt; color:#A9A9BE; margin-top:1mm; }
 
-  .nota{ margin-top:6mm; font-size:8.5pt; color:var(--dim); text-align:center; }
+  /* ---------- meta copertina ---------- */
+  .meta{ border-top:1px solid var(--riga); margin-top:8mm; padding-top:5mm;
+         display:grid; grid-template-columns:1.5fr 1.5fr 1fr; gap:6mm; }
+  .meta .e{ font-size:6.8pt; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+            color:var(--grigio); }
+  .meta .v2{ font-size:9.3pt; font-weight:700; color:var(--ink); margin-top:1.8mm; }
 
-  /* ---------- come si parte ---------- */
-  .parti{ margin-top:9mm; display:grid; grid-template-columns:repeat(3,1fr); gap:5mm; }
-  .parti .p{ border:1px solid var(--line); border-radius:4mm; padding:6mm 5mm; background:var(--card); }
-  .parti .p .n{ width:9mm; height:9mm; border-radius:100px; background:var(--gold); color:#241703;
-                font-size:10pt; font-weight:800; display:flex; align-items:center; justify-content:center; }
-  .parti .p h4{ font-size:11pt; font-weight:700; margin:3.5mm 0 2mm; }
-  .parti .p p{ font-size:9pt; line-height:1.55; color:var(--muted); }
+  /* ---------- contatti ---------- */
+  .contatti{ display:grid; grid-template-columns:repeat(2,1fr); gap:4mm 8mm; margin-top:6mm; }
+  .contatti .e{ font-size:6.8pt; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+                color:var(--viola); }
+  .contatti .v2{ font-size:9.6pt; font-weight:700; color:var(--ink); margin-top:1.4mm; }
 
-  .contatti{ margin-top:12mm; border:1px solid rgba(231,197,104,.35); border-radius:4mm;
-             padding:8mm 7mm; background:linear-gradient(180deg, rgba(231,197,104,.10), rgba(255,255,255,.02)); }
-  .contatti h3{ font-size:15pt; font-weight:800; letter-spacing:-.015em; }
-  .contatti p{ font-size:9.5pt; color:var(--muted); margin-top:2.5mm; line-height:1.6; }
-  .righe{ display:grid; grid-template-columns:1fr 1fr; gap:4mm 8mm; margin-top:6mm; }
-  .riga{ font-size:9.5pt; }
-  .riga .et{ font-size:7.5pt; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-deep);
-             font-weight:700; display:block; margin-bottom:1mm; }
-  .riga b{ font-weight:700; }
+  /* ---------- piede ---------- */
+  .piede{ position:absolute; left:18mm; right:18mm; bottom:12mm;
+          display:flex; justify-content:space-between; align-items:center;
+          font-size:6.8pt; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
+          color:#A6A6B4; border-top:1px solid var(--riga); padding-top:3.5mm; }
 </style>
 </head>
 <body>
 
-<!-- ======================= 1. COPERTINA ======================= -->
-<section class="pagina cover">
-  <div class="alone"></div><div class="alone2"></div>
-
-  <div style="position:relative;">
-    <div class="marchio">APEX<span>MEDIA</span></div>
-    <div style="height:2px;width:14mm;background:var(--gold);margin-top:3mm;border-radius:2px;"></div>
+<!-- ===================== 1 · COPERTINA ===================== -->
+<section class="pagina">
+  <div class="testata">
+    <div class="logo">
+      <div class="quadro">A</div>
+      <div class="nome">APEX MEDIA</div>
+    </div>
+    <div class="qualifica">Performance Marketing Agency</div>
   </div>
 
-  <div style="position:relative;">
-    <div class="occhiello">Social · Sito · Advertising</div>
-    <h1 style="margin-top:6mm;">Un sistema unico<br>per farsi trovare,<br>e <em>farsi scegliere</em>.</h1>
-    <p class="sub">
-      La maggior parte delle attività locali ha un profilo social, un sito e forse qualche
-      sponsorizzata. Tre cose separate, che non si parlano. Noi le mettiamo sotto una sola
-      regia, con un obiettivo solo: trasformare chi vi cerca in chi vi chiama.
+  <div style="margin-top:62mm;">
+    <div class="occhiello">Presentazione — Servizi e piani</div>
+    <h1 style="margin-top:4mm;">
+      <span class="leggero">Cosa facciamo, quanto costa,</span>
+      e cosa cambia per voi.
+    </h1>
+    <div class="barra"></div>
+    <p style="max-width:132mm;">
+      Il sistema con cui portiamo un'attività locale da «presente online» a
+      «trovata e scelta»: social, sito e advertising sotto una sola regia,
+      con tre livelli di ingresso e i prezzi in chiaro.
     </p>
-    <div class="chips">
-      <span class="chip">Strategia social</span>
-      <span class="chip">Contenuti e reel</span>
-      <span class="chip">Meta &amp; TikTok Ads</span>
-      <span class="chip">Siti e landing page</span>
-      <span class="chip">Funnel di conversione</span>
-    </div>
-  </div>
 
-  <div style="position:relative;">
-    <div style="font-size:9.5pt;color:var(--muted);line-height:1.7;">
-      <b style="color:var(--ink);">Apex Media</b> · Studio di comunicazione, Alessandria<br>
-      infoapex.eu · apex.info.studio@gmail.com<br>
-      Alexander +39 351 594 0685 &nbsp;·&nbsp; Federico Delfino +39 333 701 8993
+    <div class="meta">
+      <div><div class="e">Destinatario</div><div class="v2">Attività locali — Alessandria e provincia</div></div>
+      <div><div class="e">A cura di</div><div class="v2">Alexander Fania &amp; Federico Delfino</div></div>
+      <div><div class="e">Data</div><div class="v2">Settembre 2026</div></div>
     </div>
   </div>
 </section>
 
-<!-- ======================= 2. COSA FACCIAMO ======================= -->
+<!-- ===================== 2 · IL PROBLEMA ===================== -->
 <section class="pagina">
-  <div class="occhiello">Cosa facciamo</div>
-  <h2>Non pubblichiamo contenuti.<br>Costruiamo <em>un sistema</em>.</h2>
-  <p class="intro">
-    Un reel che fa visualizzazioni e non porta una richiesta è un costo, non un investimento.
-    Per questo ogni cosa che produciamo — un post, una campagna, una pagina — ha un compito
-    preciso dentro un percorso che finisce con un contatto.
+  <div class="occhiello">01 — Il punto di partenza</div>
+  <h2>Avete già tutto. Solo che non parla insieme</h2>
+  <div class="barra"></div>
+
+  <p>
+    Quasi tutte le attività che incontriamo hanno un profilo Instagram, un sito fatto
+    qualche anno fa e, ogni tanto, una sponsorizzata. Tre cose separate, gestite in momenti
+    diversi, da persone diverse. Nessuna delle tre sa cosa fanno le altre — e il risultato
+    si legge nei numeri, non nelle opinioni.
   </p>
 
-  <div class="pilastri">
-    <div class="pil">
-      <div class="n">01 / STRATEGIA</div>
-      <h3>Prima di pubblicare</h3>
-      <p>Studiamo target, mercato, concorrenti e i punti deboli della vostra comunicazione.
-         Da lì esce un piano editoriale che risponde a una domanda: a chi parliamo e perché
-         dovrebbe scegliere voi.</p>
-    </div>
-    <div class="pil">
-      <div class="n">02 / PRODUZIONE</div>
-      <h3>Contenuti che fermano</h3>
-      <p>Reel e TikTok ad alta ritenzione, visual coerenti, direzione creativa premium.
-         Hook nei primi tre secondi, montaggio pulito, un'idea per contenuto.</p>
-    </div>
-    <div class="pil">
-      <div class="n">03 / CONVERSIONE</div>
-      <h3>Dall'attenzione al contatto</h3>
-      <p>Advertising su Meta e TikTok, funnel e landing page che raccolgono la richiesta.
-         Social, sito e campagne collegati, non tre mondi separati.</p>
-    </div>
+  <div class="stat">
+    <div class="c"><div class="n rosso">7 su 10</div><div class="e">Ricerche locali da cellulare</div></div>
+    <div class="c"><div class="n viola">3 sec</div><div class="e">Per decidere se restare</div></div>
+    <div class="c"><div class="n rosso">~0</div><div class="e">Richieste tracciate</div></div>
   </div>
 
-  <div class="metodo">
-    <div class="occhiello" style="margin-bottom:4mm;">Il metodo Apex</div>
-    <div class="passo"><div class="num">01</div>
-      <div><h4>Analisi</h4><p>Guardiamo il vostro sito, i profili e cosa fanno i concorrenti della zona.
-      Vi diciamo cosa non funziona, con esempi concreti, prima di parlare di preventivi.</p></div></div>
-    <div class="passo"><div class="num">02</div>
-      <div><h4>Strategia</h4><p>Definiamo una direzione chiara: cosa dire, come dirlo, a chi arrivare
-      e con che frequenza. Niente pubblicazioni a caso.</p></div></div>
-    <div class="passo"><div class="num">03</div>
-      <div><h4>Produzione</h4><p>Realizziamo contenuti, visual e video. Dove serve, rifacciamo o
-      costruiamo il sito e le pagine di destinazione.</p></div></div>
-    <div class="passo"><div class="num">04</div>
-      <div><h4>Conversione e misura</h4><p>Colleghiamo social, advertising e sito, e ogni mese
-      guardiamo i numeri insieme: quante richieste sono arrivate e da dove.</p></div></div>
+  <div class="cit">
+    <p>
+      "Il like è il segnale più debole che esiste: costa un tocco e non dice niente su chi ha
+      davvero intenzione di comprare. Una richiesta è l'opposto — richiede tempo, esposizione,
+      convinzione. È quello il segnale su cui costruiamo ogni contenuto."
+    </p>
   </div>
 
-  <div class="piedino"><span>Apex Media · Alessandria</span><span>infoapex.eu</span></div>
+  <div class="nota">
+    <div class="t">Perché questo conta, in pratica</div>
+    <p>
+      Un profilo pieno di post senza una richiesta non è sfortuna: è la prova che il contenuto
+      non genera <strong>intento d'acquisto</strong>. Nessuno si è sentito coinvolto abbastanza da
+      scrivervi, chiedere un prezzo, prenotare. E allo stesso modo un sito che da telefono non si
+      lascia usare non è un problema estetico: è la porta d'ingresso chiusa proprio nel momento in
+      cui qualcuno aveva deciso di entrare.
+    </p>
+  </div>
+
+  <p>
+    Non è un problema di impegno. È un problema di <strong>competenza specifica</strong>: pubblicare
+    è una cosa, costruire un percorso che finisce con un contatto è un'altra. Servono hook, ritmo,
+    una pagina che raccolga la richiesta e dei numeri che dicano da dove è arrivata.
+  </p>
+
+  <div class="piede"><span>Apex Media · Servizi e piani</span><span>2</span></div>
 </section>
 
-<!-- ======================= 3. PACCHETTI ======================= -->
+<!-- ===================== 3 · IL SISTEMA ===================== -->
 <section class="pagina">
-  <div class="occhiello">Investi nel tuo dominio</div>
-  <h2>Tre livelli.<br>Un solo obiettivo: <em>dominare</em>.</h2>
-  <p class="intro">
-    Tutti i piani sono mensili, senza vincoli di durata. Si può salire o scendere di livello
-    quando volete, con un preavviso di trenta giorni.
+  <div class="occhiello">02 — Il sistema che cambia le cose</div>
+  <h2>Tre leve, un solo obiettivo: le richieste</h2>
+  <div class="barra"></div>
+
+  <p>
+    Con Apex Media smettete di dipendere da un canale solo. Ogni leva ha un compito commerciale
+    preciso, e le tre lavorano <strong>insieme</strong>, non a turno.
   </p>
+
+  <div class="due">
+    <div class="box">
+      <div class="t">Leva 1 — Contenuti che fermano</div>
+      <p>Reel e TikTok pensati per la ritenzione: hook nei primi tre secondi, montaggio pulito,
+         un'idea sola per contenuto. Non per esserci: per farsi guardare fino in fondo.</p>
+    </div>
+    <div class="box">
+      <div class="t">Leva 2 — Il sito che raccoglie</div>
+      <p>Una pagina che funziona dal telefono, con il numero cliccabile, gli orari giusti e
+         un modo evidente per prenotare. È dove l'attenzione diventa un contatto.</p>
+    </div>
+    <div class="box largo">
+      <div class="t">Leva 3 — Advertising e misura</div>
+      <p>Campagne Meta e TikTok che portano traffico qualificato su quella pagina, e un report
+         che dice quante richieste sono arrivate e da quale canale. Non più «pubblichiamo e
+         speriamo»: ogni mese sapete cosa ha reso e dove spostare il budget.</p>
+    </div>
+  </div>
+
+  <div class="stat">
+    <div class="c"><div class="n viola">4</div><div class="e">Fasi del metodo</div></div>
+    <div class="c"><div class="n verde">100%</div><div class="e">Attività tracciate</div></div>
+    <div class="c"><div class="n viola">3</div><div class="e">Piattaforme gestite</div></div>
+  </div>
+
+  <div class="nota">
+    <div class="t">Il metodo, in quattro passaggi</div>
+    <p>
+      <strong>01 Analisi</strong> — guardiamo sito, profili e concorrenti della zona, e vi diciamo
+      cosa non funziona con esempi concreti, prima di parlare di preventivi.
+      <strong>02 Strategia</strong> — cosa dire, a chi, con che frequenza.
+      <strong>03 Produzione</strong> — contenuti, visual, video; dove serve, il sito.
+      <strong>04 Conversione</strong> — colleghiamo tutto e misuriamo le richieste.
+    </p>
+  </div>
+
+  <p>
+    Ogni settimana senza questo sistema è un cliente che sceglie un altro perché ha più
+    recensioni, ed è spazio che un concorrente occupa al posto vostro — per primo, e senza
+    possibilità di recuperarlo facilmente dopo.
+  </p>
+
+  <div class="piede"><span>Apex Media · Servizi e piani</span><span>3</span></div>
+</section>
+
+<!-- ===================== 4 · I PIANI ===================== -->
+<section class="pagina">
+  <div class="occhiello">03 — I piani</div>
+  <h2>Tre livelli, prezzi in chiaro</h2>
+  <div class="barra"></div>
 
   <div class="piani">
     <div class="piano">
@@ -237,7 +304,7 @@
     </div>
 
     <div class="piano top">
-      <div class="badge">Più scelto</div>
+      <div class="tag">Più scelto</div>
       <div class="nome">Growth</div>
       <div class="per">Business in scale-up</div>
       <div class="desc">Il sistema per trasformare i social in un asset che porta richieste.</div>
@@ -268,66 +335,41 @@
     </div>
   </div>
 
+  <div class="cond">
+    <div class="v"><b>Impegno di tre mesi, pagamento mensile.</b> Nessun anticipo: si versa una
+      rata al mese. Tre mesi è il minimo perché i risultati si vedano.</div>
+    <div class="v"><b>Alla scadenza si rinnova di mese in mese.</b> Dopo il terzo mese potete
+      fermarvi quando volete, con trenta giorni di preavviso.</div>
+    <div class="v"><b>Un referente solo.</b> Parlate sempre con la stessa persona, non con un
+      centralino.</div>
+    <div class="v"><b>I contenuti sono vostri.</b> Foto, video e file restano a voi anche se
+      finisce il rapporto.</div>
+    <div class="v"><b>Accessi intestati a voi.</b> Profili e dominio restano di vostra
+      proprietà, sempre.</div>
+    <div class="v"><b>Siamo in zona.</b> Per le attività della provincia passiamo di persona
+      quando serve.</div>
+  </div>
 
-  <div class="incluso">
-    <div class="tit">In <span>tutti</span> i piani, senza costi aggiuntivi</div>
-    <div class="griglia">
-      <div class="voce"><b>Nessun vincolo di durata.</b> Si disdice con trenta giorni di preavviso, senza penali.</div>
-      <div class="voce"><b>Un referente solo.</b> Parlate sempre con la stessa persona, non con un centralino.</div>
-      <div class="voce"><b>I contenuti sono vostri.</b> Foto, video e file restano a voi anche se smettiamo.</div>
-      <div class="voce"><b>Accessi intestati a voi.</b> Profili e dominio restano di vostra proprietà.</div>
-      <div class="voce"><b>Report leggibile.</b> Quante richieste sono arrivate e da dove, senza grafici inutili.</div>
-      <div class="voce"><b>Siamo in zona.</b> Per le attività della provincia passiamo di persona quando serve.</div>
+  <div class="fascia">
+    <div>
+      <div class="et">Il primo passo non costa nulla</div>
+      <div class="ti">Demo gratuita della vostra nuova home · Call di 15 minuti</div>
+      <div class="ds">La guardate con calma. Se non convince finisce lì, senza impegno.</div>
     </div>
-  </div>
-
-  <div class="chiusa">
-    <p>Il primo mese si vede se funziona.<br>
-    Se dopo trenta giorni non è cambiato niente, <em>ve lo diciamo noi</em>.</p>
-  </div>
-
-  <p class="nota">Pacchetti personalizzati su richiesta. Prezzi IVA esclusa.</p>
-
-  <div class="piedino"><span>Apex Media · Alessandria</span><span>infoapex.eu</span></div>
-</section>
-
-<!-- ======================= 4. COME SI PARTE ======================= -->
-<section class="pagina">
-  <div class="occhiello">Come si parte</div>
-  <h2>Prima vede il lavoro,<br><em>poi</em> decide.</h2>
-  <p class="intro">
-    Non chiediamo di firmare niente per capire se ha senso lavorare insieme. Il primo passo
-    lo facciamo noi, e non costa nulla.
-  </p>
-
-  <div class="parti">
-    <div class="p"><div class="n">1</div>
-      <h4>La demo</h4>
-      <p>Prepariamo gratis una demo della nuova home della vostra attività, costruita sui
-         vostri dati veri: nome, servizi, foto, orari. Non un template con dentro «Lorem ipsum».</p></div>
-    <div class="p"><div class="n">2</div>
-      <h4>Quindici minuti</h4>
-      <p>Una call breve, oppure passiamo noi in negozio se preferite di persona. Vi mostriamo
-         cosa abbiamo trovato e cosa cambieremmo, in ordine di priorità.</p></div>
-    <div class="p"><div class="n">3</div>
-      <h4>Decidete voi</h4>
-      <p>Se la demo non convince, finisce lì e non dovete niente. Se convince, si sceglie il
-         livello e si parte entro la settimana.</p></div>
+    <div class="dx">
+      <div class="g">da 300 €</div>
+      <div class="p">al mese, IVA esclusa</div>
+    </div>
   </div>
 
   <div class="contatti">
-    <h3>Parliamone.</h3>
-    <p>Siamo ad Alessandria: per le attività della città e della provincia veniamo volentieri
-       di persona, senza impegno.</p>
-    <div class="righe">
-      <div class="riga"><span class="et">Alexander</span><b>+39 351 594 0685</b></div>
-      <div class="riga"><span class="et">Federico Delfino</span><b>+39 333 701 8993</b></div>
-      <div class="riga"><span class="et">Email</span><b>apex.info.studio@gmail.com</b></div>
-      <div class="riga"><span class="et">Sito</span><b>infoapex.eu</b></div>
-    </div>
+    <div><div class="e">Email</div><div class="v2">info@apexmedia.it</div></div>
+    <div><div class="e">Sito</div><div class="v2">infoapex.eu</div></div>
+    <div><div class="e">Alexander Fania</div><div class="v2">+39 351 594 0685</div></div>
+    <div><div class="e">Federico Delfino</div><div class="v2">+39 333 701 8993</div></div>
   </div>
 
-  <div class="piedino"><span>Apex Media · Studio di comunicazione · Alessandria</span><span>infoapex.eu</span></div>
+  <div class="piede"><span>Apex Media · Alessandria</span><span>4</span></div>
 </section>
 
 </body>
