@@ -45,27 +45,28 @@ def items_da_pagina(h):
     return out
 
 CATEGORIE = sys.argv[1].split(",")
-PAGINE = int(sys.argv[2]) if len(sys.argv) > 2 else 3
+CITTA = sys.argv[2] if len(sys.argv) > 2 else "alessandria"
+PAGINE = int(sys.argv[3]) if len(sys.argv) > 3 else 3
 
 tutti = {}
 for cat in CATEGORIE:
     for p in range(1, PAGINE + 1):
-        url = (f"https://www.paginegialle.it/piemonte/alessandria/{cat}.html" if p == 1
-               else f"https://www.paginegialle.it/piemonte/alessandria/{cat}/p-{p}.html")
+        url = (f"https://www.paginegialle.it/piemonte/{CITTA}/{cat}.html" if p == 1
+               else f"https://www.paginegialle.it/piemonte/{CITTA}/{cat}/p-{p}.html")
         try: h = get(url)
         except Exception as e:
             print(f"  ! {cat} p{p}: {e}", file=sys.stderr); continue
         got = items_da_pagina(h); nuovi = 0
         for it in got:
-            if it["citta"].lower() != "alessandria": continue
+            if CITTA != "al" and it["citta"].lower() != CITTA.replace("-", " ").lower(): continue
             it["categoria"] = cat
             if it["pg_url"] not in tutti:
                 tutti[it["pg_url"]] = it; nuovi += 1
         con_sito = sum(1 for it in got if it["sito_dichiarato"])
         print(f"  {cat} p{p}: {len(got)} schede · {nuovi} nuove AL · {con_sito} con sito", file=sys.stderr)
-        time.sleep(1.2)
+        time.sleep(3.5)
 
-_f = pathlib.Path("/tmp/out/aziende.json")
+_f = pathlib.Path("/tmp/out/pg.json")
 prec = json.loads(_f.read_text(encoding="utf-8")) if _f.exists() else []
 for _p in prec: tutti.setdefault(_p["pg_url"], _p)
 _f.write_text(
