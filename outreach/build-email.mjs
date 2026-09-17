@@ -13,7 +13,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SCENARI, OFFERTA, CTA_TESTO, CHIUSURA, FIRMA_NOME } from "./copy.mjs";
+import { SCENARI, OFFERTA, ALLEGATO, CTA_TESTO, CHIUSURA, FIRMA_NOME } from "./copy.mjs";
 
 const QUI = dirname(fileURLToPath(import.meta.url));
 
@@ -78,6 +78,7 @@ function componi(p) {
     PROBLEMA: scenario.problema(p),
     CONSEGUENZA: scenario.conseguenza(p),
     OFFERTA: OFFERTA(p),
+    ALLEGATO: ALLEGATO(p),
     CTA_TESTO,
     CTA_URL: `https://wa.me/${MITTENTE.whatsapp}?text=${encodeURIComponent(
       `Ciao Alexander, ho ricevuto la tua mail su ${p.attivita}. Vediamo la demo.`
@@ -119,8 +120,12 @@ function versioneTesto(html, ctaUrl) {
     .replace(/<div style="display:none[\s\S]*?<\/div>/i, "")      // preheader
     .replace(/<head[\s\S]*?<\/head>/i, "")
     .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/<a\b[^>]*href="(tel:|mailto:)[^"]*"[^>]*>([\s\S]*?)<\/a>/gi, "$2")
-    .replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, `$1: ${ctaUrl}`)     // la CTA deve restare cliccabile
+    .replace(/<a\b[^>]*href="(?:tel:|mailto:)[^"]*"[^>]*>([\s\S]*?)<\/a>/gi, "$1")
+    // ogni link tiene il PROPRIO indirizzo: prima finivano tutti su WhatsApp
+    .replace(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi, (tutto, href, testo) => {
+      const etichetta = testo.replace(/<[^>]+>/g, "").trim();
+      return etichetta.includes(href.replace(/^https?:\/\//, "")) ? etichetta : `${etichetta}: ${href}`;
+    })
     .replace(/<\/(p|tr|div|h\d|table)>/gi, "\n")
     .replace(/<[^>]+>/g, "")
     .replace(/&#?(\w+);/g, (intero, chiave) => (chiave in ENTITA ? ENTITA[chiave] : intero))

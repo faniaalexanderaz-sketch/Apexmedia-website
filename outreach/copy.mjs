@@ -1,75 +1,81 @@
 /**
- * APEX MEDIA — copy delle cold email per scenario.
+ * APEX MEDIA — copy delle cold email, per scenario.
  *
- * Un solo principio: la frase in PROBLEMA deve essere una cosa che abbiamo
- * verificato davvero sul suo sito. È l'unica ragione per cui un titolare
- * apre una mail da uno sconosciuto. Se non abbiamo un problema verificato,
- * il prospect non si contatta: si torna a cercarne un altro.
+ * Tono: diretto. La prima riga deve essere il problema, non la presentazione.
+ * Un titolare non apre una mail per sapere chi siamo: la apre perché qualcuno
+ * gli sta dicendo che una cosa sua non funziona.
  *
- * Campi disponibili in `p` (una riga di prospects.csv):
- *   attivita, referente, sito, problema, dettaglio, citta
+ * Regola che non si tocca: il problema deve essere VERO e verificabile in dieci
+ * secondi col telefono in mano. Non per scrupolo, ma perché il primo che clicca
+ * e vede che il sito funziona ha in mano la prova che gli abbiamo mentito per
+ * vendergli qualcosa — e in una provincia piccola quella cosa si racconta.
+ *
+ * Campi disponibili in `p`: attivita, referente, sito, scenario, dettaglio, citta
  */
 
-const nome = (p) => (p.referente && p.referente.trim() ? p.referente.trim() : null);
-
-const saluto = (p) => {
-  const n = nome(p);
-  return n ? `Buongiorno ${n},` : "Buongiorno,";
-};
+/* ---------------- scenari ---------------- */
 
 export const SCENARI = {
-  /* Il sito non si apre proprio: errore, dominio scaduto, timeout. */
+  /* Il sito non si apre: dominio scaduto, errore, timeout. */
   sito_down: {
     subject: (p) => `Il sito di ${p.attivita} non si apre`,
-    preheader: () => "Un problema tecnico che le sta costando chiamate ogni giorno.",
+    preheader: () => "Chi vi cerca su Google trova una pagina di errore.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di Alessandria. Ieri ho provato ad aprire ${p.sito} e non sono riuscito a vederlo.`,
-    problema: (p) => `<strong>${p.dettaglio}</strong>`,
+      `le scrivo per un motivo solo: <strong>ieri ho provato ad aprire ${p.sito} e non ci sono riuscito.</strong> Ho riprovato oggi, da due dispositivi diversi. Niente.`,
+    problema: (p) => p.dettaglio,
     conseguenza: () =>
-      "Chi la cerca su Google trova il link, clicca, vede una pagina di errore e torna indietro. Nove volte su dieci finisce dal concorrente che sta due righe sotto. E lei non lo vede succedere: non arriva nessuna segnalazione, arrivano solo meno telefonate.",
+      "Vuol dire che in questo momento chi vi cerca su Google trova il vostro link, clicca, e finisce su una pagina di errore. Non vi chiama e non vi scrive: torna indietro e apre il risultato sotto. E lei non se ne accorge, perché non arriva nessuna segnalazione. Arrivano solo meno telefonate.",
   },
 
-  /* Il sito si apre ma da telefono è inutilizzabile o lentissimo. */
+  /* Il sito si apre ma da telefono è inutilizzabile. */
   sito_lento_mobile: {
-    subject: (p) => `${p.attivita}: il sito da telefono`,
-    preheader: () => "Sette clienti su dieci la cercano dal cellulare.",
+    subject: (p) => `${p.attivita}: dal vostro sito non riesco a chiamarvi`,
+    preheader: () => "L'ho aperto dal telefono, come fa un cliente. Ecco cosa succede.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di Alessandria. Ho aperto ${p.sito} dal telefono, come fa un cliente che vi cerca per strada.`,
-    problema: (p) => `<strong>${p.dettaglio}</strong>`,
+      `ho aperto <strong>${p.sito} dal telefono</strong>, non dal computer: come fa un cliente che vi cerca mentre è per strada. È andata così.`,
+    problema: (p) => p.dettaglio,
     conseguenza: () =>
-      "Oggi la stragrande maggioranza delle ricerche locali arriva da cellulare. Se in tre secondi uno non capisce cosa fate, dove siete e come chiamarvi, chiude. Non è pigrizia del cliente: è che ha altre dieci schede aperte.",
+      "Non è un dettaglio estetico. Oggi quasi tutte le ricerche locali arrivano da cellulare, e chi cerca da cellulare vuole fare una cosa sola: toccare il numero e chiamare. Se deve zoomare, copiare a mano o mettersi a cercare dove siete, nella maggior parte dei casi non lo fa. Chiude e apre il risultato sotto — che è un vostro concorrente.",
   },
 
-  /* Il sito è fermo a anni fa: grafica vecchia, dati non aggiornati. */
+  /* Il sito è fermo a anni fa. */
   sito_vecchio: {
-    subject: (p) => `Una cosa sul sito di ${p.attivita}`,
-    preheader: () => "Il sito racconta un'attività diversa da quella che siete oggi.",
+    subject: (p) => `Una cosa sul sito di ${p.attivita} che vi sta costando clienti`,
+    preheader: () => "Chi non vi conosce si sta chiedendo se siete ancora aperti.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di Alessandria. Ho dato un'occhiata a ${p.sito} prima di scriverle.`,
-    problema: (p) => `<strong>${p.dettaglio}</strong>`,
+      `ho guardato <strong>${p.sito}</strong> prima di scriverle, e c'è una cosa che salta all'occhio subito.`,
+    problema: (p) => p.dettaglio,
     conseguenza: () =>
-      "Il punto non è l'estetica. È che un sito fermo comunica un'attività ferma, e chi non vi conosce decide in pochi secondi se siete ancora aperti e se vale la pena venire. Voi siete meglio di come vi presenta quella pagina.",
+      "So che a lei sembra un dettaglio, perché lei sa benissimo di essere aperto. Ma chi non vi conosce no: apre la pagina, vede quella data e la legge come un'attività che ha chiuso o che non segue più niente. Decide in pochi secondi, e decide senza chiedervelo. Il problema non è il sito in sé: è che sta raccontando un'attività che non siete.",
   },
 
-  /* Non hanno sito: solo Google Maps o una pagina Facebook. */
+  /* Non hanno un sito. */
   senza_sito: {
-    subject: (p) => `${p.attivita} su Google`,
-    preheader: () => "Chi vi cerca trova solo una scheda, e spesso non basta.",
+    subject: (p) => `Su Google, di ${p.attivita} parla qualcun altro`,
+    preheader: () => "Chi vi cerca legge quello che hanno scritto altri su di voi.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di Alessandria. Cercando ${p.attivita} su Google non ho trovato un vostro sito.`,
-    problema: (p) => `<strong>${p.dettaglio}</strong>`,
+      `ho cercato <strong>${p.attivita} su Google</strong>, come farebbe un cliente nuovo. Un vostro sito non c'è.`,
+    problema: (p) => p.dettaglio,
     conseguenza: () =>
-      "Vuol dire che tutto quello che un nuovo cliente sa di voi lo decidono le recensioni e due foto. Non i vostri prezzi, non i vostri servizi, non il motivo per cui dovrebbe scegliere voi.",
+      "Questo significa una cosa precisa: tutto quello che un cliente nuovo sa di voi lo ha scritto qualcun altro. Le recensioni, due foto caricate da chissà chi, orari che magari sono pure sbagliati. Non i vostri prezzi, non quello che fate meglio degli altri, non il motivo per cui dovrebbe venire da voi invece che dal concorrente in fondo alla via. Su quella pagina non avete voce.",
   },
 };
 
-/* Offerta e CTA: identiche in tutti gli scenari, è il nostro standard. */
-export const OFFERTA = (p) =>
-  `Le propongo una cosa semplice: le preparo <strong>gratis una demo della nuova home di ${p.attivita}</strong>, fatta sui vostri dati veri. La guarda con calma. Se non la convince finisce lì, non mi deve niente e non le scrivo più.`;
+/* ---------------- offerta, allegato, chiusura ---------------- */
 
-export const CTA_TESTO = "Mi va bene, sentiamoci";
+export const OFFERTA = (p) =>
+  `Le propongo una cosa concreta: le preparo <strong>gratis una demo della nuova home di ${p.attivita}</strong>, ` +
+  `costruita sui vostri dati veri — nome, servizi, foto, orari. Non un modello con dentro «Lorem ipsum». ` +
+  `La guarda con calma dal suo telefono. Se non la convince finisce lì: non mi deve niente e non le scrivo più.`;
+
+export const ALLEGATO = () =>
+  `Nell'allegato trova la nostra presentazione: cosa facciamo con social, sito e advertising, ` +
+  `e i tre livelli con i prezzi in chiaro. Così sa già tutto prima ancora di parlarmi.`;
+
+export const CTA_TESTO = "Voglio vedere la demo";
 
 export const CHIUSURA = () =>
-  "Le basta rispondere a questa mail. Facciamo una call di 15 minuti quando ha un momento, oppure se preferisce di persona passo io in negozio: sono in zona.";
+  `Le basta rispondere a questa mail. Quindici minuti di call quando ha un momento, ` +
+  `oppure passo io in negozio: siamo di Alessandria, in zona ci veniamo volentieri.`;
 
 export const FIRMA_NOME = "Alexander";
