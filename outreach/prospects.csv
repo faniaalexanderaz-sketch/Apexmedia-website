@@ -1,0 +1,2 @@
+attivita,citta,referente,email,telefono,sito,scenario,dettaglio,fonte,stato,data_invio,note
+"Esempio Trattoria (RIGA DI PROVA — non inviare)","Alessandria","Marco","esempio@example.com","0131000000","esempiotrattoria.it","sito_lento_mobile","Da telefono il menu non si apre: il PDF pesa 12 MB e su rete mobile resta a caricare oltre 20 secondi.","prova","bozza","","Riga di esempio per testare build-email.mjs. Va cancellata."
