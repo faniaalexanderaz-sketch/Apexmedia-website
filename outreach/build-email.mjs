@@ -19,8 +19,9 @@ const QUI = dirname(fileURLToPath(import.meta.url));
 
 /* Dati mittente Apex Media. Cambiarli qui, non nel template. */
 const MITTENTE = {
-  email: "info@apexmedia.it",          // casella di contatto mostrata nelle email
-  emailInvio: "apex.info.studio@gmail.com",  // casella da cui partono materialmente
+  // apexmedia.it non risolve ancora in DNS: finche' non e' attiva si usa la casella
+  // che riceve davvero, altrimenti le risposte dei prospect rimbalzano.
+  email: "apex.info.studio@gmail.com",
   sitoUrl: "https://infoapex.eu",
   sitoLabel: "infoapex.eu",
   tel1: "+39 351 594 0685",      // Alexander
