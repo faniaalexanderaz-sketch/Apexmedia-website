@@ -23,7 +23,7 @@ export const SCENARI = {
     subject: (p) => `Il sito di ${p.attivita} non si apre`,
     preheader: () => "Un problema tecnico che le sta costando chiamate ogni giorno.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di ${p.citta || "Alessandria"}. Ieri ho provato ad aprire ${p.sito} e non sono riuscito a vederlo.`,
+      `sono Alexander di Apex Media, studio di Alessandria. Ieri ho provato ad aprire ${p.sito} e non sono riuscito a vederlo.`,
     problema: (p) => `<strong>${p.dettaglio}</strong>`,
     conseguenza: () =>
       "Chi la cerca su Google trova il link, clicca, vede una pagina di errore e torna indietro. Nove volte su dieci finisce dal concorrente che sta due righe sotto. E lei non lo vede succedere: non arriva nessuna segnalazione, arrivano solo meno telefonate.",
@@ -34,7 +34,7 @@ export const SCENARI = {
     subject: (p) => `${p.attivita}: il sito da telefono`,
     preheader: () => "Sette clienti su dieci la cercano dal cellulare.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di ${p.citta || "Alessandria"}. Ho aperto ${p.sito} dal telefono, come fa un cliente che vi cerca per strada.`,
+      `sono Alexander di Apex Media, studio di Alessandria. Ho aperto ${p.sito} dal telefono, come fa un cliente che vi cerca per strada.`,
     problema: (p) => `<strong>${p.dettaglio}</strong>`,
     conseguenza: () =>
       "Oggi la stragrande maggioranza delle ricerche locali arriva da cellulare. Se in tre secondi uno non capisce cosa fate, dove siete e come chiamarvi, chiude. Non è pigrizia del cliente: è che ha altre dieci schede aperte.",
@@ -45,7 +45,7 @@ export const SCENARI = {
     subject: (p) => `Una cosa sul sito di ${p.attivita}`,
     preheader: () => "Il sito racconta un'attività diversa da quella che siete oggi.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di ${p.citta || "Alessandria"}. Ho dato un'occhiata a ${p.sito} prima di scriverle.`,
+      `sono Alexander di Apex Media, studio di Alessandria. Ho dato un'occhiata a ${p.sito} prima di scriverle.`,
     problema: (p) => `<strong>${p.dettaglio}</strong>`,
     conseguenza: () =>
       "Il punto non è l'estetica. È che un sito fermo comunica un'attività ferma, e chi non vi conosce decide in pochi secondi se siete ancora aperti e se vale la pena venire. Voi siete meglio di come vi presenta quella pagina.",
@@ -56,7 +56,7 @@ export const SCENARI = {
     subject: (p) => `${p.attivita} su Google`,
     preheader: () => "Chi vi cerca trova solo una scheda, e spesso non basta.",
     apertura: (p) =>
-      `sono Alexander di Apex Media, studio di ${p.citta || "Alessandria"}. Cercando ${p.attivita} su Google non ho trovato un vostro sito.`,
+      `sono Alexander di Apex Media, studio di Alessandria. Cercando ${p.attivita} su Google non ho trovato un vostro sito.`,
     problema: (p) => `<strong>${p.dettaglio}</strong>`,
     conseguenza: () =>
       "Vuol dire che tutto quello che un nuovo cliente sa di voi lo decidono le recensioni e due foto. Non i vostri prezzi, non i vostri servizi, non il motivo per cui dovrebbe scegliere voi.",
