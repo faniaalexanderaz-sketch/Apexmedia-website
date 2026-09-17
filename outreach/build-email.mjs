@@ -92,7 +92,10 @@ function componi(p) {
     return valori[chiave];
   });
 
-  return { subject: valori.SUBJECT, html, ctaUrl: valori.CTA_URL };
+  // via i commenti: sono note interne, non devono viaggiare dentro l'email
+  const pulito = html.replace(/<!--[\s\S]*?-->/g, "").replace(/\n{3,}/g, "\n\n");
+
+  return { subject: valori.SUBJECT, html: pulito, ctaUrl: valori.CTA_URL };
 }
 
 /* Versione testo semplice: Gmail la usa come alternativa e aiuta la consegna. */
