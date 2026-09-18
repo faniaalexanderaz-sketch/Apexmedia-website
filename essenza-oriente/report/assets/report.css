@@ -1,0 +1,216 @@
+/* =============================================================
+   APEX MEDIA — Design system documenti cliente (versione chiara)
+   Allineato al Report Mensile Essenza d'Oriente · agosto 2026
+   Type: Inter · CJK: Noto Sans SC
+   ============================================================= */
+@import url("fonts.css");
+
+:root{
+  --ink:#16161D;
+  --ink-2:#3A3A48;
+  --body:#55556A;
+  --mut:#9A9AA8;
+  --line:#E9E9F0;
+  --line-2:#F0F0F5;
+  --surface:#FFFFFF;
+  --surface-2:#F8F8FC;
+  --violet:#5B35E8;
+  --violet-2:#4726C9;
+  --blue:#1E4FD8;
+  --gold:#D8A93B;
+  --gold-soft:#FFFBEF;
+  --gold-line:#F0DCA8;
+  --green:#12945F;
+  --red:#C8392F;
+  --sans:"Inter","Noto Sans SC",system-ui,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+@page{ size:A4; margin:0; }
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+body{
+  font-family:var(--sans); background:var(--surface); color:var(--body);
+  font-size:9.6pt; line-height:1.62; letter-spacing:.002em;
+}
+
+/* ---------- Pagina ---------- */
+.page{
+  position:relative; width:210mm; min-height:297mm; height:297mm;
+  padding:14mm 17mm 12mm; overflow:hidden; background:var(--surface);
+  page-break-after:always; display:flex; flex-direction:column;
+}
+.page:last-child{ page-break-after:auto; }
+
+.phead{
+  display:flex; align-items:center; justify-content:space-between;
+  padding-bottom:4mm; border-bottom:1px solid var(--line); margin-bottom:8mm;
+}
+.logo{ display:flex; align-items:center; gap:8px; }
+.logo .sq{
+  width:26px; height:26px; border-radius:8px; background:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+}
+.logo .wm{ font-size:10.4pt; font-weight:700; color:var(--ink); letter-spacing:.09em; }
+.phead .tag{ font-size:7.2pt; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--mut); }
+
+.pfoot{
+  margin-top:auto; padding-top:4mm; border-top:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:7pt; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--mut);
+}
+
+/* ---------- Tipografia ---------- */
+.eyebrow{ font-size:7.6pt; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--violet); margin-bottom:2.5mm; }
+.kicker{ font-size:11.5pt; font-weight:400; color:var(--mut); margin-bottom:1mm; }
+h1{ font-size:27pt; line-height:1.12; font-weight:700; letter-spacing:-.024em; color:var(--ink); }
+h2{ font-size:18pt; line-height:1.2; font-weight:700; letter-spacing:-.021em; color:var(--ink); }
+h3{ font-size:10.6pt; line-height:1.34; font-weight:700; color:var(--ink); margin-bottom:1.4mm; }
+h4{ font-size:7.4pt; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--mut); margin-bottom:2mm; }
+.rule{ width:56px; height:3px; border-radius:2px; margin:3.5mm 0 4.5mm;
+  background:linear-gradient(90deg,var(--violet),var(--blue) 55%,var(--gold)); }
+.rule.sm{ width:40px; height:2.5px; margin:2.5mm 0 3.5mm; }
+p{ margin-bottom:3mm; }
+p:last-child{ margin-bottom:0; }
+p.lead{ font-size:10.4pt; line-height:1.6; color:var(--body); max-width:150mm; }
+strong{ color:var(--ink); font-weight:700; }
+.vio{ color:var(--violet); }
+.small{ font-size:8pt; line-height:1.55; color:var(--mut); }
+.hr{ border:0; border-top:1px solid var(--line); margin:7mm 0; }
+.hr.tight{ margin:5mm 0; }
+
+/* ---------- Griglie ---------- */
+.g2{ display:grid; grid-template-columns:1fr 1fr; gap:4.5mm; }
+.g3{ display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; }
+.g4{ display:grid; grid-template-columns:repeat(4,1fr); gap:3mm; }
+.g2u{ display:grid; grid-template-columns:1.25fr 1fr; gap:6mm; }
+
+/* ---------- Card ---------- */
+.card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:5mm 5.5mm;
+  box-shadow:0 1px 2px rgba(22,22,29,.04); }
+.card.quiet{ background:var(--surface-2); border-color:var(--line-2); box-shadow:none; }
+.card.tight{ padding:4mm 4.5mm; }
+
+.kpi{ text-align:center; padding:5mm 3mm; }
+.kpi .v{ font-size:30pt; font-weight:700; line-height:1; letter-spacing:-.035em; color:var(--ink); font-variant-numeric:tabular-nums; }
+.kpi .v.vio{ color:var(--violet); }
+.kpi .v.sm{ font-size:22pt; }
+.kpi .k{ font-size:7pt; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--mut); margin-top:3mm; line-height:1.4; }
+.kpi .d{ font-size:7pt; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:#C2C2CE; margin-top:1.5mm; line-height:1.4; }
+
+/* nota / callout */
+.note{ background:var(--surface-2); border:1px solid var(--line-2); border-radius:12px; padding:4.5mm 5mm; font-size:9pt; }
+.note.amber{ background:var(--gold-soft); border-color:var(--gold-line); }
+.note.amber h4{ color:var(--gold); }
+.note.vio{ background:#F6F3FF; border-color:#DED3FF; }
+.note.vio h4{ color:var(--violet); }
+
+/* ---------- Riga con icona ---------- */
+.row{ display:flex; gap:4mm; margin-bottom:4.5mm; align-items:flex-start; }
+.row:last-child{ margin-bottom:0; }
+.ico{ flex:none; width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
+.ico svg{ display:block; }
+.i-google{ background:linear-gradient(145deg,#E7C568,#C99C2E); }
+.i-ig{ background:linear-gradient(145deg,#7B4BF0,#4726C9); }
+.i-fb{ background:linear-gradient(145deg,#2F6BFF,#1740B8); }
+.i-tt{ background:linear-gradient(145deg,#2A2A36,#101018); }
+.i-tw{ background:linear-gradient(145deg,#5B8CFF,#2F55E0); }
+.i-wa{ background:linear-gradient(145deg,#2ECC8F,#12945F); }
+.i-tel{ background:linear-gradient(145deg,#7B4BF0,#4726C9); }
+.row .bd{ flex:1; }
+.row .bd p{ font-size:8.9pt; margin-bottom:1.5mm; }
+
+/* badge numerato */
+.numbox{ display:flex; gap:4.5mm; align-items:flex-start; }
+.nb{ flex:none; width:34px; height:34px; border-radius:10px; background:var(--violet); color:#fff;
+  font-size:11pt; font-weight:700; display:flex; align-items:center; justify-content:center; letter-spacing:.01em; }
+.nb.alt{ background:var(--ink); }
+.nb.gold{ background:linear-gradient(145deg,#E7C568,#C99C2E); color:#3A2A05; }
+.arrowline{ font-size:8.4pt; font-weight:700; color:var(--violet); margin-top:2mm; }
+
+/* legend chip */
+.legend{ display:flex; flex-wrap:wrap; gap:5mm; margin-top:2mm; }
+.legend span{ font-size:8pt; font-weight:700; color:var(--violet); display:flex; align-items:center; gap:5px; }
+.legend i{ width:8px; height:8px; border-radius:2px; display:block; }
+
+/* ---------- Tabelle ---------- */
+table{ width:100%; border-collapse:collapse; font-size:8.8pt; }
+thead th{ text-align:left; font-size:7pt; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--mut); padding:0 2.5mm 2.4mm; border-bottom:1px solid var(--line); }
+thead th.n{ text-align:right; }
+tbody td{ padding:2.7mm 2.5mm; border-bottom:1px solid var(--line-2); vertical-align:middle; }
+tbody tr:last-child td{ border-bottom:0; }
+td.ch{ color:var(--ink); font-weight:700; }
+td.n,th.n{ text-align:right; font-variant-numeric:tabular-nums; }
+tfoot td{ padding:2.9mm 2.5mm; border-top:1.5px solid var(--line); color:var(--ink); font-weight:700; font-variant-numeric:tabular-nums; }
+.bar{ display:block; height:6px; border-radius:99px; background:#F0F0F5; overflow:hidden; min-width:26mm; }
+.bar i{ display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,var(--violet),var(--blue)); }
+.bar i.gold{ background:linear-gradient(90deg,#E7C568,#C99C2E); }
+.bar i.grey{ background:#D4D4DE; }
+
+/* ---------- Liste ---------- */
+ul.ticks{ list-style:none; }
+ul.ticks li{ position:relative; padding-left:5.5mm; margin-bottom:2.2mm; font-size:9pt; }
+ul.ticks li:last-child{ margin-bottom:0; }
+ul.ticks li::before{ content:""; position:absolute; left:0; top:.55em; width:7px; height:7px; border-radius:2px;
+  background:linear-gradient(135deg,var(--violet),var(--blue)); }
+ul.ticks.gold li::before{ background:linear-gradient(135deg,#E7C568,#C99C2E); }
+ul.ticks.grey li::before{ background:#C6C6D2; }
+ul.ticks li strong{ color:var(--ink); }
+
+/* timeline */
+.tl{ border-left:1.5px solid var(--line); padding-left:6mm; }
+.tl .it{ position:relative; margin-bottom:5mm; }
+.tl .it:last-child{ margin-bottom:0; }
+.tl .it::before{ content:""; position:absolute; left:calc(-6mm - 4.75px); top:.35em; width:10px; height:10px;
+  border-radius:50%; background:#fff; border:2.5px solid var(--violet); }
+.tl .it.done::before{ background:var(--violet); }
+.tl .it.next::before{ border-color:var(--gold); }
+.tl .w{ font-size:7.2pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--violet); margin-bottom:1mm; }
+.tl .it.next .w{ color:var(--gold); }
+
+/* pill */
+.pill{ display:inline-block; padding:1mm 3mm; border-radius:99px; font-size:6.9pt; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase; border:1px solid var(--line); color:var(--mut); }
+.pill.new{ border-color:#BFEBD6; background:#F0FBF6; color:var(--green); }
+.pill.vio{ border-color:#DED3FF; background:#F6F3FF; color:var(--violet); }
+.pill.gold{ border-color:var(--gold-line); background:var(--gold-soft); color:var(--gold); }
+
+/* ---------- Copertina ---------- */
+.cover{ padding:16mm 17mm 12mm; }
+.cover .hero{ margin-top:4mm; flex:1; display:flex; flex-direction:column; }
+.cover h1{ font-size:32pt; max-width:160mm; }
+.cover .chips{ display:flex; gap:5mm; margin:9mm 0 0; }
+.cover .chip{ text-align:center; }
+.cover .chip .ico{ width:38px; height:38px; border-radius:11px; margin:0 auto 2.5mm; }
+.cover .chip .lb{ font-size:7pt; font-weight:700; letter-spacing:.1em; color:var(--mut); }
+.cover .meta{ margin-top:auto; }
+.meta{ display:grid; grid-template-columns:1fr 1fr; gap:6mm 10mm; padding-top:6mm; border-top:1px solid var(--line); margin-top:9mm; }
+.meta dt{ font-size:7pt; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--mut); margin-bottom:1.5mm; }
+.meta dd{ font-size:10pt; font-weight:700; color:var(--ink); }
+
+/* divisore di parte */
+.part .wrap{ margin:auto 0; }
+.part .big{ font-size:62pt; font-weight:700; line-height:1; letter-spacing:-.05em;
+  color:var(--violet); margin-bottom:4mm; }
+.part h1{ font-size:30pt; max-width:150mm; }
+
+/* chiusura */
+.sign{ text-align:right; margin-top:7mm; }
+.sign .n{ font-size:11pt; font-weight:700; color:var(--ink); }
+.sign .s{ font-size:8pt; color:var(--mut); }
+.cta{ border:1.5px solid var(--violet); border-radius:14px; padding:6mm; background:#F8F6FF; }
+
+/* ---------- CJK ---------- */
+html[lang="zh-CN"] body{ font-family:"Noto Sans SC","Inter",sans-serif; line-height:1.8; }
+html[lang="zh-CN"] h1{ font-size:24pt; letter-spacing:0; line-height:1.28; }
+html[lang="zh-CN"] .cover h1{ font-size:28pt; }
+html[lang="zh-CN"] .part h1{ font-size:26pt; }
+html[lang="zh-CN"] h2{ font-size:16pt; letter-spacing:0; line-height:1.34; }
+html[lang="zh-CN"] h3{ font-size:10.2pt; }
+html[lang="zh-CN"] p.lead{ font-size:10pt; }
+html[lang="zh-CN"] .eyebrow,html[lang="zh-CN"] h4,html[lang="zh-CN"] .pill,html[lang="zh-CN"] thead th,
+html[lang="zh-CN"] .kpi .k,html[lang="zh-CN"] .kpi .d,html[lang="zh-CN"] .pfoot,html[lang="zh-CN"] .phead .tag,
+html[lang="zh-CN"] .meta dt,html[lang="zh-CN"] .tl .w,html[lang="zh-CN"] .cover .chip .lb{
+  letter-spacing:.06em; text-transform:none;
+}
+html[lang="zh-CN"] body{ font-size:9.4pt; }
