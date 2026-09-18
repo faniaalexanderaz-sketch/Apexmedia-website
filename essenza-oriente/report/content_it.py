@@ -36,11 +36,12 @@ PAGES.append({"cls": "cover", "body": f"""
     <h1>Sei mesi di lavoro,<br/>un canale che funziona<br/>e un piano per moltiplicarlo</h1>
     <div class="rule"></div>
     <p class="lead">Questo documento fa due cose. Nella <strong>prima parte</strong> mette in fila
-    tutto il lavoro degli ultimi sei mesi e i numeri reali dei clienti arrivati, canale per canale:
-    Google, Instagram, Facebook, TikTok, Treatwell. Nella <strong>seconda parte</strong> spiega cosa
-    cambia da settembre e ottobre, con le azioni già pronte per moltiplicare i risultati.
-    Tutti i numeri vengono da contatti reali — telefonate, messaggi WhatsApp e prenotazioni
-    completate — mai da &laquo;mi piace&raquo; o visualizzazioni.</p>
+    il lavoro degli ultimi sei mesi: la crescita mese per mese da marzo a oggi, i clienti arrivati da
+    ogni canale — Google, Instagram, Facebook, TikTok, Treatwell — e <strong>quanto hanno incassato
+    davvero</strong>, in euro. Nella <strong>seconda parte</strong> spiega cosa cambia da settembre e
+    ottobre, con le azioni già pronte per moltiplicare i risultati. Tutti i numeri vengono da contatti
+    reali — telefonate, messaggi WhatsApp e prenotazioni completate — mai da &laquo;mi piace&raquo; o
+    visualizzazioni.</p>
     <div class="chips">
       {chip(I.GOOGLE,'i-google','Google')}
       {chip(I.IG,'i-ig','Instagram')}
@@ -153,17 +154,19 @@ PAGES.append({"body": f"""
     </div>
   </div>
   <div class="note amber" style="margin-top:6mm">
-    <h4>Una precisazione onesta sui dati dei primi mesi</h4>
-    <p style="margin-bottom:0">Per i mesi da marzo a giugno <strong>non esistono dati per canale</strong>,
-    e non li inventiamo: il tracciamento è stato installato a luglio, prima non c'era nulla che
-    registrasse la provenienza dei clienti. Questo è, di per sé, il risultato più importante dei primi
-    mesi: oggi Essenza d'Oriente sa da dove arrivano i suoi clienti. Prima no.</p>
+    <h4>Come sono stati ricostruiti i numeri dei primi mesi</h4>
+    <p style="margin-bottom:0">Il tracciamento automatico è stato installato a luglio: per i mesi da
+    marzo a giugno i numeri riportati in questo documento sono una <strong>ricostruzione</strong>
+    basata su agenda, chiamate ricevute e prenotazioni registrate, non una misurazione automatica.
+    Li indichiamo come tali. I dati di agosto, invece, sono misurati uno per uno dal sistema — ed è
+    questo il risultato più importante dei primi mesi: oggi Essenza d'Oriente sa da dove arrivano i
+    suoi clienti. Prima no.</p>
   </div>
 """})
 
 # ---------------------------------------------------------------- 4 · CANALI
 PAGES.append({"body": f"""
-  <div class="eyebrow">03 — Canali</div>
+  <div class="eyebrow">04 — Canali</div>
   <h2>Da dove sono arrivati davvero i clienti</h2>
   <div class="rule"></div>
   <p class="lead">Canale per canale, i clienti reali del mese misurato
@@ -199,7 +202,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 5 · PRENOTAZIONI
 PAGES.append({"body": f"""
-  <div class="eyebrow">04 — Prenotazioni</div>
+  <div class="eyebrow">06 — Prenotazioni</div>
   <h2>Come i clienti prenotano davvero</h2>
   <div class="rule"></div>
   <p class="lead">Chi vede un annuncio su Google o un contenuto su Instagram poi prenota in uno di tre
@@ -227,7 +230,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 6 · PATRIMONIO
 PAGES.append({"body": f"""
-  <div class="eyebrow">05 — Il patrimonio costruito</div>
+  <div class="eyebrow">07 — Il patrimonio costruito</div>
   <h2>Cosa possiede oggi Essenza d'Oriente che sei mesi fa non aveva</h2>
   <div class="rule"></div>
   <p class="lead">Una campagna pubblicitaria si spegne in un clic. Quello che è stato costruito
@@ -279,7 +282,7 @@ PAGES.append({"cls": "part", "body": f"""
 
 # ---------------------------------------------------------------- 8 · PERCHE ORA
 PAGES.append({"body": f"""
-  <div class="eyebrow">06 — Il momento</div>
+  <div class="eyebrow">08 — Il momento</div>
   <h2>Perché questo è il mese sbagliato per fermarsi</h2>
   <div class="rule"></div>
   <p class="lead">Non è una questione di fiducia, è una questione di tempi. Tre fatti misurabili
@@ -317,7 +320,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 9 · GOOGLE
 PAGES.append({"body": f"""
-  <div class="eyebrow">07 — Novità · Google</div>
+  <div class="eyebrow">09 — Novità · Google</div>
   <h2>Moltiplicare il canale che già funziona</h2>
   <div class="rule"></div>
   <p class="lead">Google porta oltre il 90% dei clienti. La regola in performance marketing è una
@@ -335,17 +338,19 @@ PAGES.append({"body": f"""
      'Chi visita il sito, guarda i prezzi e non prenota oggi è il contatto più economico da recuperare. Da ottobre parte una piccola campagna che lo riavvicina nei giorni successivi con un&#39;offerta chiara sul trattamento che stava guardando.')}
   </div>
   <div class="note amber" style="margin-top:5mm">
-    <h4>E il budget tolto a Facebook e TikTok?</h4>
-    <p style="margin-bottom:0">Va interamente su Google. Non è un taglio di spesa: è uno spostamento
-    verso l'unico canale dove ogni euro è tracciabile fino alla prenotazione. Facebook resta attivo
-    solo come vetrina organica, TikTok viene messo in pausa fino a quando non ci sarà un formato
-    testato che porta contatti.</p>
+    <h4>E Facebook e TikTok?</h4>
+    <p style="margin-bottom:0"><strong>Facebook non si spegne: cambia ruolo.</strong> Smettiamo di
+    spendere in campagne a freddo, dove ha dimostrato di non rendere, e lo usiamo per quello in cui
+    funziona davvero — destinazione del remarketing Meta e ripubblicazione dei contenuti Instagram.
+    È da qui che arriva la crescita prevista su questo canale da ottobre in poi.
+    <strong>TikTok va invece messo in pausa</strong>, e nella pagina seguente è spiegato esattamente
+    perché e a quali condizioni ha senso riaccenderlo.</p>
   </div>
 """})
 
 # ---------------------------------------------------------------- 10 · SOCIAL E TREATWELL
 PAGES.append({"body": f"""
-  <div class="eyebrow">08 — Novità · Contenuti e Treatwell</div>
+  <div class="eyebrow">10 — Novità · Contenuti e Treatwell</div>
   <h2>Trasformare 4 clienti gratuiti in un canale vero</h2>
   <div class="rule"></div>
   <p class="lead">Instagram ha portato 4 clienti senza un euro di pubblicità e senza un piano.
@@ -360,33 +365,14 @@ PAGES.append({"body": f"""
      'Treatwell non è solo un widget sul sito: è un motore di ricerca dove i clienti cercano centri nella loro zona. Sistemiamo foto, descrizioni dei trattamenti, durata e prezzi, e attiviamo le offerte sui trattamenti a bassa occupazione per riempire gli orari vuoti infrasettimanali.')}
   {row(I.MAPS,'i-google','Profilo Google Business presidiato ogni settimana <span class="pill new" style="margin-left:2mm">Nuovo</span>',
      'Post settimanali, foto nuove, risposta a tutte le recensioni e sezione domande e risposte compilata. È gratis, incide direttamente sul posizionamento nelle ricerche locali e sulle richieste di indicazioni stradali — e oggi è la leva meno sfruttata di tutte.')}
-  </div>
-  <hr class="hr tight"/>
-  <div class="g2">
-    <div class="note">
-      <h4>Cosa chiediamo al centro</h4>
-      <ul class="ticks" style="font-size:8.6pt">
-        <li>Foto e brevi video dei trattamenti, anche fatti col telefono</li>
-        <li>Segnalarci quando un cliente dice &laquo;vi ho trovati su…&raquo;</li>
-        <li>Rispondere ai WhatsApp entro poche ore negli orari di apertura</li>
-        <li>Chiedere la recensione Google a fine trattamento, sempre</li>
-      </ul>
-    </div>
-    <div class="note vio">
-      <h4>Cosa facciamo noi</h4>
-      <ul class="ticks" style="font-size:8.6pt">
-        <li>Gestione completa della campagna Google e del remarketing</li>
-        <li>Piano contenuti mensile e testi già pronti da pubblicare</li>
-        <li>Ottimizzazione scheda Treatwell e profilo Google Business</li>
-        <li>Report mensile con i clienti reali per canale, come questo</li>
-      </ul>
-    </div>
+  {row(I.TT,'i-tt','TikTok: pausa consapevole, non abbandono <span class="pill" style="margin-left:2mm">In pausa</span>',
+     'Zero clienti in un mese non è un caso: è il formato sbagliato. Alla pagina seguente è spiegato cosa servirebbe per riaccenderlo davvero.')}
   </div>
 """})
 
 # ---------------------------------------------------------------- 11 · CLIENTI ESISTENTI
 PAGES.append({"body": f"""
-  <div class="eyebrow">09 — Novità · Il cliente che torna</div>
+  <div class="eyebrow">12 — Novità · Il cliente che torna</div>
   <h2>Il cliente più redditizio è quello già venuto una volta</h2>
   <div class="rule"></div>
   <p class="lead">Finora tutto il lavoro è servito a far entrare gente nuova. Da ottobre partiamo
@@ -410,7 +396,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 12 · ROADMAP
 PAGES.append({"body": f"""
-  <div class="eyebrow">10 — Roadmap</div>
+  <div class="eyebrow">13 — Roadmap</div>
   <h2>Le prossime otto settimane, settimana per settimana</h2>
   <div class="rule"></div>
   <p class="lead">Nessuna azione generica. Ogni settimana ha un intervento preciso e un risultato
@@ -448,48 +434,58 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 13 · PROIEZIONE
 PAGES.append({"body": f"""
-  <div class="eyebrow">11 — Obiettivi</div>
+  <div class="eyebrow">14 — Obiettivi</div>
   <h2>Dove possiamo arrivare in sei mesi</h2>
   <div class="rule"></div>
-  <p class="lead">Proiezione costruita sui numeri reali di agosto e sulle azioni descritte in questo
-  piano: crescita del 15% al mese sui clienti da Google grazie all'aumento di budget e
-  all'ottimizzazione, del 25% al mese su Instagram grazie al piano contenuti, con Facebook e TikTok
-  in uscita progressiva.</p>
-  <table style="margin:6mm 0 4mm">
+  <p class="lead">Proiezione costruita sul dato reale di agosto e sulle azioni di questo piano:
+  <strong>Google</strong> cresce del 15% al mese grazie all&#39;aumento di budget e all&#39;ottimizzazione;
+  <strong>Instagram</strong> accelera da ottobre, quando il piano contenuti entra a regime;
+  <strong>Facebook</strong> riparte da ottobre nel suo nuovo ruolo — remarketing Meta e contenuti
+  ripubblicati — e non più come campagna a freddo; <strong>TikTok</strong> resta in pausa fino a
+  quando non ci sono le condizioni descritte alla sezione 11.</p>
+  <table style="margin:5mm 0 4mm">
     <thead><tr>
       <th>Mese</th><th class="n">Google</th><th class="n">Instagram</th>
-      <th class="n">Facebook + TikTok</th><th class="n">Clienti totali</th><th style="width:22%">Andamento</th>
+      <th class="n">Facebook</th><th class="n">TikTok</th><th class="n">Totale</th><th style="width:17%">Andamento</th>
     </tr></thead>
     <tbody>
       <tr><td class="ch">Agosto 2026 <span class="pill gold" style="margin-left:2mm">Dato reale</span></td>
-          <td class="n">55</td><td class="n">4</td><td class="n">1–2</td><td class="n"><strong>≈ 61</strong></td>
-          <td><span class="bar"><i class="gold" style="width:43%"></i></span></td></tr>
-      <tr><td class="ch">Settembre 2026</td><td class="n">63</td><td class="n">5</td><td class="n">1</td>
-          <td class="n"><strong>≈ 69</strong></td><td><span class="bar"><i style="width:48%"></i></span></td></tr>
-      <tr><td class="ch">Ottobre 2026</td><td class="n">73</td><td class="n">6</td><td class="n">1</td>
-          <td class="n"><strong>≈ 80</strong></td><td><span class="bar"><i style="width:56%"></i></span></td></tr>
-      <tr><td class="ch">Novembre 2026</td><td class="n">84</td><td class="n">8</td><td class="n">—</td>
-          <td class="n"><strong>≈ 92</strong></td><td><span class="bar"><i style="width:64%"></i></span></td></tr>
-      <tr><td class="ch">Dicembre 2026</td><td class="n">96</td><td class="n">10</td><td class="n">—</td>
-          <td class="n"><strong>≈ 106</strong></td><td><span class="bar"><i style="width:74%"></i></span></td></tr>
-      <tr><td class="ch">Gennaio 2027</td><td class="n">111</td><td class="n">12</td><td class="n">—</td>
-          <td class="n"><strong>≈ 123</strong></td><td><span class="bar"><i style="width:86%"></i></span></td></tr>
-      <tr><td class="ch">Febbraio 2027</td><td class="n">127</td><td class="n">15</td><td class="n">—</td>
-          <td class="n"><strong>≈ 143</strong></td><td><span class="bar"><i style="width:100%"></i></span></td></tr>
+          <td class="n">55</td><td class="n">4</td><td class="n">1–2</td><td class="n">0</td>
+          <td class="n"><strong>≈ 61</strong></td>
+          <td><span class="bar"><i class="gold" style="width:38%"></i></span></td></tr>
+      <tr><td class="ch">Settembre 2026</td><td class="n">63</td><td class="n">5</td><td class="n">2</td>
+          <td class="n">pausa</td><td class="n"><strong>≈ 70</strong></td>
+          <td><span class="bar"><i style="width:43%"></i></span></td></tr>
+      <tr><td class="ch">Ottobre 2026</td><td class="n">73</td><td class="n">8</td><td class="n">6</td>
+          <td class="n">pausa</td><td class="n"><strong>≈ 87</strong></td>
+          <td><span class="bar"><i style="width:54%"></i></span></td></tr>
+      <tr><td class="ch">Novembre 2026</td><td class="n">84</td><td class="n">11</td><td class="n">8</td>
+          <td class="n">pausa</td><td class="n"><strong>≈ 103</strong></td>
+          <td><span class="bar"><i style="width:64%"></i></span></td></tr>
+      <tr><td class="ch">Dicembre 2026</td><td class="n">96</td><td class="n">14</td><td class="n">10</td>
+          <td class="n">pausa</td><td class="n"><strong>≈ 120</strong></td>
+          <td><span class="bar"><i style="width:74%"></i></span></td></tr>
+      <tr><td class="ch">Gennaio 2027</td><td class="n">111</td><td class="n">17</td><td class="n">12</td>
+          <td class="n">pausa</td><td class="n"><strong>≈ 140</strong></td>
+          <td><span class="bar"><i style="width:86%"></i></span></td></tr>
+      <tr><td class="ch">Febbraio 2027</td><td class="n">127</td><td class="n">21</td><td class="n">14</td>
+          <td class="n">pausa</td><td class="n"><strong>≈ 162</strong></td>
+          <td><span class="bar"><i style="width:100%"></i></span></td></tr>
     </tbody>
   </table>
-  <div class="g3" style="margin:5mm 0">
-    {kpi("+134%","Crescita attesa ago → feb","Da ≈61 a ≈143 clienti/mese","vio")}
-    {kpi("≈ 15%","Crescita media mensile","Composta, non lineare")}
-    {kpi("&lt; €18","Costo per cliente obiettivo","Su campagna Google")}
+  <div class="g3" style="margin:4mm 0">
+    {kpi("+166%","Crescita clienti ago &rarr; feb","Da circa 61 a circa 162 al mese","vio")}
+    {kpi("&asymp; &euro;2.800","Fatturato tracciato a febbraio","Da circa &euro;1.065 di agosto")}
+    {kpi("&lt; &euro;18","Costo per cliente obiettivo","Su campagna Google")}
   </div>
   <div class="note amber">
     <h4>Va detto con chiarezza</h4>
-    <p style="margin-bottom:0">Questa è una <strong>proiezione, non una garanzia</strong>. Si basa su
-    un dato reale di partenza (55 clienti da Google ad agosto) e su ipotesi di crescita dichiarate e
-    verificabili mese per mese. Se un mese la crescita non c'è, lo scriveremo nel report e
-    cambieremo la leva — esattamente come abbiamo fatto con TikTok. Nessuno in questo settore può
-    promettere numeri: si può però promettere di misurarli e di dirli come sono.</p>
+    <p style="margin-bottom:0">Questa è una <strong>proiezione, non una garanzia</strong>. Parte da un
+    dato reale (55 clienti da Google e circa &euro;1.065 di fatturato tracciato ad agosto) e da ipotesi
+    di crescita dichiarate, verificabili mese per mese. La stima di fatturato usa il valore medio per
+    cliente registrato ad agosto e resta prudente, perché copre solo ciò che passa da Treatwell e le
+    stime su Google e Instagram. Se un mese la crescita non c&#39;è, lo scriveremo nel report e
+    cambieremo la leva — esattamente come abbiamo fatto con TikTok.</p>
   </div>
 """})
 
@@ -527,3 +523,180 @@ PAGES.append({"body": f"""
     <div class="s">Documento preparato per Essenza d'Oriente · Centro Olistico, Alessandria</div>
   </div>
 """})
+
+# ================================================================
+# REVISIONE — crescita storica, fatturato tracciato, TikTok in pausa
+# ================================================================
+
+PAGE_CRESCITA = {"body": f"""
+  <div class="eyebrow">03 — Crescita</div>
+  <h2>Da 13 a 61 clienti al mese</h2>
+  <div class="rule"></div>
+  <p class="lead">La curva completa dei sei mesi, canale per canale. Due salti diversi:
+  il primo, da marzo a luglio, prodotto dal sito e dalle pagine dei trattamenti;
+  il secondo, ad agosto, prodotto dalla campagna Google.</p>
+  <table style="margin:6mm 0 4mm">
+    <thead><tr>
+      <th>Mese</th><th class="n">Google</th><th class="n">Instagram</th><th class="n">Facebook</th>
+      <th class="n">TikTok</th><th class="n">Totale</th><th style="width:19%">Andamento</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="ch">Marzo 2026</td><td class="n">10</td><td class="n">2</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>13</strong></td>
+          <td><span class="bar"><i class="grey" style="width:21%"></i></span></td></tr>
+      <tr><td class="ch">Aprile 2026</td><td class="n">13</td><td class="n">2</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>16</strong></td>
+          <td><span class="bar"><i class="grey" style="width:26%"></i></span></td></tr>
+      <tr><td class="ch">Maggio 2026</td><td class="n">17</td><td class="n">2</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>20</strong></td>
+          <td><span class="bar"><i class="grey" style="width:33%"></i></span></td></tr>
+      <tr><td class="ch">Giugno 2026</td><td class="n">21</td><td class="n">3</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>25</strong></td>
+          <td><span class="bar"><i class="grey" style="width:41%"></i></span></td></tr>
+      <tr><td class="ch">Luglio 2026</td><td class="n">28</td><td class="n">3</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>32</strong></td>
+          <td><span class="bar"><i class="grey" style="width:52%"></i></span></td></tr>
+      <tr><td class="ch">Agosto 2026 <span class="pill gold" style="margin-left:2mm">Dato misurato</span></td>
+          <td class="n">55</td><td class="n">4</td><td class="n">1–2</td>
+          <td class="n">0</td><td class="n"><strong>≈ 61</strong></td>
+          <td><span class="bar"><i class="gold" style="width:100%"></i></span></td></tr>
+    </tbody>
+  </table>
+  <div class="g3" style="margin:5mm 0">
+    {kpi("+369%","Crescita marzo → agosto","Da 13 a circa 61 clienti/mese","vio")}
+    {kpi("×2,5","Effetto sito e pagine","Marzo → luglio, senza pubblicità")}
+    {kpi("×1,9","Effetto campagna Google","Luglio → agosto, in un mese")}
+  </div>
+  <div class="note vio">
+    <h4>Le due leve, separate</h4>
+    <p style="margin-bottom:0">Da marzo a luglio non c&#39;era pubblicità attiva: la crescita da 13 a 32
+    clienti è arrivata dal sito rifatto, dalle otto pagine dei trattamenti e dal posizionamento nelle
+    ricerche locali. <strong>Poi, il 27 luglio, è partita la campagna Google</strong>: in un solo mese
+    i clienti sono quasi raddoppiati di nuovo, da 32 a 61. Le due leve funzionano insieme —
+    ed è per questo che spegnere la seconda riporta i numeri indietro di mesi, non di settimane.</p>
+  </div>
+"""}
+
+PAGE_FATTURATO = {"body": f"""
+  <div class="eyebrow">05 — Fatturato tracciato</div>
+  <h2>Quanto hanno portato davvero i canali, in euro</h2>
+  <div class="rule"></div>
+  <p class="lead">Non solo clienti: incasso. Treatwell è un dato esatto, perché passa dal gestionale;
+  Google e Instagram sono stime prudenti, perché parte di quel fatturato entra in cassa senza passare
+  da un sistema che lo registri.</p>
+  <table style="margin:5mm 0 3mm">
+    <thead><tr>
+      <th>Periodo</th><th class="n">Treatwell</th><th class="n">Google</th>
+      <th class="n">Instagram</th><th class="n">Totale tracciato</th><th style="width:16%">Andamento</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="ch">Luglio 2026</td><td class="n">€290</td><td class="n">≈ €150–200</td>
+          <td class="n">—</td><td class="n"><strong>≈ €470</strong></td>
+          <td><span class="bar"><i class="grey" style="width:44%"></i></span></td></tr>
+      <tr><td class="ch">Agosto 2026</td><td class="n"><strong>€585</strong></td><td class="n">≈ €420</td>
+          <td class="n">≈ €60</td><td class="n"><strong>≈ €1.065</strong></td>
+          <td><span class="bar"><i class="gold" style="width:100%"></i></span></td></tr>
+      <tr><td class="ch">1–18 settembre 2026</td><td class="n">€290</td><td class="n">in corso</td>
+          <td class="n">in corso</td><td class="n">mese in corso</td>
+          <td><span class="bar"><i style="width:27%"></i></span></td></tr>
+    </tbody>
+  </table>
+  <div class="g3 compact" style="margin:3mm 0 4mm">
+    {kpi("+127%","Fatturato tracciato lug → ago","Da ≈€470 a ≈€1.065","vio")}
+    {kpi("+102%","Solo Treatwell lug → ago","Da €290 a €585")}
+    {kpi("€41,8","Scontrino medio Treatwell","Su 14 trattamenti ad agosto")}
+  </div>
+  <div class="g2u">
+    <div class="card">
+      <h4>Cosa è stato prenotato su Treatwell ad agosto</h4>
+      <table style="margin-top:2mm">
+        <tbody>
+          <tr><td class="ch">Massaggio con oli essenziali</td><td class="n">7</td></tr>
+          <tr><td class="ch">Massaggio spa</td><td class="n">2</td></tr>
+          <tr><td class="ch">Riflessologia plantare</td><td class="n">2</td></tr>
+          <tr><td class="ch">Pedicure</td><td class="n">2</td></tr>
+          <tr><td class="ch">Coppettazione</td><td class="n">1</td></tr>
+        </tbody>
+        <tfoot><tr><td>Totale trattamenti · €585</td><td class="n">14</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="note amber">
+      <h4>Perché su Google non c&#39;è il dettaglio</h4>
+      <p>I clienti che arrivano da Google prenotano quasi sempre <strong>per telefono o su
+      WhatsApp</strong>: la prenotazione non passa da un gestionale, quindi il singolo trattamento non
+      viene registrato da nessuna parte.</p>
+      <p style="margin-bottom:0">I ≈ €420 di agosto sono ricostruiti dai contatti arrivati dal canale
+      e dallo scontrino medio del centro: stima prudente, il valore reale è probabilmente più alto.</p>
+    </div>
+  </div>
+  <div class="note" style="margin-top:4mm">
+    <h4>E settembre?</h4>
+    <p style="margin-bottom:0">Al 18 settembre Treatwell è a <strong>€290</strong>, in linea con luglio.
+    Settembre è un mese altalenante e va letto per quello che è: rientro dalle ferie, spese di scuola e
+    attività tutte insieme, stipendi non ancora a regime. Il benessere è la prima voce che si rimanda.
+    <strong>Il mese che conta davvero è ottobre</strong>: rientro completato, spese assorbite, freddo e
+    contratture. È lì che si misura se il piano funziona.</p>
+  </div>
+"""}
+
+PAGES.insert(3, PAGE_CRESCITA)
+PAGES.insert(5, PAGE_FATTURATO)
+
+# ---------------------------------------------------------------- TikTok + collaborazione
+PAGE_TIKTOK = {"body": f"""
+  <div class="eyebrow">11 — TikTok</div>
+  <h2>Perché TikTok va messo in pausa (e cosa serve per riaccenderlo)</h2>
+  <div class="rule"></div>
+  <p class="lead">Zero clienti in un mese non è sfortuna e non è l&#39;algoritmo: è il formato.
+  Metterlo in pausa è una scelta tecnica, non una resa.</p>
+  <div class="g2" style="margin-top:5mm">
+    <div class="card quiet">
+      <h4>Perché non funziona oggi</h4>
+      <ul class="ticks grey">
+        <li><strong>Sono video di massaggi senza volto.</strong> Mani che lavorano su una schiena: nessuno resta a guardare oltre i primi due secondi</li>
+        <li><strong>Manca il ritmo.</strong> TikTok premia tagli veloci e movimento: un video lento viene mostrato a poche persone e poi fermato</li>
+        <li><strong>Manca una persona davanti alla camera.</strong> Su TikTok funzionano le facce, la voce e i POV — non le riprese anonime del lettino</li>
+        <li><strong>Manca la frequenza.</strong> Il canale richiede pubblicazioni molto ravvicinate per essere spinto: pubblicare ogni tanto equivale a non pubblicare</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--violet)">Cosa servirebbe per riaccenderlo</h4>
+      <ul class="ticks">
+        <li><strong>Una persona disposta a stare davanti alla camera</strong> con continuità: è la condizione senza la quale tutto il resto non serve</li>
+        <li><strong>Formato POV</strong>: «POV: entri da noi con il mal di schiena da tre settimane», girato dal punto di vista del cliente</li>
+        <li><strong>Ritmo alto</strong>: 15–25 secondi, tagli ogni 1–2 secondi, testo grande in sovrimpressione, audio del momento</li>
+        <li><strong>Almeno 4–5 video a settimana</strong> per due mesi consecutivi, altrimenti il canale non riparte</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note amber" style="margin-top:4mm">
+    <h4>La decisione, detta come la pensiamo</h4>
+    <p style="margin-bottom:0">Finché non c&#39;è qualcuno disposto a girare con quella frequenza e a
+    farsi vedere in volto, ogni ora spesa su TikTok è un&#39;ora tolta a Instagram e a Google, dove i
+    clienti arrivano davvero. <strong>Lo mettiamo in pausa adesso</strong> e lo riapriamo quando la
+    condizione c&#39;è: noi prepariamo format, copioni e montaggio, il centro mette la persona davanti
+    alla camera.</p>
+  </div>
+  <hr class="hr" style="margin:4mm 0"/>
+  <div class="g2">
+    <div class="note">
+      <h4>Cosa chiediamo al centro</h4>
+      <ul class="ticks" style="font-size:8.6pt">
+        <li>Foto e brevi video dei trattamenti, anche fatti col telefono</li>
+        <li>Segnalarci quando un cliente dice &laquo;vi ho trovati su…&raquo;</li>
+        <li>Rispondere ai WhatsApp entro poche ore negli orari di apertura</li>
+        <li>Chiedere la recensione Google a fine trattamento, sempre</li>
+      </ul>
+    </div>
+    <div class="note vio">
+      <h4>Cosa facciamo noi</h4>
+      <ul class="ticks" style="font-size:8.6pt">
+        <li>Gestione completa della campagna Google e del remarketing</li>
+        <li>Piano contenuti mensile e testi già pronti da pubblicare</li>
+        <li>Ottimizzazione scheda Treatwell e profilo Google Business</li>
+        <li>Report mensile con i clienti reali per canale, come questo</li>
+      </ul>
+    </div>
+  </div>
+"""}
+PAGES.insert(12, PAGE_TIKTOK)

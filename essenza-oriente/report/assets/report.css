@@ -94,6 +94,9 @@ strong{ color:var(--ink); font-weight:700; }
 .kpi .v{ font-size:30pt; font-weight:700; line-height:1; letter-spacing:-.035em; color:var(--ink); font-variant-numeric:tabular-nums; }
 .kpi .v.vio{ color:var(--violet); }
 .kpi .v.sm{ font-size:22pt; }
+.compact .kpi{ padding:3.4mm 2.5mm; }
+.compact .kpi .v{ font-size:24pt; }
+.compact .kpi .k{ margin-top:2mm; }
 .kpi .k{ font-size:7pt; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--mut); margin-top:3mm; line-height:1.4; }
 .kpi .d{ font-size:7pt; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:#C2C2CE; margin-top:1.5mm; line-height:1.4; }
 

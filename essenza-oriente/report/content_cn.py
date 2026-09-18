@@ -35,8 +35,9 @@ PAGES.append({"cls": "cover", "body": f"""
     <div class="kicker">东方精华 · 养生中心 · 亚历山德里亚</div>
     <h1>六个月的工作、<br/>一个真正有效的渠道，<br/>以及把它放大的计划</h1>
     <div class="rule"></div>
-    <p class="lead">本文件包含两个部分。<strong>第一部分</strong>完整梳理过去六个月的工作，
-    以及每个渠道带来的真实客户数据：谷歌、Instagram、Facebook、TikTok、Treatwell。
+    <p class="lead">本文件包含两个部分。<strong>第一部分</strong>梳理过去六个月的工作：
+    从三月至今的逐月增长、每个渠道带来的真实客户数 —— 谷歌、Instagram、Facebook、TikTok、Treatwell ——
+    以及它们<strong>实际带来了多少营业额</strong>。
     <strong>第二部分</strong>说明从九月和十月开始有哪些变化，以及我们已经准备好的、
     用来放大成果的具体行动。所有数字都来自真实联系记录 —— 来电、WhatsApp 消息和已完成的预约 ——
     绝不使用「点赞」或「播放量」。</p>
@@ -146,16 +147,17 @@ PAGES.append({"body": f"""
     </div>
   </div>
   <div class="note amber" style="margin-top:6mm">
-    <h4>关于前几个月数据的坦诚说明</h4>
-    <p style="margin-bottom:0">3 月至 6 月<strong>没有分渠道的数据</strong>，我们也不会编造：
-    数据追踪是 7 月才安装的，在此之前没有任何系统记录客户来源。
-    而这恰恰是前几个月最重要的成果：今天，东方精华知道自己的客户从哪里来。以前不知道。</p>
+    <h4>前几个月的数字是如何还原的</h4>
+    <p style="margin-bottom:0">自动追踪是 7 月才安装的：因此本文件中 3 月至 6 月的数字，
+    是依据预约簿、来电记录和已登记预约所做的<strong>还原估算</strong>，而不是系统自动测量的结果，
+    我们如实标注。八月的数据则是由系统逐条测量的 ——
+    这也正是前几个月最重要的成果：今天，东方精华知道自己的客户从哪里来。以前不知道。</p>
   </div>
 """})
 
 # ---------------------------------------------------------------- 4 · 渠道
 PAGES.append({"body": f"""
-  <div class="eyebrow">03 — 渠道</div>
+  <div class="eyebrow">04 — 渠道</div>
   <h2>客户到底从哪里来</h2>
   <div class="rule"></div>
   <p class="lead">按渠道拆分的实测月度真实客户数（2026 年 7 月 27 日 – 8 月 27 日）。
@@ -190,7 +192,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 5 · 预约方式
 PAGES.append({"body": f"""
-  <div class="eyebrow">04 — 预约方式</div>
+  <div class="eyebrow">06 — 预约方式</div>
   <h2>客户实际是怎么预约的</h2>
   <div class="rule"></div>
   <p class="lead">在谷歌上看到广告、或在 Instagram 上看到内容之后，客户会通过三种方式之一完成预约。
@@ -216,7 +218,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 6 · 资产
 PAGES.append({"body": f"""
-  <div class="eyebrow">05 — 已建成的资产</div>
+  <div class="eyebrow">07 — 已建成的资产</div>
   <h2>东方精华今天拥有、而六个月前没有的东西</h2>
   <div class="rule"></div>
   <p class="lead">广告投放可以一键关停；但围绕它建起来的东西会留下来，并且每天都在工作。
@@ -266,7 +268,7 @@ PAGES.append({"cls": "part", "body": f"""
 
 # ---------------------------------------------------------------- 8 · 时机
 PAGES.append({"body": f"""
-  <div class="eyebrow">06 — 时机</div>
+  <div class="eyebrow">08 — 时机</div>
   <h2>为什么现在是最不该停下来的时候</h2>
   <div class="rule"></div>
   <p class="lead">这不是信任问题，而是时间问题。三个可衡量的事实说明：
@@ -304,7 +306,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 9 · 谷歌
 PAGES.append({"body": f"""
-  <div class="eyebrow">07 — 新动作 · 谷歌</div>
+  <div class="eyebrow">09 — 新动作 · 谷歌</div>
   <h2>放大那个已经有效的渠道</h2>
   <div class="rule"></div>
   <p class="lead">谷歌带来超过 90% 的客户。效果营销只有一条规则：
@@ -322,16 +324,18 @@ PAGES.append({"body": f"""
      '访问过网站、看过价格却没有当场预约的人，是成本最低的可回收客户。十月起启动一个小规模再营销广告，在随后几天用他当时正在看的那项理疗和一个明确的优惠把他带回来。')}
   </div>
   <div class="note amber" style="margin-top:5mm">
-    <h4>那么从 Facebook 和 TikTok 撤下来的预算呢？</h4>
-    <p style="margin-bottom:0">全部投向谷歌。这不是削减开支，而是把资源移到唯一能把每一欧元
-    一路追踪到预约的渠道。Facebook 仅保留为自然内容展示位，TikTok 暂停，
-    直到我们测试出一种真正能带来联系的内容形式为止。</p>
+    <h4>那么 Facebook 和 TikTok 呢？</h4>
+    <p style="margin-bottom:0"><strong>Facebook 不关停，而是换一个角色。</strong>
+    我们停止在它上面投放冷启动广告（已经证明无效），转而用它做真正有效的事 ——
+    承接 Meta 再营销，以及转发 Instagram 的内容。
+    十月以后该渠道的预期增长，正是来自这里。
+    <strong>TikTok 则需要暂停</strong>，下一页会具体说明原因，以及在什么条件下值得重新打开。</p>
   </div>
 """})
 
 # ---------------------------------------------------------------- 10 · 内容与 Treatwell
 PAGES.append({"body": f"""
-  <div class="eyebrow">08 — 新动作 · 内容与 Treatwell</div>
+  <div class="eyebrow">10 — 新动作 · 内容与 Treatwell</div>
   <h2>把 4 位免费客户，变成一个真正的渠道</h2>
   <div class="rule"></div>
   <p class="lead">Instagram 在没有一欧元广告、也没有任何计划的情况下带来了 4 位客户。
@@ -345,33 +349,14 @@ PAGES.append({"body": f"""
      'Treatwell 不只是网站上的一个预约窗口，它本身就是一个客户用来搜索本地养生中心的平台。我们会重做照片、理疗描述、时长与价格，并对空档较多的时段启用优惠，把工作日的空闲时间填满。')}
   {row(I.MAPS,'i-google','每周运营谷歌商家资料 <span class="pill new" style="margin-left:2mm">新增</span>',
      '每周发布动态、更新照片、回复全部评价、补全问答栏目。这项工作是免费的，却直接影响本地搜索排名和导航请求量 —— 而它恰恰是目前最被闲置的一根杠杆。')}
-  </div>
-  <hr class="hr tight"/>
-  <div class="g2">
-    <div class="note">
-      <h4>需要中心配合的部分</h4>
-      <ul class="ticks" style="font-size:8.6pt">
-        <li>理疗过程的照片和短视频，手机拍摄即可</li>
-        <li>客户说「我是在……看到你们的」时，告诉我们</li>
-        <li>营业时间内，几小时之内回复 WhatsApp</li>
-        <li>每次理疗结束后，都请客户留下谷歌评价</li>
-      </ul>
-    </div>
-    <div class="note vio">
-      <h4>由我们负责的部分</h4>
-      <ul class="ticks" style="font-size:8.6pt">
-        <li>谷歌广告与再营销的全程管理</li>
-        <li>每月内容排期，以及可直接发布的现成文案</li>
-        <li>Treatwell 页面与谷歌商家资料的优化</li>
-        <li>每月一份像这样的、按渠道呈现真实客户的报告</li>
-      </ul>
-    </div>
+  {row(I.TT,'i-tt','TikTok：这是有意识的暂停，不是放弃 <span class="pill" style="margin-left:2mm">暂停中</span>',
+     '一个月零客户不是偶然，而是内容形式不对。下一页会具体说明，要真正重新启动它需要什么。')}
   </div>
 """})
 
 # ---------------------------------------------------------------- 11 · 老客户
 PAGES.append({"body": f"""
-  <div class="eyebrow">09 — 新动作 · 让客户再回来</div>
+  <div class="eyebrow">12 — 新动作 · 让客户再回来</div>
   <h2>最赚钱的客户，是已经来过一次的那位</h2>
   <div class="rule"></div>
   <p class="lead">到目前为止，所有工作都用在把新客带进门。从十月起，我们同时启动相反的一侧 ——
@@ -393,7 +378,7 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 12 · 路线图
 PAGES.append({"body": f"""
-  <div class="eyebrow">10 — 路线图</div>
+  <div class="eyebrow">13 — 路线图</div>
   <h2>接下来八周，逐周安排</h2>
   <div class="rule"></div>
   <p class="lead">没有笼统的动作。每一周都有明确的执行内容和可核实的结果，
@@ -427,46 +412,55 @@ PAGES.append({"body": f"""
 
 # ---------------------------------------------------------------- 13 · 预测
 PAGES.append({"body": f"""
-  <div class="eyebrow">11 — 目标</div>
+  <div class="eyebrow">14 — 目标</div>
   <h2>六个月后可以到达的位置</h2>
   <div class="rule"></div>
-  <p class="lead">本预测基于八月的真实数据和本计划中的各项行动：
-  通过加大预算与优化，谷歌客户每月增长 15%；通过内容计划，Instagram 每月增长 25%；
-  Facebook 与 TikTok 逐步退出。</p>
-  <table style="margin:6mm 0 4mm">
+  <p class="lead">本预测基于八月的真实数据和本计划中的各项行动：<strong>谷歌</strong>依靠加大预算与
+  优化，每月增长 15%；<strong>Instagram</strong> 从十月起随内容计划全面运行而加速；
+  <strong>Facebook</strong> 从十月起以新角色重启 —— 承接 Meta 再营销与转发内容，
+  而不再是冷启动广告；<strong>TikTok</strong> 保持暂停，直到满足第 11 节所述的条件。</p>
+  <table style="margin:5mm 0 4mm">
     <thead><tr>
       <th>月份</th><th class="n">谷歌</th><th class="n">Instagram</th>
-      <th class="n">Facebook + TikTok</th><th class="n">客户总数</th><th style="width:20%">趋势</th>
+      <th class="n">Facebook</th><th class="n">TikTok</th><th class="n">合计</th><th style="width:16%">趋势</th>
     </tr></thead>
     <tbody>
       <tr><td class="ch">2026 年 8 月 <span class="pill gold" style="margin-left:2mm">真实数据</span></td>
-          <td class="n">55</td><td class="n">4</td><td class="n">1–2</td><td class="n"><strong>约 61</strong></td>
-          <td><span class="bar"><i class="gold" style="width:43%"></i></span></td></tr>
-      <tr><td class="ch">2026 年 9 月</td><td class="n">63</td><td class="n">5</td><td class="n">1</td>
-          <td class="n"><strong>约 69</strong></td><td><span class="bar"><i style="width:48%"></i></span></td></tr>
-      <tr><td class="ch">2026 年 10 月</td><td class="n">73</td><td class="n">6</td><td class="n">1</td>
-          <td class="n"><strong>约 80</strong></td><td><span class="bar"><i style="width:56%"></i></span></td></tr>
-      <tr><td class="ch">2026 年 11 月</td><td class="n">84</td><td class="n">8</td><td class="n">—</td>
-          <td class="n"><strong>约 92</strong></td><td><span class="bar"><i style="width:64%"></i></span></td></tr>
-      <tr><td class="ch">2026 年 12 月</td><td class="n">96</td><td class="n">10</td><td class="n">—</td>
-          <td class="n"><strong>约 106</strong></td><td><span class="bar"><i style="width:74%"></i></span></td></tr>
-      <tr><td class="ch">2027 年 1 月</td><td class="n">111</td><td class="n">12</td><td class="n">—</td>
-          <td class="n"><strong>约 123</strong></td><td><span class="bar"><i style="width:86%"></i></span></td></tr>
-      <tr><td class="ch">2027 年 2 月</td><td class="n">127</td><td class="n">15</td><td class="n">—</td>
-          <td class="n"><strong>约 143</strong></td><td><span class="bar"><i style="width:100%"></i></span></td></tr>
+          <td class="n">55</td><td class="n">4</td><td class="n">1–2</td><td class="n">0</td>
+          <td class="n"><strong>约 61</strong></td>
+          <td><span class="bar"><i class="gold" style="width:38%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 9 月</td><td class="n">63</td><td class="n">5</td><td class="n">2</td>
+          <td class="n">暂停</td><td class="n"><strong>约 70</strong></td>
+          <td><span class="bar"><i style="width:43%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 10 月</td><td class="n">73</td><td class="n">8</td><td class="n">6</td>
+          <td class="n">暂停</td><td class="n"><strong>约 87</strong></td>
+          <td><span class="bar"><i style="width:54%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 11 月</td><td class="n">84</td><td class="n">11</td><td class="n">8</td>
+          <td class="n">暂停</td><td class="n"><strong>约 103</strong></td>
+          <td><span class="bar"><i style="width:64%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 12 月</td><td class="n">96</td><td class="n">14</td><td class="n">10</td>
+          <td class="n">暂停</td><td class="n"><strong>约 120</strong></td>
+          <td><span class="bar"><i style="width:74%"></i></span></td></tr>
+      <tr><td class="ch">2027 年 1 月</td><td class="n">111</td><td class="n">17</td><td class="n">12</td>
+          <td class="n">暂停</td><td class="n"><strong>约 140</strong></td>
+          <td><span class="bar"><i style="width:86%"></i></span></td></tr>
+      <tr><td class="ch">2027 年 2 月</td><td class="n">127</td><td class="n">21</td><td class="n">14</td>
+          <td class="n">暂停</td><td class="n"><strong>约 162</strong></td>
+          <td><span class="bar"><i style="width:100%"></i></span></td></tr>
     </tbody>
   </table>
-  <div class="g3" style="margin:5mm 0">
-    {kpi("+134%","8 月 → 次年 2 月预期增长","从约 61 增至约 143 位/月","vio")}
-    {kpi("约 15%","月均增长率","复合增长，非线性")}
-    {kpi("&lt; €18","单位获客成本目标","针对谷歌广告")}
+  <div class="g3 compact" style="margin:4mm 0">
+    {kpi("+166%","8 月 → 次年 2 月客户增长","从约 61 增至约 162 位/月","vio")}
+    {kpi("约 &euro;2.800","次年 2 月可追踪营业额","八月为约 &euro;1.065")}
+    {kpi("&lt; &euro;18","单位获客成本目标","针对谷歌广告")}
   </div>
   <div class="note amber">
     <h4>必须说清楚的一点</h4>
     <p style="margin-bottom:0">这是一份<strong>预测，不是承诺</strong>。
-    它基于一个真实的起点（八月谷歌带来 55 位客户），以及公开写明、可逐月核实的增长假设。
-    如果某个月没有实现增长，我们会写进报告并更换策略杠杆 —— 就像我们对 TikTok 所做的那样。
-    在这个行业里没有人能承诺数字；但可以承诺如实测量，并如实说出结果。</p>
+    它的起点是真实数据（八月谷歌带来 55 位客户、可追踪营业额约 &euro;1.065），
+    增长假设已公开写明、可逐月核实。营业额估算采用八月记录的客户平均价值，且偏保守，
+    因为它只覆盖经过 Treatwell 的部分以及谷歌和 Instagram 的估算。
+    如果某个月没有实现增长，我们会写进报告并更换策略杠杆 —— 就像我们对 TikTok 所做的那样。</p>
   </div>
 """})
 
@@ -502,3 +496,175 @@ PAGES.append({"body": f"""
     <div class="s">本文件为东方精华 · 养生中心（亚历山德里亚）编制</div>
   </div>
 """})
+
+# ================================================================
+# 修订 —— 历史增长、可追踪营业额、TikTok 暂停
+# ================================================================
+
+PAGE_CRESCITA = {"body": f"""
+  <div class="eyebrow">03 — 增长</div>
+  <h2>从每月 13 位客户，到 61 位</h2>
+  <div class="rule"></div>
+  <p class="lead">六个月的完整曲线，按渠道拆分。其中有两次不同性质的跃升：
+  第一次从三月到七月，来自网站和理疗专属页面；第二次在八月，来自谷歌广告。</p>
+  <table style="margin:6mm 0 4mm">
+    <thead><tr>
+      <th>月份</th><th class="n">谷歌</th><th class="n">Instagram</th><th class="n">Facebook</th>
+      <th class="n">TikTok</th><th class="n">合计</th><th style="width:18%">趋势</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="ch">2026 年 3 月</td><td class="n">10</td><td class="n">2</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>13</strong></td>
+          <td><span class="bar"><i class="grey" style="width:21%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 4 月</td><td class="n">13</td><td class="n">2</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>16</strong></td>
+          <td><span class="bar"><i class="grey" style="width:26%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 5 月</td><td class="n">17</td><td class="n">2</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>20</strong></td>
+          <td><span class="bar"><i class="grey" style="width:33%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 6 月</td><td class="n">21</td><td class="n">3</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>25</strong></td>
+          <td><span class="bar"><i class="grey" style="width:41%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 7 月</td><td class="n">28</td><td class="n">3</td><td class="n">1</td>
+          <td class="n">0</td><td class="n"><strong>32</strong></td>
+          <td><span class="bar"><i class="grey" style="width:52%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 8 月 <span class="pill gold" style="margin-left:2mm">实测数据</span></td>
+          <td class="n">55</td><td class="n">4</td><td class="n">1–2</td>
+          <td class="n">0</td><td class="n"><strong>约 61</strong></td>
+          <td><span class="bar"><i class="gold" style="width:100%"></i></span></td></tr>
+    </tbody>
+  </table>
+  <div class="g3" style="margin:5mm 0">
+    {kpi("+369%","3 月 → 8 月增长","从 13 位增至约 61 位/月","vio")}
+    {kpi("×2,5","网站与页面的作用","3 月 → 7 月，无任何广告")}
+    {kpi("×1,9","谷歌广告的作用","7 月 → 8 月，仅一个月")}
+  </div>
+  <div class="note vio">
+    <h4>两根杠杆，分开来看</h4>
+    <p style="margin-bottom:0">三月到七月没有任何广告投放：客户从 13 位增长到 32 位，
+    全部来自重做的网站、八个理疗专属页面和本地搜索排名的提升。
+    <strong>随后在 7 月 27 日，谷歌广告上线</strong>：仅一个月，客户数又几乎翻了一倍，
+    从 32 位到 61 位。两根杠杆是配合使用的 ——
+    这也是为什么关掉第二根，会把数字倒退回几个月前，而不是几周前。</p>
+  </div>
+"""}
+
+PAGE_FATTURATO = {"body": f"""
+  <div class="eyebrow">05 — 可追踪营业额</div>
+  <h2>各渠道实际带来了多少营业额</h2>
+  <div class="rule"></div>
+  <p class="lead">不只是客户数，还有收入。Treatwell 是精确数据，因为它经过预约系统；
+  谷歌和 Instagram 是保守估算，因为其中一部分营业额直接进了收银，没有任何系统记录。</p>
+  <table style="margin:5mm 0 3mm">
+    <thead><tr>
+      <th>周期</th><th class="n">Treatwell</th><th class="n">谷歌</th>
+      <th class="n">Instagram</th><th class="n">可追踪合计</th><th style="width:15%">趋势</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="ch">2026 年 7 月</td><td class="n">€290</td><td class="n">约 €150–200</td>
+          <td class="n">—</td><td class="n"><strong>约 €470</strong></td>
+          <td><span class="bar"><i class="grey" style="width:44%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 8 月</td><td class="n"><strong>€585</strong></td><td class="n">约 €420</td>
+          <td class="n">约 €60</td><td class="n"><strong>约 €1.065</strong></td>
+          <td><span class="bar"><i class="gold" style="width:100%"></i></span></td></tr>
+      <tr><td class="ch">2026 年 9 月 1–18 日</td><td class="n">€290</td><td class="n">统计中</td>
+          <td class="n">统计中</td><td class="n">本月进行中</td>
+          <td><span class="bar"><i style="width:27%"></i></span></td></tr>
+    </tbody>
+  </table>
+  <div class="g3 compact" style="margin:3mm 0 4mm">
+    {kpi("+127%","可追踪营业额 7→8 月","从约 €470 到约 €1.065","vio")}
+    {kpi("+102%","仅 Treatwell 7→8 月","从 €290 到 €585")}
+    {kpi("€41,8","Treatwell 客单价","八月 14 次理疗")}
+  </div>
+  <div class="g2u">
+    <div class="card">
+      <h4>八月在 Treatwell 上被预约的项目</h4>
+      <table style="margin-top:2mm">
+        <tbody>
+          <tr><td class="ch">精油按摩</td><td class="n">7</td></tr>
+          <tr><td class="ch">水疗按摩</td><td class="n">2</td></tr>
+          <tr><td class="ch">足底反射疗法</td><td class="n">2</td></tr>
+          <tr><td class="ch">修脚</td><td class="n">2</td></tr>
+          <tr><td class="ch">拔罐</td><td class="n">1</td></tr>
+        </tbody>
+        <tfoot><tr><td>理疗合计 · €585</td><td class="n">14</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="note amber">
+      <h4>为什么谷歌没有明细</h4>
+      <p>来自谷歌的客户几乎都通过<strong>电话或 WhatsApp</strong> 预约：
+      这类预约不经过预约系统，因此具体做了哪个项目没有任何地方记录。</p>
+      <p style="margin-bottom:0">八月的约 €420，是根据该渠道带来的联系数量和中心的客单价推算的：
+      这是保守估算，真实数值很可能更高，而不是更低。</p>
+    </div>
+  </div>
+  <div class="note" style="margin-top:4mm">
+    <h4>那么九月呢？</h4>
+    <p style="margin-bottom:0">截至 9 月 18 日，Treatwell 为 <strong>€290</strong>，与七月持平。
+    九月本来就是起伏不定的月份，要按它本来的样子来读：刚从假期返回、学费和各类活动开销集中到来、
+    工资还没有回到正常节奏。养生消费永远是第一个被推迟的支出。
+    <strong>真正关键的月份是十月</strong>：返工完成、开销消化、天气转冷、肌肉紧张。
+    那时才能真正衡量这套计划是否有效。</p>
+  </div>
+"""}
+
+PAGE_TIKTOK = {"body": f"""
+  <div class="eyebrow">11 — TikTok</div>
+  <h2>为什么要暂停 TikTok（以及重新启动的条件）</h2>
+  <div class="rule"></div>
+  <p class="lead">一个月零客户不是运气问题，也不是算法问题：是内容形式的问题。
+  暂停它是一个技术判断，不是放弃。</p>
+  <div class="g2" style="margin-top:5mm">
+    <div class="card quiet">
+      <h4>今天为什么无效</h4>
+      <ul class="ticks grey">
+        <li><strong>是没有人出镜的按摩视频。</strong>一双手在背上操作：没有人会看过前两秒</li>
+        <li><strong>缺少节奏。</strong>TikTok 奖励快剪和画面变化，节奏慢的视频只会被推给很少的人，然后停止</li>
+        <li><strong>镜头前没有人。</strong>TikTok 上有效的是面孔、声音和 POV 视角，而不是理疗床的匿名镜头</li>
+        <li><strong>缺少频率。</strong>这个平台需要密集发布才会获得推荐：偶尔发一条，等于没有发</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--violet)">重新启动需要什么</h4>
+      <ul class="ticks">
+        <li><strong>要有一个人愿意持续出镜</strong>：这是前提，没有它其余都没有意义</li>
+        <li><strong>POV 形式</strong>：「POV：你带着三周的腰背疼走进我们店里」，从客户视角拍摄</li>
+        <li><strong>高节奏</strong>：15–25 秒，每 1–2 秒一个剪辑，大字幕叠加，使用当下热门音频</li>
+        <li><strong>每周至少 4–5 条，连续两个月</strong>，否则这个账号不会重新起量</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note amber" style="margin-top:4mm">
+    <h4>我们的判断，直说</h4>
+    <p style="margin-bottom:0">只要还没有人愿意以那样的频率出镜拍摄，
+    花在 TikTok 上的每一小时，都是从 Instagram 和谷歌那里挪走的一小时 —— 而客户真正来自后两者。
+    <strong>我们现在把它暂停</strong>，等条件具备时再重新打开：
+    形式、脚本和剪辑由我们准备，中心负责把人放到镜头前。</p>
+  </div>
+  <hr class="hr" style="margin:4mm 0"/>
+  <div class="g2">
+    <div class="note">
+      <h4>需要中心配合的部分</h4>
+      <ul class="ticks" style="font-size:8.6pt">
+        <li>理疗过程的照片和短视频，手机拍摄即可</li>
+        <li>客户说「我是在……看到你们的」时，告诉我们</li>
+        <li>营业时间内，几小时之内回复 WhatsApp</li>
+        <li>每次理疗结束后，都请客户留下谷歌评价</li>
+      </ul>
+    </div>
+    <div class="note vio">
+      <h4>由我们负责的部分</h4>
+      <ul class="ticks" style="font-size:8.6pt">
+        <li>谷歌广告与再营销的全程管理</li>
+        <li>每月内容排期，以及可直接发布的现成文案</li>
+        <li>Treatwell 页面与谷歌商家资料的优化</li>
+        <li>每月一份像这样的、按渠道呈现真实客户的报告</li>
+      </ul>
+    </div>
+  </div>
+"""}
+
+PAGES.insert(3, PAGE_CRESCITA)
+PAGES.insert(5, PAGE_FATTURATO)
+PAGES.insert(12, PAGE_TIKTOK)
