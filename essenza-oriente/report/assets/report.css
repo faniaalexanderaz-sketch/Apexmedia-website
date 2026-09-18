@@ -144,6 +144,7 @@ tbody td{ padding:2.7mm 2.5mm; border-bottom:1px solid var(--line-2); vertical-a
 tbody tr:last-child td{ border-bottom:0; }
 td.ch{ color:var(--ink); font-weight:700; }
 td.n,th.n{ text-align:right; font-variant-numeric:tabular-nums; }
+td.n{ white-space:nowrap; }
 tfoot td{ padding:2.9mm 2.5mm; border-top:1.5px solid var(--line); color:var(--ink); font-weight:700; font-variant-numeric:tabular-nums; }
 .bar{ display:block; height:6px; border-radius:99px; background:#F0F0F5; overflow:hidden; min-width:26mm; }
 .bar i{ display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,var(--violet),var(--blue)); }

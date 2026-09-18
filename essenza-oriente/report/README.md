@@ -9,7 +9,7 @@ allineata al report mensile di agosto 2026).
 | File | Contenuto |
 |---|---|
 | `Apex-Media-Essenza-dOriente-Report-6-mesi-IT.pdf` | Versione italiana, 18 pagine A4 |
-| `Apex-Media-Essenza-dOriente-Report-6-mesi-CN.pdf` | Versione 简体中文, 18 pagine A4 |
+| `Apex-Media-Essenza-dOriente-Report-6-mesi-CN.pdf` | Versione 简体中文 in linguaggio semplice, 19 pagine A4 |
 | `content_it.py` / `content_cn.py` | Contenuti e numeri, una pagina per blocco |
 | `assets/report.css` | Design system del documento |
 | `assets/icons.py` | Icone dei canali |
@@ -24,6 +24,19 @@ python3 build.py
 
 Richiede Chromium headless (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`,
 modificabile in `build.py`).
+
+## Nota sulla versione cinese
+
+La versione CN **non è una traduzione riga per riga della IT**: è riscritta in
+linguaggio semplice per una lettrice anziana e non tecnica. Nessun termine inglese
+di marketing lasciato non spiegato (geo-targeting, remarketing, conversioni, CPA,
+POV, Meta, organic…): ogni concetto è reso in cinese corrente e spiegato dove
+compare. In più ha una pagina in più rispetto alla IT — **sezione 16, glossario**
+(名词解释) — che spiega in una riga ciascuno i nomi delle piattaforme, le cose che
+facciamo e come si leggono i numeri, così la cliente non deve chiedere.
+
+Se si modifica il contenuto IT, la corrispondente modifica CN va riscritta in
+linguaggio semplice, non tradotta letteralmente.
 
 ## Fonte dei dati
 
