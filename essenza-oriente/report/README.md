@@ -8,9 +8,12 @@ allineata al report mensile di agosto 2026).
 
 | File | Contenuto |
 |---|---|
-| `Apex-Media-Essenza-dOriente-Report-6-mesi-IT.pdf` | Versione italiana, 18 pagine A4 |
-| `Apex-Media-Essenza-dOriente-Report-6-mesi-CN.pdf` | Versione 简体中文 in linguaggio semplice, 19 pagine A4 |
-| `content_it.py` / `content_cn.py` | Contenuti e numeri, una pagina per blocco |
+| `Apex-Media-Essenza-dOriente-Sintesi-IT.pdf` | **Da presentare** — sintesi italiana, 8 pagine A4 |
+| `Apex-Media-Essenza-dOriente-Sintesi-CN.pdf` | **Da presentare** — sintesi 简体中文, 8 pagine A4 |
+| `Apex-Media-Essenza-dOriente-Report-6-mesi-IT.pdf` | Da lasciare — versione italiana completa, 18 pagine A4 |
+| `Apex-Media-Essenza-dOriente-Report-6-mesi-CN.pdf` | Da lasciare — versione 简体中文 completa in linguaggio semplice, 19 pagine A4 |
+| `content_it.py` / `content_cn.py` | Contenuti delle versioni lunghe, una pagina per blocco |
+| `content_it_short.py` / `content_cn_short.py` | Contenuti delle sintesi (classe CSS `dense`) |
 | `assets/report.css` | Design system del documento |
 | `assets/icons.py` | Icone dei canali |
 | `build.py` | Generatore HTML → PDF |
@@ -24,6 +27,22 @@ python3 build.py
 
 Richiede Chromium headless (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`,
 modificabile in `build.py`).
+
+## Le due lunghezze
+
+Ogni lingua esiste in due versioni, con **gli stessi numeri e le stesse
+conclusioni**:
+
+- **Sintesi, 8 pagine** — quella da aprire davanti alla cliente e leggere
+  insieme in cinque minuti. Copre tutto il documento lungo: crescita mar–ago,
+  canali, come prenotano, fatturato Treatwell, patrimonio costruito, perché non
+  fermarsi, piano set–ott, roadmap, proiezione, tre scenari e proposta finale.
+- **Completa, 18/19 pagine** — da lasciare alla cliente perché la rilegga con
+  calma; contiene gli approfondimenti e, in cinese, il glossario.
+
+Le sintesi usano la classe `dense` di `report.css`: stesso design system, corpo
+tipografico e spaziature ridotti. Quando si aggiorna un numero va aggiornato in
+tutti e quattro i file di contenuto.
 
 ## Nota sulla versione cinese
 

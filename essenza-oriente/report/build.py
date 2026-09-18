@@ -61,7 +61,9 @@ def to_pdf(html_path, pdf_path):
 
 if __name__ == "__main__":
     for mod, lang, stem in (("content_it", "it", "Apex-Media-Essenza-dOriente-Report-6-mesi-IT"),
-                            ("content_cn", "zh-CN", "Apex-Media-Essenza-dOriente-Report-6-mesi-CN")):
+                            ("content_cn", "zh-CN", "Apex-Media-Essenza-dOriente-Report-6-mesi-CN"),
+                            ("content_it_short", "it", "Apex-Media-Essenza-dOriente-Sintesi-IT"),
+                            ("content_cn_short", "zh-CN", "Apex-Media-Essenza-dOriente-Sintesi-CN")):
         m = importlib.import_module(mod)
         hp = build(lang, m.STRINGS, m.PAGES, stem + ".html")
         to_pdf(hp, os.path.join(HERE, stem + ".pdf"))
