@@ -8,8 +8,8 @@ allineata al report mensile di agosto 2026).
 
 | File | Contenuto |
 |---|---|
-| `Apex-Media-Essenza-dOriente-Report-6-mesi-IT.pdf` | Versione italiana, 17 pagine A4 |
-| `Apex-Media-Essenza-dOriente-Report-6-mesi-CN.pdf` | Versione 简体中文, 17 pagine A4 |
+| `Apex-Media-Essenza-dOriente-Report-6-mesi-IT.pdf` | Versione italiana, 18 pagine A4 |
+| `Apex-Media-Essenza-dOriente-Report-6-mesi-CN.pdf` | Versione 简体中文, 18 pagine A4 |
 | `content_it.py` / `content_cn.py` | Contenuti e numeri, una pagina per blocco |
 | `assets/report.css` | Design system del documento |
 | `assets/icons.py` | Icone dei canali |
@@ -31,11 +31,20 @@ modificabile in `build.py`).
 del periodo **27 luglio – 27 agosto 2026**: Google 55 clienti, Instagram 4,
 Facebook 1–2 (stima), TikTok 0, totale ≈ 61.
 
-**Fatturato tracciato.** Treatwell è un dato esatto dal gestionale: luglio €290,
-agosto €585 (14 trattamenti — 7 massaggi con oli, 2 spa, 2 riflessologie, 2 pedicure,
-1 coppettazione), 1–18 settembre €290. Google (luglio ≈ €150–200, agosto ≈ €420) e
-Instagram (agosto ≈ €60) sono stime, perché quelle prenotazioni arrivano per telefono
-e WhatsApp e non passano da un gestionale. Il documento lo dichiara esplicitamente.
+**Fatturato tracciato.** Dal report vendite Treatwell (screenshot del gestionale,
+generato il 18 settembre 2026): **€1.275 su 33 trattamenti nel periodo 7 luglio –
+19 settembre 2026** — 11 massaggi con oli €420, 8 riflessologie €275, 8 pedicure €280,
+2 spa €150, 2 shiatsu €100, 1 coppettazione €25, 1 pulizia orecchie €25.
+Sottoperiodo **29 agosto – 19 settembre: €400**, da cui si ricava 7 luglio – 28 agosto
+= €875. Ritmo giornaliero €16,5 → €18,2 (+10%). Google (≈ €420 ad agosto) e Instagram
+(≈ €60) restano stime, perché quelle prenotazioni arrivano per telefono e WhatsApp e non
+passano dal gestionale: il documento lo dichiara esplicitamente.
+
+**Aspettative (sezione 15).** Tre scenari a sei mesi — A tenere la rotta (≈95 clienti/mese,
+≈€1.500), B scalata misurata e consigliata (≈162, ≈€2.700), C spinta forte (≈240, ≈€4.200) —
+con la conversione di ogni obiettivo di fatturato in trattamenti al giorno allo scontrino
+medio di €38,6, e il punto in cui il collo di bottiglia passa dalla pubblicità alla
+capacità operativa del centro.
 
 **Mesi marzo–luglio 2026.** Il tracciamento automatico è stato installato a luglio:
 i numeri di quei mesi (13 → 16 → 20 → 25 → 32 clienti) sono una **ricostruzione** da
