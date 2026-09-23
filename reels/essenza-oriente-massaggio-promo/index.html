@@ -118,9 +118,10 @@
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="23.5" data-width="1080" data-height="1920">
 
-      <!-- SCENE 1 — HOOK 0.00–2.73s -->
-      <div class="scene clip" id="s1" data-start="0" data-duration="2.73" data-track-index="0">
-        <div class="bg-wrap"><img class="bg" id="s1-img" src="media/hook.jpg" alt="" /></div>
+      <!-- SCENE 1 — HOOK 0.00–2.73s (real footage: clip-hook.mov, 2.735s source) -->
+      <video class="bg clip" id="s1-vid" src="media/clip-hook.mov" muted playsinline
+             data-start="0" data-duration="2.73" data-media-start="0" data-track-index="0"></video>
+      <div class="scene clip" id="s1-overlay" data-start="0" data-duration="2.73" data-track-index="1">
         <div class="grade"></div>
         <div class="headline" id="s1-headline">Il tuo momento<br />di pace inizia qui.</div>
       </div>
@@ -142,9 +143,12 @@
         <div class="grade"></div>
       </div>
 
-      <!-- SCENE 4 — OFFERTA 7.98–13.157s -->
-      <div class="scene clip" id="s4" data-start="7.98" data-duration="5.177" data-track-index="0">
-        <div class="bg-wrap"><img class="bg" id="s4-img" src="media/offerta.jpg" alt="" /></div>
+      <!-- SCENE 4 — OFFERTA 7.98–12.814s (real footage: 2 clips back to back, jump cut at 11.592s) -->
+      <video class="bg clip" id="s4-vid-a" src="media/clip-offerta1.mov" muted playsinline
+             data-start="7.98" data-duration="3.612" data-media-start="0" data-track-index="0"></video>
+      <video class="bg clip" id="s4-vid-b" src="media/clip-offerta2.mov" muted playsinline
+             data-start="11.592" data-duration="1.222" data-media-start="0" data-track-index="0"></video>
+      <div class="scene clip" id="s4-overlay" data-start="7.98" data-duration="4.834" data-track-index="1">
         <div class="grade"></div>
         <div class="flash" id="s4-flash"></div>
         <div class="badge" id="s4-badge">
@@ -153,9 +157,12 @@
         </div>
       </div>
 
-      <!-- SCENE 5 — BONUS 13.157–17.899s -->
-      <div class="scene clip" id="s5" data-start="13.157" data-duration="4.742" data-track-index="0">
-        <div class="bg-wrap"><img class="bg" id="s5-img" src="media/hook.jpg" alt="" style="object-position: 30% 50%;" /></div>
+      <!-- SCENE 5 — BONUS 12.814–17.899s (real footage: 2 clips back to back, jump cut at 15.622s) -->
+      <video class="bg clip" id="s5-vid-a" src="media/clip-bonus1.mov" muted playsinline
+             data-start="12.814" data-duration="2.808" data-media-start="0" data-track-index="0"></video>
+      <video class="bg clip" id="s5-vid-b" src="media/clip-bonus2.mov" muted playsinline
+             data-start="15.622" data-duration="2.277" data-media-start="0" data-track-index="0"></video>
+      <div class="scene clip" id="s5-overlay" data-start="12.814" data-duration="5.085" data-track-index="1">
         <div class="grade"></div>
         <div class="bonus-tag" id="s5-tag">+ 10€ di sconto al prossimo trattamento</div>
       </div>
@@ -254,7 +261,7 @@
       const tl = gsap.timeline({ paused: true });
 
       // --- Scene 1 HOOK: slow push-in (Ken Burns) ---
-      tl.fromTo("#s1-img", { scale: 1.0 }, { scale: 1.1, duration: 2.73, ease: "none" }, 0);
+      tl.fromTo("#s1-vid", { scale: 1.0 }, { scale: 1.1, duration: 2.73, ease: "none" }, 0);
       tl.fromTo("#s1-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.25);
 
       // --- Cut 1 -> Scene 2: match cut on color (gold flash) ---
@@ -264,14 +271,16 @@
       // --- Cut 2 -> Scene 3: zoom-cut ---
       tl.fromTo("#s3-vid", { scale: 1.22 }, { scale: 1.0, duration: 0.35, ease: "power3.out" }, 4.461);
 
-      // --- Cut 3 -> Scene 4: glitch leggero (quick jitter on scene wrapper) + Ken Burns on image ---
-      tl.fromTo("#s4", { x: -14, skewX: 2 }, { x: 0, skewX: 0, duration: 0.16, ease: "steps(3)" }, 7.98);
-      tl.fromTo("#s4-img", { scale: 1.0 }, { scale: 1.08, duration: 5.177, ease: "none" }, 7.98);
+      // --- Cut 3 -> Scene 4: glitch leggero (quick jitter on overlay) + zoom-cut on video A, jump cut to video B ---
+      tl.fromTo("#s4-overlay", { x: -14, skewX: 2 }, { x: 0, skewX: 0, duration: 0.16, ease: "steps(3)" }, 7.98);
+      tl.fromTo("#s4-vid-a", { scale: 1.15 }, { scale: 1.0, duration: 0.3, ease: "power3.out" }, 7.98);
+      tl.fromTo("#s4-vid-b", { scale: 1.1 }, { scale: 1.0, duration: 0.25, ease: "power2.out" }, 11.592);
       tl.fromTo("#s4-badge", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 9.4);
 
-      // --- Cut 4 -> Scene 5: whip pan ---
-      tl.fromTo("#s5-img", { x: 220, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.28, ease: "power2.out" }, 13.157);
-      tl.fromTo("#s5-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35 }, 13.5);
+      // --- Cut 4 -> Scene 5: whip pan on video A, jump cut to video B ---
+      tl.fromTo("#s5-vid-a", { x: 220, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.28, ease: "power2.out" }, 12.814);
+      tl.fromTo("#s5-vid-b", { scale: 1.08 }, { scale: 1.0, duration: 0.25, ease: "power2.out" }, 15.622);
+      tl.fromTo("#s5-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35 }, 13.15);
 
       // --- Cut 5 -> Scene 6: cut a ritmo (fast scale pop) ---
       tl.fromTo("#s6-img", { scale: 1.05 }, { scale: 1.0, duration: 0.2, ease: "power2.out" }, 17.899);
