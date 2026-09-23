@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor-gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal; font-weight: 600; font-display: block;
+        src: url('fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal; font-weight: 500; font-display: block;
+        src: url('fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Lato';
+        font-style: normal; font-weight: 400; font-display: block;
+        src: url('fonts/lato-latin-400-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Lato';
+        font-style: normal; font-weight: 700; font-display: block;
+        src: url('fonts/lato-latin-700-normal.woff2') format('woff2');
+      }
+      :root {
+        --bosco: #2C5138;
+        --bosco-scuro: #17271c;
+        --oro: #B99A45;
+        --oro-chiaro: #D9C68C;
+        --pergamena: #D6E6C0;
+        --ink: #16220f;
+        --serif: 'Cormorant Garamond', Georgia, serif;
+        --sans: 'Lato', system-ui, sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden; background: #0c1710;
+      }
+      #root {
+        position: relative; width: 1080px; height: 1920px; overflow: hidden;
+        font-family: var(--sans);
+      }
+      .scene {
+        position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden;
+      }
+      .scene .bg-wrap { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+      .scene img.bg, .scene video.bg {
+        position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
+        object-fit: cover; transform: translate(-50%, -50%) scale(1.0);
+      }
+      .scene .grade {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(23,39,28,.55) 0%, rgba(23,39,28,.05) 30%, rgba(23,39,28,.15) 60%, rgba(12,23,16,.75) 100%);
+      }
+      .scene .flash {
+        position: absolute; inset: 0; background: var(--oro-chiaro); opacity: 0; pointer-events: none;
+      }
+      .headline {
+        position: absolute; left: 64px; right: 64px; top: 620px;
+        font-family: var(--serif); font-weight: 600; color: #fff;
+        font-size: 76px; line-height: 1.08; text-shadow: 0 4px 24px rgba(0,0,0,.55);
+      }
+      .badge {
+        position: absolute; left: 50%; top: 760px; transform: translateX(-50%);
+        display: flex; flex-direction: column; align-items: center; gap: 6px;
+        background: rgba(23,39,28,.72); border: 2px solid var(--oro);
+        border-radius: 28px; padding: 40px 56px; backdrop-filter: blur(6px);
+      }
+      .badge .num { font-family: var(--serif); font-weight: 600; font-size: 128px; color: var(--oro-chiaro); line-height: 1; }
+      .badge .label { font-family: var(--sans); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 34px; color: #fff; }
+      .bonus-tag {
+        position: absolute; left: 50%; top: 900px; transform: translateX(-50%);
+        background: var(--oro); color: var(--ink); font-family: var(--sans); font-weight: 700;
+        font-size: 42px; padding: 22px 44px; border-radius: 999px; white-space: nowrap;
+        box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      }
+      .social {
+        position: absolute; left: 50%; top: 760px; transform: translateX(-50%);
+        text-align: center; color: #fff;
+      }
+      .social .stars { font-size: 64px; color: var(--oro-chiaro); letter-spacing: 8px; }
+      .social .rev { font-family: var(--serif); font-size: 48px; margin-top: 10px; }
+      .cta1 {
+        position: absolute; left: 50%; bottom: 300px; transform: translateX(-50%);
+        background: var(--oro); color: var(--ink); font-family: var(--sans); font-weight: 700;
+        font-size: 48px; padding: 30px 64px; border-radius: 999px; white-space: nowrap;
+        box-shadow: 0 12px 34px rgba(0,0,0,.4);
+      }
+      .brandmark {
+        position: absolute; left: 0; right: 0; top: 820px; text-align: center; color: #fff;
+      }
+      .brandmark .name { font-family: var(--serif); font-weight: 600; font-size: 96px; }
+      .brandmark .cn { font-size: 40px; color: #ffffff; margin-top: 6px; text-shadow: 0 2px 3px rgba(0,0,0,.9); }
+      .final-cta {
+        position: absolute; left: 0; right: 0; top: 1120px; text-align: center;
+      }
+      .final-cta .line1 { font-family: var(--sans); font-weight: 700; color: #fff; font-size: 46px; }
+      .final-cta .line2 { font-family: var(--sans); font-weight: 700; color: #fff; font-size: 34px; margin-top: 14px; opacity: .92; }
+      .swipe {
+        position: absolute; left: 50%; bottom: 130px; transform: translateX(-50%);
+        color: #fff; font-family: var(--sans); font-weight: 700; font-size: 32px;
+        display: flex; align-items: center; gap: 12px; letter-spacing: .04em;
+      }
+      .swipe .arrow { font-size: 40px; }
+      #captions {
+        position: absolute; left: 0; right: 0; bottom: 210px; text-align: center; z-index: 20;
+      }
+      .word {
+        display: inline-block; font-family: var(--sans); font-weight: 700; font-size: 56px;
+        color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.4), 0 0 22px rgba(0,0,0,.5);
+        -webkit-text-stroke: 1.5px rgba(0,0,0,.35);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="23.5" data-width="1080" data-height="1920">
+
+      <!-- SCENE 1 — HOOK 0.00–2.73s -->
+      <div class="scene clip" id="s1" data-start="0" data-duration="2.73" data-track-index="0">
+        <div class="bg-wrap"><img class="bg" id="s1-img" src="media/hook.jpg" alt="" /></div>
+        <div class="grade"></div>
+        <div class="headline" id="s1-headline">Il tuo momento<br />di pace inizia qui.</div>
+      </div>
+
+      <!-- SCENE 2 — TEXTURE OLIO 2.73–4.461s (clip-a 0-1.731s): video is a direct, independently-timed
+           stage child (not nested inside a second timed wrapper) per the composition contract. -->
+      <video class="bg clip" id="s2-vid" src="media/clip-a.mov" muted playsinline
+             data-start="2.73" data-duration="1.731" data-media-start="0" data-track-index="0"></video>
+      <div class="scene clip" id="s2-overlay" data-start="2.73" data-duration="1.731" data-track-index="1">
+        <div class="grade"></div>
+        <div class="flash" id="s2-flash"></div>
+        <div class="headline" style="top:1500px; font-size:52px;">oli essenziali</div>
+      </div>
+
+      <!-- SCENE 3 — TRATTAMENTO IN AZIONE 4.461–7.98s (clip-b 0-3.519s) -->
+      <video class="bg clip" id="s3-vid" src="media/clip-b.mov" muted playsinline
+             data-start="4.461" data-duration="3.519" data-media-start="0" data-track-index="0"></video>
+      <div class="scene clip" id="s3-overlay" data-start="4.461" data-duration="3.519" data-track-index="1">
+        <div class="grade"></div>
+      </div>
+
+      <!-- SCENE 4 — OFFERTA 7.98–13.157s -->
+      <div class="scene clip" id="s4" data-start="7.98" data-duration="5.177" data-track-index="0">
+        <div class="bg-wrap"><img class="bg" id="s4-img" src="media/offerta.jpg" alt="" /></div>
+        <div class="grade"></div>
+        <div class="flash" id="s4-flash"></div>
+        <div class="badge" id="s4-badge">
+          <div class="num">40€</div>
+          <div class="label">40 minuti · questa settimana</div>
+        </div>
+      </div>
+
+      <!-- SCENE 5 — BONUS 13.157–17.899s -->
+      <div class="scene clip" id="s5" data-start="13.157" data-duration="4.742" data-track-index="0">
+        <div class="bg-wrap"><img class="bg" id="s5-img" src="media/hook.jpg" alt="" style="object-position: 30% 50%;" /></div>
+        <div class="grade"></div>
+        <div class="bonus-tag" id="s5-tag">+ 10€ di sconto al prossimo trattamento</div>
+      </div>
+
+      <!-- SCENE 6 — RIPROVA SOCIALE + CTA1 17.899–20.829s -->
+      <div class="scene clip" id="s6" data-start="17.899" data-duration="2.93" data-track-index="0">
+        <div class="bg-wrap"><img class="bg" id="s6-img" src="media/brand.jpg" alt="" /></div>
+        <div class="grade"></div>
+        <div class="social" id="s6-social">
+          <div class="stars">★★★★★</div>
+          <div class="rev">5,0 su Google · 106 recensioni</div>
+        </div>
+        <div class="cta1" id="s6-cta">Prenota il tuo massaggio →</div>
+      </div>
+
+      <!-- SCENE 7 — CTA2 CHIUSURA 20.829–23.5s (hold) -->
+      <div class="scene clip" id="s7" data-start="20.829" data-duration="2.671" data-track-index="0">
+        <div class="bg-wrap"><img class="bg" id="s7-img" src="media/brand.jpg" alt="" /></div>
+        <div class="grade"></div>
+        <div class="brandmark">
+          <div class="name">Essenza d'Oriente</div>
+          <div class="cn">东方之♥养生馆</div>
+        </div>
+        <div class="final-cta">
+          <div class="line1">Alessandria · Via San Lorenzo 46</div>
+          <div class="line2">Link in bio per prenotare</div>
+        </div>
+        <div class="swipe"><span class="arrow">↑</span> Scorri per prenotare</div>
+      </div>
+
+      <!-- CAPTIONS — parola per parola, sincronizzate sul voiceover -->
+      <div id="captions">
+        <span class="clip word" data-start="0.05" data-duration="0.169" data-track-index="9">Ti</span>
+        <span class="clip word" data-start="0.219" data-duration="0.393" data-track-index="9">meriti</span>
+        <span class="clip word" data-start="0.612" data-duration="0.168" data-track-index="9">un</span>
+        <span class="clip word" data-start="0.78" data-duration="0.45" data-track-index="9">momento</span>
+        <span class="clip word" data-start="1.23" data-duration="0.337" data-track-index="9">tutto</span>
+        <span class="clip word" data-start="1.567" data-duration="0.224" data-track-index="9">per</span>
+        <span class="clip word" data-start="1.791" data-duration="0.225" data-track-index="9">te,</span>
+        <span class="clip word" data-start="2.73" data-duration="0.162" data-track-index="9">un</span>
+        <span class="clip word" data-start="2.892" data-duration="0.541" data-track-index="9">massaggio</span>
+        <span class="clip word" data-start="3.433" data-duration="0.216" data-track-index="9">con</span>
+        <span class="clip word" data-start="3.649" data-duration="0.217" data-track-index="9">oli</span>
+        <span class="clip word" data-start="3.866" data-duration="0.595" data-track-index="9">essenziali</span>
+        <span class="clip word" data-start="4.461" data-duration="0.216" data-track-index="9">che</span>
+        <span class="clip word" data-start="4.677" data-duration="0.487" data-track-index="9">scioglie</span>
+        <span class="clip word" data-start="5.164" data-duration="0.162" data-track-index="9">lo</span>
+        <span class="clip word" data-start="5.326" data-duration="0.379" data-track-index="9">stress</span>
+        <span class="clip word" data-start="5.705" data-duration="0.108" data-track-index="9">e</span>
+        <span class="clip word" data-start="5.813" data-duration="0.487" data-track-index="9">rigenera</span>
+        <span class="clip word" data-start="6.3" data-duration="0.324" data-track-index="9">corpo</span>
+        <span class="clip word" data-start="6.624" data-duration="0.108" data-track-index="9">e</span>
+        <span class="clip word" data-start="6.732" data-duration="0.379" data-track-index="9">mente.</span>
+        <span class="clip word" data-start="7.98" data-duration="0.338" data-track-index="9">Solo</span>
+        <span class="clip word" data-start="8.318" data-duration="0.474" data-track-index="9">questa</span>
+        <span class="clip word" data-start="8.792" data-duration="0.745" data-track-index="9">settimana,</span>
+        <span class="clip word" data-start="9.537" data-duration="0.203" data-track-index="9">40</span>
+        <span class="clip word" data-start="9.74" data-duration="0.474" data-track-index="9">minuti</span>
+        <span class="clip word" data-start="10.214" data-duration="0.203" data-track-index="9">di</span>
+        <span class="clip word" data-start="10.417" data-duration="0.338" data-track-index="9">puro</span>
+        <span class="clip word" data-start="10.755" data-duration="0.406" data-track-index="9">relax</span>
+        <span class="clip word" data-start="11.161" data-duration="0.135" data-track-index="9">a</span>
+        <span class="clip word" data-start="11.296" data-duration="0.339" data-track-index="9">soli</span>
+        <span class="clip word" data-start="11.635" data-duration="0.203" data-track-index="9">40</span>
+        <span class="clip word" data-start="11.838" data-duration="0.406" data-track-index="9">euro.</span>
+        <span class="clip word" data-start="13.157" data-duration="0.08" data-track-index="9">E</span>
+        <span class="clip word" data-start="13.237" data-duration="0.159" data-track-index="9">non</span>
+        <span class="clip word" data-start="13.396" data-duration="0.318" data-track-index="9">finisce</span>
+        <span class="clip word" data-start="13.714" data-duration="0.199" data-track-index="9">qui:</span>
+        <span class="clip word" data-start="14.451" data-duration="0.17" data-track-index="9">al</span>
+        <span class="clip word" data-start="14.621" data-duration="0.508" data-track-index="9">prossimo</span>
+        <span class="clip word" data-start="15.129" data-duration="0.679" data-track-index="9">trattamento</span>
+        <span class="clip word" data-start="15.808" data-duration="0.226" data-track-index="9">hai</span>
+        <span class="clip word" data-start="16.034" data-duration="0.169" data-track-index="9">10</span>
+        <span class="clip word" data-start="16.203" data-duration="0.283" data-track-index="9">euro</span>
+        <span class="clip word" data-start="16.486" data-duration="0.17" data-track-index="9">di</span>
+        <span class="clip word" data-start="16.656" data-duration="0.452" data-track-index="9">sconto.</span>
+        <span class="clip word" data-start="17.899" data-duration="0.399" data-track-index="9">Prenota</span>
+        <span class="clip word" data-start="18.298" data-duration="0.25" data-track-index="9">ora,</span>
+        <span class="clip word" data-start="18.866" data-duration="0.11" data-track-index="9">i</span>
+        <span class="clip word" data-start="18.976" data-duration="0.328" data-track-index="9">posti</span>
+        <span class="clip word" data-start="19.304" data-duration="0.274" data-track-index="9">sono</span>
+        <span class="clip word" data-start="19.578" data-duration="0.548" data-track-index="9">limitati.</span>
+        <span class="clip word" data-start="20.829" data-duration="0.392" data-track-index="9">Essenza</span>
+        <span class="clip word" data-start="21.221" data-duration="0.491" data-track-index="9">d'Oriente</span>
+        <span class="clip word" data-start="21.712" data-duration="0.147" data-track-index="9">ti</span>
+        <span class="clip word" data-start="21.859" data-duration="0.441" data-track-index="9">aspetta.</span>
+      </div>
+
+      <!-- AUDIO — voiceover ElevenLabs, traccia principale -->
+      <audio class="clip" id="voiceover" src="media/voiceover.mp3" data-start="0" data-duration="22.36" data-track-index="20"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // --- Scene 1 HOOK: slow push-in (Ken Burns) ---
+      tl.fromTo("#s1-img", { scale: 1.0 }, { scale: 1.1, duration: 2.73, ease: "none" }, 0);
+      tl.fromTo("#s1-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.25);
+
+      // --- Cut 1 -> Scene 2: match cut on color (gold flash) ---
+      tl.fromTo("#s2-flash", { opacity: 0.55 }, { opacity: 0, duration: 0.22, ease: "power1.out" }, 2.73);
+      tl.fromTo("#s2-vid", { scale: 1.05 }, { scale: 1.0, duration: 1.731, ease: "none" }, 2.73);
+
+      // --- Cut 2 -> Scene 3: zoom-cut ---
+      tl.fromTo("#s3-vid", { scale: 1.22 }, { scale: 1.0, duration: 0.35, ease: "power3.out" }, 4.461);
+
+      // --- Cut 3 -> Scene 4: glitch leggero (quick jitter on scene wrapper) + Ken Burns on image ---
+      tl.fromTo("#s4", { x: -14, skewX: 2 }, { x: 0, skewX: 0, duration: 0.16, ease: "steps(3)" }, 7.98);
+      tl.fromTo("#s4-img", { scale: 1.0 }, { scale: 1.08, duration: 5.177, ease: "none" }, 7.98);
+      tl.fromTo("#s4-badge", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 9.4);
+
+      // --- Cut 4 -> Scene 5: whip pan ---
+      tl.fromTo("#s5-img", { x: 220, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.28, ease: "power2.out" }, 13.157);
+      tl.fromTo("#s5-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35 }, 13.5);
+
+      // --- Cut 5 -> Scene 6: cut a ritmo (fast scale pop) ---
+      tl.fromTo("#s6-img", { scale: 1.05 }, { scale: 1.0, duration: 0.2, ease: "power2.out" }, 17.899);
+      tl.fromTo("#s6-social", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35 }, 18.0);
+      tl.fromTo("#s6-cta", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35 }, 19.0);
+
+      // --- Cut 6 -> Scene 7: hard cut + hold finale ---
+      tl.fromTo("#s7-img", { scale: 1.0 }, { scale: 1.05, duration: 2.671, ease: "none" }, 20.829);
+      tl.fromTo(".brandmark", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 }, 21.0);
+      tl.fromTo(".final-cta", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 }, 21.5);
+      tl.fromTo(".swipe", { opacity: 0 }, { opacity: 1, duration: 0.4, repeat: 3, yoyo: true }, 22.0);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
