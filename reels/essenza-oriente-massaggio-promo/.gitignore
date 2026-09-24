@@ -1,0 +1,4 @@
+node_modules/
+renders/
+.transcode-cache/
+media/raw/
