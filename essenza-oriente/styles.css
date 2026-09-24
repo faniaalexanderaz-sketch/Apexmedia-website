@@ -2175,3 +2175,28 @@ body.menu-aperto { overflow: hidden; }
   .hero-prova-info { font-size: 11.5px; }
   .ribbon-offerta-cta { padding: 6px 10px; font-size: 10.5px; }
 }
+
+/* ---------- ANIMAZIONI GSAP (animazioni.js) ----------
+   anim-attesa: messa nell'head da uno script di poche righe, tiene
+   nascosta l'hero finché GSAP la prende in carico — al massimo 1,8s,
+   poi si mostra comunque (rete lenta o GSAP non caricato). */
+.anim-attesa .hero-copy > *,
+.anim-attesa .hero-foto,
+.anim-attesa .hero-marchio-mini,
+.anim-attesa .hero-tratt > * { opacity: 0; }
+/* gli slittamenti laterali d'ingresso non devono creare scroll orizzontale */
+html.gsap-attivo { overflow-x: clip; }
+/* maschera delle parole nei titoli: margine per discendenti e corsivi */
+.sw-mask { padding: 0 .06em .16em; margin: 0 -.06em -.16em; }
+.hc { will-change: transform, opacity, filter; }
+/* filetti d'oro del divisore a loto: si allungano dal fiore (--linea) */
+.loto-divisore::before { transform: scaleX(var(--linea, 1)); transform-origin: right center; }
+.loto-divisore::after  { transform: scaleX(var(--linea, 1)); transform-origin: left center; }
+/* riflesso di luce che attraversa "Prenota ora" */
+#heroCtaPrenota { overflow: hidden; }
+.btn > .cta-luce {
+  position: absolute; inset: 0; z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.42) 50%, transparent 70%);
+  transform: translateX(-130%);
+}

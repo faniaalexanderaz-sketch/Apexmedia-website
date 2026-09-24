@@ -72,6 +72,15 @@
     }
   }
   </script>
+  <!-- animazioni d'ingresso (animazioni.js): l'hero resta nascosta solo finché
+       GSAP la prende in carico, mai più di 1,8s -->
+  <link rel="preload" href="../vendor/gsap/gsap-bundle.min.js" as="script" />
+  <script>
+    if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('anim-attesa');
+      setTimeout(function () { document.documentElement.classList.remove('anim-attesa'); }, 1800);
+    }
+  </script>
 </head>
 <body class="pagina-tratt" data-base="../">
   <header class="top">
@@ -214,5 +223,7 @@
 
   <script src="../cookie.js"></script>
   <script src="../script.js"></script>
+  <script src="../vendor/gsap/gsap-bundle.min.js"></script>
+  <script src="../animazioni.js"></script>
 </body>
 </html>
