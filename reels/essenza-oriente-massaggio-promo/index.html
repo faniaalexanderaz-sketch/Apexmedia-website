@@ -47,7 +47,10 @@
         position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden;
       }
       .scene .bg-wrap { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
-      .scene img.bg, .scene video.bg {
+      /* .bg applies regardless of ancestor: video/img backgrounds are now direct #root
+         children (siblings of their timed overlay), not nested inside .scene, per the
+         no-video-nested-in-a-second-timed-element composition rule. */
+      .bg {
         position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
         object-fit: cover; transform: translate(-50%, -50%) scale(1.0);
       }
@@ -58,10 +61,10 @@
       .scene .flash {
         position: absolute; inset: 0; background: var(--oro-chiaro); opacity: 0; pointer-events: none;
       }
-      .headline {
-        position: absolute; left: 64px; right: 64px; top: 620px;
-        font-family: var(--serif); font-weight: 600; color: #fff;
-        font-size: 76px; line-height: 1.08; text-shadow: 0 4px 24px rgba(0,0,0,.55);
+      .icon-pop {
+        position: absolute; left: 50%; top: 980px; transform: translateX(-50%);
+        font-size: 120px; line-height: 1; text-shadow: 0 6px 20px rgba(0,0,0,.5);
+        z-index: 15;
       }
       .badge {
         position: absolute; left: 50%; top: 760px; transform: translateX(-50%);
@@ -105,13 +108,16 @@
         display: flex; align-items: center; gap: 12px; letter-spacing: .04em;
       }
       .swipe .arrow { font-size: 40px; }
+      /* Single, fixed caption position for the whole video — never moves, never doubles
+         up with another text band. Centered horizontally, in the safe middle-lower third
+         (clear of platform UI at the very bottom and of any scene overlay above it). */
       #captions {
-        position: absolute; left: 0; right: 0; bottom: 210px; text-align: center; z-index: 20;
+        position: absolute; left: 40px; right: 40px; top: 1420px; text-align: center; z-index: 20;
       }
       .word {
-        display: inline-block; font-family: var(--sans); font-weight: 700; font-size: 56px;
-        color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.4), 0 0 22px rgba(0,0,0,.5);
-        -webkit-text-stroke: 1.5px rgba(0,0,0,.35);
+        display: inline-block; font-family: var(--sans); font-weight: 700; font-size: 58px;
+        color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.5), 0 0 26px rgba(0,0,0,.6);
+        -webkit-text-stroke: 1.5px rgba(0,0,0,.4);
       }
     </style>
   </head>
@@ -123,7 +129,6 @@
              data-start="0" data-duration="2.73" data-media-start="0" data-track-index="0"></video>
       <div class="scene clip" id="s1-overlay" data-start="0" data-duration="2.73" data-track-index="1">
         <div class="grade"></div>
-        <div class="headline" id="s1-headline">Il tuo momento<br />di pace inizia qui.</div>
       </div>
 
       <!-- SCENE 2 — TEXTURE OLIO 2.73–4.461s (clip-a 0-1.731s): video is a direct, independently-timed
@@ -133,7 +138,7 @@
       <div class="scene clip" id="s2-overlay" data-start="2.73" data-duration="1.731" data-track-index="1">
         <div class="grade"></div>
         <div class="flash" id="s2-flash"></div>
-        <div class="headline" style="top:1500px; font-size:52px;">oli essenziali</div>
+        <div class="icon-pop" id="s2-icon" style="top: 700px;">🌿</div>
       </div>
 
       <!-- SCENE 3 — TRATTAMENTO IN AZIONE 4.461–7.98s (clip-b 0-3.519s) -->
@@ -262,11 +267,14 @@
 
       // --- Scene 1 HOOK: slow push-in (Ken Burns) ---
       tl.fromTo("#s1-vid", { scale: 1.0 }, { scale: 1.1, duration: 2.73, ease: "none" }, 0);
-      tl.fromTo("#s1-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.25);
 
       // --- Cut 1 -> Scene 2: match cut on color (gold flash) ---
       tl.fromTo("#s2-flash", { opacity: 0.55 }, { opacity: 0, duration: 0.22, ease: "power1.out" }, 2.73);
       tl.fromTo("#s2-vid", { scale: 1.05 }, { scale: 1.0, duration: 1.731, ease: "none" }, 2.73);
+      // icon pop timed to the word "essenziali" (3.866s)
+      tl.set("#s2-icon", { opacity: 0, scale: 0.5 }, 2.73);
+      tl.fromTo("#s2-icon", { opacity: 0, scale: 0.5, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(2.5)" }, 3.866)
+        .to("#s2-icon", { opacity: 0, duration: 0.2 }, 4.35);
 
       // --- Cut 2 -> Scene 3: zoom-cut ---
       tl.fromTo("#s3-vid", { scale: 1.22 }, { scale: 1.0, duration: 0.35, ease: "power3.out" }, 4.461);
@@ -275,12 +283,14 @@
       tl.fromTo("#s4-overlay", { x: -14, skewX: 2 }, { x: 0, skewX: 0, duration: 0.16, ease: "steps(3)" }, 7.98);
       tl.fromTo("#s4-vid-a", { scale: 1.15 }, { scale: 1.0, duration: 0.3, ease: "power3.out" }, 7.98);
       tl.fromTo("#s4-vid-b", { scale: 1.1 }, { scale: 1.0, duration: 0.25, ease: "power2.out" }, 11.592);
-      tl.fromTo("#s4-badge", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 9.4);
+      // badge pops exactly as "40" (minuti) is spoken
+      tl.fromTo("#s4-badge", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 9.537);
 
       // --- Cut 4 -> Scene 5: whip pan on video A, jump cut to video B ---
       tl.fromTo("#s5-vid-a", { x: 220, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.28, ease: "power2.out" }, 12.814);
       tl.fromTo("#s5-vid-b", { scale: 1.08 }, { scale: 1.0, duration: 0.25, ease: "power2.out" }, 15.622);
-      tl.fromTo("#s5-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35 }, 13.15);
+      // bonus tag pops exactly as "10 euro di sconto" is spoken, not before
+      tl.fromTo("#s5-tag", { opacity: 0, y: 20, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "back.out(2)" }, 16.034);
 
       // --- Cut 5 -> Scene 6: cut a ritmo (fast scale pop) ---
       tl.fromTo("#s6-img", { scale: 1.05 }, { scale: 1.0, duration: 0.2, ease: "power2.out" }, 17.899);
