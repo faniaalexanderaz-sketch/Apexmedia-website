@@ -189,20 +189,20 @@
     });
   }
 
-  /* ---------- Offerta Primo Accesso: fascia in alto + countdown ----------
-     Flash offer con scadenza reale (15 settembre, giorno del rinnovo
-     contratto Ads: dopo quella data l'offerta non ha più motivo di
-     esistere). Tre superfici condividono lo stesso countdown:
+  /* ---------- Offerta della settimana: fascia in alto + countdown ----------
+     Flash offer con scadenza reale (3 ottobre, fine della campagna Ads
+     in corso: dopo quella data l'offerta non ha più motivo di esistere).
+     Tre superfici condividono lo stesso countdown:
      - ".ribbon-offerta": iniettata qui via JS sopra l'header, su OGNI
        pagina (non serve editarle una per una);
      - ".offerta-sez": sezione statica già scritta nell'HTML (home e
-       landing riflessologia plantare) — questo script si limita ad
+       landing massaggio con oli essenziali) — questo script si limita ad
        aggiornarne i numeri tramite [data-countdown];
      - se il tempo è scaduto, fascia e sezioni offerta si nascondono da
-       sole: evita che l'offerta resti online per errore dopo il 15. */
-  var OFFERTA_SCADENZA = new Date('2026-09-15T23:59:59');
+       sole: evita che l'offerta resti online per errore dopo la scadenza. */
+  var OFFERTA_SCADENZA = new Date('2026-10-03T23:59:59');
   var OFFERTA_WA_HREF = 'https://wa.me/393317153533?text=' +
-    encodeURIComponent("Ciao! Vorrei prenotare la Riflessologia Plantare a 25€ (offerta Primo Accesso).");
+    encodeURIComponent("Ciao! Vorrei prenotare il Massaggio con Oli Essenziali a 40€ (offerta 40 minuti).");
 
   function offertaResiduo() {
     var ms = OFFERTA_SCADENZA.getTime() - Date.now();
@@ -255,7 +255,7 @@
     fascia.innerHTML =
       '<span class="ribbon-offerta-testo">' +
         '<svg width="12" height="12" viewBox="0 0 34 20" fill="currentColor" aria-hidden="true"><path d="M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z"/><path d="M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z"/><path d="M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z"/></svg>' +
-        '<strong>Primo accesso:</strong> Riflessologia 25&nbsp;€ anziché 35&nbsp;€' +
+        '<strong>Offerta:</strong> Massaggio Oli Essenziali 40&nbsp;€ (40 min) anziché 60&nbsp;€' +
       '</span>' +
       '<span class="ribbon-offerta-conto">Scade tra <span id="ribbonOffertaConto"></span></span>' +
       '<a class="ribbon-offerta-cta" href="' + OFFERTA_WA_HREF + '" target="_blank" rel="noopener">Scrivici su WhatsApp</a>' +
@@ -354,16 +354,16 @@
     });
   });
 
-  /* Se l'offerta Primo Accesso e' scaduta, il chip della hero non puo'
-     continuare a promettere 25 € mentre la sezione offerta sparisce:
+  /* Se l'offerta della settimana e' scaduta, il chip della hero non puo'
+     continuare a promettere 40 € mentre la sezione offerta sparisce:
      torna al prezzo di listino. */
   if (!offertaResiduo()) {
     var chipOfferta = document.querySelector('.hero-chip[data-offerta]');
     if (chipOfferta) {
       chipOfferta.classList.remove('hero-chip-offerta');
-      chipOfferta.dataset.info = '40 min · 35 € — 60 min · 50 €';
+      chipOfferta.dataset.info = 'cervicale e schiena · 60 min · 60 €';
       var infoEl = chipOfferta.querySelector('.hero-chip-info');
-      if (infoEl) infoEl.textContent = '35 € · 40 min';
+      if (infoEl) infoEl.textContent = '60 € · 60 min';
     }
   }
 
