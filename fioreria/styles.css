@@ -3154,3 +3154,9 @@ img.no-foto { opacity: 0; }
 @media (max-width: 640px) {
   .assistente-pannello { right: 8px; bottom: 126px; }
 }
+
+/* =============================================================
+   ANIMAZIONI GSAP — maschera delle parole nei titoli (animazioni.js):
+   un filo di margine per non tagliare discendenti e corsivi durante la salita
+   ============================================================= */
+.sw-mask { padding: 0 .06em .16em; margin: 0 -.06em -.16em; }
