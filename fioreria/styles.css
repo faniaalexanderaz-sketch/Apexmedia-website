@@ -3160,3 +3160,24 @@ img.no-foto { opacity: 0; }
    un filo di margine per non tagliare discendenti e corsivi durante la salita
    ============================================================= */
 .sw-mask { padding: 0 .06em .16em; margin: 0 -.06em -.16em; }
+.hero-titolo .hc { will-change: transform, opacity, filter; }
+/* filetti d'oro dell'etichetta hero: si allungano dal centro (--linea) */
+.hero-eyebrow::before { transform: scaleX(var(--linea, 1)); transform-origin: right center; }
+.hero-eyebrow::after  { transform: scaleX(var(--linea, 1)); transform-origin: left center; }
+/* riflesso di luce che attraversa il bottone principale (--luce) */
+.btn-hero { position: relative; overflow: hidden; isolation: isolate; }
+.btn-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.38) 50%, transparent 70%);
+  transform: translateX(var(--luce, -130%));
+  pointer-events: none;
+}
+/* svolazzo d'oro sotto la parola in corsivo del titolo hero */
+.hero-titolo em { position: relative; white-space: nowrap; }
+.svolazzo {
+  position: absolute; left: 2%; right: 2%; bottom: -.16em;
+  width: 96%; height: .26em;
+  overflow: visible; pointer-events: none;
+}
+.svolazzo path { fill: none; stroke: var(--gold, #C2A45C); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
