@@ -70,17 +70,17 @@
          bonus tag so the two read as one design language. Small footprint on
          purpose: never covers more than a corner of the frame. */
       .badge {
-        position: absolute; left: 50%; top: 700px; transform: translateX(-50%);
-        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        position: absolute; left: 50%; top: 420px; transform: translateX(-50%);
+        display: flex; flex-direction: column; align-items: center; gap: 6px;
         background: rgba(23,39,28,.78); border: 2px solid var(--oro);
-        border-radius: 24px; padding: 30px 46px; backdrop-filter: blur(6px);
-        box-shadow: 0 14px 34px rgba(0,0,0,.35);
+        border-radius: 30px; padding: 44px 70px; backdrop-filter: blur(6px);
+        box-shadow: 0 16px 40px rgba(0,0,0,.4);
       }
-      .badge .eyebrow { font-family: var(--sans); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 22px; color: var(--oro-chiaro); opacity: .85; }
-      .badge .num { font-family: var(--serif); font-weight: 600; font-size: 104px; color: var(--oro-chiaro); line-height: 1; }
-      .badge .label { font-family: var(--sans); font-weight: 700; letter-spacing: .04em; font-size: 30px; color: #fff; }
+      .badge .eyebrow { font-family: var(--sans); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 26px; color: var(--oro-chiaro); opacity: .85; }
+      .badge .num { font-family: var(--serif); font-weight: 600; font-size: 156px; color: var(--oro-chiaro); line-height: 1; }
+      .badge .label { font-family: var(--sans); font-weight: 700; letter-spacing: .04em; font-size: 36px; color: #fff; }
       .bonus-tag {
-        position: absolute; left: 50%; top: 850px; transform: translateX(-50%);
+        position: absolute; left: 50%; top: 480px; transform: translateX(-50%);
         display: flex; flex-direction: column; align-items: center; gap: 2px;
         background: rgba(23,39,28,.78); border: 2px solid var(--oro);
         border-radius: 22px; padding: 22px 40px; white-space: nowrap;
@@ -89,7 +89,7 @@
       .bonus-tag .num { font-family: var(--serif); font-weight: 600; font-size: 54px; color: var(--oro-chiaro); line-height: 1; }
       .bonus-tag .label { font-family: var(--sans); font-weight: 700; font-size: 26px; color: #fff; letter-spacing: .02em; }
       .social {
-        position: absolute; left: 50%; top: 700px; transform: translateX(-50%);
+        position: absolute; left: 50%; top: 440px; transform: translateX(-50%);
         text-align: center; color: #fff;
       }
       .social .stars { font-size: 64px; color: var(--oro-chiaro); letter-spacing: 8px; }
@@ -103,7 +103,7 @@
         box-shadow: 0 12px 34px rgba(0,0,0,.4);
       }
       .brandmark {
-        position: absolute; left: 0; right: 0; top: 820px; text-align: center; color: #fff;
+        position: absolute; left: 0; right: 0; top: 460px; text-align: center; color: #fff;
       }
       .brandmark .name { font-family: var(--serif); font-weight: 600; font-size: 96px; }
       .brandmark .cn { font-size: 40px; color: #ffffff; margin-top: 6px; text-shadow: 0 2px 3px rgba(0,0,0,.9); }
@@ -123,8 +123,18 @@
       /* Single, fixed caption position for the whole video — never moves, never doubles
          up with another text band. Sits in its own reserved band, clear of every
          scene's own graphic above it and of the platform's bottom safe-zone below it. */
+      /* Centered vertically on the canvas (1920px tall) — every other overlay
+         (badges, brand text, CTA) is laid out above or well below this band
+         so nothing ever collides with it. A translucent scrim guarantees
+         contrast regardless of what plays behind it (real footage brightness
+         varies frame to frame; text-shadow alone isn't reliable). */
       #captions {
-        position: absolute; left: 40px; right: 40px; top: 1300px; text-align: center; z-index: 20;
+        position: absolute; left: 40px; right: 40px; top: 890px; text-align: center; z-index: 20;
+        padding: 18px 0;
+      }
+      #captions::before {
+        content: ""; position: absolute; inset: -6px 20% ; z-index: -1;
+        background: rgba(10, 18, 12, .38); border-radius: 20px;
       }
       .word {
         display: inline-block; font-family: 'Jost', var(--sans); font-weight: 800; font-size: 70px;
