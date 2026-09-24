@@ -130,17 +130,17 @@
          varies frame to frame; text-shadow alone isn't reliable). */
       #captions {
         position: absolute; left: 40px; right: 40px; top: 890px; text-align: center; z-index: 20;
-        padding: 18px 0;
       }
-      #captions::before {
-        content: ""; position: absolute; inset: -6px 20% ; z-index: -1;
-        background: rgba(10, 18, 12, .38); border-radius: 20px;
-      }
+      /* Text-only captions — no background plate. Contrast against any real-footage
+         brightness comes from a heavier stroke and a tighter, darker shadow stack
+         instead of a scrim behind the letters. */
       .word {
         display: inline-block; font-family: 'Jost', var(--sans); font-weight: 800; font-size: 70px;
         letter-spacing: -0.01em;
-        color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,.55), 0 0 30px rgba(0,0,0,.6);
-        -webkit-text-stroke: 1.5px rgba(0,0,0,.4);
+        color: #fff;
+        text-shadow: 0 0 3px rgba(0,0,0,.9), 0 0 10px rgba(0,0,0,.85), 0 3px 8px rgba(0,0,0,.75);
+        -webkit-text-stroke: 3px rgba(0,0,0,.65);
+        paint-order: stroke fill;
       }
     </style>
   </head>
