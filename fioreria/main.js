@@ -36,7 +36,8 @@
     /* l'osservatore parte una volta sola al caricamento: le card costruite
        dopo (catalogo.js) devono potersi iscrivere, altrimenti resterebbero
        invisibili per sempre a opacity 0 */
-    window.AFC_REVEAL = { observe: function (el) { io.observe(el); } };
+    /* con GSAP attivo (animazioni.js) le card entrano come il resto della pagina */
+    window.AFC_REVEAL = window.AFC_ANIM || { observe: function (el) { io.observe(el); } };
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
     window.AFC_REVEAL = { observe: function (el) { el.classList.add('in'); } };

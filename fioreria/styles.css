@@ -3078,3 +3078,9 @@ img.no-foto { opacity: 0; }
   .whatsapp-float { right: 14px; bottom: 14px; width: 46px; height: 46px; }
   .whatsapp-float svg { width: 24px; height: 24px; }
 }
+
+/* =============================================================
+   ANIMAZIONI GSAP — maschera delle parole nei titoli (animazioni.js):
+   un filo di margine per non tagliare discendenti e corsivi durante la salita
+   ============================================================= */
+.sw-mask { padding: 0 .06em .16em; margin: 0 -.06em -.16em; }
