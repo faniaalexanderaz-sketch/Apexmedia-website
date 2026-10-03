@@ -1,0 +1,4 @@
+.agents/
+vendor/
+*vendor-gsap*
+*.min.js
