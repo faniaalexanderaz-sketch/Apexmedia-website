@@ -25,7 +25,7 @@ Se dopo 30 giorni i risultati sono buoni → fase 2 consigliata: +€5/giorno di
 - **Indirizzo:** Via San Lorenzo 46, 15121 Alessandria (AL)
 - **Telefono:** +39 331 715 3533 (anche WhatsApp)
 - **Orari:** aperti 7/7, 9:30–22:30
-- **Reputazione:** 5,0★ su Google, 106 recensioni ← **arma di conversione principale, va in ogni annuncio**
+- **Reputazione:** 5,0★ su Google, 146 recensioni ← **arma di conversione principale, va in ogni annuncio**
 - **Prenotazione online:** widget Treatwell integrato nel sito (sezione `#prenota`)
 - **Sito:** https://essenzadoriente.it/
 - **Trattamenti/pagine già pronte per landing dedicate:**
@@ -129,13 +129,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 10. Riflessologia e Shiatsu (23)
 11. Prezzi Sempre Chiari (20)
 12. Scrivici su WhatsApp (20)
-13. 106 Recensioni Google (21)
+13. 146 Recensioni Google (21)
 14. Rilassati Oggi Stesso (21)
 15. Trattamenti Orientali (21)
 
 **Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
 1. Centro olistico ad Alessandria: massaggi, riflessologia, shiatsu. Prezzi chiari. (80)
-2. 5,0 stelle su Google, 106 recensioni. Prenota online o scrivici su WhatsApp. (76)
+2. 5,0 stelle su Google, 146 recensioni. Prenota online o scrivici su WhatsApp. (76)
 3. Aperti tutti i giorni fino alle 22:30. Staff qualificato, parcheggio comodo. (76)
 4. Hai trovato il posto giusto. Prenota ora il tuo massaggio su misura. (68)
 
@@ -174,13 +174,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 10. Tecnica Orientale Autentica (27)
 11. Prezzi Sempre Chiari (20)
 12. Scrivici su WhatsApp (20)
-13. 106 Recensioni Google (21)
+13. 146 Recensioni Google (21)
 14. Un Momento Per Te (17)
 15. Benessere dai Piedi (19)
 
 **Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
 1. Riflessologia plantare praticata da mani esperte. Prenota online in un minuto. (78)
-2. 5,0 stelle su Google, 106 recensioni. Trattamento rilassante, prezzi chiari. (76)
+2. 5,0 stelle su Google, 146 recensioni. Trattamento rilassante, prezzi chiari. (76)
 3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
 4. Riscopri energia con un trattamento mirato ai piedi. Conferma immediata. (72)
 
@@ -219,13 +219,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 10. Riequilibra Corpo e Energia (27)
 11. Prezzi Sempre Chiari (20)
 12. Scrivici su WhatsApp (20)
-13. 106 Recensioni Google (21)
+13. 146 Recensioni Google (21)
 14. Esperti in Medicina Orient. (27)
 15. Un Trattamento Diverso (22)
 
 **Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
 1. Shiatsu e Tuina, esperti in medicina tradizionale cinese. Prenota online. (73)
-2. 5,0 stelle su Google, 106 recensioni. Trattamento autentico e rilassante. (73)
+2. 5,0 stelle su Google, 146 recensioni. Trattamento autentico e rilassante. (73)
 3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
 4. Scopri le tecniche orientali che rilassano corpo e mente. Prenota ora. (70)
 
@@ -266,13 +266,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 10. Drena e Rilassa (15)
 11. Prezzi Sempre Chiari (20)
 12. Scrivici su WhatsApp (20)
-13. 106 Recensioni Google (21)
+13. 146 Recensioni Google (21)
 14. Il Trattamento del Momento (26)
 15. Viso e Corpo Curati (19)
 
 **Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
 1. Gua Sha e Coppettazione: tecniche orientali di tendenza. Prenota online. (72)
-2. 5,0 stelle su Google, 106 recensioni. Trattamenti drenanti, prezzi chiari. (74)
+2. 5,0 stelle su Google, 146 recensioni. Trattamenti drenanti, prezzi chiari. (74)
 3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
 4. Prova il trattamento che tutti cercano. Conferma immediata online. (66)
 
@@ -310,13 +310,13 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 10. Anche Pulizia Orecchie (22)
 11. Prezzi Sempre Chiari (20)
 12. Scrivici su WhatsApp (20)
-13. 106 Recensioni Google (21)
+13. 146 Recensioni Google (21)
 14. Piedi Sempre in Ordine (22)
 15. Un Momento Solo per Te (22)
 
 **Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
 1. Pedicure estetica professionale ad Alessandria. Anche pulizia orecchie. (71)
-2. 5,0 stelle su Google, 106 recensioni. Cura del corpo, prezzi chiari. (68)
+2. 5,0 stelle su Google, 146 recensioni. Cura del corpo, prezzi chiari. (68)
 3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
 4. Prenditi cura di te con un trattamento professionale. Prenota ora. (66)
 
@@ -349,7 +349,7 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 6. Aperti 7/7 fino alle 22:30 (26)
 7. Via San Lorenzo 46 (18)
 8. Conferma Immediata (18)
-9. 106 Recensioni Google (21)
+9. 146 Recensioni Google (21)
 10. Chiama o Scrivi WhatsApp (24)
 11. Prezzi Sempre Chiari (20)
 12. Tutti i Trattamenti Insieme (27)
@@ -358,7 +358,7 @@ Il numero tra parentesi dopo ogni titolo/descrizione (es. "(21)") è la conta ca
 15. Torna a Sentirti Bene (21)
 
 **Descrizioni (4, ognuna verificata ≤ 90 caratteri):**
-1. Essenza d'Oriente: centro olistico con 5,0 stelle e 106 recensioni. (67)
+1. Essenza d'Oriente: centro olistico con 5,0 stelle e 146 recensioni. (67)
 2. Massaggi, riflessologia, shiatsu, gua sha, coppettazione, pedicure. (67)
 3. Aperti tutti i giorni fino alle 22:30 ad Alessandria. Scrivici su WhatsApp. (75)
 4. Il centro scelto da centinaia di clienti soddisfatti. Prenota ora. (66)
@@ -413,12 +413,12 @@ Attiva gli annunci solo quando c'è probabilità reale di prenotazione/chiamata:
 - **Sitelink (4, con descrizione da 2 righe ciascuno — URL SEMPRE con https://):**
   1. Titolo: "Prenota ora" → link `https://essenzadoriente.it/#prenota` · Riga 1: "Calendario online sempre aggiornato" · Riga 2: "Conferma immediata in 1 minuto"
   2. Titolo: "I nostri trattamenti" → link `https://essenzadoriente.it/#trattamenti` · Riga 1: "Massaggi, riflessologia, shiatsu, gua sha" · Riga 2: "Prezzi sempre in chiaro"
-  3. Titolo: "Recensioni 5,0★" → link `https://essenzadoriente.it/#recensioni` (o home) · Riga 1: "106 recensioni verificate su Google" · Riga 2: "Il centro più apprezzato di Alessandria"
+  3. Titolo: "Recensioni 5,0★" → link `https://essenzadoriente.it/#recensioni` (o home) · Riga 1: "146 recensioni verificate su Google" · Riga 2: "Il centro più apprezzato di Alessandria"
   4. Titolo: "Come raggiungerci" → link `https://essenzadoriente.it/#dove-siamo` (o home) · Riga 1: "Via San Lorenzo 46, Alessandria" · Riga 2: "Parcheggio comodo nei dintorni"
 - **Callout (Google Ads ne chiede almeno 4, limite 25 caratteri ciascuno — questi 4 sono già verificati, incollali così come sono):**
   ```
   5,0 su Google (13)
-  106 Recensioni (14)
+  146 Recensioni (14)
   Aperti 7/7 (10)
   Prenotazione Online (19)
   ```
