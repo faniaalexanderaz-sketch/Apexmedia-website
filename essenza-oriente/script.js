@@ -23,6 +23,34 @@
      l'evento viene scartato invece di essere accodato */
   function traccia(obj) {
     if (window.EO_COOKIE) window.EO_COOKIE.push(obj);
+    convertiAds(obj.event);
+  }
+
+  /* ---------- conversioni Google Ads (gtag diretto) ----------
+     Gli eventi dataLayer qui sopra NON arrivano a Google Ads da
+     soli: serve un evento 'conversion' con send_to = ID/etichetta
+     dell'azione di conversione. Etichetta: Google Ads → Obiettivi →
+     Conversioni → azione → "Configurazione tag" → "Installa tu il
+     tag" → send_to: 'AW-17997395114/XXXXXXXX'.
+     Un'etichetta per evento; se vuota si usa PREDEFINITA.
+     Il gtag è in Consent Mode (index.html): senza consenso Google
+     riceve solo ping anonimi, nessun cookie. */
+  var AW_ID = 'AW-17997395114';
+  var AW_ETICHETTE = {
+    PREDEFINITA: '',
+    click_chiama: '',
+    click_whatsapp: '',
+    click_widget_prenotazione: ''
+  };
+  function convertiAds(evento) {
+    var etichetta = AW_ETICHETTE[evento] || AW_ETICHETTE.PREDEFINITA;
+    if (!etichetta || typeof window.gtag !== 'function') return;
+    window.gtag('event', 'conversion', {
+      send_to: AW_ID + '/' + etichetta,
+      value: 30.0,
+      currency: 'EUR',
+      transport_type: 'beacon'
+    });
   }
 
   /* ---------- click_chiama + click_whatsapp ----------
