@@ -1,0 +1,980 @@
+{
+  "arabesque/api/_admin.js": {
+    "mtime": 1790942304.7756524,
+    "seen": 1791038209.054285,
+    "ast_hash": "4b278b985d66f40d58a5dbdf86538c0b",
+    "semantic_hash": "4b278b985d66f40d58a5dbdf86538c0b"
+  },
+  "arabesque/api/_db.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0542881,
+    "ast_hash": "3718b2e98ec4a54e71013dc83902c9f4",
+    "semantic_hash": "3718b2e98ec4a54e71013dc83902c9f4"
+  },
+  "arabesque/api/_email-template.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0542896,
+    "ast_hash": "2e23e5269b4a0b29cc82baa3f7ccd781",
+    "semantic_hash": "2e23e5269b4a0b29cc82baa3f7ccd781"
+  },
+  "arabesque/api/_email.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0542912,
+    "ast_hash": "bed64a4654760990fe8c78adb8d9aae5",
+    "semantic_hash": "bed64a4654760990fe8c78adb8d9aae5"
+  },
+  "arabesque/api/admin-data.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0542922,
+    "ast_hash": "bbd4eeb0b0af6639c14875131442d3fd",
+    "semantic_hash": "bbd4eeb0b0af6639c14875131442d3fd"
+  },
+  "arabesque/api/admin-login.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0542932,
+    "ast_hash": "f0a681e4b55809a03c8e806bd4bffaa3",
+    "semantic_hash": "f0a681e4b55809a03c8e806bd4bffaa3"
+  },
+  "arabesque/api/admin-ordine-stato.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0542946,
+    "ast_hash": "4a5ff148846e5623114cff2aea039718",
+    "semantic_hash": "4a5ff148846e5623114cff2aea039718"
+  },
+  "arabesque/api/avvisami.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543036,
+    "ast_hash": "f314067632b102b5246ef69ac3b96e4a",
+    "semantic_hash": "f314067632b102b5246ef69ac3b96e4a"
+  },
+  "arabesque/api/carrello-abbandonato.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543058,
+    "ast_hash": "8fc8edd170453f395d638f28538ff7d6",
+    "semantic_hash": "8fc8edd170453f395d638f28538ff7d6"
+  },
+  "arabesque/api/create-checkout-session.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543067,
+    "ast_hash": "7f59746fa07ce8d836a5b2512533bf80",
+    "semantic_hash": "7f59746fa07ce8d836a5b2512533bf80"
+  },
+  "arabesque/api/newsletter.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543315,
+    "ast_hash": "dcf04c9bcaff3024a9fa41fbc4ddab81",
+    "semantic_hash": "dcf04c9bcaff3024a9fa41fbc4ddab81"
+  },
+  "arabesque/api/ordine-manuale.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543337,
+    "ast_hash": "a51edae794f10acd23ff356537fe721d",
+    "semantic_hash": "a51edae794f10acd23ff356537fe721d"
+  },
+  "arabesque/api/prenota-negozio.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.054335,
+    "ast_hash": "658146efe9faf5a17e544191ac14e3e7",
+    "semantic_hash": "658146efe9faf5a17e544191ac14e3e7"
+  },
+  "arabesque/api/stripe-webhook.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543365,
+    "ast_hash": "bc9fac1909c18730c577354a68a22f72",
+    "semantic_hash": "bc9fac1909c18730c577354a68a22f72"
+  },
+  "arabesque/api/traccia-ordine.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543377,
+    "ast_hash": "056b2e64bd3512b6ec60a185d4419777",
+    "semantic_hash": "056b2e64bd3512b6ec60a185d4419777"
+  },
+  "arabesque/api/track.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543392,
+    "ast_hash": "d979c2cc63c5976b2360b75166e466b7",
+    "semantic_hash": "d979c2cc63c5976b2360b75166e466b7"
+  },
+  "arabesque/catalogo.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543404,
+    "ast_hash": "c72cf8a716f44beee3aa3a07046b37bc",
+    "semantic_hash": "c72cf8a716f44beee3aa3a07046b37bc"
+  },
+  "arabesque/checkout.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543416,
+    "ast_hash": "7c7a42ded5304a9d16311ca12b237ae8",
+    "semantic_hash": "7c7a42ded5304a9d16311ca12b237ae8"
+  },
+  "arabesque/config.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.054343,
+    "ast_hash": "cd300ec43c77c6fb91c732057249d13f",
+    "semantic_hash": "cd300ec43c77c6fb91c732057249d13f"
+  },
+  "arabesque/cookie.js": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0543442,
+    "ast_hash": "26a6228c79d8aca2943278f79f10f2af",
+    "semantic_hash": "26a6228c79d8aca2943278f79f10f2af"
+  },
+  "arabesque/home.js": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.054346,
+    "ast_hash": "1c34de5a07da008b9dfc2eb101167800",
+    "semantic_hash": "1c34de5a07da008b9dfc2eb101167800"
+  },
+  "arabesque/main.js": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0543473,
+    "ast_hash": "90d428ce5b5c41af6904db0dabedf48c",
+    "semantic_hash": "90d428ce5b5c41af6904db0dabedf48c"
+  },
+  "arabesque/movimento.js": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0543487,
+    "ast_hash": "dd4c82d93459b0fcf96cd19d3a6c2851",
+    "semantic_hash": "dd4c82d93459b0fcf96cd19d3a6c2851"
+  },
+  "arabesque/package.json": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0543504,
+    "ast_hash": "f0830edd59c141f0712069fa82624f88",
+    "semantic_hash": "f0830edd59c141f0712069fa82624f88"
+  },
+  "arabesque/prodotti.js": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0543518,
+    "ast_hash": "5fc8486c76796b140fb85d54eaee1e47",
+    "semantic_hash": "5fc8486c76796b140fb85d54eaee1e47"
+  },
+  "arabesque/prodotto.js": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0543535,
+    "ast_hash": "e7dd774667d7fb3f41e7aeb931ffbe6e",
+    "semantic_hash": "e7dd774667d7fb3f41e7aeb931ffbe6e"
+  },
+  "arabesque/vercel.json": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0543547,
+    "ast_hash": "de392528574f6fc31f896554f3462c49",
+    "semantic_hash": "de392528574f6fc31f896554f3462c49"
+  },
+  "audit-gratuito/app/admin/layout.tsx": {
+    "mtime": 1790942304.7824087,
+    "seen": 1791038209.0543563,
+    "ast_hash": "e5347a50d76c27060a6e61de3df9fd7c",
+    "semantic_hash": "e5347a50d76c27060a6e61de3df9fd7c"
+  },
+  "audit-gratuito/app/admin/page.tsx": {
+    "mtime": 1790942304.7824337,
+    "seen": 1791038209.0543575,
+    "ast_hash": "1389994f7636162a860bb01fa7226067",
+    "semantic_hash": "1389994f7636162a860bb01fa7226067"
+  },
+  "audit-gratuito/app/api/admin/leads/[id]/route.ts": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543587,
+    "ast_hash": "c2fb99433a094fed0331a746e1d9d722",
+    "semantic_hash": "c2fb99433a094fed0331a746e1d9d722"
+  },
+  "audit-gratuito/app/api/admin/leads/route.ts": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543602,
+    "ast_hash": "f10424aeeebc26c8e2296162c4b88cd6",
+    "semantic_hash": "f10424aeeebc26c8e2296162c4b88cd6"
+  },
+  "audit-gratuito/app/api/admin/login/route.ts": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543616,
+    "ast_hash": "474bc8726d3839c4d3d9d769eddb2a8f",
+    "semantic_hash": "474bc8726d3839c4d3d9d769eddb2a8f"
+  },
+  "audit-gratuito/app/api/admin/logout/route.ts": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543628,
+    "ast_hash": "8a7d9d637fb60736de57ecea4e8c195f",
+    "semantic_hash": "8a7d9d637fb60736de57ecea4e8c195f"
+  },
+  "audit-gratuito/app/api/lead/route.ts": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543644,
+    "ast_hash": "623cf3e7588797e95df647f31dd3e5a0",
+    "semantic_hash": "623cf3e7588797e95df647f31dd3e5a0"
+  },
+  "audit-gratuito/app/icon.tsx": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543656,
+    "ast_hash": "2d5ece1b08689489315414fe50208e1e",
+    "semantic_hash": "2d5ece1b08689489315414fe50208e1e"
+  },
+  "audit-gratuito/app/layout.tsx": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543673,
+    "ast_hash": "fd2fc407dd93ce4a53b9fcdac9a681b8",
+    "semantic_hash": "fd2fc407dd93ce4a53b9fcdac9a681b8"
+  },
+  "audit-gratuito/app/page.tsx": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543687,
+    "ast_hash": "783e8b1bc5dbab97d8971f84b1e60f73",
+    "semantic_hash": "783e8b1bc5dbab97d8971f84b1e60f73"
+  },
+  "audit-gratuito/components/CtaButton.tsx": {
+    "mtime": 1790942304.7825925,
+    "seen": 1791038209.0543702,
+    "ast_hash": "ec09d31233c4e6d749b958856fbf6d0b",
+    "semantic_hash": "ec09d31233c4e6d749b958856fbf6d0b"
+  },
+  "audit-gratuito/components/Footer.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543716,
+    "ast_hash": "8aaa5eb469748cbd17d82dff07f36283",
+    "semantic_hash": "8aaa5eb469748cbd17d82dff07f36283"
+  },
+  "audit-gratuito/components/FormSection.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.054373,
+    "ast_hash": "5733eca5b2d165a5560ed6dab97063ae",
+    "semantic_hash": "5733eca5b2d165a5560ed6dab97063ae"
+  },
+  "audit-gratuito/components/Hero.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543745,
+    "ast_hash": "6e9f541d36e79dab6ff1e6f75798d775",
+    "semantic_hash": "6e9f541d36e79dab6ff1e6f75798d775"
+  },
+  "audit-gratuito/components/LeadForm.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543754,
+    "ast_hash": "f4e6aac6cff9e8e39f9895ff7043d6e2",
+    "semantic_hash": "f4e6aac6cff9e8e39f9895ff7043d6e2"
+  },
+  "audit-gratuito/components/Logo.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543766,
+    "ast_hash": "7969f3db202eb9d584682e0b83006c80",
+    "semantic_hash": "7969f3db202eb9d584682e0b83006c80"
+  },
+  "audit-gratuito/components/OfferSection.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.054381,
+    "ast_hash": "207684e66c8078bb1747c0f866f01e64",
+    "semantic_hash": "207684e66c8078bb1747c0f866f01e64"
+  },
+  "audit-gratuito/components/ProblemSection.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543816,
+    "ast_hash": "6ddbac31684829d0d58d96dbcd7e499c",
+    "semantic_hash": "6ddbac31684829d0d58d96dbcd7e499c"
+  },
+  "audit-gratuito/components/ScanMock.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543823,
+    "ast_hash": "661ac550586fd7208d2b27a72efc936f",
+    "semantic_hash": "661ac550586fd7208d2b27a72efc936f"
+  },
+  "audit-gratuito/components/SectionHeading.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543833,
+    "ast_hash": "bb5ed49fec486459b764f577148f16e4",
+    "semantic_hash": "bb5ed49fec486459b764f577148f16e4"
+  },
+  "audit-gratuito/components/StickyCta.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543845,
+    "ast_hash": "1770ef2368a2997244ca18360e3e8d53",
+    "semantic_hash": "1770ef2368a2997244ca18360e3e8d53"
+  },
+  "audit-gratuito/components/TriStripe.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543852,
+    "ast_hash": "1a0cd00ada018803ebc56ddcb8f7326e",
+    "semantic_hash": "1a0cd00ada018803ebc56ddcb8f7326e"
+  },
+  "audit-gratuito/components/icons.tsx": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.054386,
+    "ast_hash": "cf36cb5c2321ec8e03b03df2b7c306df",
+    "semantic_hash": "cf36cb5c2321ec8e03b03df2b7c306df"
+  },
+  "audit-gratuito/lib/admin-auth.ts": {
+    "mtime": 1790942304.7830021,
+    "seen": 1791038209.0543869,
+    "ast_hash": "f4f6fb15dfc84917d8f79de3b2632a81",
+    "semantic_hash": "f4f6fb15dfc84917d8f79de3b2632a81"
+  },
+  "audit-gratuito/lib/email-templates.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.054388,
+    "ast_hash": "c31de2dbf31e8b26cc2446ca93e525a6",
+    "semantic_hash": "c31de2dbf31e8b26cc2446ca93e525a6"
+  },
+  "audit-gratuito/lib/email.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543888,
+    "ast_hash": "e781e6d1b660164fe7c17bceeb69a6fd",
+    "semantic_hash": "e781e6d1b660164fe7c17bceeb69a6fd"
+  },
+  "audit-gratuito/lib/fallback-storage.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543892,
+    "ast_hash": "ebdcacf4d82ef628912437485c861adb",
+    "semantic_hash": "ebdcacf4d82ef628912437485c861adb"
+  },
+  "audit-gratuito/lib/labels.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.05439,
+    "ast_hash": "5aa876c92402341977a60d8f2198f1d7",
+    "semantic_hash": "5aa876c92402341977a60d8f2198f1d7"
+  },
+  "audit-gratuito/lib/scoring.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543907,
+    "ast_hash": "440d4e7585ea997fa73ab56a96583736",
+    "semantic_hash": "440d4e7585ea997fa73ab56a96583736"
+  },
+  "audit-gratuito/lib/supabase.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543916,
+    "ast_hash": "99c20a002205e1eb000033e8b8c05a85",
+    "semantic_hash": "99c20a002205e1eb000033e8b8c05a85"
+  },
+  "audit-gratuito/lib/types.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543923,
+    "ast_hash": "fca2108258a9b1947d75b876b54418e1",
+    "semantic_hash": "fca2108258a9b1947d75b876b54418e1"
+  },
+  "audit-gratuito/lib/validate.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.054393,
+    "ast_hash": "012189ba5d06a874cbe3b57386155e18",
+    "semantic_hash": "012189ba5d06a874cbe3b57386155e18"
+  },
+  "audit-gratuito/next.config.mjs": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543938,
+    "ast_hash": "43e25a268e01dddbf72034596da53347",
+    "semantic_hash": "43e25a268e01dddbf72034596da53347"
+  },
+  "audit-gratuito/package.json": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543947,
+    "ast_hash": "c2b66fa4dd35d0a505f68fbad050e0c9",
+    "semantic_hash": "c2b66fa4dd35d0a505f68fbad050e0c9"
+  },
+  "audit-gratuito/postcss.config.mjs": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543954,
+    "ast_hash": "c735540bb63936a123bc867d950c9f69",
+    "semantic_hash": "c735540bb63936a123bc867d950c9f69"
+  },
+  "audit-gratuito/tailwind.config.ts": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543962,
+    "ast_hash": "bd581bd10cea51b37f00bcf5f6d44e74",
+    "semantic_hash": "bd581bd10cea51b37f00bcf5f6d44e74"
+  },
+  "audit-gratuito/tsconfig.json": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543969,
+    "ast_hash": "8caab4d9723bd43ea2efe49f4f42d5f1",
+    "semantic_hash": "8caab4d9723bd43ea2efe49f4f42d5f1"
+  },
+  "essenza-oriente/animazioni.js": {
+    "mtime": 1790942304.7833266,
+    "seen": 1791038209.0543976,
+    "ast_hash": "a55c425d80480653eff0052aed7313e3",
+    "semantic_hash": "a55c425d80480653eff0052aed7313e3"
+  },
+  "essenza-oriente/cookie.js": {
+    "mtime": 1790942304.7844157,
+    "seen": 1791038209.0543985,
+    "ast_hash": "ce69bf8caf168f7443a229071613b908",
+    "semantic_hash": "ce69bf8caf168f7443a229071613b908"
+  },
+  "essenza-oriente/genera-trattamenti.js": {
+    "mtime": 1790942304.7907822,
+    "seen": 1791038209.0543993,
+    "ast_hash": "b3933aedb33f5cdcdac3396f38115e4d",
+    "semantic_hash": "b3933aedb33f5cdcdac3396f38115e4d"
+  },
+  "essenza-oriente/script.js": {
+    "mtime": 1790942304.7907822,
+    "seen": 1791038209.0544,
+    "ast_hash": "8f4d37d02d262a41b7d004d87e107125",
+    "semantic_hash": "8f4d37d02d262a41b7d004d87e107125"
+  },
+  "fioreria/account.js": {
+    "mtime": 1790942304.8007839,
+    "seen": 1791038209.0544007,
+    "ast_hash": "9487d8a3932f0a9c7c83b96f956cc436",
+    "semantic_hash": "9487d8a3932f0a9c7c83b96f956cc436"
+  },
+  "fioreria/admin.js": {
+    "mtime": 1790942304.8007839,
+    "seen": 1791038209.0544014,
+    "ast_hash": "b86161718ebca2feffe7066b3c53cf3a",
+    "semantic_hash": "b86161718ebca2feffe7066b3c53cf3a"
+  },
+  "fioreria/animazioni.js": {
+    "mtime": 1790942304.8007839,
+    "seen": 1791038209.054402,
+    "ast_hash": "6c49625eb3b1359b112f3953672f9a25",
+    "semantic_hash": "6c49625eb3b1359b112f3953672f9a25"
+  },
+  "fioreria/api/_admin.js": {
+    "mtime": 1790942304.8007839,
+    "seen": 1791038209.0544028,
+    "ast_hash": "1908cf8880211be9aed9b8ba6a629f97",
+    "semantic_hash": "1908cf8880211be9aed9b8ba6a629f97"
+  },
+  "fioreria/api/_db.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544035,
+    "ast_hash": "8e185f365b99f6af480be3d2614aa6ea",
+    "semantic_hash": "8e185f365b99f6af480be3d2614aa6ea"
+  },
+  "fioreria/api/_email-template.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544043,
+    "ast_hash": "fdf346dd942dbbb3f974a3ee65f732b1",
+    "semantic_hash": "fdf346dd942dbbb3f974a3ee65f732b1"
+  },
+  "fioreria/api/_email.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544052,
+    "ast_hash": "ae589a2d040ec7efb02cc2110af10391",
+    "semantic_hash": "ae589a2d040ec7efb02cc2110af10391"
+  },
+  "fioreria/api/admin-data.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.054406,
+    "ast_hash": "984a6133276e80648610b6bdb613cf73",
+    "semantic_hash": "984a6133276e80648610b6bdb613cf73"
+  },
+  "fioreria/api/admin-login.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544064,
+    "ast_hash": "b244ad96f4a72e1c7867bef5a5e3d95f",
+    "semantic_hash": "b244ad96f4a72e1c7867bef5a5e3d95f"
+  },
+  "fioreria/api/admin-ordine-stato.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544071,
+    "ast_hash": "8117826e099c741d2f92e639de93ae3a",
+    "semantic_hash": "8117826e099c741d2f92e639de93ae3a"
+  },
+  "fioreria/api/admin-scorte.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.054408,
+    "ast_hash": "8791a95ca1e236147a7ca9fd7975ddfa",
+    "semantic_hash": "8791a95ca1e236147a7ca9fd7975ddfa"
+  },
+  "fioreria/api/assistente.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.054409,
+    "ast_hash": "8036598d5ab4e9696046b863fcd0c7cc",
+    "semantic_hash": "8036598d5ab4e9696046b863fcd0c7cc"
+  },
+  "fioreria/api/create-checkout-session.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544097,
+    "ast_hash": "62fcb6188949ea4b7d82401a2251d53a",
+    "semantic_hash": "62fcb6188949ea4b7d82401a2251d53a"
+  },
+  "fioreria/api/invia-benvenuto.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544105,
+    "ast_hash": "b7c897d352e0e3abfc214e049985b9b2",
+    "semantic_hash": "b7c897d352e0e3abfc214e049985b9b2"
+  },
+  "fioreria/api/ordine-contrassegno.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.054411,
+    "ast_hash": "14434a7cbd10ea9bf4c1d16b0ec97dd3",
+    "semantic_hash": "14434a7cbd10ea9bf4c1d16b0ec97dd3"
+  },
+  "fioreria/api/stock.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544121,
+    "ast_hash": "9578a9d3c95d5e4f226e47468929a68e",
+    "semantic_hash": "9578a9d3c95d5e4f226e47468929a68e"
+  },
+  "fioreria/api/stripe-webhook.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544128,
+    "ast_hash": "69194293f74530e76b39ee3bd492c863",
+    "semantic_hash": "69194293f74530e76b39ee3bd492c863"
+  },
+  "fioreria/api/traccia-ordine.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544133,
+    "ast_hash": "d9620b8d2b5e11c24945ed9ed31af6c8",
+    "semantic_hash": "d9620b8d2b5e11c24945ed9ed31af6c8"
+  },
+  "fioreria/api/track.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.054415,
+    "ast_hash": "f2a4781bdc851d08bbeea86bd40bd8f1",
+    "semantic_hash": "f2a4781bdc851d08bbeea86bd40bd8f1"
+  },
+  "fioreria/assistente-fiorista.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544164,
+    "ast_hash": "892a52572741920a1f39433ff4cb0a1e",
+    "semantic_hash": "892a52572741920a1f39433ff4cb0a1e"
+  },
+  "fioreria/auth.js": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.0544171,
+    "ast_hash": "a8f8973e18345f4775b6c8640ffd3a54",
+    "semantic_hash": "a8f8973e18345f4775b6c8640ffd3a54"
+  },
+  "fioreria/catalogo.js": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.054418,
+    "ast_hash": "1f6ad34811746e6f9e3d61ae472b6ec6",
+    "semantic_hash": "1f6ad34811746e6f9e3d61ae472b6ec6"
+  },
+  "fioreria/checkout.js": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.0544188,
+    "ast_hash": "ffde5235f625b5cc59abcc93c523e395",
+    "semantic_hash": "ffde5235f625b5cc59abcc93c523e395"
+  },
+  "fioreria/collezione.js": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.0544195,
+    "ast_hash": "a8f438550346195b8289b35d81fbc0b7",
+    "semantic_hash": "a8f438550346195b8289b35d81fbc0b7"
+  },
+  "fioreria/cookie.js": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.0544202,
+    "ast_hash": "5c0c856aaed89139bf7cd4138932cb8f",
+    "semantic_hash": "5c0c856aaed89139bf7cd4138932cb8f"
+  },
+  "fioreria/main.js": {
+    "mtime": 1790942305.9747822,
+    "seen": 1791038209.054421,
+    "ast_hash": "77bd4ec9fb8cdeb7b94d81f3eea3ace1",
+    "semantic_hash": "77bd4ec9fb8cdeb7b94d81f3eea3ace1"
+  },
+  "fioreria/netlify/functions/create-checkout-session.js": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544217,
+    "ast_hash": "13b13367d6213d74fc39c6eb916b3aed",
+    "semantic_hash": "13b13367d6213d74fc39c6eb916b3aed"
+  },
+  "fioreria/package.json": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544226,
+    "ast_hash": "da6832b6ba2fdd3b2ffbc3679cf246fa",
+    "semantic_hash": "da6832b6ba2fdd3b2ffbc3679cf246fa"
+  },
+  "fioreria/prodotti.js": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544233,
+    "ast_hash": "bea862f5b55d195b150af697c377ca7e",
+    "semantic_hash": "bea862f5b55d195b150af697c377ca7e"
+  },
+  "fioreria/prodotto.js": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.054424,
+    "ast_hash": "d907c64751bfcfbf57028610a14824d4",
+    "semantic_hash": "d907c64751bfcfbf57028610a14824d4"
+  },
+  "fioreria/traccia-ordine.js": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544245,
+    "ast_hash": "0c2d868e32b6042f007cc1ee61e86648",
+    "semantic_hash": "0c2d868e32b6042f007cc1ee61e86648"
+  },
+  "fioreria/vercel.json": {
+    "mtime": 1790942305.981975,
+    "seen": 1791038209.0544252,
+    "ast_hash": "9406b45716578eb4c7f3eb7c65f3a4a2",
+    "semantic_hash": "9406b45716578eb4c7f3eb7c65f3a4a2"
+  },
+  "main.js": {
+    "mtime": 1790942305.981975,
+    "seen": 1791038209.0544262,
+    "ast_hash": "35ec17309a70c7b62d9fa276f4258a72",
+    "semantic_hash": "35ec17309a70c7b62d9fa276f4258a72"
+  },
+  "reels/essenza-oriente-massaggio-promo/hyperframes.json": {
+    "mtime": 1790942306.0443857,
+    "seen": 1791038209.054427,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "reels/essenza-oriente-massaggio-promo/meta.json": {
+    "mtime": 1790942306.7787821,
+    "seen": 1791038209.0544276,
+    "ast_hash": "43df29362088f356ebe1cc01b4cc4679",
+    "semantic_hash": "43df29362088f356ebe1cc01b4cc4679"
+  },
+  "reels/essenza-oriente-massaggio-promo/package.json": {
+    "mtime": 1790942306.7787821,
+    "seen": 1791038209.0544286,
+    "ast_hash": "4cd141e188a1c754b03069d082bf8731",
+    "semantic_hash": "4cd141e188a1c754b03069d082bf8731"
+  },
+  "skills-lock.json": {
+    "mtime": 1790942306.7787821,
+    "seen": 1791038209.0544295,
+    "ast_hash": "686d58cca98359e9b47d5cdedb1ae129",
+    "semantic_hash": "686d58cca98359e9b47d5cdedb1ae129"
+  },
+  ".claude/skills/frontend-design/LICENSE.txt": {
+    "mtime": 1790942304.7067807,
+    "seen": 1791038209.0544302,
+    "ast_hash": "2ee41112a44fe7014dce33e26468ba93",
+    "semantic_hash": "2ee41112a44fe7014dce33e26468ba93"
+  },
+  ".claude/skills/frontend-design/SKILL.md": {
+    "mtime": 1790942304.706933,
+    "seen": 1791038209.054431,
+    "ast_hash": "31c633612585bf2dd4e6d1103afc9f33",
+    "semantic_hash": "31c633612585bf2dd4e6d1103afc9f33"
+  },
+  "README.md": {
+    "mtime": 1790942304.770782,
+    "seen": 1791038209.0544317,
+    "ast_hash": "8cb56757390e7fa6e4311e4c68d7588a",
+    "semantic_hash": "8cb56757390e7fa6e4311e4c68d7588a"
+  },
+  "arabesque/PROMPT-BASE.md": {
+    "mtime": 1790942304.7756524,
+    "seen": 1791038209.0544326,
+    "ast_hash": "bcae3aa393ea29be9c91d21e83a21869",
+    "semantic_hash": "bcae3aa393ea29be9c91d21e83a21869"
+  },
+  "arabesque/PROMPT-DINAMICO.md": {
+    "mtime": 1790942304.7756524,
+    "seen": 1791038209.0544333,
+    "ast_hash": "66501d98a9e389b18523def3e83106af",
+    "semantic_hash": "66501d98a9e389b18523def3e83106af"
+  },
+  "arabesque/PROMPT-V2-CHIARO.md": {
+    "mtime": 1790942304.7756524,
+    "seen": 1791038209.054434,
+    "ast_hash": "f9f3e166c85c33b6ec870b199c47a2c2",
+    "semantic_hash": "f9f3e166c85c33b6ec870b199c47a2c2"
+  },
+  "arabesque/README.md": {
+    "mtime": 1790942304.7756524,
+    "seen": 1791038209.0544348,
+    "ast_hash": "9aff354abca220b74c3dc8c68805066c",
+    "semantic_hash": "9aff354abca220b74c3dc8c68805066c"
+  },
+  "arabesque/accessori.html": {
+    "mtime": 1790942304.7756524,
+    "seen": 1791038209.0544355,
+    "ast_hash": "38207bfdf26a577688e7f18cd6ea5201",
+    "semantic_hash": "38207bfdf26a577688e7f18cd6ea5201"
+  },
+  "arabesque/admin.html": {
+    "mtime": 1790942304.7756524,
+    "seen": 1791038209.0544364,
+    "ast_hash": "6ff473d58ac92d9cbfe9e819939d934d",
+    "semantic_hash": "6ff473d58ac92d9cbfe9e819939d934d"
+  },
+  "arabesque/checkout.html": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0544372,
+    "ast_hash": "573bc2fddaccaf5e8d488cb64c350cd4",
+    "semantic_hash": "573bc2fddaccaf5e8d488cb64c350cd4"
+  },
+  "arabesque/cookie-policy.html": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0544379,
+    "ast_hash": "5a60e31187c34738f2944c2ee29bbabb",
+    "semantic_hash": "5a60e31187c34738f2944c2ee29bbabb"
+  },
+  "arabesque/curvy.html": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.0544386,
+    "ast_hash": "563672e7b7027a5c7420f841439a6d1c",
+    "semantic_hash": "563672e7b7027a5c7420f841439a6d1c"
+  },
+  "arabesque/donna.html": {
+    "mtime": 1790942304.776818,
+    "seen": 1791038209.054439,
+    "ast_hash": "5cdf652ff45c1437937ee00bdbad0283",
+    "semantic_hash": "5cdf652ff45c1437937ee00bdbad0283"
+  },
+  "arabesque/index.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.05444,
+    "ast_hash": "be4048a2392ccd65c35ca701af3950b7",
+    "semantic_hash": "be4048a2392ccd65c35ca701af3950b7"
+  },
+  "arabesque/negozio.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544407,
+    "ast_hash": "bc8fd18044a2e81452952e4e1b551f9b",
+    "semantic_hash": "bc8fd18044a2e81452952e4e1b551f9b"
+  },
+  "arabesque/ordine-completato.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544415,
+    "ast_hash": "4308127b02d7fdc51cffacf6f269e586",
+    "semantic_hash": "4308127b02d7fdc51cffacf6f269e586"
+  },
+  "arabesque/pagamento-annullato.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544424,
+    "ast_hash": "04af20de078ab95437c1a368b0c12f45",
+    "semantic_hash": "04af20de078ab95437c1a368b0c12f45"
+  },
+  "arabesque/privacy.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544434,
+    "ast_hash": "19a5bce4468f7286a1711a3102106ead",
+    "semantic_hash": "19a5bce4468f7286a1711a3102106ead"
+  },
+  "arabesque/prompt-migliora-design-conversione.md": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.054444,
+    "ast_hash": "f8e4478ef331d17ecd6cad4bd09733b8",
+    "semantic_hash": "f8e4478ef331d17ecd6cad4bd09733b8"
+  },
+  "arabesque/resi-spedizioni.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544448,
+    "ast_hash": "dadf196b2956a8fd0f46753e42561312",
+    "semantic_hash": "dadf196b2956a8fd0f46753e42561312"
+  },
+  "arabesque/robots.txt": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544455,
+    "ast_hash": "3489d505eb7f378e510aae330a18c2ff",
+    "semantic_hash": "3489d505eb7f378e510aae330a18c2ff"
+  },
+  "arabesque/termini.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544462,
+    "ast_hash": "62496ce6a89359df41fa0d4edfe1d3c5",
+    "semantic_hash": "62496ce6a89359df41fa0d4edfe1d3c5"
+  },
+  "arabesque/traccia-ordine.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.0544472,
+    "ast_hash": "a133c1f74b8ebc8aa4f7643d92d06694",
+    "semantic_hash": "a133c1f74b8ebc8aa4f7643d92d06694"
+  },
+  "arabesque/uomo.html": {
+    "mtime": 1790942304.7784858,
+    "seen": 1791038209.054448,
+    "ast_hash": "c9765ed0997c5be1e1503f4269ac8ea2",
+    "semantic_hash": "c9765ed0997c5be1e1503f4269ac8ea2"
+  },
+  "essenza-oriente/campagna-ads-settembre-2026.md": {
+    "mtime": 1790942304.7844157,
+    "seen": 1791038209.0544488,
+    "ast_hash": "cfbb328a7dca2e7ae6155d39f8002fa2",
+    "semantic_hash": "cfbb328a7dca2e7ae6155d39f8002fa2"
+  },
+  "essenza-oriente/index.html": {
+    "mtime": 1790942304.7907822,
+    "seen": 1791038209.0544493,
+    "ast_hash": "516fdd63fa9330b836cae94664be7b10",
+    "semantic_hash": "516fdd63fa9330b836cae94664be7b10"
+  },
+  "essenza-oriente/privacy.html": {
+    "mtime": 1790942304.7907822,
+    "seen": 1791038209.0544505,
+    "ast_hash": "4943363fe11b1966754fb1d761347a27",
+    "semantic_hash": "4943363fe11b1966754fb1d761347a27"
+  },
+  "essenza-oriente/robots.txt": {
+    "mtime": 1790942304.7907822,
+    "seen": 1791038209.054451,
+    "ast_hash": "5190173f2f6095b9ba08d38a75e6862a",
+    "semantic_hash": "5190173f2f6095b9ba08d38a75e6862a"
+  },
+  "essenza-oriente/trattamenti/coppettazione.html": {
+    "mtime": 1790942304.7947822,
+    "seen": 1791038209.054452,
+    "ast_hash": "aceecc7486a1a1e0a722d94ae5661e88",
+    "semantic_hash": "aceecc7486a1a1e0a722d94ae5661e88"
+  },
+  "essenza-oriente/trattamenti/gua-sha.html": {
+    "mtime": 1790942304.7991695,
+    "seen": 1791038209.0544527,
+    "ast_hash": "8915fa0529fc43b0b5c17dbc34e0798f",
+    "semantic_hash": "8915fa0529fc43b0b5c17dbc34e0798f"
+  },
+  "essenza-oriente/trattamenti/massaggio-oli-essenziali.html": {
+    "mtime": 1790942304.7991695,
+    "seen": 1791038209.0544536,
+    "ast_hash": "47914a4c006fe95bf4a0e622be4949a8",
+    "semantic_hash": "47914a4c006fe95bf4a0e622be4949a8"
+  },
+  "essenza-oriente/trattamenti/massaggio-spa.html": {
+    "mtime": 1790942304.7991695,
+    "seen": 1791038209.0544543,
+    "ast_hash": "ec7d18fed5161d2010532f47620c3ee0",
+    "semantic_hash": "ec7d18fed5161d2010532f47620c3ee0"
+  },
+  "essenza-oriente/trattamenti/pedicure.html": {
+    "mtime": 1790942304.7991695,
+    "seen": 1791038209.054455,
+    "ast_hash": "56ad03857ac8dade03e2b78ae2112220",
+    "semantic_hash": "56ad03857ac8dade03e2b78ae2112220"
+  },
+  "essenza-oriente/trattamenti/pulizia-orecchie.html": {
+    "mtime": 1790942304.7991695,
+    "seen": 1791038209.0544558,
+    "ast_hash": "fe93d97eea0060239bdafb2ed68107c4",
+    "semantic_hash": "fe93d97eea0060239bdafb2ed68107c4"
+  },
+  "essenza-oriente/trattamenti/riflessologia-plantare.html": {
+    "mtime": 1790942304.7991695,
+    "seen": 1791038209.0544565,
+    "ast_hash": "6326516bd5a0204b2aac6157d2dde7ec",
+    "semantic_hash": "6326516bd5a0204b2aac6157d2dde7ec"
+  },
+  "essenza-oriente/trattamenti/tuina-shiatsu.html": {
+    "mtime": 1790942304.7991695,
+    "seen": 1791038209.0544574,
+    "ast_hash": "78b4cc2132d799d7cfca1230cc2aaaf2",
+    "semantic_hash": "78b4cc2132d799d7cfca1230cc2aaaf2"
+  },
+  "fioreria/account.html": {
+    "mtime": 1790942304.8007839,
+    "seen": 1791038209.0544581,
+    "ast_hash": "b91304dd53d3d8e209b04dac9b7f64e2",
+    "semantic_hash": "b91304dd53d3d8e209b04dac9b7f64e2"
+  },
+  "fioreria/campagna-ads-settembre-2026.md": {
+    "mtime": 1790942304.8014476,
+    "seen": 1791038209.054459,
+    "ast_hash": "17ca00dc2b274ea67e0adb69521bb6cb",
+    "semantic_hash": "17ca00dc2b274ea67e0adb69521bb6cb"
+  },
+  "fioreria/checkout.html": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.0544596,
+    "ast_hash": "8db3a693a1d461c8547207c5778415b4",
+    "semantic_hash": "8db3a693a1d461c8547207c5778415b4"
+  },
+  "fioreria/collezione.html": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.0544608,
+    "ast_hash": "5f1bffb21ececcb7fcc2f247ccbd09b9",
+    "semantic_hash": "5f1bffb21ececcb7fcc2f247ccbd09b9"
+  },
+  "fioreria/cookie-policy.html": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.0544615,
+    "ast_hash": "7754cad8b7c286acdc46fe067983187c",
+    "semantic_hash": "7754cad8b7c286acdc46fe067983187c"
+  },
+  "fioreria/foto/README.md": {
+    "mtime": 1790942305.7187822,
+    "seen": 1791038209.0544622,
+    "ast_hash": "b477c91804a99d21eb9fa280e67d07fa",
+    "semantic_hash": "b477c91804a99d21eb9fa280e67d07fa"
+  },
+  "fioreria/index.html": {
+    "mtime": 1790942305.9747822,
+    "seen": 1791038209.054463,
+    "ast_hash": "e0b1600bbda3e34fade0b537feb93d09",
+    "semantic_hash": "e0b1600bbda3e34fade0b537feb93d09"
+  },
+  "fioreria/ordine-completato.html": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544636,
+    "ast_hash": "48412256f878478c49d0f50064f81ea3",
+    "semantic_hash": "48412256f878478c49d0f50064f81ea3"
+  },
+  "fioreria/pagamento-annullato.html": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544646,
+    "ast_hash": "53011706325c95f13306504560f488f2",
+    "semantic_hash": "53011706325c95f13306504560f488f2"
+  },
+  "fioreria/privacy.html": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544653,
+    "ast_hash": "02d2df042cedc78631977f8029db3f48",
+    "semantic_hash": "02d2df042cedc78631977f8029db3f48"
+  },
+  "fioreria/prodotto.html": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544665,
+    "ast_hash": "d871d0b6f44255a4beba7100e498c203",
+    "semantic_hash": "d871d0b6f44255a4beba7100e498c203"
+  },
+  "fioreria/prompt-redesign-home-CRO.md": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544674,
+    "ast_hash": "fde091d0e41c44e417564b1339ac011a",
+    "semantic_hash": "fde091d0e41c44e417564b1339ac011a"
+  },
+  "fioreria/robots.txt": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.0544684,
+    "ast_hash": "ab488b30d760c11855e956b8b934cf33",
+    "semantic_hash": "ab488b30d760c11855e956b8b934cf33"
+  },
+  "fioreria/termini.html": {
+    "mtime": 1790942305.9796736,
+    "seen": 1791038209.054469,
+    "ast_hash": "6ddfa902fecc18553969de253eb93c2d",
+    "semantic_hash": "6ddfa902fecc18553969de253eb93c2d"
+  },
+  "index.html": {
+    "mtime": 1790942305.981975,
+    "seen": 1791038209.0544698,
+    "ast_hash": "7d6c9baed32c2128552d9eca9efd1c8f",
+    "semantic_hash": "7d6c9baed32c2128552d9eca9efd1c8f"
+  },
+  "public/images/README.md": {
+    "mtime": 1790942306.0267823,
+    "seen": 1791038209.0544705,
+    "ast_hash": "105486ca75766e82fe0970be93f0fd51",
+    "semantic_hash": "105486ca75766e82fe0970be93f0fd51"
+  },
+  "reels/essenza-oriente-massaggio-promo/AGENTS.md": {
+    "mtime": 1790942306.0441325,
+    "seen": 1791038209.0544715,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "reels/essenza-oriente-massaggio-promo/BRIEF.md": {
+    "mtime": 1790942306.0441325,
+    "seen": 1791038209.0544722,
+    "ast_hash": "46037829a1e567cda96c6e53a8c5dd61",
+    "semantic_hash": "46037829a1e567cda96c6e53a8c5dd61"
+  },
+  "reels/essenza-oriente-massaggio-promo/CLAUDE.md": {
+    "mtime": 1790942306.0441325,
+    "seen": 1791038209.054473,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "reels/essenza-oriente-massaggio-promo/index.html": {
+    "mtime": 1790942306.0443857,
+    "seen": 1791038209.0544736,
+    "ast_hash": "2b3c20aef4977ebdc467c0476d7f8ab3",
+    "semantic_hash": "2b3c20aef4977ebdc467c0476d7f8ab3"
+  },
+  "essenza-oriente/campagna-ads-settembre-2026.pdf": {
+    "mtime": 1790942304.7844157,
+    "seen": 1791038209.0544746,
+    "ast_hash": "8ded8ae3fb3368f4441f92568c1ab2bd",
+    "semantic_hash": "8ded8ae3fb3368f4441f92568c1ab2bd"
+  },
+  "fioreria/campagna-ads-settembre-2026.pdf": {
+    "mtime": 1790942304.802782,
+    "seen": 1791038209.0544753,
+    "ast_hash": "04e73b7c47ea88821fc4731ce11ea96d",
+    "semantic_hash": "04e73b7c47ea88821fc4731ce11ea96d"
+  }
+}
