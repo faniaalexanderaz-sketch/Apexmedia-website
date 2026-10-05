@@ -183,8 +183,9 @@
 
       if (nota) tl.from(nota, { opacity: 0, y: 10, duration: 0.6, clearProps: 'transform,opacity' }, 0.8);
 
-      /* scorrendo oltre, il testo dell'hero sale e sfuma */
-      if (copy && window.matchMedia('(min-width: 821px)').matches) {
+      /* scorrendo oltre, il testo dell'hero sale e sfuma (non su desktop:
+         risalendo la pagina il testo restava sbiadito e la CTA meno visibile) */
+      if (copy && window.matchMedia('(min-width: 821px) and (max-width: 1023px)').matches) {
         gsap.to(copy, {
           yPercent: -6, opacity: 0.4, ease: 'none',
           scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true }

@@ -1,0 +1,541 @@
+/* =============================================================
+   ESSENZA D'ORIENTE — LAYOUT DESKTOP (≥1024px)
+   Caricato con media="(min-width: 1024px)": il mobile non lo legge
+   e resta esattamente com'è.
+
+   Perché esiste: il sito era nato mobile-first e su PC veniva
+   "stirato" — colonna centrale stretta (920px su schermi da 1440+),
+   titolo della hero su 5 righe, testi a 10-11px, recensioni che
+   scorrono da sole (illeggibili), widget di prenotazione isolato in
+   mezzo a una foto sfocata, cinque font diversi. Chi arriva dalle
+   Ads da computer trovava un sito "strano" e se ne andava.
+
+   Regole di questo layer:
+   1. una sola griglia: contenuto a 1200px, margini laterali ampi;
+   2. due famiglie tipografiche: Cormorant Garamond (titoli) e Lato
+      (testo), Jost solo per etichette e bottoni;
+   3. ogni schermata ha una sola azione principale: Prenota;
+   4. niente movimento che ostacola la lettura (marquee, tilt 3D).
+   ============================================================= */
+
+:root {
+  --dk-max: 1200px;
+  --dk-gutter: max(40px, calc((100vw - var(--dk-max)) / 2));
+}
+
+body { font-size: 17px; }
+body::before { height: 3200px; }
+
+/* ---------- tipografia unificata ---------- */
+h1, h2, h3 { font-family: var(--serif); }
+h2 {
+  font-size: clamp(40px, 3.3vw, 48px);
+  font-weight: 600;
+  letter-spacing: -.005em;
+  line-height: 1.08;
+  margin-bottom: 14px;
+}
+.sez { padding: 80px var(--dk-gutter); }
+.sez-testa { max-width: 720px; margin-bottom: 48px; }
+.sez-testa p {
+  font-family: var(--sans); font-style: normal; font-weight: 400;
+  font-size: 18px; line-height: 1.6; color: var(--testo);
+}
+.etichetta { font-size: 11.5px; padding: 7px 18px; margin-bottom: 18px; }
+.loto-divisore { padding: 8px var(--pad); }
+
+/* elementi presenti solo su desktop (nascosti in styles.css) */
+.top-nav .solo-desktop { display: inline-block; }
+.top-nav .nav-prenota { display: none; }
+
+/* ---------- header ---------- */
+.top {
+  padding: 14px var(--dk-gutter);
+  gap: 28px;
+}
+.menu-btn { display: none; }
+.marchio-nome { font-size: 25px; }
+.marchio-sotto { font-size: 10px; letter-spacing: .32em; }
+.top-nav { gap: 30px; margin: 0 auto; }
+.top-nav a {
+  font-family: var(--sans); font-size: 15px; font-weight: 700;
+  color: var(--ink);
+  padding: 6px 0;
+  border-bottom-width: 2px;
+}
+.top-azioni { gap: 10px; align-items: center; }
+.top-azioni .btn { padding: 10px 20px; min-height: 46px; font-size: 14.5px; }
+.top-azioni .btn-wa { padding: 10px 16px; }
+.top-chiama-num { display: inline; }
+.top-prenota { display: inline-flex; padding: 10px 26px; }
+
+/* ---------- fascia offerta ---------- */
+.ribbon-offerta { font-size: 14px; padding: 10px 56px; }
+
+/* ---------- HERO (home) ----------
+   Due colonne nella stessa griglia del resto della pagina: testo a
+   sinistra, foto reale del trattamento a destra (coerente con
+   l'headline delle Ads), con una recensione vera appoggiata sopra. */
+.hero { padding: 36px var(--dk-gutter) 64px; overflow: visible; }
+/* la pillola "Centro olistico · Alessandria" ripete marchio e H1 */
+.hero-eyebrow { display: none; }
+.hero-inner {
+  max-width: var(--dk-max); margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 72px;
+  align-items: center;
+}
+.hero-copy { padding-left: 0; }
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(44px, 3.6vw, 54px);
+  line-height: 1.04;
+  letter-spacing: -.012em;
+  margin-bottom: 16px;
+}
+.hero-sub {
+  font-family: var(--sans); font-style: normal; font-weight: 400;
+  font-size: 18px; line-height: 1.55;
+  color: var(--testo);
+  max-width: 34em;
+  margin-bottom: 18px;
+}
+.hero-prova { font-size: 14px; padding: 8px 20px 8px 15px; margin-bottom: 20px; }
+.hero-prova-voto { font-size: 16px; }
+
+.hero-scelta { margin-bottom: 20px; }
+.hero-scelta-titolo { font-size: 12px; margin-bottom: 12px; }
+.hero-chip-riga {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.hero-chip {
+  min-height: 56px;
+  padding: 9px 16px;
+  border-radius: 14px;
+  justify-content: center;
+}
+.hero-chip-nome { font-size: 14.5px; }
+.hero-chip-info { font-size: 12.5px; }
+.hero-chip-altri { align-items: center; font-size: 13.5px; }
+
+.hero-cta { gap: 22px; }
+.btn-grande { min-width: 320px; min-height: 66px; padding: 14px 40px; }
+.btn-grande-testo { font-size: 17px; }
+.btn-grande-sub { font-size: 12.5px; }
+.hero-cta-tel { font-size: 15px; font-weight: 600; color: var(--ink); }
+.hero-nota { font-size: 13.5px; margin-top: 16px; }
+
+.hero-foto {
+  position: relative;
+  align-self: center;
+  overflow: visible;
+}
+.hero-foto picture { display: block; }
+.hero-foto img {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  max-height: none;
+  object-fit: cover;
+  object-position: 40% center;
+  border-radius: 28px;
+  border: 1px solid rgba(217,198,140,.8);
+  box-shadow: 0 2px 6px rgba(44,81,56,.08), 0 40px 80px -30px rgba(28,54,36,.45);
+}
+.hero-foto-recensione {
+  display: block;
+  position: absolute; left: -40px; bottom: -36px;
+  width: min(340px, 72%);
+  margin: 0;
+  padding: 18px 20px 16px;
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(185,154,69,.35);
+  border-radius: 18px;
+  box-shadow: 0 2px 6px rgba(44,81,56,.08), 0 24px 48px -16px rgba(28,54,36,.35);
+}
+.hero-foto-recensione .stelle { display: block; font-size: 14px; margin-bottom: 6px; }
+.hero-foto-recensione-testo {
+  display: block; margin: 0 0 10px;
+  font-size: 15px; line-height: 1.5; color: var(--ink);
+}
+.hero-foto-recensione-autore { display: block; font-size: 13px; color: var(--testo); }
+.hero-foto-recensione-autore strong { color: var(--ink); }
+.hero-foto-orari {
+  display: inline-flex;
+  position: absolute; top: 22px; right: 22px;
+  align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(185,154,69,.35);
+  box-shadow: 0 10px 24px -10px rgba(28,54,36,.4);
+  font-family: 'Jost', var(--sans);
+  font-size: 13px; font-weight: 600; color: var(--bosco);
+}
+.hero-foto-orari::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: #2FA14E;
+}
+
+/* schermi bassi (portatili 1366×768, 1280×720): la CTA deve restare
+   nel primo schermo anche lì */
+@media (max-height: 820px) {
+  .hero { padding-top: 24px; padding-bottom: 48px; }
+  .hero h1 { font-size: clamp(40px, 3.3vw, 48px); margin-bottom: 14px; }
+  /* su schermi bassi il sottotitolo cede il posto alla CTA: H1,
+     recensioni e scelta del trattamento dicono già tutto */
+  .hero .hero-sub { display: none; }
+  .hero-prova { margin-bottom: 18px; }
+  .hero-scelta { margin-bottom: 18px; }
+  .hero-chip { min-height: 54px; padding: 8px 14px; }
+  .btn-grande { min-height: 60px; }
+}
+
+/* portatili stretti (1024–1279px): header su una riga sola */
+@media (max-width: 1279px) {
+  .top { gap: 18px; }
+  .top-nav { gap: 22px; }
+  .top-nav a { white-space: nowrap; }
+  .top-nav .solo-desktop, .top-chiama-num { display: none; }
+  .top-azioni .btn { white-space: nowrap; padding: 10px 16px; }
+  .hero-inner { gap: 48px; }
+  .hero-prova-info { font-size: 13px; }
+  .hero-foto-recensione { left: -24px; }
+  .tratt-griglia { gap: 16px; }
+  .tratt { padding: 0 16px 18px; }
+  .tratt-foto-box { margin: 0 -16px 20px; }
+  .tratt h3 { font-size: 21px; }
+}
+
+/* ---------- striscia fiducia ---------- */
+.striscia-fiducia { padding: 26px var(--dk-gutter); }
+.striscia-fiducia-inner { max-width: var(--dk-max); gap: 32px; }
+.fiducia-icona { width: 44px; height: 44px; }
+.fiducia-testo strong { font-size: 15px; }
+.fiducia-testo em { font-size: 13.5px; }
+
+/* ---------- PRENOTAZIONE a due colonne ----------
+   A sinistra tutto ciò che serve per decidere (cosa stai prenotando,
+   come funziona, le alternative), a destra il calendario. Su mobile
+   gli stessi elementi restano impilati come prima. */
+.prenota-2col {
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto 1fr;
+  column-gap: 64px;
+  align-items: start;
+}
+.prenota-2col > .sez-testa {
+  grid-column: 1; grid-row: 1;
+  text-align: left; max-width: none; margin: 0 0 26px;
+}
+.prenota-2col > .sez-testa h2 { font-size: 42px; }
+.prenota-2col > .prenota-scelta { grid-column: 1; grid-row: 2; max-width: none; margin: 0 0 26px; }
+.prenota-2col > .prenota-passi { grid-column: 1; grid-row: 3; }
+.prenota-2col > .prenota-alt {
+  grid-column: 1; grid-row: 4;
+  text-align: left; margin: 0;
+  /* le alternative (WhatsApp / telefono) restano a portata mentre si
+     scorre il calendario, che è lungo */
+  position: sticky; top: 112px;
+}
+.prenota-2col > .prenota-cornice {
+  grid-column: 2; grid-row: 1 / -1;
+  max-width: none; width: 100%; margin: 0;
+  border-radius: 22px;
+}
+.prenota-2col .treatwell-frame { height: 1180px; }
+.prenota-2col .prenota-alt p { font-size: 15px; margin-bottom: 14px; }
+.prenota-2col .prenota-alt-bottoni,
+.prenota-2col > .prenota-alt { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+.prenota-2col > .prenota-alt > p { margin: 0 0 4px; }
+.prenota-2col .prenota-alt .btn { margin: 0; width: 100%; }
+
+.prenota-passi {
+  display: grid; gap: 14px;
+  list-style: none;
+  margin: 0 0 32px; padding: 22px 0 0;
+  border-top: 1px solid var(--linea);
+}
+.prenota-passi li {
+  display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-items: center;
+  font-size: 15.5px; line-height: 1.4; color: var(--testo);
+}
+.prenota-passi li > span {
+  display: grid; place-items: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  font-family: 'Jost', var(--sans); font-size: 14px; font-weight: 700;
+  background: var(--bosco); color: #F4EFDF;
+}
+.prenota-passi strong { color: var(--ink); }
+
+/* home: la sezione prenota è su fondo scuro — la foto sfocata
+   ingrandita a 1440px diventava una macchia, qui resta solo il velo */
+/* clip e non hidden: hidden blocca il position:sticky qui sotto */
+.sez-prenota-foto { overflow: clip; background: linear-gradient(160deg, #1C3624 0%, var(--bosco-scuro) 45%, #1A3121 100%); }
+.sez-prenota-foto .sez-foto-sfondo { opacity: .22; }
+.sez-prenota-foto .sez-foto-sfondo::after { background: linear-gradient(90deg, rgba(20,36,25,.7), rgba(20,36,25,.2)); }
+.sez-prenota-foto .sez-testa h2 { font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
+.sez-prenota-foto .prenota-passi { border-color: rgba(253,252,247,.16); }
+.sez-prenota-foto .prenota-passi li { color: rgba(253,252,247,.75); }
+.sez-prenota-foto .prenota-passi strong { color: #FBF8EF; }
+.sez-prenota-foto .prenota-passi li > span { background: var(--oro-chiaro); color: var(--bosco-scuro); }
+.sez-prenota-foto .prenota-cornice { border-color: rgba(217,198,140,.5); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); }
+.sez-prenota-foto .prenota-passi { position: relative; z-index: 1; }
+.sez-prenota-foto > .prenota-alt { position: sticky; z-index: 1; }
+
+/* ---------- RECENSIONI: griglia ferma e leggibile ----------
+   Su desktop il nastro che scorre da solo costringeva a "inseguire"
+   il testo. Qui le quattro recensioni stanno ferme, per intero. */
+.recensioni-viewport {
+  max-width: var(--dk-max);
+  margin: 40px auto 26px;
+  overflow: visible;
+  -webkit-mask-image: none; mask-image: none;
+}
+.recensioni-griglia,
+.recensioni-griglia.marquee-attivo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: auto;
+  padding: 0;
+  animation: none;
+  transform: none;
+}
+.recensione[aria-hidden="true"] { display: none; }
+.recensione {
+  width: auto;
+  display: flex; flex-direction: column;
+  padding: 24px 24px 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.72);
+}
+.recensione .stelle { font-size: 15px; margin-bottom: 12px; }
+.recensione blockquote {
+  flex: 1 1 auto;
+  font-family: var(--sans); font-style: normal;
+  font-size: 15.5px; line-height: 1.6;
+  display: block; -webkit-line-clamp: unset; overflow: visible;
+  margin-bottom: 16px;
+}
+.recensione figcaption { font-family: var(--sans); font-size: 13px; font-weight: 400; gap: 4px 7px; flex-wrap: wrap; }
+.badge-google { font-size: 16px; padding: 14px 28px; }
+.link-google { font-size: 15.5px; }
+
+/* ---------- TRATTAMENTI: 4 colonne, testi leggibili ---------- */
+.tratt-griglia {
+  max-width: var(--dk-max);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+.tratt { display: flex; flex-direction: column; padding: 0 20px 20px; border-radius: 22px; }
+.tratt:hover { transform: translateY(-6px); }
+/* l'inclinazione 3D seguiva il mouse: effetto "giocattolo" che
+   distrae proprio mentre si confrontano i prezzi */
+.tratt.tilt-attivo { transform: translateY(-6px) !important; }
+.tratt.tilt-attivo h3, .tratt.tilt-attivo .tratt-riga { transform: none; }
+.tratt-lucido { display: none; }
+.tratt-foto-box { margin: 0 -20px 22px; }
+.tratt-foto-clip { border-radius: 22px 22px 0 0; }
+.tratt-icona-flottante { left: 16px; width: 38px; height: 38px; bottom: -17px; }
+.tratt-icona-flottante svg { width: 17px; height: 17px; }
+.tratt h3 { font-size: 23px; font-weight: 600; margin: 8px 0 4px; }
+.tratt-riga { margin-top: 8px; padding-top: 12px; align-items: center; flex-wrap: nowrap; }
+.tratt-durata { min-width: 0; }
+.tratt-prezzo { flex: 0 0 auto; white-space: nowrap; }
+.tratt-durata { font-family: var(--sans); font-size: 13.5px; font-weight: 400; letter-spacing: 0; }
+.tratt-prezzo {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 26px; -webkit-text-stroke: 0;
+}
+.tratt-prezzo .tratt-prezzo-barrato { font-size: 13px; }
+.tratt-cta { margin-top: auto; padding-top: 18px; gap: 12px; }
+.tratt-cta .btn { min-height: 46px; font-size: 14px; }
+.tratt-piu { font-size: 13.5px; justify-self: center; }
+.tratt-primario::before,
+.tratt-offerta::before { font-size: 10.5px; padding: 4px 11px; top: 12px; }
+.tratt-primario::before { right: 12px; }
+.tratt-offerta::before { left: 12px; }
+
+/* ---------- OFFERTA ---------- */
+.offerta-sez { padding-top: 88px; padding-bottom: 88px; }
+.offerta-inner { max-width: var(--dk-max); grid-template-columns: 1.25fr .75fr; }
+.offerta-copy h2 { font-family: var(--serif); font-weight: 600; letter-spacing: 0; font-size: 48px; }
+.offerta-copy p {
+  font-family: var(--sans); font-style: normal;
+  font-size: 18px; max-width: 40em;
+}
+.offerta-conto-blocco { min-width: 76px; padding: 12px 6px; }
+.offerta-conto-num { font-family: var(--serif); font-weight: 700; font-size: 30px; }
+.offerta-conto-etichetta { font-size: 10.5px; }
+.offerta-copy .offerta-nota { font-size: 13.5px; }
+.offerta-sigillo { width: 280px; height: 280px; }
+.offerta-sigillo-eyebrow { font-size: 11px; }
+.offerta-sigillo-prezzo { font-family: var(--serif); font-weight: 700; font-size: 72px; }
+.offerta-sigillo-barrato { font-size: 15px; }
+
+/* ---------- DOVE SIAMO ---------- */
+.dove-griglia { max-width: var(--dk-max); grid-template-columns: 1.3fr 1fr; gap: 32px; }
+.mappa-frame iframe { height: 380px; }
+.contatti-griglia { gap: 16px; grid-auto-rows: 1fr; align-content: stretch; }
+.contatto-scheda { padding: 22px 20px; align-items: center; }
+.contatto-icona { width: 44px; height: 44px; }
+.contatto-label { font-size: 11px; }
+.contatto-valore { font-size: 16px; }
+
+/* ---------- FAQ su due colonne ---------- */
+.faq-lista {
+  max-width: var(--dk-max);
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  align-items: start;
+}
+.faq-voce { padding: 4px 26px; }
+.faq-voce summary { font-size: 19px; padding: 20px 0; }
+.faq-voce p { font-size: 15.5px; }
+
+/* ---------- CTA FINALE (solo desktop) ---------- */
+.cta-finale {
+  display: block;
+  padding: 0 var(--dk-gutter) 96px;
+}
+.cta-finale-inner {
+  max-width: var(--dk-max); margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+  padding: 48px 56px;
+  border-radius: 28px;
+  background: linear-gradient(150deg, #1C3624 0%, var(--bosco) 60%, #1A3121 100%);
+  box-shadow: 0 40px 80px -36px rgba(20,36,25,.6);
+  color: rgba(253,252,247,.8);
+}
+.cta-finale h2 { color: #FBF8EF; margin: 0 0 8px; font-size: 40px; }
+.cta-finale p { margin: 0; font-size: 17px; }
+.cta-finale-azioni { display: flex; align-items: center; gap: 12px; }
+.cta-finale .btn-prenota {
+  background: linear-gradient(180deg, #F0DA9E 0%, var(--oro) 55%, #8C6E28 100%);
+  color: #2A2306; text-shadow: none;
+  padding: 16px 34px; min-height: 56px; font-size: 16px;
+}
+
+/* ---------- FOOTER su più colonne ---------- */
+.fondo {
+  display: grid;
+  grid-template-columns: 1.2fr 1.4fr 1fr;
+  grid-template-areas:
+    "nome    indirizzo social"
+    "cinese  indirizzo legale";
+  align-items: center;
+  column-gap: 40px; row-gap: 4px;
+  text-align: left;
+  padding: 44px var(--dk-gutter);
+  font-size: 15px;
+}
+.fondo > :nth-child(1) { grid-area: nome; margin: 0; font-size: 24px; }
+.fondo > .fondo-cinese { grid-area: cinese; margin: 0; }
+.fondo > p:not([class]) { grid-area: indirizzo; margin: 0; }
+.fondo > .fondo-social { grid-area: social; justify-content: flex-end; margin: 0; }
+.fondo > .fondo-legale { grid-area: legale; text-align: right; margin: 0; }
+
+/* ---------- banner cookie: barra sottile in basso ----------
+   La scheda a destra copriva card, recensioni e mappa per tutta la
+   visita. Una riga sola, a tutta larghezza, ingombra la metà. */
+.cookie-banner {
+  left: 0; right: 0; bottom: 0;
+  max-width: none; margin: 0;
+  display: flex; align-items: center; justify-content: center; gap: 28px;
+  padding: 12px var(--dk-gutter);
+  border-radius: 0;
+  border-width: 1px 0 0;
+  background: rgba(255,255,255,.96);
+}
+.cookie-testo { font-size: 14px; }
+.cookie-azioni { flex: 0 0 auto; }
+
+/* =============================================================
+   PAGINE TRATTAMENTO (landing delle Ads)
+   La prima schermata ora contiene tutto ciò che serve per
+   decidere: nome, prezzo, recensioni, Prenota/WhatsApp e la foto.
+   Prima prezzo e bottone stavano sotto la foto, fuori schermo.
+   ============================================================= */
+.pagina-tratt main {
+  display: grid;
+  grid-template-columns:
+    [pieno-start] minmax(40px, 1fr)
+    [testo-start] minmax(0, 560px)
+    [testo-end foto-start] minmax(0, 640px)
+    [foto-end] minmax(40px, 1fr) [pieno-end];
+  column-gap: 0;
+}
+.pagina-tratt main > * { grid-column: pieno; min-width: 0; }
+.pagina-tratt .hero-tratt {
+  grid-column: testo; grid-row: 1;
+  max-width: none; margin: 0;
+  padding: 56px 64px 64px 0;
+  text-align: left;
+  align-self: center;
+}
+.pagina-tratt .foto-tratt {
+  grid-column: foto; grid-row: 1;
+  max-width: none; margin: 0;
+  padding: 56px 0 64px;
+  align-self: center;
+}
+.pagina-tratt .hero-tratt h1 { font-size: clamp(46px, 3.9vw, 58px); font-weight: 700; line-height: 1.04; margin-bottom: 16px; }
+.pagina-tratt .hero-tratt .hero-sub {
+  font-family: var(--sans); font-style: normal;
+  font-size: 17px; color: var(--ink);
+  margin-bottom: 26px;
+}
+.foto-tratt-box { aspect-ratio: 4 / 3; border-radius: 28px; }
+
+.hero-tratt-prezzo {
+  display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  margin: 0 0 24px; padding: 18px 0;
+  border-block: 1px solid var(--linea);
+}
+.hero-tratt-prezzo-valore {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 44px; line-height: 1; color: var(--bosco);
+}
+.hero-tratt-prezzo-valore strong { font-weight: 700; }
+.hero-tratt-prezzo-valore .tratt-prezzo-barrato { font-size: 22px; }
+.hero-tratt-prezzo-info { font-size: 15.5px; color: var(--testo); }
+.hero-tratt-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 24px; }
+.hero-tratt-cta .btn { min-height: 56px; padding: 15px 24px; font-size: 15px; }
+.hero-tratt-cta .btn-wa { display: inline-flex; }
+.hero-tratt-punti {
+  display: grid; gap: 8px;
+  list-style: none; margin: 0; padding: 0;
+  font-size: 15px; color: var(--testo);
+}
+.hero-tratt-punti li { display: flex; align-items: center; gap: 10px; }
+.hero-tratt-punti li::before {
+  content: ''; flex: 0 0 auto;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--bosco) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F4EFDF' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7'/%3E%3C/svg%3E") center/11px no-repeat;
+}
+
+/* corpo: tre colonne affiancate invece di un muro di testo */
+.pagina-tratt .corpo-tratt {
+  max-width: var(--dk-max);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  grid-auto-flow: column;
+  column-gap: 48px;
+}
+.pagina-tratt .corpo-tratt h2 {
+  font-size: 30px; margin: 0 0 12px; padding-top: 22px;
+  border-top: 2px solid var(--oro-chiaro);
+}
+.pagina-tratt .corpo-tratt p { font-size: 16.5px; line-height: 1.7; margin: 0; }
+.pagina-tratt .corpo-tratt .avviso { grid-column: 1 / -1; grid-row: 3; margin-top: 32px; }
+.pagina-tratt .box-prezzo { max-width: 900px; margin-top: 48px; padding: 24px 32px; }
+.pagina-tratt .altri-tratt { max-width: 900px; gap: 12px; }
+.pagina-tratt .altri-tratt a { font-size: 15px; padding: 12px 22px; }
+.pagina-tratt .fondo { grid-template-areas:
+    "nome    indirizzo legale"
+    "cinese  indirizzo legale"; }

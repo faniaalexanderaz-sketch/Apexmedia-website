@@ -40,6 +40,8 @@
   <meta name="twitter:image" content="https://essenzadoriente.it/foto/tratt-coppettazione.jpg" />
 
   <link rel="stylesheet" href="../styles.css" />
+  <!-- layout PC (≥1024px): il mobile non lo carica nemmeno -->
+  <link rel="stylesheet" href="../desktop.css" media="(min-width: 1024px)" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192" />
@@ -93,12 +95,15 @@
     </div>
     <nav class="top-nav" aria-label="Sezioni">
       <a href="../index.html#trattamenti">Trattamenti</a>
-      <a href="#prenota">Prenota</a>
+      <a href="#prenota" class="nav-prenota">Prenota</a>
+      <a href="../index.html#recensioni" class="solo-desktop">Recensioni</a>
       <a href="../index.html#dove">Dove siamo</a>
+      <a href="../index.html#faq" class="solo-desktop">FAQ</a>
     </nav>
     <div class="top-azioni">
-      <a class="btn btn-chiama" href="tel:+393317153533"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> Chiama</a>
+      <a class="btn btn-chiama" href="tel:+393317153533"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> Chiama<span class="top-chiama-num solo-desktop">&nbsp;331 715 3533</span></a>
       <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> WhatsApp</a>
+      <a class="btn btn-prenota top-prenota solo-desktop" href="#prenota">Prenota ora</a>
     </div>
   </header>
 
@@ -140,7 +145,16 @@
       <span class="etichetta">Essenza d'Oriente · Alessandria</span>
       <h1>Coppettazione ad Alessandria</h1>
       <p class="hero-sub">Cupping — tecnica tradizionale cinese · <span class="stelle" aria-hidden="true">★★★★★</span> 5,0 su Google</p>
-      <p><a class="btn btn-prenota" href="#prenota">Prenota questo trattamento</a></p>
+      <div class="hero-tratt-prezzo solo-desktop">
+        <span class="hero-tratt-prezzo-valore"><strong>25 €</strong></span>
+        <span class="hero-tratt-prezzo-info">Seduta breve</span>
+      </div>
+      <p class="hero-tratt-cta"><a class="btn btn-prenota" href="#prenota">Prenota questo trattamento</a> <a class="btn btn-wa solo-desktop" href="https://wa.me/393317153533?text=Ciao!%20Vorrei%20prenotare%3A%20Coppettazione.%20Quando%20avete%20disponibilit%C3%A0%3F" target="_blank" rel="noopener">Scrivici su WhatsApp</a></p>
+      <ul class="hero-tratt-punti solo-desktop">
+        <li>Conferma immediata online, nessuna carta richiesta</li>
+        <li>Aperti tutti i giorni, 9:30&ndash;22:30</li>
+        <li>Via San Lorenzo 46, nel centro di Alessandria</li>
+      </ul>
     </section>
 
     <div class="foto-tratt">
@@ -174,12 +188,18 @@
 
     <div class="loto-divisore" aria-hidden="true"><svg width="34" height="20" viewBox="0 0 34 20" fill="currentColor"><path d="M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z"/><path d="M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z"/><path d="M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z"/><path d="M4.4 8.6c3.6.4 7 2.4 8.6 5.6-4 1.1-7.6-1.5-8.6-5.6Z"/><path d="M29.6 8.6c-1 4.1-4.6 6.7-8.6 5.6 1.6-3.2 5-5.2 8.6-5.6Z"/><path d="M9.5 16.2c2.3-.9 5-.9 7.5-.9s5.2 0 7.5.9c-2.3 1.6-4.8 2.3-7.5 2.3s-5.2-.7-7.5-2.3Z" opacity=".55"/></svg></div>
 
-    <section class="sez" id="prenota">
+    <section class="sez prenota-2col" id="prenota">
       <div class="sez-testa">
         <span class="etichetta">Prenotazione online</span>
         <h2>Prenota il tuo trattamento</h2>
         <p>Scegli data e ora, ricevi conferma immediata.</p>
       </div>
+        <!-- solo PC: come funziona, accanto al calendario -->
+        <ol class="prenota-passi solo-desktop">
+          <li><span>1</span><div><strong>Scegli il trattamento</strong> nel calendario qui accanto</div></li>
+          <li><span>2</span><div><strong>Scegli giorno e orario</strong> tra quelli liberi</div></li>
+          <li><span>3</span><div><strong>Ricevi la conferma</strong> subito, senza carta</div></li>
+        </ol>
       <div class="prenota-cornice">
         <iframe
           id="treatwellFrame"

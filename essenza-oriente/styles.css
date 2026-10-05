@@ -2200,3 +2200,15 @@ html.gsap-attivo { overflow-x: clip; }
   background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.42) 50%, transparent 70%);
   transform: translateX(-130%);
 }
+
+/* ---------- ELEMENTI SOLO DESKTOP ----------
+   Nascosti qui, accesi da desktop.css (≥1024px): il mobile resta
+   identico. */
+.solo-desktop { display: none; }
+
+/* il riepilogo "Stai prenotando" deve restare nascosto finché non si
+   sceglie un trattamento: il display:flex qui sopra batteva
+   l'attributo hidden e mostrava una barra vuota sopra il widget */
+.prenota-scelta[hidden] { display: none; }
+/* prezzo del box finale: "35 € / 50 €" non deve spezzarsi su tre righe */
+.box-prezzo strong { white-space: nowrap; }

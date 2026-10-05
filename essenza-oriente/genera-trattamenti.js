@@ -165,6 +165,11 @@ ${voci}
   </aside>`;
 }
 
+/* link WhatsApp col messaggio già pronto per il trattamento della pagina */
+function waTratt(nome) {
+  return 'https://wa.me/393317153533?text=' + encodeURIComponent('Ciao! Vorrei prenotare: ' + nome + '. Quando avete disponibilità?');
+}
+
 function pagina(t, altri) {
   const altriLink = altri.map(a => `<a href="${a.file}">${a.nome}</a>`).join('\n        ');
   return `<!DOCTYPE html>
@@ -209,6 +214,8 @@ function pagina(t, altri) {
   <meta name="twitter:image" content="https://essenzadoriente.it/foto/tratt-${t.file.replace('.html', '')}.jpg" />
 
   <link rel="stylesheet" href="../styles.css" />
+  <!-- layout PC (≥1024px): il mobile non lo carica nemmeno -->
+  <link rel="stylesheet" href="../desktop.css" media="(min-width: 1024px)" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192" />
@@ -262,12 +269,15 @@ function pagina(t, altri) {
     </div>
     <nav class="top-nav" aria-label="Sezioni">
       <a href="../index.html#trattamenti">Trattamenti</a>
-      <a href="#prenota">Prenota</a>
+      <a href="#prenota" class="nav-prenota">Prenota</a>
+      <a href="../index.html#recensioni" class="solo-desktop">Recensioni</a>
       <a href="../index.html#dove">Dove siamo</a>
+      <a href="../index.html#faq" class="solo-desktop">FAQ</a>
     </nav>
     <div class="top-azioni">
-      <a class="btn btn-chiama" href="tel:+393317153533">${ICONA_TEL} Chiama</a>
+      <a class="btn btn-chiama" href="tel:+393317153533">${ICONA_TEL} Chiama<span class="top-chiama-num solo-desktop">&nbsp;331 715 3533</span></a>
       <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">${ICONA_WA} WhatsApp</a>
+      <a class="btn btn-prenota top-prenota solo-desktop" href="#prenota">Prenota ora</a>
     </div>
   </header>
 
@@ -283,7 +293,16 @@ function pagina(t, altri) {
       <span class="etichetta">Essenza d'Oriente · Alessandria</span>
       <h1>${t.h1}</h1>
       <p class="hero-sub">${t.sotto} · <span class="stelle" aria-hidden="true">★★★★★</span> 5,0 su Google</p>
-      <p><a class="btn btn-prenota" href="#prenota">Prenota questo trattamento</a></p>
+      <div class="hero-tratt-prezzo solo-desktop">
+        <span class="hero-tratt-prezzo-valore"><strong>${t.prezzo}</strong></span>
+        <span class="hero-tratt-prezzo-info">${t.durata}</span>
+      </div>
+      <p class="hero-tratt-cta"><a class="btn btn-prenota" href="#prenota">Prenota questo trattamento</a> <a class="btn btn-wa solo-desktop" href="${waTratt(t.nome)}" target="_blank" rel="noopener">Scrivici su WhatsApp</a></p>
+      <ul class="hero-tratt-punti solo-desktop">
+        <li>Conferma immediata online, nessuna carta richiesta</li>
+        <li>Aperti tutti i giorni, 9:30&ndash;22:30</li>
+        <li>Via San Lorenzo 46, nel centro di Alessandria</li>
+      </ul>
     </section>
 
     <div class="foto-tratt">
@@ -317,12 +336,18 @@ function pagina(t, altri) {
 
     <div class="loto-divisore" aria-hidden="true">${LOTO}</div>
 
-    <section class="sez" id="prenota">
+    <section class="sez prenota-2col" id="prenota">
       <div class="sez-testa">
         <span class="etichetta">Prenotazione online</span>
         <h2>Prenota il tuo trattamento</h2>
         <p>Scegli data e ora, ricevi conferma immediata.</p>
       </div>
+        <!-- solo PC: come funziona, accanto al calendario -->
+        <ol class="prenota-passi solo-desktop">
+          <li><span>1</span><div><strong>Scegli il trattamento</strong> nel calendario qui accanto</div></li>
+          <li><span>2</span><div><strong>Scegli giorno e orario</strong> tra quelli liberi</div></li>
+          <li><span>3</span><div><strong>Ricevi la conferma</strong> subito, senza carta</div></li>
+        </ol>
       <div class="prenota-cornice">
         <iframe
           id="treatwellFrame"

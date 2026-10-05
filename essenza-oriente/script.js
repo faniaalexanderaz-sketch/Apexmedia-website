@@ -105,13 +105,15 @@
   });
 
   /* ---------- hero: leggero parallax sulla foto ----------
-     Solo su desktop (dove la foto è a tutto bordo) e solo mentre la
+     Solo su tablet orizzontale (dove la foto è a tutto bordo; sopra i
+     1024px la foto è una card con una recensione sopra, e spostarla
+     la staccherebbe dalla card) e solo mentre la
      hero è visibile: un IntersectionObserver accende/spegne un rAF
      loop, così non giriamo calcoli inutili quando l'utente ha già
      scrollato oltre. Anima solo `transform` (GPU-safe), mai `top`. */
   var heroFotoImg = document.getElementById('heroFotoImg');
   var vuoleMenoMovimentoHero = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var schermoDesktopHero = window.matchMedia && window.matchMedia('(min-width: 821px)').matches;
+  var schermoDesktopHero = window.matchMedia && window.matchMedia('(min-width: 821px) and (max-width: 1023px)').matches;
   if (heroFotoImg && !vuoleMenoMovimentoHero && schermoDesktopHero) {
     var heroInView = false;
     var heroRafInCorso = false;
