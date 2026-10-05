@@ -121,10 +121,11 @@ h2 {
 .hero-chip-info { font-size: 12.5px; }
 .hero-chip-altri { align-items: center; font-size: 13.5px; }
 
-.hero-cta { gap: 22px; }
-.btn-grande { min-width: 320px; min-height: 66px; padding: 14px 40px; }
+.hero-cta { gap: 14px; flex-wrap: nowrap; max-width: 600px; }
+/* due tasti affiancati, stesso peso visivo ma Prenota resta il pieno */
+.btn-grande { flex: 1 1 0; min-width: 0; min-height: 66px; padding: 14px 18px; }
 .btn-grande-testo { font-size: 17px; }
-.btn-grande-sub { font-size: 12.5px; }
+.btn-grande-sub { font-size: 12px; white-space: nowrap; letter-spacing: .02em; }
 .hero-cta-tel { font-size: 15px; font-weight: 600; color: var(--ink); }
 .hero-nota { font-size: 13.5px; margin-top: 16px; }
 

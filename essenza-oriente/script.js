@@ -371,8 +371,8 @@
   if (prenotaSceltaCambia) {
     prenotaSceltaCambia.addEventListener('click', function () {
       azzeraScelta();
-      var hero = document.getElementById('heroScelta');
-      if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var listino = document.getElementById('trattamenti');
+      if (listino) listino.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
@@ -383,6 +383,65 @@
       scegliTrattamento(card.dataset.tratt, card.dataset.info, true);
     });
   });
+
+  /* ---------- ogni "Prenota" porta al calendario Treatwell ----------
+     Prima era un semplice link all'ancora #prenota: toccando "Prenota"
+     su una card compare la barra "Stai prenotando", la pagina si
+     ricalcola (e le animazioni ricalcolano le posizioni) proprio mentre
+     scorre — lo scorrimento si fermava a meta', sulle recensioni, e chi
+     e' poco pratico non trovava il calendario. Qui il punto d'arrivo si
+     ricalcola e, se lo scorrimento si interrompe, si riparte finche'
+     il calendario non e' davvero sullo schermo. */
+  var sezPrenota = document.getElementById('prenota');
+  var vuoleMenoMovimentoScroll = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function bersaglioPrenota() {
+    /* su PC si vede tutta la sezione (passi a sinistra, calendario a
+       destra); su telefono si arriva dritti al calendario, preceduto
+       dal riepilogo del trattamento scelto se c'e' */
+    if (window.matchMedia('(min-width: 1024px)').matches) return sezPrenota;
+    var scelta = document.getElementById('prenotaScelta');
+    if (scelta && !scelta.hidden) return scelta;
+    return sezPrenota.querySelector('.prenota-cornice') || sezPrenota;
+  }
+  function yPrenota() {
+    var testata = document.querySelector('.top');
+    var alto = testata ? testata.offsetHeight : 0;
+    var y = bersaglioPrenota().getBoundingClientRect().top + window.scrollY - alto - 12;
+    return Math.max(0, Math.round(y));
+  }
+  var correzionePrenota = 0;
+  function vaiAlCalendario() {
+    if (!sezPrenota) return;
+    var modo = vuoleMenoMovimentoScroll ? 'auto' : 'smooth';
+    window.scrollTo({ top: yPrenota(), behavior: modo });
+    clearInterval(correzionePrenota);
+    var ultimoY = -1, giri = 0;
+    correzionePrenota = setInterval(function () {
+      giri++;
+      var arrivo = yPrenota();
+      if (Math.abs(window.scrollY - arrivo) < 4 || giri > 16) { clearInterval(correzionePrenota); return; }
+      /* fermo ma non arrivato: lo scorrimento e' stato interrotto */
+      if (window.scrollY === ultimoY) window.scrollTo({ top: arrivo, behavior: modo });
+      ultimoY = window.scrollY;
+    }, 250);
+  }
+  if (sezPrenota) {
+    /* delegato sul documento: scatta DOPO il click della card (che
+       mostra il trattamento scelto), quindi il punto d'arrivo e' gia'
+       quello definitivo */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href="#prenota"]');
+      if (!a) return;
+      e.preventDefault();
+      vaiAlCalendario();
+      if (history.replaceState) history.replaceState(null, '', '#prenota');
+    });
+    /* arrivo da un'altra pagina (es. menu delle pagine trattamento) */
+    if (location.hash === '#prenota') {
+      window.addEventListener('load', function () { setTimeout(vaiAlCalendario, 300); });
+    }
+  }
 
   /* Se l'offerta della settimana e' scaduta, il chip della hero non puo'
      continuare a promettere 20 € mentre la sezione offerta sparisce:

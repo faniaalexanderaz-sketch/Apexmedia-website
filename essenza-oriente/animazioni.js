@@ -177,7 +177,7 @@
             xPercent: 130, duration: 1.1, ease: 'power2.inOut', delay: 1.6, repeat: 2, repeatDelay: 4.5
           });
         }
-        var tel = $('.hero-cta-tel', cta);
+        var tel = $('.hero-cta-tel, .hero-cta-scopri', cta);
         if (tel) tl.from(tel, { opacity: 0, x: -12, duration: 0.6, clearProps: 'transform,opacity' }, 0.7);
       }
 
@@ -337,8 +337,12 @@
       });
     });
     $$('.recensioni-viewport').forEach(function (r) {
-      gsap.set(r, { opacity: 0, x: 90 });
-      allaVista(r, function () { gsap.to(r, { opacity: 1, x: 0, duration: 1.3, ease: 'power3.out', clearProps: 'transform,opacity' }); });
+      /* entra dal basso, non da destra: partendo 90px fuori dal bordo
+         destro allargava la pagina su telefono (layout a 461px invece di
+         390: tutto il sito rimpicciolito e i tocchi sulla barra in basso
+         finivano nel punto sbagliato) */
+      gsap.set(r, { opacity: 0, y: 40 });
+      allaVista(r, function () { gsap.to(r, { opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', clearProps: 'transform,opacity' }); });
     });
 
     /* widget di prenotazione: si solleva */

@@ -203,43 +203,17 @@
             <span class="hero-prova-divisore" aria-hidden="true"></span>
             <span class="hero-prova-info">146 recensioni · Aperti 7/7 fino alle 22:30</span>
           </p>
-          <!-- SCELTA RAPIDA: il funnel comincia qui, nel primo schermo.
-               L'utente sceglie il trattamento prima ancora di scorrere;
-               la scelta viaggia poi fino al widget di prenotazione. -->
-          <div class="hero-scelta" id="heroScelta">
-            <p class="hero-scelta-titolo"><span class="hero-scelta-num">1</span> Scegli il trattamento</p>
-            <div class="hero-chip-riga" role="group" aria-label="Scegli il trattamento">
-              <button type="button" class="hero-chip hero-chip-offerta" data-tratt="Pulizia delle Orecchie" data-info="tecnica tradizionale cinese · 20 &euro; anzich&eacute; 25 &euro; · poi -10&euro; sul prossimo trattamento" data-offerta="1" aria-pressed="false">
-                <span class="hero-chip-nome">Pulizia delle Orecchie</span>
-                <span class="hero-chip-info"><span class="hero-chip-barrato">25&nbsp;&euro;</span> 20&nbsp;&euro; &middot; offerta</span>
-              </button>
-              <button type="button" class="hero-chip" data-tratt="Massaggio Oli Essenziali" data-info="cervicale e schiena · 60 min · 60 &euro;" aria-pressed="false">
-                <span class="hero-chip-nome">Massaggio Oli Essenziali</span>
-                <span class="hero-chip-info">60&nbsp;&euro; &middot; 60 min</span>
-              </button>
-              <button type="button" class="hero-chip" data-tratt="Riflessologia Plantare" data-info="40 min · 35 &euro;" aria-pressed="false">
-                <span class="hero-chip-nome">Riflessologia Plantare</span>
-                <span class="hero-chip-info">35&nbsp;&euro; &middot; 40 min</span>
-              </button>
-              <button type="button" class="hero-chip" data-tratt="Tuina Shiatsu" data-info="50 min · 50 &euro;" aria-pressed="false">
-                <span class="hero-chip-nome">Tuina Shiatsu</span>
-                <span class="hero-chip-info">50&nbsp;&euro; &middot; 50 min</span>
-              </button>
-              <button type="button" class="hero-chip" data-tratt="Massaggio Spa" data-info="corpo completo · 90 min · 90 &euro;" aria-pressed="false">
-                <span class="hero-chip-nome">Massaggio Spa</span>
-                <span class="hero-chip-info">90&nbsp;&euro; &middot; 90 min</span>
-              </button>
-              <a class="hero-chip hero-chip-altri" href="#trattamenti">Altri 3 trattamenti &rarr;</a>
-            </div>
-          </div>
+          <!-- due sole scelte nel primo schermo: prenotare subito oppure
+               guardare i trattamenti (dal listino ogni "Prenota" riporta
+               al calendario) -->
           <div class="hero-cta">
             <a class="btn btn-prenota btn-grande" id="heroCtaPrenota" href="#prenota">
               <span class="btn-grande-testo">Prenota ora</span>
               <span class="btn-grande-sub" id="heroCtaSub">Scegli data e ora &middot; conferma immediata</span>
             </a>
-            <a class="hero-cta-tel" href="tel:+393317153533">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
-              oppure chiama 331 715 3533
+            <a class="btn btn-chiama btn-grande hero-cta-scopri" href="#trattamenti">
+              <span class="btn-grande-testo">Scopri i trattamenti</span>
+              <span class="btn-grande-sub">Prezzi e durate &middot; 8 trattamenti</span>
             </a>
           </div>
           <p class="hero-nota" id="heroNota">
