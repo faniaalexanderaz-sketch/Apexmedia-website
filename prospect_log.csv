@@ -1,0 +1,77 @@
+data,nome,categoria,sito,email,telefono,problemi_verificati,stato,motivo
+2026-10-13,Studio Medico Dentistico Dr. G. Cacciabue - Dr. G. Guerci,dentista,https://www.assodental.it/,cacciabuegianfranco@gmail.com,0131 260466,IONOS MyWebsite; viewport fisso width=1025 (non adattivo); voce COVID19 e due 'Nuova pagina' nel menu; nessun form/prenotazione online; refusi (porfessionalità),bozza_creata,Oggetto: Quella voce COVID19 nel vostro menu
+2026-10-13,Centro Casa Alessandria,agenzia immobiliare,https://www.centrocasaalessandria.com/,info@centrocasaalessandria.com,0131 445044,WordPress 4.7.29 + Slider Revolution 5.0.9; copyright 2016; refuso nel banner cookie ('fonire'); agenzia dal 1981,bozza_creata,"Oggetto: Centro Casa: dal 1981, ma il sito dice 2016"
+2026-10-13,Termo-Impianti srl,idraulico/termoidraulica,https://termo-impianti.it/,termoimp.srl@gmail.com,0131 486658 / 327 3129268,Blocco di template 'showroom Peroni Auto / sede di Aulla' in home; home spinge ancora il superbonus; copyright 2022; WordPress 5.9.19,bozza_creata,Oggetto: Cosa c'entra Peroni Auto?
+2026-10-13,C. & S. Impianti Elettrici (Camurani e Scarpinati),elettricista,https://csimpiantielettrici.it/,info@csimpiantielettrici.net,0131 296492 / 338 3033542 / 339 2044462,Fisso scritto 'o131 296492' (lettera o); link tel 338 2044462 vs testo 339 2044462; email .net su sito .it; WordPress 6.2.14; zoom disabilitato,bozza_creata,Oggetto: o131 296492
+2026-10-13,GDA Impianti Elettrici,elettricista,https://www.gdaimpiantial.com/,info@gdaimpiantial.com,0131 347883,Numero non cliccabile (nessun link tel) in home e contatti; nessun form; ragione sociale incoerente s.n.c./srl; jQuery 3.1.0,bozza_creata,Oggetto: Ho provato a chiamarvi dal sito
+2026-10-13,PG Salon Parrucchieri,parrucchiere,https://www.pgsalonparrucchieri.it/,pagliuca.pg@gmail.com,,Widget recensioni (315 valutazioni) con le più recenti di nov 2022; nessuna prenotazione online; Slider Revolution 6.1.3 (2019); dal 1990,bozza_creata,Oggetto: Le vostre recensioni sono ferme al 2022
+2026-10-13,La Maison del Capello,parrucchiere,https://lamaisondelcapello.it/,dalilaercole@gmail.com,340 955 6049,Prenotazione solo telefono/WhatsApp; copyright 2023; WordPress 6.3.13; refuso 'conosce',bozza_creata,Oggetto: Prenotare una consulenza alle 22 (sito usa il tu)
+2026-10-13,Bistrot Cavour,ristorante,https://www.bistrotcavour.it/,bistrotcavour.al@gmail.com,0131 517105,"Menu à la carte, business lunch e delivery solo in PDF; jQuery 1.10.1 (2013); viewport senza initial-scale",bozza_creata,Oggetto: Ho aperto il vostro menu dal telefono
+2026-10-13,La Poligonia,ristorante,http://www.lapoligonia.com/,,0131 224477 / 347 882 3379,SITO ROTTO: il dominio mostra 'ConnectYourDomain Error | Wix.com' (404); 3142 voti aggregati Sluurpy,solo_telefono,Nessuna email pubblica trovata
+2026-10-13,La Cucina di Francesca (Valmadonna),ristorante,https://www.ristorantelacucinadifrancesca.it/,,+39 366 122 0260,DOMINIO PERSO: il sito ufficiale ora mostra un casinò online (MarathonBet); il link è ancora su italia.it,solo_telefono,Nessuna email pubblica trovata
+2026-10-13,Walla Walla - Tasty Burger,ristorante/hamburgeria,http://walla-walla-tasty-burger.business.site/,,0131 482310,SITO ROTTO: sito Google business.site restituisce 404 (servizio dismesso); 2607 voti Sluurpy,solo_telefono,Nessuna email pubblica trovata
+2026-10-13,Elio's Burgers & Grill,ristorante/steakhouse,https://eliosburger.wixsite.com/eliosburgerandgrill,,0131 344267,Wix piano gratuito: sottodominio wixsite + banner 'Questo sito è stato realizzato con Wix'; footer di template '© 2023 by Steakhouse'; viewport width=320; 2629 voti Sluurpy,solo_telefono,Unica email trovata nel codice (frescarni@gmail.it) ha dominio non valido: non usata
+2026-10-13,FISIO RIAB,fisioterapista,https://www.fisioriab.net/,,392 808 7510,SITO SCADUTO: 'Squarespace - Website Expired' (404),solo_telefono,Nessuna email pubblica trovata
+2026-10-13,Palestra Meeting Alessandria,palestra,http://www.palestrameetingal.it/,,0131 43711,"Dominio non raggiungibile (DNS non risolve al 13/10/2026), indicizzato su Google come sito ufficiale",solo_telefono,Nessuna email pubblica trovata
+2026-10-13,Antica Casa Rava,ristorante vegano,https://anticacasarava.com/,,+39 333 128 1346,Vecchio builder IONOS con viewport fisso width=321; nessuna email né prenotazione sul sito,solo_telefono,Nessuna email pubblica trovata
+2026-10-13,Arteràa,ristorante/locale,https://www.facebook.com/ArteriaClub,,+39 339 548 0968,Senza sito: solo pagina Facebook (fonte italia.it); 3615 voti Sluurpy,solo_telefono,Senza sito
+2026-10-13,Roger's Pizza,pizzeria,https://www.facebook.com/RogersPizza/,,0131 224036,Senza sito: solo pagina Facebook (fonte italia.it); 3099 voti Sluurpy,solo_telefono,Senza sito
+2026-10-13,Il Vicoletto,ristorante,https://m.facebook.com/pages/Il-Vicoletto/1946964865592980,,0131 261578,Senza sito: solo pagina Facebook (fonte Wanderlog/Foodle); 2525 voti Sluurpy,solo_telefono,Senza sito
+2026-10-13,Trattoria Ai Due Storti,trattoria,,,0131 265780,"Senza sito: nessun sito su italia.it, prenotazione solo via TheFork; 1757 voti Sluurpy",solo_telefono,Senza sito
+2026-10-13,Osteria della Luna in Brodo,osteria,https://www.facebook.com/Osteria-della-Luna-in-Brodo-446145670047/,,0131 231898,Senza sito: solo pagina Facebook (fonte Wanderlog); 1697 voti Sluurpy,solo_telefono,Senza sito
+2026-10-13,Trattoria Il Paladino,trattoria,https://ilpaladinoalessandria.it/,,0131 253719,,scartata,"Sito moderno (ProntoEasy, copyright 2026, prenotazione online)"
+2026-10-13,Barbarossa Bistrot,pizzeria,https://www.barbarossabistrot.it/,barbarossaalessandria@gmail.com,0131 265213,,scartata,"Sito aggiornato (WP recente, prenotazioni)"
+2026-10-13,Osteria il Gallo d'Oro,osteria,https://osteriagallodoro.it/,,,,scartata,Sito rifatto nel 2026
+2026-10-13,DaDiego,ristorante,https://www.dadiego.com/,info@dadiego.com,0131 266684,,scartata,Sito moderno con OpenTable
+2026-10-13,Antico Cappelverde,trattoria,https://classone.it/antico-cappelverde/,,,,scartata,"Parte di un gruppo (Classone), sito moderno con prenotazione"
+2026-10-13,Ristorante Pizzeria La Mezzaluna,pizzeria,https://pizzerialamezzaluna.com/,,0131 254696,,scartata,Sito WP/Elementor recente
+2026-10-13,Ideal Fratelli Palella,pizzeria,https://idealfratellipalella.it/,info@idealfratellipalella.it,0131 225795,,scartata,Sito recente
+2026-10-13,Ratafià,ristorante,https://www.ratafià.com/,,,,scartata,"Sito curato, menu aggiornati settimanalmente"
+2026-10-13,Le Cicale,ristorante,https://www.lecicale.net/,,,,scartata,"Spinetta Marengo, sito recente"
+2026-10-13,Ristorante Napoleon,ristorante,https://www.ristorantenapoleon.it/,ristorantenapoleon@libero.it,0131 52016,,scartata,Sito recente con prenotazioni
+2026-10-13,Melchionni Cafe,bistrot,https://www.melchionnicafe.com/,info@melchionnicafe.it,,,scartata,"Prenotazione online Cooperto, sito curato"
+2026-10-13,Unico,ristorante,https://unico.al.it/,,,,scartata,"Sito di agenzia (SWSD Studio), prenotazione Plateform"
+2026-10-13,Casa Signorelli,bar/ristorante,https://www.casasignorelli.com/,,0131 1965155,"Slider Revolution 5.4.8, zoom disabilitato",scartata,Nessuna email pubblica e problemi minori
+2026-10-13,Bononi Romano Impianti,idraulico,https://www.impiantiriscaldamentobononi.it/,romanobononi@gmail.com,338 8750610,,scartata,"Sito di agenzia locale (AL 2.0), WP aggiornato"
+2026-10-13,Lazzaro Parrucche,parrucchiere,https://www.lazzaroparrucche.com/,lazzarobas@gmail.com,0131 443957,,scartata,"Sito WP/Divi aggiornato, problemi non evidenti"
+2026-10-13,J&J Estetica,centro estetico,https://jjestetica.it/,,,,scartata,"Sito di agenzia (Brand-360), booking presente"
+2026-10-13,Gocce di Bellezza,centro estetico,https://goccedibellezza.it/,,,,scartata,Sito aggiornato (WP 7.0)
+2026-10-13,Nemesi Tricomeccanica,parrucchiere,https://nemesitricomeccanica.it/,,,,scartata,"Sito di agenzia, prenotazione online"
+2026-10-13,Studio Odontoiatrico Muka,dentista,https://dentista-alessandria.it/,,,,scartata,Sito di agenzia (Brand-360)
+2026-10-13,Da.Co Studio Dentistico,dentista,https://www.da-co.it/,,,,scartata,Sito recente con prenotazione
+2026-10-13,Studi Chiappino-Grasso,dentista,https://www.studichiappino.it/,,,,scartata,Sito aggiornato
+2026-10-13,Studio Torchio,dentista,https://www.dottoressacinziatorchio.com/,info@dottoressacinziatorchio.com,0131 325521,,scartata,"Sito di agenzia (B4web), con form, problemi minori"
+2026-10-13,Beldent,dentista,https://www.beldent.it/,,,,scartata,Sito moderno con Calendly
+2026-10-13,DentalBio / Fioccodent,dentista,,,,,scartata,Catena
+2026-10-13,Habitat Immobiliare,agenzia immobiliare,https://www.habitat.al.it/,fracchiastefano@libero.it,0131 260549,,scartata,Sito di agenzia web locale (Sasquatch)
+2026-10-13,Gierre Immobiliare,agenzia immobiliare,https://gierreimmobiliare.com/,,0131 218521,,scartata,"Sito aggiornato, nessuna email"
+2026-10-13,Erre G. Immobiliare,agenzia immobiliare,https://alessandriacasa.com/,,,,scartata,Sito aggiornato
+2026-10-13,Agenzia Borsa Immobiliare,agenzia immobiliare,https://www.agenziaborsaimmobiliare.com/,,,,scartata,Sito aggiornato
+2026-10-13,Tempocasa Alessandria,agenzia immobiliare,,,,,scartata,Franchising
+2026-10-13,Alessandro Parrucchiere,parrucchiere,https://www.alessandroparrucchiere.com/,,,,scartata,"Sede non verificata ad Alessandria (omonimo a Roma), risposta del server incoerente"
+2026-10-13,Alberto Forlini,fisioterapista,https://albertoforlini.it/,,,,scartata,Sito aggiornato con prenotazione
+2026-10-13,Dot 41 Punto Medico,poliambulatorio,https://www.dot41.it/,,,,scartata,Sito di agenzia (Sasquatch)
+2026-10-13,My Trainers Club,palestra,https://www.mytrainersclub.com/,,,,scartata,"Sito non analizzabile (contenuto JS), nessuna email"
+2026-10-13,AEM Impianti Termici,idraulico,https://www.aemimpiantitermici.com/,,,,scartata,Sede a Tortona
+2026-10-13,Afrodite Megghy Studio Estetico,centro estetico,https://www.studioesteticoafroditemegghy.it/,,,Dominio non risolve,scartata,Nessun contatto verificato (telefono/indirizzo non trovati)
+2026-10-13,Idraulica Marco Lotti,idraulico,https://www.idraulicomarcolotti.com/,,,Dominio non risolve,scartata,Nessun contatto verificato
+2026-10-13,Filippo Il Gelatiere,,,filippoilgelatiere@hotmail.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Luigi Regalzi,,,regalzi1860@hotmail.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Soleluna,,,info@solelunatortona.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Gioielleria Ferrando,,,ferrando@gioielleriaferrando.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Marengo Catering,,,info@marengocatering.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Dimar Catering,,,info@dimar.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Castello di Oviglio,,,info@castellodioviglio.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Ristorante Duomo,,,info@ristorante-duomo.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Anna Ghisolfi,,,info@annaghisolfi.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Vaniglia Gelaterie,,,info@vanigliagelaterie.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Il Girasole,,,ezio.girasole@gmail.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Spaltra,,,info@spaltra.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Astrua,,,astrua@astrua.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Ferramenta Scarazzini,,,info@ferramentascarazzini.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Trattoria La Piola,,,ale@trattorialapiola.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Pizzeria Il Faro,,,ilfaro@outlook.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,(contatto teo.scarvaci),,,teo.scarvaci@gmail.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Il Girone dei Golosi,,,ristorante@gironedeigolosi.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Le Muse Acconciatori,,,info@lemuseacconciatori.it,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
+2026-10-13,Montecristo Pub,,,info@montecristopub.com,,,scartata,Già contattato in precedenza (bozza o mail inviata in Gmail)
