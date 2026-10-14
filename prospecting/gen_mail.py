@@ -5,6 +5,8 @@ e=lambda s: html.escape(s,quote=False)
 CL={False:'Se le va, facciamo una chiamata di 10 minuti e le spiego come lo farei. Se invece preferisce vedere subito il risultato, mi risponda "demo" e le preparo gratis una bozza del nuovo sito in 24 ore.',
     True:'Se ti va, facciamo una chiamata di 10 minuti e ti spiego come lo farei. Se invece preferisci vedere subito il risultato, rispondimi "demo" e ti preparo gratis una bozza del nuovo sito in 24 ore.'}
 NO={False:'Se non le interessa basta un "no grazie" e non la ricontatto.',True:'Se non ti interessa basta un "no grazie" e non ti ricontatto.'}
+LOC={False:'Siamo un\'agenzia di Alessandria, quindi se preferisce parlarne di persona passo volentieri da Lei in negozio: mi basta un messaggio su WhatsApp o una risposta a questa mail.',
+     True:'Siamo un\'agenzia di Alessandria, quindi se preferisci parlarne di persona passo volentieri da te in negozio: mi basta un messaggio su WhatsApp o una risposta a questa mail.'}
 WA={False:'Mi scriva su WhatsApp: 351 594 0685',True:'Scrivimi su WhatsApp: 351 594 0685'}
 btn='display:block;text-align:center;font-family:'+SANS+';font-weight:bold;font-size:16px;padding:15px 20px;border-radius:10px;text-decoration:none;'
 out=[]
@@ -18,13 +20,13 @@ for (i,nome,email,tu,subj,title,greet,opener,pers,scene,three) in M:
       f'<p style="margin:0 0 22px;font-family:{SERIF};font-size:25px;line-height:1.25;color:#081536;font-weight:bold">{e(title)}</p>'
       +P(greet)+P(opener)+P(pers)+P(scene)+
       f'<div style="background-color:#faf6ea;border-left:4px solid #e7c568;border-radius:8px;padding:16px 18px;margin:0 0 22px"><p style="margin:0 0 6px;font-size:12px;letter-spacing:2px;color:#c39b3f;font-weight:bold">COSA STANNO FACENDO I MIGLIORI IN CITTÀ</p><p style="margin:0">{e(three)}</p></div>'
-      +P(CL[tu])+
+      +P(CL[tu])+P(LOC[tu])+
       f'<span style="{btn}background-color:#25d366;color:#ffffff;margin:0 0 10px">Scrivimi su WhatsApp</span>'
       f'<a href="{mail}" style="{btn}background-color:#081536;color:#ffffff;margin:0 0 18px">Voglio la demo gratuita in 24 ore</a>'
       f'<p style="margin:0 0 22px;font-size:14px;color:#6b7080;text-align:center">{e(NO[tu])}</p>'
       f'<div style="border-top:1px solid #eceef2;padding-top:18px"><p style="margin:0;font-family:{SERIF};font-size:18px;color:#081536;font-weight:bold">Alex Fania</p><p style="margin:0;font-size:14px;color:#4a4f60">Apex Media · Alessandria</p><p style="margin:4px 0 0;font-size:14px;color:#5a2ee6">351 594 0685 · studio@infoapex.eu</p></div>'
       f'</div></div>')
-    plain='\n\n'.join([greet,opener,pers,scene,three,CL[tu],WA[tu],NO[tu]])+"\n\nAlex Fania\nApex Media · Alessandria\n351 594 0685 · studio@infoapex.eu"
+    plain='\n\n'.join([greet,opener,pers,scene,three,CL[tu],LOC[tu],WA[tu],NO[tu]])+"\n\nAlex Fania\nApex Media · Alessandria\n351 594 0685 · studio@infoapex.eu"
     assert 'http' not in doc
     out.append({'i':i,'to':email,'subject':subj,'html':doc,'plain':plain})
     open(f'h{i}.html','w').write('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><body style="margin:0;padding:20px 12px;background:#fff">'+doc)
