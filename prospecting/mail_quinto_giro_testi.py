@@ -19,7 +19,7 @@ T.update({
 'abb':"I negozi che lavorano meglio in città stanno facendo tre cose: una vetrina online con i nuovi arrivi e i marchi, la richiesta di disponibilità di un capo via WhatsApp, e le recensioni dei clienti in evidenza.",
 })
 NSV=["ho cercato e non ho trovato un vostro sito: negli elenchi online ci sono solo indirizzo e telefono.",
-     "ho cercato con attenzione, ma un vostro sito non c'è: online risultano solo indirizzo e numero.",
+     "ho cercato con attenzione e un vostro sito non c'è: online risultano solo indirizzo e numero.",
      "ho controllato: non esiste un vostro sito, e negli elenchi ci sono solo indirizzo e telefono."]
 R=[
 # ---------- siti con problemi verificati ----------
