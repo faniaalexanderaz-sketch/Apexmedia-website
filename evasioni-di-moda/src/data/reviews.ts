@@ -1,8 +1,6 @@
-// Recensioni mostrate nel nastro a scorrimento.
-//
-// ATTENZIONE: finché `sample` è true sono TESTI D'ESEMPIO, etichettati come tali nel sito.
-// Prima della pubblicazione vanno sostituiti con recensioni Google reali del negozio
-// (copiate con il nome come appare su Google, es. "Giulia R.") e `sample` va messo a false.
+// Recensioni Google reali del negozio (solo 5 stelle), trascritte dalla scheda Google Maps.
+// Nome mostrato come nome + iniziale del cognome. Per aggiungerne: copiare testo e nome da Google.
+// `sample: true` va usato solo per testi d'esempio: nel sito vengono etichettati come tali.
 
 export type Review = {
   text: string
@@ -13,10 +11,16 @@ export type Review = {
 }
 
 export const reviews: Review[] = [
-  { text: 'Personale gentile e disponibile, ti consigliano davvero senza fretta. Sono uscita con un look completo per una cerimonia.', author: 'Esempio di recensione', rating: 5, source: 'Google', sample: true },
-  { text: 'Bella selezione di capi e accessori, sempre qualcosa di nuovo quando passo in Corso Acqui.', author: 'Esempio di recensione', rating: 5, source: 'Google', sample: true },
-  { text: 'Ho trovato il regalo perfetto per mio marito: mi hanno aiutata a scegliere taglia e colore.', author: 'Esempio di recensione', rating: 5, source: 'Google', sample: true },
-  { text: 'Negozio curato, capi di qualità e un servizio che non trovi nei grandi centri commerciali.', author: 'Esempio di recensione', rating: 5, source: 'Google', sample: true },
-  { text: 'Ottimo assortimento anche di scarpe. Gentilissimi nel trovare il numero giusto.', author: 'Esempio di recensione', rating: 5, source: 'Google', sample: true },
-  { text: 'Ci torno a ogni cambio di stagione: idee nuove e consigli sinceri.', author: 'Esempio di recensione', rating: 5, source: 'Google', sample: true },
+  {
+    text: 'Pur abitandovi vicino non ero mai entrato. Ho trovato del personale più che gentile, mi hanno fatto sentire come fossi andato a trovare dei parenti lontani.',
+    author: 'Alessandro F.',
+    rating: 5,
+    source: 'Google',
+  },
+  { text: 'Personale gentile e disponibile. Marchi importanti ad un ottimo prezzo.', author: 'Cliente Google', rating: 5, source: 'Google' },
+  { text: 'Merce varia, per tutte le tasche, scelta con cura, personale gentile e familiare.', author: 'Elena C.', rating: 5, source: 'Google' },
+  { text: 'Qualità eccelsa, capi alla moda ad un buon prezzo.', author: 'Lie92', rating: 5, source: 'Google' },
+  { text: 'Ottimo posto per acquisti di vestiario a buon prezzo e di ottima qualità.', author: 'Pietro R.', rating: 5, source: 'Google' },
+  { text: 'Personale oltre disponibile, ti sanno consigliare.', author: 'Mariafranca A.', rating: 5, source: 'Google' },
+  { text: "Bel negozio, ha un bel po' di abbigliamento vario!", author: 'Sara V.', rating: 5, source: 'Google' },
 ]

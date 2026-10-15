@@ -41,8 +41,8 @@ Variabili di build:
 
 - **Orari di apertura** → `store.hours`: oggi presi dalla scheda pubblica Nextdoor (lun–sab 9–12:30, 15:30–19:30).
   Con `null` il sito invita a chiamare. Lo stato "Aperto ora" si calcola sull'ora italiana.
-- **Recensioni** → `src/data/reviews.ts`: oggi sono TESTI D'ESEMPIO, etichettati come tali. Sostituirli con
-  recensioni Google reali e togliere `sample: true`.
+- **Recensioni** → `src/data/reviews.ts`: recensioni Google reali a 5 stelle trascritte dalla scheda Maps
+  (nome + iniziale). Aggiornarle periodicamente.
 - **Civico e telefono**: in rete compaiono anche Corso Acqui 91 e 0131 1951940 (scheda "Evasioni di Moda Shoes").
 - **Seconda sede** al Centro Commerciale Gli Archi (via Sclavo 15): citata in rete, da confermare.
 - **Numero WhatsApp** → `store.whatsapp` (finché è `null` i pulsanti WhatsApp non compaiono).
