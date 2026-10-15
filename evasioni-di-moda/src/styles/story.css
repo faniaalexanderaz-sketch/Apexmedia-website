@@ -1,0 +1,144 @@
+.story {
+  background: var(--beige);
+}
+
+.story__grid {
+  display: grid;
+  gap: clamp(96px, 12vw, 140px);
+}
+
+.story__visual {
+  position: relative;
+  padding-bottom: 12%;
+}
+
+.story__main {
+  width: 80%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #979390;
+}
+
+.story__main-inner,
+.story__detail-inner {
+  display: block;
+  height: 100%;
+}
+
+.story__parallax {
+  display: block;
+  height: 114%;
+  margin-top: -7%;
+}
+
+.story__main img,
+.story__detail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story__detail {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 44%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: clamp(6px, 0.9vw, 12px) solid var(--beige);
+  background: #7b6451;
+}
+
+.story__caption {
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.story__caption span {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  letter-spacing: 0;
+  color: var(--bordeaux);
+}
+
+.story__eyebrow {
+  color: var(--bordeaux);
+}
+
+.story__title {
+  margin-top: 22px;
+  font-size: clamp(2.8rem, 1.6rem + 3.8vw, 5.8rem);
+  line-height: 0.95;
+}
+
+.story__body {
+  display: grid;
+  gap: 18px;
+  margin-top: clamp(28px, 3vw, 44px);
+  max-width: 46ch;
+  color: var(--text-muted);
+}
+
+.story__lead {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 1.15rem + 0.7vw, 1.75rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.story__points {
+  display: grid;
+  margin-block: clamp(34px, 4vw, 52px);
+  border-top: 1px solid var(--line-strong);
+}
+
+.story__points li {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 8px;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line-strong);
+  font-size: 0.93rem;
+  color: var(--text-muted);
+}
+
+.story__points strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.story__point-index {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--bordeaux);
+}
+
+@media (min-width: 900px) {
+  .story__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    align-items: center;
+  }
+
+  .story__visual {
+    grid-column: 1 / span 6;
+  }
+
+  .story__text {
+    grid-column: 8 / span 5;
+  }
+}

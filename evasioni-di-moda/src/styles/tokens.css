@@ -1,0 +1,44 @@
+:root {
+  /* palette */
+  --ink: #171715;
+  --ink-2: #22211e;
+  --ivory: #f7f4ee;
+  --beige: #e8dfd2;
+  --stone: #a7a29a;
+  --bordeaux: #642e3b;
+  --bordeaux-deep: #4f2330;
+  --champagne: #b8a17a;
+
+  /* ruoli */
+  --text: var(--ink);
+  --text-muted: #5e5a53; /* 6.3:1 su avorio */
+  --text-muted-light: #bdb7ad; /* su inchiostro */
+  --line: rgba(23, 23, 21, 0.14);
+  --line-strong: rgba(23, 23, 21, 0.32);
+  --line-light: rgba(247, 244, 238, 0.18);
+
+  /* tipografia */
+  --serif: 'Cormorant Garamond', 'Cormorant', 'Times New Roman', serif;
+  --sans: 'Manrope Variable', 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-display: clamp(3.2rem, 1rem + 7.6vw, 9.8rem);
+  --fs-h2: clamp(2.9rem, 1.6rem + 4.4vw, 6.6rem);
+  --fs-h3: clamp(1.7rem, 1.25rem + 1.2vw, 2.5rem);
+  --fs-lead: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
+
+  /* spazi */
+  --gutter: clamp(20px, 4.2vw, 72px);
+  --gap: clamp(14px, 1.8vw, 28px);
+  --max: 1560px;
+  --section-y: clamp(104px, 12vw, 200px);
+  --header-h: 76px;
+
+  /* movimento */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@media (max-width: 899px) {
+  :root {
+    --header-h: 64px;
+  }
+}
