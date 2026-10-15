@@ -336,3 +336,77 @@ data,nome,categoria,sito,email,telefono,problemi_verificati,stato,motivo
 2026-10-14,Design & Technology,,,,,,scartata,"Settore web/IT, possibile concorrente"
 2026-10-14,"Costa Poco, Tuttocapsule, Fitactive, Washdog, Soloviso, Vendocasa, Tempocasa, Friking, Dressinput, Driver Center Pirelli",,,,,,scartata,Catene o franchising
 2026-10-14,"Onoranze funebri (Il Paradiso, Prevedini, Raica)",,,,,,scartata,Esclusi per tono
+2026-10-15,Gabriella Gabutti Geometra,geometra,http://www.gabriellagabutti.it/,web@gabriellagabutti.it,+39 320.845.4377,"WordPress di default: pagina ""Hello world!"" (browser iPhone)",bozza_creata,"Oggetto: gabriellagabutti.it: ""Hello world!"""
+2026-10-15,Mister Service,calzolaio,http://misterserviceexpress.com,misterserviceexpress@gmail.com,+39 334 1135536,"Dominio scaduto, in vendita su Afternic/GoDaddy",bozza_creata,Oggetto: misterserviceexpress.com è in vendita
+2026-10-15,Nuova Edilizia Generale,impresa edile,http://nuovaediliziagenerale.it,nuova.edilizia.generale@gmail.com,+39 366 2594084,"""Sito in lavorazione - Sito momentaneamente non raggiungibile""",bozza_creata,"Oggetto: nuovaediliziagenerale.it: ""Sito momentaneamente non raggiungibile"""
+2026-10-15,Farmacia Sacchi,farmacia,http://farmaciasacchi.it,info@farmaciasacchi.it,+39 0131 342703,"Certificato SSL non valido + ""SITO IN COSTRUZIONE""",bozza_creata,"Oggetto: farmaciasacchi.it: ""SITO IN COSTRUZIONE"""
+2026-10-15,Smiles Bomboniere,bomboniere,http://smilesbomboniere.it,info@smilesbomboniere.it,+39 0131 441085,"Nessun viewport, pagina larga 1010px su iPhone, nessun link tel",bozza_creata,Oggetto: smilesbomboniere.it dal telefono
+2026-10-15,Lombarduzzi Soccorso Stradale,soccorso stradale,http://lombarduzzi.it,info@lombarduzzi.it,+39 0131 225319,"ERR_CERT_COMMON_NAME_INVALID (""La connessione non è privata""), nessun viewport",bozza_creata,"Oggetto: lombarduzzi.it: ""La connessione non è privata"""
+2026-10-15,Ottica Principe,ottica,"http://otticaprincipe.org,otticaprincipe.it",info@otticaprincipe.it,+39 0172 422396,otticaprincipe.it = Apache Test Page (403); otticaprincipe.org NXDOMAIN,bozza_creata,Oggetto: otticaprincipe.it mostra una pagina di test del server
+2026-10-15,Atelier Odontoiatrico Alessandria,studio dentistico,http://federicoferrarissmileatelier.it,segreteria@studioff.it,+39 335 7817976,"""Sito in manutenzione""",bozza_creata,"Oggetto: federicoferrarissmileatelier.it: ""Sito in manutenzione"""
+2026-10-15,Pelletteria Valigeria Lemon,pelletteria,http://pelletteriavaligerialemon.it,lemon48@libero.it,+39 0131 43161,Dominio mostra un casinò online (Nv Casino),bozza_creata,Oggetto: pelletteriavaligerialemon.it ora mostra un casinò
+2026-10-15,Ferrari 1908,abbigliamento,http://shop.ferrari1908.com/,ferrari1908@ferrari1908.191.it,+39 0131.254020,shop.ferrari1908.com e ferrari1908.com: ERR_CONNECTION_CLOSED,bozza_creata,Oggetto: shop.ferrari1908.com non si apre
+2026-10-15,Hotel Royal,hotel,http://hotelroyalalessandria.it,hotelroyalalessandria@gmail.com,+39 0131 342284,"ERR_CERT_COMMON_NAME_INVALID, nessun viewport, copyright 2010",bozza_creata,"Oggetto: hotelroyalalessandria.it: ""La connessione non è privata"""
+2026-10-15,Il Pizz'ino,ristorante,http://gioilpizzino.it/,info@gioilpizzino.it,+39 0131 1716401,"""Site is undergoing maintenance"" (© 2024)",bozza_creata,"Oggetto: gioilpizzino.it: ""Site is undergoing maintenance"""
+2026-10-15,Coltelleria Einstein,intrattenimento,http://coltelleriaeinstein.it,info@coltelleriaeinstein.it,+39 348 8720266,"""Questo dominio è già registrato"" (parcheggio), https non risponde",bozza_creata,"Oggetto: coltelleriaeinstein.it: ""Questo dominio è già registrato"""
+2026-10-15,GTAuto,auto,http://gtautosrl.it,gabriele.traverso@gtautosrl.it,+39 0131 1935171,"""Sito attualmente in allestimento""",bozza_creata,"Oggetto: gtautosrl.it: ""Sito attualmente in allestimento"""
+2026-10-15,S.M.C. Sport & Wellness,palestra,http://bodystudio.it,bodystudio.alessandria@gmail.com,+39 389 7695025,bodystudio.it reindirizza a Sedo (dominio in vendita),bozza_creata,Oggetto: bodystudio.it porta a una pagina di vendita del dominio
+2026-10-15,Carrozzeria Maxicar,auto,http://carrozzeriamaxicar.it,maxicar.alessandria@gmail.com,+39 0131 234626,"Pagina bianca: iframe verso Wix ""This domain isn't connected to a site""",bozza_creata,"Oggetto: carrozzeriamaxicar.it: ""This domain isn't connected to a site"""
+2026-10-15,AGS Shop,ferramenta,http://agsservizi2016.com,agsservizi2016@gmail.com,+39 333 5072179,NXDOMAIN agsservizi2016.com,bozza_creata,Oggetto: agsservizi2016.com non esiste più
+2026-10-15,Nuova Didattica e Libri,libreria,http://nuovadidatticaelibri.com,nuovadidatticaelibri@gmail.com,+39 0131 227413,NXDOMAIN nuovadidatticaelibri.com,bozza_creata,Oggetto: nuovadidatticaelibri.com non esiste più
+2026-10-15,R.D. Service,soccorso stradale,http://aci-rdservice.it,rd.service24@gmail.com,+39 0131 030680,NXDOMAIN aci-rdservice.it,bozza_creata,Oggetto: aci-rdservice.it non esiste più
+2026-10-15,Torti Ferramenta,ferramenta,http://ferramentatorti.com/,ferramentatorti@virgilio.it,+39 0131 618335,NXDOMAIN ferramentatorti.com,bozza_creata,Oggetto: ferramentatorti.com non esiste più
+2026-10-15,Farmacia Danovi,farmacia,http://farmaciadanovi.fapnet.it,farmaciadanovi@fapnet.it,+39 0131 251353,"Home = solo login ""Amministrazione Web Farmacie"", nessun viewport",bozza_creata,Oggetto: farmaciadanovi.fapnet.it mostra solo un login
+2026-10-15,Farmacia Falcone,farmacia,http://farmaciafalcone.fapnet.it,farmaciafalcone@fapnet.it,+39 0131 252977,"Nessun viewport (980px su iPhone), nessun link tel",bozza_creata,Oggetto: farmaciafalcone.fapnet.it dal telefono
+2026-10-15,Farmacia Scevola,farmacia,http://farmaciascevola.fapnet.it,farmaciascevolasnc@fapnet.it,+39 0131 254272,"Nessun viewport (980px su iPhone), nessun link tel",bozza_creata,Oggetto: farmaciascevola.fapnet.it dal telefono
+2026-10-15,Farmacia Invernizzi,farmacia,http://farmaciainvernizzi.fapnet.it,farmaciainvernizzi@fapnet.it,+39 0131 251619,"Nessun viewport (980px su iPhone), nessun link tel",bozza_creata,Oggetto: farmaciainvernizzi.fapnet.it dal telefono
+2026-10-15,Sapore di Pane,alimentari,,viadante131@outlook.it,+39 392 868 2073,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Pane fresco in via Dante
+2026-10-15,Call Of Party,articoli regalo,,callofparty2023@gmail.com,+39 329 160 3719,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Una festa da organizzare in via San Lorenzo
+2026-10-15,Cose Così,articoli regalo,,cosecosial@gmail.com,+39 0131 264695,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,"Oggetto: Cose Così, via Milano"
+2026-10-15,Debby Time,centro estetico,,debbietime@me.com,+39 0131 264769,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Un trattamento prenotato la sera
+2026-10-15,Colorificio Castagna,ferramenta,,colorificiocastagna@gmail.com,+39 0131 442198,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Un colorificio in via Ghilini
+2026-10-15,Cereda e Panizza,tessili,,ceredaepanizza@tiscali.it,+39 0131 252774,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Tessuti in via San Lorenzo
+2026-10-15,Il Sentiero degli Scarabocchi,libreria,,ilsentierodegliscarabocchi@gmail.com,+39 331 3842573,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,"Oggetto: Il Sentiero degli Scarabocchi, corso Acqui"
+2026-10-15,Libreria L'Atheneo,libreria,,libreria.atheneo@libero.it,+39 0131 222331,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Una libreria in viale Teresa Michel
+2026-10-15,La Boutique dello Svapo,articoli regalo,,multibrand.svapo.al@gmail.com,+39 340 6167544,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Una boutique dello svapo in via Milano
+2026-10-15,Arcobaleno Ricami,merceria,,arcobalenoricami@gmail.com,+39 0131 43064,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Ricami e merceria in via Dante
+2026-10-15,L'Angolo della Casa,articoli per la casa,,langolodellacasa97@gmail.com,+39 392 6542526,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,"Oggetto: L'Angolo della Casa, corso Acqui"
+2026-10-15,Semi di Albicocca,farmacia,,semidialbicocca@gmail.com,+39 320 6712779,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,"Oggetto: Semi di Albicocca, via Cordara"
+2026-10-15,Cartoleria Carin,cartoleria,,carinsas@libero.it,+39 0131 222523,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Una cartoleria in via Gramsci
+2026-10-15,Rossi Pelletteria,pelletteria,,rossipelletteria.al@libero.it,+39 0131 252728,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Pelletteria in via Modena
+2026-10-15,Ferrari di Cassano Alberto,alimentari,,primacolazione@alice.it,+39 0131 345820,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Alimentari in via dell'Industria
+2026-10-15,Roby Serramenti,impresa edile,,roberto.togaro@gmail.com,+39 338 5062451,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Serramenti in via Palermo
+2026-10-15,Caponiti Impianti,idraulico,,f.caponiti@outlook.it,+39 348 5240344,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Un'emergenza idraulica in via San Baudolino
+2026-10-15,Piastrelle Moderne,impresa edile,,piastrellebaki@gmail.com,+39 3319753548,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Piastrelle in corso Carlo Marx
+2026-10-15,Farmacia Rizzotti,farmacia,,farmacia.rizzotti@tiscali.it,+39 0131 253083,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,"Oggetto: Farmacia Rizzotti, via Vochieri"
+2026-10-15,Tigossi,elettronica,,tigossi.snc@gmail.com,+39 0131 252356,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,"Oggetto: Tigossi, via Pisacane"
+2026-10-15,Bertozzi Lorenzo Idraulico,idraulico,,bertozzilorenzo7@gmail.com,+39 347 8194141,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Un idraulico in via Rettoria
+2026-10-15,Montemezzo Franco Idraulico,idraulico,,franco.montemezzo@gmail.com,+39 328 5682036,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Un idraulico in strada Tortona
+2026-10-15,Impianti Termoidraulici Larocca,idraulico,,itld@libero.it,+39 0131 820570,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Termoidraulica in strada della Meliga
+2026-10-15,Secchi Fabio Idraulico,idraulico,,secchifabio@tiscali.it,+39 347 4662334,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Un idraulico in via Volvera
+2026-10-15,Ponte Sergio Idraulico,idraulico,,ser.ponte71@gmail.com,+39 338 5815901,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Un idraulico in via Tortona
+2026-10-15,Autoservizi Gatti,auto,,autoservizi.al@gmail.com,+39 0131 254624,Nessun sito proprio (domini ovvi verificati via DNS),bozza_creata,Oggetto: Autoservizi in via Tortona
+2026-10-15,Controtempo,,,,,,scartata,Dominio senza record A ma www.controtempo.com attivo (Jimdo)
+2026-10-15,Macridi / VivInfanzia,,,,,,scartata,www.vivinfanzia.it attivo
+2026-10-15,Pasticceria Zoccola 1820,,,,,,scartata,Redirect rotto su .com ma pasticceriazoccola.it funziona
+2026-10-15,Fanciot,,,,,,scartata,Sito funzionante
+2026-10-15,Zuccarelli Luca impianti,,,,,,scartata,Sito zlimpianti.it funzionante
+2026-10-15,Enologia Agraria Passaggio,,,,,,scartata,Sito enologicasippi.it funzionante
+2026-10-15,Safety & Quality,,,,,,scartata,"Ente di formazione; dominio email con certificato errato, rimandato"
+2026-10-15,Cacciola gioielleria,,,,,,scartata,Email su dominio di agenzia web (dinamis.it)
+2026-10-15,Carrozzeria D3 / Autocucita,,,,,,scartata,"Nome della scheda diverso dal sito, attribuzione incerta"
+2026-10-15,L'Oblò Viaggi / Soave Arte,,,,,,scartata,Sito si apre solo in http: problema non dimostrabile con certezza
+2026-10-15,Hotel Europa,,,,,,scartata,Sito funzionante in http
+2026-10-15,"Siamocasa, Alan Meyer, It Girl, Quagli, Glassdrive",,,,,,scartata,Protezione Cloudflare: sito non verificabile
+2026-10-15,Il Melograno celiachia,,,,,,scartata,Sito bloccato per paese (non verificabile dall'Italia)
+2026-10-15,Gipsy Fiori,,,,,,scartata,Errore 522 ma nessun MX (già nel log)
+2026-10-15,"Residenza Il Platano, Immobiliare Borsalino, Idrogas, Piemonte Ponteggi",,,,,,scartata,Già nel log
+2026-10-15,Macelleria Brezzi / Le 4 Cascine / Az. Agr. Fratelli Brezzi,,,,,,scartata,Stessa famiglia di Macelleria Brezzi già contattata
+2026-10-15,"Tartaruga Viaggi, Riprocentro, Movie Boutique, Dani, Itaca, Virtual, Immobiliare Pasturana, Cartoleria da Roberta, Metacasa, Mille Idee, Il Pane e le Rose",,,,,,scartata,Dominio inesistente o senza MX con email sullo stesso dominio: rimbalzerebbe
+2026-10-15,"Tecnocasa, Tecnorete, Tempocasa, Gruppo Vendocasa, Kipoint, 101 Caffè, Gallusi (Gattinoni), Grandiauto, Audi Zentrum, Ducati, Alessandria Auto, Moto Gerardo BMW, Astrua, Fitactive",,,,,,scartata,"Catene, franchising o concessionarie di marca"
+2026-10-15,"La Fenice, Trifoglio",,,,,,scartata,Onoranze funebri / gruppo sanitario
+2026-10-15,"My Cafè, Corso Roma, L'Albero, Dolcessenza, Bar Dante, BeshoGarage, Gjika, Termopili, Vetri X, Artecasa, Centro Liturgico, Di tutto un po'",,,,,,scartata,Dominio ovvio attivo che potrebbe essere loro
+2026-10-15,"Ottica Bigotti, Pasquali, Centro Fiori, Erba Colta, Antica Fioreria, Jolly Green, A Tutto Vapore, Pizza Ready, Leone Frigoriferi, Farmacia Damilano",,,,,,scartata,Hanno già un sito
+2026-10-15,O.T.2 Ottica In Vista,,,,,,scartata,"Dominio e prefisso telefonico di Acqui Terme, sede incerta"
+2026-10-15,"Inart Restauri, Porky's, CESI, Confservizi",,,,,,scartata,Esclusi per settore o tono
+2026-10-15,Liberty Dogs e altri ~280 siti,,,,,,scartata,Sito funzionante e adatto al telefono
