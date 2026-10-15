@@ -3,6 +3,9 @@ import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { NewArrivals } from './components/NewArrivals'
 import { Collections } from './components/Collections'
+import { Marquee } from './components/Marquee'
+import { Reviews } from './components/Reviews'
+import { PointerEffects } from './components/PointerEffects'
 import { BrandStory } from './components/BrandStory'
 import { SeasonalEditorial } from './components/SeasonalEditorial'
 import { StoreCTA } from './components/StoreCTA'
@@ -24,15 +27,18 @@ export function App() {
       <Header />
       <main id="main">
         <Hero />
+        <Marquee />
         <NewArrivals />
         <Collections />
         <BrandStory />
+        <Reviews />
         <SeasonalEditorial />
         <StoreCTA />
         <ContactSection />
       </main>
       <Footer />
       <MobileActionBar />
+      <PointerEffects />
       <InquiryDialog content={inquiry} onClose={closeInquiry} />
     </InquiryContext.Provider>
   )

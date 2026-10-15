@@ -1,13 +1,15 @@
 import { useRef } from 'react'
 import { ArrowDown, ArrowRight } from 'lucide-react'
 import { images } from '../data/images'
+import { store } from '../data/store'
 import { gsap, MEDIA, SplitText, useGSAP, EASE_EDITORIAL } from '../lib/gsap'
 import { ResponsiveImage } from './ResponsiveImage'
+import { OpenStatusBadge } from './OpenStatus'
 
 /**
- * Hero a tutta altezza, composizione asimmetrica:
- * desktop → titolo editoriale a sinistra che sconfina sulla foto verticale a destra;
- * mobile  → foto a pieno schermo con ritaglio dedicato e testo ancorato in basso.
+ * Hero su fondo avorio: titolo in Bodoni Moda che entra lettera per lettera,
+ * foto incorniciata in un arco (rimando alle vetrine e ai portici del centro),
+ * dettaglio in sovrapposizione e sigillo circolare che ruota con lo scroll.
  */
 export function Hero() {
   const root = useRef<HTMLElement>(null)
@@ -18,90 +20,99 @@ export function Hero() {
       const mm = gsap.matchMedia()
 
       mm.add(MEDIA.motion, () => {
-        // L'intro parte solo se la pagina è ancora "in attesa": se la rete è stata lenta
-        // e il fallback dell'head ha già mostrato l'hero, non la si nasconde di nuovo.
+        // se il fallback dell'head ha già mostrato l'hero (rete lenta) non la si nasconde di nuovo
         if (!html.classList.contains('intro')) return
 
         const title = root.current!.querySelector('.hero__title')!
-        const split = SplitText.create(title, { type: 'lines', mask: 'lines', linesClass: 'split-line' })
+        const split = SplitText.create(title, { type: 'lines,chars', mask: 'lines', linesClass: 'split-line' })
 
         const tl = gsap.timeline({ defaults: { ease: EASE_EDITORIAL } })
         tl.fromTo(
-          '.hero__media',
-          { clipPath: 'inset(0% 0% 100% 0%)' },
+          '.hero__arch',
+          { clipPath: 'inset(100% 0% 0% 0%)' },
           { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut', clearProps: 'clipPath' },
           0,
         )
-          .from('.hero__media-inner', { scale: 1.28, duration: 2.4 }, 0)
-          .from('.hero__eyebrow', { autoAlpha: 0, y: 12, duration: 0.9 }, 0.45)
-          .from(split.lines, { yPercent: 110, duration: 1.3, stagger: 0.1 }, 0.55)
-          .from('.hero__lead', { autoAlpha: 0, y: 18, duration: 1 }, 1.0)
-          .from('.hero__ctas > *', { autoAlpha: 0, y: 16, duration: 0.9, stagger: 0.1 }, 1.12)
-          .from('.hero__meta > *, .scroll-cue', { autoAlpha: 0, duration: 1, stagger: 0.08 }, 1.3)
-          // l'header ha già una transizione CSS su transform (nascondi/mostra): qui solo opacità
-          .from(document.querySelector('.site-header'), { autoAlpha: 0, duration: 1.2 }, 0.9)
+          .from('.hero__arch-inner', { scale: 1.35, duration: 2.4 }, 0)
+          .from('.hero__eyebrow', { opacity: 0, y: 14, duration: 0.9 }, 0.35)
+          .from(split.chars, { yPercent: 115, rotate: 6, duration: 1.15, stagger: 0.022 }, 0.45)
+          .from('.hero__lead', { opacity: 0, y: 18, duration: 1 }, 1.05)
+          .from('.hero__ctas > *', { opacity: 0, y: 18, duration: 0.9, stagger: 0.1 }, 1.15)
+          .from('.hero__detail', { opacity: 0, y: 60, rotate: -4, duration: 1.4 }, 0.95)
+          .from('.hero__seal', { opacity: 0, scale: 0.6, rotate: -90, duration: 1.6 }, 1.1)
+          .from('.hero__meta > *, .scroll-cue', { opacity: 0, duration: 1, stagger: 0.08 }, 1.35)
+          .from(document.querySelector('.site-header'), { autoAlpha: 0, duration: 1.2 }, 0.8)
 
         html.classList.remove('intro')
       })
 
-      // scorrendo, la foto scivola appena più lenta del testo: profondità senza effetti vistosi
-      mm.add(MEDIA.desktop, () => {
-        gsap.to('.hero__media-parallax', {
-          yPercent: 10,
-          ease: 'none',
-          scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 },
-        })
-        gsap.to('.hero__content', {
-          yPercent: -12,
-          autoAlpha: 0.2,
-          ease: 'none',
-          scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 },
-        })
+      // scroll: il sigillo ruota, la foto scorre più lenta, il dettaglio più veloce (profondità)
+      mm.add(MEDIA.motion, () => {
+        const st = { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.6 }
+        gsap.to('.hero__seal-text', { rotate: 220, ease: 'none', scrollTrigger: st })
+        gsap.to('.hero__arch-parallax', { yPercent: 8, ease: 'none', scrollTrigger: st })
+        gsap.to('.hero__detail', { yPercent: -35, ease: 'none', scrollTrigger: st })
       })
 
-      // senza GSAP/animazioni: la pagina non resta mai in attesa
       html.classList.remove('intro')
     },
     { scope: root },
   )
 
   return (
-    <section ref={root} id="top" className="hero" data-header="dark" aria-labelledby="hero-title">
-      <div className="hero__media" data-intro>
-        <div className="hero__media-parallax">
-          <div className="hero__media-inner">
-            <ResponsiveImage
-              image={images.heroCappottoCammello}
-              sizes="(min-width: 900px) 48vw, 100vw"
-              priority
-            />
+    <section ref={root} id="top" className="hero" data-header="light" aria-labelledby="hero-title">
+      <div className="hero__inner">
+        <div className="hero__content">
+          <p className="eyebrow hero__eyebrow" data-intro>
+            Boutique multimarca <span aria-hidden="true">·</span> Alessandria
+          </p>
+          <h1 id="hero-title" className="hero__title" data-intro>
+            Lo stile è<br /> il tuo modo<br /> di <em>evadere.</em>
+          </h1>
+          <p className="hero__lead" data-intro>
+            Abbigliamento, calzature e accessori uomo e donna: nuovi arrivi e consigli su misura, in Corso Acqui 94.
+          </p>
+          <div className="hero__ctas" data-intro>
+            <a className="btn btn--primary" href="#nuovi-arrivi" data-magnetic>
+              Scopri i nuovi arrivi <ArrowRight aria-hidden="true" size={16} strokeWidth={1.5} />
+            </a>
+            <a className="btn btn--outline" href="#contatti" data-magnetic>
+              Visita la boutique
+            </a>
+          </div>
+          <div className="hero__meta" data-intro>
+            <OpenStatusBadge />
+            <a className="hero__phone link-underline" href={store.phone.href}>
+              Tel. {store.phone.display}
+            </a>
           </div>
         </div>
-      </div>
 
-      <div className="hero__content">
-        <p className="eyebrow hero__eyebrow" data-intro>
-          Boutique di abbigliamento <span aria-hidden="true">·</span> Alessandria
-        </p>
-        <h1 id="hero-title" className="hero__title" data-intro>
-          Lo stile è<br /> il tuo modo<br /> di <em>evadere.</em>
-        </h1>
-        <p className="hero__lead" data-intro>
-          Nuovi arrivi, capi scelti con cura e dettagli che parlano di te. Ti aspettiamo in Corso Acqui.
-        </p>
-        <div className="hero__ctas" data-intro>
-          <a className="btn btn--light" href="#nuovi-arrivi">
-            Scopri i nuovi arrivi <ArrowRight aria-hidden="true" size={16} strokeWidth={1.5} />
-          </a>
-          <a className="btn btn--ghost-light" href="#contatti">
-            Visita la boutique
-          </a>
+        <div className="hero__visual" data-intro>
+          <div className="hero__arch">
+            <div className="hero__arch-parallax">
+              <div className="hero__arch-inner">
+                <ResponsiveImage image={images.heroCappottoCammello} sizes="(min-width: 900px) 40vw, 88vw" priority />
+              </div>
+            </div>
+          </div>
+
+          <figure className="hero__detail">
+            <ResponsiveImage image={images.heroDettaglio} sizes="(min-width: 900px) 14vw, 30vw" priority />
+          </figure>
+
+          <div className="hero__seal" aria-hidden="true">
+            <svg className="hero__seal-text" viewBox="0 0 200 200">
+              <defs>
+                <path id="seal-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+              </defs>
+              <text>
+                <textPath href="#seal-circle">Nuovi arrivi · Autunno Inverno · Corso Acqui ·</textPath>
+              </text>
+            </svg>
+            <span className="hero__seal-center">E</span>
+          </div>
         </div>
-      </div>
-
-      <div className="hero__meta" aria-hidden="true" data-intro>
-        <span>N° 01 — Nuova stagione</span>
-        <span>Corso Acqui 94</span>
       </div>
 
       <a className="scroll-cue" href="#nuovi-arrivi" aria-label="Scorri ai nuovi arrivi" data-intro>

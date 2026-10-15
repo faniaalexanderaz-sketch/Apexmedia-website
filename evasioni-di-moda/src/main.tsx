@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import '@fontsource/cormorant-garamond/300.css'
+import '@fontsource-variable/bodoni-moda/opsz.css'
 import '@fontsource/cormorant-garamond/400.css'
 import '@fontsource/cormorant-garamond/400-italic.css'
 import '@fontsource/cormorant-garamond/500.css'

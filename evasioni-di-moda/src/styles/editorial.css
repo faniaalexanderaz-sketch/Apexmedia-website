@@ -64,8 +64,9 @@
 }
 
 .story-card--main .story-card__title {
-  font-size: clamp(2.2rem, 1.4rem + 2.4vw, 3.8rem);
-  font-weight: 300;
+  font-family: var(--display);
+  font-size: clamp(2rem, 1.3rem + 2vw, 3.3rem);
+  font-weight: 400;
   line-height: 0.98;
   max-width: 16ch;
 }
@@ -119,8 +120,7 @@
   }
 
   .editorial__issue span:first-child {
-    font-family: var(--serif);
-    font-style: italic;
+    font-family: var(--display);
     font-size: 1.3rem;
     font-weight: 400;
     letter-spacing: 0;

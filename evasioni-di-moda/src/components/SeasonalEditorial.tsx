@@ -17,7 +17,7 @@ export function SeasonalEditorial() {
       <div className="container">
         <div className="editorial__masthead">
           <SectionHeading
-            index={4}
+            index={5}
             label="Quaderno di stile"
             id="editorial-title"
             title={
@@ -59,7 +59,7 @@ function StoryCard({ story, variant }: { story: EditorialStory; variant: 'main' 
 
   return (
     <article className={`story-card story-card--${variant}`}>
-      <button type="button" className="story-card__media" onClick={open} data-reveal="image" tabIndex={-1} aria-hidden="true">
+      <button type="button" className="story-card__media" onClick={open} data-reveal="image" data-cursor="Leggi" tabIndex={-1} aria-hidden="true">
         <span className="story-card__media-inner" data-reveal-inner>
           <ResponsiveImage
             image={story.image}
