@@ -12,8 +12,8 @@
 }
 
 .site-footer__claim {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2.2rem, 1.5rem + 2.2vw, 3.6rem);
   line-height: 1;
   max-width: 12ch;
@@ -53,9 +53,18 @@
   justify-content: space-between;
   gap: 0.25em;
   width: 100%;
-  font-size: clamp(2.1rem, 9.6vw, 11rem);
+  font-size: clamp(1.9rem, 8.8vw, 10.4rem);
   font-weight: 400;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+}
+
+.site-footer__claim em {
+  color: #e2cfae;
+}
+
+.site-footer__project {
+  color: var(--ivory);
+  font-weight: 600;
 }
 
 .wordmark--display .wordmark__di {

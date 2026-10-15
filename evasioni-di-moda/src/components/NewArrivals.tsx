@@ -30,6 +30,7 @@ export function NewArrivals() {
             intro="Nuove ispirazioni, nuovi dettagli, nuove possibilità di esprimere il tuo stile."
           />
           <p className="arrivals__note" data-reveal="fade" data-delay="0.3">
+            <span className="arrivals__note-rule" data-reveal="line" aria-hidden="true" />
             Una selezione da scoprire dal vivo: taglie e disponibilità cambiano ogni settimana, chiedici cosa è appena
             entrato in boutique.
           </p>
@@ -44,6 +45,9 @@ export function NewArrivals() {
     </section>
   )
 }
+
+// velocità leggermente diverse per ogni posizione: la griglia "respira" scorrendo (solo desktop)
+const SPEEDS = [1, 1.1, 0.94, 1.06, 0.96, 1]
 
 function ArrivalCard({ item, index }: { item: NewArrival; index: number }) {
   const openInquiry = useInquiry()
@@ -61,9 +65,17 @@ function ArrivalCard({ item, index }: { item: NewArrival; index: number }) {
     })
 
   return (
-    <li className={`arrival arrival--${index % 6}`}>
+    <li className={`arrival arrival--${index % 6}`} data-speed={SPEEDS[index % 6]}>
       {/* la foto è cliccabile col mouse; da tastiera e lettore di schermo si usa il pulsante "Scopri il look" */}
-      <button type="button" className="arrival__media" onClick={open} data-reveal="image" tabIndex={-1} aria-hidden="true">
+      <button
+        type="button"
+        className="arrival__media"
+        onClick={open}
+        data-reveal="image"
+        data-cursor="Scopri"
+        tabIndex={-1}
+        aria-hidden="true"
+      >
         <span className="arrival__media-inner" data-reveal-inner>
           <ResponsiveImage
             image={item.image}

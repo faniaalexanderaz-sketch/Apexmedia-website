@@ -48,18 +48,18 @@ export function StoreCTA() {
         <p className="eyebrow" data-reveal="fade">
           La boutique ti aspetta
         </p>
-        <h2 id="cta-title" className="store-cta__title" data-reveal="title">
+        <h2 id="cta-title" className="store-cta__title" data-reveal="chars">
           Il prossimo look <em>ti aspetta.</em>
         </h2>
         <p className="store-cta__text" data-reveal="fade" data-delay="0.15">
           Scopri la boutique, lasciati ispirare dai nuovi arrivi e trova i dettagli che parlano di te.
         </p>
         <div className="store-cta__actions" data-reveal="stagger">
-          <a className="btn btn--light" href={store.directionsUrl} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn--light" href={store.directionsUrl} target="_blank" rel="noopener noreferrer" data-magnetic>
             Vieni a trovarci <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.5} />
             <span className="visually-hidden"> (indicazioni su Google Maps, si apre in una nuova scheda)</span>
           </a>
-          <a className="btn btn--ghost-light" href="#contatti">
+          <a className="btn btn--ghost-light" href="#contatti" data-magnetic>
             Contattaci
           </a>
         </div>

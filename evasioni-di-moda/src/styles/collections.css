@@ -1,31 +1,78 @@
 .collections {
-  background: var(--ink);
-  color: var(--ivory);
+  position: relative;
+  background: var(--sand);
+  padding-block: var(--section-y);
 }
 
-.collections__head {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 24px;
+.collections__viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.collections__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.collections__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 40px;
+  width: max-content;
+  padding-inline: var(--gutter);
+}
+
+/* mobile: l'intestazione resta ferma a sinistra mentre si sfogliano le schede */
+.collections__intro {
+  grid-row: 1;
+  grid-column: 1 / span 9;
+}
+
+.collections__intro > * {
+  position: sticky;
+  left: var(--gutter);
+  max-width: calc(100vw - 2 * var(--gutter));
 }
 
 .collections__hint {
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
   font-size: 0.66rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--text-muted-light);
+  color: var(--text-muted);
 }
 
-.collections__grid {
-  margin-top: clamp(48px, 7vw, 110px);
+.collections__hint-line {
+  width: 48px;
+  height: 1px;
+  background: currentColor;
 }
 
 .collection {
+  grid-row: 2;
   position: relative;
-  min-width: 0;
+  height: min(118vw, 560px);
+  scroll-snap-align: start;
+  scroll-margin-left: var(--gutter);
+}
+
+.collection--portrait {
+  width: 76vw;
+}
+
+.collection--landscape {
+  width: 88vw;
+}
+
+.collection--advice {
+  width: 80vw;
 }
 
 .collection__button {
@@ -42,12 +89,12 @@
 .collection__media {
   position: absolute;
   inset: 0;
-  display: block;
+  overflow: hidden;
 }
 
 .collection__media-inner {
-  display: block;
-  height: 100%;
+  position: absolute;
+  inset: 0 -7%;
 }
 
 .collection__media img {
@@ -61,12 +108,21 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(23, 23, 21, 0) 38%, rgba(23, 23, 21, 0.78) 100%);
+  background: linear-gradient(180deg, rgba(23, 23, 21, 0) 42%, rgba(23, 23, 21, 0.72) 100%);
 }
 
 .collection__button:hover .collection__media img,
 .collection__button:focus-visible .collection__media img {
   transform: scale(1.06);
+}
+
+.collection__index {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  z-index: 1;
+  font-family: var(--display);
+  font-size: 0.9rem;
 }
 
 .collection__body {
@@ -77,42 +133,31 @@
   padding: clamp(20px, 2.2vw, 34px);
 }
 
-.collection__index {
-  position: absolute;
-  top: clamp(18px, 2vw, 30px);
-  left: clamp(20px, 2.2vw, 34px);
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--ivory);
-}
-
 .collection__title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(2rem, 1.3rem + 1.9vw, 3.2rem);
-  line-height: 0.98;
-  letter-spacing: -0.01em;
+  font-family: var(--display);
+  font-size: clamp(2.1rem, 1.4rem + 1.8vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .collection__text {
   max-width: 36ch;
   font-size: 0.92rem;
-  color: rgba(247, 244, 238, 0.82);
+  color: rgba(247, 244, 238, 0.86);
 }
 
 .collection__cta {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
-/* scheda consiglio: l'unico blocco bordeaux della pagina */
+/* scheda consiglio: l'unico blocco interamente bordeaux */
 .advice {
   display: flex;
   flex-direction: column;
@@ -129,16 +174,19 @@
 }
 
 .advice__title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(2.1rem, 1.4rem + 1.8vw, 3.3rem);
-  line-height: 0.98;
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 1.4rem + 1.9vw, 3.4rem);
+  line-height: 1;
+}
+
+.advice__title em {
+  color: #f0dcc0;
 }
 
 .advice__text {
   max-width: 34ch;
   font-size: 0.95rem;
-  color: rgba(247, 244, 238, 0.86);
+  color: rgba(247, 244, 238, 0.88);
 }
 
 .advice__actions {
@@ -152,105 +200,57 @@
   --btn-fill: var(--ink);
 }
 
-/* --- mobile e tablet: carosello con aggancio --- */
-@media (max-width: 899px) {
-  .collections__grid {
+.collections__progress {
+  display: none;
+}
+
+/* ---------- desktop ---------- */
+@media (min-width: 900px) {
+  .collections__track {
     display: flex;
-    gap: 12px;
-    margin-inline: calc(var(--gutter) * -1);
-    padding-inline: var(--gutter);
-    padding-bottom: 6px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--gutter);
-    scrollbar-width: none;
+    align-items: stretch;
+    gap: clamp(12px, 1.4vw, 22px);
   }
 
-  .collections__grid::-webkit-scrollbar {
-    display: none;
+  .collections__intro {
+    flex: 0 0 clamp(380px, 34vw, 560px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 3vw;
+  }
+
+  .collections__intro > * {
+    position: static;
+    max-width: none;
   }
 
   .collection {
-    flex: 0 0 min(80vw, 420px);
-    aspect-ratio: 4 / 5.4;
-    scroll-snap-align: start;
+    flex: 0 0 auto;
+    height: clamp(460px, 68svh, 760px);
+  }
+
+  .collection--portrait {
+    width: clamp(300px, 25vw, 460px);
+  }
+
+  .collection--landscape {
+    width: clamp(460px, 44vw, 820px);
   }
 
   .collection--advice {
-    aspect-ratio: auto;
+    width: clamp(320px, 27vw, 460px);
   }
 
-  .collection__index {
-    font-size: 1rem;
-  }
-}
-
-/* --- desktop: mosaico --- */
-@media (min-width: 900px) {
-  .collections__hint {
-    display: none;
+  .collection:last-child {
+    margin-right: var(--gutter);
   }
 
-  .collections__grid {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-auto-rows: clamp(260px, 26vw, 440px);
-    gap: clamp(10px, 1.1vw, 18px);
-  }
-
-  .collection--donna {
-    grid-column: 1 / span 5;
-    grid-row: 1 / span 2;
-  }
-
-  .collection--look {
-    grid-column: 6 / span 3;
-    grid-row: 1;
-  }
-
-  .collection--maglieria {
-    grid-column: 9 / span 4;
-    grid-row: 1;
-  }
-
-  .collection--denim {
-    grid-column: 6 / span 4;
-    grid-row: 2;
-  }
-
-  .collection--accessori {
-    grid-column: 10 / span 3;
-    grid-row: 2;
-  }
-
-  .collection--regalo {
-    grid-column: 1 / span 8;
-    grid-row: 3;
-  }
-
-  .collection--advice {
-    grid-column: 9 / span 4;
-    grid-row: 3;
-  }
-
-  .collection--donna .collection__title {
-    font-size: clamp(2.6rem, 1.4rem + 3vw, 4.6rem);
-  }
-
-  /* su desktop il testo descrittivo si apre al passaggio del mouse */
   @media (hover: hover) {
-    .collection__text,
-    .collection__cta {
+    .collection__text {
       opacity: 0;
-      transform: translateY(12px);
-      transition:
-        opacity 0.6s var(--ease),
-        transform 0.8s var(--ease);
-    }
-
-    .collection__button .collection__text {
       max-height: 0;
+      transform: translateY(10px);
       transition:
         opacity 0.6s var(--ease),
         transform 0.8s var(--ease),
@@ -259,15 +259,49 @@
 
     .collection__button:hover .collection__text,
     .collection__button:focus-visible .collection__text {
-      max-height: 8em;
-    }
-
-    .collection__button:hover .collection__text,
-    .collection__button:hover .collection__cta,
-    .collection__button:focus-visible .collection__text,
-    .collection__button:focus-visible .collection__cta {
       opacity: 1;
+      max-height: 8em;
       transform: none;
     }
+  }
+
+  /* versione "fermata" con scorrimento orizzontale guidato da GSAP */
+  .collections.is-pinned {
+    height: 100svh;
+    padding-block: calc(var(--header-h) + 8px) 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .collections.is-pinned .collections__viewport {
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .collections.is-pinned .collections__track {
+    padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    will-change: transform;
+  }
+
+  .collections.is-pinned .collection {
+    height: min(68svh, 760px);
+  }
+
+  .collections.is-pinned .collections__progress {
+    display: block;
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 28px;
+    height: 1px;
+    background: var(--line-strong);
+  }
+
+  .collections__progress-bar {
+    display: block;
+    height: 100%;
+    background: var(--bordeaux);
+    transform-origin: left;
   }
 }

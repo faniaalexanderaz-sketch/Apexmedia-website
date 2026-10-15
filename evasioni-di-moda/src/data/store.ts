@@ -2,12 +2,11 @@
 // passa da qui: nessun recapito è scritto altrove nei componenti.
 // I campi null restano nascosti finché il titolare non li conferma.
 
-export type DayHours = {
-  /** es. "Lunedì" */
-  day: string
-  /** es. "15:30 – 19:30" oppure "Chiuso" */
-  hours: string
-}
+/** Fascia oraria "HH:MM" – "HH:MM" */
+export type TimeRange = [string, string]
+
+/** Orario settimanale: chiave = giorno (0 domenica … 6 sabato), valore = fasce di apertura */
+export type WeeklyHours = Record<number, TimeRange[]>
 
 export type SocialLink = { label: string; url: string }
 
@@ -33,6 +32,9 @@ export const store = {
   /** Navigazione diretta verso il negozio */
   directionsUrl:
     'https://www.google.com/maps/dir/?api=1&destination=Evasioni%20di%20Moda%2C%20Corso%20Acqui%2094%2C%2015121%20Alessandria',
+  /** Pagina per lasciare una recensione / leggere quelle esistenti su Google */
+  reviewsUrl:
+    'https://www.google.com/maps/search/?api=1&query=Evasioni%20di%20Moda%2C%20Corso%20Acqui%2094%2C%2015121%20Alessandria',
   /** Mappa incorporata, caricata solo su richiesta del visitatore */
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Evasioni%20di%20Moda%2C%20Corso%20Acqui%2094%2C%2015121%20Alessandria&z=16&output=embed',
@@ -41,8 +43,27 @@ export const store = {
    *  Da inserire solo dopo averlo verificato con il negozio. */
   whatsapp: null as string | null,
 
-  /** Orari di apertura: da confermare con il negozio prima della pubblicazione. */
-  hours: null as DayHours[] | null,
+  /** Orari di apertura. Fonte: scheda pubblica del negozio (Nextdoor).
+   *  DA CONFERMARE con il titolare prima della messa online definitiva. */
+  hours: {
+    0: [],
+    1: [['09:00', '12:30'], ['15:30', '19:30']],
+    2: [['09:00', '12:30'], ['15:30', '19:30']],
+    3: [['09:00', '12:30'], ['15:30', '19:30']],
+    4: [['09:00', '12:30'], ['15:30', '19:30']],
+    5: [['09:00', '12:30'], ['15:30', '19:30']],
+    6: [['09:00', '12:30'], ['15:30', '19:30']],
+  } as WeeklyHours | null,
+
+  /** Cosa tratta il negozio (dalla scheda pubblica): usato nei testi */
+  offer: {
+    audience: 'Uomo e donna',
+    categories: 'Abbigliamento, calzature e accessori',
+    styles: 'Fashion, sportivo, classico',
+  },
+
+  /** true finché il sito è una demo: recensioni d'esempio etichettate, pagina non indicizzata */
+  demo: true,
 
   /** Profili social ufficiali: da inserire solo se verificati. */
   socials: [] as SocialLink[],

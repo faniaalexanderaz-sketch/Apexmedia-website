@@ -1,10 +1,38 @@
+import { useRef } from 'react'
 import { navItems } from '../data/nav'
 import { fullAddress, store } from '../data/store'
+import { gsap, MEDIA, useGSAP, EASE_EDITORIAL } from '../lib/gsap'
 import { Wordmark } from './Wordmark'
 
 export function Footer() {
+  const root = useRef<HTMLElement>(null)
+
+  // il wordmark gigante sale lettera per lettera quando il footer entra in vista
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add(MEDIA.motion, () => {
+        gsap.from('.site-footer__wordmark .wordmark__word, .site-footer__wordmark .wordmark__di', {
+          yPercent: 110,
+          duration: 1.4,
+          stagger: 0.12,
+          ease: EASE_EDITORIAL,
+          scrollTrigger: { trigger: '.site-footer__wordmark', start: 'top 95%', once: true },
+        })
+        gsap.from('.site-footer__top > *', {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          stagger: 0.1,
+          scrollTrigger: { trigger: root.current, start: 'top 85%', once: true },
+        })
+      })
+    },
+    { scope: root },
+  )
+
   return (
-    <footer className="site-footer" data-header="dark">
+    <footer ref={root} className="site-footer" data-header="dark">
       <div className="container">
         <div className="site-footer__top">
           <p className="site-footer__claim">
@@ -42,11 +70,17 @@ export function Footer() {
         </a>
 
         <div className="site-footer__bottom">
-          <p suppressHydrationWarning>© {new Date().getFullYear()} {store.name} · Alessandria</p>
-          <p>
-            Demo realizzata da Apex Media. Fotografie dimostrative (Unsplash), non rappresentano capi disponibili in
-            negozio.
+          <p suppressHydrationWarning>
+            © {new Date().getFullYear()} {store.name} · Alessandria
           </p>
+          {store.demo && (
+            <p>
+              Demo realizzata da Apex Media · fotografie dimostrative (Unsplash), non rappresentano capi in negozio ·{' '}
+              <a className="link-underline site-footer__project" href="/presentazione/">
+                Scopri il progetto
+              </a>
+            </p>
+          )}
         </div>
       </div>
     </footer>

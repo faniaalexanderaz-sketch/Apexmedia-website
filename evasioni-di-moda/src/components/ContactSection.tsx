@@ -2,6 +2,8 @@ import { useRef, useState } from 'react'
 import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone } from 'lucide-react'
 import { fullAddress, store, whatsappUrl } from '../data/store'
 import { useReveal } from '../hooks/useReveal'
+import { hoursRows } from '../lib/hours'
+import { OpenStatusBadge } from './OpenStatus'
 import { SectionHeading } from './SectionHeading'
 
 /** Contatti e localizzazione: tutto ciò che serve per chiamare o arrivare in negozio. */
@@ -15,7 +17,7 @@ export function ContactSection() {
       <div className="container contact__grid">
         <div className="contact__info">
           <SectionHeading
-            index={5}
+            index={6}
             label="Contatti"
             id="contact-title"
             title={
@@ -49,14 +51,17 @@ export function ContactSection() {
               <Clock aria-hidden="true" size={15} strokeWidth={1.6} /> Orari
             </span>
             {store.hours ? (
-              <dl className="contact__hours">
-                {store.hours.map((d) => (
-                  <div key={d.day}>
-                    <dt>{d.day}</dt>
-                    <dd>{d.hours}</dd>
-                  </div>
-                ))}
-              </dl>
+              <>
+                <OpenStatusBadge className="contact__status" />
+                <dl className="contact__hours">
+                  {hoursRows().map((row) => (
+                    <div key={row.days}>
+                      <dt>{row.days}</dt>
+                      <dd>{row.hours}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </>
             ) : (
               <p className="contact__hours-note">
                 Per gli orari aggiornati <a className="link-underline" href={store.phone.href}>chiamaci al {store.phone.display}</a>:
@@ -66,10 +71,10 @@ export function ContactSection() {
           </div>
 
           <div className="contact__actions" data-reveal="stagger">
-            <a className="btn btn--dark" href={store.phone.href}>
+            <a className="btn btn--primary" href={store.phone.href} data-magnetic>
               <Phone aria-hidden="true" size={16} strokeWidth={1.6} /> Chiama la boutique
             </a>
-            <a className="btn btn--outline" href={store.directionsUrl} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn--outline" href={store.directionsUrl} target="_blank" rel="noopener noreferrer" data-magnetic>
               <MapPin aria-hidden="true" size={16} strokeWidth={1.6} /> Indicazioni stradali
               <span className="visually-hidden"> (Google Maps, si apre in una nuova scheda)</span>
             </a>
@@ -134,10 +139,10 @@ function MapCard() {
             <p className="map-card__city">Alessandria</p>
           </div>
           <div className="map-card__buttons">
-            <button type="button" className="btn btn--light btn--small" onClick={() => setLoaded(true)}>
+            <button type="button" className="btn btn--primary btn--small" onClick={() => setLoaded(true)}>
               Mostra la mappa
             </button>
-            <a className="text-link text-link--light" href={store.mapsUrl} target="_blank" rel="noopener noreferrer">
+            <a className="text-link" href={store.mapsUrl} target="_blank" rel="noopener noreferrer">
               Apri in Google Maps <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.5} />
               <span className="visually-hidden"> (si apre in una nuova scheda)</span>
             </a>

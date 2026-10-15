@@ -1,9 +1,17 @@
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// base relativa: la demo funziona sia su un dominio dedicato sia in una sottocartella
+// pubblicato alla radice di un dominio dedicato (Vercel): due pagine, / e /presentazione/
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [react()],
-  build: { cssCodeSplit: false },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(import.meta.dirname, 'index.html'),
+        presentazione: resolve(import.meta.dirname, 'presentazione/index.html'),
+      },
+    },
+  },
 })
