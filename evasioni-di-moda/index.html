@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Evasioni di Moda · Boutique di abbigliamento ad Alessandria, Corso Acqui 94</title>
+    <meta
+      name="description"
+      content="Evasioni di Moda, boutique di abbigliamento donna in Corso Acqui 94 ad Alessandria. Scopri i nuovi arrivi, maglieria, denim, borse e accessori e vieni a trovarci in negozio. Tel. 0131 381843."
+    />
+    <meta name="theme-color" content="#171715" />
+    <meta name="format-detection" content="telephone=no" />
+    <!--SEO:canonical-->
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Evasioni di Moda" />
+    <meta property="og:title" content="Evasioni di Moda · Boutique ad Alessandria" />
+    <meta property="og:description" content="Lo stile è il tuo modo di evadere. Nuovi arrivi e ispirazioni in Corso Acqui 94, Alessandria." />
+    <meta property="og:image" content="%OG_IMAGE%" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Evasioni di Moda, boutique di abbigliamento ad Alessandria" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!--PRELOAD:hero-->
+
+    <script>
+      // Classi di stato prima del primo paint: l'hero resta in attesa dell'intro animata
+      // solo se il visitatore accetta il movimento; dopo 3,5 s si mostra comunque.
+      ;(function () {
+        var html = document.documentElement
+        html.classList.add('js')
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        html.classList.add('intro')
+        setTimeout(function () { html.classList.remove('intro') }, 3500)
+      })()
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ClothingStore",
+        "name": "Evasioni di Moda",
+        "description": "Boutique di abbigliamento ad Alessandria: nuovi arrivi, maglieria, denim, borse e accessori.",
+        "telephone": "+390131381843",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Corso Acqui 94",
+          "postalCode": "15121",
+          "addressLocality": "Alessandria",
+          "addressRegion": "AL",
+          "addressCountry": "IT"
+        },
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=Evasioni%20di%20Moda%2C%20Corso%20Acqui%2094%2C%2015121%20Alessandria"
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"><!--APP--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+// Elenco centralizzato delle immagini. Sono foto dimostrative (Unsplash License).
+// Per sostituirle con le foto reali del negozio basta caricare i file in public/images
+// con lo stesso nome e le stesse larghezze, oppure aggiornare le voci qui sotto.
+
+export type ImageAsset = {
+  /** prefisso del file in public/images: <src>-<larghezza>.webp */
+  src: string
+  alt: string
+  width: number
+  height: number
+  widths: number[]
+  /** colore medio, mostrato mentre la foto si carica */
+  color: string
+  /** fonte della foto dimostrativa */
+  credit: string
+  /** punto focale per i ritagli (object-position), se diverso dal centro */
+  focus?: string
+}
+
+export const images = {
+  heroCappottoCammello: {
+    src: 'hero-cappotto-cammello',
+    alt: "Donna in cappotto color cammello e abito in maglia verde salvia, appoggiata a un muro coperto d'edera",
+    width: 2600,
+    height: 3900,
+    widths: [640, 960, 1280, 1800],
+    color: '#333329',
+    credit: 'https://images.unsplash.com/photo-1618244972963-dbee1a7edc95',
+  },
+  arrivoGiaccaUtility: {
+    src: 'arrivo-giacca-utility',
+    alt: "Giacca utility verde oliva su camicia bianca, ritratto su fondo chiaro",
+    width: 2600,
+    height: 3900,
+    widths: [480, 768, 1080, 1440],
+    color: '#ada491',
+    credit: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a',
+    focus: '50% 20%',
+  },
+  arrivoVolantAvorio: {
+    src: 'arrivo-volant-avorio',
+    alt: "Top bianco con volant e scollo a barchetta su fondo grigio scuro",
+    width: 2600,
+    height: 3250,
+    widths: [480, 768, 1080, 1440],
+    color: '#52504a',
+    credit: 'https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda',
+  },
+  arrivoMagliaPanna: {
+    src: 'arrivo-maglia-panna',
+    alt: "Maglione color panna a coste morbide, dettaglio del tessuto in movimento",
+    width: 2600,
+    height: 3249,
+    widths: [480, 768, 1080, 1440],
+    color: '#c7c1b7',
+    credit: 'https://images.unsplash.com/photo-1574201635302-388dd92a4c3f',
+  },
+  arrivoCappelloFeltro: {
+    src: 'arrivo-cappello-feltro',
+    alt: "Cappello in feltro beige e camicia avorio, ritratto su fondo scuro",
+    width: 2600,
+    height: 3250,
+    widths: [480, 768, 1080, 1440],
+    color: '#4c4237',
+    credit: 'https://images.unsplash.com/photo-1611042553365-9b101441c135',
+  },
+  arrivoChemisierAvorio: {
+    src: 'arrivo-chemisier-avorio',
+    alt: "Abito chemisier avorio con cintura, controluce di una giornata d'autunno",
+    width: 2600,
+    height: 3900,
+    widths: [480, 768, 1080, 1440],
+    color: '#aaa281',
+    credit: 'https://images.unsplash.com/photo-1617019114583-affb34d1b3cd',
+  },
+  arrivoTailleurRosa: {
+    src: 'arrivo-tailleur-rosa',
+    alt: "Tailleur avorio con rosa rossa appuntata sul revers",
+    width: 2600,
+    height: 3900,
+    widths: [480, 768, 1080, 1440],
+    color: '#c3b7a5',
+    credit: 'https://images.unsplash.com/photo-1571513722275-4b41940f54b8',
+  },
+  collDonna: {
+    src: 'coll-donna',
+    alt: "Donna in cappotto rosa cipria e foulard stampato sotto un porticato",
+    width: 2600,
+    height: 3900,
+    widths: [480, 768, 1080, 1440],
+    color: '#524b4f',
+    credit: 'https://images.unsplash.com/photo-1485462537746-965f33f7f6a7',
+    focus: '50% 30%',
+  },
+  collLook: {
+    src: 'coll-look',
+    alt: "Ritratto con giacca in principe di Galles e capelli raccolti",
+    width: 2600,
+    height: 3900,
+    widths: [480, 768, 1080, 1440],
+    color: '#948b7e',
+    credit: 'https://images.unsplash.com/photo-1597586124394-fbd6ef244026',
+    focus: '50% 25%',
+  },
+  collMaglieria: {
+    src: 'coll-maglieria',
+    alt: "Maglioni in tonalità neutre appesi a una stender con pampas essiccata",
+    width: 2600,
+    height: 1950,
+    widths: [768, 1200, 1800, 2400],
+    color: '#b19e8c',
+    credit: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e',
+  },
+  collDenim: {
+    src: 'coll-denim',
+    alt: "Pila di jeans in diverse tonalità di blu, tenuti tra le braccia",
+    width: 2600,
+    height: 2600,
+    widths: [480, 768, 1080, 1440],
+    color: '#8c8e94',
+    credit: 'https://images.unsplash.com/photo-1604176354204-9268737828e4',
+  },
+  collAccessori: {
+    src: 'coll-accessori',
+    alt: "Borsa a tracolla in pelle color cuoio con dettagli dorati",
+    width: 2600,
+    height: 3033,
+    widths: [480, 768, 1080, 1440],
+    color: '#dcc9bd',
+    credit: 'https://images.unsplash.com/photo-1600857062241-98e5dba7f214',
+  },
+  collRegalo: {
+    src: 'coll-regalo',
+    alt: "Pacco regalo in carta kraft con nastro bianco e rosso, porto tra le mani",
+    width: 2600,
+    height: 1733,
+    widths: [768, 1200, 1800, 2400],
+    color: '#968a7e',
+    credit: 'https://images.unsplash.com/photo-1512909006721-3d6018887383',
+  },
+  storiaStender: {
+    src: 'storia-stender',
+    alt: "Stender con capispalla in tonalità neutre: cappotto cammello, giacca in pelle, denim",
+    width: 2600,
+    height: 3900,
+    widths: [480, 768, 1080, 1440],
+    color: '#9b938b',
+    credit: 'https://images.unsplash.com/photo-1551232864-3f0890e580d9',
+  },
+  storiaDettaglio: {
+    src: 'storia-dettaglio',
+    alt: "Collane sottili dorate su una blusa bianca arricciata",
+    width: 2600,
+    height: 3719,
+    widths: [480, 768, 1080, 1440],
+    color: '#7d6450',
+    credit: 'https://images.unsplash.com/photo-1600721391689-2564bb8055de',
+  },
+  editorialeCappelloNero: {
+    src: 'editoriale-cappello-nero',
+    alt: "Cappotto nero con rouches e cappello a falda larga su fondo bianco e rosso",
+    width: 2600,
+    height: 4054,
+    widths: [480, 768, 1080, 1440],
+    color: '#a58e8a',
+    credit: 'https://images.unsplash.com/photo-1554412933-514a83d2f3c8',
+  },
+  editorialeDolcevita: {
+    src: 'editoriale-dolcevita',
+    alt: "Dolcevita nero con collana geometrica e gonna a quadri",
+    width: 2600,
+    height: 3547,
+    widths: [480, 768, 1080, 1440],
+    color: '#615c57',
+    credit: 'https://images.unsplash.com/photo-1550639525-c97d455acf70',
+    focus: '50% 8%',
+  },
+  editorialeQuadri: {
+    src: 'editoriale-quadri',
+    alt: "Cappotto a quadri verde scuro, donna di spalle in una via cittadina",
+    width: 2600,
+    height: 3910,
+    widths: [480, 768, 1080, 1440],
+    color: '#7f7a76',
+    credit: 'https://images.unsplash.com/photo-1485968579580-b6d095142e6e',
+    focus: '50% 20%',
+  },
+  ctaBoutique: {
+    src: 'cta-boutique',
+    alt: "Interno di una boutique: capi in tonalità calde appesi sotto luci soffuse",
+    width: 2600,
+    height: 1733,
+    widths: [768, 1200, 1800, 2400],
+    color: '#776746',
+    credit: 'https://images.unsplash.com/photo-1445205170230-053b83016050',
+  },
+} satisfies Record<string, ImageAsset>
