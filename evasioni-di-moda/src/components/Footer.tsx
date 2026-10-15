@@ -1,11 +1,13 @@
 import { useRef } from 'react'
-import { navItems } from '../data/nav'
+import { navHref, navItems, navKey } from '../data/nav'
+import { useHomeAnchor } from '../router'
 import { fullAddress, store } from '../data/store'
 import { gsap, MEDIA, useGSAP, EASE_EDITORIAL } from '../lib/gsap'
 import { Wordmark } from './Wordmark'
 
 export function Footer() {
   const root = useRef<HTMLElement>(null)
+  const anchor = useHomeAnchor()
 
   // il wordmark gigante sale lettera per lettera quando il footer entra in vista
   useGSAP(
@@ -41,8 +43,8 @@ export function Footer() {
           <nav aria-label="Navigazione nel footer">
             <ul className="site-footer__nav">
               {navItems.map((item) => (
-                <li key={item.id}>
-                  <a className="link-underline" href={`#${item.id}`}>
+                <li key={navKey(item)}>
+                  <a className="link-underline" href={navHref(item, anchor)}>
                     {item.label}
                   </a>
                 </li>
@@ -65,7 +67,7 @@ export function Footer() {
           </div>
         </div>
 
-        <a className="site-footer__wordmark" href="#top" aria-label="Evasioni di Moda, torna all'inizio">
+        <a className="site-footer__wordmark" href={anchor('top')} aria-label="Evasioni di Moda, torna all'inizio">
           <Wordmark className="wordmark--display" />
         </a>
 

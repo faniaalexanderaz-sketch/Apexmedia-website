@@ -10,6 +10,8 @@ export type NewArrival = {
   category: string
   description: string
   image: ImageAsset
+  /** slug della scheda prodotto da prenotare */
+  product: string
   /** Prezzo da mostrare solo se confermato dal negozio (es. "€ 129") */
   price?: string
   isNew?: boolean
@@ -18,6 +20,7 @@ export type NewArrival = {
 export const newArrivals: NewArrival[] = [
   {
     id: 'giacca-utility',
+    product: 'giacca-utility-oliva',
     title: 'La giacca utility',
     category: 'Capispalla',
     description:
@@ -27,6 +30,7 @@ export const newArrivals: NewArrival[] = [
   },
   {
     id: 'volant-avorio',
+    product: 'blusa-volant-bianca',
     title: 'Volant e luce',
     category: 'Bluse e camicie',
     description:
@@ -36,6 +40,7 @@ export const newArrivals: NewArrival[] = [
   },
   {
     id: 'maglia-panna',
+    product: 'maglione-coste-panna',
     title: 'Essential knitwear',
     category: 'Maglieria',
     description:
@@ -45,6 +50,7 @@ export const newArrivals: NewArrival[] = [
   },
   {
     id: 'cappello-feltro',
+    product: 'cappello-feltro',
     title: 'Dettagli di stagione',
     category: 'Accessori',
     description:
@@ -54,6 +60,7 @@ export const newArrivals: NewArrival[] = [
   },
   {
     id: 'chemisier-avorio',
+    product: 'abito-chemisier-avorio',
     title: 'Chemisier avorio',
     category: 'Abiti',
     description:
@@ -63,6 +70,7 @@ export const newArrivals: NewArrival[] = [
   },
   {
     id: 'tailleur-avorio',
+    product: 'tailleur-avorio',
     title: 'Tailleur con un accento',
     category: 'Look',
     description:
