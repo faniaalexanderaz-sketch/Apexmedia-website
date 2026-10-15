@@ -80,7 +80,7 @@ R=[
  "Pensi a un genitore che deve ordinare i libri di scuola e cerca dal telefono una libreria in città. Apre nuovadidatticaelibri.com e la pagina non si apre: il dominio non esiste più. L'ho verificato. Li ordina online.",'libr'),
 ("R.D. Service","rd.service24@gmail.com","aci-rdservice.it non esiste più","Il dominio del vostro sito non esiste più",
  "R.D. Service sulla strada per Pavia è negli elenchi di Alessandria per il soccorso stradale, con il sito aci-rdservice.it.",
- "Nel soccorso stradale vince chi si fa trovare subito: un servizio attivo giorno e notte merita un sito che lo dica chiaro.",
+ "Nel soccorso stradale vince chi si fa trovare subito: chi è fermo in strada chiama il primo numero affidabile che vede.",
  "Pensi a chi resta fermo in tangenziale e cerca dal telefono un carro attrezzi. Apre aci-rdservice.it e la pagina non si apre: il dominio non esiste più. L'ho verificato. Chiama il primo numero che trova.",'socc'),
 ("Torti Ferramenta","ferramentatorti@virgilio.it","ferramentatorti.com non esiste più","Il dominio della ferramenta non esiste più",
  "Torti Ferramenta in via Genova è negli elenchi di Alessandria per ferramenta e bricolage, con il sito ferramentatorti.com.",
