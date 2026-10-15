@@ -108,7 +108,7 @@ export const needs = [
   'Conferma di civico e numero di telefono (in rete compaiono 91/94 e due numeri diversi)',
   'Numero WhatsApp, se volete ricevere messaggi',
   'Profili Instagram e Facebook ufficiali',
-  'Recensioni Google reali da mostrare nel nastro (le attuali sono testi d’esempio)',
+  'Permesso di mostrare le recensioni Google nel sito (già inserite le 5 stelle) e nuove recensioni da aggiungere nel tempo',
   'Seconda sede al Centro Commerciale Gli Archi: se attiva, la aggiungiamo',
   'Marchi trattati, se volete metterli in evidenza',
 ]
