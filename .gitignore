@@ -1,2 +1,5 @@
 __pycache__/
 node_modules/
+prospecting/data.py
+prospecting/out.json
+prospecting/h*.html
