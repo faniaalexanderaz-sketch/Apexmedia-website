@@ -4,7 +4,7 @@ import { newArrivals, type NewArrival } from '../data/newArrivals'
 import { useReveal } from '../hooks/useReveal'
 import { ResponsiveImage } from './ResponsiveImage'
 import { SectionHeading } from './SectionHeading'
-import { useInquiry } from './Inquiry'
+import { paths } from '../router'
 
 /**
  * Nuovi arrivi come un servizio di moda: griglia asimmetrica che ripete
@@ -50,32 +50,15 @@ export function NewArrivals() {
 const SPEEDS = [1, 1.1, 0.94, 1.06, 0.96, 1]
 
 function ArrivalCard({ item, index }: { item: NewArrival; index: number }) {
-  const openInquiry = useInquiry()
   const number = String(index + 1).padStart(2, '0')
   const isFeature = index % 6 === 5
 
-  const open = () =>
-    openInquiry({
-      kicker: `${item.category} · Nuovo arrivo`,
-      title: item.title,
-      image: item.image,
-      paragraphs: [item.description],
-      topic: `il look "${item.title}" (${item.category.toLowerCase()})`,
-      price: item.price,
-    })
+  const href = paths.product(item.product)
 
   return (
     <li className={`arrival arrival--${index % 6}`} data-speed={SPEEDS[index % 6]}>
       {/* la foto è cliccabile col mouse; da tastiera e lettore di schermo si usa il pulsante "Scopri il look" */}
-      <button
-        type="button"
-        className="arrival__media"
-        onClick={open}
-        data-reveal="image"
-        data-cursor="Scopri"
-        tabIndex={-1}
-        aria-hidden="true"
-      >
+      <a className="arrival__media" href={href} data-reveal="image" data-cursor="Prenota" tabIndex={-1} aria-hidden="true">
         <span className="arrival__media-inner" data-reveal-inner>
           <ResponsiveImage
             image={item.image}
@@ -83,7 +66,7 @@ function ArrivalCard({ item, index }: { item: NewArrival; index: number }) {
           />
         </span>
         {item.isNew && <span className="tag arrival__tag">Nuovo arrivo</span>}
-      </button>
+      </a>
       <div className="arrival__caption" data-reveal="fade">
         <span className="arrival__number" aria-hidden="true">
           {number}
@@ -93,9 +76,9 @@ function ArrivalCard({ item, index }: { item: NewArrival; index: number }) {
           <h3 className="arrival__title">{item.title}</h3>
           {isFeature && <p className="arrival__description">{item.description}</p>}
           {item.price && <p className="arrival__price">{item.price}</p>}
-          <button type="button" className="text-link" onClick={open} aria-label={`Scopri il look: ${item.title}`}>
-            Scopri il look <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.5} />
-          </button>
+          <a className="text-link" href={href} aria-label={`Scopri e prenota: ${item.title}`}>
+            Scopri e prenota <ArrowUpRight aria-hidden="true" size={15} strokeWidth={1.5} />
+          </a>
         </div>
       </div>
     </li>

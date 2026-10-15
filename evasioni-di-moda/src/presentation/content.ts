@@ -45,6 +45,11 @@ export const sections = [
     why: 'Uomo, donna, calzature e accessori stanno in uno spazio solo, senza pagine da caricare. La scheda bordeaux “Non sai da dove iniziare?” intercetta chi è indeciso e lo porta al telefono.',
   },
   {
+    name: 'Prenota online, ritira in negozio',
+    what: 'Catalogo per collezione, scheda prodotto con scelta della taglia, borsa delle prenotazioni e conferma con giorno e fascia di ritiro. Nessun pagamento online, nessuna spedizione.',
+    why: 'È l’e-commerce adatto a una boutique: porta il cliente in negozio invece di spedirgli il pacco. Chi prenota ha già scelto capo e taglia, quindi arriva deciso; in boutique provi, consigli e vendi anche l’abbinamento. La prenotazione arriva via email allo staff, che richiama per confermare.',
+  },
+  {
     name: 'Il negozio',
     what: 'Un manifesto che si “accende” parola per parola mentre si scorre, foto e i fatti essenziali: per chi, cosa trovi, quali stili.',
     why: 'Dà un volto umano alla boutique. La lettura guidata trattiene l’attenzione proprio sul messaggio che conta.',
@@ -111,9 +116,12 @@ export const needs = [
   'Permesso di mostrare le recensioni Google nel sito (già inserite le 5 stelle) e nuove recensioni da aggiungere nel tempo',
   'Seconda sede al Centro Commerciale Gli Archi: se attiva, la aggiungiamo',
   'Marchi trattati, se volete metterli in evidenza',
+  'Capi da mettere nel catalogo “prenota e ritira”: foto, prezzo, taglie disponibili',
+  'Email a cui ricevere le prenotazioni e regole di ritiro (quanti giorni teniamo il capo da parte)',
 ]
 
 export const nextSteps = [
+  { title: 'Catalogo reale', text: 'Foto dei capi, prezzi e taglie veri; aggiornamento delle disponibilità quando un capo finisce.' },
   { title: 'Messa online', text: 'Dominio, foto reali e dati confermati: il sito diventa quello ufficiale.' },
   { title: 'Google Business Profile', text: 'Scheda allineata al sito (orari, foto, link), il primo punto di contatto su Maps.' },
   { title: 'Più recensioni', text: 'QR code in cassa e link diretto: ogni cliente soddisfatto diventa visibilità.' },

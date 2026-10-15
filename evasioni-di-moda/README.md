@@ -5,6 +5,8 @@ Boutique di abbigliamento · Corso Acqui 94, 15121 Alessandria · Tel. 0131 3818
 Due pagine, entrambe prerenderizzate in build (SEO locale, anteprime social, funzionano anche senza JavaScript):
 
 - `/` il sito della boutique (one-page editoriale)
+- `/collezioni/`, `/collezioni/<id>/`, `/prodotto/<slug>/`, `/prenota/`: catalogo "prenota e ritira in negozio"
+  (scelta taglia, borsa delle prenotazioni, conferma con giorno di ritiro; nessun pagamento, nessuna spedizione)
 - `/presentazione/` "Il progetto": la spiegazione per il titolare (obiettivi, percorso del cliente,
   sezione per sezione, identità visiva, animazioni, tecnica, cosa serve, prossimi passi)
 
@@ -23,6 +25,8 @@ npm run preview    # anteprima della build
 Deploy su Vercel: importare il repository con **Root Directory = `evasioni-di-moda`** (`vercel.json` già pronto).
 Variabili di build:
 - `SITE_URL` (es. `https://www.evasionidimoda.it`): attiva canonical e Open Graph assoluti.
+- `RESEND_API_KEY`, `RESERVATION_EMAIL_TO`, `RESERVATION_EMAIL_FROM`: abilitano l'invio via email delle
+  prenotazioni (funzione `api/prenota.ts`). Senza, la prenotazione funziona in modalità demo e il sito lo dichiara.
 - `DEMO=false`: rimuove il `noindex` alla messa online (di default la demo non viene indicizzata).
 
 ## Dove si modificano i contenuti
@@ -33,6 +37,7 @@ Variabili di build:
 | Nuovi arrivi (aggiungi/togli oggetti all'elenco) | `src/data/newArrivals.ts` |
 | Categorie / collezioni | `src/data/collections.ts` |
 | Ispirazioni di stagione | `src/data/editorial.ts` |
+| Prodotti del catalogo (prezzo, taglie, disponibilità) | `src/data/products.ts` |
 | Recensioni del nastro a scorrimento | `src/data/reviews.ts` |
 | Elenco foto (alt, dimensioni, punto focale) | `src/data/images.ts` |
 | Testi della pagina "Il progetto" | `src/presentation/content.ts` |

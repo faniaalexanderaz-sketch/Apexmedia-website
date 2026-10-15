@@ -69,3 +69,31 @@ export function hoursRows(): { days: string; hours: string }[] {
     hours: r.hours,
   }))
 }
+
+export type PickupDay = { value: string; label: string; slots: { value: string; label: string }[] }
+
+/** Prossimi giorni di apertura (ora italiana), per scegliere quando ritirare. */
+export function nextPickupDays(count = 6, date = new Date()): PickupDay[] {
+  const hours = store.hours
+  if (!hours) return []
+  const out: PickupDay[] = []
+  const fmt = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', weekday: 'long', day: 'numeric', month: 'long' })
+  const iso = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome', year: 'numeric', month: '2-digit', day: '2-digit' })
+  const { minutes } = nowInRome(date)
+  for (let i = 0; out.length < count && i < 21; i++) {
+    const d = new Date(date.getTime() + i * 86_400_000)
+    const { day } = nowInRome(d)
+    const ranges = (hours[day] ?? []).filter(([, to]) => i > 0 || toMinutes(to) - 30 > minutes)
+    if (!ranges.length) continue
+    const label = fmt.format(d)
+    out.push({
+      value: iso.format(d),
+      label: (i === 0 ? 'Oggi, ' : i === 1 ? 'Domani, ' : '') + label,
+      slots: ranges.map(([a, b]) => ({
+        value: `${a}-${b}`,
+        label: `${toMinutes(a) < 13 * 60 ? 'Mattina' : 'Pomeriggio'} (${pretty(a)}–${pretty(b)})`,
+      })),
+    })
+  }
+  return out
+}

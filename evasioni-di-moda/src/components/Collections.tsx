@@ -6,7 +6,8 @@ import { gsap, ScrollTrigger, useGSAP } from '../lib/gsap'
 import { useReveal } from '../hooks/useReveal'
 import { ResponsiveImage } from './ResponsiveImage'
 import { SectionHeading } from './SectionHeading'
-import { useInquiry } from './Inquiry'
+import { paths } from '../router'
+import { productsIn } from '../data/products'
 
 /**
  * Collezioni come una galleria da sfogliare.
@@ -130,30 +131,12 @@ export function Collections() {
 }
 
 function CollectionCard({ collection, index }: { collection: Collection; index: number }) {
-  const openInquiry = useInquiry()
   const fullTitle = collection.accent ? `${collection.title} ${collection.accent}` : collection.title
-
-  const open = () =>
-    openInquiry({
-      kicker: 'Collezioni',
-      title: fullTitle,
-      image: collection.image,
-      paragraphs: [
-        collection.text,
-        'La selezione cambia spesso: il modo migliore per scoprirla è passare in boutique o chiamarci per sapere cosa è appena arrivato.',
-      ],
-      topic: `la selezione ${fullTitle.toLowerCase()}`,
-    })
+  const count = productsIn(collection.id).length
 
   return (
     <li className={`collection collection--${collection.shape}`}>
-      <button
-        type="button"
-        className="collection__button"
-        onClick={open}
-        data-cursor="Esplora"
-        aria-label={`${fullTitle}: esplora la selezione`}
-      >
+      <a className="collection__button" href={paths.shop(collection.id)} data-cursor="Esplora" aria-label={`${fullTitle}: ${count} ${count === 1 ? "capo" : "capi"} da prenotare`}>
         <span className="collection__media">
           <span className="collection__media-inner">
             <ResponsiveImage
@@ -172,10 +155,10 @@ function CollectionCard({ collection, index }: { collection: Collection; index: 
           </span>
           <span className="collection__text">{collection.text}</span>
           <span className="collection__cta" aria-hidden="true">
-            Esplora la selezione <ArrowUpRight size={15} strokeWidth={1.5} />
+            Scopri {count} {count === 1 ? "capo" : "capi"} <ArrowUpRight size={15} strokeWidth={1.5} />
           </span>
         </span>
-      </button>
+      </a>
     </li>
   )
 }

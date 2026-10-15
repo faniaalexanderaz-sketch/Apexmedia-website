@@ -36,6 +36,7 @@
       ;(function () {
         var html = document.documentElement
         html.classList.add('js')
+        if (location.pathname !== '/') return
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
         html.classList.add('intro')
         setTimeout(function () { html.classList.remove('intro') }, 3500)

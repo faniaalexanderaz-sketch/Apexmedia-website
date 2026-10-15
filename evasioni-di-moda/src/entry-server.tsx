@@ -4,13 +4,16 @@ import { App } from './App'
 import { Presentation } from './presentation/Presentation'
 import { PointerEffects } from './components/PointerEffects'
 
-export function render(): string {
+export function render(path = '/'): string {
   return renderToString(
     <StrictMode>
-      <App />
+      <App path={path} />
     </StrictMode>,
   )
 }
+
+export { products } from './data/products'
+export { collections } from './data/collections'
 
 export function renderPresentation(): string {
   return renderToString(

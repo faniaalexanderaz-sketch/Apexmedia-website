@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { navItems } from '../data/nav'
+import { navHref, navItems, navKey } from '../data/nav'
+import { useHomeAnchor } from '../router'
 import { Wordmark } from './Wordmark'
 import { MobileMenu } from './MobileMenu'
+import { ShoppingBag } from 'lucide-react'
+import { useBag } from './shop/Bag'
 
 type Theme = 'dark' | 'light'
 
@@ -17,6 +20,8 @@ export function Header() {
   const [active, setActive] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const lastY = useRef(0)
+  const anchor = useHomeAnchor()
+  const bag = useBag()
 
   useEffect(() => {
     let frame = 0
@@ -45,6 +50,7 @@ export function Header() {
       // voce attiva: la sezione che occupa la linea a metà schermo
       let current: string | null = null
       for (const item of navItems) {
+        if (!('id' in item)) continue
         const el = document.getElementById(item.id)
         if (!el) continue
         const r = el.getBoundingClientRect()
@@ -79,18 +85,18 @@ export function Header() {
         onFocus={onFocus}
       >
         <div className="site-header__inner">
-          <a className="site-header__brand" href="#top" aria-label="Evasioni di Moda, torna all'inizio">
+          <a className="site-header__brand" href={anchor('top')} aria-label="Evasioni di Moda, torna all'inizio">
             <Wordmark />
           </a>
 
           <nav className="site-nav" aria-label="Navigazione principale">
             <ul>
               {navItems.map((item) => (
-                <li key={item.id}>
+                <li key={navKey(item)}>
                   <a
                     className="site-nav__link link-underline"
-                    href={`#${item.id}`}
-                    aria-current={active === item.id ? 'location' : undefined}
+                    href={navHref(item, anchor)}
+                    aria-current={'id' in item && active === item.id ? 'location' : undefined}
                   >
                     {item.label}
                   </a>
@@ -99,9 +105,14 @@ export function Header() {
             </ul>
           </nav>
 
-          <a className="btn btn--header" href="#contatti">
-            Vieni a trovarci
-          </a>
+          <div className="site-header__actions">
+            <a className="btn btn--header" href={anchor('contatti')}>
+              Vieni a trovarci
+            </a>
+            <button type="button" className="bag-toggle" onClick={bag.open} aria-label={`Capi da ritirare: ${bag.count}`}>
+              <ShoppingBag aria-hidden="true" size={20} strokeWidth={1.4} />
+              {bag.count > 0 && <span className="bag-toggle__count">{bag.count}</span>}
+            </button>
 
           <button
             type="button"
@@ -116,6 +127,7 @@ export function Header() {
               <span />
             </span>
           </button>
+          </div>
         </div>
       </header>
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />

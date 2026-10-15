@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { X, Phone, MapPin } from 'lucide-react'
-import { navItems } from '../data/nav'
+import { navHref, navItems, navKey } from '../data/nav'
+import { useHomeAnchor } from '../router'
 import { fullAddress, store } from '../data/store'
 import { gsap, MEDIA, useGSAP } from '../lib/gsap'
 import { Wordmark } from './Wordmark'
@@ -85,7 +86,13 @@ export function MobileMenu({ open, onClose }: Props) {
   }, [open, onClose])
 
   // si chiude il menu e poi si scorre alla sezione, quando la pagina è di nuovo scorrevole
-  const goTo = (e: React.MouseEvent, id: string) => {
+  const anchor = useHomeAnchor()
+  const goTo = (e: React.MouseEvent, id: string | null) => {
+    // link a un'altra pagina (o sezione della home da una sottopagina): navigazione normale
+    if (!id || !document.getElementById(id)) {
+      onClose()
+      return
+    }
     e.preventDefault()
     onClose()
     requestAnimationFrame(() => {
@@ -115,8 +122,8 @@ export function MobileMenu({ open, onClose }: Props) {
       <nav aria-label="Menu principale">
         <ol className="mobile-menu__list">
           {navItems.map((item, i) => (
-            <li key={item.id}>
-              <a className="mobile-menu__link" href={`#${item.id}`} onClick={(e) => goTo(e, item.id)}>
+            <li key={navKey(item)}>
+              <a className="mobile-menu__link" href={navHref(item, anchor)} onClick={(e) => goTo(e, 'id' in item ? item.id : null)}>
                 <span className="mobile-menu__index">{String(i + 1).padStart(2, '0')}</span>
                 <span className="mobile-menu__link-mask">
                   <span className="mobile-menu__link-text">{item.label}</span>
