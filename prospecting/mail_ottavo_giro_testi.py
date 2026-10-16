@@ -198,7 +198,7 @@ R=[
  "Pensi a un ragazzo che vuole prenotare il taglio per sabato e cerca dal telefono un barbiere a Valenza. Vi trova, ma "+N[1]+" Prenota da chi gli permette di farlo online.",'barber'),
 ("Acconciature Giusi","acconciaturegiusi@gmail.com","Acconciature Giusi, piazza Giovanni XXIII","Il salone non si trova online",
  "Acconciature Giusi in piazza Giovanni XXIII è negli elenchi dei parrucchieri di Valenza.",
- "Un salone con il nome della titolare ha un rapporto diretto con le clienti, ed è quel calore che online fa la differenza.",
+ "Un salone che porta il nome di chi lo guida ha un rapporto diretto con la clientela, ed è quel calore che online fa la differenza.",
  "Pensi a una cliente nuova in città che cerca dal telefono un parrucchiere in centro a Valenza. Vi trova, ma "+N[2]+" Non vede servizi né foto, e prenota altrove.",'parr'),
 ("JNails Valenza","jnailsvalenza@gmail.com","Unghie in viale Dante","Il vostro lavoro non si trova online",
  "JNails in viale Dante è negli elenchi dei centri estetici di Valenza.",
