@@ -2,10 +2,10 @@ import html,json,urllib.parse
 from data import M
 SANS="Helvetica,Arial,sans-serif"; SERIF="'Playfair Display',Georgia,'Times New Roman',serif"
 e=lambda s: html.escape(s,quote=False)
-CL={False:'Qualora lo ritenga utile, sarà un piacere illustrarLe in una breve telefonata di dieci minuti come imposterei il lavoro. In alternativa, se preferisce valutare direttamente il risultato, può rispondere a questa email con la parola "demo": Le preparerò gratuitamente, entro 24 ore, una bozza del nuovo sito.',
+CL={False:'Qualora lo ritenga utile, sarà un piacere illustrarle in una breve telefonata di dieci minuti come imposterei il lavoro. In alternativa, se preferisce valutare direttamente il risultato, può rispondere a questa email con la parola "demo": le preparerò gratuitamente, entro 24 ore, una bozza del nuovo sito.',
     True:'Se ti va, facciamo una chiamata di 10 minuti e ti spiego come lo farei. Se invece preferisci vedere subito il risultato, rispondimi "demo" e ti preparo gratis una bozza del nuovo sito in 24 ore.'}
-NO={False:'Qualora la proposta non fosse di Suo interesse, è sufficiente rispondere "no grazie" e non La disturberò ulteriormente.',True:'Se non ti interessa basta un "no grazie" e non ti ricontatto.'}
-LOC={False:'Siamo un\'agenzia di Alessandria: se preferisce un incontro di persona, sarà un piacere venire a trovarLa presso la Sua attività. È sufficiente un messaggio su WhatsApp o una risposta a questa email.',
+NO={False:'Qualora la proposta non fosse di suo interesse, è sufficiente rispondere "no grazie" e non la disturberò ulteriormente.',True:'Se non ti interessa basta un "no grazie" e non ti ricontatto.'}
+LOC={False:'Siamo un\'agenzia di Alessandria: se preferisce un incontro di persona, sarà un piacere venire a trovarla presso la sua attività. È sufficiente un messaggio su WhatsApp o una risposta a questa email.',
      True:'Siamo un\'agenzia di Alessandria, quindi se preferisci parlarne di persona passo volentieri da te in negozio: mi basta un messaggio su WhatsApp o una risposta a questa mail.'}
 WA={False:'Può scrivermi su WhatsApp al numero 351 594 0685.',True:'Scrivimi su WhatsApp: 351 594 0685'}
 BTN={False:'Mi scriva su WhatsApp',True:'Scrivimi su WhatsApp'}
