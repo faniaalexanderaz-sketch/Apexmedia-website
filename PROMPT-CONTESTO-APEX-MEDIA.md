@@ -24,7 +24,7 @@ Stile: risposte dirette e operative, niente teoria. Se servono opzioni, massimo 
 - Aperti 7/7, 9:30–22:30. 5,0★ su Google con 146 recensioni (è l'arma di conversione principale: va in ogni annuncio).
 - Trattamenti (ognuno con landing dedicata): riflessologia plantare, massaggio decontratturante, tuina shiatsu, gua sha, massaggio oli essenziali, massaggio spa, pedicure, pulizia orecchie, coppettazione.
 - Prenotazione online con widget Treatwell. Conversioni Google Ads tracciate via gtag.
-- Campagna Google Ads Ricerca locale: 3 set–3 ott 2026, €15/giorno (€450). Obiettivo prenotazioni, CPA target ≤ €18, CR atteso 8–15%. Annuncio → pagina del trattamento, mai la home. Fase 2: remarketing Meta +€5/giorno.
+- Campagna Google Ads Ricerca locale: budget €22,50/giorno (circa €675 su 30 giorni). Obiettivo prenotazioni, CPA target ≤ €18, CR atteso 8–15%. Annuncio → pagina del trattamento, mai la home. Fase 2: remarketing Meta +€5/giorno.
 - Offerte usate: Pulizia orecchie a €20 (offerta settimana 3–10 ott); promo massaggio oli essenziali 40 min/€40 + €10 di sconto sul trattamento successivo.
 - Reel Meta Ads 9:16 da 20s per il massaggio oli (hook sensoriale, riprova sociale, doppia CTA "Prenota"). Font brand: Cormorant Garamond + Lato.
 
