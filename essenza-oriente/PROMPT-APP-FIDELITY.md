@@ -217,3 +217,14 @@ RLS: ogni cliente vede solo i propri dati; lo staff ha un ruolo dedicato. Accred
 6. Build per TestFlight / Google Play interno.
 
 Prima di scrivere codice, mostrami in breve: la mappa delle schermate e il componente LoyaltyCard. Poi procedi.
+
+## 12. Da demo a produzione (requisiti obbligatori)
+- Nessuna parola "demo", nessun dato finto, nessun codice OTP finto, nessun modo per il cliente di darsi punti.
+- Login senza password con codice a 6 cifre via email (poi SMS con Twilio) + Google/Apple. Schermata "Completa il profilo" al primo accesso.
+- Sessione persistente: chi entra resta dentro finché non preme "Esci". Onboarding solo al primo avvio.
+- Saldo punti = somma del registro movimenti, calcolata dal database. Punti solo quando lo staff segna la visita "completata" con l'importo pagato.
+- Orari liberi calcolati da apertura − chiusure − prenotazioni, in tempo reale, senza doppie prenotazioni.
+- Email di conferma con file .ics. Sposta/annulla fino a 12 h prima.
+- QR della tessera = token firmato a scadenza 30 s, non l'id in chiaro.
+- Area staff con agenda, prenotazione manuale, completa/no-show, scanner QR, gestione listino/premi/orari, schede clienti, dashboard.
+- Offline, toast, errori con "Riprova", elimina account (GDPR), pagine Privacy e Cookie.
