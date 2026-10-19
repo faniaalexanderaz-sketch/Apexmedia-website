@@ -110,8 +110,19 @@ Dark mode: sfondo `#1A2A1F`, superfici `#22402C`, testo `#E8EFE0`, oro invariato
 ### Logo
 Usa il logo allegato. Wordmark "Essenza d'Oriente" + sottotitolo "Centro Olistico" + nome cinese 东方之♥养生馆 (con il cuore rosso --cuore). Area di rispetto pari all'altezza della "E". Versione chiara su bosco-scuro per la tessera e lo splash.
 
-### Movimento
-Lento e "respirato": 250–400 ms, easing `cubic-bezier(.2,.8,.2,1)`. Haptic leggero sui tap importanti. Animazione speciale quando si guadagnano punti (il sigillo si "timbra" sulla tessera) e quando si sblocca un premio (bagliore oro + petali leggeri). Rispetta "riduci movimento".
+### Movimento (firma dell'app: deve stupire al primo tocco)
+Libreria: GSAP (+ @gsap/react `useGSAP`, Flip, SplitText, DrawSVG, MorphSVG, Draggable, InertiaPlugin, CustomEase, ScrollTrigger). In React Native: Reanimated 3 + Moti + Skia con le stesse coreografie.
+- **Transizioni che partono dal dito:** ogni cambio schermata nasce dal punto toccato (clip-path circolare che si espande dalle coordinate del tap). Card trattamento → si espande in scheda dettaglio come elemento condiviso (Flip): la foto vola e diventa l'header.
+- **Tab bar viva:** indicatore oro che scivola con easing elastico, icona che si disegna (DrawSVG) quando diventa attiva, tab Tessera centrale che "respira".
+- **Bottoni che luccicano:** CTA principale con riflesso oro che attraversa il bottone ogni 4 s; alla pressione scala 0.96 con molla, onda d'inchiostro dal punto toccato, vibrazione leggera; bottoni magnetici che seguono leggermente il dito.
+- **Tessera olografica:** si inclina in 3D seguendo dito/giroscopio, riflesso oro che scorre con l'inclinazione; punti che contano in su; flip 3D con molla.
+- **Sigillo:** quando arrivano i punti scende, si schiaccia ("timbro"), polvere d'oro, barra di avanzamento che si riempie con bagliore.
+- **Premio sbloccato:** fiore di loto che si apre + petali d'oro che esplodono dal centro.
+- **Splash:** logo che si disegna tratto per tratto, lettere che salgono una a una (SplitText), 心 che pulsa una volta.
+- **Liste e scroll:** ingresso a cascata (stagger), parallasse sulla foto dell'header, header che si comprime, pull-to-refresh con loto che si apre.
+- **Prenotazione:** passaggi che scorrono con profondità; slot orario che si trasforma (morph) quando lo scegli; bottone "Conferma" che diventa una spunta e poi un'onda che apre la schermata di successo.
+- **Bottom sheet:** trascinabili con inerzia e rimbalzo.
+Regole: solo transform/opacity (60 fps), micro-interazioni 150–250 ms, momenti "wow" 500–900 ms, easing personalizzato morbido; con "riduci movimento" attivo tutto diventa dissolvenza semplice. Le animazioni guidano verso le azioni che fanno guadagnare (Prenota, Riscatta), non distraggono.
 
 ## 5. Programma fedeltà "Il Cammino del Loto"
 
