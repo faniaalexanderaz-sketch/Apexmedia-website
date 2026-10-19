@@ -108,7 +108,13 @@ Dark mode: sfondo `#1A2A1F`, superfici `#22402C`, testo `#E8EFE0`, oro invariato
 - Foto: reali del centro (candele, bambù, pietre, oli). Mai stock con persone sorridenti in accappatoio bianco.
 
 ### Logo
-Usa il logo allegato. Wordmark "Essenza d'Oriente" + sottotitolo "Centro Olistico" + nome cinese 东方之♥养生馆 (con il cuore rosso --cuore). Area di rispetto pari all'altezza della "E". Versione chiara su bosco-scuro per la tessera e lo splash.
+Riferimento: `essenza-oriente/foto/volantino-logo.jpg` (volantino ufficiale). Ricostruisci il logo come componente SVG vettoriale, non usare il volantino come immagine. Dall'alto in basso:
+1. ornamento di loto oro stilizzato (5 petali a linea sottile) con due linee orizzontali sottili che si allungano ai lati;
+2. "ESSENZA D'ORIENTE" tutto maiuscolo, serif classico romano (font Cinzel 600/700, simile al Trajan), colore --bosco;
+3. "CENTRO OLISTICO" maiuscolo spaziato, Cinzel, colore --oro, tra due trattini oro;
+4. "东方之心养生馆" (Noto Serif SC), colore --bosco, con il 心 bianco dentro un cuore rosso --cuore.
+Varianti: completa (splash, onboarding), compatta orizzontale (loto + nome, per gli header), monogramma (solo loto, per l'icona dell'app e il QR). Versione oro su bosco-scuro per la tessera. Area di rispetto pari all'altezza della "E".
+Cornice ovale a doppia linea verde/oro del volantino: usala come motivo decorativo (splash, tessera, schermata di successo). Area di rispetto pari all'altezza della "E". Versione chiara su bosco-scuro per la tessera e lo splash.
 
 ### Movimento (firma dell'app: deve stupire al primo tocco)
 Libreria: GSAP (+ @gsap/react `useGSAP`, Flip, SplitText, DrawSVG, MorphSVG, Draggable, InertiaPlugin, CustomEase, ScrollTrigger). In React Native: Reanimated 3 + Moti + Skia con le stesse coreografie.
