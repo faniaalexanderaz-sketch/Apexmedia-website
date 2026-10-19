@@ -14,6 +14,32 @@ Sei un team senior (product designer + iOS/Android engineer + growth marketer) c
 - Aperto tutti i giorni, 09:30–22:30
 - 5,0 ★ su Google, 146 recensioni (usalo come riprova sociale)
 - Prenotazioni oggi: telefono, WhatsApp, Treatwell (salone 532986)
+- Aperto 7 giorni su 7, anche domeniche, festivi e Natale (usalo come vantaggio: "Prenota anche stasera alle 21")
+- Pagamento in sede: contanti, carta di credito o bancomat. Nessuna carta richiesta per prenotare.
+- Nome cinese del centro: 东方之♥养生馆 (fa parte del marchio, va sotto il logotipo)
+- Terapisti citati nelle recensioni: Jenny e Luca (Luca è il più citato per la riflessologia plantare)
+- Social: instagram.com/essenza.oriente · tiktok.com/@essenzaoriente.al · Facebook
+- P.IVA 14409690964 (da mostrare nel Profilo, sezione Info legali)
+
+**Claim reali del brand (usali nei testi):**
+- "Un piccolo rifugio d'Oriente nel cuore di Alessandria"
+- "Il centro olistico più recensito di Alessandria"
+- "Vieni come sei: al resto pensiamo noi"
+- "Durata e prezzo sempre in chiaro"
+
+**Recensioni Google reali (per la striscia in Home, non inventarne altre):**
+- Ella Grace (Local Guide): visitatrice dall'Australia, ringrazia Jenny e il team
+- Lily Lily: gentilezza, pulizia, personale efficiente
+- Roberta Massobrio: accoglienza cordiale e professionale, riflessologia plantare con Luca "molto bravo"
+- Mirko: riflessologia plantare professionale e precisa, rilassamento immediato
+
+**FAQ (da mettere in una sezione "Prima volta?" e nella conferma prenotazione):**
+- Alla prima visita ti accogliamo, ti chiediamo preferenze e zone da evitare e ti spieghiamo il trattamento. Non serve nessuna preparazione.
+- Asciugamani, teli e ciabattine li fornisce il centro.
+- Abbigliamento: torso nudo o intimo per i massaggi con olio, abiti comodi per gli altri trattamenti.
+- Arriva 5-10 minuti prima.
+- Gravidanza: va segnalata quando prenoti. Alcuni trattamenti, come la coppettazione, sono sconsigliati e ti proponiamo un'alternativa. Nel flusso di prenotazione aggiungi la domanda "Sei in gravidanza?" e, se la risposta è sì, nascondi la Coppettazione e proponi un'alternativa.
+- Le sedute durano da 25 minuti (trattamenti brevi) a 90 minuti (Massaggio Spa).
 
 **Listino reale (usa questi dati, non inventarne altri):**
 | Trattamento | Durata | Prezzo |
@@ -82,7 +108,7 @@ Dark mode: sfondo `#1A2A1F`, superfici `#22402C`, testo `#E8EFE0`, oro invariato
 - Foto: reali del centro (candele, bambù, pietre, oli). Mai stock con persone sorridenti in accappatoio bianco.
 
 ### Logo
-Usa il logo allegato. Wordmark "Essenza d'Oriente" + sottotitolo "Centro Olistico". Area di rispetto pari all'altezza della "E". Versione chiara su bosco-scuro per la tessera e lo splash.
+Usa il logo allegato. Wordmark "Essenza d'Oriente" + sottotitolo "Centro Olistico" + nome cinese 东方之♥养生馆 (con il cuore rosso --cuore). Area di rispetto pari all'altezza della "E". Versione chiara su bosco-scuro per la tessera e lo splash.
 
 ### Movimento
 Lento e "respirato": 250–400 ms, easing `cubic-bezier(.2,.8,.2,1)`. Haptic leggero sui tap importanti. Animazione speciale quando si guadagnano punti (il sigillo si "timbra" sulla tessera) e quando si sblocca un premio (bagliore oro + petali leggeri). Rispetta "riduci movimento".
