@@ -55,8 +55,14 @@ Devi costruire la web app di un nuovo coworking per un cliente reale di Apex Med
   - Mese, postazione fissa con cassettiera: €190
   - Sala riunioni: [DA CONFERMARE se esiste e a che prezzo]
   - Fidelity card: ogni 10 giornate, la successiva è in omaggio
-- [DA CONFERMARE] numero di postazioni (usa 8 come valore di default nel file di config),
-  orari di apertura (default: lun-ven 8:30-19:00), giorni di chiusura, dominio definitivo.
+- Postazioni iniziali: 6 (nel file di config, perché aumenteranno).
+- Orari: dal lunedì al venerdì, 9:30-18:30. Sabato e domenica chiuso.
+- Telefono e WhatsApp della titolare: +39 347 224 9457 (link wa.me/393472249457,
+  tel:+393472249457). Il fisso del negozio 0131 444845 resta nel footer.
+- Carnet: 10 ingressi pagati in anticipo, validi 3 mesi dal primo ingresso
+  (valore nel file di config, la titolare può cambiarlo).
+- Dominio: NON ancora deciso. Nessun dominio scritto nel codice: usa una variabile
+  SITO_URL e, finché manca, l'indirizzo provvisorio di Vercel.
 
 ## 2. Brand e design
 
@@ -130,7 +136,7 @@ diventa troppo lunga), `privacy.html`, `cookie.html`, `404.html`.
 1. Scegli il pacchetto (preselezionato se arrivi da una card prezzo).
 2. Scegli il giorno su un calendario a settimana (mobile: scroll orizzontale dei giorni)
    con posti liberi per giorno ("4 liberi" verde, "Ultimi 2" ocra, "Pieno" grigio).
-   Per il mese: scegli il giorno di inizio.
+   Per il mese: scegli il giorno di inizio. Sabato e domenica non selezionabili.
 3. Dati: nome, cognome, email, telefono, P. IVA/codice fiscale facoltativo per fattura,
    note. Consenso privacy obbligatorio, marketing facoltativo.
    Riepilogo con prezzo e "Pagamento in sede il primo giorno" (pagamento online in futuro).
@@ -140,7 +146,7 @@ Validazione inline, errori in italiano chiaro, nessun campo inutile.
 
 ## 6. WhatsApp
 
-Link wa.me al numero [DA CONFERMARE: cellulare WhatsApp Business della titolare] con
+Link wa.me al numero +39 347 224 9457 (wa.me/393472249457) con
 messaggio precompilato diverso per contesto (es. "Ciao, vorrei prenotare una postazione
 per il [giorno]" / "Ciao, vorrei informazioni sul pacchetto mensile").
 
@@ -232,7 +238,8 @@ contiene il codice prenotazione. Il numero e i testi stanno in config.js.
   ("Hai una giornata in omaggio: vuoi usarla?").
 
 ## 6. Carnet
-Acquisto del carnet = 10 ingressi utilizzabili entro 3 mesi [DA CONFERMARE la scadenza].
+Acquisto del carnet = 10 ingressi utilizzabili entro 3 mesi dal primo ingresso
+(valore in config/impostazioni).
 Ogni prenotazione "giornata" di un cliente con carnet attivo scala un ingresso e mostra
 "Ti restano X ingressi".
 
@@ -269,7 +276,7 @@ password in ADMIN_PASSWORD, cookie HttpOnly con impronta).
 In alto 3 numeri grandi:
 - Incasso del mese (e differenza in % sul mese precedente)
 - Prenotazioni di questa settimana (e differenza sulla precedente)
-- Scrivanie occupate oggi (es. "5 su 8") con barra
+- Scrivanie occupate oggi (es. "4 su 6") con barra
 Sotto:
 - "Chi arriva oggi" e "Chi arriva domani": nome, pacchetto, telefono cliccabile,
   pulsanti grandi "È arrivato" (segna presente → timbro fidelity) e "Non è venuto".
@@ -308,7 +315,7 @@ Sotto:
 - Playwright: prenotazione completa da mobile, annullamento, accesso admin, segna
   presente, verifica timbro fidelity, esportazione CSV.
 - Controlla schema.org con il validatore, sitemap, robots, 404, redirect.
-- Checklist di lancio nel README: dominio [DA CONFERMARE] collegato a Vercel, variabili
+- Checklist di lancio nel README: dominio (quando verrà scelto) collegato a Vercel, variabili
   d'ambiente, email mittente verificata su SendGrid, scheda Google Business aggiornata
   con il link di prenotazione, ID GA4/Meta inseriti, prima prenotazione di prova.
 - Scrivi una mini guida per la titolare (`GUIDA-TITOLARE.md`, max 1 pagina, parole
