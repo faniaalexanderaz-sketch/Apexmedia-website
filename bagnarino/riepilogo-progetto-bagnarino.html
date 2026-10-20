@@ -433,6 +433,20 @@ a{color:inherit;text-decoration:none}
 .sline{border-top:.3mm solid var(--ink);padding-top:1.2mm;font-size:6pt;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--muted);display:flex;justify-content:space-between}
 .sline span:last-child{letter-spacing:0;text-transform:none;font-weight:500}
 .cbox{height:9mm}
+.idx{display:grid;grid-template-columns:repeat(5,1fr);gap:2mm}
+.ix{padding:2.6mm 2.6mm;display:block}
+.ix .nb2{display:block;font-size:11pt;font-weight:800;color:var(--violet);line-height:1}
+.ix b{display:block;font-size:8.4pt;margin-top:1mm}
+.ix span:last-child{display:block;font-size:6.8pt;color:var(--muted);line-height:1.35;margin-top:.4mm}
+.why6{display:grid;grid-template-columns:repeat(3,1fr);gap:2mm}
+.w6{padding:2.4mm 2.6mm;display:grid;grid-template-columns:7.6mm 1fr;gap:2mm;align-items:start}
+.w6 h3{font-size:8pt;line-height:1.25}
+.w6 p{font-size:6.9pt;line-height:1.4;margin-top:.4mm}
+.payback{margin-top:2mm;display:flex;align-items:center;gap:2mm;background:var(--ink);color:#D9D7E6;border-radius:2.4mm;padding:1.8mm 3mm;font-size:7.8pt}
+.payback .ic{width:4.2mm;height:4.2mm;color:var(--gold)}
+.payback b{color:#fff}
+.payback em{font-style:normal;color:var(--gold);font-weight:800}
+
 .kp6{display:grid;grid-template-columns:repeat(6,1fr);gap:1.6mm}
 .kp6 div{background:var(--lilac);border:.25mm solid var(--line);border-radius:2.4mm;padding:2mm 2mm}
 .kp6 .ic{width:4mm;height:4mm;color:var(--violet);display:block;margin-bottom:.8mm}
@@ -485,7 +499,7 @@ a{color:inherit;text-decoration:none}
 .budget p{font-size:7.8pt;line-height:1.46;margin-top:.4mm}
 
 /* web app page */
-.vs2{display:grid;grid-template-columns:.8fr 1.2fr;gap:3.4mm;margin-top:4mm}
+.vs2{display:grid;grid-template-columns:.8fr 1.2fr;gap:3.4mm;margin-top:3.4mm}
 .opt{border-radius:3.2mm;padding:3.6mm 4mm;position:relative}
 .opt .k{font-size:6pt;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .opt h3{font-size:10.6pt;margin-top:.6mm}
@@ -507,7 +521,7 @@ a{color:inherit;text-decoration:none}
 .w3{padding:2.8mm 3mm;display:grid;grid-template-columns:7.6mm 1fr;gap:2.2mm;align-items:start}
 .w3 h3{font-size:8.3pt;line-height:1.3}
 .w3 p{font-size:7.2pt;line-height:1.45;margin-top:.6mm}
-.mock2{display:grid;grid-template-columns:1.55fr 1fr;gap:4mm;margin-top:4.4mm;align-items:center}
+.mock2{display:grid;grid-template-columns:1.55fr 1fr;gap:4mm;margin-top:3.4mm;align-items:center}
 .dash{border-radius:3mm;overflow:hidden;border:.25mm solid var(--line);box-shadow:0 10px 26px rgba(21,20,42,.12);background:#fff}
 .dbar{background:var(--ink);padding:1.6mm 2.4mm;display:flex;align-items:center;gap:1mm}
 .dbar span{width:1.6mm;height:1.6mm;border-radius:50%;background:#4B4A63}
@@ -543,8 +557,8 @@ a{color:inherit;text-decoration:none}
 .ft2{font-size:6.4pt;color:#E7E5F2;font-weight:600}
 .fp{font-size:7.4pt;line-height:1.45;margin-top:2.2mm}
 .eight{display:grid;grid-template-columns:repeat(4,1fr);gap:2mm}
-.e8{background:var(--lilac);border:.25mm solid var(--line);border-radius:2.6mm;padding:2.4mm 2.6mm}
-.e8 .ic,.e8 svg{width:4.4mm;height:4.4mm;color:var(--violet);display:block;margin-bottom:1mm}
+.e8{background:var(--lilac);border:.25mm solid var(--line);border-radius:2.2mm;padding:1.8mm 2.2mm;display:flex;align-items:center;gap:1.6mm}
+.e8 .ic,.e8 svg{width:3.8mm;height:3.8mm;color:var(--violet);flex:none}
 .e8 svg:not(.ic){fill:#25D366}
 .e8 b{display:block;font-size:7.8pt;color:var(--ink);line-height:1.25}
 .e8 span{display:block;font-size:6.6pt;color:var(--muted);line-height:1.3}
@@ -606,24 +620,13 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
 
-    <div class="st">Cosa è cambiato dopo l'analisi</div>
-    <div class="change">
-      <div class="chg before">
-        <div class="tg">Prima ipotesi</div>
-        <h3>Una pagina semplice per raccogliere contatti</h3>
-        <p>Una pagina semplice per chiedere una consulenza su macchine Olivetti e assistenza.</p>
-        <div class="px">Pagina: <s>€300</s> · €600 con il primo mese</div>
-      </div>
-      <div class="arrow"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M5 12h14" />
-  <path d="m12 5 7 7-7 7" />
-</svg></div>
-      <div class="chg after">
-        <div class="tg">Proposta aggiornata</div>
-        <h3>Una web app che vende le postazioni del coworking</h3>
-        <p>Se le scrivanie si affittano, il sito deve <b>mostrare i posti liberi, far prenotare e ricevere i messaggi WhatsApp</b> in automatico. Lavora come un receptionist, anche di notte.</p>
-        <div class="px">Web app: <s style="font-size:8pt;color:var(--soft)">€700</s> <b>€500</b> una tantum, se per lei va bene · <a href="#p4" style="text-decoration:underline">perché ›</a></div>
-      </div>
+    <div class="st">Cosa troverà in queste pagine</div>
+    <div class="idx">
+      <a class="card ix" href="#p2"><span class="nb2">02</span><b>Il mercato</b><span>Chi fa coworking in città, dove e a quanto</span></a>
+      <a class="card ix" href="#p3"><span class="nb2">03</span><b>Il progetto</b><span>Sito, Google e social, spiegati semplice</span></a>
+      <a class="card ix" href="#p4"><span class="nb2">04</span><b>La web app</b><span>Come prenotano i clienti e cosa vede lei</span></a>
+      <a class="card ix" href="#p5"><span class="nb2">05</span><b>Il percorso</b><span>I primi 3 mesi e la pubblicità</span></a>
+      <a class="card ix" href="#p6"><span class="nb2">06</span><b>Il preventivo</b><span>Tutti i costi, in chiaro</span></a>
     </div>
 
     <div class="st">Il piano, in quattro passi</div>
@@ -2051,7 +2054,7 @@ a{color:inherit;text-decoration:none}
     <div class="eb">04 — Perché €500 e non €300</div>
     <h2 class="t">Non una pagina: una web app per il coworking.</h2>
     <div class="bar"></div>
-    <p class="lead">In negozio le avevamo parlato di <b>una pagina semplice da €300</b>, cioè €600 con il primo mese di gestione. Dopo l'analisi abbiamo capito che, per affittare scrivanie, una pagina non basta: serve un piccolo sistema che lavori al posto suo.</p>
+    <p class="lead">In negozio le avevamo parlato di <b>una pagina semplice da €300</b> (€600 con il primo mese). Dopo l'analisi abbiamo capito che, per affittare scrivanie, serve un piccolo sistema che lavori al posto suo.</p>
 
     <div class="vs2">
       <div class="opt simple2">
@@ -2076,27 +2079,45 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
 
-    <div class="st">Tre motivi, in parole semplici</div>
-    <div class="why3">
-      <div class="card w3"><span class="ib"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <div class="st">Sei motivi per scegliere la web app</div>
+    <div class="why6">
+      <div class="card w6"><span class="ib"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
   <path d="M16 2v4" />
   <path d="M8 2v4" />
   <path d="M3 10h5" />
   <path d="M17.5 17.5 16 16.3V14" />
   <circle cx="16" cy="16" r="6" />
-</svg></span><div><h3>1 · La prenotazione ha bisogno di un “cervello”</h3><p>Deve sapere quali scrivanie sono libere, evitare che due persone prenotino lo stesso posto e aggiornarsi da sola. Una pagina semplice questo non lo fa.</p></div></div>
-      <div class="card w3"><span class="ib o"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+</svg></span><div><h3>La prenotazione ha un “cervello”</h3><p>Sa quali scrivanie sono libere e non fa mai prenotare due persone sullo stesso posto.</p></div></div>
+      <div class="card w6"><span class="ib o"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-</svg></span><div><h3>2 · Gli avvisi partono da soli</h3><p>Il cliente riceve la conferma e un <b>promemoria il giorno prima</b>. A lei arriva una <b>notifica a ogni prenotazione</b>. Nessuna telefonata persa.</p></div></div>
-      <div class="card w3"><span class="ib g"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+</svg></span><div><h3>Gli avvisi partono da soli</h3><p>Conferma e <b>promemoria il giorno prima</b> al cliente, una <b>notifica a lei</b> a ogni prenotazione.</p></div></div>
+      <div class="card w6"><span class="ib g"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <rect width="7" height="9" x="3" y="3" rx="1" />
   <rect width="7" height="5" x="14" y="3" rx="1" />
   <rect width="7" height="9" x="14" y="12" rx="1" />
   <rect width="7" height="5" x="3" y="16" rx="1" />
-</svg></span><div><h3>3 · Lei vede tutto, in ogni momento</h3><p>Un'<b>area riservata</b> solo per lei: incassi, prenotazioni della settimana, scrivanie occupate, clienti abituali.</p></div></div>
+</svg></span><div><h3>Lei vede tutto, in ogni momento</h3><p>Un'<b>area riservata</b> con incassi, prenotazioni della settimana e clienti abituali.</p></div></div>
+      <div class="card w6"><span class="ib k"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg></span><div><h3>Vende anche a negozio chiuso</h3><p>Chi decide la sera o la domenica prenota subito, invece di cercare un altro coworking.</p></div></div>
+      <div class="card w6"><span class="ib"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="6" />
+  <circle cx="12" cy="12" r="2" />
+</svg></span><div><h3>Rende la pubblicità più efficace</h3><p>Sappiamo quale sponsorizzata ha portato ogni prenotazione: i soldi vanno solo dove rendono.</p></div></div>
+      <div class="card w6"><span class="ib o"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+  <polyline points="16 7 22 7 22 13" />
+</svg></span><div><h3>Cresce con lei, senza rifarla</h3><p>Più postazioni, sala riunioni, pagamento online: si aggiungono in seguito, sulla stessa base.</p></div></div>
     </div>
+    <div class="payback"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+  <path d="M7 12h5" />
+  <path d="M15 9.4a4 4 0 1 0 0 5.2" />
+</svg><span>La differenza rispetto alla pagina semplice è di <b>€200</b>: <em>si ripaga con un solo carnet venduto</em>.</span></div>
 
     <div class="mock2">
       <div class="dash">
@@ -2151,35 +2172,35 @@ a{color:inherit;text-decoration:none}
   <rect width="18" height="18" x="3" y="4" rx="2" />
   <path d="M3 10h18" />
   <path d="m9 16 2 2 4-4" />
-</svg><b>Prenotazione integrata</b><span>posti liberi in tempo reale</span></div>
+</svg><b>Prenotazione integrata</b></div>
       <div class="e8"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-</svg><b>Avvisi al cliente</b><span>conferma e promemoria</span></div>
+</svg><b>Avvisi al cliente</b></div>
       <div class="e8"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg><b>Avvisi a lei</b><span>a ogni nuova prenotazione</span></div>
+</svg><b>Avvisi a lei</b></div>
       <div class="e8"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <rect width="7" height="9" x="3" y="3" rx="1" />
   <rect width="7" height="5" x="14" y="3" rx="1" />
   <rect width="7" height="9" x="14" y="12" rx="1" />
   <rect width="7" height="5" x="3" y="16" rx="1" />
-</svg><b>Area riservata</b><span>incassi e prenotazioni</span></div>
-      <div class="e8"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><b>WhatsApp integrato</b><span>messaggio già pronto</span></div>
+</svg><b>Area riservata</b></div>
+      <div class="e8"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><b>WhatsApp integrato</b></div>
       <div class="e8"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
   <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
   <path d="M12 17.5v-11" />
-</svg><b>Listino e pacchetti</b><span>giornata, carnet, mese</span></div>
+</svg><b>Listino e pacchetti</b></div>
       <div class="e8"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <rect x="3" y="8" width="18" height="4" rx="1" />
   <path d="M12 8v13" />
   <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" />
   <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" />
-</svg><b>Fidelity card</b><span>timbri e omaggi</span></div>
+</svg><b>Fidelity card</b></div>
       <div class="e8"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-</svg><b>Recensioni Google</b><span>in evidenza sul sito</span></div>
+</svg><b>Recensioni Google</b></div>
     </div>
   </div>
   <div class="ft"><span>Apex Media · per Bagnarino S.r.l.</span><span class="n">4</span></div>
@@ -2236,7 +2257,7 @@ a{color:inherit;text-decoration:none}
     <div class="meta">
       <div>
         <div class="lvh"><span class="bi mt" style="width:7.6mm;height:7.6mm;border-radius:2mm"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Meta</title><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span><div><div class="k">Meta Ads · le “sponsorizzate”</div><h3>Il volantino che arriva solo alle persone giuste</h3></div></div>
-        <div class="simple"><b>Immagini una piazza enorme</b> dove ogni giorno passano migliaia di persone di Alessandria: è Facebook e Instagram. Le <b>Meta Ads</b> sono un piccolo cartellone che mettiamo in quella piazza, ma <b>che vedono solo le persone che ci interessano</b>: chi abita vicino, chi lavora in proprio, chi cerca un posto tranquillo dove lavorare.</div>
+        <div class="simple"><b>Pensi a quando sfoglia il telefono</b> e tra le foto di amici e parenti compare un video di un negozio: quella è una sponsorizzata. Le <b>Meta Ads</b> sono questo: il video di Bagnarino che compare su Facebook e Instagram, ma <b>solo sul telefono delle persone giuste</b>: chi abita vicino, chi lavora in proprio, chi cerca un posto tranquillo dove lavorare. Gli altri non lo vedono, e non si paga per loro.</div>
         <div class="vsx">
           <div class="vx bad"><b>Volantino di carta</b><span>Lo ricevono tutti, anche chi non è interessato. Non si sa chi l'ha letto.</span></div>
           <div class="vx good"><b>Sponsorizzata Meta</b><span>La vede solo chi può diventare cliente. Sappiamo quanti l'hanno vista e quanti hanno prenotato.</span></div>
