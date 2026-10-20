@@ -34,11 +34,6 @@
       "permanent": true
     },
     {
-      "source": "/prenotazione",
-      "destination": "/prenota",
-      "permanent": true
-    },
-    {
       "source": "/prezzi",
       "destination": "/#prezzi",
       "permanent": false
