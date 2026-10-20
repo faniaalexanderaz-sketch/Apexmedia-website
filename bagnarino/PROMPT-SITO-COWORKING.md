@@ -55,7 +55,8 @@ Devi costruire la web app di un nuovo coworking per un cliente reale di Apex Med
   - Mese, postazione fissa con cassettiera: €190
   - Sala riunioni: [DA CONFERMARE se esiste e a che prezzo]
   - Fidelity card: ogni 10 giornate, la successiva è in omaggio
-- Postazioni iniziali: 6 (nel file di config, perché aumenteranno).
+- Postazioni: [DA CONFERMARE] numero esatto. Usa 6 come valore provvisorio nel file di config,
+  così si cambia in un punto solo.
 - Orari: dal lunedì al venerdì, 9:30-18:30. Sabato e domenica chiuso.
 - Telefono e WhatsApp della titolare: +39 347 224 9457 (link wa.me/393472249457,
   tel:+393472249457). Il fisso del negozio 0131 444845 resta nel footer.
