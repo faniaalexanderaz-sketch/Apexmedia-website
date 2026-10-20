@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Area riservata | Bagnarino Coworking</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1B2A3A">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/img/favicon-180.png">
+  <link rel="preload" href="/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/admin.css">
+  <script src="/admin.js" defer></script>
+</head>
+<body class="admin">
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-calendar-days" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
+<symbol id="i-house" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V7"/><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
+<symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
+</svg>
+
+
+<!-- ACCESSO -->
+<main class="accesso" data-vista="accesso" hidden>
+  <form class="accesso-box" data-login novalidate>
+    <img src="/img/logo.svg" alt="Bagnarino Coworking" width="200" height="56">
+    <h1>Area riservata</h1>
+    <label for="password">Password</label>
+    <div class="password-riga">
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button class="btn-mostra" type="button" data-mostra aria-label="Mostra la password">Mostra</button>
+    </div>
+    <button class="btn btn-pieno btn-grande btn-largo" type="submit">Entra</button>
+    <p class="avviso-errore" data-login-errore role="alert"></p>
+  </form>
+</main>
+
+<!-- APPLICAZIONE -->
+<div class="app" data-vista="app" hidden>
+  <header class="app-testa">
+    <img src="/img/logo-chiaro.svg" alt="Bagnarino Coworking" width="130" height="36">
+    <nav class="schede" aria-label="Sezioni">
+      <button type="button" data-scheda="oggi" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-house"/></svg><span>Oggi</span></button>
+      <button type="button" data-scheda="calendario"><svg class="ico" aria-hidden="true"><use href="#i-calendar-days"/></svg><span>Calendario</span></button>
+      <button type="button" data-scheda="clienti"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg><span>Clienti</span></button>
+      <button type="button" data-scheda="incassi"><svg class="ico" aria-hidden="true"><use href="#i-receipt"/></svg><span>Incassi</span></button>
+      <button type="button" data-scheda="impostazioni"><svg class="ico" aria-hidden="true"><use href="#i-settings"/></svg><span>Impostazioni</span></button>
+    </nav>
+    <button class="esci" type="button" data-esci>Esci</button>
+  </header>
+
+  <p class="avviso-db" data-avviso-db hidden></p>
+
+  <!-- OGGI -->
+  <section class="pannello" data-pannello="oggi" aria-labelledby="t-oggi">
+    <h1 id="t-oggi" class="saluto" data-saluto>Buongiorno</h1>
+    <p class="sottosaluto" data-data-oggi></p>
+    <div class="numeri">
+      <article class="numero"><h2>Incasso del mese</h2><p class="numero-valore" data-k-incasso>—</p><p class="numero-delta" data-k-incasso-d></p></article>
+      <article class="numero"><h2>Prenotazioni di questa settimana</h2><p class="numero-valore" data-k-sett>—</p><p class="numero-delta" data-k-sett-d></p></article>
+      <article class="numero"><h2>Scrivanie occupate oggi</h2><p class="numero-valore" data-k-occ>—</p><div class="barra" aria-hidden="true"><span data-k-occ-barra></span></div></article>
+    </div>
+    <button class="avviso-incassare" type="button" data-da-incassare hidden></button>
+
+    <h2 class="titolo-sezione">Chi arriva oggi</h2>
+    <div class="arrivi" data-arrivi-oggi></div>
+    <h2 class="titolo-sezione" data-titolo-prossimo>Chi arriva domani</h2>
+    <div class="arrivi" data-arrivi-prossimo></div>
+
+    <div class="grafici">
+      <article class="riquadro"><h2>Prenotazioni per settimana</h2><p class="nota">Ultime 8 settimane</p><div data-grafico-settimane></div></article>
+      <article class="riquadro"><h2>Incassi per mese</h2><p class="nota">Ultimi 6 mesi</p><div data-grafico-mesi></div></article>
+    </div>
+    <article class="riquadro"><h2>Da dove arrivano le prenotazioni</h2><p class="nota">Ultimi 90 giorni</p><div data-fonti></div></article>
+  </section>
+
+  <!-- CALENDARIO -->
+  <section class="pannello" data-pannello="calendario" hidden aria-labelledby="t-cal">
+    <h1 id="t-cal" class="titolo-pannello">Calendario</h1>
+    <div class="nav-periodo">
+      <button type="button" class="btn-tondo" data-cal-prima aria-label="Settimana prima"><svg class="ico" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <p data-cal-titolo></p>
+      <button type="button" class="btn-tondo" data-cal-dopo aria-label="Settimana dopo"><svg class="ico" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+    </div>
+    <button class="btn btn-ocra btn-largo" type="button" data-nuova>+ Aggiungi una prenotazione</button>
+    <form class="riquadro modulo-nuova" data-modulo-nuova hidden novalidate>
+      <h2>Nuova prenotazione</h2>
+      <p class="nota">Per chi passa in negozio o telefona. L’email serve solo per mandargli la conferma.</p>
+      <div class="griglia-campi">
+        <label>Nome<input name="nome" required autocomplete="off"></label>
+        <label>Cognome<input name="cognome" required autocomplete="off"></label>
+        <label>Telefono<input name="telefono" type="tel" inputmode="tel" required></label>
+        <label>Email (facoltativa)<input name="email" type="email" inputmode="email"></label>
+        <label>Formula<select name="pacchetto" data-sel-pacchetto></select></label>
+        <label>Giorno<input name="data" type="date" required></label>
+      </div>
+      <label>Note<input name="note"></label>
+      <div class="azioni-riga">
+        <button class="btn btn-pieno btn-grande" type="submit">Salva la prenotazione</button>
+        <button class="btn btn-filo btn-grande" type="button" data-annulla-nuova>Annulla</button>
+      </div>
+    </form>
+    <div class="settimana" data-settimana></div>
+  </section>
+
+  <!-- CLIENTI -->
+  <section class="pannello" data-pannello="clienti" hidden aria-labelledby="t-cli">
+    <h1 id="t-cli" class="titolo-pannello">Clienti</h1>
+    <label class="cerca"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+      <input type="search" placeholder="Cerca per nome o telefono" data-cerca aria-label="Cerca un cliente"></label>
+    <p class="legenda-clienti"><span class="etichetta etichetta-verde">Abituale</span> viene almeno 4 volte al mese · <span class="etichetta etichetta-ocra">Da richiamare</span> non viene da più di 30 giorni</p>
+    <div class="lista-clienti" data-clienti></div>
+  </section>
+
+  <!-- INCASSI -->
+  <section class="pannello" data-pannello="incassi" hidden aria-labelledby="t-inc">
+    <h1 id="t-inc" class="titolo-pannello">Incassi</h1>
+    <div class="segmenti" role="group" aria-label="Periodo">
+      <button type="button" data-periodo="giorno">Giorno</button>
+      <button type="button" data-periodo="settimana">Settimana</button>
+      <button type="button" data-periodo="mese" aria-pressed="true">Mese</button>
+    </div>
+    <div class="nav-periodo">
+      <button type="button" class="btn-tondo" data-inc-prima aria-label="Periodo prima"><svg class="ico" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <p data-inc-titolo></p>
+      <button type="button" class="btn-tondo" data-inc-dopo aria-label="Periodo dopo"><svg class="ico" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+    </div>
+    <div class="numeri numeri-2">
+      <article class="numero"><h2>Incassato</h2><p class="numero-valore" data-inc-incassato>—</p></article>
+      <article class="numero"><h2>Previsto</h2><p class="numero-valore" data-inc-previsto>—</p></article>
+    </div>
+    <div class="righe-incassi" data-righe-incassi></div>
+    <a class="btn btn-filo btn-largo" data-csv href="#"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg>Scarica il file per il commercialista</a>
+  </section>
+
+  <!-- IMPOSTAZIONI -->
+  <section class="pannello" data-pannello="impostazioni" hidden aria-labelledby="t-imp">
+    <h1 id="t-imp" class="titolo-pannello">Impostazioni</h1>
+    <form data-impostazioni novalidate>
+      <article class="riquadro"><h2>Prezzi</h2><div class="prezzi-modifica" data-imp-prezzi></div></article>
+      <article class="riquadro"><h2>Scrivanie</h2>
+        <div class="contatore">
+          <button type="button" class="btn-tondo" data-post-meno aria-label="Una scrivania in meno">−</button>
+          <output data-imp-postazioni>6</output>
+          <button type="button" class="btn-tondo" data-post-piu aria-label="Una scrivania in più">+</button>
+        </div>
+        <p class="nota">Numero di scrivanie prenotabili sul sito.</p>
+      </article>
+      <article class="riquadro"><h2>Orari</h2>
+        <div class="griglia-campi">
+          <label>Apertura<input type="time" name="apertura" data-imp-apertura></label>
+          <label>Chiusura<input type="time" name="chiusura" data-imp-chiusura></label>
+        </div>
+        <p class="nota">Aperto dal lunedì al venerdì. Per le feste e le chiusure usa la sezione qui sotto.</p>
+      </article>
+      <article class="riquadro"><h2>Giorni di chiusura</h2>
+        <ul class="chiusure" data-imp-chiusure></ul>
+        <div class="griglia-campi">
+          <label>Giorno<input type="date" data-ch-data></label>
+          <label>Motivo<input data-ch-motivo placeholder="Es. Ferie, ponte"></label>
+        </div>
+        <button type="button" class="btn btn-filo" data-ch-aggiungi>Chiudi questo giorno</button>
+        <p class="nota">I festivi nazionali sono già chiusi da soli.</p>
+      </article>
+      <article class="riquadro"><h2>Messaggi WhatsApp</h2><p class="nota">Il testo già scritto che il cliente invia toccando i pulsanti WhatsApp del sito.</p><div data-imp-wa></div></article>
+      <div class="salva-barra"><button class="btn btn-pieno btn-grande btn-largo" type="submit">Salva le modifiche</button></div>
+    </form>
+  </section>
+</div>
+
+<div class="avviso-toast" data-toast role="status" aria-live="polite" hidden></div>
+</body>
+</html>

@@ -176,6 +176,14 @@ var BGN_CONFIG = {
      rispondono il sito lavora in modalità dimostrativa. */
   api: {
     disponibilita: '/api/disponibilita',
-    prenota: '/api/prenota'
+    prenota: '/api/prenota',
+    prenotazione: '/api/prenotazione',
+    annulla: '/api/annulla',
+    vantaggi: '/api/vantaggi',
+    card: '/api/card'
   }
 };
+
+/* Le funzioni del server (cartella api/) leggono questo stesso file:
+   un solo listino per sito, prenotazioni ed email. */
+if (typeof module !== 'undefined' && module.exports) module.exports = BGN_CONFIG;

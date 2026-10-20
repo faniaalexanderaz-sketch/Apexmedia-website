@@ -62,11 +62,16 @@
     aggiornaInfoGiorno();
     aggiorna();
     if (scorri) vaiA(2);
+    /* motore attivo: i posti dipendono dalla formula (un mese chiede
+       posti liberi per tutto il periodo) */
+    if (stato.reale) caricaDisponibilita();
+    controllaVantaggi();
   }
   opzioni.addEventListener('change', function (e) {
     if (e.target.name === 'pacchetto') scegliPacchetto(e.target.value, true);
   });
   $('[data-cambia="1"]').addEventListener('click', function () {
+    document.documentElement.classList.remove('con-pacchetto');
     opzioni.hidden = false;
     $('[data-sintesi="1"]').hidden = true;
     $('[data-blocco="1"]').classList.remove('completo');
@@ -79,7 +84,8 @@
      ============================================================= */
   var griglia = $('[data-giorni]');
   var inizio = oggi();
-  var giorni = C.giorniPrenotabili || 28;
+  /* giorni mostrati: almeno quelli prenotabili, fino a 5 settimane intere */
+  var giorni = Math.max(C.giorniPrenotabili || 28, 35 - (inizio.getDay() + 6) % 7);
 
   function statoGiorno(d) {
     var s = B.iso(d), liberi = stato.liberi[s];
@@ -101,6 +107,7 @@
     /* su schermi larghi la griglia parte dal lunedì: caselle vuote prima di oggi */
     var vuoti = (inizio.getDay() + 6) % 7;
     for (var v = 0; v < vuoti; v++) html += '<span class="giorno-vuoto" aria-hidden="true"></span>';
+    /* 5 settimane intere: la griglia ha sempre la stessa altezza */
     for (var i = 0; i < giorni; i++) {
       var d = aggiungiGiorni(inizio, i), s = B.iso(d), st = statoGiorno(d);
       var scelto = stato.data === s;
@@ -130,6 +137,7 @@
     aggiornaInfoGiorno();
     aggiorna();
     if (scorri && !stato.sceltoGiornoUnaVolta) { stato.sceltoGiornoUnaVolta = true; vaiA(3); }
+    controllaVantaggi();
     return true;
   }
   griglia.addEventListener('click', function (e) {
@@ -166,14 +174,25 @@
   /* =============================================================
      Riepilogo, indicatore, barra mobile
      ============================================================= */
+  /* con giornata omaggio o carnet attivo la giornata non si paga */
+  function prezzoAttuale() {
+    var p = stato.pacchetto, v = stato.vantaggi;
+    if (!p) return null;
+    if (p.id === 'giornata' && v) {
+      var omaggio = $('#usa_omaggio');
+      if (v.omaggi > 0 && omaggio && omaggio.checked) return 0;
+      if (v.carnet) return 0;
+    }
+    return p.prezzo;
+  }
   function aggiorna() {
-    var p = stato.pacchetto, s = stato.data;
+    var p = stato.pacchetto, s = stato.data, prezzo = prezzoAttuale();
     $('[data-r-formula]').textContent = p ? p.nome : '—';
     $('[data-r-etichetta-giorno]').textContent = etichettaGiorno(p);
     $('[data-r-giorno]').textContent = s ? (p && p.tipoData === 'inizio' && p.id !== 'carnet'
       ? B.data(B.daIso(s), 'breve') + ' → ' + B.data(fineMese(s), 'breve')
       : maiuscola(B.data(B.daIso(s), 'lungo'))) : 'da scegliere';
-    $('[data-r-totale]').textContent = p ? B.euro(p.prezzo) : '—';
+    $('[data-r-totale]').textContent = p ? B.euro(prezzo) : '—';
 
     var passo = !p ? 1 : !s ? 2 : 3;
     $$('[data-indicatore]').forEach(function (li) {
@@ -183,7 +202,7 @@
       if (n === passo) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
     });
 
-    $('[data-b-totale]').textContent = p ? B.euro(p.prezzo) : 'da ' + B.euro(Math.min.apply(null, C.listino.map(function (x) { return x.prezzo; })));
+    $('[data-b-totale]').textContent = p ? B.euro(prezzo) : 'da ' + B.euro(Math.min.apply(null, C.listino.map(function (x) { return x.prezzo; })));
     $('[data-b-testo]').textContent = !p ? 'Scegli la formula' : p.nome + (s ? ' · ' + B.data(B.daIso(s), 'breve') : '');
     $('[data-b-avanti]').textContent = !p ? 'Inizia' : !s ? 'Scegli il giorno' : 'Conferma';
   }
@@ -230,6 +249,34 @@
     });
   });
 
+  /* Giornate omaggio e carnet: si chiedono al server quando email e
+     telefono sono validi. Il server risponde solo se combaciano. */
+  var boxVantaggi = $('[data-vantaggi]'), ultimaChiave = '';
+  function controllaVantaggi() {
+    if (!boxVantaggi) return;
+    var f = modulo.elements, p = stato.pacchetto;
+    var ok = stato.reale && p && p.id === 'giornata' && REGOLE.email(f.email.value) && REGOLE.telefono(f.telefono.value);
+    if (!ok) { stato.vantaggi = null; boxVantaggi.hidden = true; aggiorna(); return; }
+    var chiave = f.email.value.trim().toLowerCase() + '|' + f.telefono.value + '|' + (stato.data || '');
+    if (chiave === ultimaChiave) return;
+    ultimaChiave = chiave;
+    B.chiamaApi(C.api.vantaggi, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: f.email.value.trim(), telefono: f.telefono.value, data: stato.data }) })
+      .then(function (v) {
+        stato.vantaggi = (v.omaggi > 0 || v.carnet) ? v : null;
+        if (!stato.vantaggi) { boxVantaggi.hidden = true; aggiorna(); return; }
+        boxVantaggi.innerHTML = v.omaggi > 0
+          ? '<label class="spunta" for="usa_omaggio"><input type="checkbox" id="usa_omaggio" checked>' +
+            '<span><strong>Hai una giornata in omaggio</strong> con la Bagnarino Card. Vuoi usarla adesso?</span></label>'
+          : '<p><strong>Questa giornata la scaliamo dal tuo carnet</strong>: dopo ti resteranno ' + (v.carnet.residui - 1) + ' ingressi. Niente da pagare.</p>';
+        boxVantaggi.hidden = false;
+        var o = $('#usa_omaggio');
+        if (o) o.addEventListener('change', aggiorna);
+        aggiorna();
+      }).catch(function () { stato.vantaggi = null; boxVantaggi.hidden = true; });
+  }
+  ['email', 'telefono'].forEach(function (n) { modulo.elements[n].addEventListener('blur', controllaVantaggi); });
+
   var erroreGenerale = $('[data-errore-generale]');
   function mostraErrore(html) { erroreGenerale.innerHTML = html; erroreGenerale.classList.add('visibile'); }
 
@@ -252,6 +299,7 @@
     for (var i = 0; i < 4; i++) c += a.charAt(Math.floor(Math.random() * a.length));
     return 'BGN-' + c;
   }
+  var idEvento = 'bgn-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   function datiModulo() {
     var f = modulo.elements;
     return {
@@ -266,6 +314,9 @@
       consenso_privacy: f.privacy.checked,
       consenso_marketing: f.marketing.checked,
       origine: B.origine(),
+      usa_omaggio: !!($('#usa_omaggio') && $('#usa_omaggio').checked && stato.vantaggi && stato.vantaggi.omaggi > 0),
+      consenso_misurazione: B.consensoMisurazione(),
+      event_id: idEvento,
       sito_web: f.sito_web.value   /* trappola anti-spam: deve restare vuoto */
     };
   }
@@ -286,7 +337,7 @@
       bottone.disabled = false;
       bottone.innerHTML = testoBottone;
       var wa = '<a href="' + B.linkWa('giorno', { giorno: dataLunga(dati.data) }) + '" target="_blank" rel="noopener">scrivici su WhatsApp</a>';
-      if (err && err.stato === 409) {
+      if (err && err.stato === 409 && err.dati && err.dati.errore === 'POSTO_ESAURITO') {
         /* il posto è stato preso nel frattempo: si ricaricano i posti */
         mostraErrore('Questo giorno si è appena riempito. Scegline un altro qui sopra oppure ' + wa + '.');
         stato.data = null;
@@ -317,7 +368,8 @@
     $('[data-s-giorno]').textContent = p.tipoData === 'inizio' && p.id !== 'carnet'
       ? B.data(B.daIso(dati.data), 'breve') + ' → ' + B.data(fineMese(dati.data), 'breve')
       : maiuscola(dataLunga(dati.data));
-    $('[data-s-totale]').textContent = B.euro(p.prezzo);
+    var prezzoFinale = r.prezzo != null ? r.prezzo / 100 : p.prezzo;
+    $('[data-s-totale]').textContent = prezzoFinale === 0 ? 'Niente: già pagato' : B.euro(prezzoFinale);
 
     if (demo) {
       $('[data-successo-titolo]').textContent = 'Prenotazione pronta, ' + dati.nome + '!';
@@ -338,7 +390,14 @@
       $('[data-wa-conferma]').rel = 'noopener';
     } else {
       $('[data-successo-titolo]').textContent = 'Prenotazione confermata, ' + dati.nome + '!';
-      $('[data-successo-sotto]').textContent = 'Ti abbiamo mandato il riepilogo a ' + dati.email + '. Ti aspettiamo!';
+      var sotto = r.emailInviata ? 'Ti abbiamo mandato il riepilogo a ' + dati.email + '. Ti aspettiamo!'
+        : 'Salva il codice qui sotto: ti serve per gestire la prenotazione. Ti aspettiamo!';
+      if (r.omaggio) sotto += ' Questa giornata è in omaggio con la tua Bagnarino Card.';
+      else if (r.carnet) sotto += ' Ti restano ' + r.carnet.residui + ' ingressi nel carnet.';
+      $('[data-successo-sotto]').textContent = sotto;
+      var g = $('[data-gestisci]');
+      g.href = '/prenotazione?codice=' + encodeURIComponent(r.codice) + '&email=' + encodeURIComponent(dati.email);
+      g.hidden = false;
     }
     var dom = $('[data-wa-domanda]');
     dom.href = B.linkWa('domanda', { codice: r.codice });
@@ -347,7 +406,7 @@
     /* in modalità dimostrativa non è un acquisto vero: evento separato,
        così le campagne non imparano da prenotazioni mai salvate */
     if (demo) B.traccia('prenotazione_demo', { value: p.prezzo, item_id: p.id });
-    else B.traccia('purchase', { value: p.prezzo, currency: 'EUR', transaction_id: r.codice, item_id: p.id });
+    else B.traccia('purchase', { value: prezzoFinale, currency: 'EUR', transaction_id: r.codice, item_id: p.id, event_id: dati.event_id });
     window.scrollTo(0, 0);
     box.focus({ preventScroll: true });
   }
@@ -385,9 +444,15 @@
      Avvio
      ============================================================= */
   function caricaDisponibilita() {
-    return B.disponibilita(inizio, giorni).then(function (r) {
+    return B.disponibilita(inizio, giorni, stato.pacchetto && stato.pacchetto.id).then(function (r) {
       stato.reale = r.reale;
       stato.liberi = r.giorni;
+      /* il giorno scelto non è più disponibile con questa formula */
+      if (stato.data && !(r.giorni[stato.data] > 0)) {
+        stato.data = null;
+        $('[data-blocco="2"]').classList.remove('completo');
+        aggiornaInfoGiorno(); aggiorna();
+      }
       $('[data-avviso-demo]').hidden = r.reale;
       disegnaGiorni();
       return r;

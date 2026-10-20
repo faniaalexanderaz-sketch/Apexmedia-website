@@ -31,6 +31,7 @@
 
   <script src="/config.js"></script>
   <script src="/cookie.js" defer></script>
+  <script src="/api/impostazioni" defer></script>
   <script src="/main.js" defer></script>
   <script src="/animazioni.js" defer></script>
 </head>
@@ -263,8 +264,11 @@
         <p class="occhiello" data-cfg="fidelity.nome">Bagnarino Card</p>
         <h2 id="card-titolo" data-cfg="fidelity.titolo">Ogni 10 giornate, l’undicesima è nostra.</h2>
         <p data-cfg="fidelity.testo">A ogni giornata di lavoro ti segniamo un timbro. Al decimo, la giornata successiva te la offriamo noi. Niente app da scaricare, niente punti da calcolare.</p>
-        <a class="btn btn-pieno" href="/prenota?pacchetto=giornata" data-pos="fidelity">Inizia dalla prima giornata
-          <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <div class="fidelity-azioni">
+          <a class="btn btn-pieno" href="/prenota?pacchetto=giornata" data-pos="fidelity">Inizia dalla prima giornata
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="link-forte" href="/card">Hai già la card? Guarda i tuoi timbri</a>
+        </div>
       </div>
       <div class="tessera" role="img" aria-label="Esempio di Bagnarino Card con 7 timbri su 10 e l’undicesima giornata in omaggio">
         <div class="tessera-testa">
@@ -431,37 +435,7 @@
   </section>
 </main>
 
-<footer class="piede">
-  <div class="contenitore piede-griglia">
-    <div class="piede-marchio">
-      <img src="/img/logo-chiaro.svg" alt="Bagnarino Coworking" width="173" height="48">
-      <p>Postazioni di lavoro in affitto nel negozio Bagnarino, concessionario Olivetti in corso Lamarmora dal <span data-cfg="azienda.dal">1983</span>.</p>
-    </div>
-    <div>
-      <h2 class="piede-titolo">Contatti</h2>
-      <ul class="piede-lista">
-        <li><a data-indicazioni href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria"><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.cap">15121</span> <span data-cfg="azienda.citta">Alessandria</span></a></li>
-        <li>Cellulare e WhatsApp: <a data-tel data-tel-testo data-pos="piede" href="tel:+393472249457">347 224 9457</a></li>
-        <li>Negozio: <a data-tel="fisso" data-tel-testo data-pos="piede-fisso" href="tel:+390131444845">0131 444845</a></li>
-        <li><a data-mail href="mailto:info@bagnarino.it">info@bagnarino.it</a></li>
-      </ul>
-    </div>
-    <div>
-      <h2 class="piede-titolo">Orari</h2>
-      <p data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</p>
-      <h2 class="piede-titolo">Pagine</h2>
-      <ul class="piede-lista">
-        <li><a href="/#prezzi">Prezzi</a></li>
-        <li><a href="/prenota">Prenota una postazione</a></li>
-        <li><a href="/privacy">Privacy</a></li>
-        <li><a href="/cookie">Cookie</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="contenitore piede-legale">
-    <p><span data-cfg="azienda.ragioneSociale">Bagnarino S.r.l.</span> · <span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.cap">15121</span> <span data-cfg="azienda.citta">Alessandria</span> (<span data-cfg="azienda.provincia">AL</span>) · P. IVA <span data-cfg="azienda.piva">01588170066</span> · © <span data-anno>2026</span></p>
-  </div>
-</footer>
+
 
 <nav class="barra-mobile" aria-label="Azioni rapide">
   <a class="btn btn-pieno" href="/prenota" data-pos="barra-mobile">Prenota una postazione</a>

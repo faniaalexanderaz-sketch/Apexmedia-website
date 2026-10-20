@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>La mia Bagnarino Card | Bagnarino Coworking</title>
+  <meta name="description" content="Guarda i timbri della tua Bagnarino Card: ogni 10 giornate, l’undicesima è in omaggio.">
+  <link rel="canonical" href="/card">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F7F5F0">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/img/favicon-180.png">
+  <link rel="preload" href="/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js"></script>
+  <script src="/cookie.js" defer></script>
+  <script src="/api/impostazioni" defer></script>
+  <script src="/main.js" defer></script>
+  <script src="/tessera.js" defer></script>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
+</svg>
+
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+<header class="testata">
+  <div class="contenitore testata-riga">
+    <a class="testata-logo" href="/" aria-label="Bagnarino Coworking, torna all’inizio">
+      <img src="/img/logo.svg" alt="Bagnarino Coworking" width="144" height="40">
+    </a>
+    <div class="testata-azioni">
+      <a class="btn-icona btn-icona-wa" data-wa="generico" href="https://wa.me/393472249457" aria-label="Scrivici su WhatsApp">
+        <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+      </a>
+      <a class="btn btn-pieno btn-piccolo" href="/prenota">Prenota</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto" class="flusso contenitore-stretto contenitore">
+  <div class="flusso-testa">
+    <p class="occhiello" data-cfg="fidelity.nome">Bagnarino Card</p>
+    <h1>La mia Bagnarino Card</h1>
+    <p class="sezione-intro" data-cfg="fidelity.titolo">Ogni 10 giornate, l’undicesima è nostra.</p>
+  </div>
+  <form class="blocco" data-cerca novalidate>
+    <p class="campo-aiuto" style="margin:0 0 14px">Per vedere i tuoi timbri inserisci la tua email e il codice di una tua prenotazione (lo trovi nell’email di conferma).</p>
+    <div class="campi campi-2">
+      <div class="campo"><label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120"></div>
+      <div class="campo"><label for="codice">Codice di una prenotazione</label>
+        <input id="codice" name="codice" type="text" autocomplete="off" required maxlength="8" placeholder="BGN-4K7Q" style="text-transform:uppercase"></div>
+    </div>
+    <button class="btn btn-pieno btn-largo" type="submit" style="margin-top:16px">Mostra la mia card</button>
+    <p class="errore-generale" data-errore role="alert"></p>
+  </form>
+  <section data-scheda hidden aria-live="polite">
+    <div class="tessera tessera-grande">
+      <div class="tessera-testa">
+        <img src="/img/logo-mark-chiaro.svg" alt="" width="30" height="32">
+        <span class="tessera-nome" data-c-nome>Bagnarino Card</span>
+      </div>
+      <ol class="timbri" data-timbri></ol>
+      <div class="tessera-piede"><span data-c-conta></span><span class="omaggio"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg><span data-c-premio>11ª giornata in omaggio</span></span></div>
+    </div>
+    <div class="blocco card-info">
+      <p data-c-omaggi></p>
+      <p data-c-carnet hidden></p>
+      <a class="btn btn-pieno btn-largo" href="/prenota?pacchetto=giornata">Prenota la prossima giornata <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </section>
+</main>
+
+
+
+<nav class="barra-mobile" aria-label="Azioni rapide">
+  <a class="btn btn-pieno" href="/prenota" data-pos="barra-mobile">Prenota una postazione</a>
+  <a class="btn btn-wa" data-wa="prenota" data-pos="barra-mobile" href="https://wa.me/393472249457">
+    <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+</nav>
+</body>
+</html>

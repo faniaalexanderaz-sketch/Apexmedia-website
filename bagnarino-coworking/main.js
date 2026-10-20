@@ -103,13 +103,16 @@
      Un solo punto da cui passano tutti gli eventi: GA4 via
      dataLayer e Meta Pixel, solo se caricati dopo il consenso. */
   var META = { view_item: 'ViewContent', begin_checkout: 'InitiateCheckout', generate_lead: 'Contact', purchase: 'Schedule' };
+  function consensoMisurazione() { try { return localStorage.getItem('bgn-cookie') === 'tutti'; } catch (e) { return false; } }
   function traccia(evento, dati) {
     dati = dati || {};
     try {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: evento, parametri: dati });
       if (window.gtag && C.ga4) window.gtag('event', evento, dati);
-      if (window.fbq && META[evento]) window.fbq('track', META[evento], dati.value ? { value: dati.value, currency: 'EUR' } : {});
+      /* eventID: lo stesso codice parte anche dal server (Conversions API),
+         così Meta conta la prenotazione una volta sola */
+      if (window.fbq && META[evento]) window.fbq('track', META[evento], dati.value ? { value: dati.value, currency: 'EUR' } : {}, dati.event_id ? { eventID: dati.event_id } : undefined);
     } catch (e) {}
   }
 
@@ -147,9 +150,9 @@
       return r.json().then(function (j) { if (!r.ok) { var e = new Error(j.errore || 'errore'); e.dati = j; e.stato = r.status; throw e; } return j; });
     });
   }
-  function disponibilita(da, giorni) {
-    return chiamaApi(C.api.disponibilita + '?da=' + iso(da) + '&giorni=' + giorni)
-      .then(function (j) { return { reale: true, giorni: j.giorni || {} }; })
+  function disponibilita(da, giorni, pacchettoId) {
+    return chiamaApi(C.api.disponibilita + '?da=' + iso(da) + '&giorni=' + giorni + (pacchettoId ? '&pacchetto=' + pacchettoId : ''))
+      .then(function (j) { if (j.modalita === 'demo' || !j.giorni) throw new Error('demo'); return { reale: true, giorni: j.giorni }; })
       .catch(function () {
         if (console && console.info) console.info('[Bagnarino] Motore di prenotazione non attivo: modalità dimostrativa.');
         var out = {}, d = new Date(da);
@@ -162,7 +165,7 @@
     cfg: C, $: $, $$: $$, euro: euro, iso: iso, daIso: daIso, pacchetto: pacchetto,
     aperto: aperto, oggiPrenotabile: oggiPrenotabile, primoGiornoUtile: primoGiornoUtile,
     data: data, relativa: relativa, testoWa: testoWa, linkWa: linkWa, traccia: traccia,
-    origine: origine, chiamaApi: chiamaApi, disponibilita: disponibilita
+    origine: origine, chiamaApi: chiamaApi, disponibilita: disponibilita, consensoMisurazione: consensoMisurazione
   };
 
   /* =============================================================

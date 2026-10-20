@@ -26,7 +26,7 @@ module.exports = (req, res) => {
     const produzione = !process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'production';
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.end(produzione
-      ? 'User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ' + base + '/sitemap.xml\n'
+      ? 'User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin\nDisallow: /prenotazione\nDisallow: /card\n\nSitemap: ' + base + '/sitemap.xml\n'
       : 'User-agent: *\nDisallow: /\n');
     return;
   }
