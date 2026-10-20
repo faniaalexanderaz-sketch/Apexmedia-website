@@ -310,6 +310,15 @@
     window.addEventListener('scroll', su, { passive: true }); su();
   }
 
+  /* ---------- home: la barra in basso compare quando i pulsanti
+     dell'apertura escono dallo schermo (mai due inviti uguali insieme) ---------- */
+  var barra = $('.home .barra-mobile'), ctaApertura = $('.apertura-cta');
+  if (barra && ctaApertura && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (voci) {
+      barra.classList.toggle('nascosta', voci[0].isIntersecting);
+    }).observe(ctaApertura);
+  }
+
   /* ---------- SEO: indirizzi assoluti e dati strutturati ---------- */
   var base = sitoUrl();
   var can = $('link[rel="canonical"]');
@@ -334,7 +343,7 @@
       legalName: C.azienda.ragioneSociale,
       url: base + '/',
       logo: base + '/img/logo.svg',
-      image: base + '/img/og-bagnarino-coworking.png',
+      image: base + '/img/og-bagnarino-coworking.jpg',
       telephone: C.contatti.cellulare,
       email: C.azienda.email,
       vatID: 'IT' + C.azienda.piva,

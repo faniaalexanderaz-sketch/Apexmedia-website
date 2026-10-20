@@ -11,6 +11,21 @@ Funzioni serverless Vercel in `api/`, database Neon Postgres, email SendGrid.
 torna da solo in modalità dimostrativa (le prenotazioni si inviano su WhatsApp), senza
 SendGrid salva tutto ma non manda email, senza `ADMIN_PASSWORD` l'area riservata resta chiusa.
 
+## Design
+
+Direzione editoriale italiana, ispirata alla grafica storica Olivetti (il negozio ne è concessionario dal 1983).
+
+- **Font** (ospitati in `fonts/`, nessun servizio esterno): *Newsreader* per i titoli, con il corsivo come accento;
+  *Hanken Grotesk* per testi e interfaccia; *IBM Plex Mono* per etichette e numeri di sezione (richiamo alla macchina da scrivere).
+- **Colori**: notte `#0F1A26`, inchiostro `#1B2A3A`, ocra `#C9973B` (unico accento, il "divisorio" del logo), carta `#F4EFE6`, avorio `#FBF8F2`.
+- **Foto** in `img/foto/`: immagini **illustrative generate su misura** (nessun monumento riconoscibile, nessuna foto di repertorio
+  spacciata per lo spazio). Sul sito sono dichiarate come illustrative: vanno sostituite con le foto vere dello spazio
+  mantenendo gli stessi nomi file e misure (WebP, versioni da 560/768 e 896/1344 px; per il telefono `spazio-verticale-*`).
+- **Animazioni**: l'apertura (foto, righe del titolo, pianta dei posti liberi) è in CSS e parte subito; GSAP + ScrollTrigger
+  (`vendor/gsap/`) si caricano dopo la pagina e animano solo ciò che è sotto la piega: frase manifesto che si accende parola
+  per parola, foto che si scoprono, parallasse leggera, cifre che contano, filo ocra dei passi, timbri della card, tessera che
+  si inclina col mouse. Con "riduci movimento" tutto resta fermo e leggibile.
+
 ## Provarlo in locale
 
 ```bash
@@ -124,7 +139,8 @@ nella scheda Google Business `?utm_source=gmb`.
 - `npm test`: 11 test (disponibilità, doppia prenotazione anche simultanea, stessa persona due volte, mese fisso, carnet, fidelity, annullamento fuori orario, anti-spam).
 - Playwright da mobile (iPhone 13), modalità reale con database: prenotazione completa, gestione e annullamento, carnet usato in prenotazione, card, mese fisso; area riservata: accesso (anche password errata), prenotazione a mano, "È arrivato" con timbro, incasso, clienti, CSV, cambio prezzo che si riflette sul sito, uscita.
 - Playwright a 375 / 768 / 1440 px: nessuno scroll orizzontale, CTA sempre visibili, nessun errore JavaScript.
-- Lighthouse mobile: home 99 / 100 / 100 / 100, prenota 99 / 100 / 100 / 100 (Prestazioni, Accessibilità, Best Practices, SEO). L'area riservata non è indicizzata di proposito.
+- Lighthouse mobile (server locale con compressione): home 96 / 100 / 100 / 100 con le foto, prenota 99 / 100 / 100 / 100 (Prestazioni, Accessibilità, Best Practices, SEO). L'area riservata non è indicizzata di proposito.
+- Animazioni GSAP verificate: 37 animazioni attive, nessun elemento lasciato nascosto, nessun errore.
 - Dati strutturati LocalBusiness + CoworkingSpace + FAQPage generati da `config.js` (verificarli con il Rich Results Test di Google, che esegue JavaScript).
 
 ## Checklist di lancio
@@ -136,7 +152,7 @@ nella scheda Google Business `?utm_source=gmb`.
 - [ ] Dominio scelto e collegato al progetto Vercel → `SITO_URL` impostato
 - [ ] Scheda **Google Business** aggiornata con il link di prenotazione (`/prenota?utm_source=gmb`) e la categoria "Spazio di coworking"
 - [ ] Codici GA4 e Meta Pixel in `config.js`; `META_PIXEL_ID` e `META_CAPI_TOKEN` su Vercel; verifica in Gestione eventi di Meta
-- [ ] Foto vere al posto dei segnaposto "Foto in arrivo"
+- [ ] Foto vere dello spazio al posto delle immagini illustrative (`img/foto/`)
 - [ ] Punti [DA CONFERMARE] chiusi (sotto)
 - [ ] Guida consegnata a Marcella (`GUIDA-TITOLARE.md`) e password comunicata a voce
 

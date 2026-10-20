@@ -52,7 +52,12 @@ const TIPI = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': '
     if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
     if (!fs.existsSync(f) && fs.existsSync(f + '.html')) f += '.html';
     if (!fs.existsSync(f)) { res.statusCode = 404; f = path.join(RADICE, '404.html'); }
-    res.setHeader('Content-Type', TIPI[path.extname(f)] || 'application/octet-stream');
-    fs.createReadStream(f).pipe(res);
+    const tipo = TIPI[path.extname(f)] || 'application/octet-stream';
+    res.setHeader('Content-Type', tipo);
+    /* compressione come su Vercel, per misurare le prestazioni in modo realistico */
+    if (/text|javascript|json|svg|xml/.test(tipo) && /gzip/.test(req.headers['accept-encoding'] || '')) {
+      res.setHeader('Content-Encoding', 'gzip');
+      fs.createReadStream(f).pipe(require('zlib').createGzip()).pipe(res);
+    } else fs.createReadStream(f).pipe(res);
   }).listen(PORTA, () => console.log('Bagnarino Coworking in locale: http://localhost:' + PORTA + '  (area riservata: password "' + process.env.ADMIN_PASSWORD + '")'));
 })();
