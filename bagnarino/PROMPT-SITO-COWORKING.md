@@ -26,7 +26,7 @@ Devi costruire la web app di un nuovo coworking per un cliente reale di Apex Med
 
 - Azienda: Bagnarino S.r.l. — Corso Lamarmora 46, 15121 Alessandria (AL)
   Tel. 0131 444845 · info@bagnarino.it · P. IVA 01588170066
-- Storia: dal 1983 in corso Lamarmora, concessionario Olivetti (registratori di cassa,
+- Storia: attiva dal 1983 ad Alessandria (da circa 20 anni in corso Lamarmora), concessionario Olivetti (registratori di cassa,
   multifunzione, forniture per ufficio). Titolare: Sig.ra Marcella Bagnarino.
 - Il nuovo business: la titolare NON vuole spingere l'assistenza tecnica. Vuole trasformare
   lo spazio del negozio in un COWORKING: divisori in plexiglass tra le postazioni,
@@ -108,7 +108,7 @@ Home (`index.html`), in quest'ordine — ogni sezione deve avere uno scopo di co
    Sottotitolo con i 3 vantaggi (wi-fi veloce, stampanti Olivetti incluse, spazi divisi
    e silenziosi). Badge "Oggi: X posti liberi" (dato da config in fase 1, reale in fase 2).
    CTA primaria "Prenota ora", secondaria "Scrivici su WhatsApp".
-3. Striscia di fiducia: "Dal 1983 in corso Lamarmora" · "Concessionario Olivetti" ·
+3. Striscia di fiducia: "Dal 1983 ad Alessandria" · "Concessionario Olivetti" ·
    "Niente tessera, niente vincoli" · "Prenoti in 30 secondi".
 4. Prezzi (sezione più importante): 4 card (Giornata, Carnet 10, Mese flessibile, Mese
    fisso), la card "Mese flessibile" evidenziata come "La più scelta". Ogni card: prezzo
