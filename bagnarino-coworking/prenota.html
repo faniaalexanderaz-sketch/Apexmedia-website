@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Prenota una postazione | Bagnarino Coworking Alessandria</title>
+  <meta name="description" content="Prenota la tua scrivania al coworking Bagnarino di Alessandria: scegli formula e giorno, paghi in sede il primo giorno. Giornata €25, carnet, mese.">
+  <link rel="canonical" href="/prenota">
+  <meta name="theme-color" content="#F7F5F0">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Bagnarino Coworking">
+  <meta property="og:title" content="Prenota una postazione al Bagnarino Coworking">
+  <meta property="og:description" content="Scegli il giorno, prenoti in 30 secondi, paghi in sede.">
+  <meta property="og:url" content="/prenota">
+  <meta property="og:image" content="/img/og-bagnarino-coworking.png">
+
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/img/favicon-180.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preload" href="/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+
+  <script src="/config.js"></script>
+  <script src="/cookie.js" defer></script>
+  <script src="/main.js" defer></script>
+  <script src="/prenota.js" defer></script>
+</head>
+<body class="pagina-prenota">
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-calendar-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="m9 15 2 2 4-4"/></symbol>
+<symbol id="i-calendar-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18h6"/><path d="M16 2v3"/><path d="M19 15v6"/><path d="M21 11.5V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h8.3"/><path d="M3 9h18"/><path d="M8 2v3"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-credit-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><path d="M6 14h2"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+<symbol id="i-navigation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></symbol>
+<symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
+</svg>
+
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<!-- testata ridotta: niente menu, nessuna uscita inutile dal flusso -->
+<header class="testata testata-flusso">
+  <div class="contenitore testata-riga">
+    <a class="testata-logo" href="/" aria-label="Bagnarino Coworking, torna al sito">
+      <img src="/img/logo.svg" alt="Bagnarino Coworking" width="144" height="40">
+    </a>
+    <a class="aiuto-link" data-wa="prenota" data-pos="flusso-testata" href="https://wa.me/393472249457">
+      <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Serve aiuto?</span>
+    </a>
+  </div>
+</header>
+
+<main id="contenuto" class="flusso">
+  <div class="contenitore">
+
+    <div data-modulo-zona>
+      <div class="avviso-demo" data-avviso-demo hidden>
+        <svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>
+        <p><strong>Versione di prova.</strong> La prenotazione online non viene ancora salvata: alla fine potrai inviarla con un tocco su WhatsApp per bloccare il posto.</p>
+      </div>
+
+      <div class="flusso-testa">
+        <h1>Prenota la tua postazione</h1>
+        <ul class="rassicurazioni">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Nessun pagamento online</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Paghi in sede il primo giorno</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Disdici gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span></span></li>
+        </ul>
+      </div>
+
+      <ol class="indicatore" aria-label="Passaggi della prenotazione">
+        <li data-indicatore="1">1. Formula</li>
+        <li data-indicatore="2">2. Giorno</li>
+        <li data-indicatore="3">3. I tuoi dati</li>
+      </ol>
+
+      <div class="flusso-griglia">
+        <form class="flusso-form" data-modulo novalidate>
+
+          <!-- PASSO 1: formula -->
+          <fieldset class="blocco" data-blocco="1">
+            <legend class="blocco-titolo"><span class="blocco-num" aria-hidden="true">1</span>Scegli la formula</legend>
+            <div class="opzioni" data-opzioni role="radiogroup" aria-label="Formula"></div>
+            <div class="blocco-sintesi" data-sintesi="1" hidden>
+              <p data-sintesi-testo></p>
+              <button class="link-cambia" type="button" data-cambia="1">Cambia</button>
+            </div>
+          </fieldset>
+
+          <!-- PASSO 2: giorno -->
+          <fieldset class="blocco" data-blocco="2">
+            <legend class="blocco-titolo"><span class="blocco-num" aria-hidden="true">2</span><span data-etichetta-data>Scegli il giorno</span></legend>
+            <p class="giorni-legenda" aria-hidden="true">
+              <span><i style="background:var(--verde)"></i>Posti liberi</span>
+              <span><i style="background:var(--ocra)"></i>Ultimi posti</span>
+              <span><i style="background:#B9B2A3"></i>Pieno o chiuso</span>
+            </p>
+            <div class="giorni" data-giorni role="radiogroup" aria-label="Giorno"></div>
+            <p class="giorno-info" data-giorno-info aria-live="polite"></p>
+            <p class="campo-errore" data-errore-giorno style="display:none">Scegli un giorno per continuare.</p>
+          </fieldset>
+
+          <!-- PASSO 3: dati -->
+          <fieldset class="blocco" data-blocco="3">
+            <legend class="blocco-titolo"><span class="blocco-num" aria-hidden="true">3</span>I tuoi dati</legend>
+            <div class="campi">
+              <div class="campi campi-2">
+                <div class="campo" data-campo="nome">
+                  <label for="nome">Nome</label>
+                  <input id="nome" name="nome" type="text" autocomplete="given-name" required maxlength="60" aria-describedby="nome-errore">
+                  <p class="campo-errore" id="nome-errore">Scrivi il tuo nome.</p>
+                </div>
+                <div class="campo" data-campo="cognome">
+                  <label for="cognome">Cognome</label>
+                  <input id="cognome" name="cognome" type="text" autocomplete="family-name" required maxlength="60" aria-describedby="cognome-errore">
+                  <p class="campo-errore" id="cognome-errore">Scrivi il tuo cognome.</p>
+                </div>
+              </div>
+              <div class="campo" data-campo="email">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120" aria-describedby="email-aiuto email-errore">
+                <p class="campo-aiuto" id="email-aiuto">Ti mandiamo qui il riepilogo della prenotazione.</p>
+                <p class="campo-errore" id="email-errore">Controlla l’email: deve essere tipo nome@esempio.it.</p>
+              </div>
+              <div class="campo" data-campo="telefono">
+                <label for="telefono">Cellulare</label>
+                <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" aria-describedby="telefono-errore" placeholder="347 123 4567">
+                <p class="campo-errore" id="telefono-errore">Inserisci un numero di cellulare valido, ad esempio 347 123 4567.</p>
+              </div>
+
+              <details class="dettagli-extra">
+                <summary>Mi serve la fattura</summary>
+                <div class="campo" data-campo="piva_cf">
+                  <label for="piva_cf">Partita IVA o codice fiscale <span class="facoltativo">(facoltativo)</span></label>
+                  <input id="piva_cf" name="piva_cf" type="text" autocomplete="off" maxlength="16" aria-describedby="piva-errore" style="text-transform:uppercase">
+                  <p class="campo-errore" id="piva-errore">Controlla il dato: la partita IVA ha 11 cifre, il codice fiscale 16 caratteri.</p>
+                </div>
+              </details>
+              <details class="dettagli-extra">
+                <summary>Aggiungi una nota</summary>
+                <div class="campo">
+                  <label for="note">Nota per noi <span class="facoltativo">(facoltativo)</span></label>
+                  <textarea id="note" name="note" maxlength="500" placeholder="Es. arrivo verso le 11, mi serve una postazione vicina alla presa"></textarea>
+                </div>
+              </details>
+
+              <!-- campo trappola per i robot: le persone non lo vedono -->
+              <div class="trappola" aria-hidden="true">
+                <label for="sito_web">Lascia vuoto</label>
+                <input id="sito_web" name="sito_web" type="text" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="spunta-gruppo">
+                <div class="campo" data-campo="privacy">
+                  <label class="spunta" for="privacy">
+                    <input id="privacy" name="privacy" type="checkbox" required aria-describedby="privacy-errore">
+                    <span>Ho letto l’<a href="/privacy" target="_blank" rel="noopener">informativa privacy</a> e accetto il trattamento dei dati per gestire la prenotazione.</span>
+                  </label>
+                  <p class="campo-errore" id="privacy-errore">Per prenotare serve il tuo consenso al trattamento dei dati.</p>
+                </div>
+                <label class="spunta" for="marketing">
+                  <input id="marketing" name="marketing" type="checkbox">
+                  <span>Voglio ricevere offerte e novità del coworking (al massimo una email al mese). <span class="facoltativo">Facoltativo.</span></span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="invia-zona">
+            <button class="btn btn-pieno btn-grande btn-largo" type="submit" data-invia>
+              Conferma prenotazione <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </button>
+            <p class="invia-nota">Nessun pagamento ora: paghi in sede il primo giorno.</p>
+            <p class="errore-generale" data-errore-generale role="alert"></p>
+          </div>
+        </form>
+
+        <aside class="riepilogo" aria-labelledby="riepilogo-titolo">
+          <h2 id="riepilogo-titolo">Il tuo riepilogo</h2>
+          <dl>
+            <div><dt>Formula</dt><dd data-r-formula>—</dd></div>
+            <div><dt data-r-etichetta-giorno>Giorno</dt><dd data-r-giorno>da scegliere</dd></div>
+            <div><dt>Orario</dt><dd><span data-cfg="orari.apertura">9:30</span>–<span data-cfg="orari.chiusura">18:30</span></dd></div>
+            <div class="riepilogo-totale"><dt>Totale</dt><dd data-r-totale>—</dd></div>
+          </dl>
+          <p class="riepilogo-paga"><svg class="ico" aria-hidden="true"><use href="#i-credit-card"/></svg><span>Pagamento in sede il primo giorno, contanti o carta.</span></p>
+          <p class="riepilogo-aiuto">Preferisci scriverci? <a data-wa="prenota" data-pos="riepilogo" href="https://wa.me/393472249457">Prenota su WhatsApp</a></p>
+        </aside>
+      </div>
+    </div>
+
+    <!-- CONFERMA -->
+    <section class="successo" data-successo hidden tabindex="-1" aria-labelledby="successo-titolo">
+      <div class="successo-icona"><svg class="ico" aria-hidden="true"><use href="#i-calendar-check"/></svg></div>
+      <h1 id="successo-titolo" data-successo-titolo>Prenotazione confermata</h1>
+      <p class="successo-sotto" data-successo-sotto>Ti abbiamo mandato il riepilogo via email. Ti aspettiamo!</p>
+      <p class="codice"><span>Codice prenotazione</span><strong data-codice>BGN-0000</strong></p>
+
+      <div class="avviso-demo" data-successo-demo hidden>
+        <p><strong>Ultimo passo: invia la prenotazione su WhatsApp.</strong> Il sito è in versione di prova e non salva ancora le prenotazioni. Con il messaggio già pronto, Marcella ti blocca il posto e ti risponde.</p>
+        <a class="btn btn-pieno btn-grande" data-wa-conferma data-pos="successo-demo" href="https://wa.me/393472249457">
+          <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Invia su WhatsApp</a>
+      </div>
+
+      <dl class="successo-dettagli">
+        <div><dt>Formula</dt><dd data-s-formula></dd></div>
+        <div><dt data-s-etichetta-giorno>Giorno</dt><dd data-s-giorno></dd></div>
+        <div><dt>Orario</dt><dd><span data-cfg="orari.apertura">9:30</span>–<span data-cfg="orari.chiusura">18:30</span></dd></div>
+        <div><dt>Da pagare in sede</dt><dd data-s-totale></dd></div>
+        <div><dt>Dove</dt><dd><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.citta">Alessandria</span></dd></div>
+      </dl>
+
+      <div class="successo-azioni">
+        <button class="btn btn-filo" type="button" data-ics>
+          <svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg>Aggiungi al calendario</button>
+        <a class="btn btn-filo" data-indicazioni data-pos="successo" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria">
+          <svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Come arrivare</a>
+        <a class="btn btn-wa" data-wa-domanda data-pos="successo-domanda" href="https://wa.me/393472249457">
+          <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Ho una domanda sulla mia prenotazione</a>
+      </div>
+      <a class="successo-torna" href="/">Torna al sito</a>
+    </section>
+  </div>
+</main>
+
+<!-- barra fissa mobile: prezzo sempre in vista + passo successivo -->
+<div class="barra-flusso" data-barra-flusso>
+  <div class="barra-flusso-prezzo"><strong data-b-totale>—</strong><span data-b-testo>Scegli la formula</span></div>
+  <button class="btn btn-pieno" type="button" data-b-avanti>Continua</button>
+</div>
+
+<footer class="piede">
+  <div class="contenitore piede-griglia">
+    <div class="piede-marchio">
+      <img src="/img/logo-chiaro.svg" alt="Bagnarino Coworking" width="173" height="48">
+      <p>Postazioni di lavoro in affitto nel negozio Bagnarino, concessionario Olivetti in corso Lamarmora dal <span data-cfg="azienda.dal">1983</span>.</p>
+    </div>
+    <div>
+      <h2 class="piede-titolo">Contatti</h2>
+      <ul class="piede-lista">
+        <li><a data-indicazioni href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria"><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.cap">15121</span> <span data-cfg="azienda.citta">Alessandria</span></a></li>
+        <li>Cellulare e WhatsApp: <a data-tel data-tel-testo data-pos="piede" href="tel:+393472249457">347 224 9457</a></li>
+        <li>Negozio: <a data-tel="fisso" data-tel-testo data-pos="piede-fisso" href="tel:+390131444845">0131 444845</a></li>
+        <li><a data-mail href="mailto:info@bagnarino.it">info@bagnarino.it</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="piede-titolo">Orari</h2>
+      <p data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</p>
+      <h2 class="piede-titolo">Pagine</h2>
+      <ul class="piede-lista">
+        <li><a href="/#prezzi">Prezzi</a></li>
+        <li><a href="/prenota">Prenota una postazione</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/cookie">Cookie</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="contenitore piede-legale">
+    <p><span data-cfg="azienda.ragioneSociale">Bagnarino S.r.l.</span> · <span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.cap">15121</span> <span data-cfg="azienda.citta">Alessandria</span> (<span data-cfg="azienda.provincia">AL</span>) · P. IVA <span data-cfg="azienda.piva">01588170066</span> · © <span data-anno>2026</span></p>
+  </div>
+</footer>
+</body>
+</html>
