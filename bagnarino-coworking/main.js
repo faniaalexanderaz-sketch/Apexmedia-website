@@ -224,13 +224,16 @@
   var listino = $('[data-listino]');
   if (listino) {
     listino.innerHTML = C.listino.map(function (p) {
-      return '<article class="prezzo' + (p.evidenza ? ' prezzo-evidenza' : '') + '">' +
-        (p.etichetta ? '<p class="prezzo-etichetta">' + p.etichetta + '</p>' : '') +
-        '<h3 class="prezzo-nome">' + p.nome + '</h3>' +
-        '<p class="prezzo-cifra"><span class="prezzo-valore">' + euro(p.prezzo) + '</span> <span class="prezzo-unita">' + p.unita + '</span></p>' +
+      var cifra = euro(p.prezzo).replace('€', '');
+      return '<article class="prezzo' + (p.evidenza ? ' prezzo-evidenza' : '') + '" data-card-prezzo>' +
+        '<div class="prezzo-testa"><h3 class="prezzo-nome">' + p.nome + '</h3>' +
+        (p.etichetta ? '<p class="prezzo-etichetta">' + p.etichetta + '</p>' : '') + '</div>' +
+        '<p class="prezzo-cifra"><span class="visually-hidden">' + euro(p.prezzo) + ' ' + p.unita + '</span><span class="prezzo-valuta" aria-hidden="true">€</span>' +
+        '<span class="prezzo-valore" aria-hidden="true" data-cifra="' + p.prezzo + '">' + cifra + '</span>' +
+        '<span class="prezzo-unita" aria-hidden="true">' + p.unita + '</span></p>' +
         '<p class="prezzo-nota">' + p.nota + '</p>' +
         '<ul class="prezzo-include">' + p.include.map(function (x) {
-          return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + x + '</li>';
+          return '<li><span class="spunta"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>' + x + '</li>';
         }).join('') + '</ul>' +
         '<a class="btn ' + (p.evidenza ? 'btn-ocra' : 'btn-pieno') + ' btn-largo" href="/prenota?pacchetto=' + p.id + '" data-pos="prezzi-' + p.id + '">' + p.cta +
         '<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>' +
