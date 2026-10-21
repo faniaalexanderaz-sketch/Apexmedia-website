@@ -301,6 +301,7 @@ async function annulla(codice, email, adesso) {
 
 /* annullamento dall'area riservata: nessun limite di orario */
 async function annullaDaAdmin(id) {
+  if (!Number.isInteger(id)) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
   const cfg = await impostazioni();
   const p = (await q(
     `SELECT p.id, p.codice, p.pacchetto, to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
@@ -366,6 +367,7 @@ async function card(email, codice) {
    del carnet) vale un timbro. Al decimo timbro: una giornata in
    omaggio. Tornare indietro toglie il timbro. */
 async function segnaPresenza(id, nuovoStato) {
+  if (!Number.isInteger(id)) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
   if (['presente', 'assente', 'confermata'].indexOf(nuovoStato) === -1) throw errore('DATI', 'Stato non valido.');
   const cfg = await impostazioni();
   const soglia = (cfg.fidelity && cfg.fidelity.timbri) || 10;
