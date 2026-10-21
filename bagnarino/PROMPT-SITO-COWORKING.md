@@ -57,7 +57,8 @@ Devi costruire la web app di un nuovo coworking per un cliente reale di Apex Med
   - Fidelity card: ogni 10 giornate, la successiva è in omaggio
 - Postazioni: [DA CONFERMARE] numero esatto. Usa 6 come valore provvisorio nel file di config,
   così si cambia in un punto solo.
-- Orari: dal lunedì al venerdì, 9:30-18:30. Sabato e domenica chiuso.
+- Orari: [DA CONFERMARE] giorni e orari esatti. Valore provvisorio nel file di config:
+  dal lunedì al venerdì, 9:30-18:30, sabato e domenica chiuso.
 - Telefono e WhatsApp della titolare: +39 347 224 9457 (link wa.me/393472249457,
   tel:+393472249457). Il fisso del negozio 0131 444845 resta nel footer.
 - Pacchetto 10 giornate: 10 ingressi pagati in anticipo, validi 3 mesi dal primo ingresso.
