@@ -129,47 +129,47 @@
     </div>
   </section>
 
-  <!-- ============ PIANTA DI OGGI (si appoggia sull'apertura) ============ -->
-  <section class="pianta-sezione" aria-label="Posti liberi">
+  <!-- ============ DISPONIBILITÀ: scegli il giorno, vedi le scrivanie libere ============ -->
+  <section class="disp-sezione" aria-labelledby="disp-titolo">
     <div class="contenitore">
-      <!-- La "pianta di oggi": schema dello spazio con i posti liberi.
-           I colori arrivano dalle prenotazioni vere. -->
-      <a class="pianta-card" href="/prenota?pacchetto=giornata" data-pos="pianta">
-        <div class="pianta-testa">
-          <div>
-            <p class="etichetta-mono">La pianta di oggi</p>
-            <p class="pianta-giorno" data-pianta-giorno>Oggi</p>
-          </div>
-          <p class="pianta-conta"><strong data-pianta-conta>4 su 6</strong> <span>scrivanie libere</span></p>
+      <div class="disp-card" data-disp>
+        <div class="disp-testa">
+          <p class="disp-live"><span class="disp-live-punto" aria-hidden="true"></span><span data-disp-fonte>Posti liberi aggiornati</span></p>
+          <h2 id="disp-titolo" class="disp-titolo">Scegli il giorno, <em>la scrivania è pronta.</em></h2>
         </div>
-        <svg class="pianta" data-pianta viewBox="0 0 360 250" role="img" aria-labelledby="pianta-titolo">
-          <title id="pianta-titolo">Schema dello spazio: sei scrivanie divise da pannelli in plexiglass</title>
-          <rect class="p-stanza" x="8" y="8" width="344" height="234" rx="10"/>
-          <line class="p-vetro" x1="70" y1="8" x2="290" y2="8"/>
-          <text class="p-etichetta" x="180" y="26" text-anchor="middle">vetrina su corso Lamarmora</text>
-          <g class="p-scrivania" data-scrivania="1"><rect class="p-sedia" x="66" y="38" width="28" height="12" rx="5"/><rect class="p-piano" x="40" y="54" width="80" height="48" rx="6"/><circle class="p-stato" cx="80" cy="78" r="6"/></g>
-          <g class="p-scrivania" data-scrivania="2"><rect class="p-sedia" x="154" y="38" width="28" height="12" rx="5"/><rect class="p-piano" x="128" y="54" width="80" height="48" rx="6"/><circle class="p-stato" cx="168" cy="78" r="6"/></g>
-          <g class="p-scrivania" data-scrivania="3"><rect class="p-sedia" x="242" y="38" width="28" height="12" rx="5"/><rect class="p-piano" x="216" y="54" width="80" height="48" rx="6"/><circle class="p-stato" cx="256" cy="78" r="6"/></g>
-          <g class="p-scrivania" data-scrivania="4"><rect class="p-piano" x="40" y="118" width="80" height="48" rx="6"/><rect class="p-sedia" x="66" y="170" width="28" height="12" rx="5"/><circle class="p-stato" cx="80" cy="142" r="6"/></g>
-          <g class="p-scrivania" data-scrivania="5"><rect class="p-piano" x="128" y="118" width="80" height="48" rx="6"/><rect class="p-sedia" x="154" y="170" width="28" height="12" rx="5"/><circle class="p-stato" cx="168" cy="142" r="6"/></g>
-          <g class="p-scrivania" data-scrivania="6"><rect class="p-piano" x="216" y="118" width="80" height="48" rx="6"/><rect class="p-sedia" x="242" y="170" width="28" height="12" rx="5"/><circle class="p-stato" cx="256" cy="142" r="6"/></g>
-          <line class="p-divisorio p-div-o" x1="34" y1="110" x2="302" y2="110"/>
-          <line class="p-divisorio p-div-v" x1="124" y1="50" x2="124" y2="170"/>
-          <line class="p-divisorio p-div-v" x1="212" y1="50" x2="212" y2="170"/>
-          <rect class="p-stampa" x="266" y="196" width="72" height="34" rx="5"/>
-          <text class="p-etichetta p-etichetta-scura" x="302" y="217" text-anchor="middle">Olivetti</text>
-          <line class="p-porta-varco" x1="36" y1="242" x2="80" y2="242"/>
-          <path class="p-porta" d="M38 242V200M38 200A42 42 0 0 1 80 242"/>
-          <text class="p-etichetta" x="92" y="232">ingresso</text>
-        </svg>
-        <div class="pianta-piede">
-          <ul class="legenda" aria-hidden="true">
-            <li><span class="legenda-punto libera"></span>Libera</li>
-            <li><span class="legenda-punto occupata"></span>Occupata</li>
+
+        <div class="disp-giorni" role="group" aria-label="Scegli il giorno" data-disp-giorni>
+          <!-- i giorni si generano qui: prossimi giorni di apertura -->
+        </div>
+
+        <div class="disp-sala">
+          <p class="disp-vetrina"><span>Vetrina · corso Lamarmora</span></p>
+          <ul class="disp-scrivanie" aria-label="Scrivanie" data-disp-scrivanie>
+          <li class="disp-scrivania libera" data-scrivania="1"><svg class="tavolo" viewBox="0 0 80 64" aria-hidden="true"><rect class="t-sedia" x="28" y="46" width="24" height="14" rx="7"/><rect class="t-piano" x="6" y="8" width="68" height="34" rx="5"/><rect class="t-schermo" x="27" y="12" width="26" height="4" rx="2"/><rect class="t-pc" x="30" y="22" width="20" height="12" rx="2"/><circle class="t-persona" cx="40" cy="50" r="9"/></svg><span class="disp-num">1</span><span class="disp-stato">Libera</span></li>
+          <li class="disp-scrivania libera" data-scrivania="2"><svg class="tavolo" viewBox="0 0 80 64" aria-hidden="true"><rect class="t-sedia" x="28" y="46" width="24" height="14" rx="7"/><rect class="t-piano" x="6" y="8" width="68" height="34" rx="5"/><rect class="t-schermo" x="27" y="12" width="26" height="4" rx="2"/><rect class="t-pc" x="30" y="22" width="20" height="12" rx="2"/><circle class="t-persona" cx="40" cy="50" r="9"/></svg><span class="disp-num">2</span><span class="disp-stato">Libera</span></li>
+          <li class="disp-scrivania libera" data-scrivania="3"><svg class="tavolo" viewBox="0 0 80 64" aria-hidden="true"><rect class="t-sedia" x="28" y="46" width="24" height="14" rx="7"/><rect class="t-piano" x="6" y="8" width="68" height="34" rx="5"/><rect class="t-schermo" x="27" y="12" width="26" height="4" rx="2"/><rect class="t-pc" x="30" y="22" width="20" height="12" rx="2"/><circle class="t-persona" cx="40" cy="50" r="9"/></svg><span class="disp-num">3</span><span class="disp-stato">Libera</span></li>
+          <li class="disp-scrivania libera" data-scrivania="4"><svg class="tavolo" viewBox="0 0 80 64" aria-hidden="true"><rect class="t-sedia" x="28" y="46" width="24" height="14" rx="7"/><rect class="t-piano" x="6" y="8" width="68" height="34" rx="5"/><rect class="t-schermo" x="27" y="12" width="26" height="4" rx="2"/><rect class="t-pc" x="30" y="22" width="20" height="12" rx="2"/><circle class="t-persona" cx="40" cy="50" r="9"/></svg><span class="disp-num">4</span><span class="disp-stato">Libera</span></li>
+          <li class="disp-scrivania libera" data-scrivania="5"><svg class="tavolo" viewBox="0 0 80 64" aria-hidden="true"><rect class="t-sedia" x="28" y="46" width="24" height="14" rx="7"/><rect class="t-piano" x="6" y="8" width="68" height="34" rx="5"/><rect class="t-schermo" x="27" y="12" width="26" height="4" rx="2"/><rect class="t-pc" x="30" y="22" width="20" height="12" rx="2"/><circle class="t-persona" cx="40" cy="50" r="9"/></svg><span class="disp-num">5</span><span class="disp-stato">Libera</span></li>
+          <li class="disp-scrivania libera" data-scrivania="6"><svg class="tavolo" viewBox="0 0 80 64" aria-hidden="true"><rect class="t-sedia" x="28" y="46" width="24" height="14" rx="7"/><rect class="t-piano" x="6" y="8" width="68" height="34" rx="5"/><rect class="t-schermo" x="27" y="12" width="26" height="4" rx="2"/><rect class="t-pc" x="30" y="22" width="20" height="12" rx="2"/><circle class="t-persona" cx="40" cy="50" r="9"/></svg><span class="disp-num">6</span><span class="disp-stato">Libera</span></li>
           </ul>
-          <span class="pianta-link">Prenota un posto <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+          <div class="disp-sala-piede">
+            <span class="disp-legenda"><span class="punto libera" aria-hidden="true"></span>Libera</span>
+            <span class="disp-legenda"><span class="punto occupata" aria-hidden="true"></span>Occupata</span>
+            <span class="disp-legenda disp-olivetti"><svg class="ico" aria-hidden="true"><use href="#i-printer"/></svg>Stampante Olivetti</span>
+          </div>
         </div>
-      </a>
+
+        <div class="disp-azione">
+          <p class="disp-conta" aria-live="polite"><strong data-disp-conta>6 su 6</strong> <span data-disp-quando>scrivanie libere</span></p>
+          <a class="btn btn-ocra btn-grande btn-largo" href="/prenota?pacchetto=giornata" data-disp-cta data-pos="disponibilita"><span data-disp-cta-testo>Prenota la tua giornata</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <ol class="disp-passi">
+            <li><span>1</span>Scegli il giorno</li>
+            <li><span>2</span>Scegli la formula</li>
+            <li><span>3</span>Paghi quando arrivi</li>
+          </ol>
+          <p class="disp-nota">La scrivania te la assegniamo noi tra quelle libere: sono tutte uguali, divise da pannelli trasparenti.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -195,12 +195,15 @@
       <h2 class="manifesto" id="titolo-luogo" data-manifesto>Dal 1983 vendiamo e ripariamo macchine per l’ufficio ad Alessandria. Oggi il negozio di corso Lamarmora diventa <em>il tuo ufficio</em>: scrivanie vere, divisori trasparenti e le stampanti che conosciamo meglio di chiunque.</h2>
 
       <div class="luogo-griglia">
-        <figure class="foto foto-alta" data-rivela>
-          <img src="/img/foto/macchina-da-scrivere-560.webp" srcset="/img/foto/macchina-da-scrivere-560.webp 560w, /img/foto/macchina-da-scrivere-896.webp 896w"
-               sizes="(min-width: 900px) 40vw, 90vw" width="896" height="1120" loading="lazy" decoding="async"
-               alt="Una macchina da scrivere d’epoca accanto a un portatile su un bancone di legno">
-          <figcaption><span>Dal <span data-cfg="azienda.dal">1983</span></span> Concessionario Olivetti</figcaption>
-        </figure>
+        <div class="storia" aria-label="La nostra storia">
+          <p class="storia-etichetta">La nostra storia</p>
+          <ol class="storia-linea">
+            <li><span class="storia-anno" data-cfg="azienda.dal">1983</span><p><strong>Nasce Bagnarino.</strong> Vendita e assistenza di macchine per l’ufficio ad Alessandria.</p></li>
+            <li><span class="storia-anno storia-anno-testo">Olivetti</span><p><strong>Concessionario ufficiale.</strong> Stampanti, registratori di cassa e un tecnico sempre a portata di mano.</p></li>
+            <li><span class="storia-anno storia-anno-testo">Corso Lamarmora</span><p><strong>Il negozio di oggi,</strong> al numero 46, in pieno centro.</p></li>
+            <li class="storia-oggi"><span class="storia-anno">Oggi</span><p><strong>Il negozio diventa il tuo ufficio:</strong> <span data-cfg="postazioni">6</span> scrivanie da <span data-prezzo="giornata">€25</span> al giorno.</p></li>
+          </ol>
+        </div>
         <div class="luogo-testo">
           <dl class="cifre">
             <div><dt>Anni di esperienza</dt><dd data-conta="43"><span data-anni>43</span></dd></div>

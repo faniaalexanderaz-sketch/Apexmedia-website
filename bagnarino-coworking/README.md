@@ -96,12 +96,24 @@ posto lo stesso giorno sono impossibili anche con richieste simultanee), `tentat
 - Installabile come app: `site.webmanifest` (clienti) e `admin.webmanifest` (titolare, icona "Gestione").
 - Area riservata: `/admin`, link "Area riservata" nel piè di pagina.
 
+## Crescita (area riservata)
+
+Scheda **Crescita** in `/admin` (icona ↗ in basso): come sta andando il coworking mese per mese, ultimi 12 mesi.
+
+- **Numeri automatici** dal database: prenotazioni, incassato e prenotato, nuovi clienti, clienti che tornano, arrivati / non venuti, prenotazioni per canale (stessa classificazione di "Da dove arrivano le prenotazioni").
+- **Numeri a mano** (tabella `marketing_mesi`, uno per mese): follower e persone raggiunte su Instagram/Facebook, visualizzazioni, chiamate, indicazioni e clic dal profilo Google, recensioni (numero e media), visite al sito, contatti WhatsApp, spesa Meta e Google, nota "Cosa abbiamo fatto questo mese". **Nessuna chiave API**: li inserisce Apex Media.
+- In cima una frase in italiano semplice generata dai numeri; carte con confronto sul mese prima (freccia + parole); imbuto *persone raggiunte → visite al sito → prenotazioni → arrivati*; grafici SVG animati (prenotazioni, incassi, canali, follower, azioni Google).
+- **Costo per prenotazione** = spesa pubblicitaria del mese ÷ tutte le prenotazioni del mese. **Ritorno della pubblicità** = valore delle prenotazioni arrivate da Instagram, Facebook e Google Ads ÷ spesa.
+- **Due accessi**: `ADMIN_PASSWORD` (Marcella, ruolo *titolare*: vede tutto, Crescita in sola lettura) e `APEX_PASSWORD` (Apex Media, ruolo *apex*: in più il pulsante "Aggiorna i dati del mese"). Il cookie contiene un'impronta diversa per ruolo; senza `APEX_PASSWORD` l'accesso Apex non esiste. Le Impostazioni sono nell'ingranaggio in alto.
+- Come aggiornarla: entra con la password Apex → Crescita → scegli il mese con le frecce → "Aggiorna i dati del mese" (si possono lasciare campi vuoti; numeri all'italiana, es. 1.234 o 4,6).
+
 ## Variabili d'ambiente su Vercel
 
 | Variabile | Obbligatoria | A cosa serve |
 |---|---|---|
 | `DATABASE_URL` | sì, per le prenotazioni vere | Neon Postgres (Vercel → Storage → Neon la imposta da sola) |
 | `ADMIN_PASSWORD` | sì, per l'area riservata | Password della titolare |
+| `APEX_PASSWORD` | per la scheda Crescita | Password di Apex Media: aggiorna i numeri di social, Google e pubblicità |
 | `CRON_SECRET` | sì, per i promemoria | Protegge `/api/cron` (Vercel la invia da solo) |
 | `RESEND_API_KEY`, `EMAIL_FROM` | per le email | Chiave Resend (gratis fino a 3.000 email/mese) e mittente su dominio verificato, es. `prenotazioni@dominio.it`. `EMAIL_FROM_NOME` facoltativa |
 | `SENDGRID_API_KEY` | alternativa a Resend | Funziona ancora; SendGrid non ha più il piano gratuito (circa 20 $/mese dopo 60 giorni) |

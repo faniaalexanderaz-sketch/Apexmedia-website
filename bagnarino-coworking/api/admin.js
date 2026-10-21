@@ -1,10 +1,13 @@
 /* =============================================================
    BAGNARINO COWORKING — API dell'area riservata (una funzione)
-   GET  ?azione=oggi | calendario&da= | clienti&cerca= |
-            incassi&periodo=giorno|settimana|mese&da= | csv&da=&a= | impostazioni
+   GET  ?azione=chi | oggi | calendario&da= | clienti&cerca= |
+            incassi&periodo=giorno|settimana|mese&da= | csv&da=&a= |
+            impostazioni | crescita&mese=AAAA-MM
    POST ?azione=login | esci | presenza | pagato | prenotazione |
-            annulla | chiusura | impostazioni
-   Tutto (tranne login) richiede la sessione della titolare.
+            annulla | chiusura | impostazioni | marketing
+   Tutto (tranne login) richiede una sessione: "titolare" (Marcella,
+   ADMIN_PASSWORD) o "apex" (Apex Media, APEX_PASSWORD). Solo
+   "apex" può salvare i numeri di marketing della scheda Crescita.
    ============================================================= */
 const crypto = require('crypto');
 const { q, disponibile } = require('./_db');
@@ -16,6 +19,7 @@ const T = require('./_email-template');
 const { inviaEmail } = require('./_email');
 const { creaIcs } = require('./_ics');
 const A = require('./_admin');
+const G = require('./_crescita');
 const { corpo, ip, json, errore, sitoUrl } = require('./_http');
 
 const STATI_ATTIVI = ['confermata', 'presente', 'assente'];
@@ -253,22 +257,24 @@ module.exports = async (req, res) => {
   const azione = req.query.azione;
   try {
     if (req.method === 'POST' && azione === 'login') {
-      if (!process.env.ADMIN_PASSWORD) { json(res, 501, { errore: 'ADMIN_SPENTO', messaggio: 'L’area riservata non è ancora configurata (manca ADMIN_PASSWORD).' }); return; }
+      if (!A.accessoConfigurato()) { json(res, 501, { errore: 'ADMIN_SPENTO', messaggio: 'L’area riservata non è ancora configurata (manca ADMIN_PASSWORD).' }); return; }
       await controllaTentativi(req);
-      if (!A.confrontoSicuro(String(corpo(req).password || ''), process.env.ADMIN_PASSWORD)) {
-        json(res, 401, { errore: 'PASSWORD', messaggio: 'Password sbagliata. Riprova.' }); return;
-      }
-      A.apriSessione(req, res);
-      json(res, 200, { ok: true });
+      const ruoloNuovo = A.ruoloPassword(corpo(req).password);
+      if (!ruoloNuovo) { json(res, 401, { errore: 'PASSWORD', messaggio: 'Password sbagliata. Riprova.' }); return; }
+      A.apriSessione(req, res, ruoloNuovo);
+      json(res, 200, { ok: true, ruolo: ruoloNuovo });
       return;
     }
     if (req.method === 'POST' && azione === 'esci') { A.chiudiSessione(req, res); json(res, 200, { ok: true }); return; }
-    if (!A.sessioneValida(req)) { json(res, 401, { errore: 'NON_AUTORIZZATO', messaggio: 'Accesso scaduto: inserisci di nuovo la password.' }); return; }
+    const ruolo = A.ruoloSessione(req);
+    if (!ruolo) { json(res, 401, { errore: 'NON_AUTORIZZATO', messaggio: 'Accesso scaduto: inserisci di nuovo la password.' }); return; }
+    if (req.method === 'GET' && azione === 'chi') { json(res, 200, { ruolo }); return; }
     if (!disponibile()) { json(res, 501, { errore: 'DB_ASSENTE', messaggio: 'Il database non è ancora collegato: le prenotazioni online non sono attive.' }); return; }
 
     const cfg = await impostazioni();
     if (req.method === 'GET') {
-      if (azione === 'oggi') { json(res, 200, await oggi(cfg)); return; }
+      if (azione === 'oggi') { json(res, 200, Object.assign(await oggi(cfg), { ruolo })); return; }
+      if (azione === 'crescita') { json(res, 200, Object.assign(await G.crescita(req.query.mese), { ruolo })); return; }
       if (azione === 'calendario') { json(res, 200, await calendario(req.query.da, cfg)); return; }
       if (azione === 'clienti') { json(res, 200, { clienti: await clienti(req.query.cerca) }); return; }
       if (azione === 'incassi') { json(res, 200, await incassi(req.query.periodo, req.query.da, cfg)); return; }
@@ -292,6 +298,11 @@ module.exports = async (req, res) => {
     }
     if (req.method === 'POST') {
       const b = corpo(req);
+      if (azione === 'marketing') {
+        /* i numeri di social e Google li aggiorna solo Apex Media */
+        if (ruolo !== 'apex') { json(res, 403, { errore: 'SOLO_APEX', messaggio: 'Questi numeri li aggiorna Apex Media.' }); return; }
+        json(res, 200, await G.salvaMarketing(b)); return;
+      }
       if (azione === 'presenza') { json(res, 200, await P.segnaPresenza(parseInt(b.id, 10), b.stato)); return; }
       if (azione === 'pagato') {
         const pagato = b.pagato === true, metodo = ['contanti', 'carta', 'bonifico', 'online'].indexOf(b.metodo) !== -1 ? b.metodo : null;

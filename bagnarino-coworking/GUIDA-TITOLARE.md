@@ -7,7 +7,7 @@ Una pagina sola, da tenere a portata di mano.
 2. Scrivi la password e tocca **Entra**. Il telefono ti ricorda per 30 giorni.
 3. Consiglio: su iPhone tocca **Condividi → "Aggiungi alla schermata Home"**; su Android tocca **⋮ → "Aggiungi a schermata Home"**. Comparirà l'icona **Gestione**: da lì entri direttamente, come un'app.
 
-In basso trovi 5 pulsanti: **Oggi**, **Calendario**, **Clienti**, **Incassi**, **Impostazioni**.
+In basso trovi 5 pulsanti: **Oggi**, **Calendario**, **Clienti**, **Incassi**, **Crescita**. Le **Impostazioni** (prezzi, orari, chiusure) sono nell'ingranaggio ⚙ in alto.
 
 ## Quando arriva un cliente
 1. Apri **Oggi**: sotto "Chi arriva oggi" c'è il suo nome.
@@ -39,3 +39,6 @@ Nello stesso posto puoi cambiare il numero di scrivanie, l'orario e i messaggi W
 - Per il commercialista: **Incassi** → **Scarica il file per il commercialista**.
 
 Problemi o dubbi? Scrivi ad Apex Media.
+
+## Come sta andando: la scheda Crescita
+Tocca **Crescita** in basso. In cima c'è una frase che riassume il mese; sotto, i numeri grandi con la freccia verde ▲ (meglio del mese prima) o rossa ▼ (peggio). Con le frecce ‹ › guardi i mesi passati. Prenotazioni e incassi si aggiornano da soli; i numeri di Instagram, Facebook e Google li inserisce Apex Media ogni mese, insieme a una nota su cosa ha fatto.

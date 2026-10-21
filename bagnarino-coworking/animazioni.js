@@ -89,14 +89,20 @@
         gsap.from(el, { y: 30, opacity: 0, duration: 1, delay: 0.15, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
       });
 
-      /* 4) fotografie: si scoprono dal basso, l'immagine si assesta */
+      /* 4) fotografie: compaiono in dissolvenza morbida, senza "tendine" */
       $$('[data-rivela]').forEach(function (fig) {
         if (!sottoLaPiega(fig)) return;
-        var img = $('img', fig);
-        var tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 85%', once: true } });
-        tl.fromTo(fig, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'expo.out', clearProps: 'clipPath' })
-          .from(img, { scale: 1.22, duration: 1.7, ease: 'expo.out', clearProps: 'transform' }, 0);
+        gsap.from(fig, { opacity: 0, y: 28, duration: 1.4, ease: 'power2.out', clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: fig, start: 'top 88%', once: true } });
       });
+
+      /* 4b) la nostra storia: il filo si traccia, le tappe arrivano una a una */
+      var storia = $('.storia');
+      if (storia && sottoLaPiega(storia)) {
+        var tls = gsap.timeline({ scrollTrigger: { trigger: storia, start: 'top 82%', once: true } });
+        tls.from(storia, { opacity: 0, y: 40, duration: 1, clearProps: 'opacity,transform' })
+           .from($$('.storia-linea li', storia), { opacity: 0, x: -18, stagger: 0.18, duration: 0.7, clearProps: 'opacity,transform' }, 0.35);
+      }
 
       /* 5) parallasse leggera sulle foto di sfondo */
       $$('[data-parallasse] img').forEach(function (img) {
@@ -107,6 +113,13 @@
           scrollTrigger: { trigger: box, start: primo ? 'top top' : 'top bottom', end: 'bottom top', scrub: true }
         });
       });
+
+      /* 5b) disponibilità: i giorni e le scrivanie si posano in sequenza */
+      var dispCard = $('[data-disp]');
+      if (dispCard && sottoLaPiega(dispCard)) {
+        gsap.from($$('.disp-giorno, .disp-scrivania', dispCard), { y: 20, opacity: 0, stagger: 0.04, duration: 0.6, clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: dispCard, start: 'top 85%', once: true } });
+      }
 
       /* 6) cifre che contano (anni, scrivanie, prezzo) */
       $$('.cifre dd').forEach(function (dd) {

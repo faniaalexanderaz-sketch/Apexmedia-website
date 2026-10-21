@@ -1,6 +1,9 @@
 /* =============================================================
    BAGNARINO COWORKING — area riservata (interfaccia)
-   Cinque schede: Oggi, Calendario, Clienti, Incassi, Impostazioni.
+   Cinque schede: Oggi, Calendario, Clienti, Incassi, Crescita
+   (+ Impostazioni dall'ingranaggio in alto).
+   Due ruoli: "titolare" (Marcella) e "apex" (Apex Media): solo
+   Apex vede il pulsante per aggiornare i numeri di marketing.
    Tutti i dati arrivano da /api/admin; i grafici sono SVG fatti a
    mano (nessuna libreria). Ogni azione mostra un breve messaggio
    di conferma in basso.
@@ -55,13 +58,14 @@
     e.preventDefault();
     var err = $('[data-login-errore]'); err.textContent = '';
     api('login', { dati: { password: $('#password').value } })
-      .then(function () { $('#password').value = ''; mostraApp(); })
+      .then(function (r) { ruolo = r.ruolo || 'titolare'; $('#password').value = ''; mostraApp(); })
       .catch(function (x) { err.textContent = x.message; });
   });
   $('[data-esci]').addEventListener('click', function () { api('esci', { dati: {} }).then(mostraAccesso, mostraAccesso); });
 
   /* ---------- schede ---------- */
   var caricatori = {};
+  var ruolo = 'titolare';
   function schedaIniziale() { var s = location.hash.slice(1); return caricatori[s] ? s : 'oggi'; }
   function vai(nome) {
     $$('[data-pannello]').forEach(function (p) { p.hidden = p.getAttribute('data-pannello') !== nome; });
@@ -127,7 +131,7 @@
 
   caricatori.oggi = function () {
     var ora = new Date().getHours();
-    $('[data-saluto]').textContent = (ora < 13 ? 'Buongiorno' : ora < 18 ? 'Buon pomeriggio' : 'Buonasera') + ', Marcella';
+    $('[data-saluto]').textContent = ruolo === 'apex' ? 'Ciao, Apex Media' : (ora < 13 ? 'Buongiorno' : ora < 18 ? 'Buon pomeriggio' : 'Buonasera') + ', Marcella';
     $('[data-data-oggi]').textContent = cap(new Date().toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }));
     return api('oggi').then(function (d) {
       var k = d.kpi;
@@ -394,8 +398,275 @@
       .catch(function (x) { toast(x.message, true); });
   });
 
+  /* =============================================================
+     CRESCITA: come sta andando il coworking, mese per mese.
+     Numeri automatici (prenotazioni, incassi, clienti, canali) +
+     numeri di social, Google e pubblicità inseriti da Apex Media.
+     Grafici SVG fatti a mano, animati quando si apre la scheda.
+     ============================================================= */
+  /* icone delle carte (per lo sprite): #i-calendar-check #i-euro #i-user-plus #i-repeat #i-check #i-heart
+     #i-eye #i-mouse-pointer-click #i-map-pin #i-star #i-megaphone #i-target #i-trending-up #i-arrow-right */
+  var MESI_BREVI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
+  var COLORI_CANALI = {
+    'Instagram': '#B4457E', 'Facebook': '#3B5BDB', 'Google': '#C9973B', 'Google Ads': '#E3B95F', 'Google Maps': '#0C8599',
+    'WhatsApp': '#1A9E4B', 'Diretto': '#1B2A3A', 'In sede / telefono': '#7A8794', 'Altro': '#C5BDAD'
+  };
+  var GRUPPI = [
+    { titolo: 'Instagram', campi: ['instagram_follower', 'instagram_copertura'], aiuto: 'Dashboard professionale → Account raggiunti (ultimi 30 giorni).' },
+    { titolo: 'Facebook', campi: ['facebook_follower', 'facebook_copertura'], aiuto: 'Meta Business Suite → Insight → Copertura.' },
+    { titolo: 'Google', campi: ['google_visualizzazioni', 'google_chiamate', 'google_indicazioni', 'google_clic_sito', 'recensioni_numero', 'recensioni_media'], aiuto: 'Profilo dell’attività → Rendimento (mese scelto).' },
+    { titolo: 'Sito e WhatsApp', campi: ['visite_sito', 'contatti_whatsapp'], aiuto: 'Visite: Google Analytics → Utenti del mese.' },
+    { titolo: 'Pubblicità (in euro)', campi: ['spesa_meta', 'spesa_google'], aiuto: 'Importo speso nel mese, IVA inclusa.' }
+  ];
+  var creMese = null, creDati = null;
+
+  function intero(n) { return Math.round(n).toLocaleString('it-IT'); }
+  function compatto(n) {
+    if (n >= 10000) return (n / 1000).toLocaleString('it-IT', { maximumFractionDigits: 1 }) + 'k';
+    return intero(n);
+  }
+  function etichettaMese(m) { var i = +m.slice(5, 7) - 1; return MESI_BREVI[i] + (i === 0 ? ' ' + m.slice(2, 4) : ''); }
+  function nomeMeseLungo(m) { return cap(daIso(m).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' })); }
+
+  /* ---------- confronto con il mese prima, in parole ---------- */
+  function confronto(v, prima, tipo, nomePrima) {
+    var aM = (/^a/.test(nomePrima || '') ? 'ad ' : 'a ') + nomePrima;
+    if (v == null) return '';
+    if (prima == null || (tipo !== 'abs' && !prima)) {
+      return prima == null && v ? '<span class="neutro">Primo mese con questo dato</span>' : '';
+    }
+    if (tipo === 'abs') {
+      var d = v - prima;
+      if (!d) return '<span class="neutro">= uguale ' + aM + '</span>';
+      return '<span class="' + (d > 0 ? 'su' : 'giu') + '">' + (d > 0 ? '▲ +' : '▼ ') + intero(d) + '</span> rispetto ' + aM;
+    }
+    var p = Math.round((v - prima) / prima * 100);
+    if (!p) return '<span class="neutro">= come ' + aM + '</span>';
+    return '<span class="' + (p > 0 ? 'su' : 'giu') + '">' + (p > 0 ? '▲ +' : '▼ ') + p + '%</span> rispetto ' + aM;
+  }
+  function cartaKpi(o) {
+    return '<article class="kpi' + (o.forte ? ' kpi-forte' : '') + '">' +
+      '<p class="kpi-nome"><svg class="ico" aria-hidden="true"><use href="#i-' + o.icona + '"/></svg>' + h(o.nome) + '</p>' +
+      '<p class="kpi-valore">' + o.valore + '</p>' +
+      (o.delta ? '<p class="kpi-delta">' + o.delta + '</p>' : '') +
+      (o.sotto ? '<p class="kpi-sotto">' + o.sotto + '</p>' : '') + '</article>';
+  }
+
+  /* ---------- grafici ---------- */
+  var W = 560, H = 250, BASSO = 34, ALTO = 30, SX = 8, DX = 8;
+  function svg(contenuto, titolo) {
+    return '<svg class="grafico cre-anim" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + h(titolo) + '"><title>' + h(titolo) + '</title>' +
+      '<line x1="0" x2="' + W + '" y1="' + (H - BASSO) + '" y2="' + (H - BASSO) + '" stroke="#E2DDD1" stroke-width="2"/>' + contenuto + '</svg>';
+  }
+  function xPasso(n) { return (W - SX - DX) / n; }
+  function assiMesi(mesi) {
+    var p = xPasso(mesi.length);
+    return mesi.map(function (m, i) {
+      var ultimo = i === mesi.length - 1;
+      return '<text x="' + (SX + p * i + p / 2) + '" y="' + (H - 11) + '" text-anchor="middle" font-size="13"' + (ultimo ? ' class="valore"' : '') + '>' + etichettaMese(m.mese) + '</text>';
+    }).join('');
+  }
+  function testoTitolo(nome, mesi, valori, fmt) {
+    return nome + ', ultimi 12 mesi: ' + mesi.map(function (m, i) { return etichettaMese(m.mese) + ' ' + fmt(valori[i]); }).join(', ');
+  }
+
+  /* linea con area sotto: un punto per mese */
+  function graficoLinea(mesi, valori, fmt, colore, nome) {
+    var max = Math.max.apply(null, valori.concat([1])), p = xPasso(mesi.length), alt = H - BASSO - ALTO;
+    var pt = valori.map(function (v, i) { return [SX + p * i + p / 2, H - BASSO - alt * v / max]; });
+    var linea = pt.map(function (q, i) { return (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join(' ');
+    var area = linea + ' L' + pt[pt.length - 1][0].toFixed(1) + ' ' + (H - BASSO) + ' L' + pt[0][0].toFixed(1) + ' ' + (H - BASSO) + ' Z';
+    var id = 'g' + Math.random().toString(36).slice(2, 8);
+    var punti = pt.map(function (q, i) {
+      var ultimo = i === pt.length - 1, mostra = ultimo || valori[i] === max || mesi.length <= 6;
+      return '<circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="' + (ultimo ? 6 : 3.5) + '" fill="' + (ultimo ? colore : '#fff') + '" stroke="' + colore + '" stroke-width="2.5" class="punto" style="--i:' + i + '"/>' +
+        (mostra && valori[i] ? '<text class="valore" x="' + q[0].toFixed(1) + '" y="' + (q[1] - 12).toFixed(1) + '" text-anchor="middle" font-size="14">' + fmt(valori[i]) + '</text>' : '');
+    }).join('');
+    return svg('<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + colore + '" stop-opacity=".28"/><stop offset="1" stop-color="' + colore + '" stop-opacity="0"/></linearGradient></defs>' +
+      '<path class="area" d="' + area + '" fill="url(#' + id + ')"/>' +
+      '<path class="traccia" d="' + linea + '" fill="none" stroke="' + colore + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" pathLength="1"/>' +
+      punti + assiMesi(mesi), testoTitolo(nome, mesi, valori, fmt));
+  }
+
+  /* barre: pieno = incassato, contorno = prenotato */
+  function graficoIncassi(mesi) {
+    var inc = mesi.map(function (m) { return m.incassato; }), pre = mesi.map(function (m) { return m.valore; });
+    var max = Math.max.apply(null, inc.concat(pre, [1])), p = xPasso(mesi.length), larg = Math.min(30, p * 0.6), alt = H - BASSO - ALTO;
+    var c = mesi.map(function (m, i) {
+      var x = SX + p * i + (p - larg) / 2, hp = alt * pre[i] / max, hi = alt * inc[i] / max, ultimo = i === mesi.length - 1;
+      return (pre[i] ? '<rect class="barra-g" style="--i:' + i + '" x="' + x.toFixed(1) + '" y="' + (H - BASSO - hp).toFixed(1) + '" width="' + larg.toFixed(1) + '" height="' + hp.toFixed(1) + '" rx="5" fill="none" stroke="#B9B2A3" stroke-width="2" stroke-dasharray="4 3"/>' : '') +
+        (inc[i] ? '<rect class="barra-g" style="--i:' + i + '" x="' + x.toFixed(1) + '" y="' + (H - BASSO - hi).toFixed(1) + '" width="' + larg.toFixed(1) + '" height="' + hi.toFixed(1) + '" rx="5" fill="' + (ultimo ? '#C9973B' : '#1B2A3A') + '"/>' : '') +
+        (ultimo || inc[i] === Math.max.apply(null, inc) && inc[i] ? '<text class="valore" x="' + (x + larg / 2).toFixed(1) + '" y="' + (H - BASSO - Math.max(hp, hi) - 9).toFixed(1) + '" text-anchor="middle" font-size="14">' + euro(inc[i] || pre[i]).replace(/,00$/, '') + '</text>' : '');
+    }).join('');
+    return svg(c + assiMesi(mesi), testoTitolo('Incassato', mesi, inc, euro));
+  }
+
+  /* barre impilate: una fetta per voce, totale sopra */
+  function graficoImpilato(mesi, voci, valoreDi, nome) {
+    var tot = mesi.map(function (m) { return voci.reduce(function (t, v) { return t + (valoreDi(m, v.id) || 0); }, 0); });
+    var max = Math.max.apply(null, tot.concat([1])), p = xPasso(mesi.length), larg = Math.min(30, p * 0.6), alt = H - BASSO - ALTO;
+    var c = mesi.map(function (m, i) {
+      var x = SX + p * i + (p - larg) / 2, y = H - BASSO, pezzi = '';
+      voci.forEach(function (v) {
+        var val = valoreDi(m, v.id) || 0; if (!val) return;
+        var hh = alt * val / max; y -= hh;
+        pezzi += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + larg.toFixed(1) + '" height="' + Math.max(hh - 1.5, 1.5).toFixed(1) + '" rx="3" fill="' + v.colore + '"><title>' + h(etichettaMese(m.mese) + ' · ' + v.nome + ': ' + intero(val)) + '</title></rect>';
+      });
+      return '<g class="barra-g" style="--i:' + i + '">' + pezzi + '</g>' +
+        (tot[i] ? '<text class="valore" x="' + (x + larg / 2).toFixed(1) + '" y="' + (y - 8).toFixed(1) + '" text-anchor="middle" font-size="13">' + compatto(tot[i]) + '</text>' : '');
+    }).join('');
+    return svg(c + assiMesi(mesi), testoTitolo(nome, mesi, tot, intero));
+  }
+
+  /* più linee, con i buchi dove manca il dato (scala che parte vicino al minimo) */
+  function graficoLinee(mesi, serie, nome) {
+    var tutti = [];
+    serie.forEach(function (s) { mesi.forEach(function (m) { var v = s.valore(m); if (v != null) tutti.push(v); }); });
+    if (!tutti.length) return '';
+    var min = Math.min.apply(null, tutti), max = Math.max.apply(null, tutti);
+    var basso = Math.max(0, Math.floor(min - (max - min) * 0.25 - 1)), alto = max + Math.max(1, (max - min) * 0.1);
+    var p = xPasso(mesi.length), alt = H - BASSO - ALTO;
+    var y = function (v) { return H - BASSO - alt * (v - basso) / (alto - basso); };
+    var c = serie.map(function (s) {
+      var d = '', prima = false, ultimo = null;
+      mesi.forEach(function (m, i) {
+        var v = s.valore(m), x = SX + p * i + p / 2;
+        if (v == null) { prima = false; return; }
+        d += (prima ? 'L' : 'M') + x.toFixed(1) + ' ' + y(v).toFixed(1) + ' '; prima = true; ultimo = [x, y(v), v];
+      });
+      var punti = mesi.map(function (m, i) { var v = s.valore(m); return v == null ? '' : '<circle class="punto" style="--i:' + i + '" cx="' + (SX + p * i + p / 2).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="3.5" fill="#fff" stroke="' + s.colore + '" stroke-width="2.5"/>'; }).join('');
+      return '<path class="traccia" d="' + d + '" fill="none" stroke="' + s.colore + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" pathLength="1"/>' + punti +
+        (ultimo ? '<text class="valore" x="' + Math.min(ultimo[0], W - 30).toFixed(1) + '" y="' + (ultimo[1] - 12).toFixed(1) + '" text-anchor="middle" font-size="14">' + compatto(ultimo[2]) + '</text>' : '');
+    }).join('');
+    return svg(c + assiMesi(mesi), nome + ': ' + serie.map(function (s) {
+      var u = mesi.map(s.valore).filter(function (v) { return v != null; }); return s.nome + ' ' + (u.length ? intero(u[u.length - 1]) : 'nessun dato');
+    }).join(', '));
+  }
+  function legenda(voci) {
+    return voci.map(function (v) { return '<span><i style="background:' + v.colore + '"></i>' + h(v.nome) + '</span>'; }).join('');
+  }
+
+  /* imbuto: barre in scala logaritmica (così si vedono anche i numeri piccoli) */
+  function disegnaImbuto(passi) {
+    if (passi.length < 2) return '<p class="vuoto">Quando Apex Media inserisce le persone raggiunte e le visite al sito, qui vedrai quante di loro arrivano fino alla scrivania.</p>';
+    var primo = Math.max(passi[0].valore, 1), lmax = Math.log10(primo + 1);
+    return '<ol class="imbuto">' + passi.map(function (x, i) {
+      var w = lmax ? 22 + 78 * Math.log10(x.valore + 1) / lmax : 100;
+      return (i ? '<li class="imbuto-freccia" aria-hidden="true">' + (x.quota != null ? '↓ ' + String(x.quota).replace('.', ',') + '% passa al passo dopo' : '↓') + '</li>' : '') +
+        '<li class="imbuto-passo"><span class="imbuto-barra" style="--w:' + w.toFixed(1) + '%;--i:' + i + '"></span>' +
+        '<span class="imbuto-testo"><strong>' + intero(x.valore) + '</strong> ' + h(x.nome) +
+        (x.quota != null ? '<span class="sr-solo"> (' + String(x.quota).replace('.', ',') + '% del passo prima)</span>' : '') + '</span></li>';
+    }).join('') + '</ol>';
+  }
+
+  /* ---------- la scheda ---------- */
+  caricatori.crescita = function () {
+    return api('crescita', { query: creMese ? 'mese=' + creMese.slice(0, 7) : '' }).then(function (d) {
+      creDati = d; creMese = d.mese; ruolo = d.ruolo || ruolo;
+      var k = d.kpi, prima = d.nomeMesePrima, mk = d.marketing || {};
+      $('[data-cre-titolo]').textContent = nomeMeseLungo(d.mese);
+      $('[data-cre-dopo]').disabled = d.mese >= d.corrente;
+      $('[data-cre-modifica]').hidden = ruolo !== 'apex';
+      $('[data-cre-riassunto]').textContent = d.riassunto;
+
+      /* numeri del coworking */
+      $('[data-cre-kpi-attivita]').innerHTML = [
+        cartaKpi({ icona: 'calendar-check', nome: 'Prenotazioni', valore: intero(k.prenotazioni.valore), delta: confronto(k.prenotazioni.valore, k.prenotazioni.prima, 'pct', prima), forte: true }),
+        cartaKpi({ icona: 'euro', nome: 'Incassato', valore: euro(k.incasso.valore), delta: confronto(k.incasso.valore, k.incasso.prima, 'pct', prima),
+          sotto: 'Valore delle prenotazioni ricevute: ' + euro(k.valorePrenotato.valore) }),
+        cartaKpi({ icona: 'user-plus', nome: 'Nuovi clienti', valore: intero(k.nuoviClienti.valore), delta: confronto(k.nuoviClienti.valore, k.nuoviClienti.prima, 'pct', prima) }),
+        cartaKpi({ icona: 'repeat', nome: 'Clienti che tornano', valore: k.quotaRitorni.valore == null ? '—' : k.quotaRitorni.valore + '%',
+          sotto: k.quotaRitorni.valore == null ? 'Nessun cliente questo mese' : 'Su ' + d.mesi[d.mesi.length - 1].clienti + ' clienti del mese, quelli già venuti prima' }),
+        cartaKpi({ icona: 'check', nome: 'Arrivati in sede', valore: intero(k.arrivati.valore), delta: confronto(k.arrivati.valore, k.arrivati.prima, 'pct', prima),
+          sotto: k.nonVenuti.valore ? 'Non sono venuti: ' + k.nonVenuti.valore : 'Giornate segnate con «È arrivato»' })
+      ].join('');
+
+      /* numeri di social, Google e pubblicità (solo quelli inseriti) */
+      var carte = [];
+      if (k.followerInstagram.valore != null) carte.push(cartaKpi({ icona: 'heart', nome: 'Follower Instagram', valore: intero(k.followerInstagram.valore),
+        delta: confronto(k.followerInstagram.valore, k.followerInstagram.prima, 'abs', prima),
+        sotto: k.followerFacebook.valore != null ? 'Su Facebook: ' + intero(k.followerFacebook.valore) + ' follower' : '' }));
+      else if (k.followerFacebook.valore != null) carte.push(cartaKpi({ icona: 'heart', nome: 'Follower Facebook', valore: intero(k.followerFacebook.valore), delta: confronto(k.followerFacebook.valore, k.followerFacebook.prima, 'abs', prima) }));
+      if (k.personeRaggiunte.valore != null) carte.push(cartaKpi({ icona: 'eye', nome: 'Persone raggiunte sui social', valore: intero(k.personeRaggiunte.valore), delta: confronto(k.personeRaggiunte.valore, k.personeRaggiunte.prima, 'pct', prima), sotto: 'Instagram + Facebook' }));
+      if (k.visiteSito.valore != null) carte.push(cartaKpi({ icona: 'mouse-pointer-click', nome: 'Visite al sito', valore: intero(k.visiteSito.valore), delta: confronto(k.visiteSito.valore, k.visiteSito.prima, 'pct', prima) }));
+      if (k.azioniGoogle.valore != null) carte.push(cartaKpi({ icona: 'map-pin', nome: 'Azioni sul profilo Google', valore: intero(k.azioniGoogle.valore), delta: confronto(k.azioniGoogle.valore, k.azioniGoogle.prima, 'pct', prima),
+        sotto: [mk.google_chiamate != null ? mk.google_chiamate + ' chiamate' : '', mk.google_indicazioni != null ? mk.google_indicazioni + ' indicazioni' : '', mk.google_clic_sito != null ? mk.google_clic_sito + ' clic sul sito' : ''].filter(Boolean).join(' · ') }));
+      if (k.recensioniMedia.valore != null || k.recensioniNumero.valore != null) carte.push(cartaKpi({ icona: 'star', nome: 'Recensioni su Google',
+        valore: k.recensioniMedia.valore != null ? String(k.recensioniMedia.valore).replace('.', ',') + ' <span class="stelle" aria-label="stelle">★</span>' : intero(k.recensioniNumero.valore),
+        delta: confronto(k.recensioniNumero.valore, k.recensioniNumero.prima, 'abs', prima),
+        sotto: k.recensioniNumero.valore != null ? intero(k.recensioniNumero.valore) + ' recensioni in tutto' : '' }));
+      if (k.spesa.valore != null) carte.push(cartaKpi({ icona: 'megaphone', nome: 'Spesa in pubblicità', valore: euro(Math.round(k.spesa.valore * 100)), delta: confronto(k.spesa.valore, k.spesa.prima, 'pct', prima),
+        sotto: [mk.spesa_meta != null ? 'Meta ' + euro(Math.round(mk.spesa_meta * 100)) : '', mk.spesa_google != null ? 'Google ' + euro(Math.round(mk.spesa_google * 100)) : ''].filter(Boolean).join(' · ') }));
+      if (k.costoPrenotazione.valore != null) carte.push(cartaKpi({ icona: 'target', nome: 'Costo per prenotazione', valore: euro(k.costoPrenotazione.valore), sotto: 'Spesa in pubblicità ÷ tutte le prenotazioni del mese' }));
+      if (k.ritornoPubblicita.valore != null) carte.push(cartaKpi({ icona: 'trending-up', nome: 'Ritorno della pubblicità', forte: k.ritornoPubblicita.valore >= 1,
+        valore: euro(Math.round(k.ritornoPubblicita.valore * 100)) + '<small> per ogni €1</small>',
+        sotto: 'Prenotazioni arrivate da Instagram, Facebook e Google Ads (' + k.prenotazioniDaPubblicita.valore + ') ÷ spesa' }));
+      $('[data-cre-kpi-marketing]').innerHTML = carte.join('');
+      $('[data-cre-vuoto]').hidden = !!carte.length;
+
+      $('[data-cre-nota-box]').hidden = !d.note;
+      $('[data-cre-nota]').textContent = d.note || '';
+      $('[data-cre-imbuto]').innerHTML = disegnaImbuto(d.imbuto);
+
+      /* grafici degli ultimi 12 mesi */
+      var mesi = d.mesi;
+      $('[data-cre-g-prenotazioni]').innerHTML = graficoLinea(mesi, mesi.map(function (m) { return m.prenotazioni; }), intero, '#1B2A3A', 'Prenotazioni');
+      $('[data-cre-g-incassi]').innerHTML = graficoIncassi(mesi);
+      var voci = d.canali.map(function (c) { return { id: c, nome: c, colore: COLORI_CANALI[c] || '#C5BDAD' }; });
+      $('[data-cre-g-canali]').innerHTML = voci.length ? graficoImpilato(mesi, voci, function (m, id) { return m.canali[id]; }, 'Prenotazioni per canale') : '<p class="vuoto">Ancora nessuna prenotazione negli ultimi 12 mesi.</p>';
+      $('[data-cre-l-canali]').innerHTML = legenda(voci);
+      var social = [
+        { nome: 'Instagram', colore: '#B4457E', valore: function (m) { return m.marketing && m.marketing.instagram_follower != null ? m.marketing.instagram_follower : null; } },
+        { nome: 'Facebook', colore: '#3B5BDB', valore: function (m) { return m.marketing && m.marketing.facebook_follower != null ? m.marketing.facebook_follower : null; } }
+      ].filter(function (s) { return mesi.some(function (m) { return s.valore(m) != null; }); });
+      $('[data-cre-g-social]').innerHTML = social.length ? graficoLinee(mesi, social, 'Follower') : '<p class="vuoto">Nessun dato dei social per ora.</p>';
+      $('[data-cre-l-social]').innerHTML = legenda(social);
+      var vociG = [{ id: 'google_chiamate', nome: 'Chiamate', colore: '#1B2A3A' }, { id: 'google_indicazioni', nome: 'Indicazioni', colore: '#0C8599' }, { id: 'google_clic_sito', nome: 'Clic sul sito', colore: '#C9973B' }];
+      var conG = mesi.some(function (m) { return m.marketing && vociG.some(function (v) { return m.marketing[v.id]; }); });
+      $('[data-cre-g-google]').innerHTML = conG ? graficoImpilato(mesi, vociG, function (m, id) { return m.marketing ? m.marketing[id] : 0; }, 'Azioni sul profilo Google') : '<p class="vuoto">Nessun dato di Google per ora.</p>';
+      $('[data-cre-l-google]').innerHTML = conG ? legenda(vociG) : '';
+      $('[data-cre-aggiornato]').textContent = d.aggiornato ? 'Numeri di social e Google aggiornati da Apex Media il ' + dataTesto(d.aggiornato, { day: 'numeric', month: 'long', year: 'numeric' }) + '.' : '';
+    }).catch(function (x) { toast(x.message, true); });
+  };
+  $('[data-cre-prima]').addEventListener('click', function () { creMese = piuMesi(creMese, -1); caricatori.crescita(); });
+  $('[data-cre-dopo]').addEventListener('click', function () { creMese = piuMesi(creMese, 1); caricatori.crescita(); });
+
+  /* ---------- modulo per Apex Media ---------- */
+  var dialogo = $('[data-cre-dialogo]'), modulo = $('[data-cre-form]');
+  function valoreCampo(v) { return v == null ? '' : String(v).replace('.', ','); }
+  function apriModulo() {
+    if (!creDati) return;
+    var mk = creDati.marketing || {}, nomi = {};
+    creDati.campi.forEach(function (c) { nomi[c.id] = c; });
+    $('[data-cre-mod-titolo]').textContent = 'Dati di ' + nomeMeseLungo(creDati.mese).toLowerCase();
+    $('[data-cre-campi]').innerHTML = GRUPPI.map(function (g) {
+      return '<fieldset class="cre-gruppo"><legend>' + h(g.titolo) + '</legend><p class="nota">' + h(g.aiuto) + '</p><div class="griglia-campi">' +
+        g.campi.map(function (id) {
+          var c = nomi[id];
+          return '<label>' + h(c.nome) + '<input name="' + id + '" inputmode="' + (c.dec ? 'decimal' : 'numeric') + '" autocomplete="off" value="' + h(valoreCampo(mk[id])) + '"></label>';
+        }).join('') + '</div></fieldset>';
+    }).join('');
+    modulo.note.value = creDati.note || '';
+    $('[data-cre-errore]').textContent = '';
+    if (typeof dialogo.showModal === 'function') dialogo.showModal(); else dialogo.setAttribute('open', '');
+  }
+  function chiudiModulo() { if (dialogo.open) { if (typeof dialogo.close === 'function') dialogo.close(); else dialogo.removeAttribute('open'); } }
+  $('[data-cre-modifica]').addEventListener('click', apriModulo);
+  $$('[data-cre-chiudi]').forEach(function (b) { b.addEventListener('click', chiudiModulo); });
+  dialogo.addEventListener('click', function (e) { if (e.target === dialogo) chiudiModulo(); });
+  modulo.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var dati = {};
+    creDati.campi.forEach(function (c) { if (modulo[c.id]) dati[c.id] = modulo[c.id].value; });
+    var b = modulo.querySelector('button[type=submit]'); b.disabled = true;
+    api('marketing', { dati: { mese: creDati.mese.slice(0, 7), dati: dati, note: modulo.note.value } }).then(function () {
+      chiudiModulo(); toast('Dati di ' + nomeMeseLungo(creDati.mese).toLowerCase() + ' salvati.'); caricatori.crescita();
+    }).catch(function (x) { $('[data-cre-errore]').textContent = x.message; })
+      .then(function () { b.disabled = false; });
+  });
+
   /* ---------- avvio: se la sessione è valida si entra direttamente ---------- */
-  api('oggi').then(function () { mostraApp(); }).catch(function (e) {
+  api('chi').then(function (r) { ruolo = r.ruolo || 'titolare'; mostraApp(); }).catch(function (e) {
     if (e.stato === 501) { mostraApp(); return; }
     mostraAccesso();
   });

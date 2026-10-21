@@ -140,6 +140,15 @@ const SCHEMA = [
      chiave TEXT PRIMARY KEY,
      valore JSONB NOT NULL,
      aggiornato_il TIMESTAMPTZ NOT NULL DEFAULT now()
+   )`,
+  /* scheda Crescita: numeri di social, Google e pubblicità, uno per
+     mese, inseriti a mano da Apex Media (nessuna chiave di accesso
+     ai servizi esterni). mese = primo giorno del mese. */
+  `CREATE TABLE IF NOT EXISTS marketing_mesi (
+     mese DATE PRIMARY KEY,
+     dati JSONB NOT NULL DEFAULT '{}'::jsonb,
+     note TEXT,
+     aggiornato_il TIMESTAMPTZ NOT NULL DEFAULT now()
    )`
 ];
 

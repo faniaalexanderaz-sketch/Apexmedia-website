@@ -4,7 +4,8 @@
    Serve il sito e le API come su Vercel, con un database
    Postgres in memoria (PGlite): niente da installare né da
    configurare. Si azzera a ogni riavvio. Le email non partono.
-   Password dell'area riservata in locale: "prova" (o ADMIN_PASSWORD).
+   Password dell'area riservata in locale: "prova" (titolare) e
+   "apex-prova" (Apex Media), oppure ADMIN_PASSWORD / APEX_PASSWORD.
    ============================================================= */
 const http = require('http');
 const fs = require('fs');
@@ -14,6 +15,7 @@ const { PGlite } = require('@electric-sql/pglite');
 const RADICE = path.join(__dirname, '..');
 const PORTA = +process.env.PORT || 3000;
 process.env.ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'prova';
+process.env.APEX_PASSWORD = process.env.APEX_PASSWORD || 'apex-prova';
 process.env.CRON_SECRET = process.env.CRON_SECRET || 'locale';
 
 const TIPI = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript', '.svg': 'image/svg+xml',
