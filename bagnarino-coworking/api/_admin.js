@@ -29,13 +29,21 @@ function leggiCookie(req, nome) {
 }
 function passwordDi(ruolo) { return process.env[VARIABILE[ruolo]] || ''; }
 
+/* la tastiera del telefono "aiuta" troppo: spazi in coda, prima lettera
+   maiuscola, trattino lungo al posto di quello corto. Le password sono
+   frasi lunghe, quindi le confrontiamo in forma semplice. */
+function normalizza(p) {
+  return String(p || '').normalize('NFKC').replace(/[\u2010-\u2015\u2212]/g, '-')
+    .replace(/[\s\u200B-\u200D\uFEFF]+/g, '').toLowerCase();
+}
+
 /* quale ruolo ha chi presenta questa password (null = nessuno) */
 function ruoloPassword(password) {
   let trovato = null;
   /* si controllano sempre entrambe, così il tempo di risposta non dice nulla */
   ['titolare', 'apex'].forEach(r => {
-    const giusta = passwordDi(r);
-    const ok = confrontoSicuro(String(password || ''), giusta || crypto.randomBytes(16).toString('hex'));
+    const giusta = normalizza(passwordDi(r));
+    const ok = confrontoSicuro(normalizza(password), giusta || crypto.randomBytes(16).toString('hex'));
     if (ok && giusta && !trovato) trovato = r;
   });
   return trovato;
