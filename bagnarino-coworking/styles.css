@@ -1,20 +1,17 @@
 /* =============================================================
    BAGNARINO COWORKING — stili
-   Direzione: editoriale italiana, eredità della grafica Olivetti.
-   - Newsreader (serif) per i titoli, con il corsivo come accento
-   - Hanken Grotesk per testi e interfaccia
-   - IBM Plex Mono per etichette e numeri di sezione (la macchina
-     da scrivere: la storia vera del negozio)
+   Direzione: moderna e pulita, eredità della grafica Olivetti.
+   - Plus Jakarta Sans per tutto: titoli pieni e stretti, testi
+     leggibili anche per chi ha qualche anno in più
+   - etichette in maiuscoletto spaziato al posto della macchina da scrivere
    Un solo accento: l'ocra del logo, il "divisorio" tra le due
    metà della B. Contrasti AA: su fondo chiaro l'ocra come testo
    è sempre la versione scura (--ocra-testo).
    ============================================================= */
 
-@font-face { font-family: 'Newsreader'; src: url('/fonts/newsreader-latin-wght-normal.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Newsreader'; src: url('/fonts/newsreader-latin-wght-italic.woff2') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
-@font-face { font-family: 'Hanken Grotesk'; src: url('/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-@font-face { font-family: 'IBM Plex Mono'; src: url('/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'IBM Plex Mono'; src: url('/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+
+@font-face { font-family: 'Plus Jakarta Sans'; src: url('/fonts/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plus Jakarta Sans'; src: url('/fonts/plus-jakarta-sans-latin-wght-italic.woff2') format('woff2'); font-weight: 200 800; font-style: italic; font-display: swap; }
 
 :root {
   --notte: #07112A;
@@ -37,10 +34,10 @@
   --rosso: #B42318;
   --rosso-chiaro: #FDECEA;
 
-  --f-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
-  --f-titoli: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --f-testo: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --f-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --f-display: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-titoli: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-testo: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --raggio: 10px;
   --raggio-grande: 14px;
@@ -1008,3 +1005,31 @@ body.menu-aperto { overflow: hidden; }
 .storia-linea p { margin: 0; color: #C9D3E6; font-size: 1rem; line-height: 1.5; }
 .storia-linea strong { color: #fff; font-weight: 650; }
 @media (min-width: 900px) { .storia { padding: 40px 36px; } .storia-anno { font-size: 2.6rem; } }
+
+
+/* ---------- carattere unico (Plus Jakarta Sans): titoli pieni, accenti ocra ---------- */
+.titolo-sezione, .manifesto, .apertura-titolo, .finale h2, .disp-titolo, .dove-scheda .titolo-sezione {
+  font-weight: 800; letter-spacing: -0.035em; line-height: 1.04;
+}
+.apertura-titolo { font-weight: 800; letter-spacing: -0.04em; }
+.manifesto { font-weight: 700; letter-spacing: -0.03em; line-height: 1.18; }
+.titolo-sezione em, .manifesto em, .apertura-titolo em, .finale h2 em, .disp-titolo em, .apertura-titolo .riga-accento { font-style: normal; }
+.prezzo-valore, .cifre dd, .storia-anno, .dg-num, .disp-conta strong, .pianta-conta strong, .opzione-prezzo, .riepilogo-totale dd, .barra-flusso-prezzo strong {
+  font-weight: 800; letter-spacing: -0.045em;
+}
+.prezzo-valuta { font-weight: 700; }
+.prezzo-nota { font-style: normal; font-weight: 600; font-size: 1rem; }
+.storia-anno-testo { font-style: normal; font-weight: 750; letter-spacing: -0.02em; }
+.numero-sezione, .etichetta-mono, .disp-live, .prezzo-etichetta, .storia-etichetta, .disp-vetrina, .menu-etichetta, .foto figcaption, .cifre dt, .nastro-traccia {
+  font-weight: 700; letter-spacing: .12em;
+}
+
+/* pesi e spaziature per il carattere unico: niente titoli sottili, parole che respirano */
+.titolo-sezione, .manifesto, .apertura-titolo, .finale h2, .disp-titolo, .dove-scheda .titolo-sezione,
+.flusso-testa h1, .testo-legale h1, .pagina-404 h1, .successo h1 { letter-spacing: -0.025em; word-spacing: .06em; }
+.passo h3, .profilo h3, .testo-legale h2, .blocco-titolo, .riepilogo h2, .scheda-titolo, .tessera-nome { font-weight: 750; letter-spacing: -0.02em; }
+.flusso-testa h1, .testo-legale h1, .pagina-404 h1, .successo h1 { font-weight: 800; }
+.passo-num, .profilo-num { font-style: normal; font-weight: 800; letter-spacing: -0.04em; }
+.faq summary { font-weight: 650; letter-spacing: -0.01em; }
+.dg-num, .giorno-num { font-weight: 800; letter-spacing: -0.03em; }
+.disp-titolo { font-weight: 800; }

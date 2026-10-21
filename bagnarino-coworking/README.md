@@ -87,6 +87,10 @@ posto lo stesso giorno sono impossibili anche con richieste simultanee), `tentat
 - La stessa persona non può occupare due scrivanie lo stesso giorno.
 - **Anti-spam**: campo trappola, massimo 8 tentativi l'ora per IP, controllo email/telefono lato server.
 
+## Prima di pubblicare
+
+Lancia `python3 strumenti/versiona.py`: aggiunge `?v=<impronta>` a CSS e JS nelle pagine, così i telefoni non usano lo stile vecchio dalla memoria (prima capitava di vedere la pagina nuova con lo stile vecchio).
+
 ## Web app (telefono)
 
 - Barra a schede in basso su tutte le pagine pubbliche: **Home · Prezzi · Prenota · Le mie · Contatti**. Nel flusso di prenotazione resta solo la barra con il prezzo e il pulsante.
