@@ -433,6 +433,11 @@ a{color:inherit;text-decoration:none}
 .sline{border-top:.3mm solid var(--ink);padding-top:1.2mm;font-size:6pt;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--muted);display:flex;justify-content:space-between}
 .sline span:last-child{letter-spacing:0;text-transform:none;font-weight:500}
 .cbox{height:9mm}
+.week{margin-top:2mm;display:flex;align-items:center;gap:3mm;background:#fff;border:.35mm solid var(--violet);border-radius:2.4mm;padding:1.8mm 3mm;font-size:7pt;line-height:1.4}
+.week .wk{display:flex;align-items:center;gap:1.4mm;font-weight:800;color:var(--violet);font-size:7.8pt;white-space:nowrap}
+.week .wk .ic{width:3.8mm;height:3.8mm}
+.week span:last-child{color:var(--body)}
+.tm .row{grid-template-columns:21mm 1fr}
 .funnel{display:grid;gap:1.6mm}
 .fs{display:grid;grid-template-columns:58mm 1fr;align-items:center;gap:4mm;border-radius:2.6mm;padding:2.4mm 3.4mm;color:#fff}
 .fs .fl{display:flex;align-items:center;gap:2mm}
@@ -2301,7 +2306,7 @@ a{color:inherit;text-decoration:none}
 
     <div class="road">
       <div class="ph p1c">
-        <div class="when3">Mese 1</div>
+        <div class="when3">Primi 7 giorni</div>
         <h3>Si parte</h3>
         <ul class="ck">
           <li>Web app online, con prenotazione</li>
@@ -2311,7 +2316,7 @@ a{color:inherit;text-decoration:none}
         </ul>
       </div>
       <div class="ph p2c">
-        <div class="when3">Mesi 2 e 3</div>
+        <div class="when3">Fino al 3° mese</div>
         <h3>I primi risultati, in numeri</h3>
         <ul class="ck">
           <li>Sponsorizzate attive su Facebook e Instagram</li>
@@ -2594,8 +2599,8 @@ a{color:inherit;text-decoration:none}
   <polyline points="12 6 12 12 16 14" />
 </svg> I tempi</h3>
         <div class="row"><b>Prossimo incontro</b><span>Le mostriamo il sito praticamente ultimato, firma e pagamento.</span></div>
-        <div class="row"><b>Sett. 1–2</b><span>Video in negozio, nuovo logo dal grafico, primi post.</span></div>
-        <div class="row"><b>Sett. 3</b><span>Web app online con prenotazioni e scheda Google.</span></div>
+        <div class="row"><b>Entro 7 giorni</b><span>Tutto completato: sito online, nuovo logo, social pronti e primi post in partenza.</span></div>
+        <div class="row"><b>Ogni settimana</b><span>Nuovi contenuti e sponsorizzate attive.</span></div>
         <div class="row"><b>Ogni mese</b><span>Contenuti, prenotazioni ricevute e report.</span></div>
       </div>
     </div>
@@ -2637,7 +2642,7 @@ a{color:inherit;text-decoration:none}
     <div class="eb">08 — Per partire</div>
     <h2 class="t">Cosa ci serve da lei</h2>
     <div class="bar"></div>
-    <p class="lead">Pochi dati e due accessi, poi pensiamo a tutto noi. Quello che sappiamo già è segnato con <span class="okk">✓</span>. Può compilare a penna o <b>mandarci tutto con un messaggio</b>.</p>
+    <p class="lead">Pochi dati e due accessi, poi pensiamo a tutto noi. Quello che sappiamo già è segnato con <span class="okk">✓</span>.</p>
 
     <div class="dgrid2">
       <div class="card dbox">
@@ -2720,13 +2725,19 @@ a{color:inherit;text-decoration:none}
   <path d="m21 3 1 11h-2" />
   <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
   <path d="M3 4h8" />
-</svg></span><div><h3>Il prossimo incontro: firma e partenza</h3><p>Ci vedremo ancora una volta in negozio, alla firma. Le mostreremo il sito <b>praticamente ultimato</b>: tutta la parte importante sarà già fatta, mancheranno solo le ultime foto e le ultime informazioni da inserire.</p></div></div>
+</svg></span><div><h3>Il prossimo incontro: firma e partenza</h3><p>Alla firma le mostreremo il sito <b>praticamente ultimato</b>: mancheranno solo le ultime foto e informazioni.</p></div></div>
       <div class="m4">
         <div><span class="sn">1</span><b>Le mostriamo il sito quasi finito, da provare</b></div>
         <div><span class="sn">2</span><b>Firma e pagamento, per partire subito</b></div>
         <div><span class="sn">3</span><b>Raccogliamo gli accessi social e fissiamo i video</b></div>
         <div><span class="sn">4</span><b>Il nostro grafico crea il nuovo logo, partono i post</b></div>
       </div>
+      <div class="week"><span class="wk"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+</svg> Entro 7 giorni dal pagamento è tutto pronto</span><span>Web app online con le ultime foto · Instagram e TikTok creati · Facebook e Google sistemati · nuovo logo · primi post pronti a partire</span></div>
       <div class="pay"><span class="pl"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
   <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
