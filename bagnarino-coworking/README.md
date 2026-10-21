@@ -94,7 +94,8 @@ posto lo stesso giorno sono impossibili anche con richieste simultanee), `tentat
 | `DATABASE_URL` | sì, per le prenotazioni vere | Neon Postgres (Vercel → Storage → Neon la imposta da sola) |
 | `ADMIN_PASSWORD` | sì, per l'area riservata | Password della titolare |
 | `CRON_SECRET` | sì, per i promemoria | Protegge `/api/cron` (Vercel la invia da solo) |
-| `SENDGRID_API_KEY`, `SENDGRID_FROM` | per le email | Chiave e mittente **verificato** su SendGrid. `SENDGRID_FROM_NOME` facoltativa |
+| `RESEND_API_KEY`, `EMAIL_FROM` | per le email | Chiave Resend (gratis fino a 3.000 email/mese) e mittente su dominio verificato, es. `prenotazioni@dominio.it`. `EMAIL_FROM_NOME` facoltativa |
+| `SENDGRID_API_KEY` | alternativa a Resend | Funziona ancora; SendGrid non ha più il piano gratuito (circa 20 $/mese dopo 60 giorni) |
 | `NOTIFICHE_EMAIL` | per gli avvisi | Email della titolare (nuove prenotazioni, annullamenti, riepilogo serale, report) |
 | `REPORT_EMAIL` | facoltativa | Altri destinatari del report mensile (es. Apex Media), separati da virgola |
 | `SITO_URL` | quando c'è il dominio | Es. `https://www.dominio.it`, senza barra finale |
@@ -147,7 +148,7 @@ nella scheda Google Business `?utm_source=gmb`.
 
 - [ ] Vercel → progetto `bagnarino-coworking` → Storage → **collega un database Neon** (crea `DATABASE_URL`)
 - [ ] Variabili `ADMIN_PASSWORD`, `CRON_SECRET`, `NOTIFICHE_EMAIL` impostate
-- [ ] SendGrid: **mittente verificato** (meglio dominio autenticato), poi `SENDGRID_API_KEY` e `SENDGRID_FROM`
+- [ ] Resend: **dominio verificato** (record DNS), poi `RESEND_API_KEY` e `EMAIL_FROM`
 - [ ] Prima prenotazione di prova dal telefono → arrivano email al cliente e alla titolare → annullala dal link nell'email
 - [ ] Dominio scelto e collegato al progetto Vercel → `SITO_URL` impostato
 - [ ] Scheda **Google Business** aggiornata con il link di prenotazione (`/prenota?utm_source=gmb`) e la categoria "Spazio di coworking"
