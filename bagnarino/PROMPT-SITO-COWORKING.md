@@ -31,7 +31,7 @@ Devi costruire la web app di un nuovo coworking per un cliente reale di Apex Med
 - Il nuovo business: la titolare NON vuole spingere l'assistenza tecnica. Vuole trasformare
   lo spazio del negozio in un COWORKING: divisori in plexiglass tra le postazioni,
   scrivanie attrezzate, wi-fi, stampanti multifunzione Olivetti incluse, e vendere
-  le scrivanie in affitto (giornata, carnet, mese).
+  le scrivanie in affitto (giornata, pacchetto 10 giornate, mese).
 - Nome del brand: "Bagnarino Coworking" (Bagnarino resta il nome principale).
 - Target: liberi professionisti, chi lavora da remoto e non vuole stare a casa,
   studenti universitari e praticanti, piccoli team che cercano una sala per riunioni.
@@ -50,7 +50,7 @@ Devi costruire la web app di un nuovo coworking per un cliente reale di Apex Med
   prezzo più accessibile.
 - Listino proposto (mettilo in UN SOLO file di configurazione, perché cambierà):
   - Giornata: €25
-  - Carnet 10 ingressi: €200 (€20 a ingresso)
+  - Pacchetto 10 giornate: €200 (€20 a giornata)
   - Mese, postazione flessibile: €160
   - Mese, postazione fissa con cassettiera: €190
   - Sala riunioni: [DA CONFERMARE se esiste e a che prezzo]
@@ -60,7 +60,8 @@ Devi costruire la web app di un nuovo coworking per un cliente reale di Apex Med
 - Orari: dal lunedì al venerdì, 9:30-18:30. Sabato e domenica chiuso.
 - Telefono e WhatsApp della titolare: +39 347 224 9457 (link wa.me/393472249457,
   tel:+393472249457). Il fisso del negozio 0131 444845 resta nel footer.
-- Carnet: 10 ingressi pagati in anticipo, validi 3 mesi dal primo ingresso
+- Pacchetto 10 giornate: 10 ingressi pagati in anticipo, validi 3 mesi dal primo ingresso.
+  Nei testi del sito chiamalo SEMPRE "Pacchetto 10 giornate", mai "carnet"
   (valore nel file di config, la titolare può cambiarlo).
 - Dominio: NON ancora deciso. Nessun dominio scritto nel codice: usa una variabile
   SITO_URL e, finché manca, l'indirizzo provvisorio di Vercel.
@@ -111,7 +112,7 @@ Home (`index.html`), in quest'ordine — ogni sezione deve avere uno scopo di co
    CTA primaria "Prenota ora", secondaria "Scrivici su WhatsApp".
 3. Striscia di fiducia: "Dal 1983 ad Alessandria" · "Concessionario Olivetti" ·
    "Niente tessera, niente vincoli" · "Prenoti in 30 secondi".
-4. Prezzi (sezione più importante): 4 card (Giornata, Carnet 10, Mese flessibile, Mese
+4. Prezzi (sezione più importante): 4 card (Giornata, Pacchetto 10 giornate, Mese flessibile, Mese
    fisso), la card "Mese flessibile" evidenziata come "La più scelta". Ogni card: prezzo
    grande, cosa include, pulsante "Prenota" che apre il flusso con il pacchetto già
    selezionato. Sotto: riga "Confronta: altri coworking in città €30/giorno — da noi €25".
@@ -195,10 +196,10 @@ NOTIFICHE_EMAIL (email della titolare), ADMIN_PASSWORD, CRON_SECRET, SITO_URL.
 - `clienti` (id, nome, cognome, email unica, telefono, piva_cf, consenso_marketing,
   creato_il)
 - `prenotazioni` (id, codice leggibile tipo BGN-4K7Q, cliente_id, pacchetto
-  'giornata'|'carnet'|'mese_flessibile'|'mese_fisso'|'sala', data_inizio, data_fine,
+  'giornata'|'pacchetto10'|'mese_flessibile'|'mese_fisso'|'sala', data_inizio, data_fine,
   postazione_id nullable, prezzo_centesimi, stato 'confermata'|'annullata'|'presente'|
   'assente', pagato bool, metodo_pagamento, note, origine (utm/fonte), creato_il)
-- `carnet` (id, cliente_id, ingressi_totali 10, ingressi_usati, scadenza)
+- `pacchetti` (id, cliente_id, ingressi_totali 10, ingressi_usati, scadenza)
 - `fidelity` (cliente_id, timbri, omaggi_disponibili, omaggi_usati)
 - `chiusure` (data, motivo) per festivi e chiusure straordinarie
 - `eventi` (tipo, dati json, creato_il) per il tracciamento interno
@@ -208,7 +209,7 @@ NOTIFICHE_EMAIL (email della titolare), ADMIN_PASSWORD, CRON_SECRET, SITO_URL.
   (postazioni attive − prenotazioni confermate − giorni chiusi/orari da config).
 - `POST /api/prenota` → valida, ricontrolla la disponibilità DENTRO una transazione
   (niente doppie prenotazioni sullo stesso posto), crea cliente se nuovo, crea
-  prenotazione, assegna la prima postazione libera, aggiorna carnet/fidelity se
+  prenotazione, assegna la prima postazione libera, aggiorna pacchetto/fidelity se
   applicabile, invia gli avvisi, risponde con codice e riepilogo.
   Protezione anti-spam: honeypot + limite per IP + controllo formato email/telefono.
 - `POST /api/annulla` → annullamento con codice + email, fino alle 20:00 del giorno prima.
@@ -238,10 +239,10 @@ contiene il codice prenotazione. Il numero e i testi stanno in config.js.
 - In fase di prenotazione, se il cliente ha un omaggio disponibile, glielo propone
   ("Hai una giornata in omaggio: vuoi usarla?").
 
-## 6. Carnet
-Acquisto del carnet = 10 ingressi utilizzabili entro 3 mesi dal primo ingresso
+## 6. Pacchetto 10 giornate
+Acquisto del pacchetto = 10 giornate utilizzabili entro 3 mesi dal primo ingresso
 (valore in config/impostazioni).
-Ogni prenotazione "giornata" di un cliente con carnet attivo scala un ingresso e mostra
+Ogni prenotazione "giornata" di un cliente con pacchetto attivo scala un ingresso e mostra
 "Ti restano X ingressi".
 
 ## 7. Pagamenti
@@ -255,7 +256,7 @@ Dati conservati solo il necessario. Nessun dato personale nei log.
 
 ## 9. Consegna
 - Test: script `npm test` (node:test) che verifica disponibilità, doppia prenotazione
-  bloccata, carnet, fidelity, annullamento fuori orario rifiutato.
+  bloccata, pacchetto 10 giornate, fidelity, annullamento fuori orario rifiutato.
 - README aggiornato: variabili da impostare su Vercel, come aggiungere un giorno di
   chiusura, come cambiare il numero di postazioni.
 - Prova end-to-end con Playwright in modalità dimostrativa e, se DATABASE_URL è
@@ -288,7 +289,7 @@ Sotto:
 - **Calendario**: vista settimana, per ogni giorno le postazioni occupate e da chi.
   Può aggiungere una prenotazione a mano (cliente arrivato in negozio o al telefono)
   e segnare un giorno come chiuso.
-- **Clienti**: elenco con ricerca, per ognuno: prenotazioni, totale speso, carnet
+- **Clienti**: elenco con ricerca, per ognuno: prenotazioni, totale speso, giornate rimaste nel pacchetto
   residuo, timbri fidelity, ultimo ingresso. Evidenzia i "clienti abituali" (≥4 ingressi
   al mese) e quelli "da richiamare" (non vengono da 30 giorni).
 - **Incassi**: tabella per giorno/settimana/mese, segna "pagato" e metodo; esporta CSV
@@ -329,6 +330,6 @@ Sotto:
 ## Prossimi miglioramenti (da valutare dopo il lancio)
 
 - Foto professionali degli spazi (shooting Apex Media) e video verticali per le sponsorizzate.
-- Pagamento online con Stripe per carnet e mensili (riduce i "non è venuto").
+- Pagamento online con Stripe per pacchetti e mensili (riduce i "non è venuto").
 - Landing dedicate per ogni campagna (es. "studenti in sessione d'esame", "smart worker").
 - Pagine SEO locali: "coworking vicino ospedale Alessandria", "ufficio a giornata Alessandria".
