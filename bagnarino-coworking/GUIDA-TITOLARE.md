@@ -3,9 +3,9 @@
 Una pagina sola, da tenere a portata di mano.
 
 ## Come entrare
-1. Sul telefono apri il sito e aggiungi **/admin** alla fine dell'indirizzo (es. `bagnarino-coworking.vercel.app/admin`).
+1. Sul telefono apri **bagnarino-coworking.vercel.app/admin** (oppure, in fondo a qualsiasi pagina del sito, tocca **Area riservata**).
 2. Scrivi la password e tocca **Entra**. Il telefono ti ricorda per 30 giorni.
-3. Consiglio: dal menu del browser scegli **"Aggiungi a schermata Home"**. Avrai un'icona come un'app.
+3. Consiglio: su iPhone tocca **Condividi → "Aggiungi alla schermata Home"**; su Android tocca **⋮ → "Aggiungi a schermata Home"**. Comparirà l'icona **Gestione**: da lì entri direttamente, come un'app.
 
 In basso trovi 5 pulsanti: **Oggi**, **Calendario**, **Clienti**, **Incassi**, **Impostazioni**.
 

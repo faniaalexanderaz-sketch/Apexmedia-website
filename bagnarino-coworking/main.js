@@ -310,13 +310,54 @@
     window.addEventListener('scroll', su, { passive: true }); su();
   }
 
-  /* ---------- home: la barra in basso compare quando i pulsanti
-     dell'apertura escono dallo schermo (mai due inviti uguali insieme) ---------- */
-  var barra = $('.home .barra-mobile'), ctaApertura = $('.apertura-cta');
-  if (barra && ctaApertura && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (voci) {
-      barra.classList.toggle('nascosta', voci[0].isIntersecting);
-    }).observe(ctaApertura);
+  /* ---------- barra delle schede: evidenzia dove si trova l'utente ---------- */
+  var schede = $$('.tab-app [data-tab]');
+  if (schede.length) {
+    var segna = function (nome) {
+      schede.forEach(function (t) {
+        if (t.getAttribute('data-tab') === nome) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+      });
+    };
+    var percorso = location.pathname.replace(/\/$/, '') || '/';
+    if (percorso === '/' || percorso === '/index') {
+      segna(location.hash === '#prezzi' ? 'prezzi' : 'home');
+      var sezPrezzi = $('#prezzi');
+      if (sezPrezzi && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (voci) { segna(voci[0].isIntersecting ? 'prezzi' : 'home'); },
+          { rootMargin: '-45% 0px -45% 0px' }).observe(sezPrezzi);
+      }
+    } else if (percorso === '/prenotazione') segna('prenotazione');
+  }
+
+  /* ---------- menu (hamburger in alto, "Contatti" in basso) ---------- */
+  var menu = $('#menu');
+  if (menu && typeof menu.showModal === 'function') {
+    var pulsanti = $$('[data-menu-apri]');
+    var chiudi = function () { if (menu.open) menu.close(); };
+    menu.addEventListener('close', function () {
+      document.body.classList.remove('menu-aperto');
+      pulsanti.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+    });
+    pulsanti.forEach(function (b) {
+      b.addEventListener('click', function () {
+        menu.showModal();
+        document.body.classList.add('menu-aperto');
+        b.setAttribute('aria-expanded', 'true');
+        var soloContatti = b.getAttribute('data-menu-apri') === 'contatti';
+        menu.classList.toggle('solo-contatti', soloContatti);
+        menu.scrollTop = 0;
+        if (soloContatti) traccia('apri_contatti', { posizione: 'tab' });
+      });
+    });
+    $$('[data-menu-chiudi]', menu).forEach(function (b) { b.addEventListener('click', chiudi); });
+    /* tocco fuori dal pannello = chiudi */
+    menu.addEventListener('click', function (e) { if (e.target === menu) chiudi(); });
+    /* le voci del menu portano altrove o a una sezione: chiudi subito */
+    $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setTimeout(chiudi, 0); }); });
+  } else if (menu) {
+    /* browser molto vecchi: il menu resta una lista in fondo alla pagina */
+    menu.setAttribute('open', '');
+    menu.style.position = 'static';
   }
 
   /* ---------- SEO: indirizzi assoluti e dati strutturati ---------- */

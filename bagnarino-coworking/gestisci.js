@@ -17,6 +17,7 @@
 
   function disegna(p) {
     corrente = p;
+    try { localStorage.setItem('bgn-ultima', JSON.stringify({ codice: p.codice, email: form.email.value.trim() })); } catch (x) {}
     scheda.hidden = false;
     $('[data-s-stato]').textContent = STATI[p.stato] || p.stato;
     $('[data-s-titolo]').textContent = p.stato === 'annullata' ? 'Questa prenotazione è annullata.' : 'Ciao ' + p.nome + ', ecco la tua prenotazione.';
@@ -71,9 +72,15 @@
       .then(function () { b.disabled = false; b.textContent = 'Sì, annulla'; });
   });
 
-  /* arrivo dal link nell'email: codice ed email già compilati */
-  var q = new URLSearchParams(location.search);
-  if (q.get('codice')) form.codice.value = q.get('codice');
-  if (q.get('email')) form.email.value = q.get('email');
-  if (q.get('codice') && q.get('email')) cerca(q.get('codice').toUpperCase(), q.get('email'));
+  /* arrivo dal link nell'email (codice ed email nell'indirizzo) oppure
+     prenotazione già fatta da questo telefono: la mostriamo subito */
+  var q = new URLSearchParams(location.search), salvata = null;
+  try { salvata = JSON.parse(localStorage.getItem('bgn-ultima') || 'null'); } catch (x) {}
+  var codiceIniziale = q.get('codice') || (salvata && salvata.codice);
+  var emailIniziale = q.get('email') || (salvata && salvata.email);
+  /* togli email e codice dall'indirizzo prima che lo leggano le statistiche */
+  if (q.get('codice') || q.get('email')) { try { history.replaceState(null, '', location.pathname); } catch (x) {} }
+  if (codiceIniziale) form.codice.value = codiceIniziale;
+  if (emailIniziale) form.email.value = emailIniziale;
+  if (codiceIniziale && emailIniziale) cerca(String(codiceIniziale).toUpperCase(), emailIniziale);
 })();

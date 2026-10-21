@@ -44,7 +44,12 @@
         else mostraErrore((err.dati && err.dati.messaggio) || 'Non troviamo la tua card: controlla email e codice.');
       });
   });
-  var q = new URLSearchParams(location.search);
-  if (q.get('email')) form.email.value = q.get('email');
-  if (q.get('codice')) form.codice.value = q.get('codice');
+  var q = new URLSearchParams(location.search), salvata = null;
+  try { salvata = JSON.parse(localStorage.getItem('bgn-ultima') || 'null'); } catch (x) {}
+  var email0 = q.get('email') || (salvata && salvata.email), codice0 = q.get('codice') || (salvata && salvata.codice);
+  if (q.get('codice') || q.get('email')) { try { history.replaceState(null, '', location.pathname); } catch (x) {} }
+  if (email0) form.email.value = email0;
+  if (codice0) form.codice.value = codice0;
+  /* cliente già riconosciuto su questo telefono: apri subito la card */
+  if (email0 && codice0 && form.requestSubmit) form.requestSubmit();
 })();

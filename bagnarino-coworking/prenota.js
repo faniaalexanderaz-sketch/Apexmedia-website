@@ -396,7 +396,10 @@
       else if (r.carnet) sotto += ' Ti restano ' + r.carnet.residui + ' ingressi nel carnet.';
       $('[data-successo-sotto]').textContent = sotto;
       var g = $('[data-gestisci]');
-      g.href = '/prenotazione?codice=' + encodeURIComponent(r.codice) + '&email=' + encodeURIComponent(dati.email);
+      /* il telefono ricorda la prenotazione: la scheda "Le mie" la mostra subito,
+         senza mettere l'email nell'indirizzo (che finirebbe nelle statistiche) */
+      try { localStorage.setItem('bgn-ultima', JSON.stringify({ codice: r.codice, email: dati.email })); } catch (x) {}
+      g.href = '/prenotazione';
       g.hidden = false;
     }
     var dom = $('[data-wa-domanda]');

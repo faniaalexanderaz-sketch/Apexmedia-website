@@ -87,6 +87,15 @@ posto lo stesso giorno sono impossibili anche con richieste simultanee), `tentat
 - La stessa persona non può occupare due scrivanie lo stesso giorno.
 - **Anti-spam**: campo trappola, massimo 8 tentativi l'ora per IP, controllo email/telefono lato server.
 
+## Web app (telefono)
+
+- Barra a schede in basso su tutte le pagine pubbliche: **Home · Prezzi · Prenota · Le mie · Contatti**. Nel flusso di prenotazione resta solo la barra con il prezzo e il pulsante.
+- Menu (☰) in alto a destra con tutte le sezioni e i contatti. Su computer il menu è in testata.
+- "Le mie": il telefono ricorda l'ultima prenotazione fatta (localStorage `bgn-ultima`) e la mostra subito, con il pulsante della **Bagnarino Card** (la card non è più nel menu: la vede solo chi ha prenotato).
+- Codice ed email arrivati dal link nell'email vengono tolti dall'indirizzo, così non finiscono nelle statistiche.
+- Installabile come app: `site.webmanifest` (clienti) e `admin.webmanifest` (titolare, icona "Gestione").
+- Area riservata: `/admin`, link "Area riservata" nel piè di pagina.
+
 ## Variabili d'ambiente su Vercel
 
 | Variabile | Obbligatoria | A cosa serve |

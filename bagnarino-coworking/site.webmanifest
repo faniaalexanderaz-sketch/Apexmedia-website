@@ -1,15 +1,21 @@
 {
+  "id": "/",
   "name": "Bagnarino Coworking",
   "short_name": "Bagnarino",
-  "description": "Postazioni di lavoro in affitto in centro ad Alessandria.",
-  "start_url": "/",
+  "description": "Prenota una scrivania in centro ad Alessandria.",
+  "start_url": "/?utm_source=app",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#F7F5F0",
-  "theme_color": "#1B2A3A",
+  "background_color": "#F4EFE6",
+  "theme_color": "#0F1A26",
   "lang": "it",
   "icons": [
     { "src": "/img/favicon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/img/favicon-512.png", "sizes": "512x512", "type": "image/png" },
     { "src": "/img/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Prenota una postazione", "short_name": "Prenota", "url": "/prenota?utm_source=app" },
+    { "name": "La mia prenotazione", "short_name": "Le mie", "url": "/prenotazione" }
   ]
 }
