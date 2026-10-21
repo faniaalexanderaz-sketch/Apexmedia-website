@@ -146,8 +146,8 @@ nella scheda Google Business `?utm_source=gmb`.
 
 ## Checklist di lancio
 
-- [ ] Vercel → progetto `bagnarino-coworking` → Storage → **collega un database Neon** (crea `DATABASE_URL`)
-- [ ] Variabili `ADMIN_PASSWORD`, `CRON_SECRET`, `NOTIFICHE_EMAIL` impostate
+- [x] Vercel → progetto `bagnarino-coworking` → Storage → **database Neon collegato** (`neon-crimson-castle`, crea `DATABASE_URL`)
+- [x] Variabili `ADMIN_PASSWORD`, `CRON_SECRET`, `NOTIFICHE_EMAIL` impostate
 - [ ] Resend: **dominio verificato** (record DNS), poi `RESEND_API_KEY` e `EMAIL_FROM`
 - [ ] Prima prenotazione di prova dal telefono → arrivano email al cliente e alla titolare → annullala dal link nell'email
 - [ ] Dominio scelto e collegato al progetto Vercel → `SITO_URL` impostato
