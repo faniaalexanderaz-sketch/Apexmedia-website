@@ -754,6 +754,33 @@ a{color:inherit;text-decoration:none}
 .nxt .row{display:grid;grid-template-columns:4.6mm 1fr;gap:1.4mm;font-size:7.4pt;line-height:1.4}
 .nxt .row+.row{margin-top:1.1mm}
 .nxt .row b{display:grid;place-items:center;width:4.2mm;height:4.2mm;border-radius:50%;background:var(--violet);color:#fff;font-size:6pt}
+.keyb{margin-top:5mm;display:grid;grid-template-columns:12mm 1fr;gap:3mm;align-items:center;background:var(--ink);border-radius:3.4mm;padding:4.4mm 5mm;color:#C9C6D8}
+.keyb .kq{font-size:40pt;line-height:.6;color:var(--gold);font-weight:800;height:9mm}
+.keyb b{display:block;font-size:12.4pt;line-height:1.3;color:#fff;font-weight:800}
+.keyb span{display:block;font-size:8.2pt;line-height:1.5;margin-top:1.2mm}
+.k6{display:grid;grid-template-columns:1fr 1fr;gap:2.6mm;margin-top:4.4mm}
+.kp{position:relative;background:#fff;border:.3mm solid var(--line);border-left:1.2mm solid var(--violet);border-radius:2.8mm;padding:3mm 3.4mm 3mm 10.4mm}
+.kp.hot{border-left-color:var(--orange);background:#FFFBF6}
+.kp .kn{position:absolute;left:3mm;top:3mm;width:5.4mm;height:5.4mm;border-radius:50%;background:var(--ink);color:var(--gold);font-weight:800;font-size:7.2pt;display:grid;place-items:center}
+.kp .kt{font-size:10.2pt;line-height:1.3;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.kp p{font-size:7.6pt;line-height:1.48;margin-top:1.2mm;color:var(--body)}
+.ba{display:grid;grid-template-columns:1fr 8mm 1fr;align-items:stretch}
+.bb,.ba2{border-radius:3mm;padding:3mm 3.6mm}
+.bb{background:#FDF0E2;border:.3mm solid #F2D3AE}
+.ba2{background:#F6FEF9;border:.3mm solid #BBF0CF}
+.bh2{font-size:6.4pt;letter-spacing:.2em;text-transform:uppercase;font-weight:800}
+.bb .bh2{color:#B45F14}.ba2 .bh2{color:#15803D}
+.ba ul{list-style:none;margin-top:1.4mm;display:grid;gap:.9mm}
+.ba li{font-size:7.9pt;line-height:1.4;display:grid;grid-template-columns:3.6mm 1fr}
+.bb li::before{content:"✕";color:#E0533C;font-weight:800}
+.ba2 li::before{content:"✓";color:var(--green);font-weight:800}
+.barr{display:grid;place-items:center;color:var(--violet)}
+.barr .ic{width:5mm;height:5mm;stroke-width:2.6}
+.get4{display:grid;grid-template-columns:repeat(4,1fr);gap:2.4mm}
+.get4 div{background:#fff;border:.3mm solid var(--line);border-top:1mm solid var(--violet);border-radius:2.6mm;padding:2.8mm 3mm;text-align:center}
+.get4 .ic{width:6mm;height:6mm;color:var(--violet);display:block;margin:0 auto 1.2mm}
+.get4 b{display:block;font-size:9pt;color:var(--ink)}
+.get4 span{display:block;font-size:7pt;color:var(--muted);margin-top:.3mm}
 </style>
 </head>
 <body>
@@ -818,7 +845,72 @@ a{color:inherit;text-decoration:none}
 </svg></span><h3>Social senza un piano</h3><p>Pubblicare ogni tanto non basta: servono costanza, video, pubblicità mirata in zona e numeri per capire cosa porta davvero ordini.</p></div>
     </div>
 
-    <div class="st">I tre obiettivi</div>
+    <div class="keyb">
+      <span class="kq">“</span>
+      <div><b>Il prodotto c'è già. Manca il sistema che lo fa arrivare a più persone.</b><span>È esattamente quello che costruiamo: una web app vostra, una fidelity card e social con un piano preciso.</span></div>
+    </div>
+
+    <div class="st">Cosa ottenete</div>
+    <div class="get4">
+      <div><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+  <path d="M3 6h18" />
+  <path d="M16 10a4 4 0 0 1-8 0" />
+</svg><b>Più ordini diretti</b><span>senza commissioni</span></div>
+      <div><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="m17 2 4 4-4 4" />
+  <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
+  <path d="m7 22-4-4 4-4" />
+  <path d="M21 13v1a4 4 0 0 1-4 4H3" />
+</svg><b>Clienti che tornano</b><span>grazie alla fidelity card</span></div>
+      <div><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" />
+</svg><b>Più visibilità in zona</b><span>Google, Instagram, TikTok</span></div>
+      <div><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+  <path d="M18 17V9" />
+  <path d="M13 17V5" />
+  <path d="M8 17v-3" />
+</svg><b>Numeri chiari</b><span>un report ogni mese</span></div>
+    </div>
+  </div>
+  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">1 / 4</span></div>
+</section>
+
+
+<!-- ================= PAGINA 2 · PERCHÉ TI SERVE ================= -->
+<section class="page" id="p2">
+  <div class="hd">
+    <div class="logo"><div class="tile"></div><div><div class="w">APEX MEDIA</div><div class="s">Performance Marketing Agency</div></div></div>
+    <div class="r">02 — Perché vi serve</div>
+  </div>
+  <div class="body">
+    <div class="eb">02 — Perché vi serve</div>
+    <h2 class="t">Sei cose che cambiano davvero per Da Rò.</h2>
+    <div class="bar"></div>
+    <p class="lead">Non vendiamo post o app fini a sé stessi. Ogni cosa che facciamo serve a una sola cosa: <b>più ordini, più clienti abituali, più incassi</b>. Ecco perché.</p>
+
+    <div class="k6">
+      <div class="kp"><span class="kn">1</span><div class="kt">“Chi non vi trova online, ordina da un'altra pizzeria.”</div><p>Oggi il link del sito porta a una pagina vuota. Con la web app e la scheda Google curata, chi cerca “pizzeria” in zona Pista trova voi, con menu e pulsante per ordinare.</p></div>
+      <div class="kp hot"><span class="kn">2</span><div class="kt">“Ogni ordine diretto è tutto vostro.”</div><p>Sulle piattaforme una parte di ogni ordine se ne va in commissione. Dalla vostra web app no: il guadagno resta in pizzeria, ordine dopo ordine.</p></div>
+      <div class="kp"><span class="kn">3</span><div class="kt">“Un cliente che torna vale più di un cliente nuovo.”</div><p>La fidelity card premia chi ordina spesso: ogni 10 pizze una in omaggio. Il cliente ha un motivo in più per scegliere voi e non la pizzeria accanto.</p></div>
+      <div class="kp"><span class="kn">4</span><div class="kt">“Il martedì vuoto si riempie con un messaggio.”</div><p>Con i contatti dei vostri clienti potete mandare una promozione mirata nelle sere più tranquille. Le piattaforme questo non ve lo permettono.</p></div>
+      <div class="kp"><span class="kn">5</span><div class="kt">“La pizza si sceglie con gli occhi, prima ancora che con la fame.”</div><p>Un video della farinata appena sfornata vende più di mille parole. Video fatti apposta e sponsorizzati a chi abita vicino portano clienti nuovi ogni settimana.</p></div>
+      <div class="kp"><span class="kn">6</span><div class="kt">“Quello che non si misura, non si migliora.”</div><p>Ogni mese un report semplice: quanti ordini, quante prenotazioni, quanto incasso dal marketing. Si tiene ciò che funziona, si cambia ciò che non rende.</p></div>
+    </div>
+
+    <div class="st" style="margin-top:4.6mm">Oggi e domani, a confronto</div>
+    <div class="ba">
+      <div class="bb"><div class="bh2">Oggi</div><ul><li>Sito non raggiungibile</li><li>Ordini online solo tramite piattaforme</li><li>Nessun dato sui clienti abituali</li><li>Social aggiornati quando c'è tempo</li></ul></div>
+      <div class="barr"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg></div>
+      <div class="ba2"><div class="bh2">Con Apex Media</div><ul><li>Web app vostra, sempre online</li><li>Ordini diretti senza commissioni</li><li>Fidelity card e clienti che tornano</li><li>Social con un piano, video e numeri</li></ul></div>
+    </div>
+
+    <div class="st" style="margin-top:4.6mm">I tre obiettivi</div>
     <div class="obj3">
       <div class="obj a"><span class="ib"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
@@ -840,17 +932,17 @@ a{color:inherit;text-decoration:none}
 </svg></span><div class="tg">Obiettivo 3</div><h3>Più tavoli pieni in settimana</h3><p>Prenotazione del tavolo online e promozioni mirate nelle sere più tranquille, dal martedì al giovedì.</p></div>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">1 / 3</span></div>
+  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">2 / 4</span></div>
 </section>
 
-<!-- ================= PAGINA 2 ================= -->
-<section class="page" id="p2">
+<!-- ================= PAGINA 3 ================= -->
+<section class="page" id="p3">
   <div class="hd">
     <div class="logo"><div class="tile"></div><div><div class="w">APEX MEDIA</div><div class="s">Performance Marketing Agency</div></div></div>
-    <div class="r">02 — La web app</div>
+    <div class="r">03 — La web app</div>
   </div>
   <div class="body">
-    <div class="eb">02 — La vostra web app</div>
+    <div class="eb">03 — La vostra web app</div>
     <h2 class="t">Un'app tutta vostra, senza commissioni.</h2>
     <div class="bar"></div>
     <p class="lead">Si apre dal telefono come un'app, <b>senza scaricare nulla</b>. I clienti ordinano e prenotano direttamente da voi. Se oggi usate già un'app, la sostituiamo o la colleghiamo: l'obiettivo è che tutto passi da <b>un unico sistema vostro</b>.</p>
@@ -997,17 +1089,17 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">2 / 3</span></div>
+  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">3 / 4</span></div>
 </section>
 
-<!-- ================= PAGINA 3 ================= -->
-<section class="page p3" id="p3">
+<!-- ================= PAGINA 4 ================= -->
+<section class="page p3" id="p4">
   <div class="hd">
     <div class="logo"><div class="tile"></div><div><div class="w">APEX MEDIA</div><div class="s">Performance Marketing Agency</div></div></div>
-    <div class="r">03 — Social e preventivo</div>
+    <div class="r">04 — Social e preventivo</div>
   </div>
   <div class="body">
-    <div class="eb">03 — I social e il preventivo</div>
+    <div class="eb">04 — I social e il preventivo</div>
     <h2 class="t">Pubblicare non basta: serve un sistema.</h2>
     <div class="bar"></div>
 
@@ -1106,7 +1198,7 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · 351 594 0685 · studio@infoapex.eu</span><span class="n">3 / 3</span></div>
+  <div class="ft"><span>Apex Media · 351 594 0685 · studio@infoapex.eu</span><span class="n">4 / 4</span></div>
 </section>
 </body>
 </html>
