@@ -1235,3 +1235,17 @@ body.menu-aperto { overflow: hidden; }
 .faq-sezione .faq details:last-child { border-bottom: 0; }
 .finale { padding-top: calc(96px + 56px); }
 @media (min-width: 900px) { .faq-sezione .faq { padding: 10px 32px 14px; margin-bottom: -88px; } .finale { padding-top: calc(150px + 88px); } }
+
+/* ---------- la targhetta Olivetti (concessionario ufficiale) ---------- */
+.targa-olivetti {
+  display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 8px 11px; border-radius: 6px;
+  background: var(--avorio); color: var(--notte); border: 1px solid rgba(250, 246, 238, .6);
+  font-family: var(--f-titoli); font-weight: 700; font-size: 1.3rem; line-height: 1; letter-spacing: -0.045em; text-transform: lowercase;
+}
+.targa-olivetti i { width: 14px; height: 14px; border-radius: 3px; background: #E2261C; flex-shrink: 0; }
+.apertura-fatti { grid-template-columns: repeat(2, auto); gap: 18px 32px; }
+.fatto-olivetti dd { padding-top: 2px; }
+.apertura-fatti dt { white-space: nowrap; }
+@media (min-width: 900px) { .apertura-fatti { grid-template-columns: repeat(4, auto); gap: 0 44px; align-items: end; } .targa-olivetti { font-size: 1.45rem; } }
+.piede-olivetti { display: flex; align-items: center; gap: 12px; margin: 18px 0 0; font-family: var(--f-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chiaro-70); }
+.piede-olivetti .targa-olivetti { font-size: 1.1rem; padding: 6px 12px 7px 10px; }
