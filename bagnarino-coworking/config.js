@@ -81,7 +81,8 @@ var BGN_CONFIG = {
       nome: 'Giornata',
       prezzo: 25,
       unita: 'al giorno',
-      nota: 'Vieni quando ti serve',
+      nota: 'Nessun impegno',
+      perChi: 'Per provare o venire ogni tanto',
       include: ['Scrivania dalle 9:30 alle 18:30', 'Wi-fi in fibra', 'Stampe e scansioni Olivetti'],
       cta: 'Prenota la giornata',
       tipoData: 'giorno',
@@ -92,7 +93,8 @@ var BGN_CONFIG = {
       nome: 'Carnet 10 ingressi',
       prezzo: 200,
       unita: '10 giornate',
-      nota: '€20 a ingresso: risparmi €50',
+      nota: '€20 al giorno · risparmi €50',
+      perChi: 'Per chi viene una o due volte a settimana',
       include: ['10 giornate da usare quando vuoi', 'Valido 3 mesi dal primo ingresso', 'Tutto quello della giornata'],
       cta: 'Prenota il carnet',
       tipoData: 'inizio',
@@ -103,7 +105,8 @@ var BGN_CONFIG = {
       nome: 'Mese flessibile',
       prezzo: 160,
       unita: 'al mese',
-      nota: 'Meno di €8 al giorno lavorativo',
+      nota: 'Meno di €8 al giorno',
+      perChi: 'Per chi lavora qui quasi ogni giorno',
       include: ['Tutti i giorni di apertura', 'Una scrivania libera a scelta', 'Stampe, scansioni e wi-fi inclusi'],
       cta: 'Prenota il mese',
       tipoData: 'inizio',
@@ -118,7 +121,8 @@ var BGN_CONFIG = {
       nome: 'Mese, postazione fissa',
       prezzo: 190,
       unita: 'al mese',
-      nota: 'La tua scrivania, sempre uguale',
+      nota: 'Circa €9 al giorno',
+      perChi: 'Per chi vuole la sua scrivania, sempre quella',
       include: ['Sempre la stessa scrivania', 'Cassettiera personale', 'Lasci le tue cose dove sono'],
       cta: 'Prenota la fissa',
       tipoData: 'inizio',
@@ -132,17 +136,14 @@ var BGN_CONFIG = {
 
   carnet: { ingressi: 10, validitaMesi: 3 },
 
-  /* Confronto prezzi (portali pubblici, ottobre 2026) */
-  concorrenza: { prezzoGiorno: 30 },
-
   /* Disdetta: regola mostrata nei testi (in fase 2 la applica il server) */
   disdetta: { ora: '20:00', testo: 'entro le 20:00 del giorno prima' },
 
   fidelity: {
     nome: 'Bagnarino Card',
     timbri: 10,
-    titolo: 'Ogni 10 giornate, l’undicesima è nostra.',
-    testo: 'A ogni giornata di lavoro ti segniamo un timbro. Al decimo, la giornata successiva te la offriamo noi. Niente app da scaricare, niente punti da calcolare.'
+    titolo: 'Ogni 10 giornate, l’undicesima è in regalo.',
+    testo: 'A ogni giornata di lavoro ti segniamo un timbro. Dopo 10 timbri, l’undicesima giornata te la regaliamo. La card è gratis: niente app da scaricare, niente punti da calcolare.'
   },
 
   /* Servizi non ancora confermati: restano nascosti finché sono false */

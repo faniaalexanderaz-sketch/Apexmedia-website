@@ -482,11 +482,6 @@ em { font-style: italic; }
   .prezzo-evidenza { margin-top: -16px; margin-bottom: 16px; }
   .prezzo-valore { font-size: clamp(3.6rem, 4.6vw, 4.6rem); }
 }
-.confronto {
-  display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap;
-  margin: 2.4rem 0 0; padding: 20px 0 0; border-top: 1px solid var(--linea); font-size: 1.02rem;
-}
-.confronto .etichetta-mono { margin: 0; }
 .sala-nota { margin-top: 1rem; }
 
 /* N° 03 · come funziona */
@@ -1161,3 +1156,38 @@ body.menu-aperto { overflow: hidden; }
 }
 
 .dove-vicino { margin: -6px 0 18px; font-size: 1.05rem; color: var(--inchiostro-morbido); }
+
+/* --- card prezzi: per chi è, prezzo al giorno, pulsanti distinti --- */
+.prezzo-testa { margin-bottom: 4px; }
+.prezzo-nome { font-size: 1.3rem; font-weight: 800; letter-spacing: -.01em; }
+.prezzo-perchi { margin: 0 0 18px; font-size: .95rem; line-height: 1.4; color: var(--inchiostro-morbido); }
+@media (min-width: 700px) { .prezzo-perchi { min-height: 2.8em; } }
+.prezzo-nota {
+  align-self: flex-start; display: inline-flex; align-items: center; margin: 14px 0 20px; padding: 6px 12px; border-radius: 999px;
+  font: 700 .9rem/1.2 var(--f-testo); font-style: normal; color: var(--ocra-testo); background: var(--ocra-chiaro);
+}
+.prezzo-evidenza .prezzo-nota { background: var(--ocra); color: var(--notte); }
+.prezzo-include { margin-bottom: 24px; }
+/* pulsante delle formule normali: contorno scuro, si riempie al passaggio */
+.btn-prezzo {
+  background: var(--bianco); color: var(--inchiostro); border: 2px solid var(--inchiostro); box-shadow: none;
+  transition: background-color .2s var(--curva), color .2s var(--curva), transform .18s var(--curva);
+}
+.btn-prezzo:hover { background: var(--inchiostro); color: var(--avorio); transform: translateY(-1px); }
+.btn-prezzo:active { transform: translateY(1px); }
+.btn-prezzo::before { display: none; }
+/* pulsante della formula consigliata: pieno, più alto */
+.btn-prezzo-top { min-height: 56px; font-size: 1.05rem; }
+.prezzo-evidenza .prezzo-etichetta { padding: 6px 12px; font-size: .7rem; }
+
+/* sotto le card: le tre cose che tolgono ogni dubbio */
+.prezzi-garanzie {
+  display: grid; gap: 12px; margin: 2.2rem 0 0; padding: 22px 0 0; list-style: none;
+  border-top: 1px solid var(--linea); font-size: 1rem; color: var(--inchiostro-morbido);
+}
+.prezzi-garanzie li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
+.prezzi-garanzie strong { color: var(--inchiostro); }
+.prezzi-garanzie .ico { flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px; color: var(--verde-testo); stroke-width: 2.6; }
+@media (min-width: 900px) {
+  .prezzi-garanzie { grid-template-columns: repeat(3, auto); justify-content: center; gap: 36px; }
+}

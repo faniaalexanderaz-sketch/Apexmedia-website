@@ -183,7 +183,6 @@
     var p = pacchetto(el.getAttribute('data-prezzo'));
     if (p) el.textContent = euro(p.prezzo);
   });
-  $$('[data-prezzo-concorrenza]').forEach(function (el) { el.textContent = euro(C.concorrenza.prezzoGiorno); });
   /* blocchi legati a un dato non confermato */
   $$('[data-cfg-attivo]').forEach(function (el) {
     if (!leggi(el.getAttribute('data-cfg-attivo'))) el.hidden = true; else el.hidden = false;
@@ -228,6 +227,7 @@
       return '<article class="prezzo' + (p.evidenza ? ' prezzo-evidenza' : '') + '" data-card-prezzo>' +
         '<div class="prezzo-testa"><h3 class="prezzo-nome">' + p.nome + '</h3>' +
         (p.etichetta ? '<p class="prezzo-etichetta">' + p.etichetta + '</p>' : '') + '</div>' +
+        (p.perChi ? '<p class="prezzo-perchi">' + p.perChi + '</p>' : '') +
         '<p class="prezzo-cifra"><span class="visually-hidden">' + euro(p.prezzo) + ' ' + p.unita + '</span><span class="prezzo-valuta" aria-hidden="true">€</span>' +
         '<span class="prezzo-valore" aria-hidden="true" data-cifra="' + p.prezzo + '">' + cifra + '</span>' +
         '<span class="prezzo-unita" aria-hidden="true">' + p.unita + '</span></p>' +
@@ -235,7 +235,7 @@
         '<ul class="prezzo-include">' + p.include.map(function (x) {
           return '<li><span class="prezzo-spunta"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>' + x + '</li>';
         }).join('') + '</ul>' +
-        '<a class="btn ' + (p.evidenza ? 'btn-ocra' : 'btn-pieno') + ' btn-largo" href="/prenota?pacchetto=' + p.id + '" data-pos="prezzi-' + p.id + '">' + p.cta +
+        '<a class="btn btn-largo ' + (p.evidenza ? 'btn-ocra btn-prezzo-top' : 'btn-prezzo') + '" href="/prenota?pacchetto=' + p.id + '" data-pos="prezzi-' + p.id + '">' + p.cta +
         '<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>' +
         '</article>';
     }).join('');

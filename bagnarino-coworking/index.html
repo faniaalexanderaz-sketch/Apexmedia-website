@@ -12,7 +12,7 @@
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Bagnarino Coworking">
   <meta property="og:title" content="Coworking in centro ad Alessandria · da €25 al giorno">
-  <meta property="og:description" content="Scrivania, wi-fi in fibra e stampante incluse. Niente tessera: prenoti online in 30 secondi, paghi quando arrivi.">
+  <meta property="og:description" content="Scrivania, wi-fi in fibra e stampante incluse. Niente iscrizione: prenoti online in 30 secondi, paghi quando arrivi.">
   <meta property="og:url" content="/">
   <meta property="og:image" content="/img/og-bagnarino-coworking.jpg">
   <meta property="og:image:width" content="1200">
@@ -34,12 +34,12 @@
   <link rel="preload" as="image" href="/img/logo-chiaro.svg" fetchpriority="high">
   <link rel="preload" href="/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/fraunces-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=72ca3c0f">
+  <link rel="stylesheet" href="/styles.css?v=a9a93a1d">
 
-  <script src="/config.js?v=19ce66f6"></script>
+  <script src="/config.js?v=ce0ae7ec"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=953a1288" defer></script>
+  <script src="/main.js?v=b2e491ad" defer></script>
   <script src="/animazioni.js?v=6b2e11fc" defer></script>
 </head>
 <body class="home" data-schema-attivita>
@@ -220,7 +220,7 @@
           <span class="tappa-segno" aria-hidden="true"><svg class="ico"><use href="#i-laptop"/></svg></span>
           <span class="tappa-anno">Oggi</span>
           <h3>Il negozio diventa il tuo ufficio</h3>
-          <p>Coworking da <span data-prezzo="giornata">€25</span> al giorno, senza tessere né contratti.</p>
+          <p>Coworking da <span data-prezzo="giornata">€25</span> al giorno, senza iscrizioni né contratti.</p>
         </li>
       </ol>
     </div>
@@ -232,22 +232,23 @@
       <div class="testa-sezione">
         <p class="occhiello">Prezzi</p>
         <h2 id="prezzi-titolo" class="titolo-sezione">Prezzi del coworking: <em>da €25 al giorno.</em></h2>
-        <p class="intro-sezione">Giornata, carnet o mese. Paghi in sede: niente tessera, niente iscrizione.</p>
+        <p class="intro-sezione">Scegli in base a quante volte vieni. Tutte le formule includono scrivania, wi-fi in fibra e stampe.</p>
       </div>
 
       <!-- le card si generano da config.js (listino); questo è il contenuto
            di partenza per chi non esegue JavaScript -->
       <div class="prezzi" data-listino>
-        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Giornata</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">25</span><span class="prezzo-unita">al giorno</span></p><a class="btn btn-pieno btn-largo" href="/prenota?pacchetto=giornata">Prenota la giornata</a></article>
-        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Carnet 10 ingressi</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">200</span><span class="prezzo-unita">10 giornate</span></p><a class="btn btn-pieno btn-largo" href="/prenota?pacchetto=carnet">Prenota il carnet</a></article>
-        <article class="prezzo prezzo-evidenza"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese flessibile</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">160</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-ocra btn-largo" href="/prenota?pacchetto=mese_flessibile">Prenota il mese</a></article>
-        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese, postazione fissa</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">190</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-pieno btn-largo" href="/prenota?pacchetto=mese_fisso">Prenota la fissa</a></article>
+        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Giornata</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">25</span><span class="prezzo-unita">al giorno</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=giornata">Prenota la giornata</a></article>
+        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Carnet 10 ingressi</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">200</span><span class="prezzo-unita">10 giornate</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=carnet">Prenota il carnet</a></article>
+        <article class="prezzo prezzo-evidenza"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese flessibile</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">160</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-ocra btn-prezzo-top" href="/prenota?pacchetto=mese_flessibile">Prenota il mese</a></article>
+        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese, postazione fissa</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">190</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=mese_fisso">Prenota la fissa</a></article>
       </div>
 
-      <p class="confronto">
-        <span class="etichetta-mono">Confronta</span>
-        <span>Gli altri coworking in città costano <span data-prezzo-concorrenza>€30</span> al giorno e chiedono la tessera da socio. Da noi <strong data-prezzo="giornata">€25</strong>, senza tessera.</span>
-      </p>
+      <ul class="prezzi-garanzie">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Paghi quando arrivi</strong>, in contanti o con carta</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Disdici gratis</strong> <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span></span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Fattura</strong> per partita IVA o codice fiscale</span></li>
+      </ul>
       <p class="sala-nota" data-cfg-attivo="sala.attiva" hidden>
         Vi serve una sala per una riunione? <a data-wa="generico" data-pos="prezzi-sala" href="https://wa.me/393472249457">Chiedici la disponibilità della sala riunioni</a>.
       </p>
@@ -294,7 +295,7 @@
         <div class="dotazione-no">
           <h3>Cosa non c’è</h3>
           <ul>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg><span>Tessere da socio o quote d’iscrizione</span></li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg><span>Quote da socio o d’iscrizione</span></li>
             <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg><span>Pagamenti anticipati online: paghi quando arrivi</span></li>
             <li><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg><span>Contratti o vincoli: disdici gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span></span></li>
           </ul>
@@ -309,8 +310,8 @@
     <div class="contenitore fidelity">
       <div class="fidelity-testo">
         <p class="occhiello occhiello-chiaro"><span data-cfg="fidelity.nome">Bagnarino Card</span></p>
-        <h2 id="card-titolo" class="titolo-sezione" data-cfg="fidelity.titolo">Ogni 10 giornate, l’undicesima è nostra.</h2>
-        <p data-cfg="fidelity.testo">A ogni giornata di lavoro ti segniamo un timbro. Al decimo, la giornata successiva te la offriamo noi. Niente app da scaricare, niente punti da calcolare.</p>
+        <h2 id="card-titolo" class="titolo-sezione" data-cfg="fidelity.titolo">Ogni 10 giornate, l’undicesima è in regalo.</h2>
+        <p data-cfg="fidelity.testo">A ogni giornata di lavoro ti segniamo un timbro. Dopo 10 timbri, l’undicesima giornata te la regaliamo. La card è gratis: niente app da scaricare, niente punti da calcolare.</p>
         <div class="fidelity-azioni">
           <a class="btn btn-ocra btn-grande" href="/prenota?pacchetto=giornata" data-pos="fidelity">Inizia dalla prima giornata
             <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
@@ -318,7 +319,7 @@
         </div>
       </div>
       <div class="tessera-scena">
-        <div class="tessera" role="img" aria-label="Esempio di Bagnarino Card con 7 timbri su 10 e l’undicesima giornata in omaggio">
+        <div class="tessera" role="img" aria-label="Esempio di Bagnarino Card con 7 timbri su 10 e l’undicesima giornata in regalo">
           <div class="tessera-testa">
             <img src="/img/logo-mark-chiaro.svg" alt="" width="30" height="32">
             <span class="tessera-nome">Bagnarino Card</span>
@@ -330,7 +331,7 @@
           </ol>
           <div class="tessera-piede">
             <span>7 timbri su 10</span>
-            <span class="omaggio"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg>11ª giornata in omaggio</span>
+            <span class="omaggio"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg>11ª giornata in regalo</span>
           </div>
         </div>
       </div>
@@ -429,8 +430,8 @@
       </div>
       <div class="faq">
         <details>
-          <summary>Serve una tessera o un’iscrizione?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
-          <div class="faq-risposta"><p>No. Niente tessera da socio, niente quota annuale: prenoti e vieni.</p></div>
+          <summary>Serve un’iscrizione o una quota da socio?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+          <div class="faq-risposta"><p>No. Niente iscrizione e niente quota annuale: prenoti e vieni. La Bagnarino Card per i timbri è gratis e te la diamo alla prima giornata.</p></div>
         </details>
         <details>
           <summary>Posso disdire una prenotazione?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>

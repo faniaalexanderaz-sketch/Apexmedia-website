@@ -267,7 +267,7 @@
         if (!stato.vantaggi) { boxVantaggi.hidden = true; aggiorna(); return; }
         boxVantaggi.innerHTML = v.omaggi > 0
           ? '<label class="spunta" for="usa_omaggio"><input type="checkbox" id="usa_omaggio" checked>' +
-            '<span><strong>Hai una giornata in omaggio</strong> con la Bagnarino Card. Vuoi usarla adesso?</span></label>'
+            '<span><strong>Hai una giornata in regalo</strong> con la Bagnarino Card. Vuoi usarla adesso?</span></label>'
           : '<p><strong>Questa giornata la scaliamo dal tuo carnet</strong>: dopo ti resteranno ' + (v.carnet.residui - 1) + ' ingressi. Niente da pagare.</p>';
         boxVantaggi.hidden = false;
         var o = $('#usa_omaggio');

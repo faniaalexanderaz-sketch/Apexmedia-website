@@ -94,7 +94,7 @@ function codiceBox(c) {
 /* ---------- al cliente ---------- */
 function confermaCliente(p, cfg, sito) {
   const gestisci = sito + '/prenotazione?codice=' + encodeURIComponent(p.codice) + '&email=' + encodeURIComponent(p.email);
-  const extra = p.omaggio ? paragrafo('🎁 Questa giornata è in omaggio con la tua Bagnarino Card.')
+  const extra = p.omaggio ? paragrafo('🎁 Questa giornata è in regalo con la tua Bagnarino Card.')
     : p.carnet && p.pacchetto === 'giornata' ? paragrafo('Ingresso dal tuo carnet: ti restano <b>' + p.carnet.residui + '</b> ingressi.', true)
     : p.pacchetto === 'carnet' ? paragrafo('Il carnet è attivo: oltre a questa giornata ti restano <b>' + p.carnet.residui + '</b> ingressi da prenotare quando vuoi.', true)
     : '';
@@ -149,7 +149,7 @@ function titolareNuova(p, cfg, sito) {
     righe([
       ['Chi', p.nome + ' ' + p.cognome],
       ['Quando', periodo(p)],
-      ['Cosa', p.nomePacchetto + (p.omaggio ? ' (omaggio Card)' : p.carnet && p.pacchetto === 'giornata' ? ' (dal carnet)' : '')],
+      ['Cosa', p.nomePacchetto + (p.omaggio ? ' (in regalo con la Card)' : p.carnet && p.pacchetto === 'giornata' ? ' (dal carnet)' : '')],
       ['Quanto', p.prezzo === 0 ? 'Già pagato' : p.prezzoTesto],
       ['Telefono', tel, true],
       ['Email', p.email],

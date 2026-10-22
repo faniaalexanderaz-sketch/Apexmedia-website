@@ -18,11 +18,11 @@
     $('[data-timbri]').innerHTML = html;
     $('[data-c-nome]').textContent = 'Card di ' + c.nome;
     $('[data-c-conta]').textContent = c.timbri + (c.timbri === 1 ? ' timbro' : ' timbri') + ' su ' + tot;
-    $('[data-c-premio]').textContent = (tot + 1) + 'ª giornata in omaggio';
+    $('[data-c-premio]').textContent = (tot + 1) + 'ª giornata in regalo';
     var mancano = tot - c.timbri;
     $('[data-c-omaggi]').innerHTML = c.omaggi > 0
-      ? '<strong>Hai ' + (c.omaggi === 1 ? 'una giornata' : c.omaggi + ' giornate') + ' in omaggio!</strong> Quando prenoti con la tua email e il tuo cellulare te la proponiamo noi.'
-      : 'Ti ' + (mancano === 1 ? 'manca 1 giornata' : 'mancano ' + mancano + ' giornate') + ' per la prossima in omaggio.';
+      ? '<strong>Hai ' + (c.omaggi === 1 ? 'una giornata' : c.omaggi + ' giornate') + ' in regalo!</strong> Quando prenoti con la tua email e il tuo cellulare te la proponiamo noi.'
+      : 'Ti ' + (mancano === 1 ? 'manca 1 giornata' : 'mancano ' + mancano + ' giornate') + ' per la prossima in regalo.';
     var k = $('[data-c-carnet]');
     k.hidden = !c.carnet;
     if (c.carnet) k.textContent = 'Carnet attivo: ' + c.carnet.residui + ' ingressi da usare entro il ' +
