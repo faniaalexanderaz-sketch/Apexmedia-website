@@ -29,7 +29,7 @@
   --ocra-chiaro: #F0E3C6;
   --ocra-testo: #7A5A1E;            /* ocra leggibile come testo su carta: 5.6:1 */
   --timbro: #B4302A;                /* rosso inchiostro da timbro: solo sulla Card */
-  --carta: #F1EBE0;
+  --carta: #F4EEE3;
   --carta-2: #E6DECF;
   --avorio: #FAF6EE;
   --bianco: #FFFFFF;
@@ -58,6 +58,7 @@
   --curva: cubic-bezier(.2, .7, .1, 1);
   --testata: 64px;
 }
+
 @media (min-width: 900px) { :root { --margine: 48px; --testata: 76px; } }
 
 /* ---------- base ---------- */
@@ -224,59 +225,77 @@ strong { font-weight: 600; }
 .sezione { padding: 80px 0; position: relative; }
 @media (min-width: 900px) { .sezione { padding: 128px 0; } }
 
-.apertura { position: relative; padding: 28px 0 0; background: var(--carta); }
-.apertura-griglia { display: grid; gap: 36px; }
-.apertura-sopra {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 26px;
-  font-family: var(--f-mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--inchiostro-morbido);
+.apertura {
+  position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
+  color: var(--avorio); background: var(--notte); overflow: hidden; isolation: isolate;
+  margin-top: calc(-1 * var(--testata));
 }
-.apertura-sopra .posti { display: inline-flex; align-items: center; gap: 9px; color: var(--inchiostro); }
-.apertura-sopra .sep { color: var(--linea-forte); }
+.apertura-foto { position: absolute; inset: 0; z-index: -2; margin: 0; }
+.apertura-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+.apertura-velo {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(17, 25, 34, .5) 0%, rgba(17, 25, 34, .15) 18%, rgba(17, 25, 34, .55) 42%, rgba(17, 25, 34, .9) 62%, rgba(17, 25, 34, .97) 100%);
+}
+.apertura-contenuto { position: relative; padding-top: calc(var(--testata) + 40px); padding-bottom: 32px; }
+.apertura-sopra {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 22px;
+  font-family: var(--f-mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chiaro-70);
+}
+.apertura-sopra .posti { display: inline-flex; align-items: center; gap: 9px; color: var(--avorio); }
+.apertura-sopra .punto-vivo, .apertura-sopra .punto-vivo::after { background-color: #4ADE80; border-color: #4ADE80; }
+.apertura-sopra .sep { color: var(--linea-scura); }
 .apertura-titolo {
-  font-size: clamp(2.75rem, 11.5vw, 6.6rem); line-height: .96; margin: 0 0 1.3rem; letter-spacing: -0.03em;
+  font-size: clamp(2.75rem, 11.5vw, 6.6rem); line-height: .96; margin: 0 0 1.2rem; letter-spacing: -0.03em; color: var(--avorio);
   font-variation-settings: 'opsz' 144;
 }
-.apertura-titolo em { font-style: italic; color: var(--ocra-testo); }
-.apertura-sotto { font-size: 1.14rem; line-height: 1.55; color: var(--inchiostro-morbido); max-width: 46ch; margin: 0 0 1.8rem; }
+.apertura-titolo em { font-style: italic; color: var(--ocra-vivo); }
+.apertura-sotto { font-size: 1.12rem; line-height: 1.55; color: rgba(250, 246, 238, .86); max-width: 46ch; margin: 0 0 1.7rem; }
 .apertura-cta { display: flex; flex-direction: column; gap: 10px; }
-.apertura-fatti { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 32px; margin: 2.4rem 0 0; padding-top: 18px; border-top: 1px solid var(--linea); }
+.apertura-fatti { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 28px; margin: 2.2rem 0 0; padding-top: 18px; border-top: 1px solid var(--linea-scura); }
 .apertura-fatti > div { display: flex; flex-direction: column-reverse; gap: 4px; }
-.apertura-fatti dt { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--inchiostro-morbido); }
-.apertura-fatti dd { margin: 0; font-size: 1.5rem; line-height: 1; }
-.apertura-foto { margin: 0 calc(-1 * var(--margine)); position: relative; }
-.apertura-foto .foto-maschera { border-radius: 0; }
-.apertura-foto img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
-.apertura-didascalia { margin: 10px var(--margine) 0; display: flex; justify-content: space-between; gap: 12px; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--inchiostro-morbido); }
+.apertura-fatti dt { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chiaro-70); }
+.apertura-fatti dd { margin: 0; font-size: 1.5rem; line-height: 1; color: var(--avorio); }
+.apertura-orari { font-family: var(--f-mono) !important; font-size: .9rem !important; letter-spacing: .04em; padding-top: .45rem; }
 /* il bollo "dal 1983" che gira piano: dettaglio fisico, non decorazione */
-.bollo { position: absolute; right: calc(var(--margine) + 14px); bottom: 56px; width: 88px; height: 88px; border-radius: 50%; background: var(--inchiostro); color: var(--avorio); display: grid; place-items: center; }
+.bollo { position: absolute; right: var(--margine); top: calc(var(--testata) + 18px); width: 78px; height: 78px; border-radius: 50%; background: var(--avorio); color: var(--inchiostro); display: grid; place-items: center; }
 .bollo svg { width: 100%; height: 100%; animation: gira 24s linear infinite; }
-.bollo text { font-family: var(--f-mono); font-size: 8.4px; letter-spacing: 1.7px; fill: var(--avorio); text-transform: uppercase; }
-.bollo img { position: absolute; width: 26px; height: auto; }
+.bollo text { font-family: var(--f-mono); font-size: 8.4px; letter-spacing: 1.7px; fill: var(--inchiostro); text-transform: uppercase; }
+.bollo img { position: absolute; width: 24px; height: auto; }
 @keyframes gira { to { transform: rotate(360deg); } }
+/* la testata sulla home galleggia sulla foto e diventa scura scorrendo */
+.home .testata { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.home .testata.scorsa { background: rgba(17, 25, 34, .86); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom-color: var(--linea-scura); }
+.home .testata.scorsa, .home .testata { color: var(--avorio); }
+.home .testata .logo-scuro { display: none; }
+.home .testata .logo-chiaro { display: block; }
+.home .testata-menu a::after { background: var(--ocra-vivo); }
+.home .testata .btn-icona { color: var(--avorio); border-color: rgba(250, 246, 238, .45); }
+.home .testata .btn-icona:hover { background: var(--avorio); color: var(--inchiostro); }
+.home .testata .btn-icona-wa .ico { color: #4ADE80; }
+.home .testata .btn-pieno { background: var(--ocra); border-color: var(--ocra); color: var(--notte); }
+.home .testata .btn-pieno:hover { background: var(--ocra-vivo); border-color: var(--ocra-vivo); }
 
 /* ingresso: solo CSS, parte subito */
 @media (prefers-reduced-motion: no-preference) {
-  .apertura-sopra, .apertura-titolo, .apertura-sotto, .apertura-cta, .apertura-fatti { animation: appare .9s var(--curva) both; }
-  .apertura-titolo { animation-delay: .05s; } .apertura-sotto { animation-delay: .15s; } .apertura-cta { animation-delay: .22s; } .apertura-fatti { animation-delay: .3s; }
-  .apertura-foto { animation: appare 1.1s .2s var(--curva) both; }
+  .apertura-foto img { animation: foto-entra 1.8s var(--curva) both; }
+  .apertura-sopra, .apertura-titolo, .apertura-sotto, .apertura-cta, .apertura-fatti, .bollo { animation: appare .9s var(--curva) both; }
+  .apertura-titolo { animation-delay: .05s; } .apertura-sotto { animation-delay: .15s; } .apertura-cta { animation-delay: .22s; } .apertura-fatti, .bollo { animation-delay: .3s; }
 }
+@keyframes foto-entra { from { transform: scale(1.06); } }
 @keyframes appare { from { opacity: 0; transform: translateY(14px); } }
 
 @media (min-width: 560px) { .apertura-cta { flex-direction: row; flex-wrap: wrap; } }
 @media (min-width: 900px) {
-  .apertura { padding: 48px 0 0; min-height: calc(100vh - var(--testata)); display: flex; align-items: center; }
-  .apertura-griglia { grid-template-columns: 7fr 5fr; gap: 64px; align-items: center; width: 100%; }
-  .apertura-titolo { font-size: clamp(3.8rem, 6.6vw, 6.8rem); }
-  .apertura-foto { margin: 0; }
-  .apertura-foto .foto-maschera { border-radius: var(--raggio); }
-  .apertura-foto img { aspect-ratio: 4 / 5; }
-  .apertura-didascalia { margin: 12px 0 0; }
-  .bollo { right: -28px; top: -40px; bottom: auto; width: 112px; height: 112px; }
-  .bollo img { width: 30px; }
+  .apertura { min-height: max(680px, 100vh); }
+  .apertura-velo { background: linear-gradient(90deg, rgba(17, 25, 34, .9) 0%, rgba(17, 25, 34, .6) 38%, rgba(17, 25, 34, .08) 70%), linear-gradient(180deg, rgba(17, 25, 34, .45) 0%, rgba(17, 25, 34, 0) 25%, rgba(17, 25, 34, 0) 65%, rgba(17, 25, 34, .75) 100%); }
+  .apertura-contenuto { padding-top: calc(var(--testata) + 64px); padding-bottom: 56px; }
+  .apertura-contenuto > *:not(.bollo) { max-width: min(680px, 100%); }
+  .apertura-titolo { font-size: clamp(3.8rem, 6.4vw, 6.6rem); }
   .apertura-fatti { gap: 0 44px; }
   .apertura-fatti dd { font-size: 1.8rem; }
+  .bollo { right: var(--margine); top: auto; bottom: 56px; width: 112px; height: 112px; }
+  .bollo img { width: 30px; }
 }
-@media (min-width: 1200px) { .apertura-griglia { grid-template-columns: 7fr 5fr; gap: 96px; } }
 
 /* =============================================================
    01 · POSTI LIBERI: pianta della sala, tipografica

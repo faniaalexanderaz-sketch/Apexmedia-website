@@ -6,7 +6,7 @@
   <title>Coworking Alessandria centro · Scrivania da €25 al giorno | Bagnarino</title>
   <meta name="description" content="Coworking nel centro di Alessandria, corso Lamarmora 46, nel negozio Olivetti Bagnarino dal 1983. Scrivania, wi-fi in fibra e stampante incluse: €25 al giorno, €270 al mese. Prenoti online, paghi in sede.">
   <link rel="canonical" href="/">
-  <meta name="theme-color" content="#F1EBE0">
+  <meta name="theme-color" content="#111922">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="it_IT">
@@ -31,8 +31,9 @@
 
   <link rel="preload" href="/fonts/fraunces-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="/img/foto/sala-coworking-1280.webp" media="(min-width: 900px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=e91aa860">
+  <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
+  <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
+  <link rel="stylesheet" href="/styles.css?v=5524c844">
 
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -66,7 +67,8 @@
 <header class="testata">
   <div class="contenitore testata-riga">
     <a class="testata-logo" href="/" aria-label="Bagnarino Coworking, torna all’inizio">
-      <img src="/img/logo.svg" alt="Bagnarino Coworking" width="144" height="40">
+      <img class="logo-chiaro" src="/img/logo-chiaro.svg" alt="Bagnarino Coworking" width="144" height="40">
+      <img class="logo-scuro" src="/img/logo.svg" alt="" width="144" height="40">
     </a>
     <nav class="testata-menu" aria-label="Sezioni">
       <a href="/#posti">Posti liberi</a>
@@ -88,41 +90,38 @@
 
 <main id="contenuto">
 
-  <!-- ============ APERTURA: carta a sinistra, la sala vera a destra ============ -->
+  <!-- ============ APERTURA: la foto dietro la scritta, come la vuole la titolare ============ -->
   <section class="apertura" aria-labelledby="titolo-apertura">
-    <div class="contenitore apertura-griglia">
-      <div class="apertura-testo">
-        <p class="apertura-sopra">
-          <span class="posti"><span class="punto-vivo" aria-hidden="true"></span><span data-posti-oggi>Oggi: 4 posti liberi</span></span>
-          <span class="sep" aria-hidden="true">·</span>
-          <span><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.citta">Alessandria</span></span>
-        </p>
-        <h1 class="apertura-titolo" id="titolo-apertura">Coworking in centro ad Alessandria, <em>da <span data-prezzo="giornata">€25</span> al giorno.</em></h1>
-        <p class="apertura-sotto">Sei scrivanie nel negozio Olivetti di corso Lamarmora, aperto dal <span data-cfg="azienda.dal">1983</span>. Wi-fi in fibra e stampante incluse. Prenoti in 30 secondi, paghi quando arrivi.</p>
-        <div class="apertura-cta">
-          <a class="btn btn-pieno btn-grande" href="/prenota" data-pos="hero">Prenota una scrivania
-            <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <a class="btn btn-filo btn-grande" data-wa="prenota" data-pos="hero" href="https://wa.me/393472249457">
-            <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Scrivici su WhatsApp</a>
-        </div>
-        <dl class="apertura-fatti">
-          <div><dt>In centro dal</dt><dd data-cfg="azienda.dal">1983</dd></div>
-          <div><dt>Scrivanie</dt><dd data-cfg="postazioni">6</dd></div>
-          <div><dt>Orari</dt><dd class="mono" style="font-family:var(--f-mono);font-size:.95rem;letter-spacing:.04em;padding-top:.4rem" data-cfg="orari.testoBreve">Lun–Ven 9:30–18:30</dd></div>
-        </dl>
+    <picture class="apertura-foto">
+      <source media="(max-width: 760px)" srcset="/img/foto/spazio-verticale-480.webp 480w, /img/foto/spazio-verticale-828.webp 828w" sizes="100vw">
+      <img src="/img/foto/spazio-1344.webp" srcset="/img/foto/spazio-768.webp 768w, /img/foto/spazio-1344.webp 1344w" sizes="100vw"
+           width="1344" height="752" fetchpriority="high" decoding="async"
+           alt="Scrivanie in legno divise da pannelli trasparenti in un negozio luminoso trasformato in coworking">
+    </picture>
+    <div class="apertura-velo" aria-hidden="true"></div>
+    <div class="contenitore apertura-contenuto">
+      <p class="apertura-sopra">
+        <span class="posti"><span class="punto-vivo" aria-hidden="true"></span><span data-posti-oggi>Oggi: 4 posti liberi</span></span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.citta">Alessandria</span></span>
+      </p>
+      <h1 class="apertura-titolo" id="titolo-apertura">Coworking in centro ad Alessandria, <em>da <span data-prezzo="giornata">€25</span> al giorno.</em></h1>
+      <p class="apertura-sotto">Sei scrivanie nel negozio Olivetti di corso Lamarmora, aperto dal <span data-cfg="azienda.dal">1983</span>. Wi-fi in fibra e stampante incluse. Prenoti in 30 secondi, paghi quando arrivi.</p>
+      <div class="apertura-cta">
+        <a class="btn btn-ocra btn-grande" href="/prenota" data-pos="hero">Prenota una scrivania
+          <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn-vetro btn-grande" data-wa="prenota" data-pos="hero" href="https://wa.me/393472249457">
+          <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Scrivici su WhatsApp</a>
       </div>
-      <figure class="apertura-foto foto-cornice" data-foto-rivela>
-        <div class="foto-maschera">
-          <img src="/img/foto/sala-coworking-1280.webp" srcset="/img/foto/sala-coworking-720.webp 720w, /img/foto/sala-coworking-1280.webp 1280w" sizes="(min-width: 900px) 40vw, 100vw"
-               width="1280" height="960" fetchpriority="high" decoding="async"
-               alt="La sala del coworking Bagnarino: scrivanie in legno con divisori trasparenti, un tavolo rotondo e le stampanti Olivetti">
-        </div>
-        <div class="bollo" aria-hidden="true">
-          <svg viewBox="0 0 100 100"><defs><path id="cerchio" d="M50 50 m-36 0 a36 36 0 1 1 72 0 a36 36 0 1 1 -72 0"/></defs><text><textPath href="#cerchio">Bagnarino · Alessandria · 1983 · </textPath></text></svg>
-          <img src="/img/logo-mark-chiaro.svg" alt="" width="26" height="28">
-        </div>
-        <figcaption class="apertura-didascalia"><span>La sala, corso Lamarmora 46</span><span>Olivetti dal 1983</span></figcaption>
-      </figure>
+      <dl class="apertura-fatti">
+        <div><dt>In centro dal</dt><dd data-cfg="azienda.dal">1983</dd></div>
+        <div><dt>Scrivanie</dt><dd data-cfg="postazioni">6</dd></div>
+        <div><dt>Orari</dt><dd class="apertura-orari" data-cfg="orari.testoBreve">Lun–Ven 9:30–18:30</dd></div>
+      </dl>
+      <div class="bollo" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><defs><path id="cerchio" d="M50 50 m-36 0 a36 36 0 1 1 72 0 a36 36 0 1 1 -72 0"/></defs><text><textPath href="#cerchio">Bagnarino · Alessandria · 1983 · </textPath></text></svg>
+        <img src="/img/logo-mark.svg" alt="" width="26" height="28">
+      </div>
     </div>
   </section>
 
@@ -539,7 +538,7 @@
   </div>
   <div class="contenitore piede-legale">
     <p><span data-cfg="azienda.ragioneSociale">Bagnarino S.r.l.</span> · <span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.cap">15121</span> <span data-cfg="azienda.citta">Alessandria</span> (<span data-cfg="azienda.provincia">AL</span>) · P. IVA <span data-cfg="azienda.piva">01588170066</span> · © <span data-anno>2026</span></p>
-    <p>Le foto dell’ingresso e della sala sono dello spazio vero (la sala è stata ritoccata per mostrare le scrivanie): il servizio fotografico definitivo arriverà a breve.</p>
+    <p>La foto di apertura è un’immagine illustrativa; l’ingresso e la sala sono dello spazio vero (la sala è stata ritoccata per mostrare le scrivanie). Il servizio fotografico definitivo arriverà a breve.</p>
   </div>
 </footer>
 
