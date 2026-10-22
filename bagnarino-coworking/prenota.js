@@ -268,7 +268,7 @@
         boxVantaggi.innerHTML = v.omaggi > 0
           ? '<label class="spunta" for="usa_omaggio"><input type="checkbox" id="usa_omaggio" checked>' +
             '<span><strong>Hai una giornata in regalo</strong> con la Bagnarino Card. Vuoi usarla adesso?</span></label>'
-          : '<p><strong>Questa giornata la scaliamo dal tuo carnet</strong>: dopo ti resteranno ' + (v.carnet.residui - 1) + ' ingressi. Niente da pagare.</p>';
+          : '<p><strong>Questa giornata la scaliamo dal tuo pacchetto</strong>: dopo ti resteranno ' + (v.carnet.residui - 1) + ' ingressi. Niente da pagare.</p>';
         boxVantaggi.hidden = false;
         var o = $('#usa_omaggio');
         if (o) o.addEventListener('change', aggiorna);
@@ -393,7 +393,7 @@
       var sotto = r.emailInviata ? 'Ti abbiamo mandato il riepilogo a ' + dati.email + '. Ti aspettiamo!'
         : 'Salva il codice qui sotto: ti serve per gestire la prenotazione. Ti aspettiamo!';
       if (r.omaggio) sotto += ' Questa giornata è in omaggio con la tua Bagnarino Card.';
-      else if (r.carnet) sotto += ' Ti restano ' + r.carnet.residui + ' ingressi nel carnet.';
+      else if (r.carnet) sotto += ' Ti restano ' + r.carnet.residui + ' ingressi nel pacchetto.';
       $('[data-successo-sotto]').textContent = sotto;
       var g = $('[data-gestisci]');
       /* il telefono ricorda la prenotazione: la scheda "Le mie" la mostra subito,

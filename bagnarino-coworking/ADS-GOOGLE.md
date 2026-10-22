@@ -58,7 +58,7 @@ usato · mobili · arredamento · ikea · casa · appartamento · affitto casa �
 7. Wi-Fi in Fibra e Stampante
 8. Postazione Fissa €320/Mese
 9. Mese Flessibile a €270
-10. Carnet 10 Giornate a €200
+10. Pacchetto 10 ingressi €200
 11. Ufficio a Giornata Alessandria
 12. Posti Liberi Oggi
 13. Coworking per Freelance
@@ -74,7 +74,7 @@ usato · mobili · arredamento · ikea · casa · appartamento · affitto casa �
 
 1. Coworking nel centro di Alessandria: scrivania, wi-fi in fibra e stampante. Da €25/giorno.
 2. Prenoti online in 30 secondi e paghi in sede. Niente tessera, niente iscrizione.
-3. Giornata €25, carnet 10 ingressi €200, mese da €270. Disdetta gratis fino al giorno prima.
+3. Giornata €25, pacchetto 10 ingressi €200, mese da €270. Disdetta gratis fino al giorno prima.
 4. Postazioni divise da pannelli, stampante professionale e assistenza in negozio dal 1983.
 
 ## Estensioni (asset)
@@ -82,7 +82,7 @@ usato · mobili · arredamento · ikea · casa · appartamento · affitto casa �
 **Sitelink**
 | Titolo | Riga 1 | Riga 2 | URL |
 |---|---|---|---|
-| Prezzi | Da €25 al giorno | Carnet e mensili | /#prezzi |
+| Prezzi | Da €25 al giorno | Pacchetti e mensili | /#prezzi |
 | Prenota ora | Scegli il giorno | Paghi quando arrivi | /prenota |
 | Dove siamo | Corso Lamarmora 46 | In centro ad Alessandria | /#dove |
 | Domande frequenti | Tessera, pagamenti | Parcheggio, fattura | /#faq |
@@ -90,10 +90,10 @@ usato · mobili · arredamento · ikea · casa · appartamento · affitto casa �
 **Callout:** Prenoti in 30 Secondi · Paghi in Sede · Niente Tessera · Wi-Fi in Fibra ·
 Stampante Inclusa · Disdetta Gratuita · Fattura per P. IVA · In Pieno Centro
 
-**Snippet strutturati — Servizi:** Postazione giornaliera, Carnet 10 ingressi, Mese flessibile,
+**Snippet strutturati — Servizi:** Postazione giornaliera, Pacchetto 10 ingressi, Mese flessibile,
 Postazione fissa, Stampa e scansioni
 
-**Prezzo:** Giornata €25 · Carnet €200 · Mese flessibile €270 · Postazione fissa €320
+**Prezzo:** Giornata €25 · Pacchetto 10 ingressi €200 · Mese flessibile €270 · Postazione fissa €320
 
 **Chiamata:** 347 224 9457 (solo negli orari di apertura) · **Località:** collega il profilo Google Business
 

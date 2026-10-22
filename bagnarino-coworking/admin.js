@@ -94,7 +94,7 @@
   function isMese(a) { return /^mese/.test(a.pacchetto); }
   function conArrivo(a) { return a.pacchetto === 'giornata' || a.pacchetto === 'carnet'; }
   function postoBreve(t) { return String(t || '').replace(/^(Postazione|Scrivania)\s*/i, 'Scr. '); }
-  function prezzoTesto(a) { return a.prezzo_centesimi ? euro(a.prezzo_centesimi) : a.omaggio ? 'in regalo' : 'dal carnet'; }
+  function prezzoTesto(a) { return a.prezzo_centesimi ? euro(a.prezzo_centesimi) : a.omaggio ? 'in regalo' : 'dal pacchetto'; }
 
   /* a che punto è una prenotazione e qual è il passo successivo */
   function situazione(a) {
@@ -284,7 +284,7 @@
 
       /* passo 3: pagamento */
       var corpo3, stato3;
-      if (!x.prezzo_centesimi) { stato3 = 'fatto'; corpo3 = fattoHtml(x.omaggio ? 'Niente da incassare: giornata in regalo con la Card' : 'Niente da incassare: ingresso del carnet, già pagato'); }
+      if (!x.prezzo_centesimi) { stato3 = 'fatto'; corpo3 = fattoHtml(x.omaggio ? 'Niente da incassare: giornata in regalo con la Card' : 'Niente da incassare: ingresso del pacchetto, già pagato'); }
       else if (x.pagato) {
         stato3 = 'fatto';
         corpo3 = fattoHtml('Pagato ' + euro(x.prezzo_centesimi) + (x.metodo_pagamento ? ' · ' + x.metodo_pagamento : '') + (x.pagato_il ? ' · ' + dataTesto(x.pagato_il, { day: 'numeric', month: 'long' }) : '')) +
@@ -302,7 +302,7 @@
     /* dettagli */
     var righe = [
       ['Quando', quando], ['Formula', x.nomePacchetto], ['Scrivania', x.postazione || '—'],
-      ['Prezzo', x.prezzo_centesimi ? euro(x.prezzo_centesimi) : x.omaggio ? '€0 · in regalo con la Card' : '€0 · dal carnet'],
+      ['Prezzo', x.prezzo_centesimi ? euro(x.prezzo_centesimi) : x.omaggio ? '€0 · in regalo con la Card' : '€0 · dal pacchetto'],
       ['Bagnarino Card', x.timbri + ' timbri su 10' + (x.omaggi ? ' · ' + x.omaggi + (x.omaggi === 1 ? ' giornata' : ' giornate') + ' in regalo' : '')],
       x.piva_cf ? ['Fattura a', x.piva_cf] : null, x.note ? ['Note', x.note] : null,
       ['Arrivata da', x.manuale ? 'Inserita da te' : 'Sito · ' + x.fonte],
@@ -551,7 +551,7 @@
           '<dl class="cliente-dati">' +
             '<div><dt>Prenotazioni</dt><dd>' + c.prenotazioni + '</dd></div>' +
             '<div><dt>Totale speso</dt><dd>' + euro(c.speso) + '</dd></div>' +
-            '<div><dt>Carnet</dt><dd>' + (c.carnet ? c.carnet + ' ingressi' : '—') + '</dd></div>' +
+            '<div><dt>Pacchetto</dt><dd>' + (c.carnet ? c.carnet + ' ingressi' : '—') + '</dd></div>' +
             '<div><dt>Card</dt><dd>' + c.timbri + ' su 10' + (c.omaggi ? ' · 🎁 ' + c.omaggi : '') + '</dd></div>' +
             '<div><dt>Ultimo ingresso</dt><dd>' + (c.ultimo ? dataTesto(c.ultimo, { day: 'numeric', month: 'short' }) : '—') + '</dd></div>' +
           '</dl>' + (c.piva_cf ? '<p class="nota">Fattura a: ' + h(c.piva_cf) + '</p>' : '') + '</article>';
@@ -577,7 +577,7 @@
         return '<article class="riga-incasso"><div class="riga-incasso-testa"><strong>' + h(r.nome + ' ' + r.cognome) + '</strong>' +
           '<span class="riga-importo">' + (gratis ? '€0' : euro(r.prezzo_centesimi)) + '</span></div>' +
           '<p>' + dataTesto(r.data, { weekday: 'short', day: 'numeric', month: 'short' }) + ' · ' + h(r.nomePacchetto) +
-          (r.omaggio ? ' · omaggio' : r.carnet_id && r.pacchetto === 'giornata' ? ' · dal carnet' : '') + (r.piva_cf ? ' · fattura ' + h(r.piva_cf) : '') + '</p>' +
+          (r.omaggio ? ' · omaggio' : r.carnet_id && r.pacchetto === 'giornata' ? ' · dal pacchetto' : '') + (r.piva_cf ? ' · fattura ' + h(r.piva_cf) : '') + '</p>' +
           (gratis ? '' : r.pagato
             ? '<div class="pagato-ok"><span>✓ Pagato' + (r.metodo_pagamento ? ' (' + r.metodo_pagamento + ')' : '') + '</span><button class="link-azione" type="button" data-non-pagato data-id="' + r.id + '">Annulla</button></div>'
             : '<div class="incassa-scelta"><button class="btn btn-filo" type="button" data-incassa="contanti" data-id="' + r.id + '">Contanti</button>' +

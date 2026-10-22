@@ -35,7 +35,7 @@
     if (scala && B.premiScala) scala.innerHTML = B.premiScala(c.timbri);
     var k = $('[data-c-carnet]');
     k.hidden = !c.carnet;
-    if (c.carnet) k.textContent = 'Carnet attivo: ' + c.carnet.residui + ' ingressi da usare entro il ' +
+    if (c.carnet) k.textContent = 'Pacchetto attivo: ' + c.carnet.residui + ' ingressi da usare entro il ' +
       B.daIso(c.carnet.scadenza).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) + '.';
     scheda.setAttribute('aria-label', $('[data-c-conta]').textContent);
   }

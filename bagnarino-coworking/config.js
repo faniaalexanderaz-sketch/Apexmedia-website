@@ -90,13 +90,13 @@ var BGN_CONFIG = {
     },
     {
       id: 'carnet',
-      nome: 'Carnet 10 ingressi',
+      nome: 'Pacchetto 10 ingressi',
       prezzo: 200,
       unita: '10 giornate',
       nota: '€20 al giorno · risparmi €50',
       perChi: 'Per chi viene una o due volte a settimana',
       include: ['10 giornate da usare quando vuoi', 'Valido 3 mesi dal primo ingresso', 'Tutto quello della giornata'],
-      cta: 'Prenota il carnet',
+      cta: 'Prenota il pacchetto',
       tipoData: 'inizio',
       etichettaData: 'Scegli il giorno del primo ingresso'
     },

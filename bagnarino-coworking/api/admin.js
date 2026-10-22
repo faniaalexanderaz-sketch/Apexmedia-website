@@ -222,7 +222,7 @@ function csv(righe) {
   const corpoCsv = righe.map(r => [
     r.data.split('-').reverse().join('/'), r.codice, r.nome + ' ' + r.cognome, r.telefono, r.email, r.piva_cf || '', r.nomePacchetto,
     (r.prezzo_centesimi / 100).toFixed(2).replace('.', ','), r.pagato ? 'sì' : 'no', r.metodo_pagamento || '',
-    r.pagato_il ? r.pagato_il.split('-').reverse().join('/') : '', r.omaggio ? 'omaggio Bagnarino Card' : r.carnet_id && r.pacchetto === 'giornata' ? 'ingresso da carnet' : ''
+    r.pagato_il ? r.pagato_il.split('-').reverse().join('/') : '', r.omaggio ? 'omaggio Bagnarino Card' : r.carnet_id && r.pacchetto === 'giornata' ? 'ingresso da pacchetto' : ''
   ].map(cella).join(';'));
   return '﻿' + [intest.join(';')].concat(corpoCsv).join('\r\n') + '\r\n';
 }

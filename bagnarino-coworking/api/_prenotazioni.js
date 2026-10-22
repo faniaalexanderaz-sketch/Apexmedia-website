@@ -319,7 +319,7 @@ async function annullaPrenotazione(p) {
     await x('SELECT pg_advisory_xact_lock(7231983)');
     if (p.pacchetto === 'carnet' && p.carnet_id) {
       const altri = await x("SELECT COUNT(*)::int AS n FROM prenotazioni WHERE carnet_id = $1 AND id <> $2 AND stato <> 'annullata'", [p.carnet_id, p.id]);
-      if (altri[0].n > 0) throw errore('CARNET_IN_USO', 'Il carnet è già in uso: per annullarlo scrivici su WhatsApp.');
+      if (altri[0].n > 0) throw errore('CARNET_IN_USO', 'Il pacchetto è già in uso: per annullarlo scrivici su WhatsApp.');
       await x('UPDATE carnet SET ingressi_totali = 0, ingressi_usati = 0 WHERE id = $1', [p.carnet_id]);
     } else if (p.carnet_id) {
       await x('UPDATE carnet SET ingressi_usati = GREATEST(0, ingressi_usati - 1) WHERE id = $1', [p.carnet_id]);
