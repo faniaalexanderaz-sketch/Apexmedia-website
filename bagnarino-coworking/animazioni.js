@@ -44,20 +44,76 @@
         });
       }
 
-      /* 2) comparsa discreta: un filo di movimento, niente effetti */
-      var discreti = $$('.testa-sezione, .negozio-testo, .accoglie, .prezzo, .prezzi-garanzie li, .giornata li, .dotazione > div, .premi-scala li, .vantaggi-mese, .fidelity-azioni, .profilo, .faq details, .dove-scheda, .mappa, .finale-interno > *')
-        .filter(sottoLaPiega);
-      if (discreti.length) {
-        gsap.set(discreti, { opacity: 0, y: 12 });
-        ScrollTrigger.batch(discreti, {
-          start: 'top 90%', once: true,
-          onEnter: function (gruppo) {
-            gsap.to(gruppo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.06, clearProps: 'opacity,transform' });
-          }
+      /* 2) i titoli entrano parola per parola, da dietro una maschera */
+      function spezzaParole(el) {
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodi = [];
+        while (walker.nextNode()) if (walker.currentNode.nodeValue.trim()) nodi.push(walker.currentNode);
+        nodi.forEach(function (n) {
+          var frag = document.createDocumentFragment();
+          n.nodeValue.split(/(\s+)/).forEach(function (pezzo) {
+            if (!pezzo) return;
+            if (/^\s+$/.test(pezzo)) { frag.appendChild(document.createTextNode(' ')); return; }
+            var m = document.createElement('span'); m.className = 'maschera';
+            var p = document.createElement('span'); p.className = 'parola-su'; p.textContent = pezzo;
+            m.appendChild(p); frag.appendChild(m);
+          });
+          n.parentNode.replaceChild(frag, n);
         });
+        return $$('.parola-su', el);
+      }
+      $$('.titolo-sezione, .disp-titolo, .finale h2').filter(sottoLaPiega).forEach(function (t) {
+        var parole = spezzaParole(t);
+        if (!parole.length) return;
+        gsap.from(parole, { yPercent: 110, duration: 0.8, ease: 'power3.out', stagger: 0.045,
+          scrollTrigger: { trigger: t, start: 'top 88%', once: true } });
+      });
+
+      /* 2b) testi e voci: comparsa leggera, sfalsata */
+      var leggeri = $$('.occhiello, .intro-sezione, .negozio-paragrafo, .fatti > div, .accoglie > *, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .disp-live, .disp-azione > *, .prezzi-garanzie li, .dotazione h3')
+        .filter(sottoLaPiega);
+      if (leggeri.length) {
+        gsap.set(leggeri, { opacity: 0, y: 16 });
+        ScrollTrigger.batch(leggeri, { start: 'top 92%', once: true,
+          onEnter: function (g) { gsap.to(g, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.07, clearProps: 'opacity,transform' }); } });
       }
 
-      /* 2b) i prezzi contano fino alla cifra, una volta sola */
+      /* 2c) liste: una voce alla volta, da sinistra */
+      [['.dotazione ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.giornata', 'li'], ['.faq', 'details'], ['.disp-giorni', '.disp-giorno'], ['.disp-scrivanie', '.disp-scrivania'], ['.tempo', '.tappa']].forEach(function (c) {
+        $$(c[0]).forEach(function (lista) {
+          var voci = $$(c[1], lista);
+          if (!voci.length || !sottoLaPiega(lista)) return;
+          gsap.from(voci, { opacity: 0, x: -18, duration: 0.55, ease: 'power2.out', stagger: 0.07, clearProps: 'opacity,transform',
+            scrollTrigger: { trigger: lista, start: 'top 88%', once: true } });
+        });
+      });
+
+      /* 2d) il listino: le colonne salgono una dopo l'altra, quella del mese si apre per ultima */
+      var colonne = $$('.prezzo');
+      if (colonne.length && sottoLaPiega(colonne[0])) {
+        var normali = colonne.filter(function (c) { return !c.classList.contains('prezzo-evidenza'); }), mese = $('.prezzo-evidenza');
+        var tl = gsap.timeline({ scrollTrigger: { trigger: '.prezzi', start: 'top 82%', once: true } });
+        tl.from(normali, { opacity: 0, y: 40, duration: 0.7, ease: 'power3.out', stagger: 0.12, clearProps: 'opacity,transform' });
+        if (mese) tl.from(mese, { opacity: 0, scaleY: 0.6, transformOrigin: '50% 50%', duration: 0.7, ease: 'back.out(1.6)', clearProps: 'opacity,transform' }, 0.3)
+          .from($('.prezzo-etichetta', mese), { scale: 2.2, opacity: 0, rotation: -20, duration: 0.4, ease: 'power3.in', clearProps: 'opacity,transform' }, 0.8);
+        $$('.prezzo-valore', mese || document).forEach(function () {});
+      }
+
+      /* 2e) per chi è e lo spazio: i riquadri entrano alternati da destra e da sinistra */
+      [$$('.profilo'), $$('.dotazione > div')].forEach(function (riquadri) {
+        if (!riquadri.length || !sottoLaPiega(riquadri[0])) return;
+        riquadri.forEach(function (r, i) {
+          gsap.from(r, { opacity: 0, x: i % 2 ? 48 : -48, y: 24, duration: 0.8, ease: 'power3.out', clearProps: 'opacity,transform',
+            scrollTrigger: { trigger: r, start: 'top 90%', once: true } });
+        });
+      });
+
+      /* 2f) la mappa e i pulsanti: su e dentro */
+      $$('.mappa, .dove-cta .btn').filter(sottoLaPiega).forEach(function (el, i) {
+        gsap.from(el, { opacity: 0, y: 30, duration: 0.7, delay: i * 0.08, ease: 'power2.out', clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: el, start: 'top 92%', once: true } });
+      });
+
+      /* 2g) i prezzi contano fino alla cifra, una volta sola */
       $$('[data-cifra]').forEach(function (el) {
         var fine = +el.getAttribute('data-cifra');
         if (!fine || !sottoLaPiega(el)) return;
@@ -67,11 +123,23 @@
           scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
       });
 
+      /* 2h) la tessera ruota ed entra come posata sul tavolo, poi i timbri si pressano */
+      var tessera = $('.tessera-scena .tessera');
+      if (tessera && sottoLaPiega(tessera)) {
+        gsap.from(tessera, { opacity: 0, rotationY: 35, rotationZ: -8, y: 60, transformPerspective: 1000, duration: 1.1, ease: 'power3.out', clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: tessera, start: 'top 85%', once: true } });
+      }
+
+      /* 2i) barra di lettura in alto, ocra */
+      var barra = document.createElement('div'); barra.className = 'avanzamento'; barra.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(barra);
+      gsap.to(barra, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
+
       /* 3) Bagnarino Card: i timbri si posano uno alla volta */
       var timbri = $$('[data-timbri] .timbro.pieno');
       if (timbri.length && sottoLaPiega(timbri[0])) {
         gsap.from(timbri, { scale: 1.7, opacity: 0, rotation: -25, stagger: 0.09, duration: 0.32, ease: 'power3.in', clearProps: 'transform,opacity',
-          scrollTrigger: { trigger: '[data-timbri]', start: 'top 80%', once: true } });
+          delay: 0.6, scrollTrigger: { trigger: '[data-timbri]', start: 'top 80%', once: true } });
       }
 
       /* 4) le foto si scoprono a tendina, con un filo di zoom e di parallasse */
@@ -93,6 +161,7 @@
       try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}
       $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; });
       var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
+      $$('.parola-su').forEach(function (p) { p.style.transform = ''; });
     }
   }
 

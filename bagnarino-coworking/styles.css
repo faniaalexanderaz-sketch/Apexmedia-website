@@ -1100,3 +1100,10 @@ body.menu-aperto { overflow: hidden; }
 /* prenotazione: anche qui il mese si vede */
 .opzione input[value="mese_flessibile"] + .opzione-corpo { background: var(--ocra-chiaro); border-color: var(--ocra); }
 .opzione input[value="mese_flessibile"]:checked + .opzione-corpo { background: var(--ocra-chiaro); border-color: var(--inchiostro); }
+
+/* ---------- supporti per le animazioni GSAP ---------- */
+.maschera { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .04em .14em 0; margin: 0 -.04em -.14em 0; }
+.parola-su { display: inline-block; will-change: transform; }
+.avanzamento { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 70; pointer-events: none; background: var(--ocra); transform: scaleX(0); transform-origin: 0 50%; }
+.tessera-scena { perspective: 1200px; }
+.prezzi { overflow: visible; }
