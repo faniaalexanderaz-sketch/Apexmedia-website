@@ -155,6 +155,13 @@ var BGN_CONFIG = {
      Metti true dopo aver inserito i testi reali in index.html. */
   recensioniAttive: false,
 
+  /* Offerta per chi viene la prima volta. [DA CONFERMARE] con Marcella:
+     resta spenta (attiva: false) finché non dà l'ok su prezzo e regole. */
+  offertaPrimaVolta: {
+    attiva: false,
+    testo: 'Prima volta? Se torni entro 7 giorni, la seconda giornata costa €20.'
+  },
+
   /* Messaggi WhatsApp precompilati. {giorno}, {pacchetto}, {codice},
      {riepilogo} vengono sostituiti dal sito. */
   whatsappTesti: {

@@ -19,7 +19,7 @@ body.admin { font-size: 1.1875rem; background: var(--carta); padding-bottom: 96p
   background: var(--bianco); border: 2px solid #B9B2A3; border-radius: 12px;
 }
 .admin textarea { min-height: 96px; resize: vertical; font-size: 1.05rem; }
-.admin input:focus, .admin select:focus, .admin textarea:focus { outline: none; border-color: var(--inchiostro); box-shadow: 0 0 0 3px rgba(201, 151, 59, .45); }
+.admin input:focus, .admin select:focus, .admin textarea:focus { outline: none; border-color: var(--inchiostro); box-shadow: 0 0 0 3px rgba(185, 138, 69, .45); }
 .btn-mostra { flex-shrink: 0; min-width: 88px; border: 2px solid var(--linea); background: var(--carta); border-radius: 12px; font-weight: 600; cursor: pointer; }
 .avviso-errore { color: var(--rosso); font-weight: 600; margin: 14px 0 0; min-height: 1.4em; }
 
@@ -209,7 +209,7 @@ body.admin { font-size: 1.1875rem; background: var(--carta); padding-bottom: 96p
 }
 .cre-riassunto::after {
   content: ''; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(201, 151, 59, .35), transparent); pointer-events: none;
+  background: radial-gradient(closest-side, rgba(185, 138, 69, .35), transparent); pointer-events: none;
 }
 .cre-etichetta {
   display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-family: var(--f-mono, monospace); font-size: .8rem;

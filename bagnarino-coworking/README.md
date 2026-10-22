@@ -202,6 +202,24 @@ nella scheda Google Business `?utm_source=gmb`.
 16. **Foto vere** degli spazi (shooting Apex Media).
 17. **Dominio** del sito.
 
+18. **Testo "Ti accoglie Marcella"** (home, sezione Il negozio): va bene come descrive l'accoglienza? Serve una **foto vera** di Marcella al posto delle iniziali "MB".
+19. **Offerta prima volta** (`config.js` → `offertaPrimaVolta`, oggi spenta): "se torni entro 7 giorni la seconda giornata costa €20". Accenderla solo con l'ok di Marcella.
+
+## Foto da scattare (shooting Apex Media)
+
+Sostituiscono le immagini illustrative. Luce naturale, niente filtri, persone vere.
+
+1. La vetrina di corso Lamarmora da fuori, di giorno (hero e "Dove siamo").
+2. La sala intera con le 6 scrivanie, ripresa dall'ingresso.
+3. Una scrivania da vicino: pannello trasparente, presa, portatile aperto.
+4. La multifunzione Olivetti mentre stampa.
+5. Marcella al bancone, sorridente, sguardo in camera (sezione "Ti accoglie Marcella").
+6. Mani su una tastiera con il pannello trasparente sullo sfondo.
+7. Un cliente al lavoro, di spalle o di tre quarti (con liberatoria).
+8. I portici di corso Lamarmora, sera (sfondo di "Dove siamo").
+9. Dettaglio dell'insegna Bagnarino.
+10. Una foto d'archivio del negozio negli anni '80/'90 (per la linea del tempo).
+
 ## Prossimi miglioramenti
 
 - Pagamento online con Stripe per carnet e mensili (aggancio pronto in `api/pagamento.js`, manca il webhook).
