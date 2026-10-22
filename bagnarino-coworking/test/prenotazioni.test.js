@@ -1,0 +1,182 @@
+/* =============================================================
+   BAGNARINO COWORKING — test del motore di prenotazione
+   Eseguire con: npm test
+   Usa un Postgres vero ma in memoria (PGlite): stesso SQL del
+   sito, nessun database esterno, nessuna email inviata.
+   ============================================================= */
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const { PGlite } = require('@electric-sql/pglite');
+const db = require('../api/_db');
+const P = require('../api/_prenotazioni');
+
+/* lunedì 2 novembre 2026, 9:00 a Roma */
+const ADESSO = new Date('2026-11-02T08:00:00Z');
+
+async function nuovoDb() {
+  const pg = new PGlite();
+  db.impostaAdattatore({
+    query: (t, v) => pg.query(t, v || []).then(r => r.rows),
+    transazione: (lavoro) => pg.transaction(tx => lavoro((t, v) => tx.query(t, v || []).then(r => r.rows)))
+  });
+  await db.assicuraSchema();
+  return pg;
+}
+
+let n = 0;
+function cliente(extra) {
+  n++;
+  return Object.assign({
+    pacchetto: 'giornata', data: '2026-11-04',
+    nome: 'Prova', cognome: 'Cliente' + n, email: 'cliente' + n + '@esempio.it', telefono: '347 000 00' + String(n).padStart(2, '0'),
+    consenso_privacy: true
+  }, extra || {});
+}
+const ctx = { adesso: ADESSO };
+
+test('disponibilità: weekend e festivi chiusi, giorni feriali con tutti i posti', async () => {
+  await nuovoDb();
+  const r = await P.disponibilita('2026-11-02', 14, 'giornata', ADESSO);
+  assert.equal(r.postazioni, 6);
+  assert.equal(r.giorni['2026-11-03'], 6);      // martedì
+  assert.equal(r.giorni['2026-11-07'], 0);      // sabato
+  assert.equal(r.giorni['2026-11-08'], 0);      // domenica
+  const dic = await P.disponibilita('2026-12-07', 3, 'giornata', new Date('2026-12-01T08:00:00Z'));
+  assert.equal(dic.giorni['2026-12-08'], 0);    // Immacolata
+  assert.equal(dic.giorni['2026-12-09'], 6);
+});
+
+test('prenotazione: assegna un posto e lo toglie dalla disponibilità', async () => {
+  await nuovoDb();
+  const p = await P.prenota(cliente(), ctx);
+  assert.match(p.codice, /^BGN-[A-Z0-9]{4}$/);
+  assert.equal(p.prezzo, 2500);
+  const r = await P.disponibilita('2026-11-04', 1, 'giornata', ADESSO);
+  assert.equal(r.giorni['2026-11-04'], 5);
+});
+
+test('doppia prenotazione bloccata: con il giorno pieno la settima fallisce', async () => {
+  await nuovoDb();
+  for (let i = 0; i < 6; i++) await P.prenota(cliente({ data: '2026-11-05' }), ctx);
+  await assert.rejects(P.prenota(cliente({ data: '2026-11-05' }), ctx), e => e.codice === 'POSTO_ESAURITO');
+  const r = await P.disponibilita('2026-11-05', 1, 'giornata', ADESSO);
+  assert.equal(r.giorni['2026-11-05'], 0);
+});
+
+test('doppia prenotazione bloccata anche con richieste nello stesso istante', async () => {
+  await nuovoDb();
+  for (let i = 0; i < 5; i++) await P.prenota(cliente({ data: '2026-11-06' }), ctx);
+  const esiti = await Promise.allSettled([
+    P.prenota(cliente({ data: '2026-11-06' }), ctx),
+    P.prenota(cliente({ data: '2026-11-06' }), ctx)
+  ]);
+  assert.equal(esiti.filter(e => e.status === 'fulfilled').length, 1);
+  assert.equal(esiti.filter(e => e.status === 'rejected' && e.reason.codice === 'POSTO_ESAURITO').length, 1);
+});
+
+test('la stessa persona non può occupare due scrivanie lo stesso giorno', async () => {
+  await nuovoDb();
+  const d = cliente({ data: '2026-11-10' });
+  await P.prenota(d, ctx);
+  await assert.rejects(P.prenota(Object.assign({}, d), ctx), e => e.codice === 'GIA_PRENOTATO');
+  await assert.rejects(P.prenota(Object.assign({}, d, { pacchetto: 'mese_flessibile', data: '2026-11-09' }), ctx), e => e.codice === 'GIA_PRENOTATO');
+});
+
+test('il database rifiuta comunque due occupazioni dello stesso posto nello stesso giorno', async () => {
+  const pg = await nuovoDb();
+  const p = await P.prenota(cliente({ data: '2026-11-09' }), ctx);
+  await assert.rejects(pg.query('INSERT INTO occupazioni (postazione_id, data, prenotazione_id) VALUES ($1, $2, $3)', [p.postazione, '2026-11-09', p.id]));
+});
+
+test('mese fisso: stessa scrivania per tutti i giorni di apertura del mese', async () => {
+  const pg = await nuovoDb();
+  const p = await P.prenota(cliente({ pacchetto: 'mese_fisso', data: '2026-11-03' }), ctx);
+  assert.equal(p.data_fine, '2026-12-02');
+  const occ = (await pg.query('SELECT DISTINCT postazione_id FROM occupazioni WHERE prenotazione_id = $1', [p.id])).rows;
+  assert.equal(occ.length, 1);
+  const giorni = (await pg.query('SELECT COUNT(*)::int AS n FROM occupazioni WHERE prenotazione_id = $1', [p.id])).rows[0].n;
+  assert.equal(giorni, 22); /* giorni feriali dal 3/11 al 2/12 */
+  const r = await P.disponibilita('2026-11-03', 1, 'mese_fisso', ADESSO);
+  assert.equal(r.giorni['2026-11-03'], 5);
+});
+
+test('carnet: 10 ingressi, ogni giornata ne scala uno ed è già pagata', async () => {
+  await nuovoDb();
+  const dati = cliente({ pacchetto: 'carnet', data: '2026-11-03' });
+  const c = await P.prenota(dati, ctx);
+  assert.equal(c.prezzo, 20000);
+  assert.equal(c.carnet.residui, 9);
+  const g = await P.prenota(Object.assign({}, dati, { pacchetto: 'giornata', data: '2026-11-10' }), ctx);
+  assert.equal(g.prezzo, 0);
+  assert.equal(g.carnet.residui, 8);
+  const v = await P.vantaggi(dati.email, dati.telefono, '2026-11-12');
+  assert.equal(v.carnet.residui, 8);
+  /* telefono sbagliato: nessun dato rivelato */
+  const v2 = await P.vantaggi(dati.email, '333 999 9999', '2026-11-12');
+  assert.equal(v2.carnet, null);
+  /* annullare la giornata restituisce l'ingresso */
+  await P.annulla(g.codice, dati.email, ADESSO);
+  assert.equal((await P.vantaggi(dati.email, dati.telefono, '2026-11-12')).carnet.residui, 9);
+});
+
+test('fidelity: 10 giornate presenti = 1 omaggio, che si può usare', async () => {
+  await nuovoDb();
+  const base = cliente();
+  const giorni = ['2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06', '2026-11-09', '2026-11-10', '2026-11-11', '2026-11-12', '2026-11-13', '2026-11-16'];
+  let ultimo;
+  const sbloccati = [];
+  for (const d of giorni) {
+    const p = await P.prenota(Object.assign({}, base, { data: d }), ctx);
+    ultimo = await P.segnaPresenza(p.id, 'presente');
+    if (ultimo.premioSbloccato) sbloccati.push(ultimo.timbri + ':' + ultimo.premioSbloccato);
+  }
+  /* premi intermedi da consegnare in sede al 3°, 5° e 7° timbro */
+  assert.deepEqual(sbloccati, ['3:25 stampe a colori gratis', '5:Porta un amico', '7:Sconto 10% in negozio']);
+  assert.equal(ultimo.premio, true);
+  assert.equal(ultimo.omaggi, 1);
+  assert.equal(ultimo.timbri, 0);
+  /* segnare di nuovo "presente" non regala timbri in più */
+  const card0 = await P.card(base.email, (await P.prenota(Object.assign({}, base, { data: '2026-11-17' }), ctx)).codice);
+  assert.equal(card0.omaggi, 1);
+  const o = await P.prenota(Object.assign({}, base, { data: '2026-11-18', usa_omaggio: true }), ctx);
+  assert.equal(o.omaggio, true);
+  assert.equal(o.prezzo, 0);
+  assert.equal((await P.vantaggi(base.email, base.telefono)).omaggi, 0);
+});
+
+test('annullamento: possibile fino alle 20:00 del giorno prima, poi rifiutato', async () => {
+  await nuovoDb();
+  const d = cliente({ data: '2026-11-12' });
+  const p = await P.prenota(d, ctx);
+  /* 11 novembre alle 20:30 (ora italiana = 19:30 UTC): troppo tardi */
+  await assert.rejects(P.annulla(p.codice, d.email, new Date('2026-11-11T19:30:00Z')), e => e.codice === 'FUORI_TEMPO');
+  /* 11 novembre alle 19:00: si può, e il posto torna libero */
+  await P.annulla(p.codice, d.email, new Date('2026-11-11T18:00:00Z'));
+  const r = await P.disponibilita('2026-11-12', 1, 'giornata', ADESSO);
+  assert.equal(r.giorni['2026-11-12'], 6);
+  await assert.rejects(P.annulla(p.codice, d.email, ADESSO), e => e.codice === 'GIA_FATTO');
+  await assert.rejects(P.annulla(p.codice, 'altro@esempio.it', ADESSO), e => e.codice === 'NON_TROVATA');
+});
+
+test('protezioni: dati non validi, giorno chiuso, trappola anti-robot, limite per IP', async () => {
+  const pg = await nuovoDb();
+  await assert.rejects(P.prenota(cliente({ email: 'non-una-email' }), ctx), e => e.codice === 'DATI' && e.extra.campi.includes('email'));
+  await assert.rejects(P.prenota(cliente({ consenso_privacy: false }), ctx), e => e.codice === 'DATI');
+  await assert.rejects(P.prenota(cliente({ data: '2026-11-07' }), ctx), e => e.codice === 'DATA'); /* sabato */
+  const finto = await P.prenota(cliente({ sito_web: 'http://spam' }), ctx);
+  assert.equal(finto.finto, true);
+  assert.equal((await pg.query('SELECT COUNT(*)::int AS n FROM prenotazioni')).rows[0].n, 0);
+  for (let i = 0; i < 8; i++) await P.prenota(cliente({ data: i < 6 ? '2026-11-19' : '2026-11-20' }), { adesso: ADESSO, ip: '1.2.3.4' });
+  await assert.rejects(P.prenota(cliente({ data: '2026-11-20' }), { adesso: ADESSO, ip: '1.2.3.4' }), e => e.codice === 'TROPPI');
+});
+
+test('richieste dal sito da accettare: online no, a mano sì, arrivo = accettata', async () => {
+  await nuovoDb();
+  const online = await P.prenota(cliente({ data: '2026-11-05' }), ctx);
+  const banco = await P.prenota(cliente({ data: '2026-11-05' }), { adesso: ADESSO, manuale: true });
+  const stato = async id => (await db.q('SELECT accettata FROM prenotazioni WHERE id = $1', [id]))[0].accettata;
+  assert.equal(await stato(online.id), false);
+  assert.equal(await stato(banco.id), true);
+  await P.segnaPresenza(online.id, 'presente');
+  assert.equal(await stato(online.id), true);
+});
