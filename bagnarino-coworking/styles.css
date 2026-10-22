@@ -850,11 +850,11 @@ body.menu-aperto { overflow: hidden; }
 .opzione-etichetta { position: absolute; top: -2px; right: 18px; padding: 5px 10px 6px; border-radius: 0 0 6px 6px; background: var(--ocra); color: var(--notte); font-family: var(--f-mono); font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
 .opzione-mese_flessibile .opzione-corpo { padding-top: 28px; }
 
-/* colori: giornata ocra, carnet verde, mese blu, postazione fissa rosso timbro */
+/* colori: giornata ocra, carnet verde, mese blu, postazione fissa petrolio */
 .opzione-giornata { --c-sfondo: #F5DFAE; --c-testo: var(--notte); --c-bordo: #E1B861; --c-sel: var(--ocra); }
 .opzione-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-bordo: #8CC4A6; --c-sel: #1E6B52; }
 .opzione-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-bordo: transparent; --c-sel: var(--inchiostro); }
-.opzione-mese_fisso { --c-sfondo: #F4D8D2; --c-testo: #3D1410; --c-bordo: #DE9D92; --c-sel: var(--timbro); }
+.opzione-mese_fisso { --c-sfondo: #D3E6EA; --c-testo: #0E323A; --c-bordo: #8FBFC9; --c-sel: #1E6471; }
 .opzione-mese_flessibile .opzione-prezzo { color: var(--ocra-vivo); }
 .opzione input:checked + .opzione-corpo { background: var(--c-sel); border-color: var(--c-sel); box-shadow: 0 16px 32px -16px rgba(17, 25, 34, .55); transform: translateY(-2px); }
 .opzione-giornata input:checked + .opzione-corpo { color: var(--notte); }
@@ -877,7 +877,7 @@ body.menu-aperto { overflow: hidden; }
 .blocco-sintesi .link-cambia { color: inherit; font-weight: 600; }
 [data-piano="carnet"] .blocco-sintesi { background: #1E6B52; color: #fff; }
 [data-piano="mese_flessibile"] .blocco-sintesi { background: var(--inchiostro); color: var(--avorio); box-shadow: 0 0 0 2px var(--ocra); }
-[data-piano="mese_fisso"] .blocco-sintesi { background: var(--timbro); color: #fff; }
+[data-piano="mese_fisso"] .blocco-sintesi { background: #1E6471; color: #fff; }
 
 /* ---- calendario: un blocco scuro con i giorni a colori ---- */
 .giorni-legenda { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: -2px 0 6px; font-size: .84rem; color: var(--chiaro-70); }
@@ -1256,7 +1256,7 @@ body.menu-aperto { overflow: hidden; }
 .prezzo-giornata { --c-sfondo: #F5DFAE; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--notte); --c-btn-testo: var(--avorio); }
 .prezzo-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-forte: #1E6B52; --c-btn: #1E6B52; --c-btn-testo: #fff; }
 .prezzo-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-forte: var(--ocra-vivo); --c-btn: var(--ocra); --c-btn-testo: var(--notte); }
-.prezzo-mese_fisso { --c-sfondo: #F4D8D2; --c-testo: #3D1410; --c-forte: #B4302A; --c-btn: #B4302A; --c-btn-testo: #fff; }
+.prezzo-mese_fisso { --c-sfondo: #D3E6EA; --c-testo: #0E323A; --c-forte: #1E6471; --c-btn: #1E6471; --c-btn-testo: #fff; }
 .prezzo .prezzo-nome, .prezzo .prezzo-valore, .prezzo .prezzo-include li { color: var(--c-testo); }
 .prezzo .prezzo-perchi, .prezzo .prezzo-unita { color: var(--c-testo); opacity: .72; }
 .prezzo .prezzo-valuta, .prezzo .prezzo-nota, .prezzo .prezzo-include li::before, .prezzo .prezzo-regalo { color: var(--c-forte); }
@@ -1265,13 +1265,10 @@ body.menu-aperto { overflow: hidden; }
 .prezzo .prezzo-regalo { border-top: 1px dashed rgba(17, 25, 34, .3); }
 .prezzo .btn { background: var(--c-btn); border-color: var(--c-btn); color: var(--c-btn-testo); }
 .prezzo .btn:hover { filter: brightness(1.08); }
-/* ogni formula ha la sua voce: serif, grotesk pesante, corsivo, macchina per scrivere */
-.prezzo-giornata .prezzo-nome { font-family: var(--f-display); font-weight: 400; }
-.prezzo-carnet .prezzo-nome { font-family: var(--f-titoli); font-weight: 800; letter-spacing: -0.03em; font-size: 1.6rem; }
-.prezzo-mese_flessibile .prezzo-nome { font-family: var(--f-display); font-style: italic; font-weight: 400; font-size: 1.95rem; }
-.prezzo-mese_fisso .prezzo-nome { font-family: var(--f-mono); font-weight: 500; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.3; }
-.prezzo-mese_fisso .prezzo-valore { font-family: var(--f-mono); font-weight: 500; letter-spacing: -0.04em; }
-.prezzo-carnet .prezzo-valore { font-family: var(--f-titoli); font-weight: 800; letter-spacing: -0.05em; }
+/* due e due: giornata e carnet con il serif tondo, i due mesi con lo stesso serif in corsivo */
+.prezzo .prezzo-nome { font-family: var(--f-display); font-weight: 400; font-size: 1.7rem; letter-spacing: -0.01em; }
+.prezzo-mese_flessibile .prezzo-nome, .prezzo-mese_fisso .prezzo-nome { font-style: italic; font-size: 1.85rem; }
+.prezzo .prezzo-valore { font-family: var(--f-display); font-weight: 400; letter-spacing: -.04em; }
 .prezzo-evidenza { box-shadow: 0 0 0 3px var(--ocra), 0 30px 56px -28px rgba(17, 25, 34, .8); }
 .prezzo-evidenza .prezzo-etichetta { top: -12px; right: 16px; }
 @media (max-width: 699px) { .prezzo-evidenza { margin: 0; padding: 48px 22px 28px; } }
