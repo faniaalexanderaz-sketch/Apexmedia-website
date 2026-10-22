@@ -34,12 +34,12 @@
   <link rel="preload" as="image" href="/img/logo-chiaro.svg" fetchpriority="high">
   <link rel="preload" href="/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/fraunces-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=a9a93a1d">
+  <link rel="stylesheet" href="/styles.css?v=6eaa5475">
 
-  <script src="/config.js?v=ce0ae7ec"></script>
+  <script src="/config.js?v=6924b741"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=b2e491ad" defer></script>
+  <script src="/main.js?v=5b938cfd" defer></script>
   <script src="/animazioni.js?v=6b2e11fc" defer></script>
 </head>
 <body class="home" data-schema-attivita>
@@ -248,6 +248,7 @@
         <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Paghi quando arrivi</strong>, in contanti o con carta</span></li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Disdici gratis</strong> <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span></span></li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Fattura</strong> per partita IVA o codice fiscale</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg><span><strong>Bagnarino Card gratis:</strong> <a href="#card">un premio al 3°, 5°, 7° e 10° timbro</a></span></li>
       </ul>
       <p class="sala-nota" data-cfg-attivo="sala.attiva" hidden>
         Vi serve una sala per una riunione? <a data-wa="generico" data-pos="prezzi-sala" href="https://wa.me/393472249457">Chiedici la disponibilità della sala riunioni</a>.
@@ -311,7 +312,13 @@
       <div class="fidelity-testo">
         <p class="occhiello occhiello-chiaro"><span data-cfg="fidelity.nome">Bagnarino Card</span></p>
         <h2 id="card-titolo" class="titolo-sezione" data-cfg="fidelity.titolo">Ogni 10 giornate, l’undicesima è in regalo.</h2>
-        <p data-cfg="fidelity.testo">A ogni giornata di lavoro ti segniamo un timbro. Dopo 10 timbri, l’undicesima giornata te la regaliamo. La card è gratis: niente app da scaricare, niente punti da calcolare.</p>
+        <p data-cfg="fidelity.testo">A ogni giornata ti segniamo un timbro e lungo la strada sblocchi quattro premi. L’ultimo è una giornata intera in regalo. La card è gratis, niente app da scaricare.</p>
+        <ol class="premi-scala" data-premi>
+          <li><span class="premi-n">3</span><div><strong>Stampe a colori gratis</strong><span>Fino a 50 pagine a colori per i tuoi lavori.</span></div></li>
+          <li><span class="premi-n">5</span><div><strong>Porta un amico</strong><span>Venite insieme: la sua prima giornata è gratis.</span></div></li>
+          <li><span class="premi-n">7</span><div><strong>Sconto 10% in negozio</strong><span>Su carta, cartucce e accessori per l’ufficio.</span></div></li>
+          <li class="premi-top"><span class="premi-n">10</span><div><strong>Giornata in regalo</strong><span>L’undicesima giornata la offriamo noi.</span></div></li>
+        </ol>
         <div class="fidelity-azioni">
           <a class="btn btn-ocra btn-grande" href="/prenota?pacchetto=giornata" data-pos="fidelity">Inizia dalla prima giornata
             <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
@@ -319,15 +326,15 @@
         </div>
       </div>
       <div class="tessera-scena">
-        <div class="tessera" role="img" aria-label="Esempio di Bagnarino Card con 7 timbri su 10 e l’undicesima giornata in regalo">
+        <div class="tessera" role="img" aria-label="Esempio di Bagnarino Card con 7 timbri su 10: premi al 3°, 5°, 7° e 10° timbro">
           <div class="tessera-testa">
             <img src="/img/logo-mark-chiaro.svg" alt="" width="30" height="32">
             <span class="tessera-nome">Bagnarino Card</span>
             <span class="tessera-num">N° 0042</span>
           </div>
           <ol class="timbri" data-timbri>
-            <li class="timbro pieno"></li><li class="timbro pieno"></li><li class="timbro pieno"></li><li class="timbro pieno"></li><li class="timbro pieno"></li>
-            <li class="timbro pieno"></li><li class="timbro pieno"></li><li class="timbro"></li><li class="timbro"></li><li class="timbro"></li>
+            <li class="timbro pieno"></li><li class="timbro pieno"></li><li class="timbro pieno premio"></li><li class="timbro pieno"></li><li class="timbro pieno premio"></li>
+            <li class="timbro pieno"></li><li class="timbro pieno premio"></li><li class="timbro"></li><li class="timbro"></li><li class="timbro premio"></li>
           </ol>
           <div class="tessera-piede">
             <span>7 timbri su 10</span>
@@ -349,15 +356,15 @@
         <li class="profilo">
           <div>
             <h3>Freelance e professionisti</h3>
-            <p>Scrivania vera, fattura intestata, stampante a due metri.</p>
-            <a class="profilo-link" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-freelance"><span>Mese flessibile, <span data-prezzo="mese_flessibile">€160</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <p>La tua scrivania sempre pronta, le tue cose nella cassettiera, fattura intestata.</p>
+            <a class="profilo-link" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-freelance"><span>Postazione fissa, <span data-prezzo="mese_fisso">€190</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
           </div>
         </li>
         <li class="profilo">
           <div>
             <h3>Smart working</h3>
-            <p>Esci di casa, separa il lavoro dal resto. Wi-fi stabile, in centro.</p>
-            <a class="profilo-link" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-remoto"><span>Postazione fissa, <span data-prezzo="mese_fisso">€190</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <p>Esci di casa, separa il lavoro dal resto. Wi-fi stabile, in centro, meno di €8 al giorno.</p>
+            <a class="profilo-link" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-remoto"><span>Mese flessibile, <span data-prezzo="mese_flessibile">€160</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
           </div>
         </li>
         <li class="profilo">

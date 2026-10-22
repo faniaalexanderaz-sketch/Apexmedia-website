@@ -364,8 +364,8 @@ async function card(email, codice) {
 
 /* ---------- presenze (area riservata, fase 3) ----------
    Ogni giornata 'presente' pagata (giornata singola o ingresso
-   del carnet) vale un timbro. Al decimo timbro: una giornata in
-   omaggio. Tornare indietro toglie il timbro. */
+   del carnet) vale un timbro. Al 3°, 5° e 7° un premio da consegnare
+   in sede, al decimo una giornata in regalo. Tornare indietro toglie il timbro. */
 async function segnaPresenza(id, nuovoStato) {
   if (!Number.isInteger(id)) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
   if (['presente', 'assente', 'confermata'].indexOf(nuovoStato) === -1) throw errore('DATI', 'Stato non valido.');
@@ -377,9 +377,12 @@ async function segnaPresenza(id, nuovoStato) {
     if (p.stato === 'annullata') throw errore('GIA_FATTO', 'La prenotazione è annullata.');
     const vale = (p.pacchetto === 'giornata' || p.pacchetto === 'carnet') && !p.omaggio;
     await x('INSERT INTO fidelity (cliente_id) VALUES ($1) ON CONFLICT (cliente_id) DO NOTHING', [p.cliente_id]);
-    let premio = false;
+    let premio = false, premioSbloccato = null;
     if (vale && p.stato !== 'presente' && nuovoStato === 'presente') {
       const f = (await x('UPDATE fidelity SET timbri = timbri + 1 WHERE cliente_id = $1 RETURNING timbri', [p.cliente_id]))[0];
+      /* premi intermedi della card (stampe, amico, sconto): li consegna il negozio */
+      const sb = ((cfg.fidelity && cfg.fidelity.premi) || []).find(z => z.timbri === f.timbri && z.timbri < soglia);
+      if (sb) premioSbloccato = sb.titolo;
       if (f.timbri >= soglia) {
         premio = true;
         await x('UPDATE fidelity SET timbri = timbri - $2, omaggi_disponibili = omaggi_disponibili + 1 WHERE cliente_id = $1', [p.cliente_id, soglia]);
@@ -394,7 +397,7 @@ async function segnaPresenza(id, nuovoStato) {
     }
     await x('UPDATE prenotazioni SET stato = $2 WHERE id = $1', [id, nuovoStato]);
     const f = (await x('SELECT timbri, omaggi_disponibili FROM fidelity WHERE cliente_id = $1', [p.cliente_id]))[0];
-    return { id, stato: nuovoStato, timbri: f.timbri, omaggi: f.omaggi_disponibili, premio };
+    return { id, stato: nuovoStato, timbri: f.timbri, omaggi: f.omaggi_disponibili, premio, premioSbloccato };
   });
 }
 

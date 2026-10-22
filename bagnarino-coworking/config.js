@@ -143,7 +143,17 @@ var BGN_CONFIG = {
     nome: 'Bagnarino Card',
     timbri: 10,
     titolo: 'Ogni 10 giornate, l’undicesima è in regalo.',
-    testo: 'A ogni giornata di lavoro ti segniamo un timbro. Dopo 10 timbri, l’undicesima giornata te la regaliamo. La card è gratis: niente app da scaricare, niente punti da calcolare.'
+    testo: 'A ogni giornata ti segniamo un timbro e lungo la strada sblocchi quattro premi. L’ultimo è una giornata intera in regalo. La card è gratis, niente app da scaricare.',
+    /* Premi lungo la card: timbri = al quale timbro si sblocca.
+       I premi intermedi li consegna Marcella in sede: l'area riservata
+       glielo ricorda quando segna l'arrivo. Dopo il 10° si ricomincia.
+       [DA CONFERMARE] con Marcella pagine a colori e sconto in negozio. */
+    premi: [
+      { timbri: 3, titolo: 'Stampe a colori gratis', testo: 'Fino a 50 pagine a colori per i tuoi lavori.' },
+      { timbri: 5, titolo: 'Porta un amico', testo: 'Venite insieme: la sua prima giornata è gratis.' },
+      { timbri: 7, titolo: 'Sconto 10% in negozio', testo: 'Su carta, cartucce e accessori per l’ufficio.' },
+      { timbri: 10, titolo: 'Giornata in regalo', testo: 'L’undicesima giornata la offriamo noi.' }
+    ]
   },
 
   /* Servizi non ancora confermati: restano nascosti finché sono false */

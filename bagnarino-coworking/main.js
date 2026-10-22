@@ -219,6 +219,20 @@
     else if (a.href.indexOf('prenota') !== -1 && a.hasAttribute('data-pos')) traccia('select_item', { posizione: a.getAttribute('data-pos') });
   });
 
+  /* ---------- premi della Bagnarino Card (home e pagina card) ---------- */
+  function premiScala(timbri) {
+    var premi = (C.fidelity && C.fidelity.premi) || [];
+    return premi.map(function (z, i) {
+      var preso = typeof timbri === 'number' && timbri >= z.timbri;
+      return '<li class="' + (i === premi.length - 1 ? 'premi-top' : '') + (preso ? ' premi-preso' : '') + '">' +
+        '<span class="premi-n">' + (preso ? '<svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' : z.timbri) + '</span>' +
+        '<div><strong>' + z.titolo + '</strong><span>' + (preso ? 'Sbloccato · ' : z.timbri + '° timbro · ') + z.testo + '</span></div></li>';
+    }).join('');
+  }
+  window.BGN.premiScala = premiScala;
+  var scalaHome = $('[data-premi]');
+  if (scalaHome && C.fidelity && C.fidelity.premi) scalaHome.innerHTML = premiScala();
+
   /* ---------- listino (home): card generate da config.js ---------- */
   var listino = $('[data-listino]');
   if (listino) {

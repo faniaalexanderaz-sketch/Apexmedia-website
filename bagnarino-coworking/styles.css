@@ -1188,6 +1188,41 @@ body.menu-aperto { overflow: hidden; }
 .prezzi-garanzie li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
 .prezzi-garanzie strong { color: var(--inchiostro); }
 .prezzi-garanzie .ico { flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px; color: var(--verde-testo); stroke-width: 2.6; }
-@media (min-width: 900px) {
-  .prezzi-garanzie { grid-template-columns: repeat(3, auto); justify-content: center; gap: 36px; }
+@media (min-width: 700px) { .prezzi-garanzie { grid-template-columns: repeat(2, auto); justify-content: start; gap: 14px 36px; } }
+@media (min-width: 1200px) { .prezzi-garanzie { grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 24px; } }
+.prezzi-garanzie a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.fidelity-testo > p[data-cfg="fidelity.testo"] { margin-bottom: 1.4rem; }
+
+/* --- Bagnarino Card: scala dei premi --- */
+.premi-scala { list-style: none; margin: 0 0 2rem; padding: 0; display: grid; gap: 10px; max-width: 520px; counter-reset: none; }
+.premi-scala li {
+  display: flex; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px;
+  background: rgba(251, 248, 242, .05); border: 1px solid rgba(251, 248, 242, .12);
+}
+.premi-scala li div { display: grid; gap: 2px; min-width: 0; }
+.premi-scala strong { color: var(--avorio); font-size: 1.02rem; }
+.premi-scala li span:not(.premi-n) { color: rgba(251, 248, 242, .7); font-size: .92rem; line-height: 1.35; }
+.premi-n {
+  flex-shrink: 0; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px dashed var(--ocra-vivo); color: var(--ocra-vivo); font: 500 1.1rem/1 var(--f-display);
+}
+.premi-n .ico { width: 18px; height: 18px; stroke-width: 3; }
+.premi-top { background: rgba(185, 138, 69, .16) !important; border-color: rgba(207, 161, 96, .55) !important; }
+.premi-top .premi-n { border-style: solid; background: var(--ocra); color: var(--notte); }
+.premi-preso .premi-n { border-style: solid; background: var(--verde); border-color: var(--verde); color: #fff; }
+/* versione chiara (pagina "La mia card") */
+.premi-chiari { margin: 0 0 1.4rem; }
+.premi-chiari li { background: var(--bianco); border-color: var(--linea); }
+.premi-chiari strong { color: var(--inchiostro); }
+.premi-chiari li span:not(.premi-n) { color: var(--inchiostro-morbido); }
+.premi-chiari .premi-n { color: var(--ocra-testo); border-color: var(--ocra); }
+.premi-chiari .premi-top { background: var(--ocra-chiaro) !important; border-color: var(--ocra) !important; }
+.premi-chiari .premi-top .premi-n { color: var(--notte); }
+.premi-chiari .premi-preso .premi-n { color: #fff; border-color: var(--verde); }
+/* timbri che sbloccano un premio: piccolo regalo in alto a destra */
+.timbro { position: relative; }
+.timbro.premio::after {
+  content: ''; position: absolute; top: -4px; right: -4px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--avorio) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237D5A22' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='4' rx='1'/%3E%3Cpath d='M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5'/%3E%3C/svg%3E") center / 12px no-repeat;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 }

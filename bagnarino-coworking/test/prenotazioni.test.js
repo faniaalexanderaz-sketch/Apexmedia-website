@@ -124,10 +124,14 @@ test('fidelity: 10 giornate presenti = 1 omaggio, che si può usare', async () =
   const base = cliente();
   const giorni = ['2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06', '2026-11-09', '2026-11-10', '2026-11-11', '2026-11-12', '2026-11-13', '2026-11-16'];
   let ultimo;
+  const sbloccati = [];
   for (const d of giorni) {
     const p = await P.prenota(Object.assign({}, base, { data: d }), ctx);
     ultimo = await P.segnaPresenza(p.id, 'presente');
+    if (ultimo.premioSbloccato) sbloccati.push(ultimo.timbri + ':' + ultimo.premioSbloccato);
   }
+  /* premi intermedi da consegnare in sede al 3°, 5° e 7° timbro */
+  assert.deepEqual(sbloccati, ['3:Stampe a colori gratis', '5:Porta un amico', '7:Sconto 10% in negozio']);
   assert.equal(ultimo.premio, true);
   assert.equal(ultimo.omaggi, 1);
   assert.equal(ultimo.timbri, 0);

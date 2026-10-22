@@ -14,7 +14,9 @@
   function disegna(c) {
     scheda.hidden = false;
     var tot = c.timbriPerOmaggio || 10, html = '';
-    for (var i = 0; i < tot; i++) html += '<li class="timbro' + (i < c.timbri ? ' pieno' : '') + '" aria-hidden="true"></li>';
+    var premi = (C.fidelity && C.fidelity.premi) || [];
+    var soglie = premi.map(function (z) { return z.timbri; });
+    for (var i = 0; i < tot; i++) html += '<li class="timbro' + (i < c.timbri ? ' pieno' : '') + (soglie.indexOf(i + 1) !== -1 ? ' premio' : '') + '" aria-hidden="true"></li>';
     $('[data-timbri]').innerHTML = html;
     $('[data-c-nome]').textContent = 'Card di ' + c.nome;
     $('[data-c-conta]').textContent = c.timbri + (c.timbri === 1 ? ' timbro' : ' timbri') + ' su ' + tot;
@@ -22,7 +24,15 @@
     var mancano = tot - c.timbri;
     $('[data-c-omaggi]').innerHTML = c.omaggi > 0
       ? '<strong>Hai ' + (c.omaggi === 1 ? 'una giornata' : c.omaggi + ' giornate') + ' in regalo!</strong> Quando prenoti con la tua email e il tuo cellulare te la proponiamo noi.'
-      : 'Ti ' + (mancano === 1 ? 'manca 1 giornata' : 'mancano ' + mancano + ' giornate') + ' per la prossima in regalo.';
+      : prossimo();
+    function prossimo() {
+      var z = premi.filter(function (p) { return p.timbri > c.timbri; })[0];
+      if (!z) return 'Ti ' + (mancano === 1 ? 'manca 1 giornata' : 'mancano ' + mancano + ' giornate') + ' per la prossima in regalo.';
+      var m = z.timbri - c.timbri;
+      return 'Ti ' + (m === 1 ? 'manca 1 giornata' : 'mancano ' + m + ' giornate') + ' per il prossimo premio: <strong>' + z.titolo + '</strong>.';
+    }
+    var scala = $('[data-premi-card]');
+    if (scala && B.premiScala) scala.innerHTML = B.premiScala(c.timbri);
     var k = $('[data-c-carnet]');
     k.hidden = !c.carnet;
     if (c.carnet) k.textContent = 'Carnet attivo: ' + c.carnet.residui + ' ingressi da usare entro il ' +

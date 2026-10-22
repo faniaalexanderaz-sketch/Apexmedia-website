@@ -43,7 +43,7 @@
   function toast(t, errore) {
     var el = $('[data-toast]');
     el.textContent = t; el.classList.toggle('errore', !!errore); el.hidden = false;
-    clearTimeout(timerToast); timerToast = setTimeout(function () { el.hidden = true; }, 3200);
+    clearTimeout(timerToast); timerToast = setTimeout(function () { el.hidden = true; }, t.indexOf('🎁') === 0 ? 9000 : 3200);
   }
   function avvisoDb(t) { var el = $('[data-avviso-db]'); el.textContent = t || 'Il database non è ancora collegato.'; el.hidden = false; }
 
@@ -171,7 +171,7 @@
     if (b) {
       b.disabled = true;
       api('presenza', { dati: { id: +b.getAttribute('data-id'), stato: b.getAttribute('data-presenza') } }).then(function (r) {
-        toast(r.stato === 'presente' ? (r.premio ? '🎁 Arrivato! Ha appena guadagnato una giornata in omaggio.' : 'Arrivato. Timbri sulla card: ' + r.timbri + ' su 10.')
+        toast(r.stato === 'presente' ? (r.premio ? '🎁 Arrivato! Ha appena guadagnato una giornata in regalo.' : r.premioSbloccato ? '🎁 Arrivato! Con ' + r.timbri + ' timbri ha sbloccato: ' + r.premioSbloccato + '. Ricordati di darglielo.' : 'Arrivato. Timbri sulla card: ' + r.timbri + ' su 10.')
           : r.stato === 'assente' ? 'Segnato: non è venuto.' : 'Corretto: di nuovo in attesa.');
         caricatori.oggi();
       }).catch(function (x) { b.disabled = false; toast(x.message, true); });
