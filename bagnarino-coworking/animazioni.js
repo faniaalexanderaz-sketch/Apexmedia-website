@@ -64,7 +64,21 @@
           scrollTrigger: { trigger: '[data-timbri]', start: 'top 82%', once: true } });
       }
 
-      /* 4) l'apertura: la foto scende appena, con calma */
+      /* 4) le foto si scoprono a tendina, con un filo di zoom e di parallasse */
+      $$('[data-foto-rivela]').forEach(function (fig) {
+        var mask = $('.foto-maschera', fig), img = $('img', fig);
+        if (!mask || !img) return;
+        if (sottoLaPiega(fig)) {
+          var tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 85%', once: true } });
+          tl.fromTo(mask, { clipPath: 'inset(100% 0% 0% 0% round 14px)' }, { clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 1.1, ease: 'expo.out', clearProps: 'clipPath' })
+            .fromTo(img, { scale: 1.18 }, { scale: 1.06, duration: 1.4, ease: 'expo.out' }, 0);
+          var cap = $('figcaption', fig);
+          if (cap) tl.from(cap, { opacity: 0, y: 8, duration: 0.5, ease: 'power2.out', clearProps: 'opacity,transform' }, 0.45);
+        } else gsap.set(img, { scale: 1.06 });
+        gsap.fromTo(img, { yPercent: -3 }, { yPercent: 3, ease: 'none', scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
+      });
+
+      /* 5) l'apertura: la foto scende appena, con calma */
       var foto = $('.apertura-foto img');
       if (foto) {
         gsap.to(foto, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.apertura', start: 'top top', end: 'bottom top', scrub: true } });
@@ -72,7 +86,7 @@
     } catch (e) {
       /* rete di sicurezza: nulla deve restare nascosto */
       try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}
-      $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; });
+      $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; });
       var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
     }
   }
