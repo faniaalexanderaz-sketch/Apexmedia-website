@@ -6,7 +6,7 @@
   <title>Prenota il coworking ad Alessandria · da €25 al giorno | Bagnarino</title>
   <meta name="description" content="Prenota una postazione di coworking in centro ad Alessandria in 30 secondi. Giornata €25, carnet 10 ingressi €200, mese €270. Paghi in sede, disdetta gratuita.">
   <link rel="canonical" href="/prenota">
-  <meta name="theme-color" content="#F1EBE0">
+  <meta name="theme-color" content="#1B2A3A">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Bagnarino Coworking">
@@ -26,14 +26,14 @@
 
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/fraunces-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=9f4b0114">
+  <link rel="stylesheet" href="/styles.css?v=117b2a56">
 
   <script>if (/[?&]pacchetto=/.test(location.search)) document.documentElement.classList.add('con-pacchetto');</script>
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
   <script src="/main.js?v=58fb0b7c" defer></script>
-  <script src="/prenota.js?v=2cf11dc7" defer></script>
+  <script src="/prenota.js?v=3ddfbe4d" defer></script>
 </head>
 <body class="pagina-prenota">
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -54,10 +54,11 @@
 <a class="salta" href="#contenuto">Vai al contenuto</a>
 
 <!-- testata ridotta: niente menu, nessuna uscita inutile dal flusso -->
-<header class="testata testata-flusso">
+<header class="testata testata-flusso testata-scura">
   <div class="contenitore testata-riga">
     <a class="testata-logo" href="/" aria-label="Bagnarino Coworking, torna al sito">
-      <img src="/img/logo.svg" alt="Bagnarino Coworking" width="144" height="40">
+      <img class="logo-chiaro" src="/img/logo-chiaro.svg" alt="Bagnarino Coworking" width="144" height="40">
+      <img class="logo-scuro" src="/img/logo.svg" alt="" width="144" height="40">
     </a>
     <div class="testata-azioni">
     <a class="aiuto-link" data-wa="prenota" data-pos="flusso-testata" href="https://wa.me/393472249457">
@@ -69,28 +70,33 @@
 </header>
 
 <main id="contenuto" class="flusso">
-  <div class="contenitore">
+  <div data-modulo-zona>
 
-    <div data-modulo-zona>
+    <!-- banda scura: titolo, rassicurazioni e i tre passi -->
+    <section class="flusso-banda" aria-labelledby="flusso-titolo">
+      <div class="contenitore">
+        <p class="flusso-sopra">Prenota in 30 secondi</p>
+        <div class="flusso-testa">
+          <h1 id="flusso-titolo">Prenota la tua <em>scrivania.</em></h1>
+          <ul class="rassicurazioni">
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Nessun pagamento online</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Paghi in sede il primo giorno</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Disdici gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span></span></li>
+          </ul>
+        </div>
+        <ol class="indicatore" aria-label="Passaggi della prenotazione">
+          <li data-indicatore="1">1. Formula</li>
+          <li data-indicatore="2">2. Giorno</li>
+          <li data-indicatore="3">3. I tuoi dati</li>
+        </ol>
+      </div>
+    </section>
+
+    <div class="contenitore flusso-corpo">
       <div class="avviso-demo" data-avviso-demo hidden>
         <svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>
         <p><strong>Versione di prova.</strong> La prenotazione online non viene ancora salvata: alla fine potrai inviarla con un tocco su WhatsApp per bloccare il posto.</p>
       </div>
-
-      <div class="flusso-testa">
-        <h1>Prenota la tua postazione</h1>
-        <ul class="rassicurazioni">
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Nessun pagamento online</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Paghi in sede il primo giorno</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Disdici gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span></span></li>
-        </ul>
-      </div>
-
-      <ol class="indicatore" aria-label="Passaggi della prenotazione">
-        <li data-indicatore="1">1. Formula</li>
-        <li data-indicatore="2">2. Giorno</li>
-        <li data-indicatore="3">3. I tuoi dati</li>
-      </ol>
 
       <div class="flusso-griglia">
         <form class="flusso-form" data-modulo novalidate>
@@ -109,10 +115,12 @@
           <fieldset class="blocco" data-blocco="2">
             <legend class="blocco-titolo"><span class="blocco-num" aria-hidden="true">2</span><span data-etichetta-data>Scegli il giorno</span></legend>
             <p class="giorni-legenda" aria-hidden="true">
-              <span><i style="background:var(--verde)"></i>Posti liberi</span>
-              <span><i style="background:var(--ocra)"></i>Ultimi posti</span>
-              <span><i style="background:#B9B2A3"></i>Pieno o chiuso</span>
+              <span><i class="l-ok"></i>Posti liberi</span>
+              <span><i class="l-pochi"></i>Ultimi posti</span>
+              <span><i class="l-pieno"></i>Pieno</span>
+              <span><i class="l-chiuso"></i>Chiuso</span>
             </p>
+            <p class="giorni-nota" aria-hidden="true">Ogni pallino è una scrivania: pieno = libera.</p>
             <div class="giorni" data-giorni role="radiogroup" aria-label="Giorno"></div>
             <p class="giorno-info" data-giorno-info aria-live="polite"></p>
             <p class="campo-errore" data-errore-giorno style="display:none">Scegli un giorno per continuare.</p>
@@ -186,7 +194,7 @@
           </fieldset>
 
           <div class="invia-zona">
-            <button class="btn btn-pieno btn-grande btn-largo" type="submit" data-invia>
+            <button class="btn btn-ocra btn-grande btn-largo" type="submit" data-invia>
               Conferma prenotazione <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg>
             </button>
             <p class="invia-nota">Nessun pagamento ora: paghi in sede il primo giorno.</p>
@@ -207,7 +215,9 @@
         </aside>
       </div>
     </div>
+  </div>
 
+  <div class="contenitore">
     <!-- CONFERMA -->
     <section class="successo" data-successo hidden tabindex="-1" aria-labelledby="successo-titolo">
       <div class="successo-icona"><svg class="ico" aria-hidden="true"><use href="#i-calendar-check"/></svg></div>
@@ -217,7 +227,7 @@
 
       <div class="avviso-demo" data-successo-demo hidden>
         <p><strong>Ultimo passo: invia la prenotazione su WhatsApp.</strong> Il sito è in versione di prova e non salva ancora le prenotazioni. Con il messaggio già pronto, Marcella ti blocca il posto e ti risponde.</p>
-        <a class="btn btn-pieno btn-grande" data-wa-conferma data-pos="successo-demo" href="https://wa.me/393472249457">
+        <a class="btn btn-ocra btn-grande" data-wa-conferma data-pos="successo-demo" href="https://wa.me/393472249457">
           <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Invia su WhatsApp</a>
       </div>
 
@@ -246,7 +256,7 @@
 <!-- barra fissa mobile: prezzo sempre in vista + passo successivo -->
 <div class="barra-flusso" data-barra-flusso>
   <div class="barra-flusso-prezzo"><strong data-b-totale>—</strong><span data-b-testo>Scegli la formula</span></div>
-  <button class="btn btn-pieno" type="button" data-b-avanti>Continua</button>
+  <button class="btn btn-ocra" type="button" data-b-avanti>Continua</button>
 </div>
 
 

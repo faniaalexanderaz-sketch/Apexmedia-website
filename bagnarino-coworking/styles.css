@@ -828,65 +828,102 @@ body.menu-aperto { overflow: hidden; }
 .link-cambia { background: none; border: 0; padding: 10px 4px; min-height: 44px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 @media (min-width: 600px) { .blocco { padding: 26px 26px 28px; } }
 
-/* opzioni pacchetto */
-.opzioni { display: grid; gap: 8px; }
+/* ---- formule: quattro card colorate, il mese in blu con il timbro ocra ---- */
+.opzioni { display: grid; gap: 12px; }
+@media (min-width: 640px) { .opzioni { grid-template-columns: 1fr 1fr; } }
 .opzione { position: relative; display: block; cursor: pointer; }
 .opzione input { position: absolute; opacity: 0; pointer-events: none; }
 .opzione-corpo {
-  display: grid; grid-template-columns: auto 1fr auto; gap: 2px 14px; align-items: center;
-  padding: 14px 16px; border: 1px solid var(--linea-forte); border-radius: var(--raggio); background: transparent;
-  transition: border-color .15s, background-color .15s;
+  position: relative; display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "spunta nome prezzo" "spunta nota prezzo" "per per per";
+  gap: 3px 14px; align-items: center; height: 100%; min-height: 128px; padding: 20px 18px 16px;
+  border: 2px solid var(--c-bordo, transparent); border-radius: 12px; background: var(--c-sfondo); color: var(--c-testo);
+  transition: transform .25s var(--curva), background-color .25s, border-color .25s, color .25s, box-shadow .25s, opacity .25s;
 }
-.opzione-corpo::before { content: ''; grid-row: 1 / span 2; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--linea-forte); background: var(--avorio); transition: border .15s; }
-.opzione:hover .opzione-corpo { border-color: var(--inchiostro); }
-.opzione input:checked + .opzione-corpo { border-color: var(--inchiostro); background: var(--carta); box-shadow: inset 0 0 0 1px var(--inchiostro); }
-.opzione input:checked + .opzione-corpo::before { border: 6px solid var(--inchiostro); }
-.opzione input:focus-visible + .opzione-corpo { outline: 2px solid var(--ocra-testo); outline-offset: 2px; }
-.opzione-nome { font-weight: 600; font-size: 1.05rem; }
-.opzione-nota { grid-column: 2; font-size: .9rem; color: var(--inchiostro-morbido); }
-.opzione-prezzo { grid-row: 1 / span 2; grid-column: 3; text-align: right; font-size: 1.5rem; line-height: 1.05; }
-.opzione-prezzo small { display: block; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .04em; text-transform: uppercase; color: var(--inchiostro-morbido); margin-top: 3px; }
-.opzione-etichetta { display: inline-block; margin-left: 8px; font-family: var(--f-display); font-style: italic; font-weight: 400; font-size: .95rem; color: var(--ocra-testo); }
+.opzione:hover .opzione-corpo { transform: translateY(-3px); box-shadow: 0 14px 28px -16px rgba(17, 25, 34, .45); }
+.opzione-spunta { grid-area: spunta; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid currentColor; opacity: .55; transition: all .25s var(--curva); }
+.opzione-spunta .ico { width: 15px; height: 15px; stroke-width: 3; opacity: 0; transform: scale(.4); transition: all .25s var(--curva); }
+.opzione-nome { grid-area: nome; align-self: end; font-family: var(--f-display); font-weight: 400; font-size: 1.35rem; line-height: 1.1; letter-spacing: -0.01em; }
+.opzione-nota { grid-area: nota; align-self: start; font-size: .9rem; line-height: 1.35; opacity: .82; }
+.opzione-prezzo { grid-area: prezzo; text-align: right; font-size: 2.4rem; line-height: .95; letter-spacing: -.03em; }
+.opzione-prezzo small { display: block; margin-top: 5px; font-family: var(--f-mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+.opzione-per { grid-area: per; margin-top: 10px; padding-top: 10px; border-top: 1px dashed currentColor; font-size: .86rem; line-height: 1.35; opacity: .8; }
+.opzione-etichetta { position: absolute; top: -2px; right: 18px; padding: 5px 10px 6px; border-radius: 0 0 6px 6px; background: var(--ocra); color: var(--notte); font-family: var(--f-mono); font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.opzione-mese_flessibile .opzione-corpo { padding-top: 28px; }
 
-/* calendario */
-.giorni-legenda { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: -4px 0 14px; font-size: .84rem; color: var(--inchiostro-morbido); }
-.giorni-legenda span { display: inline-flex; align-items: center; gap: 6px; }
-.giorni-legenda i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.giorni {
-  display: grid; grid-auto-flow: column; grid-auto-columns: 84px; gap: 8px;
-  overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
-  margin: 0 -18px; padding: 4px 18px 12px; scrollbar-width: thin; min-height: 128px;
+/* colori: giornata ocra, carnet verde, mese blu, postazione fissa rosso timbro */
+.opzione-giornata { --c-sfondo: #F5DFAE; --c-testo: var(--notte); --c-bordo: #E1B861; --c-sel: var(--ocra); }
+.opzione-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-bordo: #8CC4A6; --c-sel: #1E6B52; }
+.opzione-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-bordo: transparent; --c-sel: var(--inchiostro); }
+.opzione-mese_fisso { --c-sfondo: #F4D8D2; --c-testo: #3D1410; --c-bordo: #DE9D92; --c-sel: var(--timbro); }
+.opzione-mese_flessibile .opzione-prezzo { color: var(--ocra-vivo); }
+.opzione input:checked + .opzione-corpo { background: var(--c-sel); border-color: var(--c-sel); box-shadow: 0 16px 32px -16px rgba(17, 25, 34, .55); transform: translateY(-2px); }
+.opzione-giornata input:checked + .opzione-corpo { color: var(--notte); }
+.opzione-carnet input:checked + .opzione-corpo, .opzione-mese_fisso input:checked + .opzione-corpo { color: #fff; }
+.opzione-mese_flessibile input:checked + .opzione-corpo { border-color: var(--ocra); box-shadow: 0 0 0 3px var(--ocra), 0 18px 34px -16px rgba(17, 25, 34, .6); }
+.opzione input:checked + .opzione-corpo .opzione-spunta { opacity: 1; background: var(--avorio); border-color: var(--avorio); color: var(--notte); }
+.opzione-mese_flessibile input:checked + .opzione-corpo .opzione-spunta { background: var(--ocra); border-color: var(--ocra); }
+.opzione input:checked + .opzione-corpo .opzione-spunta .ico { opacity: 1; transform: none; }
+.opzioni:has(input:checked) .opzione input:not(:checked) + .opzione-corpo { opacity: .62; }
+.opzioni:has(input:checked) .opzione input:not(:checked) + .opzione-corpo:hover { opacity: 1; }
+.opzione input:focus-visible + .opzione-corpo { outline: 3px solid var(--ocra-testo); outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .opzione { animation: appare .6s var(--curva) both; }
+  .opzione:nth-child(2) { animation-delay: .07s; } .opzione:nth-child(3) { animation-delay: .14s; } .opzione:nth-child(4) { animation-delay: .21s; }
 }
+
+/* riga di sintesi quando la formula arriva già scelta dal listino */
+.blocco-sintesi { padding: 14px 16px; border-radius: 10px; background: var(--ocra); color: var(--notte); }
+.blocco-sintesi p { font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; }
+.blocco-sintesi .link-cambia { color: inherit; font-weight: 600; }
+[data-piano="carnet"] .blocco-sintesi { background: #1E6B52; color: #fff; }
+[data-piano="mese_flessibile"] .blocco-sintesi { background: var(--inchiostro); color: var(--avorio); box-shadow: 0 0 0 2px var(--ocra); }
+[data-piano="mese_fisso"] .blocco-sintesi { background: var(--timbro); color: #fff; }
+
+/* ---- calendario: un blocco scuro con i giorni a colori ---- */
+.giorni-legenda { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: -2px 0 6px; font-size: .84rem; color: var(--chiaro-70); }
+.giorni-legenda span { display: inline-flex; align-items: center; gap: 7px; }
+.giorni-legenda i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.l-ok { background: #DDF0E2; } .l-pochi { background: #F8D98C; } .l-pieno { background: repeating-linear-gradient(45deg, rgba(250,246,238,.25) 0 3px, transparent 3px 6px); border: 1px solid rgba(250,246,238,.35); } .l-chiuso { border: 1px dashed rgba(250,246,238,.4); }
+.giorni-nota { margin: 0 0 18px; font-family: var(--f-mono); font-size: .7rem; letter-spacing: .04em; color: var(--ocra-vivo); }
+.giorni { container-type: inline-size; }
+.mesi { display: grid; gap: 30px; }
+@container (min-width: 620px) { .mesi { grid-template-columns: 1fr 1fr; gap: 32px; } }
+.mese-titolo { margin: 0 0 12px; font-family: var(--f-display); font-weight: 400; font-size: 1.6rem; line-height: 1; letter-spacing: -0.01em; color: var(--avorio); }
+.mese-titolo::after { content: ''; display: block; width: 36px; height: 3px; margin-top: 10px; background: var(--ocra); }
+.mese-griglia { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.giorno-intestazione { display: block; padding-bottom: 4px; text-align: center; font-family: var(--f-mono); font-size: .64rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ocra-vivo); }
+.giorno-vuoto { display: block; }
 .giorno {
-  scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; gap: 2px;
-  min-height: 112px; padding: 10px 6px; border-radius: var(--raggio); cursor: pointer;
-  border: 1px solid var(--linea-forte); background: var(--avorio); text-align: center; line-height: 1.15;
-  transition: border-color .15s, background-color .15s, color .15s;
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  min-height: 60px; padding: 6px 1px 6px; border-radius: 8px; border: 1px solid transparent; cursor: pointer; text-align: center; line-height: 1;
+  font-family: var(--f-testo); color: var(--notte); -webkit-tap-highlight-color: transparent;
+  transition: transform .2s var(--curva), background-color .2s, box-shadow .2s;
 }
-.giorno:hover:not(:disabled) { border-color: var(--inchiostro); }
-.giorno-sett { font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--inchiostro-morbido); }
-.giorno-num { font-size: 1.6rem; }
-.giorno-mese { font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--inchiostro-morbido); }
-.giorno-stato { margin-top: auto; font-family: var(--f-mono); font-size: .64rem; letter-spacing: .02em; font-weight: 500; padding: 3px 6px; border-radius: 3px; white-space: nowrap; }
-.stato-ok { background: var(--verde-chiaro); color: #14532D; }
-.stato-pochi { background: var(--ocra-chiaro); color: var(--ocra-testo); }
-.stato-pieno, .stato-chiuso { background: var(--carta-2); color: var(--inchiostro-morbido); }
-.giorno:disabled { cursor: not-allowed; background: transparent; border-color: var(--linea); }
-.giorno:disabled .giorno-num { color: #8A93A0; }
-.giorno.scelto { border-color: var(--inchiostro); background: var(--inchiostro); color: var(--avorio); }
-.giorno.scelto .giorno-sett, .giorno.scelto .giorno-mese { color: var(--chiaro-70); }
-.giorno-vuoto { display: none; }
-.con-pacchetto [data-opzioni] { display: none; }
-.con-pacchetto [data-sintesi="1"] { display: flex !important; min-height: 44px; }
-.giorni-nav { display: none; }
-@media (min-width: 720px) {
-  .giorni { grid-auto-flow: row; grid-template-columns: repeat(7, 1fr); grid-auto-columns: auto; overflow: visible; margin: 0; padding: 0; min-height: 645px; }
-  .giorno-vuoto { display: block; }
-  .giorno-intestazione { display: block; text-align: center; font-family: var(--f-mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--inchiostro-morbido); }
-}
-.giorno-intestazione { display: none; }
-.giorno-info { margin: 14px 0 0; padding: 12px 14px; border-radius: var(--raggio); background: var(--carta); font-size: .98rem; }
+.giorno-sett, .giorno-mese { display: none; }
+.giorno-num { font-size: 1.35rem; }
+.giorno-stato { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.giorno-posti { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; width: 24px; min-height: 6px; }
+.giorno-posti i { width: 6px; height: 6px; border-radius: 50%; border: 1px solid currentColor; opacity: .4; }
+.giorno-posti i.l { background: currentColor; border-color: currentColor; opacity: 1; }
+.giorno.stato-ok { background: #DDF0E2; color: #166A3A; }
+.giorno.stato-ok .giorno-num { color: var(--notte); }
+.giorno.stato-pochi { background: #F8D98C; color: #A04A05; }
+.giorno.stato-pochi .giorno-num { color: var(--notte); }
+.giorno.stato-pieno { background: repeating-linear-gradient(45deg, rgba(250, 246, 238, .12) 0 4px, transparent 4px 8px); border-color: rgba(250, 246, 238, .22); color: rgba(250, 246, 238, .5); }
+.giorno.stato-chiuso { border: 1px dashed rgba(250, 246, 238, .22); color: rgba(250, 246, 238, .32); cursor: not-allowed; }
+.giorno.stato-chiuso:not(:disabled) { background: rgba(250, 246, 238, .1); border-style: solid; color: rgba(250, 246, 238, .7); }
+.giorno:disabled { cursor: not-allowed; }
+.giorno:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 18px -8px rgba(0, 0, 0, .6); }
+.giorno.oggi .giorno-num { text-decoration: underline; text-decoration-color: var(--ocra); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.giorno.scelto { background: var(--ocra); border-color: var(--avorio); color: var(--notte); transform: scale(1.1); box-shadow: 0 12px 24px -8px rgba(0, 0, 0, .65); z-index: 2; }
+.giorno.scelto .giorno-num { color: var(--notte); }
+.giorno:focus-visible { outline: 3px solid var(--avorio); outline-offset: 2px; }
+@media (min-width: 720px) { .giorno { min-height: 66px; } .giorno-num { font-size: 1.5rem; } .giorno-posti { width: 28px; } .giorno-posti i { width: 7px; height: 7px; } }
+.giorno-info { margin: 18px 0 0; padding: 14px 16px; border-radius: 10px; background: var(--ocra-chiaro); color: var(--notte); font-size: .98rem; border-left: 5px solid var(--ocra); }
 .giorno-info:empty { display: none; }
+.con-pacchetto [data-opzioni] { display: none; }
+.con-pacchetto [data-sintesi="1"] { display: flex !important; min-height: 52px; }
+.giorni-nav { display: none; }
 
 /* modulo dati */
 .campi { display: grid; gap: 16px; }
@@ -1097,13 +1134,47 @@ body.menu-aperto { overflow: hidden; }
 .offerta { border-color: var(--notte); color: var(--notte); }
 .piede { border-top: 0; }
 
-/* prenotazione: anche qui il mese si vede */
-.opzione input[value="mese_flessibile"] + .opzione-corpo { background: var(--ocra-chiaro); border-color: var(--ocra); }
-.opzione input[value="mese_flessibile"]:checked + .opzione-corpo { background: var(--ocra-chiaro); border-color: var(--inchiostro); }
-
-/* ---------- supporti per le animazioni GSAP ---------- */
-.maschera { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .04em .14em 0; margin: 0 -.04em -.14em 0; }
-.parola-su { display: inline-block; will-change: transform; }
-.avanzamento { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 70; pointer-events: none; background: var(--ocra); transform: scaleX(0); transform-origin: 0 50%; }
-.tessera-scena { perspective: 1200px; }
-.prezzi { overflow: visible; }
+/* =============================================================
+   PRENOTAZIONE: banda scura, blocchi a colori, scontrino
+   ============================================================= */
+.testata-scura { background: var(--inchiostro); border-bottom: 1px solid var(--linea-scura); color: var(--avorio); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.testata-scura .logo-chiaro { display: block; }
+.testata-scura .logo-scuro { display: none; }
+.testata-scura .aiuto-link { color: var(--avorio); }
+.testata-scura .btn-icona { color: var(--avorio); border-color: rgba(250, 246, 238, .45); }
+.pagina-prenota { background: var(--carta); }
+.pagina-prenota .flusso { padding: 0 0 calc(var(--barra-mobile) + 40px); }
+.flusso-banda { position: relative; overflow: hidden; padding: 34px 0 96px; background: var(--inchiostro); color: var(--avorio); border-bottom: 4px solid var(--ocra); }
+.flusso-banda::before { content: ''; position: absolute; border-radius: 50%; pointer-events: none; border: 1px solid rgba(221, 176, 92, .35); }
+.flusso-banda::before { width: 260px; height: 260px; right: -90px; top: -110px; box-shadow: 0 0 0 26px rgba(221, 176, 92, .06), 0 0 0 52px rgba(221, 176, 92, .04); }
+.flusso-banda .contenitore { position: relative; z-index: 1; }
+.flusso-sopra { margin: 0 0 14px; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ocra-vivo); }
+.flusso-banda h1 { font-size: clamp(2.6rem, 10vw, 4.6rem); line-height: .98; color: var(--avorio); margin-bottom: 1rem; }
+.flusso-banda h1 em { font-style: italic; color: var(--ocra-vivo); }
+.flusso-banda .rassicurazioni { display: grid; gap: 6px; margin-bottom: 1.6rem; color: var(--chiaro-70); font-size: .95rem; }
+.flusso-banda .rassicurazioni .ico { color: var(--ocra-vivo); }
+@media (min-width: 700px) { .flusso-banda .rassicurazioni { display: flex; flex-wrap: wrap; gap: 8px 24px; } }
+.flusso-banda .indicatore { margin-bottom: 0; gap: 8px; }
+.flusso-banda .indicatore li { padding-top: 10px; border-top: 3px solid rgba(250, 246, 238, .22); color: rgba(250, 246, 238, .55); }
+.flusso-banda .indicatore li.fatto { border-top-color: var(--ocra-vivo); color: var(--ocra-vivo); }
+.flusso-banda .indicatore li.attivo { border-top-color: var(--avorio); color: var(--avorio); }
+.flusso-corpo { position: relative; z-index: 2; margin-top: -64px; }
+.pagina-prenota .blocco { border: 0; background: var(--avorio); border-radius: 14px; box-shadow: 0 22px 40px -26px rgba(17, 25, 34, .55); padding: 22px 16px 24px; }
+@media (min-width: 600px) { .pagina-prenota .blocco { padding: 30px 30px 32px; } }
+.pagina-prenota .blocco-titolo { font-size: 1.7rem; }
+.pagina-prenota .blocco-num { width: 36px; height: 36px; background: var(--ocra); color: var(--notte); font: 400 1.15rem var(--f-display); }
+.pagina-prenota .blocco.completo .blocco-num { background: var(--verde-testo); color: #fff; }
+.pagina-prenota .blocco[data-blocco="2"] { background: var(--inchiostro); color: var(--avorio); }
+.pagina-prenota .blocco[data-blocco="2"] .blocco-titolo { color: var(--avorio); }
+.pagina-prenota .blocco[data-blocco="2"] .campo-errore { color: #FCA5A5; }
+.pagina-prenota .blocco[data-blocco="3"] { border-top: 6px solid var(--ocra); }
+.pagina-prenota .campo input:not([type='checkbox']), .pagina-prenota .campo textarea { border: 1.5px solid var(--linea-forte); background: #fff; }
+.pagina-prenota .riepilogo { border: 0; border-top: 6px solid var(--ocra); background: var(--avorio); box-shadow: 0 22px 40px -26px rgba(17, 25, 34, .55); }
+.pagina-prenota .riepilogo-totale dd { font-size: 2.1rem; color: var(--notte); }
+.barra-flusso { background: var(--inchiostro); border-top: 3px solid var(--ocra); }
+.barra-flusso-prezzo strong { color: var(--ocra-vivo); font-size: 1.6rem; }
+.barra-flusso-prezzo span { color: var(--chiaro-70); }
+.pagina-prenota .successo-icona { width: 76px; height: 76px; background: var(--verde-testo); border: 0; color: #fff; }
+.pagina-prenota .codice { background: var(--inchiostro); border-color: var(--ocra); }
+.pagina-prenota .codice span { color: var(--chiaro-70); }
+.pagina-prenota .codice strong { color: var(--ocra-vivo); }

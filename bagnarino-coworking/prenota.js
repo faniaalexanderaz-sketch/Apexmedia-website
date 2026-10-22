@@ -38,12 +38,15 @@
      ============================================================= */
   var opzioni = $('[data-opzioni]');
   opzioni.innerHTML = C.listino.map(function (p) {
-    return '<label class="opzione">' +
+    return '<label class="opzione opzione-' + p.id + '">' +
       '<input type="radio" name="pacchetto" value="' + p.id + '">' +
       '<span class="opzione-corpo">' +
-        '<span class="opzione-nome">' + p.nome + (p.etichetta ? '<span class="opzione-etichetta">' + p.etichetta + '</span>' : '') + '</span>' +
+        (p.etichetta ? '<span class="opzione-etichetta">' + p.etichetta + '</span>' : '') +
+        '<span class="opzione-spunta" aria-hidden="true"><svg class="ico"><use href="#i-check"/></svg></span>' +
+        '<span class="opzione-nome">' + p.nome + '</span>' +
         '<span class="opzione-nota">' + p.nota + '</span>' +
         '<span class="opzione-prezzo">' + B.euro(p.prezzo) + '<small>' + p.unita + '</small></span>' +
+        (p.perChi ? '<span class="opzione-per">' + p.perChi + '</span>' : '') +
       '</span></label>';
   }).join('');
 
@@ -59,6 +62,7 @@
     $('[data-sintesi="1"]').hidden = false;
     $('[data-sintesi-testo]').textContent = p.nome + ' · ' + B.euro(p.prezzo);
     $('[data-blocco="1"]').classList.add('completo');
+    $('[data-blocco="1"]').setAttribute('data-piano', id);
     aggiornaInfoGiorno();
     aggiorna();
     if (scorri) vaiA(2);
@@ -100,26 +104,35 @@
     return { attivo: true, classe: 'stato-ok', testo: liberi + ' liberi', aria: liberi + ' posti liberi' };
   }
 
+  var NOMI_GIORNI = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
   function disegnaGiorni() {
-    var html = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'].map(function (g) {
-      return '<span class="giorno-intestazione" aria-hidden="true">' + g + '</span>';
-    }).join('');
-    /* su schermi larghi la griglia parte dal lunedì: caselle vuote prima di oggi */
-    var vuoti = (inizio.getDay() + 6) % 7;
-    for (var v = 0; v < vuoti; v++) html += '<span class="giorno-vuoto" aria-hidden="true"></span>';
-    /* 5 settimane intere: la griglia ha sempre la stessa altezza */
+    var tot = Math.min(C.postazioni || 6, 12), mesi = [], corrente = null;
     for (var i = 0; i < giorni; i++) {
-      var d = aggiungiGiorni(inizio, i), s = B.iso(d), st = statoGiorno(d);
-      var scelto = stato.data === s;
-      html += '<button type="button" class="giorno' + (scelto ? ' scelto' : '') + '" data-data="' + s + '"' +
-        (st.attivo ? '' : ' disabled') + ' role="radio" aria-checked="' + scelto + '"' +
-        ' aria-label="' + B.data(d, 'lungo') + ', ' + st.aria + '">' +
-        '<span class="giorno-sett">' + d.toLocaleDateString('it-IT', { weekday: 'short' }).replace('.', '') + '</span>' +
-        '<span class="giorno-num">' + d.getDate() + '</span>' +
-        '<span class="giorno-mese">' + d.toLocaleDateString('it-IT', { month: 'short' }).replace('.', '') + '</span>' +
-        '<span class="giorno-stato ' + st.classe + '">' + st.testo + '</span>' +
-        '</button>';
+      var d = aggiungiGiorni(inizio, i), chiave = d.getFullYear() + '-' + d.getMonth();
+      if (!corrente || corrente.chiave !== chiave) { corrente = { chiave: chiave, data: d, giorni: [] }; mesi.push(corrente); }
+      corrente.giorni.push({ d: d, primo: i === 0 });
     }
+    var html = '<div class="mesi">' + mesi.map(function (m) {
+      var titolo = maiuscola(m.data.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' }));
+      var out = '<div class="mese"><p class="mese-titolo">' + titolo + '</p><div class="mese-griglia">' +
+        NOMI_GIORNI.map(function (g) { return '<span class="giorno-intestazione" aria-hidden="true">' + g + '</span>'; }).join('');
+      for (var v = 0; v < (m.data.getDay() + 6) % 7; v++) out += '<span class="giorno-vuoto" aria-hidden="true"></span>';
+      m.giorni.forEach(function (g) {
+        var d = g.d, s = B.iso(d), st = statoGiorno(d), liberi = stato.liberi[s], scelto = stato.data === s, pallini = '';
+        if (st.classe === 'stato-ok' || st.classe === 'stato-pochi' || st.classe === 'stato-pieno') {
+          for (var n = 1; n <= tot; n++) pallini += '<i' + (liberi != null && n <= liberi ? ' class="l"' : '') + '></i>';
+        }
+        out += '<button type="button" class="giorno ' + st.classe + (scelto ? ' scelto' : '') + (g.primo ? ' oggi' : '') + '" data-data="' + s + '"' +
+          (st.attivo ? '' : ' disabled') + ' role="radio" aria-checked="' + scelto + '"' +
+          ' aria-label="' + B.data(d, 'lungo') + ', ' + st.aria + '">' +
+          '<span class="giorno-sett">' + d.toLocaleDateString('it-IT', { weekday: 'short' }).replace('.', '') + '</span>' +
+          '<span class="giorno-num">' + d.getDate() + '</span>' +
+          '<span class="giorno-posti" aria-hidden="true">' + pallini + '</span>' +
+          '<span class="giorno-stato">' + st.testo + '</span>' +
+          '</button>';
+      });
+      return out + '</div></div>';
+    }).join('') + '</div>';
     griglia.innerHTML = html;
   }
 
@@ -150,7 +163,7 @@
     var attivi = $$('.giorno:not(:disabled)', griglia), i = attivi.indexOf(document.activeElement);
     if (i === -1) return;
     e.preventDefault();
-    var passo = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowDown' ? 5 : -5;
+    var passo = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowDown' ? 7 : -7;
     var prossimo = attivi[Math.max(0, Math.min(attivi.length - 1, i + passo))];
     prossimo.focus();
   });
