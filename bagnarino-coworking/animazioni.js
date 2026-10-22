@@ -45,7 +45,7 @@
       }
 
       /* 2) comparsa discreta: un filo di movimento, niente effetti */
-      var discreti = $$('.testa-sezione, .negozio-testo, .accoglie, .prezzo, .confronto, .giornata li, .dotazione > div, .profilo, .faq details, .dove-scheda, .finale-interno > *')
+      var discreti = $$('.testa-sezione, .negozio-testo, .accoglie, .prezzo, .prezzi-garanzie li, .giornata li, .dotazione > div, .premi-scala li, .vantaggi-mese, .fidelity-azioni, .profilo, .faq details, .dove-scheda, .mappa, .finale-interno > *')
         .filter(sottoLaPiega);
       if (discreti.length) {
         gsap.set(discreti, { opacity: 0, y: 12 });
@@ -60,8 +60,8 @@
       /* 3) Bagnarino Card: i timbri si posano uno alla volta */
       var timbri = $$('[data-timbri] .timbro.pieno');
       if (timbri.length && sottoLaPiega(timbri[0])) {
-        gsap.from(timbri, { scale: 1.5, opacity: 0, stagger: 0.07, duration: 0.35, ease: 'back.out(2)', clearProps: 'transform,opacity',
-          scrollTrigger: { trigger: '[data-timbri]', start: 'top 82%', once: true } });
+        gsap.from(timbri, { scale: 1.7, opacity: 0, rotation: -25, stagger: 0.09, duration: 0.32, ease: 'power3.in', clearProps: 'transform,opacity',
+          scrollTrigger: { trigger: '[data-timbri]', start: 'top 80%', once: true } });
       }
 
       /* 4) le foto si scoprono a tendina, con un filo di zoom e di parallasse */
@@ -70,7 +70,7 @@
         if (!mask || !img) return;
         if (sottoLaPiega(fig)) {
           var tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 85%', once: true } });
-          tl.fromTo(mask, { clipPath: 'inset(100% 0% 0% 0% round 14px)' }, { clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 1.1, ease: 'expo.out', clearProps: 'clipPath' })
+          tl.fromTo(mask, { clipPath: 'inset(100% 0% 0% 0% round 4px)' }, { clipPath: 'inset(0% 0% 0% 0% round 4px)', duration: 1.1, ease: 'expo.out', clearProps: 'clipPath' })
             .fromTo(img, { scale: 1.18 }, { scale: 1.06, duration: 1.4, ease: 'expo.out' }, 0);
           var cap = $('figcaption', fig);
           if (cap) tl.from(cap, { opacity: 0, y: 8, duration: 0.5, ease: 'power2.out', clearProps: 'opacity,transform' }, 0.45);
@@ -78,11 +78,6 @@
         gsap.fromTo(img, { yPercent: -3 }, { yPercent: 3, ease: 'none', scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
       });
 
-      /* 5) l'apertura: la foto scende appena, con calma */
-      var foto = $('.apertura-foto img');
-      if (foto) {
-        gsap.to(foto, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.apertura', start: 'top top', end: 'bottom top', scrub: true } });
-      }
     } catch (e) {
       /* rete di sicurezza: nulla deve restare nascosto */
       try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}

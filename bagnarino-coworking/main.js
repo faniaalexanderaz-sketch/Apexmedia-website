@@ -236,7 +236,7 @@
   if (mese && C.vantaggiMese) {
     $('[data-vm-titolo]', mese).textContent = C.vantaggiMese.titolo;
     $('[data-vm-voci]', mese).innerHTML = C.vantaggiMese.voci.map(function (v) {
-      return '<li><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg><div><strong>' + v.titolo + '</strong><span>' + v.testo + '</span></div></li>';
+      return '<li><div><strong>' + v.titolo + '</strong><span>' + v.testo + '</span></div></li>';
     }).join('');
   }
 
@@ -253,11 +253,9 @@
         '<span class="prezzo-valore" aria-hidden="true" data-cifra="' + p.prezzo + '">' + cifra + '</span>' +
         '<span class="prezzo-unita" aria-hidden="true">' + p.unita + '</span></p>' +
         '<p class="prezzo-nota">' + p.nota + '</p>' +
-        '<ul class="prezzo-include">' + p.include.map(function (x) {
-          return '<li><span class="prezzo-spunta"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>' + x + '</li>';
-        }).join('') + '</ul>' +
-        (p.id.indexOf('mese') === 0 && C.vantaggiMese ? '<a class="prezzo-regalo" href="#card"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg><span>' + C.vantaggiMese.breve + '</span></a>' : '') +
-        '<a class="btn btn-largo ' + (p.evidenza ? 'btn-ocra btn-prezzo-top' : 'btn-prezzo') + '" href="/prenota?pacchetto=' + p.id + '" data-pos="prezzi-' + p.id + '">' + p.cta +
+        '<ul class="prezzo-include">' + p.include.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
+        (p.id.indexOf('mese') === 0 && C.vantaggiMese ? '<a class="prezzo-regalo" href="#card">' + C.vantaggiMese.breve + '</a>' : '') +
+        '<a class="btn btn-largo ' + (p.evidenza ? 'btn-pieno btn-prezzo-top' : 'btn-prezzo') + '" href="/prenota?pacchetto=' + p.id + '" data-pos="prezzi-' + p.id + '">' + p.cta +
         '<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>' +
         '</article>';
     }).join('');
