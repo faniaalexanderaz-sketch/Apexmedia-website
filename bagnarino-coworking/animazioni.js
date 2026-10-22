@@ -23,6 +23,25 @@
     });
   }
 
+
+  /* "Per chi è": le card si inclinano seguendo il mouse (solo con mouse vero) */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    $$('[data-tilt]').forEach(function (el) {
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        el.classList.add('attiva');
+        el.style.setProperty('--ry', ((x - 0.5) * 10).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', ((0.5 - y) * 8).toFixed(2) + 'deg');
+        el.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+        el.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+      });
+      el.addEventListener('pointerleave', function () {
+        el.classList.remove('attiva');
+        el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
   function anima() {
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -45,7 +64,7 @@
       }
 
       /* 2) comparsa discreta: un filo di movimento, niente effetti */
-      var discreti = $$('.testa-sezione, .negozio-testo, .accoglie, .prezzo, .confronto, .giornata li, .dotazione > div, .profilo, .faq details, .dove-scheda, .finale-interno > *')
+      var discreti = $$('.testa-sezione, .negozio-testo, .accoglie, .prezzo, .confronto, .giornata li, .dotazione > div, .pc, .faq details, .dove-scheda, .finale-interno > *')
         .filter(sottoLaPiega);
       if (discreti.length) {
         gsap.set(discreti, { opacity: 0, y: 12 });

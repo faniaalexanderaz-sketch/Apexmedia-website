@@ -99,7 +99,7 @@
       <source media="(max-width: 760px)" srcset="/img/foto/spazio-verticale-480.webp 480w, /img/foto/spazio-verticale-828.webp 828w" sizes="100vw">
       <img src="/img/foto/spazio-1344.webp" srcset="/img/foto/spazio-768.webp 768w, /img/foto/spazio-1344.webp 1344w" sizes="100vw"
            width="1344" height="752" fetchpriority="high" decoding="async"
-           alt="Scrivanie in legno divise da pannelli trasparenti in un negozio luminoso trasformato in coworking">
+           alt="Scrivanie in legno divise da pannelli trasparenti in uno spazio luminoso e ordinato">
     </picture>
     <div class="apertura-velo" aria-hidden="true"></div>
 
@@ -173,9 +173,9 @@
   <section class="sezione negozio" id="negozio" aria-labelledby="negozio-titolo">
     <div class="contenitore negozio-griglia">
       <div class="negozio-testo">
-        <p class="occhiello">Il negozio</p>
-        <h2 id="negozio-titolo" class="titolo-sezione">Il coworking di Alessandria <em>dentro un negozio vero.</em></h2>
-        <p class="negozio-paragrafo">Dal <span data-cfg="azienda.dal">1983</span> vendiamo e ripariamo macchine per l’ufficio. Oggi il negozio di corso Lamarmora è anche il tuo ufficio: <span data-cfg="postazioni">6</span> postazioni, stampante professionale, assistenza a due passi.</p>
+        <p class="occhiello">Chi siamo</p>
+        <h2 id="negozio-titolo" class="titolo-sezione">Uno spazio di lavoro professionale <em>nel centro di Alessandria.</em></h2>
+        <p class="negozio-paragrafo">Dal <span data-cfg="azienda.dal">1983</span> Bagnarino attrezza e assiste gli uffici di Alessandria. Oggi apre la sua sede di corso Lamarmora a chi cerca un posto serio dove lavorare: <span data-cfg="postazioni">6</span> postazioni, stampa professionale e assistenza tecnica in sede.</p>
         <dl class="fatti">
           <div><dt>In centro dal</dt><dd data-cfg="azienda.dal">1983</dd></div>
           <div><dt>Al giorno, tutto incluso</dt><dd data-prezzo="giornata">€25</dd></div>
@@ -374,39 +374,61 @@
 
   <!-- ============ PER CHI È ============ -->
   <section class="sezione perchi-sezione" id="per-chi" aria-labelledby="perchi-titolo">
-    <div class="contenitore perchi-griglia">
+    <div class="contenitore">
       <div class="perchi-testa">
         <p class="occhiello">Per chi è</p>
-        <h2 id="perchi-titolo" class="titolo-sezione">Coworking per freelance, <em>smart worker e studenti.</em></h2>
+        <h2 id="perchi-titolo" class="titolo-sezione">Quattro modi di lavorare, <em>un solo indirizzo.</em></h2>
+        <p class="perchi-sotto">Scegli il profilo più vicino a te: ti portiamo dritto alla formula giusta.</p>
       </div>
-      <ul class="profili">
-        <li class="profilo">
-          <div>
-            <h3>Freelance e professionisti</h3>
-            <p>La tua scrivania sempre pronta, le tue cose nella cassettiera, fattura intestata.</p>
-            <a class="profilo-link" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-freelance"><span>Postazione fissa, <span data-prezzo="mese_fisso">€320</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          </div>
+      <ul class="pc-griglia">
+        <li class="pc pc-chiara">
+          <a class="pc-corpo" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-freelance" data-tilt>
+            <span class="pc-luce" aria-hidden="true"></span>
+            <span class="pc-testa"><span class="pc-num">01</span><span class="pc-tag">Freelance e professionisti</span><span class="pc-ico" aria-hidden="true"><svg class="ico"><use href="#i-laptop"/></svg></span></span>
+            <span class="pc-titolo">La tua scrivania, <em>sempre quella.</em></span>
+            <span class="pc-testo">Le tue cose nella cassettiera, la postazione pronta ogni mattina, fattura intestata.</span>
+            <span class="pc-piede">
+              <span class="pc-offerta"><span class="pc-etichetta">Postazione fissa</span><span class="pc-prezzo"><span data-prezzo="mese_fisso">€320</span></span><span class="pc-unita">al mese</span></span>
+              <span class="pc-vai" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span>
+            </span>
+          </a>
         </li>
-        <li class="profilo">
-          <div>
-            <h3>Smart working</h3>
-            <p>Esci di casa, separa il lavoro dal resto. Wi-fi stabile, in centro, circa €13 al giorno.</p>
-            <a class="profilo-link" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-remoto"><span>Mese flessibile, <span data-prezzo="mese_flessibile">€270</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          </div>
+        <li class="pc pc-scura">
+          <a class="pc-corpo" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-remoto" data-tilt>
+            <span class="pc-luce" aria-hidden="true"></span>
+            <span class="pc-testa"><span class="pc-num">02</span><span class="pc-tag">Smart working</span><span class="pc-ico" aria-hidden="true"><svg class="ico"><use href="#i-house"/></svg></span></span>
+            <span class="pc-titolo">Esci di casa, <em>entra in ufficio.</em></span>
+            <span class="pc-testo">Separa il lavoro dal resto. Wi-fi in fibra, in pieno centro, circa €13 al giorno.</span>
+            <span class="pc-piede">
+              <span class="pc-offerta"><span class="pc-etichetta">Mese flessibile</span><span class="pc-prezzo"><span data-prezzo="mese_flessibile">€270</span></span><span class="pc-unita">al mese</span></span>
+              <span class="pc-vai" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span>
+            </span>
+            <span class="pc-bollino">La più conveniente</span>
+          </a>
         </li>
-        <li class="profilo">
-          <div>
-            <h3>Studenti e praticanti</h3>
-            <p>Silenzio per la sessione o l’esame di Stato. Con il carnet, €20 al giorno.</p>
-            <a class="profilo-link" href="/prenota?pacchetto=carnet" data-pos="perchi-studenti"><span>Carnet 10 ingressi, <span data-prezzo="carnet">€200</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          </div>
+        <li class="pc pc-ocra">
+          <a class="pc-corpo" href="/prenota?pacchetto=carnet" data-pos="perchi-studenti" data-tilt>
+            <span class="pc-luce" aria-hidden="true"></span>
+            <span class="pc-testa"><span class="pc-num">03</span><span class="pc-tag">Studenti e praticanti</span><span class="pc-ico" aria-hidden="true"><svg class="ico"><use href="#i-keyboard"/></svg></span></span>
+            <span class="pc-titolo">Silenzio per <em>la sessione.</em></span>
+            <span class="pc-testo">Esami, tesi o esame di Stato: un posto tranquillo, a €20 al giorno.</span>
+            <span class="pc-piede">
+              <span class="pc-offerta"><span class="pc-etichetta">Carnet 10 ingressi</span><span class="pc-prezzo"><span data-prezzo="carnet">€200</span></span><span class="pc-unita">10 giornate</span></span>
+              <span class="pc-vai" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span>
+            </span>
+          </a>
         </li>
-        <li class="profilo">
-          <div>
-            <h3>Piccoli team</h3>
-            <p>Scrivanie vicine per lavorare insieme, senza contratto d’affitto.</p>
-            <a class="profilo-link" data-wa="generico" data-pos="perchi-team" href="https://wa.me/393472249457"><span>Chiedici le postazioni vicine</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          </div>
+        <li class="pc pc-chiara">
+          <a class="pc-corpo" data-wa="generico" href="https://wa.me/393472249457" data-pos="perchi-team" data-tilt>
+            <span class="pc-luce" aria-hidden="true"></span>
+            <span class="pc-testa"><span class="pc-num">04</span><span class="pc-tag">Piccoli team</span><span class="pc-ico" aria-hidden="true"><svg class="ico"><use href="#i-message-circle"/></svg></span></span>
+            <span class="pc-titolo">Lavorate <em>fianco a fianco.</em></span>
+            <span class="pc-testo">Scrivanie vicine per due o tre persone, senza contratto d’affitto.</span>
+            <span class="pc-piede">
+              <span class="pc-offerta"><span class="pc-etichetta">Su misura</span><span class="pc-prezzo">Chiedici</span><span class="pc-unita">su WhatsApp</span></span>
+              <span class="pc-vai" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span>
+            </span>
+          </a>
         </li>
       </ul>
     </div>
