@@ -10,7 +10,8 @@
    (testate azzurre, testi sbiaditi); quelle già scure restano come le abbiamo disegnate. */
 const NOTTE = '#141C26', CARD = '#1C2633', RIGA = '#2C3A4B', OCRA = '#B98A45', OCRA_VIVO = '#CFA160',
   TESTO = '#F3EEE6', MORBIDO = '#AEB7C2', INK = '#F3EEE6', CARTA = NOTTE, GRIGIO = MORBIDO, LINEA = RIGA;
-const FONT = "'Plus Jakarta Sans',-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+const FONT = "'Hanken Grotesk',-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+const MONO = "'IBM Plex Mono',Menlo,Consolas,monospace";
 const SERIF = "Fraunces,'Iowan Old Style',Georgia,'Times New Roman',serif";
 
 function h(t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -34,9 +35,9 @@ function bottone(href, testo, secondario) {
     ? 'background:transparent;border:1.5px solid #55657A;color:' + TESTO
     : 'background:' + OCRA + ';border:1.5px solid ' + OCRA + ';color:' + NOTTE;
   return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 10px"><tr>' +
-    '<td ' + (secondario ? '' : 'bgcolor="' + OCRA + '" ') + 'style="border-radius:10px;mso-padding-alt:14px 26px">' +
+    '<td ' + (secondario ? '' : 'bgcolor="' + OCRA + '" ') + 'style="border-radius:4px;mso-padding-alt:14px 26px">' +
     '<a href="' + h(href) + '" target="_blank" style="display:block;padding:14px 26px;font:700 16px ' + FONT + ';' + stile +
-    ';text-decoration:none;border-radius:10px">' + h(testo) + '</a></td></tr></table>';
+    ';text-decoration:none;border-radius:4px">' + h(testo) + '</a></td></tr></table>';
 }
 function righe(coppie) {
   return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ' + RIGA + '">' +
@@ -53,7 +54,8 @@ function layout({ titolo, anteprima, corpo, sito, cfg, foto }) {
     /* Apple Mail e iOS usano i caratteri del sito; gli altri ripiegano su Georgia e sul carattere di sistema */
     '<style>@font-face{font-family:Fraunces;src:url(' + h(sito) + '/fonts/fraunces-latin-standard-normal.woff2) format("woff2");font-weight:100 900}' +
     '@font-face{font-family:Fraunces;src:url(' + h(sito) + '/fonts/fraunces-latin-standard-italic.woff2) format("woff2");font-weight:100 900;font-style:italic}' +
-    '@font-face{font-family:"Plus Jakarta Sans";src:url(' + h(sito) + '/fonts/plus-jakarta-sans-latin-wght-normal.woff2) format("woff2");font-weight:200 800}' +
+    '@font-face{font-family:"Hanken Grotesk";src:url(' + h(sito) + '/fonts/hanken-grotesk-latin-wght-normal.woff2) format("woff2");font-weight:100 900}' +
+    '@font-face{font-family:"IBM Plex Mono";src:url(' + h(sito) + '/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500}' +
     ':root{color-scheme:dark}a{color:' + OCRA_VIVO + '}</style></head>' +
     '<body style="margin:0;padding:0;background:' + NOTTE + '">' +
     '<div style="display:none;max-height:0;overflow:hidden;opacity:0">' + h(anteprima || '') + '</div>' +
@@ -63,9 +65,9 @@ function layout({ titolo, anteprima, corpo, sito, cfg, foto }) {
       '<tr><td style="padding:0 4px 20px">' +
         '<img src="' + h(sito) + '/img/email-logo.png" width="170" height="48" alt="Bagnarino Coworking · dal 1983" style="display:block;border:0;width:170px;height:auto;font:600 20px ' + SERIF + ';color:' + TESTO + '">' +
       '</td></tr>' +
-      '<tr><td bgcolor="' + CARD + '" style="background:' + CARD + ';border-radius:18px;border:1px solid ' + RIGA + ';overflow:hidden">' +
+      '<tr><td bgcolor="' + CARD + '" style="background:' + CARD + ';border-radius:8px;border:1px solid ' + RIGA + ';overflow:hidden">' +
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' +
-        (foto ? '<tr><td style="padding:0;line-height:0;font-size:0"><img src="' + h(sito) + '/img/email-testata.jpg" width="560" alt="" style="display:block;width:100%;height:auto;border:0;border-radius:18px 18px 0 0"></td></tr>' : '') +
+        (foto ? '<tr><td style="padding:0;line-height:0;font-size:0"><img src="' + h(sito) + '/img/email-testata.jpg" width="560" alt="" style="display:block;width:100%;height:auto;border:0;border-radius:8px 8px 0 0"></td></tr>' : '') +
         '<tr><td style="height:3px;line-height:3px;font-size:0;background:' + OCRA + '" bgcolor="' + OCRA + '">&nbsp;</td></tr>' +
         '<tr><td style="padding:30px 30px 14px;font:16px/1.6 ' + FONT + ';color:' + TESTO + '">' + corpo + '</td></tr>' +
         '</table>' +
@@ -87,8 +89,8 @@ function titoloH(t) { return '<h1 style="margin:0 0 12px;font:500 30px/1.15 ' + 
 function paragrafo(t, html) { return '<p style="margin:0 0 16px;font:16px/1.6 ' + FONT + ';color:' + MORBIDO + '">' + (html ? t : h(t)) + '</p>'; }
 function codiceBox(c) {
   return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 22px"><tr>' +
-    '<td style="border:1.5px dashed ' + OCRA + ';border-radius:12px;padding:14px 22px;font:700 11px ' + FONT + ';color:' + MORBIDO + ';letter-spacing:2px">' +
-    'CODICE PRENOTAZIONE<br><span style="font:500 30px ' + SERIF + ';color:' + OCRA_VIVO + ';letter-spacing:4px">' + h(c) + '</span></td></tr></table>';
+    '<td style="border:1px dashed ' + OCRA + ';border-radius:4px;padding:14px 22px;font:500 11px ' + MONO + ';color:' + MORBIDO + ';letter-spacing:2px">' +
+    'CODICE PRENOTAZIONE<br><span style="font:500 28px ' + MONO + ';color:' + OCRA_VIVO + ';letter-spacing:4px">' + h(c) + '</span></td></tr></table>';
 }
 
 /* ---------- al cliente ---------- */
