@@ -476,7 +476,7 @@
       description: 'Coworking nel centro di Alessandria: postazioni a giornata, carnet e mensili con wi-fi in fibra e stampante incluse. Da ' + euro(C.listino[0].prezzo) + ' al giorno.',
       areaServed: { '@type': 'City', name: C.azienda.citta },
       url: base + '/',
-      logo: base + '/img/logo.svg',
+      logo: base + '/img/logo-quadrato.png',
       image: base + '/img/og-bagnarino-coworking.jpg',
       telephone: C.contatti.cellulare,
       email: C.azienda.email,

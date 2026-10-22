@@ -19,7 +19,7 @@ process.env.APEX_PASSWORD = process.env.APEX_PASSWORD || 'apex-prova';
 process.env.CRON_SECRET = process.env.CRON_SECRET || 'locale';
 
 const TIPI = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript', '.svg': 'image/svg+xml',
-  '.png': 'image/png', '.woff2': 'font/woff2', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.xml': 'application/xml', '.txt': 'text/plain' };
+  '.png': 'image/png', '.woff2': 'font/woff2', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.xml': 'application/xml', '.txt': 'text/plain', '.ico': 'image/x-icon', '.webp': 'image/webp', '.jpg': 'image/jpeg' };
 
 (async () => {
   const pg = new PGlite();
