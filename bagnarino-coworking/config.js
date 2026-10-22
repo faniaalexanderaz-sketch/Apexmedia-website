@@ -156,6 +156,20 @@ var BGN_CONFIG = {
     ]
   },
 
+  /* Abbonati mensili: niente timbri, ma i premi della card subito,
+     ogni mese. Li consegna Marcella in sede.
+     [DA CONFERMARE] con Marcella quantità e sconto sul rinnovo. */
+  vantaggiMese: {
+    titolo: 'Con il mese, i premi li hai subito',
+    breve: 'Ogni mese: stampe a colori, un amico gratis, −10% in negozio',
+    voci: [
+      { titolo: '100 stampe a colori', testo: 'Ogni mese, per i tuoi lavori.' },
+      { titolo: 'Un amico gratis', testo: 'Ogni mese porti chi vuoi per una giornata.' },
+      { titolo: '−10% in negozio', testo: 'Su carta, cartucce e accessori, per tutto il mese.' },
+      { titolo: 'Rinnovi, risparmi', testo: 'Dal quarto mese di fila, €20 in meno al mese.' }
+    ]
+  },
+
   /* Servizi non ancora confermati: restano nascosti finché sono false */
   servizi: {
     caffe: false,         /* [DA CONFERMARE] caffè/acqua a disposizione */

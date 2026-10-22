@@ -232,6 +232,13 @@
   window.BGN.premiScala = premiScala;
   var scalaHome = $('[data-premi]');
   if (scalaHome && C.fidelity && C.fidelity.premi) scalaHome.innerHTML = premiScala();
+  var mese = $('[data-vantaggi-mese]');
+  if (mese && C.vantaggiMese) {
+    $('[data-vm-titolo]', mese).textContent = C.vantaggiMese.titolo;
+    $('[data-vm-voci]', mese).innerHTML = C.vantaggiMese.voci.map(function (v) {
+      return '<li><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg><div><strong>' + v.titolo + '</strong><span>' + v.testo + '</span></div></li>';
+    }).join('');
+  }
 
   /* ---------- listino (home): card generate da config.js ---------- */
   var listino = $('[data-listino]');
@@ -249,6 +256,7 @@
         '<ul class="prezzo-include">' + p.include.map(function (x) {
           return '<li><span class="prezzo-spunta"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>' + x + '</li>';
         }).join('') + '</ul>' +
+        (p.id.indexOf('mese') === 0 && C.vantaggiMese ? '<a class="prezzo-regalo" href="#card"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg><span>' + C.vantaggiMese.breve + '</span></a>' : '') +
         '<a class="btn btn-largo ' + (p.evidenza ? 'btn-ocra btn-prezzo-top' : 'btn-prezzo') + '" href="/prenota?pacchetto=' + p.id + '" data-pos="prezzi-' + p.id + '">' + p.cta +
         '<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>' +
         '</article>';

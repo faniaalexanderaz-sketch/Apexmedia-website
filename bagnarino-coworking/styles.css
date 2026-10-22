@@ -1226,3 +1226,23 @@ body.menu-aperto { overflow: hidden; }
   background: var(--avorio) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237D5A22' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='4' rx='1'/%3E%3Cpath d='M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5'/%3E%3C/svg%3E") center / 12px no-repeat;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 }
+
+/* --- abbonati mensili: premi subito --- */
+.vantaggi-mese { max-width: 520px; margin: 0 0 2rem; padding: 20px; border-radius: 14px; background: var(--avorio); color: var(--inchiostro); }
+.vm-occhiello { margin: 0 0 4px !important; font-size: .78rem !important; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ocra-testo) !important; }
+.vantaggi-mese h3 { margin: 0 0 14px; font: 500 1.35rem/1.2 var(--f-display); }
+.vantaggi-mese ul { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 12px; }
+.vantaggi-mese li { display: flex; gap: 12px; align-items: flex-start; }
+.vantaggi-mese li .ico { flex-shrink: 0; width: 20px; height: 20px; margin-top: 2px; color: var(--ocra-testo); }
+.vantaggi-mese li div { display: grid; gap: 1px; }
+.vantaggi-mese li span { font-size: .92rem; color: var(--inchiostro-morbido); }
+.vantaggi-mese .link-forte { color: var(--inchiostro); }
+@media (min-width: 700px) { .vantaggi-mese ul { grid-template-columns: 1fr 1fr; } }
+/* riga regalo nelle card prezzi dei mesi */
+.prezzo-regalo {
+  display: flex; gap: 10px; align-items: flex-start; margin: -8px 0 22px; padding: 10px 12px; border-radius: 10px;
+  background: var(--ocra-chiaro); color: var(--ocra-testo); font-size: .9rem; font-weight: 600; line-height: 1.35; text-decoration: none;
+}
+.prezzo-regalo:hover { text-decoration: underline; }
+.prezzo-regalo .ico { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; }
+.prezzo-evidenza .prezzo-regalo { background: var(--bianco); }
