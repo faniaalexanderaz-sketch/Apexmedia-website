@@ -33,12 +33,12 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=0216a6e3">
+  <link rel="stylesheet" href="/styles.css?v=24bda41f">
 
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=58fb0b7c" defer></script>
+  <script src="/main.js?v=2764bfa5" defer></script>
   <script src="/animazioni.js?v=e3afc6b5" defer></script>
 </head>
 <body class="home" data-schema-attivita>
@@ -48,6 +48,9 @@
 <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
 <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
 <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-banconota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
+<symbol id="i-calendar-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m14 14-4 4"/><path d="m10 14 4 4"/></symbol>
+<symbol id="i-fattura" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
 <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5"/><rect x="3" y="7" width="18" height="4" rx="1"/></symbol>
 <symbol id="i-house" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
 <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
@@ -257,17 +260,17 @@
       <!-- le colonne si generano da config.js (listino); questo è il contenuto
            di partenza per chi non esegue JavaScript -->
       <div class="prezzi" data-listino>
-        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Giornata</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">25</span><span class="prezzo-unita">al giorno</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=giornata">Prenota la giornata</a></article>
-        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Carnet 10 ingressi</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">200</span><span class="prezzo-unita">10 giornate</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=carnet">Prenota il carnet</a></article>
-        <article class="prezzo prezzo-evidenza"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese flessibile</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">270</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-pieno btn-prezzo-top" href="/prenota?pacchetto=mese_flessibile">Prenota il mese</a></article>
-        <article class="prezzo"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese, postazione fissa</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">320</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=mese_fisso">Prenota la fissa</a></article>
+        <article class="prezzo prezzo-giornata"><div class="prezzo-testa"><h3 class="prezzo-nome">Giornata</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">25</span><span class="prezzo-unita">al giorno</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=giornata">Prenota la giornata</a></article>
+        <article class="prezzo prezzo-carnet"><div class="prezzo-testa"><h3 class="prezzo-nome">Carnet 10 ingressi</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">200</span><span class="prezzo-unita">10 giornate</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=carnet">Prenota il carnet</a></article>
+        <article class="prezzo prezzo-mese_flessibile prezzo-evidenza"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese flessibile</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">270</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-pieno btn-prezzo-top" href="/prenota?pacchetto=mese_flessibile">Prenota il mese</a></article>
+        <article class="prezzo prezzo-mese_fisso"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese, postazione fissa</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">320</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=mese_fisso">Prenota la fissa</a></article>
       </div>
 
       <ul class="prezzi-garanzie">
-        <li><strong>Paghi quando arrivi</strong><span>In contanti o con carta, il primo giorno. Niente anticipi online.</span></li>
-        <li><strong>Disdici gratis</strong><span>Fino alle <span data-cfg="disdetta.ora">20:00</span> del giorno prima, dal link nell’email.</span></li>
-        <li><strong>Fattura</strong><span>Intestata a partita IVA o codice fiscale, se la chiedi quando prenoti.</span></li>
-        <li><strong>Bagnarino Card gratis</strong><span><a href="#card">Un premio al 3°, 5°, 7° e 10° timbro</a>. Con il mese, i premi subito.</span></li>
+        <li><span class="garanzia-icona"><svg class="ico" aria-hidden="true"><use href="#i-banconota"/></svg></span><strong>Paghi in sede</strong><span>Contanti o carta, il primo giorno</span></li>
+        <li><span class="garanzia-icona"><svg class="ico" aria-hidden="true"><use href="#i-calendar-x"/></svg></span><strong>Disdici gratis</strong><span>Fino alle <span data-cfg="disdetta.ora">20:00</span> del giorno prima</span></li>
+        <li><span class="garanzia-icona"><svg class="ico" aria-hidden="true"><use href="#i-fattura"/></svg></span><strong>Fattura</strong><span>A partita IVA o codice fiscale</span></li>
+        <li><a href="#card"><span class="garanzia-icona"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg></span><strong>Card gratis</strong><span>Un premio ogni pochi timbri</span></a></li>
       </ul>
       <p class="sala-nota" data-cfg-attivo="sala.attiva" hidden>
         Vi serve una sala per una riunione? <a data-wa="generico" data-pos="prezzi-sala" href="https://wa.me/393472249457">Chiedici la disponibilità della sala riunioni</a>.

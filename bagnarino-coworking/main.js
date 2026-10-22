@@ -245,7 +245,7 @@
   if (listino) {
     listino.innerHTML = C.listino.map(function (p) {
       var cifra = euro(p.prezzo).replace('€', '');
-      return '<article class="prezzo' + (p.evidenza ? ' prezzo-evidenza' : '') + '" data-card-prezzo>' +
+      return '<article class="prezzo prezzo-' + p.id + (p.evidenza ? ' prezzo-evidenza' : '') + '" data-card-prezzo>' +
         '<div class="prezzo-testa"><h3 class="prezzo-nome">' + p.nome + '</h3>' +
         (p.etichetta ? '<p class="prezzo-etichetta">' + p.etichetta + '</p>' : '') + '</div>' +
         (p.perChi ? '<p class="prezzo-perchi">' + p.perChi + '</p>' : '') +
