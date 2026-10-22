@@ -1,6 +1,6 @@
 # Bagnarino Coworking — redesign premium (prompt per una nuova chat)
 
-Sei l'AI operativa di Apex Media. Lavori nel repository `faniaalexanderaz-sketch/apexmedia-website`, cartella `bagnarino-coworking/`. Sviluppa sul branch che ti viene assegnato; `main` è collegato a Vercel e si aggiorna solo con merge esplicito su mia richiesta.
+Sei l'AI operativa di Apex Media. Lavori nel repository `faniaalexanderaz-sketch/apexmedia-website`, cartella `bagnarino-coworking/`. Sviluppa sul branch che ti viene assegnato, ma **il risultato deve finire su `main`**: `main` è collegato a Vercel ed è il sito online. Quando hai finito tutto il lavoro, con i test verdi, fai il merge su `main` (fast-forward o merge pulito) e pushalo, senza aspettare che te lo chieda. Se mi fermo a metà e ti dico di pubblicare, fai lo stesso con quello che è pronto.
 
 ## Il progetto in breve
 
@@ -49,6 +49,7 @@ Una **trasformazione grossa di UI e di esperienza**: il sito oggi è pulito ma s
 5. **Prestazioni:** niente librerie pesanti nuove, niente web font esterni (usa `fonts/` o aggiungi file woff2 locali), immagini in webp con srcset, LCP sotto i 2,5 s su 4G.
 6. **Accessibilità:** contrasto AA, focus visibile, HTML semantico, tocchi da 44 px.
 7. L'**area riservata** non va ridisegnata in questo giro: solo coerenza di colori/caratteri se cambi il sistema.
+8. **Tutto deve arrivare su `main`.** Un lavoro lasciato solo sul branch per me non esiste: non è online e non lo vede nessuno.
 
 ### Come lavorare
 1. Prima leggi `index.html`, `styles.css`, `main.js`, `animazioni.js`, `config.js`, `prenota.html` e guarda il sito vero: avvia `npm run locale` e fai screenshot con Playwright (Chromium è già installato) a 390 px e 1440 px.
@@ -56,6 +57,7 @@ Una **trasformazione grossa di UI e di esperienza**: il sito oggi è pulito ma s
 3. Procedi per sezioni, dalla più importante per la conversione: apertura + posti liberi → prezzi → lo spazio/foto → card → resto. Dopo ogni blocco, screenshot mobile e desktop e un messaggio breve con cosa hai cambiato e cosa viene dopo.
 4. Applica lo stesso sistema anche a `prenota.html`, `prenotazione.html`, `card.html`, `404.html`, `privacy.html`, `cookie.html` e alle email (`api/_email-template.js`), così il brand è uno solo dall'inizio alla fine.
 5. Alla fine aggiorna `README.md` (lista foto da scattare con inquadrature precise per il nuovo layout) e, se cambia qualcosa che Marcella vede, il documento in `../bagnarino/`.
-6. Commit piccoli con messaggi in italiano semplice (come i precedenti nel log). Push sul branch. **Non fare merge su `main` senza che te lo chieda.**
+6. Commit piccoli con messaggi in italiano semplice (come i precedenti nel log). Push sul branch dopo ogni blocco.
+7. **Alla fine, merge su `main` e push**, poi dimmi in due righe cosa è andato online. Prima del merge: `npm test` verde, `python3 strumenti/versiona.py` eseguito, screenshot finali mobile e desktop controllati. Se il merge non è pulito, risolvi i conflitti tu e ripeti i test: non lasciarmi il branch da unire a mano.
 
 Criterio con cui giudicherò il risultato: lo mostro a Marcella e a un cliente freelance di Alessandria, e tutti e due devono dire "questo è un posto serio, prenoto". Se una cosa è bella ma non aiuta a prenotare, toglila.
