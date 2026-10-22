@@ -781,6 +781,32 @@ a{color:inherit;text-decoration:none}
 .get4 .ic{width:6mm;height:6mm;color:var(--violet);display:block;margin:0 auto 1.2mm}
 .get4 b{display:block;font-size:9pt;color:var(--ink)}
 .get4 span{display:block;font-size:7pt;color:var(--muted);margin-top:.3mm}
+.flow4{display:grid;grid-template-columns:repeat(4,1fr);gap:2.4mm}
+.flow4 > div{position:relative;background:#fff;border:.3mm solid var(--line);border-radius:2.8mm;padding:3mm 3mm 2.8mm}
+.flow4 .fn{position:absolute;right:2.6mm;top:2.4mm;font-size:13pt;font-weight:800;color:#E4DEF7}
+.flow4 .ic{width:5.4mm;height:5.4mm;color:var(--violet);display:block;margin-bottom:1.4mm}
+.flow4 b{display:block;font-size:8.6pt;color:var(--ink)}
+.flow4 span:last-child{display:block;font-size:7.1pt;line-height:1.4;color:var(--body);margin-top:.4mm}
+.feat2{display:grid;grid-template-columns:1.05fr 1fr;gap:5mm;align-items:center;margin-top:4.6mm}
+.feat2.rev{grid-template-columns:1fr .8fr}
+.ftx .tg2{display:inline-flex;align-items:center;gap:1.4mm;font-size:6.6pt;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);background:var(--lilac-2);border-radius:99px;padding:.8mm 2.6mm}
+.ftx .tg2 .ic{width:3.4mm;height:3.4mm}
+.ftx h3{font-size:12pt;line-height:1.25;margin:1.8mm 0 1.6mm}
+.ck2{list-style:none;display:grid;gap:1.2mm}
+.ck2 li{position:relative;padding-left:4.2mm;font-size:8.3pt;line-height:1.45;color:var(--body)}
+.ck2 li::before{content:"✓";position:absolute;left:0;top:0;color:var(--green);font-weight:800}
+.sm2{font-size:7pt;color:var(--muted);margin-top:1.6mm;font-style:italic}
+.steps3{display:grid;gap:1.2mm;margin-bottom:2mm}
+.steps3 div{display:flex;align-items:center;gap:2mm;font-size:8.3pt;font-weight:600;color:var(--ink);background:var(--lilac);border:.3mm solid var(--line);border-radius:2.2mm;padding:1.6mm 2.4mm}
+.steps3 span{display:grid;place-items:center;width:5mm;height:5mm;border-radius:50%;background:var(--violet);color:#fff;font-size:7pt;font-weight:800;flex:none}
+.fcol2 .fcard{padding:4.4mm 4.6mm}
+.fcol2 .ft1{font-size:10pt}
+.msgs{display:grid;gap:2mm;background:#ECE5DD;border-radius:3.2mm;padding:3.4mm}
+.ms{font-size:7.6pt;line-height:1.45;color:#1F2C33;border-radius:2.4mm;padding:2.2mm 2.8mm;max-width:92%}
+.ms b{display:block;font-size:6.8pt;color:#128C7E;margin-bottom:.4mm}
+.ms.in{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.ms.note{background:var(--ink);color:#fff;font-weight:700;display:flex;align-items:center;gap:1.6mm;justify-self:end;font-size:7.2pt}
+.ms.note .ic{width:3.6mm;height:3.6mm;color:var(--gold)}
 </style>
 </head>
 <body>
@@ -875,7 +901,7 @@ a{color:inherit;text-decoration:none}
 </svg><b>Numeri chiari</b><span>un report ogni mese</span></div>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">1 / 4</span></div>
+  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">1 / 5</span></div>
 </section>
 
 
@@ -932,7 +958,7 @@ a{color:inherit;text-decoration:none}
 </svg></span><div class="tg">Obiettivo 3</div><h3>Più tavoli pieni in settimana</h3><p>Prenotazione del tavolo online e promozioni mirate nelle sere più tranquille, dal martedì al giovedì.</p></div>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">2 / 4</span></div>
+  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">2 / 5</span></div>
 </section>
 
 <!-- ================= PAGINA 3 ================= -->
@@ -1047,7 +1073,63 @@ a{color:inherit;text-decoration:none}
     </div>
     <p class="note4">Deliveroo può restare attivo per farsi scoprire da nuovi clienti: l'obiettivo è portare i clienti abituali a ordinare direttamente da voi.</p>
 
-    <div class="mock2" style="margin-top:4mm">
+    <div class="st" style="margin-top:4.4mm">Come ordina un cliente, in 4 tocchi</div>
+    <div class="flow4">
+      <div><span class="fn">1</span><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <rect width="5" height="5" x="3" y="3" rx="1" />
+  <rect width="5" height="5" x="16" y="3" rx="1" />
+  <rect width="5" height="5" x="3" y="16" rx="1" />
+  <path d="M21 16h-3a2 2 0 0 0-2 2v3" />
+  <path d="M21 21v.01" />
+  <path d="M12 7v3a2 2 0 0 1-2 2H7" />
+  <path d="M3 12h.01" />
+  <path d="M12 3h.01" />
+  <path d="M12 16v.01" />
+  <path d="M16 12h1" />
+  <path d="M21 12v.01" />
+  <path d="M12 21v-1" />
+</svg><b>Apre la web app</b><span>dal link sui social, da Google o dal QR sul cartone della pizza</span></div>
+      <div><span class="fn">2</span><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="m12 14-1 1" />
+  <path d="m13.75 18.25-1.25 1.42" />
+  <path d="M17.775 5.654a15.68 15.68 0 0 0-12.121 12.12" />
+  <path d="M18.8 9.3a1 1 0 0 0 2.1 7.7" />
+  <path d="M21.964 20.732a1 1 0 0 1-1.232 1.232l-18-5a1 1 0 0 1-.695-1.232A19.68 19.68 0 0 1 15.732 2.037a1 1 0 0 1 1.232.695z" />
+</svg><b>Sceglie le pizze</b><span>dal menu con foto e prezzi sempre aggiornati</span></div>
+      <div><span class="fn">3</span><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <line x1="10" x2="14" y1="2" y2="2" />
+  <line x1="12" x2="15" y1="14" y2="11" />
+  <circle cx="12" cy="14" r="8" />
+</svg><b>Sceglie l'orario</b><span>ritiro in pizzeria o consegna a casa</span></div>
+      <div><span class="fn">4</span><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+  <path d="M4 2C2.8 3.7 2 5.7 2 8" />
+  <path d="M22 8c0-2.3-.8-4.3-2-6" />
+</svg><b>Riceve la conferma</b><span>e a voi arriva subito l'ordine, chiaro e completo</span></div>
+    </div>
+
+    <div class="keyb" style="margin-top:5mm">
+      <span class="kq">“</span>
+      <div><b>Un'app vostra significa clienti vostri.</b><span>Ogni ordine diretto vi lascia un contatto: la prossima volta potete essere voi a chiamare il cliente, con una promozione o un premio.</span></div>
+    </div>
+  </div>
+  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">3 / 5</span></div>
+</section>
+
+<!-- ================= PAGINA 4 · DENTRO LA WEB APP ================= -->
+<section class="page" id="p4">
+  <div class="hd">
+    <div class="logo"><div class="tile"></div><div><div class="w">APEX MEDIA</div><div class="s">Performance Marketing Agency</div></div></div>
+    <div class="r">04 — Dentro la web app</div>
+  </div>
+  <div class="body">
+    <div class="eb">04 — Dentro la web app</div>
+    <h2 class="t">Voi vedete tutto. I clienti tornano.</h2>
+    <div class="bar"></div>
+    <p class="lead">Dietro la web app ci sono tre strumenti che lavorano per voi ogni sera: <b>l'area riservata</b>, <b>la fidelity card</b> e <b>gli avvisi automatici</b>. Ecco cosa fanno, in parole semplici.</p>
+
+    <div class="feat2">
       <div class="dash">
         <div class="dbar"><span></span><span></span><span></span><em>Area riservata · Pizzeria Da Rò</em></div>
         <div class="dbody">
@@ -1067,7 +1149,44 @@ a{color:inherit;text-decoration:none}
           </div>
         </div>
       </div>
-      <div class="fcol">
+      <div class="ftx">
+        <div class="tg2"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <rect width="7" height="9" x="3" y="3" rx="1" />
+  <rect width="7" height="5" x="14" y="3" rx="1" />
+  <rect width="7" height="9" x="14" y="12" rx="1" />
+  <rect width="7" height="5" x="3" y="16" rx="1" />
+</svg> Area riservata</div>
+        <h3>La pizzeria sotto controllo, dal telefono</h3>
+        <ul class="ck2">
+          <li><b>Ordini in tempo reale:</b> chi ha ordinato, cosa e per che ora.</li>
+          <li><b>Incassi</b> della serata e del mese, senza fare conti a mano.</li>
+          <li><b>Clienti abituali:</b> chi torna spesso e chi non ordina da un mese.</li>
+          <li><b>Le sere migliori</b> e quelle da riempire, a colpo d'occhio.</li>
+        </ul>
+        <p class="sm2">Si apre da telefono o computer, con una password solo vostra.</p>
+      </div>
+    </div>
+
+    <div class="feat2 rev">
+      <div class="ftx">
+        <div class="tg2"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="8" width="18" height="4" rx="1" />
+  <path d="M12 8v13" />
+  <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" />
+  <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" />
+</svg> Fidelity card</div>
+        <h3>Un motivo in più per scegliere voi</h3>
+        <div class="steps3">
+          <div><span>1</span>Il cliente ordina dalla web app</div>
+          <div><span>2</span>Riceve un timbro sulla sua card</div>
+          <div><span>3</span>Alla decima pizza, una è in omaggio</div>
+        </div>
+        <ul class="ck2">
+          <li><b>Niente cartoncini da perdere:</b> la card vive nel telefono.</li>
+          <li><b>Il premio lo decidete voi:</b> una pizza, la farinata, una bibita.</li>
+        </ul>
+      </div>
+      <div class="fcol2">
         <div class="fcard">
           <div class="ft1"><span>Card Da Rò</span><em><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <rect x="3" y="8" width="18" height="4" rx="1" />
@@ -1084,22 +1203,46 @@ a{color:inherit;text-decoration:none}
 </svg></i></div>
           <div class="ft2">7 su 10 · la prossima pizza è vicina</div>
         </div>
-        <p class="fp"><b>Fidelity card digitale.</b> Ogni ordine è un timbro: chi torna spesso viene premiato, e voi vi tenete i clienti.</p>
-        <div class="cap" style="text-align:left;margin-top:1mm">Esempi illustrativi, i dati sono finti.</div>
+      </div>
+    </div>
+
+    <div class="feat2">
+      <div class="msgs">
+        <div class="ms in"><b>Pizzeria Da Rò</b>Ciao Luca! Il tuo ordine è confermato: 2 pizze pronte alle 20:30. Ti manca 1 timbro per la pizza in omaggio 🍕</div>
+        <div class="ms in"><b>Pizzeria Da Rò</b>Stasera, solo per chi ha la card: farinata in omaggio con 2 pizze. Ordina in un tocco 👉</div>
+        <div class="ms note"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+  <path d="M4 2C2.8 3.7 2 5.7 2 8" />
+  <path d="M22 8c0-2.3-.8-4.3-2-6" />
+</svg> Nuovo ordine · Fam. Rossi · 4 pizze · ritiro 20:45</div>
+      </div>
+      <div class="ftx">
+        <div class="tg2"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+</svg> Avvisi e promozioni</div>
+        <h3>Il messaggio giusto, al momento giusto</h3>
+        <ul class="ck2">
+          <li><b>Il cliente</b> riceve la conferma dell'ordine e sa quando è pronto.</li>
+          <li><b>Voi</b> ricevete ogni ordine subito, chiaro e completo.</li>
+          <li><b>Sera tranquilla?</b> Una promozione ai clienti con la card riempie i tavoli.</li>
+        </ul>
+        <p class="sm2">Esempi illustrativi: testi e dati sono finti.</p>
       </div>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">3 / 4</span></div>
+  <div class="ft"><span>Apex Media · per Pizzeria Da Rò</span><span class="n">4 / 5</span></div>
 </section>
 
-<!-- ================= PAGINA 4 ================= -->
-<section class="page p3" id="p4">
+<!-- ================= PAGINA 5 ================= -->
+<section class="page p3" id="p5">
   <div class="hd">
     <div class="logo"><div class="tile"></div><div><div class="w">APEX MEDIA</div><div class="s">Performance Marketing Agency</div></div></div>
-    <div class="r">04 — Social e preventivo</div>
+    <div class="r">05 — Social e preventivo</div>
   </div>
   <div class="body">
-    <div class="eb">04 — I social e il preventivo</div>
+    <div class="eb">05 — I social e il preventivo</div>
     <h2 class="t">Pubblicare non basta: serve un sistema.</h2>
     <div class="bar"></div>
 
@@ -1198,7 +1341,7 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · 351 594 0685 · studio@infoapex.eu</span><span class="n">4 / 4</span></div>
+  <div class="ft"><span>Apex Media · 351 594 0685 · studio@infoapex.eu</span><span class="n">5 / 5</span></div>
 </section>
 </body>
 </html>

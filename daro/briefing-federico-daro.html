@@ -741,6 +741,14 @@ a{color:inherit;text-decoration:none}
 .never b{color:var(--gold)}
 .pt{display:inline-block;margin-top:1mm;font-size:6.9pt;font-weight:700;color:#B45F14;background:#FDF0E2;border-radius:99px;padding:.4mm 2.2mm}
 .pt::before{content:"→ "}
+.fx{display:grid;grid-template-columns:1fr 1fr;gap:2.6mm;margin-top:4mm}
+.fxi{display:grid;grid-template-columns:7.6mm 1fr;gap:2.4mm;align-items:start;background:var(--lilac);border:.3mm solid var(--line);border-radius:2.8mm;padding:3mm 3.2mm}
+.fxi h3{font-size:9.8pt;margin-bottom:.8mm}
+.fxi p{font-size:7.5pt;line-height:1.45;color:var(--body)}
+.fxi p+p{margin-top:1mm}
+.fxi .say{background:#fff;border-left:1mm solid var(--violet);border-radius:0 1.6mm 1.6mm 0;padding:1.4mm 2.2mm;font-style:italic;color:var(--violet);font-weight:600}
+.fxi .faq{color:var(--muted)}
+.fxi .faq b{color:var(--orange)}
 </style>
 </head>
 <body>
@@ -775,7 +783,7 @@ a{color:inherit;text-decoration:none}
           <span>Google</span><b>4,7 ★ con 138 recensioni</b>
           <span>Punti forti</span><b>Farinata, impasto arioso, pizza in pala e teglia</b>
           <span>Ordini</span><b>Asporto, sala, consegna via Deliveroo</b>
-          <span>Documento</span><b>4 pagine: analisi · perché vi serve · web app · prezzi</b>
+          <span>Documento</span><b>5 pagine: analisi · perché vi serve · web app · dentro la web app · prezzi</b>
           <span>Social</span><b>Facebook “Pizzeria_DaRó” · Instagram @pizzeria_da_ro</b>
         </div>
       </div>
@@ -843,10 +851,71 @@ a{color:inherit;text-decoration:none}
       </ul>
     </div>
   </div>
-  <div class="ft"><span>Apex Media · briefing interno Da Rò</span><span class="n">1 / 2</span></div>
+  <div class="ft"><span>Apex Media · briefing interno Da Rò</span><span class="n">1 / 3</span></div>
 </section>
 
-<!-- ================= PAGINA 2 ================= -->
+<!-- ================= PAGINA 2 · FUNZIONI ================= -->
+<section class="page">
+  <div class="hd">
+    <div class="logo"><div class="tile"></div><div><div class="w">APEX MEDIA</div><div class="s">Performance Marketing Agency</div></div></div>
+    <span class="int">Uso interno · non condividere</span>
+  </div>
+  <div class="body">
+    <div class="eb">Prima dell'incontro: studia questa pagina</div>
+    <h2 class="t">Le funzioni, spiegate a Federico</h2>
+    <div class="bar"></div>
+    <p class="lead">Rossella ti farà domande su cosa c'è “dentro”. Per ogni funzione: <b>cos'è</b>, la <b>frase da dirle</b> e la <b>domanda che può farti</b>. Non serve sapere come è fatta tecnicamente: basta sapere cosa le fa guadagnare.</p>
+
+    <div class="fx">
+      <div class="fxi"><span class="ib"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8" />
+  <path d="M10 19v-3.96 3.15" />
+  <path d="M7 19h5" />
+  <rect width="6" height="10" x="16" y="12" rx="2" />
+</svg></span><div><h3>La web app</h3><p><b>Cos'è:</b> un sito che funziona come un'app. Si apre da un link o da un QR, senza scaricare niente dagli store.</p><p class="say">“È la vostra app, ma i clienti non devono installare nulla: toccano il link e ordinano.”</p><p class="faq"><b>Se chiede:</b> “Ma è un'app vera?” → Sì, si può anche aggiungere alla schermata del telefono con l'icona Da Rò.</p></div></div>
+      <div class="fxi"><span class="ib o"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+  <path d="M3 6h18" />
+  <path d="M16 10a4 4 0 0 1-8 0" />
+</svg></span><div><h3>Ordini diretti</h3><p><b>Cos'è:</b> il cliente sceglie le pizze, l'orario di ritiro o la consegna, e conferma. L'ordine arriva subito a loro.</p><p class="say">“Ogni ordine che arriva da qui è tutto vostro: nessuna percentuale a nessuno.”</p><p class="faq"><b>Se chiede:</b> “E il pagamento?” → Si parte con pagamento al ritiro o alla consegna. Il pagamento online si può aggiungere dopo.</p></div></div>
+      <div class="fxi"><span class="ib g"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <rect width="7" height="9" x="3" y="3" rx="1" />
+  <rect width="7" height="5" x="14" y="3" rx="1" />
+  <rect width="7" height="9" x="14" y="12" rx="1" />
+  <rect width="7" height="5" x="3" y="16" rx="1" />
+</svg></span><div><h3>Area riservata</h3><p><b>Cos'è:</b> una pagina con password, solo per loro. Mostra ordini in arrivo, incassi della sera e del mese, clienti abituali, sere forti e deboli.</p><p class="say">“Dal telefono vedi in ogni momento quanto avete incassato e chi sono i vostri clienti migliori.”</p><p class="faq"><b>Se chiede:</b> “È difficile da usare?” → No: numeri grandi, niente tecnicismi. Glielo mostriamo noi la prima volta.</p></div></div>
+      <div class="fxi"><span class="ib"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="8" width="18" height="4" rx="1" />
+  <path d="M12 8v13" />
+  <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" />
+  <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" />
+</svg></span><div><h3>Fidelity card digitale</h3><p><b>Cos'è:</b> una tessera a timbri dentro la web app. Ogni ordine = 1 timbro. Al decimo, il premio deciso da loro (pizza, farinata, bibita).</p><p class="say">“Come la tessera del bar, ma non si perde: sta nel telefono del cliente.”</p><p class="faq"><b>Se chiede:</b> “E chi ordina da Deliveroo?” → La card vale solo per gli ordini diretti: è proprio il motivo per passare alla web app.</p></div></div>
+      <div class="fxi"><span class="ib o"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+</svg></span><div><h3>Avvisi e promozioni</h3><p><b>Cos'è:</b> conferma automatica al cliente, notifica dell'ordine a loro, e promozioni mirate ai clienti con la card.</p><p class="say">“Martedì sera vuoto? Con un messaggio ai clienti con la card lo riempite.”</p><p class="faq"><b>Se chiede:</b> “Non disturbiamo i clienti?” → Solo chi ha dato il consenso, e poche promozioni ben scelte.</p></div></div>
+      <div class="fxi"><span class="ib k"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 2v4" />
+  <path d="M16 2v4" />
+  <rect width="18" height="18" x="3" y="4" rx="2" />
+  <path d="M3 10h18" />
+  <path d="m9 16 2 2 4-4" />
+</svg></span><div><h3>Prenotazione tavolo e menu</h3><p><b>Cos'è:</b> il cliente prenota giorno, ora e persone. Il menu (prezzi, novità, pizza del mese) si aggiorna in un attimo.</p><p class="say">“Meno telefonate durante il servizio, e il menu è sempre quello giusto.”</p><p class="faq"><b>Se chiede:</b> “Chi lo aggiorna?” → Noi, su sua richiesta via WhatsApp. Oppure lei, in modo semplice.</p></div></div>
+      <div class="fxi"><span class="ib"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" />
+  <rect x="2" y="6" width="14" height="12" rx="2" />
+</svg></span><div><h3>Gestione social (Piano Starter)</h3><p><b>Cos'è:</b> 8 video e 8 post al mese, 2 storie al giorno su Facebook, Instagram e TikTok, sponsorizzate in zona e report mensile.</p><p class="say">“Voi fate le pizze, noi le facciamo vedere a chi abita vicino. E ogni mese vi diciamo cosa ha portato.”</p><p class="faq"><b>Se chiede:</b> “E la cugina?” → Può mandarci idee e foto: lavoriamo insieme, non al posto suo.</p></div></div>
+      <div class="fxi"><span class="ib g"><svg class="ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+  <path d="M2 12h20" />
+</svg></span><div><h3>Dominio e sito</h3><p><b>Cos'è:</b> l'indirizzo internet della pizzeria (oggi pizzeriadaro.it non funziona). Lo registriamo e rinnoviamo noi: €50 all'anno.</p><p class="say">“Riportiamo online il vostro indirizzo: chi lo trova su Facebook arriva dritto alla web app.”</p><p class="faq"><b>Se chiede:</b> “Perché si paga ogni anno?” → Il dominio è come un affitto: va rinnovato, ci pensiamo noi.</p></div></div>
+    </div>
+  </div>
+  <div class="ft"><span>Apex Media · briefing interno Da Rò</span><span class="n">2 / 3</span></div>
+</section>
+
+<!-- ================= PAGINA 3 ================= -->
 <section class="page">
   <div class="hd">
     <div class="logo"><div class="tile"></div><div><div class="w">APEX MEDIA</div><div class="s">Performance Marketing Agency</div></div></div>
@@ -861,8 +930,8 @@ a{color:inherit;text-decoration:none}
       <div class="stp"><span class="n">1</span><div><b>Apri con i complimenti (2 minuti)</b><p>Parti dal 4,7 su Google e dalla farinata: <i>“I clienti vi adorano, il prodotto è già vincente.”</i></p><span class="pt">Indica: pag. 1 · riquadro “4,7 ★” e la fascia scura “Il prodotto c'è già. Manca il sistema”</span></div></div>
       <div class="stp"><span class="n">2</span><div><b>Mostra il problema, non spiegarlo</b><p>Apri Facebook dal telefono, tocca il link del sito e falle vedere l'errore: <i>“Ogni persona che clicca qui oggi si perde.”</i> Poi: <i>“Quanto vi resta di una pizza ordinata su Deliveroo?”</i></p><span class="pt">Indica: pag. 1 · “Il sito non esiste più” e “Gli ordini passano dalle piattaforme”</span></div></div>
       <div class="stp"><span class="n">3</span><div><b>Spiega perché le serve, con le 6 frasi</b><p>Leggi ad alta voce le frasi chiave. Le più forti per una pizzeria: <b>2</b> (ordini diretti senza commissioni), <b>3</b> (cliente che torna) e <b>4</b> (il martedì vuoto). Poi il confronto “Oggi / Con Apex Media”.</p><span class="pt">Indica: pag. 2 · riquadri 1–6, soprattutto il 2 (in arancione)</span></div></div>
-      <div class="stp"><span class="n">4</span><div><b>Mostra la web app e gestisci la cugina</b><p>Fai vedere l'anteprima sul telefono, la fidelity card e il confronto piattaforme / web app. Poi i social, senza mai criticare la cugina (vedi sotto).</p><span class="pt">Indica: pag. 3 · telefono e “Piattaforme o web app” · pag. 4 · riquadro verde “può restare coinvolto”</span></div></div>
-      <div class="stp"><span class="n">5</span><div><b>Chiudi</b><p><i>“Partiamo con 3 mesi: se i numeri non ci danno ragione, decidi tu.”</i> Poi: <i>“Preferisci pagare in contanti o con bonifico?”</i> Si parla di <b>come</b> partire, non di <b>se</b>.</p><span class="pt">Indica: pag. 4 · €700 barrato → €300 e il totale €650</span></div></div>
+      <div class="stp"><span class="n">4</span><div><b>Mostra la web app e cosa c'è dentro</b><p>Telefono e i 4 tocchi dell'ordine. Poi pagina 4: <b>area riservata</b> (lei vede ordini e incassi), <b>fidelity card</b> (10 pizze = 1 omaggio) e <b>avvisi</b>. Usa le frasi della pagina “Le funzioni”. Poi i social, senza mai criticare la cugina.</p><span class="pt">Indica: pag. 3 · telefono e “4 tocchi” · pag. 4 · tutti e tre i blocchi · pag. 5 · riquadro verde</span></div></div>
+      <div class="stp"><span class="n">5</span><div><b>Chiudi</b><p><i>“Partiamo con 3 mesi: se i numeri non ci danno ragione, decidi tu.”</i> Poi: <i>“Preferisci pagare in contanti o con bonifico?”</i> Si parla di <b>come</b> partire, non di <b>se</b>.</p><span class="pt">Indica: pag. 5 · €700 barrato → €300 e il totale €650</span></div></div>
     </div>
 
     <div class="st">Le obiezioni, e come rispondere</div>
@@ -875,7 +944,7 @@ a{color:inherit;text-decoration:none}
 
     <div class="never"><b>Da non fare mai:</b> criticare la cugina o il lavoro fatto finora · promettere numeri di ordini · parlare male di Deliveroo (resta utile per i clienti nuovi) · usare parole tecniche. <b>Da fare sempre:</b> far parlare Rossella, prendere appunti sui suoi numeri, chiudere con una data.</div>
   </div>
-  <div class="ft"><span>Apex Media · briefing interno Da Rò</span><span class="n">2 / 2</span></div>
+  <div class="ft"><span>Apex Media · briefing interno Da Rò</span><span class="n">3 / 3</span></div>
 </section>
 </body>
 </html>
