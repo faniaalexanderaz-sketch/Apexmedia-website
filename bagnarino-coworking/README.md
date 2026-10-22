@@ -13,18 +13,36 @@ SendGrid salva tutto ma non manda email, senza `ADMIN_PASSWORD` l'area riservata
 
 ## Design
 
-Direzione editoriale italiana, ispirata alla grafica storica Olivetti (il negozio ne è concessionario dal 1983).
+Direzione "carta e inchiostro, Olivetti 1983": il sito deve sembrare stampato, non generato. Carta avorio, inchiostro blu,
+un solo accento ocra (quello del logo) e un rosso da timbro usato soltanto sui timbri della Bagnarino Card.
 
-- **Font** (ospitati in `fonts/`, nessun servizio esterno): *Newsreader* per i titoli, con il corsivo come accento;
-  *Hanken Grotesk* per testi e interfaccia; *IBM Plex Mono* per etichette e numeri di sezione (richiamo alla macchina da scrivere).
-- **Colori**: notte `#0F1A26`, inchiostro `#1B2A3A`, ocra `#C9973B` (unico accento, il "divisorio" del logo), carta `#F4EFE6`, avorio `#FBF8F2`.
-- **Foto** in `img/foto/`: immagini **illustrative generate su misura** (nessun monumento riconoscibile, nessuna foto di repertorio
-  spacciata per lo spazio). Sul sito sono dichiarate come illustrative: vanno sostituite con le foto vere dello spazio
-  mantenendo gli stessi nomi file e misure (WebP, versioni da 560/768 e 896/1344 px; per il telefono `spazio-verticale-*`).
-- **Animazioni**: l'apertura (foto, righe del titolo, pianta dei posti liberi) è in CSS e parte subito; GSAP + ScrollTrigger
-  (`vendor/gsap/`) si caricano dopo la pagina e animano solo ciò che è sotto la piega: frase manifesto che si accende parola
-  per parola, foto che si scoprono, parallasse leggera, cifre che contano, filo ocra dei passi, timbri della card, tessera che
-  si inclina col mouse. Con "riduci movimento" tutto resta fermo e leggibile.
+- **Font** (ospitati in `fonts/`, nessun servizio esterno): *Fraunces* per titoli e numeri grandi (asse ottico alto, corsivo come accento);
+  *Hanken Grotesk* per testi e interfaccia (la grotesk della grafica Olivetti); *IBM Plex Mono* per etichette, orari, numeri di sezione e codici
+  (la macchina per scrivere).
+- **Colori**: notte `#111922`, inchiostro `#1B2A3A`, ocra `#C9973B`, timbro `#B4302A` (solo Card), carta `#F1EBE0`, avorio `#FAF6EE`.
+  Filetti sottili al posto dei bordi delle card, angoli da 4 px, niente ombre 3D né gradienti di sfondo.
+- **Foto** in `img/foto/`: `esterno-*.webp` è l'ingresso vero; `sala-coworking-*.webp` e `sala-stampa-*.webp` sono la sala vera
+  ritoccata per mostrare le scrivanie. Sono le uniche tre foto del sito (apertura, negozio, spazio) e lo dice la nota in fondo alla pagina.
+  Quando arriva il servizio fotografico si sostituiscono con gli stessi nomi e misure: vedi la lista qui sotto.
+- **Animazioni**: l'apertura è in CSS e parte subito. GSAP + ScrollTrigger (`vendor/gsap/`) si caricano al primo gesto e fanno quattro cose:
+  il filo della storia che si traccia scorrendo (la firma), le foto che si scoprono a tendina, i timbri che si pressano sulla card,
+  una comparsa quasi impercettibile delle sezioni. Con "riduci movimento" tutto resta fermo e leggibile.
+
+### Foto da scattare (per il nuovo layout)
+
+Tutte orizzontali 4:3 salvo dove indicato, luce naturale, nessuna persona riconoscibile (o con liberatoria). Esportare in WebP
+con gli stessi nomi dei file attuali, alle larghezze indicate.
+
+| File | Inquadratura | Dove compare |
+|---|---|---|
+| `sala-coworking-720/1280.webp` | La sala dall'ingresso: scrivanie in primo piano, finestra sul fondo, stampanti a destra. Sul telefono viene ritagliata 4:3, sul computer 4:5 (tenere il soggetto al centro) | Apertura (foto principale) e sezione "Lo spazio" |
+| `sala-stampa-720/1280.webp` | Dal fondo della sala verso l'angolo stampa: postazioni vicino alla finestra e le multifunzione Olivetti | "Lo spazio" (foto grande) |
+| `esterno-560/960.webp` | L'ingresso di corso Lamarmora 46, quadrata 1:1, con le insegne e i vasi rossi; scattare di giorno con la porta aperta | "Il negozio" |
+| `email-testata.jpg` | Ritaglio orizzontale 1120×470 della foto della sala (si genera dalla prima) | Testa delle email |
+| `og-bagnarino-coworking.jpg` | 1200×630: la sala con il logo in sovraimpressione | Anteprima sui social e su WhatsApp |
+
+Scatti utili in più (facoltativi, per aggiornamenti futuri): un dettaglio di una scrivania con il computer e la lampada;
+la Bagnarino Card vera stampata, con un timbro; Marcella al banco del negozio (serve il suo ok).
 
 ## Provarlo in locale
 
@@ -44,7 +62,7 @@ Solo il sito statico, in modalità dimostrativa: `npx serve bagnarino-coworking`
 | File | A cosa serve |
 |---|---|
 | `config.js` | **Valori di partenza**: azienda, contatti, orari, postazioni, listino, fidelity, testi WhatsApp, codici GA4/Meta. Lo leggono sia il sito sia le API |
-| `index.html` | Home: hero con la "pianta di oggi" (posti liberi veri), prezzi, come funziona, spazio, Bagnarino Card, per chi è, dove siamo, FAQ |
+| `index.html` | Home: apertura su carta con la foto della sala, posti liberi (pianta delle 6 scrivanie), negozio, storia, listino, una giornata, spazio, Bagnarino Card, per chi è, dove siamo, FAQ, chiusura |
 | `prenota.html` + `prenota.js` | Prenotazione in 3 passi; giornate omaggio e carnet riconosciuti da email + cellulare |
 | `prenotazione.html` + `gestisci.js` | "La mia prenotazione": stato e annullamento con codice + email |
 | `card.html` + `tessera.js` | "La mia Bagnarino Card": timbri, omaggi, carnet |
@@ -178,7 +196,7 @@ nella scheda Google Business `?utm_source=gmb`.
 - [ ] Dominio scelto e collegato al progetto Vercel → `SITO_URL` impostato
 - [ ] Scheda **Google Business** aggiornata con il link di prenotazione (`/prenota?utm_source=gmb`) e la categoria "Spazio di coworking"
 - [ ] Codici GA4 e Meta Pixel in `config.js`; `META_PIXEL_ID` e `META_CAPI_TOKEN` su Vercel; verifica in Gestione eventi di Meta
-- [ ] Foto vere dello spazio al posto delle immagini illustrative (`img/foto/`)
+- [ ] Servizio fotografico definitivo (`img/foto/`, lista sopra in "Foto da scattare")
 - [ ] Punti [DA CONFERMARE] chiusi (sotto)
 - [ ] Guida consegnata a Marcella (`GUIDA-TITOLARE.md`) e password comunicata a voce
 
@@ -199,26 +217,11 @@ nella scheda Google Business `?utm_source=gmb`.
 13. **Etichetta della card in evidenza**: oggi "La più conveniente". "La più scelta" solo con dati veri.
 14. **Nome "Marcella"** nella schermata di conferma e nell'area riservata: va bene?
 15. **Gli abbonati mensili raccolgono timbri?** Oggi no (solo giornate e carnet).
-16. **Foto vere** degli spazi (shooting Apex Media).
+16. **Foto vere** degli spazi (shooting Apex Media, lista in "Foto da scattare").
 17. **Dominio** del sito.
 
-18. **Testo "Ti accoglie Marcella"** (home, sezione Il negozio): va bene come descrive l'accoglienza? Serve una **foto vera** di Marcella al posto delle iniziali "MB".
+18. **Testo "Ti accoglie Marcella"** (home, sezione Il negozio): va bene come descrive l'accoglienza? Una **foto vera** di Marcella al banco si può aggiungere accanto, con il suo ok.
 19. **Offerta prima volta** (`config.js` → `offertaPrimaVolta`, oggi spenta): "se torni entro 7 giorni la seconda giornata costa €20". Accenderla solo con l'ok di Marcella.
-
-## Foto da scattare (shooting Apex Media)
-
-Sostituiscono le immagini illustrative. Luce naturale, niente filtri, persone vere.
-
-1. La vetrina di corso Lamarmora da fuori, di giorno (hero e "Dove siamo").
-2. La sala intera con le 6 scrivanie, ripresa dall'ingresso.
-3. Una scrivania da vicino: pannello trasparente, presa, portatile aperto.
-4. La multifunzione Olivetti mentre stampa.
-5. Marcella al bancone, sorridente, sguardo in camera (sezione "Ti accoglie Marcella").
-6. Mani su una tastiera con il pannello trasparente sullo sfondo.
-7. Un cliente al lavoro, di spalle o di tre quarti (con liberatoria).
-8. I portici di corso Lamarmora, sera (sfondo di "Dove siamo").
-9. Dettaglio dell'insegna Bagnarino.
-10. Una foto d'archivio del negozio negli anni '80/'90 (per la linea del tempo).
 
 ## Prossimi miglioramenti
 
