@@ -1013,3 +1013,90 @@ body.menu-aperto { overflow: hidden; }
   .punto-vivo::after, .disp.reale .disp-live-punto, .disp.cambia .disp-scrivania, .bollo svg, .menu-app[open] { animation: none; }
   .btn, .btn .ico, .link-forte .ico, .profilo-link .ico { transition: none; }
 }
+
+/* =============================================================
+   RITMO DELLA PAGINA: fasce e riquadri diversi dalla metà in giù
+   ============================================================= */
+/* nastro che scorre sotto l'apertura */
+.nastro { background: var(--ocra); color: var(--notte); overflow: hidden; }
+.nastro-binario { display: flex; width: max-content; }
+.nastro-traccia { display: flex; align-items: center; flex-shrink: 0; margin: 0; padding: 13px 0; font-family: var(--f-mono); font-size: .74rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.nastro-traccia > span { padding: 0 26px; }
+.nastro-traccia i { display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--notte); flex-shrink: 0; }
+@media (prefers-reduced-motion: no-preference) { .nastro-binario { animation: nastro 34s linear infinite; } .nastro:hover .nastro-binario { animation-play-state: paused; } }
+@keyframes nastro { to { transform: translateX(-50%); } }
+
+/* listino: la colonna del mese flessibile è blu inchiostro, con il timbro ocra */
+.prezzo-evidenza { background: var(--inchiostro); color: var(--avorio); box-shadow: none; }
+.prezzo-evidenza .prezzo-nome, .prezzo-evidenza .prezzo-valore { color: var(--avorio); }
+.prezzo-evidenza .prezzo-perchi, .prezzo-evidenza .prezzo-unita { color: var(--chiaro-70); }
+.prezzo-evidenza .prezzo-valuta, .prezzo-evidenza .prezzo-nota, .prezzo-evidenza .prezzo-include li::before, .prezzo-evidenza .prezzo-regalo { color: var(--ocra-vivo); }
+.prezzo-evidenza .prezzo-include { border-top-color: var(--linea-scura); }
+.prezzo-evidenza .prezzo-include li { color: var(--avorio); }
+.prezzo-evidenza .prezzo-regalo { border-top-color: var(--linea-scura); }
+.prezzo-evidenza .btn-prezzo-top { background: var(--ocra); border-color: var(--ocra); color: var(--notte); }
+.prezzo-evidenza .btn-prezzo-top:hover { background: var(--ocra-vivo); border-color: var(--ocra-vivo); }
+.prezzo-evidenza .prezzo-etichetta {
+  position: absolute; top: 18px; right: 18px; order: 0; margin: 0; padding: 7px 11px; border-radius: 3px;
+  background: var(--ocra); color: var(--notte); font-family: var(--f-mono); font-style: normal; font-size: .62rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  transform: rotate(4deg); box-shadow: 0 0 0 2px var(--inchiostro), 0 0 0 3px var(--ocra);
+}
+@media (min-width: 1100px) { .prezzo-evidenza { margin: -18px 0; padding-top: 52px; padding-bottom: 52px; } .prezzi { overflow: visible; } }
+@media (min-width: 700px) and (max-width: 1099px) { .prezzo-evidenza { padding-top: 56px; } }
+@media (max-width: 699px) { .prezzo-evidenza { margin: 0 calc(-1 * var(--margine)); padding: 56px var(--margine) 32px; } }
+.prezzo { transition: background-color .3s var(--curva); }
+.prezzo:not(.prezzo-evidenza):hover { background: var(--avorio); }
+
+/* una giornata: fascia avorio con riga ocra, non un'altra sezione su carta */
+.giornata-sezione { padding: 64px 0 72px; background: var(--avorio); border-top: 3px solid var(--ocra); border-bottom: 1px solid var(--linea); }
+.giornata-sezione .testa-sezione { margin-bottom: 2rem; }
+@media (min-width: 900px) { .giornata-sezione { padding: 88px 0 96px; } }
+
+/* lo spazio: le due liste in riquadri diversi, uno chiaro e uno scuro */
+.spazio-sezione { background: var(--carta); }
+.dotazione > div { padding: 26px 22px 28px; border-radius: var(--raggio-grande); }
+.dotazione-si { background: var(--avorio); border: 1px solid var(--linea-forte); }
+.dotazione-no { background: var(--inchiostro); color: var(--avorio); }
+.dotazione-no h3 { color: var(--avorio); }
+.dotazione-no ul { border-top-color: var(--linea-scura); }
+.dotazione-no li { border-bottom-color: var(--linea-scura); }
+.dotazione-no li::before { color: var(--ocra-vivo); }
+.dotazione-no li span { color: var(--chiaro-70); }
+.dotazione-no .dotazione-porta { color: var(--ocra-vivo); }
+@media (min-width: 900px) { .dotazione > div { padding: 36px 36px 40px; } .dotazione-no { transform: translateY(32px); } }
+
+/* per chi è: quattro riquadri numerati, il mese ha il suo colore */
+.profili { border-top: 0; display: grid; gap: 14px; }
+.profilo { position: relative; padding: 26px 22px 24px; border: 1px solid var(--linea-forte); border-radius: var(--raggio-grande); background: var(--avorio); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
+.profilo:hover { transform: translateY(-3px); box-shadow: var(--ombra); }
+.profilo-num { display: block; margin: 0 0 18px; font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; color: var(--ocra-testo); }
+.profilo h3 { font-size: clamp(1.45rem, 3.2vw, 1.8rem); }
+.profilo-mese { background: var(--ocra-chiaro); border-color: var(--ocra); }
+.profilo-mese .profilo-num::after { content: ' · Mese flessibile'; }
+@media (min-width: 700px) { .profili { grid-template-columns: 1fr 1fr; } .profilo:nth-child(even) { transform: translateY(24px); } .profilo:nth-child(even):hover { transform: translateY(21px); } }
+
+/* dove siamo: fascia scura, mappa su carta */
+.dove-sezione { background: var(--inchiostro); color: var(--avorio); border-top: 0; }
+.dove-sezione .titolo-sezione { color: var(--avorio); }
+.dove-sezione .titolo-sezione em { color: var(--ocra-vivo); }
+.dove-vicino, .dove-orari, .dove-visita, .mappa-nota { color: var(--chiaro-70); }
+.dove-visita a { color: var(--avorio); }
+.mappa-anteprima { border-color: var(--linea-scura); background: var(--notte) repeating-linear-gradient(0deg, transparent 0 31px, var(--linea-scura) 31px 32px), var(--notte) repeating-linear-gradient(90deg, transparent 0 31px, var(--linea-scura) 31px 32px); }
+.mappa-carica { background: var(--avorio); color: var(--inchiostro); }
+
+/* chiusura: ocra pieno, la pagina finisce con un colpo di colore */
+.finale { background: var(--ocra); color: var(--notte); border-top: 0; }
+.finale h2 { color: var(--notte); }
+.finale h2 em { color: var(--avorio); }
+.finale p { color: rgba(17, 25, 34, .78); }
+.finale .apertura-sopra { color: rgba(17, 25, 34, .7); }
+.finale .apertura-sopra .posti { color: var(--notte); }
+.finale .apertura-sopra .punto-vivo, .finale .apertura-sopra .punto-vivo::after { background-color: var(--notte); border-color: var(--notte); }
+.finale .btn-filo { border-color: var(--notte); color: var(--notte); }
+.finale .btn-filo:hover { background: var(--notte); color: var(--avorio); }
+.offerta { border-color: var(--notte); color: var(--notte); }
+.piede { border-top: 0; }
+
+/* prenotazione: anche qui il mese si vede */
+.opzione input[value="mese_flessibile"] + .opzione-corpo { background: var(--ocra-chiaro); border-color: var(--ocra); }
+.opzione input[value="mese_flessibile"]:checked + .opzione-corpo { background: var(--ocra-chiaro); border-color: var(--inchiostro); }

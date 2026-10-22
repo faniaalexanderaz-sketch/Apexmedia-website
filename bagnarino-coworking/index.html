@@ -33,13 +33,13 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=5524c844">
+  <link rel="stylesheet" href="/styles.css?v=72d25e87">
 
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
   <script src="/main.js?v=58fb0b7c" defer></script>
-  <script src="/animazioni.js?v=b847f04f" defer></script>
+  <script src="/animazioni.js?v=a646c61d" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -124,6 +124,14 @@
       </div>
     </div>
   </section>
+
+  <!-- nastro: le cose essenziali, che scorrono come un'insegna -->
+  <div class="nastro" aria-hidden="true">
+    <div class="nastro-binario">
+      <p class="nastro-traccia"><span>Wi-fi in fibra</span><i></i><span>Stampante Olivetti</span><i></i><span>Paghi quando arrivi</span><i></i><span>Disdici gratis</span><i></i><span>Fattura a P. IVA</span><i></i><span>Dal 1983 in corso Lamarmora</span><i></i></p>
+      <p class="nastro-traccia"><span>Wi-fi in fibra</span><i></i><span>Stampante Olivetti</span><i></i><span>Paghi quando arrivi</span><i></i><span>Disdici gratis</span><i></i><span>Fattura a P. IVA</span><i></i><span>Dal 1983 in corso Lamarmora</span><i></i></p>
+    </div>
+  </div>
 
   <!-- ============ 01 · POSTI LIBERI: scegli il giorno, vedi le scrivanie ============ -->
   <section class="disp-sezione" id="posti" aria-labelledby="disp-titolo">
@@ -383,22 +391,22 @@
         <p class="intro-sezione">Chi lavora da casa e vuole un posto serio in centro, senza affittare un ufficio.</p>
       </div>
       <ul class="profili">
-        <li class="profilo">
+        <li class="profilo"><span class="profilo-num">01</span>
           <h3>Freelance e professionisti</h3>
           <p>La tua scrivania sempre pronta, le tue cose nella cassettiera, fattura intestata.</p>
           <a class="profilo-link" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-freelance"><span>Postazione fissa, <span data-prezzo="mese_fisso">€320</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </li>
-        <li class="profilo">
+        <li class="profilo profilo-mese"><span class="profilo-num">02</span>
           <h3>Smart working</h3>
           <p>Esci di casa, separa il lavoro dal resto. Wi-fi stabile, in centro, circa €13 al giorno.</p>
           <a class="profilo-link" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-remoto"><span>Mese flessibile, <span data-prezzo="mese_flessibile">€270</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </li>
-        <li class="profilo">
+        <li class="profilo"><span class="profilo-num">03</span>
           <h3>Studenti e praticanti</h3>
           <p>Silenzio per la sessione o l’esame di Stato. Con il carnet, €20 al giorno.</p>
           <a class="profilo-link" href="/prenota?pacchetto=carnet" data-pos="perchi-studenti"><span>Carnet 10 ingressi, <span data-prezzo="carnet">€200</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </li>
-        <li class="profilo">
+        <li class="profilo"><span class="profilo-num">04</span>
           <h3>Piccoli team</h3>
           <p>Scrivanie vicine per lavorare insieme, senza contratto d’affitto.</p>
           <a class="profilo-link" data-wa="generico" data-pos="perchi-team" href="https://wa.me/393472249457"><span>Chiedici le postazioni vicine</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
@@ -411,7 +419,7 @@
   <section class="sezione dove-sezione" id="dove" aria-labelledby="dove-titolo">
     <div class="contenitore dove">
       <div class="dove-scheda">
-        <p class="occhiello"><span>09</span>Dove siamo</p>
+        <p class="occhiello occhiello-chiaro"><span>09</span>Dove siamo</p>
         <h2 id="dove-titolo" class="titolo-sezione">In centro ad Alessandria, <em>corso Lamarmora 46.</em></h2>
         <p class="dove-vicino"><span data-cfg="azienda.vicinoA">A due passi dall’ospedale e da Piazza Libertà</span>.</p>
         <address class="dove-indirizzo">
@@ -420,9 +428,9 @@
         </address>
         <p class="dove-orari"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><span data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</span></p>
         <div class="dove-cta">
-          <a class="btn btn-pieno" data-indicazioni data-pos="dove" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria">
+          <a class="btn btn-ocra" data-indicazioni data-pos="dove" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria">
             <svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Indicazioni</a>
-          <a class="btn btn-filo" data-tel data-pos="dove" href="tel:+393472249457">
+          <a class="btn btn-vetro" data-tel data-pos="dove" href="tel:+393472249457">
             <svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Chiama</a>
         </div>
         <p class="dove-visita">Vuoi vedere lo spazio prima di prenotare? <a data-wa="visita" data-pos="dove-visita" href="https://wa.me/393472249457">Scrivici e passa a trovarci</a>.</p>
@@ -498,9 +506,9 @@
       <p>La prima giornata costa <span data-prezzo="giornata">€25</span>. La paghi quando arrivi, e se cambi idea disdici gratis.</p>
       <p class="offerta" data-cfg-attivo="offertaPrimaVolta.attiva" hidden><span data-cfg="offertaPrimaVolta.testo"></span></p>
       <div class="apertura-cta">
-        <a class="btn btn-ocra btn-grande" href="/prenota?pacchetto=giornata" data-pos="finale">Prenota la prima giornata
+        <a class="btn btn-pieno btn-grande" href="/prenota?pacchetto=giornata" data-pos="finale">Prenota la prima giornata
           <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        <a class="btn btn-vetro btn-grande" data-wa="prenota" data-pos="finale" href="https://wa.me/393472249457">
+        <a class="btn btn-filo btn-grande" data-wa="prenota" data-pos="finale" href="https://wa.me/393472249457">
           <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
       </div>
     </div>

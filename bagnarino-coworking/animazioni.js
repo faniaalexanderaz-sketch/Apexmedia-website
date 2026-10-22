@@ -57,6 +57,16 @@
         });
       }
 
+      /* 2b) i prezzi contano fino alla cifra, una volta sola */
+      $$('[data-cifra]').forEach(function (el) {
+        var fine = +el.getAttribute('data-cifra');
+        if (!fine || !sottoLaPiega(el)) return;
+        var conta = { v: 0 };
+        gsap.to(conta, { v: fine, duration: 1.1, ease: 'power2.out', snap: { v: 1 },
+          onUpdate: function () { el.textContent = String(Math.round(conta.v)); },
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+      });
+
       /* 3) Bagnarino Card: i timbri si posano uno alla volta */
       var timbri = $$('[data-timbri] .timbro.pieno');
       if (timbri.length && sottoLaPiega(timbri[0])) {
