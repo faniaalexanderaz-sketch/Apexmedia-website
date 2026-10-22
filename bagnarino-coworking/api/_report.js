@@ -71,7 +71,7 @@ async function inviaReportMensile(cfg, sito, adesso) {
     ]) + '<div style="height:18px"></div>' +
     T.paragrafo('<b>Da dove arrivano le prenotazioni</b>', true) +
     (n.canali.length ? T.righe(n.canali.map(c => [c.fonte, String(c.n)])) : T.paragrafo('Nessuna prenotazione nel mese.')) +
-    '<div style="height:18px"></div>' + T.bottone(sito + '/admin', 'Apri l’area riservata', true);
+    '<div style="height:18px"></div>' + T.bottone(sito + '/admin', 'Apri l’area riservata');
   const html = T.layout({ titolo: 'Report ' + nomeMese, anteprima: n.prenotazioni + ' prenotazioni, ' + euro(n.incasso) + ' incassati', corpo, sito, cfg });
   const destinatari = [process.env.NOTIFICHE_EMAIL].concat(String(process.env.REPORT_EMAIL || '').split(','))
     .map(s => (s || '').trim()).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
