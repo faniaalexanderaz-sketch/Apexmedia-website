@@ -233,7 +233,7 @@
         '<span class="prezzo-unita" aria-hidden="true">' + p.unita + '</span></p>' +
         '<p class="prezzo-nota">' + p.nota + '</p>' +
         '<ul class="prezzo-include">' + p.include.map(function (x) {
-          return '<li><span class="spunta"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>' + x + '</li>';
+          return '<li><span class="prezzo-spunta"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>' + x + '</li>';
         }).join('') + '</ul>' +
         '<a class="btn ' + (p.evidenza ? 'btn-ocra' : 'btn-pieno') + ' btn-largo" href="/prenota?pacchetto=' + p.id + '" data-pos="prezzi-' + p.id + '">' + p.cta +
         '<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>' +

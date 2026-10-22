@@ -457,8 +457,8 @@ em { font-style: italic; }
 .prezzo-nota { margin: .7rem 0 1.2rem; font: italic 400 1.1rem var(--f-display); color: var(--ocra-testo); }
 .prezzo-include { display: grid; gap: 11px; margin: 0 0 1.6rem; padding: 18px 0 0; border-top: 1px dashed #D9CDB5; list-style: none; }
 .prezzo-include li { display: flex; gap: 11px; align-items: flex-start; font-size: .98rem; line-height: 1.4; }
-.spunta { flex-shrink: 0; display: grid; place-items: center; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; background: var(--verde-chiaro); color: var(--verde-testo); }
-.spunta .ico { width: 13px; height: 13px; stroke-width: 3; }
+.prezzo-spunta { flex-shrink: 0; display: grid; place-items: center; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; background: var(--verde-chiaro); color: var(--verde-testo); }
+.prezzo-spunta .ico { width: 13px; height: 13px; stroke-width: 3; }
 .prezzo .btn { margin-top: auto; }
 /* la formula consigliata: blu notte, bordo che si accende */
 .prezzo-evidenza {
@@ -475,7 +475,7 @@ em { font-style: italic; }
 .prezzo-evidenza .prezzo-valuta, .prezzo-evidenza .prezzo-nota { color: var(--ocra-vivo); }
 .prezzo-evidenza .prezzo-unita { color: #B7BEC8; }
 .prezzo-evidenza .prezzo-include { border-top-color: rgba(251, 248, 242, .18); }
-.prezzo-evidenza .spunta { background: rgba(74, 222, 128, .16); color: #4ADE80; }
+.prezzo-evidenza .prezzo-spunta { background: rgba(74, 222, 128, .16); color: #4ADE80; }
 @media (min-width: 700px) { .prezzi { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) {
   .prezzi { grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch; }
@@ -1068,8 +1068,8 @@ body.menu-aperto { overflow: hidden; }
 .prezzo-evidenza .prezzo-unita { color: var(--inchiostro-morbido); }
 .prezzo-evidenza .prezzo-include { border-top-color: #E4D6BC; }
 .prezzo-etichetta { background: var(--ocra); color: var(--notte); box-shadow: none; border-radius: 4px; }
-.spunta, .prezzo-evidenza .spunta { background: transparent; color: var(--ocra-testo); width: 18px; height: 18px; }
-.spunta .ico { width: 16px; height: 16px; stroke-width: 2.4; }
+.prezzo-spunta, .prezzo-evidenza .prezzo-spunta { background: transparent; color: var(--ocra-testo); width: 18px; height: 18px; }
+.prezzo-spunta .ico { width: 16px; height: 16px; stroke-width: 2.4; }
 .prezzo-valore { font-size: clamp(4rem, 13vw, 5rem); }
 
 /* --- il negozio e chi ti accoglie --- */
