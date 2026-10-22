@@ -1178,3 +1178,60 @@ body.menu-aperto { overflow: hidden; }
 .pagina-prenota .codice { background: var(--inchiostro); border-color: var(--ocra); }
 .pagina-prenota .codice span { color: var(--chiaro-70); }
 .pagina-prenota .codice strong { color: var(--ocra-vivo); }
+
+/* =============================================================
+   FASCE BLU E SCHEDE CHE GALLEGGIANO (come nella pagina di prenotazione)
+   ============================================================= */
+.banda-blu { position: relative; color: var(--avorio); border-top: 0;
+  background: var(--inchiostro) radial-gradient(circle at calc(100% + 40px) -20px, rgba(221, 176, 92, .08) 0 128px, rgba(221, 176, 92, .4) 128px 129.5px, rgba(221, 176, 92, .05) 129.5px 155px, rgba(221, 176, 92, .22) 155px 156px, rgba(221, 176, 92, .03) 156px 182px, rgba(221, 176, 92, .14) 182px 183px, transparent 183px) no-repeat; }
+.banda-blu > .contenitore { position: relative; z-index: 1; }
+.banda-blu .titolo-sezione, .banda-blu .disp-titolo { color: var(--avorio); }
+.banda-blu .titolo-sezione em, .banda-blu .disp-titolo em { color: var(--ocra-vivo); }
+.banda-blu .intro-sezione, .banda-blu .disp-live, .banda-blu .faq-altro { color: var(--chiaro-70); }
+.banda-blu .faq-altro a { color: var(--avorio); }
+.scheda-chiara { background: var(--avorio); color: var(--inchiostro); border-radius: 14px; padding: 22px 16px 24px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
+@media (min-width: 600px) { .scheda-chiara { padding: 30px 30px 32px; } }
+
+/* 01 · posti liberi: testo sul blu, pianta e giorni nella scheda chiara che sconfina sotto */
+.disp-sezione.banda-blu { padding: 72px 0 0; border-bottom: 4px solid var(--ocra); }
+.disp { display: grid; gap: 28px; }
+.disp-testa { max-width: 720px; }
+.disp-scheda { position: relative; z-index: 2; display: grid; gap: 22px; margin-bottom: -88px; background: var(--avorio); color: var(--inchiostro); border-radius: 14px; padding: 20px 16px 22px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
+.disp-sala { background: var(--carta); }
+.negozio { padding-top: calc(80px + 88px); }
+@media (min-width: 900px) {
+  .disp-sezione.banda-blu { padding: 96px 0 0; }
+  .disp { grid-template-columns: 1fr; grid-template-areas: none; gap: 36px; }
+  .disp-testa, .disp-giorni, .disp-sala, .disp-azione { grid-area: auto; }
+  .disp-scheda { grid-template-columns: 6fr 6fr; grid-template-areas: "giorni sala" "azione sala"; gap: 24px 56px; padding: 36px 40px 40px; align-items: start; margin-bottom: -120px; }
+  .disp-giorni { grid-area: giorni; } .disp-sala { grid-area: sala; } .disp-azione { grid-area: azione; }
+  .negozio { padding-top: calc(128px + 120px); }
+}
+
+/* 08 · per chi è: schede chiare sul blu, che sconfinano in "dove siamo" */
+.perchi-sezione.banda-blu { padding-bottom: 0; }
+.perchi-sezione .profili { position: relative; z-index: 2; margin-bottom: -72px; }
+.profilo { border: 0; color: var(--inchiostro); box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
+.profilo:hover { box-shadow: 0 30px 50px -24px rgba(17, 25, 34, .8); }
+.perchi-sezione .intro-sezione { color: var(--chiaro-70); }
+.dove-sezione { padding-top: calc(80px + 72px); }
+@media (min-width: 900px) { .perchi-sezione .profili { margin-bottom: -120px; } .dove-sezione { padding-top: calc(128px + 120px); } }
+@media (min-width: 700px) { .profilo:nth-child(even) { transform: translateY(24px); } }
+
+/* 09 · dove siamo: di nuovo chiaro, mappa in una scheda */
+.dove-sezione { background: var(--carta); color: var(--inchiostro); }
+.dove-sezione .titolo-sezione { color: var(--inchiostro); }
+.dove-sezione .titolo-sezione em { color: var(--ocra-testo); }
+.dove-vicino, .dove-orari, .dove-visita, .mappa-nota { color: var(--inchiostro-morbido); }
+.dove-visita a { color: var(--inchiostro); }
+.mappa { background: var(--avorio); border-radius: 14px; padding: 12px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .5); }
+.mappa-anteprima { border-color: var(--linea); background: var(--carta) repeating-linear-gradient(0deg, transparent 0 31px, var(--linea) 31px 32px), var(--carta) repeating-linear-gradient(90deg, transparent 0 31px, var(--linea) 31px 32px); }
+.mappa-carica { background: var(--inchiostro); color: var(--avorio); }
+.mappa-nota { padding: 10px 4px 0; }
+
+/* 10 · domande: le risposte in una scheda chiara sul blu */
+.faq-sezione.banda-blu { padding-bottom: 0; }
+.faq-sezione .faq { position: relative; z-index: 2; margin-bottom: -56px; background: var(--avorio); color: var(--inchiostro); border-radius: 14px; border-top: 6px solid var(--ocra); padding: 6px 18px 10px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
+.faq-sezione .faq details:last-child { border-bottom: 0; }
+.finale { padding-top: calc(96px + 56px); }
+@media (min-width: 900px) { .faq-sezione .faq { padding: 10px 32px 14px; margin-bottom: -88px; } .finale { padding-top: calc(150px + 88px); } }

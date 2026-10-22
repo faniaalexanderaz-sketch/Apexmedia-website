@@ -33,7 +33,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=117b2a56">
+  <link rel="stylesheet" href="/styles.css?v=5c25d219">
 
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -134,14 +134,15 @@
   </div>
 
   <!-- ============ 01 · POSTI LIBERI: scegli il giorno, vedi le scrivanie ============ -->
-  <section class="disp-sezione" id="posti" aria-labelledby="disp-titolo">
+  <section class="disp-sezione banda-blu" id="posti" aria-labelledby="disp-titolo">
     <div class="contenitore disp" data-disp>
       <div class="disp-testa">
-        <p class="occhiello"><span>01</span>Posti liberi</p>
+        <p class="occhiello occhiello-chiaro"><span>01</span>Posti liberi</p>
         <h2 id="disp-titolo" class="disp-titolo">Scegli il giorno, <em>vedi le scrivanie libere.</em></h2>
         <p class="disp-live"><span class="disp-live-punto" aria-hidden="true"></span><span data-disp-fonte>Posti liberi aggiornati</span></p>
       </div>
 
+      <div class="disp-scheda">
       <div class="disp-giorni" role="group" aria-label="Scegli il giorno" data-disp-giorni>
         <!-- i giorni si generano qui: prossimi giorni di apertura -->
       </div>
@@ -172,6 +173,7 @@
           <li><span>3</span>Paghi quando arrivi</li>
         </ol>
         <p class="disp-nota">All’arrivo ti assegniamo una delle scrivanie libere: sono tutte uguali.</p>
+      </div>
       </div>
     </div>
   </section>
@@ -383,10 +385,10 @@
   </section>
 
   <!-- ============ 08 · PER CHI È ============ -->
-  <section class="sezione perchi-sezione" id="per-chi" aria-labelledby="perchi-titolo">
+  <section class="sezione perchi-sezione banda-blu" id="per-chi" aria-labelledby="perchi-titolo">
     <div class="contenitore perchi-griglia">
       <div class="perchi-testa">
-        <p class="occhiello"><span>08</span>Per chi è</p>
+        <p class="occhiello occhiello-chiaro"><span>08</span>Per chi è</p>
         <h2 id="perchi-titolo" class="titolo-sezione">Freelance, smart worker, <em>studenti.</em></h2>
         <p class="intro-sezione">Chi lavora da casa e vuole un posto serio in centro, senza affittare un ufficio.</p>
       </div>
@@ -419,7 +421,7 @@
   <section class="sezione dove-sezione" id="dove" aria-labelledby="dove-titolo">
     <div class="contenitore dove">
       <div class="dove-scheda">
-        <p class="occhiello occhiello-chiaro"><span>09</span>Dove siamo</p>
+        <p class="occhiello"><span>09</span>Dove siamo</p>
         <h2 id="dove-titolo" class="titolo-sezione">In centro ad Alessandria, <em>corso Lamarmora 46.</em></h2>
         <p class="dove-vicino"><span data-cfg="azienda.vicinoA">A due passi dall’ospedale e da Piazza Libertà</span>.</p>
         <address class="dove-indirizzo">
@@ -428,9 +430,9 @@
         </address>
         <p class="dove-orari"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><span data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</span></p>
         <div class="dove-cta">
-          <a class="btn btn-ocra" data-indicazioni data-pos="dove" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria">
+          <a class="btn btn-pieno" data-indicazioni data-pos="dove" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria">
             <svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Indicazioni</a>
-          <a class="btn btn-vetro" data-tel data-pos="dove" href="tel:+393472249457">
+          <a class="btn btn-filo" data-tel data-pos="dove" href="tel:+393472249457">
             <svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Chiama</a>
         </div>
         <p class="dove-visita">Vuoi vedere lo spazio prima di prenotare? <a data-wa="visita" data-pos="dove-visita" href="https://wa.me/393472249457">Scrivici e passa a trovarci</a>.</p>
@@ -454,10 +456,10 @@
   </section>
 
   <!-- ============ 10 · DOMANDE ============ -->
-  <section class="sezione faq-sezione" id="faq" aria-labelledby="faq-titolo">
+  <section class="sezione faq-sezione banda-blu" id="faq" aria-labelledby="faq-titolo">
     <div class="contenitore faq-griglia">
       <div class="testa-sezione">
-        <p class="occhiello"><span>10</span>Domande frequenti</p>
+        <p class="occhiello occhiello-chiaro"><span>10</span>Domande frequenti</p>
         <h2 id="faq-titolo" class="titolo-sezione">Prima di <em>prenotare.</em></h2>
         <p class="faq-altro">Hai un’altra domanda? <a data-wa="generico" data-pos="faq" href="https://wa.me/393472249457">Scrivici su WhatsApp</a>, rispondiamo in giornata.</p>
       </div>
