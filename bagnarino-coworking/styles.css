@@ -1159,3 +1159,5 @@ body.menu-aperto { overflow: hidden; }
   .prezzo-valore { font-size: clamp(3.4rem, 4.2vw, 4.3rem); }
   .prezzo-unita { white-space: normal; max-width: 6em; line-height: 1.15; }
 }
+
+.dove-vicino { margin: -6px 0 18px; font-size: 1.05rem; color: var(--inchiostro-morbido); }
