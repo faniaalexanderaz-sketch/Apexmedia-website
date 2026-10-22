@@ -303,3 +303,11 @@ body.admin { font-size: 1.1875rem; background: var(--carta); padding-bottom: 96p
 .cre-campo-nota textarea { margin-top: 6px; }
 .kpi-valore small { white-space: nowrap; }
 @media (min-width: 1040px) { [data-cre-kpi-attivita] { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+/* apertura: logo e una riga, mentre il server risponde */
+.caricamento { min-height: 100vh; min-height: 100dvh; display: grid; place-content: center; justify-items: center; gap: 14px; padding: 24px; background: var(--carta); color: var(--inchiostro-morbido); font-size: 1rem; }
+.caricamento[hidden] { display: none; }
+.caricamento img { width: 180px; height: auto; }
+.caricamento p { margin: 0; animation: caricamento-pulsa 1.4s ease-in-out infinite; }
+@keyframes caricamento-pulsa { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { .caricamento p { animation: none; } }

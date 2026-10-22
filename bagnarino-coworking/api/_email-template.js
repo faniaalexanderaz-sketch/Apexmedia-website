@@ -35,7 +35,7 @@ function bottone(href, testo, secondario) {
     : 'background:' + OCRA + ';border:1.5px solid ' + OCRA + ';color:' + NOTTE;
   return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 10px"><tr>' +
     '<td ' + (secondario ? '' : 'bgcolor="' + OCRA + '" ') + 'style="border-radius:10px;mso-padding-alt:14px 26px">' +
-    '<a href="' + h(href) + '" style="display:inline-block;padding:14px 26px;font:700 16px ' + FONT + ';' + stile +
+    '<a href="' + h(href) + '" target="_blank" style="display:block;padding:14px 26px;font:700 16px ' + FONT + ';' + stile +
     ';text-decoration:none;border-radius:10px">' + h(testo) + '</a></td></tr></table>';
 }
 function righe(coppie) {
@@ -79,6 +79,10 @@ function layout({ titolo, anteprima, corpo, sito, cfg, foto }) {
     '</table></td></tr></table></body></html>';
 }
 
+/* indirizzo scritto per esteso: se un'app di posta blocca il pulsante, il link resta toccabile */
+function linkScritto(url) {
+  return '<p style="margin:4px 0 16px;font:13px/1.5 ' + FONT + ';color:' + MORBIDO + '">Oppure apri: <a href="' + h(url) + '" target="_blank" style="color:' + OCRA_VIVO + ';text-decoration:underline">' + h(url.replace(/^https?:\/\//, '')) + '</a></p>';
+}
 function titoloH(t) { return '<h1 style="margin:0 0 12px;font:500 30px/1.15 ' + SERIF + ';color:' + TESTO + ';letter-spacing:-0.3px">' + h(t) + '</h1>'; }
 function paragrafo(t, html) { return '<p style="margin:0 0 16px;font:16px/1.6 ' + FONT + ';color:' + MORBIDO + '">' + (html ? t : h(t)) + '</p>'; }
 function codiceBox(c) {
@@ -155,7 +159,8 @@ function titolareNuova(p, cfg, sito) {
       ['Codice', p.codice]
     ]) + '<div style="height:18px"></div>' +
     bottone('https://wa.me/' + p.telefono.replace(/\D/g, '').replace(/^(?!39)(3\d{8,9})$/, '39$1'), 'Scrivigli su WhatsApp') +
-    bottone(sito + '/admin', 'Apri l’area riservata', true);
+    bottone(sito + '/admin', 'Apri l’area riservata', true) +
+    linkScritto(sito + '/admin');
   return { oggetto: 'Nuova: ' + p.nome + ' ' + p.cognome + ' – ' + p.nomePacchetto + ', ' + periodo(p), html: layout({ titolo: 'Nuova prenotazione', corpo, sito, cfg }) };
 }
 function titolareAnnullata(p, cfg, sito) {

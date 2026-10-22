@@ -48,8 +48,9 @@
   function avvisoDb(t) { var el = $('[data-avviso-db]'); el.textContent = t || 'Il database non è ancora collegato.'; el.hidden = false; }
 
   /* ---------- accesso ---------- */
-  function mostraAccesso() { $('[data-vista="app"]').hidden = true; $('[data-vista="accesso"]').hidden = false; setTimeout(function () { $('#password').focus(); }, 50); }
-  function mostraApp() { $('[data-vista="accesso"]').hidden = true; $('[data-vista="app"]').hidden = false; vai(schedaIniziale()); }
+  function nascondiCaricamento() { var c = $('[data-vista="caricamento"]'); if (c) c.hidden = true; }
+  function mostraAccesso() { nascondiCaricamento(); $('[data-vista="app"]').hidden = true; $('[data-vista="accesso"]').hidden = false; setTimeout(function () { $('#password').focus(); }, 50); }
+  function mostraApp() { nascondiCaricamento(); $('[data-vista="accesso"]').hidden = true; $('[data-vista="app"]').hidden = false; vai(schedaIniziale()); }
   $('[data-mostra]').addEventListener('click', function () {
     var p = $('#password'), vis = p.type === 'password';
     p.type = vis ? 'text' : 'password'; this.textContent = vis ? 'Nascondi' : 'Mostra';
@@ -666,7 +667,12 @@
   });
 
   /* ---------- avvio: se la sessione è valida si entra direttamente ---------- */
-  api('chi').then(function (r) { ruolo = r.ruolo || 'titolare'; mostraApp(); }).catch(function (e) {
+  /* se il server è lento a svegliarsi (prima apertura dopo un po'), dopo
+     5 secondi mostriamo comunque l'accesso: nessuna pagina bianca */
+  var deciso = false;
+  var lento = setTimeout(function () { if (!deciso) mostraAccesso(); }, 5000);
+  api('chi').then(function (r) { deciso = true; clearTimeout(lento); ruolo = r.ruolo || 'titolare'; mostraApp(); }).catch(function (e) {
+    deciso = true; clearTimeout(lento);
     if (e.stato === 501) { mostraApp(); return; }
     mostraAccesso();
   });
