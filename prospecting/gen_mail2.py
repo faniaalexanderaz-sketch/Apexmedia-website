@@ -5,12 +5,14 @@ e=lambda s: html.escape(s,quote=False)
 CL={False:'Qualora lo ritenga utile, sarà un piacere illustrarle in una breve telefonata di dieci minuti come imposterei il lavoro. In alternativa, se preferisce valutare direttamente il risultato, può rispondere a questa email con la parola "demo": le preparerò gratuitamente, entro 24 ore, una bozza del nuovo sito.',
     True:'Se ti va, facciamo una chiamata di 10 minuti e ti spiego come lo farei. Se invece preferisci vedere subito il risultato, rispondimi "demo" e ti preparo gratis una bozza del nuovo sito in 24 ore.'}
 NO={False:'Qualora la proposta non fosse di suo interesse, è sufficiente rispondere "no grazie" e non la disturberò ulteriormente.',True:'Se non ti interessa basta un "no grazie" e non ti ricontatto.'}
-LOC={False:'Siamo un\'agenzia di Alessandria: se preferisce un incontro di persona, sarà un piacere venire a trovarla presso la sua attività. È sufficiente un messaggio su WhatsApp o una risposta a questa email.',
-     True:'Siamo un\'agenzia di Alessandria, quindi se preferisci parlarne di persona passo volentieri da te in negozio: mi basta un messaggio su WhatsApp o una risposta a questa mail.'}
+LOC={False:'Siamo ad Alessandria: se preferisce un incontro di persona, sarà un piacere venire a trovarla presso la sua attività. È sufficiente un messaggio su WhatsApp o una risposta a questa email.',
+     True:'Siamo ad Alessandria, quindi se preferisci parlarne di persona passo volentieri da te in negozio: mi basta un messaggio su WhatsApp o una risposta a questa mail.'}
 WA={False:'Può scrivermi su WhatsApp al numero 351 594 0685.',True:'Scrivimi su WhatsApp: 351 594 0685'}
 BTN={False:'Mi scriva su WhatsApp',True:'Scrivimi su WhatsApp'}
 SAL={False:'Cordiali saluti,',True:''}
-ZR='La bozza è senza alcun impegno: se non la convince, non le chiederò nulla. Ad Alessandria abbiamo appena avviato la collaborazione con Bagnarino, attivo in città dal 1983, e ogni progetto parte da qui: capire cosa porta clienti all\'attività, e costruire solo quello.'
+ZR='La bozza è senza alcun impegno: se non la convince, non le chiederò nulla.'
+PM={False:'Apex Media è un\'agenzia di performance marketing: aiutiamo le attività del territorio ad aumentare il fatturato in pochi mesi, con siti e campagne costruiti per portare clienti, non solo visite. Se vuole capire quanto potrebbe crescere la sua attività, le basta un clic qui sotto.',
+    True:'Apex Media è un\'agenzia di performance marketing: aiutiamo le attività della zona ad aumentare il fatturato in pochi mesi, con siti e campagne fatti per portare clienti, non solo visite. Se vuoi capire quanto potrebbe crescere la tua attività, ti basta un clic qui sotto.'}
 btn='display:block;text-align:center;font-family:'+SANS+';font-weight:bold;font-size:16px;padding:15px 20px;border-radius:10px;text-decoration:none;'
 out=[]
 for (i,nome,email,tu,subj,title,greet,opener,pers,scene,three) in M:
@@ -25,13 +27,14 @@ for (i,nome,email,tu,subj,title,greet,opener,pers,scene,three) in M:
       +P(greet)+P(opener)+P(pers)+P(scene)+
       f'<div style="background-color:#faf6ea;border-left:4px solid #e7c568;border-radius:8px;padding:16px 18px;margin:0 0 22px"><p style="margin:0 0 6px;font-size:12px;letter-spacing:2px;color:#c39b3f;font-weight:bold">COSA STANNO FACENDO I MIGLIORI IN CITTÀ</p><p style="margin:0">{e(three)}</p></div>'
       +P(CL[tu])+P(ZR)+P(LOC[tu])+
+      f'<div style="background-color:#081536;border-radius:10px;padding:18px 20px;margin:0 0 16px"><p style="margin:0;color:#ffffff;font-size:16px;line-height:1.6"><span style="color:#e7c568;font-weight:bold">Apex Media</span>{e(PM[tu].format(n=nome)[len("Apex Media"):])}</p></div>'
       f'<a href="{mail}" style="{btn}background-color:#081536;color:#ffffff;margin:0 0 10px">Voglio la demo gratuita in 24 ore</a>'
       f'<a href="https://wa.me/393515940685?text=Ciao%20Alex%2C%20vorrei%20la%20demo" style="{btn}background-color:#25d366;color:#ffffff;margin:0 0 18px">{BTN[tu]}</a>'
       f'<p style="margin:0 0 22px;font-size:14px;color:#6b7080;text-align:center">{e(NO[tu])}</p>'
       +(f'<p style="margin:0 0 14px">{e(SAL[tu])}</p>' if SAL[tu] else '')+
       f'<div style="border-top:1px solid #eceef2;padding-top:18px"><p style="margin:0;font-family:{SERIF};font-size:18px;color:#081536;font-weight:bold">Alex Fania</p><p style="margin:0;font-size:14px;color:#4a4f60">Apex Media · Alessandria</p><p style="margin:4px 0 0;font-size:14px;color:#5a2ee6">351 594 0685 · studio@infoapex.eu</p></div>'
       f'</div></div>')
-    plain='\n\n'.join([greet,opener,pers,scene,three,CL[tu],ZR,LOC[tu],WA[tu],NO[tu]]+([SAL[tu]] if SAL[tu] else []))+"\n\nAlex Fania\nApex Media · Alessandria\n351 594 0685 · studio@infoapex.eu"
+    plain='\n\n'.join([greet,opener,pers,scene,three,CL[tu],ZR,LOC[tu],PM[tu].format(n=nome).replace('un clic qui sotto','una risposta a questa email'),WA[tu],NO[tu]]+([SAL[tu]] if SAL[tu] else []))+"\n\nAlex Fania\nApex Media · Alessandria\n351 594 0685 · studio@infoapex.eu"
     pass
     out.append({'i':i,'to':email,'subject':subj,'html':doc,'plain':plain})
     open(f'h{i}.html','w').write('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><body style="margin:0;padding:20px 12px;background:#fff">'+doc)
