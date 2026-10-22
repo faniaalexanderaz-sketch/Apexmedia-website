@@ -56,8 +56,8 @@ usato · mobili · arredamento · ikea · casa · appartamento · affitto casa �
 5. Paghi Quando Arrivi
 6. Niente Tessera, Niente Quote
 7. Wi-Fi in Fibra e Stampante
-8. Postazione Fissa €190/Mese
-9. Mese Flessibile a €160
+8. Postazione Fissa €320/Mese
+9. Mese Flessibile a €270
 10. Carnet 10 Giornate a €200
 11. Ufficio a Giornata Alessandria
 12. Posti Liberi Oggi
@@ -74,7 +74,7 @@ usato · mobili · arredamento · ikea · casa · appartamento · affitto casa �
 
 1. Coworking nel centro di Alessandria: scrivania, wi-fi in fibra e stampante. Da €25/giorno.
 2. Prenoti online in 30 secondi e paghi in sede. Niente tessera, niente iscrizione.
-3. Giornata €25, carnet 10 ingressi €200, mese da €160. Disdetta gratis fino al giorno prima.
+3. Giornata €25, carnet 10 ingressi €200, mese da €270. Disdetta gratis fino al giorno prima.
 4. Postazioni divise da pannelli, stampante professionale e assistenza in negozio dal 1983.
 
 ## Estensioni (asset)
@@ -93,7 +93,7 @@ Stampante Inclusa · Disdetta Gratuita · Fattura per P. IVA · In Pieno Centro
 **Snippet strutturati — Servizi:** Postazione giornaliera, Carnet 10 ingressi, Mese flessibile,
 Postazione fissa, Stampa e scansioni
 
-**Prezzo:** Giornata €25 · Carnet €200 · Mese flessibile €160 · Postazione fissa €190
+**Prezzo:** Giornata €25 · Carnet €200 · Mese flessibile €270 · Postazione fissa €320
 
 **Chiamata:** 347 224 9457 (solo negli orari di apertura) · **Località:** collega il profilo Google Business
 

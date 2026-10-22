@@ -227,8 +227,8 @@ async function prenota(dati, contesto) {
     }
     const pren = (await x(
       `INSERT INTO prenotazioni (codice, cliente_id, pacchetto, data_inizio, data_fine, postazione_id, prezzo_centesimi,
-         note, origine, carnet_id, omaggio, pagato, manuale)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NULLIF($8, ''), $9, $10, $11, $12, $13) RETURNING id`,
+         note, origine, carnet_id, omaggio, pagato, manuale, accettata)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, NULLIF($8, ''), $9, $10, $11, $12, $13, $13) RETURNING id`,
       [codice, cli.id, d.pacchetto, d.data, dataFine, assegnate[0][0], prezzo, d.note,
         JSON.stringify(contesto.manuale ? { utm_source: 'banco' } : d.origine),
         carnetId, omaggio, prezzo === 0 && d.pacchetto === 'giornata' && !!carnetId, !!contesto.manuale]))[0];
@@ -395,7 +395,8 @@ async function segnaPresenza(id, nuovoStato) {
         await x('UPDATE fidelity SET timbri = $2, omaggi_disponibili = omaggi_disponibili - 1 WHERE cliente_id = $1', [p.cliente_id, soglia - 1]);
       }
     }
-    await x('UPDATE prenotazioni SET stato = $2 WHERE id = $1', [id, nuovoStato]);
+    /* segnare arrivo o assenza vale anche come "accettata" */
+    await x('UPDATE prenotazioni SET stato = $2, accettata = true WHERE id = $1', [id, nuovoStato]);
     const f = (await x('SELECT timbri, omaggi_disponibili FROM fidelity WHERE cliente_id = $1', [p.cliente_id]))[0];
     return { id, stato: nuovoStato, timbri: f.timbri, omaggi: f.omaggi_disponibili, premio, premioSbloccato };
   });

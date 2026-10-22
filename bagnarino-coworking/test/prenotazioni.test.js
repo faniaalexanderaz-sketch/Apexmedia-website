@@ -131,7 +131,7 @@ test('fidelity: 10 giornate presenti = 1 omaggio, che si può usare', async () =
     if (ultimo.premioSbloccato) sbloccati.push(ultimo.timbri + ':' + ultimo.premioSbloccato);
   }
   /* premi intermedi da consegnare in sede al 3°, 5° e 7° timbro */
-  assert.deepEqual(sbloccati, ['3:Stampe a colori gratis', '5:Porta un amico', '7:Sconto 10% in negozio']);
+  assert.deepEqual(sbloccati, ['3:25 stampe a colori gratis', '5:Porta un amico', '7:Sconto 10% in negozio']);
   assert.equal(ultimo.premio, true);
   assert.equal(ultimo.omaggi, 1);
   assert.equal(ultimo.timbri, 0);
@@ -168,4 +168,15 @@ test('protezioni: dati non validi, giorno chiuso, trappola anti-robot, limite pe
   assert.equal((await pg.query('SELECT COUNT(*)::int AS n FROM prenotazioni')).rows[0].n, 0);
   for (let i = 0; i < 8; i++) await P.prenota(cliente({ data: i < 6 ? '2026-11-19' : '2026-11-20' }), { adesso: ADESSO, ip: '1.2.3.4' });
   await assert.rejects(P.prenota(cliente({ data: '2026-11-20' }), { adesso: ADESSO, ip: '1.2.3.4' }), e => e.codice === 'TROPPI');
+});
+
+test('richieste dal sito da accettare: online no, a mano sì, arrivo = accettata', async () => {
+  await nuovoDb();
+  const online = await P.prenota(cliente({ data: '2026-11-05' }), ctx);
+  const banco = await P.prenota(cliente({ data: '2026-11-05' }), { adesso: ADESSO, manuale: true });
+  const stato = async id => (await db.q('SELECT accettata FROM prenotazioni WHERE id = $1', [id]))[0].accettata;
+  assert.equal(await stato(online.id), false);
+  assert.equal(await stato(banco.id), true);
+  await P.segnaPresenza(online.id, 'presente');
+  assert.equal(await stato(online.id), true);
 });

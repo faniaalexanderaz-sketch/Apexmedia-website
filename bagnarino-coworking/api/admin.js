@@ -3,7 +3,8 @@
    GET  ?azione=chi | oggi | calendario&da= | clienti&cerca= |
             incassi&periodo=giorno|settimana|mese&da= | csv&da=&a= |
             impostazioni | crescita&mese=AAAA-MM
-   POST ?azione=login | esci | presenza | pagato | prenotazione |
+   GET  ?azione=scheda&id= (tutti i dettagli di una prenotazione)
+   POST ?azione=login | esci | accetta | presenza | pagato | prenotazione |
             annulla | chiusura | impostazioni | marketing
    Tutto (tranne login) richiede una sessione: "titolare" (Marcella,
    ADMIN_PASSWORD) o "apex" (Apex Media, APEX_PASSWORD). Solo
@@ -31,7 +32,7 @@ function emailVera(e) { return e && !/\.invalid$/.test(e) ? e : ''; }
 /* ---------- arrivi di un giorno ---------- */
 async function arrivi(data, cfg) {
   const r = await q(
-    `SELECT p.id, p.codice, p.pacchetto, p.stato, p.pagato, p.metodo_pagamento, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note,
+    `SELECT p.id, p.codice, p.pacchetto, p.stato, p.pagato, p.metodo_pagamento, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note, p.accettata,
             to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
             c.id AS cliente_id, c.nome, c.cognome, c.telefono, c.email, s.nome AS postazione,
             COALESCE(f.timbri, 0) AS timbri
@@ -44,6 +45,44 @@ async function arrivi(data, cfg) {
     conPresenza: x.data_inizio === data && (x.pacchetto === 'giornata' || x.pacchetto === 'carnet'),
     primoGiorno: x.data_inizio === data
   }));
+}
+
+/* ---------- nuove richieste dal sito, ancora da accettare ---------- */
+async function richieste(cfg) {
+  const oggi = cal.oraRoma().data;
+  const r = await q(
+    `SELECT p.id, p.codice, p.pacchetto, p.stato, p.pagato, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note, p.accettata, p.origine,
+            to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
+            to_char(p.creato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD"T"HH24:MI') AS creato_il,
+            c.nome, c.cognome, c.telefono, c.email, s.nome AS postazione
+     FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id LEFT JOIN postazioni s ON s.id = p.postazione_id
+     WHERE NOT p.accettata AND p.stato = 'confermata' AND p.data_fine >= $1 ORDER BY p.creato_il`, [oggi]);
+  return r.map(x => Object.assign(x, { nomePacchetto: nomePacchetto(cfg, x.pacchetto), email: emailVera(x.email),
+    fonte: R.classificaFonte(x.origine), origine: undefined }));
+}
+
+/* ---------- scheda completa di una prenotazione ---------- */
+async function scheda(id, cfg) {
+  if (!Number.isInteger(id)) throw P.errore('NON_TROVATA', 'Prenotazione non trovata.');
+  const x = (await q(
+    `SELECT p.id, p.codice, p.pacchetto, p.stato, p.pagato, p.metodo_pagamento, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note,
+            p.accettata, p.manuale, p.origine,
+            to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
+            to_char(p.creato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD"T"HH24:MI') AS creato_il,
+            to_char(p.pagato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD') AS pagato_il,
+            c.id AS cliente_id, c.nome, c.cognome, c.telefono, c.email, c.piva_cf, s.nome AS postazione,
+            COALESCE(f.timbri, 0) AS timbri, COALESCE(f.omaggi_disponibili, 0) AS omaggi,
+            (SELECT COUNT(*)::int FROM prenotazioni z WHERE z.cliente_id = c.id AND z.stato <> 'annullata') AS prenotazioni_cliente
+     FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id LEFT JOIN postazioni s ON s.id = p.postazione_id
+     LEFT JOIN fidelity f ON f.cliente_id = c.id WHERE p.id = $1`, [id]))[0];
+  if (!x) throw P.errore('NON_TROVATA', 'Prenotazione non trovata.');
+  const oggi = cal.oraRoma().data;
+  return Object.assign(x, {
+    nomePacchetto: nomePacchetto(cfg, x.pacchetto), email: emailVera(x.email), fonte: R.classificaFonte(x.origine), origine: undefined,
+    oggi,
+    /* l'arrivo si segna per giornate e ingressi del carnet, dal giorno della prenotazione in poi */
+    conPresenza: (x.pacchetto === 'giornata' || x.pacchetto === 'carnet') && x.data_inizio <= oggi
+  });
 }
 
 async function oggi(cfg) {
@@ -94,6 +133,7 @@ async function oggi(cfg) {
       settimanaPrima: await create(lunPrima, cal.aggiungiGiorni(lunPrima, giorniSett)),
       occupate, postazioni: posti, daIncassare: daIncassare.c, daIncassareN: daIncassare.n
     },
+    richieste: await richieste(cfg),
     arriviOggi: await arrivi(oggi, cfg),
     arriviProssimo: await arrivi(prossimo, cfg),
     settimane, mesi,
@@ -106,7 +146,8 @@ async function calendario(da, cfg) {
   const fine = cal.aggiungiGiorni(inizio, 6);
   const posti = await q('SELECT id, nome, attiva FROM postazioni ORDER BY id');
   const occ = await q(
-    `SELECT to_char(o.data, 'YYYY-MM-DD') AS data, o.postazione_id, p.id, p.codice, p.pacchetto, p.stato, c.nome, c.cognome, c.telefono
+    `SELECT to_char(o.data, 'YYYY-MM-DD') AS data, o.postazione_id, p.id, p.codice, p.pacchetto, p.stato, p.accettata, p.pagato, p.prezzo_centesimi,
+            to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, c.nome, c.cognome, c.telefono
      FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id JOIN clienti c ON c.id = p.cliente_id
      WHERE o.data BETWEEN $1 AND $2`, [inizio, fine]);
   const chiusure = await q(`SELECT to_char(data, 'YYYY-MM-DD') AS data, motivo FROM chiusure WHERE data BETWEEN $1 AND $2`, [inizio, fine]);
@@ -120,7 +161,8 @@ async function calendario(da, cfg) {
       posti: posti.filter(p => p.attiva).map(p => {
         const o = occ.find(x => x.data === d && x.postazione_id === p.id);
         return { postazione: p.nome, prenotazione: o ? { id: o.id, codice: o.codice, nome: o.nome + ' ' + o.cognome, telefono: o.telefono,
-          pacchetto: nomePacchetto(cfg, o.pacchetto), stato: o.stato } : null };
+          pacchetto: nomePacchetto(cfg, o.pacchetto), idPacchetto: o.pacchetto, stato: o.stato, accettata: o.accettata, pagato: o.pagato,
+          prezzo: o.prezzo_centesimi, primoGiorno: o.data_inizio === d } : null };
       })
     });
   }
@@ -276,6 +318,7 @@ module.exports = async (req, res) => {
       if (azione === 'oggi') { json(res, 200, Object.assign(await oggi(cfg), { ruolo })); return; }
       if (azione === 'crescita') { json(res, 200, Object.assign(await G.crescita(req.query.mese), { ruolo })); return; }
       if (azione === 'calendario') { json(res, 200, await calendario(req.query.da, cfg)); return; }
+      if (azione === 'scheda') { json(res, 200, await scheda(parseInt(req.query.id, 10), cfg)); return; }
       if (azione === 'clienti') { json(res, 200, { clienti: await clienti(req.query.cerca) }); return; }
       if (azione === 'incassi') { json(res, 200, await incassi(req.query.periodo, req.query.da, cfg)); return; }
       if (azione === 'csv') {
@@ -303,10 +346,16 @@ module.exports = async (req, res) => {
         if (ruolo !== 'apex') { json(res, 403, { errore: 'SOLO_APEX', messaggio: 'Questi numeri li aggiorna Apex Media.' }); return; }
         json(res, 200, await G.salvaMarketing(b)); return;
       }
+      if (azione === 'accetta') {
+        const r = await q(`UPDATE prenotazioni SET accettata = true WHERE id = $1 AND stato <> 'annullata' RETURNING id, codice`, [parseInt(b.id, 10)]);
+        if (!r.length) throw P.errore('NON_TROVATA', 'Prenotazione non trovata o già annullata.');
+        json(res, 200, { id: r[0].id, accettata: true }); return;
+      }
       if (azione === 'presenza') { json(res, 200, await P.segnaPresenza(parseInt(b.id, 10), b.stato)); return; }
       if (azione === 'pagato') {
         const pagato = b.pagato === true, metodo = ['contanti', 'carta', 'bonifico', 'online'].indexOf(b.metodo) !== -1 ? b.metodo : null;
-        const r = await q(`UPDATE prenotazioni SET pagato = $2, metodo_pagamento = $3, pagato_il = CASE WHEN $2 THEN COALESCE(pagato_il, now()) ELSE NULL END
+        const r = await q(`UPDATE prenotazioni SET pagato = $2, metodo_pagamento = $3, pagato_il = CASE WHEN $2 THEN COALESCE(pagato_il, now()) ELSE NULL END,
+                             accettata = accettata OR $2
                            WHERE id = $1 RETURNING id, pagato, metodo_pagamento`, [parseInt(b.id, 10), pagato, pagato ? metodo : null]);
         if (!r.length) throw P.errore('NON_TROVATA', 'Prenotazione non trovata.');
         json(res, 200, r[0]); return;

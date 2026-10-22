@@ -59,7 +59,7 @@
     e.preventDefault();
     var err = $('[data-login-errore]'); err.textContent = '';
     api('login', { dati: { password: $('#password').value } })
-      .then(function (r) { ruolo = r.ruolo || 'titolare'; $('#password').value = ''; mostraApp(); })
+      .then(function (r) { ruolo = r.ruolo || 'titolare'; $('#password').value = ''; mostraApp(); apriDaEmail(); })
       .catch(function (x) { err.textContent = x.message; });
   });
   $('[data-esci]').addEventListener('click', function () { api('esci', { dati: {} }).then(mostraAccesso, mostraAccesso); });
@@ -78,42 +78,67 @@
   $$('[data-scheda]').forEach(function (b) { b.addEventListener('click', function () { vai(b.getAttribute('data-scheda')); }); });
 
   /* =============================================================
-     OGGI
+     OGGI — le cose da fare adesso, le richieste da accettare e
+     chi arriva. Ogni prenotazione ha tre passi:
+       1 Accettata → 2 È arrivato → 3 Pagato
+     Ogni riga mostra un solo pulsante: il passo che viene dopo.
+     Toccando la riga si apre la scheda con tutte le funzioni.
      ============================================================= */
+  var oggiIso = iso(new Date());
   function delta(a, b, cosa) {
     if (!b) return a ? '<span class="su">' + (cosa === 'mese' ? 'Primo mese con incassi' : 'Prima settimana con prenotazioni') + '</span>' : '';
     var p = Math.round((a - b) / b * 100);
     return '<span class="' + (p >= 0 ? 'su' : 'giu') + '">' + (p >= 0 ? '▲ +' : '▼ ') + p + '%</span> rispetto ' + (cosa === 'mese' ? 'al mese scorso' : 'alla settimana scorsa');
   }
+  function giornoBreve(s) { return cap(dataTesto(s, { weekday: 'short', day: 'numeric', month: 'short' }).replace(/\./g, '')); }
+  function isMese(a) { return /^mese/.test(a.pacchetto); }
+  function conArrivo(a) { return a.pacchetto === 'giornata' || a.pacchetto === 'carnet'; }
+  function postoBreve(t) { return String(t || '').replace(/^(Postazione|Scrivania)\s*/i, 'Scr. '); }
+  function prezzoTesto(a) { return a.prezzo_centesimi ? euro(a.prezzo_centesimi) : a.omaggio ? 'in regalo' : 'dal carnet'; }
 
-  function schedaArrivo(a, conAzioni) {
-    var mese = /^mese/.test(a.pacchetto);
-    var stato = a.stato === 'presente' ? '<span class="arrivo-stato stato-presente">✓ Arrivato</span>'
-      : a.stato === 'assente' ? '<span class="arrivo-stato stato-assente">Non è venuto</span>'
-      : mese ? '<span class="arrivo-stato stato-mese">Abbonamento</span>' : '';
-    var info = a.nomePacchetto + ' · ' + a.postazione +
-      (mese ? ' · fino al ' + dataTesto(a.data_fine, { day: 'numeric', month: 'long' }) : '') +
-      (a.omaggio ? ' · giornata omaggio' : a.carnet_id && a.pacchetto === 'giornata' ? ' · dal carnet' : '');
-    var azioni = '';
-    if (conAzioni && a.conPresenza && a.stato !== 'confermata') {
-      azioni = '<button class="link-azione" type="button" data-presenza="confermata" data-id="' + a.id + '">Correggi</button>';
-    } else if (conAzioni && a.conPresenza) {
-      azioni = '<div class="arrivo-azioni">' +
-        '<button class="btn btn-verde" type="button" data-presenza="presente" data-id="' + a.id + '">È arrivato</button>' +
-        '<button class="btn btn-grigio" type="button" data-presenza="assente" data-id="' + a.id + '">Non è venuto</button></div>';
-    }
-    if (conAzioni && a.primoGiorno && !a.pagato && a.prezzo_centesimi > 0) {
-      azioni += '<div class="incassa-scelta"><button class="btn btn-filo" type="button" data-incassa="contanti" data-id="' + a.id + '">Incassato ' + euro(a.prezzo_centesimi) + ' in contanti</button>' +
-        '<button class="btn btn-filo" type="button" data-incassa="carta" data-id="' + a.id + '">Incassato ' + euro(a.prezzo_centesimi) + ' con carta</button></div>';
-    } else if (a.pagato && a.prezzo_centesimi > 0 && conAzioni && a.primoGiorno) {
-      azioni += '<p class="pagato-ok">✓ Pagato ' + euro(a.prezzo_centesimi) + (a.metodo_pagamento ? ' (' + a.metodo_pagamento + ')' : '') + '</p>';
-    }
-    return '<article class="arrivo">' +
-      '<div class="arrivo-testa"><div><h3>' + h(a.nome + ' ' + a.cognome) + '</h3><p class="arrivo-info">' + h(info) + '</p>' +
-      (a.note ? '<p class="arrivo-info">Nota: ' + h(a.note) + '</p>' : '') + '</div>' + stato + '</div>' +
-      '<div class="arrivo-contatti"><a href="tel:' + h(tel(a.telefono)) + '"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Chiama</a>' +
-      '<a href="' + h(wa(a.telefono)) + '" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a></div>' +
-      azioni + '</article>';
+  /* a che punto è una prenotazione e qual è il passo successivo */
+  function situazione(a) {
+    var gratis = !a.prezzo_centesimi, pagatoOk = a.pagato || gratis, arrivo = conArrivo(a);
+    var iniziata = a.data_inizio <= oggiIso;
+    var passi = [
+      { nome: 'Accettata', fatto: a.accettata },
+      arrivo ? { nome: a.stato === 'assente' ? 'Non è venuto' : 'Arrivato', fatto: a.stato === 'presente', no: a.stato === 'assente' }
+             : { nome: 'Abbonamento', fatto: true },
+      { nome: gratis ? 'Niente da pagare' : 'Pagato', fatto: pagatoOk }
+    ];
+    var azione = null;
+    if (a.stato === 'annullata') azione = null;
+    else if (!a.accettata) azione = 'accetta';
+    else if (arrivo && a.stato === 'confermata' && iniziata) azione = 'arrivato';
+    else if (!pagatoOk && a.stato !== 'assente' && iniziata) azione = 'incassa';
+    var fatto = a.accettata && pagatoOk && (!arrivo || a.stato === 'presente');
+    return { passi: passi, azione: azione, assente: a.stato === 'assente', fatto: fatto, iniziata: iniziata };
+  }
+  function passiHtml(s) {
+    return '<ol class="passi-mini">' + s.passi.map(function (p) {
+      return '<li class="' + (p.fatto ? 'fatto' : p.no ? 'no' : '') + '">' + (p.fatto ? '✓ ' : p.no ? '✕ ' : '') + h(p.nome) + '</li>';
+    }).join('') + '</ol>';
+  }
+  function bottoneAzione(a, azione) {
+    if (azione === 'accetta') return '<button class="btn btn-s btn-ocra" type="button" data-accetta="' + a.id + '"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Accetta</button>';
+    if (azione === 'arrivato') return '<button class="btn btn-s btn-verde" type="button" data-presenza="presente" data-id="' + a.id + '"><svg class="ico" aria-hidden="true"><use href="#i-user-check"/></svg>È arrivato</button>';
+    if (azione === 'incassa') return '<button class="btn btn-s btn-pieno" type="button" data-apri-incasso="' + a.id + '"><svg class="ico" aria-hidden="true"><use href="#i-euro"/></svg>Incassa ' + euro(a.prezzo_centesimi) + '</button>';
+    return '';
+  }
+  function rigaPren(a, richiesta) {
+    var s = situazione(a);
+    var quando = richiesta ? giornoBreve(a.data_inizio) : postoBreve(a.postazione);
+    var info = h(a.nomePacchetto) + ' · ' + prezzoTesto(a) +
+      (isMese(a) ? ' · fino al ' + dataTesto(a.data_fine, { day: 'numeric', month: 'short' }) : '') +
+      (richiesta && a.fonte ? ' · dal sito, via ' + h(a.fonte) : '');
+    var destra = s.azione ? bottoneAzione(a, s.azione)
+      : s.assente ? '<span class="pill pill-rosso">Non è venuto</span>'
+      : s.fatto ? '<span class="pill pill-verde">✓ Tutto fatto</span>'
+      : '<span class="pill">In attesa</span>';
+    return '<article class="pren' + (s.fatto ? ' pren-fatta' : '') + (s.assente ? ' pren-assente' : '') + (!a.accettata ? ' pren-nuova' : '') + '" data-apri="' + a.id + '" tabindex="0" role="button" aria-label="Apri la prenotazione di ' + h(a.nome + ' ' + a.cognome) + '">' +
+      '<div class="pren-quando">' + h(quando) + '</div>' +
+      '<div class="pren-corpo"><p class="pren-nome">' + h(a.nome + ' ' + a.cognome) + '</p><p class="pren-info">' + info + '</p>' + passiHtml(s) + '</div>' +
+      '<div class="pren-azione">' + destra + '<span class="pren-apri">Dettagli ›</span></div></article>';
   }
 
   /* grafico a barre: SVG semplice, valori scritti sopra ogni barra */
@@ -130,12 +155,45 @@
       '<line x1="0" x2="' + W + '" y1="' + (H - basso) + '" y2="' + (H - basso) + '" stroke="#E2DDD1" stroke-width="2"/>' + barre + '</svg>';
   }
 
+  function aggiornaBadge(n) {
+    var b = $('[data-badge]');
+    b.hidden = !n; b.textContent = n > 9 ? '9+' : n;
+  }
+
   caricatori.oggi = function () {
     var ora = new Date().getHours();
+    oggiIso = iso(new Date());
     $('[data-saluto]').textContent = ruolo === 'apex' ? 'Ciao, Apex Media' : (ora < 13 ? 'Buongiorno' : ora < 18 ? 'Buon pomeriggio' : 'Buonasera') + ', Marcella';
     $('[data-data-oggi]').textContent = cap(new Date().toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }));
     return api('oggi').then(function (d) {
-      var k = d.kpi;
+      var k = d.kpi, rich = d.richieste || [];
+      oggiIso = d.oggi;
+
+      /* da fare adesso */
+      var daSegnare = d.arriviOggi.filter(function (a) { return situazione(a).azione === 'arrivato'; }).length;
+      var chip = [];
+      if (rich.length) chip.push('<button class="chip chip-ocra" type="button" data-vai-a="[data-blocco-richieste]"><b>' + rich.length + '</b> ' + (rich.length === 1 ? 'nuova richiesta da accettare' : 'nuove richieste da accettare') + ' ›</button>');
+      if (daSegnare) chip.push('<button class="chip chip-verde" type="button" data-vai-a="[data-arrivi-oggi]"><b>' + daSegnare + '</b> ' + (daSegnare === 1 ? 'arrivo da segnare' : 'arrivi da segnare') + ' ›</button>');
+      if (k.daIncassare) chip.push('<button class="chip chip-blu" type="button" data-vai-scheda="incassi"><b>' + euro(k.daIncassare) + '</b> da incassare (' + k.daIncassareN + ') ›</button>');
+      $('[data-da-fare]').innerHTML = chip.length ? '<p class="da-fare-titolo">Da fare adesso</p><div class="chips">' + chip.join('') + '</div>'
+        : '<p class="tutto-ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Tutto in ordine: adesso non c’è niente da fare.</p>';
+      aggiornaBadge(rich.length);
+
+      /* richieste da accettare */
+      $('[data-blocco-richieste]').hidden = !rich.length;
+      $('[data-n-richieste]').textContent = rich.length;
+      $('[data-richieste]').innerHTML = rich.map(function (a) { return rigaPren(a, true); }).join('');
+
+      /* arrivi */
+      $('[data-oggi-occ]').textContent = k.occupate + ' su ' + k.postazioni + ' scrivanie occupate';
+      $('[data-arrivi-oggi]').innerHTML = d.arriviOggi.length ? d.arriviOggi.map(function (a) { return rigaPren(a, false); }).join('')
+        : '<p class="vuoto">Oggi non arriva nessuno.</p>';
+      var rel = d.prossimo === piu(d.oggi, 1) ? 'domani' : dataTesto(d.prossimo, { weekday: 'long' });
+      $('[data-titolo-prossimo]').textContent = 'Chi arriva ' + rel + ' (' + dataTesto(d.prossimo, { day: 'numeric', month: 'long' }) + ')';
+      $('[data-arrivi-prossimo]').innerHTML = d.arriviProssimo.length ? d.arriviProssimo.map(function (a) { return rigaPren(a, false); }).join('')
+        : '<p class="vuoto">Per ora nessuna prenotazione.</p>';
+
+      /* numeri e grafici */
       $('[data-k-incasso]').textContent = euro(k.incassoMese);
       $('[data-k-incasso-d]').innerHTML = delta(k.incassoMese, k.incassoMesePrima, 'mese');
       $('[data-k-sett]').textContent = k.settimana;
@@ -146,14 +204,6 @@
       inc.hidden = !k.daIncassare;
       inc.textContent = 'Da incassare: ' + euro(k.daIncassare) + ' (' + k.daIncassareN + (k.daIncassareN === 1 ? ' prenotazione' : ' prenotazioni') + ') →';
       inc.onclick = function () { vai('incassi'); };
-
-      $('[data-arrivi-oggi]').innerHTML = d.arriviOggi.length ? d.arriviOggi.map(function (a) { return schedaArrivo(a, true); }).join('')
-        : '<p class="vuoto">Oggi non arriva nessuno.</p>';
-      var rel = d.prossimo === piu(d.oggi, 1) ? 'domani' : dataTesto(d.prossimo, { weekday: 'long' });
-      $('[data-titolo-prossimo]').textContent = 'Chi arriva ' + (rel === 'domani' ? 'domani' : rel) + ' (' + dataTesto(d.prossimo, { day: 'numeric', month: 'long' }) + ')';
-      $('[data-arrivi-prossimo]').innerHTML = d.arriviProssimo.length ? d.arriviProssimo.map(function (a) { return schedaArrivo(a, false); }).join('')
-        : '<p class="vuoto">Per ora nessuna prenotazione.</p>';
-
       $('[data-grafico-settimane]').innerHTML = grafico(d.settimane.map(function (s) { return s.n; }),
         d.settimane.map(function (s) { return dataTesto(s.inizio, { day: 'numeric', month: 'numeric' }); }), String, '#1B2A3A');
       $('[data-grafico-mesi]').innerHTML = grafico(d.mesi.map(function (m) { return Math.round(m.centesimi / 100); }),
@@ -165,68 +215,279 @@
     }).catch(function (e) { if (e.stato !== 501) toast(e.message, true); });
   };
 
-  /* azioni sugli arrivi: presenza e incasso */
+  /* =============================================================
+     SCHEDA DI UNA PRENOTAZIONE — tutti i dettagli, i tre passi
+     spiegati uno per uno e tutte le azioni possibili
+     ============================================================= */
+  var dlgScheda = $('[data-scheda-dlg]'), dlgNuova = $('[data-nuova-dlg]'), schedaId = null;
+  function apriDlg(d) { if (typeof d.showModal === 'function') { if (!d.open) d.showModal(); } else d.setAttribute('open', ''); }
+  function chiudiDlg(d) { if (d && d.open) { if (typeof d.close === 'function') d.close(); else d.removeAttribute('open'); } }
+  $$('[data-chiudi-dlg]').forEach(function (b) { b.addEventListener('click', function () { chiudiDlg(b.closest('dialog')); }); });
+  [dlgScheda, dlgNuova].forEach(function (d) {
+    d.addEventListener('click', function (e) { if (e.target === d) chiudiDlg(d); });
+    d.addEventListener('close', function () { if (d === dlgScheda) schedaId = null; });
+  });
+
+  function apriScheda(id, punto) {
+    var nuova = schedaId !== id;
+    schedaId = id;
+    if (nuova) { $('[data-sc-nome]').textContent = 'Prenotazione'; $('[data-sc-sotto]').textContent = ''; $('[data-sc-corpo]').innerHTML = '<p class="nota">Un attimo…</p>'; }
+    apriDlg(dlgScheda);
+    return api('scheda', { query: 'id=' + id }).then(function (x) {
+      disegnaScheda(x);
+      if (punto) { var el = $('[data-passo="' + punto + '"]', dlgScheda); if (el) el.scrollIntoView({ block: 'center' }); }
+    }).catch(function (e) { toast(e.message, true); chiudiDlg(dlgScheda); });
+  }
+  function fattoHtml(t) { return '<p class="passo-fatto"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + t + '</p>'; }
+  function passoHtml(n, titolo, stato, corpo, chiave) {
+    return '<section class="passo passo-' + stato + '" data-passo="' + chiave + '"><div class="passo-n">' + (stato === 'fatto' ? '✓' : n) + '</div>' +
+      '<div class="passo-corpo"><h3>' + titolo + '</h3>' + corpo + '</div></section>';
+  }
+  function disegnaScheda(x) {
+    var annullata = x.stato === 'annullata', s = situazione(x), id = x.id, chi = h(x.nome + ' ' + x.cognome);
+    $('[data-sc-nome]').textContent = x.nome + ' ' + x.cognome;
+    $('[data-sc-sotto]').textContent = x.nomePacchetto + ' · codice ' + x.codice;
+    var quando = isMese(x) ? 'dal ' + dataTesto(x.data_inizio, { day: 'numeric', month: 'long' }) + ' al ' + dataTesto(x.data_fine, { day: 'numeric', month: 'long' })
+      : cap(dataTesto(x.data_inizio));
+    var html = '';
+
+    /* cosa fare adesso */
+    var adesso = annullata ? '<strong>Prenotazione annullata.</strong> Il posto è di nuovo libero.'
+      : s.azione === 'accetta' ? '<strong>Cosa fare adesso:</strong> controlla la richiesta e accettala (passo 1).'
+      : s.azione === 'arrivato' ? '<strong>Cosa fare adesso:</strong> quando entra in negozio tocca “È arrivato” (passo 2).'
+      : s.azione === 'incassa' ? '<strong>Cosa fare adesso:</strong> incassa ' + euro(x.prezzo_centesimi) + ' e scegli come ha pagato (passo 3).'
+      : s.assente ? '<strong>Non è venuto.</strong> Se ti sei sbagliata, tocca “Correggi” al passo 2.'
+      : s.fatto ? '<strong>Tutto fatto.</strong> Non c’è altro da fare per questa prenotazione.'
+      : '<strong>Tutto a posto per ora.</strong> Il giorno della prenotazione potrai segnare l’arrivo e l’incasso.';
+    html += '<p class="adesso' + (s.fatto && !annullata ? ' adesso-ok' : '') + (annullata ? ' adesso-no' : '') + '">' + adesso + '</p>';
+
+    if (!annullata) {
+      /* passo 1: accettare */
+      html += passoHtml(1, 'Accetta la richiesta', x.accettata ? 'fatto' : 'ora', x.accettata
+        ? fattoHtml(x.manuale ? 'Inserita da te: già accettata' : 'Accettata')
+        : '<p class="nota">Il cliente ha già ricevuto la conferma via email. Se va tutto bene, accettala. Se non va bene (per esempio quel giorno sei chiusa), rifiutala: gli arriva un’email di annullamento e il posto torna libero.</p>' +
+          '<div class="azioni-riga"><button class="btn btn-ocra" type="button" data-accetta="' + id + '"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Accetta</button>' +
+          '<button class="btn btn-rosso-filo" type="button" data-rifiuta="' + id + '" data-chi="' + chi + '"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Rifiuta</button></div>', 'accetta');
+
+      /* passo 2: arrivo */
+      var corpo2, stato2;
+      if (!conArrivo(x)) { stato2 = 'fatto'; corpo2 = fattoHtml('Abbonamento: non serve segnare gli arrivi'); }
+      else if (x.stato === 'presente') { stato2 = 'fatto'; corpo2 = fattoHtml('È arrivato · timbro aggiunto alla Bagnarino Card') + '<button class="link-azione" type="button" data-presenza="confermata" data-id="' + id + '">Correggi: non è ancora arrivato</button>'; }
+      else if (x.stato === 'assente') { stato2 = 'no'; corpo2 = '<p class="pill pill-rosso">Non è venuto</p><button class="link-azione" type="button" data-presenza="confermata" data-id="' + id + '">Correggi</button>'; }
+      else if (x.conPresenza) {
+        stato2 = x.accettata ? 'ora' : 'dopo';
+        corpo2 = '<p class="nota">Quando entra in negozio tocca “È arrivato”: il timbro sulla sua Bagnarino Card si aggiunge da solo.</p>' +
+          '<div class="azioni-riga"><button class="btn btn-verde" type="button" data-presenza="presente" data-id="' + id + '"><svg class="ico" aria-hidden="true"><use href="#i-user-check"/></svg>È arrivato</button>' +
+          '<button class="btn btn-filo" type="button" data-presenza="assente" data-id="' + id + '">Non è venuto</button></div>';
+      } else { stato2 = 'dopo'; corpo2 = '<p class="nota">Si segna il giorno della prenotazione: ' + dataTesto(x.data_inizio) + '.</p>'; }
+      html += passoHtml(2, 'Il giorno dell’arrivo', stato2, corpo2, 'arrivo');
+
+      /* passo 3: pagamento */
+      var corpo3, stato3;
+      if (!x.prezzo_centesimi) { stato3 = 'fatto'; corpo3 = fattoHtml(x.omaggio ? 'Niente da incassare: giornata in regalo con la Card' : 'Niente da incassare: ingresso del carnet, già pagato'); }
+      else if (x.pagato) {
+        stato3 = 'fatto';
+        corpo3 = fattoHtml('Pagato ' + euro(x.prezzo_centesimi) + (x.metodo_pagamento ? ' · ' + x.metodo_pagamento : '') + (x.pagato_il ? ' · ' + dataTesto(x.pagato_il, { day: 'numeric', month: 'long' }) : '')) +
+          '<button class="link-azione" type="button" data-non-pagato data-id="' + id + '">Annulla l’incasso</button>';
+      } else {
+        stato3 = s.azione === 'incassa' ? 'ora' : 'dopo';
+        corpo3 = '<p class="nota">Da incassare: <strong class="importo">' + euro(x.prezzo_centesimi) + '</strong>. Come ha pagato?</p>' +
+          '<div class="azioni-3"><button class="btn btn-pieno" type="button" data-incassa="contanti" data-id="' + id + '">Contanti</button>' +
+          '<button class="btn btn-pieno" type="button" data-incassa="carta" data-id="' + id + '">Carta</button>' +
+          '<button class="btn btn-filo" type="button" data-incassa="bonifico" data-id="' + id + '">Bonifico</button></div>';
+      }
+      html += passoHtml(3, 'Il pagamento', stato3, corpo3, 'incasso');
+    }
+
+    /* dettagli */
+    var righe = [
+      ['Quando', quando], ['Formula', x.nomePacchetto], ['Scrivania', x.postazione || '—'],
+      ['Prezzo', x.prezzo_centesimi ? euro(x.prezzo_centesimi) : x.omaggio ? '€0 · in regalo con la Card' : '€0 · dal carnet'],
+      ['Bagnarino Card', x.timbri + ' timbri su 10' + (x.omaggi ? ' · ' + x.omaggi + (x.omaggi === 1 ? ' giornata' : ' giornate') + ' in regalo' : '')],
+      x.piva_cf ? ['Fattura a', x.piva_cf] : null, x.note ? ['Note', x.note] : null,
+      ['Arrivata da', x.manuale ? 'Inserita da te' : 'Sito · ' + x.fonte],
+      ['Prenotata il', dataTesto(x.creato_il.slice(0, 10), { day: 'numeric', month: 'long' }) + ' alle ' + x.creato_il.slice(11, 16)],
+      ['È venuto', x.prenotazioni_cliente === 1 ? 'Prima prenotazione' : x.prenotazioni_cliente + ' prenotazioni in tutto']
+    ].filter(Boolean);
+    html += '<h3 class="foglio-sottotitolo">Dettagli</h3><dl class="dettagli">' + righe.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + h(r[1]) + '</dd></div>'; }).join('') + '</dl>';
+
+    /* contatti */
+    html += '<div class="contatti-riga"><a class="btn btn-filo btn-s" href="tel:' + h(tel(x.telefono)) + '"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Chiama</a>' +
+      '<a class="btn btn-filo btn-s" href="' + h(wa(x.telefono)) + '" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>' +
+      (x.email ? '<a class="btn btn-filo btn-s" href="mailto:' + h(x.email) + '"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>Email</a>' : '') + '</div>';
+
+    if (!annullata) {
+      html += '<div class="zona-annulla"><button class="link-azione link-rosso" type="button" data-annulla-id="' + id + '" data-chi="' + chi + '">Annulla questa prenotazione</button>' +
+        '<p class="nota">Il posto torna libero e il cliente riceve un’email.</p></div>';
+    }
+    $('[data-sc-corpo]').innerHTML = html;
+  }
+
+  /* dopo ogni azione: si aggiorna la scheda aperta e la pagina sotto */
+  function aggiorna() {
+    var attivo = schedaAttiva();
+    if (caricatori[attivo]) caricatori[attivo]();
+    if (schedaId && dlgScheda.open) apriScheda(schedaId);
+  }
+  function schedaAttiva() { var p = $$('[data-pannello]').filter(function (x) { return !x.hidden; })[0]; return p ? p.getAttribute('data-pannello') : 'oggi'; }
+
   document.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-presenza]');
-    if (b) {
+    var t = e.target;
+    var b;
+    if ((b = t.closest('[data-accetta]'))) {
       b.disabled = true;
-      api('presenza', { dati: { id: +b.getAttribute('data-id'), stato: b.getAttribute('data-presenza') } }).then(function (r) {
-        toast(r.stato === 'presente' ? (r.premio ? '🎁 Arrivato! Ha appena guadagnato una giornata in regalo.' : r.premioSbloccato ? '🎁 Arrivato! Con ' + r.timbri + ' timbri ha sbloccato: ' + r.premioSbloccato + '. Ricordati di darglielo.' : 'Arrivato. Timbri sulla card: ' + r.timbri + ' su 10.')
-          : r.stato === 'assente' ? 'Segnato: non è venuto.' : 'Corretto: di nuovo in attesa.');
-        caricatori.oggi();
+      api('accetta', { dati: { id: +b.getAttribute('data-accetta') } }).then(function () {
+        toast('Richiesta accettata.');
+        var badge = $('[data-badge]'); if (!badge.hidden) aggiornaBadge(Math.max(0, (+badge.textContent || 1) - 1));
+        aggiorna();
       }).catch(function (x) { b.disabled = false; toast(x.message, true); });
       return;
     }
-    var c = e.target.closest('[data-incassa]');
-    if (c) {
-      c.disabled = true;
-      api('pagato', { dati: { id: +c.getAttribute('data-id'), pagato: true, metodo: c.getAttribute('data-incassa') } }).then(function () {
-        toast('Incasso registrato.');
-        var p = $('[data-pannello="incassi"]');
-        if (!p.hidden) caricatori.incassi(); else caricatori.oggi();
-      }).catch(function (x) { c.disabled = false; toast(x.message, true); });
+    if ((b = t.closest('[data-rifiuta]'))) {
+      if (!confirm('Rifiutare la richiesta di ' + b.getAttribute('data-chi') + '?\nGli arriva un’email di annullamento e il posto torna libero.')) return;
+      api('annulla', { dati: { id: +b.getAttribute('data-rifiuta') } }).then(function () {
+        toast('Richiesta rifiutata: il cliente riceve un’email.'); chiudiDlg(dlgScheda); aggiorna();
+      }).catch(function (x) { toast(x.message, true); });
       return;
     }
-    var n = e.target.closest('[data-non-pagato]');
-    if (n) {
-      api('pagato', { dati: { id: +n.getAttribute('data-id'), pagato: false } }).then(function () { toast('Segnato come da incassare.'); caricatori.incassi(); })
-        .catch(function (x) { toast(x.message, true); });
+    if ((b = t.closest('[data-presenza]'))) {
+      b.disabled = true;
+      api('presenza', { dati: { id: +b.getAttribute('data-id'), stato: b.getAttribute('data-presenza') } }).then(function (r) {
+        toast(r.stato === 'presente' ? (r.premio ? '🎁 Arrivato! Ha appena guadagnato una giornata in regalo.' : r.premioSbloccato ? '🎁 Arrivato! Con ' + r.timbri + ' timbri ha sbloccato: ' + r.premioSbloccato + '. Ricordati di darglielo.' : 'Arrivato. Timbri sulla card: ' + r.timbri + ' su 10.')
+          : r.stato === 'assente' ? 'Segnato: non è venuto.' : 'Corretto.');
+        aggiorna();
+      }).catch(function (x) { b.disabled = false; toast(x.message, true); });
+      return;
     }
+    if ((b = t.closest('[data-incassa]'))) {
+      b.disabled = true;
+      api('pagato', { dati: { id: +b.getAttribute('data-id'), pagato: true, metodo: b.getAttribute('data-incassa') } }).then(function () {
+        toast('Incasso registrato (' + b.getAttribute('data-incassa') + ').'); aggiorna();
+      }).catch(function (x) { b.disabled = false; toast(x.message, true); });
+      return;
+    }
+    if ((b = t.closest('[data-non-pagato]'))) {
+      api('pagato', { dati: { id: +b.getAttribute('data-id'), pagato: false } }).then(function () { toast('Segnato come da incassare.'); aggiorna(); })
+        .catch(function (x) { toast(x.message, true); });
+      return;
+    }
+    if ((b = t.closest('[data-annulla-id]'))) {
+      if (!confirm('Annullare la prenotazione di ' + b.getAttribute('data-chi') + '?\nIl posto torna libero e il cliente riceve un’email.')) return;
+      api('annulla', { dati: { id: +b.getAttribute('data-annulla-id') } }).then(function () {
+        toast('Prenotazione annullata.'); chiudiDlg(dlgScheda); aggiorna();
+      }).catch(function (x) { toast(x.message, true); });
+      return;
+    }
+    if ((b = t.closest('[data-apri-incasso]'))) { apriScheda(+b.getAttribute('data-apri-incasso'), 'incasso'); return; }
+    if ((b = t.closest('[data-vai-a]'))) { var el = $(b.getAttribute('data-vai-a')); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    if ((b = t.closest('[data-vai-scheda]'))) { vai(b.getAttribute('data-vai-scheda')); return; }
+    if ((b = t.closest('[data-nuova]'))) { apriNuova(b.getAttribute('data-data')); return; }
+    if ((b = t.closest('[data-apri]')) && !t.closest('a, button:not([data-apri])')) { apriScheda(+b.getAttribute('data-apri')); return; }
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('article[data-apri]')) { e.preventDefault(); apriScheda(+e.target.getAttribute('data-apri')); }
   });
 
   /* =============================================================
-     CALENDARIO
+     CALENDARIO — come un gestionale: scrivanie × giorni.
+     Computer: tutta la settimana in griglia.
+     Telefono: un giorno alla volta, con i giorni in alto.
+     Colori: da accettare (ocra), accettata (blu), arrivato (verde);
+     "€✓" = pagato. Una scrivania libera si tocca per prenotarla.
      ============================================================= */
-  var calDa = null;
+  var calDa = null, calGiorno = null, calDati = null;
+  function statoCella(r) {
+    if (r.stato === 'assente') return 'st-assente';
+    if (!r.accettata) return 'st-nuova';
+    if (r.stato === 'presente' || (!/^(giornata|carnet)$/.test(r.idPacchetto) && !r.primoGiorno)) return 'st-arrivato';
+    return 'st-accettata';
+  }
+  function nomeCorto(n) { var p = String(n).split(' '); return p[0] + (p[1] ? ' ' + p[1].charAt(0) + '.' : ''); }
+  function cellaPren(r, lungo) {
+    var pagato = r.pagato || !r.prezzo;
+    return '<button class="cella ' + statoCella(r) + '" type="button" data-apri="' + r.id + '" title="' + h(r.nome + ' · ' + r.pacchetto) + '">' +
+      '<span class="cella-nome">' + h(lungo ? r.nome : nomeCorto(r.nome)) + '</span>' +
+      '<span class="cella-info">' + h(r.pacchetto) + (pagato ? ' <b class="euro-ok" title="Pagato">€✓</b>' : '') + '</span></button>';
+  }
+  function giorniVisibili(d) {
+    return d.giorni.filter(function (g) {
+      var we = [0, 6].indexOf(daIso(g.data).getDay()) !== -1;
+      return !we || g.aperto || g.posti.some(function (p) { return p.prenotazione; });
+    });
+  }
+  function statoGiorno(g) {
+    var occ = g.posti.filter(function (p) { return p.prenotazione; }).length;
+    return g.aperto ? occ + ' su ' + g.posti.length : g.chiusoDaTe ? 'Chiuso' + (g.motivo ? ' · ' + g.motivo : '') : g.festivo ? 'Festivo' : 'Chiuso';
+  }
+  function bottoneChiusura(g, oggi) {
+    var we = [0, 6].indexOf(daIso(g.data).getDay()) !== -1;
+    if (g.data < oggi || we || g.festivo) return '';
+    return g.chiusoDaTe ? '<button class="link-azione" type="button" data-riapri="' + g.data + '">Riapri questo giorno</button>'
+      : '<button class="link-azione link-piccolo" type="button" data-chiudi="' + g.data + '">Chiudi questo giorno</button>';
+  }
   caricatori.calendario = function () {
     return api('calendario', { query: calDa ? 'da=' + calDa : '' }).then(function (d) {
-      calDa = d.inizio;
-      $('[data-cal-titolo]').textContent = dataTesto(d.inizio, { day: 'numeric', month: 'long' }) + ' – ' + dataTesto(piu(d.inizio, 6), { day: 'numeric', month: 'long' });
-      $('[data-settimana]').innerHTML = d.giorni.map(function (g) {
-        var weekend = [0, 6].indexOf(daIso(g.data).getDay()) !== -1;
-        if (weekend && !g.posti.some(function (p) { return p.prenotazione; })) return '';
-        var occupati = g.posti.filter(function (p) { return p.prenotazione; }).length;
-        var stato = g.aperto ? occupati + ' su ' + g.posti.length + ' occupate'
-          : g.chiusoDaTe ? 'Chiuso' + (g.motivo ? ': ' + h(g.motivo) : '') : g.festivo ? 'Festivo' : 'Chiuso';
-        var bottone = g.data < d.oggi || weekend || g.festivo ? ''
-          : g.chiusoDaTe ? '<button class="link-azione" type="button" data-riapri="' + g.data + '">Riapri questo giorno</button>'
-          : '<button class="link-azione" type="button" data-chiudi="' + g.data + '">Chiudi questo giorno</button>';
-        return '<article class="giorno-cal' + (g.data === d.oggi ? ' oggi' : '') + (g.aperto ? '' : ' chiuso') + '">' +
-          '<div class="giorno-cal-testa"><h2>' + cap(dataTesto(g.data)) + '</h2><span>' + stato + '</span></div>' +
-          (g.aperto ? g.posti.map(function (p) {
-            var r = p.prenotazione;
-            return '<div class="posto"><span class="posto-nome">' + h(p.postazione) + '</span>' +
-              (r ? '<span class="posto-chi">' + h(r.nome) + '<small>' + h(r.pacchetto) + ' · <a href="tel:' + h(tel(r.telefono)) + '">' + h(r.telefono) + '</a> · ' +
-                '<button class="link-azione" type="button" data-annulla-id="' + r.id + '" data-chi="' + h(r.nome) + '">annulla</button></small></span>'
-                : '<span class="posto-libero">Libera</span>') + '</div>';
-          }).join('') : '') + bottone + '</article>';
+      calDa = d.inizio; calDati = d;
+      var fine = piu(d.inizio, 6);
+      if (!calGiorno || calGiorno < d.inizio || calGiorno > fine) calGiorno = d.oggi >= d.inizio && d.oggi <= fine ? d.oggi : d.inizio;
+      $('[data-cal-titolo]').textContent = dataTesto(d.inizio, { day: 'numeric', month: 'long' }) + ' – ' + dataTesto(fine, { day: 'numeric', month: 'long' });
+      $('[data-cal-oggi]').hidden = d.oggi >= d.inizio && d.oggi <= fine;
+      var giorni = giorniVisibili(d);
+      if (!giorni.some(function (g) { return g.data === calGiorno; }) && giorni.length) calGiorno = giorni[0].data;
+
+      /* griglia (computer) */
+      var n = Math.max.apply(null, d.giorni.map(function (g) { return g.posti.length; }).concat([0]));
+      var testa = '<thead><tr><th class="cal-angolo">Scrivania</th>' + giorni.map(function (g) {
+        return '<th class="' + (g.data === d.oggi ? 'oggi' : '') + (g.aperto ? '' : ' chiuso') + '"><span class="th-giorno">' + giornoBreve(g.data) + '</span>' +
+          '<span class="th-stato">' + h(statoGiorno(g)) + '</span>' + bottoneChiusura(g, d.oggi) + '</th>';
+      }).join('') + '</tr></thead>';
+      var corpo = '<tbody>';
+      for (var i = 0; i < n; i++) {
+        corpo += '<tr><th class="cal-posto">' + h((giorni[0] && giorni[0].posti[i] ? giorni[0].posti[i].postazione : 'Scrivania ' + (i + 1))) + '</th>';
+        giorni.forEach(function (g) {
+          var p = g.posti[i];
+          if (!g.aperto) { corpo += '<td class="chiuso"></td>'; return; }
+          if (p && p.prenotazione) { corpo += '<td>' + cellaPren(p.prenotazione, false) + '</td>'; return; }
+          corpo += '<td>' + (g.data >= d.oggi ? '<button class="cella cella-libera" type="button" data-nuova data-data="' + g.data + '" aria-label="Prenota ' + h(p ? p.postazione : '') + ' ' + dataTesto(g.data) + '">+</button>' : '<span class="cella cella-vuota"></span>') + '</td>';
+        });
+        corpo += '</tr>';
+      }
+      $('[data-cal-griglia]').innerHTML = testa + corpo + '</tbody>';
+
+      /* giorni in alto (telefono) */
+      $('[data-cal-giorni]').innerHTML = giorni.map(function (g) {
+        return '<button type="button" role="tab" class="giorno-pill' + (g.data === d.oggi ? ' oggi' : '') + (g.aperto ? '' : ' chiuso') + '" aria-selected="' + (g.data === calGiorno) + '" data-cal-sel="' + g.data + '">' +
+          '<span>' + cap(dataTesto(g.data, { weekday: 'short' }).replace('.', '')) + '</span><strong>' + daIso(g.data).getDate() + '</strong>' +
+          '<small>' + (g.aperto ? g.posti.filter(function (p) { return p.prenotazione; }).length + '/' + g.posti.length : 'chiuso') + '</small></button>';
       }).join('');
+      disegnaGiorno();
     }).catch(function (e) { if (e.stato !== 501) toast(e.message, true); });
   };
+  function disegnaGiorno() {
+    var d = calDati, g = d && d.giorni.filter(function (x) { return x.data === calGiorno; })[0];
+    if (!g) { $('[data-cal-giorno]').innerHTML = ''; return; }
+    var html = '<div class="cal-giorno-testa"><h2>' + cap(dataTesto(g.data)) + '</h2><span class="occupazione">' + h(statoGiorno(g)) + '</span></div>';
+    if (g.aperto) {
+      html += g.posti.map(function (p) {
+        var r = p.prenotazione;
+        return '<div class="posto-riga"><span class="posto-nome">' + h(p.postazione) + '</span>' +
+          (r ? cellaPren(r, true) : g.data >= d.oggi ? '<button class="cella cella-libera" type="button" data-nuova data-data="' + g.data + '">Libera · <b>+ Prenota</b></button>' : '<span class="cella cella-vuota">Libera</span>') + '</div>';
+      }).join('');
+    } else html += '<p class="vuoto">Giorno chiuso: nessuno può prenotare.</p>';
+    html += '<div class="cal-giorno-piede">' + bottoneChiusura(g, d.oggi) + '</div>';
+    $('[data-cal-giorno]').innerHTML = html;
+  }
+  $('[data-cal-giorni]').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cal-sel]'); if (!b) return;
+    calGiorno = b.getAttribute('data-cal-sel');
+    $$('[data-cal-sel]').forEach(function (x) { x.setAttribute('aria-selected', x === b); });
+    disegnaGiorno();
+  });
   $('[data-cal-prima]').addEventListener('click', function () { calDa = piu(calDa, -7); caricatori.calendario(); });
   $('[data-cal-dopo]').addEventListener('click', function () { calDa = piu(calDa, 7); caricatori.calendario(); });
-  $('[data-settimana]').addEventListener('click', function (e) {
-    var c = e.target.closest('[data-chiudi]'), r = e.target.closest('[data-riapri]'), a = e.target.closest('[data-annulla-id]');
+  $('[data-cal-oggi]').addEventListener('click', function () { calDa = null; calGiorno = null; caricatori.calendario(); });
+  $('[data-pannello="calendario"]').addEventListener('click', function (e) {
+    var c = e.target.closest('[data-chiudi]'), r = e.target.closest('[data-riapri]');
     if (c) {
       var motivo = prompt('Perché chiudi ' + dataTesto(c.getAttribute('data-chiudi')) + '? (es. ferie, ponte)', 'Chiuso');
       if (motivo === null) return;
@@ -236,13 +497,9 @@
       }).catch(function (x) { toast(x.message, true); });
     }
     if (r) api('chiusura', { dati: { data: r.getAttribute('data-riapri'), chiudi: false } }).then(function () { toast('Giorno riaperto.'); caricatori.calendario(); });
-    if (a && confirm('Annullare la prenotazione di ' + a.getAttribute('data-chi') + '? Il posto torna libero e il cliente riceve un’email.')) {
-      api('annulla', { dati: { id: +a.getAttribute('data-annulla-id') } }).then(function () { toast('Prenotazione annullata.'); caricatori.calendario(); })
-        .catch(function (x) { toast(x.message, true); });
-    }
   });
 
-  /* nuova prenotazione a mano */
+  /* nuova prenotazione a mano (telefono o negozio) */
   var listinoCache = null;
   function riempiFormule() {
     var sel = $('[data-sel-pacchetto]');
@@ -252,15 +509,15 @@
       sel.innerHTML = d.listino.map(function (p) { return '<option value="' + p.id + '">' + h(p.nome) + ' – €' + p.prezzo + '</option>'; }).join('');
     });
   }
-  $('[data-nuova]').addEventListener('click', function () {
+  function apriNuova(data) {
     riempiFormule().then(function () {
-      var f = $('[data-modulo-nuova]'); f.hidden = false;
-      var oggi = iso(new Date());
-      f.data.value = calDa && calDa > oggi ? calDa : oggi;
-      f.nome.focus();
+      var f = $('[data-modulo-nuova]'), oggi = iso(new Date());
+      f.reset();
+      f.data.value = data && data >= oggi ? data : oggi;
+      apriDlg(dlgNuova);
+      setTimeout(function () { f.nome.focus(); }, 60);
     }).catch(function (x) { toast(x.message, true); });
-  });
-  $('[data-annulla-nuova]').addEventListener('click', function () { $('[data-modulo-nuova]').hidden = true; });
+  }
   $('[data-modulo-nuova]').addEventListener('submit', function (e) {
     e.preventDefault();
     var f = this, dati = {};
@@ -268,11 +525,13 @@
     if (dati.nome.length < 2 || dati.cognome.length < 2 || dati.telefono.replace(/\D/g, '').length < 8 || !dati.data) {
       toast('Servono nome, cognome, telefono e giorno.', true); return;
     }
+    var b = f.querySelector('button[type=submit]'); b.disabled = true;
     api('prenotazione', { dati: dati }).then(function (r) {
       toast('Prenotazione salvata: ' + r.codice);
-      f.reset(); f.hidden = true;
-      calDa = dati.data; caricatori.calendario();
-    }).catch(function (x) { toast(x.message, true); });
+      chiudiDlg(dlgNuova);
+      if (schedaAttiva() === 'calendario') { calDa = null; calGiorno = dati.data; var l = daIso(dati.data); l.setDate(l.getDate() - ((l.getDay() + 6) % 7)); calDa = iso(l); }
+      aggiorna();
+    }).catch(function (x) { toast(x.message, true); }).then(function () { b.disabled = false; });
   });
 
   /* =============================================================
@@ -671,7 +930,15 @@
      5 secondi mostriamo comunque l'accesso: nessuna pagina bianca */
   var deciso = false;
   var lento = setTimeout(function () { if (!deciso) mostraAccesso(); }, 5000);
-  api('chi').then(function (r) { deciso = true; clearTimeout(lento); ruolo = r.ruolo || 'titolare'; mostraApp(); }).catch(function (e) {
+  /* dal pulsante dell'email "Apri e accetta la richiesta": /admin?pren=ID */
+  var prenDaAprire = +(new URLSearchParams(location.search).get('pren') || 0);
+  function apriDaEmail() {
+    if (!prenDaAprire) return;
+    var id = prenDaAprire; prenDaAprire = 0;
+    try { history.replaceState(null, '', location.pathname + location.hash); } catch (x) {}
+    apriScheda(id);
+  }
+  api('chi').then(function (r) { deciso = true; clearTimeout(lento); ruolo = r.ruolo || 'titolare'; mostraApp(); apriDaEmail(); }).catch(function (e) {
     deciso = true; clearTimeout(lento);
     if (e.stato === 501) { mostraApp(); return; }
     mostraAccesso();

@@ -103,9 +103,9 @@ var BGN_CONFIG = {
     {
       id: 'mese_flessibile',
       nome: 'Mese flessibile',
-      prezzo: 160,
+      prezzo: 270,
       unita: 'al mese',
-      nota: 'Meno di €8 al giorno',
+      nota: 'Circa €13 al giorno',
       perChi: 'Per chi lavora qui quasi ogni giorno',
       include: ['Tutti i giorni di apertura', 'Una scrivania libera a scelta', 'Stampe, scansioni e wi-fi inclusi'],
       cta: 'Prenota il mese',
@@ -119,9 +119,9 @@ var BGN_CONFIG = {
     {
       id: 'mese_fisso',
       nome: 'Mese, postazione fissa',
-      prezzo: 190,
+      prezzo: 320,
       unita: 'al mese',
-      nota: 'Circa €9 al giorno',
+      nota: 'Circa €15 al giorno',
       perChi: 'Per chi vuole la sua scrivania, sempre quella',
       include: ['Sempre la stessa scrivania', 'Cassettiera personale', 'Lasci le tue cose dove sono'],
       cta: 'Prenota la fissa',
@@ -149,7 +149,7 @@ var BGN_CONFIG = {
        glielo ricorda quando segna l'arrivo. Dopo il 10° si ricomincia.
        [DA CONFERMARE] con Marcella pagine a colori e sconto in negozio. */
     premi: [
-      { timbri: 3, titolo: 'Stampe a colori gratis', testo: 'Fino a 50 pagine a colori per i tuoi lavori.' },
+      { timbri: 3, titolo: '25 stampe a colori gratis', testo: 'Per i tuoi lavori, da usare quando vuoi.' },
       { timbri: 5, titolo: 'Porta un amico', testo: 'Venite insieme: la sua prima giornata è gratis.' },
       { timbri: 7, titolo: 'Sconto 10% in negozio', testo: 'Su carta, cartucce e accessori per l’ufficio.' },
       { timbri: 10, titolo: 'Giornata in regalo', testo: 'L’undicesima giornata la offriamo noi.' }

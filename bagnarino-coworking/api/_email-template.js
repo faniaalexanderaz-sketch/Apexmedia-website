@@ -145,7 +145,8 @@ function annullataCliente(p, cfg, sito) {
 /* ---------- alla titolare: brevi, leggibili dal telefono ---------- */
 function titolareNuova(p, cfg, sito) {
   const tel = '<a href="tel:' + h(p.telefono.replace(/\s/g, '')) + '" style="color:' + INK + '">' + h(p.telefono) + '</a>';
-  const corpo = titoloH('Nuova prenotazione') +
+  const corpo = titoloH('Nuova prenotazione da accettare') +
+    paragrafo('Il cliente ha già ricevuto la conferma. Apri la richiesta e tocca <strong>Accetta</strong>; se non va bene, <strong>Rifiuta</strong> e gli arriva un’email di annullamento.', true) +
     righe([
       ['Chi', p.nome + ' ' + p.cognome],
       ['Quando', periodo(p)],
@@ -159,7 +160,7 @@ function titolareNuova(p, cfg, sito) {
       ['Codice', p.codice]
     ]) + '<div style="height:18px"></div>' +
     bottone('https://wa.me/' + p.telefono.replace(/\D/g, '').replace(/^(?!39)(3\d{8,9})$/, '39$1'), 'Scrivigli su WhatsApp') +
-    bottone(sito + '/admin', 'Apri l’area riservata', true) +
+    bottone(sito + '/admin' + (p.id ? '?pren=' + p.id : '') + '#oggi', 'Apri e accetta la richiesta', true) +
     linkScritto(sito + '/admin');
   return { oggetto: 'Nuova: ' + p.nome + ' ' + p.cognome + ' – ' + p.nomePacchetto + ', ' + periodo(p), html: layout({ titolo: 'Nuova prenotazione', corpo, sito, cfg }) };
 }
