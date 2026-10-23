@@ -671,13 +671,30 @@
     'Instagram': '#B4457E', 'Facebook': '#3B5BDB', 'Google': '#C9973B', 'Google Ads': '#E3B95F', 'Google Maps': '#0C8599',
     'WhatsApp': '#1A9E4B', 'Diretto': '#1B2A3A', 'In sede / telefono': '#7A8794', 'Altro': '#C5BDAD'
   };
+  /* i blocchi di social, Google e pubblicità: stessi nomi, icone e colori
+     nella scheda di Marcella e nel modulo di Apex Media */
   var GRUPPI = [
-    { titolo: 'Instagram', campi: ['instagram_follower', 'instagram_copertura'], aiuto: 'Dashboard professionale → Account raggiunti (ultimi 30 giorni).' },
-    { titolo: 'Facebook', campi: ['facebook_follower', 'facebook_copertura'], aiuto: 'Meta Business Suite → Insight → Copertura.' },
-    { titolo: 'Google', campi: ['google_visualizzazioni', 'google_chiamate', 'google_indicazioni', 'google_clic_sito', 'recensioni_numero', 'recensioni_media'], aiuto: 'Profilo dell’attività → Rendimento (mese scelto).' },
-    { titolo: 'Sito e WhatsApp', campi: ['visite_sito', 'contatti_whatsapp'], aiuto: 'Visite: Google Analytics → Utenti del mese.' },
-    { titolo: 'Pubblicità (in euro)', campi: ['spesa_meta', 'spesa_google'], aiuto: 'Importo speso nel mese, IVA inclusa.' }
+    { id: 'instagram', titolo: 'Instagram', icona: 'instagram', c: '#B4457E', chiaro: '#F7E1EC',
+      campi: ['instagram_follower', 'instagram_copertura'], aiuto: 'App Instagram → Dashboard professionale → Account raggiunti (ultimi 30 giorni).' },
+    { id: 'facebook', titolo: 'Facebook', icona: 'facebook', c: '#3B5BDB', chiaro: '#E3E9FB',
+      campi: ['facebook_follower', 'facebook_copertura'], aiuto: 'Meta Business Suite → Insight → Copertura.' },
+    { id: 'google', titolo: 'Google', icona: 'google', c: '#9A6B12', chiaro: '#F5DFAE',
+      campi: ['google_visualizzazioni', 'google_chiamate', 'google_indicazioni', 'google_clic_sito', 'recensioni_numero', 'recensioni_media'], aiuto: 'Profilo dell’attività su Google → Rendimento, mese scelto. Recensioni: totale e voto medio di oggi.' },
+    { id: 'sito', titolo: 'Sito e WhatsApp', icona: 'globe', c: '#1E6B52', chiaro: '#D6EADF',
+      campi: ['visite_sito', 'contatti_whatsapp'], aiuto: 'Visite: Google Analytics → Utenti del mese. WhatsApp: chat nuove arrivate dal sito.' },
+    { id: 'pubblicita', titolo: 'Pubblicità', icona: 'megaphone', c: '#1B2A3A', chiaro: '#DDE3EA',
+      campi: ['spesa_meta', 'spesa_google'], aiuto: 'Quanto è stato speso nel mese, IVA inclusa (in euro).' }
   ];
+  /* nomi brevi e icone dei singoli numeri, per le righe dei blocchi */
+  var VOCI = {
+    instagram_follower: ['Follower', 'heart'], instagram_copertura: ['Persone raggiunte', 'eye'],
+    facebook_follower: ['Follower', 'heart'], facebook_copertura: ['Persone raggiunte', 'eye'],
+    google_visualizzazioni: ['Hanno visto la scheda', 'eye'], google_chiamate: ['Chiamate', 'phone'],
+    google_indicazioni: ['Indicazioni stradali', 'navigation'], google_clic_sito: ['Clic sul sito', 'mouse-pointer-click'],
+    recensioni_numero: ['Recensioni', 'star'], recensioni_media: ['Voto medio', 'star'],
+    visite_sito: ['Visite al sito', 'globe'], contatti_whatsapp: ['Chat WhatsApp', 'whatsapp'],
+    spesa_meta: ['Spesa Instagram e Facebook', 'euro'], spesa_google: ['Spesa Google', 'euro']
+  };
   var creMese = null, creDati = null;
 
   function intero(n) { return Math.round(n).toLocaleString('it-IT'); }
@@ -704,12 +721,22 @@
     if (!p) return '<span class="neutro">= come ' + aM + '</span>';
     return '<span class="' + (p > 0 ? 'su' : 'giu') + '">' + (p > 0 ? '▲ +' : '▼ ') + p + '%</span> rispetto ' + aM;
   }
-  function cartaKpi(o) {
-    return '<article class="kpi' + (o.forte ? ' kpi-forte' : '') + '">' +
-      '<p class="kpi-nome"><svg class="ico" aria-hidden="true"><use href="#i-' + o.icona + '"/></svg>' + h(o.nome) + '</p>' +
-      '<p class="kpi-valore">' + o.valore + '</p>' +
-      (o.delta ? '<p class="kpi-delta">' + o.delta + '</p>' : '') +
-      (o.sotto ? '<p class="kpi-sotto">' + o.sotto + '</p>' : '') + '</article>';
+  /* piccola etichetta con la variazione rispetto al mese prima */
+  function variazione(v, prima, tipo) {
+    if (v == null || prima == null) return '';
+    var d = tipo === 'abs' ? v - prima : (prima ? Math.round((v - prima) / prima * 100) : null);
+    if (d == null) return '';
+    if (!d) return '<span class="cre-var neutro">=</span>';
+    return '<span class="cre-var ' + (d > 0 ? 'su' : 'giu') + '">' + (d > 0 ? '▲ +' : '▼ ') + intero(d) + (tipo === 'abs' ? '' : '%') + '</span>';
+  }
+  /* una tessera del coworking: icona colorata, numero grande, una frase */
+  function tessera(o) {
+    return '<article class="cre-tessera" style="--c:' + o.c + ';--c-chiaro:' + o.chiaro + '">' +
+      '<span class="cre-tessera-icona"><svg class="ico" aria-hidden="true"><use href="#i-' + o.icona + '"/></svg></span>' +
+      '<p class="cre-tessera-nome">' + h(o.nome) + '</p>' +
+      '<p class="cre-tessera-valore">' + o.valore + '</p>' +
+      '<p class="cre-tessera-spiega">' + o.spiega + '</p>' +
+      (o.delta ? '<p class="cre-tessera-delta">' + o.delta + '</p>' : '') + '</article>';
   }
 
   /* ---------- grafici ---------- */
@@ -806,67 +833,98 @@
     return voci.map(function (v) { return '<span><i style="background:' + v.colore + '"></i>' + h(v.nome) + '</span>'; }).join('');
   }
 
-  /* imbuto: barre in scala logaritmica (così si vedono anche i numeri piccoli) */
-  function disegnaImbuto(passi) {
-    if (passi.length < 2) return '<p class="vuoto">Quando Apex Media inserisce le persone raggiunte e le visite al sito, qui vedrai quante di loro arrivano fino alla scrivania.</p>';
-    var primo = Math.max(passi[0].valore, 1), lmax = Math.log10(primo + 1);
-    return '<ol class="imbuto">' + passi.map(function (x, i) {
-      var w = lmax ? 22 + 78 * Math.log10(x.valore + 1) / lmax : 100;
-      return (i ? '<li class="imbuto-freccia" aria-hidden="true">' + (x.quota != null ? '↓ ' + String(x.quota).replace('.', ',') + '% passa al passo dopo' : '↓') + '</li>' : '') +
-        '<li class="imbuto-passo"><span class="imbuto-barra" style="--w:' + w.toFixed(1) + '%;--i:' + i + '"></span>' +
-        '<span class="imbuto-testo"><strong>' + intero(x.valore) + '</strong> ' + h(x.nome) +
-        (x.quota != null ? '<span class="sr-solo"> (' + String(x.quota).replace('.', ',') + '% del passo prima)</span>' : '') + '</span></li>';
-    }).join('') + '</ol>';
+  /* il percorso del cliente: quattro passi con icona, sempre tutti e quattro,
+     "—" dove il numero non c'è ancora (niente barre che escono dal riquadro) */
+  function disegnaPercorso(d) {
+    var mk = d.marketing || {}, m = d.mesi[d.mesi.length - 1];
+    var soc = mk.instagram_copertura != null || mk.facebook_copertura != null ? (mk.instagram_copertura || 0) + (mk.facebook_copertura || 0) : null;
+    var passi = [
+      { nome: 'Hanno visto i social', icona: 'eye', valore: soc },
+      { nome: 'Sono andati sul sito', icona: 'globe', valore: mk.visite_sito != null ? mk.visite_sito : null },
+      { nome: 'Hanno prenotato', icona: 'calendar-check', valore: m.prenotazioni },
+      { nome: 'Sono arrivati in sede', icona: 'check', valore: m.presenti != null ? m.presenti : d.kpi.arrivati.valore }
+    ];
+    return passi.map(function (x, i) {
+      var prima = i ? passi[i - 1].valore : null;
+      var quota = i && x.valore != null && prima ? Math.round(x.valore / prima * 1000) / 10 : null;
+      return (i ? '<li class="cre-passo-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-down"/></svg>' +
+          (quota != null ? '<span>' + String(Math.min(quota, 999)).replace('.', ',') + '%</span>' : '') + '</li>' : '') +
+        '<li class="cre-passo' + (x.valore == null ? ' cre-passo-vuoto' : '') + (i === passi.length - 1 ? ' cre-passo-fine' : '') + '">' +
+        '<span class="cre-passo-icona"><svg class="ico" aria-hidden="true"><use href="#i-' + x.icona + '"/></svg></span>' +
+        '<strong>' + (x.valore == null ? '—' : intero(x.valore)) + '</strong>' +
+        '<span class="cre-passo-nome">' + h(x.nome) + (x.valore == null ? '<small>Ancora da inserire</small>' : '') +
+        (quota != null ? '<span class="sr-solo"> (' + String(quota).replace('.', ',') + '% del passo prima)</span>' : '') + '</span></li>';
+    }).join('');
+  }
+
+  /* un blocco di social / Google / pubblicità */
+  function disegnaBlocco(g, d) {
+    var mk = d.marketing || {}, pr = d.mesi.length > 1 ? (d.mesi[d.mesi.length - 2].marketing || {}) : {}, k = d.kpi;
+    var apex = ruolo === 'apex', righe = [];
+    function riga(icona, nome, valore, delta) {
+      righe.push('<li><span class="cre-riga-nome"><svg class="ico" aria-hidden="true"><use href="#i-' + icona + '"/></svg>' + h(nome) + '</span>' +
+        '<span class="cre-riga-valore">' + valore + delta + '</span></li>');
+    }
+    var conDati = g.campi.some(function (id) { return mk[id] != null; });
+    if (g.id === 'google') {
+      ['google_visualizzazioni', 'google_chiamate', 'google_indicazioni', 'google_clic_sito'].forEach(function (id) {
+        if (mk[id] != null) riga(VOCI[id][1], VOCI[id][0], intero(mk[id]), variazione(mk[id], pr[id], 'pct'));
+      });
+      if (mk.recensioni_media != null || mk.recensioni_numero != null) riga('star', 'Recensioni',
+        (mk.recensioni_media != null ? String(mk.recensioni_media).replace('.', ',') + ' <span class="stelle">★</span>' : '') +
+        (mk.recensioni_numero != null ? ' <small>' + intero(mk.recensioni_numero) + ' in tutto</small>' : ''), variazione(mk.recensioni_numero, pr.recensioni_numero, 'abs'));
+    } else if (g.id === 'pubblicita') {
+      if (k.spesa.valore != null) riga('euro', 'Spesa del mese', euro(Math.round(k.spesa.valore * 100)), '');
+      if (k.costoPrenotazione.valore != null) riga('target', 'Costo per prenotazione', euro(k.costoPrenotazione.valore), '');
+      if (k.ritornoPubblicita.valore != null) riga('trending-up', 'Rende, per ogni €1', euro(Math.round(k.ritornoPubblicita.valore * 100)), '');
+    } else {
+      g.campi.forEach(function (id) {
+        if (mk[id] != null) riga(VOCI[id][1], VOCI[id][0], intero(mk[id]), variazione(mk[id], pr[id], /follower/.test(id) ? 'abs' : 'pct'));
+      });
+    }
+    var corpo = righe.length ? '<ul class="cre-righe">' + righe.join('') + '</ul>'
+      : '<p class="cre-blocco-vuoto">' + (apex ? 'Nessun numero per questo mese.' : 'In arrivo: lo aggiorna Apex Media a inizio mese.') + '</p>';
+    return '<article class="cre-blocco' + (conDati ? '' : ' cre-blocco-senza') + '" style="--c:' + g.c + ';--c-chiaro:' + g.chiaro + '">' +
+      '<header class="cre-blocco-testa"><span class="cre-blocco-icona"><svg class="ico" aria-hidden="true"><use href="#i-' + g.icona + '"/></svg></span>' +
+      '<h3>' + h(g.titolo) + '</h3>' +
+      (apex ? '<button type="button" class="cre-blocco-modifica" data-cre-apri="' + g.id + '"><svg class="ico" aria-hidden="true"><use href="#i-pencil"/></svg>' + (conDati ? 'Modifica' : 'Inserisci') + '</button>' : '') +
+      '</header>' + corpo + '</article>';
   }
 
   /* ---------- la scheda ---------- */
   caricatori.crescita = function () {
     return api('crescita', { query: creMese ? 'mese=' + creMese.slice(0, 7) : '' }).then(function (d) {
       creDati = d; creMese = d.mese; ruolo = d.ruolo || ruolo;
-      var k = d.kpi, prima = d.nomeMesePrima, mk = d.marketing || {};
-      $('[data-cre-titolo]').textContent = nomeMeseLungo(d.mese);
+      var k = d.kpi, apex = ruolo === 'apex', nomeM = nomeMeseLungo(d.mese);
+      $('[data-cre-titolo]').textContent = nomeM;
       $('[data-cre-dopo]').disabled = d.mese >= d.corrente;
-      $('[data-cre-modifica]').hidden = ruolo !== 'apex';
+      $('[data-cre-apex]').hidden = !apex;
+      $('[data-cre-apex-testo]').textContent = d.aggiornato
+        ? 'Dati di ' + nomeM.toLowerCase() + ' inseriti il ' + dataTesto(d.aggiornato, { day: 'numeric', month: 'long' }) + '. Tocca «Modifica» su un blocco per cambiarli.'
+        : 'I dati di ' + nomeM.toLowerCase() + ' non sono ancora stati inseriti: Marcella vede «In arrivo».';
       $('[data-cre-riassunto]').textContent = d.riassunto;
 
-      /* numeri del coworking */
-      $('[data-cre-kpi-attivita]').innerHTML = [
-        cartaKpi({ icona: 'calendar-check', nome: 'Prenotazioni', valore: intero(k.prenotazioni.valore), delta: confronto(k.prenotazioni.valore, k.prenotazioni.prima, 'pct', prima), forte: true }),
-        cartaKpi({ icona: 'euro', nome: 'Incassato', valore: euro(k.incasso.valore), delta: confronto(k.incasso.valore, k.incasso.prima, 'pct', prima),
-          sotto: 'Valore delle prenotazioni ricevute: ' + euro(k.valorePrenotato.valore) }),
-        cartaKpi({ icona: 'user-plus', nome: 'Nuovi clienti', valore: intero(k.nuoviClienti.valore), delta: confronto(k.nuoviClienti.valore, k.nuoviClienti.prima, 'pct', prima) }),
-        cartaKpi({ icona: 'repeat', nome: 'Clienti che tornano', valore: k.quotaRitorni.valore == null ? '—' : k.quotaRitorni.valore + '%',
-          sotto: k.quotaRitorni.valore == null ? 'Nessun cliente questo mese' : 'Su ' + d.mesi[d.mesi.length - 1].clienti + ' clienti del mese, quelli già venuti prima' }),
-        cartaKpi({ icona: 'check', nome: 'Arrivati in sede', valore: intero(k.arrivati.valore), delta: confronto(k.arrivati.valore, k.arrivati.prima, 'pct', prima),
-          sotto: k.nonVenuti.valore ? 'Non sono venuti: ' + k.nonVenuti.valore : 'Giornate segnate con «È arrivato»' })
+      /* il coworking: cinque tessere che si spiegano da sole */
+      var ultimo = d.mesi[d.mesi.length - 1];
+      $('[data-cre-tessere]').innerHTML = [
+        tessera({ icona: 'calendar-check', c: '#1B2A3A', chiaro: '#DDE3EA', nome: 'Prenotazioni', valore: intero(k.prenotazioni.valore),
+          spiega: 'Arrivate questo mese, dal sito e in sede.', delta: variazione(k.prenotazioni.valore, k.prenotazioni.prima, 'pct') }),
+        tessera({ icona: 'euro', c: '#1E6B52', chiaro: '#D6EADF', nome: 'Incassato', valore: euro(k.incasso.valore),
+          spiega: 'Soldi già entrati. Prenotato in tutto: ' + euro(k.valorePrenotato.valore) + '.', delta: variazione(k.incasso.valore, k.incasso.prima, 'pct') }),
+        tessera({ icona: 'user-plus', c: '#9A6B12', chiaro: '#F5DFAE', nome: 'Nuovi clienti', valore: intero(k.nuoviClienti.valore),
+          spiega: 'Persone venute per la prima volta.', delta: variazione(k.nuoviClienti.valore, k.nuoviClienti.prima, 'pct') }),
+        tessera({ icona: 'repeat', c: '#1E6471', chiaro: '#D3E6EA', nome: 'Clienti che tornano', valore: k.quotaRitorni.valore == null ? '—' : k.quotaRitorni.valore + '%',
+          spiega: k.quotaRitorni.valore == null ? 'Nessun cliente questo mese.' : 'Dei ' + ultimo.clienti + ' clienti del mese, quanti erano già venuti.' }),
+        tessera({ icona: 'check', c: '#166A3A', chiaro: '#DCEFE2', nome: 'Arrivati in sede', valore: intero(k.arrivati.valore),
+          spiega: k.nonVenuti.valore ? 'Segnati «È arrivato». Non venuti: ' + k.nonVenuti.valore + '.' : 'Giornate segnate con «È arrivato».', delta: variazione(k.arrivati.valore, k.arrivati.prima, 'pct') })
       ].join('');
 
-      /* numeri di social, Google e pubblicità (solo quelli inseriti) */
-      var carte = [];
-      if (k.followerInstagram.valore != null) carte.push(cartaKpi({ icona: 'heart', nome: 'Follower Instagram', valore: intero(k.followerInstagram.valore),
-        delta: confronto(k.followerInstagram.valore, k.followerInstagram.prima, 'abs', prima),
-        sotto: k.followerFacebook.valore != null ? 'Su Facebook: ' + intero(k.followerFacebook.valore) + ' follower' : '' }));
-      else if (k.followerFacebook.valore != null) carte.push(cartaKpi({ icona: 'heart', nome: 'Follower Facebook', valore: intero(k.followerFacebook.valore), delta: confronto(k.followerFacebook.valore, k.followerFacebook.prima, 'abs', prima) }));
-      if (k.personeRaggiunte.valore != null) carte.push(cartaKpi({ icona: 'eye', nome: 'Persone raggiunte sui social', valore: intero(k.personeRaggiunte.valore), delta: confronto(k.personeRaggiunte.valore, k.personeRaggiunte.prima, 'pct', prima), sotto: 'Instagram + Facebook' }));
-      if (k.visiteSito.valore != null) carte.push(cartaKpi({ icona: 'mouse-pointer-click', nome: 'Visite al sito', valore: intero(k.visiteSito.valore), delta: confronto(k.visiteSito.valore, k.visiteSito.prima, 'pct', prima) }));
-      if (k.azioniGoogle.valore != null) carte.push(cartaKpi({ icona: 'map-pin', nome: 'Azioni sul profilo Google', valore: intero(k.azioniGoogle.valore), delta: confronto(k.azioniGoogle.valore, k.azioniGoogle.prima, 'pct', prima),
-        sotto: [mk.google_chiamate != null ? mk.google_chiamate + ' chiamate' : '', mk.google_indicazioni != null ? mk.google_indicazioni + ' indicazioni' : '', mk.google_clic_sito != null ? mk.google_clic_sito + ' clic sul sito' : ''].filter(Boolean).join(' · ') }));
-      if (k.recensioniMedia.valore != null || k.recensioniNumero.valore != null) carte.push(cartaKpi({ icona: 'star', nome: 'Recensioni su Google',
-        valore: k.recensioniMedia.valore != null ? String(k.recensioniMedia.valore).replace('.', ',') + ' <span class="stelle" aria-label="stelle">★</span>' : intero(k.recensioniNumero.valore),
-        delta: confronto(k.recensioniNumero.valore, k.recensioniNumero.prima, 'abs', prima),
-        sotto: k.recensioniNumero.valore != null ? intero(k.recensioniNumero.valore) + ' recensioni in tutto' : '' }));
-      if (k.spesa.valore != null) carte.push(cartaKpi({ icona: 'megaphone', nome: 'Spesa in pubblicità', valore: euro(Math.round(k.spesa.valore * 100)), delta: confronto(k.spesa.valore, k.spesa.prima, 'pct', prima),
-        sotto: [mk.spesa_meta != null ? 'Meta ' + euro(Math.round(mk.spesa_meta * 100)) : '', mk.spesa_google != null ? 'Google ' + euro(Math.round(mk.spesa_google * 100)) : ''].filter(Boolean).join(' · ') }));
-      if (k.costoPrenotazione.valore != null) carte.push(cartaKpi({ icona: 'target', nome: 'Costo per prenotazione', valore: euro(k.costoPrenotazione.valore), sotto: 'Spesa in pubblicità ÷ tutte le prenotazioni del mese' }));
-      if (k.ritornoPubblicita.valore != null) carte.push(cartaKpi({ icona: 'trending-up', nome: 'Ritorno della pubblicità', forte: k.ritornoPubblicita.valore >= 1,
-        valore: euro(Math.round(k.ritornoPubblicita.valore * 100)) + '<small> per ogni €1</small>',
-        sotto: 'Prenotazioni arrivate da Instagram, Facebook e Google Ads (' + k.prenotazioniDaPubblicita.valore + ') ÷ spesa' }));
-      $('[data-cre-kpi-marketing]').innerHTML = carte.join('');
-      $('[data-cre-vuoto]').hidden = !!carte.length;
+      $('[data-cre-percorso]').innerHTML = disegnaPercorso(d);
+      $('[data-cre-blocchi]').innerHTML = GRUPPI.map(function (g) { return disegnaBlocco(g, d); }).join('');
+      $$('[data-cre-apri]').forEach(function (b) { b.addEventListener('click', function () { apriModulo(b.getAttribute('data-cre-apri')); }); });
 
       $('[data-cre-nota-box]').hidden = !d.note;
       $('[data-cre-nota]').textContent = d.note || '';
-      $('[data-cre-imbuto]').innerHTML = disegnaImbuto(d.imbuto);
 
       /* grafici degli ultimi 12 mesi */
       var mesi = d.mesi;
@@ -891,27 +949,45 @@
   $('[data-cre-prima]').addEventListener('click', function () { creMese = piuMesi(creMese, -1); caricatori.crescita(); });
   $('[data-cre-dopo]').addEventListener('click', function () { creMese = piuMesi(creMese, 1); caricatori.crescita(); });
 
-  /* ---------- modulo per Apex Media ---------- */
+  /* ---------- modulo per Apex Media: un blocco per canale ---------- */
   var dialogo = $('[data-cre-dialogo]'), modulo = $('[data-cre-form]');
   function valoreCampo(v) { return v == null ? '' : String(v).replace('.', ','); }
-  function apriModulo() {
+  function apriModulo(gruppo) {
     if (!creDati) return;
     var mk = creDati.marketing || {}, nomi = {};
+    var pr = creDati.mesi.length > 1 ? (creDati.mesi[creDati.mesi.length - 2].marketing || {}) : {};
+    var nomePrima = cap(creDati.nomeMesePrima || 'mese prima');
     creDati.campi.forEach(function (c) { nomi[c.id] = c; });
     $('[data-cre-mod-titolo]').textContent = 'Dati di ' + nomeMeseLungo(creDati.mese).toLowerCase();
     $('[data-cre-campi]').innerHTML = GRUPPI.map(function (g) {
-      return '<fieldset class="cre-gruppo"><legend>' + h(g.titolo) + '</legend><p class="nota">' + h(g.aiuto) + '</p><div class="griglia-campi">' +
-        g.campi.map(function (id) {
-          var c = nomi[id];
-          return '<label>' + h(c.nome) + '<input name="' + id + '" inputmode="' + (c.dec ? 'decimal' : 'numeric') + '" autocomplete="off" value="' + h(valoreCampo(mk[id])) + '"></label>';
+      var haPrima = g.campi.some(function (id) { return pr[id] != null; });
+      return '<fieldset class="cre-gruppo" data-gruppo="' + g.id + '" style="--c:' + g.c + ';--c-chiaro:' + g.chiaro + '">' +
+        '<legend class="cre-gruppo-testa"><span class="cre-blocco-icona"><svg class="ico" aria-hidden="true"><use href="#i-' + g.icona + '"/></svg></span>' + h(g.titolo) + '</legend>' +
+        '<p class="nota cre-aiuto">' + h(g.aiuto) + '</p>' +
+        (haPrima ? '<button type="button" class="cre-copia" data-cre-copia="' + g.id + '"><svg class="ico" aria-hidden="true"><use href="#i-history"/></svg>Riprendi i numeri di ' + h(nomePrima.toLowerCase()) + '</button>' : '') +
+        '<div class="cre-campi">' + g.campi.map(function (id) {
+          var c = nomi[id], v = VOCI[id];
+          return '<label class="cre-campo"><span class="cre-campo-nome"><svg class="ico" aria-hidden="true"><use href="#i-' + v[1] + '"/></svg>' + h(c.nome) + '</span>' +
+            '<input name="' + id + '" inputmode="' + (c.dec ? 'decimal' : 'numeric') + '" autocomplete="off" placeholder="—" value="' + h(valoreCampo(mk[id])) + '">' +
+            '<small>' + (pr[id] != null ? nomePrima + ': ' + h(valoreCampo(pr[id])) : 'Nessun dato il mese prima') + '</small></label>';
         }).join('') + '</div></fieldset>';
     }).join('');
+    $$('[data-cre-copia]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var g = GRUPPI.filter(function (x) { return x.id === b.getAttribute('data-cre-copia'); })[0];
+        g.campi.forEach(function (id) { if (pr[id] != null && !modulo[id].value) modulo[id].value = valoreCampo(pr[id]); });
+        toast('Numeri ripresi: correggi quelli cambiati.');
+      });
+    });
     modulo.note.value = creDati.note || '';
     $('[data-cre-errore]').textContent = '';
     if (typeof dialogo.showModal === 'function') dialogo.showModal(); else dialogo.setAttribute('open', '');
+    var dove = typeof gruppo === 'string' && modulo.querySelector('[data-gruppo="' + gruppo + '"]');
+    if (dove) { dove.scrollIntoView({ block: 'start' }); var primo = dove.querySelector('input'); if (primo) primo.focus({ preventScroll: true }); }
+    else modulo.scrollTop = 0;
   }
   function chiudiModulo() { if (dialogo.open) { if (typeof dialogo.close === 'function') dialogo.close(); else dialogo.removeAttribute('open'); } }
-  $('[data-cre-modifica]').addEventListener('click', apriModulo);
+  $('[data-cre-modifica]').addEventListener('click', function () { apriModulo(); });
   $$('[data-cre-chiudi]').forEach(function (b) { b.addEventListener('click', chiudiModulo); });
   dialogo.addEventListener('click', function (e) { if (e.target === dialogo) chiudiModulo(); });
   modulo.addEventListener('submit', function (e) {
