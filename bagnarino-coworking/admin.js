@@ -169,14 +169,27 @@
       var k = d.kpi, rich = d.richieste || [];
       oggiIso = d.oggi;
 
-      /* da fare adesso */
+      /* la giornata in quattro riquadri: scrivanie, richieste, arrivi, incassi */
       var daSegnare = d.arriviOggi.filter(function (a) { return situazione(a).azione === 'arrivato'; }).length;
-      var chip = [];
-      if (rich.length) chip.push('<button class="chip chip-ocra" type="button" data-vai-a="[data-blocco-richieste]"><b>' + rich.length + '</b> ' + (rich.length === 1 ? 'nuova richiesta da accettare' : 'nuove richieste da accettare') + ' ›</button>');
-      if (daSegnare) chip.push('<button class="chip chip-verde" type="button" data-vai-a="[data-arrivi-oggi]"><b>' + daSegnare + '</b> ' + (daSegnare === 1 ? 'arrivo da segnare' : 'arrivi da segnare') + ' ›</button>');
-      if (k.daIncassare) chip.push('<button class="chip chip-blu" type="button" data-vai-scheda="incassi"><b>' + euro(k.daIncassare) + '</b> da incassare (' + k.daIncassareN + ') ›</button>');
-      $('[data-da-fare]').innerHTML = chip.length ? '<p class="da-fare-titolo">Da fare adesso</p><div class="chips">' + chip.join('') + '</div>'
-        : '<p class="tutto-ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Tutto in ordine: adesso non c’è niente da fare.</p>';
+      var libere = Math.max(0, k.postazioni - k.occupate), scrivanie = '';
+      for (var i = 0; i < k.postazioni; i++) scrivanie += '<i class="' + (i < k.occupate ? 'piena' : '') + '"></i>';
+      function riquadro(o) {
+        return '<button type="button" class="cr' + (o.fatto ? ' cr-fatto' : '') + '" style="--c:' + o.c + ';--c-chiaro:' + o.chiaro + '"' + (o.vai ? ' ' + o.vai : '') + '>' +
+          '<span class="cr-icona"><svg class="ico" aria-hidden="true"><use href="#i-' + (o.fatto ? 'check' : o.icona) + '"/></svg></span>' +
+          '<span class="cr-nome">' + o.nome + '</span><strong class="cr-valore">' + o.valore + '</strong>' +
+          (o.extra || '') + '<span class="cr-spiega">' + o.spiega + '</span></button>';
+      }
+      $('[data-cruscotto]').innerHTML = [
+        riquadro({ icona: 'scrivania', c: '#1B2A3A', chiaro: '#DDE3EA', nome: 'Scrivanie oggi', valore: k.occupate + '<small> su ' + k.postazioni + '</small>',
+          extra: '<span class="cr-scrivanie" aria-hidden="true">' + scrivanie + '</span>',
+          spiega: libere ? libere + (libere === 1 ? ' libera: si può ancora prenotare' : ' libere: si può ancora prenotare') : 'Tutte occupate', vai: 'data-vai-scheda="calendario"' }),
+        riquadro({ icona: 'inbox', c: '#B4620A', chiaro: '#FDF0DC', nome: 'Da accettare', valore: rich.length, fatto: !rich.length,
+          spiega: rich.length ? (rich.length === 1 ? 'Richiesta arrivata dal sito' : 'Richieste arrivate dal sito') : 'Nessuna richiesta in attesa', vai: rich.length ? 'data-vai-a="[data-blocco-richieste]"' : '' }),
+        riquadro({ icona: 'user-check', c: '#166A3A', chiaro: '#DCEFE2', nome: 'Arrivi da segnare', valore: daSegnare, fatto: !daSegnare,
+          spiega: daSegnare ? 'Tocca «È arrivato» quando entrano' : d.arriviOggi.length ? 'Tutti segnati' : 'Oggi non arriva nessuno', vai: 'data-vai-a="[data-arrivi-oggi]"' }),
+        riquadro({ icona: 'euro', c: '#9A6B12', chiaro: '#F5DFAE', nome: 'Da incassare', valore: euro(k.daIncassare), fatto: !k.daIncassare,
+          spiega: k.daIncassare ? k.daIncassareN + (k.daIncassareN === 1 ? ' prenotazione da far pagare' : ' prenotazioni da far pagare') : 'Tutto incassato', vai: 'data-vai-scheda="incassi"' })
+      ].join('');
       aggiornaBadge(rich.length);
 
       /* richieste da accettare */
@@ -193,24 +206,28 @@
       $('[data-arrivi-prossimo]').innerHTML = d.arriviProssimo.length ? d.arriviProssimo.map(function (a) { return rigaPren(a, false); }).join('')
         : '<p class="vuoto">Per ora nessuna prenotazione.</p>';
 
-      /* numeri e grafici */
-      $('[data-k-incasso]').textContent = euro(k.incassoMese);
-      $('[data-k-incasso-d]').innerHTML = delta(k.incassoMese, k.incassoMesePrima, 'mese');
-      $('[data-k-sett]').textContent = k.settimana;
-      $('[data-k-sett-d]').innerHTML = delta(k.settimana, k.settimanaPrima, 'settimana');
-      $('[data-k-occ]').textContent = k.occupate + ' su ' + k.postazioni;
-      $('[data-k-occ-barra]').style.width = Math.min(100, Math.round(k.occupate / Math.max(1, k.postazioni) * 100)) + '%';
-      var inc = $('[data-da-incassare]');
-      inc.hidden = !k.daIncassare;
-      inc.textContent = 'Da incassare: ' + euro(k.daIncassare) + ' (' + k.daIncassareN + (k.daIncassareN === 1 ? ' prenotazione' : ' prenotazioni') + ') →';
-      inc.onclick = function () { vai('incassi'); };
-      $('[data-grafico-settimane]').innerHTML = grafico(d.settimane.map(function (s) { return s.n; }),
-        d.settimane.map(function (s) { return dataTesto(s.inizio, { day: 'numeric', month: 'numeric' }); }), String, '#1B2A3A');
-      $('[data-grafico-mesi]').innerHTML = grafico(d.mesi.map(function (m) { return Math.round(m.centesimi / 100); }),
-        d.mesi.map(function (m) { return dataTesto(m.inizio, { month: 'short' }).replace('.', ''); }), function (v) { return '€' + v; }, '#C9973B');
+      /* come va il mese: ogni numero con accanto il suo andamento */
+      var nomeMeseOra = dataTesto(d.oggi, { month: 'long' }), nomeMesePrima = dataTesto(piuMesi(d.oggi.slice(0, 8) + '01', -1), { month: 'long' });
+      function confrontoTesto(a, b, rispetto) {
+        if (!b) return a ? '<span class="cre-var su">Primo dato</span>' : '';
+        var p = Math.round((a - b) / b * 100);
+        return '<span class="cre-var ' + (p > 0 ? 'su' : p < 0 ? 'giu' : '') + '">' + (p > 0 ? '▲ +' : p < 0 ? '▼ ' : '= ') + p + '%</span> ' + rispetto;
+      }
+      $('[data-andamento]').innerHTML =
+        '<article class="and" style="--c:#1E6B52;--c-chiaro:#D6EADF"><div class="and-testa"><span class="cr-icona"><svg class="ico" aria-hidden="true"><use href="#i-euro"/></svg></span>' +
+          '<div><p class="and-nome">Incassato a ' + nomeMeseOra + '</p><p class="and-valore">' + euro(k.incassoMese) + '</p>' +
+          '<p class="and-delta">' + confrontoTesto(k.incassoMese, k.incassoMesePrima, 'rispetto a ' + nomeMesePrima) + '</p></div></div>' +
+          '<p class="and-sotto">Gli ultimi 6 mesi</p>' +
+          grafico(d.mesi.map(function (m) { return Math.round(m.centesimi / 100); }), d.mesi.map(function (m) { return dataTesto(m.inizio, { month: 'short' }).replace('.', ''); }), function (v) { return '€' + v; }, '#1E6B52') + '</article>' +
+        '<article class="and" style="--c:#1B2A3A;--c-chiaro:#DDE3EA"><div class="and-testa"><span class="cr-icona"><svg class="ico" aria-hidden="true"><use href="#i-calendar-check"/></svg></span>' +
+          '<div><p class="and-nome">Prenotazioni questa settimana</p><p class="and-valore">' + k.settimana + '</p>' +
+          '<p class="and-delta">' + confrontoTesto(k.settimana, k.settimanaPrima, 'rispetto alla settimana scorsa') + '</p></div></div>' +
+          '<p class="and-sotto">Le ultime 8 settimane</p>' +
+          grafico(d.settimane.map(function (x) { return x.n; }), d.settimane.map(function (x) { return dataTesto(x.inizio, { day: 'numeric', month: 'numeric' }); }), String, '#1B2A3A') + '</article>';
       var tot = d.fonti.reduce(function (t, f) { return t + f.n; }, 0);
       $('[data-fonti]').innerHTML = tot ? d.fonti.map(function (f) {
-        return '<div class="fonte"><span>' + h(f.fonte) + '</span><strong>' + f.n + '</strong><div class="fonte-barra"><span style="width:' + Math.round(f.n / tot * 100) + '%"></span></div></div>';
+        var col = COLORI_CANALI[f.fonte] || '#7A8794';
+        return '<div class="fonte"><span><i style="background:' + col + '"></i>' + h(f.fonte) + '</span><strong>' + f.n + ' <small>(' + Math.round(f.n / tot * 100) + '%)</small></strong><div class="fonte-barra"><span style="width:' + Math.round(f.n / tot * 100) + '%;background:' + col + '"></span></div></div>';
       }).join('') : '<p class="vuoto">Ancora nessuna prenotazione.</p>';
     }).catch(function (e) { if (e.stato !== 501) toast(e.message, true); });
   };
@@ -563,31 +580,87 @@
   /* =============================================================
      INCASSI
      ============================================================= */
-  var incPeriodo = 'mese', incDa = iso(new Date());
+  var incPeriodo = 'mese', incDa = iso(new Date()), incFiltro = 'tutte', incDati = null;
+  var METODI = { contanti: ['Contanti', 'banconota'], carta: ['Carta', 'carta'], bonifico: ['Bonifico', 'receipt'], online: ['Online', 'globe'] };
+  function rigaIncasso(r) {
+    var gratis = r.prezzo_centesimi === 0, d = daIso(r.data), futura = r.data > oggiIso;
+    var info = h(r.nomePacchetto) + (r.omaggio ? ' · regalo della Card' : r.carnet_id && r.pacchetto === 'giornata' ? ' · ingresso del carnet' : '') +
+      (r.piva_cf ? ' · fattura a ' + h(r.piva_cf) : '');
+    var stato;
+    if (gratis) stato = '<span class="inc-stato inc-stato-gratis"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg>Niente da pagare</span>';
+    else if (r.pagato) {
+      var m = METODI[r.metodo_pagamento] || ['Pagato', 'check'];
+      stato = '<span class="inc-stato inc-stato-ok"><svg class="ico" aria-hidden="true"><use href="#i-' + m[1] + '"/></svg>Pagato' + (r.metodo_pagamento ? ' · ' + m[0].toLowerCase() : '') + '</span>' +
+        '<button class="link-azione" type="button" data-non-pagato data-id="' + r.id + '">Annulla</button>';
+    } else stato = (futura ? '<span class="inc-quando">Paga quando arriva</span>' : '') +
+      '<span class="inc-bottoni"><button class="btn btn-s btn-pieno" type="button" data-incassa="contanti" data-id="' + r.id + '"><svg class="ico" aria-hidden="true"><use href="#i-banconota"/></svg>Contanti</button>' +
+      '<button class="btn btn-s btn-pieno" type="button" data-incassa="carta" data-id="' + r.id + '"><svg class="ico" aria-hidden="true"><use href="#i-carta"/></svg>Carta</button></span>';
+    return '<article class="inc-riga' + (r.pagato || gratis ? ' inc-riga-ok' : '') + '">' +
+      '<div class="inc-data"><span>' + dataTesto(r.data, { weekday: 'short' }).replace('.', '') + '</span><strong>' + d.getDate() + '</strong><span>' + dataTesto(r.data, { month: 'short' }).replace('.', '') + '</span></div>' +
+      '<div class="inc-chi"><strong>' + h(r.nome + ' ' + r.cognome) + '</strong><span>' + info + '</span></div>' +
+      '<div class="inc-importo">' + (gratis ? '€0' : euro(r.prezzo_centesimi)) + '</div>' +
+      '<div class="inc-azione">' + stato + '</div></article>';
+  }
+  /* "1 da far pagare ora · 3 pagano quando arrivano" */
+  function spiegaDa(da) {
+    var ora = da.filter(function (r) { return r.data <= oggiIso; }).length, dopo = da.length - ora;
+    return [ora ? ora + ' da far pagare ora' : '', dopo ? dopo + (dopo === 1 ? ' paga quando arriva' : ' pagano quando arrivano') : ''].filter(Boolean).join(' · ');
+  }
+  function disegnaIncassi() {
+    var d = incDati, righe = d.righe;
+    var da = righe.filter(function (r) { return r.prezzo_centesimi > 0 && !r.pagato; });
+    var ok = righe.filter(function (r) { return r.prezzo_centesimi > 0 && r.pagato; });
+    var gratis = righe.filter(function (r) { return r.prezzo_centesimi === 0; });
+    var somma = function (l) { return l.reduce(function (t, r) { return t + r.prezzo_centesimi; }, 0); };
+    var perc = d.totali.previsto ? Math.round(d.totali.incassato / d.totali.previsto * 100) : 0;
+    var metodi = {};
+    ok.forEach(function (r) { var m = r.metodo_pagamento || 'altro'; metodi[m] = (metodi[m] || 0) + r.prezzo_centesimi; });
+    var pezzi = Object.keys(metodi).map(function (m) {
+      var x = METODI[m] || ['Altro', 'check'];
+      return '<li><svg class="ico" aria-hidden="true"><use href="#i-' + x[1] + '"/></svg>' + x[0] + ' <strong>' + euro(metodi[m]) + '</strong></li>';
+    });
+    $('[data-inc-riassunto]').innerHTML =
+      '<article class="inc-totale">' +
+        '<div class="inc-totale-riga"><div><p class="inc-etichetta">Incassato</p><p class="inc-grande">' + euro(d.totali.incassato) + '</p></div>' +
+        '<p class="inc-di">su <strong>' + euro(d.totali.previsto) + '</strong> prenotati</p></div>' +
+        '<div class="inc-barra" role="img" aria-label="Incassato il ' + perc + '% del prenotato"><span style="width:' + perc + '%"></span></div>' +
+        (pezzi.length ? '<ul class="inc-metodi">' + pezzi.join('') + '</ul>' : '') +
+      '</article>' +
+      '<button type="button" class="inc-manca' + (da.length ? '' : ' inc-manca-ok') + '" data-inc-filtro="da">' +
+        '<span class="cr-icona"><svg class="ico" aria-hidden="true"><use href="#i-' + (da.length ? 'clessidra' : 'check') + '"/></svg></span>' +
+        '<span><span class="inc-etichetta">Da incassare</span><strong class="inc-medio">' + euro(somma(da)) + '</strong>' +
+        '<span class="inc-spiega">' + (da.length ? spiegaDa(da) : 'Hanno pagato tutti') + '</span></span></button>';
+    var filtri = [['tutte', 'Tutte', righe.length], ['da', 'Da incassare', da.length], ['pagate', 'Pagate', ok.length]];
+    $('[data-inc-filtri]').innerHTML = filtri.map(function (f) {
+      return '<button type="button" data-inc-filtro="' + f[0] + '" aria-pressed="' + (incFiltro === f[0]) + '">' + f[1] + ' <span>' + f[2] + '</span></button>';
+    }).join('');
+    function gruppo(titolo, icona, lista, classe) {
+      if (!lista.length) return '';
+      return '<section class="inc-gruppo ' + classe + '"><h2><svg class="ico" aria-hidden="true"><use href="#i-' + icona + '"/></svg>' + titolo +
+        ' <span>' + lista.length + ' · ' + euro(somma(lista)) + '</span></h2>' + lista.map(rigaIncasso).join('') + '</section>';
+    }
+    var html = '';
+    if (incFiltro !== 'pagate') html += gruppo('Da incassare', 'clessidra', da, 'inc-gruppo-da');
+    if (incFiltro !== 'da') html += gruppo('Già pagate', 'check', ok, 'inc-gruppo-ok') + gruppo('Senza pagamento', 'gift', gratis, 'inc-gruppo-gratis');
+    $('[data-righe-incassi]').innerHTML = html || '<p class="vuoto">' + (righe.length ? 'Niente in questo elenco.' : 'Nessuna prenotazione in questo periodo.') + '</p>';
+  }
   caricatori.incassi = function () {
     $$('[data-periodo]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-periodo') === incPeriodo); });
     return api('incassi', { query: 'periodo=' + incPeriodo + '&da=' + incDa }).then(function (d) {
-      $('[data-inc-titolo]').textContent = incPeriodo === 'giorno' ? dataTesto(d.inizio)
+      incDati = d;
+      $('[data-inc-titolo]').textContent = cap(incPeriodo === 'giorno' ? dataTesto(d.inizio)
         : incPeriodo === 'settimana' ? dataTesto(d.inizio, { day: 'numeric', month: 'short' }) + ' – ' + dataTesto(d.fine, { day: 'numeric', month: 'short' })
-        : dataTesto(d.inizio, { month: 'long', year: 'numeric' });
-      $('[data-inc-incassato]').textContent = euro(d.totali.incassato);
-      $('[data-inc-previsto]').textContent = euro(d.totali.previsto);
-      $('[data-righe-incassi]').innerHTML = d.righe.length ? d.righe.map(function (r) {
-        var gratis = r.prezzo_centesimi === 0;
-        return '<article class="riga-incasso"><div class="riga-incasso-testa"><strong>' + h(r.nome + ' ' + r.cognome) + '</strong>' +
-          '<span class="riga-importo">' + (gratis ? '€0' : euro(r.prezzo_centesimi)) + '</span></div>' +
-          '<p>' + dataTesto(r.data, { weekday: 'short', day: 'numeric', month: 'short' }) + ' · ' + h(r.nomePacchetto) +
-          (r.omaggio ? ' · omaggio' : r.carnet_id && r.pacchetto === 'giornata' ? ' · dal carnet' : '') + (r.piva_cf ? ' · fattura ' + h(r.piva_cf) : '') + '</p>' +
-          (gratis ? '' : r.pagato
-            ? '<div class="pagato-ok"><span>✓ Pagato' + (r.metodo_pagamento ? ' (' + r.metodo_pagamento + ')' : '') + '</span><button class="link-azione" type="button" data-non-pagato data-id="' + r.id + '">Annulla</button></div>'
-            : '<div class="incassa-scelta"><button class="btn btn-filo" type="button" data-incassa="contanti" data-id="' + r.id + '">Contanti</button>' +
-              '<button class="btn btn-filo" type="button" data-incassa="carta" data-id="' + r.id + '">Carta</button></div>') +
-          '</article>';
-      }).join('') : '<p class="vuoto">Nessuna prenotazione in questo periodo.</p>';
+        : dataTesto(d.inizio, { month: 'long', year: 'numeric' }));
+      disegnaIncassi();
       $('[data-csv]').href = '/api/admin?azione=csv&da=' + d.inizio + '&a=' + d.fine;
       $('[data-csv]').setAttribute('download', 'incassi-bagnarino-' + d.inizio + '.csv');
     }).catch(function (e) { if (e.stato !== 501) toast(e.message, true); });
   };
+  $('[data-pannello="incassi"]').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-inc-filtro]');
+    if (!b || !incDati) return;
+    incFiltro = b.getAttribute('data-inc-filtro'); disegnaIncassi();
+  });
   $$('[data-periodo]').forEach(function (b) { b.addEventListener('click', function () { incPeriodo = b.getAttribute('data-periodo'); caricatori.incassi(); }); });
   function spostaInc(segno) {
     incDa = incPeriodo === 'giorno' ? piu(incDa, segno) : incPeriodo === 'settimana' ? piu(incDa, 7 * segno) : piuMesi(incDa.slice(0, 8) + '01', segno);
