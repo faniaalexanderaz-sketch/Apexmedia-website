@@ -132,7 +132,7 @@ strong { font-weight: 600; }
   font-family: var(--f-display); font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums;
   font-variation-settings: 'opsz' 120;
 }
-.mono, .apertura-fatti dt, .disp-live, .disp-vetrina, .disp-num, .disp-legenda, .tappa-quando, .prezzo-unita, .prezzo-valuta-testo, .giornata time, .dotazione-n, .piede-titolo, .tessera-num, .tessera-piede, .premi-n, .indicatore li, .codice span, .riepilogo dt, .giorno-sett, .giorno-mese, .foto-cornice figcaption, .apertura-didascalia, .dove-orari, .piede-legale {
+.mono, .apertura-fatti dt, .disp-live, .disp-vetrina, .disp-num, .disp-legenda, .tappa-quando, .prezzo-unita, .prezzo-valuta-testo, .giornata time, .piede-titolo, .tessera-num, .tessera-piede, .premi-n, .indicatore li, .codice span, .riepilogo dt, .giorno-sett, .giorno-mese, .foto-cornice figcaption, .apertura-didascalia, .dove-orari, .piede-legale {
   font-family: var(--f-mono); font-weight: 400; letter-spacing: .04em;
 }
 
@@ -386,27 +386,10 @@ strong { font-weight: 600; }
    02 · IL NEGOZIO: foto dell'ingresso, chi ti accoglie
    ============================================================= */
 .negozio { border-top: 1px solid var(--linea); }
-.negozio-griglia { display: grid; gap: 40px; }
-.negozio-paragrafo { font-size: 1.12rem; line-height: 1.65; color: var(--inchiostro-morbido); max-width: 54ch; margin: 0 0 28px; }
 .fatti { display: flex; flex-wrap: wrap; gap: 20px 44px; margin: 0; padding-top: 22px; border-top: 1px solid var(--linea); }
 .fatti div { display: flex; flex-direction: column-reverse; gap: 6px; }
 .fatti dt { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--inchiostro-morbido); }
 .fatti dd { margin: 0; font-size: clamp(2.4rem, 7vw, 3.4rem); line-height: 1; }
-.negozio-lato { display: grid; gap: 22px; }
-.accoglie { padding-top: 18px; border-top: 1px solid var(--inchiostro); }
-.accoglie-chi { margin: 0 0 8px; display: flex; flex-direction: column; }
-.accoglie-chi strong { font-family: var(--f-display); font-weight: 400; font-size: 1.6rem; line-height: 1.15; }
-.accoglie-chi span { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--inchiostro-morbido); margin-top: 4px; }
-.accoglie-testo { margin: 0 0 14px; color: var(--inchiostro-morbido); line-height: 1.6; max-width: 40ch; }
-.accoglie-tel { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; text-decoration: none; }
-.accoglie-tel span { border-bottom: 1px solid var(--inchiostro); }
-.accoglie-tel .ico { width: 16px; height: 16px; }
-@media (min-width: 900px) {
-  .negozio-griglia { grid-template-columns: 5fr 7fr; gap: 96px; align-items: end; }
-  .negozio-testo { order: 2; padding-bottom: 8px; }
-  .negozio-lato { order: 1; grid-template-columns: 1fr; }
-  .foto-esterno { max-width: 560px; }
-}
 
 /* foto con didascalia: maschera per la tendina GSAP, niente cornice */
 .foto-cornice { margin: 0; }
@@ -493,18 +476,6 @@ strong { font-weight: 600; }
 /* =============================================================
    05 · UNA GIORNATA: orari in mono, compatta
    ============================================================= */
-.giornata-sezione { padding-top: 0; }
-.giornata-sezione .testa-sezione { margin-bottom: 2rem; }
-.giornata { display: grid; gap: 0; border-top: 1px solid var(--linea-forte); }
-.giornata li { display: grid; grid-template-columns: 84px 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--linea); }
-.giornata time { font-size: 1.7rem; line-height: 1; color: var(--ocra-testo); font-variation-settings: 'opsz' 72; }
-.giornata h3 { margin: 0 0 4px; font-size: 1.08rem; }
-.giornata p { margin: 0; color: var(--inchiostro-morbido); line-height: 1.55; max-width: 46ch; font-size: .98rem; }
-@media (min-width: 900px) {
-  .giornata { grid-template-columns: repeat(4, 1fr); gap: 0 40px; border-top: 0; }
-  .giornata li { grid-template-columns: 1fr; gap: 10px; border-bottom: 0; border-top: 1px solid var(--inchiostro); padding: 20px 0 0; }
-  .giornata time { font-size: 2.2rem; }
-}
 
 /* =============================================================
    06 · LO SPAZIO: due foto vere, asimmetriche, poi l'inventario
@@ -512,20 +483,10 @@ strong { font-weight: 600; }
 .spazio-sezione { border-top: 1px solid var(--linea); }
 .galleria-spazio { display: grid; gap: 14px; margin: 0 0 48px; }
 .galleria-spazio .foto-maschera img { aspect-ratio: 4 / 3; object-fit: cover; }
-.dotazione { display: grid; gap: 36px; }
-.dotazione h3 { margin: 0 0 14px; font-family: var(--f-display); font-weight: 400; font-size: 1.6rem; }
-.dotazione ul { display: grid; gap: 0; counter-reset: voce; border-top: 1px solid var(--inchiostro); }
-.dotazione li { position: relative; display: flex; gap: 16px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--linea); line-height: 1.5; counter-increment: voce; }
-.dotazione li::before { content: counter(voce, decimal-leading-zero); font-family: var(--f-mono); font-size: .7rem; letter-spacing: .04em; color: var(--ocra-testo); margin-top: .45em; flex-shrink: 0; }
-.dotazione li .ico { display: none; }
-.dotazione-no li::before { color: var(--inchiostro-morbido); }
-.dotazione-no li span { color: var(--inchiostro-morbido); }
-.dotazione-porta { margin: 22px 0 0; font-family: var(--f-display); font-style: italic; font-size: 1.5rem; color: var(--ocra-testo); }
 @media (min-width: 900px) {
   .galleria-spazio { grid-template-columns: 7fr 5fr; gap: 32px; align-items: start; margin-bottom: 72px; }
   .galleria-spazio .foto-cornice:nth-child(2) { margin-top: 96px; }
   .galleria-spazio .foto-cornice:nth-child(2) .foto-maschera img { aspect-ratio: 4 / 5; }
-  .dotazione { grid-template-columns: 7fr 5fr; gap: 72px; }
 }
 
 /* =============================================================
@@ -1084,23 +1045,8 @@ body.menu-aperto { overflow: hidden; }
 .prezzo { transition: background-color .3s var(--curva); }
 .prezzo:not(.prezzo-evidenza):hover { background: var(--avorio); }
 
-/* una giornata: fascia avorio con riga ocra, non un'altra sezione su carta */
-.giornata-sezione { padding: 64px 0 72px; background: var(--avorio); border-top: 3px solid var(--ocra); border-bottom: 1px solid var(--linea); }
-.giornata-sezione .testa-sezione { margin-bottom: 2rem; }
-@media (min-width: 900px) { .giornata-sezione { padding: 88px 0 96px; } }
-
 /* lo spazio: le due liste in riquadri diversi, uno chiaro e uno scuro */
 .spazio-sezione { background: var(--carta); }
-.dotazione > div { padding: 26px 22px 28px; border-radius: var(--raggio-grande); }
-.dotazione-si { background: var(--avorio); border: 1px solid var(--linea-forte); }
-.dotazione-no { background: var(--inchiostro); color: var(--avorio); }
-.dotazione-no h3 { color: var(--avorio); }
-.dotazione-no ul { border-top-color: var(--linea-scura); }
-.dotazione-no li { border-bottom-color: var(--linea-scura); }
-.dotazione-no li::before { color: var(--ocra-vivo); }
-.dotazione-no li span { color: var(--chiaro-70); }
-.dotazione-no .dotazione-porta { color: var(--ocra-vivo); }
-@media (min-width: 900px) { .dotazione > div { padding: 36px 36px 40px; } .dotazione-no { transform: translateY(32px); } }
 
 /* per chi è: quattro riquadri numerati, il mese ha il suo colore */
 .profili { border-top: 0; display: grid; gap: 14px; }
@@ -1284,3 +1230,154 @@ body.menu-aperto { overflow: hidden; }
 .garanzia-icona { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--inchiostro); color: var(--ocra-vivo); }
 .garanzia-icona .ico { display: block; width: 26px; height: 26px; stroke-width: 1.75; }
 @media (min-width: 900px) { .prezzi-garanzie { grid-template-columns: repeat(4, 1fr); gap: 24px 32px; margin-top: 3.6rem; } .garanzia-icona { width: 64px; height: 64px; } .garanzia-icona .ico { width: 30px; height: 30px; } }
+
+/* =============================================================
+   02 · IL NEGOZIO, rifatto: foto grande dell'ingresso + scheda "come arrivi"
+   ============================================================= */
+.negozio-testa { display: grid; gap: 18px; margin-bottom: 32px; }
+.negozio-testa .titolo-sezione { margin-bottom: 0; }
+.negozio-lead { margin: 0; font-family: var(--f-display); font-size: clamp(1.3rem, 4.6vw, 1.75rem); line-height: 1.35; letter-spacing: -.01em; color: var(--inchiostro); max-width: 30ch; }
+.negozio-lead strong { font-weight: 400; font-style: italic; color: var(--ocra-testo); }
+.negozio-scena { position: relative; display: grid; }
+.negozio-foto { position: relative; margin: 0 calc(var(--margine) * -1); }
+.negozio-foto .foto-maschera { border-radius: 0; }
+.negozio-foto .foto-maschera img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 30% 50%; }
+.negozio-foto .negozio-targa { position: absolute; left: 14px; top: 14px; margin: 0; display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 999px; background: rgba(17, 25, 34, .78); color: var(--avorio); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); font-size: .68rem; letter-spacing: .07em; }
+.negozio-targa .ico { width: 14px; height: 14px; color: var(--ocra-vivo); }
+.negozio-foto .negozio-targa > span:last-child { color: var(--avorio); white-space: normal; }
+
+.ingresso { position: relative; z-index: 2; margin: -96px 0 0; padding: 26px 20px 24px; border-radius: 14px; background: var(--inchiostro); color: var(--avorio); box-shadow: 0 30px 56px -28px rgba(17, 25, 34, .75); border-top: 5px solid var(--ocra); }
+.ingresso-occhiello { margin: 0 0 8px; font-family: var(--f-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ocra-vivo); }
+.ingresso-titolo { margin: 0 0 10px; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.7rem, 6vw, 2.2rem); line-height: 1.1; letter-spacing: -.015em; color: var(--avorio); }
+.ingresso-titolo em { color: var(--ocra-vivo); }
+.ingresso-testo { margin: 0 0 18px; color: var(--chiaro-70); line-height: 1.6; }
+.ingresso-righe { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--linea-scura); }
+.ingresso-righe li { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--linea-scura); }
+.ingresso-righe li > span:last-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ingresso-righe strong, .ingresso-tel { font-size: 1.05rem; font-weight: 600; color: var(--avorio); }
+.ingresso-tel { text-decoration: underline; text-decoration-color: var(--ocra); text-underline-offset: 4px; }
+.ingresso-righe small { font-size: .86rem; color: var(--chiaro-70); }
+.ingresso-ico { flex-shrink: 0; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(221, 176, 92, .14); color: var(--ocra-vivo); }
+.ingresso-ico .ico { width: 20px; height: 20px; }
+.ingresso-azioni { display: grid; gap: 10px; }
+.ingresso-azioni .btn { width: 100%; }
+.negozio-fatti { margin-top: 36px; justify-content: space-between; border-top-color: var(--linea-forte); }
+@media (min-width: 600px) { .ingresso-azioni { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) {
+  .negozio-testa { grid-template-columns: 6fr 5fr; gap: 64px; align-items: end; margin-bottom: 48px; }
+  .negozio-scena { grid-template-columns: 8fr 4fr; align-items: center; }
+  .negozio-foto { grid-column: 1 / 3; grid-row: 1; margin: 0; width: 72%; }
+  .negozio-foto .foto-maschera { border-radius: 10px; }
+  .negozio-foto .foto-maschera img { aspect-ratio: 5 / 4; }
+  .negozio-foto .negozio-targa { left: 20px; top: 20px; font-size: .72rem; }
+  .ingresso { grid-column: 2; grid-row: 1; margin: 0; width: 470px; justify-self: end; padding: 34px 32px 32px; }
+  .ingresso-azioni { grid-template-columns: 1fr 1fr; }
+  .negozio-fatti { margin-top: 56px; gap: 24px 48px; }
+}
+@media (min-width: 1200px) { .ingresso { width: 500px; } }
+
+/* =============================================================
+   05 · UNA GIORNATA, rifatta: fascia blu, orologio che gira scorrendo,
+   quattro momenti con icona che si accendono uno dopo l'altro
+   ============================================================= */
+.giornata-sezione.banda-blu { padding: 80px 0 88px; border-bottom: 4px solid var(--ocra); }
+.giornata-sezione .testa-sezione { margin-bottom: 36px; }
+.giornata-corpo { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 0 14px; --avanza: 1; }
+/* il binario: verticale sul telefono, orizzontale sul computer */
+.giornata-corpo::before, .giornata-corpo::after { content: ""; position: absolute; left: 31px; top: 88px; bottom: 30px; width: 2px; background: var(--linea-scura); border-radius: 2px; }
+.giornata-corpo::after { background: var(--ocra-vivo); transform-origin: 50% 0; transform: scaleY(var(--avanza)); }
+
+.orologio { position: sticky; top: calc(var(--testata) + 16px); align-self: start; z-index: 2; display: grid; justify-items: center; gap: 6px; }
+.orologio-quadrante { width: 64px; height: 64px; display: block; }
+.orologio-cassa { fill: var(--avorio); stroke: var(--ocra); stroke-width: 4; }
+.orologio-tacche path { stroke: var(--inchiostro); stroke-width: 3; stroke-linecap: round; }
+.orologio-tacche path + path { stroke-width: 2; opacity: .45; }
+.lancetta { stroke: var(--inchiostro); stroke-linecap: round; transform-origin: 60px 60px; }
+.lancetta-ore { stroke-width: 6; transform: rotate(285deg); }
+.lancetta-min { stroke-width: 4; stroke: var(--ocra-testo); transform: rotate(180deg); }
+.orologio-perno { fill: var(--ocra); }
+.orologio-ora { margin: 0; padding: 3px 7px; border-radius: 6px; background: var(--ocra); color: var(--notte); font-family: var(--f-mono); font-size: .78rem; font-weight: 600; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+
+.giornata { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.momento { position: relative; display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icona ora" "titolo titolo" "testo testo"; align-items: center; gap: 6px 14px; padding: 18px 18px 20px; border-radius: 14px; background: var(--avorio); color: var(--inchiostro); box-shadow: 0 22px 40px -26px rgba(0, 0, 0, .7); transition: background-color .45s var(--curva), color .45s var(--curva), transform .45s var(--curva), box-shadow .45s var(--curva); }
+.momento-icona { grid-area: icona; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--ocra); color: var(--notte); transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), background-color .45s var(--curva), color .45s var(--curva); }
+.momento-icona .ico { width: 26px; height: 26px; stroke-width: 1.8; }
+.momento time { grid-area: ora; font-family: var(--f-mono); font-size: 1.6rem; line-height: 1; color: var(--ocra-testo); font-variant-numeric: tabular-nums; }
+.momento h3 { grid-area: titolo; margin: 8px 0 0; font-size: 1.15rem; }
+.momento p { grid-area: testo; margin: 0; line-height: 1.55; font-size: .97rem; color: var(--inchiostro-morbido); }
+
+/* con l'animazione attiva: i momenti non ancora arrivati restano "spenti" sul blu */
+.giornata-corpo.animata .momento:not(.accesa) { background: rgba(250, 246, 238, .05); color: var(--avorio); box-shadow: inset 0 0 0 1px var(--linea-scura); transform: scale(.97); }
+.giornata-corpo.animata .momento:not(.accesa) .momento-icona { background: rgba(250, 246, 238, .08); color: var(--chiaro-70); transform: scale(.82) rotate(-8deg); }
+.giornata-corpo.animata .momento:not(.accesa) time { color: var(--chiaro-70); }
+.giornata-corpo.animata .momento:not(.accesa) p { color: rgba(250, 246, 238, .5); }
+.giornata-corpo.animata .momento.ora-qui { box-shadow: 0 0 0 3px var(--ocra-vivo), 0 26px 48px -24px rgba(0, 0, 0, .8); }
+
+@media (min-width: 900px) {
+  .giornata-sezione.banda-blu { padding: 120px 0 128px; }
+  .giornata-sezione .testa-sezione { margin-bottom: 56px; }
+  .giornata-corpo { grid-template-columns: 200px 1fr; gap: 0 48px; align-items: center; }
+  .giornata-corpo::before, .giornata-corpo::after { left: 248px; right: 0; top: -22px; bottom: auto; width: auto; height: 2px; }
+  .giornata-corpo::after { transform-origin: 0 50%; transform: scaleX(var(--avanza)); }
+  .orologio { position: relative; top: 0; gap: 14px; }
+  .orologio-quadrante { width: 180px; height: 180px; filter: drop-shadow(0 24px 30px rgba(0, 0, 0, .45)); }
+  .orologio-ora { font-size: 1.05rem; padding: 6px 12px; }
+  .giornata { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .momento { grid-template-columns: 1fr; grid-template-areas: "icona" "ora" "titolo" "testo"; align-content: start; gap: 12px; padding: 22px 20px 24px; height: 100%; }
+  .momento-icona { width: 56px; height: 56px; }
+  .momento time { font-size: 1.9rem; margin-top: 4px; }
+  .momento h3 { margin: 0; }
+}
+
+/* =============================================================
+   06 · SERVIZI INCLUSI: card con icone grandi, il wi-fi in evidenza
+   ============================================================= */
+.servizi-testa { margin-bottom: 24px; }
+.servizi-titolo { margin: 0 0 8px; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.08; letter-spacing: -.02em; }
+.servizi-titolo em { color: var(--ocra-testo); }
+.servizi-testa p { margin: 0; color: var(--inchiostro-morbido); font-size: 1.05rem; }
+.servizi-griglia { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.servizio { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 16px 20px; border-radius: 14px; background: var(--avorio); border: 1px solid var(--linea); box-shadow: 0 18px 34px -26px rgba(17, 25, 34, .55); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
+.servizio:hover { transform: translateY(-3px); box-shadow: 0 26px 40px -24px rgba(17, 25, 34, .6); }
+.servizio[hidden] { display: none; }
+.servizio-icona { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 8px; border-radius: 16px; background: #F5DFAE; color: var(--notte); }
+.servizio:nth-child(3n+2) .servizio-icona { background: #D6EADF; color: #1E6B52; }
+.servizio:nth-child(3n) .servizio-icona { background: #D3E6EA; color: #1E6471; }
+.servizio-icona .ico { width: 28px; height: 28px; stroke-width: 1.8; }
+.servizio strong { font-size: 1.08rem; line-height: 1.25; }
+.servizio > span:last-child { font-size: .9rem; line-height: 1.45; color: var(--inchiostro-morbido); }
+/* il wi-fi, la prima domanda di tutti: card blu larga, onde che pulsano */
+.servizio-wifi { grid-column: 1 / -1; display: grid; align-content: center; grid-template-columns: auto 1fr; grid-template-areas: "icona titolo" "icona testo"; align-items: center; gap: 2px 18px; padding: 22px 20px; background: var(--inchiostro); border-color: var(--inchiostro); color: var(--avorio); }
+.servizio-wifi .servizio-icona { grid-area: icona; width: 72px; height: 72px; margin: 0; border-radius: 50%; background: var(--ocra); color: var(--notte); }
+.servizio-wifi .servizio-icona .ico { width: 38px; height: 38px; stroke-width: 2; }
+.servizio-wifi strong { grid-area: titolo; font-family: var(--f-display); font-weight: 400; font-size: 1.7rem; color: var(--avorio); }
+.servizio-wifi > span:last-child { grid-area: testo; color: var(--chiaro-70); font-size: .98rem; }
+.servizio-fissa { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 16px; }
+.servizio-fissa .servizio-icona { margin: 0; flex-shrink: 0; }
+.servizio-fissa > strong + span { flex: 1; }
+.servizio-fissa { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icona titolo" "icona testo"; gap: 2px 16px; }
+.servizio-fissa .servizio-icona { grid-area: icona; }
+.servizio-fissa strong { grid-area: titolo; } .servizio-fissa > span:last-child { grid-area: testo; }
+@media (prefers-reduced-motion: no-preference) {
+  .servizio-wifi .onda { animation: onda 2.4s ease-in-out infinite; }
+  .servizio-wifi .onda-2 { animation-delay: .25s; }
+  .servizio-wifi .onda-3 { animation-delay: .5s; }
+}
+@keyframes onda { 0%, 15% { opacity: .2; } 40%, 80% { opacity: 1; } 100% { opacity: .2; } }
+
+.servizi-senza { margin-top: 16px; padding: 22px 20px; border-radius: 14px; background: var(--carta-2); border: 1px dashed var(--linea-forte); }
+.servizi-senza-titolo { margin: 0 0 10px; font-weight: 700; }
+.servizi-senza ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.servizi-senza li { display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; color: var(--inchiostro-morbido); }
+.servizi-senza li .ico { flex-shrink: 0; width: 20px; height: 20px; padding: 3px; margin-top: 1px; border-radius: 50%; background: var(--inchiostro); color: var(--ocra-vivo); stroke-width: 3; }
+.servizi-porta { margin: 16px 0 0; font-family: var(--f-display); font-style: italic; font-size: 1.45rem; color: var(--ocra-testo); }
+@media (min-width: 900px) {
+  .servizi { display: grid; grid-template-columns: 4fr 8fr; gap: 24px 48px; align-items: start; }
+  .servizi-testa { grid-column: 1; grid-row: 1; position: sticky; top: calc(var(--testata) + 24px); }
+  .servizi-griglia { grid-column: 2; grid-row: 1 / span 2; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .servizi-senza { grid-column: 1; grid-row: 2; margin: 0; }
+  .servizio { padding: 22px 20px 24px; }
+  .servizio-wifi { grid-column: span 2; padding: 26px; }
+  .servizio-wifi strong { font-size: 2rem; }
+  .servizio-fissa { grid-column: 1 / -1; }
+}

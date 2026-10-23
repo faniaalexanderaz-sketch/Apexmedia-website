@@ -44,6 +44,34 @@
         });
       }
 
+      /* 1b) una giornata: scorrendo l'orologio va dalle 9:30 alle 18:30
+         e i quattro momenti si accendono quando arriva la loro ora */
+      var corpo = $('[data-giornata]');
+      if (corpo) {
+        var momenti = $$('.momento', corpo), ore = momenti.map(function (m) {
+          var t = ($('time', m) || {}).textContent || '', x = t.split(':');
+          return (+x[0] || 0) + (+x[1] || 0) / 60;
+        });
+        var oraInizio = ore[0] || 9.5, oraFine = ore[ore.length - 1] || 18.5;
+        var lOre = $('.lancetta-ore', corpo), lMin = $('.lancetta-min', corpo), digitale = $('[data-orologio-ora]', corpo);
+        var segna = function (p) {
+          var t = oraInizio + (oraFine - oraInizio) * p, q = Math.round(t * 4) / 4;
+          corpo.style.setProperty('--avanza', p.toFixed(3));
+          if (lOre) lOre.style.transform = 'rotate(' + ((t % 12) * 30).toFixed(1) + 'deg)';
+          if (lMin) lMin.style.transform = 'rotate(' + ((t % 1) * 360).toFixed(1) + 'deg)';
+          if (digitale) digitale.textContent = Math.floor(q) + ':' + String(Math.round((q % 1) * 60)).padStart(2, '0');
+          var ultima = -1;
+          momenti.forEach(function (m, i) { var on = t >= ore[i] - 0.05; m.classList.toggle('accesa', on); if (on) ultima = i; });
+          momenti.forEach(function (m, i) { m.classList.toggle('ora-qui', i === ultima && p < 0.999); });
+        };
+        corpo.classList.add('animata');
+        var stG = ScrollTrigger.create({
+          trigger: corpo, start: 'top 70%', end: function () { return window.innerWidth >= 900 ? 'bottom 35%' : 'bottom 60%'; }, scrub: 0.5,
+          onUpdate: function (st) { segna(st.progress); }, onRefresh: function (st) { segna(st.progress); }
+        });
+        segna(stG.progress);
+      }
+
       /* 2) i titoli entrano parola per parola, da dietro una maschera */
       function spezzaParole(el) {
         var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodi = [];
@@ -69,7 +97,7 @@
       });
 
       /* 2b) testi e voci: comparsa leggera, sfalsata */
-      var leggeri = $$('.occhiello, .intro-sezione, .negozio-paragrafo, .fatti > div, .accoglie > *, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .disp-live, .disp-azione > *, .prezzi-garanzie li, .dotazione h3')
+      var leggeri = $$('.occhiello, .intro-sezione, .negozio-lead, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .disp-live, .disp-azione > *, .prezzi-garanzie li')
         .filter(sottoLaPiega);
       if (leggeri.length) {
         gsap.set(leggeri, { opacity: 0, y: 16 });
@@ -78,7 +106,7 @@
       }
 
       /* 2c) liste: una voce alla volta, da sinistra */
-      [['.dotazione ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.giornata', 'li'], ['.faq', 'details'], ['.disp-giorni', '.disp-giorno'], ['.disp-scrivanie', '.disp-scrivania'], ['.tempo', '.tappa']].forEach(function (c) {
+      [['.ingresso-righe', 'li'], ['.servizi-senza ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.faq', 'details'], ['.disp-giorni', '.disp-giorno'], ['.disp-scrivanie', '.disp-scrivania'], ['.tempo', '.tappa']].forEach(function (c) {
         $$(c[0]).forEach(function (lista) {
           var voci = $$(c[1], lista);
           if (!voci.length || !sottoLaPiega(lista)) return;
@@ -99,13 +127,29 @@
       }
 
       /* 2e) per chi è e lo spazio: i riquadri entrano alternati da destra e da sinistra */
-      [$$('.profilo'), $$('.dotazione > div')].forEach(function (riquadri) {
+      [$$('.profilo')].forEach(function (riquadri) {
         if (!riquadri.length || !sottoLaPiega(riquadri[0])) return;
         riquadri.forEach(function (r, i) {
           gsap.from(r, { opacity: 0, x: i % 2 ? 48 : -48, y: 24, duration: 0.8, ease: 'power3.out', clearProps: 'opacity,transform',
             scrollTrigger: { trigger: r, start: 'top 90%', once: true } });
         });
       });
+
+      /* 2e-bis) negozio: la scheda "come arrivi" scivola sopra la foto */
+      var ingresso = $('.ingresso');
+      if (ingresso && sottoLaPiega(ingresso)) {
+        var largo = window.innerWidth >= 900;
+        gsap.from(ingresso, { opacity: 0, x: largo ? 80 : 0, y: largo ? 0 : 50, duration: 0.9, ease: 'power3.out', clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: ingresso, start: 'top 88%', once: true } });
+      }
+
+      /* 2e-ter) servizi inclusi: le card salgono a cascata e le icone "scattano" */
+      var servizi = $$('.servizio:not([hidden])');
+      if (servizi.length && sottoLaPiega(servizi[0])) {
+        var tlS = gsap.timeline({ scrollTrigger: { trigger: '.servizi-griglia', start: 'top 85%', once: true } });
+        tlS.from(servizi, { opacity: 0, y: 36, duration: 0.6, ease: 'power3.out', stagger: 0.08, clearProps: 'opacity,transform' })
+          .from(servizi.map(function (c) { return $('.servizio-icona', c); }), { scale: 0.3, rotation: -35, duration: 0.55, ease: 'back.out(2.2)', stagger: 0.08, clearProps: 'transform' }, 0.15);
+      }
 
       /* 2f) la mappa e i pulsanti: su e dentro */
       $$('.mappa, .dove-cta .btn').filter(sottoLaPiega).forEach(function (el, i) {
@@ -162,6 +206,7 @@
       $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; });
       var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
       $$('.parola-su').forEach(function (p) { p.style.transform = ''; });
+      $$('[data-giornata]').forEach(function (c) { c.classList.remove('animata'); });
     }
   }
 
