@@ -388,6 +388,15 @@
         .catch(function (x) { toast(x.message, true); });
       return;
     }
+    if ((b = t.closest('[data-elimina-cliente]'))) {
+      var n = +b.getAttribute('data-n') || 0;
+      if (!confirm('Eliminare per sempre ' + b.getAttribute('data-chi') + '?\n' + (n === 1 ? 'Si cancella anche la sua prenotazione, con l’eventuale incasso.\n' : n ? 'Si cancellano anche le sue ' + n + ' prenotazioni e gli incassi collegati.\n' : '') + 'Non si può tornare indietro.')) return;
+      b.disabled = true;
+      api('elimina-cliente', { dati: { id: +b.getAttribute('data-elimina-cliente') } }).then(function () {
+        toast('Cliente eliminato.'); aggiorna();
+      }).catch(function (x) { b.disabled = false; toast(x.message, true); });
+      return;
+    }
     if ((b = t.closest('[data-annulla-id]'))) {
       if (!confirm('Annullare la prenotazione di ' + b.getAttribute('data-chi') + '?\nIl posto torna libero e il cliente riceve un’email.')) return;
       api('annulla', { dati: { id: +b.getAttribute('data-annulla-id') } }).then(function () {
@@ -571,7 +580,8 @@
             '<div><dt>Carnet</dt><dd>' + (c.carnet ? c.carnet + ' ingressi' : '—') + '</dd></div>' +
             '<div><dt>Card</dt><dd>' + c.timbri + ' su 10' + (c.omaggi ? ' · 🎁 ' + c.omaggi : '') + '</dd></div>' +
             '<div><dt>Ultimo ingresso</dt><dd>' + (c.ultimo ? dataTesto(c.ultimo, { day: 'numeric', month: 'short' }) : '—') + '</dd></div>' +
-          '</dl>' + (c.piva_cf ? '<p class="nota">Fattura a: ' + h(c.piva_cf) + '</p>' : '') + '</article>';
+          '</dl>' + (c.piva_cf ? '<p class="nota">Fattura a: ' + h(c.piva_cf) + '</p>' : '') +
+          '<button class="link-azione cliente-elimina" type="button" data-elimina-cliente="' + c.id + '" data-chi="' + h(c.nome + ' ' + c.cognome) + '" data-n="' + c.prenotazioni + '">Elimina cliente</button></article>';
       }).join('') : '<p class="vuoto">' + (cerca ? 'Nessun cliente trovato.' : 'Ancora nessun cliente.') + '</p>';
     }).catch(function (e) { if (e.stato !== 501) toast(e.message, true); });
   };

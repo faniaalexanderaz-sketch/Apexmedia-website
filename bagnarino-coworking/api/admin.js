@@ -351,6 +351,7 @@ module.exports = async (req, res) => {
         if (!r.length) throw P.errore('NON_TROVATA', 'Prenotazione non trovata o già annullata.');
         json(res, 200, { id: r[0].id, accettata: true }); return;
       }
+      if (azione === 'elimina-cliente') { json(res, 200, await P.eliminaCliente(parseInt(b.id, 10))); return; }
       if (azione === 'presenza') { json(res, 200, await P.segnaPresenza(parseInt(b.id, 10), b.stato)); return; }
       if (azione === 'pagato') {
         const pagato = b.pagato === true, metodo = ['contanti', 'carta', 'bonifico', 'online'].indexOf(b.metodo) !== -1 ? b.metodo : null;

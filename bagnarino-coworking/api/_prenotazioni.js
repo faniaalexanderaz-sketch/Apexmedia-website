@@ -402,7 +402,30 @@ async function segnaPresenza(id, nuovoStato) {
   });
 }
 
+/* eliminazione definitiva di un cliente (clienti di prova, richieste di
+   cancellazione dei dati): con lui spariscono le sue prenotazioni, i
+   posti occupati, il carnet, i timbri della Card e gli eventi collegati.
+   Non si può annullare: l'area riservata chiede conferma prima. */
+async function eliminaCliente(id) {
+  if (!Number.isInteger(id)) throw errore('NON_TROVATO', 'Cliente non trovato.');
+  return transazione(async (x) => {
+    await x('SELECT pg_advisory_xact_lock(7231983)');
+    const c = (await x('SELECT id, nome, cognome FROM clienti WHERE id = $1', [id]))[0];
+    if (!c) throw errore('NON_TROVATO', 'Cliente non trovato.');
+    const pren = await x('SELECT id, codice FROM prenotazioni WHERE cliente_id = $1', [id]);
+    const codici = pren.map(r => r.codice);
+    if (codici.length) await x("DELETE FROM eventi WHERE dati->>'codice' = ANY($1::text[])", [codici]);
+    await x('DELETE FROM occupazioni WHERE prenotazione_id IN (SELECT id FROM prenotazioni WHERE cliente_id = $1)', [id]);
+    await x('DELETE FROM prenotazioni WHERE cliente_id = $1', [id]);
+    await x('DELETE FROM carnet WHERE cliente_id = $1', [id]);
+    await x('DELETE FROM fidelity WHERE cliente_id = $1', [id]);
+    await x('DELETE FROM clienti WHERE id = $1', [id]);
+    return { id, nome: c.nome, cognome: c.cognome, prenotazioni: pren.length };
+  });
+}
+
 module.exports = {
+  eliminaCliente,
   disponibilita, prenota, stato, annulla, annullaDaAdmin, vantaggi, card, segnaPresenza, trova,
   valida, errore, euro, stessoTelefono, impronta
 };

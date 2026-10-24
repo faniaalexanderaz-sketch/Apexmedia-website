@@ -673,3 +673,6 @@ body.admin { font-size: 1.0625rem; background: var(--carta); padding-bottom: 96p
 .inc-csv .btn { grid-column: 1 / -1; }
 @media (min-width: 760px) { .inc-csv { grid-template-columns: auto 1fr auto; } .inc-csv .btn { grid-column: auto; } }
 @media (prefers-reduced-motion: reduce) { .cr { animation: none; } }
+
+/* clienti: eliminazione definitiva (con conferma) */
+.cliente-elimina { margin-top: 12px; color: var(--rosso); font-size: .92rem; }

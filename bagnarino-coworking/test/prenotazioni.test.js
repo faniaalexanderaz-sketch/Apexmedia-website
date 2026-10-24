@@ -180,3 +180,22 @@ test('richieste dal sito da accettare: online no, a mano sì, arrivo = accettata
   await P.segnaPresenza(online.id, 'presente');
   assert.equal(await stato(online.id), true);
 });
+
+test('eliminare un cliente cancella prenotazioni, posti, carnet, card e incassi', async () => {
+  await nuovoDb();
+  const a = await P.prenota(cliente({ data: '2026-11-05', pacchetto: 'carnet' }), { adesso: ADESSO, manuale: true });
+  const resta = await P.prenota(cliente({ data: '2026-11-05' }), { adesso: ADESSO, manuale: true });
+  await db.q('UPDATE prenotazioni SET pagato = true, pagato_il = now() WHERE id = $1', [a.id]);
+  const cid = (await db.q('SELECT cliente_id FROM prenotazioni WHERE id = $1', [a.id]))[0].cliente_id;
+  const r = await P.eliminaCliente(cid);
+  assert.equal(r.prenotazioni, 1);
+  const conta = async (t, w, v) => (await db.q('SELECT COUNT(*)::int AS n FROM ' + t + ' WHERE ' + w, v))[0].n;
+  assert.equal(await conta('clienti', 'id = $1', [cid]), 0);
+  assert.equal(await conta('prenotazioni', 'cliente_id = $1', [cid]), 0);
+  assert.equal(await conta('carnet', 'cliente_id = $1', [cid]), 0);
+  assert.equal(await conta('occupazioni', 'prenotazione_id = $1', [a.id]), 0);
+  assert.equal(await conta("eventi", "dati->>'codice' = $1", [a.codice]), 0);
+  /* l'altro cliente resta com'era */
+  assert.equal(await conta('prenotazioni', 'id = $1', [resta.id]), 1);
+  await assert.rejects(P.eliminaCliente(cid), /non trovato/i);
+});
