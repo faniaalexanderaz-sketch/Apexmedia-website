@@ -1191,57 +1191,56 @@ body.menu-aperto { overflow: hidden; }
 @media (min-width: 1200px) { .ingresso { width: 500px; } }
 
 /* =============================================================
-   05 · UNA GIORNATA, rifatta: fascia blu, orologio che gira scorrendo,
-   quattro momenti con icona che si accendono uno dopo l'altro
+   05 · UNA GIORNATA: lo scontrino che esce dal registratore di cassa
    ============================================================= */
-.giornata-sezione.banda-blu { padding: 80px 0 88px; border-bottom: 4px solid var(--ocra); }
-.giornata-sezione .testa-sezione { margin-bottom: 36px; }
-.giornata-corpo { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 0 14px; --avanza: 1; }
-/* il binario: verticale sul telefono, orizzontale sul computer */
-.giornata-corpo::before, .giornata-corpo::after { content: ""; position: absolute; left: 31px; top: 88px; bottom: 30px; width: 2px; background: var(--linea-scura); border-radius: 2px; }
-.giornata-corpo::after { background: var(--ocra-vivo); transform-origin: 50% 0; transform: scaleY(var(--avanza)); }
+.giornata-sezione.banda-blu { padding: 80px 0 96px; border-bottom: 4px solid var(--ocra); overflow: hidden; }
+.giornata-griglia { display: grid; gap: 40px; align-items: start; }
+.giornata-testo .titolo-sezione { margin-bottom: 18px; }
+.giornata-lead { margin: 0 0 26px; max-width: 44ch; font-size: 1.08rem; line-height: 1.65; color: var(--chiaro-70); }
+.giornata-cta { width: 100%; }
 
-.orologio { position: sticky; top: calc(var(--testata) + 16px); align-self: start; z-index: 2; display: grid; justify-items: center; gap: 6px; }
-.orologio-quadrante { width: 64px; height: 64px; display: block; }
-.orologio-cassa { fill: var(--avorio); stroke: var(--ocra); stroke-width: 4; }
-.orologio-tacche path { stroke: var(--inchiostro); stroke-width: 3; stroke-linecap: round; }
-.orologio-tacche path + path { stroke-width: 2; opacity: .45; }
-.lancetta { stroke: var(--inchiostro); stroke-linecap: round; transform-origin: 60px 60px; }
-.lancetta-ore { stroke-width: 6; transform: rotate(285deg); }
-.lancetta-min { stroke-width: 4; stroke: var(--ocra-testo); transform: rotate(180deg); }
-.orologio-perno { fill: var(--ocra); }
-.orologio-ora { margin: 0; padding: 3px 7px; border-radius: 6px; background: var(--ocra); color: var(--notte); font-family: var(--f-mono); font-size: .78rem; font-weight: 600; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
-
-.giornata { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.momento { position: relative; display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icona ora" "titolo titolo" "testo testo"; align-items: center; gap: 6px 14px; padding: 18px 18px 20px; border-radius: 14px; background: var(--avorio); color: var(--inchiostro); box-shadow: 0 22px 40px -26px rgba(0, 0, 0, .7); transition: background-color .45s var(--curva), color .45s var(--curva), transform .45s var(--curva), box-shadow .45s var(--curva); }
-.momento-icona { grid-area: icona; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--ocra); color: var(--notte); transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), background-color .45s var(--curva), color .45s var(--curva); }
-.momento-icona .ico { width: 26px; height: 26px; stroke-width: 1.8; }
-.momento time { grid-area: ora; font-family: var(--f-mono); font-size: 1.6rem; line-height: 1; color: var(--ocra-testo); font-variant-numeric: tabular-nums; }
-.momento h3 { grid-area: titolo; margin: 8px 0 0; font-size: 1.15rem; }
-.momento p { grid-area: testo; margin: 0; line-height: 1.55; font-size: .97rem; color: var(--inchiostro-morbido); }
-
-/* con l'animazione attiva: i momenti non ancora arrivati restano "spenti" sul blu */
-.giornata-corpo.animata .momento:not(.accesa) { background: rgba(250, 246, 238, .05); color: var(--avorio); box-shadow: inset 0 0 0 1px var(--linea-scura); transform: scale(.97); }
-.giornata-corpo.animata .momento:not(.accesa) .momento-icona { background: rgba(250, 246, 238, .08); color: var(--chiaro-70); transform: scale(.82) rotate(-8deg); }
-.giornata-corpo.animata .momento:not(.accesa) time { color: var(--chiaro-70); }
-.giornata-corpo.animata .momento:not(.accesa) p { color: rgba(250, 246, 238, .5); }
-.giornata-corpo.animata .momento.ora-qui { box-shadow: 0 0 0 3px var(--ocra-vivo), 0 26px 48px -24px rgba(0, 0, 0, .8); }
-
+.scontrino-scena { position: relative; width: min(360px, 100%); margin: 0 auto; }
+/* la cassa: un blocco scuro con la fessura da cui esce la carta */
+.cassa { position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; height: 58px; padding: 0 18px 10px; border-radius: 14px 14px 8px 8px; background: linear-gradient(180deg, #2A3B4E, #0E151D); box-shadow: 0 18px 30px -14px rgba(0, 0, 0, .7), inset 0 1px 0 rgba(255, 255, 255, .12); }
+.cassa-luce { width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 8px #4ADE80; }
+.cassa-nome { font-family: var(--f-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--chiaro-70); }
+.cassa-fessura { position: absolute; left: 16px; right: 16px; bottom: 8px; height: 5px; border-radius: 3px; background: #05080B; box-shadow: inset 0 2px 3px rgba(0, 0, 0, .9); }
+/* la carta passa sotto la fessura: la maschera la "taglia" lì */
+.scontrino-maschera { position: relative; margin: -12px 26px 0; padding: 0 6px 30px; overflow: hidden; }
+.scontrino { position: relative; padding: 26px 20px 30px; background: #FFFDF6; color: #23272B; font-family: var(--f-mono); font-size: .8rem; line-height: 1.5; box-shadow: 0 24px 40px -22px rgba(0, 0, 0, .8); transform-origin: 50% 0;
+  background-image: linear-gradient(180deg, rgba(27, 42, 58, .07), transparent 26px);
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 10px repeat-x;
+  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 10px repeat-x; }
+.scontrino p { margin: 0; }
+.sc-centro { text-align: center; }
+.sc-forte { font-weight: 600; letter-spacing: .12em; }
+.sc-piccolo { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: #6B6F73; margin: 4px 0 10px !important; }
+.sc-taglio { margin: 14px 0; border: 0; border-top: 1.5px dashed #9AA0A6; }
+.sc-righe { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.sc-riga { display: grid; grid-template-columns: auto 1fr auto; column-gap: 10px; align-items: baseline; }
+.sc-ora { font-weight: 600; color: #7A5A1E; }
+.sc-voce { display: flex; align-items: baseline; min-width: 0; text-transform: uppercase; font-size: .76rem; letter-spacing: .03em; }
+.sc-voce::after { content: ''; flex: 1; min-width: 10px; margin: 0 0 .25em 6px; border-bottom: 1.5px dotted #9AA0A6; }
+.sc-val { font-weight: 600; font-size: .72rem; }
+.sc-riga small { grid-column: 2 / -1; font-size: .7rem; color: #6B6F73; line-height: 1.35; }
+.sc-inclusi { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 4px; font-size: .74rem; }
+.sc-inclusi li { display: flex; justify-content: space-between; gap: 10px; }
+.sc-inclusi li span:last-child { font-weight: 600; }
+.sc-totale { display: flex; justify-content: space-between; align-items: baseline; margin: 6px 0 4px !important; padding: 10px 0; border-top: 2px solid #23272B; border-bottom: 2px solid #23272B; font-weight: 600; letter-spacing: .06em; }
+.sc-totale strong { font-family: var(--f-display); font-weight: 400; font-size: 2rem; letter-spacing: -.02em; line-height: 1; }
+.sc-barre { height: 42px; margin: 16px 18px 10px; background: repeating-linear-gradient(90deg, #23272B 0 2px, transparent 2px 4px, #23272B 4px 5px, transparent 5px 8px, #23272B 8px 11px, transparent 11px 12px, #23272B 12px 13px, transparent 13px 16px); }
 @media (min-width: 900px) {
-  .giornata-sezione.banda-blu { padding: 120px 0 128px; }
-  .giornata-sezione .testa-sezione { margin-bottom: 56px; }
-  .giornata-corpo { grid-template-columns: 200px 1fr; gap: 0 48px; align-items: center; }
-  .giornata-corpo::before, .giornata-corpo::after { left: 248px; right: 0; top: -22px; bottom: auto; width: auto; height: 2px; }
-  .giornata-corpo::after { transform-origin: 0 50%; transform: scaleX(var(--avanza)); }
-  .orologio { position: relative; top: 0; gap: 14px; }
-  .orologio-quadrante { width: 180px; height: 180px; filter: drop-shadow(0 24px 30px rgba(0, 0, 0, .45)); }
-  .orologio-ora { font-size: 1.05rem; padding: 6px 12px; }
-  .giornata { grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .momento { grid-template-columns: 1fr; grid-template-areas: "icona" "ora" "titolo" "testo"; align-content: start; gap: 12px; padding: 22px 20px 24px; height: 100%; }
-  .momento-icona { width: 56px; height: 56px; }
-  .momento time { font-size: 1.9rem; margin-top: 4px; }
-  .momento h3 { margin: 0; }
+  .giornata-sezione.banda-blu { padding: 128px 0 120px; }
+  .giornata-griglia { grid-template-columns: 6fr 5fr; gap: 72px; align-items: center; }
+  .giornata-cta { width: auto; }
+  .scontrino-scena { width: 380px; margin: 0 0 0 auto; }
+  .scontrino { font-size: .84rem; padding: 30px 24px 34px; }
 }
+/* con l'animazione attiva: la carta parte dentro la cassa, la luce lampeggia mentre stampa */
+.scontrino-scena.animata .scontrino { clip-path: inset(0 0 var(--nascosto, 0%) 0); transform: translateY(var(--scende, 0px)) rotate(var(--piega, 0deg)); }
+@media (max-width: 899px) { .sc-voce { font-size: .7rem; } }
+.scontrino-scena.stampa .cassa-luce { animation: cassa-luce .25s steps(1) infinite; }
+@keyframes cassa-luce { 50% { background: #F5DFAE; box-shadow: 0 0 8px #F5DFAE; } }
 
 /* =============================================================
    06 · SERVIZI INCLUSI: card con icone grandi, il wi-fi in evidenza

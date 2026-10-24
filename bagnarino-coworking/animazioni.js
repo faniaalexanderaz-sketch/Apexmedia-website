@@ -44,32 +44,22 @@
         });
       }
 
-      /* 1b) una giornata: scorrendo l'orologio va dalle 9:30 alle 18:30
-         e i quattro momenti si accendono quando arriva la loro ora */
-      var corpo = $('[data-giornata]');
-      if (corpo) {
-        var momenti = $$('.momento', corpo), ore = momenti.map(function (m) {
-          var t = ($('time', m) || {}).textContent || '', x = t.split(':');
-          return (+x[0] || 0) + (+x[1] || 0) / 60;
-        });
-        var oraInizio = ore[0] || 9.5, oraFine = ore[ore.length - 1] || 18.5;
-        var lOre = $('.lancetta-ore', corpo), lMin = $('.lancetta-min', corpo), digitale = $('[data-orologio-ora]', corpo);
-        var segna = function (p) {
-          var t = oraInizio + (oraFine - oraInizio) * p, q = Math.round(t * 4) / 4;
-          corpo.style.setProperty('--avanza', p.toFixed(3));
-          if (lOre) lOre.style.transform = 'rotate(' + ((t % 12) * 30).toFixed(1) + 'deg)';
-          if (lMin) lMin.style.transform = 'rotate(' + ((t % 1) * 360).toFixed(1) + 'deg)';
-          if (digitale) digitale.textContent = Math.floor(q) + ':' + String(Math.round((q % 1) * 60)).padStart(2, '0');
-          var ultima = -1;
-          momenti.forEach(function (m, i) { var on = t >= ore[i] - 0.05; m.classList.toggle('accesa', on); if (on) ultima = i; });
-          momenti.forEach(function (m, i) { m.classList.toggle('ora-qui', i === ultima && p < 0.999); });
+      /* 1b) una giornata: scorrendo, lo scontrino si stampa dall'alto, riga per riga,
+         e alla fine si piega appena, come una carta vera */
+      var scena = $('[data-scontrino]');
+      if (scena) {
+        var esci = function (p) {
+          scena.style.setProperty('--nascosto', ((1 - p) * 100).toFixed(1) + '%');
+          scena.style.setProperty('--scende', ((p - 1) * 24).toFixed(1) + 'px');
+          scena.style.setProperty('--piega', (p > 0.98 ? -1.5 : 0) + 'deg');
+          scena.classList.toggle('stampa', p > 0.02 && p < 0.98);
         };
-        corpo.classList.add('animata');
-        var stG = ScrollTrigger.create({
-          trigger: corpo, start: 'top 70%', end: function () { return window.innerWidth >= 900 ? 'bottom 35%' : 'bottom 60%'; }, scrub: 0.5,
-          onUpdate: function (st) { segna(st.progress); }, onRefresh: function (st) { segna(st.progress); }
+        scena.classList.add('animata');
+        var stS = ScrollTrigger.create({
+          trigger: scena, start: 'top 75%', end: function () { return window.innerWidth >= 900 ? 'bottom 55%' : 'bottom 85%'; }, scrub: 0.6,
+          onUpdate: function (st) { esci(st.progress); }, onRefresh: function (st) { esci(st.progress); }
         });
-        segna(stG.progress);
+        esci(stS.progress);
       }
 
       /* 2) i titoli entrano parola per parola, da dietro una maschera */
@@ -97,7 +87,7 @@
       });
 
       /* 2b) testi e voci: comparsa leggera, sfalsata */
-      var leggeri = $$('.occhiello, .intro-sezione, .negozio-lead, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .ps-posti, .ps-titolo, .ps-cta, .ps-sotto, .prezzi-garanzie li')
+      var leggeri = $$('.occhiello, .intro-sezione, .negozio-lead, .giornata-lead, .giornata-cta, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .ps-posti, .ps-titolo, .ps-cta, .ps-sotto, .prezzi-garanzie li')
         .filter(sottoLaPiega);
       if (leggeri.length) {
         gsap.set(leggeri, { opacity: 0, y: 16 });
@@ -206,7 +196,7 @@
       $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; });
       var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
       $$('.parola-su').forEach(function (p) { p.style.transform = ''; });
-      $$('[data-giornata]').forEach(function (c) { c.classList.remove('animata'); });
+      $$('[data-scontrino]').forEach(function (c) { c.classList.remove('animata', 'stampa'); });
     }
   }
 
