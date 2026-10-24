@@ -32,8 +32,7 @@ var BGN_CONFIG = {
     telefonoFissoVisibile: '0131 444845',
     telefonoFisso: '+390131444845',
     dal: 1983,
-    geo: { lat: 44.9112, lng: 8.6215 },
-    vicinoA: 'a due passi dall’ospedale e da Piazza Libertà'
+    geo: { lat: 44.9112, lng: 8.6215 }
   },
 
   /* Cellulare e WhatsApp della titolare: sono i contatti "caldi"

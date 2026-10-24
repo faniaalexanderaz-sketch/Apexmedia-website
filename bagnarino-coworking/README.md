@@ -212,7 +212,7 @@ nella scheda Google Business `?utm_source=gmb`.
 8. **Disdetta gratis entro le 20:00 del giorno prima**: va bene come regola?
 9. **Chiusure**: San Baudolino (10 novembre), ferie estive, ponti.
 10. **Parcheggio**: ci sono convenzioni o parcheggi vicini da indicare?
-11. **"A due passi dall'ospedale e da Piazza Libertà"**: confermare la descrizione.
+11. **Punti di riferimento vicini al negozio** (parcheggi, piazze): da chiedere a Marcella; per ora il sito dice solo "in pieno centro".
 12. **Videochiamate**: sono ammesse alle postazioni? (il testo del wi-fi le cita)
 13. **Etichetta della card in evidenza**: oggi "La più conveniente". "La più scelta" solo con dati veri.
 14. **Nome "Marcella"** nella schermata di conferma e nell'area riservata: va bene?
