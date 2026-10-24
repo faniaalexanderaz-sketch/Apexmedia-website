@@ -286,75 +286,51 @@
     disponibilita(giornoBadge, 1).then(function (r) { if (r.reale && r.giorni[iso(giornoBadge)] != null) mostraBadge(r.giorni[iso(giornoBadge)]); });
   }
 
-  /* ---------- disponibilità: scegli il giorno, vedi le scrivanie ----------
-     Le scrivanie si assegnano in automatico: qui mostriamo quante sono
-     libere quel giorno, non una scrivania precisa da scegliere. */
+  /* ---------- posti liberi: i prossimi 10 giorni di apertura ----------
+     Ogni giorno è un link: tocchi e sei alla prenotazione con quel
+     giorno già scelto, devi solo scrivere nome e telefono. Le scrivanie
+     si assegnano all'arrivo, qui contano solo quante sono libere. */
   var disp = $('[data-disp]');
   if (disp) {
-    var boxGiorni = $('[data-disp-giorni]', disp), listaScr = $('[data-disp-scrivanie]', disp);
-    /* tante scrivanie quante ne dice la configurazione */
-    var modello = $('[data-scrivania]', listaScr);
-    if (modello) {
-      var html = '';
-      for (var n = 1; n <= C.postazioni; n++) html += modello.outerHTML.replace(/data-scrivania="\d+"/, 'data-scrivania="' + n + '"').replace(/<span class="disp-num">\d+<\/span>/, '<span class="disp-num">' + n + '</span>');
-      listaScr.innerHTML = html;
-    }
-    var scrivanie = $$('[data-scrivania]', listaScr);
+    var boxGiorni = $('[data-disp-giorni]', disp);
     var giorniDisp = [], cursore = primoGiornoUtile();
-    for (var k = 0; giorniDisp.length < 5 && k < 30; k++) {
+    for (var k = 0; giorniDisp.length < 10 && k < 40; k++) {
       if (aperto(cursore)) giorniDisp.push(new Date(cursore.getFullYear(), cursore.getMonth(), cursore.getDate()));
       cursore.setDate(cursore.getDate() + 1);
     }
     var liberiDi = {};
     giorniDisp.forEach(function (g) { liberiDi[iso(g)] = liberiDemo(g); });
-    var scelto = giorniDisp.length ? iso(giorniDisp[0]) : null;
-    var breve = function (g) {
+    var nomeGiorno = function (g) {
       var r = relativa(g);
       return r === 'Oggi' || r === 'Domani' ? r : g.toLocaleDateString('it-IT', { weekday: 'short' }).replace('.', '');
     };
     var disegnaGiorniDisp = function () {
       boxGiorni.innerHTML = giorniDisp.map(function (g) {
-        var key = iso(g), lib = liberiDi[key], pieno = lib === 0;
-        return '<button type="button" class="disp-giorno' + (pieno ? ' pieno' : lib <= 2 ? ' pochi' : '') + '" data-giorno="' + key + '" aria-pressed="' + (key === scelto) + '">' +
-          '<span class="dg-sett">' + breve(g) + '</span><span class="dg-num">' + g.getDate() + '</span>' +
-          '<span class="dg-liberi">' + (pieno ? 'completo' : lib + (lib === 1 ? ' libera' : ' libere')) + '</span></button>';
+        var key = iso(g), lib = Math.max(0, Math.min(C.postazioni, liberiDi[key])), pieno = lib === 0;
+        var lungo = g.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+        var posti = '';
+        if (C.postazioni <= 12) for (var i = 0; i < C.postazioni; i++) posti += '<i' + (i < lib ? ' class="l"' : '') + '></i>';
+        var corpo = '<span class="dg-sett">' + nomeGiorno(g) + '</span><span class="dg-num">' + g.getDate() + '</span>' +
+          '<span class="dg-mese">' + g.toLocaleDateString('it-IT', { month: 'short' }).replace('.', '') + '</span>' +
+          (posti ? '<span class="dg-posti" aria-hidden="true">' + posti + '</span>' : '') +
+          '<span class="dg-liberi">' + (pieno ? 'Completo' : lib + (lib === 1 ? ' libera' : ' libere')) + '</span>';
+        return '<li>' + (pieno
+          ? '<span class="disp-giorno pieno" aria-label="' + lungo + ': completo">' + corpo + '</span>'
+          : '<a class="disp-giorno' + (lib <= 2 ? ' pochi' : '') + '" href="/prenota?pacchetto=giornata&amp;data=' + key + '" data-giorno="' + key + '" data-pos="disponibilita-giorno" aria-label="Prenota ' + lungo + ', ' + lib + (lib === 1 ? ' scrivania libera' : ' scrivanie libere') + '">' +
+              corpo + '<span class="dg-vai">Prenota<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></a>') + '</li>';
       }).join('');
-    };
-    var ordine = [2, 5, 1, 4, 6, 3];
-    var aggiornaSala = function () {
-      if (!scelto) return;
-      var g = daIso(scelto), lib = liberiDi[scelto], occupate = C.postazioni - lib;
-      /* ordine di riempimento realistico, non in fila */
-      var seq = ordine.filter(function (x) { return x <= C.postazioni; });
-      for (var x = 1; x <= C.postazioni; x++) if (seq.indexOf(x) === -1) seq.push(x);
-      scrivanie.forEach(function (sc) {
-        var num = +sc.getAttribute('data-scrivania'), occ = seq.indexOf(num) < occupate;
-        sc.classList.toggle('occupata', occ); sc.classList.toggle('libera', !occ);
-        $('.disp-stato', sc).textContent = occ ? 'Occupata' : 'Libera';
-        sc.setAttribute('aria-label', 'Scrivania ' + num + ': ' + (occ ? 'occupata' : 'libera'));
-      });
-      var quando = relativa(g);
-      var quandoTesto = quando === 'Oggi' || quando === 'Domani' ? quando.toLowerCase() : quando.toLowerCase() + ' ' + g.getDate();
-      $('[data-disp-conta]', disp).textContent = lib + ' su ' + C.postazioni;
-      $('[data-disp-quando]', disp).textContent = (lib === 1 ? 'scrivania libera ' : 'scrivanie libere ') + quandoTesto;
-      var cta = $('[data-disp-cta]', disp);
-      if (lib === 0) {
-        cta.href = '/prenota?pacchetto=giornata';
-        $('[data-disp-cta-testo]', disp).textContent = 'Completo: scegli un altro giorno';
+      /* il pulsante grande porta al primo giorno con posti */
+      var primo = giorniDisp.filter(function (g) { return liberiDi[iso(g)] > 0; })[0], cta = $('[data-disp-cta]', disp);
+      if (primo) {
+        var r = relativa(primo);
+        cta.href = '/prenota?pacchetto=giornata&data=' + iso(primo);
+        $('[data-disp-cta-testo]', disp).textContent = 'Prenota per ' + (r === 'Oggi' || r === 'Domani' ? r.toLowerCase() : primo.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric' }));
       } else {
-        cta.href = '/prenota?pacchetto=giornata&data=' + scelto;
-        $('[data-disp-cta-testo]', disp).textContent = 'Prenota per ' + quandoTesto;
+        cta.href = '/prenota?pacchetto=giornata';
+        $('[data-disp-cta-testo]', disp).textContent = 'Scegli un altro giorno';
       }
     };
-    boxGiorni.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-giorno]');
-      if (!b) return;
-      scelto = b.getAttribute('data-giorno');
-      $$('[data-giorno]', boxGiorni).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      disp.classList.remove('cambia'); void disp.offsetWidth; disp.classList.add('cambia');
-      aggiornaSala();
-    });
-    disegnaGiorniDisp(); aggiornaSala();
+    disegnaGiorniDisp();
     if (giorniDisp.length) {
       var ultimo = giorniDisp[giorniDisp.length - 1];
       var span = Math.round((ultimo - giorniDisp[0]) / 864e5) + 1;
@@ -363,7 +339,7 @@
         giorniDisp.forEach(function (g) { var key = iso(g); if (r.giorni[key] != null) liberiDi[key] = r.giorni[key]; });
         $('[data-disp-fonte]', disp).textContent = 'Posti liberi in tempo reale';
         disp.classList.add('reale');
-        disegnaGiorniDisp(); aggiornaSala();
+        disegnaGiorniDisp();
       });
     }
   }

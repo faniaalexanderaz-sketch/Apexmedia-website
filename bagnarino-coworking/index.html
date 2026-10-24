@@ -36,13 +36,13 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=e11d2147">
+  <link rel="stylesheet" href="/styles.css?v=c2fb5c25">
 
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=b39c23ee" defer></script>
-  <script src="/animazioni.js?v=844c4322" defer></script>
+  <script src="/main.js?v=5ce9d6a5" defer></script>
+  <script src="/animazioni.js?v=bb5f400a" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -149,47 +149,32 @@
     </div>
   </div>
 
-  <!-- ============ 01 · POSTI LIBERI: scegli il giorno, vedi le scrivanie ============ -->
+  <!-- ============ 01 · POSTI LIBERI: tocchi il giorno e sei già alla prenotazione ============ -->
   <section class="disp-sezione banda-blu" id="posti" aria-labelledby="disp-titolo">
     <div class="contenitore disp" data-disp>
       <div class="disp-testa">
         <p class="occhiello occhiello-chiaro"><span>01</span>Posti liberi</p>
-        <h2 id="disp-titolo" class="disp-titolo">Scegli il giorno, <em>vedi le scrivanie libere.</em></h2>
+        <h2 id="disp-titolo" class="disp-titolo">Tocca un giorno, <em>la scrivania è tua.</em></h2>
         <p class="disp-live"><span class="disp-live-punto" aria-hidden="true"></span><span data-disp-fonte>Posti liberi aggiornati</span></p>
       </div>
 
       <div class="disp-scheda">
-      <div class="disp-giorni" role="group" aria-label="Scegli il giorno" data-disp-giorni>
-        <!-- i giorni si generano qui: prossimi giorni di apertura -->
-      </div>
-
-      <div class="disp-sala">
-        <p class="disp-vetrina">Vetrina · corso Lamarmora</p>
-        <ul class="disp-scrivanie" aria-label="Scrivanie" data-disp-scrivanie>
-          <li class="disp-scrivania libera" data-scrivania="1"><span class="disp-num">1</span><span class="disp-stato">Libera</span></li>
-          <li class="disp-scrivania libera" data-scrivania="2"><span class="disp-num">2</span><span class="disp-stato">Libera</span></li>
-          <li class="disp-scrivania libera" data-scrivania="3"><span class="disp-num">3</span><span class="disp-stato">Libera</span></li>
-          <li class="disp-scrivania libera" data-scrivania="4"><span class="disp-num">4</span><span class="disp-stato">Libera</span></li>
-          <li class="disp-scrivania libera" data-scrivania="5"><span class="disp-num">5</span><span class="disp-stato">Libera</span></li>
-          <li class="disp-scrivania libera" data-scrivania="6"><span class="disp-num">6</span><span class="disp-stato">Libera</span></li>
-        </ul>
-        <div class="disp-sala-piede">
-          <span class="disp-legenda"><span class="punto libera" aria-hidden="true"></span>Libera</span>
-          <span class="disp-legenda"><span class="punto occupata" aria-hidden="true"></span>Occupata</span>
-          <span class="disp-legenda disp-olivetti"><svg class="ico" aria-hidden="true"><use href="#i-printer"/></svg>Stampante Olivetti</span>
+        <div class="disp-scheda-testa">
+          <p class="disp-istruzione"><strong>Quando vuoi venire?</strong> <span>Giornata <span data-prezzo="giornata">€25</span>, paghi quando arrivi.</span></p>
+          <p class="disp-chiave" aria-hidden="true"><span><i class="l-libera"></i>scrivania libera</span><span><i class="l-occupata"></i>occupata</span></p>
         </div>
-      </div>
-
-      <div class="disp-azione">
-        <p class="disp-conta" aria-live="polite"><strong data-disp-conta>6 su 6</strong> <span data-disp-quando>scrivanie libere</span></p>
-        <a class="btn btn-pieno btn-grande btn-largo" href="/prenota?pacchetto=giornata" data-disp-cta data-pos="disponibilita"><span data-disp-cta-testo>Prenota la tua giornata</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <!-- i giorni si generano qui: ogni giorno è un link che apre la
+             prenotazione con quel giorno già scelto -->
+        <ul class="disp-giorni" data-disp-giorni aria-label="Prossimi giorni: tocca per prenotare"></ul>
+        <div class="disp-piede">
+          <a class="btn btn-ocra btn-grande" href="/prenota?pacchetto=giornata" data-disp-cta data-pos="disponibilita"><span data-disp-cta-testo>Prenota la tua giornata</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <a class="disp-altro" href="/prenota" data-pos="disponibilita-formule">Carnet o abbonamento mensile? <span>Scegli la formula ›</span></a>
+        </div>
         <ol class="disp-passi">
-          <li><span>1</span>Scegli il giorno</li>
-          <li><span>2</span>Scegli la formula</li>
+          <li><span>1</span>Tocca il giorno</li>
+          <li><span>2</span>Scrivi nome e telefono</li>
           <li><span>3</span>Paghi quando arrivi</li>
         </ol>
-        <p class="disp-nota">All’arrivo ti assegniamo una delle scrivanie libere: sono tutte uguali.</p>
-      </div>
       </div>
     </div>
   </section>

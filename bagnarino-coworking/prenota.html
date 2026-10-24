@@ -28,14 +28,14 @@
 
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/fraunces-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=e11d2147">
+  <link rel="stylesheet" href="/styles.css?v=c2fb5c25">
 
   <script>if (/[?&]pacchetto=/.test(location.search)) document.documentElement.classList.add('con-pacchetto');</script>
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=b39c23ee" defer></script>
-  <script src="/prenota.js?v=3ddfbe4d" defer></script>
+  <script src="/main.js?v=5ce9d6a5" defer></script>
+  <script src="/prenota.js?v=23dbde9f" defer></script>
 </head>
 <body class="pagina-prenota">
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -126,6 +126,11 @@
             <div class="giorni" data-giorni role="radiogroup" aria-label="Giorno"></div>
             <p class="giorno-info" data-giorno-info aria-live="polite"></p>
             <p class="campo-errore" data-errore-giorno style="display:none">Scegli un giorno per continuare.</p>
+            <!-- giorno già scelto: il calendario si chiude in una riga, come la formula -->
+            <div class="blocco-sintesi sintesi-giorno" data-sintesi="2" hidden>
+              <p><svg class="ico" aria-hidden="true"><use href="#i-calendar-check"/></svg><span data-sintesi-giorno></span></p>
+              <button class="link-cambia" type="button" data-cambia="2">Cambia giorno</button>
+            </div>
           </fieldset>
 
           <!-- PASSO 3: dati -->

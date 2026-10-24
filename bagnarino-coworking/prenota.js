@@ -136,6 +136,17 @@
     griglia.innerHTML = html;
   }
 
+  /* il giorno scelto chiude il calendario in una riga, "Cambia giorno" lo riapre */
+  function chiudiCalendario() {
+    if (!stato.data) return;
+    $('[data-blocco="2"]').classList.add('chiuso');
+    $('[data-sintesi="2"]').hidden = false;
+    $('[data-sintesi-giorno]').textContent = maiuscola(B.data(B.daIso(stato.data), 'lungo'));
+  }
+  function apriCalendario() {
+    $('[data-blocco="2"]').classList.remove('chiuso');
+    $('[data-sintesi="2"]').hidden = true;
+  }
   function scegliGiorno(s, scorri) {
     var d = B.daIso(s);
     if (!statoGiorno(d).attivo) return false;
@@ -149,10 +160,16 @@
     $('[data-blocco="2"]').classList.add('completo');
     aggiornaInfoGiorno();
     aggiorna();
-    if (scorri && !stato.sceltoGiornoUnaVolta) { stato.sceltoGiornoUnaVolta = true; vaiA(3); }
+    chiudiCalendario();
+    if (scorri && !stato.sceltoGiornoUnaVolta) { stato.sceltoGiornoUnaVolta = true; vaiA(2); }
     controllaVantaggi();
     return true;
   }
+  $('[data-cambia="2"]').addEventListener('click', function () {
+    apriCalendario();
+    var sc = $('.giorno.scelto', griglia) || $('.giorno:not(:disabled)', griglia);
+    if (sc) sc.focus();
+  });
   griglia.addEventListener('click', function (e) {
     var b = e.target.closest('.giorno');
     if (b && !b.disabled) scegliGiorno(b.getAttribute('data-data'), true);
@@ -465,7 +482,7 @@
       stato.liberi = r.giorni;
       /* il giorno scelto non è più disponibile con questa formula */
       if (stato.data && !(r.giorni[stato.data] > 0)) {
-        stato.data = null;
+        stato.data = null; apriCalendario();
         $('[data-blocco="2"]').classList.remove('completo');
         aggiornaInfoGiorno(); aggiorna();
       }
@@ -483,6 +500,10 @@
 
   caricaDisponibilita().then(function () {
     var dq = q.get('data');
-    if (dq && /^\d{4}-\d{2}-\d{2}$/.test(dq)) scegliGiorno(dq, false);
+    /* arrivo dalla home con il giorno già scelto: si va dritti ai dati */
+    if (dq && /^\d{4}-\d{2}-\d{2}$/.test(dq) && scegliGiorno(dq, false) && stato.pacchetto) {
+      stato.sceltoGiornoUnaVolta = true;
+      setTimeout(function () { vaiA(2); }, 150);
+    }
   });
 })();
