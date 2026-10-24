@@ -1302,69 +1302,91 @@ body.menu-aperto { overflow: hidden; }
 .sintesi-giorno p { display: inline-flex; align-items: center; gap: 10px; }
 .sintesi-giorno .ico { width: 22px; height: 22px; color: var(--ocra-testo); flex-shrink: 0; }
 
+.sintesi-giorno .link-cambia { white-space: nowrap; }
+
 /* =============================================================
-   01 · POSTI LIBERI, rifatta: dieci giorni, ognuno è un link
-   che apre la prenotazione con quel giorno già scelto
+   01 · PRENOTA: testo, tre passi, un pulsante e un disegno animato
    ============================================================= */
 .disp-sezione.banda-blu { padding: 72px 0 0; border-bottom: 4px solid var(--ocra); }
 .disp { display: grid; gap: 26px; }
 .disp-testa { max-width: 760px; }
-.disp-scheda { position: relative; z-index: 2; margin-bottom: -88px; padding: 20px 14px 22px; border-radius: 16px; background: var(--avorio); color: var(--inchiostro); box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
-.disp-scheda-testa { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; margin: 0 4px 16px; }
-.disp-istruzione { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
-.disp-istruzione strong { font-family: var(--f-display); font-weight: 400; font-size: clamp(1.45rem, 5vw, 1.9rem); letter-spacing: -.01em; }
-.disp-istruzione > span { color: var(--inchiostro-morbido); font-size: .95rem; }
-.disp-chiave { display: flex; gap: 14px; margin: 0; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .05em; color: var(--inchiostro-morbido); }
-.disp-chiave span { display: inline-flex; align-items: center; gap: 6px; }
-.disp-chiave i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #1E6B52; }
-.disp-chiave i.l-libera { background: #1E6B52; }
-
-.disp-giorni { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.disp-giorni li { display: flex; min-width: 0; }
-.disp-giorni li:nth-child(10) { display: none; }
-.disp-giorno { position: relative; display: flex; flex: 1; flex-direction: column; align-items: center; gap: 2px; min-width: 0; padding: 12px 6px 12px; border-radius: 12px; background: #E8F3EC; border: 1.5px solid #B9DCC6; color: var(--inchiostro); text-decoration: none; text-align: center; transition: transform .2s var(--curva), box-shadow .2s var(--curva), background-color .2s var(--curva), border-color .2s var(--curva); }
-a.disp-giorno:hover, a.disp-giorno:focus-visible { transform: translateY(-3px); background: var(--inchiostro); border-color: var(--inchiostro); color: var(--avorio); box-shadow: 0 16px 28px -16px rgba(17, 25, 34, .8); outline: none; }
-.dg-sett { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: inherit; opacity: .75; }
-.dg-num { font-family: var(--f-display); font-size: 2.1rem; line-height: 1; letter-spacing: -.02em; }
-.dg-mese { font-size: .78rem; text-transform: capitalize; opacity: .75; margin-top: -1px; }
-.dg-posti { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; max-width: 64px; margin: 8px 0 2px; }
-.dg-posti i { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid #1E6B52; }
-.dg-posti i.l { background: #1E6B52; }
-.dg-liberi { font-size: .78rem; font-weight: 700; color: #1E6B52; }
-.dg-vai { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; padding: 4px 10px; border-radius: 999px; background: var(--inchiostro); color: var(--avorio); font-size: .76rem; font-weight: 700; }
-.dg-vai .ico { width: 12px; height: 12px; }
-a.disp-giorno:hover .dg-vai, a.disp-giorno:focus-visible .dg-vai { background: var(--ocra); color: var(--notte); }
-a.disp-giorno:hover .dg-liberi, a.disp-giorno:focus-visible .dg-liberi { color: #9FE0B8; }
-a.disp-giorno:hover .dg-posti i, a.disp-giorno:focus-visible .dg-posti i { border-color: #9FE0B8; }
-a.disp-giorno:hover .dg-posti i.l, a.disp-giorno:focus-visible .dg-posti i.l { background: #9FE0B8; }
-/* ultimi posti: ocra; completo: grigio, non si tocca */
-.disp-giorno.pochi { background: #FBEBC8; border-color: #E8C77F; }
-.disp-giorno.pochi .dg-liberi { color: #8A5A10; }
-.disp-giorno.pochi .dg-posti i { border-color: #B0791C; } .disp-giorno.pochi .dg-posti i.l { background: #B0791C; }
-.disp-giorno.pieno { background: var(--carta-2); border-color: var(--linea); color: var(--inchiostro-morbido); }
-.disp-giorno.pieno .dg-liberi { color: var(--inchiostro-morbido); }
-.disp-giorno.pieno .dg-posti i { border-color: #B9B2A3; }
-
-.disp-piede { display: grid; gap: 10px; margin: 18px 0 0; }
-.disp-piede .btn { width: 100%; }
-.disp-altro { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; padding: 8px 4px; font-size: .95rem; color: var(--inchiostro-morbido); text-decoration: none; text-align: center; }
-.disp-altro span { font-weight: 700; color: var(--inchiostro); text-decoration: underline; text-decoration-color: var(--ocra); text-underline-offset: 3px; }
-.disp-passi { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--linea-forte); font-family: var(--f-mono); font-size: .7rem; letter-spacing: .04em; color: var(--inchiostro-morbido); }
-.disp-passi li { display: inline-flex; align-items: center; gap: 8px; }
-.disp-passi span { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--ocra); color: var(--notte); font-weight: 600; }
+.disp-scheda { position: relative; z-index: 2; margin-bottom: -88px; border-radius: 16px; background: var(--avorio); color: var(--inchiostro); box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
+.ps { display: grid; overflow: hidden; }
+.ps-testo { padding: 24px 20px 26px; }
+.ps-posti { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 7px 14px; border-radius: 999px; background: #E8F3EC; color: #1E6B52; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; }
+.ps-titolo { margin: 0 0 18px; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.9rem, 6.4vw, 2.6rem); line-height: 1.05; letter-spacing: -.02em; }
+.ps-titolo em { color: var(--ocra-testo); }
+.ps-passi { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 12px; counter-reset: passo; }
+.ps-passi li { display: flex; align-items: center; gap: 14px; }
+.ps-icona { position: relative; display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 14px; background: var(--inchiostro); color: var(--ocra-vivo); counter-increment: passo; }
+.ps-icona::after { content: counter(passo); position: absolute; top: -6px; right: -6px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--ocra); color: var(--notte); font: 600 .7rem var(--f-mono); }
+.ps-icona .ico { width: 23px; height: 23px; }
+.ps-passi strong { display: block; font-size: 1.05rem; line-height: 1.25; }
+.ps-passi small { display: block; font-size: .9rem; line-height: 1.35; color: var(--inchiostro-morbido); }
+.ps-cta { width: 100%; }
+.ps-sotto { margin: 12px 0 0; font-size: .9rem; text-align: center; color: var(--inchiostro-morbido); }
+.ps-sotto a { font-weight: 700; color: var(--inchiostro); text-decoration-color: var(--ocra); text-underline-offset: 3px; white-space: nowrap; }
+.ps-disegno { order: -1; display: grid; place-items: center; padding: 18px 12px 0; background: linear-gradient(180deg, #F3EADA, var(--avorio)); }
+.ps-svg { display: block; width: 100%; max-width: 380px; height: auto; }
 @media (min-width: 900px) {
   .disp-sezione.banda-blu { padding: 96px 0 0; }
   .disp { gap: 36px; }
-  .disp-scheda { margin-bottom: -120px; padding: 32px 36px 30px; }
-  .disp-scheda-testa { margin: 0 0 22px; }
-  .disp-giorni { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
-  .disp-giorni li:nth-child(10) { display: flex; }
-  .disp-giorno { padding: 16px 10px; }
-  .dg-num { font-size: 2.6rem; }
-  .disp-piede { grid-template-columns: auto 1fr; align-items: center; gap: 20px; margin-top: 24px; }
-  .disp-piede .btn { width: auto; }
-  .disp-altro { justify-content: flex-start; }
-  .disp-passi { justify-content: flex-start; }
+  .disp-scheda { margin-bottom: -120px; }
+  .ps { grid-template-columns: 6fr 5fr; align-items: stretch; }
+  .ps-testo { padding: 40px 44px 40px; }
+  .ps-cta { width: auto; }
+  .ps-sotto { text-align: left; }
+  .ps-disegno { order: 0; padding: 24px; background: linear-gradient(135deg, #F3EADA, var(--avorio)); }
+  .ps-svg { max-width: 460px; }
 }
-@media (prefers-reduced-motion: reduce) { .disp-giorno { transition: none; } a.disp-giorno:hover { transform: none; } }
-.sintesi-giorno .link-cambia { white-space: nowrap; }
+
+/* il disegno: colori del marchio, linee d'inchiostro */
+.d-sfondo { fill: #EFE4D0; }
+.d-pavimento { stroke: var(--inchiostro); stroke-width: 2; stroke-linecap: round; opacity: .25; }
+.d-luce { fill: #F5DFAE; opacity: .55; }
+.d-foglia { fill: #1E6B52; } .d-foglia-chiara { fill: #3E8F6E; }
+.d-vaso { fill: #1E6471; }
+.d-gamba { fill: var(--inchiostro); }
+.d-cassetti { fill: #E6DECF; stroke: var(--inchiostro); stroke-width: 2; }
+.d-linea { stroke: var(--inchiostro); stroke-width: 2; }
+.d-maniglia { stroke: var(--ocra); stroke-width: 3; stroke-linecap: round; }
+.d-piano { fill: var(--ocra); }
+.d-schermo, .d-tastiera { fill: var(--inchiostro); }
+.d-display { fill: #24384D; }
+.d-testo { fill: var(--ocra-vivo); font-family: var(--f-mono); font-size: 8px; letter-spacing: .12em; }
+.d-riga { stroke: #F4EEE3; stroke-width: 4; stroke-linecap: round; opacity: .9; }
+.d-riga-2 { stroke: var(--ocra-vivo); }
+.d-cursore { fill: var(--ocra-vivo); }
+.d-ok circle { fill: #1E6B52; }
+.d-ok path { fill: none; stroke: #fff; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.d-vapore { fill: none; stroke: var(--inchiostro); stroke-width: 2; stroke-linecap: round; opacity: .35; }
+.d-tazza { fill: #F4EEE3; stroke: var(--inchiostro); stroke-width: 2; }
+.d-manico { fill: none; stroke: var(--inchiostro); stroke-width: 2; }
+.d-lampada-base, .d-paralume { fill: var(--inchiostro); }
+.d-braccio { fill: none; stroke: var(--inchiostro); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.d-timbro rect { fill: rgba(250, 246, 238, .85); stroke: var(--ocra-testo); stroke-width: 3; stroke-dasharray: 2 0; }
+.d-timbro text { fill: var(--ocra-testo); font-family: var(--f-mono); font-size: 15px; font-weight: 600; letter-spacing: .14em; }
+
+/* l'animazione: il portatile scrive, arriva la spunta, si posa il timbro (ciclo di 7 secondi) */
+@media (prefers-reduced-motion: no-preference) {
+  .d-riga { stroke-dasharray: 1; stroke-dashoffset: 1; animation: d-scrivi 7s var(--curva) infinite; }
+  .d-riga-2 { animation-name: d-scrivi-2; } .d-riga-3 { animation-name: d-scrivi-3; }
+  .d-cursore { animation: d-cursore 1s steps(1) infinite; }
+  .d-ok { transform-box: fill-box; transform-origin: center; animation: d-ok 7s var(--curva) infinite; }
+  .d-ok path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: d-spunta 7s var(--curva) infinite; }
+  .d-timbro { transform-box: fill-box; transform-origin: center; animation: d-timbro 7s cubic-bezier(.3, 1.4, .5, 1) infinite; }
+  .d-vapore { animation: d-vapore 3s ease-in-out infinite; }
+  .d-vapore-2 { animation-delay: 1.2s; }
+  .d-luce { animation: d-luce 4s ease-in-out infinite; }
+  .d-pianta { transform-box: fill-box; transform-origin: 50% 100%; animation: d-pianta 5s ease-in-out infinite; }
+}
+@keyframes d-scrivi { 0% { stroke-dashoffset: 1; } 12%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
+@keyframes d-scrivi-2 { 0%, 12% { stroke-dashoffset: 1; } 26%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
+@keyframes d-scrivi-3 { 0%, 26% { stroke-dashoffset: 1; } 38%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
+@keyframes d-cursore { 50% { opacity: 0; } }
+@keyframes d-ok { 0%, 42% { transform: scale(0); } 50% { transform: scale(1.15); } 54%, 88% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
+@keyframes d-spunta { 0%, 48% { stroke-dashoffset: 1; } 58%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
+@keyframes d-timbro { 0%, 56% { opacity: 0; transform: scale(1.8) rotate(8deg); } 64% { opacity: 1; transform: scale(1) rotate(0); } 88% { opacity: 1; transform: scale(1); } 96%, 100% { opacity: 0; transform: scale(1); } }
+@keyframes d-vapore { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .4; } 100% { opacity: 0; transform: translateY(-10px); } }
+@keyframes d-luce { 0%, 100% { opacity: .45; } 50% { opacity: .7; } }
+@keyframes d-pianta { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2.5deg); } }

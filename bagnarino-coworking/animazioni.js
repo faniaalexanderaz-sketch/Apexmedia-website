@@ -97,7 +97,7 @@
       });
 
       /* 2b) testi e voci: comparsa leggera, sfalsata */
-      var leggeri = $$('.occhiello, .intro-sezione, .negozio-lead, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .disp-live, .disp-scheda-testa, .disp-piede > *, .disp-passi, .prezzi-garanzie li')
+      var leggeri = $$('.occhiello, .intro-sezione, .negozio-lead, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .ps-posti, .ps-titolo, .ps-cta, .ps-sotto, .prezzi-garanzie li')
         .filter(sottoLaPiega);
       if (leggeri.length) {
         gsap.set(leggeri, { opacity: 0, y: 16 });
@@ -106,7 +106,7 @@
       }
 
       /* 2c) liste: una voce alla volta, da sinistra */
-      [['.ingresso-righe', 'li'], ['.servizi-senza ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.faq', 'details'], ['.disp-giorni', 'li'], ['.tempo', '.tappa']].forEach(function (c) {
+      [['.ingresso-righe', 'li'], ['.servizi-senza ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.faq', 'details'], ['.ps-passi', 'li'], ['.tempo', '.tappa']].forEach(function (c) {
         $$(c[0]).forEach(function (lista) {
           var voci = $$(c[1], lista);
           if (!voci.length || !sottoLaPiega(lista)) return;

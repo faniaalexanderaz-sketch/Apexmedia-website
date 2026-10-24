@@ -36,13 +36,13 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=c2fb5c25">
+  <link rel="stylesheet" href="/styles.css?v=e2f0915a">
 
   <script src="/config.js?v=0a52db50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=5ce9d6a5" defer></script>
-  <script src="/animazioni.js?v=bb5f400a" defer></script>
+  <script src="/main.js?v=84186b20" defer></script>
+  <script src="/animazioni.js?v=06a1e34f" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -149,32 +149,76 @@
     </div>
   </div>
 
-  <!-- ============ 01 · POSTI LIBERI: tocchi il giorno e sei già alla prenotazione ============ -->
+  <!-- ============ 01 · PRENOTA: un pulsante, tre passi e un disegno che si anima.
+       Il calendario completo è nella pagina /prenota ============ -->
   <section class="disp-sezione banda-blu" id="posti" aria-labelledby="disp-titolo">
-    <div class="contenitore disp" data-disp>
+    <div class="contenitore disp">
       <div class="disp-testa">
-        <p class="occhiello occhiello-chiaro"><span>01</span>Posti liberi</p>
-        <h2 id="disp-titolo" class="disp-titolo">Tocca un giorno, <em>la scrivania è tua.</em></h2>
-        <p class="disp-live"><span class="disp-live-punto" aria-hidden="true"></span><span data-disp-fonte>Posti liberi aggiornati</span></p>
+        <p class="occhiello occhiello-chiaro"><span>01</span>Prenota</p>
+        <h2 id="disp-titolo" class="disp-titolo">Prenoti in 30 secondi, <em>paghi quando arrivi.</em></h2>
       </div>
 
-      <div class="disp-scheda">
-        <div class="disp-scheda-testa">
-          <p class="disp-istruzione"><strong>Quando vuoi venire?</strong> <span>Giornata <span data-prezzo="giornata">€25</span>, paghi quando arrivi.</span></p>
-          <p class="disp-chiave" aria-hidden="true"><span><i class="l-libera"></i>scrivania libera</span><span><i class="l-occupata"></i>occupata</span></p>
+      <div class="disp-scheda ps">
+        <div class="ps-testo">
+          <p class="ps-posti"><span class="punto-vivo" aria-hidden="true"></span><span data-posti-oggi>Posti liberi ogni giorno</span></p>
+          <h3 class="ps-titolo">La tua scrivania <em>ti aspetta.</em></h3>
+          <ol class="ps-passi">
+            <li><span class="ps-icona"><svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg></span><span><strong>Scegli il giorno</strong><small>Dal calendario, con i posti liberi in tempo reale</small></span></li>
+            <li><span class="ps-icona"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></span><span><strong>Lascia nome e telefono</strong><small>Ricevi subito la conferma via email</small></span></li>
+            <li><span class="ps-icona"><svg class="ico" aria-hidden="true"><use href="#i-banconota"/></svg></span><span><strong>Paghi in sede</strong><small>Contanti o carta, il giorno che arrivi</small></span></li>
+          </ol>
+          <a class="btn btn-ocra btn-grande ps-cta" href="/prenota?pacchetto=giornata" data-pos="disponibilita"><span>Prenota la tua scrivania</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <p class="ps-sotto">Disdici gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span>. <a href="/prenota" data-pos="disponibilita-formule">Carnet o mensile ›</a></p>
         </div>
-        <!-- i giorni si generano qui: ogni giorno è un link che apre la
-             prenotazione con quel giorno già scelto -->
-        <ul class="disp-giorni" data-disp-giorni aria-label="Prossimi giorni: tocca per prenotare"></ul>
-        <div class="disp-piede">
-          <a class="btn btn-ocra btn-grande" href="/prenota?pacchetto=giornata" data-disp-cta data-pos="disponibilita"><span data-disp-cta-testo>Prenota la tua giornata</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <a class="disp-altro" href="/prenota" data-pos="disponibilita-formule">Carnet o abbonamento mensile? <span>Scegli la formula ›</span></a>
+
+        <!-- il disegno: la scrivania, il portatile che "scrive" la prenotazione, il timbro -->
+        <div class="ps-disegno" aria-hidden="true">
+          <svg viewBox="0 0 440 340" class="ps-svg">
+            <circle cx="225" cy="170" r="150" class="d-sfondo"/>
+            <line x1="20" y1="300" x2="420" y2="300" class="d-pavimento"/>
+            <!-- luce della lampada -->
+            <polygon points="352,128 296,200 400,200" class="d-luce"/>
+            <!-- pianta -->
+            <g class="d-pianta">
+              <ellipse cx="76" cy="150" rx="9" ry="22" transform="rotate(-24 76 150)" class="d-foglia"/>
+              <ellipse cx="96" cy="146" rx="9" ry="24" transform="rotate(18 96 146)" class="d-foglia"/>
+              <ellipse cx="86" cy="140" rx="8" ry="26" class="d-foglia d-foglia-chiara"/>
+              <rect x="72" y="166" width="28" height="34" rx="4" class="d-vaso"/>
+            </g>
+            <!-- scrivania -->
+            <rect x="60" y="214" width="10" height="86" class="d-gamba"/>
+            <rect x="372" y="214" width="10" height="86" class="d-gamba"/>
+            <rect x="292" y="214" width="72" height="62" rx="3" class="d-cassetti"/>
+            <line x1="292" y1="235" x2="364" y2="235" class="d-linea"/><line x1="292" y1="255" x2="364" y2="255" class="d-linea"/>
+            <line x1="320" y1="225" x2="336" y2="225" class="d-maniglia"/><line x1="320" y1="245" x2="336" y2="245" class="d-maniglia"/><line x1="320" y1="265" x2="336" y2="265" class="d-maniglia"/>
+            <rect x="40" y="200" width="364" height="15" rx="3" class="d-piano"/>
+            <!-- portatile -->
+            <rect x="140" y="112" width="104" height="82" rx="6" class="d-schermo"/>
+            <rect x="147" y="119" width="90" height="68" rx="3" class="d-display"/>
+            <text x="156" y="134" class="d-testo">BAGNARINO</text>
+            <line x1="156" y1="146" x2="214" y2="146" pathLength="1" class="d-riga d-riga-1"/>
+            <line x1="156" y1="158" x2="226" y2="158" pathLength="1" class="d-riga d-riga-2"/>
+            <line x1="156" y1="170" x2="200" y2="170" pathLength="1" class="d-riga d-riga-3"/>
+            <rect x="204" y="164" width="2.5" height="11" class="d-cursore"/>
+            <path d="M130 200 L254 200 L246 193 L138 193 Z" class="d-tastiera"/>
+            <!-- conferma -->
+            <g class="d-ok"><circle cx="244" cy="110" r="17"/><path d="M236 110 l6 6 l11 -12" pathLength="1"/></g>
+            <!-- tazza con il vapore -->
+            <path d="M276 184 q4 -8 0 -16 q-4 -8 0 -16" class="d-vapore"/>
+            <path d="M286 184 q4 -8 0 -16 q-4 -8 0 -16" class="d-vapore d-vapore-2"/>
+            <rect x="268" y="186" width="26" height="14" rx="3" class="d-tazza"/>
+            <path d="M294 189 q8 0 8 5 q0 5 -8 5" class="d-manico"/>
+            <!-- lampada -->
+            <ellipse cx="338" cy="199" rx="20" ry="4" class="d-lampada-base"/>
+            <path d="M338 198 L326 152 L352 126" class="d-braccio"/>
+            <path d="M340 114 L366 112 L362 136 Z" class="d-paralume"/>
+            <!-- timbro "prenotato" -->
+            <g transform="rotate(-12 330 66)"><g class="d-timbro">
+              <rect x="268" y="46" width="124" height="40" rx="6"/>
+              <text x="330" y="72" text-anchor="middle">PRENOTATO</text>
+            </g></g>
+          </svg>
         </div>
-        <ol class="disp-passi">
-          <li><span>1</span>Tocca il giorno</li>
-          <li><span>2</span>Scrivi nome e telefono</li>
-          <li><span>3</span>Paghi quando arrivi</li>
-        </ol>
       </div>
     </div>
   </section>
