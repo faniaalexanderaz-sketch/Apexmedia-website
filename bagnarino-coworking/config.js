@@ -61,7 +61,7 @@ var BGN_CONFIG = {
   chiusure: [],
 
   /* Postazioni prenotabili. Aumentale quando arrivano nuove scrivanie. */
-  postazioni: 6,
+  postazioni: 8,
 
   /* Quanti giorni avanti si può prenotare */
   giorniPrenotabili: 28,

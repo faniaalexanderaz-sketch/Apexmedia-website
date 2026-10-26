@@ -37,13 +37,13 @@ const ctx = { adesso: ADESSO };
 test('disponibilità: weekend e festivi chiusi, giorni feriali con tutti i posti', async () => {
   await nuovoDb();
   const r = await P.disponibilita('2026-11-02', 14, 'giornata', ADESSO);
-  assert.equal(r.postazioni, 6);
-  assert.equal(r.giorni['2026-11-03'], 6);      // martedì
+  assert.equal(r.postazioni, 8);
+  assert.equal(r.giorni['2026-11-03'], 8);      // martedì
   assert.equal(r.giorni['2026-11-07'], 0);      // sabato
   assert.equal(r.giorni['2026-11-08'], 0);      // domenica
   const dic = await P.disponibilita('2026-12-07', 3, 'giornata', new Date('2026-12-01T08:00:00Z'));
   assert.equal(dic.giorni['2026-12-08'], 0);    // Immacolata
-  assert.equal(dic.giorni['2026-12-09'], 6);
+  assert.equal(dic.giorni['2026-12-09'], 8);
 });
 
 test('prenotazione: assegna un posto e lo toglie dalla disponibilità', async () => {
@@ -52,12 +52,12 @@ test('prenotazione: assegna un posto e lo toglie dalla disponibilità', async ()
   assert.match(p.codice, /^BGN-[A-Z0-9]{4}$/);
   assert.equal(p.prezzo, 2500);
   const r = await P.disponibilita('2026-11-04', 1, 'giornata', ADESSO);
-  assert.equal(r.giorni['2026-11-04'], 5);
+  assert.equal(r.giorni['2026-11-04'], 7);
 });
 
-test('doppia prenotazione bloccata: con il giorno pieno la settima fallisce', async () => {
+test('doppia prenotazione bloccata: con il giorno pieno la nona fallisce', async () => {
   await nuovoDb();
-  for (let i = 0; i < 6; i++) await P.prenota(cliente({ data: '2026-11-05' }), ctx);
+  for (let i = 0; i < 8; i++) await P.prenota(cliente({ data: '2026-11-05' }), ctx);
   await assert.rejects(P.prenota(cliente({ data: '2026-11-05' }), ctx), e => e.codice === 'POSTO_ESAURITO');
   const r = await P.disponibilita('2026-11-05', 1, 'giornata', ADESSO);
   assert.equal(r.giorni['2026-11-05'], 0);
@@ -65,7 +65,7 @@ test('doppia prenotazione bloccata: con il giorno pieno la settima fallisce', as
 
 test('doppia prenotazione bloccata anche con richieste nello stesso istante', async () => {
   await nuovoDb();
-  for (let i = 0; i < 5; i++) await P.prenota(cliente({ data: '2026-11-06' }), ctx);
+  for (let i = 0; i < 7; i++) await P.prenota(cliente({ data: '2026-11-06' }), ctx);
   const esiti = await Promise.allSettled([
     P.prenota(cliente({ data: '2026-11-06' }), ctx),
     P.prenota(cliente({ data: '2026-11-06' }), ctx)
@@ -97,7 +97,7 @@ test('mese fisso: stessa scrivania per tutti i giorni di apertura del mese', asy
   const giorni = (await pg.query('SELECT COUNT(*)::int AS n FROM occupazioni WHERE prenotazione_id = $1', [p.id])).rows[0].n;
   assert.equal(giorni, 22); /* giorni feriali dal 3/11 al 2/12 */
   const r = await P.disponibilita('2026-11-03', 1, 'mese_fisso', ADESSO);
-  assert.equal(r.giorni['2026-11-03'], 5);
+  assert.equal(r.giorni['2026-11-03'], 7);
 });
 
 test('carnet: 10 ingressi, ogni giornata ne scala uno ed è già pagata', async () => {
@@ -153,7 +153,7 @@ test('annullamento: possibile fino alle 20:00 del giorno prima, poi rifiutato', 
   /* 11 novembre alle 19:00: si può, e il posto torna libero */
   await P.annulla(p.codice, d.email, new Date('2026-11-11T18:00:00Z'));
   const r = await P.disponibilita('2026-11-12', 1, 'giornata', ADESSO);
-  assert.equal(r.giorni['2026-11-12'], 6);
+  assert.equal(r.giorni['2026-11-12'], 8);
   await assert.rejects(P.annulla(p.codice, d.email, ADESSO), e => e.codice === 'GIA_FATTO');
   await assert.rejects(P.annulla(p.codice, 'altro@esempio.it', ADESSO), e => e.codice === 'NON_TROVATA');
 });

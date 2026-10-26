@@ -62,7 +62,7 @@ Solo il sito statico, in modalità dimostrativa: `npx serve bagnarino-coworking`
 | File | A cosa serve |
 |---|---|
 | `config.js` | **Valori di partenza**: azienda, contatti, orari, postazioni, listino, fidelity, testi WhatsApp, codici GA4/Meta. Lo leggono sia il sito sia le API |
-| `index.html` | Home: apertura su carta con la foto della sala, posti liberi (pianta delle 6 scrivanie), negozio, storia, listino, una giornata, spazio, Bagnarino Card, per chi è, dove siamo, FAQ, chiusura |
+| `index.html` | Home: apertura su carta con la foto della sala, posti liberi (posti liberi giorno per giorno), negozio, storia, listino, una giornata, spazio, Bagnarino Card, per chi è, dove siamo, FAQ, chiusura |
 | `prenota.html` + `prenota.js` | Prenotazione in 3 passi; giornate omaggio e carnet riconosciuti da email + cellulare |
 | `prenotazione.html` + `gestisci.js` | "La mia prenotazione": stato e annullamento con codice + email |
 | `card.html` + `tessera.js` | "La mia Bagnarino Card": timbri, omaggi, carnet |
@@ -153,7 +153,7 @@ Codici **GA4** e **Meta Pixel** lato browser: in `config.js` (`ga4`, `metaPixel`
 
 - **Cambiare prezzi, orari, numero di postazioni, messaggi WhatsApp**: area riservata → Impostazioni (salvato nel database, il sito si aggiorna entro un minuto). `config.js` resta il valore di partenza.
 - **Aggiungere un giorno di chiusura**: area riservata → Calendario o Impostazioni → "Chiudi questo giorno". In alternativa, permanente: `config.js` → `chiusure: ['2026-12-24']`. I festivi nazionali, Pasquetta compresa, sono automatici.
-- **Cambiare il numero di postazioni**: area riservata → Impostazioni → Scrivanie (le prenotazioni già fatte restano valide). Per lo schema dell'hero, oltre le 6 scrivanie va ridisegnata la pianta in `index.html`.
+- **Cambiare il numero di postazioni**: area riservata → Impostazioni → Scrivanie (le prenotazioni già fatte restano valide). I testi del sito prendono il numero da lì.
 - **Accendere sala riunioni, caffè, climatizzazione, recensioni**: `config.js` (`sala.attiva`, `servizi`, `recensioniAttive`).
 
 ## Promemoria automatici (Vercel Cron, orari UTC)
@@ -208,7 +208,7 @@ nella scheda Google Business `?utm_source=gmb`.
 4. **Prezzi IVA inclusa?** Serve dirlo chiaramente, soprattutto a chi ha partita IVA.
 5. **Stampe incluse**: c'è un limite di pagine al giorno/mese?
 6. **Pagamento con carta (POS)** in sede: confermato? Carnet e mensili si pagano tutti il primo giorno?
-7. **Postazione fissa**: quante delle 6 scrivanie sono fisse? La cassettiera ha la chiave?
+7. **Postazione fissa**: quante delle 8 scrivanie sono fisse? La cassettiera ha la chiave?
 8. **Disdetta gratis entro le 20:00 del giorno prima**: va bene come regola?
 9. **Chiusure**: San Baudolino (10 novembre), ferie estive, ponti.
 10. **Parcheggio**: ci sono convenzioni o parcheggi vicini da indicare?
