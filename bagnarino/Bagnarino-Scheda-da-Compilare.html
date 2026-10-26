@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Apex Media · Scheda da compilare con Marcella</title>
+<style>
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@page { size: A4; margin: 0; }
+:root { --viola: #7B3FE4; --viola-chiaro: #F3EFFD; --testo: #1B1B24; --grigio: #6B6977; --linea: #C9C5D3; --tenue: #E6E3EE; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; }
+body { font-family: 'Hanken Grotesk', system-ui, sans-serif; color: var(--testo); font-size: 8.3pt; line-height: 1.3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pagina { width: 210mm; height: 297mm; padding: 9mm 11mm 8mm; display: flex; flex-direction: column; overflow: hidden; }
+
+.testa { display: flex; align-items: center; gap: 3mm; padding-bottom: 3mm; border-bottom: .5mm solid var(--viola); }
+.testa img.apex { width: 9mm; height: 9mm; border-radius: 2mm; }
+.testa-nome b { display: block; font-size: 9pt; letter-spacing: .26em; }
+.testa-nome span { font-size: 6pt; letter-spacing: .14em; text-transform: uppercase; color: var(--viola); font-weight: 700; }
+.testa h1 { margin: 0 0 0 auto; font-family: 'Fraunces', serif; font-weight: 500; font-size: 15pt; letter-spacing: -.01em; text-align: right; line-height: 1.1; }
+.testa h1 small { display: block; font-family: 'Hanken Grotesk', sans-serif; font-size: 7.4pt; color: var(--grigio); font-weight: 400; letter-spacing: 0; margin-top: .8mm; }
+.testa img.bgn { height: 9mm; margin-left: 3mm; }
+.istr { display: flex; justify-content: space-between; gap: 6mm; margin: 2.4mm 0 1mm; font-size: 7.4pt; color: var(--grigio); }
+.istr b { color: var(--testo); }
+
+.colonne { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 9mm; flex: 1; }
+.blocco { margin-top: 2.6mm; }
+.blocco h2 { display: flex; align-items: center; gap: 2mm; margin: 0 0 1.4mm; font-size: 8.6pt; font-weight: 800; }
+.blocco h2 .n { display: inline-grid; place-items: center; width: 4.6mm; height: 4.6mm; border-radius: 50%; background: var(--viola); color: #fff; font-size: 6.8pt; }
+
+.campo { display: flex; align-items: flex-end; gap: 1.6mm; min-height: 7mm; padding-bottom: .4mm; }
+.campo > span { white-space: nowrap; }
+.campo .vuoto { flex: 1; border-bottom: .3mm solid var(--linea); min-width: 8mm; height: 4.5mm; }
+.campo .vuoto.c { flex: 0 0 13mm; }
+.campo .vuoto.m { flex: 0 0 22mm; }
+.oggi { font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; color: var(--grigio); white-space: nowrap; }
+.box { display: inline-block; width: 3.2mm; height: 3.2mm; border: .35mm solid var(--testo); border-radius: .6mm; vertical-align: -.5mm; margin-right: .9mm; }
+.scelte { display: inline-flex; gap: 2.6mm; white-space: nowrap; }
+
+table { width: 100%; border-collapse: separate; border-spacing: 2.2mm 0; margin: 0 -2.2mm; width: calc(100% + 4.4mm); table-layout: fixed; }
+th { text-align: left; font-size: 6.2pt; letter-spacing: .1em; text-transform: uppercase; color: var(--viola); font-weight: 800; padding: 0 1mm 1mm 0; }
+td { height: 6.8mm; border-bottom: .3mm solid var(--linea); padding: 0 1mm 0 0; vertical-align: bottom; }
+td.etich { font-weight: 600; white-space: nowrap; border-bottom-color: var(--tenue); }
+td .oggi { display: block; }
+.orari td { height: 6.6mm; }
+.orari th:nth-child(1) { width: 15mm; } .orari th:nth-child(2) { width: 11mm; } .orari th:nth-child(3), .orari th:nth-child(4) { width: 16mm; }
+.orari td.ap { width: 15mm; border-bottom-color: var(--tenue); }
+.prezzi th:nth-child(1) { width: 46%; } .prezzi th:nth-child(2) { width: 17%; }
+.prezzi td.og { width: 17%; border-bottom-color: var(--tenue); font-family: 'IBM Plex Mono', monospace; font-size: 7pt; color: var(--grigio); }
+.accessi td { height: 8mm; } .accessi td.etich { white-space: normal; line-height: 1.15; }
+.accessi th:nth-child(1) { width: 36%; } .accessi th:nth-child(3) { width: 17%; }
+.accessi td.inv { width: 21%; border-bottom-color: var(--tenue); font-size: 7pt; }
+
+.griglia-servizi { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5mm 3mm; }
+.griglia-servizi div { white-space: nowrap; }
+.nota { margin-top: 1.4mm; padding: 1.6mm 2.4mm; border-radius: 1.6mm; background: var(--viola-chiaro); font-size: 6.9pt; line-height: 1.35; color: #3D3A4A; }
+.nota b { color: var(--viola); }
+.righe .r { border-bottom: .3mm solid var(--linea); height: 6.2mm; }
+
+.piede { display: flex; justify-content: space-between; align-items: flex-end; gap: 8mm; margin-top: 3mm; padding-top: 2.4mm; border-top: .3mm solid var(--tenue); font-size: 6.6pt; color: var(--grigio); letter-spacing: .08em; text-transform: uppercase; }
+.firma { flex: 0 0 72mm; display: flex; align-items: flex-end; gap: 2mm; text-transform: none; letter-spacing: 0; font-size: 7.6pt; color: var(--testo); }
+.firma .vuoto { flex: 1; border-bottom: .3mm solid var(--testo); height: 5mm; }
+</style>
+</head>
+<body>
+<section class="pagina">
+  <div class="testa">
+    <img class="apex" src="identita/apex-logo.png" alt="">
+    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
+    <h1>Scheda da compilare con Marcella<small>Bagnarino Coworking · data ____ / ____ / ________</small></h1>
+    <img class="bgn" src="identita/logo.svg" alt="">
+  </div>
+  <div class="istr">
+    <span>Si compila a penna, insieme. In grigio c’è <b>quello che oggi è scritto sul sito</b>: se va bene si lascia vuoto, se cambia si scrive il nuovo valore.</span>
+  </div>
+
+  <div class="colonne">
+    <!-- ======== COLONNA SINISTRA ======== -->
+    <div>
+      <div class="blocco">
+        <h2><span class="n">1</span>Giorni e orari di apertura</h2>
+        <table class="orari">
+          <tr><th>Giorno</th><th>Aperto</th><th>Dalle</th><th>Alle</th><th>Pausa (dalle–alle)</th></tr>
+          <tr><td class="etich">Lunedì</td><td class="ap"><span class="box"></span>sì</td><td></td><td></td><td></td></tr>
+          <tr><td class="etich">Martedì</td><td class="ap"><span class="box"></span>sì</td><td></td><td></td><td></td></tr>
+          <tr><td class="etich">Mercoledì</td><td class="ap"><span class="box"></span>sì</td><td></td><td></td><td></td></tr>
+          <tr><td class="etich">Giovedì</td><td class="ap"><span class="box"></span>sì</td><td></td><td></td><td></td></tr>
+          <tr><td class="etich">Venerdì</td><td class="ap"><span class="box"></span>sì</td><td></td><td></td><td></td></tr>
+          <tr><td class="etich">Sabato</td><td class="ap"><span class="box"></span>sì</td><td></td><td></td><td></td></tr>
+          <tr><td class="etich">Domenica</td><td class="ap"><span class="box"></span>sì</td><td></td><td></td><td></td></tr>
+        </table>
+        <div class="campo"><span class="oggi">oggi: lun–ven 9:30–18:30, sab e dom chiuso</span></div>
+        <div class="campo"><span>Ultima prenotazione per il giorno stesso entro le</span><span class="vuoto"></span><span class="oggi">oggi 17:00</span></div>
+      </div>
+
+      <div class="blocco">
+        <h2><span class="n">2</span>Chiusure dell’anno</h2>
+        <div class="campo"><span>Ferie estive dal</span><span class="vuoto"></span><span>al</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Natale / Capodanno dal</span><span class="vuoto"></span><span>al</span><span class="vuoto"></span></div>
+        <div class="campo"><span>San Baudolino (10 novembre)</span><span class="scelte"><span><span class="box"></span>chiuso</span><span><span class="box"></span>aperto</span></span></div>
+        <div class="campo"><span>Ponti e altre date</span><span class="vuoto"></span></div>
+      </div>
+
+      <div class="blocco">
+        <h2><span class="n">3</span>Scrivanie e spazi</h2>
+        <div class="campo"><span>Scrivanie in totale</span><span class="vuoto c"></span><span class="oggi">oggi 8</span></div>
+        <div class="campo"><span>Di cui fisse (in abbonamento mensile)</span><span class="vuoto c"></span></div>
+        <div class="campo"><span>Cassettiera con chiave per i fissi</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span></div>
+        <div class="campo"><span>Sala riunioni</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span><span>€</span><span class="vuoto c"></span><span>all’ora · posti</span><span class="vuoto c"></span></div>
+        <div class="campo"><span>Si può passare a vedere prima di prenotare</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span></div>
+      </div>
+
+      <div class="blocco">
+        <h2><span class="n">4</span>Servizi inclusi (spuntare quelli che ci sono)</h2>
+        <div class="griglia-servizi">
+          <div><span class="box"></span>Wi-fi in fibra</div><div><span class="box"></span>Aria condizionata</div>
+          <div><span class="box"></span>Stampante bianco e nero</div><div><span class="box"></span>Riscaldamento</div>
+          <div><span class="box"></span>Stampante a colori</div><div><span class="box"></span>Presa elettrica a ogni posto</div>
+          <div><span class="box"></span>Scanner / fotocopie</div><div><span class="box"></span>Armadietto / cassetto</div>
+          <div><span class="box"></span>Caffè</div><div><span class="box"></span>Angolo per telefonate</div>
+          <div><span class="box"></span>Acqua</div><div><span class="box"></span>Bagno</div>
+          <div><span class="box"></span>Microonde / frigo</div><div><span class="box"></span>Animali ammessi</div>
+          <div><span class="box"></span>Parcheggio vicino</div><div><span class="box"></span>Altro: ______________</div>
+        </div>
+        <div class="campo"><span>Stampe incluse al giorno: b/n</span><span class="vuoto c"></span><span>colori</span><span class="vuoto c"></span></div>
+      </div>
+
+      <div class="blocco">
+        <h2><span class="n">5</span>Altre cose da fissare</h2>
+        <div class="campo"><span>I separè arrivano il</span><span class="vuoto"></span><span>Foto della sala il</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Data del lancio sui social</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Ragione sociale e P. IVA (per la privacy del sito)</span><span class="vuoto"></span></div>
+      </div>
+    </div>
+
+    <!-- ======== COLONNA DESTRA ======== -->
+    <div>
+      <div class="blocco">
+        <h2><span class="n">6</span>Prezzi</h2>
+        <table class="prezzi">
+          <tr><th>Pacchetto</th><th>Oggi</th><th>Prezzo deciso</th></tr>
+          <tr><td class="etich">Giornata</td><td class="og">€25</td><td>€</td></tr>
+          <tr><td class="etich">Mezza giornata (se si fa)</td><td class="og">—</td><td>€</td></tr>
+          <tr><td class="etich">Carnet 10 ingressi</td><td class="og">€200</td><td>€</td></tr>
+          <tr><td class="etich">Mese flessibile</td><td class="og">€270</td><td>€</td></tr>
+          <tr><td class="etich">Mese, postazione fissa</td><td class="og">€320</td><td>€</td></tr>
+        </table>
+        <div class="campo"><span>Il carnet vale per</span><span class="vuoto c"></span><span>mesi</span><span class="oggi">oggi 3</span></div>
+        <div class="campo"><span>Prezzi IVA inclusa</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span></div>
+        <div class="campo"><span>Seconda giornata a €20 se torni entro 7 giorni</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span></div>
+        <div class="campo"><span>Si paga con</span><span class="scelte"><span><span class="box"></span>contanti</span><span><span class="box"></span>carta</span><span><span class="box"></span>bonifico</span><span><span class="box"></span>Satispay</span></span></div>
+      </div>
+
+      <div class="blocco">
+        <h2><span class="n">7</span>Bagnarino Card (premi)</h2>
+        <table class="prezzi">
+          <tr><th>Timbro</th><th>Va bene</th><th>Oppure cambia in</th></tr>
+          <tr><td class="etich">3° · 25 stampe a colori</td><td class="og"><span class="box"></span></td><td></td></tr>
+          <tr><td class="etich">5° · porta un amico gratis</td><td class="og"><span class="box"></span></td><td></td></tr>
+          <tr><td class="etich">7° · sconto 10% in negozio</td><td class="og"><span class="box"></span></td><td></td></tr>
+          <tr><td class="etich">10° · giornata in regalo</td><td class="og"><span class="box"></span></td><td></td></tr>
+        </table>
+        <div class="campo"><span>Abbonati mensili: stampe a colori al mese</span><span class="vuoto c"></span><span class="oggi">oggi 100</span></div>
+      </div>
+
+      <div class="blocco">
+        <h2><span class="n">8</span>Contatti e avvisi</h2>
+        <div class="campo"><span>Email dove ricevere le prenotazioni</span><span class="vuoto"></span></div>
+        <div class="campo"><span>WhatsApp sul sito</span><span class="vuoto"></span><span class="oggi">oggi 347 224 9457</span></div>
+        <div class="campo"><span>Telefono fisso del negozio</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Chi accetta le prenotazioni</span><span class="scelte"><span><span class="box"></span>Marcella</span></span><span>altri:</span><span class="vuoto"></span></div>
+      </div>
+
+      <div class="blocco">
+        <h2><span class="n">9</span>Accessi agli account</h2>
+        <table class="accessi">
+          <tr><th>Account</th><th>Email / nome utente</th><th>Invito</th></tr>
+          <tr><td class="etich">Google (Gmail)</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+          <tr><td class="etich">Profilo Google del negozio</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+          <tr><td class="etich">Facebook</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+          <tr><td class="etich">Instagram</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+          <tr><td class="etich">Altro:</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+          <tr><td class="etich">Altro:</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+          <tr><td class="etich">Altro:</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+        </table>
+        <div class="nota"><b>Niente password su questo foglio.</b> Marcella aggiunge Apex come gestore o amministratore direttamente dal telefono: l’accesso funziona subito, la password resta sua e si può togliere in ogni momento.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="piede">
+    <span>Apex Media · Bagnarino Coworking · uso interno</span>
+    <div class="firma"><span>Firma</span><span class="vuoto"></span></div>
+  </div>
+</section>
+</body>
+</html>
