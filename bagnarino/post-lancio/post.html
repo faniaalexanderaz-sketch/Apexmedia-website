@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><title>Post di lancio Bagnarino Coworking</title>
+<style>
+@font-face { font-family: 'Fraunces'; src: url('../identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Fraunces'; src: url('../identita/fonts/fraunces-latin-standard-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('../identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('../identita/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('../identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+:root { --blu: #1B2A3A; --notte: #111922; --ocra: #C9973B; --ocra-vivo: #DDB05C; --ocra-testo: #7A5A1E; --carta: #F4EEE3; --avorio: #FAF6EE; --chiaro-70: rgba(250,246,238,.75); }
+* { box-sizing: border-box; }
+body { margin: 0; background: #888; display: grid; gap: 40px; padding: 40px; font-family: 'Hanken Grotesk', sans-serif; }
+.post { position: relative; width: 1080px; height: 1350px; overflow: hidden; color: var(--blu); }
+.mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+.titolo { font-family: 'Fraunces', serif; font-weight: 400; letter-spacing: -.025em; line-height: 1.02; margin: 0; }
+.titolo em { font-style: italic; }
+.logo { position: absolute; left: 72px; top: 68px; width: 300px; }
+.pill { display: inline-flex; align-items: center; gap: 14px; padding: 20px 34px; border-radius: 999px; background: var(--ocra); color: var(--notte); font-weight: 700; font-size: 34px; }
+.pill svg { width: 30px; height: 30px; }
+.anelli::before { content: ''; position: absolute; right: -180px; top: -180px; width: 620px; height: 620px; border-radius: 50%; border: 2px solid rgba(221,176,92,.35); box-shadow: 0 0 0 60px rgba(221,176,92,.05), 0 0 0 62px rgba(221,176,92,.25), 0 0 0 120px rgba(221,176,92,.03), 0 0 0 122px rgba(221,176,92,.15); }
+
+/* 1 · lancio: foto piena */
+.p1 { background: var(--notte); }
+.p1 .foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; }
+.p1 .velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(17,25,34,.55) 0%, rgba(17,25,34,.05) 30%, rgba(17,25,34,.35) 55%, rgba(17,25,34,.94) 82%); }
+.p1 .corpo { position: absolute; left: 72px; right: 72px; bottom: 80px; color: var(--avorio); }
+.p1 .tag { display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px; border-radius: 999px; background: rgba(17,25,34,.6); border: 1.5px solid rgba(221,176,92,.6); color: var(--ocra-vivo); font-size: 22px; margin-bottom: 30px; }
+.p1 .tag i { width: 12px; height: 12px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 10px #4ADE80; }
+.p1 .titolo { font-size: 112px; color: var(--avorio); }
+.p1 .titolo em { color: var(--ocra-vivo); }
+.p1 .sotto { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-top: 44px; padding-top: 34px; border-top: 1.5px solid rgba(250,246,238,.25); }
+.p1 .prezzo { font-size: 34px; line-height: 1.3; color: var(--chiaro-70); }
+.p1 .prezzo strong { display: block; font-family: 'Fraunces', serif; font-weight: 400; font-size: 64px; color: var(--avorio); line-height: 1; }
+
+/* 2 · come funziona */
+.p2 { background: var(--blu); color: var(--avorio); padding: 0 72px; }
+.p2 .testa { position: relative; z-index: 1; padding-top: 210px; }
+.p2 .occhiello { color: var(--ocra-vivo); font-size: 24px; margin: 0 0 26px; }
+.p2 .titolo { font-size: 104px; color: var(--avorio); }
+.p2 .titolo em { color: var(--ocra-vivo); }
+.p2 .passi { list-style: none; margin: 64px 0 0; padding: 0; display: grid; gap: 22px; }
+.p2 .passo { display: flex; align-items: center; gap: 34px; padding: 34px 38px; border-radius: 26px; background: var(--avorio); color: var(--blu); box-shadow: 0 30px 50px -30px rgba(0,0,0,.8); }
+.p2 .passo:nth-child(2) { margin-left: 40px; } .p2 .passo:nth-child(3) { margin-left: 80px; }
+.p2 .icona { position: relative; flex-shrink: 0; display: grid; place-items: center; width: 104px; height: 104px; border-radius: 28px; background: var(--blu); color: var(--ocra-vivo); }
+.p2 .icona svg { width: 50px; height: 50px; }
+.p2 .icona b { position: absolute; top: -12px; right: -12px; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--ocra); color: var(--notte); font: 500 22px 'IBM Plex Mono', monospace; }
+.p2 .passo strong { display: block; font-size: 44px; line-height: 1.15; }
+.p2 .passo div span { display: block; margin-top: 6px; font-size: 28px; color: #4A5663; }
+.p2 .passi { position: relative; z-index: 1; }
+.p2 .garanzie { position: relative; z-index: 1; display: flex; gap: 34px; margin: 46px 0 0; padding: 0; list-style: none; font-size: 28px; color: var(--chiaro-70); }
+.p2 .garanzie li::before { content: '✓ '; color: var(--ocra-vivo); font-weight: 700; }
+.p2 .piede { position: absolute; left: 72px; right: 72px; bottom: 70px; display: flex; justify-content: space-between; align-items: center; }
+.p2 .sito { font-size: 24px; color: var(--chiaro-70); }
+
+/* 3 · prezzi */
+.p3 { background: var(--carta); padding: 0 72px; }
+.p3 .testa { padding-top: 190px; }
+.p3 .occhiello { color: var(--ocra-testo); font-size: 24px; margin: 0 0 24px; }
+.p3 .titolo { font-size: 100px; }
+.p3 .titolo em { color: var(--ocra-testo); }
+.p3 .griglia { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 60px; }
+.p3 .card { position: relative; padding: 34px 32px 36px; border-radius: 26px; min-height: 330px; display: flex; flex-direction: column; }
+.p3 .card .nome { font-family: 'Fraunces', serif; font-size: 44px; line-height: 1.05; }
+.p3 .card .cifra { margin-top: auto; font-family: 'Fraunces', serif; font-size: 108px; line-height: .95; letter-spacing: -.04em; }
+.p3 .card .cifra small { font-size: .5em; vertical-align: .55em; margin-right: 4px; }
+.p3 .card .unita { font-size: 22px; margin-top: 10px; opacity: .8; }
+.p3 .giornata { background: #F5DFAE; color: var(--notte); }
+.p3 .carnet { background: #D6EADF; color: #0E2F22; }
+.p3 .carnet .cifra small { color: #1E6B52; }
+.p3 .mese { background: var(--blu); color: var(--avorio); box-shadow: 0 0 0 5px var(--ocra); }
+.p3 .mese .nome, .p3 .fissa .nome { font-style: italic; }
+.p3 .mese .cifra small { color: var(--ocra-vivo); }
+.p3 .fissa { background: #D3E6EA; color: #0E323A; }
+.p3 .fissa .cifra small { color: #1E6471; }
+.p3 .bollino { position: absolute; top: -20px; right: 22px; padding: 10px 18px; border-radius: 999px; background: var(--ocra); color: var(--notte); font: 500 18px 'IBM Plex Mono', monospace; letter-spacing: .08em; text-transform: uppercase; transform: rotate(3deg); }
+.p3 .piede { position: absolute; left: 72px; right: 72px; bottom: 74px; display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 27px; color: #4A5663; }
+.p3 .piede .pill { font-size: 30px; padding: 18px 30px; }
+
+/* 4 · servizi inclusi */
+.p4 { background: var(--avorio); }
+.p4 .foto { position: absolute; left: 0; right: 0; top: 0; height: 600px; width: 100%; object-fit: cover; object-position: 50% 60%; }
+.p4 .velo { position: absolute; left: 0; right: 0; top: 0; height: 600px; background: linear-gradient(180deg, rgba(17,25,34,.82), rgba(17,25,34,.35) 32%, rgba(17,25,34,0) 55%); }
+.p4 .logo-targa { padding: 18px 22px; width: 344px; background: rgba(250,246,238,.92); border-radius: 18px; box-shadow: 0 16px 30px -18px rgba(0,0,0,.5); }
+.p4 .corpo { position: absolute; left: 0; right: 0; top: 500px; bottom: 0; padding: 60px 72px 0; background: var(--avorio); border-radius: 44px 44px 0 0; }
+.p4 .occhiello { color: var(--ocra-testo); font-size: 24px; margin: 0 0 20px; }
+.p4 .titolo { font-size: 84px; }
+.p4 .titolo em { color: var(--ocra-testo); }
+.p4 .servizi { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 38px; }
+.p4 .servizio { display: flex; align-items: center; gap: 22px; padding: 20px 22px; border-radius: 22px; background: #fff; border: 1.5px solid #E6DECF; }
+.p4 .servizio .icona { flex-shrink: 0; display: grid; place-items: center; width: 76px; height: 76px; border-radius: 22px; }
+.p4 .servizio .icona svg { width: 40px; height: 40px; }
+.p4 .servizio strong { font-size: 31px; line-height: 1.15; }
+.p4 .wifi { grid-column: 1 / -1; background: var(--blu); border-color: var(--blu); color: var(--avorio); }
+.p4 .wifi .icona { background: var(--ocra); color: var(--notte); border-radius: 50%; }
+.p4 .wifi strong { font-family: 'Fraunces', serif; font-weight: 400; font-size: 46px; }
+.p4 .wifi span { display: block; font-size: 25px; color: var(--chiaro-70); margin-top: 4px; }
+.p4 .i1 { background: #D6EADF; color: #1E6B52; } .p4 .i2 { background: #F5DFAE; color: var(--notte); } .p4 .i3 { background: #D3E6EA; color: #1E6471; } .p4 .i4 { background: #DDE3EA; color: var(--blu); }
+.p4 .piede { position: absolute; left: 72px; right: 72px; bottom: 56px; display: flex; justify-content: space-between; align-items: center; font-size: 26px; color: #4A5663; }
+.p4 .piede .pill { font-size: 30px; padding: 18px 30px; }
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="freccia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M12 14v4M10 16h4"/></symbol>
+  <symbol id="tel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="soldi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
+  <symbol id="wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><path d="M5 12.86a10 10 0 0 1 14 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/></symbol>
+  <symbol id="stampa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></symbol>
+  <symbol id="presa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></symbol>
+  <symbol id="scrivania" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="20" height="3" rx="1"/><path d="M4 12v8M20 12v8M14 12v4h6"/><path d="M8 9V6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3"/></symbol>
+  <symbol id="chiave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+</svg>
+
+<!-- 1 · LANCIO -->
+<section class="post p1" id="post-1">
+  <img class="foto" src="spazio-1344.webp" alt="">
+  <div class="velo"></div>
+  <img class="logo" src="../identita/logo-chiaro.svg" alt="Bagnarino Coworking">
+  <div class="corpo">
+    <p class="tag mono"><i></i>Nuovo · Alessandria centro</p>
+    <h1 class="titolo">Il tuo nuovo ufficio <em>è in centro.</em></h1>
+    <div class="sotto">
+      <p class="prezzo">Scrivanie da<strong>€25 al giorno</strong></p>
+      <span class="pill">Link in bio<svg><use href="#freccia"/></svg></span>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · COME FUNZIONA -->
+<section class="post p2 anelli" id="post-2">
+  <img class="logo" src="../identita/logo-chiaro.svg" alt="Bagnarino Coworking">
+  <div class="testa">
+    <p class="occhiello mono">Come si prenota</p>
+    <h1 class="titolo">Prenoti in <em>30 secondi.</em></h1>
+  </div>
+  <ol class="passi">
+    <li class="passo"><span class="icona"><svg><use href="#cal"/></svg><b>1</b></span><div><strong>Scegli il giorno</strong><span>dal calendario, posti in tempo reale</span></div></li>
+    <li class="passo"><span class="icona"><svg><use href="#tel"/></svg><b>2</b></span><div><strong>Lascia nome e telefono</strong><span>la conferma arriva per email</span></div></li>
+    <li class="passo"><span class="icona"><svg><use href="#soldi"/></svg><b>3</b></span><div><strong>Paghi quando arrivi</strong><span>contanti o carta, nessun anticipo</span></div></li>
+  </ol>
+  <ul class="garanzie"><li>Nessun anticipo</li><li>Disdici gratis</li><li>Fattura</li></ul>
+  <div class="piede"><span class="sito mono">bagnarinocoworking.it</span><span class="pill">Prenota ora<svg><use href="#freccia"/></svg></span></div>
+</section>
+
+<!-- 3 · PREZZI -->
+<section class="post p3" id="post-3">
+  <img class="logo" src="../identita/logo.svg" alt="Bagnarino Coworking">
+  <div class="testa">
+    <p class="occhiello mono">Listino</p>
+    <h1 class="titolo">Quattro formule, <em>prezzi chiari.</em></h1>
+  </div>
+  <div class="griglia">
+    <div class="card giornata"><span class="nome">Giornata</span><span class="cifra"><small>€</small>25</span><span class="unita mono">al giorno</span></div>
+    <div class="card carnet"><span class="nome">Carnet 10 ingressi</span><span class="cifra"><small>€</small>200</span><span class="unita mono">€20 al giorno</span></div>
+    <div class="card mese"><span class="bollino">La più conveniente</span><span class="nome">Mese flessibile</span><span class="cifra"><small>€</small>270</span><span class="unita mono">circa €13 al giorno</span></div>
+    <div class="card fissa"><span class="nome">Mese, postazione fissa</span><span class="cifra"><small>€</small>320</span><span class="unita mono">la tua scrivania, sempre</span></div>
+  </div>
+  <div class="piede"><span>Paghi in sede · disdici gratis</span><span class="pill">Link in bio<svg><use href="#freccia"/></svg></span></div>
+</section>
+
+<!-- 4 · SERVIZI INCLUSI -->
+<section class="post p4" id="post-4">
+  <img class="foto" src="sala-stampa-1280.webp" alt="">
+  <img class="logo logo-targa" src="../identita/logo.svg" alt="Bagnarino Coworking">
+  <div class="corpo">
+    <p class="occhiello mono">Tutto incluso</p>
+    <h1 class="titolo">Porta solo <em>il tuo computer.</em></h1>
+    <div class="servizi">
+      <div class="servizio wifi"><span class="icona"><svg><use href="#wifi"/></svg></span><div><strong>Wi-fi in fibra</strong><span>veloce, anche per le videochiamate</span></div></div>
+      <div class="servizio"><span class="icona i1"><svg><use href="#scrivania"/></svg></span><strong>Scrivania tutta tua</strong></div>
+      <div class="servizio"><span class="icona i2"><svg><use href="#stampa"/></svg></span><strong>Stampe e scansioni</strong></div>
+      <div class="servizio"><span class="icona i3"><svg><use href="#presa"/></svg></span><strong>Presa a ogni posto</strong></div>
+      <div class="servizio"><span class="icona i4"><svg><use href="#chiave"/></svg></span><strong>Tecnico in sede</strong></div>
+    </div>
+  </div>
+  <div class="piede"><span>Da €25 al giorno</span><span class="pill">Prenota ora<svg><use href="#freccia"/></svg></span></div>
+</section>
+</body></html>
