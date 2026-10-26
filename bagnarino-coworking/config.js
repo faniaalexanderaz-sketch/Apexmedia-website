@@ -200,7 +200,7 @@ var BGN_CONFIG = {
 
   /* Misurazione (fase 3): si attivano da sole quando i codici sono
      inseriti, e solo dopo il consenso ai cookie di statistica. */
-  ga4: '',        /* es. 'G-XXXXXXXXXX' */
+  ga4: 'G-E200FKTJ5G',
   metaPixel: '',  /* es. '123456789012345' */
 
   /* Indirizzi del motore di prenotazione (fase 2). Finché non
