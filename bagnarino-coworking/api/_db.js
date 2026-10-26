@@ -137,6 +137,11 @@ const SCHEMA = [
   `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS manuale BOOLEAN NOT NULL DEFAULT false`,
   /* richieste dal sito che la titolare deve ancora accettare (le vecchie restano accettate) */
   `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS accettata BOOLEAN NOT NULL DEFAULT true`,
+  /* email per far tornare i clienti: ognuna parte una volta sola */
+  `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS grazie_inviato BOOLEAN NOT NULL DEFAULT false`,
+  `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS avviso_rinnovo BOOLEAN NOT NULL DEFAULT false`,
+  `ALTER TABLE carnet ADD COLUMN IF NOT EXISTS avviso_scadenza BOOLEAN NOT NULL DEFAULT false`,
+  `ALTER TABLE clienti ADD COLUMN IF NOT EXISTS ultimo_richiamo DATE`,
   /* impostazioni modificabili dall'area riservata (fase 3) */
   `CREATE TABLE IF NOT EXISTS impostazioni (
      chiave TEXT PRIMARY KEY,

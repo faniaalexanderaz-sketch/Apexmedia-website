@@ -2,7 +2,8 @@
    GET /api/cron?compito=promemoria|riepilogo|report
    Avviato da Vercel Cron (vercel.json). Protetto da CRON_SECRET:
    Vercel lo manda da solo nell'intestazione Authorization.
-   - promemoria: email ai clienti che arrivano domani (sera prima)
+   - promemoria: email ai clienti che arrivano domani (sera prima),
+                 più le email per farli tornare (_fidelizzazione.js)
    - riepilogo:  alla titolare, chi arriva domani
    - report:     report mensile (giorno 1) — vedi _report.js
    ============================================================= */
@@ -47,7 +48,10 @@ module.exports = async (req, res) => {
         const e = await inviaEmail({ to: p.email, subject: m.oggetto, html: m.html, rispondiA: cfg.azienda.email });
         if (e.inviata) { inviate++; await q('UPDATE prenotazioni SET promemoria_inviato = true WHERE id = $1', [p.id]); }
       }
-      json(res, 200, { compito, domani, trovate: lista.length, inviate });
+      /* nello stesso giro serale: grazie, ci manchi, carnet e mese in scadenza */
+      const { inviaFidelizzazione } = require('./_fidelizzazione');
+      const fid = await inviaFidelizzazione(cfg, sito, m => inviaEmail(Object.assign({ rispondiA: cfg.azienda.email }, m)));
+      json(res, 200, { compito, domani, trovate: lista.length, inviate, fidelizzazione: fid });
       return;
     }
     if (compito === 'riepilogo') {

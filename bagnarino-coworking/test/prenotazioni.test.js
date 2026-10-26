@@ -199,3 +199,49 @@ test('eliminare un cliente cancella prenotazioni, posti, carnet, card e incassi'
   assert.equal(await conta('prenotazioni', 'id = $1', [resta.id]), 1);
   await assert.rejects(P.eliminaCliente(cid), /non trovato/i);
 });
+
+test('email per far tornare i clienti: grazie, ci manchi, carnet, rinnovo — una volta sola', async () => {
+  await nuovoDb();
+  const F = require('../api/_fidelizzazione');
+  const { impostazioni } = require('../api/_impostazioni');
+  const cfg = await impostazioni();
+  const inviate = [];
+  const invia = m => { inviate.push(m); return Promise.resolve({ inviata: true }); };
+  const sposta = async (id, da, a) => {
+    await db.q('UPDATE prenotazioni SET data_inizio = $2, data_fine = $3 WHERE id = $1', [id, da, a]);
+    await db.q('UPDATE occupazioni SET data = $2 WHERE prenotazione_id = $1', [id, da]);
+  };
+  const banco = { adesso: ADESSO, manuale: true };
+
+  /* prima visita oggi (2 novembre) → grazie */
+  const a = await P.prenota(cliente({ data: '2026-11-02' }), banco);
+  await P.segnaPresenza(a.id, 'presente');
+  /* ultima visita 25 giorni fa, con consenso → ci manchi; senza consenso → niente */
+  const b = await P.prenota(cliente({ data: '2026-11-04', consenso_marketing: true }), banco);
+  await sposta(b.id, '2026-10-08', '2026-10-08'); await P.segnaPresenza(b.id, 'presente');
+  const b2 = await P.prenota(cliente({ data: '2026-11-04' }), banco);
+  await sposta(b2.id, '2026-10-09', '2026-10-09'); await P.segnaPresenza(b2.id, 'presente');
+  /* carnet con ingressi residui che scade tra 10 giorni */
+  const k = await P.prenota(cliente({ data: '2026-11-05', pacchetto: 'carnet' }), banco);
+  await db.q("UPDATE carnet SET scadenza = '2026-11-12' WHERE id = (SELECT carnet_id FROM prenotazioni WHERE id = $1)", [k.id]);
+  /* mese che finisce tra 3 giorni */
+  const m = await P.prenota(cliente({ data: '2026-11-03', pacchetto: 'mese_flessibile' }), banco);
+  await db.q("UPDATE prenotazioni SET data_fine = '2026-11-05' WHERE id = $1", [m.id]);
+
+  const r = await F.inviaFidelizzazione(cfg, 'https://esempio.it', invia, ADESSO);
+  assert.deepEqual(r, { grazie: 1, ciManchi: 1, carnet: 1, rinnovo: 1 });
+  assert.ok(inviate.some(x => /primo timbro/.test(x.subject)));
+  assert.ok(inviate.some(x => /disiscrivi/.test(x.html)));
+  assert.ok(inviate.some(x => /pacchetto=mese_flessibile&amp;data=2026-11-06/.test(x.html)));
+
+  /* il giorno dopo non riparte niente */
+  const r2 = await F.inviaFidelizzazione(cfg, 'https://esempio.it', invia, new Date('2026-11-03T08:00:00Z'));
+  assert.deepEqual(r2, { grazie: 0, ciManchi: 0, carnet: 0, rinnovo: 0 });
+
+  /* il link per disiscriversi funziona solo con la firma giusta */
+  const idB = (await db.q('SELECT cliente_id FROM prenotazioni WHERE id = $1', [b.id]))[0].cliente_id;
+  const link = new URL(F.linkDisiscrivi('https://esempio.it', idB));
+  assert.equal(await F.disiscrivi(idB, 'sbagliata'), false);
+  assert.equal(await F.disiscrivi(idB, link.searchParams.get('t')), true);
+  assert.equal((await db.q('SELECT consenso_marketing FROM clienti WHERE id = $1', [idB]))[0].consenso_marketing, false);
+});

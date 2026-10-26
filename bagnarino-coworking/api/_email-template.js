@@ -182,4 +182,58 @@ function riepilogoSerale(lista, data, cfg, sito) {
   return { oggetto: 'Domani al coworking: ' + lista.length + (lista.length === 1 ? ' persona' : ' persone'), html: layout({ titolo: 'Riepilogo di domani', corpo, sito, cfg }) };
 }
 
-module.exports = { layout, confermaCliente, promemoria, annullataCliente, titolareNuova, titolareAnnullata, riepilogoSerale, dataLunga, periodo, bottone, righe, titoloH, paragrafo, h };
+
+/* ---------- per far tornare i clienti ---------- */
+function prossimoPremio(cfg, timbri) {
+  const premi = (cfg.fidelity && cfg.fidelity.premi) || [];
+  return premi.filter(z => z.timbri > timbri).sort((a, b) => a.timbri - b.timbri)[0] || null;
+}
+function riquadroCard(cfg, timbri) {
+  const tot = (cfg.fidelity && cfg.fidelity.timbri) || 10, pr = prossimoPremio(cfg, timbri);
+  return righe([['Bagnarino Card', timbri + ' timbri su ' + tot]].concat(pr ? [['Prossimo premio', pr.titolo + ' (al ' + pr.timbri + '° timbro)']] : [])) + '<div style="height:18px"></div>';
+}
+function piccolo(t) { return '<p style="margin:18px 0 0;font:13px/1.6 ' + FONT + ';color:' + MORBIDO + '">' + t + '</p>'; }
+
+/* la sera della prima visita: grazie e benvenuto nella Card */
+function grazieVisita(c, cfg, sito) {
+  const corpo = titoloH('Grazie per oggi, ' + c.nome + '!') +
+    paragrafo('Speriamo che la giornata al Bagnarino Coworking sia andata bene. Con questa visita hai il tuo primo timbro sulla Bagnarino Card: ogni giornata vale un timbro, e lungo la strada sblocchi dei premi.') +
+    riquadroCard(cfg, c.timbri) +
+    bottone(sito + '/prenota?pacchetto=giornata', 'Prenota la prossima giornata') +
+    bottone(sito + '/card?email=' + encodeURIComponent(c.email) + (c.codice ? '&codice=' + encodeURIComponent(c.codice) : ''), 'Guarda la tua Card', true) +
+    paragrafo('Hai suggerimenti su come migliorare lo spazio? Rispondi a questa email: la leggiamo davvero.');
+  return { oggetto: 'Grazie per oggi, ' + c.nome + ' – il tuo primo timbro', html: layout({ titolo: 'Grazie per oggi', anteprima: 'Il tuo primo timbro sulla Bagnarino Card', corpo, sito, cfg }) };
+}
+
+/* dopo tre settimane senza venire (solo con consenso alle email promozionali) */
+function ciManchi(c, cfg, sito, disiscrivi) {
+  const pr = prossimoPremio(cfg, c.timbri);
+  const corpo = titoloH('Ci manchi, ' + c.nome + '!') +
+    paragrafo('È da un po’ che non passi in corso Lamarmora. La tua scrivania è pronta quando vuoi: prenoti in 30 secondi e paghi quando arrivi.') +
+    (pr ? paragrafo('Sulla tua Bagnarino Card hai <b>' + c.timbri + ' timbri</b>: ancora ' + (pr.timbri - c.timbri) + ' e sblocchi <b>' + h(pr.titolo.toLowerCase()) + '</b>.', true) : '') +
+    bottone(sito + '/prenota?pacchetto=giornata', 'Prenota una giornata') +
+    bottone(waLink(cfg, 'Ciao, vorrei tornare al coworking. Quali giorni avete liberi?'), 'Scrivici su WhatsApp', true) +
+    piccolo('Ricevi questa email perché hai accettato di ricevere novità dal coworking. <a href="' + h(disiscrivi) + '" style="color:' + MORBIDO + '">Non voglio più ricevere queste email</a>.');
+  return { oggetto: c.nome + ', la tua scrivania ti aspetta', html: layout({ foto: true, titolo: 'Ci manchi', anteprima: 'Prenoti in 30 secondi, paghi quando arrivi', corpo, sito, cfg }) };
+}
+
+/* carnet con ingressi da usare, in scadenza */
+function carnetInScadenza(k, cfg, sito) {
+  const corpo = titoloH('Il tuo carnet sta per scadere') +
+    paragrafo('Ciao ' + k.nome + ', ti restano <b>' + k.residui + (k.residui === 1 ? ' ingresso' : ' ingressi') + '</b> sul carnet, valido fino a ' + h(dataLunga(k.scadenza)) + '. Prenotali prima che scadano: sono già pagati.', true) +
+    bottone(sito + '/prenota?pacchetto=giornata', 'Prenota i tuoi ingressi') +
+    paragrafo('Prenotando con la stessa email l’ingresso si scala dal carnet da solo.');
+  return { oggetto: 'Ti restano ' + k.residui + ' ingressi sul carnet', html: layout({ titolo: 'Carnet in scadenza', anteprima: 'Valido fino a ' + dataLunga(k.scadenza), corpo, sito, cfg }) };
+}
+
+/* abbonamento mensile che finisce tra pochi giorni */
+function rinnovoMese(p, cfg, sito) {
+  const corpo = titoloH('Il tuo mese finisce ' + dataLunga(p.data_fine)) +
+    paragrafo('Ciao ' + p.nome + ', il tuo abbonamento ' + p.nomePacchetto.toLowerCase() + ' finisce ' + dataLunga(p.data_fine) + '. Se vuoi continuare, puoi rinnovarlo adesso: tieni il posto senza interruzioni.') +
+    bottone(sito + '/prenota?pacchetto=' + encodeURIComponent(p.pacchetto) + '&data=' + encodeURIComponent(p.rinnovoDa), 'Rinnova il mese') +
+    bottone(waLink(cfg, 'Ciao, vorrei rinnovare il mio abbonamento al coworking.'), 'Scrivici su WhatsApp', true) +
+    paragrafo('Paghi in sede come sempre, contanti o carta.');
+  return { oggetto: 'Il tuo mese al coworking finisce ' + dataLunga(p.data_fine), html: layout({ titolo: 'Rinnovo', anteprima: 'Rinnova e tieni il posto senza interruzioni', corpo, sito, cfg }) };
+}
+
+module.exports = { grazieVisita, ciManchi, carnetInScadenza, rinnovoMese, layout, confermaCliente, promemoria, annullataCliente, titolareNuova, titolareAnnullata, riepilogoSerale, dataLunga, periodo, bottone, righe, titoloH, paragrafo, h };

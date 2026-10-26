@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Apex Media · Piano di avvio Bagnarino Coworking</title>
+<style>
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@page { size: A4; margin: 0; }
+:root {
+  --viola: #7B3FE4; --viola-chiaro: #F3EFFD; --viola-bordo: #E2DAF7; --scuro: #15121F; --testo: #1B1B24; --grigio: #5F5D6B; --linea: #E6E3EE;
+  --b-notte: #111922; --b-inchiostro: #1B2A3A; --b-ocra: #C9973B; --b-ocra-vivo: #DDB05C; --b-ocra-testo: #7A5A1E; --b-carta: #F4EEE3; --b-avorio: #FAF6EE;
+  --b-verde: #1E6B52; --b-verde-chiaro: #D6EADF; --b-petrolio: #1E6471; --b-petrolio-chiaro: #D3E6EA; --b-sabbia: #F5DFAE; --b-timbro: #B4302A;
+  --apex: 'Hanken Grotesk', 'Inter', system-ui, sans-serif; --serif: 'Fraunces', Georgia, serif; --mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; }
+body { font-family: var(--apex); color: var(--testo); font-size: 9.6pt; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pagina { width: 210mm; height: 297mm; padding: 13mm 15mm 0; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; }
+.pagina:last-child { page-break-after: auto; }
+p { margin: 0 0 2.4mm; }
+strong { font-weight: 700; }
+.v { color: var(--viola); font-weight: 700; }
+
+/* testata Apex */
+.testa { display: flex; align-items: center; gap: 3.5mm; margin-bottom: 8mm; }
+.testa img { width: 11mm; height: 11mm; border-radius: 2.4mm; }
+.testa-nome { line-height: 1.15; }
+.testa-nome b { display: block; font-size: 11pt; letter-spacing: .28em; font-weight: 800; }
+.testa-nome span { font-size: 6.4pt; letter-spacing: .2em; color: var(--viola); font-weight: 700; text-transform: uppercase; }
+.testa-dx { margin-left: auto; font-size: 6.6pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
+.pillole { margin-left: auto; display: flex; gap: 1.6mm; }
+.pillole span { display: inline-block; min-width: 8mm; padding: 1.2mm 2.4mm; border-radius: 99px; border: .3mm solid var(--linea); font-size: 6.4pt; font-weight: 700; color: #6d6a7a; text-align: center; }
+.pillole span.on { background: var(--viola); border-color: var(--viola); color: #fff; padding: 1.2mm 3.4mm; }
+
+.occhiello { font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 0 0 2mm; }
+h1 { font-size: 19pt; line-height: 1.12; margin: 0 0 2.6mm; letter-spacing: -.02em; font-weight: 800; }
+.trattino { width: 15mm; height: 1mm; border-radius: 1mm; background: linear-gradient(90deg, var(--viola), #E7A24A); margin: 0 0 5mm; }
+.intro { font-size: 10pt; margin-bottom: 5mm; }
+h2 { font-size: 11.4pt; margin: 0 0 1.8mm; font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 9.4pt; margin: 0 0 1mm; font-weight: 800; }
+.sez { font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 5mm 0 2.6mm; }
+
+.card { border: .3mm solid var(--viola-bordo); border-radius: 3mm; padding: 4mm 4.2mm; background: #fff; }
+.card.lav { background: var(--viola-chiaro); }
+.card.scura { background: var(--scuro); color: #EDEAF6; border-color: var(--scuro); }
+.card.scura h3, .card.scura h2 { color: #fff; }
+.griglia { display: grid; gap: 3mm; }
+.g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); } .g5 { grid-template-columns: repeat(5, 1fr); }
+.piccolo { font-size: 7.6pt; color: var(--grigio); line-height: 1.45; }
+.card.scura .piccolo { color: #BDB8CC; }
+.etichetta { display: inline-block; padding: .6mm 2.2mm; border-radius: 99px; font-size: 6pt; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; background: var(--viola-chiaro); color: var(--viola); }
+.num { font-size: 15pt; font-weight: 800; color: var(--viola); line-height: 1; margin-bottom: 1mm; }
+
+.piede { margin-top: auto; border-top: .3mm solid var(--linea); display: flex; justify-content: space-between; padding: 3.2mm 0 6mm; font-size: 6.4pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
+
+/* copertina */
+.eroe { position: relative; border-radius: 4mm; overflow: hidden; background: #06050B; color: #fff; padding: 8mm 8mm 6mm; margin-bottom: 7mm; min-height: 68mm; }
+.eroe > img.sfondo { position: absolute; right: -8mm; top: -6mm; height: 92mm; opacity: .95; }
+.eroe::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,5,11,.98) 0%, rgba(6,5,11,.85) 45%, rgba(6,5,11,0) 80%); }
+.eroe > * { position: relative; z-index: 1; }
+.eroe .occhiello { color: #B79AF5; }
+.eroe h1 { font-size: 24pt; font-weight: 500; color: #CFCBDA; margin-bottom: 0; }
+.eroe h1 b { display: block; color: #F2C66B; font-weight: 800; }
+.eroe .trattino { margin: 4mm 0 5mm; }
+.eroe-cliente { display: flex; align-items: center; gap: 4mm; padding-top: 4mm; border-top: .3mm solid rgba(255,255,255,.14); }
+.eroe-cliente .targhetta { background: var(--b-avorio); border-radius: 2mm; padding: 2.4mm 3.4mm; }
+.eroe-cliente .targhetta img { height: 9mm; display: block; }
+.eroe-cliente b { display: block; font-size: 10pt; }
+.eroe-cliente span { font-size: 7.4pt; color: #BDB8CC; }
+.firme { display: flex; gap: 10mm; margin-top: 3mm; }
+.firme div { text-align: left; }
+.firme img { height: 13mm; display: block; }
+.firme span { font-size: 6.2pt; letter-spacing: .2em; color: #8a879a; text-transform: uppercase; }
+
+/* bagnarino: campioni */
+.mondo-b { background: var(--b-carta); border: 0; }
+.campione { border-radius: 3mm; overflow: hidden; border: .3mm solid var(--linea); background: #fff; }
+.campione .colore { height: 24mm; padding: 3mm; display: flex; align-items: flex-end; font-family: var(--mono); font-size: 7pt; }
+.campione .info { padding: 2.6mm 3mm 3mm; }
+.campione .info b { display: block; font-size: 8.6pt; }
+.campione .info span { font-size: 7.2pt; color: var(--grigio); line-height: 1.4; display: block; }
+.telefono { width: 100%; border-radius: 6mm; border: 1.6mm solid #15121F; overflow: hidden; background: #15121F; box-shadow: 0 3mm 8mm -3mm rgba(0,0,0,.35); }
+.telefono img { display: block; width: 100%; }
+.schermo { border-radius: 2.6mm; overflow: hidden; border: .3mm solid var(--linea); box-shadow: 0 2.4mm 6mm -3mm rgba(0,0,0,.25); }
+.schermo img { display: block; width: 100%; }
+.didascalia { font-size: 7pt; color: var(--grigio); margin-top: 1.8mm; line-height: 1.4; }
+.didascalia b { color: var(--testo); }
+.social img { display: block; width: 100%; border-radius: 2.4mm; box-shadow: 0 2.4mm 6mm -3mm rgba(0,0,0,.3); }
+.lista { margin: 0; padding: 0; list-style: none; display: grid; gap: 1.6mm; }
+.lista li { position: relative; padding-left: 4.4mm; font-size: 8pt; line-height: 1.45; }
+.lista li::before { content: ''; position: absolute; left: 0; top: 1.6mm; width: 1.8mm; height: 1.8mm; border-radius: 50%; background: var(--viola); }
+.lista.no li::before { background: #D04A3A; }
+.lista.ok li::before { background: #1E8A4C; }
+.frase { font-family: var(--serif); font-size: 15pt; line-height: 1.2; letter-spacing: -.01em; color: var(--b-inchiostro); }
+.frase em { color: var(--b-ocra-testo); }
+
+.check { margin: 0; padding: 0; list-style: none; display: grid; gap: 2mm; }
+.check > li { display: grid; grid-template-columns: 4.2mm 1fr auto; gap: 2.6mm; align-items: start; padding: 2.4mm 3mm; border: .3mm solid var(--linea); border-radius: 2.4mm; background: #fff; font-size: 8.2pt; line-height: 1.45; }
+.check > li::before { content: ''; width: 3.6mm; height: 3.6mm; margin-top: .4mm; border: .45mm solid var(--viola); border-radius: 1mm; }
+.check > li.fatto::before { background: #1E8A4C; border-color: #1E8A4C; }
+.check > li > div > b { display: block; font-size: 8.8pt; }
+.check > li span.det { display: block; color: var(--grigio); font-size: 7.6pt; margin-top: .6mm; }
+.chi { align-self: center; padding: .7mm 2.2mm; border-radius: 99px; font-size: 5.8pt; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.chi.apex { background: var(--viola-chiaro); color: var(--viola); }
+.chi.marcella { background: #FDF0DC; color: #8A5A10; }
+.chi.insieme { background: #E3F2E8; color: #1E6B52; }
+.chi.fatto { background: #1E8A4C; color: #fff; }
+.passi { margin: 1.6mm 0 0; padding-left: 4mm; font-size: 7.6pt; color: var(--grigio); }
+.passi li { margin-bottom: .6mm; }
+.flusso { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+.mail { border: .3mm solid var(--linea); border-radius: 3mm; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+.mail .anteprima { height: 50mm; overflow: hidden; background: #151B23; }
+.mail .anteprima img { display: block; width: 100%; }
+.mail .info { padding: 2.6mm 3mm 3mm; }
+.mail .quando { font-family: var(--mono); font-size: 6.4pt; letter-spacing: .08em; text-transform: uppercase; color: var(--viola); font-weight: 500; }
+.mail h3 { margin: .8mm 0 .6mm; }
+.mail .info span { font-size: 7.2pt; color: var(--grigio); line-height: 1.4; display: block; }
+.mail .info span.tag { display: inline-block; margin-top: 1.4mm; padding: .5mm 1.8mm; border-radius: 99px; font-size: 5.8pt; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.mail .info span.tag.serv { background: #E3F2E8; color: #1E6B52; } .mail .info span.tag.mkt { background: #FDF0DC; color: #8A5A10; } .mail .info span.tag.nuova { background: var(--viola); color: #fff; }
+.tabella { width: 100%; border-collapse: collapse; font-size: 7.8pt; }
+.tabella th { text-align: left; font-size: 6.4pt; letter-spacing: .14em; text-transform: uppercase; color: var(--viola); padding: 0 2mm 1.6mm; border-bottom: .3mm solid var(--viola-bordo); }
+.tabella td { padding: 2mm; border-bottom: .3mm solid var(--linea); vertical-align: top; line-height: 1.4; }
+.tabella td:first-child { font-weight: 800; width: 34%; }
+.fase { display: flex; align-items: center; gap: 3mm; margin: 5mm 0 2.6mm; }
+.fase .n { display: grid; place-items: center; width: 7mm; height: 7mm; border-radius: 50%; background: var(--viola); color: #fff; font-weight: 800; font-size: 9pt; }
+.fase b { font-size: 10.4pt; } .fase span { font-size: 7.4pt; color: var(--grigio); margin-left: auto; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.nota-box { border-left: 1.2mm solid var(--viola); background: var(--viola-chiaro); border-radius: 0 2.4mm 2.4mm 0; padding: 3mm 4mm; font-size: 8pt; }
+</style>
+</head>
+<body>
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="testa-dx">Uso interno · 26 ottobre 2026</div></div>
+  <div class="eroe">
+    <img class="sfondo" src="identita/apex-banner.jpg" alt="">
+    <p class="occhiello">Piano di avvio · checklist operativa</p>
+    <h1>Marcella ha detto sì.<b>Ora si parte, in ordine.</b></h1>
+    <div class="trattino"></div>
+    <div class="eroe-cliente"><div class="targhetta"><img src="identita/logo.svg" alt="Bagnarino Coworking"></div><div><b>Bagnarino Coworking</b><span>Tutto quello da fare per accendere sito, misurazione, email e social</span></div></div>
+  </div>
+  <div class="griglia" style="grid-template-columns: 1.4fr 1fr; gap: 6mm;">
+    <div>
+      <h2>Come usare questo documento</h2>
+      <p>Ogni attività ha una casella da spuntare e un’etichetta che dice <b>chi la fa</b>: <span class="chi apex">Apex</span> &nbsp;<span class="chi marcella">Marcella</span> &nbsp;<span class="chi insieme">Insieme</span>. Le caselle verdi sono già fatte.</p>
+      <p>L’ordine conta: prima gli <b>accessi</b> e la <b>misurazione</b> (altrimenti i primi clienti non si contano), poi il sito in modalità definitiva, poi la formazione di Marcella e solo alla fine il <b>lancio</b> pubblico sui social e in vetrina.</p>
+      <div class="nota-box"><b>Google Tag Manager non serve.</b> Il sito ha già gli spazi per Google Analytics 4 e per il Pixel di Meta, che partono solo dopo il consenso ai cookie. Bastano i due codici: Tag Manager aggiungerebbe un passaggio senza vantaggi, lo valuteremo solo con molte campagne diverse.</div>
+    </div>
+    <div class="griglia" style="gap: 3mm;">
+      <div class="card lav"><div class="num">già attivo</div><span class="piccolo">sito e dominio, prenotazioni, database, area riservata, email di conferma e promemoria, riepilogo serale, report mensile</span></div>
+      <div class="card lav"><div class="num" style="color:#C9973B">da attivare</div><span class="piccolo">Analytics, Pixel, Search Console, profilo Google, avvisi a Marcella, pubblicazione automatica</span></div>
+      <div class="card lav"><div class="num" style="color:#1E6B52">nuovo</div><span class="piccolo">4 email automatiche per far tornare i clienti: grazie, ci manchi, carnet, rinnovo</span></div>
+    </div>
+  </div>
+  <p class="sez">Le sei tappe</p>
+  <div class="griglia g3">
+    <div class="card"><div class="num" style="font-size:11pt">02</div><h3>Accessi e misurazione</h3><span class="piccolo">Analytics, Pixel, Search Console, profilo Google</span></div>
+    <div class="card"><div class="num" style="font-size:11pt">03</div><h3>Sito in modalità definitiva</h3><span class="piccolo">Avvisi, prova completa, cose da confermare</span></div>
+    <div class="card"><div class="num" style="font-size:11pt">04</div><h3>Le email ai clienti</h3><span class="piccolo">Quando partono e cosa dicono</span></div>
+    <div class="card"><div class="num" style="font-size:11pt">05</div><h3>Formazione e lancio</h3><span class="piccolo">Marcella, vetrina, social, WhatsApp</span></div>
+    <div class="card"><div class="num" style="font-size:11pt">06</div><h3>Il primo mese</h3><span class="piccolo">Pubblicità, numeri da guardare, routine</span></div>
+    <div class="card scura"><h3>Obiettivo del primo mese</h3><span class="piccolo">Le prime prenotazioni dal sito, misurate dal primo giorno, e i primi clienti che tornano.</span></div>
+  </div>
+<div class="piede"><span>Apex Media · Piano di avvio Bagnarino Coworking</span><span>1</span></div></section>
+<section class="pagina"><div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span class="on">02 Accessi</span><span>03</span><span>04</span><span>05</span><span>06</span></div></div>
+  <p class="occhiello">02 — Accessi e misurazione · settimana 1</p>
+  <h1>Prima di tutto, contare.</h1><div class="trattino"></div>
+  <p class="intro">Gli account si creano a nome di Bagnarino (con Apex come amministratore): restano loro anche se un giorno cambiassero agenzia. Appena hai i codici, li inserisco io nel sito.</p>
+  <ul class="check">
+    <li><div><b>Google Analytics 4</b><span class="det">Misura visite, da dove arrivano e quante prenotazioni completano.</span>
+      <ol class="passi"><li>analytics.google.com → Crea proprietà “Bagnarino Coworking”, fuso Italia, valuta Euro</li><li>Stream web: bagnarinocoworking.it</li><li>Copia l’ID che inizia con <b>G-</b> e mandamelo</li><li>Aggiungi Marcella come utente “Visualizzatore”</li></ol></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Meta Business Suite e Pixel</b><span class="det">Collega Instagram e Facebook del coworking e misura le prenotazioni arrivate dalla pubblicità.</span>
+      <ol class="passi"><li>business.facebook.com → crea il portafoglio “Bagnarino Coworking”, aggiungi pagina Facebook e profilo Instagram</li><li>Gestione eventi → Collega origine dati → Web → crea il <b>Pixel</b></li><li>Mandami il numero del Pixel (15-16 cifre)</li><li>Dominio da verificare: bagnarinocoworking.it</li></ol></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Google Search Console</b><span class="det">Fa trovare il sito su Google e dice per quali ricerche compare.</span>
+      <ol class="passi"><li>search.google.com/search-console → Proprietà “Dominio” → record TXT su IONOS (o prefisso URL con meta tag, lo inserisco io)</li><li>Sitemap: <b>bagnarinocoworking.it/sitemap.xml</b></li><li>Controllo URL della home → “Richiedi indicizzazione”</li><li>Aggiungi Marcella come proprietaria</li></ol></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Profilo Google del negozio</b><span class="det">Il canale più importante per chi cerca “coworking Alessandria”. Non serve un profilo nuovo: stesso indirizzo e stessa insegna.</span>
+      <ol class="passi"><li>Marcella ti aggiunge come <b>Gestore</b> del profilo Bagnarino S.r.l.</li><li>Aggiungi la categoria secondaria “Spazio di coworking”, orari, foto della sala con i separè</li><li>Link per prenotare: bagnarinocoworking.it/prenota</li><li>Primo post: annuncio del coworking con la foto del post 1</li></ol></div><span class="chi insieme">Insieme</span></li>
+    <li class="fatto"><div><b>Favicon e logo per Google</b><span class="det">Già pubblicati: Google li mostra entro qualche giorno o settimana.</span></div><span class="chi fatto">Fatto</span></li>
+  </ul>
+<div class="piede"><span>Apex Media · Piano di avvio Bagnarino Coworking</span><span>2</span></div></section>
+<section class="pagina"><div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span class="on">03 Sito</span><span>04</span><span>05</span><span>06</span></div></div>
+  <p class="occhiello">03 — Il sito in modalità definitiva · settimana 1</p>
+  <h1>Dalle prove al lavoro vero.</h1><div class="trattino"></div>
+  <ul class="check">
+    <li><div><b>Avvisi a Marcella</b><span class="det">Oggi le email di nuove prenotazioni, annullamenti e riepilogo serale arrivano ad Apex (era per le prove). Serve l’email di Marcella; ad Apex resta il report mensile.</span></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Codici Analytics e Pixel nel sito</b><span class="det">Appena arrivano dalla tappa 02. Si attivano solo dopo il consenso ai cookie.</span></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Prova completa</b><span class="det">Una prenotazione vera dal telefono: email al cliente, avviso a Marcella, accetta / è arrivato / incassa, poi la si elimina dall’area riservata.</span></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Pubblicazione automatica</b><span class="det">Vercel ha smesso di pubblicare da solo dopo ogni modifica (oggi rilanciamo a mano). Si sistema in Vercel → progetto → Settings → Git: ricollegare il repository GitHub.</span></div><span class="chi apex">Apex</span></li>
+    <li class="fatto"><div><b>Clienti e incassi di prova eliminati</b><span class="det">Area riservata pulita, a zero.</span></div><span class="chi fatto">Fatto</span></li>
+  </ul>
+  <p class="sez">Da confermare con Marcella all’incontro</p>
+  <table class="tabella">
+    <tr><th>Cosa</th><th>Oggi sul sito</th></tr>
+    <tr><td>Listino definitivo</td><td>Giornata €25 · Carnet 10 ingressi €200 · Mese flessibile €270 · Postazione fissa €320</td></tr>
+    <tr><td>Giorni di chiusura</td><td>Festivi già inseriti. Da aggiungere: San Baudolino (10 novembre), ponti, ferie estive</td></tr>
+    <tr><td>Premi della Bagnarino Card</td><td>3° timbro 25 stampe a colori · 5° porta un amico · 7° sconto 10% in negozio · 10° giornata in regalo</td></tr>
+    <tr><td>Vantaggi degli abbonati mensili</td><td>100 stampe a colori al mese e gli altri premi subito: quantità da confermare</td></tr>
+    <tr><td>Caffè e aria condizionata</td><td>Nascosti finché non confermati</td></tr>
+    <tr><td>Sala riunioni</td><td>Nascosta: esiste? a che prezzo?</td></tr>
+    <tr><td>Offerta prima volta</td><td>Spenta: seconda giornata a €20 se torni entro 7 giorni</td></tr>
+    <tr><td>Separè e foto</td><td>Quando arrivano i separè: servizio fotografico vero della sala per sito, Google e social</td></tr>
+  </table>
+<div class="piede"><span>Apex Media · Piano di avvio Bagnarino Coworking</span><span>3</span></div></section>
+<section class="pagina"><div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span class="on">04 Email</span><span>05</span><span>06</span></div></div>
+  <p class="occhiello">04 — Le email ai clienti · partono da sole</p>
+  <h1>Ricordare, ringraziare, far tornare.</h1><div class="trattino"></div>
+  <p class="intro">Sei email automatiche, con lo stile del sito. Nessuna parte due volte. Le promozionali vanno <b>solo</b> a chi ha spuntato il consenso in prenotazione e hanno sempre il link per disiscriversi.</p>
+  <div class="flusso"><div class="mail"><div class="anteprima"><img src="avvio/email-conferma.jpg" alt=""></div><div class="info"><span class="quando">Subito</span><h3>Prenotazione confermata</h3><span>Codice, giorno, orario, quanto pagare, mappa, file per il calendario.</span><span class="tag serv">Servizio</span></div></div><div class="mail"><div class="anteprima"><img src="avvio/email-promemoria.jpg" alt=""></div><div class="info"><span class="quando">Il giorno prima, sera</span><h3>A domani</h3><span>Ricorda l’appuntamento e permette di annullare in tempo: meno posti vuoti.</span><span class="tag serv">Servizio</span></div></div><div class="mail"><div class="anteprima"><img src="avvio/email-grazie.jpg" alt=""></div><div class="info"><span class="quando">Sera della prima visita</span><h3>Grazie per oggi</h3><span>Primo timbro della Card, prossimo premio, “prenota la prossima”.</span><span class="tag nuova">Nuova</span></div></div><div class="mail"><div class="anteprima"><img src="avvio/email-ci-manchi.jpg" alt=""></div><div class="info"><span class="quando">21 giorni senza visite</span><h3>Ci manchi</h3><span>Timbri e premio vicino. Solo con consenso, con disiscrizione.</span><span class="tag mkt">Nuova · promozionale</span></div></div><div class="mail"><div class="anteprima"><img src="avvio/email-carnet.jpg" alt=""></div><div class="info"><span class="quando">14 giorni prima della scadenza</span><h3>Carnet in scadenza</h3><span>Ingressi già pagati ancora da usare: “prenotali prima che scadano”.</span><span class="tag nuova">Nuova</span></div></div><div class="mail"><div class="anteprima"><img src="avvio/email-rinnovo.jpg" alt=""></div><div class="info"><span class="quando">5 giorni prima della fine</span><h3>Rinnovo del mese</h3><span>Pulsante che apre la prenotazione del mese successivo già compilata.</span><span class="tag nuova">Nuova</span></div></div></div>
+  <p class="sez">E per Marcella</p>
+  <div class="griglia g3">
+    <div class="card lav"><h3>Nuova prenotazione</h3><span class="piccolo">Subito, con il pulsante “Apri e accetta”.</span></div>
+    <div class="card lav"><h3>Riepilogo serale</h3><span class="piccolo">Chi arriva domani, ogni sera.</span></div>
+    <div class="card lav"><h3>Report del mese</h3><span class="piccolo">Il giorno 1: prenotazioni, incassi, canali.</span></div>
+  </div>
+<div class="piede"><span>Apex Media · Piano di avvio Bagnarino Coworking</span><span>4</span></div></section>
+<section class="pagina"><div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span class="on">05 Lancio</span><span>06</span></div></div>
+  <p class="occhiello">05 — Formazione e lancio · settimana 2</p>
+  <h1>Marcella pronta, poi si accende tutto.</h1><div class="trattino"></div>
+  <div class="fase"><div class="n">A</div><b>Formazione di Marcella</b><span>20 minuti, in negozio</span></div>
+  <ul class="check">
+    <li><div><b>Area riservata sul suo telefono</b><span class="det">Aprire bagnarinocoworking.it/admin, accedere (password consegnata a parte, mai per messaggio) e salvarla nella schermata Home come un’app.</span></div><span class="chi insieme">Insieme</span></li>
+    <li><div><b>I tre gesti di ogni giorno</b><span class="det">Accetta la richiesta · È arrivato (mette il timbro sulla Card) · Incassa, contanti o carta. Una prova completa con una prenotazione finta, poi eliminata.</span></div><span class="chi insieme">Insieme</span></li>
+    <li><div><b>Calendario, clienti, chiusure</b><span class="det">Come aggiungere una prenotazione dal banco, chiudere un giorno, consegnare i premi della Card.</span></div><span class="chi insieme">Insieme</span></li>
+  </ul>
+  <div class="fase"><div class="n">B</div><b>Il giorno del lancio</b><span>quando tutto è confermato</span></div>
+  <ul class="check">
+    <li><div><b>Instagram</b><span class="det">Foto profilo (la B scura), bio, link “📅 Prenota ora” con il tracciamento, poi i 4 post nell’ordine 4 → 3 → 2 → 1, così l’annuncio resta il primo della griglia.</span></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Facebook e profilo Google</b><span class="det">Stesso annuncio. Su Google anche le foto della sala con i separè.</span></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Messaggio WhatsApp ai clienti del negozio</b><span class="det">Breve, da Marcella, con il link. È il pubblico più caldo che c’è: già si fida di lei.</span></div><span class="chi marcella">Marcella</span></li>
+    <li><div><b>Cartello con QR in vetrina e al banco</b><span class="det">“Lavora qui da €25 al giorno”, con il codice QR che apre la prenotazione. Chi passa davanti è già in centro: è il canale che costa meno.</span></div><span class="chi apex">Apex</span></li>
+    <li><div><b>Prima recensione vera</b><span class="det">Dopo i primi clienti contenti, Marcella chiede una recensione su Google a voce. Mai recensioni inventate o comprate.</span></div><span class="chi marcella">Marcella</span></li>
+  </ul>
+<div class="piede"><span>Apex Media · Piano di avvio Bagnarino Coworking</span><span>5</span></div></section>
+<section class="pagina"><div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span class="on">06 Primo mese</span></div></div>
+  <p class="occhiello">06 — Il primo mese · settimane 2–5</p>
+  <h1>Pochi numeri, guardati spesso.</h1><div class="trattino"></div>
+  <div class="griglia g2" style="gap:5mm">
+    <div>
+      <p class="sez" style="margin-top:0">Pubblicità</p>
+      <ul class="check">
+        <li><div><b>Campagna Instagram e Facebook</b><span class="det">Dopo 1–2 settimane di contenuti. €5 al giorno, 22–45 anni, Alessandria e 15 km. Annuncio: post 1 o post 3. Obiettivo: prenotazioni (Pixel).</span></div><span class="chi apex">Apex</span></li>
+        <li><div><b>Controllo dopo 7 giorni</b><span class="det">Se il costo per prenotazione supera i €15, si cambia immagine o pubblico. Mai più di una modifica alla volta.</span></div><span class="chi apex">Apex</span></li>
+      </ul>
+      <p class="sez">Routine</p>
+      <ul class="check">
+        <li><div><b>Ogni settimana</b><span class="det">2 post e qualche storia (la sala, una giornata tipo, un cliente con il suo permesso).</span></div><span class="chi apex">Apex</span></li>
+        <li><div><b>Ogni inizio mese</b><span class="det">Numeri di Instagram, Facebook e Google nella scheda Crescita dell’area riservata; il giorno 1 parte da solo il report.</span></div><span class="chi apex">Apex</span></li>
+        <li><div><b>Ogni mese con Marcella</b><span class="det">10 minuti sui numeri e su cosa provare il mese dopo.</span></div><span class="chi insieme">Insieme</span></li>
+      </ul>
+    </div>
+    <div>
+      <p class="sez" style="margin-top:0">I numeri da guardare</p>
+      <table class="tabella">
+        <tr><th>Numero</th><th>Dove si legge</th></tr>
+        <tr><td>Prenotazioni al mese</td><td>Area riservata → Crescita</td></tr>
+        <tr><td>Clienti che tornano</td><td>Crescita: la percentuale che dice se il posto piace</td></tr>
+        <tr><td>Da dove arrivano</td><td>Crescita: Instagram, Google, diretto, in sede</td></tr>
+        <tr><td>Costo per prenotazione</td><td>Spesa in pubblicità ÷ prenotazioni (Crescita)</td></tr>
+        <tr><td>Scrivanie occupate</td><td>Area riservata → Oggi</td></tr>
+      </table>
+      <p class="sez">Regole che non cambiano</p>
+      <ul class="lista ok">
+        <li>Prezzi e orari si cambiano dall’area riservata: il sito si aggiorna da solo.</li>
+        <li>Email promozionali solo a chi ha dato il consenso.</li>
+        <li>Niente recensioni, numeri o clienti inventati.</li>
+        <li>Le password non si mandano per messaggio.</li>
+      </ul>
+      <div class="card scura" style="margin-top:5mm"><h3>Cosa serve adesso da Alex</h3><span class="piccolo">1. l’email di Marcella per gli avvisi · 2. il codice Analytics (G-…) · 3. il numero del Pixel di Meta. Con questi tre la tappa 03 si chiude in un giorno.</span></div>
+    </div>
+  </div>
+<div class="piede"><span>Apex Media · Piano di avvio Bagnarino Coworking</span><span>6</span></div></section>
+</body>
+</html>
