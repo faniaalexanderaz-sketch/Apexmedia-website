@@ -234,7 +234,10 @@ strong { font-weight: 600; }
 .apertura-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 .apertura-velo {
   position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(17, 25, 34, .5) 0%, rgba(17, 25, 34, .15) 18%, rgba(17, 25, 34, .55) 42%, rgba(17, 25, 34, .9) 62%, rgba(17, 25, 34, .97) 100%);
+  /* velo blu notte: scurisce la foto quanto basta perché il testo si legga sempre */
+  background:
+    linear-gradient(180deg, rgba(13, 23, 37, .7) 0%, rgba(13, 23, 37, .46) 20%, rgba(13, 23, 37, .7) 42%, rgba(17, 25, 34, .93) 62%, rgba(17, 25, 34, .98) 100%),
+    rgba(27, 42, 58, .28);
 }
 .apertura-contenuto { position: relative; padding-top: calc(var(--testata) + 40px); padding-bottom: 32px; }
 .apertura-sopra {
@@ -251,6 +254,48 @@ strong { font-weight: 600; }
 .apertura-titolo em { font-style: italic; color: var(--ocra-vivo); }
 .apertura-sotto { font-size: 1.12rem; line-height: 1.55; color: rgba(250, 246, 238, .86); max-width: 46ch; margin: 0 0 1.7rem; }
 .apertura-cta { display: flex; flex-direction: column; gap: 10px; }
+.apertura-titolo, .apertura-sotto { text-shadow: 0 2px 18px rgba(10, 16, 24, .45); }
+
+/* ---------- pulsanti dell'apertura ---------- */
+.cta-hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 70px; padding: 10px 10px 10px 22px; border-radius: 6px;
+  background: linear-gradient(180deg, #E4BC6C 0%, var(--ocra) 100%); color: var(--notte); text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -2px 0 rgba(0, 0, 0, .12), 0 14px 32px -12px rgba(201, 151, 59, .7);
+  transition: transform .2s var(--curva), box-shadow .2s var(--curva), filter .2s var(--curva);
+}
+.cta-hero:hover { text-decoration: none; filter: brightness(1.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -2px 0 rgba(0, 0, 0, .12), 0 18px 38px -12px rgba(221, 176, 92, .85); }
+.cta-hero:active { transform: translateY(1px); }
+.cta-hero-testo { display: flex; flex-direction: column; gap: 3px; text-align: left; }
+.cta-hero-testo strong { font-family: var(--f-titoli); font-size: 1.14rem; font-weight: 700; letter-spacing: -.005em; line-height: 1.15; }
+.cta-hero-testo small { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; opacity: .72; }
+.cta-hero-freccia {
+  flex: 0 0 auto; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 4px;
+  background: var(--notte); color: var(--ocra-vivo); transition: transform .25s var(--curva);
+}
+.cta-hero-freccia .ico { width: 22px; height: 22px; }
+.cta-hero:hover .cta-hero-freccia { transform: translateX(3px); }
+.cta-hero::after {
+  content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: -40%; width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .45), transparent); transform: skewX(-20deg) translateX(-120%);
+}
+.cta-wa {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 58px; padding: 10px 22px; border-radius: 6px;
+  border: 1px solid rgba(250, 246, 238, .26); background: rgba(13, 23, 37, .42);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  color: var(--avorio); font-family: var(--f-titoli); font-size: 1.02rem; font-weight: 600; text-decoration: none;
+  transition: background-color .2s var(--curva), border-color .2s var(--curva);
+}
+.cta-wa:hover { text-decoration: none; background: rgba(250, 246, 238, .12); border-color: rgba(250, 246, 238, .5); }
+.cta-wa-ico { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #25D366; color: #fff; }
+.cta-wa-ico .ico { width: 17px; height: 17px; }
+.cta-hero:focus-visible, .cta-wa:focus-visible { outline: 3px solid var(--ocra-vivo); outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .cta-hero::after { animation: cta-luce 5s 1.4s var(--curva) infinite; }
+}
+@keyframes cta-luce { 0% { transform: skewX(-20deg) translateX(-120%); } 22%, 100% { transform: skewX(-20deg) translateX(560%); } }
 .apertura-fatti { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 28px; margin: 2.2rem 0 0; padding-top: 18px; border-top: 1px solid var(--linea-scura); }
 .apertura-fatti > div { display: flex; flex-direction: column-reverse; gap: 4px; }
 .apertura-fatti dt { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chiaro-70); }
@@ -284,10 +329,10 @@ strong { font-weight: 600; }
 @keyframes foto-entra { from { transform: scale(1.06); } }
 @keyframes appare { from { opacity: 0; transform: translateY(14px); } }
 
-@media (min-width: 560px) { .apertura-cta { flex-direction: row; flex-wrap: wrap; } }
+@media (min-width: 560px) { .apertura-cta { flex-direction: row; flex-wrap: wrap; align-items: stretch; } .cta-hero { min-width: 340px; } .cta-wa { min-height: 70px; padding: 10px 26px; } }
 @media (min-width: 900px) {
   .apertura { min-height: max(680px, 100vh); }
-  .apertura-velo { background: linear-gradient(90deg, rgba(17, 25, 34, .9) 0%, rgba(17, 25, 34, .6) 38%, rgba(17, 25, 34, .08) 70%), linear-gradient(180deg, rgba(17, 25, 34, .45) 0%, rgba(17, 25, 34, 0) 25%, rgba(17, 25, 34, 0) 65%, rgba(17, 25, 34, .75) 100%); }
+  .apertura-velo { background: linear-gradient(90deg, rgba(13, 23, 37, .94) 0%, rgba(13, 23, 37, .74) 38%, rgba(13, 23, 37, .26) 72%), linear-gradient(180deg, rgba(13, 23, 37, .5) 0%, rgba(13, 23, 37, 0) 25%, rgba(13, 23, 37, 0) 65%, rgba(17, 25, 34, .8) 100%), rgba(27, 42, 58, .22); }
   .apertura-contenuto { padding-top: calc(var(--testata) + 64px); padding-bottom: 56px; }
   .apertura-contenuto > *:not(.bollo) { max-width: min(680px, 100%); }
   .apertura-titolo { font-size: clamp(3.8rem, 6.4vw, 6.6rem); }
@@ -1389,3 +1434,6 @@ body.menu-aperto { overflow: hidden; }
 @keyframes d-vapore { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .4; } 100% { opacity: 0; transform: translateY(-10px); } }
 @keyframes d-luce { 0%, 100% { opacity: .45; } 50% { opacity: .7; } }
 @keyframes d-pianta { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2.5deg); } }
+
+/* Safari su iPhone: niente sottolineature automatiche su indirizzi e numeri */
+a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font: inherit !important; }
