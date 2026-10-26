@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<title>Apex Media · La nuova identità di Bagnarino Coworking</title>
+<title>Apex Media · L’identità di Bagnarino Coworking</title>
 <style>
 @font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
 @font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; }
@@ -11,431 +11,520 @@
 @font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
 @page { size: A4; margin: 0; }
 :root {
-  --viola: #7B3FE4; --viola-chiaro: #F3EFFD; --viola-bordo: #E2DAF7; --scuro: #15121F; --testo: #1B1B24; --grigio: #5F5D6B; --linea: #E6E3EE;
-  --b-notte: #111922; --b-inchiostro: #1B2A3A; --b-ocra: #C9973B; --b-ocra-vivo: #DDB05C; --b-ocra-testo: #7A5A1E; --b-carta: #F4EEE3; --b-avorio: #FAF6EE;
-  --b-verde: #1E6B52; --b-verde-chiaro: #D6EADF; --b-petrolio: #1E6471; --b-petrolio-chiaro: #D3E6EA; --b-sabbia: #F5DFAE; --b-timbro: #B4302A;
-  --apex: 'Hanken Grotesk', 'Inter', system-ui, sans-serif; --serif: 'Fraunces', Georgia, serif; --mono: 'IBM Plex Mono', monospace;
+  --notte: #0D141C; --inchiostro: #1B2A3A; --inchiostro-2: #24384D; --ocra: #C9973B; --ocra-vivo: #E2B45E; --ocra-testo: #7A5A1E;
+  --carta: #F4EEE3; --avorio: #FAF6EE; --sabbia: #F5DFAE; --verde: #D6EADF; --verde-scuro: #1E6B52; --petrolio: #D3E6EA; --petrolio-scuro: #1E6471; --timbro: #B4302A;
+  --viola: #7B3FE4;
+  --serif: 'Fraunces', Georgia, serif; --sans: 'Hanken Grotesk', system-ui, sans-serif; --mono: 'IBM Plex Mono', monospace;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: #fff; }
-body { font-family: var(--apex); color: var(--testo); font-size: 9.6pt; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.pagina { width: 210mm; height: 297mm; padding: 13mm 15mm 0; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; }
-.pagina:last-child { page-break-after: auto; }
+body { font-family: var(--sans); color: var(--inchiostro); font-size: 9.4pt; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 p { margin: 0 0 2.4mm; }
-strong { font-weight: 700; }
-.v { color: var(--viola); font-weight: 700; }
+img { display: block; }
 
-/* testata Apex */
-.testa { display: flex; align-items: center; gap: 3.5mm; margin-bottom: 8mm; }
-.testa img { width: 11mm; height: 11mm; border-radius: 2.4mm; }
-.testa-nome { line-height: 1.15; }
-.testa-nome b { display: block; font-size: 11pt; letter-spacing: .28em; font-weight: 800; }
-.testa-nome span { font-size: 6.4pt; letter-spacing: .2em; color: var(--viola); font-weight: 700; text-transform: uppercase; }
-.testa-dx { margin-left: auto; font-size: 6.6pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
-.pillole { margin-left: auto; display: flex; gap: 1.6mm; }
-.pillole span { display: inline-block; min-width: 8mm; padding: 1.2mm 2.4mm; border-radius: 99px; border: .3mm solid var(--linea); font-size: 6.4pt; font-weight: 700; color: #6d6a7a; text-align: center; }
-.pillole span.on { background: var(--viola); border-color: var(--viola); color: #fff; padding: 1.2mm 3.4mm; }
+.pagina { width: 210mm; height: 297mm; padding: 12mm 15mm 0; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; background: var(--carta); }
+.pagina:last-child { page-break-after: auto; }
+.pagina.scura { background: var(--notte); color: #E9E4DA; }
 
-.occhiello { font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 0 0 2mm; }
-h1 { font-size: 19pt; line-height: 1.12; margin: 0 0 2.6mm; letter-spacing: -.02em; font-weight: 800; }
-.trattino { width: 15mm; height: 1mm; border-radius: 1mm; background: linear-gradient(90deg, var(--viola), #E7A24A); margin: 0 0 5mm; }
-.intro { font-size: 10pt; margin-bottom: 5mm; }
-h2 { font-size: 11.4pt; margin: 0 0 1.8mm; font-weight: 800; letter-spacing: -.01em; }
-h3 { font-size: 9.4pt; margin: 0 0 1mm; font-weight: 800; }
-.sez { font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 5mm 0 2.6mm; }
+/* testata */
+.testa { display: flex; align-items: center; gap: 3mm; margin-bottom: 9mm; }
+.testa img { width: 9mm; height: 9mm; border-radius: 2mm; }
+.testa b { font-size: 9pt; letter-spacing: .3em; font-weight: 800; }
+.testa .cap { margin-left: auto; font-family: var(--mono); font-size: 6.8pt; letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
+.testa .cap em { font-style: normal; color: var(--ocra); opacity: 1; }
+.scura .testa .cap em { color: var(--ocra-vivo); }
 
-.card { border: .3mm solid var(--viola-bordo); border-radius: 3mm; padding: 4mm 4.2mm; background: #fff; }
-.card.lav { background: var(--viola-chiaro); }
-.card.scura { background: var(--scuro); color: #EDEAF6; border-color: var(--scuro); }
-.card.scura h3, .card.scura h2 { color: #fff; }
-.griglia { display: grid; gap: 3mm; }
-.g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); } .g5 { grid-template-columns: repeat(5, 1fr); }
-.piccolo { font-size: 7.6pt; color: var(--grigio); line-height: 1.45; }
-.card.scura .piccolo { color: #BDB8CC; }
-.etichetta { display: inline-block; padding: .6mm 2.2mm; border-radius: 99px; font-size: 6pt; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; background: var(--viola-chiaro); color: var(--viola); }
-.num { font-size: 15pt; font-weight: 800; color: var(--viola); line-height: 1; margin-bottom: 1mm; }
+.occhiello { font-family: var(--mono); font-size: 7.4pt; letter-spacing: .18em; text-transform: uppercase; color: var(--ocra-testo); margin: 0 0 3mm; display: flex; align-items: center; gap: 3mm; }
+.occhiello::before { content: ''; width: 9mm; height: .5mm; background: currentColor; }
+.scura .occhiello { color: var(--ocra-vivo); }
+h1 { font-family: var(--serif); font-weight: 400; font-size: 34pt; line-height: 1; letter-spacing: -.025em; margin: 0 0 5mm; }
+h1 em { color: var(--ocra-testo); }
+.scura h1 { color: #fff; }
+.scura h1 em { color: var(--ocra-vivo); }
+.intro { font-size: 11pt; line-height: 1.5; max-width: 150mm; margin-bottom: 7mm; }
+.scura .intro { color: #C9C3B6; }
+.intro b { color: var(--inchiostro); }
+.scura .intro b { color: #fff; }
+h2 { font-family: var(--serif); font-weight: 400; font-size: 15pt; line-height: 1.1; margin: 0 0 2mm; letter-spacing: -.01em; }
+h3 { font-size: 9.6pt; margin: 0 0 1mm; font-weight: 800; }
+.piccolo { font-size: 8pt; line-height: 1.5; color: #4E5B69; }
+.scura .piccolo { color: #AEB4BC; }
+.piccolo b { color: var(--inchiostro); }
+.scura .piccolo b { color: #fff; }
+.griglia { display: grid; gap: 4mm; }
 
-.piede { margin-top: auto; border-top: .3mm solid var(--linea); display: flex; justify-content: space-between; padding: 3.2mm 0 6mm; font-size: 6.4pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
+/* piede con QR */
+.piede { margin-top: auto; display: flex; align-items: center; gap: 4mm; padding: 4mm 0 7mm; border-top: .3mm solid rgba(27,42,58,.18); font-family: var(--mono); font-size: 6.6pt; letter-spacing: .14em; text-transform: uppercase; color: #6B7581; }
+.scura .piede { border-top-color: rgba(255,255,255,.14); color: #8A93A0; }
+.piede .qr { width: 13mm; height: 13mm; padding: 1.2mm; background: var(--avorio); border-radius: 1.6mm; }
+.piede .qr img { width: 100%; height: 100%; }
+.piede .url b { display: block; color: var(--inchiostro); font-weight: 500; letter-spacing: .08em; font-size: 7.4pt; }
+.scura .piede .url b { color: #fff; }
+.piede .num { margin-left: auto; font-family: var(--serif); font-size: 16pt; letter-spacing: 0; color: var(--ocra-testo); }
+.scura .piede .num { color: var(--ocra-vivo); }
 
-/* copertina */
-.eroe { position: relative; border-radius: 4mm; overflow: hidden; background: #06050B; color: #fff; padding: 8mm 8mm 6mm; margin-bottom: 7mm; min-height: 68mm; }
-.eroe > img.sfondo { position: absolute; right: -8mm; top: -6mm; height: 92mm; opacity: .95; }
-.eroe::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,5,11,.98) 0%, rgba(6,5,11,.85) 45%, rgba(6,5,11,0) 80%); }
-.eroe > * { position: relative; z-index: 1; }
-.eroe .occhiello { color: #B79AF5; }
-.eroe h1 { font-size: 24pt; font-weight: 500; color: #CFCBDA; margin-bottom: 0; }
-.eroe h1 b { display: block; color: #F2C66B; font-weight: 800; }
-.eroe .trattino { margin: 4mm 0 5mm; }
-.eroe-cliente { display: flex; align-items: center; gap: 4mm; padding-top: 4mm; border-top: .3mm solid rgba(255,255,255,.14); }
-.eroe-cliente .targhetta { background: var(--b-avorio); border-radius: 2mm; padding: 2.4mm 3.4mm; }
-.eroe-cliente .targhetta img { height: 9mm; display: block; }
-.eroe-cliente b { display: block; font-size: 10pt; }
-.eroe-cliente span { font-size: 7.4pt; color: #BDB8CC; }
-.firme { display: flex; gap: 10mm; margin-top: 3mm; }
-.firme div { text-align: left; }
-.firme img { height: 13mm; display: block; }
-.firme span { font-size: 6.2pt; letter-spacing: .2em; color: #8a879a; text-transform: uppercase; }
+/* immagini del sito */
+.schermo { border-radius: 2.4mm; overflow: hidden; box-shadow: 0 4mm 10mm -4mm rgba(0,0,0,.45); border: .3mm solid rgba(0,0,0,.15); }
+.schermo img { width: 100%; }
+.barra { height: 5mm; background: #E6DECF; display: flex; align-items: center; gap: 1.2mm; padding: 0 2.4mm; }
+.barra i { width: 1.6mm; height: 1.6mm; border-radius: 50%; background: #B9AF9E; }
+.barra span { margin-left: 3mm; font-family: var(--mono); font-size: 5.6pt; color: #6B7581; background: var(--avorio); border-radius: 99px; padding: .3mm 3mm; }
+.scura .barra { background: #22303F; } .scura .barra i { background: #4A5868; } .scura .barra span { background: #111A24; color: #9AA3AE; }
+.telefono { border-radius: 7mm; border: 1.8mm solid #000; overflow: hidden; background: #000; box-shadow: 0 5mm 12mm -4mm rgba(0,0,0,.55), 0 0 0 .4mm #3A4654; }
+.telefono img { width: 100%; }
+.didascalia { font-size: 7.6pt; line-height: 1.45; margin-top: 2.6mm; color: #4E5B69; }
+.scura .didascalia { color: #AEB4BC; }
+.didascalia b { color: var(--inchiostro); }
+.scura .didascalia b { color: var(--ocra-vivo); }
+.numero { display: inline-grid; place-items: center; width: 5.4mm; height: 5.4mm; border-radius: 50%; background: var(--ocra); color: var(--notte); font-weight: 800; font-size: 7.4pt; margin-right: 1.4mm; vertical-align: -1.2mm; }
 
-/* bagnarino: campioni */
-.mondo-b { background: var(--b-carta); border: 0; }
-.campione { border-radius: 3mm; overflow: hidden; border: .3mm solid var(--linea); background: #fff; }
-.campione .colore { height: 24mm; padding: 3mm; display: flex; align-items: flex-end; font-family: var(--mono); font-size: 7pt; }
-.campione .info { padding: 2.6mm 3mm 3mm; }
-.campione .info b { display: block; font-size: 8.6pt; }
-.campione .info span { font-size: 7.2pt; color: var(--grigio); line-height: 1.4; display: block; }
-.telefono { width: 100%; border-radius: 6mm; border: 1.6mm solid #15121F; overflow: hidden; background: #15121F; box-shadow: 0 3mm 8mm -3mm rgba(0,0,0,.35); }
-.telefono img { display: block; width: 100%; }
-.schermo { border-radius: 2.6mm; overflow: hidden; border: .3mm solid var(--linea); box-shadow: 0 2.4mm 6mm -3mm rgba(0,0,0,.25); }
-.schermo img { display: block; width: 100%; }
-.didascalia { font-size: 7pt; color: var(--grigio); margin-top: 1.8mm; line-height: 1.4; }
-.didascalia b { color: var(--testo); }
-.social img { display: block; width: 100%; border-radius: 2.4mm; box-shadow: 0 2.4mm 6mm -3mm rgba(0,0,0,.3); }
-.lista { margin: 0; padding: 0; list-style: none; display: grid; gap: 1.6mm; }
-.lista li { position: relative; padding-left: 4.4mm; font-size: 8pt; line-height: 1.45; }
-.lista li::before { content: ''; position: absolute; left: 0; top: 1.6mm; width: 1.8mm; height: 1.8mm; border-radius: 50%; background: var(--viola); }
-.lista.no li::before { background: #D04A3A; }
-.lista.ok li::before { background: #1E8A4C; }
-.frase { font-family: var(--serif); font-size: 15pt; line-height: 1.2; letter-spacing: -.01em; color: var(--b-inchiostro); }
-.frase em { color: var(--b-ocra-testo); }
+/* ========== copertina ========== */
+.copertina { background: var(--notte); color: #fff; padding: 0; }
+.copertina .su { padding: 12mm 15mm 0; }
+.copertina .testa { margin-bottom: 0; }
+.cop-eroe { position: relative; margin: 14mm 0 0; padding: 0 15mm; }
+.cop-eroe .logo-grande { width: 108mm; margin-bottom: 14mm; }
+.cop-eroe h1 { font-size: 42pt; max-width: 135mm; line-height: .98; margin: 0 0 6mm; }
+.cop-eroe .riga { width: 30mm; height: 1.4mm; background: var(--ocra); border-radius: 1mm; margin-bottom: 6mm; }
+.cop-eroe .sotto { font-size: 12pt; color: #C9C3B6; max-width: 118mm; line-height: 1.5; }
+.cop-foto { position: absolute; right: 0; top: 0; width: 70mm; height: 150mm; overflow: hidden; border-radius: 0 0 0 5mm; }
+.cop-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.cop-foto::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--notte) 0%, rgba(13,20,28,.35) 40%, rgba(13,20,28,0) 100%), linear-gradient(0deg, var(--notte) 0%, rgba(13,20,28,0) 30%); }
+.cop-lettera { margin: auto 15mm 0; background: var(--avorio); color: var(--inchiostro); border-radius: 4mm; padding: 7mm 8mm 6mm; display: grid; grid-template-columns: 1.5fr 1fr; gap: 8mm; }
+.cop-lettera p { font-size: 9.4pt; }
+.cop-lettera b { color: var(--inchiostro); }
+.cop-lettera .piccolo, .cop-lettera p { color: #3E4A57; }
+.firme { display: flex; gap: 8mm; margin-top: 2mm; }
+.firme img { height: 11mm; }
+.firme span { font-family: var(--mono); font-size: 6pt; letter-spacing: .14em; text-transform: uppercase; color: #6B7581; }
+.indice { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.4mm; align-content: start; }
+.indice li { display: flex; gap: 3mm; align-items: baseline; font-size: 8.6pt; border-bottom: .3mm dashed rgba(27,42,58,.2); padding-bottom: 1.2mm; }
+.indice li b { font-family: var(--serif); font-weight: 400; color: var(--ocra-testo); font-size: 10pt; width: 6mm; }
+.copertina .piede { margin: 0 15mm; }
+
+/* ========== logo: anatomia ========== */
+.anatomia { display: grid; grid-template-columns: 80mm 1fr; gap: 8mm; align-items: center; margin-bottom: 6mm; }
+.marchio-box { position: relative; background: var(--avorio); border-radius: 4mm; padding: 11mm 12mm; box-shadow: 0 3mm 9mm -5mm rgba(0,0,0,.3); }
+.marchio-box img { width: 100%; }
+.marchio-box .pin { position: absolute; width: 7mm; height: 7mm; border-radius: 50%; background: var(--timbro); color: #fff; font-weight: 800; font-size: 8.4pt; display: grid; place-items: center; box-shadow: 0 0 0 1mm var(--avorio); transform: translate(-50%, -50%); }
+.voci { display: grid; gap: 2.6mm; }
+.voce { display: grid; grid-template-columns: 7mm 1fr; gap: 3mm; }
+.voce .pin { width: 7mm; height: 7mm; border-radius: 50%; background: var(--timbro); color: #fff; font-weight: 800; font-size: 8.4pt; display: grid; place-items: center; }
+.voce h3 { font-size: 10pt; margin-bottom: .6mm; }
+.voce p { font-size: 8.2pt; line-height: 1.45; color: #3E4A57; margin: 0; }
+
+.parola { background: var(--inchiostro); color: #fff; border-radius: 4mm; padding: 6mm 8mm; display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; align-items: center; }
+.parola img { width: 100%; }
+.parola .piccolo { color: #B9C0C8; }
+.parola .piccolo b { color: #fff; }
+.parola h2 { color: #fff; }
+
+/* ========== logo: versioni ========== */
+.versioni { display: grid; grid-template-columns: 1fr 1fr; gap: 3.4mm; margin-bottom: 5mm; }
+.versione { border-radius: 3.5mm; height: 34mm; display: grid; place-items: center; position: relative; }
+.versione img { width: 60%; margin-top: -3mm; }
+.versione .tag { position: absolute; left: 4mm; bottom: 3.4mm; font-family: var(--mono); font-size: 6.4pt; letter-spacing: .14em; text-transform: uppercase; }
+.dove { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
+.dove .icona { height: 24mm; border-radius: 3mm; background: #18222E; display: grid; place-items: center; margin-bottom: 2.6mm; }
+.dove h3 { color: #fff; }
+.costruzione { display: grid; grid-template-columns: 48mm 1fr; gap: 7mm; align-items: center; background: #18222E; border-radius: 4mm; padding: 5mm 7mm; margin-bottom: 5mm; }
+.costruzione svg { width: 100%; }
+
+/* ========== colori ========== */
+.colori-grandi { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 0; height: 104mm; border-radius: 4mm; overflow: hidden; margin-bottom: 6mm; box-shadow: 0 5mm 12mm -6mm rgba(0,0,0,.5); }
+.col { padding: 7mm 6mm; display: flex; flex-direction: column; }
+.col .nome { font-family: var(--serif); font-size: 22pt; line-height: 1; margin-bottom: 1.6mm; }
+.col .hex { font-family: var(--mono); font-size: 7.4pt; letter-spacing: .1em; opacity: .75; margin-bottom: auto; }
+.col p { font-size: 8.2pt; line-height: 1.45; margin: 0; }
+.col .uso { font-family: var(--mono); font-size: 6.6pt; letter-spacing: .12em; text-transform: uppercase; margin-top: 3mm; padding-top: 2.4mm; border-top: .3mm solid currentColor; opacity: .8; }
+.formule { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.4mm; }
+.formula { border-radius: 3mm; padding: 4.4mm 4mm; min-height: 38mm; display: flex; flex-direction: column; }
+.formula .prezzo { font-family: var(--serif); font-size: 24pt; line-height: 1; margin: 1.6mm 0 auto; }
+.formula h3 { font-size: 9pt; margin: 0; }
+.formula span { font-size: 7.4pt; line-height: 1.4; margin-top: 2mm; }
+
+/* ========== caratteri ========== */
+.specimen { border-radius: 4mm; padding: 7mm 8mm; margin-bottom: 4mm; }
+.specimen .riga-alta { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: 7pt; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 4mm; }
+.alfabeto { font-family: var(--serif); font-size: 13pt; letter-spacing: .02em; opacity: .55; margin-top: 3mm; }
+
+/* ========== chiusura ========== */
+.chiusura { display: grid; grid-template-columns: 82mm 1fr; gap: 10mm; align-items: center; margin: 4mm 0 8mm; }
+.qr-grande { background: var(--avorio); border-radius: 5mm; padding: 8mm; box-shadow: 0 0 0 1.4mm var(--ocra), 0 8mm 18mm -6mm rgba(0,0,0,.6); position: relative; }
+.qr-grande img.codice { width: 100%; }
+.qr-grande .centro { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 15mm; height: 15mm; background: var(--avorio); border-radius: 2.4mm; display: grid; place-items: center; }
+.qr-grande .centro img { width: 9mm; }
+.qr-grande .sotto { margin-top: 5mm; text-align: center; font-family: var(--mono); font-size: 8pt; letter-spacing: .12em; color: var(--inchiostro); text-transform: uppercase; }
+.contatti { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+.contatti div { background: #18222E; border-radius: 3mm; padding: 4mm; }
+.contatti small { display: block; font-family: var(--mono); font-size: 6.4pt; letter-spacing: .14em; text-transform: uppercase; color: var(--ocra-vivo); margin-bottom: 1mm; }
+.contatti b { font-size: 9.4pt; color: #fff; font-weight: 600; }
 </style>
 </head>
 <body>
 
 <!-- ================= 01 COPERTINA ================= -->
-<section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="testa-dx">Riservato a Bagnarino S.r.l. · 22 ottobre 2026</div>
+<section class="pagina scura copertina">
+  <div class="cop-foto"><img src="identita/foto-sala.jpg" alt=""></div>
+  <div class="su">
+    <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b></div>
+  </div>
+  <div class="cop-eroe">
+    <p class="occhiello" style="color:var(--ocra-vivo)">Identità visiva · ottobre 2026</p>
+    <img class="logo-grande" src="identita/logo-chiaro.svg" alt="Bagnarino Coworking">
+    <h1>Un negozio dal 1983,<br><em>un marchio che si ricorda.</em></h1>
+    <div class="riga"></div>
+    <p class="sotto">Il logo, i colori, i caratteri, il sito e i social di Bagnarino Coworking: cosa significano e come lavorano insieme per portarti clienti.</p>
   </div>
 
-  <div class="eroe">
-    <img class="sfondo" src="identita/apex-banner.jpg" alt="">
-    <p class="occhiello">Identità visiva · sito e social</p>
-    <h1>Un negozio di sempre,<b>un’identità che si ricorda.</b></h1>
-    <div class="trattino"></div>
-    <div class="eroe-cliente">
-      <div class="targhetta"><img src="identita/logo.svg" alt="Bagnarino Coworking"></div>
-      <div><b>Bagnarino Coworking</b><span>Alla gentilissima Marcella Bagnarino</span></div>
-    </div>
-  </div>
-
-  <div class="griglia" style="grid-template-columns: 1.55fr 1fr; gap: 6mm;">
+  <div class="cop-lettera">
     <div>
-      <p style="font-weight:800; font-size:10.4pt">Gentilissima Marcella,</p>
-      <p>il sito di Bagnarino Coworking è online con un volto nuovo. In queste pagine ti spieghiamo <span class="v">perché è fatto così</span>: il logo, i colori, i caratteri, le pagine del sito e le prime storie e post per Instagram e Facebook.</p>
-      <p>Non abbiamo inventato un coworking da startup. Siamo partiti da quello che hai già e che nessun altro in città ha: <span class="v">un negozio vero, in corso Lamarmora dal 1983, concessionario Olivetti</span>. Carta, inchiostro, macchine per scrivere, scrivanie di legno. È la tua storia, e oggi è anche il tuo vantaggio.</p>
-      <p>Ogni scelta ha un solo scopo: che chi ti trova su Google o su Instagram pensi <strong>“questo è un posto serio, prenoto”</strong>.</p>
+      <p style="font-weight:800;font-size:10.4pt;margin-bottom:2mm">Gentilissima Marcella,</p>
+      <p>il sito è online e il marchio Bagnarino ha un volto nuovo. In queste pagine ti mostriamo <b>cosa racconta il logo</b>, i colori e i caratteri che lo accompagnano, e <b>come appare oggi il sito</b>, dal telefono e dal computer.</p>
+      <p>Siamo partiti da quello che nessun altro in città ha: un negozio vero in corso Lamarmora dal 1983, concessionario Olivetti. Carta, inchiostro, scrivanie di legno. È la tua storia, e oggi è il tuo vantaggio.</p>
       <div class="firme">
         <div><img src="identita/firma-alexander.png" alt=""><span>Alexander Fania</span></div>
         <div><img src="identita/firma-federico.png" alt=""><span>Federico Delfino</span></div>
       </div>
     </div>
-    <div class="griglia" style="gap: 3mm;">
-      <div class="card lav"><div class="num">1 logo</div><span class="piccolo">la “B” di Bagnarino con la riga ocra: sul sito, su Google, sulla card, sui social.</span></div>
-      <div class="card lav"><div class="num" style="color:#C9973B">3 colori</div><span class="piccolo">blu inchiostro, ocra, carta. Sempre gli stessi, ovunque.</span></div>
-      <div class="card lav"><div class="num" style="color:#1E6B52">3 caratteri</div><span class="piccolo">uno per i titoli, uno per leggere, uno da macchina per scrivere.</span></div>
-    </div>
+    <ol class="indice">
+      <li><b>02</b>Il logo, pezzo per pezzo</li>
+      <li><b>03</b>Il logo, ovunque</li>
+      <li><b>04</b>I colori</li>
+      <li><b>05</b>I caratteri</li>
+      <li><b>06</b>Il sito dal telefono</li>
+      <li><b>07</b>Il sito dal computer</li>
+      <li><b>08</b>Le sezioni che fanno prenotare</li>
+      <li><b>09</b>I social</li>
+      <li><b>10</b>Inquadra e apri il sito</li>
+    </ol>
   </div>
 
-  <p class="sez">Cosa troverai in queste pagine</p>
-  <div class="griglia g4">
-    <div class="card"><div class="num" style="font-size:11pt">02</div><h3>Il logo</h3><span class="piccolo">Cosa racconta la B e la riga ocra</span></div>
-    <div class="card"><div class="num" style="font-size:11pt">03</div><h3>I colori</h3><span class="piccolo">Perché il blu, perché l’ocra</span></div>
-    <div class="card"><div class="num" style="font-size:11pt">04</div><h3>I caratteri</h3><span class="piccolo">Come “parla” Bagnarino</span></div>
-    <div class="card"><div class="num" style="font-size:11pt">05</div><h3>Il sito dal telefono</h3><span class="piccolo">Dove arriva l’80% dei clienti</span></div>
-    <div class="card"><div class="num" style="font-size:11pt">06</div><h3>Il sito da computer</h3><span class="piccolo">Prezzi, card, ritmo della pagina</span></div>
-    <div class="card"><div class="num" style="font-size:11pt">07</div><h3>I social</h3><span class="piccolo">2 storie e 3 post, spiegati</span></div>
-    <div class="card"><div class="num" style="font-size:11pt">08</div><h3>Le regole</h3><span class="piccolo">Cosa facciamo sempre, cosa mai</span></div>
-    <div class="card scura" style="display:flex;align-items:center;gap:3mm"><img src="identita/olivetti.png" style="height:7mm;background:#fff;border-radius:1.4mm;padding:1mm 1.6mm" alt=""><span class="piccolo" style="color:#E6E2F2">Il marchio Olivetti sul sito: <b style="color:#F2C66B">concessionario ufficiale</b></span></div>
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt="QR del sito"></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Inquadra per aprire il sito</div>
+    <span class="num">01</span>
   </div>
-
-  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>1</span></div>
 </section>
 
-<!-- ================= 02 IL LOGO ================= -->
+<!-- ================= 02 IL LOGO, PEZZO PER PEZZO ================= -->
 <section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span class="on">02 Logo</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span></div>
-  </div>
-  <p class="occhiello">02 — Il logo</p>
-  <h1>Una B, due scrivanie, una riga d’ocra.</h1>
-  <div class="trattino"></div>
-  <p class="intro">Il logo è il primo segno che il cliente vede: nella scheda di Google, nell’icona del telefono, sulla card in tasca. Per questo deve essere <span class="v">semplice, riconoscibile anche piccolissimo</span>, e raccontare chi sei in un colpo d’occhio.</p>
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>02</em> · Il logo</span></div>
+  <p class="occhiello">Il logo, pezzo per pezzo</p>
+  <h1>Una B che racconta<br><em>tutto il negozio.</em></h1>
+  <p class="intro">Il segno sembra semplice, ed è voluto: deve funzionare grande sull’insegna e minuscolo nell’icona di Google. Ma <b>ogni parte ha un significato</b>, legato alla storia di Bagnarino.</p>
 
-  <div class="griglia g2" style="gap:4mm; margin-bottom:5mm">
-    <div class="card mondo-b" style="display:grid;place-items:center;min-height:52mm"><img src="identita/logo.svg" style="width:72%" alt="Logo Bagnarino Coworking"></div>
-    <div class="card" style="background:var(--b-inchiostro);border-color:var(--b-inchiostro);display:grid;place-items:center;min-height:52mm"><img src="identita/logo-chiaro.svg" style="width:72%" alt="Logo Bagnarino in versione chiara"></div>
-  </div>
-
-  <div class="griglia" style="grid-template-columns: 1fr 1fr 1fr; gap:3mm">
-    <div class="card">
-      <div style="display:flex;gap:3mm;align-items:center;margin-bottom:2.4mm"><img src="identita/logo-mark.svg" style="height:12mm" alt=""><h3 style="margin:0">La B in due pezzi</h3></div>
-      <span class="piccolo">La lettera è fatta di <strong>due blocchi pieni</strong>, come due scrivanie una sopra l’altra o due fogli impilati. Sono anche le due anime del posto: <strong>il negozio di sempre e il coworking di oggi</strong>, nella stessa casa.</span>
+  <div class="anatomia">
+    <div class="marchio-box">
+      <div style="position:relative"><img src="identita/logo-mark.svg" alt="La B di Bagnarino">
+      <span class="pin" style="left:45%;top:21%">1</span>
+      <span class="pin" style="left:91%;top:50%">2</span>
+      <span class="pin" style="left:47%;top:78%">3</span>
+      <span class="pin" style="left:0%;top:78%">4</span>
+      <span class="pin" style="left:94%;top:84%">5</span>
+      <span class="pin" style="left:28%;top:45%">6</span></div>
     </div>
-    <div class="card">
-      <div style="display:flex;gap:3mm;align-items:center;margin-bottom:2.4mm"><span style="display:block;width:14mm;height:2.4mm;background:var(--b-ocra);border-radius:1mm"></span><h3 style="margin:0">La riga d’ocra</h3></div>
-      <span class="piccolo">Tra i due blocchi passa una riga calda, come <strong>il divisorio tra due postazioni</strong> o la riga su cui scrive la macchina per scrivere. È l’unico accento di colore del logo, e diventa il colore di tutti i pulsanti “Prenota”.</span>
-    </div>
-    <div class="card">
-      <div style="display:flex;gap:3mm;align-items:center;margin-bottom:2.4mm"><span style="font-family:var(--mono);font-size:7pt;letter-spacing:.14em;color:var(--b-inchiostro)">COWORKING · DAL 1983</span></div>
-      <h3>La firma sotto</h3>
-      <span class="piccolo">Sotto il nome, in piccolo, <strong>“dal 1983”</strong>. Quarant’anni in centro sono una garanzia che nessun altro coworking di Alessandria può scrivere: per questo il logo la porta sempre con sé.</span>
+    <div class="voci">
+      <div class="voce"><span class="pin">1</span><div><h3>Il blocco in alto: il negozio</h3><p>Il pezzo più compatto è <b>Bagnarino dal 1983</b>: macchine per l’ufficio, assistenza, la fiducia di quarant’anni. Sta sopra, come le radici stanno all’origine di tutto.</p></div></div>
+      <div class="voce"><span class="pin">2</span><div><h3>La riga d’ocra: il punto d’incontro</h3><p>È la riga su cui batte la macchina per scrivere e il <b>divisorio tra due scrivanie</b>. Unisce negozio e coworking. La sua punta si alza appena, come un foglio che esce dal rullo.</p></div></div>
+      <div class="voce"><span class="pin">3</span><div><h3>Il blocco in basso: il coworking</h3><p>È più largo e pesante di quello sopra: il coworking è <b>la parte nuova che cresce</b>, la base solida su cui si appoggia il futuro del negozio.</p></div></div>
+      <div class="voce"><span class="pin">4</span><div><h3>Il lato dritto: il margine del foglio</h3><p>A sinistra la B è tagliata dritta, come il bordo di un foglio o il dorso di un raccoglitore. Comunica <b>ordine e precisione</b>, da ufficio vero.</p></div></div>
+      <div class="voce"><span class="pin">5</span><div><h3>Le curve: l’accoglienza</h3><p>A destra le forme diventano tonde e morbide. È il lato umano: <b>Marcella che ti accoglie al banco</b>, il posto dove ti senti a casa.</p></div></div>
+      <div class="voce"><span class="pin">6</span><div><h3>Gli spazi bianchi: le postazioni</h3><p>I tre pezzi non si toccano mai. Ognuno ha il suo spazio, come <b>ogni scrivania ha il suo</b>: si lavora vicini, ma ognuno concentrato.</p></div></div>
     </div>
   </div>
 
-  <p class="sez">Dove lo vedranno i tuoi clienti</p>
-  <div class="griglia g4">
-    <div class="card" style="text-align:center"><img src="identita/favicon-180.png" style="width:14mm;margin:0 auto 2mm;display:block;border-radius:3mm" alt=""><h3>Google e browser</h3><span class="piccolo">L’icona accanto al nome del sito nei risultati di ricerca e nelle schede.</span></div>
-    <div class="card" style="text-align:center"><div style="width:14mm;height:14mm;margin:0 auto 2mm;border-radius:3.2mm;background:var(--b-inchiostro);display:grid;place-items:center"><img src="identita/logo-mark-chiaro.svg" style="width:8mm" alt=""></div><h3>Telefono</h3><span class="piccolo">Chi salva il sito nella schermata Home lo apre come un’app.</span></div>
-    <div class="card" style="text-align:center"><div style="width:14mm;height:14mm;margin:0 auto 2mm;border-radius:50%;background:var(--b-avorio);border:.4mm solid var(--b-ocra);display:grid;place-items:center"><img src="identita/logo-mark.svg" style="width:7mm" alt=""></div><h3>Profili social</h3><span class="piccolo">La foto profilo di Instagram, Facebook e TikTok: tonda, leggibile.</span></div>
-    <div class="card" style="text-align:center"><div style="width:14mm;height:14mm;margin:0 auto 2mm;border-radius:50%;border:.6mm solid var(--b-timbro);display:grid;place-items:center"><img src="identita/logo-mark.svg" style="width:6mm;filter:grayscale(1) brightness(.5) sepia(1) hue-rotate(-30deg) saturate(6)" alt=""></div><h3>Il timbro della card</h3><span class="piccolo">La B diventa il timbro sulla Bagnarino Card: uno ogni giornata.</span></div>
-  </div>
-
-  <div class="card scura" style="margin-top:4mm;display:flex;gap:4mm;align-items:center">
-    <div style="background:#fff;border-radius:2mm;padding:2mm 3mm"><img src="identita/olivetti.png" style="height:8mm;display:block" alt="Olivetti"></div>
-    <div><h3 style="color:#F2C66B">E il logo Olivetti?</h3><span class="piccolo">Resta il marchio di Olivetti e lo usiamo così com’è, solo come <strong style="color:#fff">“concessionario ufficiale”</strong>: in apertura del sito e nel piè di pagina. Accanto a Bagnarino dice al cliente “qui ci sono macchine professionali vere”, senza confondersi con il nostro logo.</span></div>
-  </div>
-
-  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>2</span></div>
-</section>
-
-<!-- ================= 03 I COLORI ================= -->
-<section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span class="on">03 Colori</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span></div>
-  </div>
-  <p class="occhiello">03 — I colori</p>
-  <h1>Inchiostro, ottone e carta.</h1>
-  <div class="trattino"></div>
-  <p class="intro">Abbiamo scelto pochi colori e li usiamo sempre, dal sito alle storie. Così, anche scorrendo velocemente Instagram, un post di Bagnarino <span class="v">si riconosce prima ancora di leggerlo</span>.</p>
-
-  <div class="griglia g3" style="gap:4mm">
-    <div class="campione"><div class="colore" style="background:var(--b-inchiostro);color:#fff">#1B2A3A</div><div class="info"><b>Blu inchiostro</b><span>È l’inchiostro della macchina per scrivere e della penna con cui si firma un contratto. Ricorda <strong>gli uffici Olivetti</strong>, la serietà di un negozio storico, la calma di chi lavora concentrato. Comunica <strong>fiducia</strong>: è il colore delle fasce scure del sito e della formula consigliata.</span></div></div>
-    <div class="campione"><div class="colore" style="background:var(--b-ocra);color:var(--b-notte)">#C9973B</div><div class="info"><b>Ocra</b><span>L’ottone delle vecchie macchine, il legno delle scrivanie, la luce del pomeriggio in corso Lamarmora. È caldo e accogliente, e lo usiamo per una sola cosa importante: <strong>l’azione</strong>. Tutti i pulsanti “Prenota” sono ocra, così l’occhio li trova subito.</span></div></div>
-    <div class="campione"><div class="colore" style="background:var(--b-carta);color:var(--b-inchiostro);border-bottom:.3mm solid var(--linea)">#F4EEE3</div><div class="info"><b>Carta</b><span>Il colore del foglio, non il bianco freddo di un ufficio qualunque. Riposa gli occhi, fa sembrare il sito <strong>stampato</strong> e dà spazio alle foto. Si alterna al blu: scendendo nella pagina il ritmo cambia e la lettura non stanca.</span></div></div>
-  </div>
-
-  <p class="sez">Un colore per ogni formula</p>
-  <p style="font-size:8.6pt">Le quattro formule hanno ciascuna il suo colore, <strong>uguale sul sito, nella pagina di prenotazione e sui social</strong>. Chi ha visto il post del mese flessibile lo ritrova blu quando prenota: niente da cercare, niente da ricordare.</p>
-  <div class="griglia g4">
-    <div class="campione"><div class="colore" style="background:var(--b-sabbia);color:var(--b-notte);height:16mm"><span style="font-family:var(--serif);font-size:13pt">€25</span></div><div class="info"><b>Giornata</b><span>Ocra chiaro: il primo passo, caldo e leggero.</span></div></div>
-    <div class="campione"><div class="colore" style="background:var(--b-verde-chiaro);color:#0E2F22;height:16mm"><span style="font-family:var(--serif);font-size:13pt">€200</span></div><div class="info"><b>Carnet 10 ingressi</b><span>Verde: il risparmio, chi torna spesso.</span></div></div>
-    <div class="campione"><div class="colore" style="background:var(--b-inchiostro);color:var(--b-ocra-vivo);height:16mm;box-shadow:inset 0 0 0 .8mm var(--b-ocra)"><span style="font-family:var(--serif);font-style:italic;font-size:13pt">€270</span></div><div class="info"><b>Mese flessibile</b><span>Blu con bordo ocra: la più conveniente, quella che spingiamo.</span></div></div>
-    <div class="campione"><div class="colore" style="background:var(--b-petrolio-chiaro);color:#0E323A;height:16mm"><span style="font-family:var(--serif);font-style:italic;font-size:13pt">€320</span></div><div class="info"><b>Mese, postazione fissa</b><span>Petrolio: stabile, la tua scrivania di sempre.</span></div></div>
-  </div>
-
-  <div class="griglia g2" style="margin-top:5mm;gap:4mm">
-    <div class="card lav"><h3>Perché niente rosso</h3><span class="piccolo">Il rosso sui siti fa pensare a errori e urgenza, ed è già il colore del marchio Olivetti: lo lasciamo a loro, così i due marchi non si confondono. Resta solo come <strong>inchiostro dei timbri</strong> sulla Bagnarino Card, perché è il colore vero di un timbro.</span></div>
-    <div class="card lav"><h3>Leggibile per tutti</h3><span class="piccolo">Ogni coppia testo-sfondo rispetta i contrasti delle norme di accessibilità (WCAG AA): si legge bene <strong>anche da telefono, al sole, e da chi ha qualche anno in più</strong>.</span></div>
-  </div>
-
-  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>3</span></div>
-</section>
-
-<!-- ================= 04 I CARATTERI ================= -->
-<section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span class="on">04 Caratteri</span><span>05</span><span>06</span><span>07</span><span>08</span></div>
-  </div>
-  <p class="occhiello">04 — I caratteri</p>
-  <h1>Tre voci, una sola personalità.</h1>
-  <div class="trattino"></div>
-  <p class="intro">I caratteri sono il “tono di voce” scritto. Ne usiamo tre, ognuno con un compito preciso, e <span class="v">non li mescoliamo a caso</span>: così il sito sembra fatto da una tipografia, non generato in serie.</p>
-
-  <div class="card mondo-b" style="padding:6mm 6mm 5mm;margin-bottom:3mm">
-    <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="etichetta">Titoli e prezzi</span><span style="font-family:var(--mono);font-size:7pt;color:var(--b-ocra-testo)">FRAUNCES</span></div>
-    <div style="font-family:var(--serif);font-size:30pt;line-height:1.02;letter-spacing:-.02em;color:var(--b-inchiostro);margin:3mm 0 2mm">Coworking in centro, <em style="color:var(--b-ocra-testo)">da €25 al giorno.</em></div>
-    <p class="piccolo" style="margin:0">Un carattere con le grazie, come le insegne dei negozi storici e i libri ben stampati. Dà <strong>classe e calma</strong>. Il corsivo ocra sottolinea la parte che conta, spesso il prezzo o la promessa.</p>
-  </div>
-  <div class="griglia g2" style="gap:3mm">
-    <div class="card mondo-b" style="padding:5mm">
-      <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="etichetta">Testi e pulsanti</span><span style="font-family:var(--mono);font-size:7pt;color:var(--b-ocra-testo)">HANKEN GROTESK</span></div>
-      <div style="font-family:var(--apex);font-size:13pt;line-height:1.3;color:var(--b-inchiostro);margin:3mm 0 2mm;font-weight:500">Scrivania, wi-fi in fibra e stampante incluse. Prenoti in 30 secondi.</div>
-      <p class="piccolo" style="margin:0">Pulito e leggibilissimo, figlio della grafica moderna che Olivetti ha reso famosa. Si legge bene anche piccolo, dal telefono.</p>
-    </div>
-    <div class="card mondo-b" style="padding:5mm">
-      <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="etichetta">Etichette e orari</span><span style="font-family:var(--mono);font-size:7pt;color:var(--b-ocra-testo)">IBM PLEX MONO</span></div>
-      <div style="font-family:var(--mono);font-size:11pt;line-height:1.5;color:var(--b-inchiostro);margin:3mm 0 2mm;letter-spacing:.04em">LUN–VEN 9:30–18:30<br>CORSO LAMARMORA 46</div>
-      <p class="piccolo" style="margin:0">Le lettere tutte larghe uguali della <strong>macchina per scrivere</strong>. Lo usiamo per orari, indirizzi, codici di prenotazione: i dettagli “da ufficio”.</p>
-    </div>
-  </div>
-
-  <p class="sez">La regola delle card dei prezzi</p>
-  <div class="griglia" style="grid-template-columns: 1.3fr 1fr; gap:4mm; align-items:center">
-    <div class="schermo"><img src="identita/sito-d-prezzi.jpg" alt="Le quattro card dei prezzi"></div>
+  <div class="parola">
+    <div><img src="identita/logo-chiaro.svg" alt="Logo Bagnarino in versione chiara"></div>
     <div>
-      <h2>Due e due</h2>
-      <p style="font-size:8.6pt">Giornata e Carnet hanno il titolo dritto; i due abbonamenti mensili lo hanno <em style="font-family:var(--serif)">in corsivo</em>. Così si capisce senza leggere che <strong>i due mesi sono la stessa famiglia</strong>, e che sono le formule “importanti”.</p>
-      <ul class="lista">
-        <li>Le cifre sono tutte nello stesso carattere: il confronto è immediato.</li>
-        <li>Ogni card ha il suo colore, il pulsante è sempre in fondo.</li>
-        <li>Il mese flessibile sporge e ha il timbro “la più conveniente”.</li>
-      </ul>
+      <h2>Il nome e la firma</h2>
+      <p class="piccolo" style="margin-bottom:2mm"><b>“Bagnarino”</b> è scritto con un carattere moderno e pulito, figlio della grafica d’ufficio che Olivetti ha reso famosa: si legge al volo, anche piccolo.</p>
+      <p class="piccolo" style="margin:0">Sotto, spaziata come una targa, la firma <b>“Coworking · dal 1983”</b>. Quarant’anni in centro sono una garanzia che nessun altro coworking di Alessandria può scrivere: per questo il logo la porta sempre con sé.</p>
     </div>
   </div>
 
-  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>4</span></div>
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Apex Media · per Bagnarino S.r.l.</div>
+    <span class="num">02</span>
+  </div>
 </section>
 
-<!-- ================= 05 IL SITO DAL TELEFONO ================= -->
-<section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span class="on">05 Telefono</span><span>06</span><span>07</span><span>08</span></div>
-  </div>
-  <p class="occhiello">05 — Il sito, dal telefono</p>
-  <h1>Pensato per il pollice, non per lo schermo grande.</h1>
-  <div class="trattino"></div>
-  <p class="intro">Più di 8 clienti su 10 arrivano dal telefono, da Google o da Instagram. Per questo ogni pagina è disegnata prima per il telefono, con <span class="v">il pulsante “Prenota” sempre a portata di pollice</span> nella barra in basso.</p>
+<!-- ================= 03 IL LOGO, OVUNQUE ================= -->
+<section class="pagina scura">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>03</em> · Il logo</span></div>
+  <p class="occhiello">Il logo, ovunque</p>
+  <h1>Chiaro, scuro, piccolissimo:<br><em>sempre riconoscibile.</em></h1>
+  <p class="intro" style="margin-bottom:5mm">Il logo esiste in quattro versioni, tutte disegnate sulle stesse misure. Così resta <b>identico e nitido</b> sull’insegna, sul sito, sul telefono e sulla card in tasca.</p>
 
-  <div class="griglia g3" style="gap:6mm;align-items:start">
-    <div><div class="telefono"><img src="identita/sito-m-home.jpg" alt="Apertura del sito da telefono"></div>
-      <p class="didascalia"><b>L’apertura.</b> La foto dietro il titolo crea subito l’atmosfera; prezzo, posti liberi di oggi e pulsante ocra sono visibili senza scorrere. Sotto, la targhetta Olivetti e il bollo “1983” che gira piano.</p></div>
-    <div><div class="telefono"><img src="identita/sito-m-posti.jpg" alt="Posti liberi da telefono"></div>
-      <p class="didascalia"><b>I posti liberi.</b> Una fascia blu con la pianta delle 6 scrivanie, giorno per giorno. Vedere che i posti sono pochi e reali è la prima spinta a prenotare.</p></div>
-    <div><div class="telefono"><img src="identita/sito-m-prenota-2.jpg" alt="Prenotazione da telefono"></div>
-      <p class="didascalia"><b>La prenotazione.</b> Calendario scuro con i giorni colorati: verde libero, giallo ultimi posti. Ogni pallino è una scrivania. Il giorno scelto si accende in ocra.</p></div>
+  <div class="versioni">
+    <div class="versione" style="background:var(--carta)"><img src="identita/logo.svg" alt=""><span class="tag" style="color:var(--ocra-testo)">Su carta · la versione principale</span></div>
+    <div class="versione" style="background:var(--inchiostro);box-shadow:inset 0 0 0 .3mm rgba(255,255,255,.12)"><img src="identita/logo-chiaro.svg" alt=""><span class="tag" style="color:var(--ocra-vivo)">Su inchiostro · fasce scure e social</span></div>
+    <div class="versione" style="background:var(--ocra)"><img src="identita/logo.svg" alt="" style="filter:brightness(0) saturate(100%) invert(10%) sepia(18%) saturate(1500%) hue-rotate(176deg)"><span class="tag" style="color:var(--notte)">Su ocra · per le occasioni speciali</span></div>
+    <div class="versione" style="background:var(--avorio)"><img src="identita/logo-mark.svg" alt="" style="width:24%"><span class="tag" style="color:var(--ocra-testo)">Solo la B · quando lo spazio è poco</span></div>
   </div>
 
-  <div class="griglia g3" style="margin-top:5mm">
-    <div class="card lav"><h3>3 passi, 30 secondi</h3><span class="piccolo">Formula, giorno, dati. Nessun pagamento online: si paga in negozio.</span></div>
-    <div class="card lav"><h3>Sempre un’uscita</h3><span class="piccolo">WhatsApp e telefono in ogni pagina, per chi preferisce scriverti.</span></div>
-    <div class="card lav"><h3>Veloce</h3><span class="piccolo">Niente programmi pesanti: il sito si apre in un attimo anche in 4G.</span></div>
-  </div>
-
-  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>5</span></div>
-</section>
-
-<!-- ================= 06 IL SITO DA COMPUTER ================= -->
-<section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span class="on">06 Computer</span><span>07</span><span>08</span></div>
-  </div>
-  <p class="occhiello">06 — Il sito, da computer</p>
-  <h1>Una pagina che cambia ritmo mentre scendi.</h1>
-  <div class="trattino"></div>
-  <p class="intro">La home alterna <span class="v">fasce blu e fasce color carta</span>, con schede chiare che “galleggiano” e sconfinano nella sezione dopo. Nessuna sezione è uguale a quella prima: l’occhio resta sveglio fino al pulsante finale.</p>
-
-  <div class="schermo" style="margin-bottom:2mm"><img src="identita/sito-d-home.jpg" alt="Home da computer"></div>
-  <p class="didascalia" style="margin-bottom:4mm"><b>L’apertura da computer.</b> Titolo grande a sinistra, foto a tutta pagina, quattro fatti in basso: dal 1983, concessionario Olivetti, 6 scrivanie, orari. In alto a destra il pulsante “Prenota” in ocra, sempre visibile.</p>
-
-  <div class="griglia g2" style="gap:5mm">
-    <div><div class="schermo"><img src="identita/sito-d-card.jpg" alt="Sezione Bagnarino Card"></div>
-      <p class="didascalia"><b>La Bagnarino Card.</b> Una tessera di cartoncino vera, con la grana della carta e i timbri rossi un po’ storti, come quelli fatti a mano. Scorrendo, i timbri “si pressano” uno alla volta.</p></div>
-    <div><div class="schermo"><img src="identita/sito-d-perchi.jpg" alt="Sezione Per chi è"></div>
-      <p class="didascalia"><b>Per chi è.</b> Fascia blu con quattro schede chiare: freelance, smart worker, studenti, piccoli team. Ognuna porta dritta alla formula giusta; quella del mese ha il suo colore.</p></div>
-  </div>
-
-  <div class="card scura" style="margin-top:4mm;display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:center">
-    <div style="font-family:var(--serif);font-size:22pt;color:#F2C66B;line-height:1">“</div>
-    <div><h3 style="color:#F2C66B">Animazioni “di mestiere”, mai gratuite</h3><span class="piccolo">I titoli entrano parola per parola, le card dei prezzi salgono una dopo l’altra, le cifre contano fino al prezzo, i timbri si posano sulla card. Movimenti brevi e calmi che guidano lo sguardo verso “Prenota”. Chi ha chiesto al telefono di ridurre le animazioni vede la pagina ferma e completa.</span></div>
-  </div>
-
-  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>6</span></div>
-</section>
-
-<!-- ================= 07 I SOCIAL ================= -->
-<section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span class="on">07 Social</span><span>08</span></div>
-  </div>
-  <p class="occhiello">07 — I social</p>
-  <h1>Lo stesso Bagnarino, anche su Instagram.</h1>
-  <div class="trattino"></div>
-  <p class="intro">Le prime proposte: <span class="v">2 storie e 3 post</span>. Stessi colori, stessi caratteri e stessi prezzi del sito, così chi passa da Instagram al sito si sente a casa. Ogni grafica ha <strong>un solo messaggio</strong> e un’azione chiara.</p>
-
-  <div class="griglia" style="grid-template-columns: 1fr 1fr 1.25fr; gap:5mm; align-items:start">
-    <div class="social"><img src="identita/storia-1-scrivania.jpg" alt="Storia 1"><p class="didascalia"><b>Storia 1 · “La tua scrivania in centro”.</b> Tre card che “escono” dallo schermo: prezzo, paghi quando arrivi, disdici gratis. In basso il pulsante ocra: chi la vede sa già cosa fare.</p></div>
-    <div class="social"><img src="identita/storia-2-giornata.jpg" alt="Storia 2"><p class="didascalia"><b>Storia 2 · “Una giornata da noi”.</b> La sala vera e la linea del tempo dalle 9:30 alle 18:30. Fa immaginare la giornata prima ancora di prenotarla.</p></div>
-    <div class="griglia" style="gap:3mm">
-      <div class="card lav"><h3>Perché le card che escono</h3><span class="piccolo">Le storie si guardano per due secondi. Le informazioni a “cartellino”, una per riga, si leggono al volo come un listino in vetrina.</span></div>
-      <div class="card lav"><h3>Perché foto calde</h3><span class="piccolo">Luce del pomeriggio e legno: trasmettono la calma che si cerca per lavorare. Niente ufficio freddo, niente vetro e neon.</span></div>
-      <div class="card lav"><h3>Perché sempre il prezzo</h3><span class="piccolo">“Da €25” è la risposta alla prima domanda di tutti. Metterlo subito toglie un dubbio e porta clic veri.</span></div>
+  <div class="costruzione">
+    <svg viewBox="0 0 470 430" aria-label="Costruzione della B">
+      <defs><pattern id="gr" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#2C3B4C" stroke-width="1"/></pattern></defs>
+      <rect x="0" y="0" width="470" height="430" fill="url(#gr)"/>
+      <g transform="translate(20,14)">
+        <path fill="#FAF6EE" d="M40 0H267A103 103 0 0 1 343.5 172H0V40A40 40 0 0 1 40 0Z"/>
+        <path fill="#E2B45E" d="M0 192H317C331 195 340 202 345 210H0Z"/>
+        <path fill="#FAF6EE" d="M0 230H362A112 112 0 0 1 267 401H40A40 40 0 0 1 0 361Z"/>
+        <g stroke="#E2B45E" stroke-width="1.6" fill="none" stroke-dasharray="5 4">
+          <line x1="392" y1="0" x2="392" y2="172"/><line x1="392" y1="230" x2="392" y2="401"/>
+          <line x1="382" y1="0" x2="402" y2="0"/><line x1="382" y1="172" x2="402" y2="172"/><line x1="382" y1="230" x2="402" y2="230"/><line x1="382" y1="401" x2="402" y2="401"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="15" fill="#E2B45E"><text x="404" y="92">A</text><text x="404" y="322">A+</text></g>
+      </g>
+    </svg>
+    <div>
+      <h2 style="color:#fff">Disegnata a righello</h2>
+      <p class="piccolo">La B è costruita su una griglia: i due blocchi hanno quasi la stessa altezza (<b>A</b>), quello in basso è appena più largo (<b>A+</b>) per dare stabilità, come nelle lettere stampate a piombo.</p>
+      <p class="piccolo" style="margin:0">La riga d’ocra è sottile un decimo dei blocchi: abbastanza per vedersi anche in piccolo, mai così grossa da diventare un terzo pezzo.</p>
     </div>
   </div>
 
-  <div class="griglia g3" style="gap:4mm; margin-top:4mm">
-    <div class="social"><img src="identita/post-1-prezzi.jpg" alt="Post prezzi"><p class="didascalia"><b>Post 1 · Il listino.</b> Le quattro formule con i loro colori. È il post da fissare in cima al profilo.</p></div>
-    <div class="social"><img src="identita/post-2-card.jpg" alt="Post card"><p class="didascalia"><b>Post 2 · La Bagnarino Card.</b> La tessera con i timbri: un motivo concreto per tornare.</p></div>
-    <div class="social"><img src="identita/post-3-negozio.jpg" alt="Post negozio"><p class="didascalia"><b>Post 3 · Il negozio.</b> L’ingresso vero di corso Lamarmora: “un negozio vero, oggi anche il tuo ufficio”.</p></div>
+  <div class="dove">
+    <div><div class="icona"><img src="identita/favicon-180.png" style="width:15mm;border-radius:3mm" alt=""></div><h3>Google e browser</h3><p class="piccolo">L’icona accanto al nome del sito nei risultati di ricerca.</p></div>
+    <div><div class="icona"><img src="identita/social-profilo-b.jpg" style="width:20mm;border-radius:50%" alt=""></div><h3>Instagram e Facebook</h3><p class="piccolo">La foto profilo: tonda, leggibile anche a 1 cm.</p></div>
+    <div><div class="icona"><div style="width:15mm;height:15mm;border-radius:3.4mm;background:var(--inchiostro);display:grid;place-items:center;box-shadow:0 0 0 .3mm rgba(255,255,255,.2)"><img src="identita/logo-mark-chiaro.svg" style="width:8mm" alt=""></div></div><h3>Schermata del telefono</h3><p class="piccolo">Chi salva il sito lo apre come un’app.</p></div>
+    <div><div class="icona"><div style="width:18mm;height:18mm;border-radius:50%;border:.7mm solid var(--timbro);display:grid;place-items:center;background:var(--avorio)"><img src="identita/logo-mark.svg" style="width:7mm;filter:brightness(0) saturate(100%) invert(22%) sepia(60%) saturate(2400%) hue-rotate(345deg)" alt=""></div></div><h3>Il timbro della card</h3><p class="piccolo">La B diventa il timbro: uno per ogni giornata.</p></div>
   </div>
 
-  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>7</span></div>
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Apex Media · per Bagnarino S.r.l.</div>
+    <span class="num">03</span>
+  </div>
 </section>
 
-<!-- ================= 08 LE REGOLE ================= -->
+<!-- ================= 04 I COLORI ================= -->
 <section class="pagina">
-  <div class="testa">
-    <img src="identita/apex-logo.png" alt="">
-    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span class="on">08 Regole</span></div>
-  </div>
-  <p class="occhiello">08 — Le regole dell’identità</p>
-  <h1>Poche regole, sempre rispettate.</h1>
-  <div class="trattino"></div>
-  <p class="intro">Un’identità funziona se è <span class="v">costante</span>. Queste sono le regole che seguiamo noi per ogni pagina, storia e post, e che ti chiediamo di tenere anche per i materiali in negozio.</p>
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>04</em> · I colori</span></div>
+  <p class="occhiello">I colori</p>
+  <h1>Inchiostro, ottone<br><em>e carta.</em></h1>
+  <p class="intro">Tre colori presi dal negozio, usati sempre e solo questi. Così un post di Bagnarino <b>si riconosce prima ancora di leggerlo</b>, anche scorrendo veloce Instagram.</p>
 
-  <div class="griglia g2" style="gap:4mm">
-    <div class="card"><h2 style="color:#1E8A4C">Sempre</h2>
-      <ul class="lista ok">
-        <li>Il logo Bagnarino in ogni grafica, piccolo e pulito.</li>
-        <li>Blu inchiostro, ocra e carta: nessun altro colore di sfondo.</li>
-        <li>Il pulsante o l’azione in ocra: “Prenota”, “Scrivici”.</li>
-        <li>Prezzi e orari veri, presi dal listino del sito.</li>
-        <li>Foto degli spazi veri appena arriva il servizio fotografico.</li>
-        <li>Un messaggio per grafica, scritto corto.</li>
-      </ul></div>
-    <div class="card"><h2 style="color:#D04A3A">Mai</h2>
-      <ul class="lista no">
-        <li>Recensioni, numeri o clienti inventati.</li>
-        <li>Il logo Olivetti modificato o usato come se fosse nostro.</li>
-        <li>Rosso o colori accesi fuori dalla Bagnarino Card.</li>
-        <li>Più di due caratteri diversi nella stessa grafica.</li>
-        <li>Foto di persone senza la loro liberatoria.</li>
-        <li>Testi lunghi sulle storie: si leggono in due secondi.</li>
-      </ul></div>
-  </div>
-
-  <p class="sez">Il tono di voce</p>
-  <div class="card mondo-b" style="padding:5mm 6mm">
-    <p class="frase" style="margin:0 0 2mm">Diretto come un commesso di fiducia, <em>caldo come un negozio di quartiere.</em></p>
-    <p class="piccolo" style="margin:0">Diamo del “tu”, frasi brevi, parole semplici. Niente inglese da startup: “scrivania”, non “desk”; “giornata”, non “day pass”. Ogni testo risponde a una domanda del cliente: quanto costa, quando posso venire, come prenoto.</p>
-  </div>
-
-  <p class="sez">Cosa ci serve da te per completare</p>
-  <div class="griglia g4">
-    <div class="card"><div class="num" style="font-size:12pt">1</div><h3>Il servizio fotografico</h3><span class="piccolo">Un giorno in negozio per le foto vere della sala, delle scrivanie e tue al banco.</span></div>
-    <div class="card"><div class="num" style="font-size:12pt">2</div><h3>I premi della card</h3><span class="piccolo">Confermare stampe a colori e sconto 10% in negozio prima di pubblicare il post.</span></div>
-    <div class="card"><div class="num" style="font-size:12pt">3</div><h3>Il logo Olivetti</h3><span class="piccolo">Il file ufficiale dal kit del concessionario, per averlo nitido ovunque.</span></div>
-    <div class="card"><div class="num" style="font-size:12pt">4</div><h3>Google e Facebook</h3><span class="piccolo">L’accesso alla scheda Google Business e alla pagina, come gestori.</span></div>
-  </div>
-
-  <div class="card scura" style="margin-top:5mm;display:flex;justify-content:space-between;align-items:center;gap:5mm">
-    <div><h2 style="color:#F2C66B;margin-bottom:1mm">Il sito è già online</h2><span class="piccolo">bagnarinocoworking.it · prenotazioni aperte · le storie e i post partono appena li approvi.</span></div>
-    <img src="identita/logo-chiaro.svg" style="height:11mm" alt="">
-  </div>
-
-  <div style="margin-top:6mm">
-    <p style="font-weight:800;margin-bottom:1mm">Grazie per la fiducia, Marcella. Ci vediamo in negozio.</p>
-    <div class="firme">
-      <div><img src="identita/firma-alexander.png" alt=""><span>Alexander Fania</span></div>
-      <div><img src="identita/firma-federico.png" alt=""><span>Federico Delfino</span></div>
+  <div class="colori-grandi">
+    <div class="col" style="background:var(--inchiostro);color:#fff">
+      <div class="nome">Blu inchiostro</div><div class="hex">#1B2A3A</div>
+      <p style="color:#C9CFD6">L’inchiostro della macchina per scrivere e della penna con cui si firma un contratto. Ricorda gli uffici Olivetti e la calma di chi lavora concentrato. Comunica <b style="color:#fff">fiducia</b>.</p>
+      <div class="uso" style="color:var(--ocra-vivo)">Fasce scure · testi · logo</div>
+    </div>
+    <div class="col" style="background:var(--ocra);color:var(--notte)">
+      <div class="nome">Ocra</div><div class="hex">#C9973B</div>
+      <p>L’ottone delle vecchie macchine e la luce del pomeriggio in corso Lamarmora. Ha un compito solo: <b>l’azione</b>. Ogni “Prenota” è ocra, e l’occhio lo trova subito.</p>
+      <div class="uso">Pulsanti · riga del logo</div>
+    </div>
+    <div class="col" style="background:var(--avorio);color:var(--inchiostro)">
+      <div class="nome">Carta</div><div class="hex">#F4EEE3</div>
+      <p style="color:#3E4A57">Il colore del foglio, non il bianco freddo di un ufficio. Fa sembrare il sito <b>stampato</b>, riposa gli occhi e lascia parlare le foto.</p>
+      <div class="uso" style="color:var(--ocra-testo)">Sfondi · schede</div>
     </div>
   </div>
 
-  <div class="piede"><span>Apex Media · 351 594 0685 · studio@infoapex.eu</span><span>8</span></div>
+  <p class="occhiello" style="margin-top:1mm">Un colore per ogni formula</p>
+  <p style="font-size:9pt;max-width:160mm;margin-bottom:4mm">Ogni formula ha il suo colore, <b>uguale sul sito, nella prenotazione e sui social</b>. Chi vede il post del mese flessibile lo ritrova identico quando prenota: niente da cercare.</p>
+  <div class="formule">
+    <div class="formula" style="background:var(--sabbia);color:var(--notte)"><h3>Giornata</h3><div class="prezzo">€25</div><span>Il primo passo: caldo, leggero, senza impegno.</span></div>
+    <div class="formula" style="background:var(--verde);color:#0E2F22"><h3>Carnet 10 ingressi</h3><div class="prezzo">€200</div><span>Il verde del risparmio, per chi torna spesso.</span></div>
+    <div class="formula" style="background:var(--inchiostro);color:#fff;box-shadow:inset 0 0 0 .8mm var(--ocra)"><h3 style="font-family:var(--serif);font-style:italic;font-weight:400;font-size:11pt">Mese flessibile</h3><div class="prezzo" style="color:var(--ocra-vivo)">€270</div><span style="color:#C9CFD6">Blu con bordo ocra: la più conveniente, quella da spingere.</span></div>
+    <div class="formula" style="background:var(--petrolio);color:#0E323A"><h3 style="font-family:var(--serif);font-style:italic;font-weight:400;font-size:11pt">Postazione fissa</h3><div class="prezzo">€320</div><span>Petrolio: stabile, la tua scrivania di sempre.</span></div>
+  </div>
+
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Apex Media · per Bagnarino S.r.l.</div>
+    <span class="num">04</span>
+  </div>
+</section>
+
+<!-- ================= 05 I CARATTERI ================= -->
+<section class="pagina scura">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>05</em> · I caratteri</span></div>
+  <p class="occhiello">I caratteri</p>
+  <h1>Tre voci,<br><em>una sola personalità.</em></h1>
+  <p class="intro">I caratteri sono il tono di voce scritto. Ne usiamo tre, ognuno con un compito preciso: così il sito sembra <b>uscito da una tipografia</b>, non fatto in serie.</p>
+
+  <div class="specimen" style="background:var(--avorio);color:var(--inchiostro)">
+    <div class="riga-alta"><span style="color:var(--ocra-testo)">Titoli e prezzi</span><span>Fraunces</span></div>
+    <div style="font-family:var(--serif);font-size:44pt;line-height:.98;letter-spacing:-.025em">Coworking in centro,<br><em style="color:var(--ocra-testo)">da €25 al giorno.</em></div>
+    <div class="alfabeto">Aa Bb Cc Dd Ee Ff Gg 0123456789 <em>Aa Bb Cc</em></div>
+    <p class="piccolo" style="margin:3mm 0 0;max-width:150mm;color:#3E4A57">Un carattere con le grazie, come le insegne dei negozi storici e i libri ben stampati: dà <b style="color:var(--inchiostro)">classe e calma</b>. Il corsivo ocra mette in risalto la parte che conta, spesso il prezzo o la promessa.</p>
+  </div>
+
+  <div class="griglia" style="grid-template-columns:1fr 1fr">
+    <div class="specimen" style="background:var(--inchiostro-2);margin:0">
+      <div class="riga-alta"><span style="color:var(--ocra-vivo)">Testi e pulsanti</span><span style="color:#AEB4BC">Hanken Grotesk</span></div>
+      <div style="font-size:15pt;line-height:1.25;color:#fff;font-weight:500">Scrivania, wi-fi in fibra e stampe incluse. Prenoti in 30 secondi.</div>
+      <div style="margin-top:4mm;display:inline-block;background:var(--ocra);color:var(--notte);font-weight:700;font-size:9pt;padding:2.2mm 5mm;border-radius:1.2mm">Prenota una scrivania →</div>
+      <p class="piccolo" style="margin:4mm 0 0">Pulito e leggibilissimo, anche piccolo dal telefono. È la voce che spiega e che fa cliccare.</p>
+    </div>
+    <div class="specimen" style="background:var(--inchiostro-2);margin:0">
+      <div class="riga-alta"><span style="color:var(--ocra-vivo)">Etichette e orari</span><span style="color:#AEB4BC">IBM Plex Mono</span></div>
+      <div style="font-family:var(--mono);font-size:12.4pt;line-height:1.55;color:#fff;letter-spacing:.04em">LUN–VEN 9:30–18:30<br>CORSO LAMARMORA 46<br><span style="color:var(--ocra-vivo)">TOTALE GIORNATA €25</span></div>
+      <p class="piccolo" style="margin:4mm 0 0">Le lettere tutte larghe uguali della <b>macchina per scrivere</b> e dello scontrino. Per orari, indirizzi e dettagli “da ufficio”.</p>
+    </div>
+  </div>
+
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Apex Media · per Bagnarino S.r.l.</div>
+    <span class="num">05</span>
+  </div>
+</section>
+
+<!-- ================= 06 IL SITO DAL TELEFONO ================= -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>06</em> · Il sito</span></div>
+  <p class="occhiello">Il sito, dal telefono</p>
+  <h1>Pensato per il pollice,<br><em>non per lo schermo grande.</em></h1>
+  <p class="intro">Più di 8 clienti su 10 arrivano dal telefono, da Google o da Instagram. Ogni pagina è disegnata prima per lo smartphone, con <b>“Prenota” sempre a portata di pollice</b> nella barra in basso.</p>
+
+  <div class="griglia" style="grid-template-columns:repeat(4,1fr);gap:5mm;align-items:start">
+    <div><div class="telefono"><img src="identita/sito-m-home.jpg" alt=""></div>
+      <p class="didascalia"><span class="numero">1</span><b>L’apertura.</b> Prezzo, posti liberi di oggi e pulsante ocra visibili senza scorrere.</p></div>
+    <div><div class="telefono"><img src="identita/sito-m-giornata.jpg" alt=""></div>
+      <p class="didascalia"><span class="numero">2</span><b>Lo scontrino.</b> La giornata tipo battuta come alla cassa del negozio: totale €25.</p></div>
+    <div><div class="telefono"><img src="identita/sito-m-prenota-1.jpg" alt=""></div>
+      <p class="didascalia"><span class="numero">3</span><b>La formula.</b> Quattro scelte colorate, una tocca e si passa al giorno.</p></div>
+    <div><div class="telefono"><img src="identita/sito-m-prenota-3.jpg" alt=""></div>
+      <p class="didascalia"><span class="numero">4</span><b>Il calendario.</b> Ogni pallino è una scrivania: verde libera, gialla ultimi posti.</p></div>
+  </div>
+
+  <div class="griglia" style="grid-template-columns:repeat(3,1fr);margin-top:6mm">
+    <div style="background:var(--inchiostro);color:#fff;border-radius:3mm;padding:4.4mm"><h2 style="color:var(--ocra-vivo);font-size:20pt;margin:0">30 sec</h2><span class="piccolo" style="color:#C9CFD6">Formula, giorno, dati. Nessun pagamento online: si paga in negozio.</span></div>
+    <div style="background:var(--inchiostro);color:#fff;border-radius:3mm;padding:4.4mm"><h2 style="color:var(--ocra-vivo);font-size:20pt;margin:0">1 tocco</h2><span class="piccolo" style="color:#C9CFD6">WhatsApp e telefono in ogni pagina, per chi preferisce scriverti.</span></div>
+    <div style="background:var(--inchiostro);color:#fff;border-radius:3mm;padding:4.4mm"><h2 style="color:var(--ocra-vivo);font-size:20pt;margin:0">0 attese</h2><span class="piccolo" style="color:#C9CFD6">Niente programmi pesanti: si apre in un attimo anche in 4G.</span></div>
+  </div>
+
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Provalo ora dal telefono</div>
+    <span class="num">06</span>
+  </div>
+</section>
+
+<!-- ================= 07 IL SITO DAL COMPUTER ================= -->
+<section class="pagina scura">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>07</em> · Il sito</span></div>
+  <p class="occhiello">Il sito, dal computer</p>
+  <h1>Una pagina che cambia ritmo<br><em>mentre scendi.</em></h1>
+  <p class="intro">La home alterna <b>fasce blu e fasce color carta</b>, con schede che galleggiano sopra la sezione dopo. Nessuna sezione è uguale a quella prima: l’occhio resta sveglio fino al pulsante finale.</p>
+
+  <div class="schermo"><div class="barra"><i></i><i></i><i></i><span>bagnarinocoworking.it</span></div><img src="identita/sito-d-home.jpg" alt=""></div>
+  <p class="didascalia" style="margin-bottom:5mm"><span class="numero">1</span><b>L’apertura.</b> Titolo grande, la foto della sala, quattro fatti in basso: dal 1983, concessionario Olivetti, 6 scrivanie, orari. In alto a destra “Prenota”, sempre visibile.</p>
+
+  <div class="griglia" style="grid-template-columns:1.15fr 1fr;gap:5mm">
+    <div><div class="schermo"><img src="identita/sito-d-prezzi.jpg" alt="" style="height:60mm;object-fit:cover;object-position:top"></div>
+      <p class="didascalia"><span class="numero">2</span><b>Il listino.</b> Quattro card con il loro colore; il mese flessibile sporge e ha il timbro “la più conveniente”.</p></div>
+    <div><div class="schermo"><img src="identita/sito-d-giornata.jpg" alt="" style="height:60mm;object-fit:cover;object-position:right center"></div>
+      <p class="didascalia"><span class="numero">3</span><b>La giornata tipo.</b> Uno scontrino del registratore di cassa: dalle 9:30 alle 18:30, tutto incluso.</p></div>
+  </div>
+
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Apex Media · per Bagnarino S.r.l.</div>
+    <span class="num">07</span>
+  </div>
+</section>
+
+<!-- ================= 08 LE SEZIONI CHE FANNO PRENOTARE ================= -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>08</em> · Il sito</span></div>
+  <p class="occhiello">Le sezioni che fanno prenotare</p>
+  <h1>Ogni sezione risponde<br><em>a un dubbio del cliente.</em></h1>
+  <p class="intro">“Com’è il posto?”, “Conviene tornare?”, “Fa per me?”. Il sito risponde nell’ordine in cui il cliente se lo chiede, e <b>alla fine di ogni risposta c’è un pulsante</b>.</p>
+
+  <div class="schermo"><img src="identita/sito-d-spazio-foto.jpg" alt="" style="height:84mm;object-fit:cover;object-position:center"></div>
+  <p class="didascalia" style="margin-bottom:5mm"><span class="numero">1</span><b>“Com’è il posto?”</b> Le foto vere della sala e dell’angolo stampa, poi i servizi inclusi a icone: wi-fi in fibra, presa, stampe, tecnico in negozio. Niente sorprese.</p>
+
+  <div class="griglia" style="grid-template-columns:1fr 1fr;gap:5mm">
+    <div><div class="schermo"><img src="identita/sito-d-card.jpg" alt="" style="height:62mm;object-fit:cover;object-position:center 58%"></div>
+      <p class="didascalia"><span class="numero">2</span><b>“Conviene tornare?”</b> La Bagnarino Card: una tessera di cartoncino con i timbri rossi della B. Ogni 10 giornate, l’undicesima è in regalo.</p></div>
+    <div><div class="schermo"><img src="identita/sito-d-perchi-schede.jpg" alt="" style="height:62mm;object-fit:cover;object-position:center"></div>
+      <p class="didascalia"><span class="numero">3</span><b>“Fa per me?”</b> Freelance, smart worker, studenti, piccoli team: ogni scheda porta dritta alla formula giusta.</p></div>
+  </div>
+
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Apex Media · per Bagnarino S.r.l.</div>
+    <span class="num">08</span>
+  </div>
+</section>
+
+<!-- ================= 09 I SOCIAL ================= -->
+<section class="pagina scura">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>09</em> · I social</span></div>
+  <p class="occhiello">I social</p>
+  <h1>Lo stesso Bagnarino,<br><em>anche su Instagram.</em></h1>
+  <p class="intro">I quattro post di lancio usano <b>gli stessi colori, caratteri e prezzi del sito</b>: chi passa da Instagram al sito si sente già a casa. Ogni post ha un solo messaggio e un’azione chiara.</p>
+
+  <div class="griglia" style="grid-template-columns:repeat(4,1fr);gap:4mm">
+    <div><img src="identita/social-post-1.jpg" alt="" style="width:100%;border-radius:2.4mm"><p class="didascalia"><b>L’annuncio.</b> “Il tuo nuovo ufficio è in centro”, da €25 al giorno.</p></div>
+    <div><img src="identita/social-post-2.jpg" alt="" style="width:100%;border-radius:2.4mm"><p class="didascalia"><b>Come si prenota.</b> Tre passi, nessun anticipo.</p></div>
+    <div><img src="identita/social-post-3.jpg" alt="" style="width:100%;border-radius:2.4mm"><p class="didascalia"><b>Il listino.</b> Le quattro formule con i loro colori.</p></div>
+    <div><img src="identita/social-post-4.jpg" alt="" style="width:100%;border-radius:2.4mm"><p class="didascalia"><b>Tutto incluso.</b> “Porta solo il tuo computer.”</p></div>
+  </div>
+
+  <div style="margin-top:6mm;display:grid;grid-template-columns:auto auto 1fr;gap:5mm;align-items:center;background:#18222E;border-radius:4mm;padding:5mm 6mm">
+    <img src="identita/social-profilo-logo.jpg" alt="" style="width:24mm;border-radius:50%;box-shadow:0 0 0 .5mm var(--ocra)">
+    <img src="identita/social-profilo-b.jpg" alt="" style="width:24mm;border-radius:50%;box-shadow:0 0 0 .5mm var(--ocra)">
+    <div><h2 style="color:#fff">Le foto profilo</h2><p class="piccolo" style="margin:0">Due versioni su blu inchiostro: <b>il logo intero</b> per Facebook e Google, <b>solo la B</b> per Instagram e TikTok, dove il cerchio è minuscolo.</p></div>
+  </div>
+
+  <div class="piede">
+    <div class="qr"><img src="identita/qr-sito.svg" alt=""></div>
+    <div class="url"><b>bagnarinocoworking.it</b>Apex Media · per Bagnarino S.r.l.</div>
+    <span class="num">09</span>
+  </div>
+</section>
+
+<!-- ================= 10 QR E CHIUSURA ================= -->
+<section class="pagina scura">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><b>APEX MEDIA</b><span class="cap"><em>10</em> · Il sito è online</span></div>
+  <p class="occhiello">Il sito è online</p>
+  <h1>Inquadra e prova<br><em>a prenotare.</em></h1>
+  <p class="intro">Apri la fotocamera del telefono e inquadra il codice: si apre il sito di Bagnarino Coworking. Fai una prenotazione di prova, <b>in 30 secondi vedi quello che vedranno i tuoi clienti</b>.</p>
+
+  <div class="chiusura">
+    <div class="qr-grande">
+      <img class="codice" src="identita/qr-sito.svg" alt="QR code del sito bagnarinocoworking.it">
+      <div class="centro"><img src="identita/logo-mark.svg" alt=""></div>
+      <div class="sotto">bagnarinocoworking.it</div>
+    </div>
+    <div>
+      <img src="identita/logo-chiaro.svg" alt="" style="width:76mm;margin-bottom:7mm">
+      <div class="contatti">
+        <div><small>Indirizzo</small><b>Corso Lamarmora 46<br>Alessandria</b></div>
+        <div><small>Orari</small><b>Lun–Ven<br>9:30–18:30</b></div>
+        <div><small>WhatsApp</small><b>347 224 9457</b></div>
+        <div><small>Da</small><b>€25 al giorno</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--avorio);color:var(--inchiostro);border-radius:4mm;padding:6mm 7mm;display:flex;justify-content:space-between;align-items:center;gap:6mm">
+    <div>
+      <p style="font-family:var(--serif);font-size:17pt;line-height:1.15;margin:0 0 3mm">Grazie per la fiducia, Marcella.<br><em style="color:var(--ocra-testo)">Ci vediamo in negozio.</em></p>
+      <div class="firme">
+        <div><img src="identita/firma-alexander.png" alt=""><span>Alexander Fania</span></div>
+        <div><img src="identita/firma-federico.png" alt=""><span>Federico Delfino</span></div>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <img src="identita/apex-logo.png" alt="" style="width:16mm;border-radius:3mm;margin:0 0 2mm auto">
+      <div style="font-weight:800;letter-spacing:.3em;font-size:9pt">APEX MEDIA</div>
+      <div class="piccolo">351 594 0685<br>studio@infoapex.eu</div>
+    </div>
+  </div>
+
+  <div class="piede">
+    <div class="url"><b>Apex Media</b>Performance marketing agency · per Bagnarino S.r.l.</div>
+    <span class="num">10</span>
+  </div>
 </section>
 
 </body>
