@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Bagnarino Coworking · Le tue credenziali</title>
+<style>
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@page { size: A4; margin: 0; }
+:root { --notte: #111922; --inchiostro: #1B2A3A; --ocra: #C9973B; --ocra-vivo: #DDB05C; --ocra-testo: #7A5A1E; --carta: #F4EEE3; --avorio: #FAF6EE; --linea: #CFC6B4; --tenue: #E7DFD0; --grigio: #6A6458; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; }
+body { font-family: 'Hanken Grotesk', system-ui, sans-serif; color: var(--notte); font-size: 8.6pt; line-height: 1.35; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pagina { width: 210mm; height: 297mm; display: flex; flex-direction: column; overflow: hidden; background: var(--avorio); }
+
+.fascia { background: var(--notte); color: var(--avorio); padding: 11mm 14mm 9mm; display: flex; align-items: flex-end; justify-content: space-between; gap: 10mm; position: relative; }
+.fascia::after { content: ''; position: absolute; left: 14mm; right: 14mm; bottom: 0; height: .8mm; background: linear-gradient(90deg, var(--ocra), var(--ocra-vivo)); }
+.fascia img { height: 12mm; }
+.fascia h1 { margin: 4mm 0 0; font-family: 'Fraunces', serif; font-weight: 500; font-size: 26pt; line-height: 1; letter-spacing: -.02em; }
+.fascia h1 em { color: var(--ocra-vivo); }
+.fascia p { margin: 2.6mm 0 0; font-size: 8.6pt; color: rgba(250,246,238,.75); max-width: 105mm; }
+.consegna { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 7pt; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,246,238,.7); line-height: 2.1; white-space: nowrap; }
+.consegna b { color: var(--avorio); font-weight: 500; }
+
+.corpo { padding: 7mm 14mm 0; flex: 1; display: flex; flex-direction: column; }
+.sez { display: flex; align-items: baseline; gap: 3mm; margin: 0 0 2.4mm; }
+.sez span { font-family: 'IBM Plex Mono', monospace; font-size: 7pt; color: var(--ocra-testo); letter-spacing: .1em; }
+.sez h2 { margin: 0; font-family: 'Fraunces', serif; font-weight: 500; font-size: 13pt; letter-spacing: -.01em; }
+
+table { width: calc(100% + 5mm); margin: 0 -2.5mm; border-collapse: separate; border-spacing: 2.5mm 0; table-layout: fixed; }
+th { text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ocra-testo); padding: 0 0 1.4mm; }
+th:nth-child(1) { width: 26%; } th:nth-child(2) { width: 25%; } th:nth-child(3) { width: 26%; }
+td { height: 10.2mm; border-bottom: .3mm solid var(--linea); vertical-align: bottom; padding-bottom: 1mm; }
+td.serv { border-bottom-color: var(--tenue); }
+td.serv b { display: block; font-size: 9pt; }
+td.serv small { display: block; font-size: 6.8pt; color: var(--grigio); margin-top: .3mm; }
+td.dove { border-bottom-color: var(--tenue); font-family: 'IBM Plex Mono', monospace; font-size: 6.6pt; white-space: nowrap; color: var(--inchiostro); }
+td.stesso { border-bottom: .3mm dashed var(--tenue); font-size: 7.2pt; color: var(--grigio); font-style: italic; }
+
+.due { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 9mm; margin-top: 6mm; }
+.campo { display: flex; align-items: flex-end; gap: 2mm; min-height: 8.6mm; }
+.campo > span { white-space: nowrap; }
+.campo .vuoto { flex: 1; border-bottom: .3mm solid var(--linea); height: 5mm; }
+.consigli { margin: 0; padding: 0; list-style: none; display: grid; gap: 2.2mm; }
+.consigli li { position: relative; padding-left: 5mm; font-size: 8.2pt; }
+.consigli li::before { content: ''; position: absolute; left: 0; top: 1.5mm; width: 2.2mm; height: 2.2mm; border-radius: 50%; background: var(--ocra); }
+
+.aiuto { margin-top: auto; margin-bottom: 0; display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 6mm; align-items: end; padding: 5mm 0 4mm; border-top: .3mm solid var(--tenue); }
+.aiuto .chi { font-size: 7.8pt; color: var(--grigio); }
+.aiuto .chi b { display: block; font-family: 'Fraunces', serif; font-weight: 500; font-size: 11pt; color: var(--notte); margin-bottom: 1mm; }
+.firma { display: flex; flex-direction: column; gap: 1.2mm; font-size: 7pt; color: var(--grigio); }
+.firma .vuoto { border-bottom: .3mm solid var(--notte); height: 9mm; }
+.piede { display: flex; justify-content: space-between; padding: 3mm 14mm 6mm; font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; letter-spacing: .1em; text-transform: uppercase; color: var(--grigio); }
+.piede img { height: 4.5mm; border-radius: 1mm; vertical-align: middle; margin-right: 1.6mm; }
+</style>
+</head>
+<body>
+<section class="pagina">
+  <div class="fascia">
+    <div>
+      <img src="identita/logo-chiaro.svg" alt="Bagnarino Coworking">
+      <h1>Le tue <em>credenziali</em></h1>
+      <p>Tutti gli accessi del coworking in un solo foglio. Tienilo in un posto sicuro, lontano dalla scrivania: chi lo legge può entrare nei tuoi account.</p>
+    </div>
+    <div class="consegna">Consegnato il <b>____ / ____ / ________</b><br>a <b>Marcella Bagnarino</b></div>
+  </div>
+
+  <div class="corpo">
+    <div class="sez"><span>01</span><h2>Gli accessi</h2></div>
+    <table>
+      <tr><th>Servizio</th><th>Dove si entra</th><th>Email / nome utente</th><th>Password</th></tr>
+      <tr><td class="serv"><b>Area riservata del sito</b><small>Prenotazioni, clienti, incassi, chiusure</small></td><td class="dove">bagnarinocoworking.it/admin</td><td class="stesso">serve solo la password</td><td></td></tr>
+      <tr><td class="serv"><b>Gmail del coworking</b><small>La chiave di tutti i servizi Google</small></td><td class="dove">gmail.com</td><td></td><td></td></tr>
+      <tr><td class="serv"><b>Instagram</b><small>Profilo del coworking</small></td><td class="dove">app Instagram</td><td></td><td></td></tr>
+      <tr><td class="serv"><b>TikTok</b><small>Profilo del coworking</small></td><td class="dove">app TikTok</td><td></td><td></td></tr>
+      <tr><td class="serv"><b>WhatsApp Business</b><small>Il numero che risponde ai clienti</small></td><td class="dove">app WhatsApp Business</td><td></td><td></td></tr>
+      <tr><td class="serv"><b>Facebook</b><small>Pagina del coworking</small></td><td class="dove">facebook.com</td><td></td><td></td></tr>
+      <tr><td class="serv"><b>Meta Business Suite</b><small>Messaggi, post e pubblicità</small></td><td class="dove">business.facebook.com</td><td class="stesso">stesso accesso di Facebook</td><td class="stesso"></td></tr>
+      <tr><td class="serv"><b>Profilo Google del negozio</b><small>Orari, foto e recensioni su Maps</small></td><td class="dove">business.google.com</td><td class="stesso">stesso accesso di Gmail</td><td class="stesso"></td></tr>
+      <tr><td class="serv"><b>Statistiche del sito</b><small>Visite e da dove arrivano</small></td><td class="dove">analytics.google.com</td><td class="stesso">stesso accesso di Gmail</td><td class="stesso"></td></tr>
+      <tr><td class="serv"><b>Altro:</b></td><td class="dove"></td><td></td><td></td></tr>
+      <tr><td class="serv"><b>Altro:</b></td><td class="dove"></td><td></td><td></td></tr>
+      <tr><td class="serv"><b>Altro:</b></td><td class="dove"></td><td></td><td></td></tr>
+    </table>
+
+    <div class="due">
+      <div>
+        <div class="sez"><span>02</span><h2>Se perdi l’accesso</h2></div>
+        <div class="campo"><span>Telefono di recupero</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Email di recupero</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Codici di verifica salvati in</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Wi-fi clienti · rete</span><span class="vuoto"></span></div>
+        <div class="campo"><span>Wi-fi clienti · password</span><span class="vuoto"></span></div>
+      </div>
+      <div>
+        <div class="sez"><span>03</span><h2>Tre regole semplici</h2></div>
+        <ul class="consigli">
+          <li><b>Le password non si mandano per messaggio</b>, né a clienti né a fornitori. Nessuno di Google, Meta o Apex te le chiederà mai.</li>
+          <li><b>Salva l’area riservata nella schermata Home</b> del telefono: si apre come un’app, con un tocco.</li>
+          <li><b>Se cambi una password, avvisa Apex</b>: così pubblicità e statistiche continuano a funzionare.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="aiuto">
+      <div class="chi"><b>Serve aiuto?</b>Apex Media · <span style="display:inline-block;width:40mm;border-bottom:.3mm solid var(--linea)"></span></div>
+      <div class="firma"><span class="vuoto"></span>Consegnato da Apex Media</div>
+      <div class="firma"><span class="vuoto"></span>Ricevuto da Marcella Bagnarino</div>
+    </div>
+  </div>
+  <div class="piede"><span><img src="identita/apex-logo.png" alt="">Realizzato da Apex Media</span><span>Bagnarino Coworking · documento riservato</span></div>
+</section>
+</body>
+</html>

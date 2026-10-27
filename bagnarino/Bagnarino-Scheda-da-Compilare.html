@@ -49,8 +49,9 @@ td .oggi { display: block; }
 .orari td.ap { width: 15mm; border-bottom-color: var(--tenue); }
 .prezzi th:nth-child(1) { width: 46%; } .prezzi th:nth-child(2) { width: 17%; }
 .prezzi td.og { width: 17%; border-bottom-color: var(--tenue); font-family: 'IBM Plex Mono', monospace; font-size: 7pt; color: var(--grigio); }
-.accessi td { height: 8mm; } .accessi td.etich { white-space: normal; line-height: 1.15; }
-.accessi th:nth-child(1) { width: 36%; } .accessi th:nth-child(3) { width: 17%; }
+.accessi td { height: 7.8mm; } .accessi td.etich { white-space: normal; line-height: 1.15; }
+.accessi th:nth-child(1) { width: 30%; } .accessi th:nth-child(2) { width: 40%; }
+.riservato { margin: 1.6mm 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; color: var(--grigio); }
 .accessi td.inv { width: 21%; border-bottom-color: var(--tenue); font-size: 7pt; }
 
 .griglia-servizi { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5mm 3mm; }
@@ -129,7 +130,7 @@ td .oggi { display: block; }
 
       <div class="blocco">
         <h2><span class="n">5</span>Altre cose da fissare</h2>
-        <div class="campo"><span>I separè arrivano il</span><span class="vuoto"></span><span>Foto della sala il</span><span class="vuoto"></span></div>
+        <div class="campo"><span>I separè arrivano il</span><span class="vuoto"></span></div>
         <div class="campo"><span>Data del lancio sui social</span><span class="vuoto"></span></div>
         <div class="campo"><span>Ragione sociale e P. IVA (per la privacy del sito)</span><span class="vuoto"></span></div>
       </div>
@@ -150,6 +151,8 @@ td .oggi { display: block; }
         <div class="campo"><span>Il carnet vale per</span><span class="vuoto c"></span><span>mesi</span><span class="oggi">oggi 3</span></div>
         <div class="campo"><span>Prezzi IVA inclusa</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span></div>
         <div class="campo"><span>Seconda giornata a €20 se torni entro 7 giorni</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span></div>
+        <div class="campo"><span>Disdetta gratis fino alle</span><span class="vuoto c"></span><span>del giorno prima</span><span class="oggi">oggi 20:00</span></div>
+        <div class="campo"><span>Fattura su richiesta</span><span class="scelte"><span><span class="box"></span>sì</span><span><span class="box"></span>no</span></span></div>
         <div class="campo"><span>Si paga con</span><span class="scelte"><span><span class="box"></span>contanti</span><span><span class="box"></span>carta</span><span><span class="box"></span>bonifico</span><span><span class="box"></span>Satispay</span></span></div>
       </div>
 
@@ -176,16 +179,16 @@ td .oggi { display: block; }
       <div class="blocco">
         <h2><span class="n">9</span>Accessi agli account</h2>
         <table class="accessi">
-          <tr><th>Account</th><th>Email / nome utente</th><th>Invito</th></tr>
-          <tr><td class="etich">Google (Gmail)</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
-          <tr><td class="etich">Profilo Google del negozio</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
-          <tr><td class="etich">Facebook</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
-          <tr><td class="etich">Instagram</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
-          <tr><td class="etich">Altro:</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
-          <tr><td class="etich">Altro:</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
-          <tr><td class="etich">Altro:</td><td></td><td class="inv"><span class="box"></span>fatto</td></tr>
+          <tr><th>Account</th><th>Email / nome utente</th><th>Password</th></tr>
+          <tr><td class="etich">Google (Gmail)</td><td></td><td></td></tr>
+          <tr><td class="etich">Profilo Google</td><td></td><td></td></tr>
+          <tr><td class="etich">Facebook</td><td></td><td></td></tr>
+          <tr><td class="etich">Instagram</td><td></td><td></td></tr>
+          <tr><td class="etich">Altro:</td><td></td><td></td></tr>
+          <tr><td class="etich">Altro:</td><td></td><td></td></tr>
+          <tr><td class="etich">Altro:</td><td></td><td></td></tr>
         </table>
-        <div class="nota"><b>Niente password su questo foglio.</b> Marcella aggiunge Apex come gestore o amministratore direttamente dal telefono: l’accesso funziona subito, la password resta sua e si può togliere in ogni momento.</div>
+        <p class="riservato">Foglio riservato: dopo l’uso Apex lo conserva in un luogo sicuro.</p>
       </div>
     </div>
   </div>
