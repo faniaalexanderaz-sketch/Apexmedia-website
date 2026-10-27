@@ -87,7 +87,7 @@
       });
 
       /* 2b) testi e voci: comparsa leggera, sfalsata */
-      var leggeri = $$('.occhiello, .intro-sezione, .negozio-lead, .giornata-lead, .giornata-cta, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .ps-posti, .ps-titolo, .ps-cta, .ps-sotto, .prezzi-garanzie li')
+      var leggeri = $$('.occhiello, .intro-sezione, .neg-lead, .neg-contatti, .giornata-lead, .giornata-cta, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li')
         .filter(sottoLaPiega);
       if (leggeri.length) {
         gsap.set(leggeri, { opacity: 0, y: 16 });
@@ -96,7 +96,7 @@
       }
 
       /* 2c) liste: una voce alla volta, da sinistra */
-      [['.ingresso-righe', 'li'], ['.servizi-senza ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.faq', 'details'], ['.ps-passi', 'li'], ['.tempo', '.tappa']].forEach(function (c) {
+      [['.servizi-senza ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.faq', 'details'], ['.tempo', '.tappa']].forEach(function (c) {
         $$(c[0]).forEach(function (lista) {
           var voci = $$(c[1], lista);
           if (!voci.length || !sottoLaPiega(lista)) return;
@@ -124,14 +124,6 @@
             scrollTrigger: { trigger: r, start: 'top 90%', once: true } });
         });
       });
-
-      /* 2e-bis) negozio: la scheda "come arrivi" scivola sopra la foto */
-      var ingresso = $('.ingresso');
-      if (ingresso && sottoLaPiega(ingresso)) {
-        var largo = window.innerWidth >= 900;
-        gsap.from(ingresso, { opacity: 0, x: largo ? 80 : 0, y: largo ? 0 : 50, duration: 0.9, ease: 'power3.out', clearProps: 'opacity,transform',
-          scrollTrigger: { trigger: ingresso, start: 'top 88%', once: true } });
-      }
 
       /* 2e-ter) servizi inclusi: le card salgono a cascata e le icone "scattano" */
       var servizi = $$('.servizio:not([hidden])');

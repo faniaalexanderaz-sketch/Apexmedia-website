@@ -289,6 +289,157 @@
   /* ---------- orari (piè di pagina, dove siamo) ---------- */
   $$('[data-orari]').forEach(function (el) { el.textContent = C.orari.testoLungo; });
 
+  /* ---------- il cartellino dell'orario: tabella dai giorni di config.js e stato adesso ---------- */
+  var cartellino = $('[data-cartellino]');
+  if (cartellino) {
+    var NOMI = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+    var ordine = [1, 2, 3, 4, 5, 6, 0], gruppi = [];
+    ordine.forEach(function (g) {
+      var ap = C.orari.giorni.indexOf(g) !== -1, ultimo = gruppi[gruppi.length - 1];
+      if (ultimo && ultimo.ap === ap) ultimo.giorni.push(g); else gruppi.push({ ap: ap, giorni: [g] });
+    });
+    var orario = C.orari.apertura + ' – ' + C.orari.chiusura;
+    var tabella = $('[data-orari-tabella]', cartellino);
+    if (tabella) tabella.innerHTML = gruppi.map(function (gr) {
+      var n = gr.giorni, giorni = NOMI[n[0]] + (n.length > 1 ? ' – ' + NOMI[n[n.length - 1]] : '');
+      return '<div><dt>' + giorni + '</dt><dd>' + (gr.ap ? orario : 'chiuso') + '</dd></div>';
+    }).join('');
+    var ora = new Date(), adesso = ora.getHours() * 60 + ora.getMinutes();
+    var oggi = new Date(ora.getFullYear(), ora.getMonth(), ora.getDate());
+    var dentro = aperto(oggi) && adesso >= minuti(C.orari.apertura) && adesso < minuti(C.orari.chiusura);
+    var quando;
+    if (dentro) quando = 'Fino alle ' + C.orari.chiusura;
+    else if (aperto(oggi) && adesso < minuti(C.orari.apertura)) quando = 'Apre oggi alle ' + C.orari.apertura;
+    else {
+      var prossimo = new Date(oggi);
+      for (var gi = 0; gi < 30; gi++) { prossimo.setDate(prossimo.getDate() + 1); if (aperto(prossimo)) break; }
+      quando = 'Riapre ' + relativa(prossimo).toLowerCase() + ' alle ' + C.orari.apertura;
+    }
+    cartellino.classList.toggle('aperto', dentro);
+    var statoTesto = $('[data-stato-testo]', cartellino);
+    if (statoTesto) statoTesto.textContent = dentro ? 'Aperto adesso' : 'Chiuso adesso';
+    var riga = document.createElement('p');
+    riga.className = 'cartellino-quando';
+    riga.textContent = quando;
+    $('[data-stato-negozio]', cartellino).insertAdjacentElement('afterend', riga);
+  }
+
+  /* ---------- quando entrano in vista: la freccia sulla foto, il cartellino che dondola ---------- */
+  if ('IntersectionObserver' in window) {
+    var vista = new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) {
+        if (!v.isIntersecting) return;
+        v.target.classList.add('visto');
+        var segno = $('[data-segno]', v.target);
+        if (segno) segno.classList.add('visto');
+        vista.unobserve(v.target);
+      });
+    }, { threshold: 0.45 });
+    $$('.neg-foto, [data-cartellino]').forEach(function (el) { vista.observe(el); });
+  } else {
+    $$('.neg-foto, [data-cartellino], [data-segno]').forEach(function (el) { el.classList.add('visto'); });
+  }
+
+  /* ---------- la macchina da scrivere: batte la prenotazione, timbra, cambia foglio ---------- */
+  var macchina = $('[data-macchina]');
+  if (macchina) {
+    var carrello = $('[data-carrello]', macchina), foglio = $('[data-foglio]', macchina);
+    var righe = $$('[data-riga]', macchina), timbro = $('[data-timbro]', macchina), ding = $('[data-ding]', macchina);
+    var tastiMc = $$('.mc-tasto', macchina), spazio = $('.mc-spazio', macchina);
+    var PASSO = 4.8, X0 = 56, INTERLINEA = 13, AVANZA = 7; /* 4 righe + 3 a vuoto prima del timbro */
+    var NOMI_ESEMPIO = ['Giulia R.', 'Marco T.', 'Sara B.', 'Luca P.', 'Elena F.'];
+    var prezzoGiorno = pacchetto('giornata') ? pacchetto('giornata').prezzo : 25;
+    var testiFoglio = function (n) {
+      var d = new Date(); d.setHours(0, 0, 0, 0);
+      for (var i = 0; i < 30; i++) { d.setDate(d.getDate() + 1); if (aperto(d)) break; }
+      var giorno = d.toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'long' }).replace('.', '');
+      return [
+        'Giorno  ' + giorno,
+        'Nome    ' + NOMI_ESEMPIO[n % NOMI_ESEMPIO.length],
+        'Posto   scrivania ' + (1 + (n * 3 + 2) % Math.max(1, C.postazioni)),
+        'Si paga in negozio, ' + euro(prezzoGiorno)
+      ];
+    };
+    var muovi = function (el, trasf, ms) {
+      el.style.transition = ms ? 'transform ' + ms + 'ms cubic-bezier(.2, .7, .1, 1), opacity ' + ms + 'ms ease' : 'none';
+      el.style.transform = trasf;
+    };
+    var fermo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var visibile = false, partita = false;
+    var attendi = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var quandoVisibile = function () {
+      return new Promise(function (r) { (function guarda() { if (visibile && !document.hidden) r(); else setTimeout(guarda, 300); })(); });
+    };
+    var premi = function (car) {
+      var t = car === ' ' ? spazio : tastiMc[Math.floor(Math.random() * tastiMc.length)];
+      if (!t) return;
+      t.classList.add('giu');
+      setTimeout(function () { t.classList.remove('giu'); }, 85);
+    };
+    var finale = function (testi) { /* stato completo, per chi riduce le animazioni */
+      righe.forEach(function (r, k) { r.textContent = testi[k] || ''; });
+      muovi(carrello, 'translate(' + X0 + 'px, 0)', 0);
+      muovi(foglio, 'translate(0, ' + (-INTERLINEA * AVANZA) + 'px)', 0);
+      timbro.classList.add('giu');
+    };
+    var giro = function (n) {
+      var testi = testiFoglio(n);
+      righe.forEach(function (r) { r.textContent = ''; });
+      timbro.classList.remove('giu');
+      muovi(carrello, 'translate(' + X0 + 'px, 0)', 0);
+      return testi.reduce(function (catena, riga, k) {
+        return catena.then(function () {
+          return riga.split('').reduce(function (c, car, i) {
+            return c.then(quandoVisibile).then(function () {
+              premi(car);
+              righe[k].textContent = riga.slice(0, i + 1);
+              muovi(carrello, 'translate(' + (X0 - (i + 1) * PASSO) + 'px, 0)', 60);
+              return attendi(car === ' ' ? 120 : 55 + Math.random() * 75);
+            });
+          }, Promise.resolve()).then(function () {
+            return attendi(240);
+          }).then(function () {
+            if (riga.length > 16) { ding.classList.remove('suona'); void ding.getBBox(); ding.classList.add('suona'); }
+            muovi(carrello, 'translate(' + X0 + 'px, 0)', 420);
+            var avanza = k === testi.length - 1 ? AVANZA : k + 1;
+            muovi(foglio, 'translate(0, ' + (-INTERLINEA * avanza) + 'px)', k === testi.length - 1 ? 700 : 260);
+            return attendi(k === testi.length - 1 ? 800 : 520);
+          });
+        });
+      }, Promise.resolve()).then(function () {
+        timbro.classList.add('giu');
+        return attendi(3400);
+      }).then(quandoVisibile).then(function () {
+        /* il foglio esce dal rullo e ne entra uno nuovo */
+        foglio.style.opacity = '0';
+        muovi(foglio, 'translate(0, ' + (-INTERLINEA * AVANZA - 70) + 'px)', 900);
+        return attendi(950);
+      }).then(function () {
+        righe.forEach(function (r) { r.textContent = ''; });
+        timbro.classList.remove('giu');
+        muovi(foglio, 'translate(0, 30px)', 0);
+        void foglio.getBBox();
+        foglio.style.opacity = '1';
+        muovi(foglio, 'translate(0, 0)', 600);
+        return attendi(900);
+      });
+    };
+    var avvia = function () {
+      if (partita) return;
+      partita = true;
+      macchina.classList.add('acceso');
+      if (fermo) { finale(testiFoglio(0)); return; }
+      var n = 0;
+      (function ciclo() { giro(n++).then(ciclo); })();
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (voci) {
+        visibile = voci[0].isIntersecting;
+        if (visibile) avvia();
+      }, { threshold: 0.3 }).observe(macchina);
+    } else { visibile = true; avvia(); }
+  }
+
   /* ---------- mappa: si carica solo al tocco ----------
      L'iframe di Google pesa ~1 MB e usa cookie di terze parti:
      finché non serve, al suo posto c'è un'anteprima leggera. */

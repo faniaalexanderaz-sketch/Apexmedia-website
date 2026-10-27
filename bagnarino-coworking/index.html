@@ -37,13 +37,13 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=a1598a43">
+  <link rel="stylesheet" href="/styles.css?v=6ea4b40a">
 
   <script src="/config.js?v=f5a6eb62"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=84186b20" defer></script>
-  <script src="/animazioni.js?v=08ee4c81" defer></script>
+  <script src="/main.js?v=7147f9b2" defer></script>
+  <script src="/animazioni.js?v=58c7a472" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -124,9 +124,8 @@
       <h1 class="apertura-titolo" id="titolo-apertura">Coworking in centro ad Alessandria, <em>da <span data-prezzo="giornata">€25</span> al giorno.</em></h1>
       <p class="apertura-sotto"><span data-cfg="postazioni">8</span> scrivanie nel negozio Olivetti di corso Lamarmora, aperto dal <span data-cfg="azienda.dal">1983</span>. Wi-fi in fibra e stampante incluse. Prenoti in 30 secondi, paghi quando arrivi.</p>
       <div class="apertura-cta">
-        <a class="cta-hero" href="/prenota" data-pos="hero">
-          <span class="cta-hero-testo"><strong>Prenota una scrivania</strong><small>30 secondi · paghi quando arrivi</small></span>
-          <span class="cta-hero-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span>
+        <a class="tasto" href="/prenota" data-pos="hero">
+          <span class="tasto-faccia">Prenota una scrivania<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
         </a>
         <a class="cta-wa" data-wa="prenota" data-pos="hero" href="https://wa.me/393472249457">
           <span class="cta-wa-ico" aria-hidden="true"><svg class="ico"><use href="#i-whatsapp"/></svg></span>Scrivici su WhatsApp</a>
@@ -152,118 +151,199 @@
     </div>
   </div>
 
-  <!-- ============ 01 · PRENOTA: un pulsante, tre passi e un disegno che si anima.
+  <!-- ============ 01 · PRENOTA: la macchina da scrivere del negozio batte la prenotazione.
        Il calendario completo è nella pagina /prenota ============ -->
-  <section class="disp-sezione banda-blu" id="posti" aria-labelledby="disp-titolo">
-    <div class="contenitore disp">
-      <div class="disp-testa">
+  <section class="disp-sezione banda-blu pz" id="posti" aria-labelledby="disp-titolo">
+    <div class="contenitore pz-griglia">
+      <div class="pz-testo">
         <p class="occhiello occhiello-chiaro"><span>01</span>Prenota</p>
-        <h2 id="disp-titolo" class="disp-titolo">Prenoti in 30 secondi, <em>paghi quando arrivi.</em></h2>
+        <h2 id="disp-titolo" class="disp-titolo pz-titolo">Prenoti oggi,<br><em>lavori domani.</em></h2>
+        <p class="pz-sotto">Scegli il giorno sul calendario, lasci nome e telefono. Si paga in negozio, quando arrivi.</p>
+        <p class="pz-posti"><span class="punto-vivo" aria-hidden="true"></span><span data-posti-oggi>Posti liberi ogni giorno</span></p>
+        <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="disponibilita">
+          <span class="tasto-faccia">Scegli il giorno<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+        </a>
+        <p class="pz-nota">Disdetta gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span>. <a href="/prenota" data-pos="disponibilita-formule">Carnet e mensile</a></p>
       </div>
 
-      <div class="disp-scheda ps">
-        <div class="ps-testo">
-          <p class="ps-posti"><span class="punto-vivo" aria-hidden="true"></span><span data-posti-oggi>Posti liberi ogni giorno</span></p>
-          <h3 class="ps-titolo">La tua scrivania <em>ti aspetta.</em></h3>
-          <ol class="ps-passi">
-            <li><span class="ps-icona"><svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg></span><span><strong>Scegli il giorno</strong><small>Dal calendario, con i posti liberi in tempo reale</small></span></li>
-            <li><span class="ps-icona"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></span><span><strong>Lascia nome e telefono</strong><small>Ricevi subito la conferma via email</small></span></li>
-            <li><span class="ps-icona"><svg class="ico" aria-hidden="true"><use href="#i-banconota"/></svg></span><span><strong>Paghi in sede</strong><small>Contanti o carta, il giorno che arrivi</small></span></li>
-          </ol>
-          <a class="btn btn-ocra btn-grande ps-cta" href="/prenota?pacchetto=giornata" data-pos="disponibilita"><span>Prenota la tua scrivania</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <p class="ps-sotto">Disdici gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span>. <a href="/prenota" data-pos="disponibilita-formule">Carnet o mensile ›</a></p>
-        </div>
+      <!-- la scena: lampada, pianta, tazza e la macchina da scrivere che compila il foglio -->
+      <figure class="pz-scena" aria-hidden="true">
+        <svg viewBox="0 0 560 400" class="mc" data-macchina>
+          <defs>
+            <linearGradient id="mc-cono" x1="1" y1="0" x2="0.35" y2="1">
+              <stop offset="0" stop-color="#FFE7A8" stop-opacity=".55"/>
+              <stop offset="1" stop-color="#DDB05C" stop-opacity="0"/>
+            </linearGradient>
+            <radialGradient id="mc-pozza" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#FFE3A0" stop-opacity=".55"/>
+              <stop offset="1" stop-color="#FFE3A0" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
 
-        <!-- il disegno: la scrivania, il portatile che "scrive" la prenotazione, il timbro -->
-        <div class="ps-disegno" aria-hidden="true">
-          <svg viewBox="0 0 440 340" class="ps-svg">
-            <circle cx="225" cy="170" r="150" class="d-sfondo"/>
-            <line x1="20" y1="300" x2="420" y2="300" class="d-pavimento"/>
-            <!-- luce della lampada -->
-            <polygon points="352,128 296,200 400,200" class="d-luce"/>
-            <!-- pianta -->
-            <g class="d-pianta">
-              <ellipse cx="76" cy="150" rx="9" ry="22" transform="rotate(-24 76 150)" class="d-foglia"/>
-              <ellipse cx="96" cy="146" rx="9" ry="24" transform="rotate(18 96 146)" class="d-foglia"/>
-              <ellipse cx="86" cy="140" rx="8" ry="26" class="d-foglia d-foglia-chiara"/>
-              <rect x="72" y="166" width="28" height="34" rx="4" class="d-vaso"/>
+          <!-- luce della lampada -->
+          <g class="mc-luce">
+            <polygon points="489.6,192 508.4,220 452,326 214,326"/>
+            <ellipse cx="350" cy="327" rx="150" ry="9" fill="url(#mc-pozza)"/>
+          </g>
+
+          <!-- pianta -->
+          <g class="mc-pianta">
+            <path d="M58 282 C48 246 46 212 54 176 C62 208 66 246 64 282 Z" class="mc-foglia"/>
+            <path d="M64 282 C66 240 76 214 92 194 C86 226 78 256 72 282 Z" class="mc-foglia mc-foglia-2"/>
+            <path d="M52 282 C44 254 32 236 18 226 C30 248 38 266 44 282 Z" class="mc-foglia mc-foglia-3"/>
+            <path d="M60 282 C62 254 58 228 48 206 C60 222 68 250 68 282 Z" class="mc-foglia mc-foglia-2"/>
+          </g>
+          <rect x="33" y="278" width="52" height="10" rx="2" class="mc-vaso-bordo"/>
+          <path d="M37 288 L81 288 L77 326 L41 326 Z" class="mc-vaso"/>
+
+          <!-- scrivania -->
+          <rect x="14" y="326" width="532" height="14" class="mc-piano"/>
+          <rect x="14" y="326" width="532" height="2.5" class="mc-piano-luce"/>
+          <rect x="22" y="340" width="516" height="6" class="mc-piano-sotto"/>
+          <rect x="44" y="346" width="12" height="60" class="mc-gamba"/>
+          <rect x="398" y="346" width="112" height="60" rx="2" class="mc-cassettiera"/>
+          <line x1="398" y1="372" x2="510" y2="372" class="mc-cassetto-riga"/>
+          <rect x="440" y="356" width="28" height="4" rx="2" class="mc-maniglia"/>
+          <rect x="440" y="384" width="28" height="4" rx="2" class="mc-maniglia"/>
+
+          <!-- tazza -->
+          <path d="M424 288 q5 -9 0 -18 q-5 -9 0 -18" class="mc-vapore"/>
+          <path d="M436 290 q5 -9 0 -18 q-5 -9 0 -18" class="mc-vapore mc-vapore-2"/>
+          <path d="M414 300 L446 300 L443 322 Q442 326 437 326 L423 326 Q418 326 417 322 Z" class="mc-tazza"/>
+          <path d="M445 305 q11 0 11 7 q0 7 -12 7" class="mc-manico"/>
+
+          <!-- lampada -->
+          <ellipse cx="506" cy="324" rx="26" ry="5" class="mc-lampada-base"/>
+          <path d="M506 322 L490 254 L530 192" class="mc-braccio"/>
+          <circle cx="490" cy="254" r="5" class="mc-snodo"/>
+          <path d="M527.5 177 L538 191 L508.4 220 Q494 211 489.6 192 Z" class="mc-paralume"/>
+          <path d="M489.6 192 Q494 211 508.4 220" class="mc-bocca"/>
+          <circle cx="533" cy="184" r="5" class="mc-snodo"/>
+
+          <!-- ombra della macchina -->
+          <ellipse cx="290" cy="327" rx="128" ry="5" class="mc-ombra"/>
+
+          <!-- il carrello: rullo, manopole, leva e il foglio (si sposta mentre scrive) -->
+          <g class="mc-carrello" data-carrello style="transform: translate(56px, 0)">
+            <g class="mc-foglio" data-foglio>
+              <rect x="222" y="150" width="136" height="160" class="mc-carta"/>
+              <g class="mc-intestazione">
+                <rect x="234" y="161" width="11" height="5" rx="2.5"/>
+                <rect x="234" y="169" width="11" height="5" rx="2.5"/>
+                <rect x="234" y="166.4" width="11" height="1.6" class="mc-intestazione-ocra"/>
+                <text x="250" y="171">BAGNARINO COWORKING</text>
+                <line x1="234" y1="182" x2="346" y2="182"/>
+              </g>
+              <text x="234" y="208" class="mc-riga" xml:space="preserve" data-riga></text>
+              <text x="234" y="221" class="mc-riga" xml:space="preserve" data-riga></text>
+              <text x="234" y="234" class="mc-riga" xml:space="preserve" data-riga></text>
+              <text x="234" y="247" class="mc-riga" xml:space="preserve" data-riga></text>
+              <g class="mc-timbro-posa" transform="rotate(-9 302 277)">
+                <g class="mc-timbro" data-timbro>
+                  <rect x="254" y="262" width="96" height="30" rx="4"/>
+                  <text x="302" y="282" text-anchor="middle">PRENOTATO</text>
+                </g>
+              </g>
             </g>
-            <!-- scrivania -->
-            <rect x="60" y="214" width="10" height="86" class="d-gamba"/>
-            <rect x="372" y="214" width="10" height="86" class="d-gamba"/>
-            <rect x="292" y="214" width="72" height="62" rx="3" class="d-cassetti"/>
-            <line x1="292" y1="235" x2="364" y2="235" class="d-linea"/><line x1="292" y1="255" x2="364" y2="255" class="d-linea"/>
-            <line x1="320" y1="225" x2="336" y2="225" class="d-maniglia"/><line x1="320" y1="245" x2="336" y2="245" class="d-maniglia"/><line x1="320" y1="265" x2="336" y2="265" class="d-maniglia"/>
-            <rect x="40" y="200" width="364" height="15" rx="3" class="d-piano"/>
-            <!-- portatile -->
-            <rect x="140" y="112" width="104" height="82" rx="6" class="d-schermo"/>
-            <rect x="147" y="119" width="90" height="68" rx="3" class="d-display"/>
-            <text x="156" y="134" class="d-testo">BAGNARINO</text>
-            <line x1="156" y1="146" x2="214" y2="146" pathLength="1" class="d-riga d-riga-1"/>
-            <line x1="156" y1="158" x2="226" y2="158" pathLength="1" class="d-riga d-riga-2"/>
-            <line x1="156" y1="170" x2="200" y2="170" pathLength="1" class="d-riga d-riga-3"/>
-            <rect x="204" y="164" width="2.5" height="11" class="d-cursore"/>
-            <path d="M130 200 L254 200 L246 193 L138 193 Z" class="d-tastiera"/>
-            <!-- conferma -->
-            <g class="d-ok"><circle cx="244" cy="110" r="17"/><path d="M236 110 l6 6 l11 -12" pathLength="1"/></g>
-            <!-- tazza con il vapore -->
-            <path d="M276 184 q4 -8 0 -16 q-4 -8 0 -16" class="d-vapore"/>
-            <path d="M286 184 q4 -8 0 -16 q-4 -8 0 -16" class="d-vapore d-vapore-2"/>
-            <rect x="268" y="186" width="26" height="14" rx="3" class="d-tazza"/>
-            <path d="M294 189 q8 0 8 5 q0 5 -8 5" class="d-manico"/>
-            <!-- lampada -->
-            <ellipse cx="338" cy="199" rx="20" ry="4" class="d-lampada-base"/>
-            <path d="M338 198 L326 152 L352 126" class="d-braccio"/>
-            <path d="M340 114 L366 112 L362 136 Z" class="d-paralume"/>
-            <!-- timbro "prenotato" -->
-            <g transform="rotate(-12 330 66)"><g class="d-timbro">
-              <rect x="268" y="46" width="124" height="40" rx="6"/>
-              <text x="330" y="72" text-anchor="middle">PRENOTATO</text>
-            </g></g>
-          </svg>
-        </div>
-      </div>
+            <path d="M196 214 C182 202 170 196 154 190" class="mc-leva"/>
+            <circle cx="152" cy="189" r="4.5" class="mc-leva-pomo"/>
+            <rect x="196" y="212" width="188" height="20" rx="10" class="mc-rullo"/>
+            <rect x="204" y="215" width="172" height="2" rx="1" class="mc-rullo-luce"/>
+            <circle cx="190" cy="222" r="12" class="mc-manopola"/><circle cx="190" cy="222" r="4.5" class="mc-manopola-centro"/>
+            <circle cx="390" cy="222" r="12" class="mc-manopola"/><circle cx="390" cy="222" r="4.5" class="mc-manopola-centro"/>
+          </g>
+          <g class="mc-ding" data-ding><path d="M406 196 q6 -6 0 -12"/><path d="M413 200 q10 -10 0 -20"/></g>
+
+          <!-- corpo della macchina -->
+          <path d="M206 232 L374 232 Q384 232 386 242 L390 254 L190 254 L194 242 Q196 232 206 232 Z" class="mc-ponte"/>
+          <ellipse cx="226" cy="243" rx="16" ry="5.5" class="mc-bobina"/>
+          <ellipse cx="354" cy="243" rx="16" ry="5.5" class="mc-bobina"/>
+          <path d="M286 237 L294 237 L290 232 Z" class="mc-guida"/>
+          <text x="290" y="250" text-anchor="middle" class="mc-marchio">BAGNARINO</text>
+          <path d="M190 254 L390 254 L410 318 Q412 326 402 326 L178 326 Q168 326 170 318 Z" class="mc-corpo"/>
+          <path d="M370 254 L390 254 L410 318 Q412 326 402 326 L392 326 Z" class="mc-corpo-ombra"/>
+          <g class="mc-tastiera" data-tastiera>
+                <g class="mc-tasto"><circle cx="222" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="222" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="237" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="237" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="252" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="252" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="267" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="267" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="282" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="282" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="297" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="297" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="312" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="312" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="327" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="327" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="342" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="342" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="357" cy="267.4" r="6.6" class="mc-tasto-base"/><circle cx="357" cy="266" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="214" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="214" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="229" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="229" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="244" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="244" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="259" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="259" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="274" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="274" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="289" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="289" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="304" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="304" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="319" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="319" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="334" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="334" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="349" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="349" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="364" cy="283.4" r="6.6" class="mc-tasto-base"/><circle cx="364" cy="282" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="206" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="206" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="221" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="221" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="236" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="236" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="251" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="251" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="266" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="266" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="281" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="281" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="296" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="296" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="311" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="311" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="326" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="326" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="341" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="341" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+                <g class="mc-tasto"><circle cx="356" cy="299.4" r="6.6" class="mc-tasto-base"/><circle cx="356" cy="298" r="5.8" class="mc-tasto-cap"/></g>
+            <rect x="246" y="308" width="88" height="8" rx="4" class="mc-spazio"/>
+          </g>
+        </svg>
+      </figure>
     </div>
   </section>
 
-  <!-- ============ 02 · IL NEGOZIO: la foto dell'ingresso e come arrivi ============ -->
+  <!-- ============ 02 · IL NEGOZIO: la porta giusta e l'orario appeso ============ -->
   <section class="sezione negozio" id="negozio" aria-labelledby="negozio-titolo">
-    <div class="contenitore">
-      <div class="negozio-testa">
-        <div>
-          <p class="occhiello"><span>02</span>Il negozio</p>
-          <h2 id="negozio-titolo" class="titolo-sezione">Un negozio vero, <em>in centro dal 1983.</em></h2>
-        </div>
-        <p class="negozio-lead">Dal <span data-cfg="azienda.dal">1983</span> vendiamo e ripariamo <strong>macchine per l’ufficio</strong>. Oggi il negozio di corso Lamarmora è anche <strong>il tuo ufficio</strong>.</p>
-      </div>
+    <div class="contenitore neg">
+      <figure class="neg-foto">
+        <img src="/img/foto/esterno-960.webp" srcset="/img/foto/esterno-560.webp 560w, /img/foto/esterno-960.webp 960w" sizes="(min-width: 900px) 620px, 100vw" width="960" height="960" loading="lazy" decoding="async" alt="L’ingresso del negozio Bagnarino in corso Lamarmora 46: la porta con l’insegna Bagnarino S.r.l. e i vasi rossi">
+        <svg class="neg-segno" viewBox="0 0 480 480" aria-hidden="true" data-segno>
+          <path d="M214 132 C176 128 138 150 126 196" pathLength="1" class="neg-freccia"/>
+          <path d="M116 184 L126 198 L139 186" pathLength="1" class="neg-punta"/>
+        </svg>
+        <figcaption class="neg-etichetta">Si entra da qui</figcaption>
+      </figure>
 
-      <div class="negozio-scena">
-        <figure class="foto-cornice negozio-foto" data-foto-rivela>
-          <div class="foto-maschera"><img src="/img/foto/esterno-960.webp" srcset="/img/foto/esterno-560.webp 560w, /img/foto/esterno-960.webp 960w" sizes="(min-width: 900px) 760px, 100vw" width="960" height="960" loading="lazy" decoding="async" alt="L’ingresso del negozio Bagnarino in corso Lamarmora 46, con le insegne Olivetti e i vasi rossi"></div>
-          <figcaption class="negozio-targa"><svg class="ico" aria-hidden="true"><use href="#i-map-pin"/></svg><span>L’ingresso · Corso Lamarmora 46</span></figcaption>
-        </figure>
+      <div class="neg-testo">
+        <p class="occhiello"><span>02</span>Il negozio</p>
+        <h2 id="negozio-titolo" class="titolo-sezione neg-titolo">Un negozio Olivetti, <em>con le scrivanie dentro.</em></h2>
+        <p class="neg-lead">Bagnarino vende e ripara macchine per l’ufficio dal <span data-cfg="azienda.dal">1983</span>. Da quest’anno nel negozio ci sono anche <span data-cfg="postazioni">8</span> scrivanie, da prenotare a giornata o a mese.</p>
 
-        <aside class="ingresso" aria-labelledby="ingresso-titolo">
-          <p class="ingresso-occhiello">Come arrivi</p>
-          <h3 id="ingresso-titolo" class="ingresso-titolo">Entri da qui, <em>ti accoglie Marcella.</em></h3>
-          <p class="ingresso-testo">È la porta con le insegne Olivetti e i vasi rossi. Al banco Marcella, la titolare, ti mostra la scrivania e ti dà il wi-fi. Poi ti lascia lavorare.</p>
-          <ul class="ingresso-righe">
-            <li><span class="ingresso-ico"><svg class="ico" aria-hidden="true"><use href="#i-map-pin"/></svg></span><span><strong><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.citta">Alessandria</span></strong><small>In pieno centro, comodo a piedi e in auto</small></span></li>
-            <li><span class="ingresso-ico"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></span><span><strong data-cfg="orari.testoBreve">Lun–Ven 9:30–18:30</strong><small>Sabato e domenica chiuso</small></span></li>
-            <li><span class="ingresso-ico"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></span><span><a class="ingresso-tel" data-tel data-tel-testo data-pos="ingresso" href="tel:+393472249457">347 224 9457</a><small>Chiama o scrivi a Marcella</small></span></li>
-          </ul>
-          <div class="ingresso-azioni">
-            <a class="btn btn-ocra" data-indicazioni data-pos="ingresso" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria"><svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg><span>Portami qui</span></a>
-            <a class="btn btn-chiaro-filo" data-wa="visita" data-pos="ingresso" href="https://wa.me/393472249457"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Passo a vedere</span></a>
+        <div class="neg-info">
+          <div class="cartellino" data-cartellino>
+            <svg class="cartellino-filo" viewBox="0 0 120 44" aria-hidden="true">
+              <path d="M18 42 L60 6 L102 42"/>
+              <circle cx="60" cy="6" r="4.5"/>
+            </svg>
+            <div class="cartellino-carta">
+              <p class="cartellino-stato" data-stato-negozio><span class="cartellino-luce" aria-hidden="true"></span><span data-stato-testo>Orario</span></p>
+              <dl class="cartellino-orari" data-orari-tabella>
+                <div><dt>Lun – Ven</dt><dd>9:30 – 18:30</dd></div>
+                <div><dt>Sab – Dom</dt><dd>chiuso</dd></div>
+              </dl>
+            </div>
           </div>
-        </aside>
-      </div>
 
-      <dl class="fatti negozio-fatti">
-        <div><dt>Concessionario Olivetti dal</dt><dd data-cfg="azienda.dal">1983</dd></div>
-        <div><dt>Scrivanie nel negozio</dt><dd data-cfg="postazioni">8</dd></div>
-        <div><dt>Al giorno, tutto incluso</dt><dd data-prezzo="giornata">€25</dd></div>
-      </dl>
+          <div class="neg-contatti">
+            <p class="neg-indirizzo"><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span><br><span data-cfg="azienda.citta">Alessandria</span></p>
+            <p class="neg-tel">Per domande chiama il <a data-tel data-tel-testo data-pos="negozio" href="tel:+393472249457">347 224 9457</a></p>
+            <div class="neg-azioni">
+              <a class="btn btn-pieno" data-indicazioni data-pos="negozio" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria"><svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg><span>Apri in Google Maps</span></a>
+              <a class="btn btn-wa" data-wa="visita" data-pos="negozio" href="https://wa.me/393472249457"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Scrivi su WhatsApp</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

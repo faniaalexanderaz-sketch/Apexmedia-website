@@ -18,6 +18,9 @@
 @font-face { font-family: 'Hanken Grotesk'; src: url('/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Mono'; src: url('/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Mono'; src: url('/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+/* la macchina da scrivere del negozio: solo per i fogli battuti a macchina e il cartellino dell'orario */
+@font-face { font-family: 'Courier Prime'; src: url('/fonts/courier-prime-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Courier Prime'; src: url('/fonts/courier-prime-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
 
 :root {
   --notte: #111922;
@@ -46,6 +49,7 @@
   --f-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   --f-titoli: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --f-testo: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-macchina: 'Courier Prime', 'Courier New', monospace;
   --f-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
 
   --raggio: 4px;
@@ -256,30 +260,6 @@ strong { font-weight: 600; }
 .apertura-cta { display: flex; flex-direction: column; gap: 10px; }
 .apertura-titolo, .apertura-sotto { text-shadow: 0 2px 18px rgba(10, 16, 24, .45); }
 
-/* ---------- pulsanti dell'apertura ---------- */
-.cta-hero {
-  position: relative; overflow: hidden; isolation: isolate;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  min-height: 70px; padding: 10px 10px 10px 22px; border-radius: 6px;
-  background: linear-gradient(180deg, #E4BC6C 0%, var(--ocra) 100%); color: var(--notte); text-decoration: none;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -2px 0 rgba(0, 0, 0, .12), 0 14px 32px -12px rgba(201, 151, 59, .7);
-  transition: transform .2s var(--curva), box-shadow .2s var(--curva), filter .2s var(--curva);
-}
-.cta-hero:hover { text-decoration: none; filter: brightness(1.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -2px 0 rgba(0, 0, 0, .12), 0 18px 38px -12px rgba(221, 176, 92, .85); }
-.cta-hero:active { transform: translateY(1px); }
-.cta-hero-testo { display: flex; flex-direction: column; gap: 3px; text-align: left; }
-.cta-hero-testo strong { font-family: var(--f-titoli); font-size: 1.14rem; font-weight: 700; letter-spacing: -.005em; line-height: 1.15; }
-.cta-hero-testo small { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; opacity: .72; }
-.cta-hero-freccia {
-  flex: 0 0 auto; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 4px;
-  background: var(--notte); color: var(--ocra-vivo); transition: transform .25s var(--curva);
-}
-.cta-hero-freccia .ico { width: 22px; height: 22px; }
-.cta-hero:hover .cta-hero-freccia { transform: translateX(3px); }
-.cta-hero::after {
-  content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: -40%; width: 30%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .45), transparent); transform: skewX(-20deg) translateX(-120%);
-}
 .cta-wa {
   display: flex; align-items: center; justify-content: center; gap: 12px;
   min-height: 58px; padding: 10px 22px; border-radius: 6px;
@@ -291,11 +271,6 @@ strong { font-weight: 600; }
 .cta-wa:hover { text-decoration: none; background: rgba(250, 246, 238, .12); border-color: rgba(250, 246, 238, .5); }
 .cta-wa-ico { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #25D366; color: #fff; }
 .cta-wa-ico .ico { width: 17px; height: 17px; }
-.cta-hero:focus-visible, .cta-wa:focus-visible { outline: 3px solid var(--ocra-vivo); outline-offset: 3px; }
-@media (prefers-reduced-motion: no-preference) {
-  .cta-hero::after { animation: cta-luce 5s 1.4s var(--curva) infinite; }
-}
-@keyframes cta-luce { 0% { transform: skewX(-20deg) translateX(-120%); } 22%, 100% { transform: skewX(-20deg) translateX(560%); } }
 .apertura-fatti { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 28px; margin: 2.2rem 0 0; padding-top: 18px; border-top: 1px solid var(--linea-scura); }
 .apertura-fatti > div { display: flex; flex-direction: column-reverse; gap: 4px; }
 .apertura-fatti dt { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chiaro-70); }
@@ -329,7 +304,7 @@ strong { font-weight: 600; }
 @keyframes foto-entra { from { transform: scale(1.06); } }
 @keyframes appare { from { opacity: 0; transform: translateY(14px); } }
 
-@media (min-width: 560px) { .apertura-cta { flex-direction: row; flex-wrap: wrap; align-items: stretch; } .cta-hero { min-width: 340px; } .cta-wa { min-height: 70px; padding: 10px 26px; } }
+@media (min-width: 560px) { .apertura-cta { flex-direction: row; flex-wrap: wrap; align-items: flex-start; } .cta-wa { min-height: 70px; padding: 10px 26px; } }
 @media (min-width: 900px) {
   .apertura { min-height: max(680px, 100vh); }
   .apertura-velo { background: linear-gradient(90deg, rgba(13, 23, 37, .94) 0%, rgba(13, 23, 37, .74) 38%, rgba(13, 23, 37, .26) 72%), linear-gradient(180deg, rgba(13, 23, 37, .5) 0%, rgba(13, 23, 37, 0) 25%, rgba(13, 23, 37, 0) 65%, rgba(17, 25, 34, .8) 100%), rgba(27, 42, 58, .22); }
@@ -1109,9 +1084,6 @@ body.menu-aperto { overflow: hidden; }
 .scheda-chiara { background: var(--avorio); color: var(--inchiostro); border-radius: 14px; padding: 22px 16px 24px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
 @media (min-width: 600px) { .scheda-chiara { padding: 30px 30px 32px; } }
 
-/* 01 · posti liberi: testo sul blu, scheda chiara con i giorni che sconfina sotto */
-.negozio { padding-top: calc(80px + 88px); }
-@media (min-width: 900px) { .negozio { padding-top: calc(128px + 120px); } }
 
 /* 08 · per chi è: schede chiare sul blu, che sconfinano in "dove siamo" */
 .perchi-sezione.banda-blu { padding-bottom: 0; }
@@ -1189,51 +1161,6 @@ body.menu-aperto { overflow: hidden; }
 .garanzia-icona { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--inchiostro); color: var(--ocra-vivo); }
 .garanzia-icona .ico { display: block; width: 26px; height: 26px; stroke-width: 1.75; }
 @media (min-width: 900px) { .prezzi-garanzie { grid-template-columns: repeat(4, 1fr); gap: 24px 32px; margin-top: 3.6rem; } .garanzia-icona { width: 64px; height: 64px; } .garanzia-icona .ico { width: 30px; height: 30px; } }
-
-/* =============================================================
-   02 · IL NEGOZIO, rifatto: foto grande dell'ingresso + scheda "come arrivi"
-   ============================================================= */
-.negozio-testa { display: grid; gap: 18px; margin-bottom: 32px; }
-.negozio-testa .titolo-sezione { margin-bottom: 0; }
-.negozio-lead { margin: 0; font-family: var(--f-display); font-size: clamp(1.3rem, 4.6vw, 1.75rem); line-height: 1.35; letter-spacing: -.01em; color: var(--inchiostro); max-width: 30ch; }
-.negozio-lead strong { font-weight: 400; font-style: italic; color: var(--ocra-testo); }
-.negozio-scena { position: relative; display: grid; }
-.negozio-foto { position: relative; margin: 0 calc(var(--margine) * -1); }
-.negozio-foto .foto-maschera { border-radius: 0; }
-.negozio-foto .foto-maschera img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 30% 50%; }
-.negozio-foto .negozio-targa { position: absolute; left: 14px; top: 14px; margin: 0; display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 999px; background: rgba(17, 25, 34, .78); color: var(--avorio); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); font-size: .68rem; letter-spacing: .07em; }
-.negozio-targa .ico { width: 14px; height: 14px; color: var(--ocra-vivo); }
-.negozio-foto .negozio-targa > span:last-child { color: var(--avorio); white-space: normal; }
-
-.ingresso { position: relative; z-index: 2; margin: -96px 0 0; padding: 26px 20px 24px; border-radius: 14px; background: var(--inchiostro); color: var(--avorio); box-shadow: 0 30px 56px -28px rgba(17, 25, 34, .75); border-top: 5px solid var(--ocra); }
-.ingresso-occhiello { margin: 0 0 8px; font-family: var(--f-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ocra-vivo); }
-.ingresso-titolo { margin: 0 0 10px; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.7rem, 6vw, 2.2rem); line-height: 1.1; letter-spacing: -.015em; color: var(--avorio); }
-.ingresso-titolo em { color: var(--ocra-vivo); }
-.ingresso-testo { margin: 0 0 18px; color: var(--chiaro-70); line-height: 1.6; }
-.ingresso-righe { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--linea-scura); }
-.ingresso-righe li { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--linea-scura); }
-.ingresso-righe li > span:last-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.ingresso-righe strong, .ingresso-tel { font-size: 1.05rem; font-weight: 600; color: var(--avorio); }
-.ingresso-tel { text-decoration: underline; text-decoration-color: var(--ocra); text-underline-offset: 4px; }
-.ingresso-righe small { font-size: .86rem; color: var(--chiaro-70); }
-.ingresso-ico { flex-shrink: 0; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(221, 176, 92, .14); color: var(--ocra-vivo); }
-.ingresso-ico .ico { width: 20px; height: 20px; }
-.ingresso-azioni { display: grid; gap: 10px; }
-.ingresso-azioni .btn { width: 100%; }
-.negozio-fatti { margin-top: 36px; justify-content: space-between; border-top-color: var(--linea-forte); }
-@media (min-width: 600px) { .ingresso-azioni { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 900px) {
-  .negozio-testa { grid-template-columns: 6fr 5fr; gap: 64px; align-items: end; margin-bottom: 48px; }
-  .negozio-scena { grid-template-columns: 8fr 4fr; align-items: center; }
-  .negozio-foto { grid-column: 1 / 3; grid-row: 1; margin: 0; width: 72%; }
-  .negozio-foto .foto-maschera { border-radius: 10px; }
-  .negozio-foto .foto-maschera img { aspect-ratio: 5 / 4; }
-  .negozio-foto .negozio-targa { left: 20px; top: 20px; font-size: .72rem; }
-  .ingresso { grid-column: 2; grid-row: 1; margin: 0; width: 470px; justify-self: end; padding: 34px 32px 32px; }
-  .ingresso-azioni { grid-template-columns: 1fr 1fr; }
-  .negozio-fatti { margin-top: 56px; gap: 24px 48px; }
-}
-@media (min-width: 1200px) { .ingresso { width: 500px; } }
 
 /* =============================================================
    05 · UNA GIORNATA: lo scontrino che esce dal registratore di cassa
@@ -1349,91 +1276,170 @@ body.menu-aperto { overflow: hidden; }
 .sintesi-giorno .link-cambia { white-space: nowrap; }
 
 /* =============================================================
-   01 · PRENOTA: testo, tre passi, un pulsante e un disegno animato
+   IL TASTO: il pulsante principale, fatto come un tasto vero.
+   La faccia ocra poggia su un fianco più scuro: al passaggio si
+   alza, alla pressione scende. La freccia è un tasto tondo Olivetti.
    ============================================================= */
-.disp-sezione.banda-blu { padding: 72px 0 0; border-bottom: 4px solid var(--ocra); }
-.disp { display: grid; gap: 26px; }
-.disp-testa { max-width: 760px; }
-.disp-scheda { position: relative; z-index: 2; margin-bottom: -88px; border-radius: 16px; background: var(--avorio); color: var(--inchiostro); box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
-.ps { display: grid; overflow: hidden; }
-.ps-testo { padding: 24px 20px 26px; }
-.ps-posti { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 7px 14px; border-radius: 999px; background: #E8F3EC; color: #1E6B52; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; }
-.ps-titolo { margin: 0 0 18px; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.9rem, 6.4vw, 2.6rem); line-height: 1.05; letter-spacing: -.02em; }
-.ps-titolo em { color: var(--ocra-testo); }
-.ps-passi { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 12px; counter-reset: passo; }
-.ps-passi li { display: flex; align-items: center; gap: 14px; }
-.ps-icona { position: relative; display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 14px; background: var(--inchiostro); color: var(--ocra-vivo); counter-increment: passo; }
-.ps-icona::after { content: counter(passo); position: absolute; top: -6px; right: -6px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--ocra); color: var(--notte); font: 600 .7rem var(--f-mono); }
-.ps-icona .ico { width: 23px; height: 23px; }
-.ps-passi strong { display: block; font-size: 1.05rem; line-height: 1.25; }
-.ps-passi small { display: block; font-size: .9rem; line-height: 1.35; color: var(--inchiostro-morbido); }
-.ps-cta { width: 100%; }
-.ps-sotto { margin: 12px 0 0; font-size: .9rem; text-align: center; color: var(--inchiostro-morbido); }
-.ps-sotto a { font-weight: 700; color: var(--inchiostro); text-decoration-color: var(--ocra); text-underline-offset: 3px; white-space: nowrap; }
-.ps-disegno { order: -1; display: grid; place-items: center; padding: 18px 12px 0; background: linear-gradient(180deg, #F3EADA, var(--avorio)); }
-.ps-svg { display: block; width: 100%; max-width: 380px; height: auto; }
+.tasto {
+  position: relative; display: flex; width: 100%; padding-bottom: 6px; border-radius: 14px;
+  background: #8E6A24; text-decoration: none; -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .28), 0 20px 34px -18px rgba(201, 151, 59, .75);
+  transition: box-shadow .2s var(--curva);
+}
+.tasto-faccia {
+  flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  min-height: 64px; padding: 8px 8px 8px 24px; border-radius: 13px;
+  background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, .3), transparent 62%), linear-gradient(180deg, #E8C273 0%, #D6A548 55%, var(--ocra) 100%);
+  color: var(--notte); font-family: var(--f-titoli); font-size: 1.16rem; font-weight: 700; line-height: 1.1; letter-spacing: -.005em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  transition: transform .14s var(--curva), filter .2s var(--curva);
+}
+.tasto-freccia {
+  flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+  background: var(--notte); color: var(--ocra-vivo);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .12);
+  transition: transform .25s var(--curva);
+}
+.tasto-freccia .ico { width: 22px; height: 22px; }
+.tasto:hover { text-decoration: none; box-shadow: 0 2px 0 rgba(0, 0, 0, .28), 0 26px 40px -18px rgba(221, 176, 92, .85); }
+.tasto:hover .tasto-faccia { transform: translateY(-2px); filter: brightness(1.04); }
+.tasto:hover .tasto-freccia { transform: translateX(3px); }
+.tasto:active .tasto-faccia { transform: translateY(5px); filter: brightness(.97); }
+.tasto:focus-visible, .cta-wa:focus-visible { outline: 3px solid var(--ocra-vivo); outline-offset: 4px; }
+@media (min-width: 560px) { .tasto { width: auto; min-width: 330px; } }
+
+/* =============================================================
+   01 · PRENOTA: la macchina da scrivere batte la prenotazione
+   ============================================================= */
+.pz.disp-sezione { padding: 80px 0 0; border-top: 0; overflow: hidden; }
+.pz-griglia { display: grid; gap: 40px; }
+.pz-titolo { margin: 0 0 18px; font-size: clamp(2.7rem, 10vw, 4.8rem); line-height: .96; letter-spacing: -.035em; }
+.pz-sotto { margin: 0 0 22px; max-width: 34ch; font-size: 1.12rem; line-height: 1.55; color: var(--chiaro-70); }
+.pz-posti { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; font-family: var(--f-mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--avorio); }
+.pz-posti .punto-vivo, .pz-posti .punto-vivo::after { background-color: #4ADE80; border-color: #4ADE80; }
+.pz-nota { margin: 16px 0 0; font-size: .92rem; color: var(--chiaro-70); }
+.pz-nota a { color: var(--avorio); font-weight: 600; text-decoration-color: var(--ocra); text-underline-offset: 4px; white-space: nowrap; }
+.pz-scena { margin: 0 calc(var(--margine) * -1); }
 @media (min-width: 900px) {
-  .disp-sezione.banda-blu { padding: 96px 0 0; }
-  .disp { gap: 36px; }
-  .disp-scheda { margin-bottom: -120px; }
-  .ps { grid-template-columns: 6fr 5fr; align-items: stretch; }
-  .ps-testo { padding: 40px 44px 40px; }
-  .ps-cta { width: auto; }
-  .ps-sotto { text-align: left; }
-  .ps-disegno { order: 0; padding: 24px; background: linear-gradient(135deg, #F3EADA, var(--avorio)); }
-  .ps-svg { max-width: 460px; }
+  .pz.disp-sezione { padding: 120px 0 0; }
+  .pz-griglia { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; align-items: end; }
+  .pz-testo { padding-bottom: 108px; }
+  .pz-scena { margin: 0 -24px 0 0; }
 }
 
-/* il disegno: colori del marchio, linee d'inchiostro */
-.d-sfondo { fill: #EFE4D0; }
-.d-pavimento { stroke: var(--inchiostro); stroke-width: 2; stroke-linecap: round; opacity: .25; }
-.d-luce { fill: #F5DFAE; opacity: .55; }
-.d-foglia { fill: #1E6B52; } .d-foglia-chiara { fill: #3E8F6E; }
-.d-vaso { fill: #1E6471; }
-.d-gamba { fill: var(--inchiostro); }
-.d-cassetti { fill: #E6DECF; stroke: var(--inchiostro); stroke-width: 2; }
-.d-linea { stroke: var(--inchiostro); stroke-width: 2; }
-.d-maniglia { stroke: var(--ocra); stroke-width: 3; stroke-linecap: round; }
-.d-piano { fill: var(--ocra); }
-.d-schermo, .d-tastiera { fill: var(--inchiostro); }
-.d-display { fill: #24384D; }
-.d-testo { fill: var(--ocra-vivo); font-family: var(--f-mono); font-size: 8px; letter-spacing: .12em; }
-.d-riga { stroke: #F4EEE3; stroke-width: 4; stroke-linecap: round; opacity: .9; }
-.d-riga-2 { stroke: var(--ocra-vivo); }
-.d-cursore { fill: var(--ocra-vivo); }
-.d-ok circle { fill: #1E6B52; }
-.d-ok path { fill: none; stroke: #fff; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
-.d-vapore { fill: none; stroke: var(--inchiostro); stroke-width: 2; stroke-linecap: round; opacity: .35; }
-.d-tazza { fill: #F4EEE3; stroke: var(--inchiostro); stroke-width: 2; }
-.d-manico { fill: none; stroke: var(--inchiostro); stroke-width: 2; }
-.d-lampada-base, .d-paralume { fill: var(--inchiostro); }
-.d-braccio { fill: none; stroke: var(--inchiostro); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-.d-timbro rect { fill: rgba(250, 246, 238, .85); stroke: var(--ocra-testo); stroke-width: 3; stroke-dasharray: 2 0; }
-.d-timbro text { fill: var(--ocra-testo); font-family: var(--f-mono); font-size: 15px; font-weight: 600; letter-spacing: .14em; }
-
-/* l'animazione: il portatile scrive, arriva la spunta, si posa il timbro (ciclo di 7 secondi) */
+/* la scena: colori del negozio, il blu della fascia fa da parete */
+.mc { display: block; width: 100%; height: auto; overflow: visible; }
+.mc-luce { opacity: 0; transition: opacity .8s var(--curva); }
+.mc-luce polygon { fill: url(#mc-cono); }
+.mc.acceso .mc-luce { opacity: 1; }
+.mc-paralume { fill: var(--ocra); }
+.mc-bocca { fill: none; stroke: #7C6230; stroke-width: 3; stroke-linecap: round; transition: stroke .3s; }
+.mc.acceso .mc-bocca { stroke: #FFF2CF; }
+.mc-braccio { fill: none; stroke: #E8DCC2; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.mc-snodo { fill: var(--ocra); }
+.mc-lampada-base { fill: #0E141B; }
+.mc-foglia { fill: #2E7D5B; } .mc-foglia-2 { fill: #3E9A70; } .mc-foglia-3 { fill: #23664A; }
+.mc-vaso { fill: var(--timbro); } .mc-vaso-bordo { fill: #8F241F; }
+.mc-piano { fill: var(--ocra); } .mc-piano-luce { fill: #E8C273; } .mc-piano-sotto { fill: #8E6A24; }
+.mc-gamba { fill: #0E141B; }
+.mc-cassettiera { fill: #24384D; } .mc-cassetto-riga { stroke: var(--inchiostro); stroke-width: 2; } .mc-maniglia { fill: var(--ocra-vivo); }
+.mc-tazza { fill: var(--avorio); } .mc-manico { fill: none; stroke: var(--avorio); stroke-width: 3.5; }
+.mc-vapore { fill: none; stroke: rgba(250, 246, 238, .55); stroke-width: 2; stroke-linecap: round; opacity: 0; }
+.mc-ombra { fill: rgba(0, 0, 0, .35); }
+.mc-carta { fill: #FBF8F1; }
+.mc-intestazione rect { fill: var(--inchiostro); } .mc-intestazione .mc-intestazione-ocra { fill: var(--ocra); }
+.mc-intestazione text { font-family: var(--f-mono); font-size: 5.4px; font-weight: 500; letter-spacing: .16em; fill: var(--inchiostro); }
+.mc-intestazione line { stroke: var(--inchiostro); stroke-width: .6; opacity: .35; }
+.mc-riga { font-family: var(--f-macchina); font-size: 8px; fill: #1E2A38; white-space: pre; }
+.mc-timbro { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.mc-timbro rect { fill: rgba(180, 48, 42, .05); stroke: var(--timbro); stroke-width: 2.4; stroke-dasharray: 60 1.5 30 1 90 2; }
+.mc-timbro text { font-family: var(--f-macchina); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; fill: var(--timbro); }
+.mc-timbro.giu { opacity: .9; }
+.mc-leva { fill: none; stroke: #E8DCC2; stroke-width: 5; stroke-linecap: round; } .mc-leva-pomo { fill: #E8DCC2; }
+.mc-rullo { fill: #0E141B; } .mc-rullo-luce { fill: #3A4B5E; }
+.mc-manopola { fill: #E8DCC2; stroke: #BFAF8C; stroke-width: 1.5; } .mc-manopola-centro { fill: #BFAF8C; }
+.mc-ding { opacity: 0; } .mc-ding path { fill: none; stroke: var(--ocra-vivo); stroke-width: 2.2; stroke-linecap: round; }
+.mc-ponte { fill: #E3D6BB; } .mc-bobina { fill: #CDBE9E; } .mc-guida { fill: var(--timbro); }
+.mc-marchio { font-family: var(--f-mono); font-size: 6px; font-weight: 500; letter-spacing: .32em; fill: var(--ocra-testo); }
+.mc-corpo { fill: #EFE6D2; } .mc-corpo-ombra { fill: #D9CBAE; }
+.mc-tasto-base { fill: #BFAF8C; } .mc-tasto-cap { fill: var(--inchiostro); }
+.mc-tasto, .mc-spazio { transition: transform .07s; }
+.mc-tasto.giu, .mc-spazio.giu { transform: translateY(1.5px); }
+.mc-tasto.giu .mc-tasto-cap { fill: #2E3F52; }
+.mc-spazio { fill: var(--inchiostro); }
 @media (prefers-reduced-motion: no-preference) {
-  .d-riga { stroke-dasharray: 1; stroke-dashoffset: 1; animation: d-scrivi 7s var(--curva) infinite; }
-  .d-riga-2 { animation-name: d-scrivi-2; } .d-riga-3 { animation-name: d-scrivi-3; }
-  .d-cursore { animation: d-cursore 1s steps(1) infinite; }
-  .d-ok { transform-box: fill-box; transform-origin: center; animation: d-ok 7s var(--curva) infinite; }
-  .d-ok path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: d-spunta 7s var(--curva) infinite; }
-  .d-timbro { transform-box: fill-box; transform-origin: center; animation: d-timbro 7s cubic-bezier(.3, 1.4, .5, 1) infinite; }
-  .d-vapore { animation: d-vapore 3s ease-in-out infinite; }
-  .d-vapore-2 { animation-delay: 1.2s; }
-  .d-luce { animation: d-luce 4s ease-in-out infinite; }
-  .d-pianta { transform-box: fill-box; transform-origin: 50% 100%; animation: d-pianta 5s ease-in-out infinite; }
+  .mc.acceso .mc-luce { animation: mc-accendi 1s steps(1) 1; }
+  .mc-timbro.giu { animation: mc-timbro .42s cubic-bezier(.3, 1.6, .5, 1) both; }
+  .mc-ding.suona { animation: mc-ding .55s ease-out; }
+  .mc-vapore { animation: mc-vapore 3.2s ease-in-out infinite; }
+  .mc-vapore-2 { animation-delay: 1.4s; }
+  .mc-pianta { transform-box: fill-box; transform-origin: 50% 100%; animation: mc-pianta 6s ease-in-out infinite; }
 }
-@keyframes d-scrivi { 0% { stroke-dashoffset: 1; } 12%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
-@keyframes d-scrivi-2 { 0%, 12% { stroke-dashoffset: 1; } 26%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
-@keyframes d-scrivi-3 { 0%, 26% { stroke-dashoffset: 1; } 38%, 88% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
-@keyframes d-cursore { 50% { opacity: 0; } }
-@keyframes d-ok { 0%, 42% { transform: scale(0); } 50% { transform: scale(1.15); } 54%, 88% { transform: scale(1); } 96%, 100% { transform: scale(0); } }
-@keyframes d-spunta { 0%, 48% { stroke-dashoffset: 1; } 58%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
-@keyframes d-timbro { 0%, 56% { opacity: 0; transform: scale(1.8) rotate(8deg); } 64% { opacity: 1; transform: scale(1) rotate(0); } 88% { opacity: 1; transform: scale(1); } 96%, 100% { opacity: 0; transform: scale(1); } }
-@keyframes d-vapore { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .4; } 100% { opacity: 0; transform: translateY(-10px); } }
-@keyframes d-luce { 0%, 100% { opacity: .45; } 50% { opacity: .7; } }
-@keyframes d-pianta { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2.5deg); } }
+@keyframes mc-accendi { 0% { opacity: 0; } 12% { opacity: .9; } 22% { opacity: .15; } 38% { opacity: 1; } 50% { opacity: .55; } 64%, 100% { opacity: 1; } }
+@keyframes mc-timbro { from { opacity: 0; transform: scale(1.7); } to { opacity: .9; transform: scale(1); } }
+@keyframes mc-ding { 0% { opacity: 0; transform: translateX(-3px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateX(4px); } }
+@keyframes mc-vapore { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .7; } 100% { opacity: 0; transform: translateY(-12px); } }
+@keyframes mc-pianta { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2deg); } }
+
+/* =============================================================
+   02 · IL NEGOZIO: la porta giusta e l'orario appeso
+   ============================================================= */
+.neg { display: grid; gap: 40px; }
+.neg-foto { position: relative; margin: 0 calc(var(--margine) * -1); }
+.neg-foto img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.neg-segno { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.neg-segno path { fill: none; stroke: var(--avorio); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .55)); }
+.neg-etichetta {
+  position: absolute; left: 44.6%; top: 29.2%; transform: translateY(-50%) rotate(-3deg); transform-origin: left center;
+  padding: 7px 14px 8px; border-radius: 3px; background: var(--avorio); color: var(--inchiostro);
+  font-family: var(--f-display); font-style: italic; font-size: clamp(1.05rem, 3.6vw, 1.35rem); line-height: 1; white-space: nowrap;
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, .6);
+}
+.neg-titolo { margin-bottom: 18px; }
+.neg-lead { margin: 0 0 34px; max-width: 40ch; font-size: 1.12rem; line-height: 1.6; color: var(--inchiostro-morbido); }
+.neg-info { display: grid; gap: 34px; align-items: start; }
+
+/* il cartellino dell'orario, appeso a un chiodo */
+.cartellino { position: relative; width: min(100%, 260px); padding-top: 40px; transform-origin: 50% 4px; }
+.cartellino-filo { position: absolute; top: 0; left: 0; width: 100%; height: 46px; overflow: visible; }
+.cartellino-filo path { fill: none; stroke: var(--inchiostro); stroke-width: 1.4; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.cartellino-filo circle { fill: var(--inchiostro); }
+.cartellino-carta {
+  position: relative; padding: 22px 20px 18px; border-radius: 6px; background: #FFFDF8;
+  border: 1.5px solid var(--inchiostro);
+  box-shadow: inset 0 0 0 4px #FFFDF8, inset 0 0 0 5px rgba(27, 42, 58, .3), 0 22px 30px -20px rgba(17, 25, 34, .55);
+}
+.cartellino-carta::before, .cartellino-carta::after { content: ''; position: absolute; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--carta); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .35); }
+.cartellino-carta::before { left: calc(15% - 3.5px); } .cartellino-carta::after { right: calc(15% - 3.5px); }
+.cartellino-stato { display: flex; align-items: center; gap: 10px; margin: 6px 0 4px; font-family: var(--f-display); font-style: italic; font-size: 1.7rem; line-height: 1.05; color: var(--inchiostro); }
+.cartellino-luce { flex-shrink: 0; width: 11px; height: 11px; border-radius: 50%; background: var(--inchiostro-morbido); }
+.cartellino.aperto .cartellino-luce { background: var(--verde); box-shadow: 0 0 0 4px rgba(30, 138, 76, .16); }
+.cartellino-quando { margin: 0 0 14px; font-size: .9rem; color: var(--inchiostro-morbido); }
+.cartellino-orari { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--linea); }
+.cartellino-orari div { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--linea); font-family: var(--f-macchina); font-size: 1rem; }
+.cartellino-orari dt { font-weight: 700; } .cartellino-orari dd { margin: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .cartellino.visto { animation: cartellino-dondola 2.6s cubic-bezier(.3, .6, .4, 1) both; }
+  .cartellino:hover { animation: cartellino-dondola 2s cubic-bezier(.3, .6, .4, 1); }
+  .neg-segno path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .neg-segno.visto .neg-freccia { transition: stroke-dashoffset .9s var(--curva) .2s; stroke-dashoffset: 0; }
+  .neg-segno.visto .neg-punta { transition: stroke-dashoffset .35s var(--curva) 1s; stroke-dashoffset: 0; }
+  .neg-etichetta { opacity: 0; transform: translateY(-50%) rotate(-3deg) scale(.9); transition: opacity .4s var(--curva), transform .5s cubic-bezier(.3, 1.5, .5, 1); }
+  .neg-foto.visto .neg-etichetta { opacity: 1; transform: translateY(-50%) rotate(-3deg); }
+}
+@keyframes cartellino-dondola { 0% { transform: rotate(7deg); } 25% { transform: rotate(-4.5deg); } 48% { transform: rotate(2.6deg); } 68% { transform: rotate(-1.2deg); } 85% { transform: rotate(.5deg); } 100% { transform: rotate(0); } }
+
+.neg-indirizzo { margin: 0 0 10px; font-family: var(--f-display); font-size: 1.4rem; line-height: 1.12; letter-spacing: -.01em; color: var(--inchiostro); }
+.neg-tel { margin: 0 0 20px; font-size: .98rem; color: var(--inchiostro-morbido); }
+.neg-tel a { font-weight: 700; color: var(--inchiostro); text-decoration-color: var(--ocra); text-underline-offset: 4px; white-space: nowrap; }
+.neg-azioni { display: grid; gap: 10px; }
+.neg-azioni .btn { width: 100%; }
+@media (min-width: 600px) { .neg-info { grid-template-columns: auto minmax(0, 1fr); gap: 40px; } .neg-azioni .btn { width: auto; justify-self: start; } }
+@media (min-width: 900px) {
+  .neg { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 72px; align-items: center; }
+  .neg-foto { margin: 0; }
+  .neg-foto img { border-radius: 10px; }
+}
 
 /* Safari su iPhone: niente sottolineature automatiche su indirizzi e numeri */
 a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font: inherit !important; }
