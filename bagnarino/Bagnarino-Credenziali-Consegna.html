@@ -16,16 +16,16 @@ html, body { margin: 0; background: #fff; }
 body { font-family: 'Hanken Grotesk', system-ui, sans-serif; color: var(--notte); font-size: 8.6pt; line-height: 1.35; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .pagina { width: 210mm; height: 297mm; display: flex; flex-direction: column; overflow: hidden; background: var(--avorio); }
 
-.fascia { background: var(--notte); color: var(--avorio); padding: 11mm 14mm 9mm; display: flex; align-items: flex-end; justify-content: space-between; gap: 10mm; position: relative; }
+.fascia { background: var(--notte); color: var(--avorio); padding: 9mm 14mm 8mm; display: flex; align-items: flex-end; justify-content: space-between; gap: 10mm; position: relative; }
 .fascia::after { content: ''; position: absolute; left: 14mm; right: 14mm; bottom: 0; height: .8mm; background: linear-gradient(90deg, var(--ocra), var(--ocra-vivo)); }
 .fascia img { height: 12mm; }
-.fascia h1 { margin: 4mm 0 0; font-family: 'Fraunces', serif; font-weight: 500; font-size: 26pt; line-height: 1; letter-spacing: -.02em; }
+.fascia h1 { margin: 3mm 0 0; font-family: 'Fraunces', serif; font-weight: 500; font-size: 23pt; line-height: 1; letter-spacing: -.02em; }
 .fascia h1 em { color: var(--ocra-vivo); }
 .fascia p { margin: 2.6mm 0 0; font-size: 8.6pt; color: rgba(250,246,238,.75); max-width: 105mm; }
 .consegna { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 7pt; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,246,238,.7); line-height: 2.1; white-space: nowrap; }
 .consegna b { color: var(--avorio); font-weight: 500; }
 
-.corpo { padding: 7mm 14mm 0; flex: 1; display: flex; flex-direction: column; }
+.corpo { padding: 6mm 14mm 0; flex: 1; display: flex; flex-direction: column; }
 .sez { display: flex; align-items: baseline; gap: 3mm; margin: 0 0 2.4mm; }
 .sez span { font-family: 'IBM Plex Mono', monospace; font-size: 7pt; color: var(--ocra-testo); letter-spacing: .1em; }
 .sez h2 { margin: 0; font-family: 'Fraunces', serif; font-weight: 500; font-size: 13pt; letter-spacing: -.01em; }
@@ -33,26 +33,37 @@ body { font-family: 'Hanken Grotesk', system-ui, sans-serif; color: var(--notte)
 table { width: calc(100% + 5mm); margin: 0 -2.5mm; border-collapse: separate; border-spacing: 2.5mm 0; table-layout: fixed; }
 th { text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ocra-testo); padding: 0 0 1.4mm; }
 th:nth-child(1) { width: 26%; } th:nth-child(2) { width: 25%; } th:nth-child(3) { width: 26%; }
-td { height: 10.2mm; border-bottom: .3mm solid var(--linea); vertical-align: bottom; padding-bottom: 1mm; }
+td { height: 9.1mm; border-bottom: .3mm solid var(--linea); vertical-align: bottom; padding-bottom: 1mm; }
 td.serv { border-bottom-color: var(--tenue); }
 td.serv b { display: block; font-size: 9pt; }
 td.serv small { display: block; font-size: 6.8pt; color: var(--grigio); margin-top: .3mm; }
 td.dove { border-bottom-color: var(--tenue); font-family: 'IBM Plex Mono', monospace; font-size: 6.6pt; white-space: nowrap; color: var(--inchiostro); }
 td.stesso { border-bottom: .3mm dashed var(--tenue); font-size: 7.2pt; color: var(--grigio); font-style: italic; }
 
-.due { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 9mm; margin-top: 6mm; }
-.campo { display: flex; align-items: flex-end; gap: 2mm; min-height: 8.6mm; }
+tr.sua td { background: rgba(201,151,59,.09); }
+tr.sua td.serv b::after { content: 'da scrivere tu'; margin-left: 2mm; padding: .3mm 1.6mm; border-radius: 99px; background: var(--ocra); color: var(--notte); font-family: 'IBM Plex Mono', monospace; font-size: 5.6pt; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; vertical-align: 1px; }
+.perche { margin-top: 3.4mm; padding: 2.8mm 4mm; border-radius: 2mm; background: var(--notte); color: var(--avorio); }
+.perche h3 { margin: 0 0 2mm; font-family: 'Fraunces', serif; font-weight: 500; font-size: 10.5pt; }
+.perche h3 em { color: var(--ocra-vivo); }
+.perche ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4mm; counter-reset: p; }
+.perche li { font-size: 7.4pt; line-height: 1.4; color: rgba(250,246,238,.82); counter-increment: p; }
+.perche li::before { content: '0' counter(p); display: block; font-family: 'IBM Plex Mono', monospace; font-size: 6.6pt; color: var(--ocra-vivo); margin-bottom: .6mm; }
+.perche li b { color: var(--avorio); }
+.due { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 9mm; margin-top: 4.5mm; }
+.campo { display: flex; align-items: flex-end; gap: 2mm; min-height: 7.2mm; }
 .campo > span { white-space: nowrap; }
 .campo .vuoto { flex: 1; border-bottom: .3mm solid var(--linea); height: 5mm; }
 .consigli { margin: 0; padding: 0; list-style: none; display: grid; gap: 2.2mm; }
 .consigli li { position: relative; padding-left: 5mm; font-size: 8.2pt; }
 .consigli li::before { content: ''; position: absolute; left: 0; top: 1.5mm; width: 2.2mm; height: 2.2mm; border-radius: 50%; background: var(--ocra); }
 
-.aiuto { margin-top: auto; margin-bottom: 0; display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 6mm; align-items: end; padding: 5mm 0 4mm; border-top: .3mm solid var(--tenue); }
+.aiuto { margin-top: auto; margin-bottom: 6mm; display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 6mm; align-items: end; padding: 4mm 0 0; border-top: .3mm solid var(--tenue); }
 .aiuto .chi { font-size: 7.8pt; color: var(--grigio); }
 .aiuto .chi b { display: block; font-family: 'Fraunces', serif; font-weight: 500; font-size: 11pt; color: var(--notte); margin-bottom: 1mm; }
 .firma { display: flex; flex-direction: column; gap: 1.2mm; font-size: 7pt; color: var(--grigio); }
 .firma .vuoto { border-bottom: .3mm solid var(--notte); height: 9mm; }
+.fatto-da { display: flex; align-items: center; gap: 1.6mm; margin-top: 2.6mm; font-family: 'IBM Plex Mono', monospace; font-size: 6pt; letter-spacing: .1em; text-transform: uppercase; }
+.fatto-da img { height: 4mm; border-radius: 1mm; }
 .piede { display: flex; justify-content: space-between; padding: 3mm 14mm 6mm; font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; letter-spacing: .1em; text-transform: uppercase; color: var(--grigio); }
 .piede img { height: 4.5mm; border-radius: 1mm; vertical-align: middle; margin-right: 1.6mm; }
 </style>
@@ -73,18 +84,27 @@ td.stesso { border-bottom: .3mm dashed var(--tenue); font-size: 7.2pt; color: va
     <table>
       <tr><th>Servizio</th><th>Dove si entra</th><th>Email / nome utente</th><th>Password</th></tr>
       <tr><td class="serv"><b>Area riservata del sito</b><small>Prenotazioni, clienti, incassi, chiusure</small></td><td class="dove">bagnarinocoworking.it/admin</td><td class="stesso">serve solo la password</td><td></td></tr>
-      <tr><td class="serv"><b>Gmail del coworking</b><small>La chiave di tutti i servizi Google</small></td><td class="dove">gmail.com</td><td></td><td></td></tr>
+      <tr class="sua"><td class="serv"><b>La tua Gmail</b><small>Profilo Google del negozio e foto</small></td><td class="dove">gmail.com</td><td></td><td></td></tr>
+      <tr><td class="serv"><b>Gmail del coworking</b><small>Creata da Apex, solo per il coworking</small></td><td class="dove">gmail.com</td><td></td><td></td></tr>
       <tr><td class="serv"><b>Instagram</b><small>Profilo del coworking</small></td><td class="dove">app Instagram</td><td></td><td></td></tr>
       <tr><td class="serv"><b>TikTok</b><small>Profilo del coworking</small></td><td class="dove">app TikTok</td><td></td><td></td></tr>
       <tr><td class="serv"><b>WhatsApp Business</b><small>Il numero che risponde ai clienti</small></td><td class="dove">app WhatsApp Business</td><td></td><td></td></tr>
       <tr><td class="serv"><b>Facebook</b><small>Pagina del coworking</small></td><td class="dove">facebook.com</td><td></td><td></td></tr>
       <tr><td class="serv"><b>Meta Business Suite</b><small>Messaggi, post e pubblicità</small></td><td class="dove">business.facebook.com</td><td class="stesso">stesso accesso di Facebook</td><td class="stesso"></td></tr>
-      <tr><td class="serv"><b>Profilo Google del negozio</b><small>Orari, foto e recensioni su Maps</small></td><td class="dove">business.google.com</td><td class="stesso">stesso accesso di Gmail</td><td class="stesso"></td></tr>
-      <tr><td class="serv"><b>Statistiche del sito</b><small>Visite e da dove arrivano</small></td><td class="dove">analytics.google.com</td><td class="stesso">stesso accesso di Gmail</td><td class="stesso"></td></tr>
-      <tr><td class="serv"><b>Altro:</b></td><td class="dove"></td><td></td><td></td></tr>
+      <tr><td class="serv"><b>Profilo Google del negozio</b><small>Orari, foto e recensioni su Maps</small></td><td class="dove">business.google.com</td><td class="stesso">con la tua Gmail</td><td class="stesso"></td></tr>
+      <tr><td class="serv"><b>Statistiche del sito</b><small>Visite e da dove arrivano</small></td><td class="dove">analytics.google.com</td><td class="stesso">con la Gmail del coworking</td><td class="stesso"></td></tr>
       <tr><td class="serv"><b>Altro:</b></td><td class="dove"></td><td></td><td></td></tr>
       <tr><td class="serv"><b>Altro:</b></td><td class="dove"></td><td></td><td></td></tr>
     </table>
+
+    <div class="perche">
+      <h3>Perché una <em>Gmail nuova</em> per il coworking</h3>
+      <ol>
+        <li><b>La tua posta resta tua.</b> Le notifiche dei social arrivano lì, non nella casella del negozio: noi lavoriamo senza entrare nella tua email.</li>
+        <li><b>Una sola chiave per tutto.</b> Instagram, TikTok e statistiche sono legati a un solo account, facile da gestire.</li>
+        <li><b>È intestata al coworking.</b> Il proprietario sei tu: se un giorno cambi agenzia, gli account restano tuoi e basta cambiare la password.</li>
+      </ol>
+    </div>
 
     <div class="due">
       <div>
@@ -106,12 +126,11 @@ td.stesso { border-bottom: .3mm dashed var(--tenue); font-size: 7.2pt; color: va
     </div>
 
     <div class="aiuto">
-      <div class="chi"><b>Serve aiuto?</b>Apex Media · <span style="display:inline-block;width:40mm;border-bottom:.3mm solid var(--linea)"></span></div>
+      <div class="chi"><b>Serve aiuto?</b>Apex Media · <span style="display:inline-block;width:40mm;border-bottom:.3mm solid var(--linea)"></span><span class="fatto-da"><img src="identita/apex-logo.png" alt="">Realizzato da Apex Media</span></div>
       <div class="firma"><span class="vuoto"></span>Consegnato da Apex Media</div>
       <div class="firma"><span class="vuoto"></span>Ricevuto da Marcella Bagnarino</div>
     </div>
   </div>
-  <div class="piede"><span><img src="identita/apex-logo.png" alt="">Realizzato da Apex Media</span><span>Bagnarino Coworking · documento riservato</span></div>
 </section>
 </body>
 </html>
