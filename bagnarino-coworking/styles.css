@@ -1463,6 +1463,24 @@ body.menu-aperto { overflow: hidden; }
 .js-tira .occhiello > span:first-child::after { transform: scaleX(0); transform-origin: left center; transition: transform .9s var(--curva) .15s; }
 .js-tira .occhiello.tirato > span:first-child::after { transform: scaleX(1); }
 
+/* =============================================================
+   ANIMAZIONI GSAP (animazioni.js), come nel sito della fioreria
+   ============================================================= */
+/* finché GSAP non è pronto (max 1,5 s) l'apertura non si mostra a metà */
+.anim-attesa .apertura-sopra, .anim-attesa .apertura-titolo, .anim-attesa .apertura-sotto,
+.anim-attesa .apertura-cta, .anim-attesa .apertura-fatti, .anim-attesa .bollo { visibility: hidden; }
+/* con GSAP attivo l'ingresso CSS dell'apertura lascia il posto a quello GSAP */
+.gsap-attivo .apertura-foto img, .gsap-attivo .apertura-sopra, .gsap-attivo .apertura-titolo, .gsap-attivo .apertura-sotto,
+.gsap-attivo .apertura-cta, .gsap-attivo .apertura-fatti, .gsap-attivo .bollo { animation: none; }
+.apertura-titolo .hc { will-change: transform, opacity, filter; }
+/* maschera delle parole nei titoli: un filo di margine per non tagliare corsivi e discendenti */
+.sw-mask { padding: 0 .06em .16em; margin: 0 -.06em -.16em; }
+/* sottolineatura ocra disegnata sotto il corsivo */
+.apertura-titolo em, .pz-titolo em, .finale h2 em { position: relative; }
+.svolazzo { position: absolute; left: 2%; bottom: -.12em; width: 96%; height: .24em; overflow: visible; pointer-events: none; }
+.svolazzo path { fill: none; stroke: var(--ocra-vivo); stroke-width: 2.6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.finale .svolazzo path { stroke: var(--ocra); }
+
 /* Safari su iPhone: niente sottolineature automatiche su indirizzi e numeri */
 a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font: inherit !important; }
 

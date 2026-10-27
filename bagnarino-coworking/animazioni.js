@@ -1,33 +1,175 @@
 /* =============================================================
-   BAGNARINO COWORKING — animazioni (GSAP + ScrollTrigger)
-   Meno ma migliori:
-   - una sola "firma": la linea del tempo della storia, che si
-     traccia mentre scorri e accende le tappe una a una;
-   - tutto il resto compare in modo quasi impercettibile;
-   - l'apertura si anima in CSS (subito, senza pesare).
-   GSAP parte al primo gesto e rispetta "riduci movimento".
-   Senza GSAP la pagina è già completa.
+   BAGNARINO COWORKING — animazioni (GSAP + ScrollTrigger + SplitText + DrawSVG)
+   Lo stesso sistema del sito della fioreria:
+   - l'apertura entra subito: il titolo lettera per lettera, in 3D e
+     a fuoco, la parte in corsivo cambia colore e ci si disegna sotto
+     una sottolineatura ocra; sottotitolo parola per parola, pulsanti
+     che saltano fuori, il bollo che gira;
+   - i titoli di sezione salgono parola per parola ruotando, le
+     etichette si stringono, i testi passano da sfocati a nitidi,
+     i pulsanti saltano fuori, ogni blocco ha il suo ingresso;
+   - le scene (storia, scontrino, servizi, tessera) hanno i loro gesti.
+   Regola d'oro: il pulsante "Prenota" è visibile entro ~1 secondo.
+   Rispetta "riduci movimento"; senza GSAP la pagina è già completa.
    ============================================================= */
 (function () {
   'use strict';
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var radice = document.documentElement;
+  function sblocca() { radice.classList.remove('anim-attesa'); }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !window.gsap || !window.ScrollTrigger) { sblocca(); return; }
 
+  gsap.registerPlugin(ScrollTrigger);
+  var SPLIT = !!window.SplitText, DRAW = !!window.DrawSVGPlugin;
+  if (SPLIT) gsap.registerPlugin(SplitText);
+  if (DRAW) gsap.registerPlugin(DrawSVGPlugin);
+  radice.classList.add('gsap-attivo');
+
+  var OCRA = '#DDB05C', AVORIO = '#FAF6EE';
   function $(s, c) { return (c || document).querySelector(s); }
   function $$(s, c) { return [].slice.call((c || document).querySelectorAll(s)); }
   function sottoLaPiega(el) { return el.getBoundingClientRect().top > window.innerHeight * 0.9; }
-  function carica(src) {
-    return new Promise(function (ok, ko) {
-      var s = document.createElement('script');
-      s.src = src; s.async = false; s.onload = ok; s.onerror = ko;
-      document.head.appendChild(s);
-    });
+  function allaVista(el, fn, start) { ScrollTrigger.create({ trigger: el, start: start || 'top 88%', once: true, onEnter: fn }); }
+
+  /* rete di sicurezza: nulla deve restare nascosto */
+  function ripristina() {
+    try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}
+    $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; el.style.filter = ''; el.style.visibility = ''; el.style.letterSpacing = ''; });
+    var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
+    $$('[data-scontrino]').forEach(function (c) { c.classList.remove('animata', 'stampa'); });
+    radice.classList.remove('gsap-attivo', 'js-tira');
+    sblocca();
   }
 
-  function anima() {
-    if (!window.gsap || !window.ScrollTrigger) return;
-    gsap.registerPlugin(ScrollTrigger);
+  /* sottolineatura ocra disegnata sotto la parte in corsivo */
+  function svolazzo(em) {
+    if (!em || em.querySelector('.svolazzo') || em.getClientRects().length !== 1) return;
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('class', 'svolazzo'); svg.setAttribute('viewBox', '0 0 300 24');
+    svg.setAttribute('preserveAspectRatio', 'none'); svg.setAttribute('aria-hidden', 'true');
+    var p = document.createElementNS(ns, 'path');
+    p.setAttribute('d', 'M4 15 C 60 5, 110 21, 160 12 S 250 5, 296 12');
+    svg.appendChild(p); em.appendChild(svg);
+    if (DRAW) gsap.from(p, { drawSVG: 0, duration: 1.1, ease: 'power2.inOut' });
+    else gsap.from(svg, { opacity: 0, duration: 0.8 });
+  }
 
-    try {
+  try {
+    /* ======================================================
+       1) L'APERTURA — entra subito, in poco più di un secondo
+       ====================================================== */
+    (function () {
+      var ap = $('.apertura');
+      if (!ap) return;
+      var foto = $('.apertura-foto img'), sopra = $('.apertura-sopra', ap), titolo = $('.apertura-titolo', ap),
+          sotto = $('.apertura-sotto', ap), bottoni = $$('.apertura-cta > a', ap), fatti = $$('.apertura-fatti > div', ap), bollo = $('.bollo', ap);
+      var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      if (foto) tl.fromTo(foto, { scale: 1.16 }, { scale: 1, duration: 2.6, ease: 'power2.out' }, 0);
+      if (sopra) tl.from(sopra, { opacity: 0, y: 10, letterSpacing: '.4em', duration: 1, clearProps: 'opacity,transform,letterSpacing' }, 0.05);
+      if (titolo && SPLIT) {
+        var st = SplitText.create(titolo, { type: 'words,chars', wordsClass: 'hw', charsClass: 'hc' });
+        var emChars = $$('em .hc', titolo);
+        tl.from(st.chars, { opacity: 0, yPercent: 70, rotateX: -80, transformPerspective: 500, filter: 'blur(10px)', transformOrigin: '50% 100%',
+          duration: 1, stagger: 0.02 }, 0.12);
+        if (emChars.length) tl.from(emChars, { color: AVORIO, duration: 1.2, ease: 'power1.out', stagger: 0.03 }, 0.7);
+        tl.add(function () { st.revert(); svolazzo($('em', titolo)); });
+      }
+      if (sotto && SPLIT) {
+        var ss = SplitText.create(sotto, { type: 'words', wordsClass: 'hw' });
+        tl.from(ss.words, { opacity: 0, y: 14, filter: 'blur(6px)', duration: 0.7, stagger: 0.016, onComplete: function () { ss.revert(); } }, 0.45);
+      }
+      if (bottoni.length) {
+        tl.from(bottoni, { opacity: 0, y: 26, scale: 0.86, duration: 0.85, ease: 'back.out(1.8)', stagger: 0.1, clearProps: 'opacity,transform' }, 0.6);
+        var fr = $('.tasto-freccia', ap);
+        if (fr) tl.from(fr, { x: -16, rotate: -90, opacity: 0, duration: 0.6, clearProps: 'transform,opacity' }, 0.95);
+      }
+      if (fatti.length) {
+        tl.from(fatti, { opacity: 0, y: 24, duration: 0.7, stagger: 0.09, clearProps: 'opacity,transform' }, 0.85);
+        var oli = $('.targa-olivetti', ap);
+        if (oli) tl.from(oli, { scale: 0.5, rotate: -8, duration: 0.8, ease: 'back.out(2.2)', clearProps: 'transform' }, 0.95);
+      }
+      if (bollo) tl.from(bollo, { scale: 0, rotate: -140, duration: 1, ease: 'back.out(1.8)', clearProps: 'transform' }, 0.8);
+      sblocca();
+
+      /* scorrendo via: la foto si avvicina, il testo sale e sfuma */
+      gsap.to('.apertura-foto', { scale: 1.14, yPercent: 7, ease: 'none', scrollTrigger: { trigger: ap, start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to('.apertura-contenuto', { y: -70, opacity: 0.15, ease: 'none', scrollTrigger: { trigger: ap, start: '35% top', end: 'bottom top', scrub: true } });
+    })();
+
+    /* ======================================================
+       2) TITOLI DI SEZIONE — parole che salgono ruotando,
+          il corsivo si accende d'ocra
+       ====================================================== */
+    var conSvolazzo = ['pz-titolo'];
+    $$('.titolo-sezione, .disp-titolo, .servizi-titolo, .finale h2').forEach(function (el) {
+      if (!SPLIT || !sottoLaPiega(el)) return;
+      var st = SplitText.create(el, { type: 'words', mask: 'words', wordsClass: 'sw' });
+      gsap.set(st.words, { yPercent: 120, rotate: 7, transformOrigin: '0% 100%' });
+      var em = $$('em', el);
+      allaVista(el, function () {
+        var tl = gsap.timeline({ onComplete: function () {
+          st.revert();
+          if (el.closest('.finale') || conSvolazzo.some(function (c) { return el.classList.contains(c); })) svolazzo($('em', el));
+        } });
+        tl.to(st.words, { yPercent: 0, rotate: 0, duration: 1.05, ease: 'power4.out', stagger: 0.065 });
+        if (em.length) tl.from(em, { color: OCRA, duration: 1.3, ease: 'power1.out' }, 0.35);
+      });
+    });
+
+    /* etichette (01 —— PRENOTA): si stringono e la lineetta si traccia */
+    radice.classList.add('js-tira');
+    $$('.occhiello').forEach(function (o) {
+      if (!sottoLaPiega(o)) { o.classList.add('tirato'); return; }
+      gsap.set(o, { opacity: 0, letterSpacing: '.5em' });
+      allaVista(o, function () {
+        o.classList.add('tirato');
+        gsap.to(o, { opacity: 1, letterSpacing: '.12em', duration: 1.1, ease: 'power3.out', clearProps: 'opacity,letterSpacing' });
+      }, 'top 92%');
+    });
+
+    /* ======================================================
+       3) TESTI E BLOCCHI — ognuno col suo ingresso, a cascata
+       ====================================================== */
+    var testi = $$('.intro-sezione, .neg-lead, .neg-contatti, .giornata-lead, .giornata-cta, .servizi-testa > p, .servizi-senza, .fidelity-testo > p[data-cfg], .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2):not(.btn):not(.dove-cta), .faq-altro, .finale > .contenitore > p, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li, .fatti > div')
+      .filter(sottoLaPiega);
+    if (testi.length) {
+      gsap.set(testi, { opacity: 0, y: 30, filter: 'blur(6px)' });
+      ScrollTrigger.batch(testi, { start: 'top 92%', once: true,
+        onEnter: function (g) { gsap.to(g, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, ease: 'power3.out', stagger: 0.08, clearProps: 'opacity,transform,filter' }); } });
+    }
+
+    /* i pulsanti saltano fuori */
+    var pulsanti = $$('main .tasto, main .btn-grande, .neg-azioni .btn, .dove-cta .btn, .fidelity-azioni .btn').filter(function (b) { return !b.closest('.apertura') && sottoLaPiega(b); });
+    if (pulsanti.length) {
+      gsap.set(pulsanti, { opacity: 0, y: 30, scale: 0.88 });
+      ScrollTrigger.batch(pulsanti, { start: 'top 94%', once: true,
+        onEnter: function (g) { gsap.to(g, { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'back.out(1.8)', stagger: 0.1, clearProps: 'opacity,transform' }); } });
+    }
+
+    /* liste: una voce alla volta, da sinistra */
+    [['.servizi-senza ul', 'li', -30], ['.premi-scala', 'li', -40], ['.vantaggi-mese ul', 'li', -30], ['.faq', 'details', -50]].forEach(function (c) {
+      $$(c[0]).forEach(function (lista) {
+        var voci = $$(c[1], lista);
+        if (!voci.length || !sottoLaPiega(lista)) return;
+        gsap.from(voci, { opacity: 0, x: c[2], duration: 0.7, ease: 'power3.out', stagger: 0.08, clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: lista, start: 'top 88%', once: true } });
+      });
+    });
+
+    /* i numeri dei premi (3, 5, 7, 10) ruotano dentro come gettoni */
+    var gettoni = $$('.premi-n').filter(sottoLaPiega);
+    if (gettoni.length) gsap.from(gettoni, { scale: 0, rotate: -160, duration: 0.8, ease: 'back.out(2.2)', stagger: 0.1, clearProps: 'transform',
+      scrollTrigger: { trigger: gettoni[0], start: 'top 88%', once: true } });
+
+    /* piè di pagina: colonne a cascata */
+    $$('.piede-griglia > *').filter(sottoLaPiega).forEach(function (el, i) {
+      gsap.set(el, { opacity: 0, y: 40 });
+      allaVista(el, function () { gsap.to(el, { opacity: 1, y: 0, duration: 0.9, delay: (i % 4) * 0.1, ease: 'power3.out', clearProps: 'opacity,transform' }); }, 'top 96%');
+    });
+
+    /* ======================================================
+       4) LE SCENE
+       ====================================================== */
       /* 1) la storia: il filo avanza con lo scorrimento, le tappe si accendono */
       var storia = $('.storia-sezione'), tempo = storia && $('[data-tempo]', storia);
       if (tempo) {
@@ -61,49 +203,6 @@
         });
         esci(stS.progress);
       }
-
-      /* 2) i titoli entrano parola per parola, da dietro una maschera */
-      function spezzaParole(el) {
-        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodi = [];
-        while (walker.nextNode()) if (walker.currentNode.nodeValue.trim()) nodi.push(walker.currentNode);
-        nodi.forEach(function (n) {
-          var frag = document.createDocumentFragment();
-          n.nodeValue.split(/(\s+)/).forEach(function (pezzo) {
-            if (!pezzo) return;
-            if (/^\s+$/.test(pezzo)) { frag.appendChild(document.createTextNode(' ')); return; }
-            var m = document.createElement('span'); m.className = 'maschera';
-            var p = document.createElement('span'); p.className = 'parola-su'; p.textContent = pezzo;
-            m.appendChild(p); frag.appendChild(m);
-          });
-          n.parentNode.replaceChild(frag, n);
-        });
-        return $$('.parola-su', el);
-      }
-      $$('.titolo-sezione, .disp-titolo, .finale h2').filter(sottoLaPiega).forEach(function (t) {
-        var parole = spezzaParole(t);
-        if (!parole.length) return;
-        gsap.from(parole, { yPercent: 110, duration: 0.8, ease: 'power3.out', stagger: 0.045,
-          scrollTrigger: { trigger: t, start: 'top 88%', once: true } });
-      });
-
-      /* 2b) testi e voci: comparsa leggera, sfalsata */
-      var leggeri = $$('.occhiello, .intro-sezione, .neg-lead, .neg-contatti, .giornata-lead, .giornata-cta, .fatti > div, .servizi-testa > *, .servizi-senza, .fidelity-testo > p[data-cfg], .fidelity-azioni, .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2), .faq-altro, .finale p, .finale .apertura-cta, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li')
-        .filter(sottoLaPiega);
-      if (leggeri.length) {
-        gsap.set(leggeri, { opacity: 0, y: 16 });
-        ScrollTrigger.batch(leggeri, { start: 'top 92%', once: true,
-          onEnter: function (g) { gsap.to(g, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.07, clearProps: 'opacity,transform' }); } });
-      }
-
-      /* 2c) liste: una voce alla volta, da sinistra */
-      [['.servizi-senza ul', 'li'], ['.premi-scala', 'li'], ['.vantaggi-mese ul', 'li'], ['.faq', 'details'], ['.tempo', '.tappa']].forEach(function (c) {
-        $$(c[0]).forEach(function (lista) {
-          var voci = $$(c[1], lista);
-          if (!voci.length || !sottoLaPiega(lista)) return;
-          gsap.from(voci, { opacity: 0, x: -18, duration: 0.55, ease: 'power2.out', stagger: 0.07, clearProps: 'opacity,transform',
-            scrollTrigger: { trigger: lista, start: 'top 88%', once: true } });
-        });
-      });
 
       /* 2d) il listino: le colonne salgono una dopo l'altra, quella del mese si apre per ultima */
       var colonne = $$('.prezzo');
@@ -154,13 +253,6 @@
         servizi.forEach(function (c) { c.addEventListener('pointerenter', function () { muoviIcona(c); }); });
       }
 
-      /* 2e-quater) apertura: scorrendo via, la foto si avvicina e il testo sale e sfuma */
-      var apertura = $('.apertura');
-      if (apertura) {
-        gsap.to('.apertura-foto', { scale: 1.14, yPercent: 7, ease: 'none', scrollTrigger: { trigger: apertura, start: 'top top', end: 'bottom top', scrub: true } });
-        gsap.to('.apertura-contenuto', { y: -70, opacity: 0.15, ease: 'none', scrollTrigger: { trigger: apertura, start: '35% top', end: 'bottom top', scrub: true } });
-      }
-
       /* 2e-quinquies) il nastro si inclina con la velocità dello scorrimento */
       var nastro = $('.nastro');
       if (nastro) {
@@ -183,13 +275,6 @@
         gsap.fromTo($('img', negFoto), { scale: 1.2 }, { scale: 1, duration: 1.6, ease: 'expo.out', clearProps: 'transform',
           scrollTrigger: { trigger: negFoto, start: 'top 85%', once: true } });
       }
-
-      /* 2e-octies) le righe accanto agli occhielli si tracciano quando entrano in vista */
-      document.documentElement.classList.add('js-tira');
-      $$('.occhiello').forEach(function (o) {
-        if (!sottoLaPiega(o)) { o.classList.add('tirato'); return; }
-        ScrollTrigger.create({ trigger: o, start: 'top 90%', once: true, onEnter: function () { o.classList.add('tirato'); } });
-      });
 
       /* 2e-novies) i pulsanti principali seguono un poco il mouse */
       if (window.matchMedia('(hover: hover)').matches) {
@@ -253,31 +338,15 @@
         gsap.fromTo(img, { yPercent: -3 }, { yPercent: 3, ease: 'none', scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
       });
 
-    } catch (e) {
-      /* rete di sicurezza: nulla deve restare nascosto */
-      try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}
-      $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; });
-      var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
-      $$('.parola-su').forEach(function (p) { p.style.transform = ''; });
-      $$('[data-scontrino]').forEach(function (c) { c.classList.remove('animata', 'stampa'); });
-    }
-  }
 
-  /* GSAP parte al primo gesto (scorrere, toccare, tastiera):
-     il caricamento della pagina resta leggero */
-  var partito = false, gesti = ['scroll', 'wheel', 'touchstart', 'pointerdown', 'keydown'];
-  function avvia() {
-    if (partito) return; partito = true;
-    gesti.forEach(function (g) { window.removeEventListener(g, avvia); });
-    carica('/vendor/gsap/gsap.min.js')
-      .then(function () { return carica('/vendor/gsap/ScrollTrigger.min.js'); })
-      .then(anima)
-      .catch(function () {});
+    /* card, foto e font cambiano l'altezza della pagina: ricalcola i punti di attivazione */
+    window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+    if ('ResizeObserver' in window) {
+      var attesa = 0;
+      new ResizeObserver(function () { clearTimeout(attesa); attesa = setTimeout(function () { ScrollTrigger.refresh(); }, 200); }).observe(document.body);
+    }
+  } catch (e) {
+    ripristina();
+    if (window.console) console.warn('animazioni disattivate:', e);
   }
-  function arma() {
-    if (window.scrollY > 0) { avvia(); return; }
-    gesti.forEach(function (g) { window.addEventListener(g, avvia, { passive: true }); });
-  }
-  if (document.readyState === 'complete') arma();
-  else window.addEventListener('load', arma);
 })();
