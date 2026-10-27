@@ -257,20 +257,20 @@ strong { font-weight: 600; }
 }
 .apertura-titolo em { font-style: italic; color: var(--ocra-vivo); }
 .apertura-sotto { font-size: 1.12rem; line-height: 1.55; color: rgba(250, 246, 238, .86); max-width: 46ch; margin: 0 0 1.7rem; }
-.apertura-cta { display: flex; flex-direction: column; gap: 10px; }
+.apertura-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
 .apertura-titolo, .apertura-sotto { text-shadow: 0 2px 18px rgba(10, 16, 24, .45); }
 
 .cta-wa {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  min-height: 58px; padding: 10px 22px; border-radius: 6px;
-  border: 1px solid rgba(250, 246, 238, .26); background: rgba(13, 23, 37, .42);
+  display: inline-flex; align-items: center; gap: 12px; width: max-content; max-width: 100%;
+  height: 54px; padding: 0 22px 0 7px; border-radius: 999px;
+  border: 1px solid rgba(250, 246, 238, .28); background: rgba(13, 23, 37, .4);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  color: var(--avorio); font-family: var(--f-titoli); font-size: 1.02rem; font-weight: 600; text-decoration: none;
-  transition: background-color .2s var(--curva), border-color .2s var(--curva);
+  color: var(--avorio); font-family: var(--f-titoli); font-size: 1rem; font-weight: 600; text-decoration: none;
+  transition: background-color .25s var(--curva), border-color .25s var(--curva);
 }
-.cta-wa:hover { text-decoration: none; background: rgba(250, 246, 238, .12); border-color: rgba(250, 246, 238, .5); }
-.cta-wa-ico { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #25D366; color: #fff; }
-.cta-wa-ico .ico { width: 17px; height: 17px; }
+.cta-wa:hover { text-decoration: none; background: rgba(250, 246, 238, .12); border-color: rgba(250, 246, 238, .55); }
+.cta-wa-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #25D366; color: #fff; }
+.cta-wa-ico .ico { width: 19px; height: 19px; }
 .apertura-fatti { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 28px; margin: 2.2rem 0 0; padding-top: 18px; border-top: 1px solid var(--linea-scura); }
 .apertura-fatti > div { display: flex; flex-direction: column-reverse; gap: 4px; }
 .apertura-fatti dt { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chiaro-70); }
@@ -304,7 +304,7 @@ strong { font-weight: 600; }
 @keyframes foto-entra { from { transform: scale(1.06); } }
 @keyframes appare { from { opacity: 0; transform: translateY(14px); } }
 
-@media (min-width: 560px) { .apertura-cta { flex-direction: row; flex-wrap: wrap; align-items: flex-start; } .cta-wa { min-height: 70px; padding: 10px 26px; } }
+@media (min-width: 560px) { .apertura-cta { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px; } }
 @media (min-width: 900px) {
   .apertura { min-height: max(680px, 100vh); }
   .apertura-velo { background: linear-gradient(90deg, rgba(13, 23, 37, .94) 0%, rgba(13, 23, 37, .74) 38%, rgba(13, 23, 37, .26) 72%), linear-gradient(180deg, rgba(13, 23, 37, .5) 0%, rgba(13, 23, 37, 0) 25%, rgba(13, 23, 37, 0) 65%, rgba(17, 25, 34, .8) 100%), rgba(27, 42, 58, .22); }
@@ -1276,37 +1276,36 @@ body.menu-aperto { overflow: hidden; }
 .sintesi-giorno .link-cambia { white-space: nowrap; }
 
 /* =============================================================
-   IL TASTO: il pulsante principale, fatto come un tasto vero.
-   La faccia ocra poggia su un fianco più scuro: al passaggio si
-   alza, alla pressione scende. La freccia è un tasto tondo Olivetti.
+   IL TASTO: il pulsante principale, una pillola ocra.
+   Al passaggio il cerchio blu della freccia si allarga e riempie
+   la pillola; da fermo la freccia ogni tanto fa un piccolo scatto.
    ============================================================= */
 .tasto {
-  position: relative; display: flex; width: 100%; padding-bottom: 6px; border-radius: 14px;
-  background: #8E6A24; text-decoration: none; -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, .28), 0 20px 34px -18px rgba(201, 151, 59, .75);
-  transition: box-shadow .2s var(--curva);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; width: max-content; max-width: 100%;
+  height: 54px; padding: 0 6px 0 24px; border-radius: 999px;
+  background: var(--ocra); color: var(--notte); text-decoration: none; -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 10px 26px -12px rgba(201, 151, 59, .75);
+  transition: box-shadow .3s var(--curva), transform .15s var(--curva);
 }
-.tasto-faccia {
-  flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 18px;
-  min-height: 64px; padding: 8px 8px 8px 24px; border-radius: 13px;
-  background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, .3), transparent 62%), linear-gradient(180deg, #E8C273 0%, #D6A548 55%, var(--ocra) 100%);
-  color: var(--notte); font-family: var(--f-titoli); font-size: 1.16rem; font-weight: 700; line-height: 1.1; letter-spacing: -.005em;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), inset 0 -1px 0 rgba(0, 0, 0, .1);
-  transition: transform .14s var(--curva), filter .2s var(--curva);
+.tasto::before {
+  content: ''; position: absolute; z-index: -1; right: 6px; top: 50%; width: 42px; height: 42px; border-radius: 50%;
+  background: var(--notte); transform: translateY(-50%) scale(1); transition: transform .55s cubic-bezier(.65, 0, .35, 1), background-color .45s var(--curva);
 }
-.tasto-freccia {
-  flex: 0 0 auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
-  background: var(--notte); color: var(--ocra-vivo);
-  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .12);
-  transition: transform .25s var(--curva);
-}
-.tasto-freccia .ico { width: 22px; height: 22px; }
-.tasto:hover { text-decoration: none; box-shadow: 0 2px 0 rgba(0, 0, 0, .28), 0 26px 40px -18px rgba(221, 176, 92, .85); }
-.tasto:hover .tasto-faccia { transform: translateY(-2px); filter: brightness(1.04); }
-.tasto:hover .tasto-freccia { transform: translateX(3px); }
-.tasto:active .tasto-faccia { transform: translateY(5px); filter: brightness(.97); }
+.tasto-faccia { display: inline-flex; align-items: center; gap: 16px; font-family: var(--f-titoli); font-size: 1.02rem; font-weight: 700; letter-spacing: -.005em; white-space: nowrap; }
+.tasto-freccia { position: relative; overflow: hidden; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: var(--ocra-vivo); transition: color .35s var(--curva); }
+.tasto-freccia .ico { width: 19px; height: 19px; }
+.tasto:hover { text-decoration: none; box-shadow: 0 14px 30px -12px rgba(250, 246, 238, .35); }
+.tasto:hover::before { transform: translateY(-50%) scale(14); background-color: var(--avorio); }
+.tasto:hover .tasto-freccia { color: var(--notte); }
+.tasto:active { transform: scale(.97); }
 .tasto:focus-visible, .cta-wa:focus-visible { outline: 3px solid var(--ocra-vivo); outline-offset: 4px; }
-@media (min-width: 560px) { .tasto { width: auto; min-width: 330px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .tasto-freccia .ico { animation: tasto-scatto 4.5s var(--curva) 2s infinite; }
+  .tasto:hover .tasto-freccia .ico { animation: tasto-passa .5s var(--curva); }
+}
+@keyframes tasto-scatto { 0%, 84%, 100% { transform: translateX(0); } 90% { transform: translateX(5px); } 95% { transform: translateX(-1px); } }
+@keyframes tasto-passa { 0% { transform: translateX(0); } 45% { transform: translateX(28px); } 46% { transform: translateX(-28px); } 100% { transform: translateX(0); } }
 
 /* =============================================================
    01 · PRENOTA: la macchina da scrivere batte la prenotazione
