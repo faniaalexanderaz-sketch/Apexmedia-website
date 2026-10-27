@@ -1222,21 +1222,40 @@ body.menu-aperto { overflow: hidden; }
 .servizi-titolo em { color: var(--ocra-testo); }
 .servizi-testa p { margin: 0; color: var(--inchiostro-morbido); font-size: 1.05rem; }
 .servizi-griglia { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.servizio { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 16px 20px; border-radius: 14px; background: var(--avorio); border: 1px solid var(--linea); box-shadow: 0 18px 34px -26px rgba(17, 25, 34, .55); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
-.servizio:hover { transform: translateY(-3px); box-shadow: 0 26px 40px -24px rgba(17, 25, 34, .6); }
+.servizio {
+  --c-fondo: var(--carta-2); --c-forte: var(--inchiostro); --c-testo: var(--inchiostro);
+  position: relative; overflow: hidden; isolation: isolate;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px 16px 20px; border-radius: 18px;
+  background: var(--c-fondo); color: var(--c-testo); border: 0;
+  box-shadow: 0 18px 34px -24px rgba(17, 25, 34, .5);
+  transition: transform .35s var(--curva), box-shadow .35s var(--curva);
+}
+/* un cerchio di colore che fa da luce nell'angolo */
+.servizio::after { content: ''; position: absolute; z-index: -1; right: -40px; bottom: -40px; width: 130px; height: 130px; border-radius: 50%; background: var(--c-forte); opacity: .09; transition: transform .5s var(--curva), opacity .5s var(--curva); }
+.servizio:hover { transform: translateY(-4px) rotate(-.6deg); box-shadow: 0 28px 44px -24px rgba(17, 25, 34, .6); }
+.servizio:hover::after { transform: scale(1.5); opacity: .14; }
 .servizio[hidden] { display: none; }
-.servizio-icona { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 8px; border-radius: 16px; background: #F5DFAE; color: var(--notte); }
-.servizio:nth-child(3n+2) .servizio-icona { background: #D6EADF; color: #1E6B52; }
-.servizio:nth-child(3n) .servizio-icona { background: #D3E6EA; color: #1E6471; }
-.servizio-icona .ico { width: 28px; height: 28px; stroke-width: 1.8; }
-.servizio strong { font-size: 1.08rem; line-height: 1.25; }
-.servizio > span:last-child { font-size: .9rem; line-height: 1.45; color: var(--inchiostro-morbido); }
-/* il wi-fi, la prima domanda di tutti: card blu larga, onde che pulsano */
-.servizio-wifi { grid-column: 1 / -1; display: grid; align-content: center; grid-template-columns: auto 1fr; grid-template-areas: "icona titolo" "icona testo"; align-items: center; gap: 2px 18px; padding: 22px 20px; background: var(--inchiostro); border-color: var(--inchiostro); color: var(--avorio); }
-.servizio-wifi .servizio-icona { grid-area: icona; width: 72px; height: 72px; margin: 0; border-radius: 50%; background: var(--ocra); color: var(--notte); }
+.servizio-icona { display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 10px; border-radius: 18px; background: var(--c-forte); color: #fff; box-shadow: 0 10px 18px -10px var(--c-forte); }
+.servizio-icona .ico { width: 28px; height: 28px; stroke-width: 1.9; }
+.servizio strong { font-size: 1.1rem; line-height: 1.22; color: var(--c-testo); }
+.servizio > span:last-child { font-size: .92rem; line-height: 1.45; color: var(--c-testo); opacity: .78; }
+.servizio-verde { --c-fondo: #D6EADF; --c-forte: #1E6B52; --c-testo: #134433; }
+.servizio-petrolio { --c-fondo: #D3E6EA; --c-forte: #1E6471; --c-testo: #123F48; }
+.servizio-sabbia { --c-fondo: #F5DFAE; --c-forte: #A87A24; --c-testo: #4A3510; }
+.servizio-rosso { --c-fondo: #F6DCD8; --c-forte: var(--timbro); --c-testo: #5E1A16; }
+.servizio-caffe { --c-fondo: #EBDCC9; --c-forte: #6B4423; --c-testo: #3D2614; }
+.servizio-inchiostro { --c-fondo: #DCE3EB; --c-forte: var(--inchiostro); --c-testo: var(--notte); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .servizio:hover .servizio-icona .ico { animation: icona-guizzo .6s var(--curva); }
+}
+@keyframes icona-guizzo { 0%, 100% { transform: none; } 30% { transform: rotate(-14deg) scale(1.12); } 60% { transform: rotate(8deg) scale(1.05); } }
+.servizio-wifi { --c-fondo: var(--inchiostro); --c-forte: var(--ocra); --c-testo: var(--avorio); grid-column: 1 / -1; display: grid; align-content: center; grid-template-columns: auto 1fr; grid-template-areas: "icona titolo" "icona testo"; align-items: center; gap: 2px 18px; padding: 22px 20px; }
+.servizio-wifi::after { opacity: 1; width: 220px; height: 220px; right: -70px; bottom: -90px; background: transparent; border: 2px solid rgba(221, 176, 92, .35); box-shadow: 0 0 0 26px rgba(221, 176, 92, .06); }
+.servizio-wifi:hover::after { opacity: 1; }
+.servizio-wifi .servizio-icona { grid-area: icona; width: 72px; height: 72px; margin: 0; border-radius: 50%; background: var(--ocra); color: var(--notte); box-shadow: 0 0 0 8px rgba(201, 151, 59, .18); }
 .servizio-wifi .servizio-icona .ico { width: 38px; height: 38px; stroke-width: 2; }
 .servizio-wifi strong { grid-area: titolo; font-family: var(--f-display); font-weight: 400; font-size: 1.7rem; color: var(--avorio); }
-.servizio-wifi > span:last-child { grid-area: testo; color: var(--chiaro-70); font-size: .98rem; }
+.servizio-wifi > span:last-child { grid-area: testo; color: var(--avorio); opacity: .75; font-size: .98rem; }
 .servizio-fissa { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 16px; }
 .servizio-fissa .servizio-icona { margin: 0; flex-shrink: 0; }
 .servizio-fissa > strong + span { flex: 1; }
@@ -1439,6 +1458,10 @@ body.menu-aperto { overflow: hidden; }
   .neg-foto { margin: 0; }
   .neg-foto img { border-radius: 10px; }
 }
+
+/* righe degli occhielli: le traccia animazioni.js quando entrano in vista */
+.js-tira .occhiello > span:first-child::after { transform: scaleX(0); transform-origin: left center; transition: transform .9s var(--curva) .15s; }
+.js-tira .occhiello.tirato > span:first-child::after { transform: scaleX(1); }
 
 /* Safari su iPhone: niente sottolineature automatiche su indirizzi e numeri */
 a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font: inherit !important; }
