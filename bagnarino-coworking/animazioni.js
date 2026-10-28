@@ -34,7 +34,6 @@
   function ripristina() {
     try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}
     $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; el.style.filter = ''; el.style.visibility = ''; el.style.letterSpacing = ''; });
-    var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
     $$('.gd').forEach(function (c) { c.classList.remove('animata'); });
     radice.classList.remove('gsap-attivo', 'js-tira');
     sblocca();
@@ -170,22 +169,6 @@
     /* ======================================================
        4) LE SCENE
        ====================================================== */
-      /* 1) la storia: il filo avanza con lo scorrimento, le tappe si accendono */
-      var storia = $('.storia-sezione'), tempo = storia && $('[data-tempo]', storia);
-      if (tempo) {
-        var tappe = $$('.tappa', tempo), n = tappe.length;
-        storia.classList.add('animata');
-        tempo.style.setProperty('--avanza', '0');
-        ScrollTrigger.create({
-          trigger: tempo, start: 'top 78%', end: 'bottom 55%', scrub: 0.4,
-          onUpdate: function (st) {
-            var p = st.progress;
-            tempo.style.setProperty('--avanza', p.toFixed(3));
-            tappe.forEach(function (t, i) { t.classList.toggle('accesa', p >= (n > 1 ? i / (n - 1) : 0) * 0.96); });
-          }
-        });
-      }
-
       /* 1b) una giornata: la sezione si ferma e, scorrendo, passa la giornata.
          L'orologio gira dall'apertura alla chiusura, il cielo cambia colore,
          il sole fa il suo arco, le stelle escono la sera, i momenti si danno il cambio */
@@ -383,18 +366,50 @@
     var negInd = $('.neg-indirizzo');
     if (negInd && sottoLaPiega(negInd)) gsap.from(negInd, { x: 60, opacity: 0, duration: 0.9, ease: 'power3.out', clearProps: 'opacity,transform', scrollTrigger: { trigger: negInd, start: 'top 90%', once: true } });
 
-    /* 03 · storia: ogni tappa scivola dentro, l'anno conta fino al 1983 */
-    $$('.tappa').forEach(function (t, i) {
-      if (!sottoLaPiega(t)) return;
-      gsap.from($$('h3, p, .tappa-quando', t), { x: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08, clearProps: 'opacity,transform', scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
-      gsap.from($('.tappa-anno', t), { yPercent: 60, opacity: 0, scale: 0.8, duration: 0.9, ease: 'back.out(1.8)', clearProps: 'opacity,transform', scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
-    });
-    $$('.tappa-anno').forEach(function (a) {
-      var anno = parseInt(a.textContent, 10);
-      if (!anno || anno < 1900 || !sottoLaPiega(a)) return;
-      var c = { v: anno - 40 };
-      allaVista(a, function () { gsap.to(c, { v: anno, duration: 1.6, ease: 'power2.out', snap: { v: 1 }, onUpdate: function () { a.textContent = String(Math.round(c.v)); } }); }, 'top 85%');
-    });
+    /* 03 · la storia: ogni scena si rivela a modo suo */
+    (function () {
+      var st = $('#storia'); if (!st) return;
+      var mostra = function (el) { return el && sottoLaPiega(el); };
+      /* apertura: il 40 sale da dietro la maschera, il titolo riga per riga */
+      var apri = $('.st-apri', st);
+      if (mostra(apri)) {
+        var cifra = $('.st-cifra-grande .st-cifra-testo', apri), anni = $('.st-anni', apri), righe = $$('.st-riga > *', apri), intro = $('.st-intro', apri);
+        gsap.set(cifra, { yPercent: 100 }); gsap.set(anni, { opacity: 0, x: -10 }); gsap.set(righe, { yPercent: 110 }); gsap.set(intro, { opacity: 0, y: 12 });
+        gsap.timeline({ defaults: { ease: 'power4.out' }, scrollTrigger: { trigger: apri, start: 'top 70%', once: true } })
+          .to(cifra, { yPercent: 0, duration: 1.3, clearProps: 'transform' }, 0)
+          .to(anni, { opacity: 1, x: 0, duration: 0.6, clearProps: 'opacity,transform' }, 0.9)
+          .to(righe, { yPercent: 0, duration: 1.05, stagger: 0.1, clearProps: 'transform' }, 0.25)
+          .to(intro, { opacity: 1, y: 0, duration: 0.7, clearProps: 'opacity,transform' }, 0.95);
+        /* scorrendo via, il 40 resta un poco indietro */
+        gsap.to($('.st-cifra-grande', apri), { yPercent: 18, ease: 'none', scrollTrigger: { trigger: apri, start: 'top bottom', end: 'bottom top', scrub: true } });
+      }
+      /* ogni epoca: il numero sale dalla maschera, poi etichetta, titolo, testo */
+      $$('.st-scena:not(.st-apri)', st).forEach(function (sc) {
+        if (!mostra(sc)) return;
+        var num = $('.st-anno .st-cifra-testo', sc), testo = $$('.st-testo > *', sc), foto = $$('.st-foto', sc), extra = $('.st-scheda, .st-righe', sc);
+        gsap.set(num, { yPercent: 100 }); gsap.set(testo, { opacity: 0, y: 22 });
+        if (foto.length) gsap.set(foto, { clipPath: 'inset(0 0 100% 0 round 10px)' });
+        if (extra) gsap.set(extra, { opacity: 0, y: 16 });
+        var tl = gsap.timeline({ defaults: { ease: 'power4.out' }, scrollTrigger: { trigger: sc, start: 'top 68%', once: true } });
+        tl.to(num, { yPercent: 0, duration: 1.2, clearProps: 'transform' }, 0)
+          .to(testo, { opacity: 1, y: 0, duration: 0.8, stagger: 0.09, clearProps: 'opacity,transform' }, 0.3);
+        foto.forEach(function (f, k) {
+          tl.to(f, { clipPath: 'inset(0 0 0% 0 round 10px)', duration: 1.2, ease: 'expo.out', clearProps: 'clipPath' }, 0.15 + k * 0.15)
+            .fromTo($('img', f), { scale: 1.15 }, { scale: 1, duration: 1.6, ease: 'expo.out', clearProps: 'transform' }, 0.15 + k * 0.15);
+        });
+        if (extra) tl.to(extra, { opacity: 1, y: 0, duration: 0.8, clearProps: 'opacity,transform' }, 0.7);
+        if (extra && extra.classList.contains('st-righe')) tl.from($$('i', extra), { scaleX: 0, duration: 0.9, stagger: 0.06, ease: 'power3.inOut', clearProps: 'transform' }, 0.2);
+        /* il numero grande scivola piano mentre scorri: il testo gli passa davanti */
+        var anno = $('.st-anno', sc);
+        if (anno) gsap.fromTo(anno, { x: 0 }, { x: window.innerWidth >= 900 ? -30 : -8, ease: 'none', scrollTrigger: { trigger: sc, start: 'top bottom', end: 'bottom top', scrub: true } });
+      });
+      /* il 1983 conta dagli anni precedenti */
+      var c83 = $('[data-conta]', st);
+      if (c83 && mostra(c83)) {
+        var fine = +c83.getAttribute('data-conta'), v = { n: fine - 24 };
+        allaVista(c83, function () { gsap.to(v, { n: fine, duration: 1.6, ease: 'power2.out', snap: { n: 1 }, onUpdate: function () { c83.textContent = String(Math.round(v.n)); } }); }, 'top 80%');
+      }
+    })();
 
     /* 04 · prezzi: le voci incluse entrano una a una, le card si inclinano col mouse */
     $$('.prezzo').forEach(function (card) {

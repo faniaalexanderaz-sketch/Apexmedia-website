@@ -37,7 +37,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=b8a7fd17">
+  <link rel="stylesheet" href="/styles.css?v=1d57d820">
 
   <script src="/config.js?v=f5a6eb62"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -51,7 +51,7 @@
   </script>
   <script src="/main.js?v=7147f9b2" defer></script>
   <script src="/vendor/gsap/gsap-bundle.min.js" defer></script>
-  <script src="/animazioni.js?v=5c641bc9" defer></script>
+  <script src="/animazioni.js?v=5492ca9e" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -356,44 +356,82 @@
     </div>
   </section>
 
-  <!-- ============ 03 · LA STORIA: il filo che si traccia scorrendo ============ -->
-  <section class="sezione storia-sezione" id="storia" aria-labelledby="storia-titolo">
-    <div class="contenitore">
-      <div class="testa-sezione">
-        <p class="occhiello occhiello-chiaro"><span>03</span>La nostra storia</p>
-        <h2 id="storia-titolo" class="titolo-sezione">Quarant’anni di uffici, <em>un negozio solo.</em></h2>
+  <!-- ============ 03 · LA NOSTRA STORIA: un racconto a scene, non una linea del tempo ============ -->
+  <section class="sezione storia-sezione st" id="storia" aria-labelledby="storia-titolo">
+
+    <!-- apertura: il peso della storia -->
+    <div class="st-scena st-apri">
+      <div class="contenitore st-apri-griglia">
+        <p class="st-cifra-grande" aria-hidden="true"><span class="st-maschera"><span class="st-cifra-testo">40</span></span><span class="st-anni">anni</span></p>
+        <div class="st-apri-testo">
+          <p class="occhiello occhiello-chiaro"><span>03</span>Una storia di lavoro, innovazione e territorio</p>
+          <h2 id="storia-titolo" class="st-titolo"><span class="st-riga"><span>Dalle macchine</span></span><span class="st-riga"><span>per ufficio</span></span><span class="st-riga"><em>a un nuovo modo</em></span><span class="st-riga"><em>di lavorare.</em></span></h2>
+          <p class="st-intro">Quattro passaggi, un solo negozio in corso Lamarmora.</p>
+        </div>
       </div>
-      <ol class="tempo" data-tempo>
-        <li class="tappa">
-          <span class="tappa-segno" aria-hidden="true"></span>
-          <span class="tappa-anno" data-cfg="azienda.dal">1983</span>
-          <span class="tappa-quando">L’inizio</span>
-          <h3>Nasce Bagnarino</h3>
-          <p>Macchine per l’ufficio ad Alessandria: si vende, si ripara, si consiglia.</p>
-        </li>
-        <li class="tappa">
-          <span class="tappa-segno" aria-hidden="true"></span>
-          <span class="tappa-anno">Olivetti</span>
-          <span class="tappa-quando">Il marchio</span>
-          <h3>Concessionario ufficiale</h3>
-          <p>Stampanti, registratori di cassa, assistenza in negozio.</p>
-        </li>
-        <li class="tappa">
-          <span class="tappa-segno" aria-hidden="true"></span>
-          <span class="tappa-anno">N. 46</span>
-          <span class="tappa-quando">Corso Lamarmora</span>
-          <h3>Il negozio di oggi</h3>
-          <p>In pieno centro, nella via dei negozi di Alessandria.</p>
-        </li>
-        <li class="tappa tappa-oggi">
-          <span class="tappa-segno" aria-hidden="true"></span>
-          <span class="tappa-anno">Oggi</span>
-          <span class="tappa-quando">Il coworking</span>
-          <h3>Il negozio diventa il tuo ufficio</h3>
-          <p><span data-cfg="postazioni">8</span> scrivanie da <span data-prezzo="giornata">€25</span> al giorno, senza iscrizioni né contratti.</p>
-        </li>
-      </ol>
     </div>
+
+    <!-- 1983 -->
+    <article class="st-scena st-chiara st-1983" aria-labelledby="st-t1">
+      <div class="contenitore st-griglia">
+        <p class="st-anno" aria-hidden="true"><span class="st-maschera"><span class="st-cifra-testo" data-conta="1983">1983</span></span></p>
+        <div class="st-testo">
+          <p class="st-etichetta"><span>01</span>L’inizio</p>
+          <h3 id="st-t1" class="st-sotto">Nasce Bagnarino Macchine per l’Ufficio.</h3>
+          <p>Ad Alessandria apre un negozio specializzato: vendita, riparazione e consulenza su macchine e attrezzature per l’ufficio. Si impara il mestiere a contatto con chi lavora.</p>
+        </div>
+        <div class="st-scheda" aria-hidden="true"><span>Bagnarino</span><span>Macchine per l’ufficio</span><span>Alessandria · dal 1983</span></div>
+      </div>
+    </article>
+
+    <!-- Olivetti -->
+    <article class="st-scena st-ardesia st-olivetti" aria-labelledby="st-t2">
+      <div class="contenitore st-griglia">
+        <p class="st-anno st-parola" aria-hidden="true"><span class="st-maschera"><span class="st-cifra-testo">Olivetti</span></span></p>
+        <div class="st-testo">
+          <p class="st-etichetta"><span>02</span>Il marchio</p>
+          <h3 id="st-t2" class="st-sotto">Concessionario ufficiale Olivetti.</h3>
+          <p>Stampanti, registratori di cassa e assistenza specializzata. Il rapporto con le aziende e i professionisti del territorio si consolida, anno dopo anno.</p>
+          <p class="st-targa"><span class="targa-olivetti"><img src="/img/olivetti.png" alt="Olivetti" width="366" height="130" loading="lazy"></span><span>Concessionario ufficiale</span></p>
+        </div>
+        <div class="st-righe" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </article>
+
+    <!-- N. 46 -->
+    <article class="st-scena st-chiara st-46" aria-labelledby="st-t3">
+      <div class="contenitore st-griglia st-griglia-foto">
+        <figure class="st-foto st-foto-ingresso">
+          <img src="/img/foto/esterno-960.webp" srcset="/img/foto/esterno-560.webp 560w, /img/foto/esterno-960.webp 960w" sizes="(min-width: 900px) 46vw, 100vw" width="960" height="960" loading="lazy" decoding="async" alt="L’ingresso del negozio Bagnarino in corso Lamarmora 46, con l’insegna e i vasi rossi">
+        </figure>
+        <p class="st-anno st-numero-civico" aria-hidden="true"><span class="st-maschera"><span class="st-cifra-testo">46</span></span></p>
+        <div class="st-testo">
+          <p class="st-etichetta"><span>03</span>Corso Lamarmora</p>
+          <h3 id="st-t3" class="st-sotto">Il negozio di oggi, in pieno centro.</h3>
+          <p>Corso Lamarmora 46, una delle vie commerciali di Alessandria. Un luogo fisico, con l’insegna e la porta sulla strada, legato a tutta la storia dell’attività.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- Oggi -->
+    <article class="st-scena st-oggi" aria-labelledby="st-t4">
+      <div class="contenitore st-griglia st-griglia-oggi">
+        <p class="st-anno st-parola" aria-hidden="true"><span class="st-maschera"><span class="st-cifra-testo"><em>Oggi</em></span></span></p>
+        <div class="st-testo">
+          <p class="st-etichetta"><span>04</span>Il coworking</p>
+          <h3 id="st-t4" class="st-sotto">Il negozio diventa il tuo ufficio.</h3>
+          <p>Lo stesso spazio evolve in un posto dove lavorare, incontrarsi e concentrarsi. <span data-cfg="postazioni">8</span> scrivanie da <span data-prezzo="giornata">€25</span> al giorno, senza iscrizioni né contratti.</p>
+          <div class="st-azioni">
+            <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="storia"><span class="tasto-faccia">Prenota una giornata<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span></a>
+            <a class="st-link" href="#prezzi">Vedi tutte le formule<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          </div>
+        </div>
+        <div class="st-foto-oggi">
+          <figure class="st-foto"><img src="/img/foto/sala-coworking-720.webp" srcset="/img/foto/sala-coworking-720.webp 720w, /img/foto/sala-coworking-1280.webp 1280w" sizes="(min-width: 900px) 38vw, 100vw" width="1280" height="960" loading="lazy" decoding="async" alt="La sala del coworking con le scrivanie e il tavolo rotondo"></figure>
+          <figure class="st-foto"><img src="/img/foto/sala-stampa-720.webp" srcset="/img/foto/sala-stampa-720.webp 720w, /img/foto/sala-stampa-1280.webp 1280w" sizes="(min-width: 900px) 30vw, 100vw" width="1280" height="960" loading="lazy" decoding="async" alt="Le postazioni vicino alla finestra e l’angolo stampa con le multifunzione Olivetti"></figure>
+        </div>
+      </div>
+    </article>
   </section>
 
   <!-- ============ 04 · PREZZI ============ -->
