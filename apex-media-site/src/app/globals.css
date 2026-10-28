@@ -127,9 +127,6 @@ details > summary {
 details > summary::-webkit-details-marker {
   display: none;
 }
-details[open] .plus-v {
-  transform: scaleY(0);
-}
 
 /* ---------- Form a sola linea inferiore ---------- */
 .field {
@@ -174,4 +171,137 @@ select.field {
 }
 .grid-line:last-child {
   border-right: 1px solid var(--line);
+}
+
+/* ---------- Fase 2: movimento ---------- */
+html.lenis-on,
+html.lenis-on body {
+  height: auto;
+  scroll-behavior: auto;
+}
+
+/* Sottolineatura viola che si disegna da sinistra (nav e link) */
+.u-draw,
+.u-link {
+  position: relative;
+}
+.u-draw::after,
+.u-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--viola);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.u-draw:hover::after,
+.u-draw:focus-visible::after,
+.u-link:hover::after,
+.u-link:focus-visible::after {
+  transform: scaleX(1);
+}
+/* I link testuali hanno anche una linea statica, sottile */
+.u-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: color-mix(in srgb, var(--ink) 30%, transparent);
+}
+
+/* Evidenziatore: quando JS ha diviso le righe, il tratto è un elemento a parte che si disegna */
+h1.is-split .hl {
+  background-image: none;
+  position: relative;
+  z-index: 0;
+}
+.hl-ink {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform-origin: left center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C 40 9, 90 13, 150 10 S 190 8, 197 11 L 199 46 C 160 52, 110 47, 60 50 S 12 54, 2 49 Z' fill='%23FFD84D'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Fisarmoniche: il + ruota a × */
+.plus-icon {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+details[open] > summary .plus-icon {
+  transform: rotate(45deg);
+}
+
+/* Campi del form: la linea inferiore diventa viola da sinistra quando il campo è attivo */
+.field-wrap {
+  position: relative;
+}
+.field-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--viola);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+.field-wrap:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* Cornice browser: al passaggio del mouse la barra URL mostra "Visita il sito" */
+.url-swap {
+  display: grid;
+  overflow: hidden;
+  line-height: 1.2;
+}
+.url-swap > span {
+  grid-area: 1 / 1;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.3s;
+}
+.url-swap > span:last-child {
+  transform: translateY(110%);
+  opacity: 0;
+}
+@media (hover: hover) {
+  a:hover .url-swap > span:first-child {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  a:hover .url-swap > span:last-child {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  /* Pacchetti: la colonna sotto il mouse sale di 4px */
+  [data-plan] {
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  [data-plan]:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Barra CTA mobile */
+[data-mobile-cta] {
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.3s;
+}
+[data-mobile-cta][data-show="false"] {
+  transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
 }

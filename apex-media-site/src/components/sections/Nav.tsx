@@ -1,18 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { TricolorStripe } from "@/components/ui/TricolorStripe";
 import { MenuIcon, WhatsAppIcon } from "@/components/ui/Icons";
 import { Clock } from "@/components/Clock";
 import { navLinks, site } from "@/data/site";
+import { gsap, useGSAP, ScrollTrigger, MEDIA } from "@/lib/gsap";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
-
+  const ref = useRef<HTMLElement>(null);
+  const openRef = useRef(false);
+  const hideTween = useRef<gsap.core.Tween | null>(null);
   useEffect(() => {
+    openRef.current = open;
     document.documentElement.style.overflow = open ? "hidden" : "";
+    if (open) hideTween.current?.reverse();
     return () => {
       document.documentElement.style.overflow = "";
     };
@@ -24,8 +29,39 @@ export function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useGSAP(
+    () => {
+      const header = ref.current;
+      if (!header) return;
+      const mm = gsap.matchMedia();
+      mm.add([MEDIA.desktop, MEDIA.mobile], () => {
+        // Si nasconde scendendo, riappare salendo
+        hideTween.current = gsap.to(header, { yPercent: -100, duration: 0.45, ease: "power3.out", paused: true });
+        ScrollTrigger.create({
+          start: 0,
+          end: "max",
+          onUpdate: (self) => {
+            if (openRef.current) return;
+            if (self.direction === 1 && self.scroll() > 120) hideTween.current?.play();
+            else hideTween.current?.reverse();
+          },
+        });
+        // La striscia tricolore è la barra di avanzamento della pagina
+        gsap.fromTo(
+          "[data-progress]",
+          { scaleX: 0, transformOrigin: "left center" },
+          { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } },
+        );
+        return () => {
+          hideTween.current = null;
+        };
+      });
+    },
+    { scope: ref },
+  );
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-paper" data-nav>
+    <header ref={ref} className="fixed inset-x-0 top-0 z-50 bg-paper" data-nav>
       <div className="mx-auto flex h-nav w-full max-w-[1480px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
         <Logo />
 
@@ -33,10 +69,7 @@ export function Nav() {
           <ul className="flex items-center gap-7">
             {navLinks.map((l) => (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  className="text-[15px] font-medium text-ink/75 hover:text-ink"
-                >
+                <a href={l.href} className="u-draw text-[15px] font-medium text-ink/75 hover:text-ink">
                   {l.label}
                 </a>
               </li>
@@ -62,7 +95,7 @@ export function Nav() {
         </div>
       </div>
       <div className="h-px w-full bg-ink/10" />
-      <TricolorStripe data-progress="static" />
+      <TricolorStripe data-progress="page" />
 
       {/* Pannello mobile a tutta pagina */}
       <div
@@ -87,10 +120,7 @@ export function Nav() {
           </ul>
         </nav>
         <div className="mt-auto space-y-4 px-5 pb-8 sm:px-8">
-          <a
-            href={site.whatsappUrl}
-            className="inline-flex items-center gap-2 text-[17px] font-medium text-ink"
-          >
+          <a href={site.whatsappUrl} className="inline-flex items-center gap-2 text-[17px] font-medium text-ink">
             <WhatsAppIcon /> {site.whatsappDisplay}
           </a>
           <p className="label-mono text-ink/60">

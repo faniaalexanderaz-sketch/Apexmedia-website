@@ -1,5 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { SplitHeading } from "@/components/ui/SplitHeading";
+import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "./ContactForm";
 import { site } from "@/data/site";
 
@@ -8,16 +10,16 @@ export function Contact() {
     <section id="contatti" className="border-t border-ink/10 py-20 lg:py-28" data-section="contatti">
       <Container>
         <SectionLabel numero="07" testo="Contatti" />
-        <h2 className="h-display mt-6 max-w-[14ch] text-[clamp(2.5rem,1rem+5vw,6rem)]">
+        <SplitHeading as="h2" type="words" stagger={0.04} className="h-display mt-6 max-w-[14ch] text-[clamp(2.5rem,1rem+5vw,6rem)]">
           Parliamo della tua attività.
-        </h2>
+        </SplitHeading>
 
         <div className="mt-14 grid grid-cols-1 gap-14 lg:mt-20 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">
             <ContactForm />
           </div>
 
-          <aside className="lg:col-span-4 lg:col-start-9">
+          <Reveal stagger className="lg:col-span-4 lg:col-start-9">
             <div className="border-t border-ink/10 pt-6">
               <p className="label-mono text-ink/60">WhatsApp</p>
               <a
@@ -43,7 +45,7 @@ export function Contact() {
               </p>
               <p className="label-mono mt-3 text-ink/60">Alessandria · Piemonte</p>
             </div>
-          </aside>
+          </Reveal>
         </div>
       </Container>
     </section>

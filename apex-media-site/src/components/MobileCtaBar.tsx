@@ -36,7 +36,8 @@ export function MobileCtaBar() {
   return (
     <div
       data-mobile-cta
-      hidden={!show}
+      data-show={show ? "true" : "false"}
+      inert={!show}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 lg:hidden"
     >
       <div className="flex items-center gap-3">

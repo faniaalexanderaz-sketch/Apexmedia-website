@@ -37,7 +37,7 @@ export function PlusIcon({ className = "" }: { className?: string }) {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className={className}>
       <rect x="1" y="8.25" width="16" height="1.5" fill="currentColor" />
-      <rect x="8.25" y="1" width="1.5" height="16" fill="currentColor" className="plus-v origin-center" />
+      <rect x="8.25" y="1" width="1.5" height="16" fill="currentColor" />
     </svg>
   );
 }

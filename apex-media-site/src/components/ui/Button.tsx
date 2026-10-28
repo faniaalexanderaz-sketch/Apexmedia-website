@@ -4,15 +4,16 @@ type Variant = "primary" | "secondary" | "link";
 type Size = "md" | "sm";
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-sans font-semibold select-none transition-colors";
+  "inline-flex items-center justify-center gap-2 font-sans font-semibold select-none";
+
+/* Riempimento che scorre da sinistra (pseudo-elemento con scaleX), nessuna ombra. */
+const fill =
+  "relative isolate overflow-hidden rounded-sm whitespace-nowrap transition-colors duration-300 before:absolute before:inset-0 before:-z-10 before:origin-left before:scale-x-0 before:bg-ink before:transition-transform before:duration-[420ms] before:ease-[cubic-bezier(.2,.8,.2,1)] before:content-[''] hover:before:scale-x-100 focus-visible:before:scale-x-100";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-giallo text-ink rounded-sm whitespace-nowrap hover:bg-ink hover:text-paper",
-  secondary:
-    "bg-transparent text-ink rounded-sm border border-ink whitespace-nowrap hover:bg-ink hover:text-paper",
-  link:
-    "bg-transparent text-ink text-left underline underline-offset-[6px] decoration-1 hover:text-viola px-0",
+  primary: `${fill} bg-giallo text-ink hover:text-giallo focus-visible:text-giallo`,
+  secondary: `${fill} bg-transparent text-ink border border-ink hover:text-paper focus-visible:text-paper`,
+  link: "u-link text-ink text-left px-0 hover:text-viola",
 };
 
 const sizes: Record<Size, string> = {
