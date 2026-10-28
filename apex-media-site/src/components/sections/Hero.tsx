@@ -58,7 +58,6 @@ export function Hero() {
                   <PhoneFrame
                     shot={item.shots.mobile}
                     alt={`Home page del sito ${item.name} su smartphone`}
-                    priority={i === 0}
                     sizes="(min-width: 1024px) 10vw, 24vw"
                     className="absolute bottom-0 left-0 w-[28%] lg:-left-8 lg:w-[24%]"
                   />

@@ -31,7 +31,7 @@ export function Services() {
                     aria-controls={`servizio-${s.id}`}
                     className={`flex w-full items-baseline gap-6 py-6 text-left font-display text-[clamp(2.25rem,1rem+2.6vw,3.75rem)] font-bold leading-none tracking-tightest transition-colors ${isActive ? "text-ink" : "text-ink/30 hover:text-ink/60"}`}
                   >
-                    <span className={`font-mono text-[12px] tracking-label ${isActive ? "text-blu" : "text-ink/40"}`}>
+                    <span className={`font-mono text-[12px] tracking-label ${isActive ? "text-blu-deep" : "text-ink/40"}`}>
                       0{i + 1}
                     </span>
                     {s.name}
@@ -72,7 +72,7 @@ export function Services() {
             <details key={s.id} className="group border-b border-ink/10" open={i === 0}>
               <summary className="flex min-h-14 items-center justify-between gap-4 py-4">
                 <span className="flex items-baseline gap-4 font-display text-[28px] font-bold leading-none tracking-tightest">
-                  <span className="font-mono text-[11px] tracking-label text-blu">0{i + 1}</span>
+                  <span className="font-mono text-[11px] tracking-label text-blu-deep">0{i + 1}</span>
                   {s.name}
                 </span>
                 <PlusIcon className="shrink-0 text-ink" />

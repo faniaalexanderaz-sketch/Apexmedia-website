@@ -46,6 +46,7 @@ export function BrowserFrame({
           height={shot.height}
           alt={alt}
           priority={priority}
+          fetchPriority={priority ? "high" : undefined}
           sizes={sizes}
           className="block h-full w-full object-cover object-top"
         />

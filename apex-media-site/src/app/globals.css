@@ -8,6 +8,7 @@
   --color-ink: #0b0d14;
   --color-viola: #5b2eff;
   --color-blu: #2f6bff;
+  --color-blu-deep: #1f5beb; /* blu per testo piccolo su sfondo chiaro (contrasto 5.1:1) */
   --color-giallo: #ffd84d;
   --color-verde: #17b26a;
   --color-transparent: transparent;
@@ -36,6 +37,7 @@
   --ink: #0b0d14;
   --viola: #5b2eff;
   --blu: #2f6bff;
+  --blu-deep: #1f5beb;
   --giallo: #ffd84d;
   --verde: #17b26a;
   --line: color-mix(in srgb, var(--ink) 8%, transparent);

@@ -57,7 +57,7 @@ export function Work() {
                   </div>
 
                   <div className={`lg:col-span-5 ${flip ? "lg:order-1 lg:col-start-1" : "lg:col-start-8"}`}>
-                    <p className="font-mono text-[11px] tracking-label text-blu">
+                    <p className="font-mono text-[11px] tracking-label text-blu-deep">
                       {String(i + 1).padStart(2, "0")}/{String(portfolio.length).padStart(2, "0")}
                     </p>
                     <h3 className="h-display mt-3 text-[clamp(2rem,1rem+3vw,3.5rem)]">{item.name}</h3>

@@ -79,7 +79,7 @@ export function Nav() {
                   onClick={() => setOpen(false)}
                   className="flex items-baseline gap-4 py-4 font-display text-[40px] font-bold leading-none tracking-tightest text-ink"
                 >
-                  <span className="font-mono text-[11px] tracking-label text-blu">0{i + 1}</span>
+                  <span className="font-mono text-[11px] tracking-label text-blu-deep">0{i + 1}</span>
                   {l.label}
                 </a>
               </li>
