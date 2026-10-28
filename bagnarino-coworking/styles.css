@@ -989,7 +989,6 @@ body.menu-aperto { overflow: hidden; }
 @media (min-width: 700px) and (max-width: 1099px) { .prezzo-evidenza { padding-top: 56px; } }
 @media (max-width: 699px) { .prezzo-evidenza { margin: 0 calc(-1 * var(--margine)); padding: 56px var(--margine) 32px; } }
 .prezzo { transition: background-color .3s var(--curva); }
-.prezzo:not(.prezzo-evidenza):hover { background: var(--avorio); }
 
 /* lo spazio: le due liste in riquadri diversi, uno chiaro e uno scuro */
 .spazio-sezione { background: var(--carta); }
@@ -1129,7 +1128,7 @@ body.menu-aperto { overflow: hidden; }
    ============================================================= */
 .prezzi { gap: 16px; background: none; border: 0; overflow: visible; }
 .prezzo { position: relative; border-radius: 28px; padding: 30px 24px 28px; background: var(--c-sfondo); color: var(--c-testo); box-shadow: 0 26px 48px -30px rgba(17, 25, 34, .55); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
-.prezzo:hover { transform: translateY(-4px); box-shadow: 0 32px 56px -28px rgba(17, 25, 34, .6); background: var(--c-sfondo); }
+@media (hover: hover) { .prezzo:hover { transform: translateY(-4px); box-shadow: 0 32px 56px -28px rgba(17, 25, 34, .6); } }
 .prezzo-giornata { --c-sfondo: #F5DFAE; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--notte); }
 .prezzo-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-forte: #1E6B52; --c-btn: #2E8A62; --c-btn-testo: #fff; --c-btn-bordo: #0E2F22; }
 .prezzo-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-forte: var(--ocra-vivo); --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--avorio); }
