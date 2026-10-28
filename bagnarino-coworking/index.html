@@ -37,7 +37,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=33eb88fb">
+  <link rel="stylesheet" href="/styles.css?v=a7a815b6">
 
   <script src="/config.js?v=f5a6eb62"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -51,7 +51,7 @@
   </script>
   <script src="/main.js?v=37001332" defer></script>
   <script src="/vendor/gsap/gsap-bundle.min.js" defer></script>
-  <script src="/animazioni.js?v=b61b0c22" defer></script>
+  <script src="/animazioni.js?v=9164f47c" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -403,38 +403,30 @@
     </div>
   </section>
 
-  <!-- ============ 05 · UNA GIORNATA: scorrendo, passa la giornata.
-       L'orologio gira dalle 9:30 alle 18:30, il cielo cambia colore,
-       il sole attraversa la sezione e i momenti si danno il cambio.
-       Senza animazioni resta un elenco semplice dei momenti. ============ -->
-  <section class="sezione giornata-sezione banda-blu gd" id="giornata" aria-labelledby="giornata-titolo">
-    <div class="gd-cielo" aria-hidden="true"><span class="gd-stelle"></span><span class="gd-sole"></span></div>
-    <div class="contenitore gd-griglia">
-      <div class="gd-testa">
+  <!-- ============ 04 · UNA GIORNATA: tutto in una schermata, l'orologio gira da solo ============ -->
+  <section class="sezione giornata-sezione banda-blu gg" id="giornata" aria-labelledby="giornata-titolo">
+    <div class="gg-cielo" aria-hidden="true"><span class="gg-stelle"></span></div>
+    <div class="contenitore gg-griglia">
+      <div class="gg-testo">
         <p class="occhiello occhiello-chiaro"><span>04</span>Una giornata da noi</p>
-        <h2 id="giornata-titolo" class="titolo-sezione">Dalle <span data-cfg="orari.apertura">9:30</span> alle <span data-cfg="orari.chiusura">18:30</span>, <em>la scrivania è tua.</em></h2>
+        <h2 id="giornata-titolo" class="titolo-sezione gg-titolo">Dalle <span data-cfg="orari.apertura">9:30</span> alle <span data-cfg="orari.chiusura">18:30</span>, <em>la scrivania è tua.</em></h2>
+        <p class="gg-sotto">Entri, lavori, paghi al banco quando esci. Tutto il resto è già compreso.</p>
+        <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="giornata"><span class="tasto-faccia">Prenota la tua giornata<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span></a>
       </div>
 
-      <div class="gd-orologio" aria-hidden="true">
-        <p class="gd-ora"><span class="gd-cifra" data-gd-cifra="0"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gd-cifra" data-gd-cifra="1"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gd-due-punti">:</span><span class="gd-cifra" data-gd-cifra="2"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gd-cifra" data-gd-cifra="3"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span></p>
-        <div class="gd-barra">
-          <span class="gd-binario"><span class="gd-pieno" data-gd-pieno></span><span class="gd-punto" data-gd-punto></span></span>
-          <span class="gd-tacche" data-gd-tacche></span>
+      <div class="gg-scena">
+        <p class="gg-ora" aria-hidden="true"><span class="gg-cifra" data-gg-cifra="0"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gg-cifra" data-gg-cifra="1"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gg-due-punti">:</span><span class="gg-cifra" data-gg-cifra="2"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gg-cifra" data-gg-cifra="3"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span></p>
+        <div class="gg-barra" aria-hidden="true">
+          <span class="gg-binario"><span class="gg-pieno" data-gg-pieno></span><span class="gg-punto" data-gg-punto></span></span>
+          <span class="gg-tacche" data-gg-tacche></span>
         </div>
-      </div>
-
-      <ol class="gd-momenti">
-        <li class="gd-momento" data-ora="9:30"><span class="gd-quando" data-cfg="orari.apertura">9:30</span><h3>Entri, la scrivania è pronta</h3><p>Presa elettrica, wi-fi in fibra, luce dalla finestra. Apri il portatile e parti.</p></li>
-        <li class="gd-momento" data-ora="11:00"><span class="gd-quando">11:00</span><h3>Ti serve una stampa</h3><p>La multifunzione Olivetti è nell’angolo stampa. Stampe e scansioni sono già nel prezzo.</p></li>
-        <li class="gd-momento" data-ora="13:00"><span class="gd-quando">13:00</span><h3>Pausa in pieno centro</h3><p>Esci, mangi qualcosa in corso Lamarmora, torni. La scrivania ti aspetta come l’hai lasciata.</p></li>
-        <li class="gd-momento" data-ora="15:30"><span class="gd-quando">15:30</span><h3>La videochiamata importante</h3><p>Connessione stabile e un tavolo per parlare. Se qualcosa non va, il tecnico è in negozio.</p></li>
-        <li class="gd-momento" data-ora="18:30"><span class="gd-quando" data-cfg="orari.chiusura">18:30</span><h3>Chiudi il portatile</h3><p>Paghi <span data-prezzo="giornata">€25</span> al banco e torni quando vuoi. Nessun abbonamento.</p></li>
-      </ol>
-
-      <div class="gd-azione">
-        <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="giornata">
-          <span class="tasto-faccia">Prenota la tua giornata<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
-        </a>
+        <ol class="gg-momenti" data-gg-momenti>
+          <li class="gg-momento" data-ora="9:30"><svg class="ico" aria-hidden="true"><use href="#i-scrivania"/></svg><span class="gg-quando" data-cfg="orari.apertura">9:30</span><span>Entri, la scrivania è pronta</span></li>
+          <li class="gg-momento" data-ora="11:00"><svg class="ico" aria-hidden="true"><use href="#i-printer"/></svg><span class="gg-quando">11:00</span><span>Stampi, è incluso</span></li>
+          <li class="gg-momento" data-ora="13:00"><svg class="ico" aria-hidden="true"><use href="#i-caffe"/></svg><span class="gg-quando">13:00</span><span>Pausa in centro</span></li>
+          <li class="gg-momento" data-ora="15:30"><svg class="ico" aria-hidden="true"><use href="#i-wifi"/></svg><span class="gg-quando">15:30</span><span>Videochiamata in fibra</span></li>
+          <li class="gg-momento" data-ora="18:30"><svg class="ico" aria-hidden="true"><use href="#i-banconota"/></svg><span class="gg-quando" data-cfg="orari.chiusura">18:30</span><span>Paghi <span data-prezzo="giornata">€25</span> al banco</span></li>
+        </ol>
       </div>
     </div>
   </section>

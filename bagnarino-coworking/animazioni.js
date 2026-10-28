@@ -34,7 +34,6 @@
   function ripristina() {
     try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}
     $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; el.style.filter = ''; el.style.visibility = ''; el.style.letterSpacing = ''; });
-    $$('.gd').forEach(function (c) { c.classList.remove('animata'); });
     radice.classList.remove('gsap-attivo', 'js-tira');
     sblocca();
   }
@@ -164,16 +163,16 @@
     /* ======================================================
        4) LE SCENE
        ====================================================== */
-      /* 1b) una giornata: la sezione si ferma e, scorrendo, passa la giornata.
-         L'orologio gira dall'apertura alla chiusura, il cielo cambia colore,
-         il sole fa il suo arco, le stelle escono la sera, i momenti si danno il cambio */
-      var gd = $('.gd'), C = window.BGN_CONFIG || {};
-      if (gd) {
+      /* 1b) una giornata: entra una volta sola. Il titolo sale parola per parola (già nel blocco 2),
+         la barra si disegna, l'orologio gira da 9:30 a 18:30 in ~3 secondi, i momenti si accendono
+         passando, il cielo si fa sera. Niente pin, niente scrub: lo scroll resta libero */
+      var gg = $('.gg'), C = window.BGN_CONFIG || {};
+      if (gg) {
         var min = function (t) { var x = String(t).split(':'); return (+x[0]) * 60 + (+x[1] || 0); };
         var INIZIO = min((C.orari && C.orari.apertura) || '9:30'), FINE = min((C.orari && C.orari.chiusura) || '18:30');
-        var rulli = $$('[data-gd-cifra] .gd-rullo', gd), pieno = $('[data-gd-pieno]', gd), punto = $('[data-gd-punto]', gd);
-        var momenti = $$('.gd-momento', gd).map(function (m) { return { el: m, min: min(m.getAttribute('data-ora')) }; });
-        var tacche = $('[data-gd-tacche]', gd), segni = [];
+        var rulli = $$('[data-gg-cifra] .gg-rullo', gg), pieno = $('[data-gg-pieno]', gg), punto = $('[data-gg-punto]', gg);
+        var momenti = $$('.gg-momento', gg).map(function (m) { return { el: m, min: min(m.getAttribute('data-ora')) }; });
+        var tacche = $('[data-gg-tacche]', gg), segni = [];
         for (var h = Math.ceil(INIZIO / 60); h * 60 <= FINE; h++) {
           var t = document.createElement('span'); t.textContent = h; t.style.left = ((h * 60 - INIZIO) / (FINE - INIZIO) * 100) + '%';
           tacche.appendChild(t); segni.push({ el: t, min: h * 60 });
@@ -182,30 +181,43 @@
         var cieloBasso = gsap.utils.interpolate(['#1E3044', '#22374C', '#2A2C38', '#3A2A2A', '#0C1219']);
         var ultimo = '';
         var mostra = function (p) {
-          var m = INIZIO + (FINE - INIZIO) * Math.min(p / 0.86, 1), hh = Math.floor(m / 60), mm = Math.floor(m % 60);
+          var m = INIZIO + (FINE - INIZIO) * p, hh = Math.floor(m / 60), mm = Math.floor(m % 60);
           var cifre = (hh < 10 ? '0' + hh : '' + hh) + (mm < 10 ? '0' + mm : '' + mm);
           if (cifre !== ultimo) { ultimo = cifre; rulli.forEach(function (r, i) { r.style.transform = 'translateY(' + (-(+cifre[i])) + 'em)'; }); }
           pieno.style.transform = 'scaleX(' + p.toFixed(4) + ')';
           punto.style.left = (p * 100).toFixed(2) + '%';
           segni.forEach(function (sg) { sg.el.classList.toggle('passata', m >= sg.min); });
-          gd.style.setProperty('--cielo-alto', cieloAlto(p));
-          gd.style.setProperty('--cielo-basso', cieloBasso(p));
-          gd.style.setProperty('--sole-x', (8 + p * 84).toFixed(2) + '%');
-          gd.style.setProperty('--sole-y', (78 - Math.sin(Math.PI * Math.min(p / 0.9, 1)) * 62).toFixed(2) + '%');
-          gd.style.setProperty('--sole-o', (p < 0.8 ? Math.min(1, 0.35 + p * 2) : Math.max(0, 1 - (p - 0.8) * 9)).toFixed(3));
-          gd.style.setProperty('--stelle', Math.max(0, (p - 0.86) * 7).toFixed(3));
-          var attivo = 0;
-          momenti.forEach(function (x, i) { if (m >= x.min - 1) attivo = i; });
-          momenti.forEach(function (x, i) { x.el.classList.toggle('attivo', i === attivo); x.el.classList.toggle('passato', i < attivo); });
+          gg.style.setProperty('--cielo-alto', cieloAlto(p));
+          gg.style.setProperty('--cielo-basso', cieloBasso(p));
+          gg.style.setProperty('--stelle', Math.max(0, (p - 0.82) * 5.5).toFixed(3));
+          momenti.forEach(function (x) { x.el.classList.toggle('acceso', m >= x.min - 1); });
         };
-        gd.classList.add('animata');
-        mostra(0);
         var giorno = { p: 0 };
-        gsap.to(giorno, { p: 1, ease: 'none', onUpdate: function () { mostra(giorno.p); },
-          scrollTrigger: { trigger: gd, start: 'top top', end: function () { return '+=' + Math.round(window.innerHeight * 2.4); }, pin: true, scrub: 0.8, refreshPriority: 1, anticipatePin: 1 } });
-        /* all'ingresso le cifre salgono dal basso */
-        gsap.from($$('.gd-cifra', gd), { yPercent: 80, opacity: 0, duration: 0.9, ease: 'power4.out', stagger: 0.07, clearProps: 'transform,opacity',
-          scrollTrigger: { trigger: gd, start: 'top 70%', once: true } });
+        var vai = gsap.to(giorno, { p: 1, duration: 3.2, ease: 'power1.inOut', paused: true, onUpdate: function () { mostra(giorno.p); } });
+        var ridotto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (ridotto) { mostra(1); }
+        else {
+          mostra(0);
+          var scenaGg = $('.gg-scena', gg);
+          gsap.set($$('.gg-cifra', gg), { yPercent: 60, opacity: 0 });
+          gsap.set($$('.gg-momento', gg), { opacity: 0, x: -14 });
+          gsap.set(pieno.parentNode, { scaleX: 0, transformOrigin: 'left center' });
+          gsap.set($$('.gg-tacche span', gg), { opacity: 0 });
+          var tlGg = gsap.timeline({ defaults: { ease: 'power3.out' }, scrollTrigger: { trigger: gg, start: 'top 60%', once: true } });
+          tlGg.to($$('.gg-cifra', gg), { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.07, clearProps: 'opacity,transform' }, 0)
+            .to(pieno.parentNode, { scaleX: 1, duration: 0.9, ease: 'power2.inOut', clearProps: 'transform' }, 0.2)
+            .to($$('.gg-tacche span', gg), { opacity: 1, duration: 0.4, stagger: 0.04, clearProps: 'opacity' }, 0.5)
+            .to($$('.gg-momento', gg), { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, clearProps: 'opacity,transform' }, 0.6)
+            .add(function () { vai.play(0); }, 0.9);
+          /* col mouse su un momento, l'orologio salta a quell'ora (solo con puntatore) */
+          if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            var salta = gsap.quickTo(giorno, 'p', { duration: 0.6, ease: 'power3.out', onUpdate: function () { mostra(giorno.p); } });
+            momenti.forEach(function (x) {
+              x.el.addEventListener('pointerenter', function () { if (vai.isActive()) return; salta((x.min - INIZIO) / (FINE - INIZIO)); });
+              x.el.addEventListener('pointerleave', function () { if (vai.isActive()) return; salta(1); });
+            });
+          }
+        }
       }
 
       /* 2d) il listino: le colonne salgono una dopo l'altra, quella del mese si apre per ultima */
