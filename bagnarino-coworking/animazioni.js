@@ -8,7 +8,7 @@
    - i titoli di sezione salgono parola per parola ruotando, le
      etichette si stringono, i testi passano da sfocati a nitidi,
      i pulsanti saltano fuori, ogni blocco ha il suo ingresso;
-   - le scene (storia, scontrino, servizi, tessera) hanno i loro gesti.
+   - le scene (storia, giornata, servizi, tessera) hanno i loro gesti.
    Regola d'oro: il pulsante "Prenota" è visibile entro ~1 secondo.
    Rispetta "riduci movimento"; senza GSAP la pagina è già completa.
    ============================================================= */
@@ -35,7 +35,7 @@
     try { ScrollTrigger.getAll().forEach(function (t) { t.kill(); }); } catch (x) {}
     $$('[style]').forEach(function (el) { el.style.opacity = ''; el.style.transform = ''; el.style.clipPath = ''; el.style.filter = ''; el.style.visibility = ''; el.style.letterSpacing = ''; });
     var s = $('.storia-sezione'); if (s) s.classList.remove('animata');
-    $$('[data-scontrino]').forEach(function (c) { c.classList.remove('animata', 'stampa'); });
+    $$('.gd').forEach(function (c) { c.classList.remove('animata'); });
     radice.classList.remove('gsap-attivo', 'js-tira');
     sblocca();
   }
@@ -130,7 +130,7 @@
     /* ======================================================
        3) TESTI E BLOCCHI — ognuno col suo ingresso, a cascata
        ====================================================== */
-    var testi = $$('.intro-sezione, .neg-lead, .neg-contatti, .giornata-lead, .giornata-cta, .servizi-testa > p, .servizi-senza, .fidelity-testo > p[data-cfg], .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2):not(.btn):not(.dove-cta), .faq-altro, .finale > .contenitore > p, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li, .fatti > div')
+    var testi = $$('.intro-sezione, .neg-lead, .neg-contatti, .servizi-testa > p, .servizi-senza, .fidelity-testo > p[data-cfg], .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2):not(.btn):not(.dove-cta), .faq-altro, .finale > .contenitore > p, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li, .fatti > div')
       .filter(sottoLaPiega);
     if (testi.length) {
       gsap.set(testi, { opacity: 0, y: 30, filter: 'blur(6px)' });
@@ -186,22 +186,48 @@
         });
       }
 
-      /* 1b) una giornata: scorrendo, lo scontrino si stampa dall'alto, riga per riga,
-         e alla fine si piega appena, come una carta vera */
-      var scena = $('[data-scontrino]');
-      if (scena) {
-        var esci = function (p) {
-          scena.style.setProperty('--nascosto', ((1 - p) * 100).toFixed(1) + '%');
-          scena.style.setProperty('--scende', ((p - 1) * 24).toFixed(1) + 'px');
-          scena.style.setProperty('--piega', (p > 0.98 ? -1.5 : 0) + 'deg');
-          scena.classList.toggle('stampa', p > 0.02 && p < 0.98);
+      /* 1b) una giornata: la sezione si ferma e, scorrendo, passa la giornata.
+         L'orologio gira dall'apertura alla chiusura, il cielo cambia colore,
+         il sole fa il suo arco, le stelle escono la sera, i momenti si danno il cambio */
+      var gd = $('.gd'), C = window.BGN_CONFIG || {};
+      if (gd) {
+        var min = function (t) { var x = String(t).split(':'); return (+x[0]) * 60 + (+x[1] || 0); };
+        var INIZIO = min((C.orari && C.orari.apertura) || '9:30'), FINE = min((C.orari && C.orari.chiusura) || '18:30');
+        var rulli = $$('[data-gd-cifra] .gd-rullo', gd), pieno = $('[data-gd-pieno]', gd), punto = $('[data-gd-punto]', gd);
+        var momenti = $$('.gd-momento', gd).map(function (m) { return { el: m, min: min(m.getAttribute('data-ora')) }; });
+        var tacche = $('[data-gd-tacche]', gd), segni = [];
+        for (var h = Math.ceil(INIZIO / 60); h * 60 <= FINE; h++) {
+          var t = document.createElement('span'); t.textContent = h; t.style.left = ((h * 60 - INIZIO) / (FINE - INIZIO) * 100) + '%';
+          tacche.appendChild(t); segni.push({ el: t, min: h * 60 });
+        }
+        var cieloAlto = gsap.utils.interpolate(['#3A5878', '#4B6D8E', '#5A5A63', '#8A5634', '#141E2A']);
+        var cieloBasso = gsap.utils.interpolate(['#1E3044', '#22374C', '#2A2C38', '#3A2A2A', '#0C1219']);
+        var ultimo = '';
+        var mostra = function (p) {
+          var m = INIZIO + (FINE - INIZIO) * Math.min(p / 0.86, 1), hh = Math.floor(m / 60), mm = Math.floor(m % 60);
+          var cifre = (hh < 10 ? '0' + hh : '' + hh) + (mm < 10 ? '0' + mm : '' + mm);
+          if (cifre !== ultimo) { ultimo = cifre; rulli.forEach(function (r, i) { r.style.transform = 'translateY(' + (-(+cifre[i])) + 'em)'; }); }
+          pieno.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+          punto.style.left = (p * 100).toFixed(2) + '%';
+          segni.forEach(function (sg) { sg.el.classList.toggle('passata', m >= sg.min); });
+          gd.style.setProperty('--cielo-alto', cieloAlto(p));
+          gd.style.setProperty('--cielo-basso', cieloBasso(p));
+          gd.style.setProperty('--sole-x', (8 + p * 84).toFixed(2) + '%');
+          gd.style.setProperty('--sole-y', (78 - Math.sin(Math.PI * Math.min(p / 0.9, 1)) * 62).toFixed(2) + '%');
+          gd.style.setProperty('--sole-o', (p < 0.8 ? Math.min(1, 0.35 + p * 2) : Math.max(0, 1 - (p - 0.8) * 9)).toFixed(3));
+          gd.style.setProperty('--stelle', Math.max(0, (p - 0.86) * 7).toFixed(3));
+          var attivo = 0;
+          momenti.forEach(function (x, i) { if (m >= x.min - 1) attivo = i; });
+          momenti.forEach(function (x, i) { x.el.classList.toggle('attivo', i === attivo); x.el.classList.toggle('passato', i < attivo); });
         };
-        scena.classList.add('animata');
-        var stS = ScrollTrigger.create({
-          trigger: scena, start: 'top 75%', end: function () { return window.innerWidth >= 900 ? 'bottom 55%' : 'bottom 85%'; }, scrub: 0.6,
-          onUpdate: function (st) { esci(st.progress); }, onRefresh: function (st) { esci(st.progress); }
-        });
-        esci(stS.progress);
+        gd.classList.add('animata');
+        mostra(0);
+        var giorno = { p: 0 };
+        gsap.to(giorno, { p: 1, ease: 'none', onUpdate: function () { mostra(giorno.p); },
+          scrollTrigger: { trigger: gd, start: 'top top', end: function () { return '+=' + Math.round(window.innerHeight * 2.4); }, pin: true, scrub: 0.8, refreshPriority: 1, anticipatePin: 1 } });
+        /* all'ingresso le cifre salgono dal basso */
+        gsap.from($$('.gd-cifra', gd), { yPercent: 80, opacity: 0, duration: 0.9, ease: 'power4.out', stagger: 0.07, clearProps: 'transform,opacity',
+          scrollTrigger: { trigger: gd, start: 'top 70%', once: true } });
       }
 
       /* 2d) il listino: le colonne salgono una dopo l'altra, quella del mese si apre per ultima */
@@ -393,10 +419,6 @@
       var voci = $$('.prezzo-include li', card);
       if (voci.length && sottoLaPiega(card)) gsap.from(voci, { x: -24, opacity: 0, duration: 0.5, ease: 'power2.out', stagger: 0.07, delay: 0.3, clearProps: 'opacity,transform', scrollTrigger: { trigger: card, start: 'top 85%', once: true } });
     });
-
-    /* 05 · una giornata: la luce della cassa lampeggia mentre lo scontrino esce */
-    var luceCassa = $('.cassa-luce');
-    if (luceCassa) inVista('#giornata', gsap.to(luceCassa, { opacity: 0.25, duration: 0.45, ease: 'steps(1)', yoyo: true, repeat: -1 }));
 
     /* 06 · spazio: le X dei "niente sorprese" girano dentro, la frase finale si batte a macchina */
     var xx = $$('.servizi-senza li .ico').filter(sottoLaPiega);

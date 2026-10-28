@@ -37,7 +37,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=0625554b">
+  <link rel="stylesheet" href="/styles.css?v=82c50f07">
 
   <script src="/config.js?v=f5a6eb62"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -51,7 +51,7 @@
   </script>
   <script src="/main.js?v=7147f9b2" defer></script>
   <script src="/vendor/gsap/gsap-bundle.min.js" defer></script>
-  <script src="/animazioni.js?v=4677910d" defer></script>
+  <script src="/animazioni.js?v=84871f90" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -425,48 +425,38 @@
     </div>
   </section>
 
-  <!-- ============ 05 · UNA GIORNATA DA NOI: lo scontrino che esce dalla cassa
-       (Bagnarino vende registratori di cassa: la giornata tipo si "stampa" scorrendo) ============ -->
-  <section class="sezione giornata-sezione banda-blu" id="giornata" aria-labelledby="giornata-titolo">
-    <div class="contenitore giornata-griglia">
-      <div class="giornata-testo">
+  <!-- ============ 05 · UNA GIORNATA: scorrendo, passa la giornata.
+       L'orologio gira dalle 9:30 alle 18:30, il cielo cambia colore,
+       il sole attraversa la sezione e i momenti si danno il cambio.
+       Senza animazioni resta un elenco semplice dei momenti. ============ -->
+  <section class="sezione giornata-sezione banda-blu gd" id="giornata" aria-labelledby="giornata-titolo">
+    <div class="gd-cielo" aria-hidden="true"><span class="gd-stelle"></span><span class="gd-sole"></span></div>
+    <div class="contenitore gd-griglia">
+      <div class="gd-testa">
         <p class="occhiello occhiello-chiaro"><span>05</span>Una giornata da noi</p>
-        <h2 id="giornata-titolo" class="titolo-sezione">Dalle <span data-cfg="orari.apertura">9:30</span> alle <span data-cfg="orari.chiusura">18:30</span>, <em>senza pensieri.</em></h2>
-        <p class="giornata-lead">Ecco una giornata tipo, battuta su uno scontrino come quelli dei registratori di cassa che vendiamo in negozio. Tutto quello che serve per lavorare è già nel totale.</p>
-        <a class="btn btn-ocra btn-grande giornata-cta" href="/prenota?pacchetto=giornata" data-pos="giornata"><span>Prenota la tua giornata</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <h2 id="giornata-titolo" class="titolo-sezione">Dalle <span data-cfg="orari.apertura">9:30</span> alle <span data-cfg="orari.chiusura">18:30</span>, <em>la scrivania è tua.</em></h2>
       </div>
 
-      <div class="scontrino-scena" data-scontrino>
-        <div class="cassa" aria-hidden="true">
-          <span class="cassa-luce"></span>
-          <span class="cassa-nome">Bagnarino · cassa 1</span>
-          <span class="cassa-fessura"></span>
+      <div class="gd-orologio" aria-hidden="true">
+        <p class="gd-ora"><span class="gd-cifra" data-gd-cifra="0"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gd-cifra" data-gd-cifra="1"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gd-due-punti">:</span><span class="gd-cifra" data-gd-cifra="2"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gd-cifra" data-gd-cifra="3"><span class="gd-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span></p>
+        <div class="gd-barra">
+          <span class="gd-binario"><span class="gd-pieno" data-gd-pieno></span><span class="gd-punto" data-gd-punto></span></span>
+          <span class="gd-tacche" data-gd-tacche></span>
         </div>
-        <div class="scontrino-maschera">
-          <div class="scontrino" role="group" aria-label="Una giornata tipo al coworking Bagnarino">
-            <p class="sc-centro sc-forte">BAGNARINO S.R.L.</p>
-            <p class="sc-centro"><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span> · <span data-cfg="azienda.citta">Alessandria</span></p>
-            <p class="sc-centro">Coworking · dal <span data-cfg="azienda.dal">1983</span></p>
-            <hr class="sc-taglio">
-            <p class="sc-centro sc-piccolo">Una giornata tipo</p>
-            <ol class="sc-righe">
-              <li class="sc-riga"><span class="sc-ora" data-cfg="orari.apertura">9:30</span><span class="sc-voce">Arrivi e ti sistemi</span><span class="sc-val">OK</span><small>Scrivania pronta, presa e wi-fi</small></li>
-              <li class="sc-riga"><span class="sc-ora">11:00</span><span class="sc-voce">Una stampa al volo</span><span class="sc-val">INCL.</span><small>Sulla multifunzione Olivetti</small></li>
-              <li class="sc-riga"><span class="sc-ora">13:00</span><span class="sc-voce">Pausa in centro</span><span class="sc-val">2 PASSI</span><small>Bar e trattorie in corso Lamarmora</small></li>
-              <li class="sc-riga"><span class="sc-ora" data-cfg="orari.chiusura">18:30</span><span class="sc-voce">Chiudi il portatile</span><span class="sc-val">FATTO</span><small>Domani, se vuoi, torni</small></li>
-            </ol>
-            <hr class="sc-taglio">
-            <ul class="sc-inclusi">
-              <li><span>Wi-fi in fibra</span><span>INCLUSO</span></li>
-              <li><span>Stampe e scansioni</span><span>INCLUSE</span></li>
-              <li><span>Tecnico in negozio</span><span>INCLUSO</span></li>
-            </ul>
-            <p class="sc-totale"><span>TOTALE GIORNATA</span><strong data-prezzo="giornata">€25</strong></p>
-            <p class="sc-centro sc-piccolo">Si paga in sede · contanti o carta</p>
-            <div class="sc-barre" aria-hidden="true"></div>
-            <p class="sc-centro sc-forte">GRAZIE E A DOMANI</p>
-          </div>
-        </div>
+      </div>
+
+      <ol class="gd-momenti">
+        <li class="gd-momento" data-ora="9:30"><span class="gd-quando" data-cfg="orari.apertura">9:30</span><h3>Entri, la scrivania è pronta</h3><p>Presa elettrica, wi-fi in fibra, luce dalla finestra. Apri il portatile e parti.</p></li>
+        <li class="gd-momento" data-ora="11:00"><span class="gd-quando">11:00</span><h3>Ti serve una stampa</h3><p>La multifunzione Olivetti è nell’angolo stampa. Stampe e scansioni sono già nel prezzo.</p></li>
+        <li class="gd-momento" data-ora="13:00"><span class="gd-quando">13:00</span><h3>Pausa in pieno centro</h3><p>Esci, mangi qualcosa in corso Lamarmora, torni. La scrivania ti aspetta come l’hai lasciata.</p></li>
+        <li class="gd-momento" data-ora="15:30"><span class="gd-quando">15:30</span><h3>La videochiamata importante</h3><p>Connessione stabile e un tavolo per parlare. Se qualcosa non va, il tecnico è in negozio.</p></li>
+        <li class="gd-momento" data-ora="18:30"><span class="gd-quando" data-cfg="orari.chiusura">18:30</span><h3>Chiudi il portatile</h3><p>Paghi <span data-prezzo="giornata">€25</span> al banco e torni quando vuoi. Nessun abbonamento.</p></li>
+      </ol>
+
+      <div class="gd-azione">
+        <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="giornata">
+          <span class="tasto-faccia">Prenota la tua giornata<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+        </a>
       </div>
     </div>
   </section>

@@ -149,7 +149,7 @@ strong { font-weight: 600; }
 .btn {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .6em;
   min-height: 52px; padding: 12px 22px;
-  border-radius: var(--raggio); border: 1.5px solid var(--inchiostro);
+  border-radius: 999px; border: 1.5px solid var(--inchiostro);
   background: var(--inchiostro); color: var(--avorio);
   font-family: var(--f-titoli); font-size: 1rem; font-weight: 600; letter-spacing: .005em; line-height: 1.2;
   text-decoration: none; cursor: pointer; white-space: nowrap;
@@ -420,10 +420,6 @@ strong { font-weight: 600; }
 @media (min-width: 1100px) { .prezzi-garanzie { grid-template-columns: repeat(4, 1fr); gap: 32px; } }
 
 /* =============================================================
-   05 · UNA GIORNATA: orari in mono, compatta
-   ============================================================= */
-
-/* =============================================================
    06 · LO SPAZIO: due foto vere, asimmetriche, poi l'inventario
    ============================================================= */
 .spazio-sezione { border-top: 1px solid var(--linea); }
@@ -566,7 +562,7 @@ strong { font-weight: 600; }
   background: var(--avorio) repeating-linear-gradient(0deg, transparent 0 31px, var(--linea) 31px 32px), var(--avorio) repeating-linear-gradient(90deg, transparent 0 31px, var(--linea) 31px 32px);
   background-blend-mode: normal;
 }
-.mappa-carica { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; background: var(--inchiostro); color: var(--avorio); border-radius: var(--raggio); font-weight: 600; }
+.mappa-carica { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--inchiostro); color: var(--avorio); border-radius: 999px; font-weight: 600; }
 .mappa-iframe { display: block; width: 100%; aspect-ratio: 4 / 3; border: 0; border-radius: var(--raggio); }
 .mappa-nota { font-size: .8rem; color: var(--inchiostro-morbido); margin: 8px 0 0; }
 @media (min-width: 900px) {
@@ -1170,57 +1166,6 @@ body.menu-aperto { overflow: hidden; }
 .garanzia-icona .ico { display: block; width: 26px; height: 26px; stroke-width: 1.75; }
 @media (min-width: 900px) { .prezzi-garanzie { grid-template-columns: repeat(4, 1fr); gap: 24px 32px; margin-top: 3.6rem; } .garanzia-icona { width: 64px; height: 64px; } .garanzia-icona .ico { width: 30px; height: 30px; } }
 
-/* =============================================================
-   05 · UNA GIORNATA: lo scontrino che esce dal registratore di cassa
-   ============================================================= */
-.giornata-sezione.banda-blu { padding: 80px 0 96px; border-bottom: 4px solid var(--ocra); overflow: hidden; }
-.giornata-griglia { display: grid; gap: 40px; align-items: start; }
-.giornata-testo .titolo-sezione { margin-bottom: 18px; }
-.giornata-lead { margin: 0 0 26px; max-width: 44ch; font-size: 1.08rem; line-height: 1.65; color: var(--chiaro-70); }
-.giornata-cta { width: 100%; }
-
-.scontrino-scena { position: relative; width: min(360px, 100%); margin: 0 auto; }
-/* la cassa: un blocco scuro con la fessura da cui esce la carta */
-.cassa { position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; height: 58px; padding: 0 18px 10px; border-radius: 14px 14px 8px 8px; background: linear-gradient(180deg, #2A3B4E, #0E151D); box-shadow: 0 18px 30px -14px rgba(0, 0, 0, .7), inset 0 1px 0 rgba(255, 255, 255, .12); }
-.cassa-luce { width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 8px #4ADE80; }
-.cassa-nome { font-family: var(--f-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--chiaro-70); }
-.cassa-fessura { position: absolute; left: 16px; right: 16px; bottom: 8px; height: 5px; border-radius: 3px; background: #05080B; box-shadow: inset 0 2px 3px rgba(0, 0, 0, .9); }
-/* la carta passa sotto la fessura: la maschera la "taglia" lì */
-.scontrino-maschera { position: relative; margin: -12px 26px 0; padding: 0 6px 30px; overflow: hidden; }
-.scontrino { position: relative; padding: 26px 20px 30px; background: #FFFDF6; color: #23272B; font-family: var(--f-mono); font-size: .8rem; line-height: 1.5; box-shadow: 0 24px 40px -22px rgba(0, 0, 0, .8); transform-origin: 50% 0;
-  background-image: linear-gradient(180deg, rgba(27, 42, 58, .07), transparent 26px);
-  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 10px repeat-x;
-  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 10px repeat-x; }
-.scontrino p { margin: 0; }
-.sc-centro { text-align: center; }
-.sc-forte { font-weight: 600; letter-spacing: .12em; }
-.sc-piccolo { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: #6B6F73; margin: 4px 0 10px !important; }
-.sc-taglio { margin: 14px 0; border: 0; border-top: 1.5px dashed #9AA0A6; }
-.sc-righe { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.sc-riga { display: grid; grid-template-columns: auto 1fr auto; column-gap: 10px; align-items: baseline; }
-.sc-ora { font-weight: 600; color: #7A5A1E; }
-.sc-voce { display: flex; align-items: baseline; min-width: 0; text-transform: uppercase; font-size: .76rem; letter-spacing: .03em; }
-.sc-voce::after { content: ''; flex: 1; min-width: 10px; margin: 0 0 .25em 6px; border-bottom: 1.5px dotted #9AA0A6; }
-.sc-val { font-weight: 600; font-size: .72rem; }
-.sc-riga small { grid-column: 2 / -1; font-size: .7rem; color: #6B6F73; line-height: 1.35; }
-.sc-inclusi { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 4px; font-size: .74rem; }
-.sc-inclusi li { display: flex; justify-content: space-between; gap: 10px; }
-.sc-inclusi li span:last-child { font-weight: 600; }
-.sc-totale { display: flex; justify-content: space-between; align-items: baseline; margin: 6px 0 4px !important; padding: 10px 0; border-top: 2px solid #23272B; border-bottom: 2px solid #23272B; font-weight: 600; letter-spacing: .06em; }
-.sc-totale strong { font-family: var(--f-display); font-weight: 400; font-size: 2rem; letter-spacing: -.02em; line-height: 1; }
-.sc-barre { height: 42px; margin: 16px 18px 10px; background: repeating-linear-gradient(90deg, #23272B 0 2px, transparent 2px 4px, #23272B 4px 5px, transparent 5px 8px, #23272B 8px 11px, transparent 11px 12px, #23272B 12px 13px, transparent 13px 16px); }
-@media (min-width: 900px) {
-  .giornata-sezione.banda-blu { padding: 128px 0 120px; }
-  .giornata-griglia { grid-template-columns: 6fr 5fr; gap: 72px; align-items: center; }
-  .giornata-cta { width: auto; }
-  .scontrino-scena { width: 380px; margin: 0 0 0 auto; }
-  .scontrino { font-size: .84rem; padding: 30px 24px 34px; }
-}
-/* con l'animazione attiva: la carta parte dentro la cassa, la luce lampeggia mentre stampa */
-.scontrino-scena.animata .scontrino { clip-path: inset(0 0 var(--nascosto, 0%) 0); transform: translateY(var(--scende, 0px)) rotate(var(--piega, 0deg)); }
-@media (max-width: 899px) { .sc-voce { font-size: .7rem; } }
-.scontrino-scena.stampa .cassa-luce { animation: cassa-luce .25s steps(1) infinite; }
-@keyframes cassa-luce { 50% { background: #F5DFAE; box-shadow: 0 0 8px #F5DFAE; } }
 
 /* =============================================================
    06 · SERVIZI INCLUSI: card con icone grandi, il wi-fi in evidenza
@@ -1488,6 +1433,76 @@ body.menu-aperto { overflow: hidden; }
 .svolazzo { position: absolute; left: 2%; bottom: -.12em; width: 96%; height: .24em; overflow: visible; pointer-events: none; }
 .svolazzo path { fill: none; stroke: var(--ocra-vivo); stroke-width: 2.6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .finale .svolazzo path { stroke: var(--ocra); }
+
+/* =============================================================
+   05 · UNA GIORNATA: scorrendo passa la giornata.
+   Senza animazioni: un elenco dei momenti. Con animazioni (.animata):
+   la sezione si ferma, l'orologio gira, il cielo cambia, il sole passa.
+   ============================================================= */
+.gd.banda-blu { position: relative; overflow: hidden; padding: 80px 0 88px; border-bottom: 4px solid var(--ocra);
+  background: linear-gradient(180deg, var(--cielo-alto, #24384D) 0%, var(--cielo-basso, var(--inchiostro)) 100%); }
+.gd-cielo { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.gd-sole { position: absolute; left: var(--sole-x, 12%); top: var(--sole-y, 70%); width: min(56vmin, 520px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 190, var(--sole-nucleo, .9)) 0 9%, rgba(240, 196, 110, .55) 10%, rgba(221, 176, 92, .18) 34%, rgba(221, 176, 92, 0) 66%);
+  opacity: var(--sole-o, 0); filter: blur(2px); }
+.gd-stelle { position: absolute; inset: 0; opacity: var(--stelle, 0);
+  background-image: radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 27% 34%, #fff, transparent), radial-gradient(1.5px 1.5px at 44% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 63% 26%, #fff, transparent), radial-gradient(1.5px 1.5px at 78% 9%, #fff, transparent), radial-gradient(1px 1px at 88% 31%, #fff, transparent),
+    radial-gradient(1px 1px at 35% 7%, #fff, transparent), radial-gradient(1.5px 1.5px at 7% 40%, #fff, transparent), radial-gradient(1px 1px at 92% 52%, #fff, transparent); }
+.gd-griglia { position: relative; z-index: 1; display: grid; gap: 28px; }
+.gd-testa .titolo-sezione { margin: 0; }
+
+/* l'orologio: quattro rulli di cifre, come un contatore meccanico */
+.gd-orologio { display: none; }
+.gd-ora { display: flex; align-items: flex-start; margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(4.6rem, 25vw, 11.5rem); line-height: 1; letter-spacing: -.02em; color: var(--avorio); font-variant-numeric: lining-nums; }
+.gd-cifra { display: inline-block; width: .62em; height: 1em; overflow: hidden; text-align: center; }
+.gd-rullo { display: flex; flex-direction: column; transition: transform .45s cubic-bezier(.3, 1.3, .5, 1); }
+.gd-rullo span { display: block; height: 1em; }
+.gd-due-punti { width: .3em; text-align: center; color: var(--ocra-vivo); transform: translateY(-.06em); }
+@media (prefers-reduced-motion: no-preference) { .gd-due-punti { animation: gd-lampeggia 1s steps(1) infinite; } }
+@keyframes gd-lampeggia { 50% { opacity: .25; } }
+@media (max-width: 899px) { .gd-sole { width: 42vmin; --sole-nucleo: .5; } }
+.gd-barra { margin-top: 18px; max-width: 640px; }
+.gd-binario { position: relative; display: block; height: 4px; border-radius: 2px; background: rgba(250, 246, 238, .16); }
+.gd-pieno { position: absolute; inset: 0; border-radius: 2px; background: linear-gradient(90deg, var(--ocra), var(--ocra-vivo)); transform-origin: left center; transform: scaleX(0); }
+.gd-punto { position: absolute; top: 50%; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--ocra-vivo); transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 6px rgba(221, 176, 92, .22), 0 0 24px 4px rgba(221, 176, 92, .55); }
+.gd-tacche { position: relative; display: block; height: 22px; margin-top: 8px; }
+.gd-tacche span { position: absolute; top: 0; transform: translateX(-50%); font-family: var(--f-mono); font-size: .64rem; letter-spacing: .06em; color: var(--chiaro-70); transition: color .3s; }
+.gd-tacche span::before { content: ''; position: absolute; left: 50%; top: -12px; width: 1px; height: 6px; background: currentColor; opacity: .6; }
+.gd-tacche span.passata { color: var(--ocra-vivo); }
+
+/* i momenti: senza animazioni sono un elenco */
+.gd-momenti { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.gd-momento { padding-left: 18px; border-left: 2px solid var(--ocra); }
+.gd-quando { display: block; font-family: var(--f-mono); font-size: .78rem; letter-spacing: .12em; color: var(--ocra-vivo); }
+.gd-momento h3 { margin: 6px 0 6px; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.6rem, 6vw, 2.3rem); line-height: 1.08; letter-spacing: -.015em; color: var(--avorio); }
+.gd-momento p { margin: 0; max-width: 40ch; font-size: 1.02rem; line-height: 1.55; color: var(--chiaro-70); }
+
+/* con le animazioni: la sezione si ferma a schermo intero e la giornata scorre */
+.gd.animata { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: calc(var(--testata) + 16px) 0 36px; }
+.gd.animata .gd-griglia { width: 100%; gap: 22px; }
+.gd.animata .gd-orologio { display: block; }
+.gd.animata .gd-momenti { position: relative; display: block; min-height: 9.6rem; }
+.gd.animata .gd-momento { position: absolute; inset: 0 0 auto 0; opacity: 0; transform: translateY(26px); filter: blur(8px);
+  transition: opacity .55s var(--curva), transform .65s var(--curva), filter .55s var(--curva); }
+.gd.animata .gd-momento.attivo { opacity: 1; transform: none; filter: none; }
+.gd.animata .gd-momento.passato { transform: translateY(-26px); }
+@media (max-width: 899px) and (max-height: 760px) {
+  .gd.animata .gd-ora { font-size: clamp(3.6rem, 19vw, 6rem); }
+  .gd.animata .gd-momento p { font-size: .95rem; }
+}
+@media (min-width: 900px) {
+  .gd.banda-blu { padding: 128px 0; }
+  .gd-griglia { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 72px; row-gap: 28px; }
+  .gd-testa { grid-column: 1; grid-row: 1; }
+  .gd-momenti { grid-column: 1; grid-row: 2; }
+  .gd-azione { grid-column: 1; grid-row: 3; }
+  .gd-orologio { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+  .gd.animata { padding: calc(var(--testata) + 32px) 0 48px; }
+  .gd.animata .gd-momenti { min-height: 11rem; }
+  .gd-ora { justify-content: flex-start; }
+}
 
 /* Safari su iPhone: niente sottolineature automatiche su indirizzi e numeri */
 a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font: inherit !important; }
