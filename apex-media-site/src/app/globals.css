@@ -312,3 +312,23 @@ details[open] > summary .plus-icon {
     min-height: 200svh;
   }
 }
+
+/* Hero: con JS attivo gli elementi animati partono nascosti (così non lampeggiano prima dell’idratazione).
+   Senza JS, o con prefers-reduced-motion, restano visibili. Dopo 3 s tornano visibili comunque. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-hero-label],
+  html.js [data-hero-title],
+  html.js [data-hero-sub],
+  html.js [data-hero-cta] > *,
+  html.js [data-hero-24h],
+  html.js [data-hero-shot="0"] [data-phone-frame],
+  html.js [data-hero-shot="0"] figcaption {
+    opacity: 0;
+    animation: hero-fallback 0s linear 3s forwards;
+  }
+}
+@keyframes hero-fallback {
+  to {
+    opacity: 1;
+  }
+}

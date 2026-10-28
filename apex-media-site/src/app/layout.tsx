@@ -97,6 +97,10 @@ const jsonLd = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="it-IT" className={`${spaceGrotesk.variable} ${jakarta.variable} ${jetbrains.variable} h-full`}>
+      <head>
+        {/* Segnala che JS c’è: solo allora il CSS nasconde gli elementi dell’hero prima dell’animazione */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         {children}

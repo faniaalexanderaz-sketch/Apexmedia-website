@@ -13,13 +13,11 @@ import { gsap, useGSAP, SplitText, ScrollTrigger, MEDIA, EASE, CLIP_HIDDEN_BOTTO
 const ROTATE_EVERY = 4;
 const FADE = 0.6;
 
-export function Hero() {
-  const ref = useRef<HTMLElement>(null);
+const PRE_HIDDEN =
+  '[data-hero-label], [data-hero-title], [data-hero-sub], [data-hero-cta] > *, [data-hero-24h], [data-hero-shot="0"] [data-phone-frame], [data-hero-shot="0"] figcaption';
 
-  useGSAP(
-    () => {
-      const root = ref.current;
-      if (!root) return;
+/** Tutto il movimento dell’hero. Viene chiamato un frame dopo l’idratazione. */
+function setup(root: HTMLElement) {
       const h1 = root.querySelector<HTMLHeadingElement>("h1");
       const shots = gsap.utils.toArray<HTMLElement>("[data-hero-shot]", root);
       const firstFrame = shots[0]?.querySelector("[data-browser-frame]");
@@ -103,6 +101,10 @@ export function Hero() {
         });
 
       const mm = gsap.matchMedia();
+      // Il CSS li tiene nascosti fino a qui: l’opacità inline torna a 1 e i tween partono da 0 nello stesso tick
+      mm.add([MEDIA.desktop, MEDIA.mobile], () => {
+        gsap.set(root.querySelectorAll(PRE_HIDDEN), { opacity: 1, clearProps: "animation" });
+      });
 
       mm.add(MEDIA.desktop, () => {
         prepShots();
@@ -170,6 +172,18 @@ export function Hero() {
           h1.classList.remove("is-split");
         };
       });
+}
+
+export function Hero() {
+  const ref = useRef<HTMLElement>(null);
+
+  useGSAP(
+    (_, contextSafe) => {
+      const root = ref.current;
+      if (!root || !contextSafe) return;
+      // Un frame dopo l’idratazione: il browser dipinge prima l’immagine dell’hero (LCP), poi parte il movimento
+      const raf = requestAnimationFrame(contextSafe(() => setup(root)));
+      return () => cancelAnimationFrame(raf);
     },
     { scope: ref },
   );

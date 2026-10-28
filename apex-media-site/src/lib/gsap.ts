@@ -38,21 +38,42 @@ export { gsap, ScrollTrigger, SplitText, useGSAP };
 type ContextSafe = <T extends (...args: unknown[]) => unknown>(fn: T) => T;
 
 /**
- * Rimanda l’impostazione delle animazioni sotto la piega a un task separato, dopo il primo paint
- * (meno lavoro nel task di idratazione, quindi meno TBT su mobile). Da usare dentro useGSAP:
+ * Rimanda l’impostazione delle animazioni sotto la piega a dopo il primo paint: parte al primo scroll,
+ * oppure a caricamento completato (in un momento di idle), oppure comunque entro 2,5 s.
+ * Così il task di idratazione resta corto e l’immagine dell’hero viene dipinta prima (LCP).
+ * Da usare dentro useGSAP:
  *   useGSAP((_, contextSafe) => deferSetup(contextSafe, () => { ... }), { scope })
  * Il ritorno è la funzione di pulizia.
  */
 export function deferSetup(contextSafe: ContextSafe | undefined, fn: () => void, delay = 0) {
   if (typeof window === "undefined") return;
   const run = contextSafe ? contextSafe(fn) : fn;
+  let done = false;
+  let timer: number | undefined;
   let idle: number | undefined;
-  const timer = window.setTimeout(() => {
-    if ("requestIdleCallback" in window) idle = window.requestIdleCallback(run, { timeout: 900 });
-    else run();
-  }, delay);
-  return () => {
-    window.clearTimeout(timer);
+  const fire = () => {
+    if (done) return;
+    done = true;
+    cleanup();
+    timer = window.setTimeout(run, delay);
+  };
+  const onLoad = () => {
+    if ("requestIdleCallback" in window) idle = window.requestIdleCallback(fire, { timeout: 600 });
+    else fire();
+  };
+  const cleanup = () => {
+    window.removeEventListener("scroll", fire);
+    window.removeEventListener("load", onLoad);
     if (idle !== undefined && "cancelIdleCallback" in window) window.cancelIdleCallback(idle);
+  };
+  window.addEventListener("scroll", fire, { passive: true, once: true });
+  if (document.readyState === "complete") onLoad();
+  else window.addEventListener("load", onLoad, { once: true });
+  const limit = window.setTimeout(fire, 2500);
+  return () => {
+    done = true;
+    cleanup();
+    window.clearTimeout(limit);
+    if (timer !== undefined) window.clearTimeout(timer);
   };
 }
