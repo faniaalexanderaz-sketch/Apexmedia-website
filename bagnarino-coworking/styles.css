@@ -524,19 +524,7 @@ strong { font-weight: 600; }
 /* =============================================================
    08 · PER CHI È: una lista tipografica
    ============================================================= */
-.perchi-griglia { display: grid; gap: 40px; }
-.profili { border-top: 1px solid var(--inchiostro); }
-.profilo { padding: 26px 0; border-bottom: 1px solid var(--linea); }
-.profilo h3 { font-family: var(--f-display); font-weight: 400; font-size: clamp(1.6rem, 3.6vw, 2.1rem); letter-spacing: -0.015em; margin: 0 0 8px; }
-.profilo p { margin: 0 0 10px; color: var(--inchiostro-morbido); max-width: 48ch; }
-.profilo-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; text-decoration: none; }
-.profilo-link > span { border-bottom: 1px solid var(--inchiostro); }
-.profilo-link .ico { width: 16px; height: 16px; transition: transform .25s var(--curva); }
-.profilo-link:hover .ico { transform: translateX(4px); }
 @media (min-width: 900px) {
-  .perchi-griglia { grid-template-columns: 5fr 7fr; gap: 96px; align-items: start; }
-  .perchi-testa { position: sticky; top: calc(var(--testata) + 32px); }
-  .profilo { padding: 34px 0; }
 }
 
 /* =============================================================
@@ -951,7 +939,7 @@ body.menu-aperto { overflow: hidden; }
 /* ---------- riduci movimento ---------- */
 @media (prefers-reduced-motion: reduce) {
   .punto-vivo::after, .disp.reale .disp-live-punto, .bollo svg, .menu-app[open] { animation: none; }
-  .btn, .btn .ico, .link-forte .ico, .profilo-link .ico { transition: none; }
+  .btn, .btn .ico, .link-forte .ico, .pc-freccia { transition: none; }
 }
 
 /* =============================================================
@@ -996,14 +984,6 @@ body.menu-aperto { overflow: hidden; }
 .spazio-sezione { background: var(--carta); }
 
 /* per chi è: quattro riquadri numerati, il mese ha il suo colore */
-.profili { border-top: 0; display: grid; gap: 14px; }
-.profilo { position: relative; padding: 26px 22px 24px; border: 1px solid var(--linea-forte); border-radius: var(--raggio-grande); background: var(--avorio); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
-.profilo:hover { transform: translateY(-3px); box-shadow: var(--ombra); }
-.profilo-num { display: block; margin: 0 0 18px; font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; color: var(--ocra-testo); }
-.profilo h3 { font-size: clamp(1.45rem, 3.2vw, 1.8rem); }
-.profilo-mese { background: var(--ocra-chiaro); border-color: var(--ocra); }
-.profilo-mese .profilo-num::after { content: ' · Mese flessibile'; }
-@media (min-width: 700px) { .profili { grid-template-columns: 1fr 1fr; } .profilo:nth-child(even) { transform: translateY(24px); } .profilo:nth-child(even):hover { transform: translateY(21px); } }
 
 /* dove siamo: fascia scura, mappa su carta */
 .dove-sezione { background: var(--inchiostro); color: var(--avorio); border-top: 0; }
@@ -1086,15 +1066,8 @@ body.menu-aperto { overflow: hidden; }
 @media (min-width: 600px) { .scheda-chiara { padding: 30px 30px 32px; } }
 
 
-/* 08 · per chi è: schede chiare sul blu, che sconfinano in "dove siamo" */
-.perchi-sezione.banda-blu { padding-bottom: 0; }
-.perchi-sezione .profili { position: relative; z-index: 2; margin-bottom: -72px; }
-.profilo { border: 0; color: var(--inchiostro); box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .7); }
-.profilo:hover { box-shadow: 0 30px 50px -24px rgba(17, 25, 34, .8); }
-.perchi-sezione .intro-sezione { color: var(--chiaro-70); }
 .dove-sezione { padding-top: calc(80px + 72px); }
 @media (min-width: 900px) { .perchi-sezione .profili { margin-bottom: -120px; } .dove-sezione { padding-top: calc(128px + 120px); } }
-@media (min-width: 700px) { .profilo:nth-child(even) { transform: translateY(24px); } }
 
 /* 09 · dove siamo: di nuovo chiaro, mappa in una scheda */
 .dove-sezione { background: var(--carta); color: var(--inchiostro); }
@@ -1509,6 +1482,71 @@ body.menu-aperto { overflow: hidden; }
   .gd.animata .gd-momenti { min-height: 11rem; }
   .gd-ora { justify-content: flex-start; }
 }
+
+/* =============================================================
+   08 · PER CHI È: colonna editoriale a sinistra, quattro schede pastello a destra
+   ============================================================= */
+.pc.banda-blu { padding-bottom: 0; background: radial-gradient(900px 600px at 88% 8%, rgba(221, 176, 92, .09), transparent 62%), #16212F; }
+.pc-griglia { display: grid; gap: 48px; }
+.pc-testa { position: relative; }
+.pc-titolo { --linea: 1; position: relative; margin: 0 0 22px; padding-left: 22px; font-family: var(--f-display); font-weight: 400; font-size: clamp(2.9rem, 10.5vw, 5.4rem); line-height: .98; letter-spacing: -.03em; color: var(--avorio); font-variation-settings: 'opsz' 144; }
+.pc-titolo::before { content: ''; position: absolute; left: 0; top: .12em; bottom: .1em; width: 2px; background: var(--ocra-vivo); transform: scaleY(var(--linea)); transform-origin: top; }
+.pc-riga { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.pc-riga > span, .pc-riga > em { display: inline-block; }
+.pc-titolo em { font-style: italic; color: var(--ocra-vivo); }
+.pc-testo { margin: 0 0 30px; max-width: 38ch; font-size: 1.1rem; line-height: 1.6; color: rgba(250, 246, 238, .74); }
+.pc-indice { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid rgba(250, 246, 238, .14); }
+.pc-indice li { position: relative; display: flex; align-items: baseline; gap: 14px; padding: 11px 0 11px 18px; border-bottom: 1px solid rgba(250, 246, 238, .14); font-family: var(--f-titoli); font-size: .95rem; color: rgba(250, 246, 238, .6); transition: color .3s var(--curva); }
+.pc-indice li span { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .1em; color: var(--ocra-vivo); }
+.pc-indice li::before { content: ''; position: absolute; left: 0; top: 50%; width: 8px; height: 1px; background: var(--ocra-vivo); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--curva); }
+.pc-indice li.attiva { color: var(--avorio); }
+.pc-indice li.attiva::before { transform: scaleX(1); }
+
+/* le quattro schede */
+.pc-schede { position: relative; z-index: 2; list-style: none; margin: 0 0 -72px; padding: 0; display: grid; gap: 16px; }
+.pc-card { --fondo: #F2EBDD; --bordo: rgba(27, 42, 58, .16); --bordo-forte: rgba(27, 42, 58, .5); --accento: var(--ocra-testo);
+  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; gap: 12px;
+  padding: 26px 24px 24px; border-radius: 20px; border: 1px solid var(--bordo); background: var(--fondo); color: var(--inchiostro);
+  box-shadow: 0 22px 44px -30px rgba(10, 16, 24, .75); transition: border-color .35s var(--curva), box-shadow .35s var(--curva); }
+.pc-card::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(135deg, rgba(255, 255, 255, .55), transparent 55%); opacity: 0; transition: opacity .45s var(--curva); }
+.pc-avorio { --fondo: #F2EBDD; --accento: #7A5A1E; }
+.pc-burro { --fondo: #F5E8A9; --accento: #6E5410; }
+.pc-salvia { --fondo: #DCE8D5; --accento: #2E5A3E; }
+.pc-polvere { --fondo: #DCE7F2; --accento: #24506B; }
+.pc-card-testa { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+.pc-num { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em; color: var(--accento); }
+.pc-tipo { font-family: var(--f-mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--inchiostro); opacity: .55; text-align: right; }
+.pc-card-titolo { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(1.55rem, 4.4vw, 1.95rem); line-height: 1.08; letter-spacing: -.015em; color: var(--inchiostro); }
+.pc-card-testo { margin: 0; font-size: .98rem; line-height: 1.55; color: #3A4756; }
+.pc-cta { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--bordo); color: var(--inchiostro); text-decoration: none; }
+.pc-prezzo { font-family: var(--f-display); font-size: 1.75rem; line-height: 1; letter-spacing: -.02em; color: var(--inchiostro); }
+.pc-prezzo-testo { font-size: 1.25rem; line-height: 1.15; }
+.pc-prezzo small { display: block; margin-top: 4px; font-family: var(--f-titoli); font-size: .78rem; color: #5A6675; letter-spacing: .01em; }
+.pc-cta-testo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-titoli); font-size: .9rem; font-weight: 700; color: var(--accento); text-align: right; }
+.pc-freccia { flex-shrink: 0; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--bordo-forte); color: var(--inchiostro); transition: background-color .3s var(--curva), color .3s var(--curva), border-color .3s var(--curva); }
+.pc-freccia .ico { width: 16px; height: 16px; stroke-width: 2.2; }
+@media (hover: hover) {
+  .pc-card:hover { border-color: var(--bordo-forte); box-shadow: 0 34px 56px -30px rgba(10, 16, 24, .85); }
+  .pc-card:hover::after { opacity: 1; }
+  .pc-card:hover .pc-freccia { background: var(--inchiostro); color: var(--avorio); border-color: var(--inchiostro); }
+}
+.pc-cta:focus-visible { outline: 3px solid var(--ocra); outline-offset: 4px; border-radius: 8px; }
+.dove-sezione { padding-top: calc(80px + 72px); }
+@media (min-width: 700px) {
+  .pc-schede { grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .pc-card { padding: 30px 28px 26px; }
+  .pc-card:nth-child(even) { margin-top: 36px; }
+  .pc-card:nth-child(3) { margin-top: -16px; }
+}
+@media (min-width: 900px) {
+  .pc-griglia { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 88px; align-items: start; }
+  .pc-testa { position: sticky; top: calc(var(--testata) + 40px); }
+  .pc-schede { margin-bottom: -120px; }
+  .pc-card { padding: 34px 32px 30px; border-radius: 22px; }
+  .pc-card-titolo { font-size: clamp(1.7rem, 2.1vw, 2.1rem); }
+  .dove-sezione { padding-top: calc(128px + 120px); }
+}
+@media (min-width: 1200px) { .pc-griglia { gap: 112px; } .pc-titolo { font-size: 5.6rem; } }
 
 /* Safari su iPhone: niente sottolineature automatiche su indirizzi e numeri */
 a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font: inherit !important; }

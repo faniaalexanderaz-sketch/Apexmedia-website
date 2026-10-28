@@ -241,15 +241,6 @@
         $$('.prezzo-valore', mese || document).forEach(function () {});
       }
 
-      /* 2e) per chi è e lo spazio: i riquadri entrano alternati da destra e da sinistra */
-      [$$('.profilo')].forEach(function (riquadri) {
-        if (!riquadri.length || !sottoLaPiega(riquadri[0])) return;
-        riquadri.forEach(function (r, i) {
-          gsap.from(r, { opacity: 0, x: i % 2 ? 48 : -48, y: 24, duration: 0.8, ease: 'power3.out', clearProps: 'opacity,transform',
-            scrollTrigger: { trigger: r, start: 'top 90%', once: true } });
-        });
-      });
-
       /* 2e-ter) servizi inclusi: le card si alzano in 3D una dopo l'altra,
          le icone saltano fuori e ognuna fa il suo gesto (la spina si infila,
          la chiave gira, la stampante vibra, il cassetto si apre) */
@@ -425,14 +416,42 @@
     /* 07 · card: la tessera si inclina col mouse */
     inclina3d($('.tessera-scena'), 12);
 
-    /* 08 · per chi è: il numero di ogni profilo salta dentro, la freccia dei link scatta */
-    $$('.profilo').forEach(function (pr) {
-      var n = $('.profilo-num', pr);
-      if (n && sottoLaPiega(pr)) gsap.from(n, { scale: 2.4, opacity: 0, rotation: -12, transformOrigin: '0% 50%', duration: 0.7, ease: 'back.out(2)', clearProps: 'opacity,transform', scrollTrigger: { trigger: pr, start: 'top 85%', once: true } });
-      inclina3d(pr, 5);
-    });
-    var frecceProfili = $$('.profilo-link .ico');
-    if (frecceProfili.length) inVista('#per-chi', gsap.to(frecceProfili, { x: 5, duration: 0.25, ease: 'power2.out', yoyo: true, repeat: -1, repeatDelay: 2.2, stagger: 0.15 }));
+    /* 08 · per chi è: ingresso orchestrato, poi le schede rispondono al mouse e all'indice */
+    (function () {
+      var sez = $('#per-chi'); if (!sez) return;
+      var titolo = $('.pc-titolo', sez), righe = $$('.pc-riga > *', sez), testo = $('.pc-testo', sez), indice = $$('.pc-indice li', sez);
+      var schede = $$('.pc-card', sez), numeri = $$('.pc-num, .pc-tipo', sez), frecce = $$('.pc-freccia', sez), cte = $$('.pc-cta', sez);
+      if (sottoLaPiega(sez)) {
+        gsap.set(righe, { yPercent: 108 });
+        gsap.set(titolo, { '--linea': 0 });
+        gsap.set(testo, { opacity: 0, y: 18 });
+        gsap.set(indice, { opacity: 0, x: -14 });
+        gsap.set(schede, { opacity: 0, y: 48, scale: 0.97 });
+        gsap.set(numeri.concat(cte), { opacity: 0 });
+        gsap.set(frecce, { scale: 0.6, opacity: 0 });
+        var tl = gsap.timeline({ defaults: { ease: 'power3.out' }, scrollTrigger: { trigger: sez, start: 'top 72%', once: true } });
+        tl.to(titolo, { '--linea': 1, duration: 1, ease: 'power2.inOut' }, 0)
+          .to(righe, { yPercent: 0, duration: 1.05, ease: 'power4.out', stagger: 0.11, clearProps: 'transform' }, 0.05)
+          .to(testo, { opacity: 1, y: 0, duration: 0.8, clearProps: 'opacity,transform' }, 0.55)
+          .to(indice, { opacity: 1, x: 0, duration: 0.6, stagger: 0.07, clearProps: 'opacity,transform' }, 0.7)
+          .to(schede, { opacity: 1, y: 0, scale: 1, duration: 0.95, stagger: 0.12, clearProps: 'opacity,transform' }, 0.35)
+          .to(numeri.concat(cte), { opacity: 1, duration: 0.6, stagger: 0.04, clearProps: 'opacity' }, 0.8)
+          .to(frecce, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.6)', stagger: 0.1, clearProps: 'opacity,transform' }, 1);
+      }
+      var evidenzia = function (n) { indice.forEach(function (li) { li.classList.toggle('attiva', li.getAttribute('data-indice') === n); }); };
+      schede.forEach(function (card) {
+        var ico = $('.pc-freccia .ico', card);
+        var su = gsap.quickTo(card, 'y', { duration: 0.45, ease: 'power3.out' });
+        var sposta = gsap.quickTo(ico, 'x', { duration: 0.35, ease: 'power3.out' });
+        card.addEventListener('pointerenter', function (e) { if (e.pointerType === 'touch') return; su(-6); sposta(3); evidenzia(card.getAttribute('data-indice')); });
+        card.addEventListener('pointerleave', function () { su(0); sposta(0); evidenzia(''); });
+        card.addEventListener('focusin', function () { evidenzia(card.getAttribute('data-indice')); });
+        card.addEventListener('focusout', function () { evidenzia(''); });
+        /* da telefono l'indice segue la scheda al centro dello schermo */
+        ScrollTrigger.create({ trigger: card, start: 'top 55%', end: 'bottom 55%',
+          onToggle: function (st) { if (st.isActive && !window.matchMedia('(hover: hover)').matches) evidenzia(card.getAttribute('data-indice')); } });
+      });
+    })();
 
     /* 09 · dove siamo: il segnaposto della mappa rimbalza, l'indirizzo arriva riga per riga */
     var pin = $('.mappa-carica .ico');

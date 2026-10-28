@@ -37,7 +37,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=feba18dc">
+  <link rel="stylesheet" href="/styles.css?v=b8a7fd17">
 
   <script src="/config.js?v=f5a6eb62"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -51,7 +51,7 @@
   </script>
   <script src="/main.js?v=7147f9b2" defer></script>
   <script src="/vendor/gsap/gsap-bundle.min.js" defer></script>
-  <script src="/animazioni.js?v=21114ec4" defer></script>
+  <script src="/animazioni.js?v=5c641bc9" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -558,33 +558,56 @@
   </section>
 
   <!-- ============ 08 · PER CHI È ============ -->
-  <section class="sezione perchi-sezione banda-blu" id="per-chi" aria-labelledby="perchi-titolo">
-    <div class="contenitore perchi-griglia">
-      <div class="perchi-testa">
-        <p class="occhiello occhiello-chiaro"><span>08</span>Per chi è</p>
-        <h2 id="perchi-titolo" class="titolo-sezione">Freelance, smart worker, <em>studenti.</em></h2>
-        <p class="intro-sezione">Chi lavora da casa e vuole un posto serio in centro, senza affittare un ufficio.</p>
+  <!-- ============ 08 · PER CHI È: una colonna editoriale e quattro schede pastello ============ -->
+  <section class="sezione perchi-sezione banda-blu pc" id="per-chi" aria-labelledby="perchi-titolo">
+    <div class="contenitore pc-griglia">
+      <div class="pc-testa">
+        <p class="occhiello occhiello-chiaro"><span>08</span>Il tuo spazio, il tuo ritmo</p>
+        <h2 id="perchi-titolo" class="pc-titolo"><span class="pc-riga">Freelance,</span><span class="pc-riga">smart worker,</span><span class="pc-riga"><em>studenti.</em></span></h2>
+        <p class="pc-testo">Un posto serio per lavorare in centro, senza affittare un ufficio. Scegli la formula che segue il tuo ritmo: un giorno, un carnet, un mese.</p>
+        <ol class="pc-indice" aria-hidden="true">
+          <li data-indice="01"><span>01</span>Freelance e professionisti</li>
+          <li data-indice="02"><span>02</span>Smart working</li>
+          <li data-indice="03"><span>03</span>Studenti e praticanti</li>
+          <li data-indice="04"><span>04</span>Piccoli team</li>
+        </ol>
       </div>
-      <ul class="profili">
-        <li class="profilo"><span class="profilo-num">01</span>
-          <h3>Freelance e professionisti</h3>
-          <p>La tua scrivania sempre pronta, le tue cose nella cassettiera, fattura intestata.</p>
-          <a class="profilo-link" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-freelance"><span>Postazione fissa, <span data-prezzo="mese_fisso">€320</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+      <ul class="profili pc-schede">
+        <li class="profilo pc-card pc-avorio" data-indice="01">
+          <div class="pc-card-testa"><span class="pc-num">01</span><span class="pc-tipo">Postazione fissa</span></div>
+          <h3 class="pc-card-titolo">Freelance e professionisti</h3>
+          <p class="pc-card-testo">La tua scrivania sempre pronta, le tue cose nella cassettiera, fattura intestata.</p>
+          <a class="pc-cta" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-freelance">
+            <span class="pc-prezzo"><span data-prezzo="mese_fisso">€320</span><small>al mese</small></span>
+            <span class="pc-cta-testo">Prenota il mese<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
         </li>
-        <li class="profilo profilo-mese"><span class="profilo-num">02</span>
-          <h3>Smart working</h3>
-          <p>Esci di casa, separa il lavoro dal resto. Wi-fi stabile, in centro, circa €13 al giorno.</p>
-          <a class="profilo-link" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-remoto"><span>Mese flessibile, <span data-prezzo="mese_flessibile">€270</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <li class="profilo pc-card pc-burro" data-indice="02">
+          <div class="pc-card-testa"><span class="pc-num">02</span><span class="pc-tipo">Mese flessibile</span></div>
+          <h3 class="pc-card-titolo">Smart working</h3>
+          <p class="pc-card-testo">Esci di casa, separa il lavoro dal resto. Wi-fi stabile, in centro, circa €13 al giorno.</p>
+          <a class="pc-cta" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-remoto">
+            <span class="pc-prezzo"><span data-prezzo="mese_flessibile">€270</span><small>al mese</small></span>
+            <span class="pc-cta-testo">Prenota il mese<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
         </li>
-        <li class="profilo"><span class="profilo-num">03</span>
-          <h3>Studenti e praticanti</h3>
-          <p>Silenzio per la sessione o l’esame di Stato. Con il carnet, €20 al giorno.</p>
-          <a class="profilo-link" href="/prenota?pacchetto=carnet" data-pos="perchi-studenti"><span>Carnet 10 ingressi, <span data-prezzo="carnet">€200</span></span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <li class="profilo pc-card pc-salvia" data-indice="03">
+          <div class="pc-card-testa"><span class="pc-num">03</span><span class="pc-tipo">Carnet 10 ingressi</span></div>
+          <h3 class="pc-card-titolo">Studenti e praticanti</h3>
+          <p class="pc-card-testo">Silenzio per la sessione o l’esame di Stato. Con il carnet, €20 al giorno.</p>
+          <a class="pc-cta" href="/prenota?pacchetto=carnet" data-pos="perchi-studenti">
+            <span class="pc-prezzo"><span data-prezzo="carnet">€200</span><small>10 giornate</small></span>
+            <span class="pc-cta-testo">Prenota il carnet<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
         </li>
-        <li class="profilo"><span class="profilo-num">04</span>
-          <h3>Piccoli team</h3>
-          <p>Scrivanie vicine per lavorare insieme, senza contratto d’affitto.</p>
-          <a class="profilo-link" data-wa="generico" data-pos="perchi-team" href="https://wa.me/393472249457"><span>Chiedici le postazioni vicine</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <li class="profilo pc-card pc-polvere" data-indice="04">
+          <div class="pc-card-testa"><span class="pc-num">04</span><span class="pc-tipo">Su misura</span></div>
+          <h3 class="pc-card-titolo">Piccoli team</h3>
+          <p class="pc-card-testo">Scrivanie vicine per lavorare insieme, senza contratto d’affitto.</p>
+          <a class="pc-cta" data-wa="generico" data-pos="perchi-team" href="https://wa.me/393472249457">
+            <span class="pc-prezzo pc-prezzo-testo">Da 2 a 4 posti</span>
+            <span class="pc-cta-testo">Scrivici su WhatsApp<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+          </a>
         </li>
       </ul>
     </div>
