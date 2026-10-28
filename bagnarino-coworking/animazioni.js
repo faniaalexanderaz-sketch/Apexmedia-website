@@ -346,51 +346,6 @@
     var negInd = $('.neg-indirizzo');
     if (negInd && sottoLaPiega(negInd)) gsap.from(negInd, { x: 60, opacity: 0, duration: 0.9, ease: 'power3.out', clearProps: 'opacity,transform', scrollTrigger: { trigger: negInd, start: 'top 90%', once: true } });
 
-    /* 03 · la storia: ogni scena si rivela a modo suo */
-    (function () {
-      var st = $('#storia'); if (!st) return;
-      var mostra = function (el) { return el && sottoLaPiega(el); };
-      /* apertura: il 40 sale da dietro la maschera, il titolo riga per riga */
-      var apri = $('.st-apri', st);
-      if (mostra(apri)) {
-        var cifra = $('.st-cifra-grande .st-cifra-testo', apri), anni = $('.st-anni', apri), righe = $$('.st-riga > *', apri), intro = $('.st-intro', apri);
-        gsap.set(cifra, { yPercent: 100 }); gsap.set(anni, { opacity: 0, x: -10 }); gsap.set(righe, { yPercent: 110 }); gsap.set(intro, { opacity: 0, y: 12 });
-        gsap.timeline({ defaults: { ease: 'power4.out' }, scrollTrigger: { trigger: apri, start: 'top 70%', once: true } })
-          .to(cifra, { yPercent: 0, duration: 1.3, clearProps: 'transform' }, 0)
-          .to(anni, { opacity: 1, x: 0, duration: 0.6, clearProps: 'opacity,transform' }, 0.9)
-          .to(righe, { yPercent: 0, duration: 1.05, stagger: 0.1, clearProps: 'transform' }, 0.25)
-          .to(intro, { opacity: 1, y: 0, duration: 0.7, clearProps: 'opacity,transform' }, 0.95);
-        /* scorrendo via, il 40 resta un poco indietro */
-        gsap.to($('.st-cifra-grande', apri), { yPercent: 18, ease: 'none', scrollTrigger: { trigger: apri, start: 'top bottom', end: 'bottom top', scrub: true } });
-      }
-      /* ogni epoca: il numero sale dalla maschera, poi etichetta, titolo, testo */
-      $$('.st-scena:not(.st-apri)', st).forEach(function (sc) {
-        if (!mostra(sc)) return;
-        var num = $('.st-anno .st-cifra-testo', sc), testo = $$('.st-testo > *', sc), foto = $$('.st-foto', sc), extra = $('.st-scheda, .st-righe', sc);
-        gsap.set(num, { yPercent: 100 }); gsap.set(testo, { opacity: 0, y: 22 });
-        if (foto.length) gsap.set(foto, { clipPath: 'inset(0 0 100% 0 round 10px)' });
-        if (extra) gsap.set(extra, { opacity: 0, y: 16 });
-        var tl = gsap.timeline({ defaults: { ease: 'power4.out' }, scrollTrigger: { trigger: sc, start: 'top 68%', once: true } });
-        tl.to(num, { yPercent: 0, duration: 1.2, clearProps: 'transform' }, 0)
-          .to(testo, { opacity: 1, y: 0, duration: 0.8, stagger: 0.09, clearProps: 'opacity,transform' }, 0.3);
-        foto.forEach(function (f, k) {
-          tl.to(f, { clipPath: 'inset(0 0 0% 0 round 10px)', duration: 1.2, ease: 'expo.out', clearProps: 'clipPath' }, 0.15 + k * 0.15)
-            .fromTo($('img', f), { scale: 1.15 }, { scale: 1, duration: 1.6, ease: 'expo.out', clearProps: 'transform' }, 0.15 + k * 0.15);
-        });
-        if (extra) tl.to(extra, { opacity: 1, y: 0, duration: 0.8, clearProps: 'opacity,transform' }, 0.7);
-        if (extra && extra.classList.contains('st-righe')) tl.from($$('i', extra), { scaleX: 0, duration: 0.9, stagger: 0.06, ease: 'power3.inOut', clearProps: 'transform' }, 0.2);
-        /* il numero grande scivola piano mentre scorri: il testo gli passa davanti */
-        var anno = $('.st-anno', sc);
-        if (anno) gsap.fromTo(anno, { x: 0 }, { x: window.innerWidth >= 900 ? -30 : -8, ease: 'none', scrollTrigger: { trigger: sc, start: 'top bottom', end: 'bottom top', scrub: true } });
-      });
-      /* il 1983 conta dagli anni precedenti */
-      var c83 = $('[data-conta]', st);
-      if (c83 && mostra(c83)) {
-        var fine = +c83.getAttribute('data-conta'), v = { n: fine - 24 };
-        allaVista(c83, function () { gsap.to(v, { n: fine, duration: 1.6, ease: 'power2.out', snap: { n: 1 }, onUpdate: function () { c83.textContent = String(Math.round(v.n)); } }); }, 'top 80%');
-      }
-    })();
-
     /* 04 · prezzi: le voci incluse entrano una a una, le card si inclinano col mouse */
     $$('.prezzo').forEach(function (card) {
       inclina3d(card, 6);
