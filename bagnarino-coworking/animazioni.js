@@ -281,14 +281,6 @@
         servizi.forEach(function (c) { c.addEventListener('pointerenter', function () { muoviIcona(c); }); });
       }
 
-      /* 2e-quinquies) il nastro si inclina con la velocità dello scorrimento */
-      var nastro = $('.nastro');
-      if (nastro) {
-        var inclina = gsap.quickTo(nastro, 'skewY', { duration: 0.5, ease: 'power3.out' });
-        var raddrizza = gsap.delayedCall(0.18, function () { inclina(0); }).pause();
-        ScrollTrigger.create({ onUpdate: function (st) { inclina(gsap.utils.clamp(-5, 5, st.getVelocity() / -260)); raddrizza.restart(true); } });
-      }
-
       /* 2e-sexies) la scena della macchina da scrivere sale piano mentre arrivi */
       var scenaMc = $('.pz-scena');
       if (scenaMc && sottoLaPiega(scenaMc)) {

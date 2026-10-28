@@ -957,13 +957,19 @@ body.menu-aperto { overflow: hidden; }
 /* =============================================================
    RITMO DELLA PAGINA: fasce e riquadri diversi dalla metà in giù
    ============================================================= */
-/* nastro che scorre sotto l'apertura */
-.nastro { background: var(--ocra); color: var(--notte); overflow: hidden; }
-.nastro-binario { display: flex; width: max-content; }
-.nastro-traccia { display: flex; align-items: center; flex-shrink: 0; margin: 0; padding: 13px 0; font-family: var(--f-mono); font-size: .74rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
-.nastro-traccia > span { padding: 0 26px; }
-.nastro-traccia i { display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--notte); flex-shrink: 0; }
-@media (prefers-reduced-motion: no-preference) { .nastro-binario { animation: nastro 34s linear infinite; } .nastro:hover .nastro-binario { animation-play-state: paused; } }
+/* nastro che scorre sotto l'apertura: un'insegna continua, icone e il marchio come separatore */
+.nastro { position: relative; overflow: hidden; background: linear-gradient(180deg, #D9A848 0%, var(--ocra) 55%, #B98730 100%); color: var(--notte);
+  box-shadow: inset 0 1px 0 rgba(255, 244, 214, .55), inset 0 -1px 0 rgba(0, 0, 0, .25); }
+.nastro::before, .nastro::after { content: ''; position: absolute; top: 0; bottom: 0; width: 56px; z-index: 2; pointer-events: none; }
+.nastro::before { left: 0; background: linear-gradient(90deg, rgba(185, 135, 48, .55), transparent); }
+.nastro::after { right: 0; background: linear-gradient(270deg, rgba(185, 135, 48, .55), transparent); }
+.nastro-binario { display: flex; width: max-content; will-change: transform; }
+.nastro-traccia { display: flex; align-items: center; flex-shrink: 0; margin: 0; padding: 15px 0; font-family: var(--f-mono); font-size: .76rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.nastro-voce { display: inline-flex; align-items: center; gap: 10px; padding: 0 22px; }
+.nastro-voce .ico { width: 17px; height: 17px; stroke-width: 2.2; flex-shrink: 0; }
+.nastro-marchio { width: 16px; height: auto; margin: 0 6px; opacity: .55; flex-shrink: 0; }
+@media (min-width: 900px) { .nastro-traccia { padding: 17px 0; font-size: .8rem; } .nastro-voce { padding: 0 30px; } .nastro-marchio { margin: 0 8px; } }
+@media (prefers-reduced-motion: no-preference) { .nastro-binario { animation: nastro 40s linear infinite; } .nastro:hover .nastro-binario { animation-play-state: paused; } }
 @keyframes nastro { to { transform: translateX(-50%); } }
 
 /* listino: la colonna del mese flessibile è blu inchiostro, con il timbro ocra */
