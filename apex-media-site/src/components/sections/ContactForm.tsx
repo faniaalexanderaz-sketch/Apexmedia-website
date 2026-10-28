@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { deferSetup, gsap, useGSAP, MEDIA, enterAt } from "@/lib/gsap";
+import { track } from "@/lib/track";
 import { Button } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/Icons";
 import { serviceOptions, budgetOptions } from "@/data/contact";
@@ -111,6 +112,7 @@ export function ContactForm() {
     }
     const text = buildMessage({ nome, attivita, servizio, budget, messaggio });
     const url = `${site.whatsappUrl}?text=${encodeURIComponent(text)}`;
+    track("form_submit", { servizio, budget: budget || "non indicato" });
     setSent(true);
     window.open(url, "_blank", "noopener");
   };
@@ -257,7 +259,7 @@ export function ContactForm() {
       <noscript>
         <p className="text-[15px] text-ink/70">
           Il form ha bisogno di JavaScript. Scrivici direttamente su{" "}
-          <a href={site.whatsappUrl} className="underline">
+          <a href={site.whatsappUrl} className="underline" data-track="click_whatsapp" data-track-posizione="contatti">
             WhatsApp
           </a>
           .

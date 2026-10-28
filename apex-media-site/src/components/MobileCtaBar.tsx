@@ -41,12 +41,14 @@ export function MobileCtaBar() {
       className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 lg:hidden"
     >
       <div className="flex items-center gap-3">
-        <Button href="#contatti" className="flex-1">
+        <Button href="#contatti" className="flex-1" data-track="click_cta" data-track-posizione="barra-mobile">
           Prenota la call
         </Button>
         <a
           href={site.whatsappUrl}
           aria-label="Scrivici su WhatsApp"
+          data-track="click_whatsapp"
+          data-track-posizione="barra-mobile"
           className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm border border-ink text-ink"
         >
           <WhatsAppIcon size={22} />

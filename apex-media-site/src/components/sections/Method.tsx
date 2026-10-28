@@ -101,13 +101,14 @@ export function Method() {
   return (
     <section ref={ref} id="metodo" className="bg-ink py-20 text-paper lg:py-28" data-section="metodo">
       <Container>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12" data-method-head>
-          <div className="lg:col-span-3">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between" data-method-head>
+          <div>
             <SectionLabel numero="03" testo="Metodo" onDark />
+            <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)] text-paper">Come lavoriamo.</h2>
           </div>
-          <div className="lg:col-span-9">
-            <h2 className="h-display text-[clamp(2rem,1rem+3.6vw,4.25rem)] text-paper">Come lavoriamo.</h2>
-          </div>
+          <p className="max-w-[30ch] text-[16px] leading-relaxed text-paper/70 md:text-right">
+            Quattro passaggi, sempre gli stessi. Nessuna sorpresa in corso d’opera.
+          </p>
         </div>
 
         <ol className="relative mt-16 grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-6 lg:mt-24" data-method-steps>

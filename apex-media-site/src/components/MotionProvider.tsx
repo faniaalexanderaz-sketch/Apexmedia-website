@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 const NAV_OFFSET = -72;
@@ -35,9 +35,15 @@ export function MotionProvider() {
       lenis.scrollTo(target as HTMLElement, { offset: NAV_OFFSET });
     };
 
-    const start = () => {
-      if (lenis) return;
-      lenis = new Lenis({ autoRaf: false, lerp: 0.1, wheelMultiplier: 1 });
+    let starting = false;
+    const start = async () => {
+      if (lenis || starting) return;
+      starting = true;
+      // Il modulo viene scaricato solo su desktop e solo dopo il primo rendering
+      const { default: LenisCtor } = await import("lenis");
+      starting = false;
+      if (!mq.matches || lenis) return;
+      lenis = new LenisCtor({ autoRaf: false, lerp: 0.1, wheelMultiplier: 1 });
       lenis.on("scroll", ScrollTrigger.update);
       tick = (time: number) => lenis?.raf(time * 1000);
       gsap.ticker.add(tick);
@@ -53,11 +59,12 @@ export function MotionProvider() {
       document.documentElement.classList.remove("lenis-on");
       document.removeEventListener("click", onClick);
     };
-    const apply = () => (mq.matches ? start() : stop());
-    apply();
+    const apply = () => (mq.matches ? void start() : stop());
+    const idle = window.setTimeout(apply, 300);
     mq.addEventListener("change", apply);
 
     return () => {
+      window.clearTimeout(idle);
       stop();
       mq.removeEventListener("change", apply);
       window.removeEventListener("load", refresh);

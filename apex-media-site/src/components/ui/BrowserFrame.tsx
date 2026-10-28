@@ -14,6 +14,8 @@ type Props = {
   onDark?: boolean;
   /** Se presente, la cornice è un link al sito (nuova scheda) e la barra URL mostra "Visita il sito" al passaggio del mouse */
   href?: string;
+  /** Nome del cliente per l’evento click_portfolio */
+  trackClient?: string;
 };
 
 /** Cornice browser minimale disegnata in CSS: barra con 3 pallini e URL in mono. */
@@ -27,6 +29,7 @@ export function BrowserFrame({
   className = "",
   onDark = false,
   href,
+  trackClient,
 }: Props) {
   const frame = (
     <figure
@@ -79,7 +82,15 @@ export function BrowserFrame({
 
   if (!href) return frame;
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="block" aria-label={`Apri ${url} in una nuova scheda`}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block"
+      aria-label={`Apri ${url} in una nuova scheda`}
+      data-track={trackClient ? "click_portfolio" : undefined}
+      data-track-cliente={trackClient}
+    >
       {frame}
     </a>
   );

@@ -22,12 +22,12 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <a href={site.whatsappUrl} className="u-draw hover:text-ink">
+              <a href={site.whatsappUrl} className="u-draw hover:text-ink" data-track="click_whatsapp" data-track-posizione="footer">
                 WhatsApp
               </a>
             </li>
             <li>
-              <a href={`mailto:${site.email}`} className="u-draw hover:text-ink">
+              <a href={`mailto:${site.email}`} className="u-draw hover:text-ink" data-track="click_email" data-track-posizione="footer">
                 {site.email}
               </a>
             </li>

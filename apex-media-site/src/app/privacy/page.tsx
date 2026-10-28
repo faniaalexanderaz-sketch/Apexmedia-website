@@ -5,12 +5,12 @@ import { Footer } from "@/components/sections/Footer";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { site } from "@/data/site";
+import { ConsentReset } from "@/components/ConsentBanner";
 
 export const metadata: Metadata = {
   title: "Privacy",
   description: "Informativa sulla privacy del sito infoapex.eu di Apex Media.",
   alternates: { canonical: "/privacy" },
-  robots: { index: false, follow: true },
 };
 
 export default function PrivacyPage() {
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
             </div>
             <article className="lg:col-span-7">
               <h1 className="h-display text-[clamp(2rem,1rem+3.6vw,4.25rem)]">Informativa sulla privacy.</h1>
-              <p className="label-mono mt-6 text-ink/60">Aggiornata il 28 ottobre 2026</p>
+              <p className="label-mono mt-6 text-ink/60">Aggiornata il 29 ottobre 2026</p>
 
               <div className="mt-10 space-y-8 text-[17px] text-ink/85">
                 <section>
@@ -56,13 +56,19 @@ export default function PrivacyPage() {
                 </section>
 
                 <section>
-                  <h2 className="font-display text-[22px] font-bold tracking-tight text-ink">Cookie e statistiche</h2>
+                  <h2 className="font-display text-[22px] font-bold tracking-tight text-ink">Statistiche e cookie</h2>
                   <p className="mt-2">
-                    Il sito non usa cookie di profilazione e non carica script pubblicitari. L’hosting (Vercel) può
-                    registrare log tecnici anonimi necessari al funzionamento del servizio.
+                    Per capire quante persone visitano il sito usiamo Vercel Web Analytics e Speed Insights: non usano
+                    cookie e non identificano la persona. L’hosting (Vercel) registra log tecnici anonimi necessari al
+                    funzionamento del servizio.
                   </p>
-                  <p className="mt-2 border-l-2 border-giallo pl-3 text-ink/70">
-                    [SEGNAPOSTO: da aggiornare se in fase 3 aggiungiamo strumenti di analytics o pixel pubblicitari]
+                  <p className="mt-2">
+                    Solo se accetti dal banner, attiviamo Google Analytics 4 e il pixel di Meta, che usano cookie per
+                    misurare le campagne pubblicitarie. Se rifiuti, non vengono caricati. La scelta resta salvata nel tuo
+                    browser e puoi cambiarla quando vuoi.
+                  </p>
+                  <p className="mt-3">
+                    <ConsentReset />
                   </p>
                 </section>
 

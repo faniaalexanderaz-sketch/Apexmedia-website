@@ -24,6 +24,8 @@ export function Contact() {
               <p className="label-mono text-ink/60">WhatsApp</p>
               <a
                 href={site.whatsappUrl}
+                data-track="click_whatsapp"
+                data-track-posizione="contatti"
                 className="mt-3 block font-display text-[clamp(1.75rem,1rem+2.4vw,2.75rem)] font-bold leading-none tracking-tightest text-ink hover:text-viola"
               >
                 {site.whatsappDisplay}
@@ -33,6 +35,8 @@ export function Contact() {
               <p className="label-mono text-ink/60">Email</p>
               <a
                 href={`mailto:${site.email}`}
+                data-track="click_email"
+                data-track-posizione="contatti"
                 className="mt-3 block break-all font-display text-[22px] font-medium tracking-tight text-ink hover:text-viola"
               >
                 {site.email}

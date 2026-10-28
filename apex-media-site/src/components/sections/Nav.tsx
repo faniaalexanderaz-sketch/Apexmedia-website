@@ -14,6 +14,8 @@ export function Nav() {
   const ref = useRef<HTMLElement>(null);
   const openRef = useRef(false);
   const hideTween = useRef<gsap.core.Tween | null>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     openRef.current = open;
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -23,11 +25,35 @@ export function Nav() {
     };
   }, [open]);
 
+  // Focus: all’apertura va sul primo link, Tab resta dentro al pannello, Esc chiude e torna al bottone
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    if (!open) return;
+    const panel = panelRef.current;
+    const toggle = toggleRef.current;
+    const focusables = () =>
+      Array.from(panel?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? []);
+    focusables()[0]?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggle?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = [toggle, ...focusables()].filter(Boolean) as HTMLElement[];
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [open]);
 
   useGSAP(
     () => {
@@ -79,10 +105,11 @@ export function Nav() {
 
         <div className="flex items-center gap-2 sm:gap-5">
           <Clock className="hidden lg:inline" />
-          <Button href="/#contatti" size="sm">
+          <Button href="/#contatti" size="sm" data-track="click_cta" data-track-posizione="nav">
             Prenota la call
           </Button>
           <button
+            ref={toggleRef}
             type="button"
             className="-mr-2 inline-flex size-11 items-center justify-center text-ink lg:hidden"
             aria-expanded={open}
@@ -99,6 +126,7 @@ export function Nav() {
 
       {/* Pannello mobile a tutta pagina */}
       <div
+        ref={panelRef}
         id="menu-mobile"
         hidden={!open}
         className="fixed inset-x-0 bottom-0 top-[calc(var(--nav-h)+4px)] z-40 flex flex-col bg-paper lg:hidden"
@@ -120,7 +148,12 @@ export function Nav() {
           </ul>
         </nav>
         <div className="mt-auto space-y-4 px-5 pb-8 sm:px-8">
-          <a href={site.whatsappUrl} className="inline-flex items-center gap-2 text-[17px] font-medium text-ink">
+          <a
+            href={site.whatsappUrl}
+            className="inline-flex items-center gap-2 text-[17px] font-medium text-ink"
+            data-track="click_whatsapp"
+            data-track-posizione="nav"
+          >
             <WhatsAppIcon /> {site.whatsappDisplay}
           </a>
           <p className="label-mono text-ink/60">

@@ -305,3 +305,10 @@ details[open] > summary .plus-icon {
   opacity: 0;
   pointer-events: none;
 }
+
+/* Hero: due schermate di altezza solo su desktop con le animazioni attive (i clienti cambiano con lo scroll) */
+@media (min-width: 1024px) {
+  [data-scroll-hero] {
+    min-height: 200svh;
+  }
+}

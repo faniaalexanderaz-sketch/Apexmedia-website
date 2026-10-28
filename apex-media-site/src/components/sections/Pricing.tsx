@@ -57,14 +57,14 @@ export function Pricing() {
   return (
     <section ref={ref} id="pacchetti" className="py-20 lg:py-28" data-section="pacchetti">
       <Container>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-          <div className="lg:col-span-3">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end" data-pricing-head>
+          <div className="lg:col-span-6">
             <SectionLabel numero="04" testo="Pacchetti" />
+            <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">Prezzi chiari.</h2>
           </div>
-          <div className="lg:col-span-9" data-pricing-head>
-            <h2 className="h-display text-[clamp(2rem,1rem+3.6vw,4.25rem)]">Prezzi chiari.</h2>
-            <p className="text-body mt-5 text-ink/75 md:text-lg">Scegli da dove partire. Lo adattiamo alla tua attività.</p>
-          </div>
+          <p className="text-body text-ink/75 md:text-lg lg:col-span-4 lg:col-start-9 lg:pb-2">
+            Scegli da dove partire. Lo adattiamo alla tua attività.
+          </p>
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3 md:items-end md:gap-0 lg:mt-20" data-plans>
@@ -97,7 +97,7 @@ export function Pricing() {
                   ))}
                 </ul>
                 <div className="mt-8 pt-2">
-                  <Button href="#contatti" variant={p.highlight ? "primary" : "secondary"} className="w-full" data-preselect={p.formValue}>
+                  <Button href="#contatti" variant={p.highlight ? "primary" : "secondary"} className="w-full" data-preselect={p.formValue} data-track="click_pacchetto" data-track-pacchetto={p.name}>
                     {p.cta}
                   </Button>
                 </div>
@@ -108,7 +108,7 @@ export function Pricing() {
 
         <p className="mt-10 text-[17px] text-ink/75">
           {customPlanNote}{" "}
-          <a href="#contatti" className="u-link font-semibold text-ink hover:text-viola" data-preselect="Non lo so ancora">
+          <a href="#contatti" className="u-link font-semibold text-ink hover:text-viola" data-preselect="Non lo so ancora" data-track="click_pacchetto" data-track-pacchetto="Su misura">
             Parliamone
           </a>
         </p>

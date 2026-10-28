@@ -52,14 +52,14 @@ export function ClientsBar() {
 
   return (
     <section ref={ref} aria-label="Alcune attività che seguiamo" className="border-y border-ink/10">
-      <Container className="flex flex-col gap-4 py-5 md:flex-row md:items-center md:gap-10">
+      <Container className="flex flex-col gap-4 py-5 lg:flex-row lg:items-center lg:gap-10">
         <p className="label-mono shrink-0 text-ink/60">Alcune attività che seguiamo</p>
-        <div className="no-scrollbar -mx-5 overflow-x-auto px-5 sm:-mx-8 sm:px-8 md:mx-0 md:flex-1 md:px-0">
-          <ul data-track className="flex w-max md:w-full md:justify-between">
+        <div className="no-scrollbar -mx-5 overflow-x-auto px-5 sm:-mx-8 sm:px-8 lg:mx-0 lg:flex-1 lg:px-0">
+          <ul data-track className="flex w-max lg:w-full lg:justify-between">
             {portfolio.map((c) => (
               <li
                 key={c.slug}
-                className="shrink-0 whitespace-nowrap pr-10 font-display text-[20px] font-bold leading-none tracking-tightest text-ink/50 md:pr-0"
+                className="shrink-0 whitespace-nowrap pr-10 font-display text-[20px] font-bold leading-none tracking-tightest text-ink/50 lg:pr-0"
                 data-client-logo={c.slug}
               >
                 {c.name}

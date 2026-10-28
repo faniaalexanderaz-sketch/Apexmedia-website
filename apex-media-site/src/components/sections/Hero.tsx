@@ -37,24 +37,40 @@ export function Hero() {
           });
         });
 
-      /** Ogni 4 s passa al cliente successivo con dissolvenza incrociata. */
-      const rotator = () => {
+      /**
+       * Cambio cliente: ogni 4 s da fermo; su desktop anche lo scroll nell’hero (che è alto due schermate
+       * e resta appiccicato con position: sticky) porta al cliente successivo.
+       */
+      const rotator = (scrollDriven: boolean) => {
         let idx = 0;
-        const next = () => {
+        const show = (i: number) => {
+          if (i === idx) return;
           const cur = shots[idx];
-          idx = (idx + 1) % shots.length;
+          idx = i;
           const nxt = shots[idx];
-          gsap.to(cur, { autoAlpha: 0, duration: FADE, ease: "power2.inOut" });
-          gsap.fromTo(nxt, { autoAlpha: 0 }, { autoAlpha: 1, duration: FADE, ease: "power2.inOut" });
+          gsap.to(cur, { autoAlpha: 0, duration: FADE, ease: "power2.inOut", overwrite: true });
+          gsap.fromTo(nxt, { autoAlpha: 0 }, { autoAlpha: 1, duration: FADE, ease: "power2.inOut", overwrite: true });
+          loop.restart();
         };
         const loop = gsap.timeline({ repeat: -1, paused: true });
-        loop.to({}, { duration: ROTATE_EVERY }).call(next);
+        loop.to({}, { duration: ROTATE_EVERY }).call(() => show((idx + 1) % shots.length));
         ScrollTrigger.create({
           trigger: root,
           start: "top bottom",
           end: "bottom top",
           onToggle: (self) => (self.isActive && !document.hidden ? loop.play() : loop.pause()),
         });
+        if (scrollDriven) {
+          ScrollTrigger.create({
+            trigger: root,
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+              const i = Math.min(shots.length - 1, Math.floor(self.progress * shots.length));
+              show(i);
+            },
+          });
+        }
         const onVis = () => (document.hidden ? loop.pause() : loop.play());
         document.addEventListener("visibilitychange", onVis);
         return () => document.removeEventListener("visibilitychange", onVis);
@@ -103,7 +119,9 @@ export function Hero() {
         tl.from(firstPhone, { autoAlpha: 0, y: 24, rotation: 4, duration: 0.7 }, 0.45);
         if (caption) tl.from(caption, { opacity: 0, duration: 0.5 }, 0.7);
 
-        const stopRotator = rotator();
+        root.dataset.scrollHero = "true";
+        ScrollTrigger.refresh();
+        const stopRotator = rotator(true);
 
         // La cornice e il telefono seguono il mouse di pochissimo (profondità)
         const frames = gsap.utils.toArray<HTMLElement>("[data-browser-frame]", root);
@@ -132,6 +150,7 @@ export function Hero() {
           stopRotator();
           split.revert();
           h1.classList.remove("is-split");
+          delete root.dataset.scrollHero;
         };
       });
 
@@ -141,9 +160,10 @@ export function Hero() {
         tl.from("[data-hero-label]", { opacity: 0, duration: 0.5 }, 0);
         const split = splitTitle(60);
         tl.from(["[data-hero-sub]", "[data-hero-cta] > *", "[data-hero-24h]"], { y: 12, opacity: 0, duration: 0.55, stagger: 0.06 }, 0.3);
-        tl.from(firstFrame, { opacity: 0, y: 20, duration: 0.7 }, 0.35);
+        // Niente opacità sull’immagine LCP: così il browser la dipinge subito e l’LCP non aspetta la dissolvenza
+        tl.from(firstFrame, { y: 16, duration: 0.7 }, 0.35);
         tl.from(firstPhone, { opacity: 0, y: 12, duration: 0.6 }, 0.5);
-        const stopRotator = rotator();
+        const stopRotator = rotator(false);
         return () => {
           stopRotator();
           split.revert();
@@ -155,7 +175,8 @@ export function Hero() {
   );
 
   return (
-    <section ref={ref} id="top" className="relative overflow-hidden" data-hero>
+    <section ref={ref} id="top" className="relative" data-hero>
+      <div className="relative overflow-hidden lg:sticky lg:top-[calc(var(--nav-h)+4px)]">
       <GridLines />
       <Container className="relative">
         <div className="grid min-h-[calc(100svh-var(--nav-h)-4px)] grid-cols-1 items-center gap-10 py-12 lg:grid-cols-12 lg:gap-8 lg:py-16">
@@ -171,8 +192,10 @@ export function Hero() {
               cliente che ti chiama.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4" data-hero-cta>
-              <Button href="#contatti">Prenota la call gratuita</Button>
-              <Button href="#lavori" variant="link">
+              <Button href="#contatti" data-track="click_cta" data-track-posizione="hero">
+                Prenota la call gratuita
+              </Button>
+              <Button href="#lavori" variant="link" data-track="click_portfolio" data-track-cliente="hero">
                 Guarda i lavori
               </Button>
             </div>
@@ -208,6 +231,7 @@ export function Hero() {
           </div>
         </div>
       </Container>
+      </div>
     </section>
   );
 }
