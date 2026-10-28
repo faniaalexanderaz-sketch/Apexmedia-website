@@ -1128,20 +1128,29 @@ body.menu-aperto { overflow: hidden; }
    LISTINO: quattro card, ognuna con il suo colore e il suo carattere
    ============================================================= */
 .prezzi { gap: 16px; background: none; border: 0; overflow: visible; }
-.prezzo { position: relative; border-radius: 16px; padding: 28px 22px 26px; background: var(--c-sfondo); color: var(--c-testo); box-shadow: 0 26px 48px -30px rgba(17, 25, 34, .55); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
+.prezzo { position: relative; border-radius: 28px; padding: 30px 24px 28px; background: var(--c-sfondo); color: var(--c-testo); box-shadow: 0 26px 48px -30px rgba(17, 25, 34, .55); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
 .prezzo:hover { transform: translateY(-4px); box-shadow: 0 32px 56px -28px rgba(17, 25, 34, .6); background: var(--c-sfondo); }
-.prezzo-giornata { --c-sfondo: #F5DFAE; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--notte); --c-btn-testo: var(--avorio); }
-.prezzo-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-forte: #1E6B52; --c-btn: #1E6B52; --c-btn-testo: #fff; }
-.prezzo-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-forte: var(--ocra-vivo); --c-btn: var(--ocra); --c-btn-testo: var(--notte); }
-.prezzo-mese_fisso { --c-sfondo: #D3E6EA; --c-testo: #0E323A; --c-forte: #1E6471; --c-btn: #1E6471; --c-btn-testo: #fff; }
+.prezzo-giornata { --c-sfondo: #F5DFAE; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--notte); }
+.prezzo-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-forte: #1E6B52; --c-btn: #2E8A62; --c-btn-testo: #fff; --c-btn-bordo: #0E2F22; }
+.prezzo-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-forte: var(--ocra-vivo); --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--avorio); }
+.prezzo-mese_fisso { --c-sfondo: #D3E6EA; --c-testo: #0E323A; --c-forte: #1E6471; --c-btn: #2B7F8E; --c-btn-testo: #fff; --c-btn-bordo: #0E323A; }
 .prezzo .prezzo-nome, .prezzo .prezzo-valore, .prezzo .prezzo-include li { color: var(--c-testo); }
 .prezzo .prezzo-perchi, .prezzo .prezzo-unita { color: var(--c-testo); opacity: .72; }
 .prezzo .prezzo-valuta, .prezzo .prezzo-nota, .prezzo .prezzo-include li::before, .prezzo .prezzo-regalo { color: var(--c-forte); }
 .prezzo .prezzo-include { border-top-color: currentColor; border-top: 1px solid rgba(17, 25, 34, .18); }
 .prezzo-mese_flessibile .prezzo-include, .prezzo-mese_flessibile .prezzo-regalo { border-top-color: var(--linea-scura); }
 .prezzo .prezzo-regalo { border-top: 1px dashed rgba(17, 25, 34, .3); }
-.prezzo .btn { background: var(--c-btn); border-color: var(--c-btn); color: var(--c-btn-testo); }
-.prezzo .btn:hover { filter: brightness(1.08); }
+/* il pulsante di ogni pacchetto: pillola del colore della card, bordo scuro, ombra netta che si alza */
+.prezzo .btn {
+  min-height: 56px; border-radius: 999px; border: 2px solid var(--c-btn-bordo); background: var(--c-btn); color: var(--c-btn-testo);
+  font-weight: 700; box-shadow: 0 3px 0 var(--c-btn-bordo);
+  transition: transform .2s var(--curva), box-shadow .2s var(--curva), filter .2s var(--curva);
+}
+.prezzo .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--c-btn-bordo); filter: brightness(1.06); }
+.prezzo .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--c-btn-bordo); }
+.prezzo .btn .ico { transition: transform .3s var(--curva); }
+.prezzo .btn:hover .ico { transform: translateX(4px); }
+.prezzo-evidenza .btn-prezzo-top, .prezzo-evidenza .btn-prezzo-top:hover { background: var(--c-btn); border-color: var(--c-btn-bordo); color: var(--c-btn-testo); }
 /* due e due: giornata e carnet con il serif tondo, i due mesi con lo stesso serif in corsivo */
 .prezzo .prezzo-nome { font-family: var(--f-display); font-weight: 400; font-size: 1.7rem; letter-spacing: -0.01em; }
 .prezzo-mese_flessibile .prezzo-nome, .prezzo-mese_fisso .prezzo-nome { font-style: italic; font-size: 1.85rem; }

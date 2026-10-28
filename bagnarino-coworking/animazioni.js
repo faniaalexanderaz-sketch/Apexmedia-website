@@ -239,11 +239,13 @@
         else if (moto === 'onde') gsap.fromTo($('.servizio-icona', card), { boxShadow: '0 0 0 0 rgba(201,151,59,.55)' }, { boxShadow: '0 0 0 22px rgba(201,151,59,0)', duration: 1.1, ease: 'power2.out', delay: d, clearProps: 'boxShadow' });
       };
       if (servizi.length && sottoLaPiega(servizi[0])) {
-        var icone = servizi.map(function (c) { return $('.servizio-icona', c); });
-        var tlS = gsap.timeline({ scrollTrigger: { trigger: '.servizi-griglia', start: 'top 85%', once: true } });
-        tlS.from(servizi, { opacity: 0, y: 70, rotationX: -55, scale: 0.92, transformPerspective: 900, transformOrigin: '50% 100%', duration: 0.9, ease: 'back.out(1.5)', stagger: 0.1, clearProps: 'opacity,transform' })
-          .from(icone, { scale: 0, rotation: -90, duration: 0.6, ease: 'back.out(2.4)', stagger: 0.1, clearProps: 'transform' }, 0.25)
-          .add(function () { servizi.forEach(function (c, i) { muoviIcona(c, i * 0.12); }); });
+        /* ogni card entra appena spunta dal fondo dello schermo, senza aspettare le altre */
+        gsap.set(servizi, { opacity: 0, y: 46, rotationX: -22, scale: 0.96, transformPerspective: 900, transformOrigin: '50% 100%' });
+        ScrollTrigger.batch(servizi, { start: 'top 98%', once: true, onEnter: function (g) {
+          gsap.to(g, { opacity: 1, y: 0, rotationX: 0, scale: 1, duration: 0.6, ease: 'back.out(1.4)', stagger: 0.07, clearProps: 'opacity,transform' });
+          gsap.from(g.map(function (c) { return $('.servizio-icona', c); }), { scale: 0, rotation: -90, duration: 0.5, ease: 'back.out(2.4)', stagger: 0.07, delay: 0.12, clearProps: 'transform',
+            onComplete: function () { g.forEach(function (c, i) { muoviIcona(c, i * 0.08); }); } });
+        } });
       }
       if (servizi.length) {
         /* finché la griglia è in vista, ogni tanto un'icona "si sveglia" */
