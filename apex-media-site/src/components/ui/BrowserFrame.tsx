@@ -59,6 +59,8 @@ export function BrowserFrame({
           alt={alt}
           priority={priority}
           fetchPriority={priority ? "high" : undefined}
+          // L’immagine LCP si decodifica nel primo paint invece di aspettare che il thread principale si liberi
+          decoding={priority ? "sync" : "async"}
           sizes={sizes}
           className="block h-full w-full object-cover object-top"
         />

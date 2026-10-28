@@ -181,9 +181,16 @@ export function Hero() {
     (_, contextSafe) => {
       const root = ref.current;
       if (!root || !contextSafe) return;
-      // Un frame dopo l’idratazione: il browser dipinge prima l’immagine dell’hero (LCP), poi parte il movimento
-      const raf = requestAnimationFrame(contextSafe(() => setup(root)));
-      return () => cancelAnimationFrame(raf);
+      // Dopo il primo paint successivo all’idratazione (rAF = prima del paint, il timeout = dopo):
+      // così il browser dipinge l’immagine dell’hero (LCP) prima che parta il movimento
+      let timer: number | undefined;
+      const raf = requestAnimationFrame(() => {
+        timer = window.setTimeout(contextSafe(() => setup(root)), 0);
+      });
+      return () => {
+        cancelAnimationFrame(raf);
+        if (timer !== undefined) window.clearTimeout(timer);
+      };
     },
     { scope: ref },
   );
