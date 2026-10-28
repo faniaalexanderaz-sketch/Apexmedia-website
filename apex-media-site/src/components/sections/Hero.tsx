@@ -25,7 +25,11 @@ const FADE = 0.6;
 const PRE_HIDDEN =
   '[data-hero-label], [data-hero-title], [data-hero-sub], [data-hero-cta] > *, [data-hero-24h], [data-hero-shot="0"] [data-phone-frame], [data-hero-shot="0"] figcaption';
 
-/** Tutto il movimento dell’hero. Viene chiamato un frame dopo l’idratazione. */
+/**
+ * Tutto il movimento dell’hero, uguale su desktop e mobile. Solo su desktop: i clienti cambiano anche
+ * con lo scroll (hero sticky alto due schermate) e cornice e telefono seguono il mouse.
+ * Viene chiamato un frame dopo l’idratazione.
+ */
 function setup(root: HTMLElement) {
   const h1 = root.querySelector<HTMLHeadingElement>("h1");
   const shots = gsap.utils.toArray<HTMLElement>("[data-hero-shot]", root);
@@ -34,7 +38,7 @@ function setup(root: HTMLElement) {
   const caption = shots[0]?.querySelector("figcaption");
   if (!h1 || !firstFrame || !firstPhone) return;
 
-  /** Rende visibili (ma trasparenti) gli altri screenshot, così si precaricano. */
+  /** Rende visibili (ma trasparenti) gli altri screenshot dopo l’ingresso, così si precaricano. */
   const prepShots = () =>
     gsap.delayedCall(2.4, () => {
       shots.forEach((s, i) => {
@@ -44,10 +48,7 @@ function setup(root: HTMLElement) {
       });
     });
 
-  /**
-   * Cambio cliente: ogni 4 s da fermo; su desktop anche lo scroll nell’hero (che è alto due schermate
-   * e resta appiccicato con position: sticky) porta al cliente successivo.
-   */
+  /** Cambio cliente: ogni 4 s da fermo; su desktop anche lo scroll nell’hero porta al cliente successivo. */
   const rotator = (scrollDriven: boolean) => {
     let idx = 0;
     const show = (i: number) => {
@@ -84,13 +85,13 @@ function setup(root: HTMLElement) {
         trigger: root,
         start: "top top",
         end: "bottom bottom",
-        onUpdate: (self) => {
-          const i = Math.min(
-            shots.length - 1,
-            Math.floor(self.progress * shots.length),
-          );
-          show(i);
-        },
+        onUpdate: (self) =>
+          show(
+            Math.min(
+              shots.length - 1,
+              Math.floor(self.progress * shots.length),
+            ),
+          ),
       });
     }
     const onVis = () => (document.hidden ? loop.pause() : loop.play());
@@ -98,8 +99,8 @@ function setup(root: HTMLElement) {
     return () => document.removeEventListener("visibilitychange", onVis);
   };
 
-  /** Titolo: righe che salgono da una maschera + evidenziatore che si disegna. */
-  const splitTitle = (yPercent: number) =>
+  /** Titolo: righe che salgono da una maschera + evidenziatore che si disegna da sinistra. */
+  const splitTitle = () =>
     SplitText.create(h1, {
       type: "lines",
       mask: "lines",
@@ -119,7 +120,7 @@ function setup(root: HTMLElement) {
         });
         const tl = gsap.timeline();
         tl.from(self.lines, {
-          yPercent,
+          yPercent: 100,
           duration: 0.8,
           ease: EASE.reveal,
           stagger: 0.08,
@@ -134,27 +135,24 @@ function setup(root: HTMLElement) {
     });
 
   const mm = gsap.matchMedia();
-  // Il CSS li tiene nascosti fino a qui: l’opacità inline torna a 1 e i tween partono da 0 nello stesso tick
-  mm.add([MEDIA.desktop, MEDIA.mobile], () => {
+
+  mm.add({ desktop: MEDIA.desktop, mobile: MEDIA.mobile }, (ctx) => {
+    const desktop = Boolean(ctx.conditions?.desktop);
+
+    // Il CSS li tiene nascosti fino a qui: l’opacità inline torna a 1 e i tween partono da 0 nello stesso tick
     gsap.set(root.querySelectorAll(PRE_HIDDEN), {
       opacity: 1,
       clearProps: "animation",
     });
-  });
-
-  mm.add(MEDIA.desktop, () => {
     prepShots();
+
+    // Timeline d’ingresso, 1,2 s in tutto
     const tl = gsap.timeline({ defaults: { ease: EASE.enter } });
     tl.from("[data-hero-label]", { opacity: 0, duration: 0.5 }, 0);
-    const split = splitTitle(100);
+    const split = splitTitle();
     tl.from(
       ["[data-hero-sub]", "[data-hero-cta] > *", "[data-hero-24h]"],
-      {
-        y: 16,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.06,
-      },
+      { y: 16, opacity: 0, duration: 0.6, stagger: 0.06 },
       0.35,
     );
     tl.fromTo(
@@ -166,74 +164,76 @@ function setup(root: HTMLElement) {
         ease: EASE.reveal,
         clearProps: "clipPath",
       },
-      0.3,
+      0.25,
     );
-    tl.from(
+    tl.fromTo(
       firstPhone,
-      { autoAlpha: 0, y: 24, rotation: 4, duration: 0.7 },
-      0.45,
+      {
+        clipPath: CLIP_HIDDEN_BOTTOM,
+        rotation: 4,
+        transformOrigin: "bottom left",
+      },
+      {
+        clipPath: CLIP_VISIBLE,
+        rotation: 0,
+        duration: 0.8,
+        ease: EASE.reveal,
+        clearProps: "clipPath",
+      },
+      0.4,
     );
     if (caption) tl.from(caption, { opacity: 0, duration: 0.5 }, 0.7);
 
-    root.dataset.scrollHero = "true";
-    ScrollTrigger.refresh();
-    const stopRotator = rotator(true);
+    if (desktop) {
+      root.dataset.scrollHero = "true";
+      ScrollTrigger.refresh();
+    }
+    const stopRotator = rotator(desktop);
 
-    // La cornice e il telefono seguono il mouse di pochissimo (profondità)
-    const frames = gsap.utils.toArray<HTMLElement>(
-      "[data-browser-frame]",
-      root,
-    );
-    const phones = gsap.utils.toArray<HTMLElement>("[data-phone-frame]", root);
-    const fx = gsap.quickTo(frames, "x", { duration: 0.6, ease: "power3" });
-    const fy = gsap.quickTo(frames, "y", { duration: 0.6, ease: "power3" });
-    const px = gsap.quickTo(phones, "x", { duration: 0.8, ease: "power3" });
-    const py = gsap.quickTo(phones, "y", { duration: 0.8, ease: "power3" });
-    const onMove = (e: MouseEvent) => {
-      const r = root.getBoundingClientRect();
-      const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      const ny = ((e.clientY - r.top) / r.height - 0.5) * 2;
-      fx(nx * 4);
-      fy(ny * 4);
-      px(nx * 8);
-      py(ny * 8);
-    };
-    const onLeave = () => {
-      fx(0);
-      fy(0);
-      px(0);
-      py(0);
-    };
-    root.addEventListener("mousemove", onMove);
-    root.addEventListener("mouseleave", onLeave);
+    // Solo desktop: cornice e telefono seguono il mouse di pochissimo (profondità)
+    let stopMouse: (() => void) | undefined;
+    if (desktop) {
+      const frames = gsap.utils.toArray<HTMLElement>(
+        "[data-browser-frame]",
+        root,
+      );
+      const phones = gsap.utils.toArray<HTMLElement>(
+        "[data-phone-frame]",
+        root,
+      );
+      const fx = gsap.quickTo(frames, "x", { duration: 0.6, ease: "power3" });
+      const fy = gsap.quickTo(frames, "y", { duration: 0.6, ease: "power3" });
+      const px = gsap.quickTo(phones, "x", { duration: 0.8, ease: "power3" });
+      const py = gsap.quickTo(phones, "y", { duration: 0.8, ease: "power3" });
+      const onMove = (e: MouseEvent) => {
+        const r = root.getBoundingClientRect();
+        const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        const ny = ((e.clientY - r.top) / r.height - 0.5) * 2;
+        fx(nx * 4);
+        fy(ny * 4);
+        px(nx * 8);
+        py(ny * 8);
+      };
+      const onLeave = () => {
+        fx(0);
+        fy(0);
+        px(0);
+        py(0);
+      };
+      root.addEventListener("mousemove", onMove);
+      root.addEventListener("mouseleave", onLeave);
+      stopMouse = () => {
+        root.removeEventListener("mousemove", onMove);
+        root.removeEventListener("mouseleave", onLeave);
+      };
+    }
+
     return () => {
-      root.removeEventListener("mousemove", onMove);
-      root.removeEventListener("mouseleave", onLeave);
+      stopMouse?.();
       stopRotator();
       split.revert();
       h1.classList.remove("is-split");
       delete root.dataset.scrollHero;
-    };
-  });
-
-  mm.add(MEDIA.mobile, () => {
-    prepShots();
-    const tl = gsap.timeline({ defaults: { ease: EASE.enter } });
-    tl.from("[data-hero-label]", { opacity: 0, duration: 0.5 }, 0);
-    const split = splitTitle(60);
-    tl.from(
-      ["[data-hero-sub]", "[data-hero-cta] > *", "[data-hero-24h]"],
-      { y: 12, opacity: 0, duration: 0.55, stagger: 0.06 },
-      0.3,
-    );
-    // Niente opacità sull’immagine LCP: così il browser la dipinge subito e l’LCP non aspetta la dissolvenza
-    tl.from(firstFrame, { y: 16, duration: 0.7 }, 0.35);
-    tl.from(firstPhone, { opacity: 0, y: 12, duration: 0.6 }, 0.5);
-    const stopRotator = rotator(false);
-    return () => {
-      stopRotator();
-      split.revert();
-      h1.classList.remove("is-split");
     };
   });
 }
@@ -245,8 +245,7 @@ export function Hero() {
     (_, contextSafe) => {
       const root = ref.current;
       if (!root || !contextSafe) return;
-      // Dopo il primo paint successivo all’idratazione (rAF = prima del paint, il timeout = dopo):
-      // così il browser dipinge l’immagine dell’hero (LCP) prima che parta il movimento
+      // Dopo il primo paint successivo all’idratazione (rAF = prima del paint, il timeout = dopo)
       let timer: number | undefined;
       const raf = requestAnimationFrame(() => {
         timer = window.setTimeout(
@@ -320,7 +319,7 @@ export function Hero() {
 
             <div className="relative lg:col-span-5" data-hero-shots>
               {/* Ogni blocco (cornice + telefono + didascalia) ha la stessa geometria: il primo è in flusso,
-                gli altri sono sovrapposti. Il padding in basso lascia spazio al telefono che sporge. */}
+                  gli altri sono sovrapposti. Il padding in basso lascia spazio al telefono che sporge. */}
               <div className="pl-6 sm:pl-10 lg:pl-0">
                 <div className="relative">
                   {portfolio.map((item, i) => (

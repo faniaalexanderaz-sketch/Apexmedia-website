@@ -9,7 +9,6 @@ export function Footer() {
     <footer className="mt-auto" data-footer>
       <TricolorStripe />
       <Container className="pb-8 pt-10 lg:pt-14">
-        <p className="sr-only">Apex Media</p>
         <FooterWordmark />
 
         <div className="mt-8 flex flex-col gap-4 border-t border-ink/10 pt-5 text-[13px] text-ink/70 md:flex-row md:items-center md:justify-between">
@@ -22,12 +21,22 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <a href={site.whatsappUrl} className="u-draw hover:text-ink" data-track="click_whatsapp" data-track-posizione="footer">
+              <a
+                href={site.whatsappUrl}
+                className="u-draw hover:text-ink"
+                data-track="click_whatsapp"
+                data-track-posizione="footer"
+              >
                 WhatsApp
               </a>
             </li>
             <li>
-              <a href={`mailto:${site.email}`} className="u-draw hover:text-ink" data-track="click_email" data-track-posizione="footer">
+              <a
+                href={`mailto:${site.email}`}
+                className="u-draw hover:text-ink"
+                data-track="click_email"
+                data-track-posizione="footer"
+              >
                 {site.email}
               </a>
             </li>

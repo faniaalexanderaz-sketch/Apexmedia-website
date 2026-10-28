@@ -5,12 +5,21 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "./ContactForm";
 import { site } from "@/data/site";
 
-export function Contact() {
+export function Contact({ numero = "07" }: { numero?: string }) {
   return (
-    <section id="contatti" className="border-t border-ink/10 py-20 lg:py-28" data-section="contatti">
+    <section
+      id="contatti"
+      className="border-t border-ink/10 py-20 lg:py-28"
+      data-section="contatti"
+    >
       <Container>
-        <SectionLabel numero="07" testo="Contatti" />
-        <SplitHeading as="h2" type="words" stagger={0.04} className="h-display mt-6 max-w-[14ch] text-[clamp(2.5rem,1rem+5vw,6rem)]">
+        <SectionLabel numero={numero} testo="Contatti" />
+        <SplitHeading
+          as="h2"
+          type="words"
+          stagger={0.04}
+          className="h-display mt-6 max-w-[14ch] text-[clamp(2.5rem,1rem+5vw,6rem)]"
+        >
           Parliamo della tua attività.
         </SplitHeading>
 
@@ -44,10 +53,15 @@ export function Contact() {
             </div>
             <div className="mt-8 border-t border-ink/10 pt-6">
               <p className="label-mono flex items-center gap-2 text-ink/60">
-                <span className="size-2 rounded-full bg-verde" aria-hidden="true" />
+                <span
+                  className="size-2 rounded-full bg-verde"
+                  aria-hidden="true"
+                />
                 {site.responseTime}
               </p>
-              <p className="label-mono mt-3 text-ink/60">Alessandria · Piemonte</p>
+              <p className="label-mono mt-3 text-ink/60">
+                Alessandria · Piemonte
+              </p>
             </div>
           </Reveal>
         </div>

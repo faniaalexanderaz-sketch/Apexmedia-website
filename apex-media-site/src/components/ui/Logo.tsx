@@ -12,7 +12,13 @@ type Props = {
  * staccato e piccolo triangolo interno) ridisegnata in un solo colore.
  * L’originale in cristallo è in /public/brand/apex-logo-original.webp.
  */
-export function ApexMark({ className = "", size = 26 }: { className?: string; size?: number }) {
+export function ApexMark({
+  className = "",
+  size = 26,
+}: {
+  className?: string;
+  size?: number;
+}) {
   return (
     <svg
       width={size}

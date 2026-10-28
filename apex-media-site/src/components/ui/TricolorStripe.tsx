@@ -7,7 +7,11 @@ type Props = {
 };
 
 /** Firma grafica: viola → blu → giallo, 3px. */
-export function TricolorStripe({ className = "", vertical = false, ...rest }: Props) {
+export function TricolorStripe({
+  className = "",
+  vertical = false,
+  ...rest
+}: Props) {
   return (
     <div
       aria-hidden="true"

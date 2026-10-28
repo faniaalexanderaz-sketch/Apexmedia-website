@@ -8,22 +8,28 @@ export function FooterWordmark() {
   const ref = useRef<HTMLDivElement>(null);
   useGSAP(
     (_, contextSafe) =>
-      deferSetup(contextSafe, () => {
-      const el = ref.current;
-      if (!el) return;
-      const mm = gsap.matchMedia();
-      mm.add(MEDIA.desktop, () => {
-        gsap.from(el.firstElementChild, { yPercent: 100, duration: 0.9, ease: EASE.reveal, scrollTrigger: enterAt(el, "top 95%") });
-      });
-      mm.add(MEDIA.mobile, () => {
-        gsap.from(el.firstElementChild, { yPercent: 30, opacity: 0, duration: 0.7, ease: EASE.enter, scrollTrigger: enterAt(el, "top 95%") });
-      });
-      }, 420),
+      deferSetup(
+        contextSafe,
+        () => {
+          const el = ref.current;
+          if (!el) return;
+          const mm = gsap.matchMedia();
+          mm.add([MEDIA.desktop, MEDIA.mobile], () => {
+            gsap.from(el.firstElementChild, {
+              yPercent: 100,
+              duration: 0.9,
+              ease: EASE.reveal,
+              scrollTrigger: enterAt(el, "top 95%"),
+            });
+          });
+        },
+        420,
+      ),
     { scope: ref },
   );
   return (
     <div ref={ref} className="overflow-hidden" data-footer-wordmark>
-      <svg viewBox="0 0 1000 150" className="block w-full" aria-hidden="true">
+      <svg viewBox="0 0 1000 150" className="block w-full" role="img" aria-label="Apex Media">
         <text
           x="0"
           y="138"

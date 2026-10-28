@@ -9,23 +9,37 @@ const fmt = new Intl.DateTimeFormat("it-IT", {
   hour12: false,
 });
 
-/** Orario locale di Alessandria (Europe/Rome). Senza JS mostra solo la città. */
+const now = () => fmt.format(new Date());
+
+/** Orario locale di Alessandria (Europe/Rome), aggiornato lato client allo scatto di ogni minuto. */
 export function Clock({ className = "" }: { className?: string }) {
   const [time, setTime] = useState<string | null>(null);
 
   useEffect(() => {
-    const tick = () => setTime(fmt.format(new Date()));
-    tick();
-    const id = window.setInterval(tick, 15_000);
-    return () => window.clearInterval(id);
+    let interval: number | undefined;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- l’orario esiste solo nel browser
+    setTime(now());
+    // primo aggiornamento allo scatto del minuto, poi ogni 60 s
+    const toNextMinute = 60_000 - (Date.now() % 60_000);
+    const timeout = window.setTimeout(() => {
+      setTime(now());
+      interval = window.setInterval(() => setTime(now()), 60_000);
+    }, toNextMinute);
+    const onVisible = () => !document.hidden && setTime(now());
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.clearTimeout(timeout);
+      if (interval) window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, []);
 
   return (
     <span className={`label-mono text-ink/60 ${className}`} suppressHydrationWarning>
       ALESSANDRIA{" "}
-      <span className="text-ink tabular-nums" aria-live="off">
+      <time className="text-ink tabular-nums" suppressHydrationWarning>
         {time ?? "--:--"}
-      </span>
+      </time>
     </span>
   );
 }

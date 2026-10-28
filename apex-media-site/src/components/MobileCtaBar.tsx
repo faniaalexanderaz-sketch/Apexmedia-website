@@ -11,9 +11,10 @@ export function MobileCtaBar() {
 
   useEffect(() => {
     const hero = document.querySelector("[data-hero]");
-    const hide = [document.getElementById("contatti"), document.querySelector("[data-footer]")].filter(
-      Boolean,
-    ) as Element[];
+    const hide = [
+      document.getElementById("contatti"),
+      document.querySelector("[data-footer]"),
+    ].filter(Boolean) as Element[];
     if (!hero) return;
     const state = { heroVisible: true, hiddenZone: 0 };
     const update = () => setShow(!state.heroVisible && state.hiddenZone === 0);
@@ -41,7 +42,12 @@ export function MobileCtaBar() {
       className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 lg:hidden"
     >
       <div className="flex items-center gap-3">
-        <Button href="#contatti" className="flex-1" data-track="click_cta" data-track-posizione="barra-mobile">
+        <Button
+          href="#contatti"
+          className="flex-1"
+          data-track="click_cta"
+          data-track-posizione="barra-mobile"
+        >
           Prenota la call
         </Button>
         <a

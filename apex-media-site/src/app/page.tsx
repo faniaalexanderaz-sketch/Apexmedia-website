@@ -11,6 +11,7 @@ import { Faq } from "@/components/sections/Faq";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
+import { showTeam } from "@/data/team";
 
 export default function Home() {
   return (
@@ -41,10 +42,10 @@ export default function Home() {
         </Suspense>
         <Suspense>
           <Team />
-          <Faq />
+          <Faq numero={showTeam ? "06" : "05"} />
         </Suspense>
         <Suspense>
-          <Contact />
+          <Contact numero={showTeam ? "07" : "06"} />
         </Suspense>
       </main>
       <Suspense>

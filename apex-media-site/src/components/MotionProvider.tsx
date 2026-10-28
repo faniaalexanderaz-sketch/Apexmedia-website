@@ -24,10 +24,17 @@ export function MotionProvider() {
 
     const onClick = (event: MouseEvent) => {
       if (!lenis) return;
-      const a = (event.target as HTMLElement | null)?.closest<HTMLAnchorElement>("a[href]");
+      const a = (
+        event.target as HTMLElement | null
+      )?.closest<HTMLAnchorElement>("a[href]");
       if (!a) return;
       const url = new URL(a.href, window.location.href);
-      if (url.origin !== window.location.origin || url.pathname !== window.location.pathname || !url.hash) return;
+      if (
+        url.origin !== window.location.origin ||
+        url.pathname !== window.location.pathname ||
+        !url.hash
+      )
+        return;
       const target = document.querySelector(decodeURIComponent(url.hash));
       if (!target) return;
       event.preventDefault();

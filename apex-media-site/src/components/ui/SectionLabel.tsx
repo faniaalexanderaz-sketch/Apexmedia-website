@@ -5,7 +5,12 @@ type Props = {
   onDark?: boolean;
 };
 
-export function SectionLabel({ numero, testo, className = "", onDark = false }: Props) {
+export function SectionLabel({
+  numero,
+  testo,
+  className = "",
+  onDark = false,
+}: Props) {
   return (
     <p
       className={`label-mono flex items-center gap-2 ${onDark ? "text-paper/70" : "text-ink/60"} ${className}`}

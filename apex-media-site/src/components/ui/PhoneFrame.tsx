@@ -11,7 +11,13 @@ type Props = {
 };
 
 /** Telefono disegnato in CSS, raggio 12px, bordo inchiostro. */
-export function PhoneFrame({ shot, alt, className = "", sizes = "20vw", priority = false }: Props) {
+export function PhoneFrame({
+  shot,
+  alt,
+  className = "",
+  sizes = "20vw",
+  priority = false,
+}: Props) {
   return (
     <figure className={className} data-phone-frame>
       <div className="relative aspect-[390/844] overflow-hidden rounded-lg border-[3px] border-ink bg-ink">

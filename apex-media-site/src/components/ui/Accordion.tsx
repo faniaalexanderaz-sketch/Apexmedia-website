@@ -16,7 +16,13 @@ type Props = {
  * <details> nativo (funziona senza JS) con apertura animata in altezza da GSAP.
  * Con prefers-reduced-motion si usa il comportamento nativo, istantaneo.
  */
-export function AccordionItem({ summary, children, defaultOpen = false, className = "", summaryClassName = "" }: Props) {
+export function AccordionItem({
+  summary,
+  children,
+  defaultOpen = false,
+  className = "",
+  summaryClassName = "",
+}: Props) {
   const ref = useRef<HTMLDetailsElement>(null);
   const body = useRef<HTMLDivElement>(null);
 
@@ -40,13 +46,22 @@ export function AccordionItem({ summary, children, defaultOpen = false, classNam
       });
     } else {
       d.open = true;
-      gsap.from(c, { height: 0, opacity: 0, duration: 0.5, ease: "power3.out", clearProps: "height,opacity" });
+      gsap.from(c, {
+        height: 0,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power3.out",
+        clearProps: "height,opacity",
+      });
     }
   };
 
   return (
     <details ref={ref} open={defaultOpen} className={`group ${className}`}>
-      <summary onClick={onClick} className={`flex items-start justify-between gap-6 ${summaryClassName}`}>
+      <summary
+        onClick={onClick}
+        className={`flex items-start justify-between gap-6 ${summaryClassName}`}
+      >
         {summary}
         <PlusIcon className="plus-icon mt-1 shrink-0" />
       </summary>

@@ -45,13 +45,19 @@ export function BrowserFrame({
         <span className="url-swap min-w-0 flex-1 font-mono text-[11px] tracking-wide text-ink/60">
           <span className="truncate">{url}</span>
           {href ? (
-            <span className="inline-flex items-center gap-1.5 text-ink" aria-hidden="true">
+            <span
+              className="inline-flex items-center gap-1.5 text-ink"
+              aria-hidden="true"
+            >
               Visita il sito <ExternalIcon size={11} />
             </span>
           ) : null}
         </span>
       </div>
-      <div className="relative aspect-[16/10] overflow-hidden" data-browser-viewport>
+      <div
+        className="relative aspect-[16/10] overflow-hidden"
+        data-browser-viewport
+      >
         <Image
           src={shot.src}
           width={shot.width}

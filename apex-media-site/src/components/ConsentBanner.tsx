@@ -34,10 +34,16 @@ function loadTrackers() {
     };
     window.gtag("js", new Date());
     window.gtag("config", GA4_ID, { anonymize_ip: true });
-    loadScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA4_ID)}`);
+    loadScript(
+      `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA4_ID)}`,
+    );
   }
   if (PIXEL_ID && !window.fbq) {
-    type Fbq = ((...args: unknown[]) => void) & { queue?: unknown[][]; loaded?: boolean; version?: string };
+    type Fbq = ((...args: unknown[]) => void) & {
+      queue?: unknown[][];
+      loaded?: boolean;
+      version?: string;
+    };
     const queue: unknown[][] = [];
     const fbq: Fbq = (...args: unknown[]) => {
       queue.push(args);
@@ -92,18 +98,29 @@ export function ConsentBanner() {
         Cookie
       </p>
       <p className="mt-2 text-[15px] leading-relaxed text-ink/85">
-        Usiamo statistiche senza cookie. Se accetti, attiviamo anche Google Analytics e il pixel di Meta per
-        misurare le campagne. Puoi cambiare idea dalla pagina{" "}
+        Usiamo statistiche senza cookie. Se accetti, attiviamo anche Google
+        Analytics e il pixel di Meta per misurare le campagne. Puoi cambiare
+        idea dalla pagina{" "}
         <a href="/privacy" className="u-link font-medium text-ink">
           privacy
         </a>
         .
       </p>
       <div className="mt-4 flex gap-3">
-        <Button variant="secondary" size="sm" className="flex-1" onClick={() => decide("granted")}>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="flex-1"
+          onClick={() => decide("granted")}
+        >
           Accetta
         </Button>
-        <Button variant="secondary" size="sm" className="flex-1" onClick={() => decide("denied")}>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="flex-1"
+          onClick={() => decide("denied")}
+        >
           Rifiuta
         </Button>
       </div>
@@ -124,7 +141,10 @@ export function ConsentReset({ className = "" }: { className?: string }) {
           localStorage.removeItem(KEY);
         } catch {}
         window.dispatchEvent(new Event("apex-consent-reset"));
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
       }}
     >
       Gestisci il consenso ai cookie
