@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/* ---------- Design token ---------- */
+@theme {
+  --color-*: initial;
+  --color-paper: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-ink: #0b0d14;
+  --color-viola: #5b2eff;
+  --color-blu: #2f6bff;
+  --color-giallo: #ffd84d;
+  --color-verde: #17b26a;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-display: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-*: initial;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --spacing-nav: 64px;
+  --tracking-tightest: -0.03em;
+  --tracking-label: 0.12em;
+}
+
+/* Variabili CSS "pure" per chi non usa Tailwind (data-attr, SVG, script) */
+:root {
+  --paper: #f6f5f1;
+  --surface: #ffffff;
+  --ink: #0b0d14;
+  --viola: #5b2eff;
+  --blu: #2f6bff;
+  --giallo: #ffd84d;
+  --verde: #17b26a;
+  --line: color-mix(in srgb, var(--ink) 8%, transparent);
+  --line-strong: color-mix(in srgb, var(--ink) 14%, transparent);
+  --nav-h: 64px;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--giallo);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--viola);
+  outline-offset: 3px;
+}
+
+/* ---------- Tipografia ---------- */
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.text-body {
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Evidenziatore giallo "a pennarello": SVG irregolare, si clona su ogni riga */
+.hl {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.02em 0.12em;
+  margin: 0 -0.08em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C 40 9, 90 13, 150 10 S 190 8, 197 11 L 199 46 C 160 52, 110 47, 60 50 S 12 54, 2 49 Z' fill='%23FFD84D'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* ---------- Dettagli (FAQ, servizi mobile) ---------- */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .plus-v {
+  transform: scaleY(0);
+}
+
+/* ---------- Form a sola linea inferiore ---------- */
+.field {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 14px 0;
+  font: inherit;
+  color: var(--ink);
+  min-height: 48px;
+}
+.field::placeholder {
+  color: color-mix(in srgb, var(--ink) 40%, transparent);
+}
+.field:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+.field[aria-invalid="true"] {
+  border-bottom-color: #c8102e;
+}
+select.field {
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%230B0D14' stroke-width='1.5'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+}
+
+/* ---------- Utilità ---------- */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.grid-line {
+  border-left: 1px solid var(--line);
+}
+.grid-line:last-child {
+  border-right: 1px solid var(--line);
+}
