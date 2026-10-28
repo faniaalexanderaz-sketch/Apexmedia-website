@@ -341,6 +341,106 @@
       });
 
 
+    /* ======================================================
+       5) DI PIÙ, SEZIONE PER SEZIONE
+       ====================================================== */
+    var desktop = window.matchMedia('(hover: hover) and (min-width: 900px)').matches;
+    function inVista(el, tween) { /* un'animazione continua che gira solo quando la sezione si vede */
+      ScrollTrigger.create({ trigger: el, start: 'top bottom', end: 'bottom top', onToggle: function (st) { st.isActive ? tween.play() : tween.pause(); } });
+      tween.pause();
+    }
+    function inclina3d(el, forza) { /* card che si inclina in 3D seguendo il mouse */
+      if (!desktop || !el) return;
+      gsap.set(el, { transformPerspective: 900 });
+      var rx = gsap.quickTo(el, 'rotationX', { duration: 0.5, ease: 'power3.out' }), ry = gsap.quickTo(el, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        ry(((e.clientX - r.left) / r.width - 0.5) * forza); rx(-((e.clientY - r.top) / r.height - 0.5) * forza);
+      });
+      el.addEventListener('pointerleave', function () { rx(0); ry(0); });
+    }
+
+    /* apertura: il bollo gira mentre scorri */
+    var bolloAp = $('.apertura .bollo');
+    if (bolloAp) gsap.to(bolloAp, { rotation: 200, ease: 'none', scrollTrigger: { trigger: '.apertura', start: 'top top', end: 'bottom top', scrub: 0.5 } });
+
+    /* 01 · prenota: il pulsante "respira" finché la sezione è in vista */
+    var tastoPz = $('.pz .tasto');
+    if (tastoPz) inVista('#posti', gsap.to(tastoPz, { scale: 1.045, duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: -1, repeatDelay: 1.6 }));
+
+    /* 02 · negozio: il cartellino sale piano mentre scorri, l'indirizzo arriva da destra */
+    var cart = $('[data-cartellino]');
+    if (cart) gsap.fromTo(cart, { y: 30 }, { y: -10, ease: 'none', scrollTrigger: { trigger: '.neg-info', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+    var negInd = $('.neg-indirizzo');
+    if (negInd && sottoLaPiega(negInd)) gsap.from(negInd, { x: 60, opacity: 0, duration: 0.9, ease: 'power3.out', clearProps: 'opacity,transform', scrollTrigger: { trigger: negInd, start: 'top 90%', once: true } });
+
+    /* 03 · storia: ogni tappa scivola dentro, l'anno conta fino al 1983 */
+    $$('.tappa').forEach(function (t, i) {
+      if (!sottoLaPiega(t)) return;
+      gsap.from($$('h3, p, .tappa-quando', t), { x: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08, clearProps: 'opacity,transform', scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
+      gsap.from($('.tappa-anno', t), { yPercent: 60, opacity: 0, scale: 0.8, duration: 0.9, ease: 'back.out(1.8)', clearProps: 'opacity,transform', scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
+    });
+    $$('.tappa-anno').forEach(function (a) {
+      var anno = parseInt(a.textContent, 10);
+      if (!anno || anno < 1900 || !sottoLaPiega(a)) return;
+      var c = { v: anno - 40 };
+      allaVista(a, function () { gsap.to(c, { v: anno, duration: 1.6, ease: 'power2.out', snap: { v: 1 }, onUpdate: function () { a.textContent = String(Math.round(c.v)); } }); }, 'top 85%');
+    });
+
+    /* 04 · prezzi: le voci incluse entrano una a una, le card si inclinano col mouse */
+    $$('.prezzo').forEach(function (card) {
+      inclina3d(card, 6);
+      var voci = $$('.prezzo-include li', card);
+      if (voci.length && sottoLaPiega(card)) gsap.from(voci, { x: -24, opacity: 0, duration: 0.5, ease: 'power2.out', stagger: 0.07, delay: 0.3, clearProps: 'opacity,transform', scrollTrigger: { trigger: card, start: 'top 85%', once: true } });
+    });
+
+    /* 05 · una giornata: la luce della cassa lampeggia mentre lo scontrino esce */
+    var luceCassa = $('.cassa-luce');
+    if (luceCassa) inVista('#giornata', gsap.to(luceCassa, { opacity: 0.25, duration: 0.45, ease: 'steps(1)', yoyo: true, repeat: -1 }));
+
+    /* 06 · spazio: le X dei "niente sorprese" girano dentro, la frase finale si batte a macchina */
+    var xx = $$('.servizi-senza li .ico').filter(sottoLaPiega);
+    if (xx.length) gsap.from(xx, { scale: 0, rotation: -180, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.1, clearProps: 'transform', scrollTrigger: { trigger: '.servizi-senza', start: 'top 85%', once: true } });
+    var porta = $('.servizi-porta');
+    if (porta && SPLIT && sottoLaPiega(porta)) {
+      var sp = SplitText.create(porta, { type: 'chars', charsClass: 'pc' });
+      gsap.set(sp.chars, { opacity: 0 });
+      allaVista(porta, function () { gsap.to(sp.chars, { opacity: 1, duration: 0.01, stagger: 0.045, ease: 'none', onComplete: function () { sp.revert(); } }); }, 'top 90%');
+    }
+
+    /* 07 · card: la tessera si inclina col mouse */
+    inclina3d($('.tessera-scena'), 12);
+
+    /* 08 · per chi è: il numero di ogni profilo salta dentro, la freccia dei link scatta */
+    $$('.profilo').forEach(function (pr) {
+      var n = $('.profilo-num', pr);
+      if (n && sottoLaPiega(pr)) gsap.from(n, { scale: 2.4, opacity: 0, rotation: -12, transformOrigin: '0% 50%', duration: 0.7, ease: 'back.out(2)', clearProps: 'opacity,transform', scrollTrigger: { trigger: pr, start: 'top 85%', once: true } });
+      inclina3d(pr, 5);
+    });
+    var frecceProfili = $$('.profilo-link .ico');
+    if (frecceProfili.length) inVista('#per-chi', gsap.to(frecceProfili, { x: 5, duration: 0.25, ease: 'power2.out', yoyo: true, repeat: -1, repeatDelay: 2.2, stagger: 0.15 }));
+
+    /* 09 · dove siamo: il segnaposto della mappa rimbalza, l'indirizzo arriva riga per riga */
+    var pin = $('.mappa-carica .ico');
+    if (pin) inVista('#dove', gsap.to(pin, { y: -6, duration: 0.45, ease: 'power2.out', yoyo: true, repeat: -1, repeatDelay: 0.9 }));
+    var mappa = $('.mappa-anteprima');
+    if (mappa && sottoLaPiega(mappa)) gsap.from(mappa, { clipPath: 'circle(0% at 50% 50%)', duration: 1.3, ease: 'expo.out', clearProps: 'clipPath', scrollTrigger: { trigger: mappa, start: 'top 85%', once: true } });
+
+    /* 10 · domande: la risposta si apre scorrendo invece di comparire di colpo */
+    $$('.faq details').forEach(function (d) {
+      var risp = $('.faq-risposta', d);
+      if (!risp) return;
+      d.addEventListener('toggle', function () {
+        if (!d.open) return;
+        gsap.fromTo(risp, { height: 0, opacity: 0, overflow: 'hidden' }, { height: 'auto', opacity: 1, duration: 0.45, ease: 'power2.out', clearProps: 'height,opacity,overflow' });
+        gsap.from($$('p', risp), { y: -10, duration: 0.45, ease: 'power2.out', clearProps: 'transform' });
+      });
+    });
+
+    /* finale: la riga dei posti liberi salta fuori */
+    var finPosti = $('.finale .apertura-sopra');
+    if (finPosti && sottoLaPiega(finPosti)) gsap.from(finPosti, { scale: 0.6, opacity: 0, duration: 0.8, ease: 'back.out(2)', clearProps: 'opacity,transform', scrollTrigger: { trigger: finPosti, start: 'top 90%', once: true } });
+
     /* card, foto e font cambiano l'altezza della pagina: ricalcola i punti di attivazione */
     window.addEventListener('load', function () { ScrollTrigger.refresh(); });
     if ('ResizeObserver' in window) {
