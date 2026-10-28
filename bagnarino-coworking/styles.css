@@ -1047,7 +1047,7 @@ body.menu-aperto { overflow: hidden; }
 .prezzi { gap: 16px; background: none; border: 0; overflow: visible; }
 .prezzo { position: relative; border-radius: 28px; padding: 30px 24px 28px; background: var(--c-sfondo); color: var(--c-testo); box-shadow: 0 26px 48px -30px rgba(17, 25, 34, .55); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
 @media (hover: hover) { .prezzo:hover { transform: translateY(-4px); box-shadow: 0 32px 56px -28px rgba(17, 25, 34, .6); } }
-.prezzo-giornata { --c-sfondo: #FBF3DF; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--notte); }
+.prezzo-giornata { --c-sfondo: #F5E5B8; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--ocra-vivo); --c-btn-testo: var(--notte); --c-btn-bordo: var(--notte); }
 .prezzo-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-forte: #1E6B52; --c-btn: #2E8A62; --c-btn-testo: #fff; --c-btn-bordo: #0E2F22; }
 .prezzo-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-forte: var(--ocra-vivo); --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--avorio); }
 .prezzo-mese_fisso { --c-sfondo: #D3E6EA; --c-testo: #0E323A; --c-forte: #1E6471; --c-btn: #2B7F8E; --c-btn-testo: #fff; --c-btn-bordo: #0E323A; }
