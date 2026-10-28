@@ -33,6 +33,8 @@
   --ocra-testo: #7A5A1E;            /* ocra leggibile come testo su carta: 5.6:1 */
   --timbro: #B4302A;                /* rosso inchiostro da timbro: solo sulla Card */
   --carta: #F4EEE3;
+  --sabbia-1: #F7F0DF;            /* sezioni chiare: un velo d'ocra */
+  --sabbia-2: #F3E8D2;            /* sezioni chiare, un tono in più */
   --carta-2: #E6DECF;
   --avorio: #FAF6EE;
   --bianco: #FFFFFF;
@@ -331,7 +333,7 @@ strong { font-weight: 600; }
 /* =============================================================
    02 · IL NEGOZIO: foto dell'ingresso, chi ti accoglie
    ============================================================= */
-.negozio { border-top: 1px solid var(--linea); }
+.negozio { border-top: 0; background: var(--sabbia-2); }
 .fatti { display: flex; flex-wrap: wrap; gap: 20px 44px; margin: 0; padding-top: 22px; border-top: 1px solid var(--linea); }
 .fatti div { display: flex; flex-direction: column-reverse; gap: 6px; }
 .fatti dt { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--inchiostro-morbido); }
@@ -352,7 +354,7 @@ strong { font-weight: 600; }
 /* =============================================================
    04 · PREZZI: un listino stampato, quattro colonne a filetto
    ============================================================= */
-.prezzi-sezione { border-top: 1px solid var(--linea); }
+.prezzi-sezione { border-top: 0; background: var(--sabbia-1) radial-gradient(900px 500px at 85% 0%, rgba(201, 151, 59, .10), transparent 65%); }
 .prezzi { display: grid; gap: 1px; background: var(--linea-forte); border-top: 1px solid var(--linea-forte); border-bottom: 1px solid var(--linea-forte); }
 .prezzo { position: relative; display: flex; flex-direction: column; background: var(--carta); padding: 28px 0 30px; }
 .prezzo-testa { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 4px; }
@@ -917,7 +919,7 @@ body.menu-aperto { overflow: hidden; }
 .prezzo { transition: background-color .3s var(--curva); }
 
 /* lo spazio: le due liste in riquadri diversi, uno chiaro e uno scuro */
-.spazio-sezione { background: var(--carta); }
+.spazio-sezione { background: var(--sabbia-2); border-top: 0; }
 
 /* per chi è: quattro riquadri numerati, il mese ha il suo colore */
 
@@ -1006,12 +1008,17 @@ body.menu-aperto { overflow: hidden; }
 @media (min-width: 900px) { .perchi-sezione .profili { margin-bottom: -120px; } .dove-sezione { padding-top: calc(128px + 120px); } }
 
 /* 09 · dove siamo: di nuovo chiaro, mappa in una scheda */
-.dove-sezione { background: var(--carta); color: var(--inchiostro); }
+.dove-sezione { background: var(--sabbia-1) radial-gradient(800px 500px at 10% 100%, rgba(201, 151, 59, .10), transparent 65%); color: var(--inchiostro); }
 .dove-sezione .titolo-sezione { color: var(--inchiostro); }
 .dove-sezione .titolo-sezione em { color: var(--ocra-testo); }
 .dove-vicino, .dove-orari, .dove-visita, .mappa-nota { color: var(--inchiostro-morbido); }
 .dove-visita a { color: var(--inchiostro); }
-.mappa { background: var(--avorio); border-radius: 14px; padding: 12px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .5); }
+.mappa { position: relative; background: var(--avorio); border-radius: 14px; padding: 12px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .5); }
+.mappa-qui { position: absolute; z-index: 3; left: 24px; bottom: 24px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: var(--inchiostro); color: var(--avorio); font-family: var(--f-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; box-shadow: 0 10px 24px -10px rgba(17, 25, 34, .7); pointer-events: none; }
+.mappa-qui .ico { width: 14px; height: 14px; color: var(--ocra-vivo); }
+.mappa-nota a { color: var(--inchiostro); }
+.dove-cta .btn { white-space: nowrap; }
+.dove-cta .btn.copiato { background: var(--verde); border-color: var(--verde); color: #fff; }
 .mappa-anteprima { border-color: var(--linea); background: var(--carta) repeating-linear-gradient(0deg, transparent 0 31px, var(--linea) 31px 32px), var(--carta) repeating-linear-gradient(90deg, transparent 0 31px, var(--linea) 31px 32px); }
 .mappa-carica { background: var(--inchiostro); color: var(--avorio); }
 .mappa-nota { padding: 10px 4px 0; }
@@ -1040,7 +1047,7 @@ body.menu-aperto { overflow: hidden; }
 .prezzi { gap: 16px; background: none; border: 0; overflow: visible; }
 .prezzo { position: relative; border-radius: 28px; padding: 30px 24px 28px; background: var(--c-sfondo); color: var(--c-testo); box-shadow: 0 26px 48px -30px rgba(17, 25, 34, .55); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
 @media (hover: hover) { .prezzo:hover { transform: translateY(-4px); box-shadow: 0 32px 56px -28px rgba(17, 25, 34, .6); } }
-.prezzo-giornata { --c-sfondo: #F5DFAE; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--notte); }
+.prezzo-giornata { --c-sfondo: #FBF3DF; --c-testo: var(--notte); --c-forte: #7A5A1E; --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--notte); }
 .prezzo-carnet { --c-sfondo: #D6EADF; --c-testo: #0E2F22; --c-forte: #1E6B52; --c-btn: #2E8A62; --c-btn-testo: #fff; --c-btn-bordo: #0E2F22; }
 .prezzo-mese_flessibile { --c-sfondo: var(--inchiostro); --c-testo: var(--avorio); --c-forte: var(--ocra-vivo); --c-btn: var(--ocra); --c-btn-testo: var(--notte); --c-btn-bordo: var(--avorio); }
 .prezzo-mese_fisso { --c-sfondo: #D3E6EA; --c-testo: #0E323A; --c-forte: #1E6471; --c-btn: #2B7F8E; --c-btn-testo: #fff; --c-btn-bordo: #0E323A; }

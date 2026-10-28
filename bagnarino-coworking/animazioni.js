@@ -461,11 +461,21 @@
       });
     })();
 
-    /* 09 · dove siamo: il segnaposto della mappa rimbalza, l'indirizzo arriva riga per riga */
+    /* 08 · dove siamo: l'indirizzo arriva riga per riga, la mappa si apre a cerchio,
+       l'etichetta "Siamo qui" si posa sopra e il segnaposto rimbalza */
+    var scenaMappa = $('[data-mappa-scena]');
+    if (scenaMappa && sottoLaPiega(scenaMappa)) {
+      var qui = $('.mappa-qui', scenaMappa), interno = $('.mappa-anteprima, .mappa-iframe', scenaMappa);
+      gsap.set(qui, { opacity: 0, y: -40, scale: 0.7, transformOrigin: '50% 100%' });
+      var tlM = gsap.timeline({ scrollTrigger: { trigger: scenaMappa, start: 'top 82%', once: true } });
+      if (interno) tlM.fromTo(interno, { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(75% at 50% 50%)', duration: 1.3, ease: 'expo.out', clearProps: 'clipPath' }, 0);
+      tlM.to(qui, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(2)', clearProps: 'opacity,transform' }, 0.7)
+        .to($('.ico', qui), { y: -4, duration: 0.3, yoyo: true, repeat: 3, ease: 'power1.inOut', clearProps: 'transform' }, 1.3);
+      var indirizzo = $$('.dove-indirizzo, .dove-orari');
+      if (indirizzo.length) gsap.from(indirizzo, { x: -30, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12, clearProps: 'opacity,transform', scrollTrigger: { trigger: '.dove-scheda', start: 'top 85%', once: true } });
+    }
     var pin = $('.mappa-carica .ico');
     if (pin) inVista('#dove', gsap.to(pin, { y: -6, duration: 0.45, ease: 'power2.out', yoyo: true, repeat: -1, repeatDelay: 0.9 }));
-    var mappa = $('.mappa-anteprima');
-    if (mappa && sottoLaPiega(mappa)) gsap.from(mappa, { clipPath: 'circle(0% at 50% 50%)', duration: 1.3, ease: 'expo.out', clearProps: 'clipPath', scrollTrigger: { trigger: mappa, start: 'top 85%', once: true } });
 
     /* 10 · domande: la risposta si apre scorrendo invece di comparire di colpo */
     $$('.faq details').forEach(function (d) {

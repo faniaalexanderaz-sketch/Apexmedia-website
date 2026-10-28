@@ -37,7 +37,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=a7a815b6">
+  <link rel="stylesheet" href="/styles.css?v=36808c39">
 
   <script src="/config.js?v=59ad8c50"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -49,9 +49,9 @@
       setTimeout(function () { document.documentElement.classList.remove('anim-attesa'); }, 1500);
     }
   </script>
-  <script src="/main.js?v=37001332" defer></script>
+  <script src="/main.js?v=f32ec351" defer></script>
   <script src="/vendor/gsap/gsap-bundle.min.js" defer></script>
-  <script src="/animazioni.js?v=9164f47c" defer></script>
+  <script src="/animazioni.js?v=daa990cb" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -602,14 +602,19 @@
             <svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Indicazioni</a>
           <a class="btn btn-filo" data-tel data-pos="dove" href="tel:+393472249457">
             <svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Chiama</a>
+          <a class="btn btn-wa" data-wa="visita" data-pos="dove" href="https://wa.me/393472249457">
+            <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+          <button class="btn btn-filo" type="button" data-copia-indirizzo>
+            <svg class="ico" aria-hidden="true"><use href="#i-map-pin"/></svg><span>Copia indirizzo</span></button>
         </div>
         <p class="dove-visita">Per visitare lo spazio prima di prenotare, <a data-wa="visita" data-pos="dove-visita" href="https://wa.me/393472249457">scrivici su WhatsApp</a>.</p>
       </div>
-      <div class="mappa">
+      <div class="mappa" data-mappa-scena>
+        <span class="mappa-qui" aria-hidden="true"><svg class="ico"><use href="#i-map-pin"/></svg>Siamo qui</span>
         <button class="mappa-anteprima" type="button" data-mappa aria-label="Carica la mappa di Google">
           <span class="mappa-carica"><svg class="ico" aria-hidden="true"><use href="#i-map-pin"/></svg>Mostra la mappa</span>
         </button>
-        <p class="mappa-nota">Caricando la mappa accetti i cookie di Google Maps.</p>
+        <p class="mappa-nota">La mappa di Google si carica con i cookie accettati. <a href="/cookie">Dettagli</a></p>
       </div>
     </div>
   </section>

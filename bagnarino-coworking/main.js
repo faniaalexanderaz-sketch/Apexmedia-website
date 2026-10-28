@@ -442,11 +442,11 @@
     } else { visibile = true; avvia(); }
   }
 
-  /* ---------- mappa: si carica solo al tocco ----------
-     L'iframe di Google pesa ~1 MB e usa cookie di terze parti:
-     finché non serve, al suo posto c'è un'anteprima leggera. */
-  $$('[data-mappa]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
+  /* ---------- mappa ----------
+     L'iframe di Google usa cookie di terze parti: parte subito se i cookie
+     sono già stati accettati, altrimenti al tocco (o appena si accetta). */
+  function caricaMappa() {
+    $$('[data-mappa]').forEach(function (btn) {
       var f = document.createElement('iframe');
       f.src = 'https://www.google.com/maps?q=' + encodeURIComponent('Bagnarino, ' + indirizzoCompleto) + '&z=16&output=embed';
       f.title = 'Mappa: ' + indirizzoCompleto;
@@ -454,6 +454,22 @@
       f.referrerPolicy = 'no-referrer-when-downgrade';
       f.className = 'mappa-iframe';
       btn.parentNode.replaceChild(f, btn);
+      var nota = $('.mappa-nota'); if (nota) nota.remove();
+    });
+  }
+  function consensoTutti() { try { return localStorage.getItem('bgn-cookie') === 'tutti'; } catch (e) { return false; } }
+  if ($('[data-mappa]')) {
+    if (consensoTutti()) caricaMappa();
+    $$('[data-mappa]').forEach(function (btn) { btn.addEventListener('click', caricaMappa); });
+    document.addEventListener('click', function (e) { if (e.target.closest('[data-cookie="tutti"]')) setTimeout(caricaMappa, 50); });
+  }
+
+  /* ---------- copia indirizzo ---------- */
+  $$('[data-copia-indirizzo]').forEach(function (b) {
+    var testo = $('span', b), orig = testo ? testo.textContent : '';
+    b.addEventListener('click', function () {
+      var fatto = function () { b.classList.add('copiato'); if (testo) testo.textContent = 'Copiato'; setTimeout(function () { b.classList.remove('copiato'); if (testo) testo.textContent = orig; }, 1800); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(indirizzoCompleto).then(fatto, fatto); else fatto();
     });
   });
 
