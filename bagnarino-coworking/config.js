@@ -81,7 +81,7 @@ var BGN_CONFIG = {
       prezzo: 25,
       unita: 'al giorno',
       nota: 'Nessun impegno',
-      perChi: 'Per provare o venire ogni tanto',
+      perChi: 'Per una prova o un uso occasionale',
       include: ['Scrivania dalle 9:30 alle 18:30', 'Wi-fi in fibra', 'Stampe e scansioni Olivetti'],
       cta: 'Prenota la giornata',
       tipoData: 'giorno',
@@ -105,7 +105,7 @@ var BGN_CONFIG = {
       prezzo: 270,
       unita: 'al mese',
       nota: 'Circa €13 al giorno',
-      perChi: 'Per chi lavora qui quasi ogni giorno',
+      perChi: 'Per chi lavora in sede quasi ogni giorno',
       include: ['Tutti i giorni di apertura', 'Una scrivania libera a scelta', 'Stampe, scansioni e wi-fi inclusi'],
       cta: 'Prenota il mese',
       tipoData: 'inizio',
@@ -121,9 +121,9 @@ var BGN_CONFIG = {
       prezzo: 320,
       unita: 'al mese',
       nota: 'Circa €15 al giorno',
-      perChi: 'Per chi vuole la sua scrivania, sempre quella',
+      perChi: 'Per chi vuole una postazione riservata',
       include: ['Sempre la stessa scrivania', 'Cassettiera personale', 'Lasci le tue cose dove sono'],
-      cta: 'Prenota la fissa',
+      cta: 'Prenota la postazione',
       tipoData: 'inizio',
       etichettaData: 'Da che giorno inizi?'
     }
@@ -142,7 +142,7 @@ var BGN_CONFIG = {
     nome: 'Bagnarino Card',
     timbri: 10,
     titolo: 'Ogni 10 giornate, l’undicesima è in regalo.',
-    testo: 'A ogni giornata ti segniamo un timbro e lungo la strada sblocchi quattro premi. L’ultimo è una giornata intera in regalo. La card è gratis, niente app da scaricare.',
+    testo: 'Un timbro per ogni giornata e quattro premi lungo il percorso, fino alla giornata in omaggio. La card è gratuita e non richiede alcuna app.',
     /* Premi lungo la card: timbri = al quale timbro si sblocca.
        I premi intermedi li consegna Marcella in sede: l'area riservata
        glielo ricorda quando segna l'arrivo. Dopo il 10° si ricomincia.
