@@ -129,7 +129,7 @@
     /* ======================================================
        3) TESTI E BLOCCHI — ognuno col suo ingresso, a cascata
        ====================================================== */
-    var testi = $$('.intro-sezione, .neg-lead, .neg-contatti, .servizi-testa > p, .servizi-senza, .perchi-testa p, .dove-scheda > *:not(h2):not(.btn):not(.dove-cta), .faq-altro, .finale > .contenitore > p, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li, .fatti > div')
+    var testi = $$('.intro-sezione, .neg-lead, .neg-contatti, .olivetti-targa, .olivetti-testo, .olivetti-voci li, .servizi-testa > p, .servizi-senza, .perchi-testa p, .dove-scheda > *:not(h2):not(.btn):not(.dove-cta), .faq-altro, .finale > .contenitore > p, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li, .fatti > div')
       .filter(sottoLaPiega);
     if (testi.length) {
       gsap.set(testi, { opacity: 0, y: 30, filter: 'blur(6px)' });

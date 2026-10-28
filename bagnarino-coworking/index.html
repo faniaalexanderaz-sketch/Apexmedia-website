@@ -37,7 +37,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=6f1993ea">
+  <link rel="stylesheet" href="/styles.css?v=33eb88fb">
 
   <script src="/config.js?v=f5a6eb62"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -51,7 +51,7 @@
   </script>
   <script src="/main.js?v=37001332" defer></script>
   <script src="/vendor/gsap/gsap-bundle.min.js" defer></script>
-  <script src="/animazioni.js?v=737cf2af" defer></script>
+  <script src="/animazioni.js?v=b61b0c22" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -355,6 +355,23 @@
       </div>
     </div>
   </section>
+
+  <!-- ============ OLIVETTI: una fascia breve, il negozio resta un negozio ============ -->
+  <aside class="olivetti" id="olivetti" aria-labelledby="olivetti-titolo">
+    <div class="contenitore olivetti-griglia">
+      <p class="olivetti-targa"><span class="targa-olivetti"><img src="/img/olivetti.png" alt="Olivetti" width="366" height="130" loading="lazy"></span><span>Concessionario ufficiale</span></p>
+      <div class="olivetti-testo">
+        <h2 id="olivetti-titolo" class="olivetti-titolo">Il negozio continua a fare il negozio.</h2>
+        <p>Se ti serve qualcosa per il tuo ufficio, chiedi al banco.</p>
+      </div>
+      <ul class="olivetti-voci">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-printer"/></svg><span>Stampanti e multifunzione</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-banconota"/></svg><span>Registratori di cassa</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-chiave"/></svg><span>Assistenza e riparazioni</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-fattura"/></svg><span>Carta, toner e accessori</span></li>
+      </ul>
+    </div>
+  </aside>
 
     <!-- ============ 04 · PREZZI ============ -->
   <section class="sezione prezzi-sezione" id="prezzi" aria-labelledby="prezzi-titolo">
