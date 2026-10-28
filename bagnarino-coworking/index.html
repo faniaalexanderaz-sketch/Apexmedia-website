@@ -37,7 +37,7 @@
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="/img/foto/spazio-verticale-828.webp" media="(max-width: 760px)" fetchpriority="high">
   <link rel="preload" as="image" href="/img/foto/spazio-1344.webp" media="(min-width: 761px)" fetchpriority="high">
-  <link rel="stylesheet" href="/styles.css?v=1d57d820">
+  <link rel="stylesheet" href="/styles.css?v=8a86afda">
 
   <script src="/config.js?v=f5a6eb62"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
@@ -49,9 +49,9 @@
       setTimeout(function () { document.documentElement.classList.remove('anim-attesa'); }, 1500);
     }
   </script>
-  <script src="/main.js?v=7147f9b2" defer></script>
+  <script src="/main.js?v=37001332" defer></script>
   <script src="/vendor/gsap/gsap-bundle.min.js" defer></script>
-  <script src="/animazioni.js?v=5492ca9e" defer></script>
+  <script src="/animazioni.js?v=c55119d2" defer></script>
 </head>
 <body class="home" data-schema-attivita>
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -545,52 +545,55 @@
     </div>
   </section>
 
-  <!-- ============ 07 · BAGNARINO CARD ============ -->
-  <section class="sezione card-sezione" id="card" aria-labelledby="card-titolo">
-    <div class="contenitore fidelity">
-      <div class="fidelity-testo">
-        <p class="occhiello occhiello-chiaro"><span>07</span><span data-cfg="fidelity.nome">Bagnarino Card</span></p>
-        <h2 id="card-titolo" class="titolo-sezione" data-cfg="fidelity.titolo">Ogni 10 giornate, l’undicesima è in regalo.</h2>
-        <p data-cfg="fidelity.testo">A ogni giornata ti segniamo un timbro e lungo la strada sblocchi quattro premi. L’ultimo è una giornata intera in regalo. La card è gratis, niente app da scaricare.</p>
-        <ol class="premi-scala" data-premi>
-          <li><span class="premi-n">3</span><div><strong>25 stampe a colori gratis</strong><span>Per i tuoi lavori, da usare quando vuoi.</span></div></li>
-          <li><span class="premi-n">5</span><div><strong>Porta un amico</strong><span>Venite insieme: la sua prima giornata è gratis.</span></div></li>
-          <li><span class="premi-n">7</span><div><strong>Sconto 10% in negozio</strong><span>Su carta, cartucce e accessori per l’ufficio.</span></div></li>
-          <li class="premi-top"><span class="premi-n">10</span><div><strong>Giornata in regalo</strong><span>L’undicesima giornata la offriamo noi.</span></div></li>
+  <!-- ============ 07 · BAGNARINO CARD: la tessera protagonista, i premi in una lista compatta ============ -->
+  <section class="sezione card-sezione bc" id="card" aria-labelledby="card-titolo">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="bc-b" viewBox="0 0 380 402"><path d="M40 0H267A103 103 0 0 1 343.5 172H0V40A40 40 0 0 1 40 0Z"/><path d="M0 192H317C331 195 340 202 345 210H0Z"/><path d="M0 230H360A103 103 0 0 1 278 402H40A40 40 0 0 1 0 362Z"/></symbol></defs></svg>
+    <div class="contenitore bc-griglia">
+      <div class="bc-testa">
+        <p class="occhiello occhiello-chiaro"><span>07</span>Fedeltà</p>
+        <h2 id="card-titolo" class="bc-titolo"><span class="bc-riga"><span data-cfg="fidelity.nome">Bagnarino Card</span></span></h2>
+        <p class="bc-promessa"><span class="bc-riga"><em>Ogni dieci giornate, l’undicesima in regalo.</em></span></p>
+      </div>
+
+      <div class="bc-dettagli">
+        <p class="bc-come">A ogni giornata un timbro sulla card. Lungo la strada quattro premi, l’ultimo è una giornata intera. La card è gratis e non c’è nessuna app da scaricare.</p>
+        <ol class="bc-premi" data-premi>
+          <li><span class="bc-premio-n">3</span><div><strong>25 stampe a colori gratis</strong><span>Per i tuoi lavori, da usare quando vuoi.</span></div></li>
+          <li><span class="bc-premio-n">5</span><div><strong>Porta un amico</strong><span>Venite insieme: la sua prima giornata è gratis.</span></div></li>
+          <li><span class="bc-premio-n">7</span><div><strong>Sconto 10% in negozio</strong><span>Su carta, cartucce e accessori per l’ufficio.</span></div></li>
+          <li class="bc-premio-top"><span class="bc-premio-n">10</span><div><strong>Giornata in regalo</strong><span>L’undicesima giornata la offriamo noi.</span></div></li>
         </ol>
-        <div class="vantaggi-mese" data-vantaggi-mese>
-          <p class="vm-occhiello">Hai l’abbonamento mensile?</p>
-          <h3 data-vm-titolo>Con il mese, i premi li hai subito</h3>
+        <details class="bc-mese" data-vantaggi-mese>
+          <summary><span class="bc-mese-occhiello">Hai l’abbonamento mensile?</span><span data-vm-titolo>Con il mese, i premi li hai subito</span><svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
           <ul data-vm-voci>
             <li><div><strong>100 stampe a colori</strong><span>Ogni mese, per i tuoi lavori.</span></div></li>
             <li><div><strong>Un amico gratis</strong><span>Ogni mese porti chi vuoi per una giornata.</span></div></li>
             <li><div><strong>−10% in negozio</strong><span>Su carta, cartucce e accessori, per tutto il mese.</span></div></li>
             <li><div><strong>Rinnovi, risparmi</strong><span>Dal quarto mese di fila, €20 in meno al mese.</span></div></li>
           </ul>
-          <a class="link-forte" href="/prenota?pacchetto=mese_flessibile" data-pos="vantaggi-mese">Scegli il mese flessibile, <span data-prezzo="mese_flessibile">€270</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        </div>
-        <div class="fidelity-azioni">
-          <a class="btn btn-ocra btn-grande" href="/prenota?pacchetto=giornata" data-pos="fidelity">Inizia dalla prima giornata
-            <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <a class="link-forte" href="/card">Hai già la card? Guarda i tuoi timbri</a>
+          <a class="bc-link" href="/prenota?pacchetto=mese_flessibile" data-pos="vantaggi-mese">Scegli il mese flessibile, <span data-prezzo="mese_flessibile">€270</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </details>
+        <div class="bc-azioni">
+          <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="fidelity"><span class="tasto-faccia">Inizia dalla prima giornata<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span></a>
+          <a class="bc-link" href="/card">Hai già la card? Guarda i tuoi timbri<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </div>
-      <div class="tessera-scena">
-        <div class="tessera" role="img" aria-label="Esempio di Bagnarino Card con 7 timbri su 10: premi al 3°, 5°, 7° e 10° timbro">
-          <div class="tessera-testa">
-            <img src="/img/logo-mark.svg" alt="" width="22" height="23">
-            <span class="tessera-nome">Bagnarino Card</span>
-            <span class="tessera-num">N° 0042</span>
+
+      <div class="bc-scena" data-bc-scena>
+        <div class="bc-card" data-bc-card role="img" aria-label="Esempio di Bagnarino Card con 7 timbri su 10: premi al 3°, 5°, 7° e 10° timbro">
+          <span class="bc-luce" aria-hidden="true"></span>
+          <div class="bc-card-testa">
+            <img class="bc-logo" src="/img/logo-mark.svg" alt="" width="34" height="36">
+            <div class="bc-card-nome"><span>Bagnarino Card</span><small>Coworking · Corso Lamarmora 46</small></div>
+            <span class="bc-card-num">N° 0042</span>
           </div>
-          <ol class="timbri" data-timbri>
-            <li class="timbro pieno"></li><li class="timbro pieno"></li><li class="timbro pieno premio"></li><li class="timbro pieno"></li><li class="timbro pieno premio"></li>
-            <li class="timbro pieno"></li><li class="timbro pieno premio"></li><li class="timbro"></li><li class="timbro"></li><li class="timbro premio"></li>
-          </ol>
-          <div class="tessera-piede">
-            <span>7 timbri su 10</span>
-            <span class="omaggio"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg>11ª giornata in regalo</span>
+          <ol class="bc-timbri" data-bc-timbri><li class="bc-timbro bc-pieno" data-n="1"><span class="bc-timbro-n">1</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro bc-pieno" data-n="2"><span class="bc-timbro-n">2</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro bc-pieno bc-traguardo" data-n="3"><span class="bc-timbro-n">3</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro bc-pieno" data-n="4"><span class="bc-timbro-n">4</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro bc-pieno bc-traguardo" data-n="5"><span class="bc-timbro-n">5</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro bc-pieno" data-n="6"><span class="bc-timbro-n">6</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro bc-pieno bc-traguardo" data-n="7"><span class="bc-timbro-n">7</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro" data-n="8"><span class="bc-timbro-n">8</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro" data-n="9"><span class="bc-timbro-n">9</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li><li class="bc-timbro bc-traguardo" data-n="10"><span class="bc-timbro-n">10</span><svg class="bc-inchiostro" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" class="bc-inchiostro-interno"/><use href="#bc-b" x="30" y="30" width="40" height="40"/></svg></li></ol>
+          <div class="bc-card-piede">
+            <span class="bc-card-conta"><strong>7</strong> timbri su 10</span>
+            <span class="bc-card-regalo"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg>11ª giornata in regalo</span>
           </div>
         </div>
+        <span class="bc-ombra" aria-hidden="true"></span>
       </div>
     </div>
   </section>

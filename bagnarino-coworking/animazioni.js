@@ -129,7 +129,7 @@
     /* ======================================================
        3) TESTI E BLOCCHI — ognuno col suo ingresso, a cascata
        ====================================================== */
-    var testi = $$('.intro-sezione, .neg-lead, .neg-contatti, .servizi-testa > p, .servizi-senza, .fidelity-testo > p[data-cfg], .vantaggi-mese, .perchi-testa p, .dove-scheda > *:not(h2):not(.btn):not(.dove-cta), .faq-altro, .finale > .contenitore > p, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li, .fatti > div')
+    var testi = $$('.intro-sezione, .neg-lead, .neg-contatti, .servizi-testa > p, .servizi-senza, .perchi-testa p, .dove-scheda > *:not(h2):not(.btn):not(.dove-cta), .faq-altro, .finale > .contenitore > p, .pz-sotto, .pz-posti, .pz-nota, .prezzi-garanzie li, .fatti > div')
       .filter(sottoLaPiega);
     if (testi.length) {
       gsap.set(testi, { opacity: 0, y: 30, filter: 'blur(6px)' });
@@ -138,7 +138,7 @@
     }
 
     /* i pulsanti saltano fuori */
-    var pulsanti = $$('main .tasto, main .btn-grande, .neg-azioni .btn, .dove-cta .btn, .fidelity-azioni .btn').filter(function (b) { return !b.closest('.apertura') && sottoLaPiega(b); });
+    var pulsanti = $$('main .tasto, main .btn-grande, .neg-azioni .btn, .dove-cta .btn').filter(function (b) { return !b.closest('.apertura') && sottoLaPiega(b); });
     if (pulsanti.length) {
       gsap.set(pulsanti, { opacity: 0, y: 30, scale: 0.88 });
       ScrollTrigger.batch(pulsanti, { start: 'top 94%', once: true,
@@ -146,7 +146,7 @@
     }
 
     /* liste: una voce alla volta, da sinistra */
-    [['.servizi-senza ul', 'li', -30], ['.premi-scala', 'li', -40], ['.vantaggi-mese ul', 'li', -30], ['.faq', 'details', -50]].forEach(function (c) {
+    [['.servizi-senza ul', 'li', -30], ['.faq', 'details', -50]].forEach(function (c) {
       $$(c[0]).forEach(function (lista) {
         var voci = $$(c[1], lista);
         if (!voci.length || !sottoLaPiega(lista)) return;
@@ -154,11 +154,6 @@
           scrollTrigger: { trigger: lista, start: 'top 88%', once: true } });
       });
     });
-
-    /* i numeri dei premi (3, 5, 7, 10) ruotano dentro come gettoni */
-    var gettoni = $$('.premi-n').filter(sottoLaPiega);
-    if (gettoni.length) gsap.from(gettoni, { scale: 0, rotate: -160, duration: 0.8, ease: 'back.out(2.2)', stagger: 0.1, clearProps: 'transform',
-      scrollTrigger: { trigger: gettoni[0], start: 'top 88%', once: true } });
 
     /* piè di pagina: colonne a cascata */
     $$('.piede-griglia > *').filter(sottoLaPiega).forEach(function (el, i) {
@@ -298,25 +293,10 @@
           scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
       });
 
-      /* 2h) la tessera ruota ed entra come posata sul tavolo, poi i timbri si pressano */
-      var tessera = $('.tessera-scena .tessera');
-      if (tessera && sottoLaPiega(tessera)) {
-        gsap.from(tessera, { opacity: 0, rotationY: 35, rotationZ: -8, y: 60, transformPerspective: 1000, duration: 1.1, ease: 'power3.out', clearProps: 'opacity,transform',
-          scrollTrigger: { trigger: tessera, start: 'top 85%', once: true },
-          onComplete: function () { gsap.to(tessera, { y: -8, rotation: 0.8, duration: 2.8, yoyo: true, repeat: -1, ease: 'sine.inOut' }); } });
-      }
-
       /* 2i) barra di lettura in alto, ocra */
       var barra = document.createElement('div'); barra.className = 'avanzamento'; barra.setAttribute('aria-hidden', 'true');
       document.body.appendChild(barra);
       gsap.to(barra, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
-
-      /* 3) Bagnarino Card: i timbri si posano uno alla volta */
-      var timbri = $$('[data-timbri] .timbro.pieno');
-      if (timbri.length && sottoLaPiega(timbri[0])) {
-        gsap.from(timbri, { scale: 1.7, opacity: 0, rotation: -25, stagger: 0.09, duration: 0.32, ease: 'power3.in', clearProps: 'transform,opacity',
-          delay: 0.6, scrollTrigger: { trigger: '[data-timbri]', start: 'top 80%', once: true } });
-      }
 
       /* 4) le foto si scoprono a tendina, con un filo di zoom e di parallasse */
       $$('[data-foto-rivela]').forEach(function (fig) {
@@ -428,8 +408,54 @@
       allaVista(porta, function () { gsap.to(sp.chars, { opacity: 1, duration: 0.01, stagger: 0.045, ease: 'none', onComplete: function () { sp.revert(); } }); }, 'top 90%');
     }
 
-    /* 07 · card: la tessera si inclina col mouse */
-    inclina3d($('.tessera-scena'), 12);
+    /* 07 · Bagnarino Card: testo, poi la tessera entra in 3D, poi logo e timbri uno a uno */
+    (function () {
+      var sez = $('#card'); if (!sez) return;
+      var scena = $('[data-bc-scena]', sez), card = $('[data-bc-card]', sez); if (!card) return;
+      var righe = $$('.bc-riga > *', sez), come = $('.bc-come', sez), premi = $$('.bc-premi li', sez), mese = $('.bc-mese', sez), azioni = $$('.bc-azioni > *', sez);
+      var logoCard = $('.bc-card-testa', card), timbri = $$('.bc-timbro', card), inchiostri = $$('.bc-pieno .bc-inchiostro', card), piede = $('.bc-card-piede', card), luce = $('.bc-luce', card), ombra = $('.bc-ombra', scena);
+      var traguardi = $$('.bc-traguardo', card);
+      var mobile = window.innerWidth < 900;
+      if (sottoLaPiega(sez)) {
+        gsap.set(righe, { yPercent: 110 });
+        gsap.set([come, mese].concat(azioni), { opacity: 0, y: 16 });
+        gsap.set(premi, { opacity: 0, x: -18 });
+        gsap.set(card, { opacity: 0, x: mobile ? 0 : 140, y: mobile ? 40 : 30, z: -260, rotationY: mobile ? -14 : -38, rotationX: mobile ? 6 : 12, scale: 0.92, transformPerspective: 1400 });
+        gsap.set(ombra, { opacity: 0, scaleX: 0.6 });
+        gsap.set(logoCard, { opacity: 0, y: -10 });
+        gsap.set(timbri, { opacity: 0, scale: 0.6 });
+        gsap.set(inchiostri, { opacity: 0, scale: 1.6, transformOrigin: '50% 50%' });
+        gsap.set(piede, { opacity: 0 });
+        var tl = gsap.timeline({ defaults: { ease: 'power3.out' }, scrollTrigger: { trigger: sez, start: 'top 65%', once: true } });
+        tl.to(righe, { yPercent: 0, duration: 1, ease: 'power4.out', stagger: 0.12, clearProps: 'transform' }, 0)
+          .to(come, { opacity: 1, y: 0, duration: 0.7, clearProps: 'opacity,transform' }, 0.35)
+          .to(premi, { opacity: 1, x: 0, duration: 0.6, stagger: 0.09, clearProps: 'opacity,transform' }, 0.5)
+          .to([mese].concat(azioni), { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, clearProps: 'opacity,transform' }, 0.95)
+          /* la tessera: parte decisa, si assesta morbida */
+          .to(card, { opacity: 1, duration: 0.5 }, 0.3)
+          .to(card, { x: 0, y: 0, z: 0, rotationY: 0, rotationX: 0, scale: 1, duration: 1.5, ease: 'expo.out' }, 0.3)
+          .to(ombra, { opacity: 1, scaleX: 1, duration: 1.2, clearProps: 'opacity,transform' }, 0.5)
+          .fromTo(luce, { opacity: 0, '--luce-x': '-40%' }, { opacity: 1, '--luce-x': '40%', duration: 1.1, ease: 'power2.inOut' }, 0.9)
+          .to(luce, { opacity: 0, duration: 0.4 }, 1.9)
+          .to(logoCard, { opacity: 1, y: 0, duration: 0.6, clearProps: 'opacity,transform' }, 1.1)
+          .to(timbri, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(1.6)', stagger: 0.06, clearProps: 'opacity,transform' }, 1.25)
+          .to(inchiostri, { opacity: 0.86, scale: 1, duration: 0.3, ease: 'power3.in', stagger: 0.09, clearProps: 'opacity,transform' }, 1.75)
+          .to(traguardi, { boxShadow: '0 0 0 6px rgba(201,151,59,.28)', duration: 0.35, ease: 'power2.out', stagger: 0.1, yoyo: true, repeat: 1 }, 2.15)
+          .to(piede, { opacity: 1, duration: 0.6, clearProps: 'opacity' }, 2.3)
+          .add(function () { gsap.set(card, { clearProps: 'opacity,transform' }); });
+      } else { gsap.set([card, ombra], { clearProps: 'all' }); }
+      /* inclinazione 3D col mouse (solo con puntatore) */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        gsap.set(card, { transformPerspective: 1400 });
+        var rx = gsap.quickTo(card, 'rotationX', { duration: 0.6, ease: 'power3.out' }), ry = gsap.quickTo(card, 'rotationY', { duration: 0.6, ease: 'power3.out' });
+        var lx = gsap.quickTo(luce, '--luce-x', { duration: 0.6, ease: 'power3.out' });
+        scena.addEventListener('pointermove', function (e) {
+          var r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+          ry(px * 14); rx(-py * 10); gsap.to(luce, { opacity: 0.6, duration: 0.3 }); lx((px * 60) + '%');
+        });
+        scena.addEventListener('pointerleave', function () { rx(0); ry(0); gsap.to(luce, { opacity: 0, duration: 0.5 }); });
+      }
+    })();
 
     /* 08 · per chi è: ingresso orchestrato, poi le schede rispondono al mouse e all'indice */
     (function () {

@@ -231,7 +231,9 @@
   }
   window.BGN.premiScala = premiScala;
   var scalaHome = $('[data-premi]');
-  if (scalaHome && C.fidelity && C.fidelity.premi) scalaHome.innerHTML = premiScala();
+  if (scalaHome && C.fidelity && C.fidelity.premi) scalaHome.innerHTML = scalaHome.classList.contains('bc-premi')
+    ? C.fidelity.premi.map(function (z, i) { return '<li' + (i === C.fidelity.premi.length - 1 ? ' class="bc-premio-top"' : '') + '><span class="bc-premio-n">' + z.timbri + '</span><div><strong>' + z.titolo + '</strong><span>' + z.testo + '</span></div></li>'; }).join('')
+    : premiScala();
   var mese = $('[data-vantaggi-mese]');
   if (mese && C.vantaggiMese) {
     $('[data-vm-titolo]', mese).textContent = C.vantaggiMese.titolo;
