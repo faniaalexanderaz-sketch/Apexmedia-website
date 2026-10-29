@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+/* ---------- Design token ---------- */
+@theme {
+  --color-*: initial;
+  --color-paper: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-ink: #0b0d14;
+  --color-viola: #5b2eff;
+  --color-blu: #2f6bff;
+  --color-blu-deep: #1f5beb; /* blu per testo piccolo su sfondo chiaro (contrasto 5.1:1) */
+  --color-giallo: #ffd84d;
+  --color-verde: #17b26a;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-display: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-*: initial;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --spacing-nav: 64px;
+  --tracking-tightest: -0.03em;
+  --tracking-label: 0.12em;
+}
+
+/* Variabili CSS "pure" per chi non usa Tailwind (data-attr, SVG, script) */
+:root {
+  --paper: #f6f5f1;
+  --surface: #ffffff;
+  --ink: #0b0d14;
+  --viola: #5b2eff;
+  --blu: #2f6bff;
+  --blu-deep: #1f5beb;
+  --giallo: #ffd84d;
+  --verde: #17b26a;
+  --line: color-mix(in srgb, var(--ink) 8%, transparent);
+  --line-strong: color-mix(in srgb, var(--ink) 14%, transparent);
+  --nav-h: 64px;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--giallo);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--viola);
+  outline-offset: 3px;
+}
+
+/* ---------- Tipografia ---------- */
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.text-body {
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Evidenziatore giallo "a pennarello": SVG irregolare, si clona su ogni riga */
+.hl {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.02em 0.12em;
+  margin: 0 -0.08em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C 40 9, 90 13, 150 10 S 190 8, 197 11 L 199 46 C 160 52, 110 47, 60 50 S 12 54, 2 49 Z' fill='%23FFD84D'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* ---------- Dettagli (FAQ, servizi mobile) ---------- */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ---------- Form a sola linea inferiore ---------- */
+.field {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 14px 0;
+  font: inherit;
+  color: var(--ink);
+  min-height: 48px;
+}
+.field::placeholder {
+  color: color-mix(in srgb, var(--ink) 40%, transparent);
+}
+.field:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+.field[aria-invalid="true"] {
+  border-bottom-color: #c8102e;
+}
+select.field {
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%230B0D14' stroke-width='1.5'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+}
+
+/* ---------- Utilità ---------- */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.grid-line {
+  border-left: 1px solid var(--line);
+}
+.grid-line:last-child {
+  border-right: 1px solid var(--line);
+}
+
+/* ---------- Fase 2: movimento ---------- */
+html.lenis-on,
+html.lenis-on body {
+  height: auto;
+  scroll-behavior: auto;
+}
+
+/* Sottolineatura viola che si disegna da sinistra (nav e link) */
+.u-draw,
+.u-link {
+  position: relative;
+}
+.u-draw::after,
+.u-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--viola);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.u-draw:hover::after,
+.u-draw:focus-visible::after,
+.u-link:hover::after,
+.u-link:focus-visible::after {
+  transform: scaleX(1);
+}
+/* I link testuali hanno anche una linea statica, sottile */
+.u-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: color-mix(in srgb, var(--ink) 30%, transparent);
+}
+
+/* Evidenziatore: quando JS ha diviso le righe, il tratto è un elemento a parte che si disegna */
+h1.is-split .hl {
+  background-image: none;
+  position: relative;
+  z-index: 0;
+}
+.hl-ink {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform-origin: left center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C 40 9, 90 13, 150 10 S 190 8, 197 11 L 199 46 C 160 52, 110 47, 60 50 S 12 54, 2 49 Z' fill='%23FFD84D'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Fisarmoniche: il + ruota a × */
+.plus-icon {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+details[open] > summary .plus-icon {
+  transform: rotate(45deg);
+}
+
+/* Campi del form: la linea inferiore diventa viola da sinistra quando il campo è attivo */
+.field-wrap {
+  position: relative;
+}
+.field-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--viola);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+.field-wrap:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* Cornice browser: al passaggio del mouse la barra URL mostra "Visita il sito" */
+.url-swap {
+  display: grid;
+  overflow: hidden;
+  line-height: 1.2;
+}
+.url-swap > span {
+  grid-area: 1 / 1;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.3s;
+}
+.url-swap > span:last-child {
+  transform: translateY(110%);
+  opacity: 0;
+}
+@media (hover: hover) {
+  a:hover .url-swap > span:first-child {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  a:hover .url-swap > span:last-child {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  /* Pacchetti: la colonna sotto il mouse sale di 4px */
+  [data-plan] {
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  [data-plan]:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Barra CTA mobile */
+[data-mobile-cta] {
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.3s;
+}
+[data-mobile-cta][data-show="false"] {
+  transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hero: due schermate di altezza solo su desktop con le animazioni attive (i clienti cambiano con lo scroll) */
+@media (min-width: 1024px) {
+  [data-scroll-hero] {
+    min-height: 200svh;
+  }
+}
+
+/* Hero: con JS attivo gli elementi animati partono nascosti (così non lampeggiano prima dell’idratazione).
+   Senza JS, o con prefers-reduced-motion, restano visibili. Dopo 3 s tornano visibili comunque. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-hero-label],
+  html.js [data-hero-title],
+  html.js [data-hero-sub],
+  html.js [data-hero-cta] > *,
+  html.js [data-hero-24h],
+  html.js [data-hero-shot="0"] [data-phone-frame],
+  html.js [data-hero-shot="0"] figcaption {
+    opacity: 0;
+    animation: hero-fallback 0s linear 3s forwards;
+  }
+}
+@keyframes hero-fallback {
+  to {
+    opacity: 1;
+  }
+}
