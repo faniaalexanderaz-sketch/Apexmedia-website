@@ -1,45 +1,47 @@
 # Bagnarino Coworking — Video TikTok teaser (Seedance 2.5)
 
 ## Obiettivo
-Far sapere ad Alessandria che in corso Lamarmora 46 sta per aprire un coworking, senza mostrare ancora le sale e senza dire la data. KPI: visualizzazioni locali, follow, commenti "quando aprite?".
+Far sapere ad Alessandria che in corso Lamarmora 46 sta per aprire un coworking, senza mostrare le sale e senza dire la data. KPI: visualizzazioni locali, follow, commenti "quando aprite?".
 
-## Metodo (perché così viene meglio)
-1. **Foto chiave con Nano Banana Pro** (cartella attuale, `foto-*.jpg`): bloccano l'aspetto reale di ogni inquadratura. Esterno e insegna partono dalla foto vera del negozio, insegna Olivetti / Bagnarino S.R.L. lasciata com'è.
-2. **Seedance 2.5, modalità omni-reference**: le 5 foto come riferimenti (@image1…@image5), un unico video da 15 s in 9:16 con stacchi netti.
-3. **Prima una bozza a 480p** (costa poco) per controllare i movimenti, poi si finalizza la stessa a 1080p.
-4. **Scritte aggiunte in TikTok/CapCut**, non dentro il video: l'AI storpia le lettere, il testo nativo di TikTok è leggibile e conta per la ricerca.
-5. **Musica**: un suono di tendenza scelto in TikTok, volume audio originale al 30%.
+## Metodo
+1. **Foto base con Nano Banana Pro**: partono dalla foto vera del negozio (insegna Olivetti / Bagnarino S.R.L. lasciata com'è), più scrivania, cartoncino "TOP SECRET" e chiusura con logo.
+2. **Stesse foto con la scritta sopra** (`frame-*.jpg`): titolo in Fraunces, etichetta in IBM Plex Mono, colori del sito.
+3. **4 clip da 4 secondi con Seedance 2.5**: foto senza scritta come primo fotogramma, foto con scritta come ultimo. Così il titolo "scatta" dentro la clip e resta nitido.
+4. **Montaggio** con stacchi netti: 16 secondi, 1080×1920, senza audio. Musica da aggiungere in TikTok (suono di tendenza).
 
-## Storyboard (15 s)
-| Tempo | Foto | Movimento | Scritta da aggiungere |
+## Struttura (16 s)
+| Clip | Tempo | Scena | Scritta |
 |---|---|---|---|
-| 0–2 s | 1 insegna | push-in dal basso verso l'insegna | **Ad Alessandria sta per aprire qualcosa** |
-| 2–5 s | 2 facciata | carrellata lungo la facciata | **Corso Lamarmora 46** |
-| 5–9 s | 3 scrivania | si accende la lampada, vapore dal caffè | **Una scrivania tutta tua, in centro** |
-| 9–12 s | 4 top secret | un dito preme il nastro "TOP SECRET" | **La data? Top secret 🤫** |
-| 12–15 s | 5 logo | quasi fermo | **Seguici per scoprirla** |
+| 1 | 0–4 s | Carrellata sulla facciata e l'insegna | CORSO LAMARMORA 46 · **Ad Alessandria sta per aprire *qualcosa.*** |
+| 2 | 4–8 s | Lampada che si accende, caffè, laptop | NUOVO COWORKING · **Una scrivania *tutta tua, in centro.*** |
+| 3 | 8–12 s | Un dito preme il nastro "TOP SECRET" | **La data? *Top secret.*** |
+| 4 | 12–16 s | Logo, indirizzo, tasto "Attiva le notifiche" | **Seguici *per scoprire la data.*** |
 
-Font scritte in CapCut: Fraunces (titoli) se disponibile, altrimenti un serif elegante; colore crema #F7F5F0 con ombra leggera, oppure ocra #C9973B.
+## Prompt Seedance 2.5 (uno per clip)
+Impostazioni: Omni reference · 9:16 · 4 s · 1080p · audio spento · start_image = foto senza scritta, end_image = foto con scritta.
 
-## Prompt Seedance 2.5 (da incollare in Higgsfield)
-Impostazioni: modello Seedance 2.5 · modalità Omni reference · 9:16 · 15 s · audio attivo · bozza 480p → finalizza 1080p.
-Riferimenti nell'ordine: foto-1-insegna, foto-2-facciata, foto-3-scrivania, foto-4-top-secret, foto-5-chiusura-logo.
-
+**Clip 1 – facciata**
 ```
-Vertical 15-second teaser for TikTok, five shots edited with clean straight cuts, real documentary-style camera work, natural daylight, muted true colors, fine film grain. Every shot must match its reference image exactly: same building, same signs, same objects, same framing; never change or invent signs, logos or text.
-
-Shot 1 (0-2s): @image1. Slow handheld push-in from low angle towards the white shop sign above the door, a light breeze moves the leaves of the plant in the red planter. Quiet morning street ambience.
-
-Shot 2 (2-5s): @image2. Smooth lateral dolly along the facade on the sidewalk, revealing the two entrances and the red planters; soft morning light slowly brightens on the plaster. Distant footsteps and a passing bicycle bell, no people visible.
-
-Shot 3 (5-9s): @image3. Slow push-in on the desk by the window: the black desk lamp switches on with a soft click, a thin wisp of steam rises from the espresso cup, the laptop screen lights up softly with a plain warm glow (no interface, no logos). Light paper and keyboard sounds.
-
-Shot 4 (9-12s): @image4. Overhead close-up of the cream card with 'APERTURA' and the ochre tape 'TOP SECRET': a fingertip enters the frame and presses down the edge of the tape firmly, as if to keep the secret; the tape stays in place covering everything. Subtle paper sound.
-
-Shot 5 (12-15s): @image5. The navy end card with the Bagnarino logo and the address: completely static, logo and text perfectly sharp and unchanged, only a very slow gentle push-in. Soft single piano note.
-
-No added on-screen text or subtitles, no people faces, no morphing, no warping of letters or signs, no CGI look.
+Fast energetic 4-second vertical TikTok clip. Starts exactly on the start image (the real facade in Alessandria with the white signs with red Olivetti logo and 'BAGNARINO S.R.L.', red planters) with NO text. Quick confident dolly forward along the sidewalk toward the entrances, slight handheld energy, speed-ramp feel. At about 1.5 seconds the headline from the end image snaps in with a crisp punchy pop: the small ochre label 'CORSO LAMARMORA 46' then the big cream serif headline 'Ad Alessandria' / 'sta per aprire qualcosa.' with 'qualcosa.' in italic ochre, letters perfectly sharp, exactly as in the end image, then they stay still until the end. Building, signs and logos never change or warp. Bright natural daylight, muted colors, film grain. No people, no other text, no blur on the text.
 ```
+
+**Clip 2 – scrivania**
+```
+Fast energetic 4-second vertical TikTok clip. Starts exactly on the start image (oak desk by the tall window, open laptop, espresso cup, navy notebook, black lamp) with NO text. Quick push-in toward the desk, the black lamp clicks on immediately, the laptop screen lights up with a plain warm glow (no interface), a short wisp of steam from the coffee. At about 1.5 seconds the headline from the end image snaps in with a crisp pop: small ochre label 'NUOVO COWORKING', then big cream serif 'Una scrivania' / 'tutta tua, in centro.' with 'tutta tua, in centro.' in italic ochre, letters perfectly sharp exactly as in the end image, then they stay still until the end. Objects never change. Natural daylight, muted colors, film grain. No people, no other text, no blur on the text.
+```
+
+**Clip 3 – top secret**
+```
+Fast energetic 4-second vertical TikTok clip. Starts exactly on the start image (cream card on an oak desk with the printed word 'APERTURA' and an ochre tape strip 'TOP SECRET', pencil, navy notebook) with NO headline. A hand enters quickly from the bottom and presses the tape down firmly with one finger, then leaves; the tape always stays in place, nothing underneath is ever revealed, no digits anywhere. At about 1.5 seconds the headline from the end image snaps in above the card with a crisp pop: big navy serif 'La data?' / 'Top secret.' with 'Top secret.' in italic ochre, letters perfectly sharp exactly as in the end image, then stays still until the end. Soft daylight, real paper texture, film grain. No other text, no blur on the text.
+```
+
+**Clip 4 – chiusura**
+```
+Clean 4-second vertical brand end card, motion-graphics style. Starts exactly on the start image: flat navy background with the cream Bagnarino logo and the ochre address line, nothing else. Within the first second the headline 'Seguici' / 'per scoprire la data.' (with 'la data.' in italic ochre) pops in above the logo with a crisp snappy scale-in, then the ochre pill button 'Attiva le notifiche' slides up below the address and gives one quick subtle bounce. Final frame identical to the end image. Logo, address and all letters stay perfectly sharp and unchanged, no warping, no extra text, flat background, no camera movement.
+```
+
+## Montaggio
+Le 4 clip sono già montate in `bagnarino-teaser-tiktok.mp4`. Per rifarlo: stacchi netti, nessuna dissolvenza, ogni clip 4 s.
 
 ## Descrizione TikTok
 ```
@@ -49,5 +51,5 @@ La data? Top secret. Secondo te quando apriamo?
 ```
 
 ## Test da fare
-- Variante B: stesso video ma con la scritta iniziale "POV: lavori da casa e non ne puoi più" (hook più forte per i freelance).
-- Pubblicare tra le 12:30 e le 13:30 o tra le 19 e le 21; confrontare la visualizzazione media dopo 48 ore.
+- Variante B: clip 1 con la scritta "POV: lavori da casa e non ne puoi più" (gancio per i freelance).
+- Pubblicare tra le 12:30 e le 13:30 o tra le 19 e le 21; confrontare dopo 48 ore.
