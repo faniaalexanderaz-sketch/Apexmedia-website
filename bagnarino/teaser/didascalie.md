@@ -15,7 +15,7 @@ Postazioni separate e silenziose, nel centro di Alessandria. Prenoti online, arr
 
 ## Post 3 — `post-3.jpg`
 Tutto incluso, da €25 al giorno.
-Wi-fi in fibra, stampe e scansioni, caffè. Paghi quando arrivi, senza abbonamenti.
+Wi-fi in fibra, stampe e scansioni. Paghi quando arrivi, senza abbonamenti.
 Info e prenotazioni: link in bio.
 
 ## Post 4 — `post-4.jpg`
