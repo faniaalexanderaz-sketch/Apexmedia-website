@@ -1,5 +1,7 @@
 # Essenza d'Oriente — Audit CRO + Brief di redesign (ottobre 2026)
 
+> Stato: il redesign descritto nella Parte 3 è stato realizzato in questa cartella (vedi CHANGELOG.md). Il prompt resta valido per una nuova chat o per iterazioni successive.
+
 Documento operativo Apex Media. Parte 1: cosa non funziona oggi e perché.
 Parte 2: il prompt pronto da incollare per far rifare il sito.
 
@@ -69,7 +71,7 @@ Rifai il sito di Essenza d'Oriente (centro olistico, Via San Lorenzo 46, Alessan
 
 == DIREZIONE VISIVA: "spa editoriale", non "template spa" ==
 - Solo 2 font: Fraunces (titoli, peso 500–600, mai più di 2 righe in hero) e Jost (tutto il resto). Elimina Cormorant, Lato, Italiana, Instrument Serif.
-- Fotografia reale protagonista. Rimuovi il banner generato con testo dentro (foto/brand-banner.jpg). Usa foto vere: [DA FORNIRE: 6–10 foto del centro, mani che lavorano, lettino, dettagli oli/coppette, titolari]. Finché non arrivano, usa placeholder neutri a tinta piatta con rapporto 4:5, mai immagini generate e mai testo "da inserire" visibile.
+- Poche immagini, e vere. Rimuovi il banner generato con testo dentro (foto/brand-banner.jpg) da hero e pagina: resta solo come og:image. Usa le foto già presenti in foto/ (sfondo-prenota.jpg per l'hero, tratt-*.jpg nelle pagine trattamento): sono foto reali del centro. Le nuove foto arriveranno dopo [DA FORNIRE: 6–10 foto del centro, mani che lavorano, lettino, dettagli, titolari] e andranno sostituite mantenendo gli stessi nomi file. Listino senza foto. Mai testo "da inserire" visibile.
 - Superfici piatte, spazi bianchi generosi, griglia pulita. Vietati: gradienti lucidi sui bottoni, riflessi animati, macchie radiali di luce sullo sfondo, bordi oro spessi, sigilli rotanti, divisori a loto ripetuti, pillole/eyebrow su ogni titolo. Un'unica decorazione d'identità: la firma 东方之心养生馆 piccola in header e footer.
 - Bottoni: primario pieno verde bosco con angoli 10px, secondario outline. Un solo bottone primario per schermata.
 - Ombre: una sola, morbida (0 8px 24px rgba(44,81,56,.10)). Angoli card 14px.

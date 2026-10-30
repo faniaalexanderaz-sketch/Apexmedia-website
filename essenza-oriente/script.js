@@ -1,486 +1,311 @@
 /* =============================================================
-   ESSENZA D'ORIENTE — interazioni e tracciamento conversioni
+   ESSENZA D'ORIENTE — interazioni, prenotazione in 3 passi,
+   tracciamento conversioni. Nessuna libreria esterna.
    =============================================================
 
-   EVENTI DATALAYER (da importare in GA4 e poi in Google Ads
-   come conversioni):
+   EVENTI DATALAYER (da importare in GA4 e poi in Google Ads):
 
-   | Evento                    | Significato                                | Uso                          |
-   |---------------------------|--------------------------------------------|------------------------------|
-   | click_chiama              | Click su un bottone/link tel:              | GA4 -> Google Ads conversione |
-   | click_whatsapp            | Click su un bottone/link wa.me             | GA4 -> Google Ads conversione |
-   | click_widget_prenotazione | Click DENTRO il widget Treatwell (proxy)   | GA4 -> Google Ads conversione |
-
-   Il terzo evento è un "proxy di intenzione": Treatwell non
-   comunica al sito le prenotazioni completate, quindi tracciamo
-   il primo click dentro l'iframe come segnale forte di interesse.
+   | Evento           | Significato                                   |
+   |------------------|-----------------------------------------------|
+   | prenota_apri     | Aperto il pannello di prenotazione            |
+   | prenota_passo    | Completato un passo (passo: 1, 2, 3)          |
+   | click_treatwell  | Click su "Conferma su Treatwell" (conversione) |
+   | click_whatsapp   | Click su un link wa.me (conversione)           |
+   | click_chiama     | Click su un link tel: (conversione)            |
    ============================================================= */
 (function () {
   'use strict';
 
-  /* gli eventi passano da EO_COOKIE.push (definita in cookie.js):
-     se l'utente non ha ancora accettato i cookie di misurazione,
-     l'evento viene scartato invece di essere accodato */
+  var APRE = 9 * 60 + 30, CHIUDE = 22 * 60 + 30;
+  var TEL = '+393317153533';
+  var WA_BASE = 'https://wa.me/393317153533?text=';
+  var TREATWELL_MENU = 'https://widget.treatwell.it/salone/532986/menu/';
+  var base = document.body.getAttribute('data-base') || '';
+
+  /* Un trattamento, una riga. `treatwell`: deep link al servizio nel
+     widget Treatwell; finché è null si apre il menu generico e il
+     pannello dice all'utente cosa cercare. */
+  var TRATTAMENTI = [
+    { id: 'oli',           nome: 'Massaggio Oli Essenziali', meta: 'Cervicale e schiena · 60 min', prezzo: '60 €', file: 'massaggio-oli-essenziali.html', treatwell: null },
+    { id: 'tuina',         nome: 'Tuina Shiatsu',            meta: '50 min',                        prezzo: '50 €', file: 'tuina-shiatsu.html',            treatwell: null },
+    { id: 'riflessologia', nome: 'Riflessologia Plantare',   meta: '40 min · 60 min a 50 €',        prezzo: '35 €', file: 'riflessologia-plantare.html',   treatwell: null },
+    { id: 'spa',           nome: 'Massaggio Spa',            meta: 'Corpo completo · 90 min',       prezzo: '90 €', file: 'massaggio-spa.html',            treatwell: null },
+    { id: 'coppettazione', nome: 'Coppettazione',            meta: 'Cupping · seduta breve',        prezzo: '25 €', file: 'coppettazione.html',            treatwell: null },
+    { id: 'guasha',        nome: 'Gua Sha',                  meta: 'Seduta breve',                  prezzo: '25 €', file: 'gua-sha.html',                  treatwell: null },
+    { id: 'orecchie',      nome: 'Pulizia delle Orecchie',   meta: 'Tecnica tradizionale cinese',   prezzo: '25 €', file: 'pulizia-orecchie.html',         treatwell: null },
+    { id: 'pedicure',      nome: 'Pedicure',                 meta: 'Stile tradizionale cinese',     prezzo: '35 €', file: 'pedicure.html',                 treatwell: null }
+  ];
+  var FASCE = [
+    { id: 'mattina',    nome: 'Mattina',    meta: '9:30 – 13:00',  da: 9 * 60 + 30,  a: 13 * 60 },
+    { id: 'pomeriggio', nome: 'Pomeriggio', meta: '13:00 – 18:00', da: 13 * 60,      a: 18 * 60 },
+    { id: 'sera',       nome: 'Sera',       meta: '18:00 – 22:30', da: 18 * 60,      a: 22 * 60 + 30 }
+  ];
+
+  /* ---------- tracciamento ---------- */
+  var AW_ID = 'AW-17997395114';
+  var AW_ETICHETTE = { PREDEFINITA: '', click_chiama: '', click_whatsapp: '', click_treatwell: '' };
   function traccia(obj) {
     if (window.EO_COOKIE) window.EO_COOKIE.push(obj);
-    convertiAds(obj.event);
-  }
-
-  /* ---------- conversioni Google Ads (gtag diretto) ----------
-     Gli eventi dataLayer qui sopra NON arrivano a Google Ads da
-     soli: serve un evento 'conversion' con send_to = ID/etichetta
-     dell'azione di conversione. Etichetta: Google Ads → Obiettivi →
-     Conversioni → azione → "Configurazione tag" → "Installa tu il
-     tag" → send_to: 'AW-17997395114/XXXXXXXX'.
-     Un'etichetta per evento; se vuota si usa PREDEFINITA.
-     Il gtag è in Consent Mode (index.html): senza consenso Google
-     riceve solo ping anonimi, nessun cookie. */
-  var AW_ID = 'AW-17997395114';
-  var AW_ETICHETTE = {
-    PREDEFINITA: '',
-    click_chiama: '',
-    click_whatsapp: '',
-    click_widget_prenotazione: ''
-  };
-  function convertiAds(evento) {
-    var etichetta = AW_ETICHETTE[evento] || AW_ETICHETTE.PREDEFINITA;
+    var etichetta = AW_ETICHETTE[obj.event] || AW_ETICHETTE.PREDEFINITA;
     if (!etichetta || typeof window.gtag !== 'function') return;
-    window.gtag('event', 'conversion', {
-      send_to: AW_ID + '/' + etichetta,
-      value: 30.0,
-      currency: 'EUR',
-      transport_type: 'beacon'
-    });
+    if (obj.event !== 'click_chiama' && obj.event !== 'click_whatsapp' && obj.event !== 'click_treatwell') return;
+    window.gtag('event', 'conversion', { send_to: AW_ID + '/' + etichetta, value: 30.0, currency: 'EUR', transport_type: 'beacon' });
   }
-
-  /* ---------- click_chiama + click_whatsapp ----------
-     Delegato sul documento: copre anche bottoni ripetuti
-     (header, barra mobile, sezione prenotazione, contatti). */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href]');
     if (!a) return;
     var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) {
-      traccia({ event: 'click_chiama' });
-    } else if (href.indexOf('https://wa.me/') === 0 || href.indexOf('wa.me/') === 0) {
-      traccia({ event: 'click_whatsapp' });
-    }
+    if (href.indexOf('tel:') === 0) traccia({ event: 'click_chiama' });
+    else if (href.indexOf('https://wa.me/') === 0) traccia({ event: 'click_whatsapp' });
   });
 
-  /* ---------- click_widget_prenotazione: il "blur trick" ----------
-     PERCHÉ ESISTE QUESTO WORKAROUND: il widget Treatwell è un
-     iframe cross-origin — il browser NON ci lascia ascoltare i
-     click al suo interno. Però, quando l'utente clicca dentro un
-     iframe, la finestra principale perde il focus (evento "blur")
-     e document.activeElement diventa l'iframe stesso. Combinando
-     le due cose otteniamo un segnale affidabile di "ha interagito
-     col widget di prenotazione". Non è un tracciamento perfetto
-     (non sappiamo se ha COMPLETATO la prenotazione), è un proxy
-     di intenzione forte — documentato anche nella tabella sopra.
-     Il flag `widgetGiaTracciato` evita eventi duplicati nella
-     stessa sessione di pagina. */
-  var widgetGiaTracciato = false;
-  window.addEventListener('blur', function () {
-    if (widgetGiaTracciato) return;
-    var attivo = document.activeElement;
-    if (attivo && attivo.tagName === 'IFRAME' &&
-        (attivo.closest('#wahanda-online-booking-widget-iframe') ||
-         (attivo.src || '').indexOf('treatwell') !== -1)) {
-      widgetGiaTracciato = true;
-      traccia({ event: 'click_widget_prenotazione' });
-    }
-  });
-
-  /* ---------- card trattamento cliccabile ----------
-     Tutta la card porta alla pagina del trattamento (foto compresa),
-     non solo il piccolo link "Scopri di più". I link/bottoni dentro
-     la card (Prenota, Scopri di più) continuano a funzionare come
-     sempre: si naviga dalla card solo se il click non è già dentro
-     un link o un bottone. */
-  document.querySelectorAll('.tratt[data-href]').forEach(function (card) {
-    card.addEventListener('click', function (e) {
-      if (e.target.closest('a, button')) return;
-      window.location.href = card.getAttribute('data-href');
-    });
-  });
-
-  /* ---------- hero: leggero parallax sulla foto ----------
-     Solo su desktop (dove la foto è a tutto bordo) e solo mentre la
-     hero è visibile: un IntersectionObserver accende/spegne un rAF
-     loop, così non giriamo calcoli inutili quando l'utente ha già
-     scrollato oltre. Anima solo `transform` (GPU-safe), mai `top`. */
-  var heroFotoImg = document.getElementById('heroFotoImg');
-  var vuoleMenoMovimentoHero = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var schermoDesktopHero = window.matchMedia && window.matchMedia('(min-width: 821px)').matches;
-  if (heroFotoImg && !vuoleMenoMovimentoHero && schermoDesktopHero) {
-    var heroInView = false;
-    var heroRafInCorso = false;
-    function aggiornaParallaxHero() {
-      heroRafInCorso = false;
-      if (!heroInView) return;
-      var offset = Math.min(40, window.scrollY * 0.08);
-      heroFotoImg.style.transform = 'translateY(' + offset + 'px)';
-      requestAnimationFrame(aggiornaParallaxHero);
-      heroRafInCorso = true;
-    }
-    var heroObserver = new IntersectionObserver(function (entries) {
-      heroInView = entries[0].isIntersecting;
-      if (heroInView) {
-        heroFotoImg.style.willChange = 'transform';
-        if (!heroRafInCorso) { heroRafInCorso = true; requestAnimationFrame(aggiornaParallaxHero); }
-      } else {
-        heroFotoImg.style.willChange = 'auto';
-      }
-    });
-    heroObserver.observe(document.querySelector('.hero'));
-  }
-
-  /* ---------- recensioni: scorrimento continuo e lento (marquee) ----------
-     Duplichiamo le card via JS invece che nell'HTML: il markup resta
-     con una sola copia (più facile da aggiornare), e il loop CSS
-     (-50%) risulta perfetto perché il set duplicato ha esattamente
-     la stessa larghezza dell'originale. Se l'utente preferisce
-     "riduci movimento" il JS non parte: resta lo swipe manuale. */
-  var recensioniTrack = document.getElementById('recensioniTrack');
-  var vuoleMenoMovimento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (recensioniTrack && !vuoleMenoMovimento) {
-    var carteOriginali = Array.prototype.slice.call(recensioniTrack.children);
-    carteOriginali.forEach(function (carta) {
-      var clone = carta.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      recensioniTrack.appendChild(clone);
-    });
-    recensioniTrack.classList.add('marquee-attivo');
-    /* touch: metti in pausa mentre l'utente scorre col dito, riprendi dopo */
-    var timerRipresa;
-    recensioniTrack.addEventListener('touchstart', function () {
-      recensioniTrack.classList.add('scorrimento-in-pausa');
-      clearTimeout(timerRipresa);
-    }, { passive: true });
-    recensioniTrack.addEventListener('touchend', function () {
-      clearTimeout(timerRipresa);
-      timerRipresa = setTimeout(function () {
-        recensioniTrack.classList.remove('scorrimento-in-pausa');
-      }, 2500);
-    }, { passive: true });
-  }
-
-  /* ---------- hero: stato di apertura in tempo reale ----------
-     La sezione "orari" a tutto schermo e' stata rimossa: occupava uno
-     schermo intero fra l'utente e la prenotazione per dire una cosa
-     sola. L'informazione resta, ma come riga viva sotto la CTA: se
-     siamo aperti adesso, prenotare sembra qualcosa che si puo' fare
-     subito — ed e' esattamente il messaggio che serve li'. */
-  var APRE = 9 * 60 + 30, CHIUDE = 22 * 60 + 30;
-  var heroNota = document.getElementById('heroNota');
-  var heroNotaTesto = document.getElementById('heroNotaTesto');
-  function centroAperto() {
-    var ora = new Date();
-    var m = ora.getHours() * 60 + ora.getMinutes();
-    return m >= APRE && m < CHIUDE;
-  }
-  if (heroNota && heroNotaTesto) {
-    if (centroAperto()) {
-      heroNotaTesto.innerHTML = 'Aperti ora fino alle 22:30 &middot; prenoti in meno di un minuto';
-    } else {
-      heroNota.classList.add('chiuso');
-      heroNotaTesto.innerHTML = 'Chiusi ora, riapriamo alle 9:30 &middot; puoi prenotare comunque online';
-    }
-  }
-
-  /* ---------- menu a scomparsa (hamburger) ---------- */
-  var menuBtn = document.getElementById('menuBtn');
-  var menuDrawer = document.getElementById('menuDrawer');
-  var menuScrim = document.getElementById('menuScrim');
-  var menuChiudi = document.getElementById('menuChiudi');
-  if (menuBtn && menuDrawer && menuScrim) {
-    function apriMenu() {
-      menuDrawer.hidden = false;
-      menuScrim.hidden = false;
-      document.body.classList.add('menu-aperto');
-      menuBtn.setAttribute('aria-expanded', 'true');
-    }
-    function chiudiMenu() {
-      menuDrawer.hidden = true;
-      menuScrim.hidden = true;
-      document.body.classList.remove('menu-aperto');
-      menuBtn.setAttribute('aria-expanded', 'false');
-    }
-    menuBtn.addEventListener('click', apriMenu);
-    menuScrim.addEventListener('click', chiudiMenu);
-    if (menuChiudi) menuChiudi.addEventListener('click', chiudiMenu);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !menuDrawer.hidden) chiudiMenu();
-    });
-    menuDrawer.addEventListener('click', function (e) {
-      if (e.target.closest('a')) chiudiMenu();
-    });
-  }
-
-  /* ---------- Offerta della settimana: fascia in alto + countdown ----------
-     Flash offer con scadenza reale (3 ottobre, fine della campagna Ads
-     in corso: dopo quella data l'offerta non ha più motivo di esistere).
-     Tre superfici condividono lo stesso countdown:
-     - ".ribbon-offerta": iniettata qui via JS sopra l'header, su OGNI
-       pagina (non serve editarle una per una);
-     - ".offerta-sez": sezione statica già scritta nell'HTML (home e
-       landing massaggio con oli essenziali) — questo script si limita ad
-       aggiornarne i numeri tramite [data-countdown];
-     - se il tempo è scaduto, fascia e sezioni offerta si nascondono da
-       sole: evita che l'offerta resti online per errore dopo la scadenza. */
-  var OFFERTA_SCADENZA = new Date('2026-10-10T23:59:59');
-  var OFFERTA_WA_HREF = 'https://wa.me/393317153533?text=' +
-    encodeURIComponent("Ciao! Vorrei prenotare la Pulizia delle Orecchie a 20€ (offerta della settimana).");
-
-  function offertaResiduo() {
-    var ms = OFFERTA_SCADENZA.getTime() - Date.now();
-    if (ms <= 0) return null;
-    var minutiTotali = Math.floor(ms / 60000);
-    return {
-      giorni: Math.floor(minutiTotali / 1440),
-      ore: Math.floor((minutiTotali % 1440) / 60),
-      minuti: minutiTotali % 60
+  /* ---------- header compatto allo scroll ---------- */
+  var top = document.getElementById('top');
+  if (top) {
+    var ultimo = false;
+    var aggiornaTop = function () {
+      var compatto = window.scrollY > 24;
+      if (compatto !== ultimo) { top.classList.toggle('compatto', compatto); ultimo = compatto; }
     };
+    window.addEventListener('scroll', aggiornaTop, { passive: true });
+    aggiornaTop();
   }
 
-  function aggiornaContiOfferta() {
-    var residuo = offertaResiduo();
-    if (!residuo) {
-      var fasciaScaduta = document.getElementById('ribbonOfferta');
-      if (fasciaScaduta) fasciaScaduta.remove();
-      document.querySelectorAll('.offerta-sez').forEach(function (sez) { sez.hidden = true; });
-      return;
-    }
-    var contoRibbon = document.getElementById('ribbonOffertaConto');
-    if (contoRibbon) contoRibbon.textContent = residuo.giorni + 'g ' + residuo.ore + 'h';
-    var bGiorni = document.querySelector('[data-countdown="giorni"]');
-    var bOre = document.querySelector('[data-countdown="ore"]');
-    var bMinuti = document.querySelector('[data-countdown="minuti"]');
-    if (bGiorni) bGiorni.textContent = residuo.giorni;
-    if (bOre) bOre.textContent = residuo.ore;
-    if (bMinuti) bMinuti.textContent = residuo.minuti;
-  }
-
-  /* la fascia si chiude solo per il resto della giornata, non per
-     sempre: chi chiude oggi la rivede comunque domani, l'obiettivo è
-     non essere invadenti senza nascondere l'offerta a chi torna */
-  var OFFERTA_CHIUSA_KEY = 'eo_offerta_chiusa_il';
-  function offertaChiusaOggi() {
-    try { return localStorage.getItem(OFFERTA_CHIUSA_KEY) === new Date().toDateString(); }
-    catch (e) { return false; }
-  }
-  function chiudiOffertaOggi() {
-    try { localStorage.setItem(OFFERTA_CHIUSA_KEY, new Date().toDateString()); }
-    catch (e) { /* storage non disponibile (es. navigazione privata): pazienza */ }
-  }
-
-  if (offertaResiduo() && !offertaChiusaOggi() && document.querySelector('.top')) {
-    var fascia = document.createElement('div');
-    fascia.className = 'ribbon-offerta';
-    fascia.id = 'ribbonOfferta';
-    fascia.setAttribute('role', 'region');
-    fascia.setAttribute('aria-label', 'Offerta a tempo');
-    fascia.innerHTML =
-      '<span class="ribbon-offerta-testo">' +
-        '<svg width="12" height="12" viewBox="0 0 34 20" fill="currentColor" aria-hidden="true"><path d="M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z"/><path d="M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z"/><path d="M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z"/></svg>' +
-        '<strong>Offerta:</strong> Pulizia Orecchie 20&nbsp;€ <s>25&nbsp;€</s> + 10&nbsp;€ di sconto sul prossimo trattamento' +
-      '</span>' +
-      '<span class="ribbon-offerta-conto">Scade tra <span id="ribbonOffertaConto"></span></span>' +
-      '<a class="ribbon-offerta-cta" href="' + OFFERTA_WA_HREF + '" target="_blank" rel="noopener">Scrivici su WhatsApp</a>' +
-      '<button type="button" class="ribbon-offerta-chiudi" aria-label="Chiudi l\'avviso offerta">×</button>';
-    document.body.insertBefore(fascia, document.body.firstChild);
-    var chiudiBtn = fascia.querySelector('.ribbon-offerta-chiudi');
-    if (chiudiBtn) {
-      chiudiBtn.addEventListener('click', function () {
-        chiudiOffertaOggi();
-        fascia.remove();
+  /* ---------- ingresso sezioni: un fade, una volta sola ---------- */
+  var reveal = document.querySelectorAll('[data-reveal]');
+  if (reveal.length && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) {
+        if (v.isIntersecting) { v.target.classList.add('visibile'); io.unobserve(v.target); }
       });
-    }
+    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+    reveal.forEach(function (el) { io.observe(el); });
+  } else {
+    reveal.forEach(function (el) { el.classList.add('visibile'); });
   }
-  aggiornaContiOfferta();
-  setInterval(aggiornaContiOfferta, 60000);
+
+  /* ---------- stato di apertura in tempo reale ---------- */
+  function minutiOra() { var d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
+  function apertoOra() { var m = minutiOra(); return m >= APRE && m < CHIUDE; }
+  var stato = document.getElementById('statoApertura');
+  if (stato) {
+    if (apertoOra()) stato.textContent = 'Aperti oggi fino alle 22:30';
+    else { stato.textContent = 'Ora siamo chiusi: riapriamo alle 9:30. Puoi prenotare comunque.'; stato.classList.add('chiuso'); }
+  }
 
   /* =============================================================
-     SCELTA DEL TRATTAMENTO — il pezzo centrale della revisione
-     =============================================================
-     Prima ogni bottone "Prenota" scaricava l'utente sullo stesso menu
-     generico di Treatwell, dove doveva ricercare da capo il trattamento
-     che aveva appena scelto. Due volte lo stesso lavoro: e' li' che si
-     perdevano le prenotazioni.
-
-     Ora la scelta fatta una volta sola (nei chip della hero o su una
-     card del listino) viaggia fino alla sezione di prenotazione, dove
-     viene mostrata a chiare lettere e precaricata nel messaggio
-     WhatsApp. Il widget Treatwell resta cross-origin — non possiamo
-     pilotarlo dall'esterno — ma l'utente arriva sapendo cosa cercare,
-     e chi preferisce scrivere ha gia' il messaggio pronto.
+     PRENOTAZIONE IN 3 PASSI (bottom-sheet / pannello laterale)
+     1. trattamento → 2. giorno + fascia → 3. conferma
+     Il pannello è costruito qui una volta sola, così home, pagine
+     trattamento e pagine legali condividono lo stesso codice.
      ============================================================= */
-  var WA_BASE = 'https://wa.me/393317153533?text=';
-  var chips = Array.prototype.slice.call(document.querySelectorAll('.hero-chip[data-tratt]'));
-  var prenotaScelta = document.getElementById('prenotaScelta');
-  var prenotaSceltaNome = document.getElementById('prenotaSceltaNome');
-  var prenotaSceltaInfo = document.getElementById('prenotaSceltaInfo');
-  var prenotaSceltaCambia = document.getElementById('prenotaSceltaCambia');
-  var prenotaWa = document.getElementById('prenotaWa');
-  var heroCtaSub = document.getElementById('heroCtaSub');
+  var WA_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg>';
 
-  /* il testo arriva da attributi HTML che contengono entita' (&euro;,
-     &middot;): questo le converte una volta sola in caratteri veri */
-  function decodifica(testo) {
-    var d = document.createElement('textarea');
-    d.innerHTML = testo || '';
-    return d.value;
+  var scelta = { tratt: null, giorno: null, data: null, fascia: null };
+  var passo = 1;
+  var apertoDa = null;
+
+  var scrim = document.createElement('div');
+  scrim.className = 'sheet-scrim'; scrim.hidden = true;
+  var sheet = document.createElement('aside');
+  sheet.className = 'sheet'; sheet.hidden = true;
+  sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true');
+  sheet.setAttribute('aria-labelledby', 'sheetTitolo');
+  sheet.innerHTML =
+    '<div class="sheet-testa"><h2 id="sheetTitolo">Prenota</h2><button type="button" class="sheet-chiudi" aria-label="Chiudi">×</button></div>' +
+    '<div class="sheet-passi" aria-hidden="true"><span class="fatto"></span><span></span><span></span></div>' +
+    '<div class="sheet-corpo">' +
+      '<div class="sheet-passo" data-passo="1"><h3>Quale trattamento?</h3><div class="scelte" id="sheetTratt"></div></div>' +
+      '<div class="sheet-passo" data-passo="2" hidden>' +
+        '<h3>Quando?</h3>' +
+        '<div class="scelte scelte-2" id="sheetGiorni"></div>' +
+        '<div class="sheet-campo" id="sheetDataCampo" hidden><label for="sheetData">Scegli la data</label><input type="date" id="sheetData" /></div>' +
+        '<div class="sheet-gruppo"><span>Fascia oraria preferita</span><div class="scelte" id="sheetFasce"></div></div>' +
+      '</div>' +
+      '<div class="sheet-passo" data-passo="3" hidden>' +
+        '<h3>Conferma</h3>' +
+        '<div class="riepilogo" id="sheetRiepilogo"></div>' +
+        '<div class="conferma-azioni">' +
+          '<a class="btn btn-primario" id="sheetTreatwell" target="_blank" rel="noopener" href="' + TREATWELL_MENU + '">Conferma su Treatwell</a>' +
+          '<a class="btn btn-wa" id="sheetWa" target="_blank" rel="noopener">' + WA_SVG + 'Conferma su WhatsApp</a>' +
+        '</div>' +
+        '<p class="conferma-nota" id="sheetNota"></p>' +
+        '<p class="conferma-tel">oppure chiama <a class="link" href="tel:' + TEL + '">331 715 3533</a></p>' +
+      '</div>' +
+    '</div>' +
+    '<div class="sheet-piede"><button type="button" class="btn btn-secondario" id="sheetIndietro">Indietro</button><button type="button" class="btn btn-primario" id="sheetAvanti">Continua</button></div>';
+  document.body.appendChild(scrim);
+  document.body.appendChild(sheet);
+
+  var elTratt = sheet.querySelector('#sheetTratt');
+  var elGiorni = sheet.querySelector('#sheetGiorni');
+  var elDataCampo = sheet.querySelector('#sheetDataCampo');
+  var elData = sheet.querySelector('#sheetData');
+  var elFasce = sheet.querySelector('#sheetFasce');
+  var elRiepilogo = sheet.querySelector('#sheetRiepilogo');
+  var elTreatwell = sheet.querySelector('#sheetTreatwell');
+  var elWa = sheet.querySelector('#sheetWa');
+  var elNota = sheet.querySelector('#sheetNota');
+  var btnIndietro = sheet.querySelector('#sheetIndietro');
+  var btnAvanti = sheet.querySelector('#sheetAvanti');
+
+  function bottoneScelta(nome, meta, destra, dati) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'scelta'; b.setAttribute('aria-pressed', 'false');
+    Object.keys(dati).forEach(function (k) { b.setAttribute('data-' + k, dati[k]); });
+    b.innerHTML = '<span><span class="scelta-nome">' + nome + '</span>' + (meta ? '<span class="scelta-meta">' + meta + '</span>' : '') + '</span>' +
+      (destra ? '<span class="scelta-prezzo">' + destra + '</span>' : '');
+    return b;
   }
-
-  function messaggioWa(nome) {
-    if (!nome) return "Ciao! Vorrei prenotare un trattamento, quando avete disponibilit\u00e0?";
-    return 'Ciao! Vorrei prenotare: ' + nome + '. Quando avete disponibilit\u00e0?';
-  }
-
-  function scegliTrattamento(nome, info, evidenziaChip) {
-    if (!prenotaScelta) return;
-    prenotaSceltaNome.textContent = nome;
-    prenotaSceltaInfo.textContent = decodifica(info);
-    prenotaScelta.hidden = false;
-    if (prenotaWa) prenotaWa.href = WA_BASE + encodeURIComponent(messaggioWa(nome));
-    if (heroCtaSub) heroCtaSub.textContent = nome + ' · scegli data e ora';
-    chips.forEach(function (c) {
-      c.setAttribute('aria-pressed', String(evidenziaChip && c.dataset.tratt === nome));
+  function premi(contenitore, attivo) {
+    Array.prototype.forEach.call(contenitore.querySelectorAll('.scelta'), function (b) {
+      b.setAttribute('aria-pressed', b === attivo ? 'true' : 'false');
     });
-    traccia({ event: 'scelta_trattamento', trattamento: nome });
   }
 
-  function azzeraScelta() {
-    if (!prenotaScelta) return;
-    prenotaScelta.hidden = true;
-    chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
-    if (prenotaWa) prenotaWa.href = WA_BASE + encodeURIComponent(messaggioWa(null));
-    if (heroCtaSub) heroCtaSub.innerHTML = 'Scegli data e ora &middot; conferma immediata';
-  }
-
-  chips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      var gia = chip.getAttribute('aria-pressed') === 'true';
-      if (gia) { azzeraScelta(); return; }
-      scegliTrattamento(chip.dataset.tratt, chip.dataset.info, true);
+  /* passo 1: trattamenti */
+  TRATTAMENTI.forEach(function (t) {
+    var b = bottoneScelta(t.nome, t.meta, t.prezzo, { id: t.id });
+    b.addEventListener('click', function () {
+      scelta.tratt = t; premi(elTratt, b);
+      traccia({ event: 'prenota_passo', passo: 1, trattamento: t.nome });
+      vaiA(2);
     });
+    elTratt.appendChild(b);
   });
 
-  if (prenotaSceltaCambia) {
-    prenotaSceltaCambia.addEventListener('click', function () {
-      azzeraScelta();
-      var hero = document.getElementById('heroScelta');
-      if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-  }
+  /* passo 2: giorno */
+  var GIORNI = [{ id: 'oggi', nome: 'Oggi' }, { id: 'domani', nome: 'Domani' }, { id: 'altro', nome: 'Scelgo io la data' }];
+  var MESI = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  var SETT = ['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+  function dataLeggibile(d) { return SETT[d.getDay()] + ' ' + d.getDate() + ' ' + MESI[d.getMonth()]; }
+  function dataISO(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function dataDaISO(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
 
-  /* i "Prenota" delle card del listino passano dalla stessa strada */
-  document.querySelectorAll('.tratt[data-tratt] .tratt-prenota').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var card = btn.closest('.tratt');
-      scegliTrattamento(card.dataset.tratt, card.dataset.info, true);
-    });
-  });
-
-  /* Se l'offerta della settimana e' scaduta, il chip della hero non puo'
-     continuare a promettere 20 € mentre la sezione offerta sparisce:
-     torna al prezzo di listino. */
-  if (!offertaResiduo()) {
-    var chipOfferta = document.querySelector('.hero-chip[data-offerta]');
-    if (chipOfferta) {
-      chipOfferta.classList.remove('hero-chip-offerta');
-      chipOfferta.dataset.info = 'tecnica tradizionale cinese · 25 €';
-      var infoEl = chipOfferta.querySelector('.hero-chip-info');
-      if (infoEl) infoEl.textContent = '25 € · seduta breve';
-    }
-  }
-
-  /* ---------- comparsa progressiva in scroll ----------
-     Un solo observer per tutti i blocchi, che si disiscrive appena
-     l'elemento e' comparso: zero lavoro durante lo scroll successivo.
-     Se il browser non lo supporta (o l'utente vuole meno movimento)
-     tutto resta semplicemente visibile. */
-  var daRivelare = document.querySelectorAll('[data-reveal]');
-  if (!('IntersectionObserver' in window) || vuoleMenoMovimento) {
-    document.documentElement.classList.add('no-reveal');
-  } else {
-    var osservatore = new IntersectionObserver(function (voci) {
-      voci.forEach(function (voce) {
-        if (!voce.isIntersecting) return;
-        voce.target.classList.add('in-vista');
-        osservatore.unobserve(voce.target);
-      });
-    }, { rootMargin: '250px 0px 250px 0px', threshold: 0 });
-    daRivelare.forEach(function (el) { osservatore.observe(el); });
-
-    /* RETE DI SICUREZZA: un blocco che per qualunque motivo non passa
-       mai dall'observer (lo scroll l'ha scavalcato, il browser si
-       comporta diversamente) resterebbe a opacita' zero per sempre —
-       cioe' contenuto che il cliente non vede mai. Questo giro mostra
-       tutto cio' che *dovrebbe* gia' essere visibile, senza toccare
-       quello che sta piu' in basso: l'animazione di comparsa resta
-       intatta per chi scorre, ma niente puo' restare invisibile. */
-    function recuperaSaltati() {
-      daRivelare.forEach(function (el) {
-        if (el.classList.contains('in-vista')) return;
-        if (el.getBoundingClientRect().top < window.innerHeight) {
-          el.classList.add('in-vista');
-          osservatore.unobserve(el);
-        }
-      });
-    }
-    window.addEventListener('load', recuperaSaltati);
-    setTimeout(recuperaSaltati, 2500);
-    window.addEventListener('scroll', function () {
-      clearTimeout(window.__eoRecupero);
-      window.__eoRecupero = setTimeout(recuperaSaltati, 400);
-    }, { passive: true });
-  }
-
-  /* ---------- card trattamento: inclinazione 3D col puntatore ----------
-     Solo dove ha senso: serve un puntatore fine (mouse) e nessuna
-     richiesta di ridurre il movimento. L'angolo e' volutamente piccolo
-     (max 7°) — deve dare materialita' alla card, non far ballare il
-     listino. Scriviamo solo transform e due variabili CSS, quindi il
-     browser non ricalcola mai il layout. */
-  var puntatoreFine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (puntatoreFine && !vuoleMenoMovimento) {
-    document.querySelectorAll('.tratt').forEach(function (card) {
-      var lucido = document.createElement('span');
-      lucido.className = 'tratt-lucido';
-      lucido.setAttribute('aria-hidden', 'true');
-      card.appendChild(lucido);
-
-      var rect = null, rafAttivo = false, ultimoX = 0, ultimoY = 0;
-
-      function applica() {
-        rafAttivo = false;
-        if (!rect) return;
-        var px = (ultimoX - rect.left) / rect.width;
-        var py = (ultimoY - rect.top) / rect.height;
-        var rotY = (px - .5) * 14;   /* max ±7° */
-        var rotX = (.5 - py) * 10;   /* max ±5° */
-        card.style.transform =
-          'perspective(1400px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateY(-6px)';
-        card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
-        card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+  GIORNI.forEach(function (g) {
+    var d = new Date();
+    if (g.id === 'domani') d.setDate(d.getDate() + 1);
+    var meta = g.id === 'altro' ? '' : dataLeggibile(d);
+    var b = bottoneScelta(g.nome, meta, '', { id: g.id });
+    if (g.id === 'oggi' && minutiOra() >= CHIUDE - 60) { b.disabled = true; b.querySelector('.scelta-meta').textContent = 'per oggi siamo al completo'; }
+    b.addEventListener('click', function () {
+      scelta.giorno = g.id;
+      if (g.id === 'altro') {
+        elDataCampo.hidden = false;
+        var min = new Date(); elData.min = dataISO(min);
+        if (!elData.value) { var dom = new Date(); dom.setDate(dom.getDate() + 2); elData.value = dataISO(dom); }
+        scelta.data = dataDaISO(elData.value);
+      } else {
+        elDataCampo.hidden = true;
+        scelta.data = d;
       }
+      premi(elGiorni, b); aggiornaFasce(); aggiornaAvanti();
+    });
+    elGiorni.appendChild(b);
+  });
+  elData.addEventListener('change', function () {
+    if (elData.value) { scelta.data = dataDaISO(elData.value); aggiornaFasce(); aggiornaAvanti(); }
+  });
 
-      card.addEventListener('pointerenter', function () {
-        rect = card.getBoundingClientRect();
-        card.classList.add('tilt-attivo');
-        card.style.willChange = 'transform';
-      });
-      card.addEventListener('pointermove', function (e) {
-        ultimoX = e.clientX; ultimoY = e.clientY;
-        if (!rafAttivo) { rafAttivo = true; requestAnimationFrame(applica); }
-      });
-      card.addEventListener('pointerleave', function () {
-        card.classList.remove('tilt-attivo');
-        card.style.transform = '';
-        card.style.willChange = 'auto';
-        rect = null;
-      });
+  /* passo 2: fasce */
+  FASCE.forEach(function (f) {
+    var b = bottoneScelta(f.nome, f.meta, '', { id: f.id });
+    b.addEventListener('click', function () { scelta.fascia = f; premi(elFasce, b); aggiornaAvanti(); });
+    elFasce.appendChild(b);
+  });
+  function aggiornaFasce() {
+    var oggi = scelta.giorno === 'oggi';
+    var m = minutiOra();
+    Array.prototype.forEach.call(elFasce.querySelectorAll('.scelta'), function (b, i) {
+      var passata = oggi && m >= FASCE[i].a - 45;
+      b.disabled = passata;
+      if (passata && scelta.fascia === FASCE[i]) { scelta.fascia = null; b.setAttribute('aria-pressed', 'false'); }
     });
   }
+  function aggiornaAvanti() {
+    if (passo === 2) btnAvanti.disabled = !(scelta.giorno && scelta.data && scelta.fascia);
+  }
+
+  /* passo 3: riepilogo e link */
+  function testoQuando() {
+    return dataLeggibile(scelta.data) + ', ' + scelta.fascia.nome.toLowerCase() + ' (' + scelta.fascia.meta + ')';
+  }
+  function compilaConferma() {
+    var t = scelta.tratt;
+    elRiepilogo.innerHTML =
+      '<div><strong>' + t.nome + '</strong> · ' + t.prezzo + ' <a class="link cambia" href="#" data-vai="1">cambia</a></div>' +
+      '<div>' + testoQuando() + ' <a class="link cambia" href="#" data-vai="2">cambia</a></div>';
+    var msg = 'Ciao! Vorrei prenotare: ' + t.nome + ' (' + t.prezzo + ') per ' + testoQuando() + '. Avete disponibilità?';
+    elWa.href = WA_BASE + encodeURIComponent(msg);
+    if (t.treatwell) {
+      elTreatwell.href = t.treatwell;
+      elNota.textContent = 'Su Treatwell scegli l’orario e conferma: ricevi subito l’email di conferma.';
+    } else {
+      elTreatwell.href = TREATWELL_MENU;
+      elNota.innerHTML = 'Su Treatwell cerca <strong>' + t.nome + '</strong>, scegli l’orario e conferma. Oppure scrivici su WhatsApp con la richiesta già compilata.';
+    }
+  }
+  elRiepilogo.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-vai]');
+    if (!a) return;
+    e.preventDefault(); vaiA(+a.getAttribute('data-vai'));
+  });
+  elTreatwell.addEventListener('click', function () {
+    traccia({ event: 'click_treatwell', trattamento: scelta.tratt ? scelta.tratt.nome : '' });
+    traccia({ event: 'prenota_passo', passo: 3, canale: 'treatwell' });
+  });
+  elWa.addEventListener('click', function () { traccia({ event: 'prenota_passo', passo: 3, canale: 'whatsapp' }); });
+
+  /* navigazione fra i passi */
+  function vaiA(n) {
+    passo = n;
+    Array.prototype.forEach.call(sheet.querySelectorAll('.sheet-passo'), function (p) { p.hidden = +p.getAttribute('data-passo') !== n; });
+    Array.prototype.forEach.call(sheet.querySelectorAll('.sheet-passi span'), function (s, i) { s.classList.toggle('fatto', i < n); });
+    btnIndietro.hidden = n === 1;
+    btnAvanti.hidden = n !== 2;
+    sheet.querySelector('.sheet-corpo').scrollTop = 0;
+    if (n === 2) aggiornaAvanti();
+    if (n === 3) compilaConferma();
+    var h3 = sheet.querySelector('.sheet-passo[data-passo="' + n + '"] h3');
+    if (h3) { h3.setAttribute('tabindex', '-1'); h3.focus({ preventScroll: true }); }
+  }
+  btnIndietro.addEventListener('click', function () { vaiA(Math.max(1, passo - 1)); });
+  btnAvanti.addEventListener('click', function () {
+    if (passo === 2 && !btnAvanti.disabled) { traccia({ event: 'prenota_passo', passo: 2 }); vaiA(3); }
+  });
+
+  function apri(idTratt, origine) {
+    apertoDa = origine || null;
+    scrim.hidden = false; sheet.hidden = false;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { document.documentElement.classList.add('sheet-aperto'); }); });
+    traccia({ event: 'prenota_apri', trattamento: idTratt || '' });
+    var t = null;
+    if (idTratt) TRATTAMENTI.some(function (x) { if (x.id === idTratt) { t = x; return true; } return false; });
+    if (t) {
+      scelta.tratt = t;
+      premi(elTratt, elTratt.querySelector('[data-id="' + t.id + '"]'));
+      vaiA(scelta.giorno && scelta.fascia ? 3 : 2);
+    } else {
+      vaiA(scelta.tratt ? (scelta.giorno && scelta.fascia ? 3 : 2) : 1);
+    }
+  }
+  function chiudi() {
+    document.documentElement.classList.remove('sheet-aperto');
+    setTimeout(function () { scrim.hidden = true; sheet.hidden = true; }, 280);
+    if (apertoDa && apertoDa.focus) apertoDa.focus();
+  }
+  scrim.addEventListener('click', chiudi);
+  sheet.querySelector('.sheet-chiudi').addEventListener('click', chiudi);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) chiudi(); });
+
+  /* ogni [data-prenota] apre il pannello; il valore (se c'è) è il
+     trattamento da preselezionare. Senza JS gli stessi link portano
+     a #prenota o direttamente a Treatwell. */
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-prenota]');
+    if (!el) return;
+    e.preventDefault();
+    var id = el.getAttribute('data-prenota') || document.body.getAttribute('data-tratt') || '';
+    apri(id, el);
+  });
 })();

@@ -116,57 +116,78 @@ const TRATTAMENTI = [
   }
 ];
 
-const LOTO = '<svg width="34" height="20" viewBox="0 0 34 20" fill="currentColor"><path d="M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z"/><path d="M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z"/><path d="M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z"/><path d="M4.4 8.6c3.6.4 7 2.4 8.6 5.6-4 1.1-7.6-1.5-8.6-5.6Z"/><path d="M29.6 8.6c-1 4.1-4.6 6.7-8.6 5.6 1.6-3.2 5-5.2 8.6-5.6Z"/><path d="M9.5 16.2c2.3-.9 5-.9 7.5-.9s5.2 0 7.5.9c-2.3 1.6-4.8 2.3-7.5 2.3s-5.2-.7-7.5-2.3Z" opacity=".55"/></svg>';
+/* id usati da script.js per preselezionare il trattamento nel pannello */
+const ID_SHEET = {
+  'massaggio-oli-essenziali.html': 'oli',
+  'tuina-shiatsu.html': 'tuina',
+  'riflessologia-plantare.html': 'riflessologia',
+  'massaggio-spa.html': 'spa',
+  'coppettazione.html': 'coppettazione',
+  'gua-sha.html': 'guasha',
+  'pulizia-orecchie.html': 'orecchie',
+  'pedicure.html': 'pedicure'
+};
 
-const ICONA_TEL = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>';
-const ICONA_WA = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg>';
-const ICONA_HAMBURGER = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+const WA_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg>';
+const TEL_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>';
+const WA_MSG = (nome) => encodeURIComponent(`Ciao! Vorrei prenotare: ${nome}. Quando avete disponibilità?`);
 
-/* elenco completo dei trattamenti per il menu a scomparsa — durata/prezzo
-   brevi, coerenti con la griglia della home. "Pedicure" non ha una pagina
-   dedicata, quindi punta alla sezione trattamenti della home. */
-const MENU_TRATTAMENTI = [
-  { file: 'massaggio-oli-essenziali.html', nome: 'Massaggio Oli Essenziali', info: 'Cervicale e schiena · 60 min · 60 €' },
-  { file: 'tuina-shiatsu.html', nome: 'Tuina Shiatsu', info: '50 min · 50 €' },
-  { file: 'massaggio-spa.html', nome: 'Massaggio Spa', info: 'Corpo completo · 90 min · 90 €' },
-  { file: 'riflessologia-plantare.html', nome: 'Riflessologia Plantare', info: '40 min 35 € · 60 min 50 €' },
-  { file: 'coppettazione.html', nome: 'Coppettazione', info: 'Cupping · 25 €' },
-  { file: 'gua-sha.html', nome: 'Gua Sha', info: '25 €' },
-  { file: 'pulizia-orecchie.html', nome: 'Pulizia delle Orecchie', info: 'Tecnica tradizionale cinese · 25 €' },
-  { file: 'pedicure.html', nome: 'Pedicure', info: 'Stile tradizionale cinese · 35 €' }
-];
-
-/* drawer del menu: "base" è il prefisso per raggiungere la home e le
-   pagine sorelle — '../' dentro trattamenti/, '' in radice. */
-function menuDrawer(base) {
-  const voci = MENU_TRATTAMENTI.map((t) => {
-    const href = t.file ? base + t.file : base + 'index.html#trattamenti';
-    return `      <li><a href="${href}"><span class="menu-tratt-nome">${t.nome}</span><span class="menu-tratt-info">${t.info}</span></a></li>`;
-  }).join('\n');
-  return `<div class="menu-scrim" id="menuScrim" hidden></div>
-  <aside class="menu-drawer" id="menuDrawer" hidden aria-label="Menu del sito">
-    <div class="menu-drawer-testa">
+function header() {
+  return `  <header class="top" id="top">
+    <a class="marchio" href="../index.html">
       <span class="marchio-nome">Essenza d'Oriente</span>
-      <button class="menu-chiudi" id="menuChiudi" aria-label="Chiudi il menu">×</button>
-    </div>
-    <nav class="menu-sezioni">
-      <a href="${base}index.html#trattamenti">Trattamenti</a>
-      <a href="${base}index.html#prenota">Prenota</a>
-      <a href="${base}index.html#dove">Dove siamo</a>
+      <span class="marchio-sotto">Centro Olistico · Alessandria</span>
+    </a>
+    <nav class="top-nav" aria-label="Sezioni">
+      <a href="../index.html#trattamenti">Trattamenti</a>
+      <a href="../index.html#recensioni">Recensioni</a>
+      <a href="../index.html#dove">Dove siamo</a>
     </nav>
-    <p class="menu-titolo">I nostri trattamenti</p>
-    <ul class="menu-tratt-lista">
-${voci}
-    </ul>
-    <div class="menu-drawer-cta">
-      <a class="btn btn-prenota" href="${base}index.html#prenota">Prenota ora</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
+    <div class="top-azioni">
+      <a class="top-tel" href="tel:+393317153533">331 715 3533</a>
+      <a class="btn btn-primario btn-piccolo" href="#prenota" data-prenota>Prenota</a>
     </div>
-  </aside>`;
+  </header>`;
+}
+
+function footer() {
+  return `  <footer class="fondo">
+    <div class="fondo-inner">
+      <div class="fondo-col">
+        <p class="fondo-nome">Essenza d'Oriente</p>
+        <p class="firma" lang="zh">东方之<span class="cuore">心</span>养生馆</p>
+        <p>Centro olistico ad Alessandria. Tecniche tradizionali orientali, tutti i giorni fino alle 22:30.</p>
+      </div>
+      <div class="fondo-col">
+        <strong>Contatti</strong>
+        <a href="tel:+393317153533">331 715 3533</a>
+        <a href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
+        <span>Via San Lorenzo 46, 15121 Alessandria</span>
+        <span>Tutti i giorni 9:30 – 22:30</span>
+      </div>
+      <div class="fondo-col">
+        <strong>Seguici</strong>
+        <a href="https://www.instagram.com/essenza.oriente?igsh=ZWpoOTBrMDduMW5i&amp;utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/share/14jFSwS4Ysi/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.tiktok.com/@essenzaoriente.al" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+    <div class="fondo-inner">
+      <p class="fondo-legale">P.IVA 14409690964 · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
+    </div>
+  </footer>
+
+  <div class="barra-mobile" role="navigation" aria-label="Azioni rapide">
+    <a class="btn btn-primario" href="#prenota" data-prenota>Prenota ora</a>
+    <a class="btn btn-wa btn-icona" href="https://wa.me/393317153533" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">${WA_SVG.replace('width="16" height="16"', 'width="20" height="20"')}</a>
+    <a class="btn btn-secondario btn-icona" href="tel:+393317153533" aria-label="Chiama 331 715 3533">${TEL_SVG}</a>
+  </div>`;
 }
 
 function pagina(t, altri) {
-  const altriLink = altri.map(a => `<a href="${a.file}">${a.nome}</a>`).join('\n        ');
+  const slug = t.file.replace('.html', '');
+  const altriLink = altri.map(a => `<a href="${a.file}">${a.nome}</a>`).join('\n          ');
+  const id = ID_SHEET[t.file];
   return `<!DOCTYPE html>
 <html lang="it">
 <head>
@@ -194,28 +215,27 @@ function pagina(t, altri) {
   <meta name="description" content="${t.descSeo}" />
   <link rel="canonical" href="https://essenzadoriente.it/trattamenti/${t.file}" />
 
-  <!-- Open Graph / Twitter Card: senza questi tag Google, WhatsApp e
-       Facebook non hanno nessuna immagine da mostrare nell'anteprima
-       del link, e appare solo testo. -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://essenzadoriente.it/trattamenti/${t.file}" />
   <meta property="og:title" content="${t.h1} — Essenza d'Oriente" />
   <meta property="og:description" content="${t.descSeo}" />
-  <meta property="og:image" content="https://essenzadoriente.it/foto/tratt-${t.file.replace('.html', '')}.jpg" />
+  <meta property="og:image" content="https://essenzadoriente.it/foto/tratt-${slug}.jpg" />
   <meta property="og:locale" content="it_IT" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${t.h1} — Essenza d'Oriente" />
   <meta name="twitter:description" content="${t.descSeo}" />
-  <meta name="twitter:image" content="https://essenzadoriente.it/foto/tratt-${t.file.replace('.html', '')}.jpg" />
+  <meta name="twitter:image" content="https://essenzadoriente.it/foto/tratt-${slug}.jpg" />
 
+  <link rel="preload" href="../fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192" />
   <link rel="apple-touch-icon" href="../favicon-180.png" />
+  <script>document.documentElement.classList.add('js');</script>
 
-  <!-- Google Tag Manager: si carica da cookie.js SOLO dopo il consenso
-       dell'utente dal banner cookie, mai prima -->
+  <!-- Google Tag Manager: si carica da cookie.js SOLO dopo il consenso -->
 
   <script type="application/ld+json">
   {
@@ -224,7 +244,7 @@ function pagina(t, altri) {
     "name": "${t.nome}",
     "serviceType": "${t.nome}",
     "areaServed": "Alessandria",
-    "image": "https://essenzadoriente.it/foto/tratt-${t.file.replace('.html', '')}.jpg",
+    "image": "https://essenzadoriente.it/foto/tratt-${slug}.jpg",
     "url": "https://essenzadoriente.it/trattamenti/${t.file}",
     "provider": {
       "@type": "HealthAndBeautyBusiness",
@@ -241,134 +261,93 @@ function pagina(t, altri) {
     }
   }
   </script>
-  <!-- animazioni d'ingresso (animazioni.js): l'hero resta nascosta solo finché
-       GSAP la prende in carico, mai più di 1,8s -->
-  <link rel="preload" href="../vendor/gsap/gsap-bundle.min.js" as="script" />
-  <script>
-    if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.documentElement.classList.add('anim-attesa');
-      setTimeout(function () { document.documentElement.classList.remove('anim-attesa'); }, 1800);
-    }
-  </script>
 </head>
-<body class="pagina-tratt" data-base="../">
-  <header class="top">
-    <div class="top-inizio">
-      <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer">${ICONA_HAMBURGER}</button>
-      <a class="marchio" href="../index.html">
-        <span class="marchio-nome">Essenza d'Oriente</span>
-        <span class="marchio-sotto">Centro Olistico</span>
-      </a>
-    </div>
-    <nav class="top-nav" aria-label="Sezioni">
-      <a href="../index.html#trattamenti">Trattamenti</a>
-      <a href="#prenota">Prenota</a>
-      <a href="../index.html#dove">Dove siamo</a>
-    </nav>
-    <div class="top-azioni">
-      <a class="btn btn-chiama" href="tel:+393317153533">${ICONA_TEL} Chiama</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">${ICONA_WA} WhatsApp</a>
-    </div>
-  </header>
-
-  ${menuDrawer('../')}
-
-  <div class="barra-mobile" role="navigation" aria-label="Contatti rapidi">
-    <a class="btn btn-chiama" href="tel:+393317153533">${ICONA_TEL} Chiama</a>
-    <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">${ICONA_WA} WhatsApp</a>
-  </div>
+<body class="pagina-tratt" data-base="../" data-tratt="${id}">
+${header()}
 
   <main>
-    <section class="hero-tratt">
-      <span class="etichetta">Essenza d'Oriente · Alessandria</span>
-      <h1>${t.h1}</h1>
-      <p class="hero-sub">${t.sotto} · <span class="stelle" aria-hidden="true">★★★★★</span> 5,0 su Google</p>
-      <p><a class="btn btn-prenota" href="#prenota">Prenota questo trattamento</a></p>
-    </section>
-
-    <div class="foto-tratt">
-      <div class="foto-tratt-box">
-        <div class="foto-tratt-track">
-          <img class="foto-tratt-img" src="../foto/tratt-${t.file.replace('.html', '')}.jpg" alt="${t.nome} — Essenza d'Oriente, Alessandria" loading="lazy"
-               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
-          <img class="foto-tratt-img" src="../foto/tratt-${t.file.replace('.html', '')}-2.jpg" alt="${t.nome} — Essenza d'Oriente, Alessandria" loading="lazy"
-               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
+    <section class="hero tratt-hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="briciole"><a href="../index.html">Home</a> › <a href="../index.html#trattamenti">Trattamenti</a> › ${t.nome}</p>
+          <h1>${t.h1}</h1>
+          <p class="hero-sub">${t.sotto}</p>
+          <p class="tratt-prezzo-riga"><span class="prezzo">${t.prezzo}</span><span class="durata">${t.durata}</span></p>
+          <p class="hero-fiducia"><strong>5,0</strong> <span class="stelle" aria-hidden="true">★★★★★</span> <span>146 recensioni Google</span><span class="punto" aria-hidden="true"></span><span>Aperti 7/7 fino alle 22:30</span></p>
+          <div class="hero-cta">
+            <a class="btn btn-primario" href="#prenota" data-prenota="${id}">Prenota questo trattamento</a>
+            <a class="link" href="https://wa.me/393317153533?text=${WA_MSG(t.nome)}" target="_blank" rel="noopener">Chiedi su WhatsApp</a>
+          </div>
         </div>
-        <div class="foto-segnaposto" role="img" aria-label="Foto del trattamento ${t.nome} in arrivo">[FOTO TRATTAMENTO DA INSERIRE]</div>
-      </div>
-    </div>
-
-    <section class="sez">
-      <div class="corpo-tratt">
-        <h2>Che cos'è</h2>
-        <p>${t.cosa}</p>
-        <h2>Benefici</h2>
-        <p>${t.benefici}</p>
-        <h2>Come si svolge</h2>
-        <p>${t.svolgimento}</p>
-        ${t.avviso ? `<p class="avviso">${t.avviso}</p>` : ''}
-      </div>
-      <div class="box-prezzo">
-        <span><strong>${t.prezzo}</strong></span>
-        <span>${t.durata} · Essenza d'Oriente, Alessandria</span>
-        <a class="btn btn-prenota" href="#prenota">Prenota</a>
-      </div>
-    </section>
-
-    <div class="loto-divisore" aria-hidden="true">${LOTO}</div>
-
-    <section class="sez" id="prenota">
-      <div class="sez-testa">
-        <span class="etichetta">Prenotazione online</span>
-        <h2>Prenota il tuo trattamento</h2>
-        <p>Scegli data e ora, ricevi conferma immediata.</p>
-      </div>
-      <div class="prenota-cornice">
-        <iframe
-          id="treatwellFrame"
-          class="treatwell-frame"
-          src="https://widget.treatwell.it/salone/532986/menu/"
-          title="Prenota il tuo trattamento — calendario Treatwell"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-      <div class="prenota-alt">
-        <p>Preferisci prenotare al telefono o su WhatsApp?</p>
-        <a class="btn btn-chiama" href="tel:+393317153533">Chiama: 331 715 3533</a>
-        <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+        <figure class="hero-foto">
+          <picture>
+            <source srcset="../foto/tratt-${slug}.webp" type="image/webp" />
+            <img src="../foto/tratt-${slug}.jpg" alt="${t.nome} da Essenza d'Oriente, Alessandria" width="1200" height="669" fetchpriority="high" />
+          </picture>
+        </figure>
       </div>
     </section>
 
     <section class="sez">
-      <div class="sez-testa">
-        <span class="etichetta">Indecisa/o tra due opzioni?</span>
-        <h2>Altri trattamenti</h2>
+      <div class="sez-inner tratt-corpo">
+        <div class="tratt-testo">
+          <h2>Che cos'è</h2>
+          <p>${t.cosa}</p>
+          <h2>Benefici</h2>
+          <p>${t.benefici}</p>
+          <h2>Come si svolge</h2>
+          <p>${t.svolgimento}</p>${t.avviso ? `
+          <p class="avviso">${t.avviso}</p>` : ''}
+        </div>
+        <aside class="box-prezzo">
+          <span class="prezzo">${t.prezzo}</span>
+          <span class="durata">${t.durata} · si paga in sede</span>
+          <a class="btn btn-primario btn-pieno" href="#prenota" data-prenota="${id}">Prenota</a>
+          <a class="btn btn-wa btn-pieno" href="https://wa.me/393317153533?text=${WA_MSG(t.nome)}" target="_blank" rel="noopener">${WA_SVG} WhatsApp</a>
+          <p class="orari">Tutti i giorni 9:30 – 22:30 · <a class="link" href="tel:+393317153533">331 715 3533</a></p>
+        </aside>
       </div>
-      <div class="altri-tratt">
-        ${altriLink}
+    </section>
+
+    <section class="sez sez-salvia-2">
+      <div class="sez-inner">
+        <div class="sez-testa">
+          <span class="etichetta">Altri trattamenti</span>
+          <h2>Indecisa/o tra due opzioni?</h2>
+        </div>
+        <div class="altri">
+          ${altriLink}
+        </div>
+      </div>
+    </section>
+
+    <section class="sez sez-bosco" id="prenota">
+      <div class="sez-inner prenota-box">
+        <span class="etichetta">Prenotazione</span>
+        <h2>Prenota in tre passaggi</h2>
+        <p>Scegli il giorno e la fascia oraria. Confermi su Treatwell o su WhatsApp, senza carta e senza registrazione.</p>
+        <div class="prenota-azioni">
+          <a class="btn btn-chiaro" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota="${id}">Prenota online</a>
+          <a class="btn btn-wa" href="https://wa.me/393317153533?text=${WA_MSG(t.nome)}" target="_blank" rel="noopener">${WA_SVG} Scrivici su WhatsApp</a>
+        </div>
+        <p class="prenota-nota">Oppure chiama il <a class="link" href="tel:+393317153533">331 715 3533</a>, tutti i giorni dalle 9:30 alle 22:30.</p>
       </div>
     </section>
   </main>
 
-  <footer class="fondo">
-    <p class="fondo-nome">Essenza d'Oriente</p>
-    <p class="fondo-cinese" lang="zh">东方之<span class="cuore">♥</span>养生馆</p>
-    <p>Via San Lorenzo 46, 15121 Alessandria · <a href="tel:+393317153533">331 715 3533</a></p>
-    <p class="fondo-legale">P.IVA 14409690964 · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
-  </footer>
+${footer()}
 
   <script src="../cookie.js"></script>
   <script src="../script.js"></script>
-  <script src="../vendor/gsap/gsap-bundle.min.js"></script>
-  <script src="../animazioni.js"></script>
 </body>
 </html>
 `;
 }
 
-TRATTAMENTI.forEach((t) => {
-  const altri = TRATTAMENTI.filter((x) => x.file !== t.file);
-  fs.writeFileSync(path.join(__dirname, 'trattamenti', t.file), pagina(t, altri));
-  console.log('scritto trattamenti/' + t.file);
+const dir = path.join(__dirname, 'trattamenti');
+fs.mkdirSync(dir, { recursive: true });
+TRATTAMENTI.forEach(t => {
+  const altri = TRATTAMENTI.filter(a => a.file !== t.file);
+  fs.writeFileSync(path.join(dir, t.file), pagina(t, altri), 'utf8');
+  console.log('scritto', t.file);
 });
