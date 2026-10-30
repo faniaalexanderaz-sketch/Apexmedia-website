@@ -5,10 +5,22 @@ import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
 import { TricolorStripe } from "@/components/ui/TricolorStripe";
-import { plans, customPlanNote, formatPrice } from "@/data/pricing";
-import { deferSetup, gsap, useGSAP, MEDIA, EASE, enterAt } from "@/lib/gsap";
+import { plans, customPlanNote, formatPrice, brandPlan } from "@/data/pricing";
+import { TricolorStripe as Stripe } from "@/components/ui/TricolorStripe";
+import {
+  deferSetup,
+  gsap,
+  useGSAP,
+  MEDIA,
+  EASE,
+  enterAt,
+  splitWordsIn,
+  CLIP_HIDDEN_BOTTOM,
+  CLIP_VISIBLE,
+  SplitText,
+} from "@/lib/gsap";
 
-export function Pricing() {
+export function Pricing({ numero = "04" }: { numero?: string }) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -41,34 +53,114 @@ export function Pricing() {
 
           const mm = gsap.matchMedia();
           mm.add([MEDIA.desktop, MEDIA.mobile], () => {
-            gsap.from("[data-pricing-head] > *", {
+            const splits: SplitText[] = [];
+            const title = root.querySelector<HTMLElement>(
+              "[data-pricing-title]",
+            );
+            if (title) splits.push(splitWordsIn(title));
+            gsap.from("[data-pricing-head] p", {
               opacity: 0,
               y: 16,
               duration: 0.7,
-              stagger: 0.08,
               scrollTrigger: enterAt(root),
             });
+
+            // Colonne: si rivelano dal basso in sequenza (Growth per ultima, più in alto), poi dentro ogni colonna
+            // nome, prezzo, voci e bottone entrano uno dopo l’altro
             const tl = gsap.timeline({
-              scrollTrigger: enterAt(grid, "top 80%"),
+              scrollTrigger: enterAt(grid, "top 78%"),
             });
-            tl.from(
-              others,
-              {
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                ease: EASE.enter,
-                stagger: 0.1,
-              },
-              0,
-            );
-            if (growth)
-              tl.from(
-                growth,
-                { y: 52, opacity: 0, duration: 0.9, ease: EASE.enter },
-                0.2,
+            const order = [...others, ...(growth ? [growth] : [])];
+            order.forEach((card, i) => {
+              const at = i * 0.12;
+              tl.fromTo(
+                card,
+                { clipPath: CLIP_HIDDEN_BOTTOM, y: card === growth ? 52 : 40 },
+                {
+                  clipPath: CLIP_VISIBLE,
+                  y: 0,
+                  duration: 0.9,
+                  ease: EASE.reveal,
+                  clearProps: "clipPath",
+                },
+                at,
               );
+              const stripe = card.querySelector("[data-plan-stripe]");
+              if (stripe)
+                tl.from(
+                  stripe,
+                  {
+                    scaleX: 0,
+                    transformOrigin: "left center",
+                    duration: 0.7,
+                    ease: EASE.enter,
+                  },
+                  at + 0.3,
+                );
+              tl.from(
+                card.querySelectorAll("[data-plan-fade]"),
+                {
+                  opacity: 0,
+                  y: 12,
+                  duration: 0.5,
+                  ease: EASE.enter,
+                  stagger: 0.05,
+                },
+                at + 0.25,
+              );
+              tl.from(
+                card.querySelectorAll("[data-plan-line]"),
+                {
+                  scaleX: 0,
+                  transformOrigin: "left center",
+                  duration: 0.6,
+                  ease: EASE.enter,
+                  stagger: 0.05,
+                },
+                at + 0.3,
+              );
+              const badge = card.querySelector("[data-plan-badge]");
+              if (badge)
+                tl.from(
+                  badge,
+                  {
+                    scale: 0,
+                    rotation: -6,
+                    transformOrigin: "center",
+                    duration: 0.5,
+                    ease: "back.out(2)",
+                  },
+                  at + 0.5,
+                );
+            });
             countPrices();
+
+            // Brand da zero: riquadro largo che si rivela, titolo a parole, voci in due colonne
+            const brand = root.querySelector<HTMLElement>("[data-brand-plan]");
+            if (brand) {
+              gsap.fromTo(
+                brand,
+                { clipPath: "inset(0% 100% 0% 0%)" },
+                {
+                  clipPath: "inset(0% 0% 0% 0%)",
+                  duration: 0.9,
+                  ease: EASE.reveal,
+                  clearProps: "clipPath",
+                  scrollTrigger: enterAt(brand, "top 82%"),
+                },
+              );
+              const bt = brand.querySelector<HTMLElement>("h3");
+              if (bt) splits.push(splitWordsIn(bt, brand, 0.04, "top 80%"));
+              gsap.from(brand.querySelectorAll("[data-brand-fade]"), {
+                opacity: 0,
+                y: 12,
+                duration: 0.6,
+                stagger: 0.06,
+                delay: 0.3,
+                scrollTrigger: enterAt(brand, "top 82%"),
+              });
+            }
+            return () => splits.forEach((sp) => sp.revert());
           });
         },
         300,
@@ -89,13 +181,14 @@ export function Pricing() {
           data-pricing-head
         >
           <div className="lg:col-span-6">
-            <SectionLabel numero="04" testo="Pacchetti" />
+            <SectionLabel numero={numero} testo="Pacchetti" />
             <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
-              Prezzi chiari.
+              Gestione social: pacchetti e prezzi chiari.
             </h2>
           </div>
           <p className="text-body text-ink/75 md:text-lg lg:col-span-4 lg:col-start-9 lg:pb-2">
-            Scegli da dove partire. Lo adattiamo alla tua attività.
+            Gestione social, contenuti, campagne e sito: scegli da dove partire,
+            lo adattiamo alla tua attività.
           </p>
         </div>
 
@@ -107,7 +200,14 @@ export function Pricing() {
             <article
               key={p.id}
               data-plan={p.id}
-              className={`relative flex flex-col border border-ink/15 bg-surface ${p.highlight ? "md:z-10 md:-mx-px md:pb-4" : ""}`}
+              data-tone={p.tone}
+              className={`relative flex flex-col border ${
+                p.tone === "ink"
+                  ? "border-ink bg-ink text-paper"
+                  : p.tone === "paper"
+                    ? "border-ink/15 bg-paper"
+                    : "border-ink/15 bg-surface"
+              } ${p.highlight ? "md:z-10 md:-mx-px md:pb-4" : ""}`}
             >
               {p.highlight ? (
                 <TricolorStripe />
@@ -120,12 +220,14 @@ export function Pricing() {
                     {p.name}
                   </h3>
                   {p.badge ? (
-                    <span className="label-mono bg-ink px-2 py-1.5 text-paper">
+                    <span
+                      className={`label-mono px-2 py-1.5 ${p.tone === "ink" ? "bg-giallo text-ink" : "bg-ink text-paper"}`}
+                    >
                       {p.badge}
                     </span>
                   ) : null}
                 </div>
-                <p className="mt-6 flex items-baseline gap-1.5">
+                <p className="mt-6 flex items-baseline gap-1.5" data-plan-fade>
                   <span
                     className="font-display text-[clamp(2.75rem,2rem+2vw,3.75rem)] font-bold leading-none tracking-tightest tabular-nums"
                     data-price={p.price}
@@ -136,17 +238,30 @@ export function Pricing() {
                     /mese
                   </span>
                 </p>
-                <ul className="mt-8 divide-y divide-ink/10 border-y border-ink/10">
+                <ul
+                  className={`mt-8 divide-y border-y ${p.tone === "ink" ? "divide-paper/15 border-paper/15" : "divide-ink/10 border-ink/10"}`}
+                >
                   {p.features.map((f) => (
-                    <li key={f} className="py-3 text-[15px] leading-snug">
+                    <li
+                      key={f}
+                      className="relative py-3 text-[15px] leading-snug"
+                      data-plan-fade
+                    >
                       {f}
+                      <span
+                        data-plan-line
+                        aria-hidden="true"
+                        className={`absolute inset-x-0 bottom-0 h-px ${p.tone === "ink" ? "bg-paper/15" : "bg-ink/10"}`}
+                      />
                     </li>
                   ))}
                 </ul>
-                <div className="mt-8 pt-2">
+                <div className="mt-8 pt-2" data-plan-fade>
                   <Button
                     href="#contatti"
-                    variant={p.highlight ? "primary" : "secondary"}
+                    variant={
+                      p.highlight || p.tone === "ink" ? "primary" : "secondary"
+                    }
                     className="w-full"
                     data-preselect={p.formValue}
                     data-track="click_pacchetto"
@@ -159,6 +274,59 @@ export function Pricing() {
             </article>
           ))}
         </div>
+
+        <article
+          data-brand-plan
+          className="relative mt-8 grid grid-cols-1 gap-8 border border-ink/15 bg-surface p-6 md:grid-cols-12 md:p-8 lg:mt-10 lg:p-10"
+        >
+          <Stripe className="absolute inset-x-0 top-0" />
+          <div className="md:col-span-5">
+            <p className="label-mono text-blu-deep" data-brand-fade>
+              {brandPlan.kicker} — {brandPlan.name}
+            </p>
+            <h3 className="h-display mt-4 text-[clamp(1.6rem,1rem+2vw,2.6rem)]">
+              {brandPlan.title}
+            </h3>
+            <p
+              className="text-body mt-4 text-[16px] text-ink/75"
+              data-brand-fade
+            >
+              {brandPlan.text}
+            </p>
+            <div className="mt-6" data-brand-fade>
+              <Button
+                href="#contatti"
+                data-preselect={brandPlan.formValue}
+                data-track="click_pacchetto"
+                data-track-pacchetto="Brand da zero"
+              >
+                {brandPlan.cta}
+              </Button>
+            </div>
+          </div>
+          <ul
+            className="grid grid-cols-1 gap-x-8 sm:grid-cols-2 md:col-span-7 md:col-start-6"
+            aria-label="Cosa comprende"
+          >
+            {brandPlan.features.map((f) => (
+              <li
+                key={f}
+                className="relative py-3 pl-5 text-[15px] leading-snug"
+                data-brand-fade
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-[16px] size-[7px] bg-viola"
+                />
+                {f}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-px bg-ink/10"
+                />
+              </li>
+            ))}
+          </ul>
+        </article>
 
         <p className="mt-10 text-[17px] text-ink/75">
           {customPlanNote}{" "}

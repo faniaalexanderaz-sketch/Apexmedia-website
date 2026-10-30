@@ -13,6 +13,7 @@ import {
   MEDIA,
   EASE,
   enterAt,
+  splitWordsIn,
 } from "@/lib/gsap";
 
 /** Conta da 0 al valore, una sola volta, quando entra in vista. */
@@ -30,7 +31,7 @@ function countUp(el: HTMLElement, trigger: Element) {
   });
 }
 
-export function Method() {
+export function Method({ numero = "03" }: { numero?: string }) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -67,7 +68,9 @@ export function Method() {
           mm.add(MEDIA.desktop, () => {
             if (!fillH) return;
             gsap.set(dots, { opacity: 0, scale: 0.6 });
-            gsap.from("[data-method-head] > *", {
+            const mt = root.querySelector<HTMLElement>("[data-method-head] h2");
+            if (mt) splitWordsIn(mt);
+            gsap.from("[data-method-head] p", {
               opacity: 0,
               y: 16,
               duration: 0.7,
@@ -106,7 +109,11 @@ export function Method() {
           mm.add(MEDIA.mobile, () => {
             if (!fillV) return;
             gsap.set(dots, { opacity: 0, scale: 0.6 });
-            gsap.from("[data-method-head] > *", {
+            const mt2 = root.querySelector<HTMLElement>(
+              "[data-method-head] h2",
+            );
+            if (mt2) splitWordsIn(mt2);
+            gsap.from("[data-method-head] p", {
               opacity: 0,
               y: 12,
               duration: 0.6,
@@ -161,9 +168,9 @@ export function Method() {
           data-method-head
         >
           <div>
-            <SectionLabel numero="03" testo="Metodo" onDark />
+            <SectionLabel numero={numero} testo="Metodo" onDark />
             <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)] text-paper">
-              Come lavoriamo.
+              Il nostro metodo di lavoro, in quattro passaggi.
             </h2>
           </div>
           <p className="max-w-[30ch] text-[16px] leading-relaxed text-paper/70 md:text-right">

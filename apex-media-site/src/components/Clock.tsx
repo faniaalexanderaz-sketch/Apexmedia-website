@@ -35,7 +35,10 @@ export function Clock({ className = "" }: { className?: string }) {
   }, []);
 
   return (
-    <span className={`label-mono text-ink/60 ${className}`} suppressHydrationWarning>
+    <span
+      className={`label-mono text-ink/60 ${className}`}
+      suppressHydrationWarning
+    >
       ALESSANDRIA{" "}
       <time className="text-ink tabular-nums" suppressHydrationWarning>
         {time ?? "--:--"}

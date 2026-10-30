@@ -45,7 +45,11 @@ type ContextSafe = <T extends (...args: unknown[]) => unknown>(fn: T) => T;
  *   useGSAP((_, contextSafe) => deferSetup(contextSafe, () => { ... }), { scope })
  * Il ritorno è la funzione di pulizia.
  */
-export function deferSetup(contextSafe: ContextSafe | undefined, fn: () => void, delay = 0) {
+export function deferSetup(
+  contextSafe: ContextSafe | undefined,
+  fn: () => void,
+  delay = 0,
+) {
   if (typeof window === "undefined") return;
   const run = contextSafe ? contextSafe(fn) : fn;
   let done = false;
@@ -58,13 +62,15 @@ export function deferSetup(contextSafe: ContextSafe | undefined, fn: () => void,
     timer = window.setTimeout(run, delay);
   };
   const onLoad = () => {
-    if ("requestIdleCallback" in window) idle = window.requestIdleCallback(fire, { timeout: 600 });
+    if ("requestIdleCallback" in window)
+      idle = window.requestIdleCallback(fire, { timeout: 600 });
     else fire();
   };
   const cleanup = () => {
     window.removeEventListener("scroll", fire);
     window.removeEventListener("load", onLoad);
-    if (idle !== undefined && "cancelIdleCallback" in window) window.cancelIdleCallback(idle);
+    if (idle !== undefined && "cancelIdleCallback" in window)
+      window.cancelIdleCallback(idle);
   };
   window.addEventListener("scroll", fire, { passive: true, once: true });
   if (document.readyState === "complete") onLoad();
@@ -76,4 +82,26 @@ export function deferSetup(contextSafe: ContextSafe | undefined, fn: () => void,
     window.clearTimeout(limit);
     if (timer !== undefined) window.clearTimeout(timer);
   };
+}
+
+/** Titolo che sale da una maschera, parola per parola, quando entra in vista. Restituisce lo SplitText da revertire. */
+export function splitWordsIn(
+  el: Element,
+  trigger: Element = el,
+  stagger = 0.05,
+  start = "top 85%",
+) {
+  return SplitText.create(el, {
+    type: "words",
+    mask: "words",
+    autoSplit: true,
+    onSplit: (self) =>
+      gsap.from(self.words, {
+        yPercent: 100,
+        duration: 0.8,
+        ease: EASE.reveal,
+        stagger,
+        scrollTrigger: enterAt(trigger, start),
+      }),
+  });
 }

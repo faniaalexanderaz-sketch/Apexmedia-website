@@ -86,7 +86,7 @@ export function Team() {
       <Container>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5" data-team-head>
-            <SectionLabel numero="05" testo="Chi siamo" />
+            <SectionLabel numero="06" testo="Chi siamo" />
             <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
               Dietro Apex ci siamo noi.
             </h2>

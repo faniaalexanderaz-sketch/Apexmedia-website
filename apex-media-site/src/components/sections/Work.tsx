@@ -98,11 +98,11 @@ export function Work() {
           </div>
           <div className="lg:col-span-9" data-work-head>
             <h2 className="h-display text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
-              Settori diversi. Stesso obiettivo: più clienti.
+              Siti web, social e campagne per attività locali.
             </h2>
             <p className="text-body mt-5 text-ink/75 md:text-lg">
-              Una parte delle attività che seguiamo ogni giorno, ad Alessandria
-              e non solo.
+              Una selezione dei progetti che seguiamo ogni giorno: coworking,
+              centro olistico, fioreria, compagnia teatrale.
             </p>
           </div>
         </div>
