@@ -4,6 +4,7 @@ import { Hero } from "@/components/sections/Hero";
 import { ClientsBar } from "@/components/sections/ClientsBar";
 import { Work } from "@/components/sections/Work";
 import { Services } from "@/components/sections/Services";
+import { Performance } from "@/components/sections/Performance";
 import { Method } from "@/components/sections/Method";
 import { Pricing } from "@/components/sections/Pricing";
 import { Team } from "@/components/sections/Team";
@@ -35,17 +36,20 @@ export default function Home() {
           <Services />
         </Suspense>
         <Suspense>
-          <Method />
+          <Performance numero="03" />
         </Suspense>
         <Suspense>
-          <Pricing />
+          <Method numero="04" />
+        </Suspense>
+        <Suspense>
+          <Pricing numero="05" />
         </Suspense>
         <Suspense>
           <Team />
-          <Faq numero={showTeam ? "06" : "05"} />
+          <Faq numero={showTeam ? "07" : "06"} />
         </Suspense>
         <Suspense>
-          <Contact numero={showTeam ? "07" : "06"} />
+          <Contact numero={showTeam ? "08" : "07"} />
         </Suspense>
       </main>
       <Suspense>

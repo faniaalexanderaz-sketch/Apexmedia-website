@@ -4,6 +4,8 @@ export type Plan = {
   price: number;
   highlight?: boolean;
   badge?: string;
+  /** Sfondo della colonna: carta, bianco con striscia, inchiostro */
+  tone: "paper" | "surface" | "ink";
   features: string[];
   cta: string;
   /** Valore della voce corrispondente nel form contatti */
@@ -15,6 +17,7 @@ export const plans: Plan[] = [
     id: "starter",
     name: "Starter",
     price: 300,
+    tone: "paper",
     features: [
       "3 piattaforme gestite",
       "8 contenuti al mese",
@@ -30,6 +33,7 @@ export const plans: Plan[] = [
     id: "growth",
     name: "Growth",
     price: 500,
+    tone: "surface",
     highlight: true,
     badge: "Il più scelto",
     features: [
@@ -47,6 +51,7 @@ export const plans: Plan[] = [
     id: "domination",
     name: "Domination",
     price: 700,
+    tone: "ink",
     features: [
       "3 piattaforme gestite",
       "18 contenuti al mese",

@@ -8,7 +8,7 @@ import { TricolorStripe } from "@/components/ui/TricolorStripe";
 import { plans, customPlanNote, formatPrice } from "@/data/pricing";
 import { deferSetup, gsap, useGSAP, MEDIA, EASE, enterAt } from "@/lib/gsap";
 
-export function Pricing() {
+export function Pricing({ numero = "04" }: { numero?: string }) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -89,7 +89,7 @@ export function Pricing() {
           data-pricing-head
         >
           <div className="lg:col-span-6">
-            <SectionLabel numero="04" testo="Pacchetti" />
+            <SectionLabel numero={numero} testo="Pacchetti" />
             <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
               Prezzi chiari.
             </h2>
@@ -107,7 +107,14 @@ export function Pricing() {
             <article
               key={p.id}
               data-plan={p.id}
-              className={`relative flex flex-col border border-ink/15 bg-surface ${p.highlight ? "md:z-10 md:-mx-px md:pb-4" : ""}`}
+              data-tone={p.tone}
+              className={`relative flex flex-col border ${
+                p.tone === "ink"
+                  ? "border-ink bg-ink text-paper"
+                  : p.tone === "paper"
+                    ? "border-ink/15 bg-paper"
+                    : "border-ink/15 bg-surface"
+              } ${p.highlight ? "md:z-10 md:-mx-px md:pb-4" : ""}`}
             >
               {p.highlight ? (
                 <TricolorStripe />
@@ -120,7 +127,9 @@ export function Pricing() {
                     {p.name}
                   </h3>
                   {p.badge ? (
-                    <span className="label-mono bg-ink px-2 py-1.5 text-paper">
+                    <span
+                      className={`label-mono px-2 py-1.5 ${p.tone === "ink" ? "bg-giallo text-ink" : "bg-ink text-paper"}`}
+                    >
                       {p.badge}
                     </span>
                   ) : null}
@@ -136,7 +145,9 @@ export function Pricing() {
                     /mese
                   </span>
                 </p>
-                <ul className="mt-8 divide-y divide-ink/10 border-y border-ink/10">
+                <ul
+                  className={`mt-8 divide-y border-y ${p.tone === "ink" ? "divide-paper/15 border-paper/15" : "divide-ink/10 border-ink/10"}`}
+                >
                   {p.features.map((f) => (
                     <li key={f} className="py-3 text-[15px] leading-snug">
                       {f}
@@ -146,7 +157,9 @@ export function Pricing() {
                 <div className="mt-8 pt-2">
                   <Button
                     href="#contatti"
-                    variant={p.highlight ? "primary" : "secondary"}
+                    variant={
+                      p.highlight || p.tone === "ink" ? "primary" : "secondary"
+                    }
                     className="w-full"
                     data-preselect={p.formValue}
                     data-track="click_pacchetto"

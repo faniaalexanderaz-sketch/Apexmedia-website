@@ -30,7 +30,7 @@ function countUp(el: HTMLElement, trigger: Element) {
   });
 }
 
-export function Method() {
+export function Method({ numero = "03" }: { numero?: string }) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -161,7 +161,7 @@ export function Method() {
           data-method-head
         >
           <div>
-            <SectionLabel numero="03" testo="Metodo" onDark />
+            <SectionLabel numero={numero} testo="Metodo" onDark />
             <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)] text-paper">
               Come lavoriamo.
             </h2>

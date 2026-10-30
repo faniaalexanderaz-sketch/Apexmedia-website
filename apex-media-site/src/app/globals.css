@@ -332,3 +332,9 @@ details[open] > summary .plus-icon {
     opacity: 1;
   }
 }
+
+/* Pacchetto Domination (sfondo inchiostro): bottone giallo pieno, testo inchiostro */
+[data-tone="ink"] [data-plan-cta] {
+  background: var(--giallo);
+  color: var(--ink);
+}
