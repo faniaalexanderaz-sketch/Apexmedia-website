@@ -1,0 +1,296 @@
+[
+  {
+    "text": "Il",
+    "start": 0.11,
+    "end": 0.16,
+    "id": "w0"
+  },
+  {
+    "text": "nostro",
+    "start": 0.16,
+    "end": 0.63,
+    "id": "w1"
+  },
+  {
+    "text": "centro",
+    "start": 0.67,
+    "end": 1.11,
+    "id": "w2"
+  },
+  {
+    "text": "chiude",
+    "start": 1.41,
+    "end": 1.66,
+    "id": "w3"
+  },
+  {
+    "text": "alle",
+    "start": 1.66,
+    "end": 1.99,
+    "id": "w4"
+  },
+  {
+    "text": "22",
+    "start": 1.99,
+    "end": 2.43,
+    "id": "w5"
+  },
+  {
+    "text": "e",
+    "start": 2.43,
+    "end": 2.57,
+    "id": "w6"
+  },
+  {
+    "text": "30",
+    "start": 2.57,
+    "end": 3.01,
+    "id": "w7"
+  },
+  {
+    "text": "tutti",
+    "start": 3.32,
+    "end": 3.6,
+    "id": "w8"
+  },
+  {
+    "text": "i",
+    "start": 3.6,
+    "end": 3.69,
+    "id": "w9"
+  },
+  {
+    "text": "giorni,",
+    "start": 3.69,
+    "end": 4.42,
+    "id": "w10"
+  },
+  {
+    "text": "e",
+    "start": 4.42,
+    "end": 4.49,
+    "id": "w11"
+  },
+  {
+    "text": "ora",
+    "start": 4.49,
+    "end": 4.7,
+    "id": "w12"
+  },
+  {
+    "text": "ti",
+    "start": 4.7,
+    "end": 4.75,
+    "id": "w13"
+  },
+  {
+    "text": "spiego",
+    "start": 4.96,
+    "end": 5.3,
+    "id": "w14"
+  },
+  {
+    "text": "il",
+    "start": 5.3,
+    "end": 5.47,
+    "id": "w15"
+  },
+  {
+    "text": "perché.",
+    "start": 5.47,
+    "end": 6,
+    "id": "w16"
+  },
+  {
+    "text": "Perché",
+    "start": 6.11,
+    "end": 6.35,
+    "id": "w17"
+  },
+  {
+    "text": "chi",
+    "start": 6.45,
+    "end": 6.68,
+    "id": "w18"
+  },
+  {
+    "text": "lavora",
+    "start": 6.68,
+    "end": 7.11,
+    "id": "w19"
+  },
+  {
+    "text": "fino",
+    "start": 7.11,
+    "end": 7.48,
+    "id": "w20"
+  },
+  {
+    "text": "all'esetto",
+    "start": 7.48,
+    "end": 8.18,
+    "id": "w21"
+  },
+  {
+    "text": "alle",
+    "start": 8.18,
+    "end": 8.43,
+    "id": "w22"
+  },
+  {
+    "text": "8",
+    "start": 8.57,
+    "end": 8.76,
+    "id": "w23"
+  },
+  {
+    "text": "non",
+    "start": 8.76,
+    "end": 9.01,
+    "id": "w24"
+  },
+  {
+    "text": "ha",
+    "start": 9.01,
+    "end": 9.02,
+    "id": "w25"
+  },
+  {
+    "text": "mai",
+    "start": 9.32,
+    "end": 9.42,
+    "id": "w26"
+  },
+  {
+    "text": "tempo",
+    "start": 9.51,
+    "end": 9.85,
+    "id": "w27"
+  },
+  {
+    "text": "per",
+    "start": 9.85,
+    "end": 10.04,
+    "id": "w28"
+  },
+  {
+    "text": "sé,",
+    "start": 10.3,
+    "end": 10.32,
+    "id": "w29"
+  },
+  {
+    "text": "allora",
+    "start": 10.41,
+    "end": 10.99,
+    "id": "w30"
+  },
+  {
+    "text": "vieni",
+    "start": 10.99,
+    "end": 11.51,
+    "id": "w31"
+  },
+  {
+    "text": "dopo.",
+    "start": 11.61,
+    "end": 12,
+    "id": "w32"
+  },
+  {
+    "text": "Anche",
+    "start": 12.12,
+    "end": 12.35,
+    "id": "w33"
+  },
+  {
+    "text": "il",
+    "start": 12.45,
+    "end": 12.53,
+    "id": "w34"
+  },
+  {
+    "text": "sabato",
+    "start": 12.59,
+    "end": 13.09,
+    "id": "w35"
+  },
+  {
+    "text": "della",
+    "start": 13.09,
+    "end": 13.51,
+    "id": "w36"
+  },
+  {
+    "text": "domenica",
+    "start": 13.51,
+    "end": 14.17,
+    "id": "w37"
+  },
+  {
+    "text": "invia",
+    "start": 14.17,
+    "end": 14.58,
+    "id": "w38"
+  },
+  {
+    "text": "San",
+    "start": 14.58,
+    "end": 14.78,
+    "id": "w39"
+  },
+  {
+    "text": "Lorenzo",
+    "start": 14.87,
+    "end": 15.4,
+    "id": "w40"
+  },
+  {
+    "text": "46.",
+    "start": 15.51,
+    "end": 16,
+    "id": "w41"
+  },
+  {
+    "text": "Puoi",
+    "start": 16.12,
+    "end": 16.35,
+    "id": "w42"
+  },
+  {
+    "text": "prenotare",
+    "start": 16.45,
+    "end": 17.11,
+    "id": "w43"
+  },
+  {
+    "text": "anche",
+    "start": 17.48,
+    "end": 17.92,
+    "id": "w44"
+  },
+  {
+    "text": "stasera",
+    "start": 17.92,
+    "end": 18.66,
+    "id": "w45"
+  },
+  {
+    "text": "link",
+    "start": 18.66,
+    "end": 19.01,
+    "id": "w46"
+  },
+  {
+    "text": "qui",
+    "start": 19.32,
+    "end": 19.4,
+    "id": "w47"
+  },
+  {
+    "text": "sotto.",
+    "start": 19.51,
+    "end": 20,
+    "id": "w48"
+  }
+]
