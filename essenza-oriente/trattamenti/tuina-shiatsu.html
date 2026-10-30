@@ -25,9 +25,6 @@
   <meta name="description" content="Tuina e Shiatsu ad Alessandria: pressioni e manipolazioni lungo i meridiani. 50 minuti, 50 €. 5,0★ su Google, 146 recensioni. Aperti tutti i giorni." />
   <link rel="canonical" href="https://essenzadoriente.it/trattamenti/tuina-shiatsu.html" />
 
-  <!-- Open Graph / Twitter Card: senza questi tag Google, WhatsApp e
-       Facebook non hanno nessuna immagine da mostrare nell'anteprima
-       del link, e appare solo testo. -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://essenzadoriente.it/trattamenti/tuina-shiatsu.html" />
   <meta property="og:title" content="Tuina Shiatsu ad Alessandria — Essenza d'Oriente" />
@@ -39,14 +36,23 @@
   <meta name="twitter:description" content="Tuina e Shiatsu ad Alessandria: pressioni e manipolazioni lungo i meridiani. 50 minuti, 50 €. 5,0★ su Google, 146 recensioni. Aperti tutti i giorni." />
   <meta name="twitter:image" content="https://essenzadoriente.it/foto/tratt-tuina-shiatsu.jpg" />
 
+  <link rel="preload" href="../fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../vendor/gsap/gsap-bundle.min.js" as="script" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192" />
   <link rel="apple-touch-icon" href="../favicon-180.png" />
+  <script>
+    document.documentElement.classList.add('js');
+    if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('anim-attesa');
+      setTimeout(function () { document.documentElement.classList.remove('anim-attesa'); }, 1800);
+    }
+  </script>
 
-  <!-- Google Tag Manager: si carica da cookie.js SOLO dopo il consenso
-       dell'utente dal banner cookie, mai prima -->
+  <!-- Google Tag Manager: si carica da cookie.js SOLO dopo il consenso -->
 
   <script type="application/ld+json">
   {
@@ -72,154 +78,182 @@
     }
   }
   </script>
-  <!-- animazioni d'ingresso (animazioni.js): l'hero resta nascosta solo finché
-       GSAP la prende in carico, mai più di 1,8s -->
-  <link rel="preload" href="../vendor/gsap/gsap-bundle.min.js" as="script" />
-  <script>
-    if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.documentElement.classList.add('anim-attesa');
-      setTimeout(function () { document.documentElement.classList.remove('anim-attesa'); }, 1800);
-    }
-  </script>
 </head>
-<body class="pagina-tratt" data-base="../">
-  <header class="top">
-    <div class="top-inizio">
-      <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<body class="pagina-tratt" data-base="../" data-tratt-nome="Tuina Shiatsu" data-tratt-info="50 min · 50 €">
+  <header class="nav" id="nav">
+    <div class="nav-isola">
       <a class="marchio" href="../index.html">
         <span class="marchio-nome">Essenza d'Oriente</span>
-        <span class="marchio-sotto">Centro Olistico</span>
+        <span class="marchio-firma" lang="zh">东方之<span class="cuore">心</span>养生馆</span>
       </a>
-    </div>
-    <nav class="top-nav" aria-label="Sezioni">
-      <a href="../index.html#trattamenti">Trattamenti</a>
-      <a href="#prenota">Prenota</a>
-      <a href="../index.html#dove">Dove siamo</a>
-    </nav>
-    <div class="top-azioni">
-      <a class="btn btn-chiama" href="tel:+393317153533"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> Chiama</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> WhatsApp</a>
+      <nav class="nav-link" aria-label="Sezioni">
+        <a href="../index.html#trattamenti">Trattamenti</a>
+        <a href="../index.html#recensioni">Recensioni</a>
+        <a href="../index.html#dove">Dove siamo</a>
+      </nav>
+      <a class="nav-tel" href="tel:+393317153533">331 715 3533</a>
+      <a class="btn btn-ink btn-sm nav-prenota" href="#prenota" data-prenota>Prenota <span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></span></a>
+      <button class="burger" id="burger" aria-label="Apri il menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
     </div>
   </header>
-
-  <div class="menu-scrim" id="menuScrim" hidden></div>
-  <aside class="menu-drawer" id="menuDrawer" hidden aria-label="Menu del sito">
-    <div class="menu-drawer-testa">
-      <span class="marchio-nome">Essenza d'Oriente</span>
-      <button class="menu-chiudi" id="menuChiudi" aria-label="Chiudi il menu">×</button>
+  <div class="menu" id="menu" aria-label="Menu">
+    <a class="menu-voce" href="../index.html#trattamenti">Trattamenti <span class="label nolinea">01</span></a>
+    <a class="menu-voce" href="#prenota">Prenota <span class="label nolinea">02</span></a>
+    <a class="menu-voce" href="../index.html#recensioni">Recensioni <span class="label nolinea">03</span></a>
+    <a class="menu-voce" href="../index.html#dove">Dove siamo <span class="label nolinea">04</span></a>
+    <div class="menu-piede">
+      <a class="btn btn-ghost btn-sm" href="tel:+393317153533">331 715 3533</a>
+      <a class="btn btn-ghost btn-sm" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
     </div>
-    <nav class="menu-sezioni">
-      <a href="../index.html#trattamenti">Trattamenti</a>
-      <a href="../index.html#prenota">Prenota</a>
-      <a href="../index.html#dove">Dove siamo</a>
-    </nav>
-    <p class="menu-titolo">I nostri trattamenti</p>
-    <ul class="menu-tratt-lista">
-      <li><a href="../massaggio-oli-essenziali.html"><span class="menu-tratt-nome">Massaggio Oli Essenziali</span><span class="menu-tratt-info">Cervicale e schiena · 60 min · 60 €</span></a></li>
-      <li><a href="../tuina-shiatsu.html"><span class="menu-tratt-nome">Tuina Shiatsu</span><span class="menu-tratt-info">50 min · 50 €</span></a></li>
-      <li><a href="../massaggio-spa.html"><span class="menu-tratt-nome">Massaggio Spa</span><span class="menu-tratt-info">Corpo completo · 90 min · 90 €</span></a></li>
-      <li><a href="../riflessologia-plantare.html"><span class="menu-tratt-nome">Riflessologia Plantare</span><span class="menu-tratt-info">40 min 35 € · 60 min 50 €</span></a></li>
-      <li><a href="../coppettazione.html"><span class="menu-tratt-nome">Coppettazione</span><span class="menu-tratt-info">Cupping · 25 €</span></a></li>
-      <li><a href="../gua-sha.html"><span class="menu-tratt-nome">Gua Sha</span><span class="menu-tratt-info">25 €</span></a></li>
-      <li><a href="../pulizia-orecchie.html"><span class="menu-tratt-nome">Pulizia delle Orecchie</span><span class="menu-tratt-info">Tecnica tradizionale cinese · 25 €</span></a></li>
-      <li><a href="../pedicure.html"><span class="menu-tratt-nome">Pedicure</span><span class="menu-tratt-info">Stile tradizionale cinese · 35 €</span></a></li>
-    </ul>
-    <div class="menu-drawer-cta">
-      <a class="btn btn-prenota" href="../index.html#prenota">Prenota ora</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
-    </div>
-  </aside>
-
-  <div class="barra-mobile" role="navigation" aria-label="Contatti rapidi">
-    <a class="btn btn-chiama" href="tel:+393317153533"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> Chiama</a>
-    <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> WhatsApp</a>
   </div>
 
   <main>
-    <section class="hero-tratt">
-      <span class="etichetta">Essenza d'Oriente · Alessandria</span>
-      <h1>Tuina Shiatsu ad Alessandria</h1>
-      <p class="hero-sub">Tecniche orientali · 50 minuti · <span class="stelle" aria-hidden="true">★★★★★</span> 5,0 su Google</p>
-      <p><a class="btn btn-prenota" href="#prenota">Prenota questo trattamento</a></p>
-    </section>
-
-    <div class="foto-tratt">
-      <div class="foto-tratt-box">
-        <div class="foto-tratt-track">
-          <img class="foto-tratt-img" src="../foto/tratt-tuina-shiatsu.jpg" alt="Tuina Shiatsu — Essenza d'Oriente, Alessandria" loading="lazy"
-               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
-          <img class="foto-tratt-img" src="../foto/tratt-tuina-shiatsu-2.jpg" alt="Tuina Shiatsu — Essenza d'Oriente, Alessandria" loading="lazy"
-               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
+    <section class="hero tratt-hero">
+      <div class="griglia-linee" aria-hidden="true"><div class="wrap"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="briciole label nolinea"><a href="../index.html">Home</a> / <a href="../index.html#trattamenti">Trattamenti</a> / <span>Tuina Shiatsu</span></p>
+          <p class="label hero-stato" id="statoApertura"><span class="pallino" aria-hidden="true"></span><span class="solo-desktop">Essenza d'Oriente · Alessandria · </span><span id="statoTesto">Aperti ora fino alle 22:30</span></p>
+          <h1>Tuina Shiatsu ad Alessandria</h1>
+          <p class="lede">Tecniche orientali · 50 minuti. Entrambe le tecniche sono tradizionalmente associate all'alleviamento delle tensioni muscolari, al miglioramento della circolazione, alla riduzione dello stress e al rilassamento generale del sistema nervoso.</p>
+          <p class="tratt-prezzo"><span class="num">50 €</span><span class="durata">50 min</span></p>
+          <div class="hero-cta">
+            <a class="btn btn-ink" href="#prenota" data-prenota>Prenota questo trattamento <span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></span></a>
+            <a class="link" href="https://wa.me/393317153533?text=Ciao!%20Vorrei%20prenotare%3A%20Tuina%20Shiatsu.%20Quando%20avete%20disponibilit%C3%A0%3F" target="_blank" rel="noopener">Chiedi su WhatsApp</a>
+          </div>
+          <div class="hero-prova">
+            <span class="prova-voto"><span class="num">5,0</span><span class="stelle" aria-hidden="true">★★★★★</span></span>
+            <span class="label nolinea">146 recensioni Google</span>
+            <span class="label nolinea">Tutti i giorni 9:30–22:30</span>
+          </div>
         </div>
-        <div class="foto-segnaposto" role="img" aria-label="Foto del trattamento Tuina Shiatsu in arrivo">[FOTO TRATTAMENTO DA INSERIRE]</div>
-      </div>
-    </div>
-
-    <section class="sez">
-      <div class="corpo-tratt">
-        <h2>Che cos'è</h2>
-        <p>Un trattamento che unisce due tecniche di origine orientale: il Tuina, massaggio tradizionale cinese riconosciuto dall'OMS nel 1998 come pratica terapeutica, e lo Shiatsu, tecnica giapponese a pressione statica di dita e palmi, nata dall'evoluzione delle stesse radici della medicina orientale. Il Tuina è più dinamico, con manovre di pressione, sfregamento e mobilizzazione; lo Shiatsu è più statico e si concentra sulla pressione mirata lungo i meridiani energetici.</p>
-        <h2>Benefici</h2>
-        <p>Entrambe le tecniche sono tradizionalmente associate all'alleviamento delle tensioni muscolari, al miglioramento della circolazione, alla riduzione dello stress e al rilassamento generale del sistema nervoso.</p>
-        <h2>Come si svolge</h2>
-        <p>La seduta dura 50 minuti e si svolge generalmente vestiti (a differenza dei massaggi a olio), su tappeto o lettino, con pressioni e manipolazioni su punti specifici del corpo.</p>
-        
-      </div>
-      <div class="box-prezzo">
-        <span><strong>50 €</strong></span>
-        <span>50 min · Essenza d'Oriente, Alessandria</span>
-        <a class="btn btn-prenota" href="#prenota">Prenota</a>
+        <div class="hero-visual">
+          <figure class="hero-foto shell">
+            <div class="core">
+              <picture>
+                <source srcset="../foto/tratt-tuina-shiatsu.webp" type="image/webp" />
+                <img src="../foto/tratt-tuina-shiatsu.jpg" alt="Tuina Shiatsu da Essenza d'Oriente, Alessandria" width="1200" height="669" fetchpriority="high" />
+              </picture>
+            </div>
+          </figure>
+        </div>
       </div>
     </section>
 
-    <div class="loto-divisore" aria-hidden="true"><svg width="34" height="20" viewBox="0 0 34 20" fill="currentColor"><path d="M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z"/><path d="M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z"/><path d="M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z"/><path d="M4.4 8.6c3.6.4 7 2.4 8.6 5.6-4 1.1-7.6-1.5-8.6-5.6Z"/><path d="M29.6 8.6c-1 4.1-4.6 6.7-8.6 5.6 1.6-3.2 5-5.2 8.6-5.6Z"/><path d="M9.5 16.2c2.3-.9 5-.9 7.5-.9s5.2 0 7.5.9c-2.3 1.6-4.8 2.3-7.5 2.3s-5.2-.7-7.5-2.3Z" opacity=".55"/></svg></div>
-
-    <section class="sez" id="prenota">
-      <div class="sez-testa">
-        <span class="etichetta">Prenotazione online</span>
-        <h2>Prenota il tuo trattamento</h2>
-        <p>Scegli data e ora, ricevi conferma immediata.</p>
-      </div>
-      <div class="prenota-cornice">
-        <iframe
-          id="treatwellFrame"
-          class="treatwell-frame"
-          src="https://widget.treatwell.it/salone/532986/menu/"
-          title="Prenota il tuo trattamento — calendario Treatwell"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-      <div class="prenota-alt">
-        <p>Preferisci prenotare al telefono o su WhatsApp?</p>
-        <a class="btn btn-chiama" href="tel:+393317153533">Chiama: 331 715 3533</a>
-        <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+    <section class="sez sez-tight">
+      <div class="wrap tratt-corpo">
+        <div class="tratt-testo">
+          <div class="tratt-blocco" data-reveal><span class="label">Che cos'è</span><h2>Che cos'è</h2><p>Un trattamento che unisce due tecniche di origine orientale: il Tuina, massaggio tradizionale cinese riconosciuto dall'OMS nel 1998 come pratica terapeutica, e lo Shiatsu, tecnica giapponese a pressione statica di dita e palmi, nata dall'evoluzione delle stesse radici della medicina orientale. Il Tuina è più dinamico, con manovre di pressione, sfregamento e mobilizzazione; lo Shiatsu è più statico e si concentra sulla pressione mirata lungo i meridiani energetici.</p></div>
+          <div class="tratt-blocco" data-reveal><span class="label">Benefici</span><h2>Benefici</h2><p>Entrambe le tecniche sono tradizionalmente associate all'alleviamento delle tensioni muscolari, al miglioramento della circolazione, alla riduzione dello stress e al rilassamento generale del sistema nervoso.</p></div>
+          <div class="tratt-blocco" data-reveal><span class="label">Come si svolge</span><h2>Come si svolge</h2><p>La seduta dura 50 minuti e si svolge generalmente vestiti (a differenza dei massaggi a olio), su tappeto o lettino, con pressioni e manipolazioni su punti specifici del corpo.</p></div>
+        </div>
+        <aside class="box-prezzo shell" data-reveal>
+          <div class="core">
+            <span class="label">50 min · pagamento in sede</span>
+            <span class="num">50 €</span>
+            <a class="btn btn-ink" href="#prenota" data-prenota>Prenota <span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></span></a>
+            <a class="btn btn-ghost" href="https://wa.me/393317153533?text=Ciao!%20Vorrei%20prenotare%3A%20Tuina%20Shiatsu.%20Quando%20avete%20disponibilit%C3%A0%3F" target="_blank" rel="noopener">WhatsApp <span class="ico wa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg></span></a>
+            <p class="nota">Tutti i giorni 9:30 – 22:30 · <a href="tel:+393317153533">331 715 3533</a></p>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section class="sez">
-      <div class="sez-testa">
-        <span class="etichetta">Indecisa/o tra due opzioni?</span>
-        <h2>Altri trattamenti</h2>
+    <section class="sez prenota" id="prenota">
+      <div class="griglia-linee" aria-hidden="true"><div class="wrap"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="wrap">
+        <div class="testa">
+          <div>
+            <span class="label" data-reveal>Prenotazione online</span>
+            <h2 data-split style="margin-top:18px">Scegli data e ora.<br /><span class="em">Conferma immediata.</span></h2>
+          </div>
+          <p class="lede" data-reveal>Nel calendario cerca <strong>Tuina Shiatsu</strong>, poi scegli l'orario libero che preferisci. Nessuna carta richiesta.</p>
+        </div>
+        <div class="scelta-attiva" id="sceltaAttiva" hidden>
+          <span>Stai prenotando: <strong id="sceltaNome"></strong> <span id="sceltaInfo" class="label nolinea"></span></span>
+          <button type="button" id="sceltaCambia">cambia trattamento</button>
+        </div>
+        <div class="shell" data-reveal>
+          <div class="core">
+            <iframe
+              id="treatwellFrame"
+              class="treatwell-frame"
+              src="https://widget.treatwell.it/salone/532986/menu/"
+              title="Prenota il tuo trattamento — calendario Treatwell"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+        <div class="prenota-alt" data-reveal>
+          <span>Non trovi l'orario che cerchi? Scrivici, rispondiamo in giornata.</span>
+          <div class="azioni">
+            <a class="btn btn-ghost btn-sm" id="prenotaWa" href="https://wa.me/393317153533?text=Ciao!%20Vorrei%20prenotare%3A%20Tuina%20Shiatsu.%20Quando%20avete%20disponibilit%C3%A0%3F" target="_blank" rel="noopener">WhatsApp <span class="ico wa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg></span></a>
+            <a class="btn btn-ghost btn-sm btn-solo" href="tel:+393317153533">331 715 3533</a>
+          </div>
+        </div>
       </div>
-      <div class="altri-tratt">
-        <a href="massaggio-oli-essenziali.html">Massaggio Oli Essenziali</a>
-        <a href="riflessologia-plantare.html">Riflessologia Plantare</a>
-        <a href="coppettazione.html">Coppettazione</a>
-        <a href="gua-sha.html">Gua Sha</a>
-        <a href="massaggio-spa.html">Massaggio Spa</a>
-        <a href="pulizia-orecchie.html">Pulizia delle Orecchie</a>
-        <a href="pedicure.html">Pedicure</a>
+    </section>
+
+    <section class="sez sez-tight">
+      <div class="wrap">
+        <div class="testa">
+          <div>
+            <span class="label" data-reveal>Altri trattamenti</span>
+            <h2 data-split style="margin-top:18px">Indecisa/o tra <span class="em">due opzioni?</span></h2>
+          </div>
+        </div>
+        <div class="altri" data-reveal>
+          <a href="massaggio-oli-essenziali.html">Massaggio Oli Essenziali</a>
+          <a href="riflessologia-plantare.html">Riflessologia Plantare</a>
+          <a href="coppettazione.html">Coppettazione</a>
+          <a href="gua-sha.html">Gua Sha</a>
+          <a href="massaggio-spa.html">Massaggio Spa</a>
+          <a href="pulizia-orecchie.html">Pulizia delle Orecchie</a>
+          <a href="pedicure.html">Pedicure</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="fondo">
-    <p class="fondo-nome">Essenza d'Oriente</p>
-    <p class="fondo-cinese" lang="zh">东方之<span class="cuore">♥</span>养生馆</p>
-    <p>Via San Lorenzo 46, 15121 Alessandria · <a href="tel:+393317153533">331 715 3533</a></p>
-    <p class="fondo-legale">P.IVA 14409690964 · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
+    <div class="wrap">
+      <div class="fondo-grid">
+        <div class="fondo-col">
+          <span class="label">Essenza d'Oriente</span>
+          <p class="fondo-firma" lang="zh">东方之<span class="cuore">心</span>养生馆</p>
+          <p>Centro olistico ad Alessandria. Tecniche tradizionali orientali, tutti i giorni fino alle 22:30.</p>
+        </div>
+        <div class="fondo-col">
+          <span class="label">Contatti</span>
+          <a href="tel:+393317153533">331 715 3533</a>
+          <a href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
+          <span>Via San Lorenzo 46<br />15121 Alessandria</span>
+        </div>
+        <div class="fondo-col">
+          <span class="label">Pagine</span>
+          <a href="../index.html#trattamenti">Trattamenti</a>
+          <a href="#prenota">Prenota</a>
+          <a href="../index.html#recensioni">Recensioni</a>
+          <a href="../index.html#dove">Dove siamo</a>
+        </div>
+        <div class="fondo-col">
+          <span class="label">Social</span>
+          <a href="https://www.instagram.com/essenza.oriente?igsh=ZWpoOTBrMDduMW5i&amp;utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/share/14jFSwS4Ysi/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.tiktok.com/@essenzaoriente.al" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+      <div class="fondo-marchio" aria-hidden="true"><p class="display">Essenza d'Oriente</p></div>
+      <p class="fondo-legale"><span>P.IVA 14409690964</span><a href="../privacy.html">Privacy</a><a href="../cookie.html">Cookie</a><span>Sito di <a href="https://apexmedia.it" target="_blank" rel="noopener">Apex Media</a></span></p>
+    </div>
   </footer>
+
+  <div class="barra-mobile" role="navigation" aria-label="Azioni rapide">
+    <a class="btn btn-ink" href="#prenota" data-prenota>Prenota ora <span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></span></a>
+    <a class="tondo wa" href="https://wa.me/393317153533" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg></a>
+    <a class="tondo" href="tel:+393317153533" aria-label="Chiama 331 715 3533"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></a>
+  </div>
 
   <script src="../cookie.js"></script>
   <script src="../script.js"></script>

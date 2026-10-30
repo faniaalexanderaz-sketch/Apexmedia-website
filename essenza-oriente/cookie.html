@@ -24,53 +24,30 @@
   <title>Cookie Policy — Essenza d'Oriente</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="styles.css" />
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192" />
   <link rel="apple-touch-icon" href="favicon-180.png" />
 </head>
 <body>
-  <header class="top">
-    <div class="top-inizio">
-      <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
+  <header class="nav" id="nav">
+    <div class="nav-isola">
       <a class="marchio" href="index.html">
         <span class="marchio-nome">Essenza d'Oriente</span>
-        <span class="marchio-sotto">Centro Olistico</span>
+        <span class="marchio-firma" lang="zh">东方之<span class="cuore">心</span>养生馆</span>
       </a>
+      <nav class="nav-link" aria-label="Sezioni">
+        <a href="index.html#trattamenti">Trattamenti</a>
+        <a href="index.html#recensioni">Recensioni</a>
+        <a href="index.html#dove">Dove siamo</a>
+      </nav>
+      <a class="nav-tel" href="tel:+393317153533">331 715 3533</a>
+      <a class="btn btn-ink btn-sm nav-prenota" href="index.html#prenota">Prenota <span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></span></a>
     </div>
   </header>
-
-  <div class="menu-scrim" id="menuScrim" hidden></div>
-  <aside class="menu-drawer" id="menuDrawer" hidden aria-label="Menu del sito">
-    <div class="menu-drawer-testa">
-      <span class="marchio-nome">Essenza d'Oriente</span>
-      <button class="menu-chiudi" id="menuChiudi" aria-label="Chiudi il menu">×</button>
-    </div>
-    <nav class="menu-sezioni">
-      <a href="index.html#trattamenti">Trattamenti</a>
-      <a href="index.html#prenota">Prenota</a>
-      <a href="index.html#dove">Dove siamo</a>
-    </nav>
-    <p class="menu-titolo">I nostri trattamenti</p>
-    <ul class="menu-tratt-lista">
-      <li><a href="trattamenti/massaggio-oli-essenziali.html"><span class="menu-tratt-nome">Massaggio Oli Essenziali</span><span class="menu-tratt-info">Cervicale e schiena · 60 min · 60 €</span></a></li>
-      <li><a href="trattamenti/tuina-shiatsu.html"><span class="menu-tratt-nome">Tuina Shiatsu</span><span class="menu-tratt-info">50 min · 50 €</span></a></li>
-      <li><a href="trattamenti/massaggio-spa.html"><span class="menu-tratt-nome">Massaggio Spa</span><span class="menu-tratt-info">Corpo completo · 90 min · 90 €</span></a></li>
-      <li><a href="trattamenti/riflessologia-plantare.html"><span class="menu-tratt-nome">Riflessologia Plantare</span><span class="menu-tratt-info">40 min 35 € · 60 min 50 €</span></a></li>
-      <li><a href="trattamenti/coppettazione.html"><span class="menu-tratt-nome">Coppettazione</span><span class="menu-tratt-info">Cupping · 25 €</span></a></li>
-      <li><a href="trattamenti/gua-sha.html"><span class="menu-tratt-nome">Gua Sha</span><span class="menu-tratt-info">25 €</span></a></li>
-      <li><a href="trattamenti/pulizia-orecchie.html"><span class="menu-tratt-nome">Pulizia delle Orecchie</span><span class="menu-tratt-info">Con micro-telecamera · 25 €</span></a></li>
-      <li><a href="index.html#trattamenti"><span class="menu-tratt-nome">Pedicure</span><span class="menu-tratt-info">35 €</span></a></li>
-    </ul>
-    <div class="menu-drawer-cta">
-      <a class="btn btn-prenota" href="index.html#prenota">Prenota ora</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
-    </div>
-  </aside>
   <main class="sez">
-    <div class="corpo-tratt">
+    <div class="wrap legale">
       <span class="etichetta">Informativa</span>
       <h1>Cookie</h1>
       <p><em>Ultimo aggiornamento: [DATA DI PUBBLICAZIONE]</em></p>
@@ -87,9 +64,16 @@
     </div>
   </main>
   <footer class="fondo">
-    <p class="fondo-nome">Essenza d'Oriente</p>
-    <p>Via San Lorenzo 46, 15121 Alessandria · <a href="tel:+393317153533">331 715 3533</a></p>
-    <p class="fondo-legale"><a href="index.html">Torna al sito</a> · <a href="privacy.html">Privacy</a></p>
+    <div class="wrap">
+      <div class="fondo-grid">
+        <div class="fondo-col">
+          <span class="label">Essenza d'Oriente</span>
+          <p class="fondo-firma" lang="zh">东方之<span class="cuore">心</span>养生馆</p>
+          <p>Via San Lorenzo 46, 15121 Alessandria · <a href="tel:+393317153533">331 715 3533</a></p>
+        </div>
+      </div>
+      <p class="fondo-legale"><span>P.IVA 14409690964</span><a href="index.html">Torna al sito</a><a href="privacy.html">Privacy</a><a href="cookie.html">Cookie</a></p>
+    </div>
   </footer>
 
   <script src="cookie.js"></script>
