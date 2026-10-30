@@ -98,8 +98,7 @@ export function Work() {
           </div>
           <div className="lg:col-span-9" data-work-head>
             <h2 className="h-display text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
-              Siti web, social e campagne realizzati per attività locali ad
-              Alessandria.
+              Siti web, social e campagne per attività locali.
             </h2>
             <p className="text-body mt-5 text-ink/75 md:text-lg">
               Una selezione dei progetti che seguiamo ogni giorno: coworking,
