@@ -41,6 +41,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://essenzadoriente.it/trattamenti/pedicure.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://essenzadoriente.it/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>

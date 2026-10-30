@@ -2,25 +2,25 @@
    ESSENZA D'ORIENTE — consenso cookie
    Cookie tecnici (sempre attivi, non richiedono consenso) +
    Google Tag Manager (misurazione), che si carica SOLO se
-   l'utente accetta dal banner.
+   l'utente accetta dal banner. Il Google tag in head parte in
+   Consent Mode "denied" e viene sbloccato qui.
    ============================================================= */
 (function () {
   'use strict';
   var KEY = 'eo-cookie-consent';
+  var GTM_ID = 'GTM-KVSX5PF5';
   var box = null;
 
-  /* ID del contenitore Google Tag Manager */
-  var GTM_ID = 'GTM-KVSX5PF5';
-
   function stato() {
-    var v = localStorage.getItem(KEY);
-    return v === 'accettato' || v === 'rifiutato' ? v : null;
+    try {
+      var v = localStorage.getItem(KEY);
+      return v === 'accettato' || v === 'rifiutato' ? v : null;
+    } catch (e) { return null; }
   }
 
-  /* carica Google Tag Manager SOLO dopo il consenso — mai prima */
   var gtmCaricato = false;
   function caricaGTM() {
-    if (gtmCaricato || GTM_ID.indexOf('XXXX') !== -1) return;
+    if (gtmCaricato) return;
     gtmCaricato = true;
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
@@ -28,21 +28,8 @@
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
     document.head.appendChild(s);
-    var nos = document.createElement('noscript');
-    var ifr = document.createElement('iframe');
-    ifr.src = 'https://www.googletagmanager.com/ns.html?id=' + GTM_ID;
-    ifr.height = '0'; ifr.width = '0';
-    ifr.style.display = 'none'; ifr.style.visibility = 'hidden';
-    nos.appendChild(ifr);
-    document.body.insertBefore(nos, document.body.firstChild);
   }
 
-  function nascondi() {
-    if (box) { box.remove(); box = null; }
-  }
-
-  /* sblocca il Google tag (gtag.js, in head) solo dopo l'accettazione:
-     di default parte con 'denied' per restare conformi al GDPR */
   function aggiornaConsensoGtag() {
     if (typeof window.gtag !== 'function') return;
     window.gtag('consent', 'update', {
@@ -54,13 +41,13 @@
   }
 
   function imposta(v) {
-    localStorage.setItem(KEY, v);
-    nascondi();
+    try { localStorage.setItem(KEY, v); } catch (e) { /* navigazione privata */ }
+    if (box) { box.remove(); box = null; }
     if (v === 'accettato') { caricaGTM(); aggiornaConsensoGtag(); }
   }
 
   /* percorso base: '' in radice, '../' dentro trattamenti/ */
-  var base = document.body.getAttribute('data-base') || '';
+  var base = /\/trattamenti\//.test(location.pathname) ? '../' : '';
 
   function crea() {
     if (box || stato()) return;
@@ -71,8 +58,8 @@
     box.innerHTML =
       '<p class="cookie-testo">Cookie <strong>tecnici</strong> sempre attivi; quelli di <strong>misurazione</strong> (Google) solo se accetti. <a href="' + base + 'cookie.html">Dettagli</a></p>' +
       '<div class="cookie-azioni">' +
-        '<button class="btn btn-cookie-rifiuta" type="button" id="cookieRifiuta">Rifiuta</button>' +
-        '<button class="btn btn-cookie-accetta" type="button" id="cookieAccetta">Accetta</button>' +
+        '<button class="btn btn-secondario" type="button" id="cookieRifiuta">Rifiuta</button>' +
+        '<button class="btn btn-primario" type="button" id="cookieAccetta">Accetta</button>' +
       '</div>';
     document.body.appendChild(box);
     box.querySelector('#cookieAccetta').addEventListener('click', function () { imposta('accettato'); });
@@ -82,9 +69,8 @@
   if (!stato()) crea();
   if (stato() === 'accettato') { caricaGTM(); aggiornaConsensoGtag(); }
 
-  /* usata da script.js per gli eventi di conversione: se il consenso
-     non è ancora stato dato (o è stato rifiutato), l'evento non
-     viene mai accodato in dataLayer */
+  /* usata da script.js: se il consenso non è stato dato, l'evento
+     non viene accodato in dataLayer (gtag in Consent Mode fa da sé) */
   window.EO_COOKIE = {
     stato: stato,
     push: function (obj) {

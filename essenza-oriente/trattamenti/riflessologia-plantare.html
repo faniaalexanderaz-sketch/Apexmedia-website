@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <!-- Google tag (gtag.js) — Consent Mode: nessun dato pubblicitario finché
-       l'utente non accetta i cookie di misurazione dal banner -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>document.documentElement.className='js';</script>
+  <!-- Google tag (gtag.js) — Consent Mode: nessun cookie di misurazione
+       finché l'utente non accetta dal banner -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -13,21 +16,32 @@
       'analytics_storage': 'denied'
     });
   </script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5XJQW3HMLL"></script>
   <script>
     gtag('js', new Date());
     gtag('config', 'G-5XJQW3HMLL');
     gtag('config', 'AW-17997395114');
+    /* gtag.js parte alla prima interazione o 2,5 s dopo il load: i comandi
+       qui sopra restano in coda nel dataLayer e vengono eseguiti al
+       caricamento, così la pagina resta reattiva mentre si apre. */
+    (function () {
+      var fatto = false;
+      function carica() {
+        if (fatto) return; fatto = true;
+        var s = document.createElement('script'); s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-5XJQW3HMLL';
+        document.head.appendChild(s);
+      }
+      ['pointerdown','keydown','scroll','touchstart'].forEach(function (ev) {
+        addEventListener(ev, carica, { once: true, passive: true });
+      });
+      addEventListener('load', function () { setTimeout(carica, 2500); });
+    })();
   </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" as="image" href="../foto/tratt-riflessologia-plantare.webp" fetchpriority="high" />
   <title>Riflessologia Plantare ad Alessandria — Essenza d'Oriente</title>
   <meta name="description" content="Riflessologia plantare ad Alessandria: 40 o 60 minuti, da 35 €. Stimolazione dei punti riflessi del piede. 5,0★ su Google. Aperti 7/7 fino alle 22:30." />
   <link rel="canonical" href="https://essenzadoriente.it/trattamenti/riflessologia-plantare.html" />
 
-  <!-- Open Graph / Twitter Card: senza questi tag Google, WhatsApp e
-       Facebook non hanno nessuna immagine da mostrare nell'anteprima
-       del link, e appare solo testo. -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://essenzadoriente.it/trattamenti/riflessologia-plantare.html" />
   <meta property="og:title" content="Riflessologia Plantare ad Alessandria — Essenza d'Oriente" />
@@ -39,15 +53,13 @@
   <meta name="twitter:description" content="Riflessologia plantare ad Alessandria: 40 o 60 minuti, da 35 €. Stimolazione dei punti riflessi del piede. 5,0★ su Google. Aperti 7/7 fino alle 22:30." />
   <meta name="twitter:image" content="https://essenzadoriente.it/foto/tratt-riflessologia-plantare.jpg" />
 
+  <link rel="preload" href="../fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="icon" href="../favicon-192.png" type="image/png" sizes="192x192" />
   <link rel="apple-touch-icon" href="../favicon-180.png" />
-
-  <!-- Google Tag Manager: si carica da cookie.js SOLO dopo il consenso
-       dell'utente dal banner cookie, mai prima -->
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -72,158 +84,208 @@
     }
   }
   </script>
-  <!-- animazioni d'ingresso (animazioni.js): l'hero resta nascosta solo finché
-       GSAP la prende in carico, mai più di 1,8s -->
-  <link rel="preload" href="../vendor/gsap/gsap-bundle.min.js" as="script" />
-  <script>
-    if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.documentElement.classList.add('anim-attesa');
-      setTimeout(function () { document.documentElement.classList.remove('anim-attesa'); }, 1800);
-    }
-  </script>
 </head>
-<body class="pagina-tratt" data-base="../">
-  <header class="top">
-    <div class="top-inizio">
-      <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-      <a class="marchio" href="../index.html">
+<body class="pagina-tratt">
+  <header class="top" id="top">
+    <div class="top-inner">
+      <a class="marchio" href="../index.html" aria-label="Essenza d'Oriente, torna all'inizio">
         <span class="marchio-nome">Essenza d'Oriente</span>
         <span class="marchio-sotto">Centro Olistico</span>
       </a>
-    </div>
-    <nav class="top-nav" aria-label="Sezioni">
-      <a href="../index.html#trattamenti">Trattamenti</a>
-      <a href="#prenota">Prenota</a>
-      <a href="../index.html#dove">Dove siamo</a>
-    </nav>
-    <div class="top-azioni">
-      <a class="btn btn-chiama" href="tel:+393317153533"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> Chiama</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> WhatsApp</a>
+      <span class="firma" lang="zh" aria-label="Firma cinese del centro">东方之<span class="cuore">心</span>养生馆</span>
+      <nav class="top-nav" aria-label="Sezioni">
+        <a href="../index.html#trattamenti">Trattamenti</a>
+        <a href="../index.html#recensioni">Recensioni</a>
+        <a href="../index.html#dove">Dove siamo</a>
+      </nav>
+      <a class="top-tel" href="tel:+393317153533"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> 331 715 3533</a>
+      <a class="btn btn-primario" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-origine="header">Prenota</a>
     </div>
   </header>
-
-  <div class="menu-scrim" id="menuScrim" hidden></div>
-  <aside class="menu-drawer" id="menuDrawer" hidden aria-label="Menu del sito">
-    <div class="menu-drawer-testa">
-      <span class="marchio-nome">Essenza d'Oriente</span>
-      <button class="menu-chiudi" id="menuChiudi" aria-label="Chiudi il menu">×</button>
-    </div>
-    <nav class="menu-sezioni">
-      <a href="../index.html#trattamenti">Trattamenti</a>
-      <a href="../index.html#prenota">Prenota</a>
-      <a href="../index.html#dove">Dove siamo</a>
-    </nav>
-    <p class="menu-titolo">I nostri trattamenti</p>
-    <ul class="menu-tratt-lista">
-      <li><a href="../massaggio-oli-essenziali.html"><span class="menu-tratt-nome">Massaggio Oli Essenziali</span><span class="menu-tratt-info">Cervicale e schiena · 60 min · 60 €</span></a></li>
-      <li><a href="../tuina-shiatsu.html"><span class="menu-tratt-nome">Tuina Shiatsu</span><span class="menu-tratt-info">50 min · 50 €</span></a></li>
-      <li><a href="../massaggio-spa.html"><span class="menu-tratt-nome">Massaggio Spa</span><span class="menu-tratt-info">Corpo completo · 90 min · 90 €</span></a></li>
-      <li><a href="../riflessologia-plantare.html"><span class="menu-tratt-nome">Riflessologia Plantare</span><span class="menu-tratt-info">40 min 35 € · 60 min 50 €</span></a></li>
-      <li><a href="../coppettazione.html"><span class="menu-tratt-nome">Coppettazione</span><span class="menu-tratt-info">Cupping · 25 €</span></a></li>
-      <li><a href="../gua-sha.html"><span class="menu-tratt-nome">Gua Sha</span><span class="menu-tratt-info">25 €</span></a></li>
-      <li><a href="../pulizia-orecchie.html"><span class="menu-tratt-nome">Pulizia delle Orecchie</span><span class="menu-tratt-info">Tecnica tradizionale cinese · 25 €</span></a></li>
-      <li><a href="../pedicure.html"><span class="menu-tratt-nome">Pedicure</span><span class="menu-tratt-info">Stile tradizionale cinese · 35 €</span></a></li>
-    </ul>
-    <div class="menu-drawer-cta">
-      <a class="btn btn-prenota" href="../index.html#prenota">Prenota ora</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
-    </div>
-  </aside>
-
-  <div class="barra-mobile" role="navigation" aria-label="Contatti rapidi">
-    <a class="btn btn-chiama" href="tel:+393317153533"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> Chiama</a>
-    <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> WhatsApp</a>
+  <div class="barra-mobile" id="barraMobile" role="navigation" aria-label="Azioni rapide">
+    <a class="btn btn-primario" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-tratt="riflessologia-plantare" data-origine="barra">Prenota ora</a>
+    <a class="barra-icona wa" href="https://wa.me/393317153533" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg></a>
+    <a class="barra-icona" href="tel:+393317153533" aria-label="Chiama 331 715 3533"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></a>
   </div>
 
   <main>
-    <section class="hero-tratt">
-      <span class="etichetta">Essenza d'Oriente · Alessandria</span>
-      <h1>Riflessologia Plantare ad Alessandria</h1>
-      <p class="hero-sub">40 o 60 minuti · <span class="stelle" aria-hidden="true">★★★★★</span> 5,0 su Google</p>
-      <p><a class="btn btn-prenota" href="#prenota">Prenota questo trattamento</a></p>
-    </section>
-
-    <div class="foto-tratt">
-      <div class="foto-tratt-box">
-        <div class="foto-tratt-track">
-          <img class="foto-tratt-img" src="../foto/tratt-riflessologia-plantare.jpg" alt="Riflessologia Plantare — Essenza d'Oriente, Alessandria" loading="lazy"
-               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
-          <img class="foto-tratt-img" src="../foto/tratt-riflessologia-plantare-2.jpg" alt="Riflessologia Plantare — Essenza d'Oriente, Alessandria" loading="lazy"
-               onload="this.closest('.foto-tratt-box').classList.add('foto-ok')" onerror="this.remove()" />
+    <section class="hero hero-tratt" aria-labelledby="h1">
+      <div class="hero-inner">
+        <div>
+          <nav class="briciole" aria-label="Percorso">
+            <a href="../index.html">Home</a><span aria-hidden="true">›</span>
+            <a href="../index.html#trattamenti">Trattamenti</a><span aria-hidden="true">›</span>
+            <span aria-current="page">Riflessologia Plantare</span>
+          </nav>
+          <h1 id="h1">Riflessologia Plantare ad Alessandria</h1>
+          <p class="hero-sub">Stimolazione dei punti riflessi della pianta del piede. Si tolgono solo le scarpe.</p>
+          <p class="hero-prezzo"><strong>35 €</strong><span>40 min · versione da 60 min: 50 €</span></p>
+          <p class="hero-fiducia"><span>5,0</span><span class="stella" aria-hidden="true">★</span><span>· 146 recensioni Google</span></p>
+          <div class="hero-azioni">
+            <a class="btn btn-primario" id="heroCta" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-tratt="riflessologia-plantare" data-origine="hero">Prenota questo trattamento</a>
+            <a class="link-testo" href="https://wa.me/393317153533?text=Ciao!%20Vorrei%20informazioni%20su%3A%20Riflessologia%20Plantare%20(40%20min%2C%2035%20%E2%82%AC)." target="_blank" rel="noopener">Chiedi su WhatsApp</a>
+          </div>
+          <p class="hero-stato" id="statoApertura">Aperti oggi fino alle 22:30</p>
         </div>
-        <div class="foto-segnaposto" role="img" aria-label="Foto del trattamento Riflessologia Plantare in arrivo">[FOTO TRATTAMENTO DA INSERIRE]</div>
-      </div>
-    </div>
-
-    <section class="sez">
-      <div class="corpo-tratt">
-        <h2>Che cos'è</h2>
-        <p>Una pratica che stimola punti specifici della pianta del piede, secondo la mappa della riflessologia plantare, che ha origine sia nella medicina tradizionale cinese sia in studi occidentali del primo Novecento. Ogni zona del piede è tradizionalmente associata a un'area del corpo.</p>
-        <h2>Benefici</h2>
-        <p>Favorisce il rilassamento generale e può contribuire ad alleviare stress e tensione. Molte persone la trovano utile per il senso di pesantezza alle gambe dopo una giornata in piedi.</p>
-        <h2>Come si svolge</h2>
-        <p>La seduta dura 40 o 60 minuti, a seconda della durata scelta. Si resta comodamente seduti o sdraiati: si tolgono solo le calzature.</p>
-        
-      </div>
-      <div class="box-prezzo">
-        <span><strong>35 € / 50 €</strong></span>
-        <span>40 min / 60 min · Essenza d'Oriente, Alessandria</span>
-        <a class="btn btn-prenota" href="#prenota">Prenota</a>
-      </div>
-    </section>
-
-    <div class="loto-divisore" aria-hidden="true"><svg width="34" height="20" viewBox="0 0 34 20" fill="currentColor"><path d="M17 1.5c2.4 3.4 2.4 7.6 0 11.4-2.4-3.8-2.4-8 0-11.4Z"/><path d="M10.6 4.4c3 1.9 4.6 5 4.3 8.7-3.6-1-5.7-4.1-4.3-8.7Z"/><path d="M23.4 4.4c1.4 4.6-.7 7.7-4.3 8.7-.3-3.7 1.3-6.8 4.3-8.7Z"/><path d="M4.4 8.6c3.6.4 7 2.4 8.6 5.6-4 1.1-7.6-1.5-8.6-5.6Z"/><path d="M29.6 8.6c-1 4.1-4.6 6.7-8.6 5.6 1.6-3.2 5-5.2 8.6-5.6Z"/><path d="M9.5 16.2c2.3-.9 5-.9 7.5-.9s5.2 0 7.5.9c-2.3 1.6-4.8 2.3-7.5 2.3s-5.2-.7-7.5-2.3Z" opacity=".55"/></svg></div>
-
-    <section class="sez" id="prenota">
-      <div class="sez-testa">
-        <span class="etichetta">Prenotazione online</span>
-        <h2>Prenota il tuo trattamento</h2>
-        <p>Scegli data e ora, ricevi conferma immediata.</p>
-      </div>
-      <div class="prenota-cornice">
-        <iframe
-          id="treatwellFrame"
-          class="treatwell-frame"
-          src="https://widget.treatwell.it/salone/532986/menu/"
-          title="Prenota il tuo trattamento — calendario Treatwell"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-      <div class="prenota-alt">
-        <p>Preferisci prenotare al telefono o su WhatsApp?</p>
-        <a class="btn btn-chiama" href="tel:+393317153533">Chiama: 331 715 3533</a>
-        <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+        <figure class="hero-foto">
+          <picture>
+            <source srcset="../foto/tratt-riflessologia-plantare.webp" type="image/webp" />
+            <img src="../foto/tratt-riflessologia-plantare.jpg" alt="Riflessologia Plantare da Essenza d'Oriente, Alessandria" width="1200" height="669" fetchpriority="high" decoding="async" />
+          </picture>
+        </figure>
       </div>
     </section>
 
     <section class="sez">
-      <div class="sez-testa">
-        <span class="etichetta">Indecisa/o tra due opzioni?</span>
-        <h2>Altri trattamenti</h2>
+      <div class="sez-inner corpo">
+        <div class="corpo-testo" data-reveal>
+          <h2>Che cos'è</h2>
+          <p>Una pratica che stimola punti specifici della pianta del piede, secondo la mappa della riflessologia plantare, che ha origine sia nella medicina tradizionale cinese sia in studi occidentali del primo Novecento. Ogni zona del piede è tradizionalmente associata a un'area del corpo.</p>
+          <h2>Benefici</h2>
+          <p>Favorisce il rilassamento generale e può contribuire ad alleviare stress e tensione. Molte persone la trovano utile per il senso di pesantezza alle gambe dopo una giornata in piedi.</p>
+          <h2>Come si svolge</h2>
+          <p>La seduta dura 40 o 60 minuti, a seconda della durata scelta. Si resta comodamente seduti o sdraiati: si tolgono solo le calzature.</p>
+          
+        </div>
+        <aside class="box-prezzo" aria-label="Prezzo e prenotazione">
+          <span class="box-prezzo-cifra">35 €</span>
+          <span class="box-prezzo-info">Riflessologia Plantare · 40 min<br />Versione da 60 min: 50 €</span>
+          <a class="btn btn-primario btn-pieno" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-tratt="riflessologia-plantare" data-origine="box">Prenota</a>
+          <a class="btn btn-wa btn-pieno" href="https://wa.me/393317153533?text=Ciao!%20Vorrei%20informazioni%20su%3A%20Riflessologia%20Plantare%20(40%20min%2C%2035%20%E2%82%AC)." target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> WhatsApp</a>
+          <span class="box-prezzo-nota">oppure chiama <a href="tel:+393317153533">331 715 3533</a></span>
+        </aside>
       </div>
-      <div class="altri-tratt">
-        <a href="massaggio-oli-essenziali.html">Massaggio Oli Essenziali</a>
-        <a href="tuina-shiatsu.html">Tuina Shiatsu</a>
-        <a href="coppettazione.html">Coppettazione</a>
-        <a href="gua-sha.html">Gua Sha</a>
-        <a href="massaggio-spa.html">Massaggio Spa</a>
-        <a href="pulizia-orecchie.html">Pulizia delle Orecchie</a>
-        <a href="pedicure.html">Pedicure</a>
+    </section>
+
+    <section class="sez sez-bianca" aria-labelledby="corrTitolo">
+      <div class="sez-inner">
+        <div class="sez-testa" data-reveal>
+          <h2 id="corrTitolo">Potrebbe interessarti anche</h2>
+        </div>
+        <div class="correlati" data-reveal>
+          <a class="correlato" href="pedicure.html">
+            <div><strong>Pedicure</strong><span>Seduta breve · 35 €</span></div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="correlato" href="tuina-shiatsu.html">
+            <div><strong>Tuina Shiatsu</strong><span>50 min · 50 €</span></div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="correlato" href="massaggio-spa.html">
+            <div><strong>Massaggio Spa</strong><span>90 min · 90 €</span></div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sez prenota" id="prenota" aria-labelledby="prenotaTitolo">
+      <div class="prenota-inner">
+        <div class="filetto" aria-hidden="true"></div>
+        <h2 id="prenotaTitolo">Prenota: Riflessologia Plantare</h2>
+        <p>Scegli trattamento, giorno e fascia oraria. Conferma su Treatwell o scrivici su WhatsApp: nessuna carta, nessun account.</p>
+        <div class="prenota-azioni">
+          <a class="btn btn-primario" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-tratt="riflessologia-plantare" data-origine="sezione">Prenota online</a>
+          <a class="btn btn-wa" href="https://wa.me/393317153533?text=Ciao!%20Vorrei%20prenotare%3A%20Riflessologia%20Plantare%20(40%20min%2C%2035%20%E2%82%AC).%20Quando%20avete%20disponibilit%C3%A0%3F" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> WhatsApp</a>
+        </div>
+        <p class="prenota-tel">oppure chiama <a href="tel:+393317153533">331 715 3533</a> · tutti i giorni 9:30–22:30</p>
       </div>
     </section>
   </main>
 
   <footer class="fondo">
-    <p class="fondo-nome">Essenza d'Oriente</p>
-    <p class="fondo-cinese" lang="zh">东方之<span class="cuore">♥</span>养生馆</p>
-    <p>Via San Lorenzo 46, 15121 Alessandria · <a href="tel:+393317153533">331 715 3533</a></p>
-    <p class="fondo-legale">P.IVA 14409690964 · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
+    <div class="fondo-inner">
+      <div>
+        <p class="fondo-nome">Essenza d'Oriente · Centro Olistico</p>
+        <span class="firma" lang="zh" aria-label="Firma cinese del centro">东方之<span class="cuore">心</span>养生馆</span>
+      </div>
+      <div class="fondo-contatti">
+        <span>Via San Lorenzo 46, 15121 Alessandria (AL)</span>
+        <a href="tel:+393317153533">331 715 3533</a>
+        <a href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <div class="fondo-social" aria-label="Seguici sui social">
+        <a href="https://www.instagram.com/essenza.oriente?igsh=ZWpoOTBrMDduMW5i&amp;utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram di Essenza d'Oriente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.facebook.com/share/14jFSwS4Ysi/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook di Essenza d'Oriente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 8.5h-2c-.8 0-1.5.7-1.5 1.5v2h3.3l-.4 3H11.5V21h-3v-6H6.5v-3h2V9.8C8.5 7.1 10 5.5 12.5 5.5H15v3Z"/></svg></a>
+        <a href="https://www.tiktok.com/@essenzaoriente.al" target="_blank" rel="noopener" aria-label="TikTok di Essenza d'Oriente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14.5 3.5c.4 2.3 2 3.8 4.3 4v2.9c-1.5 0-2.9-.4-4.3-1.3v6.4a5.7 5.7 0 1 1-5.7-5.7c.3 0 .6 0 .9.1v3a2.7 2.7 0 1 0 1.9 2.6V3.5h2.9Z"/></svg></a>
+      </div>
+      <p class="fondo-legale">P.IVA 14409690964 · <a href="../privacy.html">Privacy</a> · <a href="../cookie.html">Cookie</a></p>
+    </div>
   </footer>
-
-  <script src="../cookie.js"></script>
-  <script src="../script.js"></script>
-  <script src="../vendor/gsap/gsap-bundle.min.js"></script>
-  <script src="../animazioni.js"></script>
+  <!-- Prenotazione in 3 passi: senza JavaScript resta nascosto e ogni
+       bottone "Prenota" porta direttamente a Treatwell. -->
+  <div class="scrim" id="sheetScrim" hidden></div>
+  <aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitolo">
+    <div class="sheet-testa">
+      <div>
+        <p class="sheet-passi" id="sheetPassi" aria-hidden="true"><span class="is-on">1</span><span>2</span><span>3</span></p>
+        <h2 class="sheet-titolo" id="sheetTitolo">Scegli il trattamento</h2>
+      </div>
+      <button type="button" class="sheet-chiudi" id="sheetChiudi" aria-label="Chiudi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="sheet-corpo">
+      <section class="passo" data-passo="1">
+        <div class="sheet-lista" id="sheetLista">
+        <button type="button" class="sheet-tratt" data-id="massaggio-oli-essenziali" data-nome="Massaggio Oli Essenziali" data-durata="60 min" data-prezzo="60 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Massaggio Oli Essenziali</span><span class="sheet-tratt-info">60 min · 60 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="tuina-shiatsu" data-nome="Tuina Shiatsu" data-durata="50 min" data-prezzo="50 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Tuina Shiatsu</span><span class="sheet-tratt-info">50 min · 50 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="massaggio-spa" data-nome="Massaggio Spa" data-durata="90 min" data-prezzo="90 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Massaggio Spa</span><span class="sheet-tratt-info">90 min · 90 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="riflessologia-plantare" data-nome="Riflessologia Plantare" data-durata="40 min" data-prezzo="35 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Riflessologia Plantare</span><span class="sheet-tratt-info">40 min · 35 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="coppettazione" data-nome="Coppettazione" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Coppettazione</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="gua-sha" data-nome="Gua Sha" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Gua Sha</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="pulizia-orecchie" data-nome="Pulizia delle Orecchie" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Pulizia delle Orecchie</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="pedicure" data-nome="Pedicure" data-durata="Seduta breve" data-prezzo="35 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Pedicure</span><span class="sheet-tratt-info">Seduta breve · 35 €</span>
+        </button>
+        </div>
+      </section>
+      <section class="passo" data-passo="2" hidden>
+        <p class="sheet-scelta"><span id="sheetScelta"></span><button type="button" class="sheet-cambia" data-vai="1">Cambia</button></p>
+        <p class="sheet-stato" id="sheetStato">Aperti oggi fino alle 22:30</p>
+        <p class="sheet-label">Giorno</p>
+        <div class="chips" id="sheetGiorni" role="group" aria-label="Giorno">
+          <button type="button" class="chip" data-giorno="oggi" aria-pressed="false">Oggi</button>
+          <button type="button" class="chip" data-giorno="domani" aria-pressed="false">Domani</button>
+          <button type="button" class="chip" data-giorno="data" aria-pressed="false">Scelgo io la data</button>
+        </div>
+        <label class="sheet-data" id="sheetDataWrap" hidden><span>Data</span><input type="date" id="sheetData" /></label>
+        <p class="sheet-label">Fascia oraria</p>
+        <div class="chips" id="sheetFasce" role="group" aria-label="Fascia oraria">
+          <button type="button" class="chip" data-fascia="mattina" data-inizio="570" data-fine="780" aria-pressed="false">Mattina<small>9:30–13:00</small></button>
+          <button type="button" class="chip" data-fascia="pomeriggio" data-inizio="780" data-fine="1080" aria-pressed="false">Pomeriggio<small>13:00–18:00</small></button>
+          <button type="button" class="chip" data-fascia="sera" data-inizio="1080" data-fine="1350" aria-pressed="false">Sera<small>18:00–22:30</small></button>
+        </div>
+        <button type="button" class="btn btn-primario btn-pieno" id="sheetAvanti" disabled>Continua</button>
+      </section>
+      <section class="passo" data-passo="3" hidden>
+        <dl class="riepilogo">
+          <dt>Trattamento</dt><dd id="riepTratt"></dd>
+          <dt>Prezzo</dt><dd id="riepPrezzo"></dd>
+          <dt>Giorno</dt><dd id="riepGiorno"></dd>
+          <dt>Fascia</dt><dd id="riepFascia"></dd>
+        </dl>
+        <p class="sheet-cerca" id="sheetCerca" hidden>Su Treatwell cerca: <strong id="sheetCercaTesto"></strong></p>
+        <a class="btn btn-primario btn-pieno" id="sheetTw" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener">Conferma su Treatwell</a>
+        <a class="btn btn-wa btn-pieno" id="sheetWa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> Conferma su WhatsApp</a>
+        <p class="sheet-tel">oppure chiama <a href="tel:+393317153533">331 715 3533</a></p>
+        <p class="sheet-piede"><button type="button" class="sheet-indietro" data-vai="2">← Indietro</button></p>
+      </section>
+    </div>
+  </aside>
+  <script src="../cookie.js" defer></script>
+  <script src="../script.js" defer></script>
 </body>
 </html>

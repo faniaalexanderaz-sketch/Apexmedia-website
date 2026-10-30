@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <!-- Google tag (gtag.js) — Consent Mode: nessun dato pubblicitario finché
-       l'utente non accetta i cookie di misurazione dal banner -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>document.documentElement.className='js';</script>
+  <!-- Google tag (gtag.js) — Consent Mode: nessun cookie di misurazione
+       finché l'utente non accetta dal banner -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -13,16 +16,46 @@
       'analytics_storage': 'denied'
     });
   </script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5XJQW3HMLL"></script>
   <script>
     gtag('js', new Date());
     gtag('config', 'G-5XJQW3HMLL');
     gtag('config', 'AW-17997395114');
+    /* gtag.js parte alla prima interazione o 2,5 s dopo il load: i comandi
+       qui sopra restano in coda nel dataLayer e vengono eseguiti al
+       caricamento, così la pagina resta reattiva mentre si apre. */
+    (function () {
+      var fatto = false;
+      function carica() {
+        if (fatto) return; fatto = true;
+        var s = document.createElement('script'); s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-5XJQW3HMLL';
+        document.head.appendChild(s);
+      }
+      ['pointerdown','keydown','scroll','touchstart'].forEach(function (ev) {
+        addEventListener(ev, carica, { once: true, passive: true });
+      });
+      addEventListener('load', function () { setTimeout(carica, 2500); });
+    })();
   </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Informativa Privacy — Essenza d'Oriente</title>
+  <meta name="description" content="Informativa privacy di Essenza d'Oriente, centro olistico ad Alessandria." />
+  <link rel="canonical" href="https://essenzadoriente.it/privacy.html" />
   <meta name="robots" content="noindex" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://essenzadoriente.it/privacy.html" />
+  <meta property="og:title" content="Informativa Privacy — Essenza d'Oriente" />
+  <meta property="og:description" content="Informativa privacy di Essenza d'Oriente, centro olistico ad Alessandria." />
+  <meta property="og:image" content="https://essenzadoriente.it/foto/brand-banner.jpg" />
+  <meta property="og:locale" content="it_IT" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Informativa Privacy — Essenza d'Oriente" />
+  <meta name="twitter:description" content="Informativa privacy di Essenza d'Oriente, centro olistico ad Alessandria." />
+  <meta name="twitter:image" content="https://essenzadoriente.it/foto/brand-banner.jpg" />
+
+  <link rel="preload" href="fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
@@ -30,69 +63,138 @@
   <link rel="apple-touch-icon" href="favicon-180.png" />
 </head>
 <body>
-  <header class="top">
-    <div class="top-inizio">
-      <button class="menu-btn" id="menuBtn" aria-label="Apri il menu dei trattamenti" aria-expanded="false" aria-controls="menuDrawer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
-      <a class="marchio" href="index.html">
+  <header class="top" id="top">
+    <div class="top-inner">
+      <a class="marchio" href="#inizio" aria-label="Essenza d'Oriente, torna all'inizio">
         <span class="marchio-nome">Essenza d'Oriente</span>
         <span class="marchio-sotto">Centro Olistico</span>
       </a>
+      <span class="firma" lang="zh" aria-label="Firma cinese del centro">东方之<span class="cuore">心</span>养生馆</span>
+      <nav class="top-nav" aria-label="Sezioni">
+        <a href="#trattamenti">Trattamenti</a>
+        <a href="#recensioni">Recensioni</a>
+        <a href="#dove">Dove siamo</a>
+      </nav>
+      <a class="top-tel" href="tel:+393317153533"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> 331 715 3533</a>
+      <a class="btn btn-primario" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-origine="header">Prenota</a>
     </div>
   </header>
-
-  <div class="menu-scrim" id="menuScrim" hidden></div>
-  <aside class="menu-drawer" id="menuDrawer" hidden aria-label="Menu del sito">
-    <div class="menu-drawer-testa">
-      <span class="marchio-nome">Essenza d'Oriente</span>
-      <button class="menu-chiudi" id="menuChiudi" aria-label="Chiudi il menu">×</button>
-    </div>
-    <nav class="menu-sezioni">
-      <a href="index.html#trattamenti">Trattamenti</a>
-      <a href="index.html#prenota">Prenota</a>
-      <a href="index.html#dove">Dove siamo</a>
-    </nav>
-    <p class="menu-titolo">I nostri trattamenti</p>
-    <ul class="menu-tratt-lista">
-      <li><a href="trattamenti/massaggio-oli-essenziali.html"><span class="menu-tratt-nome">Massaggio Oli Essenziali</span><span class="menu-tratt-info">Cervicale e schiena · 60 min · 60 €</span></a></li>
-      <li><a href="trattamenti/tuina-shiatsu.html"><span class="menu-tratt-nome">Tuina Shiatsu</span><span class="menu-tratt-info">50 min · 50 €</span></a></li>
-      <li><a href="trattamenti/massaggio-spa.html"><span class="menu-tratt-nome">Massaggio Spa</span><span class="menu-tratt-info">Corpo completo · 90 min · 90 €</span></a></li>
-      <li><a href="trattamenti/riflessologia-plantare.html"><span class="menu-tratt-nome">Riflessologia Plantare</span><span class="menu-tratt-info">40 min 35 € · 60 min 50 €</span></a></li>
-      <li><a href="trattamenti/coppettazione.html"><span class="menu-tratt-nome">Coppettazione</span><span class="menu-tratt-info">Cupping · 25 €</span></a></li>
-      <li><a href="trattamenti/gua-sha.html"><span class="menu-tratt-nome">Gua Sha</span><span class="menu-tratt-info">25 €</span></a></li>
-      <li><a href="trattamenti/pulizia-orecchie.html"><span class="menu-tratt-nome">Pulizia delle Orecchie</span><span class="menu-tratt-info">Con micro-telecamera · 25 €</span></a></li>
-      <li><a href="index.html#trattamenti"><span class="menu-tratt-nome">Pedicure</span><span class="menu-tratt-info">35 €</span></a></li>
-    </ul>
-    <div class="menu-drawer-cta">
-      <a class="btn btn-prenota" href="index.html#prenota">Prenota ora</a>
-      <a class="btn btn-wa" href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
-    </div>
-  </aside>
-  <main class="sez">
-    <div class="corpo-tratt">
-      <span class="etichetta">Informativa</span>
-      <h1>Privacy</h1>
-      <p><em>Ultimo aggiornamento: [DATA DI PUBBLICAZIONE]</em></p>
-      <h2>Titolare del trattamento</h2>
-      <p>Essenza d'Oriente — Via San Lorenzo 46, 15121 Alessandria (AL). P.IVA 14409690964. Contatti: <a href="tel:+393317153533">331 715 3533</a>.</p>
-      <h2>Quali dati trattiamo</h2>
-      <p>Questo sito non richiede registrazione e non raccoglie direttamente dati personali tramite moduli propri. I dati che ci fornisci telefonando, scrivendo su WhatsApp o prenotando tramite il widget Treatwell sono trattati al solo scopo di gestire la tua prenotazione.</p>
-      <h2>Prenotazione online (Treatwell)</h2>
-      <p>La prenotazione online è gestita da Treatwell (Hotspring Ventures Ltd), che agisce come autonomo titolare per i dati inseriti nel modulo di prenotazione. Consulta l'informativa privacy di Treatwell sul loro sito per i dettagli.</p>
-      <h2>Statistiche e misurazione</h2>
-      <p>Il sito utilizza Google Tag Manager e strumenti di misurazione per capire quante persone visitano la pagina e migliorare il servizio. Per i dettagli sui cookie utilizzati, consulta la <a href="cookie.html">cookie policy</a>.</p>
-      <h2>I tuoi diritti</h2>
-      <p>Puoi richiedere in ogni momento l'accesso, la rettifica o la cancellazione dei tuoi dati contattandoci ai recapiti sopra indicati. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali.</p>
-    </div>
+  <div class="barra-mobile" id="barraMobile" role="navigation" aria-label="Azioni rapide">
+    <a class="btn btn-primario" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-origine="barra">Prenota ora</a>
+    <a class="barra-icona wa" href="https://wa.me/393317153533" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg></a>
+    <a class="barra-icona" href="tel:+393317153533" aria-label="Chiama 331 715 3533"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></a>
+  </div>
+  <main>
+    <section class="sez">
+      <div class="sez-inner legale" data-reveal>
+        <h1>Privacy</h1>
+        <p><em>Ultimo aggiornamento: 30 ottobre 2026</em></p>
+        <h2>Titolare del trattamento</h2>
+        <p>Essenza d'Oriente — Via San Lorenzo 46, 15121 Alessandria (AL). P.IVA 14409690964. Contatti: <a href="tel:+393317153533">331 715 3533</a>.</p>
+        <h2>Quali dati trattiamo</h2>
+        <p>Questo sito non richiede registrazione e non raccoglie direttamente dati personali tramite moduli propri. I dati che ci fornisci telefonando, scrivendo su WhatsApp o prenotando su Treatwell sono trattati al solo scopo di gestire la tua prenotazione.</p>
+        <h2>Prenotazione online (Treatwell)</h2>
+        <p>La prenotazione online avviene sul sito di Treatwell (Hotspring Ventures Ltd), che si apre in una nuova scheda e agisce come autonomo titolare per i dati inseriti nel modulo di prenotazione. Consulta l'informativa privacy di Treatwell sul loro sito per i dettagli.</p>
+        <h2>Statistiche e misurazione</h2>
+        <p>Il sito utilizza Google Analytics, Google Ads e Google Tag Manager per capire quante persone visitano la pagina e misurare l'efficacia delle campagne. I cookie di misurazione si attivano solo se accetti dal banner. Per i dettagli, consulta la <a href="cookie.html">cookie policy</a>.</p>
+        <h2>I tuoi diritti</h2>
+        <p>Puoi richiedere in ogni momento l'accesso, la rettifica o la cancellazione dei tuoi dati contattandoci ai recapiti sopra indicati. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali.</p>
+      </div>
+    </section>
   </main>
   <footer class="fondo">
-    <p class="fondo-nome">Essenza d'Oriente</p>
-    <p>Via San Lorenzo 46, 15121 Alessandria · <a href="tel:+393317153533">331 715 3533</a></p>
-    <p class="fondo-legale"><a href="index.html">Torna al sito</a> · <a href="cookie.html">Cookie</a></p>
+    <div class="fondo-inner">
+      <div>
+        <p class="fondo-nome">Essenza d'Oriente · Centro Olistico</p>
+        <span class="firma" lang="zh" aria-label="Firma cinese del centro">东方之<span class="cuore">心</span>养生馆</span>
+      </div>
+      <div class="fondo-contatti">
+        <span>Via San Lorenzo 46, 15121 Alessandria (AL)</span>
+        <a href="tel:+393317153533">331 715 3533</a>
+        <a href="https://wa.me/393317153533" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <div class="fondo-social" aria-label="Seguici sui social">
+        <a href="https://www.instagram.com/essenza.oriente?igsh=ZWpoOTBrMDduMW5i&amp;utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram di Essenza d'Oriente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.facebook.com/share/14jFSwS4Ysi/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook di Essenza d'Oriente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 8.5h-2c-.8 0-1.5.7-1.5 1.5v2h3.3l-.4 3H11.5V21h-3v-6H6.5v-3h2V9.8C8.5 7.1 10 5.5 12.5 5.5H15v3Z"/></svg></a>
+        <a href="https://www.tiktok.com/@essenzaoriente.al" target="_blank" rel="noopener" aria-label="TikTok di Essenza d'Oriente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14.5 3.5c.4 2.3 2 3.8 4.3 4v2.9c-1.5 0-2.9-.4-4.3-1.3v6.4a5.7 5.7 0 1 1-5.7-5.7c.3 0 .6 0 .9.1v3a2.7 2.7 0 1 0 1.9 2.6V3.5h2.9Z"/></svg></a>
+      </div>
+      <p class="fondo-legale">P.IVA 14409690964 · <a href="privacy.html">Privacy</a> · <a href="cookie.html">Cookie</a></p>
+    </div>
   </footer>
-
-  <script src="cookie.js"></script>
-  <script src="script.js"></script>
+  <!-- Prenotazione in 3 passi: senza JavaScript resta nascosto e ogni
+       bottone "Prenota" porta direttamente a Treatwell. -->
+  <div class="scrim" id="sheetScrim" hidden></div>
+  <aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitolo">
+    <div class="sheet-testa">
+      <div>
+        <p class="sheet-passi" id="sheetPassi" aria-hidden="true"><span class="is-on">1</span><span>2</span><span>3</span></p>
+        <h2 class="sheet-titolo" id="sheetTitolo">Scegli il trattamento</h2>
+      </div>
+      <button type="button" class="sheet-chiudi" id="sheetChiudi" aria-label="Chiudi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="sheet-corpo">
+      <section class="passo" data-passo="1">
+        <div class="sheet-lista" id="sheetLista">
+        <button type="button" class="sheet-tratt" data-id="massaggio-oli-essenziali" data-nome="Massaggio Oli Essenziali" data-durata="60 min" data-prezzo="60 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Massaggio Oli Essenziali</span><span class="sheet-tratt-info">60 min · 60 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="tuina-shiatsu" data-nome="Tuina Shiatsu" data-durata="50 min" data-prezzo="50 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Tuina Shiatsu</span><span class="sheet-tratt-info">50 min · 50 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="massaggio-spa" data-nome="Massaggio Spa" data-durata="90 min" data-prezzo="90 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Massaggio Spa</span><span class="sheet-tratt-info">90 min · 90 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="riflessologia-plantare" data-nome="Riflessologia Plantare" data-durata="40 min" data-prezzo="35 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Riflessologia Plantare</span><span class="sheet-tratt-info">40 min · 35 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="coppettazione" data-nome="Coppettazione" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Coppettazione</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="gua-sha" data-nome="Gua Sha" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Gua Sha</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="pulizia-orecchie" data-nome="Pulizia delle Orecchie" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Pulizia delle Orecchie</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
+        </button>
+        <button type="button" class="sheet-tratt" data-id="pedicure" data-nome="Pedicure" data-durata="Seduta breve" data-prezzo="35 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
+          <span class="sheet-tratt-nome">Pedicure</span><span class="sheet-tratt-info">Seduta breve · 35 €</span>
+        </button>
+        </div>
+      </section>
+      <section class="passo" data-passo="2" hidden>
+        <p class="sheet-scelta"><span id="sheetScelta"></span><button type="button" class="sheet-cambia" data-vai="1">Cambia</button></p>
+        <p class="sheet-stato" id="sheetStato">Aperti oggi fino alle 22:30</p>
+        <p class="sheet-label">Giorno</p>
+        <div class="chips" id="sheetGiorni" role="group" aria-label="Giorno">
+          <button type="button" class="chip" data-giorno="oggi" aria-pressed="false">Oggi</button>
+          <button type="button" class="chip" data-giorno="domani" aria-pressed="false">Domani</button>
+          <button type="button" class="chip" data-giorno="data" aria-pressed="false">Scelgo io la data</button>
+        </div>
+        <label class="sheet-data" id="sheetDataWrap" hidden><span>Data</span><input type="date" id="sheetData" /></label>
+        <p class="sheet-label">Fascia oraria</p>
+        <div class="chips" id="sheetFasce" role="group" aria-label="Fascia oraria">
+          <button type="button" class="chip" data-fascia="mattina" data-inizio="570" data-fine="780" aria-pressed="false">Mattina<small>9:30–13:00</small></button>
+          <button type="button" class="chip" data-fascia="pomeriggio" data-inizio="780" data-fine="1080" aria-pressed="false">Pomeriggio<small>13:00–18:00</small></button>
+          <button type="button" class="chip" data-fascia="sera" data-inizio="1080" data-fine="1350" aria-pressed="false">Sera<small>18:00–22:30</small></button>
+        </div>
+        <button type="button" class="btn btn-primario btn-pieno" id="sheetAvanti" disabled>Continua</button>
+      </section>
+      <section class="passo" data-passo="3" hidden>
+        <dl class="riepilogo">
+          <dt>Trattamento</dt><dd id="riepTratt"></dd>
+          <dt>Prezzo</dt><dd id="riepPrezzo"></dd>
+          <dt>Giorno</dt><dd id="riepGiorno"></dd>
+          <dt>Fascia</dt><dd id="riepFascia"></dd>
+        </dl>
+        <p class="sheet-cerca" id="sheetCerca" hidden>Su Treatwell cerca: <strong id="sheetCercaTesto"></strong></p>
+        <a class="btn btn-primario btn-pieno" id="sheetTw" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener">Conferma su Treatwell</a>
+        <a class="btn btn-wa btn-pieno" id="sheetWa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> Conferma su WhatsApp</a>
+        <p class="sheet-tel">oppure chiama <a href="tel:+393317153533">331 715 3533</a></p>
+        <p class="sheet-piede"><button type="button" class="sheet-indietro" data-vai="2">← Indietro</button></p>
+      </section>
+    </div>
+  </aside>
+  <script src="cookie.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
