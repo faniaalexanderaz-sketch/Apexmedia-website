@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor-gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal; font-weight: 600; font-display: block;
+        src: url('fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Lato';
+        font-style: normal; font-weight: 700; font-display: block;
+        src: url('fonts/lato-latin-700-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Jost';
+        font-style: normal; font-weight: 100 900; font-display: block;
+        src: url('fonts/jost-latin-wght-normal.woff2') format('woff2-variations'), url('fonts/jost-latin-wght-normal.woff2') format('woff2');
+      }
+      :root {
+        --bosco: #2C5138;
+        --bosco-scuro: #17271c;
+        --oro: #B99A45;
+        --oro-chiaro: #D9C68C;
+        --pergamena: #F3EBD6;
+        --ink: #16220f;
+        --serif: 'Cormorant Garamond', Georgia, serif;
+        --sans: 'Lato', Arial, sans-serif;
+        --display: 'Jost', 'Lato', Arial, sans-serif;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bosco-scuro); }
+
+      /* Full-frame footage. Each <video> is a direct, independently timed stage child. */
+      .bg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; display: block; }
+      .scene { position: absolute; inset: 0; overflow: hidden; }
+      .grade {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(23,39,28,.72) 0%, rgba(23,39,28,.30) 30%, rgba(23,39,28,.05) 55%, rgba(12,23,16,.70) 100%);
+      }
+      .flash { position: absolute; inset: 0; background: var(--oro-chiaro); opacity: 0; }
+
+      /* TEXT BAND — top safe zone (y 300–760): clear of the TikTok top bar and of the
+         subject (ear / hands sit around the vertical centre of every clip). */
+      .band { position: absolute; left: 70px; right: 90px; top: 320px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+      .eyebrow {
+        display: inline-flex; align-items: center; gap: 12px;
+        font-family: var(--sans); font-weight: 700; font-size: 28px; letter-spacing: .16em; text-transform: uppercase;
+        color: var(--oro-chiaro); background: rgba(23,39,28,.72); border: 2px solid rgba(217,198,140,.55);
+        border-radius: 999px; padding: 14px 26px;
+      }
+      .headline {
+        font-family: var(--display); font-weight: 800; font-size: 92px; line-height: 1.02; letter-spacing: -0.015em;
+        color: #fff; text-shadow: 0 4px 18px rgba(0,0,0,.65), 0 0 2px rgba(0,0,0,.9);
+        -webkit-text-stroke: 1px rgba(0,0,0,.25); paint-order: stroke fill;
+      }
+      .headline .gold { color: var(--oro-chiaro); }
+      .headline.serif { font-family: var(--serif); font-weight: 600; font-size: 128px; letter-spacing: 0; line-height: .98; }
+      .sub {
+        font-family: var(--sans); font-weight: 700; font-size: 40px; color: var(--pergamena);
+        text-shadow: 0 2px 10px rgba(0,0,0,.8);
+      }
+      .line { display: block; }
+
+      /* Chip — icon + label pill. Used for the ritual tag and the three benefits. */
+      .chip {
+        display: inline-flex; align-items: center; gap: 18px;
+        background: rgba(23,39,28,.80); border: 2px solid var(--oro);
+        border-radius: 999px; padding: 18px 34px 18px 20px; backdrop-filter: blur(6px);
+        box-shadow: 0 14px 34px rgba(0,0,0,.4); white-space: nowrap;
+      }
+      .chip .ico { width: 64px; height: 64px; border-radius: 50%; background: var(--oro); display: flex; align-items: center; justify-content: center; flex: none; }
+      .chip .ico svg { width: 38px; height: 38px; stroke: var(--ink); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .chip .txt { font-family: var(--sans); font-weight: 700; font-size: 40px; color: #fff; letter-spacing: .01em; }
+      .chips { position: absolute; left: 70px; top: 700px; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+
+      /* Price badge — compact, never covers more than the upper-middle of the frame. */
+      .badge {
+        position: absolute; left: 70px; right: 90px; top: 560px;
+        display: flex; flex-direction: column; align-items: center; gap: 8px;
+        background: rgba(23,39,28,.82); border: 3px solid var(--oro);
+        border-radius: 34px; padding: 44px 60px 48px; backdrop-filter: blur(6px);
+        box-shadow: 0 18px 44px rgba(0,0,0,.45);
+      }
+      .badge .tag { width: 92px; height: 92px; border-radius: 50%; background: var(--oro); display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+      .badge .tag svg { width: 54px; height: 54px; stroke: var(--ink); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .badge .eyebrow { background: transparent; border: 0; padding: 0; font-size: 30px; }
+      .badge .num { font-family: var(--serif); font-weight: 600; font-size: 220px; line-height: .95; color: var(--oro-chiaro); }
+      .badge .label { font-family: var(--sans); font-weight: 700; font-size: 44px; color: #fff; letter-spacing: .04em; }
+
+      /* Final CTA scene */
+      .brandmark { position: absolute; left: 70px; right: 90px; top: 420px; text-align: center; color: #fff; }
+      .brandmark .name { font-family: var(--serif); font-weight: 600; font-size: 118px; line-height: 1; text-shadow: 0 4px 20px rgba(0,0,0,.7); }
+      .brandmark .cn { font-family: var(--sans); font-size: 44px; color: var(--oro-chiaro); margin-top: 14px; letter-spacing: .1em; text-shadow: 0 2px 8px rgba(0,0,0,.9); }
+      .brandmark .tratt { font-family: var(--sans); font-weight: 700; font-size: 36px; color: var(--pergamena); margin-top: 34px; letter-spacing: .14em; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,.9); }
+      .cta-wrap { position: absolute; left: 70px; right: 90px; top: 1090px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+      .cta {
+        display: inline-flex; align-items: center; gap: 20px;
+        background: var(--oro); color: var(--ink); font-family: var(--sans); font-weight: 700;
+        font-size: 56px; padding: 34px 70px; border-radius: 999px; white-space: nowrap;
+        box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      }
+      .cta svg { width: 48px; height: 48px; stroke: var(--ink); fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+      .url { font-family: var(--display); font-weight: 700; font-size: 60px; color: #fff; letter-spacing: .02em; text-shadow: 0 3px 14px rgba(0,0,0,.8); }
+      .addr { font-family: var(--sans); font-weight: 700; font-size: 32px; color: var(--pergamena); letter-spacing: .06em; text-shadow: 0 2px 8px rgba(0,0,0,.9); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+
+      <!-- SCENE 1 — HOOK 0.00–3.00 (clip1 0.4–3.4) -->
+      <video class="bg clip" id="s1-vid" src="media/clip1.mp4" muted playsinline
+             data-start="0" data-duration="3" data-media-start="0.4" data-track-index="0"></video>
+      <div class="scene clip" id="s1-overlay" data-start="0" data-duration="3" data-track-index="1">
+        <div class="grade"></div>
+        <div class="band">
+          <div class="eyebrow" id="s1-eyebrow">Tecnica tradizionale cinese</div>
+          <div class="headline" id="s1-h">
+            <span class="line" id="s1-l1">Hai mai provato</span>
+            <span class="line" id="s1-l2">la <span class="gold">pulizia</span></span>
+            <span class="line" id="s1-l3">delle <span class="gold">orecchie</span>?</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 2 — RITUALE 3.00–5.80 (clip2 0–2.8) · whip pan -->
+      <video class="bg clip" id="s2-vid" src="media/clip2.mp4" muted playsinline
+             data-start="3" data-duration="2.8" data-media-start="0" data-track-index="0"></video>
+      <div class="scene clip" id="s2-overlay" data-start="3" data-duration="2.8" data-track-index="1">
+        <div class="grade"></div>
+        <div class="band">
+          <div class="headline serif" id="s2-h">Cǎi ěr <span class="gold">采耳</span></div>
+          <div class="sub" id="s2-sub">Il rituale cinese dell'orecchio</div>
+        </div>
+        <div class="chips">
+          <div class="chip" id="s2-chip">
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 3-2 4-3 6-1 1.5-1 4-3.5 4S8 18 8 16"/><path d="M9.5 10a2.5 2.5 0 0 1 5 0c0 1.2-.8 1.8-1.5 2.6"/></svg></div>
+            <div class="txt">Tradizione di Chengdu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3 — STRUMENTI 5.80–8.80 (clip3 0.2–3.2) · gold flash match cut -->
+      <video class="bg clip" id="s3-vid" src="media/clip3.mp4" muted playsinline
+             data-start="5.8" data-duration="3" data-media-start="0.2" data-track-index="0"></video>
+      <div class="scene clip" id="s3-overlay" data-start="5.8" data-duration="3" data-track-index="1">
+        <div class="grade"></div>
+        <div class="flash" id="s3-flash"></div>
+        <div class="band">
+          <div class="headline" id="s3-h">
+            <span class="line" id="s3-l1">Strumenti in</span>
+            <span class="line" id="s3-l2"><span class="gold">bambù</span> e <span class="gold">metallo</span></span>
+          </div>
+          <div class="sub" id="s3-sub">Tocco delicato. Zero fastidio.</div>
+        </div>
+        <div class="chips">
+          <div class="chip" id="s3-chip">
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20 18 6"/><path d="M15 3l6 6-3 3-6-6z"/><path d="M4 20l3-1 1-3"/></svg></div>
+            <div class="txt">Nessuna micro-camera</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 4 — BENEFICI 8.80–12.40 (clip4 0.3–3.9) · zoom-cut -->
+      <video class="bg clip" id="s4-vid" src="media/clip4.mp4" muted playsinline
+             data-start="8.8" data-duration="3.6" data-media-start="0.3" data-track-index="0"></video>
+      <div class="scene clip" id="s4-overlay" data-start="8.8" data-duration="3.6" data-track-index="1">
+        <div class="grade"></div>
+        <div class="band">
+          <div class="eyebrow" id="s4-eyebrow">Cosa senti dopo</div>
+        </div>
+        <div class="chips" id="s4-chips" style="top: 440px; gap: 26px;">
+          <div class="chip" id="s4-c1">
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3c-2 4-6 5-6 10a6 6 0 0 0 12 0c0-5-4-6-6-10z"/><path d="M12 21v-6"/></svg></div>
+            <div class="txt">Leggerezza immediata</div>
+          </div>
+          <div class="chip" id="s4-c2">
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 15l4-4 4 4 4-6 6 6"/><path d="M3 21h18"/></svg></div>
+            <div class="txt">Comfort auricolare</div>
+          </div>
+          <div class="chip" id="s4-c3">
+            <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg></div>
+            <div class="txt">Relax profondo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 5 — PIUMINO 12.40–13.30 (clip5 0–0.9) · glitch cut, flash insert -->
+      <video class="bg clip" id="s5-vid" src="media/clip5.mp4" muted playsinline
+             data-start="12.4" data-duration="0.9" data-media-start="0" data-track-index="0"></video>
+      <div class="scene clip" id="s5-overlay" data-start="12.4" data-duration="0.9" data-track-index="1">
+        <div class="grade"></div>
+        <div class="band">
+          <div class="headline" id="s5-h">
+            <span class="line">Il tocco finale:</span>
+            <span class="line"><span class="gold">il piumino</span> ✦</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 6 — PREZZO 13.30–16.60 (clip1 2.4–5.7) · whip pan -->
+      <video class="bg clip" id="s6-vid" src="media/clip1.mp4" muted playsinline
+             data-start="13.3" data-duration="3.3" data-media-start="2.4" data-track-index="0"></video>
+      <div class="scene clip" id="s6-overlay" data-start="13.3" data-duration="3.3" data-track-index="1">
+        <div class="grade"></div>
+        <div class="badge" id="s6-badge">
+          <div class="tag"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-9-9V3h8l9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/><path d="M13 13l-1.5 1.5"/></svg></div>
+          <div class="eyebrow">Pulizia delle orecchie</div>
+          <div class="num" id="s6-num">25 €</div>
+          <div class="label">a seduta · prezzo pieno</div>
+        </div>
+      </div>
+
+      <!-- SCENE 7 — CTA 16.60–20.00 (banner brand) · scale pop + hold -->
+      <div class="scene clip" id="s7" data-start="16.6" data-duration="3.4" data-track-index="0">
+        <img class="bg" id="s7-img" src="media/banner.jpg" alt="" />
+        <div class="grade" style="background: linear-gradient(180deg, rgba(23,39,28,.80) 0%, rgba(23,39,28,.55) 50%, rgba(12,23,16,.85) 100%);"></div>
+        <div class="brandmark" id="s7-brand">
+          <div class="name">Essenza d'Oriente</div>
+          <div class="cn">东方之养生馆</div>
+          <div class="tratt">Pulizia delle orecchie · 25 €</div>
+        </div>
+        <div class="cta-wrap">
+          <div class="cta" id="s7-cta">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg>
+            <span>Prenota sul sito</span>
+          </div>
+          <div class="url" id="s7-url">essenzadoriente.it</div>
+          <div class="addr" id="s7-addr">Alessandria · Via San Lorenzo 46</div>
+        </div>
+      </div>
+
+      <!-- AUDIO — musica semplice di sottofondo, fade-in 0.6s, fade-out 18.4–20 -->
+      <audio class="clip" id="bgm" src="media/audio/bgm.mp3" data-start="0" data-duration="20" data-volume="0.75" data-track-index="20"
+             data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.6,"v":1},{"t":18.2,"v":1},{"t":20,"v":0}]}]}'></audio>
+
+      <!-- MICRO SFX — uno per ogni taglio e pop-in -->
+      <audio class="clip" id="sfx-hit" src="media/audio/sfx/impact-bass-1.mp3" data-start="0" data-duration="2.1" data-volume="0.7" data-track-index="22"></audio>
+      <audio class="clip" id="sfx-whoosh-1" src="media/audio/sfx/whoosh.mp3" data-start="2.9" data-duration="0.57" data-volume="0.8" data-track-index="23"></audio>
+      <audio class="clip" id="sfx-pop-1" src="media/audio/sfx/pop.mp3" data-start="3.55" data-duration="0.72" data-volume="0.7" data-track-index="24"></audio>
+      <audio class="clip" id="sfx-whoosh-2" src="media/audio/sfx/whoosh-short.mp3" data-start="5.72" data-duration="0.57" data-volume="0.8" data-track-index="25"></audio>
+      <audio class="clip" id="sfx-pop-2" src="media/audio/sfx/pop.mp3" data-start="6.55" data-duration="0.72" data-volume="0.7" data-track-index="26"></audio>
+      <audio class="clip" id="sfx-whoosh-3" src="media/audio/sfx/whoosh.mp3" data-start="8.72" data-duration="0.57" data-volume="0.8" data-track-index="27"></audio>
+      <audio class="clip" id="sfx-pop-3" src="media/audio/sfx/pop.mp3" data-start="9.2" data-duration="0.72" data-volume="0.7" data-track-index="28"></audio>
+      <audio class="clip" id="sfx-pop-4" src="media/audio/sfx/pop.mp3" data-start="9.75" data-duration="0.72" data-volume="0.7" data-track-index="29"></audio>
+      <audio class="clip" id="sfx-pop-5" src="media/audio/sfx/pop.mp3" data-start="10.3" data-duration="0.72" data-volume="0.7" data-track-index="30"></audio>
+      <audio class="clip" id="sfx-sparkle-1" src="media/audio/sfx/sparkle.mp3" data-start="12.4" data-duration="1.8" data-volume="0.8" data-track-index="31"></audio>
+      <audio class="clip" id="sfx-whoosh-4" src="media/audio/sfx/whoosh-short.mp3" data-start="13.22" data-duration="0.57" data-volume="0.8" data-track-index="32"></audio>
+      <audio class="clip" id="sfx-chime-1" src="media/audio/sfx/chime.mp3" data-start="13.7" data-duration="2.5" data-volume="0.8" data-track-index="33"></audio>
+      <audio class="clip" id="sfx-whoosh-5" src="media/audio/sfx/whoosh.mp3" data-start="16.52" data-duration="0.57" data-volume="0.8" data-track-index="34"></audio>
+      <audio class="clip" id="sfx-sparkle-2" src="media/audio/sfx/sparkle.mp3" data-start="17.3" data-duration="1.8" data-volume="0.8" data-track-index="35"></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const rise = (sel, at, d = 0.4) => tl.fromTo(sel, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: d, ease: "power3.out" }, at);
+      const pop = (sel, at) => tl.fromTo(sel, { opacity: 0, scale: 0.7, y: 14 }, { opacity: 1, scale: 1, y: 0, duration: 0.38, ease: "back.out(2.2)" }, at);
+
+      tl.set(["#s2-vid","#s6-vid"], { x: 0, scale: 1, filter: "blur(0px)" }, 0);
+      tl.set("#s7-img", { scale: 1 }, 0);
+
+      // --- Scene 1 HOOK: slow push-in + headline rises line by line ---
+      tl.fromTo("#s1-vid", { scale: 1.0 }, { scale: 1.12, duration: 3, ease: "none" }, 0);
+      rise("#s1-eyebrow", 0.1);
+      rise("#s1-l1", 0.25); rise("#s1-l2", 0.4); rise("#s1-l3", 0.55);
+
+      // --- Cut 1 -> Scene 2: whip pan (blur + slide in) ---
+      tl.fromTo("#s2-vid", { x: 260, filter: "blur(16px)" }, { x: 0, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }, 3);
+      tl.to("#s2-vid", { scale: 1.06, duration: 2.8, ease: "none" }, 3);
+      rise("#s2-h", 3.15, 0.45); rise("#s2-sub", 3.35);
+      pop("#s2-chip", 3.55);
+
+      // --- Cut 2 -> Scene 3: gold flash match cut ---
+      tl.fromTo("#s3-flash", { opacity: 0.7 }, { opacity: 0, duration: 0.28, ease: "power1.out" }, 5.8);
+      tl.fromTo("#s3-vid", { scale: 1.08 }, { scale: 1.0, duration: 3, ease: "none" }, 5.8);
+      rise("#s3-l1", 5.95); rise("#s3-l2", 6.1); rise("#s3-sub", 6.3);
+      pop("#s3-chip", 6.55);
+
+      // --- Cut 3 -> Scene 4: zoom-cut, then three benefit chips stagger in ---
+      tl.fromTo("#s4-vid", { scale: 1.25 }, { scale: 1.0, duration: 0.38, ease: "power3.out" }, 8.8);
+      rise("#s4-eyebrow", 8.9);
+      pop("#s4-c1", 9.2); pop("#s4-c2", 9.75); pop("#s4-c3", 10.3);
+
+      // --- Cut 4 -> Scene 5: glitch cut (stepped jitter on the overlay) + fast punch ---
+      tl.fromTo("#s5-overlay", { x: -18, skewX: 3 }, { x: 0, skewX: 0, duration: 0.18, ease: "steps(4)" }, 12.4);
+      tl.fromTo("#s5-vid", { scale: 1.18, filter: "contrast(1.4)" }, { scale: 1.0, filter: "contrast(1)", duration: 0.35, ease: "power3.out" }, 12.4);
+      tl.fromTo("#s5-h", { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power3.out" }, 12.45);
+
+      // --- Cut 5 -> Scene 6: whip pan (opposite direction) + price badge pop with chime ---
+      tl.fromTo("#s6-vid", { x: -260, filter: "blur(16px)" }, { x: 0, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }, 13.3);
+      tl.to("#s6-vid", { scale: 1.08, duration: 3.3, ease: "none" }, 13.3);
+      tl.fromTo("#s6-badge", { opacity: 0, scale: 0.75, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "back.out(2)" }, 13.7);
+      tl.fromTo("#s6-num", { scale: 1.25 }, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.5)" }, 14.0);
+
+      // --- Cut 6 -> Scene 7: scale pop on brand photo, lockup, CTA pulse ---
+      tl.fromTo("#s7-img", { scale: 1.12 }, { scale: 1.0, duration: 0.35, ease: "power3.out" }, 16.6);
+      tl.fromTo("#s7-img", { scale: 1.0 }, { scale: 1.05, duration: 3.04, ease: "none" }, 16.96);
+      rise("#s7-brand", 16.75, 0.5);
+      pop("#s7-cta", 17.3);
+      tl.fromTo("#s7-cta", { scale: 1 }, { scale: 1.06, duration: 0.45, ease: "sine.inOut", repeat: 4, yoyo: true }, 17.8);
+      rise("#s7-url", 17.55);
+      rise("#s7-addr", 17.75);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
