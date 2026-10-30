@@ -183,11 +183,12 @@ export function Pricing({ numero = "04" }: { numero?: string }) {
           <div className="lg:col-span-6">
             <SectionLabel numero={numero} testo="Pacchetti" />
             <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
-              Prezzi chiari.
+              Pacchetti di social media marketing con prezzi chiari.
             </h2>
           </div>
           <p className="text-body text-ink/75 md:text-lg lg:col-span-4 lg:col-start-9 lg:pb-2">
-            Scegli da dove partire. Lo adattiamo alla tua attività.
+            Gestione social, contenuti, campagne e sito: scegli da dove partire,
+            lo adattiamo alla tua attività.
           </p>
         </div>
 

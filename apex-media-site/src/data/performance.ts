@@ -5,13 +5,13 @@
 
 export const performanceIntro = {
   label: "Performance",
-  title: "Siamo un’agenzia performance.",
+  title: "Siamo un’agenzia di performance marketing.",
   text: "Non ci interessa quante persone vedono un post. Ci interessa quante ti scrivono, prenotano o entrano in negozio. Ogni campagna, video e pagina è costruita per quello.",
 };
 
 export const adsBlock = {
   kicker: "Pubblicità su Google, Meta e TikTok",
-  title: "Campagne che portano richieste, non solo click.",
+  title: "Gestione campagne Google Ads e Meta Ads orientate alle conversioni.",
   text: "Su Google intercettiamo chi sta già cercando il tuo servizio in zona. Su Meta e TikTok lo mostriamo a chi non ti conosce ancora. In entrambi i casi misuriamo chiamate, messaggi e prenotazioni, non le visualizzazioni.",
   /** Cosa ottimizziamo ogni settimana sulle campagne attive */
   checklist: [
@@ -26,7 +26,7 @@ export const adsBlock = {
 
 export const funnelBlock = {
   kicker: "Funnel personalizzato",
-  title: "Un percorso costruito sulla tua attività, non un modello.",
+  title: "Funnel di marketing personalizzato per la tua attività.",
   text: "Un funnel è la strada che una persona fa da quando ti scopre a quando diventa cliente e poi torna. La disegniamo noi, attività per attività: un ristorante non è un centro estetico e uno studio professionale non è un negozio.",
   steps: [
     { n: "01", name: "Scoperta", text: "Video, Reel, TikTok e annunci fanno vedere la tua attività alle persone giuste, nella tua zona." },
@@ -39,7 +39,7 @@ export const funnelBlock = {
 
 export const socialBlock = {
   kicker: "Social media management",
-  title: "Strategia, piano editoriale, pubblicazione. Tutto da noi.",
+  title: "Social media management: strategia, piano editoriale e gestione completa.",
   text: "Un social media manager dedicato pensa cosa dire, quando dirlo e in che formato. Tu non devi inventare niente: ricevi il piano del mese, approvi, e i contenuti escono da soli.",
   points: [
     { what: "Strategia", how: "Obiettivo, pubblico e tono decisi insieme, poi rivisti ogni mese sui numeri." },

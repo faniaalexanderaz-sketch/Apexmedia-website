@@ -73,7 +73,7 @@ export const brandPlan = {
   id: "brand",
   kicker: "Su misura",
   name: "Brand da zero",
-  title: "Per chi vuole diventare un marchio, non solo avere una pagina.",
+  title: "Brand identity e lancio: per chi vuole costruire un marchio, non solo una pagina.",
   text: "Nome, logo, identità visiva, materiali stampati, sito, social e campagna di lancio: un unico progetto, un unico team, un preventivo scritto dopo la call.",
   features: [
     "Analisi di mercato e dei concorrenti",

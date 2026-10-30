@@ -18,7 +18,7 @@ export function Faq({ numero = "06" }: { numero?: string }) {
             <Reveal className="lg:sticky lg:top-[calc(var(--nav-h)+40px)]">
               <SectionLabel numero={numero} testo="FAQ" />
               <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
-                Domande.
+                Domande frequenti.
               </h2>
             </Reveal>
           </div>

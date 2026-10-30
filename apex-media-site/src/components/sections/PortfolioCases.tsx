@@ -221,11 +221,11 @@ export function PortfolioCases({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
           </div>
           <div className="lg:col-span-9" data-work-head>
             <Heading className="h-display text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
-              Settori diversi. Stesso obiettivo: più clienti.
+              Portfolio: siti web, e-commerce e campagne per attività locali.
             </Heading>
             <p className="text-body mt-5 text-ink/75 md:text-lg">
-              Una parte delle attività che seguiamo ogni giorno, ad Alessandria
-              e non solo. Ogni sito lo puoi aprire e provare.
+              Progetti realizzati per attività di Alessandria e del Piemonte, in
+              settori diversi. Ogni sito lo puoi aprire e provare.
             </p>
           </div>
         </div>

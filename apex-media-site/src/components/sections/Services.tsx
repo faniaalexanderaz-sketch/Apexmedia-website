@@ -255,12 +255,13 @@ export function Services() {
               className="h-display text-[clamp(2rem,1rem+3.8vw,4.5rem)]"
               data-services-title
             >
-              Cosa facciamo. Tutto, in casa.
+              Servizi di marketing digitale per attività locali.
             </h2>
             <p className="text-body mt-6 text-[17px] text-ink/80 md:text-lg">
-              Strategia, grafica, video, campagne, sito, stampe e analisi: un
-              solo team, nessun fornitore in mezzo. Scorri per vedere ogni
-              servizio da vicino.
+              Social media marketing, produzione video, campagne Google Ads e
+              Meta Ads, siti web, brand identity e analisi di mercato. Un’unica
+              agenzia ad Alessandria che segue strategia, produzione e
+              risultati.
             </p>
           </div>
         </div>
@@ -287,7 +288,7 @@ export function Services() {
                     <a
                       href={`#servizio-${s.id}`}
                       aria-current={isActive ? "true" : undefined}
-                      className={`flex w-full items-baseline gap-5 py-4 text-left font-display text-[clamp(1.75rem,1rem+2vw,3rem)] font-bold leading-none tracking-tightest transition-colors duration-300 ${isActive ? "" : "text-ink/30 hover:text-ink/60"}`}
+                      className={`flex w-full items-baseline gap-5 py-4 text-left font-display text-[clamp(1.6rem,1rem+1.7vw,2.6rem)] font-bold leading-[1.05] tracking-tightest transition-colors duration-300 ${isActive ? "" : "text-ink/30 hover:text-ink/60"}`}
                     >
                       <span
                         className={`font-mono text-[12px] tracking-label ${isActive ? accentText[s.accent] : "text-ink/40"}`}

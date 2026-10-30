@@ -170,7 +170,7 @@ export function Method({ numero = "03" }: { numero?: string }) {
           <div>
             <SectionLabel numero={numero} testo="Metodo" onDark />
             <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)] text-paper">
-              Come lavoriamo.
+              Il nostro metodo di lavoro, in quattro passaggi.
             </h2>
           </div>
           <p className="max-w-[30ch] text-[16px] leading-relaxed text-paper/70 md:text-right">

@@ -20,9 +20,9 @@ export type Service = {
 export const services: Service[] = [
   {
     id: "social",
-    name: "Social media",
+    name: "Social media marketing",
     accent: "blu",
-    tagline: "Il tuo profilo, gestito come un canale che porta clienti.",
+    tagline: "Gestione professionale dei social media: strategia, contenuti e community per far crescere la tua attività.",
     description:
       "Strategia, piano editoriale, grafiche, testi, pubblicazione e risposte. Ti diciamo cosa pubblicare, lo prepariamo noi e tu approvi dal telefono.",
     includes: [
@@ -39,9 +39,9 @@ export const services: Service[] = [
   },
   {
     id: "video",
-    name: "Video",
+    name: "Video marketing",
     accent: "giallo",
-    tagline: "Reel e TikTok girati nella tua attività, con te davanti alla camera.",
+    tagline: "Produzione video per i social: Reel, TikTok e Shorts girati nella tua attività, con te davanti alla camera.",
     description:
       "Veniamo da te con attrezzatura e idee già pronte. In mezza giornata giriamo i contenuti di settimane. Montaggio, sottotitoli, musica e formati per ogni piattaforma li facciamo noi.",
     includes: [
@@ -58,9 +58,9 @@ export const services: Service[] = [
   },
   {
     id: "ads",
-    name: "Pubblicità",
+    name: "Pubblicità online",
     accent: "viola",
-    tagline: "Campagne su Google, Meta e TikTok che portano richieste, non click.",
+    tagline: "Campagne Google Ads, Meta Ads e TikTok Ads ottimizzate per generare richieste, prenotazioni e chiamate.",
     description:
       "Impostiamo il tracciamento prima di spendere un euro: chiamate, messaggi WhatsApp e prenotazioni contati uno a uno. Poi ottimizziamo ogni settimana su quello che converte.",
     includes: [
@@ -79,7 +79,7 @@ export const services: Service[] = [
     id: "web",
     name: "Siti web",
     accent: "ink",
-    tagline: "Siti e landing page veloci, fatti per farti contattare o prenotare.",
+    tagline: "Realizzazione di siti web e landing page veloci, progettati per trasformare le visite in contatti.",
     description:
       "Come quelli che vedi nel portfolio: design su misura, prenotazioni online o WhatsApp in un tocco, testi scritti per Google e per chi legge dal telefono.",
     includes: [
@@ -96,9 +96,9 @@ export const services: Service[] = [
   },
   {
     id: "brand",
-    name: "Brand & design",
+    name: "Brand identity",
     accent: "tricolor",
-    tagline: "Da zero a un marchio: nome, logo, identità e materiali stampati.",
+    tagline: "Brand identity completa: naming, logo, immagine coordinata e materiali di stampa per la tua attività.",
     description:
       "Se parti da zero o vuoi rifare tutto, costruiamo il brand completo: logo, colori, font, tono di voce, e poi biglietti, insegna, menu, volantini, vetrofanie. Tutto coerente, dal profilo Instagram al bancone.",
     includes: [
@@ -117,7 +117,7 @@ export const services: Service[] = [
     id: "analisi",
     name: "Analisi e report",
     accent: "ink",
-    tagline: "Prima di muoverci studiamo mercato, concorrenti e numeri.",
+    tagline: "Analisi di mercato, studio dei competitor e report periodici: ogni decisione parte dai dati.",
     description:
       "Ogni progetto parte da un’analisi scritta: cosa fanno i tuoi concorrenti in zona, cosa cercano le persone, dove perdi clienti oggi. E ogni mese ricevi un report che si capisce senza essere del mestiere.",
     includes: [
