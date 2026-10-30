@@ -6,7 +6,7 @@ message: "Scopri la pulizia delle orecchie in stile tradizionale cinese da Essen
 destination: "TikTok / Instagram Reels (organico)"
 aspect: "9:16 vertical, 1080x1920"
 audience: "Persone ad Alessandria curiose di trattamenti benessere orientali"
-length: "20s"
+length: "26s (durata voiceover)"
 angle: "Curiosità + rituale sensoriale, testo diverso per ogni clip, prezzo pieno senza offerta, CTA prenota sul sito"
 ---
 

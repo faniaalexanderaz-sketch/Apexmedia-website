@@ -1,0 +1,320 @@
+[
+  {
+    "text": "Hai",
+    "start": 0.11,
+    "end": 0.17,
+    "id": "w0"
+  },
+  {
+    "text": "mai",
+    "start": 0.17,
+    "end": 0.33,
+    "id": "w1"
+  },
+  {
+    "text": "provato",
+    "start": 0.4,
+    "end": 0.73,
+    "id": "w2"
+  },
+  {
+    "text": "la",
+    "start": 0.73,
+    "end": 0.82,
+    "id": "w3"
+  },
+  {
+    "text": "pulizia",
+    "start": 0.9,
+    "end": 1.23,
+    "id": "w4"
+  },
+  {
+    "text": "delle",
+    "start": 1.23,
+    "end": 1.51,
+    "id": "w5"
+  },
+  {
+    "text": "orecchie?",
+    "start": 1.51,
+    "end": 1.99,
+    "id": "w6"
+  },
+  {
+    "text": "Una",
+    "start": 2.29,
+    "end": 2.43,
+    "id": "w7"
+  },
+  {
+    "text": "pulizia",
+    "start": 2.43,
+    "end": 3,
+    "id": "w8"
+  },
+  {
+    "text": "delicata",
+    "start": 3.08,
+    "end": 3.7,
+    "id": "w9"
+  },
+  {
+    "text": "e",
+    "start": 3.7,
+    "end": 3.78,
+    "id": "w10"
+  },
+  {
+    "text": "accurata.",
+    "start": 3.78,
+    "end": 4.7,
+    "id": "w11"
+  },
+  {
+    "text": "Tu",
+    "start": 4.86,
+    "end": 4.9,
+    "id": "w12"
+  },
+  {
+    "text": "resti",
+    "start": 4.9,
+    "end": 5.24,
+    "id": "w13"
+  },
+  {
+    "text": "comodo,",
+    "start": 5.24,
+    "end": 5.8,
+    "id": "w14"
+  },
+  {
+    "text": "ci",
+    "start": 5.9,
+    "end": 5.95,
+    "id": "w15"
+  },
+  {
+    "text": "pensiamo",
+    "start": 5.95,
+    "end": 6.4,
+    "id": "w16"
+  },
+  {
+    "text": "noi.",
+    "start": 6.52,
+    "end": 6.75,
+    "id": "w17"
+  },
+  {
+    "text": "Strumenti",
+    "start": 7.1,
+    "end": 7.78,
+    "id": "w18"
+  },
+  {
+    "text": "in",
+    "start": 7.78,
+    "end": 7.95,
+    "id": "w19"
+  },
+  {
+    "text": "bambù",
+    "start": 7.95,
+    "end": 8.37,
+    "id": "w20"
+  },
+  {
+    "text": "e",
+    "start": 8.37,
+    "end": 8.45,
+    "id": "w21"
+  },
+  {
+    "text": "metallo,",
+    "start": 8.45,
+    "end": 9.28,
+    "id": "w22"
+  },
+  {
+    "text": "tocco",
+    "start": 9.35,
+    "end": 9.68,
+    "id": "w23"
+  },
+  {
+    "text": "leggero.",
+    "start": 9.68,
+    "end": 10.27,
+    "id": "w24"
+  },
+  {
+    "text": "Zero",
+    "start": 10.43,
+    "end": 10.74,
+    "id": "w25"
+  },
+  {
+    "text": "fastidio.",
+    "start": 10.74,
+    "end": 11.6,
+    "id": "w26"
+  },
+  {
+    "text": "Dopo",
+    "start": 11.71,
+    "end": 11.9,
+    "id": "w27"
+  },
+  {
+    "text": "senti",
+    "start": 11.9,
+    "end": 12.21,
+    "id": "w28"
+  },
+  {
+    "text": "subito",
+    "start": 12.28,
+    "end": 12.64,
+    "id": "w29"
+  },
+  {
+    "text": "leggerezza,",
+    "start": 12.74,
+    "end": 13.58,
+    "id": "w30"
+  },
+  {
+    "text": "comfort",
+    "start": 13.95,
+    "end": 14.35,
+    "id": "w31"
+  },
+  {
+    "text": "e",
+    "start": 14.35,
+    "end": 14.46,
+    "id": "w32"
+  },
+  {
+    "text": "un",
+    "start": 14.46,
+    "end": 14.65,
+    "id": "w33"
+  },
+  {
+    "text": "relax",
+    "start": 14.66,
+    "end": 15.11,
+    "id": "w34"
+  },
+  {
+    "text": "profondo.",
+    "start": 15.18,
+    "end": 16,
+    "id": "w35"
+  },
+  {
+    "text": "Ealla",
+    "start": 16.09,
+    "end": 16.61,
+    "id": "w36"
+  },
+  {
+    "text": "fine",
+    "start": 16.68,
+    "end": 17.16,
+    "id": "w37"
+  },
+  {
+    "text": "il",
+    "start": 17.16,
+    "end": 17.31,
+    "id": "w38"
+  },
+  {
+    "text": "tocco",
+    "start": 17.31,
+    "end": 17.64,
+    "id": "w39"
+  },
+  {
+    "text": "del",
+    "start": 17.82,
+    "end": 17.92,
+    "id": "w40"
+  },
+  {
+    "text": "piumino.",
+    "start": 17.92,
+    "end": 18.72,
+    "id": "w41"
+  },
+  {
+    "text": "25",
+    "start": 18.83,
+    "end": 19.29,
+    "id": "w42"
+  },
+  {
+    "text": "euro",
+    "start": 19.29,
+    "end": 19.67,
+    "id": "w43"
+  },
+  {
+    "text": "asseduta.",
+    "start": 19.67,
+    "end": 20.48,
+    "id": "w44"
+  },
+  {
+    "text": "Prenota",
+    "start": 20.56,
+    "end": 21.02,
+    "id": "w45"
+  },
+  {
+    "text": "ora",
+    "start": 21.02,
+    "end": 21.26,
+    "id": "w46"
+  },
+  {
+    "text": "su",
+    "start": 21.26,
+    "end": 21.42,
+    "id": "w47"
+  },
+  {
+    "text": "essenza",
+    "start": 21.42,
+    "end": 21.97,
+    "id": "w48"
+  },
+  {
+    "text": "d'Oriente.it",
+    "start": 21.97,
+    "end": 23.12,
+    "id": "w49"
+  },
+  {
+    "text": "Essenza",
+    "start": 23.23,
+    "end": 23.7,
+    "id": "w50"
+  },
+  {
+    "text": "d'Oriente,",
+    "start": 23.7,
+    "end": 24.63,
+    "id": "w51"
+  },
+  {
+    "text": "Alessandria.",
+    "start": 24.63,
+    "end": 25.62,
+    "id": "w52"
+  }
+]
