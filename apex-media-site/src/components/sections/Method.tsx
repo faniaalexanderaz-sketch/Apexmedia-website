@@ -13,6 +13,7 @@ import {
   MEDIA,
   EASE,
   enterAt,
+  splitWordsIn,
 } from "@/lib/gsap";
 
 /** Conta da 0 al valore, una sola volta, quando entra in vista. */
@@ -67,7 +68,9 @@ export function Method({ numero = "03" }: { numero?: string }) {
           mm.add(MEDIA.desktop, () => {
             if (!fillH) return;
             gsap.set(dots, { opacity: 0, scale: 0.6 });
-            gsap.from("[data-method-head] > *", {
+            const mt = root.querySelector<HTMLElement>("[data-method-head] h2");
+            if (mt) splitWordsIn(mt);
+            gsap.from("[data-method-head] p", {
               opacity: 0,
               y: 16,
               duration: 0.7,
@@ -106,7 +109,11 @@ export function Method({ numero = "03" }: { numero?: string }) {
           mm.add(MEDIA.mobile, () => {
             if (!fillV) return;
             gsap.set(dots, { opacity: 0, scale: 0.6 });
-            gsap.from("[data-method-head] > *", {
+            const mt2 = root.querySelector<HTMLElement>(
+              "[data-method-head] h2",
+            );
+            if (mt2) splitWordsIn(mt2);
+            gsap.from("[data-method-head] p", {
               opacity: 0,
               y: 12,
               duration: 0.6,

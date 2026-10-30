@@ -29,7 +29,12 @@ export function FooterWordmark() {
   );
   return (
     <div ref={ref} className="overflow-hidden" data-footer-wordmark>
-      <svg viewBox="0 0 1000 150" className="block w-full" role="img" aria-label="Apex Media">
+      <svg
+        viewBox="0 0 1000 150"
+        className="block w-full"
+        role="img"
+        aria-label="Apex Media"
+      >
         <text
           x="0"
           y="138"

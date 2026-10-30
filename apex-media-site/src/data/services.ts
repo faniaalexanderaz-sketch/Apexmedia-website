@@ -1,8 +1,18 @@
+export type Accent = "blu" | "giallo" | "viola" | "ink" | "tricolor";
+
 export type Service = {
   id: string;
   name: string;
+  /** Colore del servizio nella sezione "Cosa facciamo" */
+  accent: Accent;
+  tagline: string;
   description: string;
+  /** Cosa facciamo, in concreto */
   includes: string[];
+  /** Cosa ricevi tu */
+  deliverables: string[];
+  /** Strumenti che usiamo */
+  tools: string[];
   /** Valore della voce corrispondente nel form contatti */
   formValue: string;
 };
@@ -11,34 +21,116 @@ export const services: Service[] = [
   {
     id: "social",
     name: "Social media",
+    accent: "blu",
+    tagline: "Il tuo profilo, gestito come un canale che porta clienti.",
     description:
-      "Piano editoriale, pubblicazione e gestione dei profili. Ti diciamo cosa pubblicare e lo facciamo noi.",
-    includes: ["strategia mensile", "testi e grafiche", "report"],
+      "Strategia, piano editoriale, grafiche, testi, pubblicazione e risposte. Ti diciamo cosa pubblicare, lo prepariamo noi e tu approvi dal telefono.",
+    includes: [
+      "Strategia mensile: obiettivo, pubblico, tono di voce",
+      "Piano editoriale con date, formati e temi",
+      "Grafiche su misura, coerenti con il tuo marchio",
+      "Testi, didascalie, hashtag e call to action",
+      "Pubblicazione e gestione di commenti e messaggi",
+      "Ottimizzazione del profilo: bio, highlight, link",
+    ],
+    deliverables: ["Calendario del mese da approvare", "Report con numeri spiegati semplici", "Supporto WhatsApp"],
+    tools: ["Meta Business Suite", "Photoshop", "Illustrator", "Canva Pro"],
     formValue: "Social media",
   },
   {
     id: "video",
     name: "Video",
+    accent: "giallo",
+    tagline: "Reel e TikTok girati nella tua attività, con te davanti alla camera.",
     description:
-      "Reel e TikTok girati da noi nella tua attività, con te o il tuo staff davanti alla camera.",
-    includes: ["idee e copione", "riprese in sede", "montaggio"],
+      "Veniamo da te con attrezzatura e idee già pronte. In mezza giornata giriamo i contenuti di settimane. Montaggio, sottotitoli, musica e formati per ogni piattaforma li facciamo noi.",
+    includes: [
+      "Idee e copione prima di ogni riprese",
+      "Riprese in sede, luci e audio compresi",
+      "Montaggio con ritmo da social, sottotitoli e grafiche",
+      "Versioni verticali per Reel, TikTok e Shorts",
+      "Coaching davanti alla camera per te e il tuo staff",
+      "Archivio ordinato dei contenuti girati",
+    ],
+    deliverables: ["Video pronti da pubblicare", "Copertine e titoli", "Clip extra per le campagne"],
+    tools: ["Premiere Pro", "After Effects", "CapCut", "DaVinci Resolve"],
     formValue: "Video",
   },
   {
     id: "ads",
     name: "Pubblicità",
+    accent: "viola",
+    tagline: "Campagne su Google, Meta e TikTok che portano richieste, non click.",
     description:
-      "Campagne su Meta, Google e TikTok per portare richieste, prenotazioni e chiamate.",
-    includes: ["tracciamento", "creatività", "ottimizzazione continua"],
+      "Impostiamo il tracciamento prima di spendere un euro: chiamate, messaggi WhatsApp e prenotazioni contati uno a uno. Poi ottimizziamo ogni settimana su quello che converte.",
+    includes: [
+      "Ricerca di parole chiave e pubblici per la tua zona",
+      "Campagne Google Search, Meta e TikTok",
+      "Creatività e testi in più versioni, da testare",
+      "Tracciamento di chiamate, WhatsApp e prenotazioni",
+      "Ottimizzazione settimanale di offerte, budget e pubblici",
+      "Pagine di arrivo fatte per convertire",
+    ],
+    deliverables: ["Report chiaro: cosa è stato speso e cosa è arrivato", "Accesso ai tuoi account pubblicitari", "Piano delle prossime mosse"],
+    tools: ["Google Ads", "Meta Ads Manager", "TikTok Ads", "Google Analytics 4", "Tag Manager"],
     formValue: "Pubblicità",
   },
   {
     id: "web",
     name: "Siti web",
+    accent: "ink",
+    tagline: "Siti e landing page veloci, fatti per farti contattare o prenotare.",
     description:
-      "Siti e landing page veloci, fatti per farti contattare o prenotare. Come quelli qui sopra.",
-    includes: ["design", "prenotazioni o WhatsApp", "SEO di base"],
+      "Come quelli che vedi nel portfolio: design su misura, prenotazioni online o WhatsApp in un tocco, testi scritti per Google e per chi legge dal telefono.",
+    includes: [
+      "Design su misura, niente template",
+      "Prenotazioni online, listini, e-commerce",
+      "WhatsApp e chiamata sempre a portata di pollice",
+      "Testi, foto e struttura pensati per convertire",
+      "SEO di base e velocità da primo posto",
+      "Hosting, dominio e manutenzione",
+    ],
+    deliverables: ["Sito pronto e online", "Accessi e guida per aggiornarlo", "Statistiche delle visite e dei contatti"],
+    tools: ["Next.js", "Figma", "Vercel", "Search Console"],
     formValue: "Sito web",
+  },
+  {
+    id: "brand",
+    name: "Brand & design",
+    accent: "tricolor",
+    tagline: "Da zero a un marchio: nome, logo, identità e materiali stampati.",
+    description:
+      "Se parti da zero o vuoi rifare tutto, costruiamo il brand completo: logo, colori, font, tono di voce, e poi biglietti, insegna, menu, volantini, vetrofanie. Tutto coerente, dal profilo Instagram al bancone.",
+    includes: [
+      "Naming e logo, con varianti per ogni uso",
+      "Identità visiva: colori, font, regole d’uso",
+      "Materiali stampati: biglietti, menu, flyer, insegne, vetrofanie",
+      "Template per social e presentazioni",
+      "Foto e video di lancio",
+      "Manuale del marchio in PDF",
+    ],
+    deliverables: ["File sorgente e per la stampa", "Manuale del marchio", "Kit social pronto"],
+    tools: ["Illustrator", "Photoshop", "InDesign", "Figma"],
+    formValue: "Non lo so ancora",
+  },
+  {
+    id: "analisi",
+    name: "Analisi e report",
+    accent: "ink",
+    tagline: "Prima di muoverci studiamo mercato, concorrenti e numeri.",
+    description:
+      "Ogni progetto parte da un’analisi scritta: cosa fanno i tuoi concorrenti in zona, cosa cercano le persone, dove perdi clienti oggi. E ogni mese ricevi un report che si capisce senza essere del mestiere.",
+    includes: [
+      "Analisi dei concorrenti: social, sito, recensioni, offerte",
+      "Ricerca di cosa cerca la gente nella tua zona",
+      "Audit del tuo profilo e del tuo sito",
+      "Obiettivi misurabili e priorità",
+      "Report mensile o quindicinale",
+      "Riunione di revisione e prossime mosse",
+    ],
+    deliverables: ["Documento di analisi iniziale", "Report periodico", "Piano delle priorità"],
+    tools: ["Google Analytics 4", "Search Console", "Meta Insights", "Looker Studio"],
+    formValue: "Non lo so ancora",
   },
 ];
 

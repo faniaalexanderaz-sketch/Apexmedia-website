@@ -68,4 +68,25 @@ export const plans: Plan[] = [
 export const customPlanNote =
   "Ti serve qualcosa di diverso? Costruiamo un pacchetto su misura.";
 
+/** Pacchetto su misura per chi parte da zero o vuole rifare tutto */
+export const brandPlan = {
+  id: "brand",
+  kicker: "Su misura",
+  name: "Brand da zero",
+  title: "Per chi vuole diventare un marchio, non solo avere una pagina.",
+  text: "Nome, logo, identità visiva, materiali stampati, sito, social e campagna di lancio: un unico progetto, un unico team, un preventivo scritto dopo la call.",
+  features: [
+    "Analisi di mercato e dei concorrenti",
+    "Naming, logo e identità visiva",
+    "Stampe: biglietti, insegna, menu, volantini",
+    "Sito web con prenotazioni o e-commerce",
+    "Profili social aperti e impostati",
+    "Shooting foto e video di lancio",
+    "Campagna di lancio su Meta e Google",
+    "Gestione dei primi mesi",
+  ],
+  cta: "Parliamo del tuo brand",
+  formValue: "Non lo so ancora",
+};
+
 export const formatPrice = (n: number) => `${n.toLocaleString("it-IT")} €`;
