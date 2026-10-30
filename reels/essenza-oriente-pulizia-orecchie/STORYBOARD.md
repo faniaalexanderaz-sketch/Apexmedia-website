@@ -6,7 +6,7 @@ status: outline · src: media/clip1.mp4 (0.4–3.4) · rules: ken-burns push-in,
 
 ## Frame 2 — RITUALE (3.00–5.80)
 status: outline · src: media/clip2.mp4 (0–2.8) · transition: whip pan · rules: chip-pop
-"Cǎi ěr · 采耳" + chip icona orecchio "Rituale cinese antico" · SFX whoosh
+"Pulizia delicata e accurata" + chip "Rimozione del cerume" · SFX whoosh
 
 ## Frame 3 — STRUMENTI (5.80–8.80)
 status: outline · src: media/clip3.mp4 (0.2–3.2) · transition: gold flash match cut · rules: text-rise, icon-pop
