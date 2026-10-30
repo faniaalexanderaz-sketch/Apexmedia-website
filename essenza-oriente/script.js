@@ -4,12 +4,16 @@
    questo file aggiunge solo lo sheet di prenotazione, lo stato
    di apertura in tempo reale, l'header compatto e il reveal.
 
+   La prenotazione avviene nel widget Treatwell (iframe in #prenota).
+   Il pannello a 3 passi è una guida: precompila la scelta e porta
+   l'utente al widget, mostrando sopra "Stai prenotando: …".
+
    EVENTI GA4 (gtag diretto + dataLayer per GTM dopo il consenso):
-   | prenota_apri    | apertura sheet (trattamento, origine)         |
-   | prenota_passo   | passo raggiunto nello sheet (passo: 1,2,3)    |
-   | click_treatwell | click su "Conferma su Treatwell"              |
-   | click_whatsapp  | click su qualunque link wa.me                 |
-   | click_chiama    | click su qualunque link tel:                  |
+   | prenota_apri              | apertura guida (trattamento, origine)       |
+   | prenota_passo             | passo raggiunto nella guida (passo: 1,2,3)  |
+   | click_widget_prenotazione | primo click DENTRO il widget Treatwell      |
+   | click_whatsapp            | click su qualunque link wa.me               |
+   | click_chiama              | click su qualunque link tel:                |
    ============================================================= */
 (function () {
   'use strict';
@@ -25,7 +29,7 @@
      l'accettazione. Le etichette Ads si compilano quando esistono
      le azioni di conversione: Google Ads → Obiettivi → Conversioni. */
   var AW_ID = 'AW-17997395114';
-  var AW_ETICHETTE = { click_chiama: '', click_whatsapp: '', click_treatwell: '' };
+  var AW_ETICHETTE = { click_chiama: '', click_whatsapp: '', click_widget_prenotazione: '' };
   function traccia(nome, dati) {
     dati = dati || {};
     if (typeof window.gtag === 'function') window.gtag('event', nome, dati);
@@ -45,6 +49,22 @@
     var href = a.getAttribute('href') || '';
     if (href.indexOf('tel:') === 0) traccia('click_chiama');
     else if (href.indexOf('https://wa.me/') === 0) traccia('click_whatsapp');
+  });
+
+  /* ---------- click_widget_prenotazione: il "blur trick" ----------
+     Il widget Treatwell è un iframe cross-origin: non possiamo ascoltare
+     i click al suo interno. Ma quando l'utente clicca dentro un iframe la
+     finestra principale perde il focus (blur) e document.activeElement
+     diventa l'iframe stesso: è un segnale affidabile di "ha interagito
+     col calendario". Un solo evento per visita di pagina. */
+  var widgetTracciato = false;
+  window.addEventListener('blur', function () {
+    if (widgetTracciato) return;
+    var attivo = document.activeElement;
+    if (attivo && attivo.tagName === 'IFRAME' && (attivo.src || '').indexOf('treatwell') !== -1) {
+      widgetTracciato = true;
+      traccia('click_widget_prenotazione', { trattamento: window.__eoScelta || '' });
+    }
   });
 
   /* ---------- orari ---------- */
@@ -79,11 +99,17 @@
   }, { passive: true });
   suScroll();
   /* la barra fissa compare solo quando il "Prenota" della hero è uscito
-     dallo schermo: un solo bottone primario per schermata */
-  if (barra && heroCta && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (voci) {
-      barra.classList.toggle('is-hidden', voci[0].isIntersecting);
-    }, { threshold: 0 }).observe(heroCta);
+     dallo schermo e il widget di prenotazione non è in vista: un solo
+     bottone primario per schermata, e niente che copra il calendario */
+  if (barra && 'IntersectionObserver' in window) {
+    var inVista = {};
+    var ossBarra = new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) { inVista[v.target.id] = v.isIntersecting; });
+      barra.classList.toggle('is-hidden', !!(inVista.heroCta || inVista.prenota));
+    }, { threshold: 0 });
+    if (heroCta) ossBarra.observe(heroCta);
+    var sezP = document.getElementById('prenota');
+    if (sezP) ossBarra.observe(sezP);
   }
 
   /* ---------- reveal: una volta sola, 12px, 300 ms ---------- */
@@ -117,21 +143,22 @@
   var dataInput = document.getElementById('sheetData');
   var fasce = document.getElementById('sheetFasce');
   var avanti = document.getElementById('sheetAvanti');
-  var btnTw = document.getElementById('sheetTw');
+  var btnVai = document.getElementById('sheetVai');
   var btnWa = document.getElementById('sheetWa');
-  var cerca = document.getElementById('sheetCerca');
-  var cercaTesto = document.getElementById('sheetCercaTesto');
-  var TITOLI = ['Scegli il trattamento', 'Quando vuoi venire?', 'Conferma la prenotazione'];
-  var TW_MENU = 'https://widget.treatwell.it/salone/532986/menu/';
+  var frame = document.getElementById('treatwellFrame');
+  var sezPrenota = document.getElementById('prenota');
+  var sceltaRiga = document.getElementById('prenotaScelta');
+  var sceltaTesto = document.getElementById('prenotaSceltaTesto');
+  var TITOLI = ['Scegli il trattamento', 'Quando vuoi venire?', 'Vai al calendario'];
 
   var stato = { tratt: null, giorno: null, data: null, fascia: null, passo: 1 };
   var ultimoFocus = null;
-  var ispirazione = document.querySelector('.pagina-tratt') ? document.body : null;
+  var trattPagina = document.body.dataset.tratt || null;
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function dataIso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
-  function dataLeggibile(d) {
-    return d.toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'long' });
+  function dataLeggibile(d, lunga) {
+    return d.toLocaleDateString('it-IT', { weekday: lunga ? 'long' : 'short', day: 'numeric', month: 'long' });
   }
   function dataScelta() {
     var d = new Date();
@@ -147,9 +174,10 @@
     if (stato.giorno === 'domani') return 'Domani, ' + dataLeggibile(dataScelta());
     return dataLeggibile(dataScelta());
   }
-  function etichettaFascia() {
+  function etichettaFascia(breve) {
     var b = fasce.querySelector('[data-fascia="' + stato.fascia + '"]');
-    return b ? b.firstChild.textContent + ' (' + b.querySelector('small').textContent + ')' : '';
+    if (!b) return '';
+    return breve ? b.firstChild.textContent.toLowerCase() : b.firstChild.textContent + ' (' + b.querySelector('small').textContent + ')';
   }
 
   function vai(n) {
@@ -209,10 +237,6 @@
     document.getElementById('riepPrezzo').textContent = t.prezzo;
     document.getElementById('riepGiorno').textContent = etichettaGiorno();
     document.getElementById('riepFascia').textContent = etichettaFascia();
-    btnTw.href = t.tw || TW_MENU;
-    var generico = !t.tw || t.tw === TW_MENU;
-    cerca.hidden = !generico;
-    cercaTesto.textContent = t.nome + ' · ' + t.durata;
     var msg = 'Ciao! Vorrei prenotare: ' + t.nome + ' (' + t.durata + ', ' + t.prezzo + '). ' +
       'Giorno: ' + etichettaGiorno().toLowerCase() + ', fascia: ' + etichettaFascia().toLowerCase() + '. Va bene?';
     btnWa.href = WA_BASE + encodeURIComponent(msg);
@@ -221,13 +245,16 @@
   function apri(trattId, origine) {
     ultimoFocus = document.activeElement;
     var preselezionato = trattId && lista.querySelector('.sheet-tratt[data-id="' + trattId + '"]');
+    if (origine === 'cambia' && stato.tratt) preselezionato = null;
     sheet.hidden = false; scrim.hidden = false;
     document.body.classList.add('sheet-aperto');
     requestAnimationFrame(function () { requestAnimationFrame(function () {
       sheet.classList.add('is-open'); scrim.classList.add('is-open');
     }); });
-    traccia('prenota_apri', { trattamento: preselezionato ? preselezionato.dataset.nome : '', origine: origine || '' });
-    if (preselezionato) { scegliTratt(preselezionato); vai(2); } else { vai(1); }
+    traccia('prenota_apri', { trattamento: preselezionato ? preselezionato.dataset.nome : (stato.tratt ? stato.tratt.nome : ''), origine: origine || '' });
+    if (preselezionato) { scegliTratt(preselezionato); vai(2); }
+    else if (origine === 'cambia' && stato.tratt) { vai(2); }
+    else { vai(1); }
   }
   function chiudi() {
     sheet.classList.remove('is-open'); scrim.classList.remove('is-open');
@@ -236,14 +263,30 @@
     if (ultimoFocus && ultimoFocus.focus) ultimoFocus.focus({ preventScroll: true });
   }
 
-  /* ogni "Prenota" del sito apre lo sheet (il link a Treatwell resta
-     come fallback senza JS) */
+  /* ogni "Prenota" del sito apre la guida (l'àncora #prenota al widget
+     resta come fallback senza JS) */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-prenota]');
-    if (!a) return;
+    if (!a || !sezPrenota) return;
     e.preventDefault();
-    apri(a.dataset.tratt || (ispirazione ? ispirazione.dataset.tratt : null), a.dataset.origine);
+    apri(a.dataset.tratt || trattPagina, a.dataset.origine);
   });
+
+  /* passo 3: chiude la guida e porta al widget, con la riga
+     "Stai prenotando: …" sopra il calendario */
+  function vaiAlWidget() {
+    var t = stato.tratt;
+    var testo = t.nome + ' · ' + dataLeggibile(dataScelta(), true) + ', ' + etichettaFascia(true);
+    sceltaTesto.textContent = testo;
+    sceltaRiga.hidden = false;
+    window.__eoScelta = t.nome;
+    /* deep link Treatwell per servizio, quando disponibile */
+    if (frame && t.tw && frame.getAttribute('src') !== t.tw) frame.setAttribute('src', t.tw);
+    chiudi();
+    setTimeout(function () {
+      sezPrenota.scrollIntoView({ behavior: menoMovimento ? 'auto' : 'smooth', block: 'start' });
+    }, menoMovimento ? 0 : 120);
+  }
   document.getElementById('sheetChiudi').addEventListener('click', chiudi);
   scrim.addEventListener('click', chiudi);
   document.addEventListener('keydown', function (e) {
@@ -279,8 +322,6 @@
     aggiornaGiorni();
   });
   avanti.addEventListener('click', function () { if (!avanti.disabled) vai(3); });
-  btnTw.addEventListener('click', function () {
-    traccia('click_treatwell', { trattamento: stato.tratt ? stato.tratt.nome : '', giorno: stato.giorno || '', fascia: stato.fascia || '' });
-  });
+  btnVai.addEventListener('click', vaiAlWidget);
   /* il click su WhatsApp è già tracciato dal listener globale su wa.me */
 })();

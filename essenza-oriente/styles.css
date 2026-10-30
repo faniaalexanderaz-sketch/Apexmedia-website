@@ -65,7 +65,7 @@ h1 { font-size: clamp(30px, 3.4vw, 44px); }
 h2 { font-size: clamp(26px, 3.2vw, 36px); }
 h3 { font-size: 20px; font-weight: 600; }
 p { margin: 0; }
-.sez { padding: clamp(56px, 8vw, 96px) var(--pad); }
+.sez { padding: clamp(56px, 8vw, 96px) var(--pad); scroll-margin-top: 60px; }
 .sez-inner { max-width: var(--maxw); margin: 0 auto; }
 .sez-bianca { background: var(--bianco); }
 .sez-testa { max-width: 640px; margin: 0 0 clamp(28px, 4vw, 44px); }
@@ -248,20 +248,28 @@ p { margin: 0; }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq details p { padding: 0 0 20px; color: var(--testo-2); max-width: 62ch; }
 
-/* ---------- sezione prenota (scura) ---------- */
+/* ---------- sezione prenota (scura, con il widget Treatwell) ---------- */
 .prenota { background: var(--bosco-scuro); color: var(--bianco); }
-.prenota-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+.prenota-inner { max-width: 720px; margin: 0 auto; text-align: center; }
 .prenota h2 { color: var(--bianco); }
-.prenota p { color: rgba(247,247,242,.78); margin-top: 12px; font-size: 18px; }
-.prenota-azioni { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.prenota .btn-primario { background: var(--bianco); color: var(--bosco-scuro); }
-.prenota .btn-primario:hover { background: #fff; }
-.prenota .btn-wa { background: transparent; color: var(--bianco); }
-.prenota .btn-wa:hover { background: rgba(31,168,85,.16); }
-.prenota-tel { margin-top: 22px; font-size: 16px; }
-.prenota-tel a { color: var(--bianco); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.prenota > .prenota-inner > p:not(.prenota-scelta):not(.prenota-alt) { color: rgba(247,247,242,.78); margin-top: 12px; font-size: 18px; }
 .prenota .filetto { width: 40px; height: 1px; background: var(--oro); margin: 0 auto 22px; }
-@media (max-width: 600px) { .prenota-azioni .btn { width: 100%; } }
+.prenota-scelta {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: left;
+  margin: 24px 0 10px; padding: 12px 16px; border-radius: var(--r-btn);
+  background: var(--salvia); color: var(--bosco-scuro); font-size: 15.5px;
+}
+.prenota-scelta strong { font-weight: 600; }
+.prenota-cambia { flex: none; font-weight: 600; color: var(--bosco); text-decoration: underline; text-underline-offset: 3px; min-height: 44px; display: inline-flex; align-items: center; }
+.prenota-card { margin-top: 24px; background: var(--bianco); border: 1px solid var(--linea); border-radius: var(--r-card); padding: 8px; }
+.prenota-scelta + .prenota-card { margin-top: 0; }
+.treatwell-frame { display: block; width: 100%; height: 560px; border: 0; border-radius: 10px; background: var(--bianco); }
+.prenota-alt { margin-top: 18px; font-size: 15px; color: rgba(247,247,242,.78); }
+.prenota-alt a { color: var(--bianco); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 820px) {
+  .treatwell-frame { height: 520px; }
+  .prenota-scelta { flex-direction: column; align-items: flex-start; gap: 0; }
+}
 
 /* ---------- footer ---------- */
 .fondo { background: var(--bosco-scuro); color: rgba(247,247,242,.78); border-top: 1px solid rgba(247,247,242,.12); padding: 36px var(--pad) 40px; font-size: 14.5px; }
@@ -399,8 +407,7 @@ p { margin: 0; }
 .riepilogo { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; padding: 14px 16px; border-radius: var(--r-btn); background: var(--salvia); font-size: 15.5px; }
 .riepilogo dt { color: var(--testo-2); }
 .riepilogo dd { margin: 0; font-weight: 600; color: var(--bosco-scuro); }
-.sheet-cerca { font-size: 14.5px; color: var(--testo-2); padding: 2px 0 0; }
-.sheet-cerca strong { color: var(--bosco-scuro); }
+.sheet-nota { font-size: 14.5px; color: var(--testo-2); }
 .sheet-tel { text-align: center; font-size: 15px; color: var(--testo-2); }
 .sheet-tel a { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .sheet-piede { display: flex; justify-content: center; }

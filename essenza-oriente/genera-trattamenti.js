@@ -17,11 +17,12 @@ const DOMINIO = 'https://essenzadoriente.it/';
 const MAPPA_RECENSIONI = 'https://www.google.com/maps/search/?api=1&query=Essenza+d%27Oriente+Via+San+Lorenzo+46+Alessandria';
 const MAPPA_INDICAZIONI = 'https://www.google.com/maps/dir/?api=1&destination=44.9118135,8.6137538';
 
-/* Treatwell, salone 532986: sistema di prenotazione a monte.
+/* Treatwell, salone 532986: la prenotazione avviene DENTRO il sito, nel
+   widget (iframe) della sezione #prenota. Il pannello a 3 passi è solo
+   una guida che precompila la scelta e porta l'utente al widget.
    DA FORNIRE: il deep link per ciascuno degli 8 servizi dal pannello
-   Treatwell. Finché un servizio usa il menu generico, lo sheet mostra
-   sopra il bottone il riepilogo "Su Treatwell cerca: …" così l'utente
-   sa cosa cliccare. Basta sostituire l'URL qui e rigenerare. */
+   Treatwell. Quando un servizio ha un link diverso dal menu generico,
+   l'iframe lo carica direttamente (vedi script.js). */
 const TREATWELL_MENU = 'https://widget.treatwell.it/salone/532986/menu/';
 const TREATWELL = {
   'massaggio-oli-essenziali': TREATWELL_MENU,
@@ -241,8 +242,9 @@ ${o.robots ? `  <meta name="robots" content="${o.robots}" />\n` : ''}
 ${o.ldjson ? `  <script type="application/ld+json">\n${o.ldjson}\n  </script>\n` : ''}</head>`;
 }
 
-function header(base) {
+function header(base, prenotaHref) {
   const home = base ? base + 'index.html' : '';
+  prenotaHref = prenotaHref || '#prenota';
   return `  <header class="top" id="top">
     <div class="top-inner">
       <a class="marchio" href="${home || '#inizio'}" aria-label="Essenza d'Oriente, torna all'inizio">
@@ -256,15 +258,14 @@ function header(base) {
         <a href="${home}#dove">Dove siamo</a>
       </nav>
       <a class="top-tel" href="tel:${TEL}">${I.tel} ${TEL_VISIBILE}</a>
-      <a class="btn btn-primario" href="${TREATWELL_MENU}" target="_blank" rel="noopener" data-prenota data-origine="header">Prenota</a>
+      <a class="btn btn-primario" href="${prenotaHref}" data-prenota data-origine="header">Prenota</a>
     </div>
   </header>`;
 }
 
-function barraMobile(tratt) {
-  const tw = tratt ? TREATWELL[tratt.id] : TREATWELL_MENU;
+function barraMobile(tratt, prenotaHref) {
   return `  <div class="barra-mobile" id="barraMobile" role="navigation" aria-label="Azioni rapide">
-    <a class="btn btn-primario" href="${tw}" target="_blank" rel="noopener" data-prenota${tratt ? ` data-tratt="${tratt.id}"` : ''} data-origine="barra">Prenota ora</a>
+    <a class="btn btn-primario" href="${prenotaHref || '#prenota'}" data-prenota${tratt ? ` data-tratt="${tratt.id}"` : ''} data-origine="barra">Prenota ora</a>
     <a class="barra-icona wa" href="${WA}" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">${I.wa}</a>
     <a class="barra-icona" href="tel:${TEL}" aria-label="Chiama ${TEL_VISIBILE}">${I.tel}</a>
   </div>`;
@@ -275,8 +276,9 @@ function sheet() {
     `        <button type="button" class="sheet-tratt" data-id="${t.id}" data-nome="${t.nome}" data-durata="${t.durata}" data-prezzo="${t.prezzo}" data-tw="${TREATWELL[t.id]}" aria-pressed="false">
           <span class="sheet-tratt-nome">${t.nome}</span><span class="sheet-tratt-info">${t.durata} · ${t.prezzo}</span>
         </button>`).join('\n');
-  return `  <!-- Prenotazione in 3 passi: senza JavaScript resta nascosto e ogni
-       bottone "Prenota" porta direttamente a Treatwell. -->
+  return `  <!-- Guida in 3 passi: precompila la scelta e porta al widget Treatwell
+       in #prenota. Senza JavaScript resta nascosta e ogni "Prenota" è
+       un'àncora a #prenota. -->
   <div class="scrim" id="sheetScrim" hidden></div>
   <aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitolo">
     <div class="sheet-testa">
@@ -317,9 +319,9 @@ ${lista}
           <dt>Giorno</dt><dd id="riepGiorno"></dd>
           <dt>Fascia</dt><dd id="riepFascia"></dd>
         </dl>
-        <p class="sheet-cerca" id="sheetCerca" hidden>Su Treatwell cerca: <strong id="sheetCercaTesto"></strong></p>
-        <a class="btn btn-primario btn-pieno" id="sheetTw" href="${TREATWELL_MENU}" target="_blank" rel="noopener">Conferma su Treatwell</a>
-        <a class="btn btn-wa btn-pieno" id="sheetWa" href="${WA}" target="_blank" rel="noopener">${I.wa} Conferma su WhatsApp</a>
+        <p class="sheet-nota">Nel calendario Treatwell qui sotto scegli questo trattamento e l'orario: la conferma è immediata.</p>
+        <button type="button" class="btn btn-primario btn-pieno" id="sheetVai">Vai al calendario Treatwell</button>
+        <a class="btn btn-secondario btn-pieno" id="sheetWa" href="${WA}" target="_blank" rel="noopener">Preferisci WhatsApp?</a>
         <p class="sheet-tel">oppure chiama <a href="tel:${TEL}">${TEL_VISIBILE}</a></p>
         <p class="sheet-piede"><button type="button" class="sheet-indietro" data-vai="2">← Indietro</button></p>
       </section>
@@ -328,18 +330,18 @@ ${lista}
 }
 
 function sezionePrenota(tratt) {
-  const tw = tratt ? TREATWELL[tratt.id] : TREATWELL_MENU;
+  const src = tratt ? TREATWELL[tratt.id] : TREATWELL_MENU;
   const wa = tratt ? waLink(`Ciao! Vorrei prenotare: ${tratt.nome} (${tratt.durata}, ${tratt.prezzo}). Quando avete disponibilità?`) : WA;
   return `    <section class="sez prenota" id="prenota" aria-labelledby="prenotaTitolo">
       <div class="prenota-inner">
         <div class="filetto" aria-hidden="true"></div>
-        <h2 id="prenotaTitolo">${tratt ? 'Prenota: ' + tratt.nome : 'Prenota il tuo trattamento'}</h2>
-        <p>Scegli trattamento, giorno e fascia oraria. Conferma su Treatwell o scrivici su WhatsApp: nessuna carta, nessun account.</p>
-        <div class="prenota-azioni">
-          <a class="btn btn-primario" href="${tw}" target="_blank" rel="noopener" data-prenota${tratt ? ` data-tratt="${tratt.id}"` : ''} data-origine="sezione">Prenota online</a>
-          <a class="btn btn-wa" href="${wa}" target="_blank" rel="noopener">${I.wa} WhatsApp</a>
+        <h2 id="prenotaTitolo">Prenota online</h2>
+        <p>Scegli trattamento, data e ora. Conferma immediata, nessuna carta richiesta.</p>
+        <p class="prenota-scelta" id="prenotaScelta" hidden><span><strong>Stai prenotando:</strong> <span id="prenotaSceltaTesto"></span></span><a class="prenota-cambia" href="#prenota" data-prenota data-origine="cambia">cambia</a></p>
+        <div class="prenota-card">
+          <iframe id="treatwellFrame" class="treatwell-frame" src="${src}" title="Prenota il tuo trattamento — calendario Treatwell" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <p class="prenota-tel">oppure chiama <a href="tel:${TEL}">${TEL_VISIBILE}</a> · tutti i giorni 9:30–22:30</p>
+        <p class="prenota-alt">Non trovi l'orario? <a href="${wa}" target="_blank" rel="noopener">Scrivici su WhatsApp</a> o chiama il <a href="tel:${TEL}">${TEL_VISIBILE}</a></p>
       </div>
     </section>`;
 }
@@ -404,7 +406,7 @@ function home() {
           <h3>${t.nome}</h3>
           <p class="tratt-info">${t.durata} · <strong>${t.prezzo}</strong></p>
           <div class="tratt-azioni">
-            <a class="btn btn-secondario btn-compatto" href="${TREATWELL[t.id]}" target="_blank" rel="noopener" data-prenota data-tratt="${t.id}" data-origine="card">Prenota</a>
+            <a class="btn btn-secondario btn-compatto" href="#prenota" data-prenota data-tratt="${t.id}" data-origine="card">Prenota</a>
             <a class="tratt-dettagli" href="trattamenti/${t.id}.html" aria-label="Dettagli: ${t.nome}">Dettagli</a>
           </div>
         </article>`).join('\n');
@@ -437,7 +439,7 @@ ${barraMobile(null)}
           <p class="hero-sub">Massaggi e tecniche tradizionali cinesi nel centro di Alessandria, tutti i giorni fino alle 22:30.</p>
           <p class="hero-fiducia"><span>5,0</span><span class="stella" aria-hidden="true">★</span><span>· 146 recensioni Google</span></p>
           <div class="hero-azioni">
-            <a class="btn btn-primario" id="heroCta" href="${TREATWELL_MENU}" target="_blank" rel="noopener" data-prenota data-origine="hero">Prenota ora</a>
+            <a class="btn btn-primario" id="heroCta" href="#prenota" data-prenota data-origine="hero">Prenota ora</a>
             <a class="link-testo" href="#trattamenti">Vedi trattamenti e prezzi</a>
           </div>
           <p class="hero-stato" id="statoApertura">Aperti oggi fino alle 22:30</p>
@@ -606,7 +608,7 @@ function paginaTratt(t) {
     extraHead: `  <link rel="preload" as="image" href="../${foto}.webp" fetchpriority="high" />`,
     ldjson
   })}
-<body class="pagina-tratt">
+<body class="pagina-tratt" data-tratt="${t.id}">
 ${header('../')}
 ${barraMobile(t)}
 
@@ -624,7 +626,7 @@ ${barraMobile(t)}
           <p class="hero-prezzo"><strong>${t.prezzo}</strong><span>${t.durata}${t.nota ? ' · ' + t.nota.toLowerCase() : ''}</span></p>
           <p class="hero-fiducia"><span>5,0</span><span class="stella" aria-hidden="true">★</span><span>· 146 recensioni Google</span></p>
           <div class="hero-azioni">
-            <a class="btn btn-primario" id="heroCta" href="${TREATWELL[t.id]}" target="_blank" rel="noopener" data-prenota data-tratt="${t.id}" data-origine="hero">Prenota questo trattamento</a>
+            <a class="btn btn-primario" id="heroCta" href="#prenota" data-prenota data-tratt="${t.id}" data-origine="hero">Prenota questo trattamento</a>
             <a class="link-testo" href="${wa}" target="_blank" rel="noopener">Chiedi su WhatsApp</a>
           </div>
           <p class="hero-stato" id="statoApertura">Aperti oggi fino alle 22:30</p>
@@ -652,7 +654,7 @@ ${barraMobile(t)}
         <aside class="box-prezzo" aria-label="Prezzo e prenotazione">
           <span class="box-prezzo-cifra">${t.prezzo}</span>
           <span class="box-prezzo-info">${t.nome} · ${t.durata}${t.nota ? '<br />' + t.nota : ''}</span>
-          <a class="btn btn-primario btn-pieno" href="${TREATWELL[t.id]}" target="_blank" rel="noopener" data-prenota data-tratt="${t.id}" data-origine="box">Prenota</a>
+          <a class="btn btn-primario btn-pieno" href="#prenota" data-prenota data-tratt="${t.id}" data-origine="box">Prenota</a>
           <a class="btn btn-wa btn-pieno" href="${wa}" target="_blank" rel="noopener">${I.wa} WhatsApp</a>
           <span class="box-prezzo-nota">oppure chiama <a href="tel:${TEL}">${TEL_VISIBILE}</a></span>
         </aside>
@@ -689,8 +691,8 @@ function paginaLegale(o) {
     ogImage: DOMINIO + 'foto/brand-banner.jpg'
   })}
 <body>
-${header('')}
-${barraMobile(null)}
+${header('', 'index.html#prenota')}
+${barraMobile(null, 'index.html#prenota')}
   <main>
     <section class="sez">
       <div class="sez-inner legale" data-reveal>
@@ -701,7 +703,6 @@ ${o.corpo}
     </section>
   </main>
 ${footer('')}
-${sheet()}
 ${scripts('')}
 </body>
 </html>
@@ -715,9 +716,9 @@ const PRIVACY = {
   corpo: `        <h2>Titolare del trattamento</h2>
         <p>Essenza d'Oriente — Via San Lorenzo 46, 15121 Alessandria (AL). P.IVA 14409690964. Contatti: <a href="tel:${TEL}">${TEL_VISIBILE}</a>.</p>
         <h2>Quali dati trattiamo</h2>
-        <p>Questo sito non richiede registrazione e non raccoglie direttamente dati personali tramite moduli propri. I dati che ci fornisci telefonando, scrivendo su WhatsApp o prenotando su Treatwell sono trattati al solo scopo di gestire la tua prenotazione.</p>
+        <p>Questo sito non richiede registrazione e non raccoglie direttamente dati personali tramite moduli propri. I dati che ci fornisci telefonando, scrivendo su WhatsApp o prenotando tramite il widget Treatwell sono trattati al solo scopo di gestire la tua prenotazione.</p>
         <h2>Prenotazione online (Treatwell)</h2>
-        <p>La prenotazione online avviene sul sito di Treatwell (Hotspring Ventures Ltd), che si apre in una nuova scheda e agisce come autonomo titolare per i dati inseriti nel modulo di prenotazione. Consulta l'informativa privacy di Treatwell sul loro sito per i dettagli.</p>
+        <p>La prenotazione online è gestita da Treatwell (Hotspring Ventures Ltd) tramite il widget incorporato nel sito; Treatwell agisce come autonomo titolare per i dati inseriti nel modulo di prenotazione. Consulta l'informativa privacy di Treatwell sul loro sito per i dettagli.</p>
         <h2>Statistiche e misurazione</h2>
         <p>Il sito utilizza Google Analytics, Google Ads e Google Tag Manager per capire quante persone visitano la pagina e misurare l'efficacia delle campagne. I cookie di misurazione si attivano solo se accetti dal banner. Per i dettagli, consulta la <a href="cookie.html">cookie policy</a>.</p>
         <h2>I tuoi diritti</h2>
@@ -729,14 +730,14 @@ const COOKIE = {
   desc: 'Cookie policy di Essenza d\'Oriente, centro olistico ad Alessandria.',
   corpo: `        <h2>Cosa sono i cookie</h2>
         <p>I cookie sono piccoli file salvati dal browser durante la navigazione. Questo sito ne fa un uso minimo: un cookie tecnico per ricordare la tua scelta sul banner e, solo se accetti, i cookie di misurazione di Google.</p>
-        <h2>Prenotazione online (Treatwell)</h2>
-        <p>La prenotazione online avviene sul sito di Treatwell, che si apre in una nuova scheda: eventuali cookie impostati lì sono regolati dall'informativa di Treatwell (Hotspring Ventures Ltd). Questo sito non incorpora più il widget Treatwell.</p>
+        <h2>Widget di prenotazione (Treatwell)</h2>
+        <p>Il calendario di prenotazione online è fornito da Treatwell e può impostare cookie tecnici necessari al funzionamento della prenotazione. Titolare: Hotspring Ventures Ltd.</p>
         <h2>Mappa (Google Maps)</h2>
         <p>La mappa nella sezione "Dove siamo" è fornita da Google e può impostare cookie di Google LLC.</p>
         <h2>Misurazione (Google Analytics, Google Ads, Tag Manager)</h2>
         <p>Il Google tag è caricato in modalità consenso: finché non scegli "Accetta" nel banner, non viene salvato alcun cookie di misurazione o pubblicitario. Se scegli "Rifiuta", Google Tag Manager non viene caricato. Puoi cambiare scelta in qualsiasi momento cancellando i dati di navigazione del browser per questo sito.</p>
         <h2>Come gestire i cookie</h2>
-        <p>Puoi bloccare o cancellare i cookie in qualsiasi momento dalle impostazioni del tuo browser. Il sito resta consultabile anche senza cookie: potrebbe non funzionare solo la mappa.</p>`
+        <p>Puoi bloccare o cancellare i cookie in qualsiasi momento dalle impostazioni del tuo browser. Il sito resta consultabile anche senza cookie: potrebbero non funzionare solo la prenotazione online e la mappa.</p>`
 };
 
 /* ---------- scrittura ---------- */

@@ -76,11 +76,11 @@
         <a href="#dove">Dove siamo</a>
       </nav>
       <a class="top-tel" href="tel:+393317153533"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> 331 715 3533</a>
-      <a class="btn btn-primario" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-origine="header">Prenota</a>
+      <a class="btn btn-primario" href="index.html#prenota" data-prenota data-origine="header">Prenota</a>
     </div>
   </header>
   <div class="barra-mobile" id="barraMobile" role="navigation" aria-label="Azioni rapide">
-    <a class="btn btn-primario" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener" data-prenota data-origine="barra">Prenota ora</a>
+    <a class="btn btn-primario" href="index.html#prenota" data-prenota data-origine="barra">Prenota ora</a>
     <a class="barra-icona wa" href="https://wa.me/393317153533" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg></a>
     <a class="barra-icona" href="tel:+393317153533" aria-label="Chiama 331 715 3533"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></a>
   </div>
@@ -91,14 +91,14 @@
         <p><em>Ultimo aggiornamento: 30 ottobre 2026</em></p>
         <h2>Cosa sono i cookie</h2>
         <p>I cookie sono piccoli file salvati dal browser durante la navigazione. Questo sito ne fa un uso minimo: un cookie tecnico per ricordare la tua scelta sul banner e, solo se accetti, i cookie di misurazione di Google.</p>
-        <h2>Prenotazione online (Treatwell)</h2>
-        <p>La prenotazione online avviene sul sito di Treatwell, che si apre in una nuova scheda: eventuali cookie impostati lì sono regolati dall'informativa di Treatwell (Hotspring Ventures Ltd). Questo sito non incorpora più il widget Treatwell.</p>
+        <h2>Widget di prenotazione (Treatwell)</h2>
+        <p>Il calendario di prenotazione online è fornito da Treatwell e può impostare cookie tecnici necessari al funzionamento della prenotazione. Titolare: Hotspring Ventures Ltd.</p>
         <h2>Mappa (Google Maps)</h2>
         <p>La mappa nella sezione "Dove siamo" è fornita da Google e può impostare cookie di Google LLC.</p>
         <h2>Misurazione (Google Analytics, Google Ads, Tag Manager)</h2>
         <p>Il Google tag è caricato in modalità consenso: finché non scegli "Accetta" nel banner, non viene salvato alcun cookie di misurazione o pubblicitario. Se scegli "Rifiuta", Google Tag Manager non viene caricato. Puoi cambiare scelta in qualsiasi momento cancellando i dati di navigazione del browser per questo sito.</p>
         <h2>Come gestire i cookie</h2>
-        <p>Puoi bloccare o cancellare i cookie in qualsiasi momento dalle impostazioni del tuo browser. Il sito resta consultabile anche senza cookie: potrebbe non funzionare solo la mappa.</p>
+        <p>Puoi bloccare o cancellare i cookie in qualsiasi momento dalle impostazioni del tuo browser. Il sito resta consultabile anche senza cookie: potrebbero non funzionare solo la prenotazione online e la mappa.</p>
       </div>
     </section>
   </main>
@@ -121,79 +121,6 @@
       <p class="fondo-legale">P.IVA 14409690964 · <a href="privacy.html">Privacy</a> · <a href="cookie.html">Cookie</a></p>
     </div>
   </footer>
-  <!-- Prenotazione in 3 passi: senza JavaScript resta nascosto e ogni
-       bottone "Prenota" porta direttamente a Treatwell. -->
-  <div class="scrim" id="sheetScrim" hidden></div>
-  <aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitolo">
-    <div class="sheet-testa">
-      <div>
-        <p class="sheet-passi" id="sheetPassi" aria-hidden="true"><span class="is-on">1</span><span>2</span><span>3</span></p>
-        <h2 class="sheet-titolo" id="sheetTitolo">Scegli il trattamento</h2>
-      </div>
-      <button type="button" class="sheet-chiudi" id="sheetChiudi" aria-label="Chiudi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-    </div>
-    <div class="sheet-corpo">
-      <section class="passo" data-passo="1">
-        <div class="sheet-lista" id="sheetLista">
-        <button type="button" class="sheet-tratt" data-id="massaggio-oli-essenziali" data-nome="Massaggio Oli Essenziali" data-durata="60 min" data-prezzo="60 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Massaggio Oli Essenziali</span><span class="sheet-tratt-info">60 min · 60 €</span>
-        </button>
-        <button type="button" class="sheet-tratt" data-id="tuina-shiatsu" data-nome="Tuina Shiatsu" data-durata="50 min" data-prezzo="50 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Tuina Shiatsu</span><span class="sheet-tratt-info">50 min · 50 €</span>
-        </button>
-        <button type="button" class="sheet-tratt" data-id="massaggio-spa" data-nome="Massaggio Spa" data-durata="90 min" data-prezzo="90 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Massaggio Spa</span><span class="sheet-tratt-info">90 min · 90 €</span>
-        </button>
-        <button type="button" class="sheet-tratt" data-id="riflessologia-plantare" data-nome="Riflessologia Plantare" data-durata="40 min" data-prezzo="35 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Riflessologia Plantare</span><span class="sheet-tratt-info">40 min · 35 €</span>
-        </button>
-        <button type="button" class="sheet-tratt" data-id="coppettazione" data-nome="Coppettazione" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Coppettazione</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
-        </button>
-        <button type="button" class="sheet-tratt" data-id="gua-sha" data-nome="Gua Sha" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Gua Sha</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
-        </button>
-        <button type="button" class="sheet-tratt" data-id="pulizia-orecchie" data-nome="Pulizia delle Orecchie" data-durata="Seduta breve" data-prezzo="25 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Pulizia delle Orecchie</span><span class="sheet-tratt-info">Seduta breve · 25 €</span>
-        </button>
-        <button type="button" class="sheet-tratt" data-id="pedicure" data-nome="Pedicure" data-durata="Seduta breve" data-prezzo="35 €" data-tw="https://widget.treatwell.it/salone/532986/menu/" aria-pressed="false">
-          <span class="sheet-tratt-nome">Pedicure</span><span class="sheet-tratt-info">Seduta breve · 35 €</span>
-        </button>
-        </div>
-      </section>
-      <section class="passo" data-passo="2" hidden>
-        <p class="sheet-scelta"><span id="sheetScelta"></span><button type="button" class="sheet-cambia" data-vai="1">Cambia</button></p>
-        <p class="sheet-stato" id="sheetStato">Aperti oggi fino alle 22:30</p>
-        <p class="sheet-label">Giorno</p>
-        <div class="chips" id="sheetGiorni" role="group" aria-label="Giorno">
-          <button type="button" class="chip" data-giorno="oggi" aria-pressed="false">Oggi</button>
-          <button type="button" class="chip" data-giorno="domani" aria-pressed="false">Domani</button>
-          <button type="button" class="chip" data-giorno="data" aria-pressed="false">Scelgo io la data</button>
-        </div>
-        <label class="sheet-data" id="sheetDataWrap" hidden><span>Data</span><input type="date" id="sheetData" /></label>
-        <p class="sheet-label">Fascia oraria</p>
-        <div class="chips" id="sheetFasce" role="group" aria-label="Fascia oraria">
-          <button type="button" class="chip" data-fascia="mattina" data-inizio="570" data-fine="780" aria-pressed="false">Mattina<small>9:30–13:00</small></button>
-          <button type="button" class="chip" data-fascia="pomeriggio" data-inizio="780" data-fine="1080" aria-pressed="false">Pomeriggio<small>13:00–18:00</small></button>
-          <button type="button" class="chip" data-fascia="sera" data-inizio="1080" data-fine="1350" aria-pressed="false">Sera<small>18:00–22:30</small></button>
-        </div>
-        <button type="button" class="btn btn-primario btn-pieno" id="sheetAvanti" disabled>Continua</button>
-      </section>
-      <section class="passo" data-passo="3" hidden>
-        <dl class="riepilogo">
-          <dt>Trattamento</dt><dd id="riepTratt"></dd>
-          <dt>Prezzo</dt><dd id="riepPrezzo"></dd>
-          <dt>Giorno</dt><dd id="riepGiorno"></dd>
-          <dt>Fascia</dt><dd id="riepFascia"></dd>
-        </dl>
-        <p class="sheet-cerca" id="sheetCerca" hidden>Su Treatwell cerca: <strong id="sheetCercaTesto"></strong></p>
-        <a class="btn btn-primario btn-pieno" id="sheetTw" href="https://widget.treatwell.it/salone/532986/menu/" target="_blank" rel="noopener">Conferma su Treatwell</a>
-        <a class="btn btn-wa btn-pieno" id="sheetWa" href="https://wa.me/393317153533" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3Z"/></svg> Conferma su WhatsApp</a>
-        <p class="sheet-tel">oppure chiama <a href="tel:+393317153533">331 715 3533</a></p>
-        <p class="sheet-piede"><button type="button" class="sheet-indietro" data-vai="2">← Indietro</button></p>
-      </section>
-    </div>
-  </aside>
   <script src="cookie.js" defer></script>
   <script src="script.js" defer></script>
 </body>
