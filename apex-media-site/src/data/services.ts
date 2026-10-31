@@ -77,21 +77,23 @@ export const services: Service[] = [
   },
   {
     id: "web",
-    name: "Siti web",
+    name: "Siti web e app",
     accent: "ink",
-    tagline: "Realizzazione di siti web e landing page veloci, progettati per trasformare le visite in contatti.",
+    tagline: "Realizzazione di siti web, web app e applicazioni native per App Store e Play Store, progettati per trasformare le visite in contatti.",
     description:
-      "Come quelli che vedi nel portfolio: design su misura, prenotazioni online o WhatsApp in un tocco, testi scritti per Google e per chi legge dal telefono.",
+      "Come quelli che vedi nel portfolio: design su misura, prenotazioni online o WhatsApp in un tocco, testi scritti per Google e per chi legge dal telefono. E quando un sito non basta, sviluppiamo web app e app native con Xcode, pubblicate su App Store e Play Store.",
     includes: [
       "Design su misura, niente template",
       "Prenotazioni online, listini, e-commerce",
       "WhatsApp e chiamata sempre a portata di pollice",
       "Testi, foto e struttura pensati per convertire",
       "SEO di base e velocità da primo posto",
+      "Web app: gestionali, prenotazioni, aree riservate",
+      "App native per iPhone e Android, sviluppate con Xcode e pubblicate su App Store e Play Store",
       "Hosting, dominio e manutenzione",
     ],
-    deliverables: ["Sito pronto e online", "Accessi e guida per aggiornarlo", "Statistiche delle visite e dei contatti"],
-    tools: ["Next.js", "Figma", "Vercel", "Search Console"],
+    deliverables: ["Sito o app pronti e online", "Accessi e guida per aggiornarli", "Statistiche delle visite e dei contatti"],
+    tools: ["Next.js", "Xcode", "Swift", "Figma", "Vercel", "Search Console"],
     formValue: "Sito web",
   },
   {

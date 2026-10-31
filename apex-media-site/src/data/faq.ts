@@ -10,8 +10,8 @@ export const faq: FaqItem[] = [
     a: "Sì, è il nostro lavoro principale: attività locali, professionisti e brand emergenti.",
   },
   {
-    q: "Realizzate anche siti web e landing page?",
-    a: "Sì. Siti e landing pensati per farti contattare o prenotare.",
+    q: "Realizzate anche siti web, landing page e app?",
+    a: "Sì. Siti e landing pensati per farti contattare o prenotare, web app e app native per App Store e Play Store.",
   },
   {
     q: "Gestite anche campagne pubblicitarie?",
