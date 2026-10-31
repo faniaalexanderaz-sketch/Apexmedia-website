@@ -259,8 +259,8 @@ export function Services() {
             </h2>
             <p className="text-body mt-6 text-[17px] text-ink/80 md:text-lg">
               Social media marketing, produzione video, campagne Google Ads e
-              Meta Ads, siti web, brand identity e analisi di mercato. Un’unica
-              agenzia ad Alessandria che segue strategia, produzione e
+              Meta Ads, siti web e app, brand identity e analisi di mercato.
+              Un’unica agenzia ad Alessandria che segue strategia, produzione e
               risultati.
             </p>
           </div>
