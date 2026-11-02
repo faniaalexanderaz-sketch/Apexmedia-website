@@ -98,3 +98,11 @@ Le variabili d'ambiente si impostano in Vercel → Settings → Environment Vari
 - `public/brand/apex-logo-original.webp` — logo originale in cristallo
 - `src/app/icon.svg`, `src/app/apple-icon.png` — favicon e icona iOS ricavate dal marchio
 - `src/app/opengraph-image.tsx` — immagine di anteprima social generata a runtime (1200×630)
+
+## Dashboard click dei siti clienti (`/admin`)
+
+I siti clienti (oggi `essenzadoriente.it`) mandano ogni click su WhatsApp, telefono e Prenota a `POST /api/track`, che lo salva su Supabase nella tabella `click_eventi` (migrazione in `supabase/migrations/`). Nessun dato personale: azione, pagina, utm_source, utm_medium, presenza del gclid, dispositivo.
+
+`/admin` (password `ADMIN_PASSWORD`, cookie di sessione 30 giorni) mostra totali per azione (oggi / 7 / 30 giorni), grafico giornaliero, tabelle per sorgente, dispositivo e pagina, ed esporta il CSV.
+
+Variabili d'ambiente su Vercel: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PASSWORD`, opzionale `TRACK_ALLOWED_ORIGINS` (altre origini separate da virgola). Vedi `.env.example`.

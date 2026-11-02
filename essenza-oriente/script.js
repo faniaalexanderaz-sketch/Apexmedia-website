@@ -26,6 +26,49 @@
      EO_COOKIE (solo dopo il consenso). Un unico listener globale sui
      click: vale anche per bottoni aggiunti in futuro, non blocca mai la
      navigazione. */
+  /* ---------- attribuzione: utm_source, utm_medium, gclid (solo presenza)
+     letti dall'URL alla prima visita e tenuti 30 giorni in un cookie
+     tecnico, senza dati personali. Poi ogni click viene salvato nella
+     dashboard Apex Media via sendBeacon: non blocca mai il link. */
+  var TRACK_URL = 'https://infoapex.eu/api/track';
+  var SITO = 'essenzadoriente.it';
+  function leggiCookie(nome) {
+    var m = document.cookie.match(new RegExp('(?:^|; )' + nome + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function attribuzione() {
+    var salvata = leggiCookie('eo_src');
+    if (salvata) { try { return JSON.parse(salvata); } catch (e) {} }
+    var q = new URLSearchParams(window.location.search);
+    var dati = {
+      utm_source: (q.get('utm_source') || '').slice(0, 100) || null,
+      utm_medium: (q.get('utm_medium') || '').slice(0, 100) || null,
+      gclid: !!(q.get('gclid') || q.get('gbraid') || q.get('wbraid'))
+    };
+    if (dati.utm_source || dati.utm_medium || dati.gclid) {
+      try {
+        document.cookie = 'eo_src=' + encodeURIComponent(JSON.stringify(dati)) + '; max-age=' + (30 * 86400) + '; path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+      } catch (e) {}
+    }
+    return dati;
+  }
+  var ATTR = attribuzione();
+  function salvaClick(azione) {
+    try {
+      var corpo = JSON.stringify({
+        sito: SITO,
+        azione: azione,
+        pagina: window.location.pathname,
+        utm_source: ATTR.utm_source,
+        utm_medium: ATTR.utm_medium,
+        gclid: ATTR.gclid,
+        dispositivo: (window.matchMedia && matchMedia('(max-width: 899px)').matches) || /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+      });
+      if (navigator.sendBeacon && navigator.sendBeacon(TRACK_URL, corpo)) return;
+      fetch(TRACK_URL, { method: 'POST', body: corpo, keepalive: true, mode: 'cors', headers: { 'Content-Type': 'text/plain' } }).catch(function () {});
+    } catch (e) {}
+  }
+
   var AW_ID = 'AW-17997395114';
   var AW_ETICHETTE = {
     click_whatsapp: 'RMXICPCn17AdEKrp6YVD',
@@ -37,9 +80,11 @@
     if (!etichetta || typeof window.gtag !== 'function') return;
     window.gtag('event', 'conversion', { send_to: AW_ID + '/' + etichetta, transport_type: 'beacon' });
   }
+  var AZIONE_DASHBOARD = { click_whatsapp: 'whatsapp', click_chiama: 'telefono', prenota_click: 'prenota' };
   function traccia(obj) {
     if (window.EO_COOKIE) window.EO_COOKIE.push(obj);
     conversione(obj.event);
+    if (AZIONE_DASHBOARD[obj.event]) salvaClick(AZIONE_DASHBOARD[obj.event]);
   }
   var prenotaConvertito = false;
   document.addEventListener('click', function (e) {
