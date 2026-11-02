@@ -20,22 +20,42 @@
   var APRE = 9 * 60 + 30, CHIUDE = 22 * 60 + 30;
   var WA_BASE = 'https://wa.me/393317153533?text=';
 
-  /* ---------- tracciamento ---------- */
+  /* ---------- tracciamento ----------
+     Conversioni Google Ads (gtag diretto, in Consent Mode: senza consenso
+     Google riceve solo ping anonimi) + eventi dataLayer per GA4 via
+     EO_COOKIE (solo dopo il consenso). Un unico listener globale sui
+     click: vale anche per bottoni aggiunti in futuro, non blocca mai la
+     navigazione. */
   var AW_ID = 'AW-17997395114';
-  var AW_ETICHETTE = { PREDEFINITA: '', click_chiama: '', click_whatsapp: '', click_widget_prenotazione: '' };
+  var AW_ETICHETTE = {
+    click_whatsapp: 'RMXICPCn17AdEKrp6YVD',
+    click_chiama: 'W87FCPCY0LAdEKrp6YVD',
+    prenota_click: 'SL96CKCT0LAdEKrp6YVD'
+  };
+  function conversione(evento) {
+    var etichetta = AW_ETICHETTE[evento];
+    if (!etichetta || typeof window.gtag !== 'function') return;
+    window.gtag('event', 'conversion', { send_to: AW_ID + '/' + etichetta, transport_type: 'beacon' });
+  }
   function traccia(obj) {
     if (window.EO_COOKIE) window.EO_COOKIE.push(obj);
-    var etichetta = AW_ETICHETTE[obj.event] || AW_ETICHETTE.PREDEFINITA;
-    if (!etichetta || typeof window.gtag !== 'function' || !(obj.event in AW_ETICHETTE)) return;
-    window.gtag('event', 'conversion', { send_to: AW_ID + '/' + etichetta, value: 30.0, currency: 'EUR', transport_type: 'beacon' });
+    conversione(obj.event);
   }
+  var prenotaConvertito = false;
   document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href]');
-    if (!a) return;
-    var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) traccia({ event: 'click_chiama' });
-    else if (href.indexOf('https://wa.me/') === 0) traccia({ event: 'click_whatsapp' });
-  });
+    var el = e.target.closest('a[href], button, [data-prenota]');
+    if (!el) return;
+    var href = (el.getAttribute('href') || '').toLowerCase();
+    if (href.indexOf('tel:') === 0) {
+      traccia({ event: 'click_chiama' });
+    } else if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp') !== -1) {
+      traccia({ event: 'click_whatsapp' });
+    } else if (el.hasAttribute('data-prenota') || href.indexOf('treatwell') !== -1) {
+      prenotaConvertito = true;
+      var riga = el.closest('[data-tratt]');
+      traccia({ event: 'prenota_click', trattamento: riga ? riga.getAttribute('data-tratt') : (document.body.getAttribute('data-tratt-nome') || '') });
+    }
+  }, true);
 
   /* ---------- click dentro il widget Treatwell (blur trick) ----------
      Il browser non ci fa ascoltare i click in un iframe cross-origin,
@@ -47,7 +67,8 @@
       var attivo = document.activeElement;
       if (!widgetTracciato && attivo && attivo.tagName === 'IFRAME' && (attivo.src || '').indexOf('treatwell') !== -1) {
         widgetTracciato = true;
-        traccia({ event: 'click_widget_prenotazione' });
+        if (window.EO_COOKIE) window.EO_COOKIE.push({ event: 'click_widget_prenotazione' });
+        if (!prenotaConvertito) { prenotaConvertito = true; conversione('prenota_click'); }
       }
     }, 0);
   });
@@ -130,7 +151,6 @@
     var nome = riga ? riga.getAttribute('data-tratt') : trattPagina || '';
     var info = riga ? riga.getAttribute('data-info') : '';
     if (riga) scegli(nome, info);
-    traccia({ event: 'prenota_click', trattamento: nome || '' });
   });
   if (sceltaCambia) {
     sceltaCambia.addEventListener('click', function () {
