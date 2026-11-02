@@ -1,52 +1,178 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://essenzadoriente.it/</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://essenzadoriente.it/zh/</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/" />
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://essenzadoriente.it/trattamenti/massaggio-oli-essenziali.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/massaggio-oli-essenziali.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/massaggio-oli-essenziali.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/massaggio-oli-essenziali.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/trattamenti/massaggio-oli-essenziali.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/massaggio-oli-essenziali.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/massaggio-oli-essenziali.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/massaggio-oli-essenziali.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://essenzadoriente.it/trattamenti/tuina-shiatsu.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/tuina-shiatsu.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/tuina-shiatsu.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/tuina-shiatsu.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/trattamenti/tuina-shiatsu.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/tuina-shiatsu.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/tuina-shiatsu.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/tuina-shiatsu.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://essenzadoriente.it/trattamenti/riflessologia-plantare.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/riflessologia-plantare.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/riflessologia-plantare.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/riflessologia-plantare.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://essenzadoriente.it/trattamenti/coppettazione.html</loc>
+    <loc>https://essenzadoriente.it/zh/trattamenti/riflessologia-plantare.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/riflessologia-plantare.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/riflessologia-plantare.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/riflessologia-plantare.html" />
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://essenzadoriente.it/trattamenti/gua-sha.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://essenzadoriente.it/trattamenti/massaggio-spa.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/massaggio-spa.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/massaggio-spa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/massaggio-spa.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/trattamenti/massaggio-spa.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/massaggio-spa.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/massaggio-spa.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/massaggio-spa.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/trattamenti/coppettazione.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/coppettazione.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/coppettazione.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/coppettazione.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/trattamenti/coppettazione.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/coppettazione.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/coppettazione.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/coppettazione.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/trattamenti/gua-sha.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/gua-sha.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/gua-sha.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/gua-sha.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/trattamenti/gua-sha.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/gua-sha.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/gua-sha.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/gua-sha.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://essenzadoriente.it/trattamenti/pulizia-orecchie.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pulizia-orecchie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://essenzadoriente.it/zh/trattamenti/pulizia-orecchie.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pulizia-orecchie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/trattamenti/pedicure.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pedicure.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/trattamenti/pedicure.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pedicure.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://essenzadoriente.it/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/privacy.html" />
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/privacy.html" />
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
     <loc>https://essenzadoriente.it/cookie.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/cookie.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/cookie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/cookie.html" />
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://essenzadoriente.it/zh/cookie.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/cookie.html" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/cookie.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/cookie.html" />
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>

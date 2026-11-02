@@ -36,3 +36,11 @@ Linguaggio visivo Apex Media: carta calda, inchiostro verde profondo, hairline, 
 
 ### Quando arrivano le foto reali
 - Sostituire `foto/sfondo-prenota.jpg/.webp` (hero) e `foto/tratt-*.jpg/.webp` mantenendo i nomi. Rigenerare i WebP (PIL, qualità 78, max 1400 px).
+
+## Novembre 2026 — sito bilingue IT / 中文
+
+- Tutti i testi in `i18n/it.json` e `i18n/zh-CN.json`; un solo generatore (`node genera-sito.js`) produce home, 8 pagine trattamento, privacy e cookie in italiano (URL invariati) e in cinese semplificato sotto `/zh/`, più la sitemap con alternates.
+- Selettore IT / 中文 nella nav, nel menu mobile e nel footer; scelta ricordata un anno nel cookie `eo_lang`. Browser in cinese alla prima visita → versione /zh.
+- hreflang it / zh-CN / x-default su ogni pagina, title e meta tradotti, `lang="zh-Hans"`, mappa in cinese, messaggi WhatsApp precompilati nella lingua della pagina.
+- Percorsi degli asset resi assoluti (`/styles.css`, `/foto/...`): il sito va servito dalla radice del dominio, come su Vercel.
+- Tracciamento click e conversioni Google Ads invariati; la pagina salvata include il prefisso `/zh`.

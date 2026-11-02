@@ -19,6 +19,11 @@
 
   var APRE = 9 * 60 + 30, CHIUDE = 22 * 60 + 30;
   var WA_BASE = 'https://wa.me/393317153533?text=';
+  function leggiCookie(nome) {
+    var m = document.cookie.match(new RegExp('(?:^|; )' + nome + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
 
   /* ---------- tracciamento ----------
      Conversioni Google Ads (gtag diretto, in Consent Mode: senza consenso
@@ -32,10 +37,6 @@
      dashboard Apex Media via sendBeacon: non blocca mai il link. */
   var TRACK_URL = 'https://infoapex.eu/api/track';
   var SITO = 'essenzadoriente.it';
-  function leggiCookie(nome) {
-    var m = document.cookie.match(new RegExp('(?:^|; )' + nome + '=([^;]*)'));
-    return m ? decodeURIComponent(m[1]) : null;
-  }
   function attribuzione() {
     var salvata = leggiCookie('eo_src');
     if (salvata) { try { return JSON.parse(salvata); } catch (e) {} }
@@ -118,14 +119,42 @@
     }, 0);
   });
 
-  /* ---------- stato di apertura in tempo reale ---------- */
+  /* ---------- stato di apertura in tempo reale (testi dal body, per lingua) ---------- */
   function apertoOra() { var d = new Date(); var m = d.getHours() * 60 + d.getMinutes(); return m >= APRE && m < CHIUDE; }
   var stato = document.getElementById('statoApertura');
   var statoTesto = document.getElementById('statoTesto');
   if (stato && statoTesto) {
-    if (apertoOra()) statoTesto.textContent = 'Aperti ora fino alle 22:30';
-    else { statoTesto.textContent = 'Chiusi ora, riapriamo alle 9:30'; stato.classList.add('chiuso'); }
+    if (apertoOra()) statoTesto.textContent = document.body.getAttribute('data-stato-aperti') || statoTesto.textContent;
+    else { statoTesto.textContent = document.body.getAttribute('data-stato-chiusi') || statoTesto.textContent; stato.classList.add('chiuso'); }
   }
+
+  /* ---------- lingua: IT / 中文 ----------
+     La scelta si ricorda in un cookie per un anno. Alla prima visita
+     senza cookie, chi ha il browser in cinese viene portato alla versione
+     /zh; chi ha gia' scelto viene portato nella lingua scelta se atterra
+     su una pagina nell'altra lingua (es. da un link vecchio). */
+  var LINGUA_COOKIE = 'eo_lang';
+  var linguaPagina = document.body.getAttribute('data-lang') || 'it';
+  var altUrl = document.body.getAttribute('data-alt-url');
+  function salvaLingua(l) {
+    try { document.cookie = LINGUA_COOKIE + '=' + l + '; max-age=' + (365 * 86400) + '; path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : ''); } catch (e) {}
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-lang]');
+    if (a) salvaLingua(a.getAttribute('data-lang'));
+  }, true);
+  (function () {
+    var scelta = leggiCookie(LINGUA_COOKIE);
+    if (!scelta) {
+      var browser = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+      if (/^zh/i.test(browser)) scelta = 'zh';
+      salvaLingua(scelta || linguaPagina);
+    }
+    if (scelta && scelta !== linguaPagina && altUrl && !sessionStorage.getItem('eo_lang_redirect')) {
+      try { sessionStorage.setItem('eo_lang_redirect', '1'); } catch (e) {}
+      window.location.replace(altUrl + window.location.hash);
+    }
+  })();
 
   /* ---------- nav: si nasconde scendendo, riappare risalendo ---------- */
   var nav = document.getElementById('nav');
@@ -202,7 +231,7 @@
       scegli(null);
       var listino = document.getElementById('listino') || document.getElementById('trattamenti');
       if (listino) listino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      else window.location.href = '../index.html#trattamenti';
+      else window.location.href = (document.body.getAttribute('data-prefix') || '') + '/#trattamenti';
     });
   }
 

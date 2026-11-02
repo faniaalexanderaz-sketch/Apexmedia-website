@@ -33,8 +33,8 @@
   --r-xl: 28px;
   --r-lg: 20px;
   --r-md: 12px;
-  --display: 'Fraunces', Georgia, serif;
-  --sans: 'Jost', system-ui, sans-serif;
+  --display: 'Fraunces', Georgia, 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --sans: 'Jost', system-ui, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
   --ease: cubic-bezier(.32,.72,0,1);
   --ease-out: cubic-bezier(.16,1,.3,1);
@@ -178,6 +178,11 @@ p { margin: 0; }
 @media (min-width: 900px) { .nav-link, .nav-tel { display: inline-flex; } .marchio-firma { display: inline; } }
 @media (max-width: 899px) { .marchio-firma { display: none; } }
 .nav-prenota { min-height: 44px; }
+.lang { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--ink-2); margin-right: 8px; transition: background-color .4s var(--ease), color .4s var(--ease); }
+.lang:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+[lang="zh-Hans"] .display, [lang="zh-Hans"] h1, [lang="zh-Hans"] h2, [lang="zh-Hans"] h3 { letter-spacing: 0; line-height: 1.12; font-weight: 600; }
+[lang="zh-Hans"] .hero h1 { font-size: clamp(36px, 5.8vw, 76px); }
+[lang="zh-Hans"] .fondo-marchio .display { letter-spacing: -.045em; line-height: .78; }
 @media (max-width: 899px) { .nav-prenota { display: none; } .nav-isola { padding-left: 16px; } .marchio-nome { font-size: 19px; white-space: nowrap; } }
 .burger {
   width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; cursor: pointer;

@@ -1,4 +1,6 @@
 
+import { elencaBlob, scriviJson } from "@/lib/blob-store";
+
 /* =============================================================
    Tracciamento click: tipi, storage su Vercel Blob, aggregazioni.
    Solo lato server (API e pagina /admin).
@@ -43,7 +45,6 @@ export function classificaSorgente(utmSource: string | null, utmMedium: string |
    Il corpo del blob contiene lo stesso JSON, per sicurezza.
    ============================================================= */
 const PREFISSO = "click/";
-const ACCESSO = (process.env.BLOB_ACCESS === "public" ? "public" : "private") as "public" | "private";
 
 function codifica(riga: NuovoClick & { creato_il: string }): string {
   return Buffer.from(JSON.stringify(riga), "utf8").toString("base64url");
@@ -62,33 +63,26 @@ function decodifica(pathname: string): ClickEvento | null {
 }
 
 export async function inserisciClick(riga: NuovoClick): Promise<void> {
-  const { put } = await import("@vercel/blob");
   const creato_il = new Date().toISOString();
   const completo = { ...riga, creato_il };
   const giorno = creato_il.slice(0, 10);
   const nome = `${PREFISSO}${giorno}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${codifica(completo)}.json`;
-  await put(nome, JSON.stringify(completo), { access: ACCESSO, addRandomSuffix: false, contentType: "application/json" });
+  await scriviJson(nome, completo);
 }
 
 /** Ultimi `giorni` giorni di eventi, più recenti prima. */
 export async function leggiClick(giorni = 30, sito?: string): Promise<ClickEvento[]> {
-  const { list } = await import("@vercel/blob");
   const da = new Date();
   da.setUTCDate(da.getUTCDate() - giorni);
   da.setUTCHours(0, 0, 0, 0);
   const daGiorno = da.toISOString().slice(0, 10);
   const righe: ClickEvento[] = [];
-  let cursor: string | undefined;
-  do {
-    const pagina = await list({ prefix: PREFISSO, limit: 1000, cursor });
-    for (const b of pagina.blobs) {
-      const giorno = b.pathname.slice(PREFISSO.length, PREFISSO.length + 10);
-      if (giorno < daGiorno) continue;
-      const r = decodifica(b.pathname);
-      if (r && (!sito || r.sito === sito)) righe.push(r);
-    }
-    cursor = pagina.hasMore ? pagina.cursor : undefined;
-  } while (cursor);
+  for (const b of await elencaBlob(PREFISSO)) {
+    const giorno = b.pathname.slice(PREFISSO.length, PREFISSO.length + 10);
+    if (giorno < daGiorno) continue;
+    const r = decodifica(b.pathname);
+    if (r && (!sito || r.sito === sito)) righe.push(r);
+  }
   righe.sort((x, y) => (x.creato_il < y.creato_il ? 1 : -1));
   return righe;
 }

@@ -1,0 +1,402 @@
+{
+  "lang": "it",
+  "htmlLang": "it",
+  "hreflang": "it",
+  "prefix": "",
+  "altro_lang_label": "中文",
+  "meta": {
+    "title": "Riflessologia Plantare e Massaggio Decontratturante ad Alessandria | Essenza d'Oriente",
+    "description": "Centro olistico ad Alessandria: riflessologia plantare, massaggio decontratturante, tuina shiatsu, coppettazione. 5,0★ su Google con 146 recensioni. Aperti 7/7 fino alle 22:30. Prenota online.",
+    "ogTitle": "Essenza d'Oriente — Centro Olistico ad Alessandria",
+    "ogDescription": "Riflessologia plantare, massaggio decontratturante, tuina shiatsu, coppettazione. 5,0★ su Google con 146 recensioni. Aperti 7/7 fino alle 22:30.",
+    "schemaDescription": "Centro olistico ad Alessandria: riflessologia plantare, massaggio decontratturante, tuina shiatsu, coppettazione, gua sha."
+  },
+  "brand": {
+    "nome": "Essenza d'Oriente",
+    "sotto": "Centro Olistico",
+    "firma": "东方之心养生馆"
+  },
+  "nav": {
+    "trattamenti": "Trattamenti",
+    "recensioni": "Recensioni",
+    "dove": "Dove siamo",
+    "prenota": "Prenota",
+    "prenotaOra": "Prenota ora",
+    "apriMenu": "Apri il menu",
+    "chiudiMenu": "Chiudi il menu",
+    "sezioni": "Sezioni",
+    "azioniRapide": "Azioni rapide",
+    "scriviWa": "Scrivici su WhatsApp",
+    "chiama": "Chiama 331 715 3533",
+    "lingua": "Lingua"
+  },
+  "stato": {
+    "prefisso": "Centro olistico · Alessandria",
+    "prefissoTratt": "Essenza d'Oriente · Alessandria",
+    "aperti": "Aperti ora fino alle 22:30",
+    "chiusi": "Chiusi ora, riapriamo alle 9:30"
+  },
+  "hero": {
+    "h1": "Massaggio con <span class=\"hl\">Oli Essenziali</span> e Trattamenti Olistici ad Alessandria",
+    "lede": "Tuina, shiatsu, riflessologia e coppettazione in un piccolo centro nel cuore di Alessandria. Si prenota online in un minuto, si paga in sede.",
+    "cta": "Prenota ora",
+    "link": "Listino e durate",
+    "recensioni": "146 recensioni Google",
+    "orari": "Tutti i giorni 9:30–22:30",
+    "tag": "Via San Lorenzo 46",
+    "cardLabel": "recensioni · 5,0 su Google",
+    "fotoAlt": "Lettino, asciugamani e candela nella sala trattamenti di Essenza d'Oriente ad Alessandria",
+    "voto": "5,0"
+  },
+  "listino": {
+    "label": "Trattamenti e prezzi",
+    "h2": "Otto trattamenti.<br />Prezzo e durata <span class=\"em\">in chiaro.</span>",
+    "lede": "Scegli, poi prenoti data e ora nel calendario qui sotto. Si paga in sede, in contanti o con carta.",
+    "prenota": "Prenota",
+    "sedutaBreve": "Seduta breve",
+    "note": [
+      "Pagamento in sede · contanti o carta",
+      "Nessun anticipo",
+      "Asciugamani e teli inclusi"
+    ]
+  },
+  "prenota": {
+    "label": "Prenotazione online",
+    "h2": "Scegli data e ora.<br /><span class=\"em\">Conferma immediata.</span>",
+    "lede": "Il calendario è quello vero del centro: vedi solo gli orari liberi. Nessuna carta, nessuna registrazione obbligatoria.",
+    "ledeTratt": "Nel calendario cerca <strong>{nome}</strong>, poi scegli l'orario libero che preferisci. Nessuna carta richiesta.",
+    "staiPrenotando": "Stai prenotando:",
+    "cambia": "cambia trattamento",
+    "widgetTitle": "Prenota il tuo trattamento — calendario Treatwell",
+    "alt": "Non trovi l'orario che cerchi? Scrivici, rispondiamo in giornata.",
+    "wa": "WhatsApp",
+    "waMsg": "Ciao! Vorrei prenotare un trattamento. Quando avete disponibilità?",
+    "waMsgTratt": "Ciao! Vorrei prenotare: {nome}. Quando avete disponibilità?"
+  },
+  "numeri": [
+    {
+      "label": "Orari",
+      "big": "7",
+      "small": "su 7",
+      "testo": "Aperti tutti i giorni dalle 9:30 alle 22:30. Anche la domenica e la sera dopo il lavoro."
+    },
+    {
+      "label": "Google",
+      "big": "5,0",
+      "small": "su 5",
+      "testo": "Media su <span data-conta=\"146\">146</span> recensioni. Il centro olistico più recensito di Alessandria."
+    },
+    {
+      "label": "Centro storico",
+      "big": "2",
+      "small": "min dal Duomo",
+      "testo": "Via San Lorenzo 46. Ci arrivi a piedi, in bici o in auto con parcheggio nelle vicinanze."
+    }
+  ],
+  "recensioni": {
+    "label": "Recensioni",
+    "h2": "Quello che scrivono<br /><span class=\"em\">dopo la seduta.</span>",
+    "lede": "Quattro fra le 146 recensioni Google. Nomi veri, testo intero.",
+    "piede": "5,0 · 146 recensioni",
+    "link": "Leggi tutte le recensioni su Google",
+    "items": [
+      {
+        "testo": "Stamattina ho visitato Essenza d'Oriente e ho avuto un'esperienza fantastica. Sono in vacanza dall'Australia e cercavo un buon posto per massaggi e coppettazione. Sono felice di averlo finalmente trovato! Grazie a Jenny e a tutto il team.",
+        "autore": "Ella Grace · Local Guide"
+      },
+      {
+        "testo": "L'accoglienza è stata cordiale e professionale. Ho ricevuto un trattamento di riflessologia plantare che sicuramente ripeterò. Luca è molto bravo.",
+        "autore": "Roberta Massobrio"
+      },
+      {
+        "testo": "Riflessologia plantare fatta in modo molto professionale e preciso. Si sente che c'è esperienza e attenzione nei dettagli, non è una cosa «fatta tanto per». Il rilassamento è stato immediato.",
+        "autore": "Mirko"
+      },
+      {
+        "testo": "Persone molto gentili e accoglienti, ti fanno sentire come a casa. Posto molto pulito, personale efficiente. Ottimo lavoro.",
+        "autore": "Lily Lily"
+      }
+    ]
+  },
+  "dove": {
+    "label": "Dove siamo",
+    "h2": "Via San Lorenzo 46,<br /><span class=\"em\">Alessandria.</span>",
+    "mappaTitle": "Mappa: Essenza d'Oriente, Via San Lorenzo 46, Alessandria",
+    "indirizzo": "Indirizzo",
+    "indirizzoVal": "Via San Lorenzo 46, 15121 Alessandria",
+    "orari": "Orari",
+    "orariVal": "Tutti i giorni, 9:30 – 22:30",
+    "telefono": "Telefono",
+    "whatsapp": "WhatsApp",
+    "whatsappVal": "Scrivici in chat",
+    "comeArrivare": "Come arrivare"
+  },
+  "faq": {
+    "label": "Domande frequenti",
+    "h2": "Prima di <span class=\"em\">venire.</span>",
+    "items": [
+      {
+        "q": "È la mia prima volta: cosa devo aspettarmi?",
+        "a": "Ti accogliamo con calma, ti chiediamo se hai zone da evitare o preferenze, e ti spieghiamo brevemente come si svolge il trattamento scelto. Non serve nessuna preparazione: asciugamani, teli e ciabattine li troviamo noi."
+      },
+      {
+        "q": "Cosa indosso durante il trattamento?",
+        "a": "Per i massaggi con olio si resta in intimo, sempre coperti da un telo dove serve. Per tuina, shiatsu, riflessologia, coppettazione e gua sha si resta vestiti comodi."
+      },
+      {
+        "q": "Posso venire se sono incinta?",
+        "a": "Sì, ma avvisaci al momento della prenotazione: alcuni trattamenti, come la coppettazione, sono sconsigliati in gravidanza. Ti proponiamo un'alternativa adatta."
+      },
+      {
+        "q": "Come cancello o sposto una prenotazione?",
+        "a": "Chiamaci o scrivici su WhatsApp con un po' di anticipo: troviamo un altro orario. Si paga in sede, in contanti o con carta."
+      }
+    ]
+  },
+  "footer": {
+    "descrizione": "Centro olistico ad Alessandria. Tecniche tradizionali orientali, tutti i giorni fino alle 22:30.",
+    "contatti": "Contatti",
+    "pagine": "Pagine",
+    "social": "Social",
+    "privacy": "Privacy",
+    "cookie": "Cookie",
+    "sitoDi": "Sito di",
+    "tornaAlSito": "Torna al sito"
+  },
+  "tratt": {
+    "briciole": {
+      "home": "Home",
+      "trattamenti": "Trattamenti"
+    },
+    "cta": "Prenota questo trattamento",
+    "chiediWa": "Chiedi su WhatsApp",
+    "cosa": "Che cos'è",
+    "benefici": "Benefici",
+    "svolgimento": "Come si svolge",
+    "pagamento": "pagamento in sede",
+    "orariBox": "Tutti i giorni 9:30 – 22:30",
+    "altriLabel": "Altri trattamenti",
+    "altriH2": "Indecisa/o tra <span class=\"em\">due opzioni?</span>",
+    "fotoAlt": "{nome} da Essenza d'Oriente, Alessandria"
+  },
+  "trattamenti": [
+    {
+      "slug": "massaggio-oli-essenziali",
+      "id": "oli",
+      "nome": "Massaggio Oli Essenziali",
+      "descr": "Cervicale e schiena, il più richiesto per tensioni da scrivania",
+      "durata": "60 min",
+      "prezzo": "60 €",
+      "prezzoNota": "",
+      "info": "cervicale e schiena · 60 min · 60 €",
+      "titoloSeo": "Massaggio Cervicale e Schiena con Oli Essenziali ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Massaggio decontratturante cervicale e schiena con oli essenziali ad Alessandria. 60 minuti, 60 €. 5,0★ su Google. Aperti 7/7 fino alle 22:30.",
+      "h1": "Massaggio Oli Essenziali ad Alessandria",
+      "sotto": "Cervicale e schiena · 60 minuti",
+      "durataLunga": "60 min",
+      "cosa": "Un massaggio manuale mirato su collo, spalle e schiena, eseguito con oli essenziali che favoriscono il rilassamento muscolare e rendono più scorrevoli le manovre. È il trattamento più indicato per chi soffre di tensioni da postura scorretta, lavoro alla scrivania o stress accumulato nella parte alta della schiena.",
+      "benefici": "Aiuta ad allentare le contratture di collo e spalle, può migliorare la sensazione di mobilità del collo e favorisce il rilassamento generale. L'aromaterapia dell'olio contribuisce al benessere psicofisico durante la seduta.",
+      "svolgimento": "La seduta dura 60 minuti. Si resta generalmente a torso nudo o con abbigliamento comodo, secondo le indicazioni dell'operatore, in un ambiente raccolto e rilassante.",
+      "avviso": null
+    },
+    {
+      "slug": "tuina-shiatsu",
+      "id": "tuina",
+      "nome": "Tuina Shiatsu",
+      "descr": "Pressioni e manipolazioni lungo i meridiani, vestiti",
+      "durata": "50 min",
+      "prezzo": "50 €",
+      "prezzoNota": "",
+      "info": "50 min · 50 €",
+      "titoloSeo": "Massaggio Tuina Shiatsu ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Tuina e Shiatsu ad Alessandria: pressioni e manipolazioni lungo i meridiani. 50 minuti, 50 €. 5,0★ su Google, 146 recensioni. Aperti tutti i giorni.",
+      "h1": "Tuina Shiatsu ad Alessandria",
+      "sotto": "Tecniche orientali · 50 minuti",
+      "durataLunga": "50 min",
+      "cosa": "Un trattamento che unisce due tecniche di origine orientale: il Tuina, massaggio tradizionale cinese riconosciuto dall'OMS nel 1998 come pratica terapeutica, e lo Shiatsu, tecnica giapponese a pressione statica di dita e palmi, nata dall'evoluzione delle stesse radici della medicina orientale. Il Tuina è più dinamico, con manovre di pressione, sfregamento e mobilizzazione; lo Shiatsu è più statico e si concentra sulla pressione mirata lungo i meridiani energetici.",
+      "benefici": "Entrambe le tecniche sono tradizionalmente associate all'alleviamento delle tensioni muscolari, al miglioramento della circolazione, alla riduzione dello stress e al rilassamento generale del sistema nervoso.",
+      "svolgimento": "La seduta dura 50 minuti e si svolge generalmente vestiti (a differenza dei massaggi a olio), su tappeto o lettino, con pressioni e manipolazioni su punti specifici del corpo.",
+      "avviso": null
+    },
+    {
+      "slug": "riflessologia-plantare",
+      "id": "riflessologia",
+      "nome": "Riflessologia Plantare",
+      "descr": "Punti riflessi del piede, si tolgono solo le scarpe",
+      "durata": "40 min · oppure 60",
+      "prezzo": "35 €",
+      "prezzoNota": "60 min · 50 €",
+      "info": "40 min · 35 € (60 min · 50 €)",
+      "titoloSeo": "Riflessologia Plantare ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Riflessologia plantare ad Alessandria: 40 o 60 minuti, da 35 €. Stimolazione dei punti riflessi del piede. 5,0★ su Google. Aperti 7/7 fino alle 22:30.",
+      "h1": "Riflessologia Plantare ad Alessandria",
+      "sotto": "40 o 60 minuti",
+      "durataLunga": "40 min / 60 min",
+      "prezzoLungo": "35 € / 50 €",
+      "cosa": "Una pratica che stimola punti specifici della pianta del piede, secondo la mappa della riflessologia plantare, che ha origine sia nella medicina tradizionale cinese sia in studi occidentali del primo Novecento. Ogni zona del piede è tradizionalmente associata a un'area del corpo.",
+      "benefici": "Favorisce il rilassamento generale e può contribuire ad alleviare stress e tensione. Molte persone la trovano utile per il senso di pesantezza alle gambe dopo una giornata in piedi.",
+      "svolgimento": "La seduta dura 40 o 60 minuti, a seconda della durata scelta. Si resta comodamente seduti o sdraiati: si tolgono solo le calzature.",
+      "avviso": null
+    },
+    {
+      "slug": "massaggio-spa",
+      "id": "spa",
+      "nome": "Massaggio Spa",
+      "descr": "Corpo completo, un'ora e mezza solo per te",
+      "durata": "90 min",
+      "prezzo": "90 €",
+      "prezzoNota": "",
+      "info": "corpo completo · 90 min · 90 €",
+      "titoloSeo": "Massaggio Spa Corpo Completo ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Massaggio spa rilassante di corpo completo ad Alessandria: 90 minuti, 90 €. 5,0★ su Google, 146 recensioni. Aperti tutti i giorni fino alle 22:30.",
+      "h1": "Massaggio Spa ad Alessandria",
+      "sotto": "Corpo completo · 90 minuti",
+      "durataLunga": "90 min",
+      "cosa": "Un massaggio rilassante di corpo completo, pensato come momento di puro benessere più che come trattamento mirato a un problema specifico.",
+      "benefici": "Rilassamento profondo, riduzione dello stress percepito e un'ora e mezza dedicata interamente al proprio benessere.",
+      "svolgimento": "La seduta dura 90 minuti, la più lunga tra i trattamenti del centro: è indicata per chi desidera un'esperienza di relax completa, non solo un intervento su una zona specifica.",
+      "avviso": null
+    },
+    {
+      "slug": "coppettazione",
+      "id": "coppettazione",
+      "nome": "Coppettazione",
+      "descr": "Cupping tradizionale cinese, sulla schiena",
+      "durata": "Seduta breve",
+      "prezzo": "25 €",
+      "prezzoNota": "",
+      "info": "cupping · 25 €",
+      "titoloSeo": "Coppettazione (Cupping) ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Coppettazione ad Alessandria: tecnica tradizionale cinese con coppe a effetto ventosa, 25 €. 5,0★ su Google, 146 recensioni. Aperti tutti i giorni.",
+      "h1": "Coppettazione ad Alessandria",
+      "sotto": "Cupping — tecnica tradizionale cinese",
+      "durataLunga": "Seduta breve",
+      "cosa": "Una tecnica di origine antica, propria della medicina tradizionale cinese, che utilizza piccole coppe — in vetro, bambù o silicone — applicate sulla pelle con un effetto ventosa, per richiamare sangue e circolazione verso l'area trattata.",
+      "benefici": "Tradizionalmente associata a un miglioramento della circolazione locale, al rilascio delle tensioni muscolari e a una sensazione di sollievo sulle zone contratte della schiena.",
+      "svolgimento": "Le coppette vengono posizionate e lasciate agire per alcuni minuti, oppure mosse delicatamente sulla pelle. È normale che restino sulla pelle segni rotondi rosso-violacei per alcuni giorni dopo il trattamento: non sono pericolosi, sono un effetto noto e temporaneo.",
+      "avviso": "La coppettazione è sconsigliata in gravidanza, su pelle lesa o ferite aperte, e in caso di fragilità capillare. In caso di dubbi, chiedici pure informazioni prima di prenotare."
+    },
+    {
+      "slug": "gua-sha",
+      "id": "guasha",
+      "nome": "Gua Sha",
+      "descr": "Scorrimento di pietra liscia, corpo o viso",
+      "durata": "Seduta breve",
+      "prezzo": "25 €",
+      "prezzoNota": "",
+      "info": "25 €",
+      "titoloSeo": "Gua Sha ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Gua sha ad Alessandria: scorrimento di pietra liscia per stimolare la circolazione, 25 €. Centro olistico 5,0★ su Google. Aperti 7/7 fino alle 22:30.",
+      "h1": "Gua Sha ad Alessandria",
+      "sotto": "Tecnica tradizionale cinese",
+      "durataLunga": "Seduta breve",
+      "cosa": "Una tecnica della medicina tradizionale cinese che consiste nello scorrimento di uno strumento liscio — spesso una pietra piatta — sulla pelle, per generare calore e stimolare la circolazione superficiale.",
+      "benefici": "Tradizionalmente usato per favorire il rilascio delle tensioni muscolari e connettivali; è molto diffuso anche come trattamento di benessere del viso.",
+      "svolgimento": "Movimenti di scorrimento ripetuti sulla zona trattata. Può lasciare arrossamenti temporanei sulla pelle, che scompaiono in pochi giorni.",
+      "avviso": "Il gua sha è sconsigliato a chi ha problemi di coagulazione del sangue o fragilità capillare. In caso di dubbi, chiedici pure informazioni prima di prenotare."
+    },
+    {
+      "slug": "pulizia-orecchie",
+      "id": "orecchie",
+      "nome": "Pulizia delle Orecchie",
+      "descr": "Cǎi ěr, con strumenti in bambù e piumino finale",
+      "durata": "Seduta breve",
+      "prezzo": "25 €",
+      "prezzoNota": "",
+      "info": "tecnica tradizionale cinese · 25 €",
+      "titoloSeo": "Pulizia delle Orecchie in Stile Tradizionale Cinese ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Pulizia orecchie in stile tradizionale cinese (cǎi ěr) ad Alessandria: strumenti dedicati in bambù e metallo, piuma per la fase finale. 25 €. 5,0★ su Google.",
+      "h1": "Pulizia delle Orecchie ad Alessandria",
+      "sotto": "Tecnica tradizionale cinese",
+      "durataLunga": "Seduta breve",
+      "cosa": "Un servizio di pulizia auricolare eseguito secondo la tecnica tradizionale cinese nota come cǎi ěr (采耳, letteralmente \"raccogliere l'orecchio\"), una pratica diffusa da secoli in Cina — celebre in particolare nella tradizione delle case da tè di Chengdu, nel Sichuan. Non si utilizza alcuna micro-telecamera: l'operatore lavora con un piccolo set di strumenti dedicati, tra cui cucchiaini e bastoncini in bambù o metallo di forme e lunghezze diverse per la rimozione delicata del cerume, piccole pinzette per i residui più visibili e, nella fase finale, un morbido piumino che sfiora e vibra leggermente all'interno dell'orecchio, regalando una tipica sensazione di leggerezza e relax.",
+      "benefici": "Pulizia delicata e accurata, sensazione di leggerezza e comfort auricolare, momento di profondo relax grazie al tocco calibrato degli strumenti tradizionali e alla fase finale con il piumino.",
+      "svolgimento": "Si resta comodamente seduti mentre l'operatore lavora con calma, alternando gli strumenti secondo necessità, fino alla fase finale di stimolazione con il piumino.",
+      "avviso": "Questo è un servizio di pulizia e benessere estetico, non un trattamento medico. In caso di problemi specifici alle orecchie (dolore, infezioni, perdita di udito) è bene rivolgersi a un medico otorinolaringoiatra."
+    },
+    {
+      "slug": "pedicure",
+      "id": "pedicure",
+      "nome": "Pedicure",
+      "descr": "Xiūjiǎo: ammollo, calli, duroni e unghie rifinite",
+      "durata": "Seduta breve",
+      "prezzo": "35 €",
+      "prezzoNota": "",
+      "info": "stile tradizionale cinese · 35 €",
+      "titoloSeo": "Pedicure in Stile Tradizionale Cinese ad Alessandria — Essenza d'Oriente",
+      "descSeo": "Pedicure in stile tradizionale cinese (xiūjiǎo) ad Alessandria: ammollo, cura di calli e duroni con strumenti dedicati, rifinitura delle unghie. 35 €.",
+      "h1": "Pedicure ad Alessandria",
+      "sotto": "Cura del piede in stile tradizionale cinese",
+      "durataLunga": "Seduta breve",
+      "cosa": "Un servizio di cura del piede ispirato alla tradizione cinese dello xiūjiǎo (修脚, letteralmente \"rifinire il piede\"), un'arte antica e molto radicata in Cina — storicamente celebre a Pechino, dove è riconosciuta come patrimonio culturale — incentrata più sulla cura precisa del piede che sulla sola estetica dello smalto. Il piede viene prima ammorbidito con un ammollo caldo, poi l'operatore lavora con piccoli strumenti dedicati e ben affilati per rifinire con precisione calli, duroni e unghie, prestando particolare attenzione ai bordi e agli angoli più delicati.",
+      "benefici": "Piedi visibilmente più lisci e curati, sensazione di leggerezza dopo la rimozione di calli e pelle indurita, unghie rifinite con precisione.",
+      "svolgimento": "Si comincia con un ammollo rilassante, seguito dalla cura vera e propria di calli, duroni e unghie con gli strumenti dedicati, fino alla rifinitura finale.",
+      "avviso": "Questo è un servizio di cura estetica del piede, non un trattamento medico podologico. In caso di condizioni specifiche (diabete, infezioni, problemi circolatori) è bene consultare prima un podologo o un medico."
+    }
+  ],
+  "legale": {
+    "label": "Informativa",
+    "aggiornato": "Ultimo aggiornamento: 2 novembre 2026",
+    "privacy": {
+      "title": "Privacy — Essenza d'Oriente",
+      "description": "Informativa sulla privacy del sito essenzadoriente.it.",
+      "h1": "Privacy",
+      "sezioni": [
+        {
+          "h2": "Titolare del trattamento",
+          "p": "Essenza d'Oriente — Via San Lorenzo 46, 15121 Alessandria (AL). P.IVA 14409690964. Contatti: <a href=\"tel:+393317153533\">331 715 3533</a>."
+        },
+        {
+          "h2": "Quali dati trattiamo",
+          "p": "Questo sito non richiede registrazione e non raccoglie direttamente dati personali tramite moduli propri. I dati che ci fornisci telefonando, scrivendo su WhatsApp o prenotando tramite il widget Treatwell sono trattati al solo scopo di gestire la tua prenotazione."
+        },
+        {
+          "h2": "Prenotazione online (Treatwell)",
+          "p": "La prenotazione online è gestita da Treatwell (Hotspring Ventures Ltd), che agisce come autonomo titolare per i dati inseriti nel modulo di prenotazione. Consulta l'informativa privacy di Treatwell sul loro sito per i dettagli."
+        },
+        {
+          "h2": "Statistiche e misurazione",
+          "p": "Il sito utilizza Google Tag Manager e strumenti di misurazione per capire quante persone visitano la pagina e migliorare il servizio. Registriamo inoltre in forma anonima i click sui bottoni di contatto (WhatsApp, telefono, Prenota) con pagina, dispositivo e sorgente della visita, senza alcun dato personale. Per i dettagli sui cookie utilizzati, consulta la <a href=\"{prefix}/cookie.html\">cookie policy</a>."
+        },
+        {
+          "h2": "I tuoi diritti",
+          "p": "Puoi richiedere in ogni momento l'accesso, la rettifica o la cancellazione dei tuoi dati contattandoci ai recapiti sopra indicati. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali."
+        }
+      ]
+    },
+    "cookie": {
+      "title": "Cookie — Essenza d'Oriente",
+      "description": "Cookie policy del sito essenzadoriente.it.",
+      "h1": "Cookie",
+      "sezioni": [
+        {
+          "h2": "Cosa sono i cookie",
+          "p": "I cookie sono piccoli file salvati dal browser durante la navigazione. Questo sito ne fa un uso minimo, legato a tre servizi di terze parti e a due cookie tecnici propri (lingua scelta e sorgente della visita, 30 giorni, senza dati personali)."
+        },
+        {
+          "h2": "Widget di prenotazione (Treatwell)",
+          "p": "Il modulo di prenotazione online è fornito da Treatwell e può impostare cookie tecnici necessari al funzionamento della prenotazione. Titolare: Hotspring Ventures Ltd."
+        },
+        {
+          "h2": "Mappa (Google Maps)",
+          "p": "La mappa nella sezione \"Dove siamo\" è fornita da Google e può impostare cookie di Google LLC."
+        },
+        {
+          "h2": "Misurazione (Google Tag Manager)",
+          "p": "Utilizziamo Google Tag Manager per misurare le visite e l'efficacia delle campagne pubblicitarie. Questo strumento si attiva solo se scegli \"Accetta\" nel banner cookie mostrato alla prima visita: se scegli \"Rifiuta\", non viene caricato. Puoi cambiare scelta in qualsiasi momento cancellando i dati di navigazione del browser per questo sito."
+        },
+        {
+          "h2": "Come gestire i cookie",
+          "p": "Puoi bloccare o cancellare i cookie in qualsiasi momento dalle impostazioni del tuo browser. Il sito resta consultabile anche senza cookie: potrebbero non funzionare solo la prenotazione online e la mappa."
+        }
+      ]
+    }
+  },
+  "cookieBanner": {
+    "testo": "Cookie <strong>tecnici</strong> sempre attivi; quelli di <strong>misurazione</strong> (Google) solo se accetti.",
+    "dettagli": "Dettagli",
+    "rifiuta": "Rifiuta",
+    "accetta": "Accetta",
+    "aria": "Preferenze cookie"
+  }
+}
