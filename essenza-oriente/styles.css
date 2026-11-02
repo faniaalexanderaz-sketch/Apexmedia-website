@@ -11,8 +11,8 @@
 @font-face { font-family: 'Jost'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('fonts/jost-latin-wght-normal.woff2') format('woff2'); }
 
 :root {
-  --paper: #F4F2EC;
-  --paper-2: #ECEAE2;
+  --paper: #EEF3E6;
+  --paper-2: #E3EBD8;
   --surface: #FFFFFF;
   --ink: #142019;
   --ink-2: #3E4B42;
@@ -23,7 +23,7 @@
   --oro: #B99A45;
   --wa: #1FA855;
   --cuore: #C0392B;
-  --line: rgba(20,32,25,.08);
+  --line: rgba(20,32,25,.09);
   --line-strong: rgba(20,32,25,.16);
   --shadow-soft: 0 24px 60px -24px rgba(20,32,25,.25), 0 2px 6px rgba(20,32,25,.04);
   --shadow-float: 0 40px 90px -30px rgba(20,32,25,.35);
@@ -84,7 +84,7 @@ p { margin: 0; }
 
 /* evidenziatore a pennello (salvia): background che si disegna da sinistra */
 .hl {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C 40 9, 90 13, 150 10 S 190 8, 197 11 L 199 46 C 160 52, 110 47, 60 50 S 12 54, 2 49 Z' fill='%23D6E6C0'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C 40 9, 90 13, 150 10 S 190 8, 197 11 L 199 46 C 160 52, 110 47, 60 50 S 12 54, 2 49 Z' fill='%23C6DCA6'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-size: 100% 100%; background-position: 0 50%;
   padding: .02em .1em; margin: 0 -.06em; box-decoration-break: clone; -webkit-box-decoration-break: clone;
 }
@@ -133,13 +133,16 @@ p { margin: 0; }
 }
 .btn .ico svg { width: 15px; height: 15px; }
 .btn:hover .ico { transform: translate(2px, -1px) scale(1.06); }
-.btn-ink { background: var(--ink); color: var(--paper); box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, var(--shadow-soft); }
-.btn-ink:hover { background: var(--bosco); }
-.btn-ink .ico { background: rgba(255,255,255,.12); }
-.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
-.btn-ghost:hover { background: rgba(20,32,25,.04); border-color: var(--ink); }
+.btn-ink { background: var(--ink); color: var(--paper); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 10px 24px -12px rgba(20,32,25,.45); }
+.btn-ink:hover { background: var(--bosco); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 16px 30px -12px rgba(44,81,56,.5); transform: translateY(-1px); }
+.btn-ink .ico { background: rgba(255,255,255,.14); }
+.btn-ink:hover .ico { background: rgba(255,255,255,.22); }
+.btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line-strong); box-shadow: 0 1px 2px rgba(20,32,25,.04); }
+.btn-ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); transform: translateY(-1px); }
 .btn-ghost .ico { background: rgba(20,32,25,.06); }
+.btn-ghost:hover .ico { background: rgba(255,255,255,.14); }
 .btn-ghost .ico.wa { color: var(--wa); }
+.btn-ghost:hover .ico.wa { color: #fff; background: var(--wa); }
 .btn-paper { background: var(--paper); color: var(--ink); }
 .btn-paper .ico { background: rgba(20,32,25,.06); }
 .btn-sm { min-height: 42px; padding: 0 6px 0 16px; font-size: 14px; gap: 10px; }
@@ -161,7 +164,7 @@ p { margin: 0; }
 .nav-isola {
   display: flex; align-items: center; gap: 6px; width: 100%; max-width: 980px; height: var(--nav-h);
   padding: 0 8px 0 18px; border-radius: 999px;
-  background: rgba(244,242,236,.78); border: 1px solid var(--line); box-shadow: 0 10px 40px -16px rgba(20,32,25,.25);
+  background: rgba(238,243,230,.78); border: 1px solid var(--line); box-shadow: 0 10px 40px -16px rgba(20,32,25,.25);
   -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
 }
 .marchio { display: flex; align-items: baseline; gap: 10px; margin-right: auto; }
@@ -187,7 +190,7 @@ p { margin: 0; }
 .menu-aperto .burger span:nth-child(2) { transform: rotate(-45deg); }
 @media (min-width: 900px) { .burger { display: none; } }
 .menu {
-  position: fixed; inset: 0; z-index: 60; background: rgba(244,242,236,.92);
+  position: fixed; inset: 0; z-index: 60; background: rgba(238,243,230,.92);
   -webkit-backdrop-filter: blur(28px); backdrop-filter: blur(28px);
   display: flex; flex-direction: column; justify-content: center; padding: 0 var(--pad);
   opacity: 0; visibility: hidden; transition: opacity .6s var(--ease), visibility 0s .6s;
@@ -268,7 +271,7 @@ p { margin: 0; }
   padding: 22px 0; border-bottom: 1px solid var(--line); position: relative; isolation: isolate;
 }
 .riga::before {
-  content: ''; position: absolute; inset: 0 -16px; z-index: -1; background: var(--salvia-2); border-radius: var(--r-md);
+  content: ''; position: absolute; inset: 0 -16px; z-index: -1; background: rgba(255,255,255,.6); border-radius: var(--r-md);
   transform: scaleX(.98); opacity: 0; transition: opacity .5s var(--ease), transform .5s var(--ease);
 }
 @media (hover: hover) { .riga:hover::before { opacity: 1; transform: none; } }
@@ -295,9 +298,9 @@ p { margin: 0; }
 /* ---------- prenotazione: widget Treatwell ---------- */
 .prenota { background: var(--ink); color: var(--paper); }
 .prenota h2 { color: var(--paper); }
-.prenota .label { color: rgba(244,242,236,.6); }
-.prenota .lede { color: rgba(244,242,236,.72); }
-.prenota .griglia-linee i { border-color: rgba(244,242,236,.07); }
+.prenota .label { color: rgba(238,243,230,.6); }
+.prenota .lede { color: rgba(238,243,230,.72); }
+.prenota .griglia-linee i { border-color: rgba(238,243,230,.07); }
 .prenota .shell { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); max-width: 760px; margin: 0 auto; }
 .prenota .core { box-shadow: none; }
 .treatwell-frame { display: block; width: 100%; height: 560px; border: 0; background: #fff; }
@@ -308,10 +311,11 @@ p { margin: 0; }
 }
 .scelta-attiva strong { color: var(--salvia); font-weight: 500; }
 .scelta-attiva button { background: none; border: 0; color: var(--paper); font: inherit; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; opacity: .8; }
-.prenota-alt { max-width: 760px; margin: 24px auto 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; color: rgba(244,242,236,.72); font-size: 15px; }
+.prenota-alt { max-width: 760px; margin: 24px auto 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; color: rgba(238,243,230,.72); font-size: 15px; }
 .prenota-alt .azioni { display: flex; flex-wrap: wrap; gap: 10px; }
-.prenota .btn-ghost { color: var(--paper); border-color: rgba(255,255,255,.22); }
-.prenota .btn-ghost:hover { border-color: var(--paper); background: rgba(255,255,255,.06); }
+.prenota .btn-ghost { background: transparent; color: var(--paper); border-color: rgba(255,255,255,.22); box-shadow: none; }
+.prenota .btn-ghost:hover { border-color: var(--paper); background: var(--paper); color: var(--ink); }
+.prenota .btn-ghost:hover .ico { background: rgba(20,32,25,.08); }
 .prenota .btn-ghost .ico { background: rgba(255,255,255,.1); }
 
 /* ---------- numeri ---------- */
@@ -361,30 +365,30 @@ p { margin: 0; }
 .faq details p { padding: 0 0 26px; color: var(--ink-2); max-width: 64ch; }
 
 /* ---------- footer ---------- */
-.fondo { background: var(--ink); color: rgba(244,242,236,.7); padding: clamp(64px, 8vw, 120px) 0 0; overflow: hidden; position: relative; }
+.fondo { background: var(--ink); color: rgba(238,243,230,.7); padding: clamp(64px, 8vw, 120px) 0 0; overflow: hidden; position: relative; }
 .fondo-grid { display: grid; gap: 36px; padding-bottom: 56px; }
 @media (min-width: 900px) { .fondo-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px; } }
-.fondo .label { color: rgba(244,242,236,.45); }
-.fondo .label::before { background: rgba(244,242,236,.3); }
+.fondo .label { color: rgba(238,243,230,.45); }
+.fondo .label::before { background: rgba(238,243,230,.3); }
 .fondo-col { display: grid; gap: 12px; align-content: start; }
 .fondo-col a { color: var(--paper); transition: opacity .4s var(--ease); }
 .fondo-col a:hover { opacity: .7; }
-.fondo-firma { font-size: 14px; letter-spacing: .1em; color: rgba(244,242,236,.55); }
+.fondo-firma { font-size: 14px; letter-spacing: .1em; color: rgba(238,243,230,.55); }
 .fondo-firma .cuore { color: var(--cuore); }
-.fondo-marchio { border-top: 1px solid rgba(244,242,236,.1); padding-top: 28px; }
+.fondo-marchio { border-top: 1px solid rgba(238,243,230,.1); padding-top: 28px; }
 .fondo-marchio .display { font-size: clamp(56px, 13.5vw, 196px); color: var(--paper); letter-spacing: -.045em; line-height: .78; margin-bottom: -.12em; opacity: .95; white-space: nowrap; }
-.fondo-legale { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 20px 0 28px; border-top: 1px solid rgba(244,242,236,.1); font-size: 13px; color: rgba(244,242,236,.5); }
-.fondo-legale a { color: rgba(244,242,236,.75); }
+.fondo-legale { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 20px 0 28px; border-top: 1px solid rgba(238,243,230,.1); font-size: 13px; color: rgba(238,243,230,.5); }
+.fondo-legale a { color: rgba(238,243,230,.75); }
 
 /* ---------- barra mobile a isola ---------- */
 .barra-mobile {
   position: fixed; left: 14px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 50;
   display: flex; gap: 8px; padding: 8px; border-radius: 999px;
-  background: rgba(244,242,236,.82); border: 1px solid var(--line); box-shadow: 0 16px 50px -16px rgba(20,32,25,.4);
+  background: rgba(238,243,230,.82); border: 1px solid var(--line); box-shadow: 0 16px 50px -16px rgba(20,32,25,.4);
   -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
 }
 .barra-mobile .btn-ink { flex: 1; justify-content: space-between; }
-.barra-mobile .tondo { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line-strong); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); flex: none; }
+.barra-mobile .tondo { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--surface); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); flex: none; }
 .barra-mobile .tondo.wa { color: var(--wa); }
 @media (min-width: 900px) { .barra-mobile { display: none; } }
 
