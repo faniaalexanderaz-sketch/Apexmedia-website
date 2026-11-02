@@ -1,8 +1,7 @@
 
 /* =============================================================
-   Accesso a Supabase per il tracciamento click.
-   Si parla direttamente con PostgREST via fetch, con la service
-   role key: niente SDK, niente dipendenze. Solo lato server.
+   Tracciamento click: tipi, storage su Vercel Blob, aggregazioni.
+   Solo lato server (API e pagina /admin).
    ============================================================= */
 
 export const AZIONI = ["whatsapp", "telefono", "prenota"] as const;
@@ -26,17 +25,6 @@ export type ClickEvento = {
 
 export type NuovoClick = Omit<ClickEvento, "id" | "creato_il">;
 
-function config() {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) throw new Error("SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY mancanti");
-  return { url: url.replace(/\/$/, ""), key };
-}
-
-function headers(key: string, extra: Record<string, string> = {}) {
-  return { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", ...extra };
-}
-
 /** Classifica la sorgente: Google Ads se c'è il gclid o utm_source=google (con medium cpc/paid o assente). */
 export function classificaSorgente(utmSource: string | null, utmMedium: string | null, gclid: boolean): Sorgente {
   const src = (utmSource ?? "").toLowerCase();
@@ -48,33 +36,61 @@ export function classificaSorgente(utmSource: string | null, utmMedium: string |
   return "altro";
 }
 
-export async function inserisciClick(riga: NuovoClick): Promise<void> {
-  const { url, key } = config();
-  const res = await fetch(`${url}/rest/v1/click_eventi`, {
-    method: "POST",
-    headers: headers(key, { Prefer: "return=minimal" }),
-    body: JSON.stringify(riga),
-    cache: "no-store",
-  });
-  if (!res.ok) throw new Error(`Supabase insert ${res.status}: ${await res.text()}`);
+/* ---------- storage: Vercel Blob ----------
+   Un blob per evento, dentro la cartella del giorno. Tutti i campi
+   sono codificati anche nel nome del file (base64url del JSON), così
+   la dashboard legge solo l'elenco dei blob, senza scaricare nulla.
+   Il corpo del blob contiene lo stesso JSON, per sicurezza.
+   ============================================================= */
+const PREFISSO = "click/";
+const ACCESSO = (process.env.BLOB_ACCESS === "public" ? "public" : "private") as "public" | "private";
+
+function codifica(riga: NuovoClick & { creato_il: string }): string {
+  return Buffer.from(JSON.stringify(riga), "utf8").toString("base64url");
+}
+function decodifica(pathname: string): ClickEvento | null {
+  // click/2026-11-02/1762083600000-ab12.<base64url>.json
+  const m = pathname.match(/^click\/\d{4}-\d{2}-\d{2}\/(\d+)-[a-z0-9]+\.([A-Za-z0-9_-]+)\.json$/);
+  if (!m) return null;
+  try {
+    const d = JSON.parse(Buffer.from(m[2], "base64url").toString("utf8")) as NuovoClick & { creato_il: string };
+    if (!AZIONI.includes(d.azione) || !SORGENTI.includes(d.sorgente)) return null;
+    return { id: Number(m[1]), ...d };
+  } catch {
+    return null;
+  }
 }
 
-/** Ultimi `giorni` giorni di eventi (max 10.000 righe), più recenti prima. */
+export async function inserisciClick(riga: NuovoClick): Promise<void> {
+  const { put } = await import("@vercel/blob");
+  const creato_il = new Date().toISOString();
+  const completo = { ...riga, creato_il };
+  const giorno = creato_il.slice(0, 10);
+  const nome = `${PREFISSO}${giorno}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${codifica(completo)}.json`;
+  await put(nome, JSON.stringify(completo), { access: ACCESSO, addRandomSuffix: false, contentType: "application/json" });
+}
+
+/** Ultimi `giorni` giorni di eventi, più recenti prima. */
 export async function leggiClick(giorni = 30, sito?: string): Promise<ClickEvento[]> {
-  const { url, key } = config();
+  const { list } = await import("@vercel/blob");
   const da = new Date();
   da.setUTCDate(da.getUTCDate() - giorni);
   da.setUTCHours(0, 0, 0, 0);
-  const q = new URLSearchParams({
-    select: "*",
-    creato_il: `gte.${da.toISOString()}`,
-    order: "creato_il.desc",
-    limit: "10000",
-  });
-  if (sito) q.set("sito", `eq.${sito}`);
-  const res = await fetch(`${url}/rest/v1/click_eventi?${q}`, { headers: headers(key), cache: "no-store" });
-  if (!res.ok) throw new Error(`Supabase select ${res.status}: ${await res.text()}`);
-  return (await res.json()) as ClickEvento[];
+  const daGiorno = da.toISOString().slice(0, 10);
+  const righe: ClickEvento[] = [];
+  let cursor: string | undefined;
+  do {
+    const pagina = await list({ prefix: PREFISSO, limit: 1000, cursor });
+    for (const b of pagina.blobs) {
+      const giorno = b.pathname.slice(PREFISSO.length, PREFISSO.length + 10);
+      if (giorno < daGiorno) continue;
+      const r = decodifica(b.pathname);
+      if (r && (!sito || r.sito === sito)) righe.push(r);
+    }
+    cursor = pagina.hasMore ? pagina.cursor : undefined;
+  } while (cursor);
+  righe.sort((x, y) => (x.creato_il < y.creato_il ? 1 : -1));
+  return righe;
 }
 
 /** Elenco dei siti presenti negli ultimi 90 giorni. */
