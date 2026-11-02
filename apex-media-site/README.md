@@ -101,8 +101,8 @@ Le variabili d'ambiente si impostano in Vercel → Settings → Environment Vari
 
 ## Dashboard click dei siti clienti (`/admin`)
 
-I siti clienti (oggi `essenzadoriente.it`) mandano ogni click su WhatsApp, telefono e Prenota a `POST /api/track`, che lo salva su Supabase nella tabella `click_eventi` (migrazione in `supabase/migrations/`). Nessun dato personale: azione, pagina, utm_source, utm_medium, presenza del gclid, dispositivo.
+I siti clienti (oggi `essenzadoriente.it`) mandano ogni click su WhatsApp, telefono e Prenota a `POST /api/track`, che lo salva su **Vercel Blob** (un file JSON per evento, cartella per giorno, prefisso `click/`). Nessun dato personale: azione, pagina, utm_source, utm_medium, presenza del gclid, dispositivo. Nessun servizio esterno a Vercel.
 
 `/admin` (password `ADMIN_PASSWORD`, cookie di sessione 30 giorni) mostra totali per azione (oggi / 7 / 30 giorni), grafico giornaliero, tabelle per sorgente, dispositivo e pagina, ed esporta il CSV.
 
-Variabili d'ambiente su Vercel: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PASSWORD`, opzionale `TRACK_ALLOWED_ORIGINS` (altre origini separate da virgola). Vedi `.env.example`.
+Configurazione su Vercel: Storage → Create → Blob (accesso privato) → collegarlo al progetto `apex-media-site`: Vercel aggiunge da solo `BLOB_READ_WRITE_TOKEN`. Poi `ADMIN_PASSWORD` (già impostata) e, opzionale, `TRACK_ALLOWED_ORIGINS`. Vedi `.env.example`.

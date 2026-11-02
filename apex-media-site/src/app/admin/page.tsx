@@ -129,7 +129,7 @@ async function Dashboard({ sito }: { sito?: string }) {
 
       {erroreDb && (
         <div className="mt-8 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          Non riesco a leggere Supabase: {erroreDb}. Controlla SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY su Vercel e che il progetto non sia in pausa.
+          Non riesco a leggere lo storage: {erroreDb}. Controlla che su Vercel il progetto abbia un Blob store collegato (variabile BLOB_READ_WRITE_TOKEN).
         </div>
       )}
 
