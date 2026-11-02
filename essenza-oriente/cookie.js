@@ -68,11 +68,16 @@
     box.className = 'cookie-banner';
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-label', 'Preferenze cookie');
+    var b = document.body;
+    var testo = b.getAttribute('data-cookie-testo') || 'Cookie <strong>tecnici</strong> sempre attivi; quelli di <strong>misurazione</strong> (Google) solo se accetti.';
+    var dettagli = b.getAttribute('data-cookie-dettagli') || 'Dettagli';
+    var prefix = b.getAttribute('data-prefix') || '';
+    box.setAttribute('aria-label', b.getAttribute('data-cookie-aria') || 'Preferenze cookie');
     box.innerHTML =
-      '<p class="cookie-testo">Cookie <strong>tecnici</strong> sempre attivi; quelli di <strong>misurazione</strong> (Google) solo se accetti. <a href="' + base + 'cookie.html">Dettagli</a></p>' +
+      '<p class="cookie-testo">' + testo + ' <a href="' + prefix + '/cookie.html">' + dettagli + '</a></p>' +
       '<div class="cookie-azioni">' +
-        '<button class="btn btn-cookie-rifiuta" type="button" id="cookieRifiuta">Rifiuta</button>' +
-        '<button class="btn btn-cookie-accetta" type="button" id="cookieAccetta">Accetta</button>' +
+        '<button class="btn btn-cookie-rifiuta" type="button" id="cookieRifiuta">' + (b.getAttribute('data-cookie-rifiuta') || 'Rifiuta') + '</button>' +
+        '<button class="btn btn-cookie-accetta" type="button" id="cookieAccetta">' + (b.getAttribute('data-cookie-accetta') || 'Accetta') + '</button>' +
       '</div>';
     document.body.appendChild(box);
     box.querySelector('#cookieAccetta').addEventListener('click', function () { imposta('accettato'); });

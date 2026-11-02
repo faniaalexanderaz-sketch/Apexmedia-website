@@ -1,0 +1,402 @@
+{
+  "lang": "zh",
+  "htmlLang": "zh-Hans",
+  "hreflang": "zh-CN",
+  "prefix": "/zh",
+  "altro_lang_label": "IT",
+  "meta": {
+    "title": "亚历山德里亚足底反射疗法与放松按摩 | Essenza d'Oriente 东方之心养生馆",
+    "description": "位于意大利亚历山德里亚（Alessandria）的养生馆：足底反射疗法、舒缓按摩、推拿指压、拔罐。Google 评分 5.0，146 条评价。每天营业至 22:30，可在线预约。",
+    "ogTitle": "Essenza d'Oriente 东方之心养生馆 — 亚历山德里亚",
+    "ogDescription": "足底反射、舒缓按摩、推拿指压、拔罐。Google 评分 5.0，146 条评价。每天营业至 22:30。",
+    "schemaDescription": "亚历山德里亚养生馆：足底反射疗法、舒缓按摩、推拿指压、拔罐、刮痧。"
+  },
+  "brand": {
+    "nome": "Essenza d'Oriente",
+    "sotto": "养生馆",
+    "firma": "东方之心养生馆"
+  },
+  "nav": {
+    "trattamenti": "项目",
+    "recensioni": "评价",
+    "dove": "地址",
+    "prenota": "预约",
+    "prenotaOra": "立即预约",
+    "apriMenu": "打开菜单",
+    "chiudiMenu": "关闭菜单",
+    "sezioni": "栏目",
+    "azioniRapide": "快捷操作",
+    "scriviWa": "WhatsApp 联系我们",
+    "chiama": "致电 331 715 3533",
+    "lingua": "语言"
+  },
+  "stato": {
+    "prefisso": "养生馆 · 亚历山德里亚",
+    "prefissoTratt": "Essenza d'Oriente · 亚历山德里亚",
+    "aperti": "现在营业中，至 22:30",
+    "chiusi": "现在休息中，9:30 开门"
+  },
+  "hero": {
+    "h1": "亚历山德里亚的<span class=\"hl\">精油按摩</span>与东方养生理疗",
+    "lede": "推拿、指压、足底反射与拔罐，就在亚历山德里亚市中心的一家小而温馨的养生馆。一分钟在线预约，到店付款。",
+    "cta": "立即预约",
+    "link": "项目与价格",
+    "recensioni": "146 条 Google 评价",
+    "orari": "每天 9:30–22:30",
+    "tag": "Via San Lorenzo 46",
+    "cardLabel": "条评价 · Google 5.0 分",
+    "fotoAlt": "Essenza d'Oriente 养生馆理疗室：按摩床、毛巾与蜡烛，亚历山德里亚",
+    "voto": "5.0"
+  },
+  "listino": {
+    "label": "项目与价格",
+    "h2": "八个项目。<br />价格与时长<span class=\"em\">一目了然。</span>",
+    "lede": "先选项目，再在下方日历中选择日期和时间。到店付款，现金或刷卡均可。",
+    "prenota": "预约",
+    "sedutaBreve": "短时项目",
+    "note": [
+      "到店付款 · 现金或刷卡",
+      "无需预付",
+      "含毛巾与盖布"
+    ]
+  },
+  "prenota": {
+    "label": "在线预约",
+    "h2": "选择日期和时间。<br /><span class=\"em\">即时确认。</span>",
+    "lede": "这是店里真实的日历：只显示空闲时段。无需银行卡，无需强制注册。",
+    "ledeTratt": "在日历中找到 <strong>{nome}</strong>，然后选择您方便的空闲时段。无需银行卡。",
+    "staiPrenotando": "您正在预约：",
+    "cambia": "更换项目",
+    "widgetTitle": "预约您的项目 — Treatwell 日历",
+    "alt": "找不到合适的时间？给我们留言，当天回复。",
+    "wa": "WhatsApp",
+    "waMsg": "您好！我想预约一个项目，请问什么时候有空位？",
+    "waMsgTratt": "您好！我想预约：{nome}。请问什么时候有空位？"
+  },
+  "numeri": [
+    {
+      "label": "营业时间",
+      "big": "7",
+      "small": "天 / 周",
+      "testo": "每天 9:30 至 22:30 营业，周日和下班后的晚上也可以来。"
+    },
+    {
+      "label": "Google",
+      "big": "5.0",
+      "small": "/ 5",
+      "testo": "<span data-conta=\"146\">146</span> 条评价的平均分。亚历山德里亚评价最多的养生馆。"
+    },
+    {
+      "label": "老城区",
+      "big": "2",
+      "small": "分钟到主教座堂",
+      "testo": "Via San Lorenzo 46。步行、骑车或开车都方便，附近有停车位。"
+    }
+  ],
+  "recensioni": {
+    "label": "顾客评价",
+    "h2": "理疗之后，<br /><span class=\"em\">他们这样说。</span>",
+    "lede": "146 条 Google 评价中的四条。真实姓名，完整原文（意大利语）。",
+    "piede": "5.0 · 146 条评价",
+    "link": "在 Google 上查看全部评价",
+    "items": [
+      {
+        "testo": "今天早上我来到 Essenza d'Oriente，体验非常棒。我从澳大利亚来度假，一直在找一家好的按摩和拔罐店，很高兴终于找到了！感谢 Jenny 和整个团队。",
+        "autore": "Ella Grace · Local Guide"
+      },
+      {
+        "testo": "接待亲切又专业。我做了足底反射疗法，一定会再来。Luca 手法很好。",
+        "autore": "Roberta Massobrio"
+      },
+      {
+        "testo": "足底反射做得非常专业、精准。能感觉到经验和对细节的用心，不是随便应付。放松感立刻就来了。",
+        "autore": "Mirko"
+      },
+      {
+        "testo": "人很友善热情，让你有回家的感觉。店里非常干净，员工高效。做得很好。",
+        "autore": "Lily Lily"
+      }
+    ]
+  },
+  "dove": {
+    "label": "地址",
+    "h2": "Via San Lorenzo 46,<br /><span class=\"em\">Alessandria.</span>",
+    "mappaTitle": "地图：Essenza d'Oriente，Via San Lorenzo 46，亚历山德里亚",
+    "indirizzo": "地址",
+    "indirizzoVal": "Via San Lorenzo 46, 15121 Alessandria",
+    "orari": "营业时间",
+    "orariVal": "每天 9:30 – 22:30",
+    "telefono": "电话",
+    "whatsapp": "WhatsApp",
+    "whatsappVal": "在线留言",
+    "comeArrivare": "路线导航"
+  },
+  "faq": {
+    "label": "常见问题",
+    "h2": "来店<span class=\"em\">之前。</span>",
+    "items": [
+      {
+        "q": "第一次来，需要注意什么？",
+        "a": "我们会从容地接待您，询问是否有需要避开的部位或个人偏好，并简单说明所选项目的流程。无需任何准备：毛巾、盖布和拖鞋都由我们提供。"
+      },
+      {
+        "q": "理疗时穿什么？",
+        "a": "精油按摩时只穿内衣，需要的部位始终盖有毛巾。推拿、指压、足底反射、拔罐和刮痧可以穿着宽松衣物进行。"
+      },
+      {
+        "q": "怀孕期间可以来吗？",
+        "a": "可以，但请在预约时告知我们：有些项目（如拔罐）不建议孕期进行，我们会为您推荐合适的替代项目。"
+      },
+      {
+        "q": "如何取消或改期？",
+        "a": "请提前打电话或在 WhatsApp 上留言，我们会为您另找时间。到店付款，现金或刷卡均可。"
+      }
+    ]
+  },
+  "footer": {
+    "descrizione": "亚历山德里亚的养生馆。传统东方理疗，每天营业至 22:30。",
+    "contatti": "联系方式",
+    "pagine": "页面",
+    "social": "社交媒体",
+    "privacy": "隐私政策",
+    "cookie": "Cookie 政策",
+    "sitoDi": "网站制作",
+    "tornaAlSito": "返回网站"
+  },
+  "tratt": {
+    "briciole": {
+      "home": "首页",
+      "trattamenti": "项目"
+    },
+    "cta": "预约此项目",
+    "chiediWa": "WhatsApp 咨询",
+    "cosa": "项目介绍",
+    "benefici": "功效",
+    "svolgimento": "流程",
+    "pagamento": "到店付款",
+    "orariBox": "每天 9:30 – 22:30",
+    "altriLabel": "其他项目",
+    "altriH2": "还在<span class=\"em\">犹豫选哪个？</span>",
+    "fotoAlt": "{nome}，Essenza d'Oriente 养生馆，亚历山德里亚"
+  },
+  "trattamenti": [
+    {
+      "slug": "massaggio-oli-essenziali",
+      "id": "oli",
+      "nome": "精油按摩（Massaggio Oli Essenziali）",
+      "descr": "颈肩与背部，久坐办公人群最常选",
+      "durata": "60 分钟",
+      "prezzo": "60 €",
+      "prezzoNota": "",
+      "info": "颈肩背部 · 60 分钟 · 60 €",
+      "titoloSeo": "亚历山德里亚颈肩背部精油按摩 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的颈肩背部精油舒缓按摩。60 分钟，60 €。Google 评分 5.0。每天营业至 22:30。",
+      "h1": "精油按摩（Massaggio Oli Essenziali）· 亚历山德里亚",
+      "sotto": "颈肩与背部 · 60 分钟",
+      "durataLunga": "60 分钟",
+      "cosa": "针对颈部、肩部和背部的手法按摩，配合精油帮助肌肉放松，让手法更加顺畅。最适合因姿势不良、久坐办公或上背部压力累积而感到紧绷的人。",
+      "benefici": "有助于缓解颈肩僵硬，改善颈部活动的轻松感，并促进全身放松。精油的芳香在理疗过程中也有助于身心舒缓。",
+      "svolgimento": "全程 60 分钟。一般裸露上身或穿着宽松衣物，按理疗师的指引进行，环境安静而放松。",
+      "avviso": null
+    },
+    {
+      "slug": "tuina-shiatsu",
+      "id": "tuina",
+      "nome": "推拿指压（Tuina Shiatsu）",
+      "descr": "沿经络按压推拿，无需脱衣",
+      "durata": "50 分钟",
+      "prezzo": "50 €",
+      "prezzoNota": "",
+      "info": "50 分钟 · 50 €",
+      "titoloSeo": "亚历山德里亚推拿指压按摩 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的推拿与指压：沿经络按压与推拿。50 分钟，50 €。Google 评分 5.0，146 条评价。每天营业。",
+      "h1": "推拿指压（Tuina Shiatsu）· 亚历山德里亚",
+      "sotto": "东方手法 · 50 分钟",
+      "durataLunga": "50 分钟",
+      "cosa": "融合两种东方技法的理疗：推拿是中国传统按摩，1998 年被世界卫生组织认可为治疗性疗法；指压（Shiatsu）是源自同一东方医学根基的日本技法，以手指和手掌进行静态按压。推拿更为动态，包含按压、揉搓和关节活动；指压则更为静态，专注于沿经络的定点按压。",
+      "benefici": "两种技法传统上都与缓解肌肉紧张、改善血液循环、减轻压力和神经系统的整体放松相关。",
+      "svolgimento": "全程 50 分钟，一般穿着衣物进行（与精油按摩不同），在垫子或按摩床上，对身体特定穴位进行按压与推拿。",
+      "avviso": null
+    },
+    {
+      "slug": "riflessologia-plantare",
+      "id": "riflessologia",
+      "nome": "足底反射疗法（Riflessologia Plantare）",
+      "descr": "刺激足底反射区，只需脱鞋",
+      "durata": "40 分钟 · 或 60 分钟",
+      "prezzo": "35 €",
+      "prezzoNota": "60 分钟 · 50 €",
+      "info": "40 分钟 · 35 €（60 分钟 · 50 €）",
+      "titoloSeo": "亚历山德里亚足底反射疗法 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的足底反射疗法：40 或 60 分钟，35 € 起。刺激足底反射区。Google 评分 5.0。每天营业至 22:30。",
+      "h1": "足底反射疗法（Riflessologia Plantare）· 亚历山德里亚",
+      "sotto": "40 或 60 分钟",
+      "durataLunga": "40 分钟 / 60 分钟",
+      "prezzoLungo": "35 € / 50 €",
+      "cosa": "按照足底反射区图谱刺激脚底的特定点位，这一方法既源于中国传统医学，也源于二十世纪初的西方研究。传统上，足底的每个区域都对应身体的某个部位。",
+      "benefici": "促进全身放松，有助于缓解压力和紧张。许多人认为它对站立一整天后的腿部沉重感很有帮助。",
+      "svolgimento": "全程 40 或 60 分钟，按所选时长而定。舒适地坐着或躺着即可：只需脱掉鞋子。",
+      "avviso": null
+    },
+    {
+      "slug": "massaggio-spa",
+      "id": "spa",
+      "nome": "全身 SPA 按摩（Massaggio Spa）",
+      "descr": "全身放松，一个半小时只属于您",
+      "durata": "90 分钟",
+      "prezzo": "90 €",
+      "prezzoNota": "",
+      "info": "全身 · 90 分钟 · 90 €",
+      "titoloSeo": "亚历山德里亚全身 SPA 按摩 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的全身放松 SPA 按摩：90 分钟，90 €。Google 评分 5.0，146 条评价。每天营业至 22:30。",
+      "h1": "全身 SPA 按摩（Massaggio Spa）· 亚历山德里亚",
+      "sotto": "全身 · 90 分钟",
+      "durataLunga": "90 分钟",
+      "cosa": "一次全身放松按摩，更像是一段纯粹的享受时光，而不是针对某个特定问题的理疗。",
+      "benefici": "深度放松，减轻压力感，一个半小时完全属于自己的身心时间。",
+      "svolgimento": "全程 90 分钟，是本店时长最长的项目：适合想要完整放松体验、而不只是处理某一部位的人。",
+      "avviso": null
+    },
+    {
+      "slug": "coppettazione",
+      "id": "coppettazione",
+      "nome": "拔罐（Coppettazione）",
+      "descr": "中国传统拔罐，背部",
+      "durata": "短时项目",
+      "prezzo": "25 €",
+      "prezzoNota": "",
+      "info": "拔罐 · 25 €",
+      "titoloSeo": "亚历山德里亚拔罐 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的拔罐：中国传统技法，负压罐具，25 €。Google 评分 5.0，146 条评价。每天营业。",
+      "h1": "拔罐（Coppettazione）· 亚历山德里亚",
+      "sotto": "中国传统技法",
+      "durataLunga": "短时项目",
+      "cosa": "源自中国传统医学的古老技法，使用玻璃、竹或硅胶小罐吸附在皮肤上形成负压，把气血引向所处理的部位。",
+      "benefici": "传统上认为有助于改善局部血液循环、释放肌肉紧张，并让背部紧绷的部位感到舒缓。",
+      "svolgimento": "罐具放置后停留几分钟，或在皮肤上轻轻移动。拔罐后皮肤留下圆形的红紫色印记属于正常现象，几天后会自行消退：这是已知的暂时性效果，没有危险。",
+      "avviso": "孕期、皮肤破损或有开放性伤口、毛细血管脆弱者不建议拔罐。如有疑问，欢迎在预约前向我们咨询。"
+    },
+    {
+      "slug": "gua-sha",
+      "id": "guasha",
+      "nome": "刮痧（Gua Sha）",
+      "descr": "以光滑刮板刮拭，身体或面部",
+      "durata": "短时项目",
+      "prezzo": "25 €",
+      "prezzoNota": "",
+      "info": "25 €",
+      "titoloSeo": "亚历山德里亚刮痧 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的刮痧：以光滑石板刮拭皮肤促进循环，25 €。养生馆 Google 评分 5.0。每天营业至 22:30。",
+      "h1": "刮痧（Gua Sha）· 亚历山德里亚",
+      "sotto": "中国传统技法",
+      "durataLunga": "短时项目",
+      "cosa": "中国传统医学的一种技法，用光滑的工具（通常是扁平的石板）在皮肤上刮拭，产生温热感并促进浅表血液循环。",
+      "benefici": "传统上用于帮助释放肌肉和结缔组织的紧张；作为面部养护项目也非常流行。",
+      "svolgimento": "在所处理部位反复刮拭。皮肤可能出现暂时性发红，几天内自行消退。",
+      "avviso": "有凝血问题或毛细血管脆弱者不建议刮痧。如有疑问，欢迎在预约前向我们咨询。"
+    },
+    {
+      "slug": "pulizia-orecchie",
+      "id": "orecchie",
+      "nome": "采耳（Pulizia delle Orecchie）",
+      "descr": "传统采耳，竹制工具与羽毛收尾",
+      "durata": "短时项目",
+      "prezzo": "25 €",
+      "prezzoNota": "",
+      "info": "中国传统技法 · 25 €",
+      "titoloSeo": "亚历山德里亚中式传统采耳 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的中式传统采耳：竹制与金属专用工具，羽毛收尾。25 €。Google 评分 5.0。",
+      "h1": "采耳（Pulizia delle Orecchie）· 亚历山德里亚",
+      "sotto": "中国传统技法",
+      "durataLunga": "短时项目",
+      "cosa": "按照中国传统技法「采耳」进行的耳部清洁服务，这项技艺在中国流传数百年，尤以四川成都的茶馆文化最为著名。不使用任何微型摄像头：采耳师使用一套专用小工具，包括不同形状与长度的竹制或金属耳勺、耳棒，用于轻柔清除耳垢；小镊子处理较明显的残留；最后用柔软的羽毛轻扫、微振耳道，带来独特的轻盈与放松感。",
+      "benefici": "温和细致的清洁，耳部轻盈舒适，传统工具的精准触感与羽毛收尾带来深度放松。",
+      "svolgimento": "舒适地坐着，采耳师从容操作，按需更换工具，直到最后的羽毛刺激环节。",
+      "avviso": "这是一项清洁与舒适养护服务，不是医疗行为。如有耳部具体问题（疼痛、感染、听力下降），请咨询耳鼻喉科医生。"
+    },
+    {
+      "slug": "pedicure",
+      "id": "pedicure",
+      "nome": "修脚（Pedicure）",
+      "descr": "泡脚、老茧、鸡眼与修甲",
+      "durata": "短时项目",
+      "prezzo": "35 €",
+      "prezzoNota": "",
+      "info": "中国传统技法 · 35 €",
+      "titoloSeo": "亚历山德里亚中式传统修脚 — Essenza d'Oriente",
+      "descSeo": "意大利亚历山德里亚的中式传统修脚：泡脚，用专用工具处理老茧和鸡眼，修整趾甲。35 €。",
+      "h1": "修脚（Pedicure）· 亚历山德里亚",
+      "sotto": "中式传统足部护理",
+      "durataLunga": "短时项目",
+      "cosa": "源自中国传统「修脚」技艺的足部护理服务。修脚是一门古老而深植于中国的手艺，历史上以北京最为著名，并被列为文化遗产，重在对足部的精细护理，而不只是指甲油的美观。先用温水泡软双脚，再由修脚师用锋利的专用小工具精准修整老茧、鸡眼和趾甲，尤其注意边缘和最细微的角落。",
+      "benefici": "双脚明显更光滑、整洁，去除老茧和硬皮后倍感轻松，趾甲修整精准。",
+      "svolgimento": "先舒适地泡脚，接着用专用工具护理老茧、鸡眼和趾甲，直到最后的修整。",
+      "avviso": "这是一项足部美容护理服务，不是足病医疗。如有特殊情况（糖尿病、感染、循环问题），请先咨询足病医生或医师。"
+    }
+  ],
+  "legale": {
+    "label": "政策说明",
+    "aggiornato": "最后更新：2026 年 11 月 2 日",
+    "privacy": {
+      "title": "隐私政策 — Essenza d'Oriente",
+      "description": "essenzadoriente.it 网站的隐私政策。",
+      "h1": "隐私政策",
+      "sezioni": [
+        {
+          "h2": "数据控制者",
+          "p": "Essenza d'Oriente — Via San Lorenzo 46, 15121 Alessandria (AL)。增值税号 14409690964。联系方式：<a href=\"tel:+393317153533\">331 715 3533</a>。"
+        },
+        {
+          "h2": "我们处理哪些数据",
+          "p": "本网站无需注册，也不通过自有表单直接收集个人数据。您在打电话、发送 WhatsApp 消息或通过 Treatwell 预约时提供的数据，仅用于处理您的预约。"
+        },
+        {
+          "h2": "在线预约（Treatwell）",
+          "p": "在线预约由 Treatwell（Hotspring Ventures Ltd）提供，其作为独立的数据控制者处理您在预约表单中填写的数据。详情请查阅 Treatwell 网站上的隐私政策。"
+        },
+        {
+          "h2": "统计与测量",
+          "p": "本网站使用 Google Tag Manager 和测量工具，以了解访问人数并改进服务。我们还会匿名记录联系按钮（WhatsApp、电话、预约）的点击，包括页面、设备和访问来源，不含任何个人数据。有关所用 Cookie 的详情，请参阅<a href=\"{prefix}/cookie.html\">Cookie 政策</a>。"
+        },
+        {
+          "h2": "您的权利",
+          "p": "您可以随时通过上述联系方式要求访问、更正或删除您的数据。您也有权向意大利个人数据保护局提出投诉。"
+        }
+      ]
+    },
+    "cookie": {
+      "title": "Cookie 政策 — Essenza d'Oriente",
+      "description": "essenzadoriente.it 网站的 Cookie 政策。",
+      "h1": "Cookie 政策",
+      "sezioni": [
+        {
+          "h2": "什么是 Cookie",
+          "p": "Cookie 是浏览网页时由浏览器保存的小文件。本网站仅少量使用 Cookie，涉及三项第三方服务和两个自有技术 Cookie（所选语言和访问来源，保存 30 天，不含个人数据）。"
+        },
+        {
+          "h2": "预约组件（Treatwell）",
+          "p": "在线预约表单由 Treatwell 提供，可能设置预约功能所必需的技术 Cookie。控制者：Hotspring Ventures Ltd。"
+        },
+        {
+          "h2": "地图（Google Maps）",
+          "p": "「地址」栏目中的地图由 Google 提供，可能设置 Google LLC 的 Cookie。"
+        },
+        {
+          "h2": "测量（Google Tag Manager）",
+          "p": "我们使用 Google Tag Manager 来测量访问量和广告活动的效果。该工具只有在您首次访问时在 Cookie 横幅中选择「接受」后才会启用；选择「拒绝」则不会加载。您可以随时通过清除浏览器中本网站的浏览数据来更改选择。"
+        },
+        {
+          "h2": "如何管理 Cookie",
+          "p": "您可以随时在浏览器设置中阻止或删除 Cookie。没有 Cookie 网站仍可浏览：可能只有在线预约和地图无法使用。"
+        }
+      ]
+    }
+  },
+  "cookieBanner": {
+    "testo": "<strong>技术</strong> Cookie 始终启用；<strong>测量</strong> Cookie（Google）仅在您同意后启用。",
+    "dettagli": "详情",
+    "rifiuta": "拒绝",
+    "accetta": "接受",
+    "aria": "Cookie 偏好"
+  }
+}
