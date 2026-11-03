@@ -46,10 +46,13 @@ export async function verificaToken(token: string | undefined): Promise<Ruolo | 
 
 /** Ritorna il ruolo corrispondente alla password, o null. */
 export function ruoloPerPassword(tentativo: string): Ruolo | null {
-  const a = process.env.ADMIN_PASSWORD ?? "";
-  const c = process.env.CLIENT_PASSWORD ?? "";
-  if (a && uguali(a, tentativo)) return "admin";
-  if (c && uguali(c, tentativo)) return "cliente";
+  // gli spazi non contano: "Apex 26" e "Apex26" sono la stessa password
+  const pulisci = (s: string) => s.replace(/\s+/g, "");
+  const t = pulisci(tentativo);
+  const a = pulisci(process.env.ADMIN_PASSWORD ?? "");
+  const c = pulisci(process.env.CLIENT_PASSWORD ?? "");
+  if (a && uguali(a, t)) return "admin";
+  if (c && uguali(c, t)) return "cliente";
   return null;
 }
 
