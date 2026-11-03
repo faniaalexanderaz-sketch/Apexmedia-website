@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { eliminaPrenotazione, inserisciPrenotazione, normalizza, parseCsv } from "@/lib/bookings";
+import { eliminaPrenotazione, inserisciPrenotazione, inserisciPrenotazioni, normalizza, parseCsv } from "@/lib/bookings";
 import { autorizza, conMessaggio, percorsoSicuro, redirect, SITO_DEFAULT } from "@/lib/pannello-server";
 
 /* Solo admin. Un'unica rotta, il campo `_azione` del form decide:
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
   try {
     if (azione === "elimina") {
-      const id = String(form.get("id") ?? "").replace(/[^a-z0-9]/g, "");
+      const id = String(form.get("id") ?? "").replace(/[^0-9]/g, "");
       if (!id) return redirect(req, conMessaggio(next, "errore", "id"));
       await eliminaPrenotazione(id);
       return redirect(req, conMessaggio(next, "ok", "eliminata"));
@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
       if (!(file instanceof File) || file.size === 0) return redirect(req, conMessaggio(next, "errore", "file"));
       if (file.size > 2_000_000) return redirect(req, conMessaggio(next, "errore", "file_grande"));
       const { ok, errori } = parseCsv(await file.text(), sito);
-      for (const n of ok) await inserisciPrenotazione(n);
-      const u = conMessaggio(next, "ok", `importate:${ok.length}`);
+      const quante = await inserisciPrenotazioni(ok);
+      const u = conMessaggio(next, "ok", `importate:${quante}`);
       return redirect(req, errori.length ? conMessaggio(u, "errore", `righe:${errori.length}`) : u);
     }
     // aggiungi

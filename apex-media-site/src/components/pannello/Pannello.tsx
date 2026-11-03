@@ -3,7 +3,7 @@ import { connection } from "next/server";
 import { sessione, type Ruolo } from "@/lib/admin-auth";
 import { AZIONI, elencoSiti, leggiClick, seriePerGiorno, tabellaPer, totaliPerAzione, giornoLocale, type Azione, type ClickEvento, type GiornoSerie, type RigaTabella } from "@/lib/clicks";
 import { CANALI, TRATTAMENTI_NOTI, elencaPrenotazioni, type Prenotazione } from "@/lib/bookings";
-import { elencaNote, type NotaMensile } from "@/lib/notes";
+import { elencaNote, elencaSpese, type NotaMensile, type SpesaMensile } from "@/lib/notes";
 import { COOKIE_LINGUA, DIZIONARIO, euro, formattaData, nomeMese, normalizzaLingua, type Dizionario, type Lingua } from "@/lib/pannello-i18n";
 import { SITO_DEFAULT } from "@/lib/pannello-server";
 
@@ -71,10 +71,10 @@ function SelettoreLingua({ lingua, next }: { lingua: Lingua; next: string }) {
 }
 
 async function Dashboard({ t, lingua, percorso, puoModificare, sito, ok, errore }: { t: Dizionario; lingua: Lingua; percorso: string; puoModificare: boolean; sito?: string; ok?: string; errore?: string }) {
-  let click: ClickEvento[] = [], prenotazioni: Prenotazione[] = [], note: NotaMensile[] = [], siti: string[] = [];
+  let click: ClickEvento[] = [], prenotazioni: Prenotazione[] = [], note: NotaMensile[] = [], spese: SpesaMensile[] = [], siti: string[] = [];
   let erroreDb: string | null = null;
   try {
-    [click, prenotazioni, note, siti] = await Promise.all([leggiClick(60, sito), elencaPrenotazioni(365, sito), elencaNote(sito ?? SITO_DEFAULT), puoModificare ? elencoSiti() : Promise.resolve([SITO_DEFAULT])]);
+    [click, prenotazioni, note, spese, siti] = await Promise.all([leggiClick(60, sito), elencaPrenotazioni(365, sito), elencaNote(sito ?? SITO_DEFAULT), elencaSpese(sito ?? SITO_DEFAULT), puoModificare ? elencoSiti() : Promise.resolve([SITO_DEFAULT])]);
   } catch (e) {
     erroreDb = e instanceof Error ? e.message : "errore";
   }
@@ -90,7 +90,6 @@ async function Dashboard({ t, lingua, percorso, puoModificare, sito, ok, errore 
   const clickPrec = click.filter((r) => { const g = giornoLocale(r.creato_il); return g >= da60 && g < da30; });
   const pren30 = prenotazioni.filter((p) => p.data >= da30 && p.data <= oggi);
   const prenPrec = prenotazioni.filter((p) => p.data >= da60 && p.data < da30);
-  const incasso = (arr: Prenotazione[]) => arr.reduce((s, p) => s + (p.importo ?? 0), 0);
   const totali = totaliPerAzione(click30);
   const serie = seriePerGiorno(click30, 30);
   const mesiRecenti = Array.from({ length: 6 }, (_, i) => { const d = new Date(); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() - i); return d.toISOString().slice(0, 7); });
@@ -216,31 +215,56 @@ async function Dashboard({ t, lingua, percorso, puoModificare, sito, ok, errore 
         </div>
       </Sezione>
 
-      {/* NOTE MENSILI */}
+      {/* NOTE MENSILI + SPESA ADS */}
       <Sezione titolo={t.sezNote} desc={t.descNote}>
         {puoModificare && (
-          <form method="post" action="/api/admin/notes" className="rounded-xl border border-ink/10 bg-surface p-5">
-            <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sitoForm} />
-            <h3 className="font-display text-lg font-bold tracking-tightest">{t.scriviNota}</h3>
-            <div className="mt-4 grid gap-3">
-              <Campo etichetta={t.mese}><select name="mese" className={INPUT + " max-w-xs"} defaultValue={mesiRecenti[0]}>{mesiRecenti.map((m) => <option key={m} value={m}>{nomeMese(m, lingua)}</option>)}</select></Campo>
-              <Campo etichetta={t.testoIt}><textarea name="it" rows={4} maxLength={2000} className={INPUT} /></Campo>
-              <Campo etichetta={t.testoZh}><textarea name="zh" rows={4} maxLength={2000} className={INPUT} /></Campo>
-            </div>
-            <button className="mt-4 rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper hover:bg-ink/85">{t.salva}</button>
-          </form>
+          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+            <form method="post" action="/api/admin/notes" className="rounded-xl border border-ink/10 bg-surface p-5">
+              <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sitoForm} />
+              <h3 className="font-display text-lg font-bold tracking-tightest">{t.scriviNota}</h3>
+              <div className="mt-4 grid gap-3">
+                <Campo etichetta={t.mese}><select name="mese" className={INPUT + " max-w-xs"} defaultValue={mesiRecenti[0]}>{mesiRecenti.map((m) => <option key={m} value={m}>{nomeMese(m, lingua)}</option>)}</select></Campo>
+                <Campo etichetta={t.testoIt}><textarea name="it" rows={4} maxLength={2000} className={INPUT} /></Campo>
+                <Campo etichetta={t.testoZh}><textarea name="zh" rows={4} maxLength={2000} className={INPUT} /></Campo>
+              </div>
+              <button className="mt-4 rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper hover:bg-ink/85">{t.salva}</button>
+            </form>
+            <form method="post" action="/api/admin/adspend" className="rounded-xl border border-ink/10 bg-surface p-5">
+              <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sitoForm} />
+              <h3 className="font-display text-lg font-bold tracking-tightest">{t.spesaAds}</h3>
+              <p className="mt-2 text-sm text-ink/60">{t.spesaAdsHint}</p>
+              <div className="mt-4 grid gap-3">
+                <Campo etichetta={t.mese}><select name="mese" className={INPUT} defaultValue={mesiRecenti[0]}>{mesiRecenti.map((m) => <option key={m} value={m}>{nomeMese(m, lingua)}</option>)}</select></Campo>
+                <Campo etichetta={t.importo}><input type="text" inputMode="decimal" name="importo" placeholder="300" required className={INPUT} /></Campo>
+              </div>
+              <button className="mt-4 rounded-full border border-ink/15 px-5 py-2 text-sm hover:border-ink">{t.salva}</button>
+            </form>
+          </div>
         )}
         <div className="mt-6 grid gap-4">
-          {note.length === 0 ? <p className="text-sm text-ink/50">{t.nessunaNota}</p> : note.map((n) => (
-            <article key={n.mese} className="rounded-xl border border-ink/10 bg-surface p-5 lg:p-6">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="font-display text-xl font-bold tracking-tightest">{nomeMese(n.mese, lingua)}</h3>
-                <span className="label-mono text-ink/40">{t.aggiornato} {formattaData(n.aggiornato_il, lingua)}</span>
-              </div>
-              <p className="mt-3 whitespace-pre-line text-[16px] leading-relaxed text-ink/85">{(lingua === "zh" ? n.zh : n.it) || (lingua === "zh" ? n.it : n.zh)}</p>
-              {puoModificare && n.it && n.zh && <p className="mt-3 whitespace-pre-line border-t border-ink/10 pt-3 text-sm text-ink/55">{lingua === "zh" ? n.it : n.zh}</p>}
-            </article>
-          ))}
+          {mesiConDati(note, spese, click, prenotazioni).length === 0 ? <p className="text-sm text-ink/50">{t.nessunaNota}</p> : mesiConDati(note, spese, click, prenotazioni).map((m) => {
+            const n = note.find((x) => x.mese === m);
+            const sp = spese.find((x) => x.mese === m);
+            const cm = click.filter((r) => giornoLocale(r.creato_il).slice(0, 7) === m).length;
+            const pm = prenotazioni.filter((p) => p.data.slice(0, 7) === m);
+            const inc = incasso(pm);
+            return (
+              <article key={m} className="rounded-xl border border-ink/10 bg-surface p-5 lg:p-6">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="font-display text-xl font-bold tracking-tightest">{nomeMese(m, lingua)}</h3>
+                  {n && <span className="label-mono text-ink/40">{t.aggiornato} {formattaData(n.aggiornato_il, lingua)}</span>}
+                </div>
+                <dl className="mt-3 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+                  <Dato etichetta={t.sezClick} valore={String(cm)} />
+                  <Dato etichetta={t.sezPrenotazioni} valore={String(pm.length)} />
+                  <Dato etichetta={t.spesaAds} valore={sp ? euro(sp.importo, lingua) : "—"} />
+                  <Dato etichetta={t.costoPrenotazione} valore={sp && pm.length ? euro(sp.importo / pm.length, lingua) : sp && cm ? `${euro(sp.importo / cm, lingua)} / ${t.contatto}` : "—"} sotto={inc && sp ? `${t.incasso}: ${euro(inc, lingua)}` : undefined} />
+                </dl>
+                {n && (n.it || n.zh) && <p className="mt-4 whitespace-pre-line border-t border-ink/10 pt-4 text-[16px] leading-relaxed text-ink/85">{(lingua === "zh" ? n.zh : n.it) || (lingua === "zh" ? n.it : n.zh)}</p>}
+                {puoModificare && n && n.it && n.zh && <p className="mt-3 whitespace-pre-line text-sm text-ink/55">{lingua === "zh" ? n.it : n.zh}</p>}
+              </article>
+            );
+          })}
         </div>
       </Sezione>
     </div>
@@ -248,11 +272,21 @@ async function Dashboard({ t, lingua, percorso, puoModificare, sito, ok, errore 
 }
 
 /* ---------- pezzi ---------- */
+const incasso = (arr: Prenotazione[]) => arr.reduce((s, p) => s + (p.importo ?? 0), 0);
 const INPUT = "mt-1 w-full rounded-md border border-ink/15 bg-paper px-3 py-2 text-[15px] outline-none focus:border-ink";
 
 function messaggioOk(ok: string, t: Dizionario): string {
   if (ok.startsWith("importate:")) return `${ok.split(":")[1]} ${t.importate}`;
   return "✓";
+}
+function mesiConDati(note: NotaMensile[], spese: SpesaMensile[], click: ClickEvento[], pren: Prenotazione[]): string[] {
+  const s = new Set<string>();
+  note.forEach((n) => s.add(n.mese)); spese.forEach((x) => s.add(x.mese));
+  click.forEach((r) => s.add(giornoLocale(r.creato_il).slice(0, 7))); pren.forEach((p) => s.add(p.data.slice(0, 7)));
+  return Array.from(s).sort().reverse().slice(0, 12);
+}
+function Dato({ etichetta, valore, sotto }: { etichetta: string; valore: string; sotto?: string }) {
+  return <div><dt className="label-mono text-ink/50">{etichetta}</dt><dd className="mt-1 font-semibold tabular-nums">{valore}</dd>{sotto && <dd className="text-xs text-ink/50">{sotto}</dd>}</div>;
 }
 function Avviso({ tipo, children }: { tipo: "ok" | "errore"; children: React.ReactNode }) {
   const cls = tipo === "ok" ? "border-verde/30 bg-verde/10 text-ink" : "border-red-200 bg-red-50 text-red-700";

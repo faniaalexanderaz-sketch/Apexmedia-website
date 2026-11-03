@@ -73,7 +73,12 @@ const it = {
   nessunaNota: "Nessuna nota ancora.",
   aggiornato: "Aggiornato",
   errore: "Qualcosa non ha funzionato",
-  erroreStorage: "Non riesco a leggere lo storage: controlla che su Vercel il progetto abbia un Blob store collegato (BLOB_READ_WRITE_TOKEN).",
+  erroreStorage: "Non riesco a leggere il database: controlla che su Vercel il progetto abbia un database Postgres collegato (POSTGRES_URL) e che lo schema sia stato applicato con `npm run db:push`.",
+  spesaAds: "Spesa Ads del mese",
+  spesaAdsHint: "Quanto è stato speso in pubblicità nel mese (Google Ads, Meta). Serve per il costo per prenotazione.",
+  costoPrenotazione: "Costo per prenotazione",
+  contatto: "contatto",
+  incasso: "Incasso",
   mesi: ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
 };
 
@@ -144,7 +149,12 @@ const zh: typeof it = {
   nessunaNota: "暂无点评。",
   aggiornato: "更新于",
   errore: "出了点问题",
-  erroreStorage: "无法读取存储：请确认 Vercel 项目已连接 Blob 存储（BLOB_READ_WRITE_TOKEN）。",
+  erroreStorage: "无法读取数据库：请确认 Vercel 项目已连接 Postgres 数据库（POSTGRES_URL），并已执行 `npm run db:push` 应用数据表。",
+  spesaAds: "本月广告支出",
+  spesaAdsHint: "本月投放广告的花费（Google 广告、Meta）。用于计算每个预约的成本。",
+  costoPrenotazione: "每个预约成本",
+  contatto: "次联系",
+  incasso: "营业额",
   mesi: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
 };
 

@@ -1,9 +1,9 @@
-
-import { elencaBlob, scriviJson } from "@/lib/blob-store";
+import { and, desc, gte, eq } from "drizzle-orm";
+import { db, schema } from "@/db";
 
 /* =============================================================
-   Tracciamento click: tipi, storage su Vercel Blob, aggregazioni.
-   Solo lato server (API e pagina /admin).
+   Tracciamento click: tipi, lettura/scrittura su Vercel Postgres,
+   aggregazioni per la dashboard. Solo lato server.
    ============================================================= */
 
 export const AZIONI = ["whatsapp", "telefono", "prenota"] as const;
@@ -24,7 +24,6 @@ export type ClickEvento = {
   sorgente: Sorgente;
   dispositivo: Dispositivo;
 };
-
 export type NuovoClick = Omit<ClickEvento, "id" | "creato_il">;
 
 /** Classifica la sorgente: Google Ads se c'è il gclid o utm_source=google (con medium cpc/paid o assente). */
@@ -38,36 +37,27 @@ export function classificaSorgente(utmSource: string | null, utmMedium: string |
   return "altro";
 }
 
-/* ---------- storage: Vercel Blob ----------
-   Un blob per evento, dentro la cartella del giorno. Tutti i campi
-   sono codificati anche nel nome del file (base64url del JSON), così
-   la dashboard legge solo l'elenco dei blob, senza scaricare nulla.
-   Il corpo del blob contiene lo stesso JSON, per sicurezza.
-   ============================================================= */
-const PREFISSO = "click/";
-
-function codifica(riga: NuovoClick & { creato_il: string }): string {
-  return Buffer.from(JSON.stringify(riga), "utf8").toString("base64url");
-}
-function decodifica(pathname: string): ClickEvento | null {
-  // click/2026-11-02/1762083600000-ab12.<base64url>.json
-  const m = pathname.match(/^click\/\d{4}-\d{2}-\d{2}\/(\d+)-[a-z0-9]+\.([A-Za-z0-9_-]+)\.json$/);
-  if (!m) return null;
-  try {
-    const d = JSON.parse(Buffer.from(m[2], "base64url").toString("utf8")) as NuovoClick & { creato_il: string };
-    if (!AZIONI.includes(d.azione) || !SORGENTI.includes(d.sorgente)) return null;
-    return { id: Number(m[1]), ...d };
-  } catch {
-    return null;
-  }
+function daRiga(r: typeof schema.clicks.$inferSelect): ClickEvento {
+  return {
+    id: r.id,
+    creato_il: r.creatoIl.toISOString(),
+    sito: r.sito,
+    azione: r.azione as Azione,
+    pagina: r.pagina,
+    utm_source: r.utmSource,
+    utm_medium: r.utmMedium,
+    gclid: r.gclid,
+    sorgente: r.sorgente as Sorgente,
+    dispositivo: r.dispositivo as Dispositivo,
+  };
 }
 
-export async function inserisciClick(riga: NuovoClick): Promise<void> {
-  const creato_il = new Date().toISOString();
-  const completo = { ...riga, creato_il };
-  const giorno = creato_il.slice(0, 10);
-  const nome = `${PREFISSO}${giorno}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${codifica(completo)}.json`;
-  await scriviJson(nome, completo);
+export async function inserisciClick(n: NuovoClick): Promise<ClickEvento> {
+  const [r] = await (await db())
+    .insert(schema.clicks)
+    .values({ sito: n.sito, azione: n.azione, pagina: n.pagina, utmSource: n.utm_source, utmMedium: n.utm_medium, gclid: n.gclid, sorgente: n.sorgente, dispositivo: n.dispositivo })
+    .returning();
+  return daRiga(r);
 }
 
 /** Ultimi `giorni` giorni di eventi, più recenti prima. */
@@ -75,32 +65,24 @@ export async function leggiClick(giorni = 30, sito?: string): Promise<ClickEvent
   const da = new Date();
   da.setUTCDate(da.getUTCDate() - giorni);
   da.setUTCHours(0, 0, 0, 0);
-  const daGiorno = da.toISOString().slice(0, 10);
-  const righe: ClickEvento[] = [];
-  for (const b of await elencaBlob(PREFISSO)) {
-    const giorno = b.pathname.slice(PREFISSO.length, PREFISSO.length + 10);
-    if (giorno < daGiorno) continue;
-    const r = decodifica(b.pathname);
-    if (r && (!sito || r.sito === sito)) righe.push(r);
-  }
-  righe.sort((x, y) => (x.creato_il < y.creato_il ? 1 : -1));
-  return righe;
+  const cond = sito ? and(gte(schema.clicks.creatoIl, da), eq(schema.clicks.sito, sito)) : gte(schema.clicks.creatoIl, da);
+  const righe = await (await db()).select().from(schema.clicks).where(cond).orderBy(desc(schema.clicks.creatoIl)).limit(20000);
+  return righe.map(daRiga);
 }
 
 /** Elenco dei siti presenti negli ultimi 90 giorni. */
 export async function elencoSiti(): Promise<string[]> {
-  const righe = await leggiClick(90);
-  return Array.from(new Set(righe.map((r) => r.sito))).sort();
+  const da = new Date();
+  da.setUTCDate(da.getUTCDate() - 90);
+  const righe = await (await db()).selectDistinct({ sito: schema.clicks.sito }).from(schema.clicks).where(gte(schema.clicks.creatoIl, da));
+  return righe.map((r) => r.sito).sort();
 }
 
 /* ---------- aggregazioni per la dashboard (fuso Europe/Rome) ---------- */
 
 const FUSO = "Europe/Rome";
 export function giornoLocale(iso: string): string {
-  // YYYY-MM-DD nel fuso del centro, così "oggi" è l'oggi italiano
-  return new Intl.DateTimeFormat("sv-SE", { timeZone: FUSO, year: "numeric", month: "2-digit", day: "2-digit" }).format(
-    new Date(iso),
-  );
+  return new Intl.DateTimeFormat("sv-SE", { timeZone: FUSO, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(iso));
 }
 export function oggiLocale(): string {
   return giornoLocale(new Date().toISOString());
@@ -114,11 +96,10 @@ function giorniFa(n: number): string {
 export type Totali = Record<Azione, { oggi: number; g7: number; g30: number }>;
 
 export function totaliPerAzione(righe: ClickEvento[]): Totali {
-  const oggi = oggiLocale();
-  const da7 = giorniFa(6);
-  const da30 = giorniFa(29);
+  const oggi = oggiLocale(), da7 = giorniFa(6), da30 = giorniFa(29);
   const t = Object.fromEntries(AZIONI.map((a) => [a, { oggi: 0, g7: 0, g30: 0 }])) as Totali;
   for (const r of righe) {
+    if (!(r.azione in t)) continue;
     const g = giornoLocale(r.creato_il);
     if (g >= da30) t[r.azione].g30++;
     if (g >= da7) t[r.azione].g7++;
@@ -138,7 +119,7 @@ export function seriePerGiorno(righe: ClickEvento[], giorni = 30): GiornoSerie[]
   }
   for (const r of righe) {
     const voce = mappa.get(giornoLocale(r.creato_il));
-    if (voce) voce[r.azione]++;
+    if (voce && r.azione in voce) voce[r.azione]++;
   }
   return Array.from(mappa.values());
 }
@@ -150,7 +131,7 @@ export function tabellaPer(righe: ClickEvento[], campo: "sorgente" | "pagina" | 
   for (const r of righe) {
     const k = r[campo];
     const voce = mappa.get(k) ?? { chiave: k, totale: 0, whatsapp: 0, telefono: 0, prenota: 0 };
-    voce[r.azione]++;
+    if (r.azione in voce) voce[r.azione]++;
     voce.totale++;
     mappa.set(k, voce);
   }
@@ -164,9 +145,7 @@ export function csv(righe: ClickEvento[]): string {
     return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
   const corpo = righe.map((r) =>
-    [r.creato_il, r.sito, r.azione, r.pagina, r.sorgente, r.utm_source, r.utm_medium, r.gclid ? "si" : "no", r.dispositivo]
-      .map(cella)
-      .join(";"),
+    [r.creato_il, r.sito, r.azione, r.pagina, r.sorgente, r.utm_source, r.utm_medium, r.gclid ? "si" : "no", r.dispositivo].map(cella).join(";"),
   );
   return "﻿" + [testa.join(";"), ...corpo].join("\r\n");
 }
