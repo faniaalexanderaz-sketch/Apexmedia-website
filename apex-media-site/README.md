@@ -99,10 +99,16 @@ Le variabili d'ambiente si impostano in Vercel → Settings → Environment Vari
 - `src/app/icon.svg`, `src/app/apple-icon.png` — favicon e icona iOS ricavate dal marchio
 - `src/app/opengraph-image.tsx` — immagine di anteprima social generata a runtime (1200×630)
 
-## Dashboard click dei siti clienti (`/admin`)
+## Dashboard click dei siti clienti (`/admin` e `/jenny`)
 
-I siti clienti (oggi `essenzadoriente.it`) mandano ogni click su WhatsApp, telefono e Prenota a `POST /api/track`, che lo salva su **Vercel Blob** (un file JSON per evento, cartella per giorno, prefisso `click/`). Nessun dato personale: azione, pagina, utm_source, utm_medium, presenza del gclid, dispositivo. Nessun servizio esterno a Vercel.
+I siti clienti (oggi `essenzadoriente.it`) mandano ogni click su WhatsApp, telefono e Prenota a `POST /api/track`, che lo salva su **Vercel Postgres** (Drizzle ORM, schema in `src/db/schema.ts`: tabelle `clicks`, `bookings`, `monthly_notes`, `monthly_adspend`). Nessun dato personale.
 
-`/admin` (password `ADMIN_PASSWORD`, cookie di sessione 30 giorni) mostra totali per azione (oggi / 7 / 30 giorni), grafico giornaliero, tabelle per sorgente, dispositivo e pagina, ed esporta il CSV.
+`/admin` (ADMIN_PASSWORD, modifica) e `/jenny` (CLIENT_PASSWORD, sola lettura, in cinese) mostrano click, prenotazioni, note mensili e spesa Ads con costo per prenotazione; export CSV.
 
-Configurazione su Vercel: Storage → Create → Blob (accesso privato) → collegarlo al progetto `apex-media-site`: Vercel aggiunge da solo `BLOB_READ_WRITE_TOKEN`. Poi `ADMIN_PASSWORD` (già impostata) e, opzionale, `TRACK_ALLOWED_ORIGINS`. Vedi `.env.example`.
+### Database
+
+1. Vercel → progetto `apex-media-site` → Storage → Create Database → **Postgres** → Connect: Vercel aggiunge le variabili `POSTGRES_*`.
+2. In locale: `vercel env pull .env.local`, poi `npm run db:push` applica lo schema (drizzle-kit push). Da rifare a ogni modifica di `src/db/schema.ts`.
+3. Senza database (test): `DB_LOCAL_DIR=./.pglite npm run db:push` e `DB_LOCAL_DIR=./.pglite npm run dev` usano PGlite, un Postgres locale in-process.
+
+Variabili d'ambiente richieste: `POSTGRES_*` (generate da Vercel), `ADMIN_PASSWORD`, `CLIENT_PASSWORD`. Opzionale `TRACK_ALLOWED_ORIGINS`. Deploy: ogni push su `main` pubblica; a mano `vercel --prod`.

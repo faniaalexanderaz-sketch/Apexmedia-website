@@ -1,9 +1,9 @@
-import { codificaB64, decodificaB64, elencaBlob, eliminaBlob, idCasuale, scriviJson } from "@/lib/blob-store";
+import { and, desc, eq, gte } from "drizzle-orm";
+import { db, schema } from "@/db";
 
 /* =============================================================
    Prenotazioni inserite a mano (o importate da CSV) dall'admin.
-   Un blob per prenotazione: bookings/<data>-<id>.<base64url>.json
-   I campi sono nel nome del file: la lista basta, niente download.
+   Tabella `bookings` su Vercel Postgres.
    ============================================================= */
 
 export const CANALI = ["treatwell", "telefono", "whatsapp", "walk-in"] as const;
@@ -21,7 +21,6 @@ export type Prenotazione = {
 };
 export type NuovaPrenotazione = Omit<Prenotazione, "id" | "creato_il">;
 
-const PREFISSO = "bookings/";
 const DATA_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 export const TRATTAMENTI_NOTI = [
@@ -35,14 +34,17 @@ export const TRATTAMENTI_NOTI = [
   "Pedicure",
 ];
 
-function pathname(p: Prenotazione): string {
-  return `${PREFISSO}${p.data}-${p.id}.${codificaB64(p)}.json`;
-}
-function daPathname(path: string): Prenotazione | null {
-  const m = path.match(/^bookings\/\d{4}-\d{2}-\d{2}-([a-z0-9]+)\.([A-Za-z0-9_-]+)\.json$/);
-  if (!m) return null;
-  const p = decodificaB64<Prenotazione>(m[2]);
-  return p && p.id === m[1] ? p : null;
+function daRiga(r: typeof schema.bookings.$inferSelect): Prenotazione {
+  return {
+    id: String(r.id),
+    sito: r.sito,
+    data: r.data,
+    trattamento: r.trattamento,
+    canale: r.canale as Canale,
+    importo: r.importo === null ? null : Number(r.importo),
+    note: r.note,
+    creato_il: r.creatoIl.toISOString(),
+  };
 }
 
 /** Valida e normalizza i campi che arrivano da form o CSV. */
@@ -64,30 +66,33 @@ export async function elencaPrenotazioni(giorni = 365, sito?: string): Promise<P
   const da = new Date();
   da.setUTCDate(da.getUTCDate() - giorni);
   const daGiorno = da.toISOString().slice(0, 10);
-  const blobs = await elencaBlob(PREFISSO);
-  const out: Prenotazione[] = [];
-  for (const b of blobs) {
-    const giorno = b.pathname.slice(PREFISSO.length, PREFISSO.length + 10);
-    if (giorno < daGiorno) continue;
-    const p = daPathname(b.pathname);
-    if (p && (!sito || p.sito === sito)) out.push(p);
-  }
-  out.sort((a, b) => (a.data < b.data ? 1 : a.data > b.data ? -1 : a.creato_il < b.creato_il ? 1 : -1));
-  return out;
+  const cond = sito ? and(gte(schema.bookings.data, daGiorno), eq(schema.bookings.sito, sito)) : gte(schema.bookings.data, daGiorno);
+  const righe = await (await db()).select().from(schema.bookings).where(cond).orderBy(desc(schema.bookings.data), desc(schema.bookings.id)).limit(5000);
+  return righe.map(daRiga);
 }
 
 export async function inserisciPrenotazione(n: NuovaPrenotazione): Promise<Prenotazione> {
-  const p: Prenotazione = { ...n, id: idCasuale(), creato_il: new Date().toISOString() };
-  await scriviJson(pathname(p), p);
-  return p;
+  const [r] = await (await db())
+    .insert(schema.bookings)
+    .values({ sito: n.sito, data: n.data, trattamento: n.trattamento, canale: n.canale, importo: n.importo === null ? null : n.importo.toFixed(2), note: n.note })
+    .returning();
+  return daRiga(r);
+}
+
+export async function inserisciPrenotazioni(lista: NuovaPrenotazione[]): Promise<number> {
+  if (!lista.length) return 0;
+  const righe = await (await db())
+    .insert(schema.bookings)
+    .values(lista.map((n) => ({ sito: n.sito, data: n.data, trattamento: n.trattamento, canale: n.canale, importo: n.importo === null ? null : n.importo.toFixed(2), note: n.note })))
+    .returning({ id: schema.bookings.id });
+  return righe.length;
 }
 
 export async function eliminaPrenotazione(id: string): Promise<boolean> {
-  const blobs = await elencaBlob(PREFISSO);
-  const b = blobs.find((x) => daPathname(x.pathname)?.id === id);
-  if (!b) return false;
-  await eliminaBlob(b.pathname);
-  return true;
+  const n = Number(id);
+  if (!Number.isInteger(n)) return false;
+  const righe = await (await db()).delete(schema.bookings).where(eq(schema.bookings.id, n)).returning({ id: schema.bookings.id });
+  return righe.length > 0;
 }
 
 /** CSV con intestazione: data;trattamento;canale;importo;note (separatore ; o ,). Date anche gg/mm/aaaa. */
@@ -130,8 +135,5 @@ export function csvPrenotazioni(righe: Prenotazione[]): string {
     const s = v === null || v === undefined ? "" : String(v);
     return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
-  return (
-    "﻿" +
-    ["data;trattamento;canale;importo;note", ...righe.map((p) => [p.data, p.trattamento, p.canale, p.importo ?? "", p.note ?? ""].map(cella).join(";"))].join("\r\n")
-  );
+  return "﻿" + ["data;trattamento;canale;importo;note", ...righe.map((p) => [p.data, p.trattamento, p.canale, p.importo ?? "", p.note ?? ""].map(cella).join(";"))].join("\r\n");
 }

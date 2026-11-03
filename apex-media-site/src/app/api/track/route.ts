@@ -3,7 +3,7 @@ import { AZIONI, classificaSorgente, inserisciClick, type Azione } from "@/lib/c
 
 /* =============================================================
    POST /api/track — riceve un click (whatsapp / telefono / prenota)
-   dai siti clienti e lo salva su Vercel Blob. Nessun dato personale.
+   dai siti clienti e lo salva su Vercel Postgres. Nessun dato personale.
    CORS: solo le origini in TRACK_ALLOWED_ORIGINS (separate da virgola)
    più il sito Apex stesso.
    ============================================================= */
