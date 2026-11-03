@@ -113,5 +113,6 @@ Pannello dei risultati di Essenza d'Oriente, su **Vercel Postgres** (Drizzle ORM
 1. Vercel → progetto `apex-media-site` → Storage → Create Database → **Postgres** → Connect: Vercel aggiunge le variabili `POSTGRES_*`.
 2. In locale: `vercel env pull .env.local`, poi `npm run db:push` applica lo schema. Da rifare a ogni modifica di `src/db/schema.ts`.
 3. Senza database (test): `DB_LOCAL_DIR=./.pglite npm run db:push` e `DB_LOCAL_DIR=./.pglite npm run dev` usano PGlite.
+4. Senza nessuna variabile: **modalità demo**, Postgres in memoria con 12 mesi di dati di esempio (`src/db/demo.ts`), banner "Modalità demo" nel pannello. Dopo `npm run db:sql` lo schema SQL della demo si rigenera da `src/db/schema.ts`.
 
 Variabili d'ambiente richieste: `POSTGRES_*` (generate da Vercel), `ADMIN_PASSWORD`, `CLIENT_PASSWORD`. Opzionale `TRACK_ALLOWED_ORIGINS`. Deploy: ogni push su `main` pubblica; a mano `vercel --prod`.
