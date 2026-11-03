@@ -1,26 +1,30 @@
+/* eslint-disable @next/next/no-img-element */
 import { cookies } from "next/headers";
 import { connection } from "next/server";
-import { sessione, type Ruolo } from "@/lib/admin-auth";
-import { AZIONI, elencoSiti, leggiClick, seriePerGiorno, tabellaPer, totaliPerAzione, giornoLocale, type Azione, type ClickEvento, type GiornoSerie, type RigaTabella } from "@/lib/clicks";
-import { CANALI, TRATTAMENTI_NOTI, elencaPrenotazioni, type Prenotazione } from "@/lib/bookings";
-import { elencaNote, elencaSpese, type NotaMensile, type SpesaMensile } from "@/lib/notes";
-import { COOKIE_LINGUA, DIZIONARIO, euro, formattaData, nomeMese, normalizzaLingua, type Dizionario, type Lingua } from "@/lib/pannello-i18n";
+import { redirect } from "next/navigation";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import type { Ruolo } from "@/lib/admin-auth";
+import { sessione } from "@/lib/admin-auth";
+import { CANALI, TRATTAMENTI_NOTI, chiaviEsistenti, type Prenotazione } from "@/lib/bookings";
+import { COOKIE_LINGUA, DIZIONARIO, euro, formattaData, formattaDataOra, meseBreve, nomeMese, normalizzaLingua, numero, riempi, type Dizionario, type Lingua } from "@/lib/pannello-i18n";
 import { SITO_DEFAULT } from "@/lib/pannello-server";
+import { MESE_RE, meseCorrente, mesiDisponibili, statisticheMese, type Confronto, type StatMese } from "@/lib/stats";
+import { parseTreatwell } from "@/lib/treatwell";
+import { leggiFileTemporaneo } from "@/lib/treatwell-temp";
+import { CountUp, type Formato } from "./CountUp";
+import { GraficoContattiLazy, GraficoPrenotazioniLazy, GraficoSorgentiLazy, GraficoTreatwellLazy, Scena3DLazy } from "./Lazy";
+import { BottoneStampa } from "./StampaPdf";
 
 /* =============================================================
-   Pannello condiviso: /admin (modifica) e /jenny (sola lettura).
-   Stessa UI; i form di modifica compaiono solo per l'admin e le API
-   rifiutano comunque le scritture del ruolo cliente.
+   Pannello risultati: stesso componente per /admin (modifica) e
+   /jenny (sola lettura). I controlli di modifica esistono solo
+   per l'admin; le API rifiutano comunque le scritture del cliente.
    ============================================================= */
 
-const COLORI: Record<Azione, string> = { whatsapp: "#17b26a", telefono: "#2f6bff", prenota: "#5b2eff" };
-
-type Props = {
-  percorso: "/admin" | "/jenny";
-  ruoloRichiesto: Ruolo;
-  linguaDefault: Lingua;
-  searchParams: Promise<Record<string, string | undefined>>;
-};
+type Params = Promise<Record<string, string | undefined>>;
+type Props = { percorso: "/admin" | "/jenny"; ruoloRichiesto: Ruolo; linguaDefault: Lingua; searchParams: Params };
+type Anteprima = { esito: ReturnType<typeof parseTreatwell>; nuove: ReturnType<typeof parseTreatwell>["righe"]; gia: number };
 
 export async function Pannello({ percorso, ruoloRichiesto, linguaDefault, searchParams }: Props) {
   await connection();
@@ -29,352 +33,368 @@ export async function Pannello({ percorso, ruoloRichiesto, linguaDefault, search
   const lingua = normalizzaLingua(sp.lang ?? c.get(COOKIE_LINGUA)?.value, linguaDefault);
   const t = DIZIONARIO[lingua];
   const ruolo = await sessione();
-  if (!ruolo || (ruoloRichiesto === "admin" && ruolo !== "admin")) return <Login t={t} lingua={lingua} percorso={percorso} errore={sp.errore} />;
+  if (!ruolo || (ruoloRichiesto === "admin" && ruolo !== "admin")) redirect(`/login?next=${encodeURIComponent(percorso)}&lang=${lingua}`);
   const puoModificare = ruolo === "admin";
-  const sito = sp.sito || (puoModificare ? undefined : SITO_DEFAULT);
-  return <Dashboard t={t} lingua={lingua} percorso={percorso} puoModificare={puoModificare} sito={sito} ok={sp.ok} errore={sp.errore} />;
+  const sito = SITO_DEFAULT;
+  const mese = sp.mese && MESE_RE.test(sp.mese) ? sp.mese : meseCorrente();
+  const next = `${percorso}?mese=${mese}`;
+
+  let stat: StatMese | null = null, mesi: string[] = [], erroreDb: string | null = null;
+  try {
+    [stat, mesi] = await Promise.all([statisticheMese(sito, mese), mesiDisponibili(sito)]);
+  } catch (e) {
+    erroreDb = e instanceof Error ? e.message : "db";
+  }
+
+  let anteprima: Anteprima | null = null;
+  if (puoModificare && sp.anteprima) anteprima = await anteprimaTreatwell(sp.anteprima, sito).catch(() => null);
+  const logoTw = existsSync(path.join(process.cwd(), "public", "treatwell-logo.svg"));
+
+  return (
+    <>
+      <Header t={t} lingua={lingua} percorso={percorso} next={next} mese={mese} mesi={mesi} ruolo={ruolo!} />
+      <main className="p-wrap" style={{ paddingTop: 24 }}>
+        {erroreDb && (
+          <div className="p-avviso p-avviso-err"><span>{t.stati.errore} <small style={{ opacity: 0.8 }}>{t.stati.erroreDb}</small></span><a className="p-btn p-btn-sm" href={next}>{t.stati.riprova}</a></div>
+        )}
+        {sp.ok && <div className="p-avviso p-avviso-ok">{messaggioOk(sp.ok, t)}</div>}
+        {sp.errore && !erroreDb && <div className="p-avviso p-avviso-err">{t.errori.generico}: {messaggioErrore(sp.errore, t)}</div>}
+
+        {anteprima && <AnteprimaTreatwell t={t} lingua={lingua} a={anteprima} next={next} sito={sito} token={sp.anteprima!} />}
+
+        {stat && (
+          <>
+            {/* 2. HERO */}
+            <section className="p-sezione p-hero-wrap">
+              <div>
+                <h1 style={{ fontSize: 30, marginBottom: 14 }}>{t.hero.titolo} <span style={{ color: "var(--p-oro-2)", fontStyle: "italic", fontWeight: 500 }}>· {nomeMese(mese, lingua)}</span></h1>
+                <div className="p-hero">
+                  <Kpi i={0} t={t} etichetta={t.hero.prenotazioni} tip={t.hero.prenotazioniTip} c={stat.prenotazioni} formato="intero" lingua={lingua} />
+                  <Kpi i={1} t={t} etichetta={t.hero.contatti} tip={t.hero.contattiTip} c={stat.contatti} formato="intero" lingua={lingua} />
+                  <Kpi i={2} t={t} etichetta={t.hero.costoContatto} tip={t.hero.costoContattoTip} c={stat.costoContatto} formato="euro2" lingua={lingua} inverso />
+                  <Kpi i={3} t={t} etichetta={t.hero.spesa} tip={t.hero.spesaTip} c={stat.spesa} formato="euro" lingua={lingua} />
+                </div>
+              </div>
+              <div className="p-entra" style={{ animationDelay: "0.35s" }}><Scena3DLazy /></div>
+            </section>
+
+            {stat.vuoto && <Vuoto t={t} />}
+
+            {/* 3. ANDAMENTO */}
+            <section className="p-sezione p-card p-entra" style={{ animationDelay: "0.4s" }}>
+              <div className="p-card-testa"><div><h2>{t.andamento.titolo}</h2><p className="p-sotto">{t.andamento.sotto}</p></div></div>
+              <div className="p-grafico p-grafico-scroll"><div style={{ height: "100%" }}><GraficoPrenotazioniLazy dati={stat.prenotazioniPerMese.map((m) => ({ ...m, etichetta: meseBreve(m.mese, lingua) }))} meseAttivo={mese} etichettaMedia={t.andamento.media} unita={lingua === "zh" ? "个预约" : "prenotazioni"} /></div></div>
+              <p className="p-frase">{fraseAndamento(stat, t, lingua)}</p>
+            </section>
+
+            {/* 4. DUE GRAFICI */}
+            <section className="p-sezione p-griglia-2">
+              <div className="p-card p-entra" style={{ animationDelay: "0.45s" }}>
+                <div className="p-card-testa"><div><h2>{t.contattiGiorno.titolo}</h2><p className="p-sotto">{t.contattiGiorno.sotto}</p></div></div>
+                <div className="p-grafico p-grafico-scroll"><div style={{ height: "100%" }}><GraficoContattiLazy dati={stat.contattiPerGiorno} unita={t.contattiGiorno.contatti} /></div></div>
+              </div>
+              <div className="p-card p-entra" style={{ animationDelay: "0.5s" }}>
+                <div className="p-card-testa"><div><h2>{t.sorgenti.titolo}</h2><p className="p-sotto">{t.sorgenti.sotto}</p></div></div>
+                {stat.contatti.valore === 0 ? <p className="p-vuoto" style={{ padding: 24 }}>{t.sorgenti.vuoto}</p> : (
+                  <div className="p-grafico"><GraficoSorgentiLazy dati={stat.sorgenti.map((s) => ({ nome: t.sorgenti[s.sorgente], n: s.n, pct: s.pct }))} totaleEtichetta={t.hero.contatti} /></div>
+                )}
+              </div>
+            </section>
+
+            {/* 5. CANALI */}
+            <section className="p-sezione p-card p-entra" style={{ animationDelay: "0.55s" }}>
+              <div className="p-card-testa"><div><h2>{t.canali.titolo}</h2><p className="p-sotto">{t.canali.sotto}</p></div></div>
+              {stat.prenotazioni.valore === 0 ? <p className="p-vuoto" style={{ padding: 16 }}>{t.canali.vuoto}</p> : (
+                <div className="p-barre">
+                  {stat.canali.map((cn) => (
+                    <div className="p-barra" key={cn.canale}>
+                      <span>{t.canali[cn.canale]}</span>
+                      <div className="p-barra-track"><div className={`p-barra-fill${cn.canale === "treatwell" ? " tw" : ""}`} style={{ width: `${cn.pct}%` }} /></div>
+                      <span><b className="num">{cn.n}</b><small className="num">{cn.pct}%</small></span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {/* TREATWELL */}
+            <section className="p-sezione p-entra" id="treatwell" style={{ animationDelay: "0.6s" }}>
+              <Treatwell t={t} lingua={lingua} stat={stat} mese={mese} puoModificare={puoModificare} next={next} sito={sito} logo={logoTw} />
+            </section>
+
+            {/* 6. NOTE */}
+            <section className="p-sezione p-card p-entra" style={{ animationDelay: "0.65s" }}>
+              <div className="p-card-testa"><div><h2>{t.note.titolo}</h2><p className="p-sotto">{t.note.sotto}</p></div>{stat.nota && <span className="p-sotto">{t.note.aggiornato}: {formattaDataOra(stat.nota.aggiornato_il, lingua)}</span>}</div>
+              {puoModificare ? (
+                <div className="p-griglia-2">
+                  <form method="post" action="/api/admin/notes" className="p-form-griglia" style={{ gridTemplateColumns: "1fr" }}>
+                    <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sito} /><input type="hidden" name="mese" value={mese} />
+                    <label className="p-campo">{t.note.it}<textarea name="it" className="p-textarea" defaultValue={stat.nota?.it ?? ""} maxLength={2000} /></label>
+                    <label className="p-campo">{t.note.zh}<textarea name="zh" className="p-textarea" defaultValue={stat.nota?.zh ?? ""} maxLength={2000} /></label>
+                    <div><button className="p-btn p-btn-primario">{t.note.salva}</button></div>
+                  </form>
+                  <form method="post" action="/api/admin/adspend" className="p-form-griglia" style={{ gridTemplateColumns: "1fr", alignContent: "start" }}>
+                    <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sito} /><input type="hidden" name="mese" value={mese} />
+                    <label className="p-campo">{t.note.spesa}<input name="importo" inputMode="decimal" className="p-input" defaultValue={stat.spesa.valore ? String(stat.spesa.valore) : ""} placeholder="300" required /></label>
+                    <div><button className="p-btn">{t.note.salvaSpesa}</button></div>
+                    {stat.nota && (stat.nota.it || stat.nota.zh) && <p className="p-nota" style={{ fontSize: 14, color: "var(--p-testo-2)" }}>{lingua === "zh" ? stat.nota.it : stat.nota.zh}</p>}
+                  </form>
+                </div>
+              ) : stat.nota && (stat.nota.it || stat.nota.zh) ? (
+                <p className="p-nota">{(lingua === "zh" ? stat.nota.zh : stat.nota.it) || (lingua === "zh" ? stat.nota.it : stat.nota.zh)}</p>
+              ) : <p className="p-sotto">{t.note.vuoto}</p>}
+            </section>
+
+            {/* 7. TABELLA */}
+            <section className="p-sezione p-card p-entra" style={{ animationDelay: "0.7s" }}>
+              <TabellaPrenotazioni t={t} lingua={lingua} stat={stat} puoModificare={puoModificare} next={next} sito={sito} ordina={sp.ordina} modifica={sp.modifica} mese={mese} />
+            </section>
+
+            <footer className="p-footer">
+              <span>{t.footer.aggiornati} {formattaDataOra(stat.aggiornatoIl, lingua)}</span>
+              <a href="https://infoapex.eu" target="_blank" rel="noopener"><span className="apex">A</span>{t.footer.powered}</a>
+            </footer>
+          </>
+        )}
+      </main>
+    </>
+  );
 }
 
-function Login({ t, lingua, percorso, errore }: { t: Dizionario; lingua: Lingua; percorso: string; errore?: string }) {
+/* ---------- header ---------- */
+function Header({ t, lingua, percorso, next, mese, mesi, ruolo }: { t: Dizionario; lingua: Lingua; percorso: string; next: string; mese: string; mesi: string[]; ruolo: Ruolo }) {
+  const stampa = `/stampa?mese=${mese}&lang=${lingua}`;
   return (
-    <div className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center px-6">
-      <div className="flex items-center justify-between">
-        <p className="label-mono text-ink/50">{t.areaRiservata}</p>
-        <SelettoreLingua lingua={lingua} next={percorso} />
+    <header className="p-header">
+      <div className="p-wrap p-header-in">
+        <a className="p-logo" href={percorso}>
+          <img src="/essenza-logo.png" alt="" width={36} height={36} />
+          <span><b>Essenza d&apos;Oriente</b><small>{t.areaRiservata.split("·")[1]?.trim()}</small></span>
+        </a>
+        <span className="p-titolo-centro">{t.titolo}</span>
+        <div className="p-azioni p-no-stampa">
+          <form method="get" action={percorso} style={{ display: "inline-flex", gap: 6 }}>
+            <select name="mese" className="p-select" defaultValue={mese} aria-label={t.header.mese}>
+              {(mesi.includes(mese) ? mesi : [mese, ...mesi]).map((m) => <option key={m} value={m}>{nomeMese(m, lingua)}</option>)}
+            </select>
+            <button className="p-btn p-btn-sm" style={{ minHeight: 44 }}>{t.header.filtra}</button>
+          </form>
+          <form method="post" action="/api/admin/lang" className="p-lingua">
+            <input type="hidden" name="next" value={next} />
+            <button name="lang" value="it" aria-pressed={lingua === "it"}>IT</button>
+            <button name="lang" value="zh" aria-pressed={lingua === "zh"}>中文</button>
+          </form>
+          <BottoneStampa href={stampa} testo={t.header.esportaPdf} />
+          <span className="p-ruolo"><span className="p-avatar">{ruolo === "admin" ? "A" : "J"}</span>{ruolo === "admin" ? t.ruoloAdmin : t.ruoloCliente}</span>
+          <form method="post" action="/api/admin/logout"><input type="hidden" name="next" value="/login" /><button className="p-btn p-btn-sm" style={{ minHeight: 44 }}>{t.header.esci}</button></form>
+        </div>
       </div>
-      <h1 className="h-display mt-3 text-4xl">{percorso === "/jenny" ? t.titoloCliente : t.titoloAdmin}</h1>
-      <form method="post" action="/api/admin/login" className="mt-8 space-y-3">
-        <input type="hidden" name="next" value={percorso} />
-        <input type="hidden" name="lang" value={lingua} />
-        <label className="block">
-          <span className="label-mono text-ink/60">{t.password}</span>
-          <input type="password" name="password" required autoFocus autoComplete="current-password" className="mt-2 w-full rounded-md border border-ink/15 bg-surface px-4 py-3 text-[17px] outline-none focus:border-ink" />
-        </label>
-        {errore === "troppi" ? <p className="text-sm text-red-600">{t.troppiTentativi}</p> : errore ? <p className="text-sm text-red-600">{t.erroreLogin}</p> : null}
-        <button type="submit" className="w-full rounded-full bg-ink px-6 py-3 font-medium text-paper hover:bg-ink/85">{t.entra}</button>
-      </form>
+    </header>
+  );
+}
+
+/* ---------- KPI ---------- */
+function Kpi({ i, t, etichetta, tip, c, formato, lingua, inverso }: { i: number; t: Dizionario; etichetta: string; tip: string; c: Confronto; formato: Formato; lingua: Lingua; inverso?: boolean }) {
+  const delta = c.delta;
+  const migliora = delta === null ? null : inverso ? delta < 0 : delta > 0;
+  const cls = delta === null || delta === 0 ? "p-badge-neutro" : migliora ? "p-badge-su" : "p-badge-giu";
+  return (
+    <div className="p-card p-kpi p-entra" style={{ animationDelay: `${0.05 + i * 0.08}s` }}>
+      <div className="valore"><CountUp valore={c.valore} formato={formato} lingua={lingua} /></div>
+      <div className="etichetta">{etichetta} <span className="p-tip" tabIndex={0}>?<span>{tip}</span></span></div>
+      <span className={`p-badge ${cls}`}>{delta === null ? (c.prec === null ? t.hero.nuovo : "—") : `${delta > 0 ? "+" : ""}${delta}%`} <small style={{ fontWeight: 400 }}>{t.hero.vsMese}</small></span>
     </div>
   );
 }
 
-function SelettoreLingua({ lingua, next }: { lingua: Lingua; next: string }) {
+function fraseAndamento(stat: StatMese, t: Dizionario, lingua: Lingua): string {
+  const n = stat.prenotazioni.valore, p = stat.prenotazioni.prec, d = stat.prenotazioni.delta;
+  const m = nomeMese(stat.mese, lingua), prec = nomeMese(stat.prec, lingua);
+  if (p === null || p === 0) return riempi(t.andamento.fraseSenzaPrec, { mese: m, n });
+  const delta = d === null || d === 0 ? t.andamento.stabile : d > 0 ? riempi(t.andamento.inPiu, { p: d }) : riempi(t.andamento.inMeno, { p: lingua === "zh" ? Math.abs(d) : d });
+  return riempi(t.andamento.frase, { mese: m, n, delta, prec });
+}
+
+function Vuoto({ t }: { t: Dizionario }) {
   return (
-    <form method="post" action="/api/admin/lang" className="flex items-center gap-1 rounded-full border border-ink/15 p-0.5 text-sm">
-      <input type="hidden" name="next" value={next} />
-      {(["it", "zh"] as Lingua[]).map((l) => (
-        <button key={l} name="lang" value={l} className={`rounded-full px-3 py-1 ${lingua === l ? "bg-ink text-paper" : "text-ink/70 hover:text-ink"}`} aria-pressed={lingua === l}>
-          {l === "it" ? "IT" : "中文"}
-        </button>
-      ))}
+    <div className="p-sezione p-card p-vuoto p-entra">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="62" r="38" fill="#dce8e0" /><path d="M40 64c8-14 32-14 40 0" stroke="#1f4d3a" strokeWidth="3" fill="none" strokeLinecap="round" /><circle cx="48" cy="52" r="3" fill="#1f4d3a" /><circle cx="72" cy="52" r="3" fill="#1f4d3a" /><path d="M60 14v10M60 96v10M14 60h10M96 60h10" stroke="#c9a96e" strokeWidth="3" strokeLinecap="round" /></svg>
+      <b>{t.stati.nessunDato}</b><span>{t.stati.nessunDatoSotto}</span>
+    </div>
+  );
+}
+
+/* ---------- Treatwell ---------- */
+function Treatwell({ t, lingua, stat, mese, puoModificare, next, sito, logo }: { t: Dizionario; lingua: Lingua; stat: StatMese; mese: string; puoModificare: boolean; next: string; sito: string; logo: boolean }) {
+  const tw = stat.treatwell;
+  const titolo = <h2>{logo ? <img src="/treatwell-logo.svg" alt="Treatwell" /> : t.treatwell.titolo}<span className="tw-eti">{t.treatwell.etichetta}</span></h2>;
+  const delta = (v: number, p: number | undefined | null) => (p ? `${v >= p ? "+" : ""}${Math.round(((v - p) / p) * 100)}% ${t.hero.vsMese}` : "");
+  if (!tw.presente) {
+    return (
+      <div className="p-tw-vuoto">
+        <div style={{ marginBottom: 10, display: "flex", justifyContent: "center" }}><div className="p-tw" style={{ padding: "10px 18px", boxShadow: "none" }}>{titolo}</div></div>
+        <p style={{ margin: 0 }}>{puoModificare ? t.treatwell.vuotoAdmin : t.treatwell.vuotoCliente}</p>
+        {puoModificare && <div style={{ display: "flex", justifyContent: "center" }}><ImportTreatwell t={t} next={next} sito={sito} /></div>}
+      </div>
+    );
+  }
+  return (
+    <div className="p-tw">
+      {titolo}
+      <div className="p-tw-griglia">
+        <div className="p-tw-kpi grande"><div className="v"><CountUp valore={tw.netto} formato="euro" lingua={lingua} /></div><div className="e">{t.treatwell.netto}</div>{tw.prec && <div className="d" style={{ color: "var(--p-testo-2)" }}>{delta(tw.netto, tw.prec.netto)}</div>}</div>
+        <div className="p-tw-kpi"><div className="v"><CountUp valore={tw.lordo} formato="euro" lingua={lingua} /></div><div className="e">{t.treatwell.lordo}</div>{tw.prec && <div className="d">{delta(tw.lordo, tw.prec.lordo)}</div>}</div>
+        <div className="p-tw-kpi"><div className="v"><CountUp valore={tw.commissione} formato="euro" lingua={lingua} /></div><div className="e">{t.treatwell.commissione} · {tw.commissionePct}%</div></div>
+        <div className="p-tw-kpi"><div className="v"><CountUp valore={tw.prenotazioni} formato="intero" lingua={lingua} /></div><div className="e">{t.treatwell.prenotazioni}</div>{tw.prec && <div className="d">{delta(tw.prenotazioni, tw.prec.prenotazioni)}</div>}</div>
+        <div className="p-tw-kpi"><div className="v"><CountUp valore={tw.scontrino} formato="euro" lingua={lingua} /></div><div className="e">{t.treatwell.scontrino}</div>{tw.prec && <div className="d">{delta(tw.scontrino, tw.prec.scontrino)}</div>}</div>
+      </div>
+      <div className="p-tw-basso">
+        <div className="p-tw-sub">
+          <h3>{t.treatwell.grafico}</h3>
+          <div style={{ height: 180 }}><GraficoTreatwellLazy dati={tw.perMese.map((m) => ({ ...m, etichetta: meseBreve(m.mese, lingua) }))} meseAttivo={mese} lingua={lingua} /></div>
+        </div>
+        <div className="p-tw-sub">
+          <h3>{t.treatwell.top}</h3>
+          <ol className="p-tw-top" style={{ margin: 0, padding: 0, listStyle: "none" }}>
+            {tw.top.map((x, i) => <li key={x.trattamento}><span>{i + 1}</span><span>{x.trattamento}</span><span className="num">×{x.n}</span><b className="num">{euro(x.incasso, lingua)}</b></li>)}
+          </ol>
+          {(tw.nuovi > 0 || tw.ritorno > 0) && (
+            <p style={{ margin: "12px 0 0", fontSize: 13, color: "var(--p-testo-2)" }}>
+              <b className="num" style={{ color: "var(--p-tw-3)" }}>{tw.nuovi}</b> {t.treatwell.nuovi} · <b className="num" style={{ color: "var(--p-tw-3)" }}>{tw.ritorno}</b> {t.treatwell.ritorno}
+            </p>
+          )}
+        </div>
+      </div>
+      {puoModificare && (
+        <div className="p-tw-azioni">
+          <ImportTreatwell t={t} next={next} sito={sito} />
+          <form method="post" action="/api/admin/settings" style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+            <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sito} /><input type="hidden" name="chiave" value="treatwell_commissione" />
+            <label style={{ fontSize: 13 }}>{t.treatwell.commissioneImposta}</label>
+            <input name="valore" className="p-input" inputMode="decimal" defaultValue={String(tw.commissionePct)} style={{ background: "rgba(255,255,255,.95)", color: "var(--p-testo)" }} />
+            <button className="p-btn p-btn-sm">{t.treatwell.salva}</button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ImportTreatwell({ t, next, sito }: { t: Dizionario; next: string; sito: string }) {
+  return (
+    <form method="post" action="/api/admin/treatwell" encType="multipart/form-data" style={{ display: "inline-flex", gap: 6, alignItems: "center", flexWrap: "wrap", marginTop: 10 }}>
+      <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sito} /><input type="hidden" name="_azione" value="anteprima" />
+      <input type="file" name="file" accept=".csv,text/csv" required style={{ fontSize: 13, maxWidth: 220 }} />
+      <button className="p-btn p-btn-sm" style={{ color: "#fff", background: "var(--p-tw-3)", borderColor: "var(--p-tw-3)" }}>{t.treatwell.importa}</button>
     </form>
   );
 }
 
-async function Dashboard({ t, lingua, percorso, puoModificare, sito, ok, errore }: { t: Dizionario; lingua: Lingua; percorso: string; puoModificare: boolean; sito?: string; ok?: string; errore?: string }) {
-  let click: ClickEvento[] = [], prenotazioni: Prenotazione[] = [], note: NotaMensile[] = [], spese: SpesaMensile[] = [], siti: string[] = [];
-  let erroreDb: string | null = null;
-  try {
-    [click, prenotazioni, note, spese, siti] = await Promise.all([leggiClick(60, sito), elencaPrenotazioni(365, sito), elencaNote(sito ?? SITO_DEFAULT), elencaSpese(sito ?? SITO_DEFAULT), puoModificare ? elencoSiti() : Promise.resolve([SITO_DEFAULT])]);
-  } catch (e) {
-    erroreDb = e instanceof Error ? e.message : "errore";
-  }
-  const next = sito ? `${percorso}?sito=${encodeURIComponent(sito)}` : percorso;
-  const qs = sito ? `&sito=${encodeURIComponent(sito)}` : "";
-  const sitoForm = sito ?? SITO_DEFAULT;
+async function anteprimaTreatwell(token: string, sito: string): Promise<Anteprima | null> {
+  const testo = await leggiFileTemporaneo(token);
+  if (testo === null) return null;
+  const esito = parseTreatwell(testo, sito);
+  const esistenti = await chiaviEsistenti(sito, esito.righe.map((r) => r.dedup_key));
+  return { esito, nuove: esito.righe.filter((r) => !esistenti.has(r.dedup_key)), gia: esito.righe.filter((r) => esistenti.has(r.dedup_key)).length };
+}
 
-  // finestre temporali
-  const oggi = giornoLocale(new Date().toISOString());
-  const giornoFa = (n: number) => { const d = new Date(); d.setUTCDate(d.getUTCDate() - n); return giornoLocale(d.toISOString()); };
-  const da30 = giornoFa(29), da60 = giornoFa(59), da7 = giornoFa(6);
-  const click30 = click.filter((r) => giornoLocale(r.creato_il) >= da30);
-  const clickPrec = click.filter((r) => { const g = giornoLocale(r.creato_il); return g >= da60 && g < da30; });
-  const pren30 = prenotazioni.filter((p) => p.data >= da30 && p.data <= oggi);
-  const prenPrec = prenotazioni.filter((p) => p.data >= da60 && p.data < da30);
-  const totali = totaliPerAzione(click30);
-  const serie = seriePerGiorno(click30, 30);
-  const mesiRecenti = Array.from({ length: 6 }, (_, i) => { const d = new Date(); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() - i); return d.toISOString().slice(0, 7); });
-
+function AnteprimaTreatwell({ t, lingua, a, next, sito, token }: { t: Dizionario; lingua: Lingua; a: Anteprima; next: string; sito: string; token: string }) {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10 lg:py-14">
-      <header className="flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <p className="label-mono text-ink/50">{t.areaRiservata}{!puoModificare && <> · {t.solaLettura}</>}</p>
-          <h1 className="h-display mt-3 text-4xl lg:text-5xl">{sito ?? t.tuttiSiti}</h1>
-          <p className="mt-3 text-ink/60">{t.sottotitolo}</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <SelettoreLingua lingua={lingua} next={next} />
-          {puoModificare && siti.length > 1 && (
-            <form method="get" className="flex items-center gap-2">
-              <select name="sito" defaultValue={sito ?? ""} className="rounded-full border border-ink/15 bg-surface px-4 py-2 text-sm">
-                <option value="">{t.tuttiSiti}</option>
-                {siti.map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-              <button className="rounded-full border border-ink/15 bg-surface px-4 py-2 text-sm hover:border-ink">{t.filtra}</button>
-            </form>
-          )}
-          <form method="post" action="/api/admin/logout"><input type="hidden" name="next" value={percorso} /><button className="rounded-full border border-ink/15 px-4 py-2 text-sm hover:border-ink">{t.esci}</button></form>
-        </div>
-      </header>
-
-      {erroreDb && <Avviso tipo="errore">{t.erroreStorage} <span className="opacity-60">({erroreDb})</span></Avviso>}
-      {ok && <Avviso tipo="ok">{messaggioOk(ok, t)}</Avviso>}
-      {errore && !erroreDb && <Avviso tipo="errore">{t.errore}: {errore}</Avviso>}
-
-      {/* HERO: 3 numeri grandi */}
-      <section className="mt-10 grid gap-3 lg:grid-cols-3">
-        <Numero titolo={t.click30} valore={click30.length} prec={clickPrec.length} sotto={`${AZIONI.reduce((s, a) => s + totali[a].oggi, 0)} ${t.oggi} · ${AZIONI.reduce((s, a) => s + totali[a].g7, 0)} ${t.ultimi7}`} t={t} />
-        <Numero titolo={t.prenotazioni30} valore={pren30.length} prec={prenPrec.length} sotto={`${pren30.filter((p) => p.data === oggi).length} ${t.oggi} · ${pren30.filter((p) => p.data >= da7).length} ${t.ultimi7}`} t={t} />
-        <Numero titolo={t.incasso30} valore={incasso(pren30)} prec={incasso(prenPrec)} formato={(n) => euro(n, lingua)} sotto={`${pren30.filter((p) => p.importo !== null).length}/${pren30.length} ${lingua === "zh" ? "条含金额" : "con importo"}`} t={t} />
-      </section>
-
-      {/* CLICK */}
-      <Sezione titolo={t.sezClick} desc={t.descClick} azione={<a href={`/api/admin/export?tipo=click&giorni=30${qs}`} className="rounded-full border border-ink/15 bg-surface px-4 py-2 text-sm hover:border-ink">{t.esportaCsv}</a>}>
-        <div className="grid gap-3 sm:grid-cols-3">
-          {AZIONI.map((a) => <Card key={a} titolo={t[a]} colore={COLORI[a]} valore={totali[a].g30} sotto={`${totali[a].oggi} ${t.oggi} · ${totali[a].g7} ${t.ultimi7}`} />)}
-        </div>
-        <div className="mt-6 rounded-xl border border-ink/10 bg-surface p-5 lg:p-7">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h3 className="font-display text-lg font-bold tracking-tightest">{t.graficoTitolo}</h3>
-            <ul className="flex flex-wrap gap-4 text-sm text-ink/70">{AZIONI.map((a) => <li key={a} className="flex items-center gap-2"><span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: COLORI[a] }} />{t[a]}</li>)}</ul>
+    <section className="p-sezione p-card" style={{ borderColor: "var(--p-tw)" }}>
+      <div className="p-card-testa"><div><h2>{t.treatwell.anteprima}</h2><p className="p-sotto">{t.treatwell.anteprimaSotto}</p></div></div>
+      {a.esito.errore ? <p className="p-avviso p-avviso-err">{t.treatwell.colonneMancanti} <small>({a.esito.colonne.join(", ")})</small></p> : (
+        <>
+          <p style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 14 }}>
+            <span><b className="num" style={{ color: "var(--p-tw-3)" }}>{a.nuove.length}</b> {t.treatwell.daImportare}</span>
+            <span><b className="num">{a.gia}</b> {t.treatwell.giaPresenti}</span>
+            <span><b className="num">{a.esito.scartate}</b> {t.treatwell.scartate}</span>
+          </p>
+          <div className="p-tabella-scroll" style={{ maxHeight: 280, overflowY: "auto" }}>
+            <table className="p-tabella">
+              <thead><tr><th>{t.tabella.data}</th><th>{t.tabella.trattamento}</th><th className="dx">{t.tabella.importo}</th><th>{t.treatwell.cliente}</th></tr></thead>
+              <tbody>{a.nuove.slice(0, 200).map((r) => <tr key={r.dedup_key}><td className="num">{formattaData(r.data, lingua)}</td><td>{r.trattamento}</td><td className="dx num">{r.importo !== null ? euro(r.importo, lingua, 2) : "—"}</td><td><span className="p-tag">{r.cliente_hash ? r.cliente_hash.slice(0, 6) : "—"}{r.nuovo_cliente === true ? ` · ${t.treatwell.nuovoCliente}` : r.nuovo_cliente === false ? ` · ${t.treatwell.clienteRitorno}` : ""}</span></td></tr>)}</tbody>
+            </table>
           </div>
-          <Grafico serie={serie} t={t} />
-        </div>
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <Tabella t={t} titolo={t.perSorgente} righe={tabellaPer(click30, "sorgente")} etichetta={(k) => t.sorgenti[k] ?? k} vuoto={t.nessunClick} />
-          <Tabella t={t} titolo={t.perDispositivo} righe={tabellaPer(click30, "dispositivo")} etichetta={(k) => (k === "mobile" ? t.mobile : t.desktop)} vuoto={t.nessunClick} />
-          <div className="lg:col-span-2"><Tabella t={t} titolo={t.perPagina} righe={tabellaPer(click30, "pagina")} etichetta={(k) => k} vuoto={t.nessunClick} /></div>
-        </div>
-        <p className="label-mono mt-4 text-ink/40">{t.notaSorgenti}</p>
-      </Sezione>
-
-      {/* PRENOTAZIONI */}
-      <Sezione titolo={t.sezPrenotazioni} desc={t.descPrenotazioni} azione={<a href={`/api/admin/export?tipo=prenotazioni&giorni=365${qs}`} className="rounded-full border border-ink/15 bg-surface px-4 py-2 text-sm hover:border-ink">{t.esportaCsv}</a>}>
-        <div className="grid gap-6 lg:grid-cols-2">
-          <TabellaSemplice titolo={t.perCanale} colonne={[t.voce, t.totale, t.importo]} righe={raggruppa(pren30, (p) => t.canali[p.canale] ?? p.canale, lingua)} vuoto={t.nessunaPrenotazione} />
-          <TabellaSemplice titolo={t.perTrattamento} colonne={[t.voce, t.totale, t.importo]} righe={raggruppa(pren30, (p) => p.trattamento, lingua)} vuoto={t.nessunaPrenotazione} />
-        </div>
-        {puoModificare && (
-          <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
-            <form method="post" action="/api/admin/bookings" className="rounded-xl border border-ink/10 bg-surface p-5">
-              <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sitoForm} /><input type="hidden" name="_azione" value="aggiungi" />
-              <h3 className="font-display text-lg font-bold tracking-tightest">{t.aggiungi}</h3>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                <Campo etichetta={t.data}><input type="date" name="data" required defaultValue={oggi} className={INPUT} /></Campo>
-                <Campo etichetta={t.trattamento}>
-                  <select name="trattamento" required className={INPUT} defaultValue={TRATTAMENTI_NOTI[0]}>
-                    {TRATTAMENTI_NOTI.map((n) => <option key={n} value={n}>{n}</option>)}
-                    <option value="__altro">{t.altroTrattamento}</option>
-                  </select>
-                </Campo>
-                <Campo etichetta={t.canale}>
-                  <select name="canale" required className={INPUT} defaultValue="treatwell">{CANALI.map((c) => <option key={c} value={c}>{t.canali[c]}</option>)}</select>
-                </Campo>
-                <Campo etichetta={t.importo}><input type="text" inputMode="decimal" name="importo" placeholder="50" className={INPUT} /></Campo>
-                <Campo etichetta={t.note}><input type="text" name="note" maxLength={160} className={INPUT} /></Campo>
-                <Campo etichetta={t.altroTrattamento}><input type="text" name="trattamento_altro" maxLength={80} className={INPUT} /></Campo>
-              </div>
-              <button className="mt-4 rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper hover:bg-ink/85">{t.salva}</button>
-            </form>
-            <form method="post" action="/api/admin/bookings" encType="multipart/form-data" className="rounded-xl border border-ink/10 bg-surface p-5">
-              <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sitoForm} /><input type="hidden" name="_azione" value="importa" />
-              <h3 className="font-display text-lg font-bold tracking-tightest">{t.importaCsv}</h3>
-              <p className="mt-2 text-sm text-ink/60">{t.importaHint}</p>
-              <input type="file" name="file" accept=".csv,text/csv" required className="mt-4 block w-full text-sm" />
-              <button className="mt-4 rounded-full border border-ink/15 px-5 py-2 text-sm hover:border-ink">{t.importaCsv}</button>
-            </form>
+          <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap" }}>
+            <form method="post" action="/api/admin/treatwell"><input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sito} /><input type="hidden" name="_azione" value="conferma" /><input type="hidden" name="token" value={token} /><button className="p-btn p-btn-tw" disabled={a.nuove.length === 0}>{t.treatwell.conferma}</button></form>
+            <a className="p-btn" href={next}>{t.treatwell.annulla}</a>
           </div>
-        )}
-        <div className="mt-6 overflow-hidden rounded-xl border border-ink/10 bg-surface">
-          {prenotazioni.length === 0 ? <p className="px-5 py-6 text-sm text-ink/50">{t.nessunaPrenotazione}</p> : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="label-mono text-ink/50"><tr className="border-b border-ink/10">
-                  <th className="px-5 py-3 text-left font-normal">{t.data}</th><th className="px-3 py-3 text-left font-normal">{t.trattamento}</th><th className="px-3 py-3 text-left font-normal">{t.canale}</th><th className="px-3 py-3 text-right font-normal">{t.importo}</th><th className="px-3 py-3 text-left font-normal">{t.note}</th>{puoModificare && <th className="px-5 py-3 text-right font-normal">{t.azioni}</th>}
-                </tr></thead>
-                <tbody>
-                  {prenotazioni.slice(0, 200).map((p) => (
-                    <tr key={p.id} className="border-b border-ink/5 last:border-0">
-                      <td className="whitespace-nowrap px-5 py-3 tabular-nums">{formattaData(p.data, lingua)}</td>
-                      <td className="px-3 py-3">{p.trattamento}</td>
-                      <td className="px-3 py-3 text-ink/70">{t.canali[p.canale] ?? p.canale}</td>
-                      <td className="px-3 py-3 text-right tabular-nums">{p.importo !== null ? euro(p.importo, lingua) : "—"}</td>
-                      <td className="max-w-[260px] truncate px-3 py-3 text-ink/70" title={p.note ?? ""}>{p.note ?? ""}</td>
-                      {puoModificare && (
-                        <td className="px-5 py-2 text-right">
-                          <form method="post" action="/api/admin/bookings"><input type="hidden" name="next" value={next} /><input type="hidden" name="_azione" value="elimina" /><input type="hidden" name="id" value={p.id} />
-                            <button className="rounded-full border border-ink/15 px-3 py-1 text-xs hover:border-red-500 hover:text-red-600">{t.elimina}</button></form>
-                        </td>
-                      )}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </Sezione>
-
-      {/* NOTE MENSILI + SPESA ADS */}
-      <Sezione titolo={t.sezNote} desc={t.descNote}>
-        {puoModificare && (
-          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-            <form method="post" action="/api/admin/notes" className="rounded-xl border border-ink/10 bg-surface p-5">
-              <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sitoForm} />
-              <h3 className="font-display text-lg font-bold tracking-tightest">{t.scriviNota}</h3>
-              <div className="mt-4 grid gap-3">
-                <Campo etichetta={t.mese}><select name="mese" className={INPUT + " max-w-xs"} defaultValue={mesiRecenti[0]}>{mesiRecenti.map((m) => <option key={m} value={m}>{nomeMese(m, lingua)}</option>)}</select></Campo>
-                <Campo etichetta={t.testoIt}><textarea name="it" rows={4} maxLength={2000} className={INPUT} /></Campo>
-                <Campo etichetta={t.testoZh}><textarea name="zh" rows={4} maxLength={2000} className={INPUT} /></Campo>
-              </div>
-              <button className="mt-4 rounded-full bg-ink px-5 py-2 text-sm font-medium text-paper hover:bg-ink/85">{t.salva}</button>
-            </form>
-            <form method="post" action="/api/admin/adspend" className="rounded-xl border border-ink/10 bg-surface p-5">
-              <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sitoForm} />
-              <h3 className="font-display text-lg font-bold tracking-tightest">{t.spesaAds}</h3>
-              <p className="mt-2 text-sm text-ink/60">{t.spesaAdsHint}</p>
-              <div className="mt-4 grid gap-3">
-                <Campo etichetta={t.mese}><select name="mese" className={INPUT} defaultValue={mesiRecenti[0]}>{mesiRecenti.map((m) => <option key={m} value={m}>{nomeMese(m, lingua)}</option>)}</select></Campo>
-                <Campo etichetta={t.importo}><input type="text" inputMode="decimal" name="importo" placeholder="300" required className={INPUT} /></Campo>
-              </div>
-              <button className="mt-4 rounded-full border border-ink/15 px-5 py-2 text-sm hover:border-ink">{t.salva}</button>
-            </form>
-          </div>
-        )}
-        <div className="mt-6 grid gap-4">
-          {mesiConDati(note, spese, click, prenotazioni).length === 0 ? <p className="text-sm text-ink/50">{t.nessunaNota}</p> : mesiConDati(note, spese, click, prenotazioni).map((m) => {
-            const n = note.find((x) => x.mese === m);
-            const sp = spese.find((x) => x.mese === m);
-            const cm = click.filter((r) => giornoLocale(r.creato_il).slice(0, 7) === m).length;
-            const pm = prenotazioni.filter((p) => p.data.slice(0, 7) === m);
-            const inc = incasso(pm);
-            return (
-              <article key={m} className="rounded-xl border border-ink/10 bg-surface p-5 lg:p-6">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="font-display text-xl font-bold tracking-tightest">{nomeMese(m, lingua)}</h3>
-                  {n && <span className="label-mono text-ink/40">{t.aggiornato} {formattaData(n.aggiornato_il, lingua)}</span>}
-                </div>
-                <dl className="mt-3 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
-                  <Dato etichetta={t.sezClick} valore={String(cm)} />
-                  <Dato etichetta={t.sezPrenotazioni} valore={String(pm.length)} />
-                  <Dato etichetta={t.spesaAds} valore={sp ? euro(sp.importo, lingua) : "—"} />
-                  <Dato etichetta={t.costoPrenotazione} valore={sp && pm.length ? euro(sp.importo / pm.length, lingua) : sp && cm ? `${euro(sp.importo / cm, lingua)} / ${t.contatto}` : "—"} sotto={inc && sp ? `${t.incasso}: ${euro(inc, lingua)}` : undefined} />
-                </dl>
-                {n && (n.it || n.zh) && <p className="mt-4 whitespace-pre-line border-t border-ink/10 pt-4 text-[16px] leading-relaxed text-ink/85">{(lingua === "zh" ? n.zh : n.it) || (lingua === "zh" ? n.it : n.zh)}</p>}
-                {puoModificare && n && n.it && n.zh && <p className="mt-3 whitespace-pre-line text-sm text-ink/55">{lingua === "zh" ? n.it : n.zh}</p>}
-              </article>
-            );
-          })}
-        </div>
-      </Sezione>
-    </div>
-  );
-}
-
-/* ---------- pezzi ---------- */
-const incasso = (arr: Prenotazione[]) => arr.reduce((s, p) => s + (p.importo ?? 0), 0);
-const INPUT = "mt-1 w-full rounded-md border border-ink/15 bg-paper px-3 py-2 text-[15px] outline-none focus:border-ink";
-
-function messaggioOk(ok: string, t: Dizionario): string {
-  if (ok.startsWith("importate:")) return `${ok.split(":")[1]} ${t.importate}`;
-  return "✓";
-}
-function mesiConDati(note: NotaMensile[], spese: SpesaMensile[], click: ClickEvento[], pren: Prenotazione[]): string[] {
-  const s = new Set<string>();
-  note.forEach((n) => s.add(n.mese)); spese.forEach((x) => s.add(x.mese));
-  click.forEach((r) => s.add(giornoLocale(r.creato_il).slice(0, 7))); pren.forEach((p) => s.add(p.data.slice(0, 7)));
-  return Array.from(s).sort().reverse().slice(0, 12);
-}
-function Dato({ etichetta, valore, sotto }: { etichetta: string; valore: string; sotto?: string }) {
-  return <div><dt className="label-mono text-ink/50">{etichetta}</dt><dd className="mt-1 font-semibold tabular-nums">{valore}</dd>{sotto && <dd className="text-xs text-ink/50">{sotto}</dd>}</div>;
-}
-function Avviso({ tipo, children }: { tipo: "ok" | "errore"; children: React.ReactNode }) {
-  const cls = tipo === "ok" ? "border-verde/30 bg-verde/10 text-ink" : "border-red-200 bg-red-50 text-red-700";
-  return <div className={`mt-8 rounded-lg border p-4 text-sm ${cls}`}>{children}</div>;
-}
-function Sezione({ titolo, desc, azione, children }: { titolo: string; desc: string; azione?: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <section className="mt-14">
-      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-ink/10 pb-4">
-        <div><h2 className="h-display text-2xl lg:text-3xl">{titolo}</h2><p className="mt-1 text-ink/60">{desc}</p></div>
-        {azione}
-      </div>
-      <div className="mt-6">{children}</div>
+        </>
+      )}
     </section>
   );
 }
-function Campo({ etichetta, children }: { etichetta: string; children: React.ReactNode }) {
-  return <label className="block text-sm"><span className="label-mono text-ink/60">{etichetta}</span>{children}</label>;
-}
-function Numero({ titolo, valore, prec, sotto, formato, t }: { titolo: string; valore: number; prec: number; sotto: string; formato?: (n: number) => string; t: Dizionario }) {
-  const f = formato ?? ((n: number) => String(n));
-  const delta = prec > 0 ? Math.round(((valore - prec) / prec) * 100) : null;
+
+/* ---------- tabella prenotazioni ---------- */
+function TabellaPrenotazioni({ t, lingua, stat, puoModificare, next, sito, ordina, modifica, mese }: { t: Dizionario; lingua: Lingua; stat: StatMese; puoModificare: boolean; next: string; sito: string; ordina?: string; modifica?: string; mese: string }) {
+  const [campo, verso] = (ordina ?? "data-desc").split("-") as [keyof Prenotazione, string];
+  const righe = [...stat.prenotazioniMese].sort((a, b) => {
+    const x = a[campo] ?? "", y = b[campo] ?? "";
+    const r = typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y));
+    return verso === "asc" ? r : -r;
+  });
+  const linkOrdina = (c: string) => `${next}&ordina=${c}-${campo === c && verso === "desc" ? "asc" : "desc"}`;
+  const freccia = (c: string) => (campo === c ? (verso === "asc" ? " ↑" : " ↓") : "");
+  const inModifica = righe.find((p) => p.id === modifica);
   return (
-    <div className="rounded-2xl border border-ink/10 bg-surface p-6 lg:p-7">
-      <p className="label-mono text-ink/60">{titolo}</p>
-      <p className="font-display mt-3 text-5xl font-bold tracking-tightest lg:text-6xl">{f(valore)}</p>
-      <p className="mt-2 text-sm text-ink/55">{sotto}</p>
-      {delta !== null && <p className={`mt-1 text-sm font-medium ${delta >= 0 ? "text-verde" : "text-red-600"}`}>{delta >= 0 ? "+" : ""}{delta}% {t.mesePrecedente}</p>}
-    </div>
-  );
-}
-function Card({ titolo, valore, sotto, colore }: { titolo: string; valore: number; sotto: string; colore?: string }) {
-  return (
-    <div className="rounded-xl border border-ink/10 bg-surface p-5">
-      <p className="label-mono flex items-center gap-2 text-ink/60">{colore && <span className="inline-block h-2 w-2 rounded-full" style={{ background: colore }} />}{titolo}</p>
-      <p className="font-display mt-3 text-4xl font-bold tracking-tightest">{valore}</p>
-      <p className="mt-1 text-sm text-ink/55">{sotto}</p>
-    </div>
-  );
-}
-function Grafico({ serie, t }: { serie: GiornoSerie[]; t: Dizionario }) {
-  const W = 900, H = 240, PAD_B = 28, PAD_T = 20;
-  const max = Math.max(1, ...serie.map((g) => g.whatsapp + g.telefono + g.prenota));
-  const passo = W / serie.length, larg = Math.max(6, passo * 0.62), scala = (H - PAD_B - PAD_T) / max;
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="mt-6 h-auto w-full" role="img" aria-label={t.graficoTitolo}>
-      {[0.25, 0.5, 0.75, 1].map((f) => { const y = H - PAD_B - (H - PAD_B - PAD_T) * f; return <g key={f}><line x1="0" x2={W} y1={y} y2={y} stroke="currentColor" strokeOpacity=".08" /><text x="0" y={y - 4} fontSize="11" fill="currentColor" fillOpacity=".45" fontFamily="var(--font-mono)">{Math.round(max * f)}</text></g>; })}
-      {serie.map((g, i) => {
-        const x = i * passo + (passo - larg) / 2; let y = H - PAD_B;
-        return (
-          <g key={g.giorno}>
-            <title>{`${g.etichetta}: ${g.whatsapp + g.telefono + g.prenota}`}</title>
-            {AZIONI.map((a) => { const h = g[a] * scala; y -= h; return h > 0 ? <rect key={a} x={x} y={y} width={larg} height={h} fill={COLORI[a]} rx="2" /> : null; })}
-            {(i % 5 === 0 || i === serie.length - 1) && <text x={x + larg / 2} y={H - 8} fontSize="11" textAnchor="middle" fill="currentColor" fillOpacity=".55" fontFamily="var(--font-mono)">{g.etichetta}</text>}
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
-function Tabella({ t, titolo, righe, etichetta, vuoto }: { t: Dizionario; titolo: string; righe: RigaTabella[]; etichetta: (k: string) => string; vuoto: string }) {
-  return (
-    <div className="overflow-hidden rounded-xl border border-ink/10 bg-surface">
-      <h3 className="font-display border-b border-ink/10 px-5 py-4 text-lg font-bold tracking-tightest">{titolo}</h3>
-      {righe.length === 0 ? <p className="px-5 py-6 text-sm text-ink/50">{vuoto}</p> : (
-        <table className="w-full text-sm">
-          <thead className="label-mono text-ink/50"><tr className="border-b border-ink/10"><th className="px-5 py-3 text-left font-normal">{t.voce}</th>{AZIONI.map((a) => <th key={a} className="px-3 py-3 text-right font-normal">{t[a]}</th>)}<th className="px-5 py-3 text-right font-normal">{t.totale}</th></tr></thead>
-          <tbody>{righe.map((r) => <tr key={r.chiave} className="border-b border-ink/5 last:border-0"><td className="max-w-[320px] truncate px-5 py-3" title={r.chiave}>{etichetta(r.chiave)}</td>{AZIONI.map((a) => <td key={a} className="px-3 py-3 text-right tabular-nums text-ink/70">{r[a]}</td>)}<td className="px-5 py-3 text-right font-semibold tabular-nums">{r.totale}</td></tr>)}</tbody>
-        </table>
+    <>
+      <div className="p-card-testa">
+        <div><h2>{t.tabella.titolo}</h2><p className="p-sotto">{t.tabella.sotto} · {nomeMese(mese, lingua)}</p></div>
+        {puoModificare && <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}><a className="p-btn p-btn-primario p-btn-sm" href="#nuova">{t.tabella.aggiungi}</a><a className="p-btn p-btn-sm" href="#treatwell" style={{ borderColor: "var(--p-tw)", color: "var(--p-tw-3)" }}>{t.tabella.importa}</a></div>}
+      </div>
+      {puoModificare && (
+        <form id="nuova" method="post" action="/api/admin/bookings" className="p-form-griglia" style={{ marginBottom: 18, padding: 16, background: "var(--p-salvia-2)", borderRadius: 12 }}>
+          <input type="hidden" name="next" value={next} /><input type="hidden" name="sito" value={sito} /><input type="hidden" name="_azione" value={inModifica ? "modifica" : "aggiungi"} />{inModifica && <input type="hidden" name="id" value={inModifica.id} />}
+          <label className="p-campo">{t.tabella.data}<input type="date" name="data" className="p-input" required defaultValue={inModifica?.data ?? `${mese}-01`} /></label>
+          <label className="p-campo">{t.tabella.trattamento}<select name="trattamento" className="p-select" style={{ width: "100%" }} defaultValue={inModifica && !TRATTAMENTI_NOTI.includes(inModifica.trattamento) ? "__altro" : inModifica?.trattamento ?? TRATTAMENTI_NOTI[0]}>{TRATTAMENTI_NOTI.map((n) => <option key={n} value={n}>{n}</option>)}<option value="__altro">{t.tabella.altroTrattamento}</option></select></label>
+          <label className="p-campo">{t.tabella.canale}<select name="canale" className="p-select" style={{ width: "100%" }} defaultValue={inModifica?.canale ?? "treatwell"}>{CANALI.map((c) => <option key={c} value={c}>{t.canali[c]}</option>)}</select></label>
+          <label className="p-campo">{t.tabella.importo}<input name="importo" inputMode="decimal" className="p-input" placeholder="50" defaultValue={inModifica?.importo ?? ""} /></label>
+          <label className="p-campo">{t.tabella.note}<input name="note" className="p-input" maxLength={160} defaultValue={inModifica?.note ?? ""} /></label>
+          <label className="p-campo">{t.tabella.altroTrattamento}<input name="trattamento_altro" className="p-input" maxLength={80} defaultValue={inModifica && !TRATTAMENTI_NOTI.includes(inModifica.trattamento) ? inModifica.trattamento : ""} /></label>
+          <div className="largo" style={{ display: "flex", gap: 8 }}><button className="p-btn p-btn-primario">{t.tabella.salva}</button>{inModifica && <a className="p-btn" href={next}>{t.tabella.annulla}</a>}</div>
+        </form>
       )}
-    </div>
-  );
-}
-function raggruppa(pren: Prenotazione[], chiave: (p: Prenotazione) => string, lingua: Lingua): string[][] {
-  const m = new Map<string, { n: number; imp: number }>();
-  for (const p of pren) { const k = chiave(p); const v = m.get(k) ?? { n: 0, imp: 0 }; v.n++; v.imp += p.importo ?? 0; m.set(k, v); }
-  return Array.from(m.entries()).sort((a, b) => b[1].n - a[1].n).map(([k, v]) => [k, String(v.n), v.imp ? euro(v.imp, lingua) : "—"]);
-}
-function TabellaSemplice({ titolo, colonne, righe, vuoto }: { titolo: string; colonne: string[]; righe: string[][]; vuoto: string }) {
-  return (
-    <div className="overflow-hidden rounded-xl border border-ink/10 bg-surface">
-      <h3 className="font-display border-b border-ink/10 px-5 py-4 text-lg font-bold tracking-tightest">{titolo}</h3>
-      {righe.length === 0 ? <p className="px-5 py-6 text-sm text-ink/50">{vuoto}</p> : (
-        <table className="w-full text-sm">
-          <thead className="label-mono text-ink/50"><tr className="border-b border-ink/10">{colonne.map((c, i) => <th key={c} className={`px-5 py-3 font-normal ${i === 0 ? "text-left" : "text-right"}`}>{c}</th>)}</tr></thead>
-          <tbody>{righe.map((r) => <tr key={r[0]} className="border-b border-ink/5 last:border-0">{r.map((c, i) => <td key={i} className={`px-5 py-3 tabular-nums ${i === 0 ? "" : "text-right"} ${i === 1 ? "font-semibold" : ""}`}>{c}</td>)}</tr>)}</tbody>
-        </table>
+      {righe.length === 0 ? <p className="p-vuoto" style={{ padding: 20 }}>{t.tabella.vuoto}</p> : (
+        <div className="p-tabella-scroll">
+          <table className="p-tabella">
+            <thead><tr>
+              <th><a href={linkOrdina("data")}>{t.tabella.data}{freccia("data")}</a></th>
+              <th><a href={linkOrdina("trattamento")}>{t.tabella.trattamento}{freccia("trattamento")}</a></th>
+              <th><a href={linkOrdina("canale")}>{t.tabella.canale}{freccia("canale")}</a></th>
+              <th className="dx"><a href={linkOrdina("importo")}>{t.tabella.importo}{freccia("importo")}</a></th>
+              <th>{t.tabella.note}</th>
+              {puoModificare && <th className="dx">{t.tabella.azioni}</th>}
+            </tr></thead>
+            <tbody>
+              {righe.map((p) => (
+                <tr key={p.id}>
+                  <td className="num">{formattaData(p.data, lingua)}</td>
+                  <td>{p.trattamento}</td>
+                  <td><span className={`p-tag${p.canale === "treatwell" ? " tw" : ""}`}>{t.canali[p.canale]}</span></td>
+                  <td className="dx num">{p.importo !== null ? euro(p.importo, lingua, 2) : "—"}</td>
+                  <td style={{ color: "var(--p-testo-2)", maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={p.note ?? ""}>{p.note ?? ""}</td>
+                  {puoModificare && (
+                    <td className="dx" style={{ whiteSpace: "nowrap" }}>
+                      <a className="p-btn p-btn-sm" href={`${next}&modifica=${p.id}#nuova`}>{t.tabella.modifica}</a>{" "}
+                      <form method="post" action="/api/admin/bookings" style={{ display: "inline" }}><input type="hidden" name="next" value={next} /><input type="hidden" name="_azione" value="elimina" /><input type="hidden" name="id" value={p.id} /><button className="p-btn p-btn-sm p-btn-pericolo">{t.tabella.elimina}</button></form>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-    </div>
+    </>
   );
+}
+
+/* ---------- messaggi ---------- */
+function messaggioOk(ok: string, t: Dizionario): string {
+  if (ok.startsWith("importate:")) return riempi(t.ok.importate, { n: ok.split(":")[1] });
+  return (t.ok as Record<string, string>)[ok] ?? "✓";
+}
+function messaggioErrore(e: string, t: Dizionario): string {
+  if (e.startsWith("righe:")) return riempi(t.errori.righe, { n: e.split(":")[1] });
+  return (t.errori as Record<string, string>)[e] ?? e;
 }

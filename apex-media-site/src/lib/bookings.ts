@@ -1,9 +1,9 @@
-import { and, desc, eq, gte } from "drizzle-orm";
+import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
 import { db, schema } from "@/db";
 
 /* =============================================================
-   Prenotazioni inserite a mano (o importate da CSV) dall'admin.
-   Tabella `bookings` su Vercel Postgres.
+   Prenotazioni: inserite a mano, da CSV semplice o dal report
+   Treatwell. Tabella `bookings` su Vercel Postgres.
    ============================================================= */
 
 export const CANALI = ["treatwell", "telefono", "whatsapp", "walk-in"] as const;
@@ -18,34 +18,18 @@ export type Prenotazione = {
   importo: number | null;
   note: string | null;
   creato_il: string;
+  nuovo_cliente: boolean | null;
 };
-export type NuovaPrenotazione = Omit<Prenotazione, "id" | "creato_il">;
+export type NuovaPrenotazione = Omit<Prenotazione, "id" | "creato_il" | "nuovo_cliente">;
 
 const DATA_RE = /^\d{4}-\d{2}-\d{2}$/;
 
-export const TRATTAMENTI_NOTI = [
-  "Massaggio Oli Essenziali",
-  "Tuina Shiatsu",
-  "Riflessologia Plantare",
-  "Massaggio Spa",
-  "Coppettazione",
-  "Gua Sha",
-  "Pulizia delle Orecchie",
-  "Pedicure",
-];
+export const TRATTAMENTI_NOTI = ["Massaggio Oli Essenziali", "Tuina Shiatsu", "Riflessologia Plantare", "Massaggio Spa", "Coppettazione", "Gua Sha", "Pulizia delle Orecchie", "Pedicure"];
 
 function daRiga(r: typeof schema.bookings.$inferSelect): Prenotazione {
-  return {
-    id: String(r.id),
-    sito: r.sito,
-    data: r.data,
-    trattamento: r.trattamento,
-    canale: r.canale as Canale,
-    importo: r.importo === null ? null : Number(r.importo),
-    note: r.note,
-    creato_il: r.creatoIl.toISOString(),
-  };
+  return { id: String(r.id), sito: r.sito, data: r.data, trattamento: r.trattamento, canale: r.canale as Canale, importo: r.importo === null ? null : Number(r.importo), note: r.note, creato_il: r.creatoIl.toISOString(), nuovo_cliente: r.nuovoCliente };
 }
+const aValori = (n: NuovaPrenotazione) => ({ sito: n.sito, data: n.data, trattamento: n.trattamento, canale: n.canale, importo: n.importo === null ? null : n.importo.toFixed(2), note: n.note });
 
 /** Valida e normalizza i campi che arrivano da form o CSV. */
 export function normalizza(input: Record<string, unknown>, sito: string): NuovaPrenotazione | string {
@@ -62,30 +46,37 @@ export function normalizza(input: Record<string, unknown>, sito: string): NuovaP
   return { sito, data, trattamento, canale, importo, note };
 }
 
+/** Prenotazioni fra due giorni inclusi (YYYY-MM-DD), più recenti prima. */
+export async function prenotazioniTra(sito: string, da: string, a: string): Promise<Prenotazione[]> {
+  const righe = await (await db()).select().from(schema.bookings).where(and(eq(schema.bookings.sito, sito), gte(schema.bookings.data, da), lte(schema.bookings.data, a))).orderBy(desc(schema.bookings.data), desc(schema.bookings.id)).limit(10000);
+  return righe.map(daRiga);
+}
+
 export async function elencaPrenotazioni(giorni = 365, sito?: string): Promise<Prenotazione[]> {
   const da = new Date();
   da.setUTCDate(da.getUTCDate() - giorni);
   const daGiorno = da.toISOString().slice(0, 10);
   const cond = sito ? and(gte(schema.bookings.data, daGiorno), eq(schema.bookings.sito, sito)) : gte(schema.bookings.data, daGiorno);
-  const righe = await (await db()).select().from(schema.bookings).where(cond).orderBy(desc(schema.bookings.data), desc(schema.bookings.id)).limit(5000);
+  const righe = await (await db()).select().from(schema.bookings).where(cond).orderBy(desc(schema.bookings.data), desc(schema.bookings.id)).limit(10000);
   return righe.map(daRiga);
 }
 
 export async function inserisciPrenotazione(n: NuovaPrenotazione): Promise<Prenotazione> {
-  const [r] = await (await db())
-    .insert(schema.bookings)
-    .values({ sito: n.sito, data: n.data, trattamento: n.trattamento, canale: n.canale, importo: n.importo === null ? null : n.importo.toFixed(2), note: n.note })
-    .returning();
+  const [r] = await (await db()).insert(schema.bookings).values(aValori(n)).returning();
   return daRiga(r);
 }
 
 export async function inserisciPrenotazioni(lista: NuovaPrenotazione[]): Promise<number> {
   if (!lista.length) return 0;
-  const righe = await (await db())
-    .insert(schema.bookings)
-    .values(lista.map((n) => ({ sito: n.sito, data: n.data, trattamento: n.trattamento, canale: n.canale, importo: n.importo === null ? null : n.importo.toFixed(2), note: n.note })))
-    .returning({ id: schema.bookings.id });
+  const righe = await (await db()).insert(schema.bookings).values(lista.map(aValori)).returning({ id: schema.bookings.id });
   return righe.length;
+}
+
+export async function aggiornaPrenotazione(id: string, n: NuovaPrenotazione): Promise<boolean> {
+  const k = Number(id);
+  if (!Number.isInteger(k)) return false;
+  const righe = await (await db()).update(schema.bookings).set({ data: n.data, trattamento: n.trattamento, canale: n.canale, importo: n.importo === null ? null : n.importo.toFixed(2), note: n.note }).where(and(eq(schema.bookings.id, k), eq(schema.bookings.sito, n.sito))).returning({ id: schema.bookings.id });
+  return righe.length > 0;
 }
 
 export async function eliminaPrenotazione(id: string): Promise<boolean> {
@@ -95,45 +86,63 @@ export async function eliminaPrenotazione(id: string): Promise<boolean> {
   return righe.length > 0;
 }
 
-/** CSV con intestazione: data;trattamento;canale;importo;note (separatore ; o ,). Date anche gg/mm/aaaa. */
+/* ---------- Treatwell: dedup e nuovo/ritorno ---------- */
+export type RigaTw = NuovaPrenotazione & { cliente_hash: string | null; nuovo_cliente: boolean | null; dedup_key: string };
+
+/** Quali chiavi di dedup esistono già nel database. */
+export async function chiaviEsistenti(sito: string, chiavi: string[]): Promise<Set<string>> {
+  if (!chiavi.length) return new Set();
+  const righe = await (await db()).select({ k: schema.bookings.dedupKey }).from(schema.bookings).where(and(eq(schema.bookings.sito, sito), inArray(schema.bookings.dedupKey, chiavi)));
+  return new Set(righe.map((r) => r.k).filter((k): k is string => !!k));
+}
+
+/** Clienti (hash) già visti in passato: servono a decidere nuovo/ritorno quando il CSV non lo dice. */
+export async function clientiNoti(sito: string, hash: string[]): Promise<Set<string>> {
+  if (!hash.length) return new Set();
+  const righe = await (await db()).select({ h: schema.bookings.clienteHash }).from(schema.bookings).where(and(eq(schema.bookings.sito, sito), inArray(schema.bookings.clienteHash, hash)));
+  return new Set(righe.map((r) => r.h).filter((h): h is string => !!h));
+}
+
+/** Inserisce le righe Treatwell saltando i doppioni (vincolo unico su sito+dedup_key). */
+export async function inserisciTreatwell(righe: RigaTw[]): Promise<number> {
+  if (!righe.length) return 0;
+  const noti = await clientiNoti(righe[0].sito, righe.map((r) => r.cliente_hash).filter((h): h is string => !!h));
+  const vistiNelFile = new Set<string>();
+  const valori = righe
+    .sort((a, b) => (a.data < b.data ? -1 : 1))
+    .map((r) => {
+      let nuovo = r.nuovo_cliente;
+      if (nuovo === null && r.cliente_hash) { nuovo = !noti.has(r.cliente_hash) && !vistiNelFile.has(r.cliente_hash); vistiNelFile.add(r.cliente_hash); }
+      return { ...aValori(r), clienteHash: r.cliente_hash, nuovoCliente: nuovo, dedupKey: r.dedup_key };
+    });
+  const ins = await (await db()).insert(schema.bookings).values(valori).onConflictDoNothing({ target: [schema.bookings.sito, schema.bookings.dedupKey] }).returning({ id: schema.bookings.id });
+  return ins.length;
+}
+
+/** CSV semplice: data;trattamento;canale;importo;note. Date anche gg/mm/aaaa. */
 export function parseCsv(testo: string, sito: string): { ok: NuovaPrenotazione[]; errori: string[] } {
   const righe = testo.replace(/^﻿/, "").split(/\r?\n/).filter((r) => r.trim());
   if (righe.length < 2) return { ok: [], errori: ["CSV vuoto"] };
   const sep = righe[0].includes(";") ? ";" : ",";
-  const spezza = (r: string) => {
-    const out: string[] = [];
-    let cur = "", q = false;
-    for (let i = 0; i < r.length; i++) {
-      const c = r[i];
-      if (c === '"') { if (q && r[i + 1] === '"') { cur += '"'; i++; } else q = !q; }
-      else if (c === sep && !q) { out.push(cur); cur = ""; }
-      else cur += c;
-    }
-    out.push(cur);
-    return out.map((s) => s.trim());
-  };
+  const spezza = (r: string) => { const out: string[] = []; let cur = "", q = false; for (let i = 0; i < r.length; i++) { const c = r[i]; if (c === '"') { if (q && r[i + 1] === '"') { cur += '"'; i++; } else q = !q; } else if (c === sep && !q) { out.push(cur); cur = ""; } else cur += c; } out.push(cur); return out.map((s) => s.trim()); };
   const testa = spezza(righe[0]).map((h) => h.toLowerCase());
   const idx = (n: string) => testa.indexOf(n);
   const iData = idx("data"), iTr = idx("trattamento"), iCan = idx("canale"), iImp = idx("importo"), iNote = idx("note");
   if (iData < 0 || iTr < 0 || iCan < 0) return { ok: [], errori: ["Intestazione richiesta: data;trattamento;canale;importo;note"] };
-  const ok: NuovaPrenotazione[] = [];
-  const errori: string[] = [];
+  const ok: NuovaPrenotazione[] = []; const errori: string[] = [];
   righe.slice(1).forEach((r, i) => {
-    const c = spezza(r);
-    let data = c[iData] ?? "";
+    const c = spezza(r); let data = c[iData] ?? "";
     const it = data.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
     if (it) data = `${it[3]}-${it[2].padStart(2, "0")}-${it[1].padStart(2, "0")}`;
     const n = normalizza({ data, trattamento: c[iTr], canale: c[iCan], importo: iImp >= 0 ? c[iImp] : "", note: iNote >= 0 ? c[iNote] : "" }, sito);
-    if (typeof n === "string") errori.push(`Riga ${i + 2}: campo "${n}" non valido`);
-    else ok.push(n);
+    if (typeof n === "string") errori.push(`Riga ${i + 2}: campo "${n}" non valido`); else ok.push(n);
   });
   return { ok, errori };
 }
 
 export function csvPrenotazioni(righe: Prenotazione[]): string {
-  const cella = (v: unknown) => {
-    const s = v === null || v === undefined ? "" : String(v);
-    return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-  };
+  const cella = (v: unknown) => { const s = v === null || v === undefined ? "" : String(v); return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
   return "﻿" + ["data;trattamento;canale;importo;note", ...righe.map((p) => [p.data, p.trattamento, p.canale, p.importo ?? "", p.note ?? ""].map(cella).join(";"))].join("\r\n");
 }
+
+export { sql };

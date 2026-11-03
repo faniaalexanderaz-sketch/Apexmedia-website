@@ -6,7 +6,7 @@ import { sessione, type Ruolo } from "@/lib/admin-auth";
 /** Percorso di ritorno sicuro: solo /admin o /jenny (con query). */
 export function percorsoSicuro(v: unknown, predefinito = "/admin"): string {
   const s = typeof v === "string" ? v : "";
-  return /^\/(admin|jenny)(\?[^\s]*)?$/.test(s) ? s : predefinito;
+  return /^\/(admin|jenny|stampa)(\?[^\s]*)?$/.test(s) ? s : predefinito;
 }
 
 export function conMessaggio(percorso: string, chiave: string, valore: string): string {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID ?? "";
@@ -63,6 +64,8 @@ function loadTrackers() {
  * Accetta e Rifiuta hanno la stessa evidenza. La scelta si cambia dalla pagina privacy.
  */
 export function ConsentBanner() {
+  const pathname = usePathname();
+  const pannello = /^\/(admin|jenny|login|stampa)(\/|$)/.test(pathname ?? "");
   const enabled = Boolean(GA4_ID || PIXEL_ID);
   const [choice, setChoice] = useState<Choice | "unknown">("unknown");
 
@@ -88,6 +91,7 @@ export function ConsentBanner() {
     if (c === "granted") loadTrackers();
   };
 
+  if (pannello) return null;
   return (
     <div
       role="dialog"
