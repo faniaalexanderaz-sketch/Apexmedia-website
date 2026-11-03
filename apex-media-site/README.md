@@ -99,16 +99,19 @@ Le variabili d'ambiente si impostano in Vercel → Settings → Environment Vari
 - `src/app/icon.svg`, `src/app/apple-icon.png` — favicon e icona iOS ricavate dal marchio
 - `src/app/opengraph-image.tsx` — immagine di anteprima social generata a runtime (1200×630)
 
-## Dashboard click dei siti clienti (`/admin` e `/jenny`)
+## Pannello risultati (`/login`, `/admin`, `/jenny`)
 
-I siti clienti (oggi `essenzadoriente.it`) mandano ogni click su WhatsApp, telefono e Prenota a `POST /api/track`, che lo salva su **Vercel Postgres** (Drizzle ORM, schema in `src/db/schema.ts`: tabelle `clicks`, `bookings`, `monthly_notes`, `monthly_adspend`). Nessun dato personale.
+Pannello dei risultati di Essenza d'Oriente, su **Vercel Postgres** (Drizzle ORM, schema in `src/db/schema.ts`: `clicks`, `bookings`, `monthly_notes`, `monthly_adspend`, `settings`). Il sito statico manda i click a `POST /api/track`.
 
-`/admin` (ADMIN_PASSWORD, modifica) e `/jenny` (CLIENT_PASSWORD, sola lettura, in cinese) mostrano click, prenotazioni, note mensili e spesa Ads con costo per prenotazione; export CSV.
+- `/login`: un solo campo password. `ADMIN_PASSWORD` → admin (modifica), `CLIENT_PASSWORD` → cliente (sola lettura, si apre in cinese). Cookie httpOnly 30 giorni, 5 tentativi al minuto.
+- Contenuto: 4 numeri del mese con confronto al mese precedente, andamento 12 mesi, contatti per giorno, sorgenti, canali, blocco Treatwell (lordo, commissione impostabile, netto, scontrino medio, nuovi/ritorno, 12 mesi, top 5), note del mese IT/中文, dettaglio prenotazioni ordinabile, export PDF (`/stampa`, via Salva come PDF del browser).
+- Import report Treatwell Connect (CSV) con anteprima e dedup: nomi, telefoni ed email non vengono salvati, solo un hash per il dedup e il flag nuovo/ritorno.
+- Testi in `src/i18n/pannello/it.json` e `zh-CN.json`. Identità visiva in `src/app/(pannello)/pannello.css`. 3D (react-three-fiber) solo desktop, SVG statico altrove.
 
 ### Database
 
 1. Vercel → progetto `apex-media-site` → Storage → Create Database → **Postgres** → Connect: Vercel aggiunge le variabili `POSTGRES_*`.
-2. In locale: `vercel env pull .env.local`, poi `npm run db:push` applica lo schema (drizzle-kit push). Da rifare a ogni modifica di `src/db/schema.ts`.
-3. Senza database (test): `DB_LOCAL_DIR=./.pglite npm run db:push` e `DB_LOCAL_DIR=./.pglite npm run dev` usano PGlite, un Postgres locale in-process.
+2. In locale: `vercel env pull .env.local`, poi `npm run db:push` applica lo schema. Da rifare a ogni modifica di `src/db/schema.ts`.
+3. Senza database (test): `DB_LOCAL_DIR=./.pglite npm run db:push` e `DB_LOCAL_DIR=./.pglite npm run dev` usano PGlite.
 
 Variabili d'ambiente richieste: `POSTGRES_*` (generate da Vercel), `ADMIN_PASSWORD`, `CLIENT_PASSWORD`. Opzionale `TRACK_ALLOWED_ORIGINS`. Deploy: ogni push su `main` pubblica; a mano `vercel --prod`.

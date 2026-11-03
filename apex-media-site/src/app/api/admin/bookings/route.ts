@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { eliminaPrenotazione, inserisciPrenotazione, inserisciPrenotazioni, normalizza, parseCsv } from "@/lib/bookings";
+import { aggiornaPrenotazione, eliminaPrenotazione, inserisciPrenotazione, inserisciPrenotazioni, normalizza, parseCsv } from "@/lib/bookings";
 import { autorizza, conMessaggio, percorsoSicuro, redirect, SITO_DEFAULT } from "@/lib/pannello-server";
 
 /* Solo admin. Un'unica rotta, il campo `_azione` del form decide:
@@ -30,10 +30,15 @@ export async function POST(req: NextRequest) {
       const u = conMessaggio(next, "ok", `importate:${quante}`);
       return redirect(req, errori.length ? conMessaggio(u, "errore", `righe:${errori.length}`) : u);
     }
-    // aggiungi
+    // aggiungi o modifica
     const trattamento = String(form.get("trattamento") ?? "") === "__altro" ? String(form.get("trattamento_altro") ?? "") : String(form.get("trattamento") ?? "");
     const n = normalizza({ data: form.get("data"), trattamento, canale: form.get("canale"), importo: form.get("importo"), note: form.get("note") }, sito);
     if (typeof n === "string") return redirect(req, conMessaggio(next, "errore", n));
+    if (azione === "modifica") {
+      const id = String(form.get("id") ?? "").replace(/[^0-9]/g, "");
+      const ok = id ? await aggiornaPrenotazione(id, n) : false;
+      return redirect(req, conMessaggio(next, ok ? "ok" : "errore", ok ? "modificata" : "generico"));
+    }
     await inserisciPrenotazione(n);
     return redirect(req, conMessaggio(next, "ok", "salvata"));
   } catch (e) {

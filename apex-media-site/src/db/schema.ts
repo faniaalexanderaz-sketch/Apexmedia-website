@@ -1,4 +1,4 @@
-import { boolean, index, integer, numeric, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, index, numeric, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 /* =============================================================
    Schema Vercel Postgres (Drizzle). Si applica con `npm run db:push`.
@@ -35,8 +35,24 @@ export const bookings = pgTable(
     canale: text("canale").notNull(), // treatwell | telefono | whatsapp | walk-in
     importo: numeric("importo", { precision: 10, scale: 2 }),
     note: text("note"),
+    clienteHash: text("cliente_hash"), // hash del nome cliente (Treatwell), mai il nome
+    nuovoCliente: boolean("nuovo_cliente"), // true = nuovo, false = di ritorno, null = ignoto
+    dedupKey: text("dedup_key"), // sha256(data|trattamento|prezzo|cliente_hash) per evitare doppioni da CSV
   },
-  (t) => [index("bookings_sito_data_idx").on(t.sito, t.data)],
+  (t) => [index("bookings_sito_data_idx").on(t.sito, t.data), uniqueIndex("bookings_dedup_uq").on(t.sito, t.dedupKey)],
+);
+
+/** Impostazioni per sito (es. commissione Treatwell in %). */
+export const settings = pgTable(
+  "settings",
+  {
+    id: serial("id").primaryKey(),
+    sito: text("sito").notNull(),
+    chiave: text("chiave").notNull(),
+    valore: text("valore").notNull(),
+    aggiornatoIl: timestamp("aggiornato_il", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex("settings_sito_chiave_uq").on(t.sito, t.chiave)],
 );
 
 /** Nota mensile dell'admin, in italiano e cinese, visibile al cliente. */
@@ -70,4 +86,4 @@ export type ClickRiga = typeof clicks.$inferSelect;
 export type BookingRiga = typeof bookings.$inferSelect;
 export type NotaRiga = typeof monthlyNotes.$inferSelect;
 export type AdspendRiga = typeof monthlyAdspend.$inferSelect;
-export { integer };
+export type SettingRiga = typeof settings.$inferSelect;

@@ -12,6 +12,7 @@ const NAV_OFFSET = -72;
  */
 export function MotionProvider() {
   useEffect(() => {
+    if (/^\/(admin|jenny|login|stampa)(\/|$)/.test(window.location.pathname)) return;
     const refresh = () => ScrollTrigger.refresh();
     document.fonts?.ready.then(refresh);
     window.addEventListener("load", refresh);
