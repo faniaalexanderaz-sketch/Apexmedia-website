@@ -9,7 +9,8 @@
     "lint": "eslint",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:sql": "rm -rf drizzle && DB_LOCAL_DIR=./.pglite drizzle-kit generate --name schema && node -e \"const fs=require('fs');const f=fs.readdirSync('drizzle').find(x=>x.endsWith('.sql'));fs.writeFileSync('src/db/schema.sql.ts','/* Generato da npm run db:sql a partire da src/db/schema.ts: usato solo dalla modalit\u00e0 demo (PGlite in memoria). Non modificare a mano. */\\nexport const SCHEMA_SQL = '+JSON.stringify(fs.readFileSync('drizzle/'+f,'utf8'))+';\\n')\" && rm -rf drizzle"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

@@ -11,6 +11,7 @@ import { COOKIE_LINGUA, DIZIONARIO, euro, formattaData, formattaDataOra, meseBre
 import { SITO_DEFAULT } from "@/lib/pannello-server";
 import { MESE_RE, meseCorrente, mesiDisponibili, statisticheMese, type Confronto, type StatMese } from "@/lib/stats";
 import { parseTreatwell } from "@/lib/treatwell";
+import { modalitaDemo } from "@/db";
 import { leggiFileTemporaneo } from "@/lib/treatwell-temp";
 import { CountUp, type Formato } from "./CountUp";
 import { GraficoContattiLazy, GraficoPrenotazioniLazy, GraficoSorgentiLazy, GraficoTreatwellLazy, Scena3DLazy } from "./Lazy";
@@ -57,6 +58,7 @@ export async function Pannello({ percorso, ruoloRichiesto, linguaDefault, search
         {erroreDb && (
           <div className="p-avviso p-avviso-err"><span>{t.stati.errore} <small style={{ opacity: 0.8 }}>{t.stati.erroreDb}</small></span><a className="p-btn p-btn-sm" href={next}>{t.stati.riprova}</a></div>
         )}
+        {modalitaDemo() && <div className="p-avviso" style={{ background: "#fbf3df", color: "#7a5a1e" }}>{t.stati.demo}</div>}
         {sp.ok && <div className="p-avviso p-avviso-ok">{messaggioOk(sp.ok, t)}</div>}
         {sp.errore && !erroreDb && <div className="p-avviso p-avviso-err">{t.errori.generico}: {messaggioErrore(sp.errore, t)}</div>}
 

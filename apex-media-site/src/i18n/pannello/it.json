@@ -4,9 +4,30 @@
   "ruoloAdmin": "Admin",
   "ruoloCliente": "Cliente",
   "solaLettura": "Sola lettura",
-  "login": { "titolo": "Pannello risultati", "sotto": "Inserisci la password per entrare.", "password": "Password", "entra": "Entra", "errore": "Password non corretta.", "troppi": "Troppi tentativi: riprova tra un minuto." },
-  "header": { "mese": "Mese", "lingua": "Lingua", "esportaPdf": "Esporta PDF", "esci": "Esci", "filtra": "Applica" },
-  "stati": { "caricamento": "Caricamento…", "nessunDato": "Nessun dato per questo mese", "nessunDatoSotto": "Appena arrivano click o prenotazioni, compaiono qui.", "errore": "Qualcosa non ha funzionato nel caricare i dati.", "riprova": "Riprova", "erroreDb": "Il database non risponde: controlla che su Vercel il progetto abbia un database Postgres collegato (POSTGRES_URL) e che lo schema sia stato applicato con npm run db:push." },
+  "login": {
+    "titolo": "Pannello risultati",
+    "sotto": "Inserisci la password per entrare.",
+    "password": "Password",
+    "entra": "Entra",
+    "errore": "Password non corretta.",
+    "troppi": "Troppi tentativi: riprova tra un minuto."
+  },
+  "header": {
+    "mese": "Mese",
+    "lingua": "Lingua",
+    "esportaPdf": "Esporta PDF",
+    "esci": "Esci",
+    "filtra": "Applica"
+  },
+  "stati": {
+    "caricamento": "Caricamento…",
+    "nessunDato": "Nessun dato per questo mese",
+    "nessunDatoSotto": "Appena arrivano click o prenotazioni, compaiono qui.",
+    "errore": "Qualcosa non ha funzionato nel caricare i dati.",
+    "riprova": "Riprova",
+    "erroreDb": "Il database non risponde: controlla che su Vercel il progetto abbia un database Postgres collegato (POSTGRES_URL) e che lo schema sia stato applicato con npm run db:push.",
+    "demo": "Modalità demo: stai vedendo dati di esempio. Quando il database Vercel Postgres sarà collegato, qui compariranno i dati veri."
+  },
   "hero": {
     "titolo": "Il mese in sintesi",
     "prenotazioni": "Prenotazioni del mese",
@@ -20,10 +41,39 @@
     "vsMese": "vs mese precedente",
     "nuovo": "nuovo"
   },
-  "andamento": { "titolo": "Andamento prenotazioni", "sotto": "Ultimi 12 mesi", "media": "media", "frase": "{mese}: {n} prenotazioni, {delta} rispetto a {prec}", "fraseSenzaPrec": "{mese}: {n} prenotazioni", "inPiu": "+{p}%", "inMeno": "{p}%", "stabile": "stabile" },
-  "contattiGiorno": { "titolo": "Contatti per giorno", "sotto": "Ultimi 30 giorni", "contatti": "contatti" },
-  "sorgenti": { "titolo": "Da dove arrivano i clienti", "sotto": "Contatti del mese per sorgente", "google_ads": "Google Ads", "instagram": "Instagram", "organico": "Ricerca Google", "altro": "Altro", "vuoto": "Nessun contatto nel mese" },
-  "canali": { "titolo": "Canali di prenotazione", "sotto": "Prenotazioni del mese per canale", "treatwell": "Treatwell", "telefono": "Telefono", "whatsapp": "WhatsApp", "walk-in": "Di persona", "vuoto": "Nessuna prenotazione nel mese" },
+  "andamento": {
+    "titolo": "Andamento prenotazioni",
+    "sotto": "Ultimi 12 mesi",
+    "media": "media",
+    "frase": "{mese}: {n} prenotazioni, {delta} rispetto a {prec}",
+    "fraseSenzaPrec": "{mese}: {n} prenotazioni",
+    "inPiu": "+{p}%",
+    "inMeno": "{p}%",
+    "stabile": "stabile"
+  },
+  "contattiGiorno": {
+    "titolo": "Contatti per giorno",
+    "sotto": "Ultimi 30 giorni",
+    "contatti": "contatti"
+  },
+  "sorgenti": {
+    "titolo": "Da dove arrivano i clienti",
+    "sotto": "Contatti del mese per sorgente",
+    "google_ads": "Google Ads",
+    "instagram": "Instagram",
+    "organico": "Ricerca Google",
+    "altro": "Altro",
+    "vuoto": "Nessun contatto nel mese"
+  },
+  "canali": {
+    "titolo": "Canali di prenotazione",
+    "sotto": "Prenotazioni del mese per canale",
+    "treatwell": "Treatwell",
+    "telefono": "Telefono",
+    "whatsapp": "WhatsApp",
+    "walk-in": "Di persona",
+    "vuoto": "Nessuna prenotazione nel mese"
+  },
   "treatwell": {
     "titolo": "Treatwell",
     "etichetta": "Prenotazioni online",
@@ -54,18 +104,92 @@
     "nuovoCliente": "nuovo",
     "clienteRitorno": "ritorno"
   },
-  "note": { "titolo": "Note del mese", "sotto": "Il commento di Apex Media sui risultati.", "vuoto": "Nessuna nota per questo mese.", "aggiornato": "Ultima modifica", "it": "Testo in italiano", "zh": "Testo in cinese", "salva": "Salva nota", "spesa": "Spesa Ads del mese (€)", "salvaSpesa": "Salva spesa" },
+  "note": {
+    "titolo": "Note del mese",
+    "sotto": "Il commento di Apex Media sui risultati.",
+    "vuoto": "Nessuna nota per questo mese.",
+    "aggiornato": "Ultima modifica",
+    "it": "Testo in italiano",
+    "zh": "Testo in cinese",
+    "salva": "Salva nota",
+    "spesa": "Spesa Ads del mese (€)",
+    "salvaSpesa": "Salva spesa"
+  },
   "tabella": {
     "titolo": "Dettaglio prenotazioni",
     "sotto": "Prenotazioni del mese selezionato",
-    "data": "Data", "trattamento": "Trattamento", "canale": "Canale", "importo": "Importo", "note": "Note", "azioni": "Azioni",
-    "aggiungi": "+ Aggiungi prenotazione", "importa": "Importa CSV Treatwell", "modifica": "Modifica", "elimina": "Elimina", "salva": "Salva", "annulla": "Annulla",
-    "vuoto": "Nessuna prenotazione nel mese.", "altroTrattamento": "Altro (scrivi sotto)", "ordina": "Ordina per", "confermaElimina": "Eliminare questa prenotazione?"
+    "data": "Data",
+    "trattamento": "Trattamento",
+    "canale": "Canale",
+    "importo": "Importo",
+    "note": "Note",
+    "azioni": "Azioni",
+    "aggiungi": "+ Aggiungi prenotazione",
+    "importa": "Importa CSV Treatwell",
+    "modifica": "Modifica",
+    "elimina": "Elimina",
+    "salva": "Salva",
+    "annulla": "Annulla",
+    "vuoto": "Nessuna prenotazione nel mese.",
+    "altroTrattamento": "Altro (scrivi sotto)",
+    "ordina": "Ordina per",
+    "confermaElimina": "Eliminare questa prenotazione?"
   },
-  "footer": { "aggiornati": "Dati aggiornati al", "powered": "Powered by Apex Media" },
-  "pdf": { "titolo": "Report del mese", "stampa": "Salva come PDF", "generato": "Generato il" },
-  "ok": { "salvata": "Prenotazione salvata.", "eliminata": "Prenotazione eliminata.", "modificata": "Prenotazione aggiornata.", "nota": "Nota salvata.", "spesa": "Spesa salvata.", "commissione": "Commissione salvata.", "importate": "{n} prenotazioni importate." },
-  "errori": { "generico": "Operazione non riuscita", "data": "data non valida", "trattamento": "trattamento mancante", "canale": "canale non valido", "importo": "importo non valido", "file": "file mancante o vuoto", "righe": "{n} righe scartate", "mese": "mese non valido", "db": "errore del database" },
-  "mesi": ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
-  "mesiBrevi": ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"]
+  "footer": {
+    "aggiornati": "Dati aggiornati al",
+    "powered": "Powered by Apex Media"
+  },
+  "pdf": {
+    "titolo": "Report del mese",
+    "stampa": "Salva come PDF",
+    "generato": "Generato il"
+  },
+  "ok": {
+    "salvata": "Prenotazione salvata.",
+    "eliminata": "Prenotazione eliminata.",
+    "modificata": "Prenotazione aggiornata.",
+    "nota": "Nota salvata.",
+    "spesa": "Spesa salvata.",
+    "commissione": "Commissione salvata.",
+    "importate": "{n} prenotazioni importate."
+  },
+  "errori": {
+    "generico": "Operazione non riuscita",
+    "data": "data non valida",
+    "trattamento": "trattamento mancante",
+    "canale": "canale non valido",
+    "importo": "importo non valido",
+    "file": "file mancante o vuoto",
+    "righe": "{n} righe scartate",
+    "mese": "mese non valido",
+    "db": "errore del database"
+  },
+  "mesi": [
+    "gennaio",
+    "febbraio",
+    "marzo",
+    "aprile",
+    "maggio",
+    "giugno",
+    "luglio",
+    "agosto",
+    "settembre",
+    "ottobre",
+    "novembre",
+    "dicembre"
+  ],
+  "mesiBrevi": [
+    "gen",
+    "feb",
+    "mar",
+    "apr",
+    "mag",
+    "giu",
+    "lug",
+    "ago",
+    "set",
+    "ott",
+    "nov",
+    "dic"
+  ]
 }
