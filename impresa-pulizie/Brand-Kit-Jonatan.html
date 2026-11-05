@@ -31,8 +31,9 @@ p { margin: 0 0 2.4mm; }
 .testa-nome b { display: block; font-size: 11pt; letter-spacing: .28em; font-weight: 800; }
 .testa-nome span { font-size: 6.4pt; letter-spacing: .2em; color: var(--viola); font-weight: 700; text-transform: uppercase; }
 .testa-dx { margin-left: auto; font-size: 6.6pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
-.pillole { margin-left: auto; display: flex; gap: 1.4mm; }
-.pillole span { display: inline-block; min-width: 7mm; padding: 1.1mm 2mm; border-radius: 99px; border: .3mm solid var(--linea); font-size: 6.2pt; font-weight: 700; color: #6d6a7a; text-align: center; }
+.pillole { margin-left: auto; display: flex; gap: 1mm; }
+.testa-nome span { white-space: nowrap; }
+.pillole span { display: inline-block; min-width: 6mm; padding: 1mm 1.4mm; border-radius: 99px; border: .3mm solid var(--linea); font-size: 6.2pt; font-weight: 700; color: #6d6a7a; text-align: center; }
 .pillole span.on { background: var(--viola); border-color: var(--viola); color: #fff; padding: 1.1mm 3.2mm; }
 .occhiello { font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 0 0 2mm; }
 h1 { font-family: var(--serif); font-size: 21pt; line-height: 1.1; margin: 0 0 2.6mm; letter-spacing: -.02em; font-weight: 500; }
@@ -170,6 +171,18 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 .tappa { padding: 3.4mm; border-radius: 2.6mm; border: .3mm solid var(--viola-bordo); position: relative; }
 .tappa::before { content: ''; position: absolute; left: 3.4mm; top: -.3mm; width: 9mm; height: .9mm; background: var(--viola); border-radius: 1mm; }
 .tappa small { font-family: var(--mono); font-size: 6.4pt; color: var(--viola); display: block; margin-bottom: 1mm; }
+
+/* funnel */
+.imbuto { display: grid; gap: 2mm; }
+.fase { display: grid; grid-template-columns: 54mm 1fr; gap: 4mm; align-items: center; }
+.fase .barra { height: 18mm; border-radius: 2.4mm; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 3.4mm; margin: 0 auto; font-family: var(--ft); }
+.fase .barra b { font-size: 9pt; letter-spacing: -.01em; }
+.fase .barra span { font-family: var(--serif); font-size: 13pt; font-weight: 600; }
+.fase .barra small { display: block; font-family: var(--fb); font-size: 5.8pt; font-weight: 500; opacity: .85; }
+.fase .testo { font-size: 8.2pt; line-height: 1.42; color: var(--grigio); border-left: .6mm solid var(--viola-bordo); padding-left: 3mm; }
+.fase .testo b { color: var(--testo); }
+.fonte { display: grid; grid-template-columns: 12mm 1fr; gap: 3mm; }
+.fonte i { width: 12mm; height: 12mm; border-radius: 3mm; display: grid; place-items: center; font-style: normal; font-weight: 800; color: #fff; font-size: 10pt; font-family: var(--ft); }
 </style>
 </head>
 <body>
@@ -212,7 +225,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
   <div class="griglia g4" style="gap:2mm 4mm; font-size:8pt">
     <div><b>02</b> Come si trovano i clienti</div><div><b>03</b> Il nome</div><div><b>04</b> Il logo</div><div><b>05</b> Colori e caratteri</div>
     <div><b>06</b> Il profilo social</div><div><b>07</b> Le storie</div><div><b>08</b> I post</div><div><b>09</b> I video</div>
-    <div><b>10</b> La pubblicità</div><div><b>11</b> Il percorso insieme</div>
+    <div><b>10</b> Il funnel</div><div><b>11</b> Dove troviamo i clienti</div><div><b>12</b> La pubblicità</div><div><b>13</b> Il percorso insieme</div>
   </div>
   <div class="piede"><span>Apex Media · per Jonatan</span><span>1</span></div>
 </section>
@@ -220,7 +233,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 02 STRATEGIA -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span class="on">Clienti</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span class="on">Clienti</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">02 — Come si trovano i clienti</p>
   <h1>Nelle pulizie si compra <b>la fiducia</b>, non il servizio.</h1>
   <div class="trattino"></div>
@@ -261,7 +274,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 03 NOME -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span class="on">Nome</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span>02</span><span class="on">Nome</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">03 — Il nome</p>
   <h1>Tenere Euroclean <b>o ripartire?</b></h1>
   <div class="trattino"></div>
@@ -295,7 +308,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 04 LOGO -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span class="on">Logo</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span class="on">Logo</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">04 — Il logo</p>
   <h1>Una goccia, <b>una spunta.</b> Pulito e fatto.</h1>
   <div class="trattino"></div>
@@ -328,7 +341,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 05 COLORI E CARATTERI -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span class="on">Colori</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span class="on">Colori</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">05 — Colori e caratteri</p>
   <h1>Acqua pulita: <b>blu che rassicura, acqua che chiama.</b></h1>
   <div class="trattino"></div>
@@ -369,7 +382,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 06 PROFILO -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span class="on">Profilo</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span class="on">Profilo</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">06 — Il profilo social</p>
   <h1>In 3 secondi <b>si capisce tutto.</b></h1>
   <div class="trattino"></div>
@@ -405,7 +418,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 07 STORIE -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span class="on">Storie</span><span>08</span><span>09</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span class="on">Storie</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">07 — Le storie</p>
   <h1>Due minuti dal telefono, <b>ogni giorno di lavoro.</b></h1>
   <div class="trattino"></div>
@@ -458,7 +471,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 08 POST -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span class="on">Post</span><span>09</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span class="on">Post</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">08 — I post</p>
   <h1>Foto vere e grafiche nei tuoi colori, <b>alternate.</b></h1>
   <div class="trattino"></div>
@@ -496,7 +509,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
 <!-- 09 VIDEO -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span class="on">Video</span><span>10</span><span>11</span></div></div>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span class="on">Video</span><span>10</span><span>11</span><span>12</span><span>13</span></div></div>
   <p class="occhiello">09 — I video</p>
   <h1>Il video che fa vedere il lavoro <b>a chi non ti conosce.</b></h1>
   <div class="trattino"></div>
@@ -524,12 +537,82 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
   <div class="piede"><span>Apex Media · per Jonatan</span><span>9</span></div>
 </section>
 
-<!-- 11 PUBBLICITÀ -->
+<!-- 10 FUNNEL -->
+<section class="pagina">
+  <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span class="on">Funnel</span><span>11</span><span>12</span><span>13</span></div></div>
+  <p class="occhiello">10 — Il funnel</p>
+  <h1>Da sconosciuto a cliente, <b>un passo alla volta.</b></h1>
+  <div class="trattino"></div>
+  <p class="intro">Nessuno vede un post e firma un contratto. Il cliente fa sempre lo stesso percorso: <b>ti vede, si fida, ti scrive, chiede un prezzo, diventa cliente e ti porta altri clienti</b>. Questo percorso si chiama funnel, “imbuto”: a ogni passaggio qualcuno si ferma. Il nostro lavoro è far entrare più persone in alto e <b>perderne meno a ogni gradino</b>.</p>
+  <div class="imbuto">
+    <div class="fase"><div class="barra" style="width:54mm;background:#0E3A5B"><div><b>1 · Ti vede</b><small>video, Google, gruppi, passaparola</small></div><span>1.000</span></div>
+      <div class="testo"><b>Cosa facciamo:</b> il reel prima/dopo mostrato con la pubblicità alle persone entro pochi km da te, la scheda Google che compare a chi cerca “impresa di pulizie”, i post nei gruppi della città. <b>Obiettivo:</b> farsi vedere dalle persone giuste, vicine, nel momento giusto.</div></div>
+    <div class="fase"><div class="barra" style="width:50mm;background:#155279"><div><b>2 · Si fida</b><small>profilo, recensioni, facce</small></div><span>120</span></div>
+      <div class="testo"><b>Cosa facciamo:</b> chi è curioso va a guardare il profilo o le stelle su Google. Lì trova prima/dopo veri, la tua faccia, la storia di famiglia, le recensioni. <b>Obiettivo:</b> in 3 secondi deve pensare “questi sono seri”.</div></div>
+    <div class="fase"><div class="barra" style="width:46mm;background:#1A7FA0"><div><b>3 · Ti scrive</b><small>WhatsApp in un tocco</small></div><span>30</span></div>
+      <div class="testo"><b>Cosa facciamo:</b> ovunque c'è un solo bottone, WhatsApp, con il messaggio già scritto. Rispondi <b>entro 10 minuti</b> con la risposta pronta: 3 domande (che locale, quanti metri, ogni quanto). Chi aspetta un'ora ha già scritto a un altro.</div></div>
+    <div class="fase"><div class="barra" style="width:42mm;background:#22B8CF"><div><b>4 · Preventivo</b><small>entro 24 ore</small></div><span>20</span></div>
+      <div class="testo"><b>Cosa facciamo:</b> prezzo chiaro entro 24 ore, sopralluogo gratuito per uffici e condomini. Se non risponde, <b>un messaggio gentile dopo 2 giorni</b>: da solo recupera 1 preventivo su 4.</div></div>
+    <div class="fase"><div class="barra" style="width:38mm;background:#1E8A4C"><div><b>5 · Cliente</b></div><span>6</span></div>
+      <div class="testo"><b>Cosa facciamo:</b> lavoro fatto, foto prima/dopo per i social e, <b>lo stesso giorno</b>, il messaggio con il link per la recensione su Google.</div></div>
+  </div>
+  <div class="griglia g2" style="gap:4mm; margin-top:4mm">
+    <div class="card scura">
+      <h3>6 · Ti porta altri clienti</h3>
+      <p class="piccolo" style="margin:0">Il funnel non finisce con il lavoro. Ogni cliente contento lascia una recensione, che fa fidare il prossimo. Chi ha fatto una pulizia una volta riceve la proposta di un <b style="color:#fff">contratto fisso</b>. E chi ti porta un amico ha uno sconto sul mese dopo. <b style="color:#fff">Il cliente diventa la tua pubblicità.</b></p>
+    </div>
+    <div class="card lav">
+      <h3>Come leggere i numeri</h3>
+      <p class="piccolo" style="margin:0">Sono un esempio realistico per il settore: su 1.000 persone della tua zona che vedono un video, una trentina ti scrive e 5–6 diventano clienti. Se un passaggio perde troppo, sappiamo <b>esattamente dove intervenire</b>: più video, più recensioni, risposte più veloci.</p>
+    </div>
+  </div>
+  <div class="piede"><span>Apex Media · per Jonatan</span><span>10</span></div>
+</section>
+
+<!-- 11 FONTI -->
+<section class="pagina">
+  <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span class="on">Fonti</span><span>12</span><span>13</span></div></div>
+  <p class="occhiello">11 — Dove troviamo i clienti</p>
+  <h1>Quattro fonti di clienti, <b>accese insieme.</b></h1>
+  <div class="trattino"></div>
+  <p class="intro">Non dipendiamo da una sola strada. Ogni fonte porta un tipo di cliente diverso, e insieme riempiono l'agenda tutto l'anno. Le prime due sono <b>gratis</b> e partono subito: è da lì che arrivano i primi contratti.</p>
+  <div class="griglia g2" style="gap:4mm">
+    <div class="card" style="border:.6mm solid var(--viola)">
+      <div class="fonte"><i style="background:#1E8A4C">1</i><div><span class="etichetta ok">Gratis · subito</span><h3 style="margin-top:1.6mm">I clienti di tua madre</h3></div></div>
+      <p class="piccolo" style="margin-top:2.4mm">La fonte più veloce e più sottovalutata. Chi si è già fidato una volta torna, se qualcuno lo richiama.</p>
+      <ul class="lista ok"><li>Messaggio a tutti i vecchi clienti: “la ditta riparte con me, stesso metodo”</li><li>Le prime 10 recensioni su Google arrivano da loro</li><li>Sconto “porta un amico” per chi ci presenta qualcuno</li></ul>
+    </div>
+    <div class="card">
+      <div class="fonte"><i style="background:#0E3A5B">2</i><div><span class="etichetta ok">Gratis · contratti</span><h3 style="margin-top:1.6mm">Amministratori e aziende</h3></div></div>
+      <p class="piccolo" style="margin-top:2.4mm">Un solo amministratore di condominio può gestire 20 palazzi. Convincerne uno vale come cento privati.</p>
+      <ul class="lista"><li>Lista degli amministratori, studi e uffici della zona</li><li>Una lettera breve con logo e prima/dopo, poi una visita o una chiamata</li><li>L'offerta: <b>sopralluogo e prima pulizia di prova</b>, senza vincoli</li></ul>
+    </div>
+    <div class="card">
+      <div class="fonte"><i style="background:#4285F4">3</i><div><span class="etichetta">Chi ti cerca già</span><h3 style="margin-top:1.6mm">Google</h3></div></div>
+      <p class="piccolo" style="margin-top:2.4mm">Chi scrive “impresa di pulizie” su Google ha già deciso di comprare: sta solo scegliendo da chi.</p>
+      <ul class="lista"><li>Scheda Google completa: foto, servizi, zone, tante stelle</li><li>Più recensioni hai, più in alto compari nella mappa</li><li>Poi Google Ads sulle ricerche che portano contratti: uffici, condomini, fine cantiere</li></ul>
+    </div>
+    <div class="card">
+      <div class="fonte"><i style="background:#1877F2">4</i><div><span class="etichetta">Chi non ti cerca ancora</span><h3 style="margin-top:1.6mm">Facebook e Instagram</h3></div></div>
+      <p class="piccolo" style="margin-top:2.4mm">Qui creiamo il bisogno: chi vede le scale che tornano bianche pensa “anche il mio palazzo ne avrebbe bisogno”.</p>
+      <ul class="lista"><li>Pubblicità con il reel prima/dopo, solo nella tua zona</li><li>Chi tocca apre WhatsApp con il messaggio già scritto</li><li>Chi ha visto il video ma non ha scritto rivede, nei giorni dopo, le tue recensioni</li></ul>
+    </div>
+  </div>
+  <div class="card scura" style="margin-top:4mm">
+    <div class="griglia" style="grid-template-columns: 1fr 1.5fr; gap:5mm; align-items:center">
+      <div class="frase" style="color:#fff">Non perdiamo <em style="color:var(--p2)">nessun contatto.</em></div>
+      <p class="piccolo" style="margin:0">Ogni persona che scrive viene segnata in una lista semplice: chi è, cosa ha chiesto, a che punto è. Chi non risponde al preventivo viene ricontattato. Chi ha fatto un lavoro una volta riceve un messaggio dopo un mese. <b style="color:#fff">Il cliente che hai già pagato per trovare non lo lasciamo andare.</b></p>
+    </div>
+  </div>
+  <div class="piede"><span>Apex Media · per Jonatan</span><span>11</span></div>
+</section>
+
+<!-- 12 PUBBLICITÀ -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span class="on">Pubblicità</span><span>11</span></div></div>
-  <p class="occhiello">10 — La pubblicità</p>
-  <h1>Prima il gratis che funziona, <b>poi i soldi dove rendono.</b></h1>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span class="on">Pubblicità</span><span>13</span></div></div>
+  <p class="occhiello">12 — La pubblicità</p>
+  <h1>Quanto investire, <b>e cosa aspettarsi.</b></h1>
   <div class="trattino"></div>
   <p class="intro">Non accendiamo la pubblicità finché la vetrina non è pronta: logo, profilo, recensioni, risposte su WhatsApp. Altrimenti si pagano contatti che poi si perdono. Questo è l'ordine giusto per un'impresa di pulizie.</p>
   <div class="griglia g3" style="gap:4mm">
@@ -548,14 +631,14 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
     <p class="piccolo" style="margin:2.4mm 0 0">Stime sui costi medi del settore nelle città italiane di medie dimensioni. Le verifichiamo insieme dopo le prime 4 settimane, con i numeri veri.</p>
   </div>
   <div class="card scura" style="margin-top:4mm"><div class="griglia" style="grid-template-columns: 1fr 1.5fr; gap:5mm; align-items:center"><div class="frase" style="color:#fff">Un solo contratto <em style="color:var(--p2)">ripaga mesi</em> di pubblicità.</div><p class="piccolo" style="margin:0">Un ufficio pulito due sere a settimana vale facilmente 250–400 € al mese, per anni. Per questo non misuriamo i “mi piace”: misuriamo <b style="color:#fff">quanti ti scrivono, quanti preventivi fai e quanti firmano</b>. Ogni mese ti diciamo quanto ti è costato ogni cliente nuovo.</p></div></div>
-  <div class="piede"><span>Apex Media · per Jonatan</span><span>10</span></div>
+  <div class="piede"><span>Apex Media · per Jonatan</span><span>12</span></div>
 </section>
 
 <!-- 12 PERCORSO -->
 <section class="pagina">
   <div class="testa"><img src="assets/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
-    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span class="on">Percorso</span></div></div>
-  <p class="occhiello">11 — Il percorso insieme</p>
+    <div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span class="on">Percorso</span></div></div>
+  <p class="occhiello">13 — Il percorso insieme</p>
   <h1>Da oggi a online, <b>in quattro settimane.</b></h1>
   <div class="trattino"></div>
   <p class="intro">Ecco cosa facciamo noi, settimana per settimana. Tu ti occupi del lavoro e ci mandi le foto: al resto pensiamo noi, e ti lasciamo tutto pronto per andare avanti anche da solo.</p>
@@ -599,7 +682,7 @@ h3 { font-size: 9.6pt; margin: 0 0 1.2mm; font-weight: 800; }
       <div class="firme" style="margin:0"><div><img src="assets/firma-alexander.png" alt="" style="filter:brightness(0) invert(1)"><span>Alexander Fania</span></div><div><img src="assets/firma-federico.png" alt="" style="filter:brightness(0) invert(1)"><span>Federico Delfino</span></div></div>
     </div>
   </div>
-  <div class="piede"><span>Apex Media · per Jonatan</span><span>11</span></div>
+  <div class="piede"><span>Apex Media · per Jonatan</span><span>13</span></div>
 </section>
 
 <script>
