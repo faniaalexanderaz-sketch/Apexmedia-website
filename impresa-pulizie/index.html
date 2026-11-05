@@ -1,0 +1,2000 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex Media · Brand kit impresa di pulizie</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Fraunces'; src: url('assets/fonts/fraunces-latin-standard-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+
+:root {
+  /* Apex */
+  --viola: #7B3FE4; --viola-chiaro: #F3EFFD; --viola-bordo: #E2DAF7; --viola-scuro: #4E22A0;
+  --scuro: #15121F; --testo: #1B1B24; --grigio: #5F5D6B; --linea: #E6E3EE; --sfondo: #FAF9FC;
+  --ok: #1E8A4C; --ok-chiaro: #DDF3E6; --no: #D04A3A; --no-chiaro: #FBE5E1; --ambra: #E7A24A; --ambra-chiaro: #FDF1DC;
+  --apex: 'Hanken Grotesk', 'Inter', system-ui, sans-serif; --serif: 'Fraunces', Georgia, serif; --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  /* Brand del cliente (cambiano con la palette scelta) */
+  --p1: #0E3A5B; --p2: #22B8CF; --p3: #F3F8FB; --p4: #14212B; --p5: #BFF0E1;
+  --p1-nome: Blu profondo; --p2-nome: Acqua;
+  --ft: 'Sora', 'Inter', system-ui, sans-serif; --fb: 'Inter', system-ui, sans-serif;
+  --r: 16px; --r-s: 10px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--sfondo); color: var(--testo); font-family: var(--apex); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body.presenta { font-size: 19px; }
+img { max-width: 100%; display: block; }
+a { color: var(--viola); }
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.15; letter-spacing: -.015em; }
+p { margin: 0 0 .8em; }
+.v { color: var(--viola); font-weight: 700; }
+.mono { font-family: var(--mono); font-size: .82em; }
+.piccolo { font-size: .86em; color: var(--grigio); line-height: 1.45; }
+.occhiello { font-size: .72em; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 0 0 .6em; }
+.trattino { width: 56px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--viola), var(--ambra)); margin: 14px 0 22px; }
+
+/* ---------- barra strumenti ---------- */
+.barra { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--linea); }
+.barra-in { max-width: 1240px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; gap: 14px; }
+.barra img { width: 36px; height: 36px; border-radius: 9px; }
+.barra-nome b { display: block; font-size: 13px; letter-spacing: .26em; font-weight: 800; line-height: 1.1; white-space: nowrap; }
+.barra-nome span { font-size: 9.5px; letter-spacing: .16em; color: var(--viola); font-weight: 700; text-transform: uppercase; }
+.barra-cliente { margin-left: 10px; padding-left: 14px; border-left: 1px solid var(--linea); display: flex; align-items: center; gap: 10px; min-width: 0; }
+.barra-cliente .mini { width: 30px; height: 30px; border-radius: 8px; background: var(--p1); display: grid; place-items: center; flex: 0 0 auto; }
+.barra-cliente .mini svg { width: 20px; height: 20px; }
+.barra-cliente b { font-family: var(--ft); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; display: block; }
+.barra-cliente span { font-size: 11px; color: var(--grigio); display: block; line-height: 1.1; }
+.barra-azioni { margin-left: auto; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.salvato { font-size: 11px; color: var(--grigio); display: flex; align-items: center; gap: 6px; }
+.salvato i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); display: inline-block; }
+.salvato.lavoro i { background: var(--ambra); }
+
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--linea); background: #fff; color: var(--testo); font-weight: 700; font-size: 13px; line-height: 1; transition: .15s; white-space: nowrap; }
+.btn:hover { border-color: var(--viola); color: var(--viola); transform: translateY(-1px); }
+.btn.pri { background: var(--viola); border-color: var(--viola); color: #fff; }
+.btn.pri:hover { background: var(--viola-scuro); color: #fff; }
+.btn.scuro { background: var(--scuro); border-color: var(--scuro); color: #fff; }
+.btn.scuro:hover { color: #fff; opacity: .9; }
+.btn.mini { padding: 6px 10px; font-size: 12px; }
+.btn.ghost { background: transparent; }
+.btn.pieno { width: 100%; justify-content: center; padding: 13px 18px; font-size: 14px; }
+.btn svg { width: 14px; height: 14px; }
+.btn[data-copiato]::after { content: attr(data-copiato); }
+
+/* ---------- navigazione sezioni ---------- */
+.nav { position: sticky; top: var(--barra-h, 57px); z-index: 40; background: #fff; border-bottom: 1px solid var(--linea); }
+.nav-in { max-width: 1240px; margin: 0 auto; padding: 0 20px; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.nav-in::-webkit-scrollbar { display: none; }
+.nav a { flex: 0 0 auto; padding: 11px 12px; font-size: 12px; font-weight: 700; color: var(--grigio); text-decoration: none; border-bottom: 2px solid transparent; letter-spacing: .02em; }
+.nav a i { font-style: normal; font-family: var(--mono); color: var(--viola); margin-right: 6px; font-size: 11px; }
+.nav a.on, .nav a:hover { color: var(--testo); border-bottom-color: var(--viola); }
+.progresso { height: 3px; background: var(--viola-chiaro); }
+.progresso i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--viola), var(--ambra)); transition: width .4s; }
+
+/* ---------- layout ---------- */
+.pagina { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+section.sez { padding: 64px 0 36px; border-bottom: 1px solid var(--linea); }
+section.sez:last-of-type { border-bottom: 0; }
+.sez-testa { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: 34px; }
+.sez-testa h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 3.6vw, 42px); letter-spacing: -.02em; }
+.sez-testa h2 b { font-weight: 800; }
+.sez-testa .lato { font-size: 1.02em; color: var(--grigio); }
+.sez-testa .lato b { color: var(--testo); }
+.griglia { display: grid; gap: 18px; }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.card { background: #fff; border: 1px solid var(--linea); border-radius: var(--r); padding: 22px; position: relative; }
+.card.lav { background: var(--viola-chiaro); border-color: var(--viola-bordo); }
+.card.scura { background: var(--scuro); color: #EDEAF6; border-color: var(--scuro); }
+.card.scura .piccolo { color: #BDB8CC; }
+.card.scura h3 { color: #fff; }
+.card h3 { font-size: 1.08em; font-weight: 800; margin-bottom: 8px; }
+.card.consigliata { border: 2px solid var(--viola); box-shadow: 0 18px 40px -24px rgba(123,63,228,.5); }
+.etichetta { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; background: var(--viola-chiaro); color: var(--viola); }
+.etichetta.ok { background: var(--ok-chiaro); color: var(--ok); } .etichetta.no { background: var(--no-chiaro); color: var(--no); } .etichetta.ambra { background: var(--ambra-chiaro); color: #9A5E12; }
+.etichetta.ass { position: absolute; top: -12px; left: 18px; background: var(--viola); color: #fff; }
+.num { font-family: var(--serif); font-size: 2.2em; font-weight: 600; color: var(--viola); line-height: 1; margin-bottom: 6px; }
+.lista { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.lista li { position: relative; padding-left: 20px; line-height: 1.45; }
+.lista li::before { content: ''; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--viola); }
+.lista.ok li::before { background: var(--ok); } .lista.no li::before { background: var(--no); }
+.lista.spunta li::before { content: '✓'; background: none; color: var(--ok); font-weight: 800; top: 0; }
+.lista.croce li::before { content: '✕'; background: none; color: var(--no); font-weight: 800; top: 0; }
+.nota { padding: 14px 16px; border-radius: var(--r-s); background: var(--viola-chiaro); font-size: .92em; line-height: 1.45; color: #3D3A4A; border-left: 4px solid var(--viola); }
+.nota b { color: var(--viola); }
+.nota.ambra { background: var(--ambra-chiaro); border-color: var(--ambra); } .nota.ambra b { color: #9A5E12; }
+.nota.ok { background: var(--ok-chiaro); border-color: var(--ok); } .nota.ok b { color: var(--ok); }
+
+/* ---------- copertina ---------- */
+.eroe { position: relative; border-radius: 24px; overflow: hidden; background: #06050B; color: #fff; padding: clamp(28px, 5vw, 60px); margin: 28px 0 24px; min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; }
+.eroe > img.sfondo { position: absolute; right: -40px; top: -30px; height: 120%; opacity: .9; }
+.eroe::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,5,11,.98) 0%, rgba(6,5,11,.88) 40%, rgba(6,5,11,.2) 85%); }
+.eroe > * { position: relative; z-index: 1; }
+.eroe .occhiello { color: #B79AF5; }
+.eroe h1 { font-family: var(--serif); font-size: clamp(34px, 5.4vw, 64px); font-weight: 500; color: #CFCBDA; letter-spacing: -.02em; max-width: 14ch; }
+.eroe h1 b { display: block; color: #F2C66B; font-weight: 800; }
+.eroe .trattino { margin: 22px 0 26px; }
+.eroe-cliente { display: flex; align-items: center; gap: 18px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.14); flex-wrap: wrap; }
+.eroe-cliente .targhetta { background: #fff; border-radius: 12px; padding: 10px 16px; min-width: 200px; }
+.eroe-cliente .targhetta svg { height: 40px; width: auto; display: block; }
+.eroe-cliente b { display: block; font-size: 1.1em; }
+.eroe-cliente span { font-size: .9em; color: #BDB8CC; }
+.eroe-cliente input { background: rgba(255,255,255,.08); border: 1px dashed rgba(255,255,255,.35); color: #fff; border-radius: 8px; padding: 6px 10px; font-size: 15px; font-weight: 700; }
+.eroe-cliente input::placeholder { color: #8a879a; font-weight: 400; }
+.firme { display: flex; gap: 36px; margin-top: 18px; }
+.firme img { height: 46px; width: auto; }
+.firme span { display: block; font-size: 10px; letter-spacing: .2em; color: #8a879a; text-transform: uppercase; margin-top: 4px; }
+.riquadro-uso { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
+.riquadro-uso .card { padding: 18px; }
+.indice { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px 24px; }
+.indice a { display: flex; gap: 12px; align-items: baseline; padding: 9px 0; border-bottom: 1px dashed var(--linea); text-decoration: none; color: var(--testo); }
+.indice a:hover { color: var(--viola); }
+.indice a i { font-style: normal; font-family: var(--mono); color: var(--viola); font-size: .8em; }
+.indice a b { flex: 1; }
+.indice a span { font-size: .82em; color: var(--grigio); }
+
+/* ---------- campi scheda ---------- */
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo label { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--grigio); display: flex; justify-content: space-between; gap: 8px; }
+.campo label em { font-style: normal; font-weight: 500; letter-spacing: 0; text-transform: none; color: #9b98a6; }
+.campo input[type=text], .campo input[type=number], .campo input[type=tel], .campo input[type=date], .campo textarea, .campo select { width: 100%; padding: 11px 13px; border-radius: var(--r-s); border: 1.5px solid var(--linea); background: #fff; outline: none; transition: .15s; }
+.campo textarea { min-height: 84px; resize: vertical; line-height: 1.45; }
+.campo input:focus, .campo textarea:focus, .campo select:focus { border-color: var(--viola); box-shadow: 0 0 0 4px rgba(123,63,228,.12); }
+.campo input.pieno-ok, .campo textarea.pieno-ok { border-color: #CFE6D8; background: #FBFEFC; }
+.scelte { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1.5px solid var(--linea); background: #fff; font-size: 13.5px; font-weight: 600; cursor: pointer; user-select: none; transition: .15s; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip:hover { border-color: var(--viola); }
+.chip.on { background: var(--viola); border-color: var(--viola); color: #fff; }
+.chip.on.ok { background: var(--ok); border-color: var(--ok); }
+.scala { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.scala .chip { justify-content: center; padding: 10px 6px; }
+.domanda { padding: 16px 0; border-bottom: 1px dashed var(--linea); }
+.domanda:last-child { border-bottom: 0; }
+.domanda h4 { font-size: 1em; font-weight: 800; margin-bottom: 4px; display: flex; gap: 10px; align-items: baseline; }
+.domanda h4 .n { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--viola); color: #fff; font-size: 12px; flex: 0 0 auto; font-family: var(--mono); }
+.domanda .perche { font-size: .86em; color: var(--grigio); margin-bottom: 10px; }
+.domanda .perche b { color: var(--viola); }
+
+/* ---------- voti ---------- */
+.voto { display: inline-flex; gap: 6px; }
+.voto button { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--linea); background: #fff; font-size: 16px; display: grid; place-items: center; transition: .15s; }
+.voto button:hover { transform: scale(1.08); }
+.voto button.on.si { background: var(--ok-chiaro); border-color: var(--ok); }
+.voto button.on.forse { background: var(--ambra-chiaro); border-color: var(--ambra); }
+.voto button.on.no { background: var(--no-chiaro); border-color: var(--no); }
+.voto-riga { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--linea); }
+.voto-riga .piccolo { margin: 0; }
+
+/* ---------- nome ---------- */
+.nome-live { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: stretch; }
+.nome-grande { background: var(--p1); color: #fff; border-radius: var(--r); padding: 28px; display: flex; flex-direction: column; justify-content: center; min-height: 190px; }
+.nome-grande b { font-family: var(--ft); font-size: clamp(30px, 4vw, 48px); letter-spacing: -.02em; line-height: 1; word-break: break-word; }
+.nome-grande span { font-family: var(--fb); margin-top: 12px; letter-spacing: .28em; text-transform: uppercase; font-size: 12px; opacity: .85; }
+.nome-grande .sottile { opacity: .6; letter-spacing: 0; text-transform: none; font-size: 13px; margin-top: 18px; }
+.proposta-nome { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1.5px solid var(--linea); border-radius: var(--r-s); background: #fff; }
+.proposta-nome .n { font-family: var(--ft); font-weight: 800; font-size: 1.15em; min-width: 150px; }
+.proposta-nome .perche { flex: 1; font-size: .86em; color: var(--grigio); }
+.proposta-nome .btn.mini { flex: 0 0 auto; }
+.link-check { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- loghi ---------- */
+.logo-card { display: flex; flex-direction: column; gap: 14px; }
+.logo-vetrina { border-radius: 12px; border: 1px solid var(--linea); background: #fff; padding: 26px 20px; display: grid; place-items: center; min-height: 150px; }
+.logo-vetrina.scura { background: var(--p4); border-color: var(--p4); }
+.logo-vetrina.colore { background: var(--p1); border-color: var(--p1); }
+.logo-vetrina svg { width: 100%; max-width: 320px; height: auto; }
+.logo-vetrina.icona svg { max-width: 110px; }
+.logo-mini { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.logo-mini .logo-vetrina { min-height: 90px; padding: 14px; }
+.logo-mini .logo-vetrina svg { max-width: 64px; }
+.logo-toggle { display: flex; gap: 6px; flex-wrap: wrap; }
+.logo-azioni { display: flex; gap: 8px; flex-wrap: wrap; }
+.spiega { display: grid; gap: 10px; }
+.spiega div { display: flex; gap: 10px; font-size: .9em; line-height: 1.4; }
+.spiega div i { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 6px; background: var(--viola-chiaro); color: var(--viola); display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: 11px; }
+.icona-tonda { width: 72px; height: 72px; border-radius: 50%; background: var(--p1); display: grid; place-items: center; margin: 0 auto; border: 3px solid #fff; box-shadow: 0 0 0 1px var(--linea); }
+.icona-tonda svg { width: 44px; height: 44px; }
+.icona-tonda.chiara { background: #fff; }
+.favicon { width: 32px; height: 32px; border-radius: 7px; background: var(--p1); display: grid; place-items: center; }
+.favicon svg { width: 22px; height: 22px; }
+.furgone { border-radius: 12px; background: linear-gradient(180deg, #fff, #eef1f4); border: 1px solid var(--linea); padding: 18px; display: grid; place-items: center; }
+.furgone svg { width: 100%; max-width: 380px; height: auto; }
+
+/* ---------- palette ---------- */
+.palette { cursor: pointer; transition: .15s; }
+.palette:hover { transform: translateY(-2px); }
+.palette.on { border-color: var(--viola); box-shadow: 0 0 0 3px rgba(123,63,228,.18); }
+.swatches { display: grid; grid-template-columns: 2fr 1.4fr 1fr 1fr 1fr; height: 84px; border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+.swatches i { display: block; }
+.sw { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--linea); font-size: .9em; }
+.sw:last-child { border-bottom: 0; }
+.sw i { width: 22px; height: 22px; border-radius: 6px; border: 1px solid rgba(0,0,0,.08); flex: 0 0 auto; }
+.sw b { min-width: 110px; }
+.sw code { font-family: var(--mono); font-size: .86em; color: var(--grigio); margin-left: auto; }
+.sw button { border: 0; background: var(--viola-chiaro); color: var(--viola); border-radius: 6px; padding: 4px 8px; font-size: 11px; font-weight: 800; }
+.uso-colori { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+.uso-colori .card { padding: 16px; }
+.uso-colori .bar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; margin: 10px 0; }
+.contrasto { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+.contrasto div { border-radius: 10px; padding: 14px 12px; font-size: .9em; font-weight: 700; display: flex; flex-direction: column; gap: 4px; }
+.contrasto div small { font-weight: 500; opacity: .75; font-family: var(--mono); font-size: 11px; }
+
+/* ---------- caratteri ---------- */
+.font-card { cursor: pointer; }
+.font-card.on { border-color: var(--viola); box-shadow: 0 0 0 3px rgba(123,63,228,.18); }
+.font-card .anteprima { padding: 18px 0 8px; border-bottom: 1px dashed var(--linea); margin-bottom: 12px; }
+.font-card .anteprima b { display: block; font-size: 30px; letter-spacing: -.02em; line-height: 1.1; }
+.font-card .anteprima p { margin: 10px 0 0; font-size: 15px; color: var(--grigio); }
+.gerarchia { display: grid; gap: 10px; }
+.gerarchia div { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: baseline; padding: 8px 0; border-bottom: 1px dashed var(--linea); }
+.gerarchia div:last-child { border-bottom: 0; }
+.gerarchia small { font-family: var(--mono); color: var(--grigio); font-size: 11px; }
+.gerarchia .t1 { font-family: var(--ft); font-weight: 800; font-size: 28px; letter-spacing: -.02em; }
+.gerarchia .t2 { font-family: var(--ft); font-weight: 700; font-size: 20px; }
+.gerarchia .t3 { font-family: var(--fb); font-size: 16px; }
+.gerarchia .t4 { font-family: var(--fb); font-weight: 700; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+.gerarchia .t5 { font-family: var(--fb); font-weight: 700; font-size: 14px; background: var(--p2); color: #fff; padding: 8px 16px; border-radius: 999px; display: inline-block; }
+
+/* ---------- mockup social: profilo ---------- */
+.telefono { width: 100%; max-width: 330px; margin: 0 auto; border-radius: 38px; border: 10px solid #15121F; background: #fff; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.5); font-family: var(--fb); }
+.telefono .barra-ig { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px 6px; font-weight: 700; font-size: 14px; }
+.telefono .barra-ig span { font-family: var(--mono); font-size: 11px; color: #777; }
+.ig-testa { display: flex; align-items: center; gap: 16px; padding: 8px 14px; }
+.ig-testa .avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--p1); display: grid; place-items: center; flex: 0 0 auto; border: 2px solid #fff; outline: 2px solid var(--p2); }
+.ig-testa .avatar svg { width: 44px; height: 44px; }
+.ig-stat { display: flex; gap: 14px; flex: 1; justify-content: space-around; text-align: center; font-size: 11px; color: #555; }
+.ig-stat b { display: block; font-size: 15px; color: #111; }
+.ig-bio { padding: 0 14px 10px; font-size: 12.5px; line-height: 1.4; }
+.ig-bio b { display: block; font-family: var(--ft); font-size: 13px; }
+.ig-bio .cat { color: #777; font-size: 11.5px; }
+.ig-bio a { color: #1b4e8a; text-decoration: none; }
+.ig-btn { display: flex; gap: 6px; padding: 0 14px 12px; }
+.ig-btn span { flex: 1; text-align: center; padding: 7px 0; border-radius: 8px; font-size: 12px; font-weight: 700; background: #efefef; }
+.ig-btn span.p { background: var(--p2); color: #fff; }
+.ig-hl { display: flex; gap: 12px; padding: 4px 14px 12px; overflow: hidden; }
+.ig-hl div { text-align: center; font-size: 10px; color: #333; flex: 0 0 auto; }
+.ig-hl i { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; border: 1.5px solid #ddd; margin: 0 auto 4px; background: var(--p3); font-style: normal; font-weight: 800; color: var(--p1); font-size: 16px; }
+.ig-griglia { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border-top: 1px solid #eee; }
+.ig-griglia div { aspect-ratio: 1; display: grid; place-items: center; text-align: center; font-size: 9.5px; font-weight: 800; padding: 6px; line-height: 1.2; font-family: var(--ft); }
+.ig-griglia .c1 { background: var(--p1); color: #fff; } .ig-griglia .c2 { background: var(--p3); color: var(--p1); } .ig-griglia .c3 { background: var(--p2); color: #fff; }
+.ig-griglia .foto { background: linear-gradient(135deg, #d9dee3, #aeb6bf); color: #334; }
+.ig-griglia .foto.pd { background: linear-gradient(90deg, #9aa3ad 50%, #e9eef2 50%); }
+
+.profilo-griglia { grid-template-columns: 360px minmax(0,1fr); }
+.g-intro { grid-template-columns: 1.5fr 1fr; } .g-dove { grid-template-columns: 1.2fr 1fr; } .g-sim { grid-template-columns: 1fr 1.3fr; }
+@media (max-width: 900px) { .g-intro, .g-dove, .g-sim { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .profilo-griglia { grid-template-columns: 1fr; } }
+
+/* ---------- storie e post ---------- */
+.carosello { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 4px 18px; scrollbar-width: thin; }
+.carosello > * { scroll-snap-align: start; flex: 0 0 auto; }
+.storia-wrap { width: 232px; }
+.storia { width: 232px; aspect-ratio: 9/16; border-radius: 22px; overflow: hidden; position: relative; font-family: var(--ft); color: #fff; background: var(--p1); box-shadow: 0 20px 40px -24px rgba(0,0,0,.5); display: flex; flex-direction: column; }
+.storia .top { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; z-index: 3; }
+.storia .top i { width: 22px; height: 22px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+.storia .top i svg { width: 14px; height: 14px; }
+.storia .top::before { content: ''; position: absolute; top: -6px; left: 0; right: 0; height: 2px; background: rgba(255,255,255,.9); border-radius: 2px; }
+.storia .foto { background: linear-gradient(160deg, #c7ced6, #8f99a4); }
+.storia .foto.sporco { background: linear-gradient(160deg, #8d8477, #5e574e); }
+.storia .foto.pulito { background: linear-gradient(160deg, #eef3f7, #c5d3df); }
+.storia .testo-grande { font-size: 24px; font-weight: 800; line-height: 1.05; letter-spacing: -.02em; }
+.storia .pill { display: inline-block; padding: 6px 12px; border-radius: 999px; background: var(--p2); color: #fff; font-weight: 800; font-size: 11px; }
+.storia .pill.bianca { background: #fff; color: var(--p1); }
+.storia .sticker { position: absolute; background: #fff; color: var(--p4); border-radius: 10px; padding: 6px 10px; font-size: 10.5px; font-weight: 800; transform: rotate(-4deg); box-shadow: 0 6px 14px -6px rgba(0,0,0,.4); }
+.storia .fondo { position: absolute; bottom: 12px; left: 12px; right: 12px; font-size: 9.5px; display: flex; align-items: center; gap: 6px; opacity: .9; }
+.storia .fondo span { flex: 1; border: 1px solid rgba(255,255,255,.6); border-radius: 999px; padding: 6px 10px; }
+.storia .cta-wa { position: absolute; bottom: 44px; left: 20px; right: 20px; background: #25D366; color: #fff; border-radius: 12px; padding: 9px; text-align: center; font-size: 11.5px; font-weight: 800; }
+.storia .sondaggio { background: #fff; border-radius: 12px; overflow: hidden; margin: 0 18px; color: var(--p4); font-size: 11px; font-weight: 700; }
+.storia .sondaggio div { padding: 8px 10px; position: relative; }
+.storia .sondaggio div + div { border-top: 1px solid #eee; }
+.storia .sondaggio div::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: var(--w, 50%); background: var(--p5); z-index: 0; }
+.storia .sondaggio div span { position: relative; display: flex; justify-content: space-between; }
+.storia-wrap h4 { font-size: 1em; margin: 12px 0 4px; }
+.storia-wrap .piccolo { margin: 0; }
+.ok-box { margin-top: 8px; font-size: .82em; color: var(--ok); font-weight: 700; }
+
+.post-wrap { width: 270px; }
+.post { width: 270px; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; position: relative; font-family: var(--ft); background: #fff; border: 1px solid var(--linea); display: flex; flex-direction: column; }
+.post .marchio { position: absolute; top: 12px; left: 12px; display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; z-index: 3; color: var(--p1); }
+.post .marchio i { width: 18px; height: 18px; border-radius: 50%; background: var(--p1); display: grid; place-items: center; }
+.post .marchio i svg { width: 12px; height: 12px; }
+.post .marchio.bianco { color: #fff; } .post .marchio.bianco i { background: #fff; }
+.post .pd { flex: 1; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+.post .pd div { display: flex; align-items: flex-end; padding: 10px; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.post .pd .a { background: linear-gradient(160deg, #8d8477, #5e574e); }
+.post .pd .b { background: linear-gradient(160deg, #eef3f7, #c5d3df); color: var(--p1); text-shadow: none; }
+.post .pd::after { content: '→'; position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; background: var(--p2); color: #fff; display: grid; place-items: center; font-weight: 800; }
+.post .post-piede { padding: 12px 14px; background: var(--p1); color: #fff; font-size: 12px; font-weight: 800; line-height: 1.25; }
+.post .post-piede small { display: block; font-weight: 500; opacity: .8; font-size: 10px; margin-top: 3px; font-family: var(--fb); }
+.post .servizi { flex: 1; background: var(--p3); padding: 44px 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: start; }
+.post .servizi div { background: #fff; border-radius: 8px; padding: 10px 8px; font-size: 10.5px; font-weight: 800; color: var(--p1); display: flex; gap: 6px; align-items: center; }
+.post .servizi div i { width: 20px; height: 20px; border-radius: 6px; background: var(--p2); flex: 0 0 auto; display: grid; place-items: center; }
+.post .servizi div i svg { width: 12px; height: 12px; }
+.post .titolone { flex: 1; background: var(--p1); color: #fff; padding: 46px 18px 18px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; }
+.post .titolone b { font-size: 25px; line-height: 1.05; letter-spacing: -.02em; }
+.post .titolone span { font-family: var(--fb); font-size: 11px; opacity: .85; }
+.post .titolone .n { font-family: var(--serif); font-size: 64px; font-weight: 600; line-height: .9; color: var(--p2); }
+.post .recensione { flex: 1; background: #fff; padding: 44px 18px 18px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+.post .recensione .stelle { color: #F2B01E; font-size: 16px; letter-spacing: 2px; }
+.post .recensione q { font-family: var(--serif); font-size: 17px; line-height: 1.25; color: var(--p4); quotes: '“' '”'; }
+.post .recensione span { font-family: var(--fb); font-size: 11px; color: var(--grigio); }
+.post .team { flex: 1; background: linear-gradient(160deg, #c7ced6, #8f99a4); position: relative; }
+.post .team .nome { position: absolute; left: 14px; bottom: 14px; right: 14px; background: #fff; border-radius: 10px; padding: 10px 12px; font-size: 11px; line-height: 1.3; }
+.post .team .nome b { display: block; font-size: 13px; color: var(--p1); }
+.post .offerta { flex: 1; background: var(--p2); color: #fff; padding: 46px 18px 18px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; }
+.post .offerta b { font-size: 34px; line-height: .95; letter-spacing: -.03em; }
+.post .offerta span { font-family: var(--fb); font-size: 11.5px; }
+.post .offerta .pill { align-self: flex-start; background: #fff; color: var(--p1); border-radius: 999px; padding: 6px 12px; font-size: 11px; font-weight: 800; margin-top: 6px; }
+.post-wrap h4 { font-size: 1em; margin: 12px 0 4px; }
+.caption { margin-top: 10px; background: #fff; border: 1px solid var(--linea); border-radius: 10px; padding: 10px 12px; font-size: 12.5px; line-height: 1.45; color: #333; white-space: pre-line; max-height: 150px; overflow: auto; font-family: var(--fb); }
+.caption-azioni { display: flex; gap: 6px; margin-top: 8px; }
+.carosello-nav { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 6px; }
+
+/* ---------- calendario ---------- */
+.calendario { display: grid; grid-template-columns: 70px repeat(7, minmax(0, 1fr)); gap: 6px; font-size: 12px; }
+.calendario .g { font-weight: 800; text-align: center; color: var(--grigio); text-transform: uppercase; letter-spacing: .1em; font-size: 10.5px; padding: 6px 0; }
+.calendario .s { font-weight: 800; color: var(--viola); display: flex; align-items: center; font-family: var(--mono); }
+.calendario .cella { min-height: 64px; border-radius: 9px; border: 1px dashed var(--linea); padding: 6px; display: flex; flex-direction: column; gap: 4px; background: #fff; }
+.calendario .cella.vuota { background: transparent; }
+.calendario .ev { border-radius: 6px; padding: 5px 7px; font-weight: 700; font-size: 10.5px; line-height: 1.2; cursor: pointer; display: flex; gap: 5px; align-items: center; }
+.calendario .ev-post { background: var(--p1); color: #fff; } .calendario .ev-storia { background: var(--p5); color: var(--p4); } .calendario .ev-reel { background: var(--p2); color: #fff; } .calendario .ev-gbp { background: var(--ambra-chiaro); color: #9A5E12; }
+.calendario .ev.fatto { opacity: .45; text-decoration: line-through; }
+.legenda { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; margin-top: 12px; }
+.legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.legenda i { width: 14px; height: 14px; border-radius: 4px; }
+
+/* ---------- tono ---------- */
+.tagline { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1.5px solid var(--linea); border-radius: var(--r-s); background: #fff; }
+.tagline .t { font-family: var(--serif); font-size: 1.35em; flex: 1; line-height: 1.2; }
+.tagline .t em { color: var(--viola); font-style: italic; }
+.tagline .per { font-size: .8em; color: var(--grigio); max-width: 200px; }
+.script { font-family: var(--mono); font-size: 13px; line-height: 1.55; background: #fff; border: 1px solid var(--linea); border-radius: var(--r-s); padding: 14px 16px; white-space: pre-line; }
+.script b { color: var(--viola); }
+.parole { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* ---------- pubblicità ---------- */
+.slider { display: grid; gap: 10px; }
+.slider input[type=range] { width: 100%; accent-color: var(--viola); }
+.slider .valore { font-family: var(--serif); font-size: 2.4em; font-weight: 600; color: var(--viola); line-height: 1; }
+.stima { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.stima div { background: #fff; border: 1px solid var(--linea); border-radius: var(--r-s); padding: 14px; }
+.stima b { display: block; font-family: var(--serif); font-size: 1.7em; font-weight: 600; color: var(--testo); line-height: 1.1; }
+.stima span { font-size: .8em; color: var(--grigio); }
+.ripartizione { display: flex; gap: 6px; }
+.ripartizione button { flex: 1; }
+.canale { display: grid; grid-template-columns: 54px 1fr; gap: 14px; align-items: start; }
+.canale i { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; font-style: normal; font-weight: 800; color: #fff; font-size: 14px; }
+.timeline { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+.timeline div { padding: 16px; border-radius: var(--r-s); background: #fff; border: 1px solid var(--linea); position: relative; }
+.timeline div::before { content: ''; position: absolute; left: 16px; top: -1px; width: 40px; height: 3px; background: var(--viola); border-radius: 3px; }
+.timeline b { display: block; margin-bottom: 4px; }
+.timeline small { font-family: var(--mono); color: var(--viola); font-size: 11px; display: block; margin-bottom: 8px; }
+
+/* ---------- checklist ---------- */
+.check { display: grid; gap: 6px; }
+.check label { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; border-radius: var(--r-s); background: #fff; border: 1.5px solid var(--linea); cursor: pointer; transition: .15s; }
+.check label:hover { border-color: var(--viola); }
+.check label.on { background: var(--ok-chiaro); border-color: #CFE6D8; }
+.check label.on span { text-decoration: line-through; color: var(--grigio); }
+.check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--ok); flex: 0 0 auto; }
+.check span small { display: block; color: var(--grigio); font-size: .85em; text-decoration: none !important; }
+
+/* ---------- proposta ---------- */
+.pacchetto { display: flex; flex-direction: column; gap: 14px; }
+.pacchetto .prezzo { display: flex; align-items: baseline; gap: 6px; }
+.pacchetto .prezzo span { font-size: 1.4em; font-weight: 800; color: var(--grigio); }
+.pacchetto .prezzo input { width: 120px; padding: 6px 10px; font-family: var(--serif); font-size: 1.9em; font-weight: 600; border: 0; border-bottom: 2px dashed var(--viola-bordo); background: transparent; color: var(--viola); outline: none; }
+.pacchetto .prezzo input:focus { border-bottom-color: var(--viola); }
+.pacchetto .prezzo input::placeholder { color: #c9c3dc; font-size: .6em; font-family: var(--apex); font-weight: 600; }
+.pacchetto .prezzo small { color: var(--grigio); }
+.pacchetto .lista { flex: 1; }
+.pacchetto .lista li { font-size: .92em; }
+.pacchetto .scegli { margin-top: auto; }
+.pacchetto .scegli.on { background: var(--ok); border-color: var(--ok); color: #fff; }
+
+/* ---------- riepilogo / modale ---------- */
+.modale { position: fixed; inset: 0; z-index: 100; background: rgba(21,18,31,.55); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 20px; }
+.modale.on { display: flex; }
+.modale-in { background: #fff; border-radius: 20px; width: min(820px, 100%); max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); }
+.modale-testa { padding: 18px 22px; border-bottom: 1px solid var(--linea); display: flex; align-items: center; gap: 12px; }
+.modale-testa h3 { font-family: var(--serif); font-weight: 500; font-size: 1.4em; }
+.modale-testa .btn { margin-left: auto; }
+.modale pre { flex: 1; overflow: auto; margin: 0; padding: 22px; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; white-space: pre-wrap; color: #333; background: var(--sfondo); }
+.modale-piede { padding: 14px 22px; border-top: 1px solid var(--linea); display: flex; gap: 8px; flex-wrap: wrap; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--scuro); color: #fff; padding: 11px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none; transition: .25s; z-index: 200; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- piede ---------- */
+.piede { padding: 40px 0 60px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 11px; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+  .g4, .riquadro-uso, .timeline, .contrasto { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .uso-colori, .g3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .sez-testa { grid-template-columns: 1fr; gap: 10px; }
+}
+@media (max-width: 680px) {
+  body { font-size: 15px; }
+  .g2, .g3, .g4, .riquadro-uso, .uso-colori, .nome-live, .indice, .parole, .stima, .timeline { grid-template-columns: 1fr; }
+  .barra-cliente { display: none; }
+  .barra-azioni .btn span { display: none; }
+  .barra-in { padding: 8px 14px; gap: 10px; }
+  .barra img { width: 30px; height: 30px; }
+  .barra-nome span { display: none; }
+  .salvato span { display: none; }
+  .btn.mini#btnReset { padding: 8px 10px; }
+  .calendario { grid-template-columns: 50px repeat(7, minmax(0,1fr)); font-size: 10px; }
+  .calendario .ev { font-size: 9.5px; padding: 4px 5px; }
+  .cal-card { overflow-x: auto; }
+  .calendario { min-width: 640px; }
+  .eroe > img.sfondo { display: none; }
+  .scala { grid-template-columns: repeat(5, 1fr); }
+  .tagline { flex-direction: column; align-items: flex-start; }
+  .tagline .per { max-width: none; }
+  .proposta-nome { flex-wrap: wrap; }
+  .proposta-nome .perche { flex-basis: 100%; }
+  .telefono { max-width: 300px; }
+}
+
+/* ---------- stampa ---------- */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body { background: #fff; font-size: 11pt; }
+  .barra, .nav, .toast, .modale, .no-print, .carosello-nav, .caption-azioni, .logo-azioni, .link-check, .voto button:not(.on) { display: none !important; }
+  section.sez { page-break-before: always; padding: 10mm 0; border: 0; }
+  section.sez:first-of-type { page-break-before: auto; }
+  .card, .telefono, .storia, .post { break-inside: avoid; box-shadow: none; }
+  .carosello { flex-wrap: wrap; overflow: visible; }
+  .eroe { min-height: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  input, textarea { border-color: #bbb !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ BARRA STRUMENTI ============ -->
+<div class="barra">
+  <div class="barra-in">
+    <img src="assets/apex-logo.png" alt="Apex Media">
+    <div class="barra-nome"><b>APEX MEDIA</b><span>Brand kit · impresa di pulizie</span></div>
+    <div class="barra-cliente">
+      <div class="mini" data-logo="S" data-var="mark" data-mode="bianco"></div>
+      <div><b data-nome>Euroclean</b><span>Palette: <span data-palette-nome>Acqua pulita</span></span></div>
+    </div>
+    <div class="barra-azioni">
+      <span class="salvato" id="salvato"><i></i><span>Salvato</span></span>
+      <button class="btn" id="btnRiepilogo" title="Riepilogo di tutto quello che è stato compilato e votato"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16v16H4zM8 9h8M8 13h8M8 17h5"/></svg><span>Riepilogo</span></button>
+      <button class="btn" id="btnStampa" title="Salva in PDF o stampa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg><span>PDF</span></button>
+      <button class="btn" id="btnPresenta" title="Testo più grande, a tutto schermo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg><span>Presenta</span></button>
+      <button class="btn ghost mini" id="btnReset" title="Cancella tutto quello che è stato compilato">Azzera</button>
+    </div>
+  </div>
+</div>
+<nav class="nav">
+  <div class="nav-in" id="navIn">
+    <a href="#s00"><i>00</i>Inizio</a>
+    <a href="#s01"><i>01</i>Scheda</a>
+    <a href="#s02"><i>02</i>Nome</a>
+    <a href="#s03"><i>03</i>Logo</a>
+    <a href="#s04"><i>04</i>Colori</a>
+    <a href="#s05"><i>05</i>Caratteri</a>
+    <a href="#s06"><i>06</i>Profilo</a>
+    <a href="#s07"><i>07</i>Storie</a>
+    <a href="#s08"><i>08</i>Post</a>
+    <a href="#s09"><i>09</i>Calendario</a>
+    <a href="#s10"><i>10</i>Tono</a>
+    <a href="#s11"><i>11</i>Pubblicità</a>
+    <a href="#s12"><i>12</i>Materiali</a>
+    <a href="#s13"><i>13</i>Proposta</a>
+    <a href="#s14"><i>14</i>Prossimi passi</a>
+  </div>
+  <div class="progresso"><i id="progresso"></i></div>
+</nav>
+
+<main class="pagina">
+
+<!-- ============ 00 COPERTINA ============ -->
+<section class="sez" id="s00" style="padding-top:8px">
+  <div class="eroe">
+    <img class="sfondo" src="assets/apex-banner.jpg" alt="">
+    <p class="occhiello">Brand kit · identità visiva, social e pubblicità</p>
+    <h1>Una ditta di famiglia,<b>un marchio che si ricorda.</b></h1>
+    <div class="trattino"></div>
+    <div class="eroe-cliente">
+      <div class="targhetta" data-logo="S" data-var="orizz" data-mode="colore"></div>
+      <div>
+        <b data-nome>Euroclean</b>
+        <span>Documento di lavoro per <input type="text" data-k="titolare" data-label="Titolare" placeholder="nome del titolare" size="18"> · <span id="dataOggi"></span></span>
+      </div>
+      <div class="firme">
+        <div><img src="assets/firma-alexander.png" alt=""><span>Alexander Fania</span></div>
+        <div><img src="assets/firma-federico.png" alt=""><span>Federico Delfino</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="griglia g-intro" style="gap: 28px;">
+    <div>
+      <p style="font-weight:800; font-size:1.1em">Come funziona questo documento</p>
+      <p>Questo non è un preventivo e non è un libro da leggere: è il <span class="v">tavolo di lavoro</span> su cui decidiamo insieme, in un'ora, come si presenta la tua impresa di pulizie. Il nome, il logo, i colori, come si vede su Instagram e Facebook, cosa pubblicare e come far arrivare i primi clienti con la pubblicità.</p>
+      <p>Tutto quello che scrivi o scegli qui dentro <span class="v">si salva da solo</span> su questo dispositivo. Il nome che scrivi nella scheda <span class="v">aggiorna in tempo reale</span> i loghi e i mockup. Alla fine, il pulsante <b>Riepilogo</b> in alto raccoglie tutte le risposte e le scelte in una pagina da copiare o scaricare.</p>
+      <p class="piccolo">I loghi, le palette e i post che vedi sono <b>proposte di esempio</b> per far vedere il metodo e la direzione. La versione definitiva si costruisce sulle risposte di questa scheda.</p>
+    </div>
+    <div class="card scura">
+      <h3>In un'ora decidiamo</h3>
+      <ul class="lista" style="--c:#B79AF5">
+        <li><b>1 nome</b> definitivo, libero su Google, Instagram e come dominio .it</li>
+        <li><b>1 direzione di logo</b> fra le 3 proposte</li>
+        <li><b>1 palette</b> di 3 colori, sempre gli stessi ovunque</li>
+        <li><b>Cosa pubblicare</b> nelle prime 4 settimane</li>
+        <li><b>Quanto investire</b> in pubblicità per avere i primi preventivi</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="riquadro-uso" style="margin-top:24px">
+    <div class="card"><div class="num">01</div><b>Compila la scheda</b><p class="piccolo" style="margin:4px 0 0">Le domande sono in ordine: le prime servono per tutto il resto.</p></div>
+    <div class="card"><div class="num">👍</div><b>Vota le proposte</b><p class="piccolo" style="margin:4px 0 0">Nomi, loghi, palette, frasi: pollice su, forse, pollice giù.</p></div>
+    <div class="card"><div class="num">✓</div><b>Spunta i materiali</b><p class="piccolo" style="margin:4px 0 0">Foto, accessi, documenti: cosa c'è già e cosa manca.</p></div>
+    <div class="card"><div class="num">↓</div><b>Scarica il riepilogo</b><p class="piccolo" style="margin:4px 0 0">Una pagina con tutte le risposte e le scelte fatte.</p></div>
+  </div>
+
+  <div class="card" style="margin-top:24px">
+    <p class="occhiello">Indice</p>
+    <div class="indice">
+      <a href="#s01"><i>01</i><b>La scheda</b><span>25 domande, le risposte guidano tutto</span></a>
+      <a href="#s02"><i>02</i><b>Il nome</b><span>Tenere Euroclean o cambiare?</span></a>
+      <a href="#s03"><i>03</i><b>Il logo</b><span>3 direzioni, con il nome che scegli</span></a>
+      <a href="#s04"><i>04</i><b>I colori</b><span>3 palette, una sola da usare ovunque</span></a>
+      <a href="#s05"><i>05</i><b>I caratteri</b><span>Come "parla" il marchio scritto</span></a>
+      <a href="#s06"><i>06</i><b>Il profilo</b><span>Instagram e Facebook, bio e griglia</span></a>
+      <a href="#s07"><i>07</i><b>Le storie</b><span>5 formati che funzionano per le pulizie</span></a>
+      <a href="#s08"><i>08</i><b>I post</b><span>6 formati con testo pronto</span></a>
+      <a href="#s09"><i>09</i><b>Il calendario</b><span>4 settimane, cosa pubblicare e quando</span></a>
+      <a href="#s10"><i>10</i><b>Tono e messaggi</b><span>Frasi, parole sì e parole no, risposte WhatsApp</span></a>
+      <a href="#s11"><i>11</i><b>Pubblicità</b><span>Google, Meta, budget e stima dei contatti</span></a>
+      <a href="#s12"><i>12</i><b>Materiali</b><span>Cosa serve da te per partire</span></a>
+      <a href="#s13"><i>13</i><b>Proposta</b><span>3 pacchetti e tempi</span></a>
+      <a href="#s14"><i>14</i><b>Prossimi passi</b><span>Chi fa cosa, entro quando</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 SCHEDA ============ -->
+<section class="sez" id="s01">
+  <div class="sez-testa">
+    <div><p class="occhiello">01 — La scheda</p><h2>Prima di disegnare,<b> ascoltiamo.</b></h2></div>
+    <p class="lato">Ogni domanda ha un motivo scritto sotto. Rispondi come parli: <b>bastano poche parole</b>. Le risposte si salvano da sole.</p>
+  </div>
+
+  <div class="griglia g2" style="align-items:start">
+    <div class="card">
+      <p class="occhiello">A · L'azienda</p>
+      <div class="domanda">
+        <h4><span class="n">1</span>Il nome che vuoi usare</h4>
+        <p class="perche"><b>Perché:</b> da qui partono logo, profili social e dominio. Scrivilo anche se provvisorio: puoi cambiarlo quando vuoi e tutto si aggiorna.</p>
+        <div class="griglia g2">
+          <div class="campo"><label>Nome <em>si aggiorna ovunque</em></label><input type="text" data-k="nome" data-label="Nome scelto" placeholder="Euroclean" value="Euroclean"></div>
+          <div class="campo"><label>Sotto il nome <em>cosa fate</em></label><input type="text" data-k="descrittore" data-label="Descrittore sotto il nome" placeholder="Impresa di pulizie" value="Impresa di pulizie"></div>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">2</span>La storia: da che anno esiste la ditta della mamma?</h4>
+        <p class="perche"><b>Perché:</b> "dal 1998" vale più di qualsiasi slogan. È una garanzia che un'impresa nuova non può scrivere, e la mettiamo nel logo e nella bio.</p>
+        <div class="griglia g2">
+          <div class="campo"><label>Dal</label><input type="text" data-k="anno" data-label="Attiva dal" placeholder="es. 1998"></div>
+          <div class="campo"><label>Nome della mamma / cosa raccontare</label><input type="text" data-k="storia" data-label="Storia di famiglia" placeholder="es. fondata da Maria, oggi la porto avanti io"></div>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">3</span>Dove lavorate</h4>
+        <p class="perche"><b>Perché:</b> la pubblicità locale si imposta a raggio di chilometri. Città e zona entrano anche nella bio e nel nome su Google.</p>
+        <div class="griglia g2">
+          <div class="campo"><label>Città principale</label><input type="text" data-k="citta" data-label="Città" placeholder="es. Alessandria"></div>
+          <div class="campo"><label>Raggio in km / altre zone</label><input type="text" data-k="zona" data-label="Zona servita" placeholder="es. 30 km, anche Asti e Tortona"></div>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">4</span>Contatti che devono finire ovunque</h4>
+        <p class="perche"><b>Perché:</b> per una ditta di pulizie il cliente scrive su WhatsApp. Un solo numero, sempre lo stesso, su post, storie, Google e furgone.</p>
+        <div class="griglia g2">
+          <div class="campo"><label>WhatsApp / telefono</label><input type="tel" data-k="telefono" data-label="Telefono / WhatsApp" placeholder="es. 333 1234567"></div>
+          <div class="campo"><label>Email</label><input type="text" data-k="email" data-label="Email" placeholder="es. info@..."></div>
+          <div class="campo"><label>Sede / indirizzo <em>per Google Business</em></label><input type="text" data-k="sede" data-label="Sede" placeholder="via, città"></div>
+          <div class="campo"><label>Partita IVA / ragione sociale <em>per fatture e profili</em></label><input type="text" data-k="piva" data-label="Ragione sociale" placeholder="es. Euroclean di Rossi Marco"></div>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">5</span>Chi siete e con cosa lavorate</h4>
+        <p class="perche"><b>Perché:</b> il furgone e le divise sono pubblicità gratis che gira per la città. Se ci sono, vanno marchiati per primi.</p>
+        <div class="griglia g2">
+          <div class="campo"><label>Persone nel team</label><input type="text" data-k="team" data-label="Team" placeholder="es. io + 2 collaboratrici"></div>
+          <div class="campo"><label>Mezzi e divise</label>
+            <div class="scelte">
+              <label class="chip"><input type="checkbox" data-k="mezzi" data-label="Mezzi e divise" value="Furgone">Furgone</label>
+              <label class="chip"><input type="checkbox" data-k="mezzi" value="Auto">Auto</label>
+              <label class="chip"><input type="checkbox" data-k="mezzi" value="Divise">Divise</label>
+              <label class="chip"><input type="checkbox" data-k="mezzi" value="Nessuno">Nessuno</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="occhiello">B · I servizi e i clienti</p>
+      <div class="domanda">
+        <h4><span class="n">6</span>Cosa fate (tutto quello che offrite)</h4>
+        <p class="perche"><b>Perché:</b> ogni servizio è un post, una pagina e una campagna diversa. Segna tutto, poi scegliamo cosa mettere davanti.</p>
+        <div class="scelte">
+          <label class="chip"><input type="checkbox" data-k="servizi" data-label="Servizi" value="Uffici e studi">Uffici e studi</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Condomini e scale">Condomini e scale</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Case private">Case private</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Post-cantiere">Post-cantiere</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Sanificazione">Sanificazione</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Vetri e vetrate">Vetri e vetrate</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Capannoni e industriale">Capannoni e industriale</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Hotel, B&B e affitti brevi">Hotel, B&amp;B e affitti brevi</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Negozi e ristoranti">Negozi e ristoranti</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Pulizie una tantum / traslochi">Una tantum / traslochi</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Trattamento pavimenti">Trattamento pavimenti</label>
+          <label class="chip"><input type="checkbox" data-k="servizi" value="Esterni e giardini">Esterni e giardini</label>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">7</span>Il servizio che rende di più</h4>
+        <p class="perche"><b>Perché:</b> la pubblicità si fa su <b>un</b> servizio alla volta. Quello che rende di più va per primo, non quello che chiedono di più.</p>
+        <div class="campo"><input type="text" data-k="servizio_top" data-label="Servizio principale" placeholder="es. contratti mensili uffici e condomini"></div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">8</span>Il cliente ideale</h4>
+        <p class="perche"><b>Perché:</b> aziende e condomini si convincono con serietà e contratto; le famiglie con fiducia e prezzo chiaro. Cambiano tono, foto e canali.</p>
+        <div class="scelte" style="margin-bottom:10px">
+          <label class="chip"><input type="radio" name="target" data-k="target" data-label="Cliente ideale" value="Aziende, uffici, condomini (B2B)">Aziende, uffici, condomini</label>
+          <label class="chip"><input type="radio" name="target" data-k="target" value="Famiglie e privati (B2C)">Famiglie e privati</label>
+          <label class="chip"><input type="radio" name="target" data-k="target" value="Entrambi">Entrambi</label>
+        </div>
+        <div class="campo"><input type="text" data-k="target_note" data-label="Cliente ideale, dettagli" placeholder="es. amministratori di condominio, studi medici, famiglie con casa grande"></div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">9</span>Come fai i preventivi e che prezzi hai</h4>
+        <p class="perche"><b>Perché:</b> "preventivo gratuito in 24 ore" è la promessa più forte del settore. E un prezzo "a partire da" nei post abbassa la paura di chiedere.</p>
+        <div class="scelte" style="margin-bottom:10px">
+          <label class="chip"><input type="checkbox" data-k="preventivo" data-label="Preventivi" value="A ore">A ore</label>
+          <label class="chip"><input type="checkbox" data-k="preventivo" value="A metro quadro">A metro quadro</label>
+          <label class="chip"><input type="checkbox" data-k="preventivo" value="Forfait / contratto mensile">Forfait / contratto</label>
+          <label class="chip"><input type="checkbox" data-k="preventivo" value="Sopralluogo gratuito">Sopralluogo gratuito</label>
+        </div>
+        <div class="campo"><input type="text" data-k="prezzi" data-label="Prezzi indicativi" placeholder="es. da 18 €/ora, uffici da 150 €/mese"></div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">10</span>Disponibilità</h4>
+        <p class="perche"><b>Perché:</b> chi lavora sera, weekend o in urgenza ha un vantaggio da scrivere grande.</p>
+        <div class="scelte">
+          <label class="chip"><input type="checkbox" data-k="disponibilita" data-label="Disponibilità" value="Sera">Sera</label>
+          <label class="chip"><input type="checkbox" data-k="disponibilita" value="Weekend">Weekend</label>
+          <label class="chip"><input type="checkbox" data-k="disponibilita" value="Festivi">Festivi</label>
+          <label class="chip"><input type="checkbox" data-k="disponibilita" value="Urgenze entro 24h">Urgenze entro 24h</label>
+          <label class="chip"><input type="checkbox" data-k="disponibilita" value="Solo orario ufficio">Solo orario ufficio</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="occhiello">C · Cosa vi distingue e cosa potete dimostrare</p>
+      <div class="domanda">
+        <h4><span class="n">11</span>Perché un cliente dovrebbe scegliere voi</h4>
+        <p class="perche"><b>Perché:</b> "siamo professionali" lo dicono tutti. Cerchiamo 3 cose <b>vere e verificabili</b> da ripetere ovunque.</p>
+        <div class="scelte" style="margin-bottom:10px">
+          <label class="chip"><input type="checkbox" data-k="plus" data-label="Punti di forza" value="Personale assunto e formato">Personale assunto e formato</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Assicurazione RC">Assicurazione RC</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Prodotti eco / certificati">Prodotti eco</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Preventivo in 24h">Preventivo in 24h</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Sempre lo stesso operatore">Stesso operatore</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Contratto senza vincoli">Senza vincoli</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Attrezzatura professionale">Attrezzatura pro</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Fattura sempre">Fattura sempre</label>
+          <label class="chip"><input type="checkbox" data-k="plus" value="Controllo qualità con foto">Foto a fine lavoro</label>
+        </div>
+        <div class="campo"><textarea data-k="distingue" data-label="Cosa vi distingue, a parole vostre" placeholder="Con parole tue: cosa ti dicono i clienti contenti?"></textarea></div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">12</span>Clienti attuali, referenze, recensioni</h4>
+        <p class="perche"><b>Perché:</b> una recensione vera vale 10 post. Se ci sono clienti storici della mamma, sono i primi da chiamare per una frase e una foto.</p>
+        <div class="campo" style="margin-bottom:10px"><textarea data-k="referenze" data-label="Clienti e referenze" placeholder="es. 6 condomini in centro, uno studio dentistico, 2 negozi…"></textarea></div>
+        <label style="font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--grigio)">Recensioni Google oggi</label>
+        <div class="scala" style="margin-top:6px">
+          <label class="chip"><input type="radio" name="rec" data-k="recensioni" data-label="Recensioni Google" value="Nessuna">0</label>
+          <label class="chip"><input type="radio" name="rec" data-k="recensioni" value="1-5">1–5</label>
+          <label class="chip"><input type="radio" name="rec" data-k="recensioni" value="6-15">6–15</label>
+          <label class="chip"><input type="radio" name="rec" data-k="recensioni" value="16-40">16–40</label>
+          <label class="chip"><input type="radio" name="rec" data-k="recensioni" value="40+">40+</label>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">13</span>Foto che avete già</h4>
+        <p class="perche"><b>Perché:</b> nelle pulizie <b>il prima/dopo è il contenuto che converte di più</b>. Senza foto vere usiamo grafica, ma i risultati sono la metà.</p>
+        <div class="scelte">
+          <label class="chip"><input type="checkbox" data-k="foto" data-label="Foto disponibili" value="Prima/dopo">Prima/dopo</label>
+          <label class="chip"><input type="checkbox" data-k="foto" value="Team al lavoro">Team al lavoro</label>
+          <label class="chip"><input type="checkbox" data-k="foto" value="Furgone">Furgone</label>
+          <label class="chip"><input type="checkbox" data-k="foto" value="Attrezzatura">Attrezzatura</label>
+          <label class="chip"><input type="checkbox" data-k="foto" value="Foto vecchie della mamma">Foto storiche</label>
+          <label class="chip"><input type="checkbox" data-k="foto" value="Nessuna">Nessuna</label>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">14</span>Concorrenti in zona</h4>
+        <p class="perche"><b>Perché:</b> li guardiamo per fare l'opposto: se tutti sono blu e "professionali", noi dobbiamo riconoscerci a colpo d'occhio.</p>
+        <div class="campo"><input type="text" data-k="concorrenti" data-label="Concorrenti" placeholder="nomi che senti spesso, o che vedi sui furgoni"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="occhiello">D · Obiettivi e mezzi</p>
+      <div class="domanda">
+        <h4><span class="n">15</span>Obiettivo nei prossimi 6 mesi</h4>
+        <p class="perche"><b>Perché:</b> un contratto da 300 €/mese per un anno vale 3.600 €: cambia quanto ha senso spendere per trovarlo.</p>
+        <div class="scelte" style="margin-bottom:10px">
+          <label class="chip"><input type="checkbox" data-k="obiettivi" data-label="Obiettivi 6 mesi" value="Più contratti aziende/condomini">Più contratti aziende/condomini</label>
+          <label class="chip"><input type="checkbox" data-k="obiettivi" value="Più clienti privati">Più clienti privati</label>
+          <label class="chip"><input type="checkbox" data-k="obiettivi" value="Riprendere i clienti storici">Riprendere i clienti storici</label>
+          <label class="chip"><input type="checkbox" data-k="obiettivi" value="Assumere">Assumere</label>
+          <label class="chip"><input type="checkbox" data-k="obiettivi" value="Alzare i prezzi">Alzare i prezzi</label>
+        </div>
+        <div class="griglia g2">
+          <div class="campo"><label>Nuovi clienti al mese che vorresti</label><input type="text" data-k="clienti_mese" data-label="Nuovi clienti/mese desiderati" placeholder="es. 4 contratti o 10 interventi"></div>
+          <div class="campo"><label>Quanto vale un cliente medio <em>all'anno</em></label><input type="text" data-k="valore_cliente" data-label="Valore cliente medio" placeholder="es. 2.000 €"></div>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">16</span>Budget mensile per la pubblicità</h4>
+        <p class="perche"><b>Perché:</b> sotto i 150 €/mese la pubblicità locale non dà dati leggibili. Nella sezione 11 vedi cosa ci si aspetta per ogni cifra.</p>
+        <div class="scala">
+          <label class="chip"><input type="radio" name="bud" data-k="budget" data-label="Budget pubblicità" value="0 (solo organico)">0</label>
+          <label class="chip"><input type="radio" name="bud" data-k="budget" value="150-300 €/mese">150–300</label>
+          <label class="chip"><input type="radio" name="bud" data-k="budget" value="300-600 €/mese">300–600</label>
+          <label class="chip"><input type="radio" name="bud" data-k="budget" value="600-1000 €/mese">600–1000</label>
+          <label class="chip"><input type="radio" name="bud" data-k="budget" value="1000+ €/mese">1000+</label>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">17</span>Chi gestisce i social, e quanto tempo c'è</h4>
+        <p class="perche"><b>Perché:</b> decide quanto deve essere semplice il sistema. Se pubblichi tu, ti lasciamo template e calendario; se lo facciamo noi, ci servono foto ogni settimana.</p>
+        <div class="scelte" style="margin-bottom:10px">
+          <label class="chip"><input type="radio" name="ges" data-k="gestione" data-label="Gestione social" value="Il titolare">Pubblico io</label>
+          <label class="chip"><input type="radio" name="ges" data-k="gestione" value="Apex Media">Apex Media</label>
+          <label class="chip"><input type="radio" name="ges" data-k="gestione" value="Insieme: foto dal titolare, pubblicazione Apex">Insieme</label>
+        </div>
+        <div class="griglia g2">
+          <div class="campo"><label>Ore a settimana disponibili</label><input type="text" data-k="tempo" data-label="Tempo settimanale per i social" placeholder="es. 1 ora il sabato"></div>
+          <div class="campo"><label>Profili già esistenti</label><input type="text" data-k="profili" data-label="Profili esistenti" placeholder="es. @euroclean_pulizie su IG, pagina FB vecchia"></div>
+        </div>
+      </div>
+      <div class="domanda">
+        <h4><span class="n">18</span>Sito web</h4>
+        <p class="perche"><b>Perché:</b> per partire basta una pagina sola con i servizi e il bottone WhatsApp: è dove mandiamo chi clicca la pubblicità.</p>
+        <div class="scelte">
+          <label class="chip"><input type="radio" name="sito" data-k="sito" data-label="Sito web" value="Sì, subito (pagina preventivo)">Sì, subito</label>
+          <label class="chip"><input type="radio" name="sito" data-k="sito" value="Più avanti">Più avanti</label>
+          <label class="chip"><input type="radio" name="sito" data-k="sito" value="Ne ho già uno">Ne ho già uno</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1">
+      <p class="occhiello">E · I gusti (contano, ma vengono dopo i clienti)</p>
+      <div class="griglia g2">
+        <div class="domanda">
+          <h4><span class="n">19</span>Lo stile che senti tuo</h4>
+          <p class="perche"><b>Perché:</b> deve piacere a te per anni, ma soprattutto deve convincere il tuo cliente ideale (domanda 8).</p>
+          <div class="scelte">
+            <label class="chip"><input type="radio" name="stile" data-k="stile" data-label="Stile preferito" value="Fresco e moderno">Fresco e moderno</label>
+            <label class="chip"><input type="radio" name="stile" data-k="stile" value="Premium ed elegante">Premium ed elegante</label>
+            <label class="chip"><input type="radio" name="stile" data-k="stile" value="Verde, naturale, eco">Verde, naturale</label>
+            <label class="chip"><input type="radio" name="stile" data-k="stile" value="Energico e amichevole">Energico e amichevole</label>
+          </div>
+        </div>
+        <div class="domanda">
+          <h4><span class="n">20</span>Colori che vuoi, colori che non vuoi</h4>
+          <p class="perche"><b>Perché:</b> nel settore il blu/azzurro è ovunque. Non è vietato, ma va usato in modo diverso dagli altri.</p>
+          <div class="campo"><input type="text" data-k="colori" data-label="Colori sì / no" placeholder="es. mi piace il verde, niente giallo"></div>
+        </div>
+        <div class="domanda">
+          <h4><span class="n">21</span>Marchi che ti piacciono (anche di altri settori)</h4>
+          <p class="perche"><b>Perché:</b> ci dice il tono: sportivo, elegante, simpatico. Più preciso di mille aggettivi.</p>
+          <div class="campo"><input type="text" data-k="marchi" data-label="Marchi che piacciono" placeholder="es. Nike, Apple, la pizzeria sotto casa…"></div>
+        </div>
+        <div class="domanda">
+          <h4><span class="n">22</span>Cose da evitare assolutamente</h4>
+          <p class="perche"><b>Perché:</b> meglio saperlo ora che dopo il logo finito.</p>
+          <div class="campo"><input type="text" data-k="evitare" data-label="Da evitare" placeholder="es. niente scopa nel logo, niente nome in inglese"></div>
+        </div>
+        <div class="domanda">
+          <h4><span class="n">23</span>Vuoi apparire tu nelle foto e nei video?</h4>
+          <p class="perche"><b>Perché:</b> il volto del titolare è il contenuto che crea più fiducia nei servizi a domicilio. Ma deve essere una scelta comoda.</p>
+          <div class="scelte">
+            <label class="chip"><input type="radio" name="volto" data-k="volto" data-label="Titolare nelle foto/video" value="Sì, volentieri">Sì, volentieri</label>
+            <label class="chip"><input type="radio" name="volto" data-k="volto" value="Solo foto, niente video">Solo foto</label>
+            <label class="chip"><input type="radio" name="volto" data-k="volto" value="Preferisco di no">Preferisco di no</label>
+          </div>
+        </div>
+        <div class="domanda">
+          <h4><span class="n">24</span>Quando vorresti essere "online" con tutto?</h4>
+          <p class="perche"><b>Perché:</b> fissa il ritmo del piano nella sezione 14.</p>
+          <div class="campo"><input type="text" data-k="scadenza" data-label="Data obiettivo" placeholder="es. entro fine mese, prima di gennaio"></div>
+        </div>
+      </div>
+      <div class="domanda" style="border:0">
+        <h4><span class="n">25</span>Note libere, cose dette a voce</h4>
+        <div class="campo"><textarea data-k="note" data-label="Note libere" placeholder="Tutto quello che esce durante la chiacchierata e non ha una casella." style="min-height:110px"></textarea></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 NOME ============ -->
+<section class="sez" id="s02">
+  <div class="sez-testa">
+    <div><p class="occhiello">02 — Il nome</p><h2>Tenere Euroclean<b> o ripartire da zero?</b></h2></div>
+    <p class="lato">Il nome è l'unica cosa che <b>non si cambia più</b> dopo: va su furgone, divise, Google, contratti. Decidiamo con criteri, non a sensazione.</p>
+  </div>
+
+  <div class="nome-live" style="margin-bottom:22px">
+    <div class="nome-grande">
+      <b data-nome>Euroclean</b>
+      <span data-descrittore>Impresa di pulizie</span>
+      <div class="sottile">Anteprima dal vivo: cambia il nome nella domanda 1 della scheda e qui si aggiorna.</div>
+    </div>
+    <div class="card">
+      <h3>I 5 criteri di un nome che vende</h3>
+      <ul class="lista spunta">
+        <li><b>Si dice al telefono senza spiegarlo.</b> "Euroclean" va bene; "Kleanix" no.</li>
+        <li><b>È libero</b> su Google nella tua zona, come @instagram e come dominio .it.</li>
+        <li><b>Non è solo "pulizie + città":</b> non si ricorda e non si protegge.</li>
+        <li><b>Funziona anche fra 10 anni</b> se aggiungi servizi (sanificazione, giardini).</li>
+        <li><b>Sta bene piccolo:</b> sul profilo tondo e sul biglietto.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="griglia g3" style="margin-bottom:22px">
+    <div class="card">
+      <span class="etichetta">Strada 1</span>
+      <h3 style="margin-top:10px">Tenere "Euroclean"</h3>
+      <p class="piccolo">Continuità con la mamma e con i clienti che già lo conoscono. Costa zero da spiegare.</p>
+      <ul class="lista no" style="margin-top:10px"><li>Esistono già molte "Euroclean" in Italia: su Google si rischia di finire sotto agli altri.</li><li>@euroclean su Instagram è quasi certamente occupato.</li><li>Suona anni '90 e un po' generico.</li></ul>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="nome_tenere"><button class="si" title="Mi piace">👍</button><button class="forse" title="Forse">🤔</button><button class="no" title="No">👎</button></div></div>
+    </div>
+    <div class="card consigliata">
+      <span class="etichetta ass">Consigliata se si tiene il nome</span>
+      <h3 style="margin-top:10px">Euroclean, ma "firmato"</h3>
+      <p class="piccolo">Si tiene la parola, ma si aggiunge un elemento che la rende unica e locale: il cognome, la città o l'anno. Es. <b>"Euroclean <span data-citta>Alessandria</span>"</b>, <b>"Euroclean dal <span data-anno>1998</span>"</b>. Su Google vince il locale, i clienti storici riconoscono il nome, e l'handle Instagram si libera.</p>
+      <div class="scelte" style="margin-top:10px">
+        <button class="chip" data-usa-nome="Euroclean {citta}">Euroclean + città</button>
+        <button class="chip" data-usa-nome="Euroclean Service">Euroclean Service</button>
+        <button class="chip" data-usa-nome="Euroclean Pulizie">Euroclean Pulizie</button>
+      </div>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="nome_firmato"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+    <div class="card">
+      <span class="etichetta">Strada 3</span>
+      <h3 style="margin-top:10px">Nome nuovo</h3>
+      <p class="piccolo">Un marchio tutto tuo, corto, libero ovunque. Si perde un po' di continuità, ma si guadagna un nome che si ricorda e si protegge. Sotto, 6 proposte già controllate per pronuncia e significato.</p>
+      <div class="nota ambra" style="margin-top:10px"><b>Ponte:</b> per i primi 12 mesi, nella bio e sul furgone scriviamo "ex Euroclean, dal <span data-anno>1998</span>". Nessun cliente storico si perde.</div>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="nome_nuovo"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:22px">
+    <p class="occhiello">6 proposte di nome nuovo</p>
+    <div class="griglia" style="gap:10px">
+      <div class="proposta-nome"><span class="n">Nitido</span><span class="perche">"Nitido" vuol dire pulito, chiaro, preciso. Corto, italiano, nessuno lo usa nelle pulizie. Sta benissimo nel logo.</span><span class="etichetta ok">Consigliato</span><button class="btn mini" data-usa-nome="Nitido">Prova nel logo</button><div class="voto" data-voto="nome_nitido"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="proposta-nome"><span class="n">Lindo</span><span class="perche">"Lindo e pinto": lo capisce anche la nonna. Caldo, simpatico, da famiglie e privati.</span><button class="btn mini" data-usa-nome="Lindo">Prova nel logo</button><div class="voto" data-voto="nome_lindo"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="proposta-nome"><span class="n">Splendo</span><span class="perche">Da "splendere". Suona moderno e positivo, funziona anche per sanificazione e vetri.</span><button class="btn mini" data-usa-nome="Splendo">Prova nel logo</button><div class="voto" data-voto="nome_splendo"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="proposta-nome"><span class="n">Netta</span><span class="perche">Netto = pulito, preciso. Femminile: può essere un omaggio alla fondatrice. Elegante, da uffici e studi.</span><button class="btn mini" data-usa-nome="Netta">Prova nel logo</button><div class="voto" data-voto="nome_netta"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="proposta-nome"><span class="n">Lucente</span><span class="perche">Evoca pavimenti e vetri che brillano. Più lungo, ma molto "premium".</span><button class="btn mini" data-usa-nome="Lucente">Prova nel logo</button><div class="voto" data-voto="nome_lucente"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="proposta-nome"><span class="n">Chiaro Service</span><span class="perche">"Chiaro" = pulito e trasparente nei prezzi. "Service" lo rende da aziende e condomini.</span><button class="btn mini" data-usa-nome="Chiaro Service">Prova nel logo</button><div class="voto" data-voto="nome_chiaro"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+    <div class="griglia g2" style="margin-top:16px">
+      <div class="campo"><label>Altre idee uscite durante l'incontro</label><input type="text" data-k="nomi_idee" data-label="Altre idee di nome" placeholder="scrivile qui, anche brutte"></div>
+      <div class="campo"><label>Nome scelto <em>o da verificare</em></label><input type="text" data-k="nome_finale" data-label="Nome finale / da verificare" placeholder="es. Nitido"></div>
+    </div>
+  </div>
+
+  <div class="card lav">
+    <h3>Controlliamo subito se è libero</h3>
+    <p class="piccolo">I pulsanti aprono le verifiche per il nome scritto nella scheda (<b data-nome>Euroclean</b>). Spunta cosa risulta libero.</p>
+    <div class="link-check" style="margin:12px 0">
+      <a class="btn" target="_blank" rel="noopener" data-check="google">Google: "<span data-nome>Euroclean</span> pulizie"</a>
+      <a class="btn" target="_blank" rel="noopener" data-check="maps">Google Maps in zona</a>
+      <a class="btn" target="_blank" rel="noopener" data-check="ig">Instagram @<span data-handle>euroclean</span></a>
+      <a class="btn" target="_blank" rel="noopener" data-check="fb">Facebook</a>
+      <a class="btn" target="_blank" rel="noopener" data-check="dominio">Dominio <span data-handle>euroclean</span>.it</a>
+      <a class="btn" target="_blank" rel="noopener" data-check="marchio">Marchi registrati (EUIPO)</a>
+    </div>
+    <div class="scelte">
+      <label class="chip"><input type="checkbox" data-k="libero" data-label="Verifiche nome" value="Google in zona: libero">Google in zona: ok</label>
+      <label class="chip"><input type="checkbox" data-k="libero" value="Instagram: libero">Instagram: ok</label>
+      <label class="chip"><input type="checkbox" data-k="libero" value="Facebook: libero">Facebook: ok</label>
+      <label class="chip"><input type="checkbox" data-k="libero" value="Dominio .it: libero">Dominio .it: ok</label>
+      <label class="chip"><input type="checkbox" data-k="libero" value="Nessun marchio registrato uguale">Marchio: ok</label>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 LOGO ============ -->
+<section class="sez" id="s03">
+  <div class="sez-testa">
+    <div><p class="occhiello">03 — Il logo</p><h2>Tre direzioni,<b> con il tuo nome dentro.</b></h2></div>
+    <p class="lato">Sono <b>studi di direzione</b>, non loghi finiti: servono a scegliere la strada. Il nome e i colori sono quelli scelti nelle sezioni 1 e 4. Cambia palette e guarda come reagiscono.</p>
+  </div>
+
+  <div class="griglia g3" style="margin-bottom:22px">
+    <div class="card logo-card consigliata">
+      <span class="etichetta ass">Direzione A · consigliata</span>
+      <div style="margin-top:8px"><h3>La goccia con la spunta</h3><p class="piccolo">Una goccia d'acqua (pulito, fresco) con dentro una spunta (fatto, verificato, puntuale). Dice il servizio e la promessa in un segno solo. Si legge anche a 16 pixel.</p></div>
+      <div class="logo-vetrina" data-logo="A" data-var="orizz" data-mode="colore"></div>
+      <div class="logo-mini">
+        <div class="logo-vetrina icona" data-logo="A" data-var="mark" data-mode="colore"></div>
+        <div class="logo-vetrina scura" data-logo="A" data-var="mark" data-mode="bianco"></div>
+        <div class="logo-vetrina colore" data-logo="A" data-var="mark" data-mode="bianco"></div>
+      </div>
+      <div class="spiega">
+        <div><i>1</i><span><b>Goccia:</b> acqua, igiene, freschezza. Il simbolo più immediato del settore, ma trattato in modo geometrico, non "da cartone animato".</span></div>
+        <div><i>2</i><span><b>Spunta:</b> lavoro fatto, controllato. È il gesto che fa il cliente quando torna e trova tutto in ordine.</span></div>
+        <div><i>3</i><span><b>Il nome in grassetto</b> e il descrittore sotto, spaziato: serio da aziende, pulito da privati.</span></div>
+      </div>
+      <div class="logo-azioni"><button class="btn mini" data-scarica="A-orizz">Scarica SVG</button><button class="btn mini" data-scarica="A-mark">Solo simbolo</button></div>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="logo_A"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+
+    <div class="card logo-card">
+      <span class="etichetta">Direzione B · premium</span>
+      <div style="margin-top:8px"><h3>La scintilla</h3><p class="piccolo">La stella a quattro punte del "brilla": quella che si disegna sui vetri puliti nelle pubblicità. Elegante, da hotel, studi e uffici di rappresentanza. Nome in maiuscolo spaziato.</p></div>
+      <div class="logo-vetrina" data-logo="B" data-var="orizz" data-mode="colore"></div>
+      <div class="logo-mini">
+        <div class="logo-vetrina icona" data-logo="B" data-var="mark" data-mode="colore"></div>
+        <div class="logo-vetrina scura" data-logo="B" data-var="mark" data-mode="bianco"></div>
+        <div class="logo-vetrina colore" data-logo="B" data-var="mark" data-mode="bianco"></div>
+      </div>
+      <div class="spiega">
+        <div><i>1</i><span><b>Scintilla grande + scintilla piccola:</b> il risultato (brilla) e il dettaglio (anche gli angoli).</span></div>
+        <div><i>2</i><span><b>Maiuscolo spaziato:</b> il registro dei marchi premium. Funziona meglio con nomi corti.</span></div>
+        <div><i>3</i><span><b>Rischio:</b> la scintilla è usata anche da prodotti per la casa. Va personalizzata nella versione finale.</span></div>
+      </div>
+      <div class="logo-azioni"><button class="btn mini" data-scarica="B-orizz">Scarica SVG</button><button class="btn mini" data-scarica="B-mark">Solo simbolo</button></div>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="logo_B"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+
+    <div class="card logo-card">
+      <span class="etichetta">Direzione C · solida</span>
+      <div style="margin-top:8px"><h3>Il monogramma con il colpo di panno</h3><p class="piccolo">La prima lettera del nome in un quadrato arrotondato, attraversata dalla curva di un panno che pulisce. Forte, da furgone e da divisa: si vede da lontano.</p></div>
+      <div class="logo-vetrina" data-logo="C" data-var="orizz" data-mode="colore"></div>
+      <div class="logo-mini">
+        <div class="logo-vetrina icona" data-logo="C" data-var="mark" data-mode="colore"></div>
+        <div class="logo-vetrina scura" data-logo="C" data-var="mark" data-mode="bianco"></div>
+        <div class="logo-vetrina colore" data-logo="C" data-var="mark" data-mode="bianco"></div>
+      </div>
+      <div class="spiega">
+        <div><i>1</i><span><b>La lettera</b> cambia con il nome: oggi è la "<span data-iniziale>E</span>". Resta uguale se un giorno il nome si allunga.</span></div>
+        <div><i>2</i><span><b>Il colpo di panno:</b> il gesto del lavoro, l'unica parte in colore d'accento. Dà movimento a un segno altrimenti statico.</span></div>
+        <div><i>3</i><span><b>Il quadrato</b> è già la foto profilo e l'icona app: non serve adattare nulla.</span></div>
+      </div>
+      <div class="logo-azioni"><button class="btn mini" data-scarica="C-orizz">Scarica SVG</button><button class="btn mini" data-scarica="C-mark">Solo simbolo</button></div>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="logo_C"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+  </div>
+
+  <div class="griglia g-dove" style="gap:18px">
+    <div class="card">
+      <h3>Dove lo vedranno i clienti (direzione selezionata: <span id="logoScelto">A</span>)</h3>
+      <div class="logo-toggle no-print" style="margin:8px 0 16px"><button class="chip on" data-scegli-logo="A">Goccia</button><button class="chip" data-scegli-logo="B">Scintilla</button><button class="chip" data-scegli-logo="C">Monogramma</button></div>
+      <div class="griglia g4" style="gap:12px; text-align:center">
+        <div><div class="icona-tonda" data-logo="S" data-var="mark" data-mode="bianco"></div><p class="piccolo" style="margin-top:8px"><b>Profilo social</b><br>tondo, piccolo</p></div>
+        <div><div style="display:grid;place-items:center;height:72px"><div class="favicon" data-logo="S" data-var="mark" data-mode="bianco"></div></div><p class="piccolo" style="margin-top:8px"><b>Icona sito</b><br>e scheda Google</p></div>
+        <div><div style="display:grid;place-items:center;height:72px;background:var(--p3);border-radius:12px;padding:10px"><div data-logo="S" data-var="orizz" data-mode="colore" style="width:100%"></div></div><p class="piccolo" style="margin-top:8px"><b>Intestazione</b><br>preventivi e fatture</p></div>
+        <div><div style="display:grid;place-items:center;height:72px;background:var(--p1);border-radius:12px;padding:10px"><div data-logo="S" data-var="orizz" data-mode="bianco" style="width:100%"></div></div><p class="piccolo" style="margin-top:8px"><b>Divisa e furgone</b><br>su fondo colorato</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Sul furgone</h3>
+      <div class="furgone">
+        <svg viewBox="0 0 400 200" id="furgoneSvg">
+          <rect x="0" y="170" width="400" height="2" fill="#cfd5db"/>
+          <path d="M40 150 V70 a10 10 0 0 1 10-10 h190 l60 40 h50 a10 10 0 0 1 10 10 v40 a8 8 0 0 1-8 8 H48 a8 8 0 0 1-8-8z" fill="#fff" stroke="#c9d0d6" stroke-width="2"/>
+          <path d="M240 60 l60 40 h-60z" fill="#dfe6ec"/>
+          <path d="M250 70 l36 24 h-36z" fill="#b9c6d1"/>
+          <rect x="40" y="128" width="320" height="22" fill="var(--p1)"/>
+          <path d="M40 128 h320 v-6 q-160 -14 -320 0z" fill="var(--p2)" opacity=".9"/>
+          <circle cx="95" cy="160" r="16" fill="#2b2f33"/><circle cx="95" cy="160" r="7" fill="#9aa3ab"/>
+          <circle cx="300" cy="160" r="16" fill="#2b2f33"/><circle cx="300" cy="160" r="7" fill="#9aa3ab"/>
+          <g id="furgoneLogo" transform="translate(56 72)"></g>
+          <text x="200" y="143" font-family="var(--fb)" font-size="9" font-weight="700" fill="#fff" letter-spacing="1" text-anchor="middle" id="furgoneTel">WhatsApp 333 1234567 · PREVENTIVO GRATUITO</text>
+        </svg>
+      </div>
+      <p class="piccolo" style="margin-top:10px">Logo grande sulla fiancata, numero WhatsApp leggibile a 10 metri, fascia nel colore primario. Il furgone fermo sotto un condominio è il tuo cartellone pubblicitario.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 COLORI ============ -->
+<section class="sez" id="s04">
+  <div class="sez-testa">
+    <div><p class="occhiello">04 — I colori</p><h2>Tre palette.<b> Clicca e il documento si ricolora.</b></h2></div>
+    <p class="lato">Pochi colori, <b>sempre gli stessi</b> dal furgone alle storie: così un post si riconosce prima di leggerlo. Ogni palette ha un primario (fiducia), un accento (azione) e un chiaro (sfondi).</p>
+  </div>
+
+  <div class="griglia g3" style="margin-bottom:22px" id="palette">
+    <div class="card palette on" data-pal="acqua">
+      <span class="etichetta ok">Consigliata · entrambi i target</span>
+      <h3 style="margin-top:10px">Acqua pulita</h3>
+      <div class="swatches"><i style="background:#0E3A5B"></i><i style="background:#22B8CF"></i><i style="background:#BFF0E1"></i><i style="background:#F3F8FB"></i><i style="background:#14212B"></i></div>
+      <div class="sw"><i style="background:#0E3A5B"></i><b>Blu profondo</b><span class="piccolo">fiducia, serietà</span><code>#0E3A5B</code><button data-copia="#0E3A5B">copia</button></div>
+      <div class="sw"><i style="background:#22B8CF"></i><b>Acqua</b><span class="piccolo">azione, bottoni</span><code>#22B8CF</code><button data-copia="#22B8CF">copia</button></div>
+      <div class="sw"><i style="background:#BFF0E1"></i><b>Menta</b><span class="piccolo">evidenze, adesivi</span><code>#BFF0E1</code><button data-copia="#BFF0E1">copia</button></div>
+      <div class="sw"><i style="background:#F3F8FB"></i><b>Ghiaccio</b><span class="piccolo">sfondi chiari</span><code>#F3F8FB</code><button data-copia="#F3F8FB">copia</button></div>
+      <p class="piccolo" style="margin-top:12px">Il blu è del settore, ma qui è <b>profondo</b> (non celeste) e l'acqua è <b>viva</b>: si stacca dai concorrenti pur restando "pulito".</p>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="pal_acqua"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+    <div class="card palette" data-pal="notte">
+      <span class="etichetta">Premium · uffici, hotel, studi</span>
+      <h3 style="margin-top:10px">Notte e sabbia</h3>
+      <div class="swatches"><i style="background:#0F1E33"></i><i style="background:#D4A853"></i><i style="background:#F1E3C2"></i><i style="background:#F7F3EC"></i><i style="background:#0B1526"></i></div>
+      <div class="sw"><i style="background:#0F1E33"></i><b>Blu notte</b><span class="piccolo">eleganza, contratto</span><code>#0F1E33</code><button data-copia="#0F1E33">copia</button></div>
+      <div class="sw"><i style="background:#D4A853"></i><b>Sabbia dorata</b><span class="piccolo">azione, pregio</span><code>#D4A853</code><button data-copia="#D4A853">copia</button></div>
+      <div class="sw"><i style="background:#F1E3C2"></i><b>Crema</b><span class="piccolo">evidenze</span><code>#F1E3C2</code><button data-copia="#F1E3C2">copia</button></div>
+      <div class="sw"><i style="background:#F7F3EC"></i><b>Avorio</b><span class="piccolo">sfondi chiari</span><code>#F7F3EC</code><button data-copia="#F7F3EC">copia</button></div>
+      <p class="piccolo" style="margin-top:12px">Nessuno nelle pulizie usa l'oro. Dice "servizio di livello, prezzo giustificato". Meno adatta se il target principale sono famiglie attente al prezzo.</p>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="pal_notte"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+    <div class="card palette" data-pal="verde">
+      <span class="etichetta">Eco · famiglie e sanificazione</span>
+      <h3 style="margin-top:10px">Verde fresco</h3>
+      <div class="swatches"><i style="background:#136F4E"></i><i style="background:#8BE0B1"></i><i style="background:#D9F5E4"></i><i style="background:#F5FAF6"></i><i style="background:#0F2A1E"></i></div>
+      <div class="sw"><i style="background:#136F4E"></i><b>Verde bosco</b><span class="piccolo">natura, salute</span><code>#136F4E</code><button data-copia="#136F4E">copia</button></div>
+      <div class="sw"><i style="background:#8BE0B1"></i><b>Menta viva</b><span class="piccolo">azione, freschezza</span><code>#8BE0B1</code><button data-copia="#8BE0B1">copia</button></div>
+      <div class="sw"><i style="background:#D9F5E4"></i><b>Verde latte</b><span class="piccolo">evidenze</span><code>#D9F5E4</code><button data-copia="#D9F5E4">copia</button></div>
+      <div class="sw"><i style="background:#F5FAF6"></i><b>Bianco erba</b><span class="piccolo">sfondi chiari</span><code>#F5FAF6</code><button data-copia="#F5FAF6">copia</button></div>
+      <p class="piccolo" style="margin-top:12px">Da scegliere solo se i prodotti eco sono davvero un punto di forza (domanda 11): altrimenti è una promessa che non si mantiene.</p>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="pal_verde"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+  </div>
+
+  <div class="griglia g2" style="gap:18px">
+    <div class="card">
+      <h3>Come si usano (regola 60 · 30 · 10)</h3>
+      <div class="uso-colori" style="grid-template-columns:1fr">
+        <div>
+          <div class="bar"><i style="flex:60;background:var(--p3)"></i><i style="flex:30;background:var(--p1)"></i><i style="flex:10;background:var(--p2)"></i></div>
+          <ul class="lista">
+            <li><b>60% chiaro:</b> sfondi di post, storie, sito. Fa respirare le foto.</li>
+            <li><b>30% primario:</b> titoli, fasce, piede dei post, furgone.</li>
+            <li><b>10% accento:</b> <b>solo</b> i bottoni e le parole da cliccare: "Scrivici", "Preventivo gratis". Se l'accento è ovunque, non si vede più.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Leggibile per tutti</h3>
+      <p class="piccolo">Le coppie testo/sfondo che usiamo, con il contrasto misurato. Sopra 4,5 si legge anche al sole dal telefono.</p>
+      <div class="contrasto" id="contrasto" style="margin-top:12px"></div>
+      <p class="piccolo" style="margin-top:10px">L'accento non si usa mai per testi lunghi: solo per bottoni e parole grandi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 CARATTERI ============ -->
+<section class="sez" id="s05">
+  <div class="sez-testa">
+    <div><p class="occhiello">05 — I caratteri</p><h2>Due voci,<b> una sola personalità.</b></h2></div>
+    <p class="lato">Un carattere per i titoli (la voce che chiama) e uno per leggere (la voce che spiega). <b>Gratuiti, disponibili su Canva</b> e sul telefono: così pubblichi senza problemi.</p>
+  </div>
+  <div class="griglia g3" style="margin-bottom:22px" id="fonts">
+    <div class="card font-card on" data-font="sora" style="--ft-a:'Sora',sans-serif; --fb-a:'Inter',sans-serif">
+      <span class="etichetta ok">Consigliata</span>
+      <div class="anteprima" style="font-family:var(--ft-a)"><b>Pulito. Puntuale. Punto.</b><p style="font-family:var(--fb-a)">Preventivo gratuito in 24 ore, personale assunto, fattura sempre.</p></div>
+      <h3>Sora + Inter</h3>
+      <p class="piccolo">Sora è geometrico e moderno, con un carattere riconoscibile senza strafare. Inter è il più leggibile sul telefono. Coppia da "azienda seria e attuale".</p>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="font_sora"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+    <div class="card font-card" data-font="outfit" style="--ft-a:'Outfit',sans-serif; --fb-a:'DM Sans',sans-serif">
+      <span class="etichetta">Amichevole</span>
+      <div class="anteprima" style="font-family:var(--ft-a)"><b>Pulito. Puntuale. Punto.</b><p style="font-family:var(--fb-a)">Preventivo gratuito in 24 ore, personale assunto, fattura sempre.</p></div>
+      <h3>Outfit + DM Sans</h3>
+      <p class="piccolo">Più tondo e simpatico: parla alle famiglie, meno agli amministratori di condominio. Ottimo con la palette verde.</p>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="font_outfit"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+    <div class="card font-card" data-font="manrope" style="--ft-a:'Manrope',sans-serif; --fb-a:'Manrope',sans-serif">
+      <span class="etichetta">Premium</span>
+      <div class="anteprima" style="font-family:var(--ft-a)"><b>Pulito. Puntuale. Punto.</b><p style="font-family:var(--fb-a)">Preventivo gratuito in 24 ore, personale assunto, fattura sempre.</p></div>
+      <h3>Manrope, da solo</h3>
+      <p class="piccolo">Un solo carattere, usato pesante nei titoli e leggero nel testo. Essenziale, elegante: la scelta naturale con "Notte e sabbia".</p>
+      <div class="voto-riga"><span class="piccolo">Il tuo voto</span><div class="voto" data-voto="font_manrope"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>La gerarchia, sempre uguale (coppia selezionata)</h3>
+    <div class="gerarchia">
+      <div><small>Titolo post</small><span class="t1">Vetri come nuovi in 2 ore</span></div>
+      <div><small>Sottotitolo</small><span class="t2">Uffici e studi in centro</span></div>
+      <div><small>Testo</small><span class="t3">Interveniamo la sera o nel weekend, senza fermare il tuo lavoro. Personale assunto e assicurato.</span></div>
+      <div><small>Etichetta</small><span class="t4">Preventivo gratuito · <span data-citta>Alessandria</span></span></div>
+      <div><small>Bottone</small><span class="t5">Scrivici su WhatsApp</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 PROFILO ============ -->
+<section class="sez" id="s06">
+  <div class="sez-testa">
+    <div><p class="occhiello">06 — Il profilo</p><h2>Instagram e Facebook:<b> in 3 secondi si capisce tutto.</b></h2></div>
+    <p class="lato">Chi arriva sul profilo decide in 3 secondi se scriverti. Deve vedere: <b>cosa fai, dove, e come contattarti</b>. La griglia dei post è la vetrina: ordinata, con i tuoi colori.</p>
+  </div>
+  <div class="griglia profilo-griglia" style="gap: 28px; align-items:start">
+    <div class="telefono">
+      <div class="barra-ig"><span data-handle>euroclean</span>🔔 ⋯</div>
+      <div class="ig-testa">
+        <div class="avatar" data-logo="S" data-var="mark" data-mode="bianco"></div>
+        <div class="ig-stat"><div><b>24</b>post</div><div><b>318</b>follower</div><div><b>92</b>seguiti</div></div>
+      </div>
+      <div class="ig-bio">
+        <b><span data-nome>Euroclean</span> · Impresa di pulizie <span data-citta>Alessandria</span></b>
+        <div class="cat">Servizio di pulizie</div>
+        🧽 Uffici, condomini, case · dal <span data-anno>1998</span><br>
+        ✅ Preventivo gratuito in 24h<br>
+        📍 <span data-citta>Alessandria</span> e provincia<br>
+        👇 Scrivici su WhatsApp<br>
+        <a>wa.me/39<span data-telnum>3331234567</span></a>
+      </div>
+      <div class="ig-btn"><span class="p">WhatsApp</span><span>Segui</span><span>Contatta</span></div>
+      <div class="ig-hl">
+        <div><i>↔</i>Prima/dopo</div><div><i>☰</i>Servizi</div><div><i>★</i>Recensioni</div><div><i>👥</i>Team</div><div><i>€</i>Preventivo</div>
+      </div>
+      <div class="ig-griglia">
+        <div class="foto pd">PRIMA → DOPO</div><div class="c1">Preventivo<br>gratuito<br>in 24h</div><div class="foto">team</div>
+        <div class="c2">3 errori<br>sui vetri</div><div class="foto pd">PRIMA → DOPO</div><div class="c3">★★★★★<br>"Puntuali e<br>precisi"</div>
+        <div class="foto">furgone</div><div class="c2">Uffici:<br>da 150€/mese</div><div class="foto pd">PRIMA → DOPO</div>
+      </div>
+    </div>
+    <div class="griglia" style="gap:16px">
+      <div class="card">
+        <h3>La bio, riga per riga</h3>
+        <div class="spiega">
+          <div><i>1</i><span><b>Nome del profilo:</b> "<span data-nome>Euroclean</span> · Impresa di pulizie <span data-citta>Alessandria</span>". Instagram cerca anche nel nome: chi scrive "pulizie <span data-citta>Alessandria</span>" ti trova.</span></div>
+          <div><i>2</i><span><b>Riga 1:</b> cosa fai e da quando. "Dal <span data-anno>1998</span>" è la riga che gli altri non possono scrivere.</span></div>
+          <div><i>3</i><span><b>Riga 2:</b> la promessa: preventivo gratuito in 24 ore.</span></div>
+          <div><i>4</i><span><b>Riga 3:</b> dove. Niente "Italia": la gente cerca il vicino.</span></div>
+          <div><i>5</i><span><b>Link:</b> diretto a WhatsApp con messaggio precompilato, non al sito. Un passaggio in meno = più contatti.</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Le 5 storie in evidenza</h3>
+        <ul class="lista">
+          <li><b>Prima/dopo</b>: le prove. Sempre la prima.</li>
+          <li><b>Servizi</b>: una storia per servizio, con "a partire da".</li>
+          <li><b>Recensioni</b>: screenshot delle recensioni Google.</li>
+          <li><b>Team</b>: facce e nomi: chi entra in casa del cliente.</li>
+          <li><b>Preventivo</b>: come funziona in 3 passi, e il bottone WhatsApp.</li>
+        </ul>
+      </div>
+      <div class="card lav">
+        <h3>Facebook: stessa cosa, un pubblico diverso</h3>
+        <p class="piccolo" style="margin:0">Su Facebook ci sono gli amministratori di condominio, i titolari di negozi e le famiglie over 40: <b>è il canale che porta più contratti</b>. Stessi post, stessa bio, stessa foto profilo. In più: i gruppi locali ("Sei di <span data-citta>Alessandria</span> se…") dove un prima/dopo con il nome della via fa il giro della città.</p>
+      </div>
+      <div class="griglia g2">
+        <div class="campo"><label>Handle desiderato</label><input type="text" data-k="handle" data-label="Handle Instagram desiderato" placeholder="es. nitido.pulizie"></div>
+        <div class="campo"><label>Note sul profilo</label><input type="text" data-k="profilo_note" data-label="Note profilo" placeholder="cosa cambiare rispetto al mockup"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 STORIE ============ -->
+<section class="sez" id="s07">
+  <div class="sez-testa">
+    <div><p class="occhiello">07 — Le storie</p><h2>Cinque formati<b> che portano messaggi su WhatsApp.</b></h2></div>
+    <p class="lato">Le storie durano 24 ore e si fanno <b>dal telefono, in 2 minuti</b>. Per questo sono il formato giusto per chi lavora tutto il giorno. Ogni formato ha un'unica cosa da fare alla fine: scrivere.</p>
+  </div>
+  <div class="carosello-nav no-print"><button class="btn mini" data-scorri="#storie" data-dir="-1">← Indietro</button><button class="btn mini" data-scorri="#storie" data-dir="1">Avanti →</button></div>
+  <div class="carosello" id="storie">
+    <div class="storia-wrap">
+      <div class="storia">
+        <div class="top"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span> · 2h</div>
+        <div class="foto sporco" style="flex:1;display:flex;align-items:flex-start;padding:40px 14px 14px"><span class="pill bianca">PRIMA</span></div>
+        <div class="foto pulito" style="flex:1;display:flex;align-items:flex-start;justify-content:flex-end;padding:14px"><span class="pill">DOPO</span></div>
+        <div class="sticker" style="top:46%;left:14px">Cucina ristorante · 3 ore</div>
+        <div class="cta-wa">Vuoi lo stesso risultato? Scrivici →</div>
+        <div class="fondo"><span>Invia messaggio</span>♡ ➤</div>
+      </div>
+      <h4>1 · Prima / dopo</h4>
+      <p class="piccolo">Due foto dallo stesso punto, prima e dopo. Adesivo con cosa e quanto tempo. <b>Il formato che converte di più nel settore</b>: la prova senza parole.</p>
+      <div class="ok-box">✓ Sempre lo stesso angolo di ripresa, luce accesa</div>
+    </div>
+    <div class="storia-wrap">
+      <div class="storia" style="background:var(--p3);color:var(--p4)">
+        <div class="top" style="color:var(--p4)"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span> · 5h</div>
+        <div style="padding:60px 20px 0;flex:1;display:flex;flex-direction:column;gap:12px">
+          <span class="pill" style="align-self:flex-start">PREVENTIVO GRATUITO</span>
+          <div class="testo-grande" style="color:var(--p1)">Quanto costa pulire il tuo ufficio?</div>
+          <div style="font-family:var(--fb);font-size:11.5px;line-height:1.4">Mandaci 2 foto e i metri quadri. <b>Ti rispondiamo entro 24 ore</b> con un prezzo chiaro.</div>
+          <div style="font-family:var(--fb);font-size:11px;opacity:.7">📍 <span data-citta>Alessandria</span> e provincia</div>
+        </div>
+        <div class="cta-wa">💬 Chiedi il preventivo</div>
+        <div class="fondo" style="color:var(--p4)"><span style="border-color:var(--p4)">Invia messaggio</span>♡ ➤</div>
+      </div>
+      <h4>2 · Preventivo in 24h</h4>
+      <p class="piccolo">La storia "di servizio": una domanda che il cliente si fa già, e la risposta facile. Si ripubblica <b>ogni settimana</b> cambiando il servizio (ufficio, condominio, casa).</p>
+      <div class="ok-box">✓ Link sticker diretto a WhatsApp</div>
+    </div>
+    <div class="storia-wrap">
+      <div class="storia">
+        <div class="top"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span> · 20min</div>
+        <div class="foto" style="flex:1"></div>
+        <div class="sticker" style="top:60px;right:14px;transform:rotate(3deg)">📍 Condominio via Roma</div>
+        <div class="sticker" style="bottom:90px;left:14px">Oggi: scale + vetri 🧽</div>
+        <div style="position:absolute;bottom:50px;left:14px;right:14px;font-family:var(--fb);font-size:11px;background:rgba(0,0,0,.45);padding:8px 10px;border-radius:8px">Ore 7:30, prima che arrivino gli inquilini. Finiamo alle 10.</div>
+        <div class="fondo"><span>Invia messaggio</span>♡ ➤</div>
+      </div>
+      <h4>3 · Oggi siamo qui</h4>
+      <p class="piccolo">Foto o video di 5 secondi dal cantiere, con il posto e l'orario. Fa vedere che <b>lavorate davvero, ogni giorno</b>, in posti che la gente conosce. Zero montaggio.</p>
+      <div class="ok-box">✓ 3 volte a settimana, dal telefono</div>
+    </div>
+    <div class="storia-wrap">
+      <div class="storia" style="background:var(--p1)">
+        <div class="top"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span> · 1g</div>
+        <div style="padding:70px 20px 0;flex:1;display:flex;flex-direction:column;gap:10px">
+          <div style="color:#F2B01E;font-size:18px;letter-spacing:2px">★★★★★</div>
+          <div class="testo-grande" style="font-family:var(--serif);font-weight:500;font-size:20px">"Puntuali, precisi e gentili. Lo studio non è mai stato così in ordine."</div>
+          <div style="font-family:var(--fb);font-size:11px;opacity:.8">Dott.ssa Bianchi · studio dentistico · recensione Google</div>
+        </div>
+        <div class="cta-wa" style="background:#fff;color:var(--p1)">Leggi tutte le recensioni</div>
+        <div class="fondo"><span>Invia messaggio</span>♡ ➤</div>
+      </div>
+      <h4>4 · La recensione</h4>
+      <p class="piccolo">Una recensione Google vera, copiata parola per parola, con nome e tipo di cliente. Si pubblica <b>il giorno dopo averla ricevuta</b> e va nella storia in evidenza "Recensioni".</p>
+      <div class="ok-box">✓ Chiedere la recensione a fine lavoro, con il link</div>
+    </div>
+    <div class="storia-wrap">
+      <div class="storia" style="background:var(--p2)">
+        <div class="top"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span> · 3h</div>
+        <div style="padding:64px 20px 14px;display:flex;flex-direction:column;gap:12px">
+          <div class="testo-grande">Qual è la cosa che odi di più pulire?</div>
+        </div>
+        <div class="sondaggio">
+          <div style="--w:48%"><span>Il forno 🔥<b>48%</b></span></div>
+          <div style="--w:31%"><span>I vetri 🪟<b>31%</b></span></div>
+          <div style="--w:21%"><span>Il bagno 🚿<b>21%</b></span></div>
+        </div>
+        <div style="margin:14px 20px 0;font-family:var(--fb);font-size:11px">Domani ti diciamo il trucco per quella che vince 👀</div>
+        <div class="fondo"><span>Invia messaggio</span>♡ ➤</div>
+      </div>
+      <h4>5 · Il sondaggio</h4>
+      <p class="piccolo">Una domanda leggera con l'adesivo sondaggio. Serve a <b>far interagire</b>: più risposte, più Instagram mostra le storie successive (quelle con il preventivo).</p>
+      <div class="ok-box">✓ Il giorno dopo, la risposta: un consiglio pratico</div>
+    </div>
+  </div>
+  <div class="card lav" style="margin-top:8px">
+    <b>La regola delle storie:</b> <span class="piccolo" style="color:var(--testo)">ogni giorno di lavoro una storia "oggi siamo qui"; ogni settimana un prima/dopo e un preventivo; ogni recensione nuova, una storia. Mai più di 5 storie di fila.</span>
+  </div>
+</section>
+
+<!-- ============ 08 POST ============ -->
+<section class="sez" id="s08">
+  <div class="sez-testa">
+    <div><p class="occhiello">08 — I post</p><h2>Sei formati,<b> con il testo già scritto.</b></h2></div>
+    <p class="lato">I post restano nel profilo e fanno la vetrina. Si alternano <b>foto vere</b> (prima/dopo, team) e <b>grafiche nei tuoi colori</b> (servizi, consigli, offerte). Il testo sotto ogni post è pronto: tasto "Copia" e via.</p>
+  </div>
+  <div class="carosello-nav no-print"><button class="btn mini" data-scorri="#posts" data-dir="-1">← Indietro</button><button class="btn mini" data-scorri="#posts" data-dir="1">Avanti →</button></div>
+  <div class="carosello" id="posts">
+    <div class="post-wrap">
+      <div class="post">
+        <div class="marchio bianco"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span></div>
+        <div class="pd"><div class="a">Prima</div><div class="b">Dopo</div></div>
+        <div class="post-piede">Scale condominiali · via Roma<small>2 operatori · 3 ore · ogni 15 giorni</small></div>
+      </div>
+      <h4>1 · Prima / dopo <span class="etichetta ok" style="margin-left:6px">il più forte</span></h4>
+      <div class="caption" data-caption>Scale di un condominio in via Roma, <span data-citta>Alessandria</span>. Prima e dopo il nostro passaggio: 2 operatori, 3 ore, ogni 15 giorni.
+
+Gli inquilini se ne accorgono. L'amministratore riceve meno lamentele. 
+
+Se anche nel tuo condominio le scale sono "quelle che nessuno pulisce", scrivici: preventivo gratuito in 24 ore, contratto senza vincoli.
+
+📲 WhatsApp <span data-tel>333 1234567</span>
+#pulizie<span data-hashcitta>alessandria</span> #puliziecondomini #primaedopo #impresadipulizie</div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-caption>Copia testo</button></div>
+    </div>
+    <div class="post-wrap">
+      <div class="post">
+        <div class="marchio"><i data-logo="S" data-var="mark" data-mode="bianco"></i><span data-nome>Euroclean</span></div>
+        <div class="servizi">
+          <div><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 20V8l8-5 8 5v12M9 20v-6h6v6"/></svg></i>Uffici e studi</div>
+          <div><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 21h18M5 21V5h14v16M9 9h2M13 9h2M9 13h2M13 13h2"/></svg></i>Condomini</div>
+          <div><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg></i>Case private</div>
+          <div><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M4 4h16v16H4zM12 4v16M4 12h16"/></svg></i>Vetri e vetrate</div>
+          <div><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 20l4-12h10l4 12zM9 8V4h6v4"/></svg></i>Post-cantiere</div>
+          <div><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 3l7 4v5c0 5-3 8-7 9-4-1-7-4-7-9V7zM9 12l2 2 4-4"/></svg></i>Sanificazione</div>
+        </div>
+        <div class="post-piede">Tutto quello che puliamo<small>Preventivo gratuito in 24h · dal <span data-anno>1998</span></small></div>
+      </div>
+      <h4>2 · I servizi</h4>
+      <div class="caption" data-caption>Cosa facciamo, in un post solo. Salvalo per quando ti serve 👇
+
+🏢 Uffici e studi (anche sera e weekend)
+🏘 Scale e parti comuni dei condomini
+🏠 Case private, anche una tantum
+🪟 Vetri e vetrate
+🔨 Pulizie post-cantiere
+🛡 Sanificazione ambienti
+
+Personale assunto e assicurato, fattura sempre. Dal <span data-anno>1998</span> a <span data-citta>Alessandria</span> e provincia.
+
+📲 Preventivo gratuito: WhatsApp <span data-tel>333 1234567</span>
+#impresadipulizie #pulizie<span data-hashcitta>alessandria</span> #puliziauffici</div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-caption>Copia testo</button></div>
+    </div>
+    <div class="post-wrap">
+      <div class="post">
+        <div class="marchio bianco"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span></div>
+        <div class="titolone"><div class="n">3</div><b>errori che fai quando pulisci i vetri</b><span>(e perché restano gli aloni) → scorri</span></div>
+      </div>
+      <h4>3 · Il consiglio (carosello)</h4>
+      <div class="caption" data-caption>3 errori che quasi tutti fanno con i vetri (li vediamo ogni giorno):
+
+1️⃣ Pulire col sole diretto: il prodotto asciuga prima che tu lo tolga → aloni.
+2️⃣ Troppo prodotto: più schiuma non è più pulito, è più residuo.
+3️⃣ Carta da cucina: lascia pelucchi. Serve il panno in microfibra, e uno asciutto per finire.
+
+Il trucco vero? Tergivetro, movimento a S dall'alto, lama asciugata a ogni passata.
+
+Se preferisci che lo facciamo noi: WhatsApp <span data-tel>333 1234567</span> 😉
+#consiglipulizia #vetri #pulizie<span data-hashcitta>alessandria</span></div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-caption>Copia testo</button></div>
+    </div>
+    <div class="post-wrap">
+      <div class="post">
+        <div class="marchio"><i data-logo="S" data-var="mark" data-mode="bianco"></i><span data-nome>Euroclean</span></div>
+        <div class="recensione"><div class="stelle">★★★★★</div><q>Puntuali, precisi e gentili. Lo studio non è mai stato così in ordine. Consigliatissimi.</q><span>Dott.ssa Bianchi · studio dentistico · recensione Google</span></div>
+        <div class="post-piede">Grazie 🙏<small>Leggi tutte le recensioni su Google</small></div>
+      </div>
+      <h4>4 · La recensione</h4>
+      <div class="caption" data-caption>"Puntuali, precisi e gentili. Lo studio non è mai stato così in ordine."
+
+Grazie alla dott.ssa Bianchi: da 8 mesi puliamo il suo studio ogni sera dopo l'ultimo paziente, così la mattina trova tutto pronto.
+
+Le recensioni le trovi tutte sulla nostra scheda Google. Se vuoi lo stesso servizio per il tuo studio o ufficio, scrivici: preventivo gratuito in 24 ore.
+
+📲 WhatsApp <span data-tel>333 1234567</span>
+#recensioni #puliziestudi #pulizie<span data-hashcitta>alessandria</span></div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-caption>Copia testo</button></div>
+    </div>
+    <div class="post-wrap">
+      <div class="post">
+        <div class="marchio bianco"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span></div>
+        <div class="team"><div class="nome"><b data-titolare>Il titolare</b>Ho preso in mano la ditta di mia madre. Stesso metodo, stessi clienti, qualche idea nuova.</div></div>
+        <div class="post-piede">Chi entra in casa tua<small>Personale assunto, formato, assicurato</small></div>
+      </div>
+      <h4>5 · Chi siamo</h4>
+      <div class="caption" data-caption>Mi presento: sono <span data-titolare>il titolare</span> di <span data-nome>Euroclean</span>.
+
+Questa ditta l'ha fondata mia madre nel <span data-anno>1998</span>. Per anni ho visto come lavorava: puntuale, precisa, senza mai una lamentela. Oggi la porto avanti io, con lo stesso metodo e qualche strumento in più.
+
+Chi entra nel tuo ufficio o a casa tua ha un nome e una faccia: la nostra. Personale assunto, formato e assicurato.
+
+📲 Preventivo gratuito: WhatsApp <span data-tel>333 1234567</span>
+#impresadipulizie #<span data-hashcitta>alessandria</span> #aziendadifamiglia</div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-caption>Copia testo</button></div>
+    </div>
+    <div class="post-wrap">
+      <div class="post">
+        <div class="marchio bianco"><i data-logo="S" data-var="mark" data-mode="colore"></i><span data-nome>Euroclean</span></div>
+        <div class="offerta"><span>Nuovi contratti uffici · fino al 31</span><b>Il primo mese<br>−15%</b><span>Pulizia serale, 2 volte a settimana, senza vincoli.</span><span class="pill">Scrivici su WhatsApp</span></div>
+      </div>
+      <h4>6 · L'offerta</h4>
+      <div class="caption" data-caption>Per i nuovi contratti di pulizia uffici firmati entro il 31: il primo mese −15%.
+
+Come funziona:
+✅ Sopralluogo gratuito
+✅ Preventivo in 24 ore, prezzo fisso mensile
+✅ Nessun vincolo: se non sei contento, interrompi quando vuoi
+
+Posti limitati (abbiamo un numero di sere a settimana, non di più).
+
+📲 WhatsApp <span data-tel>333 1234567</span>
+#puliziauffici #pulizie<span data-hashcitta>alessandria</span> #offerta</div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-caption>Copia testo</button></div>
+    </div>
+  </div>
+  <div class="griglia g3" style="margin-top:8px">
+    <div class="card"><h3>Ogni post ha</h3><ul class="lista spunta"><li>Il logo piccolo, sempre nello stesso angolo</li><li>Un solo messaggio</li><li>Il numero WhatsApp nel testo</li><li>3–5 hashtag locali, non 30</li></ul></div>
+    <div class="card"><h3>Mai</h3><ul class="lista croce"><li>Foto scaricate da internet con persone finte</li><li>"Professionalità, serietà, qualità" senza prove</li><li>Post solo con il logo o gli auguri</li><li>Prezzi nascosti: meglio "a partire da"</li></ul></div>
+    <div class="card lav"><h3>Il reel che funziona</h3><p class="piccolo" style="margin:0;color:var(--testo)">Video verticale di 7–15 secondi: <b>il prima/dopo in time-lapse</b> (telefono fermo su un treppiede da 10 €) con musica di tendenza. È il contenuto che Instagram mostra anche a chi non ti segue. Uno a settimana basta.</p></div>
+  </div>
+</section>
+
+<!-- ============ 09 CALENDARIO ============ -->
+<section class="sez" id="s09">
+  <div class="sez-testa">
+    <div><p class="occhiello">09 — Il calendario</p><h2>Le prime 4 settimane,<b> giorno per giorno.</b></h2></div>
+    <p class="lato">Ritmo sostenibile: <b>3 post e 4–5 storie a settimana</b>, un reel. Clicca su un impegno per segnarlo fatto. Le settimane 2–4 ripetono lo schema con servizi diversi.</p>
+  </div>
+  <div class="card cal-card">
+    <div class="calendario" id="calendario"></div>
+    <div class="legenda"><span><i style="background:var(--p1)"></i>Post</span><span><i style="background:var(--p5)"></i>Storia</span><span><i style="background:var(--p2)"></i>Reel</span><span><i style="background:var(--ambra-chiaro)"></i>Scheda Google</span></div>
+  </div>
+  <div class="griglia g3" style="margin-top:18px">
+    <div class="card"><h3>Orari di pubblicazione</h3><p class="piccolo">Post: <b>12:30</b> o <b>19:00</b> (pausa pranzo e sera). Storie "oggi siamo qui": appena arrivati sul posto. Amministratori e titolari guardano Facebook la mattina presto: lì il post del lunedì va alle <b>7:30</b>.</p></div>
+    <div class="card"><h3>Quanto tempo serve</h3><p class="piccolo"><b>Se pubblichi tu:</b> 20 minuti il sabato per preparare i 3 post della settimana dai template, più 2 minuti al giorno per le storie. <b>Se pubblica Apex:</b> tu mandi le foto su WhatsApp, al resto pensiamo noi.</p></div>
+    <div class="card"><h3>Dopo il primo mese</h3><p class="piccolo">Guardiamo i numeri: quale post ha portato più messaggi? Quello si rifà. Il resto si taglia. <b>Non si pubblica per pubblicare.</b></p></div>
+  </div>
+</section>
+
+<!-- ============ 10 TONO ============ -->
+<section class="sez" id="s10">
+  <div class="sez-testa">
+    <div><p class="occhiello">10 — Tono e messaggi</p><h2>Come parla <b data-nome>Euroclean</b><b>, dal post al preventivo.</b></h2></div>
+    <p class="lato">Il tono è una persona: <b>chi lavora bene e lo dice semplice</b>. Niente "soluzioni integrate", niente "leader del settore". Frasi corte, prove, numeri, nomi di vie.</p>
+  </div>
+  <div class="card" style="margin-bottom:18px">
+    <p class="occhiello">La frase che accompagna il logo (vota)</p>
+    <div class="griglia" style="gap:10px">
+      <div class="tagline"><span class="t">Pulito. <em>Puntuale.</em> Punto.</span><span class="per">Tre parole, ritmo da ricordare. Da furgone e da bio.</span><div class="voto" data-voto="tag_1"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="tagline"><span class="t">Torni, e trovi tutto <em>come nuovo.</em></span><span class="per">Il momento che il cliente compra davvero: il rientro.</span><div class="voto" data-voto="tag_2"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="tagline"><span class="t">Puliamo noi. <em>Tu pensa al tuo lavoro.</em></span><span class="per">Da aziende e studi: vende il tempo, non la pulizia.</span><div class="voto" data-voto="tag_3"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+      <div class="tagline"><span class="t">Dal <em data-anno>1998</em>, una famiglia che pulisce bene.</span><span class="per">La storia come garanzia. Ottima accanto a "ex Euroclean".</span><div class="voto" data-voto="tag_4"><button class="si">👍</button><button class="forse">🤔</button><button class="no">👎</button></div></div>
+    </div>
+    <div class="campo" style="margin-top:12px"><label>Una frase tua, se ce l'hai</label><input type="text" data-k="tagline_tua" data-label="Tagline proposta dal titolare" placeholder="come lo diresti tu a un cliente?"></div>
+  </div>
+  <div class="parole" style="margin-bottom:18px">
+    <div class="card"><h3>Parole sì</h3><ul class="lista ok"><li>Preventivo gratuito in 24 ore</li><li>Personale assunto, assicurato, formato</li><li>Senza vincoli · prezzo fisso mensile</li><li>Sera e weekend, senza fermare il lavoro</li><li>Dal <span data-anno>1998</span> · a <span data-citta>Alessandria</span> da sempre</li><li>Nomi di vie, quartieri, tipi di locale</li></ul></div>
+    <div class="card"><h3>Parole no</h3><ul class="lista no"><li>"Professionalità, serietà, qualità" (lo dicono tutti)</li><li>"Leader", "eccellenza", "a 360 gradi"</li><li>"Soluzioni", "servizi integrati", "customer"</li><li>Inglese dove c'è l'italiano (cleaning, team building)</li><li>Punti esclamativi a raffica!!!</li><li>Prezzi nascosti ("contattaci per saperlo")</li></ul></div>
+  </div>
+  <div class="griglia g2">
+    <div class="card">
+      <h3>Risposta WhatsApp al primo messaggio</h3>
+      <p class="piccolo">Chi scrive da una pubblicità aspetta <b>meno di 10 minuti</b>. Questo testo è salvato come risposta rapida nel WhatsApp Business.</p>
+      <div class="script">Ciao! Grazie per averci scritto 👋
+Sono <b data-titolare>il titolare</b> di <b data-nome>Euroclean</b>.
+
+Per farti un preventivo preciso mi servono 3 cose:
+1. Che tipo di locale è (ufficio, casa, condominio…)
+2. Più o meno quanti metri quadri
+3. Ogni quanto vorresti la pulizia (una volta, settimanale, mensile)
+
+Se hai 2 foto, ancora meglio. <b>Ti rispondo entro 24 ore</b> con un prezzo chiaro, senza impegno.</div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-script>Copia testo</button></div>
+    </div>
+    <div class="card">
+      <h3>Richiesta di recensione a fine lavoro</h3>
+      <p class="piccolo">Si manda <b>lo stesso giorno</b>, quando il cliente è ancora contento. Le recensioni Google sono il motore della scheda locale.</p>
+      <div class="script">Ciao <b>[nome]</b>, grazie ancora per averci scelto!
+Se sei rimasto contento del lavoro di oggi, ci faresti un favore enorme lasciando due righe su Google: ci vuole un minuto e per una piccola ditta come la nostra conta tantissimo.
+
+👉 <b>[link recensione Google]</b>
+
+Se invece c'è qualcosa che non va, scrivimelo qui: rimedio subito.
+Grazie, <b data-titolare>il titolare</b></div>
+      <div class="caption-azioni"><button class="btn mini" data-copia-script>Copia testo</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 PUBBLICITÀ ============ -->
+<section class="sez" id="s11">
+  <div class="sez-testa">
+    <div><p class="occhiello">11 — Pubblicità</p><h2>Dove arrivano i clienti<b> di una ditta di pulizie.</b></h2></div>
+    <p class="lato">Nell'ordine in cui conviene farli. Il primo è <b>gratis</b> ed è quello che porta più contatti: la scheda Google. La pubblicità a pagamento si accende dopo, su un servizio solo, con il WhatsApp come punto di arrivo.</p>
+  </div>
+  <div class="griglia g3" style="margin-bottom:22px">
+    <div class="card consigliata">
+      <span class="etichetta ass">1 · Prima di tutto, gratis</span>
+      <div class="canale" style="margin-top:10px"><i style="background:#4285F4">G</i><div><h3>Scheda Google (Business Profile)</h3><p class="piccolo">Chi cerca "impresa di pulizie <span data-citta>Alessandria</span>" vede prima le 3 schede con la mappa. Entrarci è questione di <b>recensioni, foto e categorie giuste</b>, non di soldi.</p></div></div>
+      <div class="check" style="margin-top:12px">
+        <label><input type="checkbox" data-k="gbp" data-label="Scheda Google" value="Scheda creata e verificata"><span>Scheda creata e verificata</span></label>
+        <label><input type="checkbox" data-k="gbp" value="Categoria principale: Impresa di pulizie"><span>Categoria "Impresa di pulizie" + secondarie</span></label>
+        <label><input type="checkbox" data-k="gbp" value="10 foto vere caricate"><span>10 foto vere: team, furgone, prima/dopo</span></label>
+        <label><input type="checkbox" data-k="gbp" value="Servizi e zone inserite"><span>Servizi, zone servite, orari, WhatsApp</span></label>
+        <label><input type="checkbox" data-k="gbp" value="Prime 10 recensioni raccolte"><span>Prime 10 recensioni dai clienti storici</span></label>
+        <label><input type="checkbox" data-k="gbp" value="Un post Google a settimana"><span>Un post sulla scheda a settimana</span></label>
+      </div>
+    </div>
+    <div class="card">
+      <span class="etichetta">2 · Famiglie e visibilità locale</span>
+      <div class="canale" style="margin-top:10px"><i style="background:#1877F2">f</i><div><h3>Meta (Facebook + Instagram)</h3><p class="piccolo">Pubblicità a raggio di km attorno a <span data-citta>Alessandria</span>, con il reel prima/dopo o l'offerta. Chi clicca <b>apre WhatsApp</b> con il messaggio già scritto. Costo contatto nel settore: <b>7–18 €</b>.</p></div></div>
+      <ul class="lista" style="margin-top:12px"><li>Obiettivo: messaggi WhatsApp, non "mi piace"</li><li>Un servizio per campagna, mai "tutto"</li><li>Prima/dopo vero batte qualsiasi grafica</li><li>Si parte con 2 creatività e si tiene la migliore</li></ul>
+    </div>
+    <div class="card">
+      <span class="etichetta">3 · Aziende e urgenze</span>
+      <div class="canale" style="margin-top:10px"><i style="background:#34A853">G</i><div><h3>Google Ads (ricerca)</h3><p class="piccolo">Compare quando qualcuno cerca già "pulizie uffici <span data-citta>Alessandria</span>" o "pulizie post cantiere". Pochi click, ma <b>caldi</b>: costo contatto <b>15–35 €</b>, spesso contratti.</p></div></div>
+      <ul class="lista" style="margin-top:12px"><li>Solo parole con intenzione d'acquisto</li><li>Pagina di arrivo con bottone WhatsApp e chiamata</li><li>Si accende dopo la scheda Google e le prime recensioni</li><li>Da 300 €/mese in su, altrimenti non si legge nulla</li></ul>
+    </div>
+  </div>
+
+  <div class="griglia g-sim" style="gap:18px">
+    <div class="card">
+      <h3>Simulatore: quanto investire?</h3>
+      <p class="piccolo">Muovi il cursore. Le stime usano i costi medi del settore nelle città medie italiane e vanno <b>verificate nelle prime 4 settimane</b> di campagna.</p>
+      <div class="slider" style="margin-top:14px">
+        <div class="valore"><span id="budVal">400</span> €<span style="font-size:.4em;color:var(--grigio);font-family:var(--apex);font-weight:600"> / mese</span></div>
+        <input type="range" id="budget" min="150" max="1500" step="50" value="400">
+        <div class="ripartizione">
+          <button class="btn mini on" data-mix="meta">Solo Meta</button>
+          <button class="btn mini" data-mix="misto">Meta + Google</button>
+          <button class="btn mini" data-mix="google">Solo Google</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Cosa aspettarsi al mese</h3>
+      <div class="stima" style="margin-top:12px">
+        <div><b id="stLead">—</b><span>contatti su WhatsApp</span></div>
+        <div><b id="stPrev">—</b><span>preventivi fatti (70%)</span></div>
+        <div><b id="stCli">—</b><span>nuovi clienti (30% dei preventivi)</span></div>
+      </div>
+      <div class="nota" style="margin-top:12px" id="stNota"></div>
+      <p class="piccolo" style="margin-top:10px">A questo si aggiunge la gestione delle campagne (sezione 13). <b>Un solo contratto mensile da 250 € ripaga due mesi di pubblicità.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 MATERIALI ============ -->
+<section class="sez" id="s12">
+  <div class="sez-testa">
+    <div><p class="occhiello">12 — Materiali</p><h2>Cosa serve da te<b> per partire.</b></h2></div>
+    <p class="lato">Spunta quello che c'è già. Il resto lo raccogliamo insieme: <b>senza foto vere e senza accessi, il lavoro si ferma</b>.</p>
+  </div>
+  <div class="griglia g3">
+    <div class="card">
+      <h3>Foto e video</h3>
+      <div class="check">
+        <label><input type="checkbox" data-k="mat" data-label="Materiali" value="10 foto prima/dopo"><span>10 foto prima/dopo<small>stesso punto, luce accesa, orizzontali e verticali</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Foto del team"><span>Foto del team<small>in divisa, sorridenti, sul posto di lavoro</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Foto del titolare"><span>Una foto del titolare<small>per il post "chi siamo" e la scheda Google</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Foto furgone e attrezzatura"><span>Furgone e attrezzatura<small>anche se non ancora marchiati</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="3 video time-lapse"><span>3 video time-lapse di un lavoro<small>telefono fermo, 20 secondi, verticale</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Foto storiche della mamma"><span>Foto storiche<small>la mamma al lavoro, il vecchio furgone: valgono oro</small></span></label>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Accessi e dati</h3>
+      <div class="check">
+        <label><input type="checkbox" data-k="mat" value="Numero WhatsApp Business dedicato"><span>Numero WhatsApp Business<small>dedicato al lavoro, con risposte rapide</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Email aziendale"><span>Email aziendale<small>per aprire i profili: non quella personale</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Accesso profili esistenti"><span>Accesso ai profili esistenti<small>Instagram, Facebook, vecchia scheda Google della mamma</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Documenti per verifica Google"><span>Documenti per la verifica Google<small>visura o bolletta con l'indirizzo della sede</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Metodo di pagamento per le ads"><span>Carta per la pubblicità<small>intestata all'azienda, con limite di spesa</small></span></label>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Testi e prove</h3>
+      <div class="check">
+        <label><input type="checkbox" data-k="mat" value="Lista servizi con prezzi a partire da"><span>Lista servizi con "a partire da"<small>anche approssimativa</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="5 clienti da chiamare per una recensione"><span>5 clienti storici da chiamare<small>per le prime recensioni e una frase</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Assicurazione RC e documenti"><span>Assicurazione RC, iscrizioni<small>da citare nei post: sono prove</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Zone servite esatte"><span>Elenco comuni serviti<small>per Google e per il raggio delle ads</small></span></label>
+        <label><input type="checkbox" data-k="mat" value="Vecchio materiale Euroclean"><span>Vecchio materiale Euroclean<small>biglietti, volantini, logo: per capire cosa tenere</small></span></label>
+      </div>
+    </div>
+  </div>
+  <div class="campo" style="margin-top:16px"><label>Chi li raccoglie e entro quando</label><input type="text" data-k="mat_note" data-label="Materiali: chi e quando" placeholder="es. foto entro domenica, accessi oggi stesso"></div>
+</section>
+
+<!-- ============ 13 PROPOSTA ============ -->
+<section class="sez" id="s13">
+  <div class="sez-testa">
+    <div><p class="occhiello">13 — La proposta</p><h2>Tre modi di partire.<b> Uno giusto per te.</b></h2></div>
+    <p class="lato">Ogni pacchetto include il precedente. I prezzi si scrivono insieme in questa pagina. <b>Nessun abbonamento nascosto:</b> i file sono tuoi, i profili sono tuoi.</p>
+  </div>
+  <div class="griglia g3">
+    <div class="card pacchetto">
+      <span class="etichetta">1 · Identità</span>
+      <h3>Il marchio, pronto per tutto</h3>
+      <div class="prezzo"><span>€</span><input type="text" data-k="prezzo_1" data-label="Prezzo pacchetto Identità" placeholder="da definire"><small>una tantum</small></div>
+      <ul class="lista spunta">
+        <li>Nome definitivo, verificato (Google, social, dominio)</li>
+        <li>Logo finale dalla direzione scelta, con varianti (orizzontale, simbolo, chiaro/scuro)</li>
+        <li>Palette e caratteri con regole d'uso</li>
+        <li>Foto profilo, copertina Facebook, icona</li>
+        <li>File di stampa: biglietto da visita, adesivo furgone, divisa</li>
+        <li>Mini manuale: come usare tutto senza sbagliare</li>
+      </ul>
+      <p class="piccolo"><b>Tempi:</b> 10 giorni lavorativi dalla scheda compilata.</p>
+      <button class="btn scegli" data-pacchetto="Identità">Scelgo questo</button>
+    </div>
+    <div class="card pacchetto consigliata">
+      <span class="etichetta ass">2 · Identità + Social · consigliato</span>
+      <h3 style="margin-top:8px">Il marchio che pubblica</h3>
+      <div class="prezzo"><span>€</span><input type="text" data-k="prezzo_2" data-label="Prezzo pacchetto Identità + Social" placeholder="da definire"><small>una tantum</small></div>
+      <ul class="lista spunta">
+        <li>Tutto il pacchetto 1</li>
+        <li>Profili Instagram e Facebook aperti o rifatti: bio, evidenze, link WhatsApp</li>
+        <li>Scheda Google creata, verificata e ottimizzata</li>
+        <li>12 template post + 6 template storie, modificabili dal telefono (Canva)</li>
+        <li>I primi 8 post e il calendario delle 4 settimane</li>
+        <li>Risposte rapide WhatsApp Business (preventivo, recensione)</li>
+        <li>1 ora di formazione: pubblicare da soli in 20 minuti a settimana</li>
+      </ul>
+      <p class="piccolo"><b>Tempi:</b> 3 settimane. <b>Opzione:</b> gestione mensile dei social da <input type="text" data-k="prezzo_mensile" data-label="Prezzo gestione mensile" placeholder="…" style="width:60px;border:0;border-bottom:1.5px dashed var(--viola);background:transparent;color:var(--viola);font-weight:800;text-align:center"> €/mese.</p>
+      <button class="btn scegli" data-pacchetto="Identità + Social">Scelgo questo</button>
+    </div>
+    <div class="card pacchetto">
+      <span class="etichetta">3 · Sistema completo</span>
+      <h3>Il marchio che porta clienti</h3>
+      <div class="prezzo"><span>€</span><input type="text" data-k="prezzo_3" data-label="Prezzo pacchetto Sistema completo" placeholder="da definire"><small>una tantum</small></div>
+      <ul class="lista spunta">
+        <li>Tutto il pacchetto 2</li>
+        <li>Pagina web "preventivo" con servizi, prezzi da, recensioni e WhatsApp</li>
+        <li>Campagne Meta e Google impostate, con tracciamento dei contatti</li>
+        <li>2 reel prima/dopo montati da noi</li>
+        <li>60 giorni di gestione e ottimizzazione delle campagne</li>
+        <li>Report mensile: quanti contatti, quanto sono costati, cosa cambiare</li>
+      </ul>
+      <p class="piccolo"><b>Tempi:</b> 4 settimane + 60 giorni di gestione. Budget pubblicitario escluso (sezione 11).</p>
+      <button class="btn scegli" data-pacchetto="Sistema completo">Scelgo questo</button>
+    </div>
+  </div>
+  <div class="griglia g2" style="margin-top:18px">
+    <div class="card lav"><h3>Come si paga</h3><p class="piccolo" style="margin:0;color:var(--testo)">50% alla conferma, 50% alla consegna. La gestione mensile si paga a inizio mese e si disdice con un messaggio, senza penali. Tutto con fattura.</p></div>
+    <div class="card"><div class="campo"><label>Accordi presi a voce</label><textarea data-k="accordi" data-label="Accordi presi" placeholder="es. sconto famiglia, pagamento in 3 rate, partenza il…"></textarea></div></div>
+  </div>
+</section>
+
+<!-- ============ 14 PROSSIMI PASSI ============ -->
+<section class="sez" id="s14">
+  <div class="sez-testa">
+    <div><p class="occhiello">14 — Prossimi passi</p><h2>Chi fa cosa,<b> entro quando.</b></h2></div>
+    <p class="lato">Dalla scheda compilata al profilo online. Le date si scrivono qui sotto e restano nel riepilogo.</p>
+  </div>
+  <div class="timeline" style="margin-bottom:22px">
+    <div><small>Settimana 1</small><b>Decisioni</b><p class="piccolo" style="margin:0">Nome verificato, direzione logo, palette, caratteri. Raccolta foto e accessi.</p></div>
+    <div><small>Settimana 2</small><b>Il marchio</b><p class="piccolo" style="margin:0">Logo finale e varianti. Foto profilo, copertine, file per furgone e divise.</p></div>
+    <div><small>Settimana 3</small><b>I profili</b><p class="piccolo" style="margin:0">Instagram, Facebook, scheda Google online. Template, primi 8 post, risposte WhatsApp.</p></div>
+    <div><small>Settimana 4</small><b>Si parte</b><p class="piccolo" style="margin:0">Prima settimana di pubblicazione insieme. Recensioni dai clienti storici. Se previsto, pubblicità accesa.</p></div>
+  </div>
+  <div class="griglia g2">
+    <div class="card">
+      <h3>Da fare subito</h3>
+      <div class="check">
+        <label><input type="checkbox" data-k="todo" data-label="Da fare" value="Scheda compilata"><span>Scheda compilata (sezione 1)</span></label>
+        <label><input type="checkbox" data-k="todo" value="Nome verificato"><span>Nome scelto e verificato</span></label>
+        <label><input type="checkbox" data-k="todo" value="Voti dati a logo, palette, caratteri"><span>Voti dati a logo, palette, caratteri, frase</span></label>
+        <label><input type="checkbox" data-k="todo" value="Pacchetto scelto"><span>Pacchetto scelto e accordi scritti</span></label>
+        <label><input type="checkbox" data-k="todo" value="Data consegna materiali fissata"><span>Data per foto e accessi fissata</span></label>
+        <label><input type="checkbox" data-k="todo" value="Riepilogo scaricato e inviato"><span>Riepilogo scaricato e mandato su WhatsApp</span></label>
+      </div>
+    </div>
+    <div class="card scura">
+      <h3>Date</h3>
+      <div class="griglia" style="gap:10px">
+        <div class="campo"><label style="color:#BDB8CC">Prossimo incontro</label><input type="text" data-k="data_incontro" data-label="Prossimo incontro" placeholder="giorno e ora" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"></div>
+        <div class="campo"><label style="color:#BDB8CC">Consegna materiali</label><input type="text" data-k="data_materiali" data-label="Consegna materiali" placeholder="entro il…" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"></div>
+        <div class="campo"><label style="color:#BDB8CC">Obiettivo "online"</label><input type="text" data-k="data_online" data-label="Data online" placeholder="entro il…" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff"></div>
+      </div>
+      <div class="firme" style="margin-top:22px">
+        <div><img src="assets/firma-alexander.png" alt=""><span>Alexander Fania</span></div>
+        <div><img src="assets/firma-federico.png" alt=""><span>Federico Delfino</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px; text-align:center; padding:30px">
+    <p class="occhiello">Fine dell'incontro</p>
+    <h3 style="font-family:var(--serif);font-weight:500;font-size:1.6em;margin-bottom:14px">Tutto quello che abbiamo deciso, in una pagina.</h3>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap" class="no-print">
+      <button class="btn pri" data-apri-riepilogo>Apri il riepilogo</button>
+      <button class="btn" data-scarica-riepilogo>Scarica .txt</button>
+      <button class="btn" data-wa-riepilogo>Manda su WhatsApp</button>
+      <button class="btn" id="btnStampa2">Salva in PDF</button>
+    </div>
+  </div>
+</section>
+
+<div class="piede"><span>Apex Media · brand kit impresa di pulizie</span><span>Documento di lavoro riservato</span></div>
+</main>
+
+<div class="modale" id="modale">
+  <div class="modale-in">
+    <div class="modale-testa"><h3>Riepilogo</h3><button class="btn mini" data-chiudi>Chiudi ✕</button></div>
+    <pre id="riepilogoTesto"></pre>
+    <div class="modale-piede">
+      <button class="btn pri" data-copia-riepilogo>Copia tutto</button>
+      <button class="btn" data-scarica-riepilogo>Scarica .txt</button>
+      <button class="btn" data-wa-riepilogo>Manda su WhatsApp</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function () {
+  'use strict';
+  const KEY = 'apex-brandkit-pulizie-v1';
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  /* ---------- palette e font ---------- */
+  const PALETTES = {
+    acqua: { nome: 'Acqua pulita', p1: '#0E3A5B', p2: '#22B8CF', p3: '#F3F8FB', p4: '#14212B', p5: '#BFF0E1', n1: 'Blu profondo', n2: 'Acqua', n3: 'Ghiaccio', n5: 'Menta' },
+    notte: { nome: 'Notte e sabbia', p1: '#0F1E33', p2: '#D4A853', p3: '#F7F3EC', p4: '#0B1526', p5: '#F1E3C2', n1: 'Blu notte', n2: 'Sabbia dorata', n3: 'Avorio', n5: 'Crema' },
+    verde: { nome: 'Verde fresco', p1: '#136F4E', p2: '#8BE0B1', p3: '#F5FAF6', p4: '#0F2A1E', p5: '#D9F5E4', n1: 'Verde bosco', n2: 'Menta viva', n3: 'Bianco erba', n5: 'Verde latte' }
+  };
+  const FONTS = {
+    sora: { nome: 'Sora + Inter', ft: "'Sora', 'Inter', system-ui, sans-serif", fb: "'Inter', system-ui, sans-serif" },
+    outfit: { nome: 'Outfit + DM Sans', ft: "'Outfit', system-ui, sans-serif", fb: "'DM Sans', system-ui, sans-serif" },
+    manrope: { nome: 'Manrope', ft: "'Manrope', system-ui, sans-serif", fb: "'Manrope', system-ui, sans-serif" }
+  };
+  const LOGO_NOMI = { A: 'Goccia con la spunta', B: 'Scintilla', C: 'Monogramma' };
+  const VOTI_NOMI = {
+    nome_tenere: 'Nome: tenere "Euroclean"', nome_firmato: 'Nome: Euroclean "firmato"', nome_nuovo: 'Nome: nome nuovo',
+    nome_nitido: 'Proposta nome: Nitido', nome_lindo: 'Proposta nome: Lindo', nome_splendo: 'Proposta nome: Splendo', nome_netta: 'Proposta nome: Netta', nome_lucente: 'Proposta nome: Lucente', nome_chiaro: 'Proposta nome: Chiaro Service',
+    logo_A: 'Logo A: goccia con la spunta', logo_B: 'Logo B: scintilla', logo_C: 'Logo C: monogramma',
+    pal_acqua: 'Palette: Acqua pulita', pal_notte: 'Palette: Notte e sabbia', pal_verde: 'Palette: Verde fresco',
+    font_sora: 'Caratteri: Sora + Inter', font_outfit: 'Caratteri: Outfit + DM Sans', font_manrope: 'Caratteri: Manrope',
+    tag_1: 'Frase: "Pulito. Puntuale. Punto."', tag_2: 'Frase: "Torni, e trovi tutto come nuovo."', tag_3: 'Frase: "Puliamo noi. Tu pensa al tuo lavoro."', tag_4: 'Frase: "Dal …, una famiglia che pulisce bene."'
+  };
+  const VOTO_TESTO = { si: '👍 sì', forse: '🤔 forse', no: '👎 no' };
+
+  /* ---------- stato ---------- */
+  let state = { campi: {}, voti: {}, palette: 'acqua', font: 'sora', logo: 'A', budget: 400, mix: 'meta', pacchetto: '', cal: {} };
+  try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s && s.campi) state = Object.assign(state, s); } catch (e) {}
+  let timerSalva = null;
+  function salva() {
+    const ind = $('#salvato'); ind.classList.add('lavoro'); ind.lastElementChild.textContent = 'Salvataggio…';
+    clearTimeout(timerSalva);
+    timerSalva = setTimeout(() => {
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      ind.classList.remove('lavoro'); ind.lastElementChild.textContent = 'Salvato';
+      progresso();
+    }, 350);
+  }
+  function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 1800); }
+
+  /* ---------- valori derivati ---------- */
+  const val = k => (state.campi[k] || '').toString().trim();
+  const D = {
+    nome: () => val('nome') || 'Euroclean',
+    descrittore: () => val('descrittore') || 'Impresa di pulizie',
+    citta: () => val('citta') || 'Alessandria',
+    anno: () => val('anno') || '1998',
+    tel: () => val('telefono') || '333 1234567',
+    telnum: () => (val('telefono') || '3331234567').replace(/\D/g, ''),
+    titolare: () => val('titolare') || 'il titolare',
+    handle: () => (val('handle') || D.nome()).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, '').trim().replace(/\s+/g, '.'),
+    dominio: () => D.nome().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, ''),
+    hashcitta: () => D.citta().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, ''),
+    iniziale: () => D.nome().trim().charAt(0).toUpperCase() || 'E'
+  };
+
+  /* ---------- loghi ---------- */
+  function colori(mode) {
+    return mode === 'bianco'
+      ? { base: '#fff', acc: 'var(--p2)', dentro: 'var(--p1)', testo: '#fff', sotto: 'rgba(255,255,255,.8)' }
+      : { base: 'var(--p1)', acc: 'var(--p2)', dentro: '#fff', testo: 'var(--p1)', sotto: 'var(--p1)' };
+  }
+  function markSvg(dir, mode) {
+    const c = colori(mode);
+    if (dir === 'A') return `<path d="M50 6 C50 6 16 46 16 66 a34 34 0 0 0 68 0 C84 46 50 6 50 6 Z" fill="${c.base}"/><path d="M33 67 L45 79 L68 52" fill="none" stroke="${c.dentro}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="68" cy="30" r="5" fill="${c.acc}"/>`;
+    if (dir === 'B') return `<path d="M44 8 L52 40 L84 48 L52 56 L44 88 L36 56 L4 48 L36 40 Z" fill="${c.base}"/><path d="M78 62 L82 74 L94 78 L82 82 L78 94 L74 82 L62 78 L74 74 Z" fill="${c.acc}"/>`;
+    return `<rect x="4" y="4" width="92" height="92" rx="24" fill="${c.base}"/><text x="50" y="68" text-anchor="middle" font-family="var(--ft)" font-size="54" font-weight="800" fill="${c.dentro}">${D.iniziale()}</text><path d="M8 78 C 30 60, 60 96, 92 70" fill="none" stroke="${c.acc}" stroke-width="7" stroke-linecap="round"/>`;
+  }
+  function logoSvg(dir, variante, mode) {
+    if (variante === 'mark') return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${markSvg(dir, mode)}</svg>`;
+    const c = colori(mode); const nome = D.nome(); const len = Math.max(nome.length, 4);
+    let testo;
+    if (dir === 'B') {
+      const fs = Math.min(44, Math.floor(430 / (len * 0.86)));
+      testo = `<text x="122" y="${58 + fs * 0.35}" font-family="var(--ft)" font-size="${fs}" font-weight="700" letter-spacing="${(fs * 0.16).toFixed(1)}" fill="${c.testo}">${esc(nome.toUpperCase())}</text>`;
+    } else {
+      const fs = Math.min(54, Math.floor(430 / (len * 0.6)));
+      testo = `<text x="122" y="${58 + fs * 0.35}" font-family="var(--ft)" font-size="${fs}" font-weight="800" letter-spacing="-1" fill="${c.testo}">${esc(nome)}</text>`;
+    }
+    const sotto = `<text x="123" y="104" font-family="var(--fb)" font-size="14" font-weight="600" letter-spacing="4.5" fill="${c.sotto}" opacity="${mode === 'bianco' ? 1 : .72}">${esc(D.descrittore().toUpperCase())}</text>`;
+    return `<svg viewBox="0 0 560 120" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 10)">${markSvg(dir, mode)}</g>${testo}${sotto}</svg>`;
+  }
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function renderLoghi() {
+    $$('[data-logo]').forEach(el => {
+      const dir = el.dataset.logo === 'S' ? state.logo : el.dataset.logo;
+      el.innerHTML = logoSvg(dir, el.dataset.var, el.dataset.mode);
+    });
+    const g = $('#furgoneLogo');
+    if (g) g.innerHTML = `<svg x="0" y="0" width="200" height="44" viewBox="0 0 560 120">${logoSvg(state.logo, 'orizz', 'colore').replace(/^<svg[^>]*>|<\/svg>$/g, '')}</svg>`;
+    $('#furgoneTel').textContent = `WhatsApp ${D.tel()} · PREVENTIVO GRATUITO`;
+    $('#logoScelto').textContent = state.logo;
+    $$('[data-scegli-logo]').forEach(b => b.classList.toggle('on', b.dataset.scegliLogo === state.logo));
+  }
+  function scaricaSvg(id) {
+    const [dir, variante] = id.split('-'); const p = PALETTES[state.palette]; const f = FONTS[state.font];
+    let svg = logoSvg(dir, variante, 'colore')
+      .replace(/var\(--p1\)/g, p.p1).replace(/var\(--p2\)/g, p.p2).replace(/var\(--ft\)/g, f.ft.replace(/'/g, '')).replace(/var\(--fb\)/g, f.fb.replace(/'/g, ''));
+    svg = svg.replace('<svg ', '<svg width="' + (variante === 'mark' ? '400" height="400' : '1120" height="240') + '" ');
+    const blob = new Blob([svg], { type: 'image/svg+xml' }); const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = `${D.dominio()}-logo-${dir}-${variante}.svg`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    toast('Logo scaricato (SVG)');
+  }
+
+  /* ---------- testi vivi ---------- */
+  function renderTesti() {
+    const m = { nome: D.nome(), descrittore: D.descrittore(), citta: D.citta(), anno: D.anno(), tel: D.tel(), telnum: D.telnum(), handle: D.handle(), hashcitta: D.hashcitta(), iniziale: D.iniziale(), titolare: D.titolare() };
+    Object.keys(m).forEach(k => $$(`[data-${k}]`).forEach(el => { el.textContent = m[k]; }));
+    document.title = `Apex Media · Brand kit ${D.nome()}`;
+    const q = encodeURIComponent; const nome = D.nome(), citta = D.citta();
+    const link = { google: `https://www.google.com/search?q=${q(nome + ' pulizie ' + citta)}`, maps: `https://www.google.com/maps/search/${q(nome + ' pulizie ' + citta)}`, ig: `https://www.instagram.com/${D.handle()}/`, fb: `https://www.facebook.com/search/top?q=${q(nome + ' pulizie')}`, dominio: `https://who.is/whois/${D.dominio()}.it`, marchio: `https://euipo.europa.eu/eSearch/#basic/1+1+1+1/100+100+100+100/${q(nome)}` };
+    $$('[data-check]').forEach(a => { a.href = link[a.dataset.check]; });
+  }
+
+  /* ---------- palette ---------- */
+  function lum(hex) { const c = hex.replace('#', ''); const r = [0, 2, 4].map(i => parseInt(c.substr(i, 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4)); return .2126 * r[0] + .7152 * r[1] + .0722 * r[2]; }
+  function contrasto(a, b) { const l1 = lum(a), l2 = lum(b); return ((Math.max(l1, l2) + .05) / (Math.min(l1, l2) + .05)); }
+  function renderPalette() {
+    const p = PALETTES[state.palette]; const r = document.documentElement.style;
+    ['p1', 'p2', 'p3', 'p4', 'p5'].forEach(k => r.setProperty('--' + k, p[k]));
+    $$('[data-palette-nome]').forEach(el => el.textContent = p.nome);
+    $$('.palette').forEach(c => c.classList.toggle('on', c.dataset.pal === state.palette));
+    const coppie = [['#FFFFFF', p.p1, 'Bianco su ' + p.n1], [p.p4, p.p3, 'Testo su ' + p.n3], ['#FFFFFF', p.p2, 'Bianco su ' + p.n2], [p.p1, p.p5, p.n1 + ' su ' + p.n5]];
+    $('#contrasto').innerHTML = coppie.map(([t, b, n]) => { const c = contrasto(t, b); const ok = c >= 4.5 ? 'AA testo' : c >= 3 ? 'solo titoli grandi' : 'solo decorativo'; return `<div style="background:${b};color:${t}">${n}<small>${c.toFixed(1)}:1 · ${ok}</small></div>`; }).join('');
+  }
+  function renderFont() {
+    const f = FONTS[state.font]; const r = document.documentElement.style;
+    r.setProperty('--ft', f.ft); r.setProperty('--fb', f.fb);
+    $$('.font-card').forEach(c => c.classList.toggle('on', c.dataset.font === state.font));
+  }
+
+  /* ---------- campi ---------- */
+  function etichettaCampo(k) { const el = $(`[data-k="${k}"][data-label]`); return el ? el.dataset.label : k; }
+  function bindCampi() {
+    $$('[data-k]').forEach(el => {
+      const k = el.dataset.k;
+      if (el.type === 'checkbox') {
+        const arr = Array.isArray(state.campi[k]) ? state.campi[k] : [];
+        el.checked = arr.includes(el.value); el.closest('label').classList.toggle('on', el.checked);
+        el.addEventListener('change', () => {
+          let a = Array.isArray(state.campi[k]) ? state.campi[k].slice() : [];
+          if (el.checked) { if (!a.includes(el.value)) a.push(el.value); } else a = a.filter(v => v !== el.value);
+          state.campi[k] = a; el.closest('label').classList.toggle('on', el.checked); salva();
+        });
+      } else if (el.type === 'radio') {
+        el.checked = state.campi[k] === el.value; el.closest('label').classList.toggle('on', el.checked);
+        el.addEventListener('change', () => { state.campi[k] = el.value; $$(`input[name="${el.name}"]`).forEach(r => r.closest('label').classList.toggle('on', r.checked)); salva(); });
+      } else {
+        if (state.campi[k] !== undefined) el.value = state.campi[k];
+        el.classList.toggle('pieno-ok', !!el.value.trim());
+        el.addEventListener('input', () => { state.campi[k] = el.value; el.classList.toggle('pieno-ok', !!el.value.trim()); salva(); if (['nome', 'descrittore', 'citta', 'anno', 'telefono', 'handle', 'titolare'].includes(k)) { renderTesti(); renderLoghi(); } });
+      }
+    });
+    // il nome potrebbe essere in più input con la stessa chiave: tienili allineati
+  }
+  function progresso() {
+    const chiavi = [...new Set($$('[data-k]').map(e => e.dataset.k))];
+    const pieni = chiavi.filter(k => { const v = state.campi[k]; return Array.isArray(v) ? v.length > 0 : !!(v || '').toString().trim(); }).length;
+    $('#progresso').style.width = Math.round(pieni / chiavi.length * 100) + '%';
+  }
+
+  /* ---------- voti ---------- */
+  function bindVoti() {
+    $$('[data-voto]').forEach(box => {
+      const id = box.dataset.voto; const btns = $$('button', box);
+      const render = () => btns.forEach(b => b.classList.toggle('on', state.voti[id] === b.className.replace(/\s*on\s*/, '').trim()));
+      btns.forEach(b => b.addEventListener('click', () => { const v = b.classList.contains('si') ? 'si' : b.classList.contains('forse') ? 'forse' : 'no'; state.voti[id] = state.voti[id] === v ? '' : v; render(); salva(); }));
+      render();
+    });
+  }
+
+  /* ---------- calendario ---------- */
+  const GIORNI = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+  const CAL = [
+    [[['post', 'Post: prima/dopo'], ['storia', 'Oggi siamo qui']], [['storia', 'Oggi siamo qui']], [['post', 'Post: i servizi'], ['storia', 'Sondaggio']], [['storia', 'Preventivo in 24h'], ['gbp', 'Post Google']], [['reel', 'Reel prima/dopo'], ['storia', 'Oggi siamo qui']], [['post', 'Post: chi siamo']], []],
+    [[['post', 'Post: prima/dopo'], ['storia', 'Oggi siamo qui']], [['storia', 'Oggi siamo qui']], [['post', 'Post: consiglio vetri'], ['storia', 'Risposta sondaggio']], [['storia', 'Preventivo uffici'], ['gbp', 'Post Google']], [['reel', 'Reel time-lapse'], ['storia', 'Oggi siamo qui']], [['post', 'Post: recensione']], []],
+    [[['post', 'Post: prima/dopo uffici'], ['storia', 'Oggi siamo qui']], [['storia', 'Oggi siamo qui']], [['post', 'Post: offerta'], ['storia', 'Sondaggio']], [['storia', 'Preventivo condomini'], ['gbp', 'Post Google']], [['reel', 'Reel prima/dopo'], ['storia', 'Oggi siamo qui']], [['post', 'Post: il team']], []],
+    [[['post', 'Post: prima/dopo'], ['storia', 'Oggi siamo qui']], [['storia', 'Oggi siamo qui']], [['post', 'Post: consiglio'], ['storia', 'Risposta sondaggio']], [['storia', 'Preventivo case'], ['gbp', 'Post Google']], [['reel', 'Reel time-lapse'], ['storia', 'Oggi siamo qui']], [['post', 'Post: recensione']], []]
+  ];
+  function renderCalendario() {
+    const c = $('#calendario'); let h = '<div></div>' + GIORNI.map(g => `<div class="g">${g}</div>`).join('');
+    CAL.forEach((sett, si) => {
+      h += `<div class="s">S${si + 1}</div>`;
+      sett.forEach((giorno, gi) => {
+        h += `<div class="cella${giorno.length ? '' : ' vuota'}">` + giorno.map((ev, ei) => { const id = `${si}-${gi}-${ei}`; return `<div class="ev ev-${ev[0]}${state.cal[id] ? ' fatto' : ''}" data-cal="${id}" title="Clicca per segnare fatto">${state.cal[id] ? '✓ ' : ''}${ev[1]}</div>`; }).join('') + '</div>';
+      });
+    });
+    c.innerHTML = h;
+    $$('[data-cal]', c).forEach(ev => ev.addEventListener('click', () => { state.cal[ev.dataset.cal] = !state.cal[ev.dataset.cal]; salva(); renderCalendario(); }));
+  }
+
+  /* ---------- simulatore ---------- */
+  function renderBudget() {
+    const b = state.budget; $('#budVal').textContent = b; $('#budget').value = b;
+    $$('[data-mix]').forEach(x => x.classList.toggle('on', x.dataset.mix === state.mix));
+    $$('[data-mix]').forEach(x => { x.classList.toggle('pri', x.dataset.mix === state.mix); });
+    const quota = { meta: [1, 0], misto: [.6, .4], google: [0, 1] }[state.mix];
+    const lo = quota[0] * b / 18 + quota[1] * b / 35, hi = quota[0] * b / 7 + quota[1] * b / 15;
+    const f = n => Math.max(0, Math.round(n));
+    $('#stLead').textContent = `${f(lo)}–${f(hi)}`;
+    $('#stPrev').textContent = `${f(lo * .7)}–${f(hi * .7)}`;
+    $('#stCli').textContent = `${f(lo * .7 * .3)}–${f(hi * .7 * .3)}`;
+    const nota = $('#stNota');
+    if (b < 300) nota.innerHTML = '<b>Sotto i 300 €:</b> solo Meta, su un servizio solo, con il prima/dopo migliore. I numeri sono pochi: servono 6–8 settimane per capire cosa funziona.';
+    else if (b < 700) nota.innerHTML = '<b>Fascia consigliata per partire:</b> Meta per famiglie e visibilità, Google sulle ricerche "pulizie uffici / post cantiere". In 4 settimane si vede quale canale costa meno per contatto.';
+    else nota.innerHTML = '<b>Da fare solo con il sistema pronto:</b> pagina web, scheda Google con recensioni, risposte rapide. Altrimenti i contatti arrivano e si perdono. A questa cifra conviene una persona dedicata a rispondere.';
+  }
+
+  /* ---------- riepilogo ---------- */
+  function riepilogo() {
+    const r = []; const oggi = new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+    r.push(`APEX MEDIA · BRAND KIT ${D.nome().toUpperCase()}`, `Riepilogo dell'incontro · ${oggi}`, '');
+    r.push('— SCELTE —');
+    r.push(`Nome in uso: ${D.nome()} (${D.descrittore()})`);
+    if (val('nome_finale')) r.push(`Nome finale / da verificare: ${val('nome_finale')}`);
+    r.push(`Direzione logo: ${state.logo} · ${LOGO_NOMI[state.logo]}`);
+    r.push(`Palette: ${PALETTES[state.palette].nome} (${PALETTES[state.palette].p1}, ${PALETTES[state.palette].p2}, ${PALETTES[state.palette].p3})`);
+    r.push(`Caratteri: ${FONTS[state.font].nome}`);
+    r.push(`Pacchetto: ${state.pacchetto || 'non ancora scelto'}`);
+    r.push(`Budget simulato: ${state.budget} €/mese · ${({ meta: 'solo Meta', misto: 'Meta + Google', google: 'solo Google' })[state.mix]}`, '');
+    r.push('— VOTI —');
+    const voti = Object.keys(VOTI_NOMI).filter(k => state.voti[k]);
+    r.push(voti.length ? voti.map(k => `${VOTO_TESTO[state.voti[k]]}  ${VOTI_NOMI[k]}`).join('\n') : '(nessun voto)'); r.push('');
+    r.push('— SCHEDA —');
+    const chiavi = [...new Set($$('[data-k]').map(e => e.dataset.k))];
+    chiavi.forEach(k => { const v = state.campi[k]; const t = Array.isArray(v) ? v.join(', ') : (v || '').toString().trim(); if (t) r.push(`${etichettaCampo(k)}: ${t}`); });
+    const fatti = Object.values(state.cal).filter(Boolean).length; if (fatti) r.push('', `Calendario: ${fatti} impegni segnati fatti`);
+    r.push('', 'Documento di lavoro Apex Media · riservato');
+    return r.join('\n');
+  }
+  function apriRiepilogo() { $('#riepilogoTesto').textContent = riepilogo(); $('#modale').classList.add('on'); }
+  function scaricaRiepilogo() { const blob = new Blob([riepilogo()], { type: 'text/plain;charset=utf-8' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `riepilogo-${D.dominio()}-apexmedia.txt`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); toast('Riepilogo scaricato'); }
+  function waRiepilogo() { let t = riepilogo(); if (t.length > 3500) t = t.slice(0, 3400) + '\n… (riepilogo completo nel file .txt)'; window.open('https://wa.me/?text=' + encodeURIComponent(t), '_blank', 'noopener'); }
+  async function copia(testo, msg) { try { await navigator.clipboard.writeText(testo); toast(msg || 'Copiato'); } catch (e) { const ta = document.createElement('textarea'); ta.value = testo; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast(msg || 'Copiato'); } }
+
+  /* ---------- eventi ---------- */
+  document.addEventListener('click', e => {
+    const t = e.target.closest('button, a, .palette, .font-card'); if (!t) return;
+    if (t.dataset.copia) { copia(t.dataset.copia, `${t.dataset.copia} copiato`); return; }
+    if (t.hasAttribute('data-copia-caption')) { copia($('[data-caption]', t.closest('.post-wrap')).innerText.trim(), 'Testo del post copiato'); return; }
+    if (t.hasAttribute('data-copia-script')) { copia($('.script', t.closest('.card')).innerText.trim(), 'Testo copiato'); return; }
+    if (t.dataset.scarica) { scaricaSvg(t.dataset.scarica); return; }
+    if (t.dataset.scegliLogo) { state.logo = t.dataset.scegliLogo; renderLoghi(); salva(); return; }
+    if (t.dataset.usaNome !== undefined) { const n = t.dataset.usaNome.replace('{citta}', D.citta()); $$('[data-k="nome"]').forEach(i => { i.value = n; i.classList.add('pieno-ok'); }); state.campi.nome = n; renderTesti(); renderLoghi(); salva(); toast(`Nome "${n}" applicato a loghi e mockup`); $('#s03').scrollIntoView({ behavior: 'smooth' }); return; }
+    if (t.classList.contains('palette')) { state.palette = t.dataset.pal; renderPalette(); renderLoghi(); salva(); toast(`Palette "${PALETTES[state.palette].nome}" applicata a tutto il documento`); return; }
+    if (t.classList.contains('font-card')) { state.font = t.dataset.font; renderFont(); renderLoghi(); salva(); return; }
+    if (t.dataset.mix) { state.mix = t.dataset.mix; renderBudget(); salva(); return; }
+    if (t.dataset.pacchetto) { state.pacchetto = state.pacchetto === t.dataset.pacchetto ? '' : t.dataset.pacchetto; $$('[data-pacchetto]').forEach(b => { const on = b.dataset.pacchetto === state.pacchetto; b.classList.toggle('on', on); b.textContent = on ? '✓ Scelto' : 'Scelgo questo'; }); salva(); return; }
+    if (t.dataset.scorri) { const c = $(t.dataset.scorri); c.scrollBy({ left: +t.dataset.dir * (c.clientWidth * .8), behavior: 'smooth' }); return; }
+    if (t.hasAttribute('data-apri-riepilogo') || t.id === 'btnRiepilogo') { apriRiepilogo(); return; }
+    if (t.hasAttribute('data-copia-riepilogo')) { copia(riepilogo(), 'Riepilogo copiato'); return; }
+    if (t.hasAttribute('data-scarica-riepilogo')) { scaricaRiepilogo(); return; }
+    if (t.hasAttribute('data-wa-riepilogo')) { waRiepilogo(); return; }
+    if (t.hasAttribute('data-chiudi')) { $('#modale').classList.remove('on'); return; }
+    if (t.id === 'btnStampa' || t.id === 'btnStampa2') { window.print(); return; }
+    if (t.id === 'btnPresenta') { document.body.classList.toggle('presenta'); if (document.body.classList.contains('presenta') && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {}); else if (document.fullscreenElement) document.exitFullscreen(); return; }
+    if (t.id === 'btnReset') { if (confirm('Cancellare tutto quello che è stato compilato e votato in questo documento?')) { localStorage.removeItem(KEY); location.reload(); } return; }
+  });
+  $('#modale').addEventListener('click', e => { if (e.target.id === 'modale') $('#modale').classList.remove('on'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#modale').classList.remove('on'); });
+  $('#budget').addEventListener('input', e => { state.budget = +e.target.value; renderBudget(); salva(); });
+
+  /* ---------- navigazione ---------- */
+  const navLinks = $$('#navIn a');
+  const io = new IntersectionObserver(entries => { entries.forEach(en => { if (en.isIntersecting) { navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id)); const a = $('#navIn a.on'); const nv = $('#navIn'); if (a) nv.scrollTo({ left: a.offsetLeft - nv.clientWidth / 2 + a.clientWidth / 2, behavior: 'smooth' }); } }); }, { rootMargin: '-40% 0px -55% 0px' });
+  $$('section.sez').forEach(s => io.observe(s));
+
+  const barraH = () => document.documentElement.style.setProperty('--barra-h', $('.barra').offsetHeight + 'px');
+  window.addEventListener('resize', barraH); barraH();
+
+  /* ---------- avvio ---------- */
+  $('#dataOggi').textContent = new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+  bindCampi(); bindVoti(); renderPalette(); renderFont(); renderTesti(); renderLoghi(); renderCalendario(); renderBudget(); progresso();
+  $$('[data-pacchetto]').forEach(b => { const on = b.dataset.pacchetto === state.pacchetto; b.classList.toggle('on', on); b.textContent = on ? '✓ Scelto' : 'Scelgo questo'; });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderLoghi);
+})();
+</script>
+</body>
+</html>
