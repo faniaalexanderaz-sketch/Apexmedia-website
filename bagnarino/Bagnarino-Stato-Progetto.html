@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Apex Media · Stato del progetto Bagnarino Coworking</title>
+<style>
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@page { size: 297mm 210mm; margin: 0; }
+:root {
+  --viola: #7B3FE4; --viola-chiaro: #F3EFFD; --viola-bordo: #E2DAF7; --scuro: #15121F; --testo: #1B1B24; --grigio: #5F5D6B; --linea: #E6E3EE;
+  --b-inchiostro: #1B2A3A; --b-ocra: #C9973B; --b-ocra-testo: #7A5A1E; --b-carta: #F4EEE3; --b-avorio: #FAF6EE;
+  --apex: 'Hanken Grotesk', 'Inter', system-ui, sans-serif; --serif: 'Fraunces', Georgia, serif; --mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; }
+body { font-family: var(--apex); color: var(--testo); font-size: 12pt; line-height: 1.4; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pagina { width: 297mm; height: 210mm; padding: 11mm 15mm 0; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; }
+.pagina:last-child { page-break-after: auto; }
+p { margin: 0; }
+strong, b { font-weight: 800; }
+
+.testa { display: flex; align-items: center; gap: 3.5mm; margin-bottom: 7mm; }
+.testa img { width: 10mm; height: 10mm; border-radius: 2.2mm; }
+.testa-nome { line-height: 1.15; }
+.testa-nome b { display: block; font-size: 10.5pt; letter-spacing: .28em; }
+.testa-nome span { font-size: 6.2pt; letter-spacing: .2em; color: var(--viola); font-weight: 700; text-transform: uppercase; }
+.testa-dx { margin-left: auto; font-size: 6.8pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
+.pillole { margin-left: auto; display: flex; gap: 1.6mm; }
+.pillole span { display: inline-block; min-width: 8mm; padding: 1.3mm 2.6mm; border-radius: 99px; border: .3mm solid var(--linea); font-size: 6.8pt; font-weight: 700; color: #6d6a7a; text-align: center; }
+.pillole span.on { background: var(--viola); border-color: var(--viola); color: #fff; padding: 1.3mm 3.6mm; }
+
+.occhiello { font-size: 7.6pt; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 0 0 2mm; }
+h1 { font-size: 27pt; line-height: 1.08; margin: 0 0 3mm; letter-spacing: -.02em; font-weight: 800; }
+.trattino { width: 16mm; height: 1.1mm; border-radius: 1mm; background: linear-gradient(90deg, var(--viola), #E7A24A); margin: 0 0 6mm; }
+h3 { font-size: 15pt; margin: 0 0 1.6mm; font-weight: 800; letter-spacing: -.01em; }
+.card { border: .3mm solid var(--viola-bordo); border-radius: 3.4mm; padding: 5mm 5.2mm; background: #fff; }
+.card.lav { background: var(--viola-chiaro); }
+.card.scura { background: var(--scuro); color: #EDEAF6; border-color: var(--scuro); }
+.card.scura h3 { color: #fff; }
+.card.carta { background: var(--b-carta); border-color: #E7DDCB; }
+.griglia { display: grid; gap: 4mm; }
+.piccolo { font-size: 11pt; color: var(--grigio); line-height: 1.4; }
+.card.scura .piccolo { color: #BDB8CC; }
+.etichetta { display: inline-block; padding: .9mm 2.8mm; border-radius: 99px; font-size: 6.8pt; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; background: var(--viola-chiaro); color: var(--viola); white-space: nowrap; }
+.etichetta.ok { background: #1E8A4C; color: #fff; }
+.etichetta.attesa { background: #FDF0DC; color: #8A5A10; }
+.etichetta.lei { background: #FDF0DC; color: #8A5A10; }
+.etichetta.insieme { background: #E3F2E8; color: #1E6B52; }
+.num { font-size: 25pt; font-weight: 800; color: var(--viola); line-height: 1; margin-bottom: 1.4mm; letter-spacing: -.02em; }
+.piede { margin-top: auto; border-top: .3mm solid var(--linea); display: flex; justify-content: space-between; padding: 3mm 0 5mm; font-size: 6.6pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
+.corpo { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-bottom: 6mm; }
+
+/* copertina */
+.eroe { position: relative; border-radius: 4.5mm; overflow: hidden; background: #06050B; color: #fff; padding: 11mm 11mm 8mm; margin-bottom: 5mm; }
+.eroe > img.sfondo { position: absolute; right: -22mm; top: -8mm; height: 112mm; opacity: .95; }
+.eroe::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,5,11,.98) 0%, rgba(6,5,11,.92) 62%, rgba(6,5,11,0) 92%); }
+.eroe > * { position: relative; z-index: 1; }
+.eroe .occhiello { color: #B79AF5; }
+.eroe h1 { font-size: 33pt; font-weight: 500; color: #CFCBDA; margin-bottom: 0; }
+.eroe h1 b { display: block; color: #F2C66B; }
+.eroe .trattino { margin: 5mm 0 7mm; }
+.eroe-cliente { display: flex; align-items: center; gap: 4mm; padding-top: 4mm; border-top: .3mm solid rgba(255,255,255,.14); }
+.eroe-cliente .targhetta { background: var(--b-avorio); border-radius: 2mm; padding: 2.4mm 3.4mm; }
+.eroe-cliente .targhetta img { height: 9mm; display: block; }
+.eroe-cliente b { display: block; font-size: 11pt; }
+.eroe-cliente span { font-size: 8.6pt; color: #BDB8CC; }
+.riga3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; flex: 1; }
+.riga3 .card { display: flex; flex-direction: column; }
+.riga3 .card { padding: 6mm 6.4mm; }
+.riga3 .card p.fatto { font-size: 21pt; font-weight: 800; line-height: 1.16; letter-spacing: -.015em; margin: 4mm 0 auto; }
+.riga3 .card .piccolo { font-size: 12pt; padding-top: 3mm; }
+
+/* identità */
+.id { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; flex: 1; }
+.id .card { display: flex; flex-direction: column; }
+.id .piccolo { font-size: 11.6pt; color: var(--testo); }
+.id .mostra { height: 46mm; border-radius: 2.4mm; background: var(--b-avorio); display: grid; place-items: center; margin-bottom: 4mm; overflow: hidden; }
+.id .mostra.blu { background: var(--b-inchiostro); }
+.colori { display: grid; grid-template-columns: 1.3fr 1fr 1fr; width: 100%; height: 100%; }
+.colori span { display: flex; align-items: flex-end; padding: 2.4mm; font-family: var(--mono); font-size: 6.6pt; }
+.perche { margin-top: auto; padding-top: 3mm; border-top: .3mm solid var(--linea); font-size: 11pt; color: var(--grigio); line-height: 1.38; }
+.perche b { color: var(--viola); display: block; font-size: 6.8pt; letter-spacing: .18em; text-transform: uppercase; margin-bottom: .8mm; }
+.fascia { margin-top: 4mm; border-left: 1.3mm solid var(--viola); background: var(--viola-chiaro); border-radius: 0 2.6mm 2.6mm 0; padding: 4mm 5mm; font-size: 13pt; }
+
+/* social */
+.due { display: grid; grid-template-columns: 1fr 1.45fr; gap: 8mm; flex: 1; min-height: 0; }
+.due > div { display: flex; flex-direction: column; }
+.anteprime { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; align-content: start; }
+.anteprime figure { margin: 0; }
+.anteprime .img { aspect-ratio: 4 / 5; border-radius: 2.6mm; overflow: hidden; box-shadow: 0 2.4mm 6mm -3mm rgba(0,0,0,.35); }
+.anteprime img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+.anteprime figcaption { font-size: 9.6pt; margin-top: 2mm; line-height: 1.3; color: var(--grigio); }
+.anteprime figcaption b { color: var(--testo); display: block; font-size: 11pt; }
+.elenco { margin: 0; padding: 0; list-style: none; display: grid; gap: 2.2mm; grid-template-rows: repeat(6, 16.6mm); }
+.elenco li { display: flex; align-items: center; gap: 3mm; padding: 1.2mm 4.4mm; border: .3mm solid var(--linea); border-radius: 2.6mm; font-size: 11pt; line-height: 1.3; }
+.elenco li b { font-size: 12.6pt; }
+.elenco li .piccolo { font-size: 10pt; }
+.elenco li .etichetta { margin-left: auto; }
+.elenco li .n { font-weight: 800; color: var(--viola); font-size: 16pt; min-width: 13mm; }
+
+/* sito */
+.sito { display: grid; grid-template-columns: 100mm 1fr; gap: 8mm; flex: 1; min-height: 0; }
+.telefoni { display: grid; grid-template-columns: 1fr 1fr; gap: 3.4mm; align-content: start; }
+.telefono { border-radius: 5mm; border: 1.3mm solid #15121F; overflow: hidden; background: #15121F; box-shadow: 0 3mm 8mm -3mm rgba(0,0,0,.4); }
+.telefono img { display: block; width: 100%; }
+.didascalia { font-size: 9pt; color: var(--grigio); margin-top: 1.6mm; text-align: center; }
+.numeri { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.4mm; }
+.numeri .card { padding: 4mm 4.4mm; }
+.numeri .piccolo { font-size: 10.4pt; }
+.percheSito { display: grid; grid-template-columns: 1fr 1fr; gap: 3.4mm; margin-top: 3.4mm; flex: 1; }
+.percheSito .card { display: flex; flex-direction: column; }
+.punti { margin: 0; padding: 0; list-style: none; display: grid; gap: 2.6mm; }
+.percheSito .punti { gap: 3.4mm; margin-top: 3mm !important; }
+.punti li { position: relative; padding-left: 5.4mm; font-size: 12.4pt; line-height: 1.32; }
+.punti li::before { content: ''; position: absolute; left: 0; top: 2.2mm; width: 2.2mm; height: 2.2mm; border-radius: 50%; background: var(--viola); }
+.card.scura .punti li::before { background: #F2C66B; }
+
+/* passi */
+.tappe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; flex: 1; }
+.tappa { display: flex; flex-direction: column; }
+.tappa .su { display: flex; align-items: center; gap: 3mm; margin-bottom: 3.4mm; }
+.tappa .su .n { display: grid; place-items: center; width: 8.4mm; height: 8.4mm; border-radius: 50%; background: var(--viola); color: #fff; font-weight: 800; font-size: 10.5pt; flex: none; }
+.tappa .su b { font-size: 16pt; line-height: 1.15; }
+.quando { font-family: var(--mono); font-size: 9pt; letter-spacing: .08em; text-transform: uppercase; color: var(--viola); font-weight: 500; }
+.blocco { margin-top: 4.4mm; }
+.tappa { padding: 6mm 6mm 5mm; }
+.blocco .etichetta { margin-bottom: 2.6mm; font-size: 7.6pt; }
+.blocco .punti li { font-size: 12pt; }
+.data { margin-top: auto; padding-top: 3mm; border-top: .3mm dashed #cfc9df; font-size: 11pt; font-weight: 700; color: var(--grigio); display: flex; justify-content: space-between; align-items: flex-end; }
+.data i { font-style: normal; display: inline-block; width: 30mm; border-bottom: .35mm solid #9b98a6; height: 5mm; }
+
+/* decisioni */
+.dec { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 3.4mm; flex: 1; }
+.dec .card { padding: 5mm 5.2mm; display: flex; flex-direction: column; }
+.dec .k { font-family: var(--mono); font-size: 9pt; color: var(--viola); font-weight: 500; letter-spacing: .08em; margin-bottom: 1.2mm; }
+.dec h3 { font-size: 15.5pt; line-height: 1.16; margin-bottom: 2.4mm; }
+.dec .oggi { font-size: 11.4pt; color: var(--grigio); line-height: 1.35; }
+.dec .scelta { margin-top: auto; padding-top: 2.6mm; display: flex; gap: 5mm; font-size: 10.4pt; font-weight: 700; color: #4a4759; }
+.dec .scelta span::before { content: ''; display: inline-block; width: 3.2mm; height: 3.2mm; border: .4mm solid var(--viola); border-radius: .9mm; margin-right: 1.6mm; vertical-align: -0.5mm; }
+</style>
+</head>
+<body>
+
+<!-- 1 · DOVE SIAMO OGGI -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="testa-dx">Riservato a Bagnarino S.r.l. · Novembre 2026</div></div>
+  <div class="corpo">
+    <div class="eroe">
+      <img class="sfondo" src="identita/apex-banner.jpg" alt="">
+      <p class="occhiello">Stato del progetto · 01 Dove siamo oggi</p>
+      <h1>Il sito è online.<b>Ora decidiamo insieme la partenza.</b></h1>
+      <div class="trattino"></div>
+      <div class="eroe-cliente"><div class="targhetta"><img src="identita/logo.svg" alt="Bagnarino Coworking"></div><div><b>Bagnarino Coworking</b><span>Incontro con Marcella Bagnarino · corso Lamarmora 46, Alessandria</span></div></div>
+    </div>
+    <div class="riga3">
+      <div class="card">
+        <span class="etichetta ok" style="align-self:flex-start">Online</span>
+        <p class="fatto">Il sito è pronto e riceve prenotazioni.</p>
+        <p class="piccolo">bagnarinocoworking.it</p>
+      </div>
+      <div class="card">
+        <span class="etichetta ok" style="align-self:flex-start">Definita</span>
+        <p class="fatto">L’identità è una sola, su sito e social.</p>
+        <p class="piccolo">1 logo · 3 colori · 3 caratteri</p>
+      </div>
+      <div class="card lav">
+        <span class="etichetta attesa" style="align-self:flex-start">Da decidere oggi</span>
+        <p class="fatto">I contenuti social sono pronti. Manca la data.</p>
+        <p class="piccolo">Servono le Sue conferme per partire.</p>
+      </div>
+    </div>
+  </div>
+  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>1 / 6</span></div>
+</section>
+
+<!-- 2 · IDENTITÀ -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span class="on">02 Identità</span><span>03</span><span>04</span><span>05</span><span>06</span></div></div>
+  <div class="corpo">
+    <p class="occhiello">02 — Identità visiva</p>
+    <h1>Un negozio di sempre, un’identità che si ricorda.</h1>
+    <div class="trattino"></div>
+    <div class="id">
+      <div class="card">
+        <div class="mostra"><img src="identita/logo.svg" alt="Logo Bagnarino" style="width:78%"></div>
+        <h3>Il logo</h3>
+        <p class="piccolo">Una B in due blocchi, una riga ocra, la firma “dal 1983”.</p>
+        <p class="perche"><b>Perché</b>Il negozio di sempre e il coworking di oggi, nella stessa casa.</p>
+      </div>
+      <div class="card">
+        <div class="mostra"><div class="colori"><span style="background:#1B2A3A;color:#fff">#1B2A3A</span><span style="background:#C9973B;color:#1B2A3A">#C9973B</span><span style="background:#F4EEE3;color:#1B2A3A">#F4EEE3</span></div></div>
+        <h3>I colori</h3>
+        <p class="piccolo">Blu inchiostro, ocra, carta. Sempre gli stessi, ovunque.</p>
+        <p class="perche"><b>Perché</b>Il blu dà fiducia. L’ocra è riservato a un’azione: “Prenota”.</p>
+      </div>
+      <div class="card">
+        <div class="mostra" style="padding:3mm 4mm; place-items:center start;">
+          <div style="width:100%">
+            <div style="font-family:var(--serif);font-size:17pt;line-height:1.05;color:var(--b-inchiostro)">Da €25 <em style="color:var(--b-ocra-testo)">al giorno.</em></div>
+            <div style="font-size:9pt;margin:2mm 0;color:var(--b-inchiostro)">Scrivania, wi-fi in fibra e stampante.</div>
+            <div style="font-family:var(--mono);font-size:7.4pt;letter-spacing:.06em;color:var(--b-inchiostro)">LUN–VEN 9:30–18:30</div>
+          </div>
+        </div>
+        <h3>I caratteri</h3>
+        <p class="piccolo">Fraunces per i titoli, Hanken Grotesk per i testi, IBM Plex Mono per orari e codici.</p>
+        <p class="perche"><b>Perché</b>Classe nei titoli, lettura facile dal telefono, dettagli “da ufficio”.</p>
+      </div>
+      <div class="card">
+        <div class="mostra blu" style="padding:4mm 5mm"><div style="font-family:var(--serif);font-size:13.5pt;line-height:1.2;color:#F4EEE3">“Scrivania”, <em style="color:#DDB05C">non “desk”.</em><br>“Giornata”, <em style="color:#DDB05C">non “day pass”.</em></div></div>
+        <h3>Il tono</h3>
+        <p class="piccolo">Diretto come un commesso di fiducia, caldo come un negozio di quartiere.</p>
+        <p class="perche"><b>Perché</b>Ogni testo risponde a una domanda: quanto costa, quando, come prenoto.</p>
+      </div>
+    </div>
+    <div class="fascia"><b>Un solo scopo:</b> chi La trova su Google o su Instagram deve pensare “questo è un posto serio, prenoto”.</div>
+  </div>
+  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>2 / 6</span></div>
+</section>
+
+<!-- 3 · SOCIAL -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span class="on">03 Social</span><span>04</span><span>05</span><span>06</span></div></div>
+  <div class="corpo">
+    <p class="occhiello">03 — Social</p>
+    <h1>I contenuti sono pronti. Partono con il Suo ok.</h1>
+    <div class="trattino"></div>
+    <div class="due">
+      <div>
+        <ul class="elenco">
+          <li><span class="n">1</span><div><b>Foto profilo</b><br><span class="piccolo">La B del logo</span></div><span class="etichetta ok">Pronta</span></li>
+          <li><span class="n">4+3</span><div><b>Teaser di apertura</b><br><span class="piccolo">4 post e 3 storie, senza data</span></div><span class="etichetta ok">Pronti</span></li>
+          <li><span class="n">4</span><div><b>Post di lancio</b><br><span class="piccolo">Annuncio, listino, servizi</span></div><span class="etichetta ok">Pronti</span></li>
+          <li><span class="n">5</span><div><b>Carosello “Come funziona”</b><br><span class="piccolo">5 immagini, in quattro mosse</span></div><span class="etichetta ok">Pronto</span></li>
+          <li><span class="n">16″</span><div><b>Video teaser per TikTok</b><br><span class="piccolo">4 scene: “La data? Top secret.”</span></div><span class="etichetta ok">Pronto</span></li>
+          <li><span class="n">→</span><div><b>Pubblicazione</b><br><span class="piccolo">Calendario e data di apertura</span></div><span class="etichetta attesa">Da decidere</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="anteprime">
+          <figure><div class="img"><img src="stato-progetto/social-teaser.jpg" alt=""></div><figcaption><b>Teaser</b>“Qualcosa sta per aprire qui.”</figcaption></figure>
+          <figure><div class="img"><img src="stato-progetto/social-lancio.jpg" alt=""></div><figcaption><b>Lancio</b>“Il tuo nuovo ufficio è in centro.”</figcaption></figure>
+          <figure><div class="img"><img src="stato-progetto/social-carosello.jpg" alt=""></div><figcaption><b>Carosello</b>Come funziona</figcaption></figure>
+          <figure><div class="img"><img src="stato-progetto/social-video.jpg" alt=""></div><figcaption><b>Video</b>16 secondi</figcaption></figure>
+        </div>
+        <div class="fascia" style="margin-top:9mm;font-size:12.4pt"><b>La regola:</b> stessi colori, stessi caratteri e stessi prezzi del sito. Mai recensioni, numeri o clienti inventati.</div>
+      </div>
+    </div>
+  </div>
+  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>3 / 6</span></div>
+</section>
+
+<!-- 4 · SITO -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span class="on">04 Sito</span><span>05</span><span>06</span></div></div>
+  <div class="corpo">
+    <p class="occhiello">04 — Il sito · bagnarinocoworking.it</p>
+    <h1>È pronto. Lavora per Lei, anche quando è al banco.</h1>
+    <div class="trattino"></div>
+    <div class="sito">
+      <div>
+        <div class="telefoni">
+          <div><div class="telefono"><img src="stato-progetto/sito-telefono-home.jpg" alt=""></div><p class="didascalia">La pagina principale</p></div>
+          <div><div class="telefono"><img src="stato-progetto/sito-telefono-prenota.jpg" alt=""></div><p class="didascalia">La prenotazione</p></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;min-height:0">
+        <div class="numeri">
+          <div class="card"><div class="num">30 sec</div><p class="piccolo">per prenotare dal telefono, senza registrarsi</p></div>
+          <div class="card"><div class="num">€0</div><p class="piccolo">di anticipo: il cliente paga in sede</p></div>
+          <div class="card"><div class="num">4</div><p class="piccolo">formule: €25 · €200 · €270 · €320</p></div>
+          <div class="card"><div class="num">6</div><p class="piccolo">email automatiche ai clienti</p></div>
+        </div>
+        <div class="percheSito">
+          <div class="card">
+            <h3>Cosa contiene</h3>
+            <ul class="punti" style="margin-top:2mm">
+              <li>Posti liberi, giorno per giorno</li>
+              <li>Prenotazione in 3 passi</li>
+              <li>Bagnarino Card: timbri e 4 premi</li>
+              <li>La Sua area riservata, con password</li>
+              <li>WhatsApp e telefono in ogni pagina</li>
+            </ul>
+          </div>
+          <div class="card scura">
+            <h3>Cosa fa per la Sua attività</h3>
+            <ul class="punti" style="margin-top:2mm">
+              <li>Porta prenotazioni da Google e dai social</li>
+              <li>La avvisa a ogni prenotazione, e ogni sera</li>
+              <li>Riduce i posti vuoti con il promemoria</li>
+              <li>Fa tornare chi ha provato: Card ed email</li>
+              <li>Mostra incassi e provenienza dei clienti</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>4 / 6</span></div>
+</section>
+
+<!-- 5 · PROSSIMI PASSI -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span class="on">05 Prossimi passi</span><span>06</span></div></div>
+  <div class="corpo">
+    <p class="occhiello">05 — Prossimi passi</p>
+    <h1>Tre tappe. Le date le fissiamo oggi.</h1>
+    <div class="trattino"></div>
+    <div class="tappe">
+      <div class="card tappa">
+        <div class="su"><span class="n">1</span><div><b>Accessi e conferme</b><br><span class="quando">Settimana 1</span></div></div>
+        <div class="blocco"><span class="etichetta lei">Serve da Lei</span>
+          <ul class="punti"><li>L’email dove ricevere le prenotazioni</li><li>Accesso al profilo Google e a Facebook</li><li>Le conferme della pagina 6</li></ul></div>
+        <div class="blocco"><span class="etichetta">Facciamo noi</span>
+          <ul class="punti"><li>Misurazione: Pixel Meta, Search Console</li><li>Una prenotazione di prova completa</li></ul></div>
+        <p class="data"><span>Inizio</span><i></i></p>
+      </div>
+      <div class="card tappa">
+        <div class="su"><span class="n">2</span><div><b>Formazione e lancio</b><br><span class="quando">Settimana 2</span></div></div>
+        <div class="blocco"><span class="etichetta insieme">Insieme</span>
+          <ul class="punti"><li>20 minuti in negozio sull’area riservata</li></ul></div>
+        <div class="blocco"><span class="etichetta lei">Serve da Lei</span>
+          <ul class="punti"><li>Un messaggio WhatsApp ai clienti del negozio</li></ul></div>
+        <div class="blocco"><span class="etichetta">Facciamo noi</span>
+          <ul class="punti"><li>Post su Instagram, Facebook e Google</li><li>Cartello con QR per vetrina e banco</li></ul></div>
+        <p class="data"><span>Giorno del lancio</span><i></i></p>
+      </div>
+      <div class="card tappa lav">
+        <div class="su"><span class="n">3</span><div><b>Il primo mese</b><br><span class="quando">Settimane 2–5</span></div></div>
+        <div class="blocco"><span class="etichetta">Facciamo noi</span>
+          <ul class="punti"><li>2 post a settimana e qualche storia</li><li>Campagna Instagram e Facebook</li><li>I numeri del mese nella scheda Crescita</li></ul></div>
+        <div class="blocco"><span class="etichetta insieme">Insieme</span>
+          <ul class="punti"><li>10 minuti al mese sui numeri</li><li>Il servizio fotografico in negozio</li></ul></div>
+        <p class="data"><span>Primo controllo</span><i></i></p>
+      </div>
+    </div>
+  </div>
+  <div class="piede"><span>Apex Media · per Bagnarino S.r.l.</span><span>5 / 6</span></div>
+</section>
+
+<!-- 6 · DECISIONI -->
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="pillole"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span class="on">06 Decisioni</span></div></div>
+  <div class="corpo">
+    <p class="occhiello">06 — Domande e decisioni</p>
+    <h1>Otto decisioni, e si parte.</h1>
+    <div class="trattino"></div>
+    <div class="dec">
+      <div class="card lav"><p class="k">01</p><h3>Data di apertura e del lancio</h3><p class="oggi">Oggi i social dicono “apertura a breve”.</p><p class="scelta" style="font-weight:500;color:var(--grigio)">Data: ______________</p></div>
+      <div class="card"><p class="k">02</p><h3>Listino</h3><p class="oggi">Giornata €25 · Carnet €200 · Mese €270 · Postazione fissa €320. IVA inclusa?</p><p class="scelta"><span>Va bene</span><span>Da cambiare</span></p></div>
+      <div class="card"><p class="k">03</p><h3>Scrivanie</h3><p class="oggi">Sul sito oggi sono 8. Quante sono fisse?</p><p class="scelta"><span>Va bene</span><span>Da cambiare</span></p></div>
+      <div class="card"><p class="k">04</p><h3>Orari e chiusure</h3><p class="oggi">Lun–Ven 9:30–18:30. Ferie, ponti, Natale.</p><p class="scelta"><span>Va bene</span><span>Da cambiare</span></p></div>
+      <div class="card"><p class="k">05</p><h3>Premi della Bagnarino Card</h3><p class="oggi">25 stampe a colori · porta un amico · −10% in negozio · giornata in regalo.</p><p class="scelta"><span>Va bene</span><span>Da cambiare</span></p></div>
+      <div class="card"><p class="k">06</p><h3>Servizi da mostrare</h3><p class="oggi">Caffè e acqua, climatizzazione, sala riunioni: oggi nascosti.</p><p class="scelta"><span>Ci sono</span><span>Non ci sono</span></p></div>
+      <div class="card"><p class="k">07</p><h3>Pagamento e disdetta</h3><p class="oggi">Contanti o carta, in sede. Disdetta gratis entro le 20:00 del giorno prima.</p><p class="scelta"><span>Va bene</span><span>Da cambiare</span></p></div>
+      <div class="card"><p class="k">08</p><h3>Servizio fotografico</h3><p class="oggi">Un giorno in negozio per le foto vere, dopo l’arrivo dei separè.</p><p class="scelta" style="font-weight:500;color:var(--grigio)">Data: ______________</p></div>
+    </div>
+  </div>
+  <div class="piede"><span>Apex Media · 351 594 0685 · studio@infoapex.eu</span><span>6 / 6</span></div>
+</section>
+
+</body>
+</html>

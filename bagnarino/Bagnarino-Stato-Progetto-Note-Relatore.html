@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Apex Media · Note del relatore · Stato del progetto Bagnarino</title>
+<style>
+@font-face { font-family: 'Hanken Grotesk'; src: url('identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@page { size: A4; margin: 12mm 15mm 11mm; }
+:root { --viola: #7B3FE4; --viola-chiaro: #F3EFFD; --viola-bordo: #E2DAF7; --scuro: #15121F; --testo: #1B1B24; --grigio: #5F5D6B; --linea: #E6E3EE; --mono: 'IBM Plex Mono', monospace; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; }
+body { font-family: 'Hanken Grotesk', 'Inter', system-ui, sans-serif; color: var(--testo); font-size: 10pt; line-height: 1.42; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pagina { page-break-after: always; }
+.sezione, tr, .nota { break-inside: avoid; }
+.sez { break-after: avoid; }
+.pagina:last-child { page-break-after: auto; }
+p { margin: 0; }
+.testa { display: flex; align-items: center; gap: 3.5mm; margin-bottom: 6mm; }
+.testa img { width: 10mm; height: 10mm; border-radius: 2.2mm; }
+.testa-nome b { display: block; font-size: 10.5pt; letter-spacing: .28em; font-weight: 800; line-height: 1.15; }
+.testa-nome span { font-size: 6.2pt; letter-spacing: .2em; color: var(--viola); font-weight: 700; text-transform: uppercase; }
+.testa-dx { margin-left: auto; font-size: 6.6pt; letter-spacing: .2em; color: #B4302A; text-transform: uppercase; font-weight: 800; }
+h1 { font-size: 19pt; line-height: 1.12; margin: 0 0 2mm; letter-spacing: -.02em; font-weight: 800; }
+.trattino { width: 15mm; height: 1mm; border-radius: 1mm; background: linear-gradient(90deg, var(--viola), #E7A24A); margin: 0 0 4mm; }
+.intro { font-size: 10pt; color: var(--grigio); margin-bottom: 4mm; }
+.tempi { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2mm; margin-bottom: 5mm; }
+.tempi div { border: .3mm solid var(--viola-bordo); border-radius: 2.4mm; padding: 2mm 2.4mm; font-size: 7.8pt; line-height: 1.3; }
+.tempi b { display: block; font-size: 12pt; color: var(--viola); font-weight: 800; }
+.sezione { border: .3mm solid var(--linea); border-radius: 3mm; padding: 4mm 4.6mm; margin-bottom: 4mm; }
+.sezione .su { display: flex; align-items: center; gap: 3mm; margin-bottom: 3mm; }
+.sezione .su .n { display: grid; place-items: center; width: 7.4mm; height: 7.4mm; border-radius: 50%; background: var(--viola); color: #fff; font-weight: 800; font-size: 9.6pt; flex: none; }
+.sezione .su b { font-size: 12pt; font-weight: 800; }
+.sezione .su span.min { margin-left: auto; font-family: var(--mono); font-size: 7.6pt; color: var(--viola); letter-spacing: .08em; text-transform: uppercase; }
+.riga { display: grid; grid-template-columns: 24mm 1fr; gap: 3mm; padding: 1.8mm 0; border-top: .3mm solid var(--linea); }
+.riga:first-of-type { border-top: 0; padding-top: 0; }
+.riga .k { font-size: 6.6pt; letter-spacing: .14em; text-transform: uppercase; font-weight: 800; color: var(--viola); padding-top: .8mm; }
+.riga .k.dom { color: #8A5A10; } .riga .k.pas { color: #1E6B52; }
+.detto { font-weight: 700; font-size: 10.4pt; }
+ul { margin: 0; padding-left: 4.2mm; } li { margin-bottom: .9mm; }
+.piede { margin-top: auto; border-top: .3mm solid var(--linea); display: flex; justify-content: space-between; padding: 3mm 0 6mm; font-size: 6.4pt; letter-spacing: .2em; color: #9b98a6; text-transform: uppercase; }
+.sez { font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--viola); font-weight: 800; margin: 3.2mm 0 1.8mm; }
+.nota { border-left: 1.2mm solid var(--viola); background: var(--viola-chiaro); border-radius: 0 2.4mm 2.4mm 0; padding: 2.8mm 4mm; font-size: 9.2pt; margin-bottom: 4mm; }
+table { width: 100%; border-collapse: collapse; font-size: 8.8pt; }
+th { text-align: left; font-size: 6.4pt; letter-spacing: .14em; text-transform: uppercase; color: var(--viola); padding: 0 2mm 1.4mm; border-bottom: .3mm solid var(--viola-bordo); }
+td { padding: 1.3mm 2mm; border-bottom: .3mm solid var(--linea); vertical-align: top; line-height: 1.36; }
+td:first-child { font-weight: 800; width: 30%; }
+td.box { width: 6mm; } td.box::before { content: ''; display: block; width: 3.4mm; height: 3.4mm; border: .4mm solid var(--viola); border-radius: .9mm; margin-top: .4mm; }
+</style>
+</head>
+<body>
+
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="testa-dx">Solo per il relatore · non mostrare</div></div>
+  <h1>Note del relatore</h1>
+  <div class="trattino"></div>
+  <p class="intro">Stato del progetto Bagnarino Coworking · incontro con Marcella Bagnarino · circa 60 minuti. Le frasi in grassetto si dicono così come sono. Alla cliente si dà del Lei.</p>
+  <div class="tempi">
+    <div><b>5′</b>1 · Dove siamo</div><div><b>10′</b>2 · Identità</div><div><b>10′</b>3 · Social</div><div><b>15′</b>4 · Sito</div><div><b>8′</b>5 · Passi</div><div><b>12′</b>6 · Decisioni</div>
+  </div>
+
+  <div class="sezione">
+    <div class="su"><span class="n">1</span><b>Dove siamo oggi</b><span class="min">0–5 min</span></div>
+    <div class="riga"><span class="k">Apro con</span><p class="detto">“Signora Bagnarino, parto dalla notizia: il sito è online e riceve prenotazioni. Oggi Le mostro cosa abbiamo costruito e decidiamo insieme quando partire.”</p></div>
+    <div class="riga"><span class="k">Dico</span><ul>
+      <li>Tre cose sono a posto: sito, identità, contenuti social.</li>
+      <li>Una sola manca: la data. Dipende dalle Sue conferme, non dal nostro lavoro.</li>
+      <li>L’incontro ha sei punti. All’ultimo decidiamo: esce con un piano, non con dei dubbi.</li>
+    </ul></div>
+    <div class="riga"><span class="k dom">Domanda</span><p class="detto">“Prima di cominciare: c’è un punto che Le sta più a cuore, così gli dedico più tempo?”</p></div>
+    <div class="riga"><span class="k pas">Passaggio</span><p class="detto">“Parto dal volto del coworking: come si presenta a chi non La conosce ancora.”</p></div>
+  </div>
+
+  <div class="sezione">
+    <div class="su"><span class="n">2</span><b>Identità visiva</b><span class="min">5–15 min</span></div>
+    <div class="riga"><span class="k">Apro con</span><p class="detto">“Non abbiamo inventato un coworking da startup. Siamo partiti da ciò che Lei ha già e nessun altro in città ha: un negozio vero, in corso Lamarmora dal 1983, concessionario Olivetti.”</p></div>
+    <div class="riga"><span class="k">Dico</span><ul>
+      <li><b>Logo.</b> Una B in due blocchi: il negozio di sempre e il coworking di oggi. La riga ocra li unisce. Sotto, “dal 1983”: una garanzia.</li>
+      <li><b>Colori.</b> Il blu inchiostro dà fiducia. L’ocra serve a una cosa sola: i pulsanti “Prenota”. Niente rosso: è il colore di Olivetti, resta solo sui timbri della Card.</li>
+      <li><b>Caratteri e tono.</b> Tre caratteri, ognuno con un compito. Parole semplici: “scrivania”, non “desk”.</li>
+    </ul></div>
+    <div class="riga"><span class="k dom">Domanda</span><p class="detto">“Si riconosce in questa immagine? C’è qualcosa che non sente Suo?”</p></div>
+    <div class="riga"><span class="k pas">Passaggio</span><p class="detto">“Questa stessa identità è già sui contenuti per i social. Glieli mostro.”</p></div>
+  </div>
+
+  <div class="sezione">
+    <div class="su"><span class="n">3</span><b>Social</b><span class="min">15–25 min</span></div>
+    <div class="riga"><span class="k">Apro con</span><p class="detto">“I contenuti per aprire sono già pronti. Nessuno parte senza il Suo ok.”</p></div>
+    <div class="riga"><span class="k">Dico</span><ul>
+      <li><b>Due fasi.</b> Prima i teaser: 4 post, 3 storie e un video da 16 secondi, senza data. Poi i 4 post di lancio e il carosello “Come funziona”.</li>
+      <li><b>Ordine di uscita.</b> I post di lancio escono 4 → 3 → 2 → 1: l’annuncio resta il primo sul profilo.</li>
+      <li><b>Regola.</b> Stessi prezzi e colori del sito. Mai recensioni o numeri inventati.</li>
+    </ul></div>
+    <div class="riga"><span class="k dom">Domanda</span><p class="detto">“Tra queste immagini ce n’è una che non pubblicherebbe? E una che La rappresenta di più?”</p></div>
+    <div class="riga"><span class="k pas">Passaggio</span><p class="detto">“Tutti questi contenuti portano in un posto solo: il sito. Vediamo cosa trova chi ci arriva.”</p></div>
+  </div>
+
+  <div class="sezione">
+    <div class="su"><span class="n">4</span><b>Il sito</b><span class="min">25–40 min</span></div>
+    <div class="riga"><span class="k">Apro con</span><p class="detto">“Il sito è pronto. Il cliente prenota in 30 secondi dal telefono, senza registrarsi e senza pagare prima. Paga da Lei, quando arriva.”</p></div>
+    <div class="riga"><span class="k">Dico</span><ul>
+      <li><b>Per il cliente.</b> Vede i posti liberi, sceglie tra 4 formule, prenota in 3 passi. Chi preferisce, scrive su WhatsApp o chiama.</li>
+      <li><b>Per Lei.</b> Un’area riservata con password: Oggi, Calendario, Clienti, Incassi, Crescita. Un avviso a ogni prenotazione, il riepilogo ogni sera, il report il primo del mese.</li>
+      <li><b>Per far tornare i clienti.</b> La Bagnarino Card con 4 premi e 6 email automatiche: conferma, promemoria, grazie, “ci manchi”, carnet in scadenza, rinnovo.</li>
+    </ul></div>
+    <div class="riga"><span class="k">Mostro</span><p>Apro bagnarinocoworking.it dal telefono e faccio i tre passi della prenotazione, senza inviarla. Riempie 3–4 minuti e vale più di ogni spiegazione.</p></div>
+    <div class="riga"><span class="k dom">Domanda</span><p class="detto">“Se fosse una Sua cliente, prenoterebbe? Cosa Le manca per dire di sì?”</p></div>
+    <div class="riga"><span class="k pas">Passaggio</span><p class="detto">“Il sito c’è. Ora Le dico cosa serve per accenderlo davvero, e in che ordine.”</p></div>
+  </div>
+
+  <div class="sezione">
+    <div class="su"><span class="n">5</span><b>Prossimi passi</b><span class="min">40–48 min</span></div>
+    <div class="riga"><span class="k">Apro con</span><p class="detto">“Sono tre tappe. A Lei chiedo poche cose, il resto lo facciamo noi. Le date le scriviamo adesso, insieme.”</p></div>
+    <div class="riga"><span class="k">Dico</span><ul>
+      <li><b>Tappa 1, una settimana.</b> Da Lei: l’email per gli avvisi, l’accesso al profilo Google e a Facebook, le conferme. Noi: misurazione e una prenotazione di prova.</li>
+      <li><b>Tappa 2, la settimana dopo.</b> 20 minuti in negozio per l’area riservata, poi il lancio: post, cartello con QR in vetrina, il Suo messaggio WhatsApp ai clienti del negozio.</li>
+      <li><b>Tappa 3, il primo mese.</b> 2 post a settimana, la campagna, e 10 minuti al mese con Lei sui numeri.</li>
+    </ul></div>
+    <div class="riga"><span class="k">Scrivo</span><p>Le tre date sulle righe vuote della pagina, mentre le decidiamo. Chiedo prima la data di inizio: le altre due seguono.</p></div>
+    <div class="riga"><span class="k dom">Domanda</span><p class="detto">“Da quale giorno possiamo partire con la prima tappa? E quando arrivano i separè?”</p></div>
+    <div class="riga"><span class="k pas">Passaggio</span><p class="detto">“Per rispettare queste date servono otto decisioni. Le prendiamo adesso, una alla volta.”</p></div>
+  </div>
+
+  <div class="sezione" style="margin-bottom:0">
+    <div class="su"><span class="n">6</span><b>Domande e decisioni</b><span class="min">48–60 min</span></div>
+    <div class="riga"><span class="k">Apro con</span><p class="detto">“Sono otto punti. Per ciascuno Le dico cosa c’è oggi sul sito: Lei mi dice se va bene o cosa cambiare. Ogni voce si modifica in pochi minuti.”</p></div>
+    <div class="riga"><span class="k">Dico</span><ul>
+      <li>Leggo ogni riquadro e spunto la risposta. Circa un minuto a punto.</li>
+      <li>Parto dalla data: è l’unica che blocca tutto il resto.</li>
+      <li>Ciò che non si decide oggi resta nascosto sul sito. Non pubblichiamo dati non confermati.</li>
+    </ul></div>
+    <div class="riga"><span class="k dom">Domanda</span><p class="detto">“C’è una domanda che non Le ho fatto e che secondo Lei dovevo farLe?”</p></div>
+    <div class="riga"><span class="k pas">Chiudo con</span><p class="detto">“Riepilogo: da Lei aspetto … entro il …; noi consegniamo … entro il …. Le mando oggi stesso il riepilogo scritto.”</p></div>
+  </div>
+
+  <p class="sez">Se avanza tempo · altri punti aperti nei file</p>
+  <table>
+    <tr><td class="box"></td><td>Abbonati mensili</td><td>100 stampe a colori al mese, un amico gratis, −10% in negozio, €20 in meno dal quarto mese: quantità da confermare.</td></tr>
+    <tr><td class="box"></td><td>Offerta prima volta</td><td>Seconda giornata a €20 entro 7 giorni. Oggi spenta.</td></tr>
+    <tr><td class="box"></td><td>Stampe incluse</td><td>C’è un limite di pagine? Videochiamate ammesse alle postazioni?</td></tr>
+    <tr><td class="box"></td><td>“Ti accoglie Marcella”</td><td>Il Suo nome sul sito e nella conferma va bene? Una Sua foto al banco?</td></tr>
+    <tr><td class="box"></td><td>Parcheggio</td><td>Convenzioni o parcheggi vicini da indicare. Logo Olivetti: file ufficiale del concessionario.</td></tr>
+  </table>
+</section>
+
+<section class="pagina">
+  <div class="testa"><img src="identita/apex-logo.png" alt=""><div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div><div class="testa-dx">Solo per il relatore · non mostrare</div></div>
+  <h1>Da confermare</h1>
+  <div class="trattino"></div>
+  <div class="nota"><b>Non trovato nei file.</b> Questi dati mancano o si contraddicono nel materiale del progetto. Nel PDF per la cliente non compaiono, oppure sono lasciati come riga vuota. Da chiarire prima dell’incontro dove possibile.</div>
+
+  <p class="sez" style="margin-top:0">Date</p>
+  <table>
+    <tr><td class="box"></td><td>Date di calendario</td><td>I file dicono solo “settimana 1”, “settimana 2”, “settimane 2–5”. Nessun giorno preciso: nel PDF sono righe vuote.</td></tr>
+    <tr><td class="box"></td><td>Data di apertura e lancio</td><td>Non fissata. I teaser dicono “apertura a breve”.</td></tr>
+    <tr><td class="box"></td><td>Separè e servizio fotografico</td><td>Data di arrivo dei separè e giorno delle foto: campi vuoti nella scheda.</td></tr>
+    <tr><td class="box"></td><td>Data dell’incontro</td><td>Non indicata: sul PDF c’è solo “Novembre 2026”.</td></tr>
+  </table>
+
+  <p class="sez">Stato reale da verificare</p>
+  <table>
+    <tr><td class="box"></td><td>Cosa è già pubblicato</td><td>Nessun file dice quali teaser, post o video sono usciti. Nel PDF sono indicati solo come “pronti”.</td></tr>
+    <tr><td class="box"></td><td>Profili social</td><td>Instagram, Facebook, TikTok, WhatsApp Business, Gmail del coworking: il foglio credenziali è vuoto. Mancano anche i link dei profili.</td></tr>
+    <tr><td class="box"></td><td>Prenotazioni già aperte</td><td>Il sito accetta prenotazioni, i social dicono che l’apertura è “a breve”. Decidere da che giorno si può prenotare.</td></tr>
+    <tr><td class="box"></td><td>Avvisi alla cliente</td><td>Il piano del 26 ottobre dice che gli avvisi arrivano ancora ad Apex. Serve la sua email.</td></tr>
+    <tr><td class="box"></td><td>Email ai clienti</td><td>Il piano le dà per attive, la checklist tecnica segna il dominio email come non verificato. Fare una prenotazione di prova prima dell’incontro.</td></tr>
+    <tr><td class="box"></td><td>Misurazione</td><td>Analytics è nel sito. Il Pixel Meta manca. Search Console, profilo Google e pubblicazione automatica: stato non documentato.</td></tr>
+    <tr><td class="box"></td><td>Indirizzo area riservata</td><td>La guida per la titolare cita ancora l’indirizzo provvisorio; gli altri documenti bagnarinocoworking.it/admin.</td></tr>
+    <tr><td class="box"></td><td>Documenti già consegnati</td><td>Non risulta se Identità visiva, “Come funziona il sito” e la pagina da firmare sono già stati visti o firmati.</td></tr>
+  </table>
+
+  <p class="sez">Numeri che non tornano</p>
+  <table>
+    <tr><td class="box"></td><td>Scrivanie: 6 o 8</td><td>I documenti del 22 ottobre dicono 6, il sito oggi 8. Nel PDF ho usato 8 e lo chiedo alla pagina 6.</td></tr>
+    <tr><td class="box"></td><td>Budget pubblicità</td><td>€5 al giorno su Instagram e Facebook nel piano; €8–10 al giorno nel kit Google Ads. Nel PDF non c’è nessuna cifra: decidere cosa proporre.</td></tr>
+    <tr><td class="box"></td><td>San Baudolino</td><td>Il 10 novembre è passato: i file lo davano come chiusura da confermare.</td></tr>
+    <tr><td class="box"></td><td>Prezzi IVA inclusa</td><td>Non confermato. Gli annunci mostrano i prezzi: va chiarito prima della pubblicità.</td></tr>
+  </table>
+
+  <p class="sez">Forma</p>
+  <table>
+    <tr><td class="box"></td><td>Design System v1.1</td><td>Il file non è nel repository. Ho usato lo stile dei documenti Apex già fatti per Bagnarino: stessi colori, caratteri e componenti.</td></tr>
+    <tr><td class="box"></td><td>“Tu” e “Lei”</td><td>I documenti consegnati a ottobre danno del tu alla cliente. Questo PDF e queste note usano il Lei.</td></tr>
+  </table>
+</section>
+
+</body>
+</html>
