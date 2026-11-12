@@ -113,38 +113,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://essenzadoriente.it/trattamenti/pulizia-orecchie.html</loc>
-    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pulizia-orecchie.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://essenzadoriente.it/zh/trattamenti/pulizia-orecchie.html</loc>
-    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pulizia-orecchie.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pulizia-orecchie.html" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://essenzadoriente.it/trattamenti/pedicure.html</loc>
-    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pedicure.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://essenzadoriente.it/zh/trattamenti/pedicure.html</loc>
-    <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/trattamenti/pedicure.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://essenzadoriente.it/trattamenti/pedicure.html" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://essenzadoriente.it/privacy.html</loc>
     <xhtml:link rel="alternate" hreflang="it" href="https://essenzadoriente.it/privacy.html" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://essenzadoriente.it/zh/privacy.html" />
