@@ -44,3 +44,9 @@ Linguaggio visivo Apex Media: carta calda, inchiostro verde profondo, hairline, 
 - hreflang it / zh-CN / x-default su ogni pagina, title e meta tradotti, `lang="zh-Hans"`, mappa in cinese, messaggi WhatsApp precompilati nella lingua della pagina.
 - Percorsi degli asset resi assoluti (`/styles.css`, `/foto/...`): il sito va servito dalla radice del dominio, come su Vercel.
 - Tracciamento click e conversioni Google Ads invariati; la pagina salvata include il prefisso `/zh`.
+
+## Novembre 2026 — listino a sei trattamenti
+
+- Rimossi dal sito due trattamenti non più offerti (pulizia delle orecchie e pedicure): voci in `i18n/it.json` e `i18n/zh-CN.json`, pagine dedicate IT e 中文, foto, sitemap. Titolo del listino aggiornato a "Sei trattamenti" / "六个项目".
+- `vercel.json`: redirect 301 dei quattro vecchi URL verso `/#trattamenti` e `/zh/#trattamenti`.
+- Tutto il resto invariato: title, meta, H1 e schema delle altre pagine, GA4, Ads, GTM, widget Treatwell.

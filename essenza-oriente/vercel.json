@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/trattamenti/pulizia-orecchie(\\.html)?", "destination": "/#trattamenti", "statusCode": 301 },
+    { "source": "/trattamenti/pedicure(\\.html)?", "destination": "/#trattamenti", "statusCode": 301 },
+    { "source": "/zh/trattamenti/pulizia-orecchie(\\.html)?", "destination": "/zh/#trattamenti", "statusCode": 301 },
+    { "source": "/zh/trattamenti/pedicure(\\.html)?", "destination": "/zh/#trattamenti", "statusCode": 301 }
+  ]
+}
