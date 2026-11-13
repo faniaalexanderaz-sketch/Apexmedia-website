@@ -68,6 +68,7 @@ body{font-family:"Inter",system-ui,sans-serif;color:var(--body);font-size:9.2pt;
 .dl div{display:grid;grid-template-columns:24mm 1fr;gap:2mm;padding:1.9mm 0;border-top:.25mm solid var(--line);font-size:8.1pt;align-items:baseline}
 .dl dt{font-size:6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
 .dl dd{color:var(--ink-2);font-weight:500}
+.dl dd.iban{font-family:var(--num);font-weight:600;letter-spacing:.02em;white-space:nowrap}
 .dl dd.vuoto{border-bottom:.3mm dotted var(--soft);height:4mm}
 
 /* voci */
@@ -96,6 +97,17 @@ td.q{font-size:8.4pt;color:var(--body)}
 .sig span{display:block;font-size:7pt;color:var(--muted);margin-top:1.4mm}
 
 .ft{position:absolute;left:16mm;right:16mm;bottom:9mm;display:flex;justify-content:space-between;border-top:.25mm solid var(--line);padding-top:2.6mm;font-size:6pt;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
+/* compattazione */
+.page{padding-top:12mm}
+.hero{margin-top:7mm;padding:7mm 10mm}
+.parts,.voci,.low{margin-top:5mm}
+.card{padding:5mm 6.5mm 3.6mm}
+.low .card{padding:4.4mm 6.5mm 3.6mm}
+.dl div{padding:1.5mm 0}
+td{padding:2.8mm 0}
+.tot{padding-top:2.8mm}
+.nota{margin-top:2mm}
+.firma{align-items:center}
 </style>
 </head>
 <body>
@@ -119,7 +131,7 @@ td.q{font-size:8.4pt;color:var(--body)}
       <p>Sito consegnato e funzionante.</p>
     </div>
     <div class="amt">
-      <div class="k">Totale pagato</div>
+      <div class="k">Totale</div>
       <div class="v"><small>€</small>550,00</div>
     </div>
   </div>
@@ -129,8 +141,8 @@ td.q{font-size:8.4pt;color:var(--body)}
       <div class="k">Ricevuta emessa da</div>
       <h3>Alexander Fania</h3>
       <dl class="dl">
-        <div><dt>Cod. fiscale</dt><dd class="vuoto"></dd></div>
-        <div><dt>Residenza</dt><dd class="vuoto"></dd></div>
+        <div><dt>Cod. fiscale</dt><dd class="vuoto cf"></dd></div>
+        <div><dt>Residenza</dt><dd class="vuoto res"></dd></div>
         <div><dt>Telefono</dt><dd>351 594 0685</dd></div>
         <div><dt>Email</dt><dd>studio@infoapex.eu</dd></div>
       </dl>
@@ -155,15 +167,17 @@ td.q{font-size:8.4pt;color:var(--body)}
         <tr><td><b>Dominio</b><span>Registrazione e gestione del dominio, primo anno</span></td><td class="q">1 anno</td><td class="n">€ 50,00</td></tr>
       </tbody>
     </table>
-    <div class="tot"><div><span class="k">Totale pagato</span><b>€ 550,00</b></div></div>
+    <div class="tot"><div><span class="k">Totale</span><b>€ 550,00</b></div></div>
   </div>
 
   <div class="low">
     <div class="card">
-      <div class="k">Pagamento</div>
+      <div class="k">Come pagare</div>
       <dl class="dl" style="margin-top:2.4mm">
         <div><dt>Modalità</dt><dd>Bonifico bancario</dd></div>
-        <div><dt>IBAN</dt><dd class="vuoto"></dd></div>
+        <div><dt>Intestatario</dt><dd>Alexander Fania</dd></div>
+        <div><dt>IBAN</dt><dd class="vuoto iban"></dd></div>
+        <div><dt>Causale</dt><dd>Ricevuta n. 1/2026 · sito web e dominio</dd></div>
       </dl>
       <p class="nota">Operazione fuori campo IVA (art. 5 D.P.R. 633/72). Imposta di bollo da € 2,00 assolta sull'originale.</p>
     </div>
