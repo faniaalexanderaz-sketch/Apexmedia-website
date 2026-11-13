@@ -23,7 +23,8 @@ export const sito = {
     piva: process.env.NEXT_PUBLIC_VAT ?? "",
     sede: "",
     pec: "",
-    email: "info@starclean.it",
+    // starclean.it appartiene a un'altra azienda: l'email vera va inserita qui quando arriva.
+    email: "",
   },
 
   // Foto in /public/foto. L'hero ha due tagli: orizzontale su mobile, verticale accanto al titolo su desktop.
@@ -37,5 +38,5 @@ export function urlSito(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  return "https://starclean.it";
+  return "http://localhost:3000";
 }
