@@ -144,7 +144,7 @@
   .foot-right { font-size: 10px; font-weight: 700; color: var(--apex-text); text-align: right; white-space: nowrap; }
 
   /* ---- RICEVUTA PRESTAZIONE OCCASIONALE ---- */
-  .doc-title { font-size: 26px; margin-bottom: 2px; }
+  .doc-title { font-size: 26px; margin-bottom: 10px; }
   .doc-kind { font-size: 9px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--apex-text-muted); margin-bottom: 10px; }
   .field { display: flex; align-items: center; }
   .doc-meta .field, table.items td.num .field, .totals-row .field { justify-content: flex-end; }
@@ -204,7 +204,6 @@
 
     <div class="doc-meta">
       <div class="doc-title">RICEVUTA</div>
-      <div class="doc-kind">Prestazione di lavoro autonomo occasionale</div>
       <div class="doc-meta-row">
         <div class="cell">
           <label class="tag">N.</label>
@@ -229,10 +228,6 @@
       <div class="row">
         <label class="tag">Codice fiscale</label>
         <div class="field sm todo" contenteditable="true" data-placeholder="Codice fiscale"></div>
-      </div>
-      <div class="row">
-        <label class="tag">Nato a / il</label>
-        <div class="field sm todo" contenteditable="true" data-placeholder="Luogo e data di nascita"></div>
       </div>
       <div class="row">
         <label class="tag">Residenza</label>
@@ -302,25 +297,15 @@
   <!-- TOTALI -->
   <div class="totals">
     <div class="totals-box">
-      <div class="totals-row">
-        <span class="lbl"><strong>Compenso lordo</strong></span>
-        <div class="field sm" contenteditable="true"><strong>€ 550,00</strong></div>
-      </div>
-      <div class="totals-row minus">
-        <span class="lbl">Ritenuta d'acconto 20% (art. 25 D.P.R. 600/73)</span>
-        <div class="field sm" contenteditable="true">− € 110,00</div>
-      </div>
       <div class="totals-row grand">
-        <span class="lbl">Netto a pagare</span>
-        <div class="field" contenteditable="true">€ 440,00</div>
+        <span class="lbl">Totale pagato</span>
+        <div class="field" contenteditable="true">€ 550,00</div>
       </div>
     </div>
   </div>
 
   <div class="legal">
-    <p>Prestazione di lavoro autonomo occasionale ai sensi dell'art. 2222 del Codice Civile, svolta senza vincolo di subordinazione e senza carattere di abitualità.</p>
-    <p>Operazione fuori campo IVA per mancanza del presupposto soggettivo (art. 5 D.P.R. 633/72). Compenso soggetto a ritenuta d'acconto del 20%, che il committente versa come sostituto d'imposta.</p>
-    <p>Il prestatore dichiara di non aver superato, nell'anno in corso, il limite di € 5.000 di compensi per prestazioni occasionali (art. 44 D.L. 269/2003). Imposta di bollo da € 2,00 assolta sull'originale.</p>
+    <p>Operazione fuori campo IVA (art. 5 D.P.R. 633/72). Imposta di bollo da € 2,00 assolta sull'originale.</p>
   </div>
 
   <!-- PAGAMENTO -->
@@ -353,7 +338,7 @@
   <div class="foot">
     <hr>
     <div class="foot-row">
-      <div class="foot-left">Ricevuta emessa da Alexander Fania per prestazione occasionale. Per chiarimenti: 351 594 0685 · studio@infoapex.eu</div>
+      <div class="foot-left">Ricevuta emessa da Alexander Fania. Per chiarimenti: 351 594 0685 · studio@infoapex.eu</div>
       <div class="foot-right">Ricevuta n. 1/2026</div>
     </div>
   </div>
