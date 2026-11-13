@@ -12,110 +12,139 @@
 @font-face{font-family:"Space Grotesk";src:url(fonts/SpaceGrotesk-SemiBold.woff2) format("woff2");font-weight:600}
 @font-face{font-family:"Space Grotesk";src:url(fonts/SpaceGrotesk-Bold.woff2) format("woff2");font-weight:700}
 :root{
-  --ink:#0B0B12; --ink-2:#23222E; --body:#44434F; --muted:#7C7B88; --soft:#B1B0BA;
-  --paper:#F6F5F9; --line:#E4E2EC; --violet:#6D3BF5; --gold:#E9C46A;
+  --bg:#0E0E14; --txt:#F4F3F8; --txt2:#C9C8D4; --muted:#8F8E9D; --dim:#5F5E6C;
+  --violet:#9B7BFF; --gold:#EBCB7A; --hair:rgba(255,255,255,.09);
   --num:"Space Grotesk","Inter",sans-serif;
 }
 @page{size:A4;margin:0}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#DDDCE3}
-body{font-family:"Inter",system-ui,sans-serif;color:var(--body);font-size:9.2pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.page{width:210mm;height:297mm;margin:0 auto;position:relative;overflow:hidden;padding:15mm 16mm 0;
+html,body{background:#000}
+body{font-family:"Inter",system-ui,sans-serif;color:var(--txt2);font-size:8.8pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;margin:0 auto;position:relative;overflow:hidden;padding:12mm 15mm 0;
   background:
-    radial-gradient(120mm 80mm at 100% 0%,rgba(109,59,245,.07),transparent 70%),
-    radial-gradient(110mm 90mm at 0% 100%,rgba(233,196,106,.09),transparent 70%),
-    var(--paper)}
-@media print{html,body{background:#fff}}
-.k{font-size:6.2pt;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+    radial-gradient(130mm 90mm at 100% 0%,rgba(124,92,255,.22),transparent 70%),
+    radial-gradient(120mm 100mm at 0% 100%,rgba(235,203,122,.10),transparent 70%),
+    linear-gradient(180deg,#14141C,#0A0A0F)}
+.k{font-size:6pt;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+
+/* superficie in rilievo: bordo sfumato, luce in alto, ombra sotto (tutto vettoriale, niente sfocature) */
+.s3d{position:relative;border:.3mm solid transparent;border-radius:4.2mm;
+  background:
+    linear-gradient(180deg,#24242F 0%,#191921 45%,#131319 100%) padding-box,
+    linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.07) 38%,rgba(255,255,255,.02) 70%,rgba(0,0,0,.6)) border-box}
+.s3d::before{content:"";position:absolute;left:5mm;right:5mm;top:0;height:.25mm;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent)}
+.s3d::after{content:"";position:absolute;z-index:-1;left:3mm;right:3mm;bottom:-3.2mm;height:6mm;border-radius:0 0 5mm 5mm;
+  background:linear-gradient(180deg,rgba(0,0,0,.75),rgba(0,0,0,0))}
+.wrap{position:relative;z-index:0}
 
 /* testata */
 .hd{display:flex;justify-content:space-between;align-items:center}
 .brand{display:flex;align-items:center;gap:5mm}
-.logo{width:23mm;height:23mm;border-radius:50%;background:url(apex-logo.png) center/101% no-repeat #000;
-  box-shadow:0 .4mm .6mm rgba(11,11,18,.25),0 3mm 5mm -1.5mm rgba(11,11,18,.38),0 8mm 12mm -5mm rgba(11,11,18,.42),inset 0 .35mm 0 rgba(255,255,255,.22)}
-.brand .w{font-family:var(--num);font-weight:700;font-size:14pt;letter-spacing:.3em;color:var(--ink);line-height:1.1}
+.ring{width:25mm;height:25mm;border-radius:50%;padding:.7mm;background:linear-gradient(160deg,#fff,#6E6D7C 45%,#2A2A34 70%,#B9B8C6)}
+.logo{width:100%;height:100%;border-radius:50%;background:url(apex-logo.png) center/101% no-repeat #000}
+.brand .w{font-family:var(--num);font-weight:700;font-size:14pt;letter-spacing:.3em;color:var(--txt);line-height:1.1}
 .brand .s{font-size:6pt;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:1.4mm}
 .doc{text-align:right}
-.doc h1{font-family:var(--num);font-weight:500;font-size:27pt;letter-spacing:-.02em;color:var(--ink);line-height:1}
-.chips{display:flex;gap:2.4mm;justify-content:flex-end;margin-top:3.4mm}
-.chip{background:#fff;border-radius:99px;padding:1.5mm 3.6mm;font-size:7.6pt;color:var(--muted);
-  box-shadow:0 .3mm .5mm rgba(11,11,18,.08),0 1.6mm 3mm -1.2mm rgba(11,11,18,.16),inset 0 0 0 .25mm var(--line)}
-.chip b{color:var(--ink);font-weight:700;font-family:var(--num);margin-left:1.4mm}
+.doc h1{font-family:var(--num);font-weight:500;font-size:27pt;letter-spacing:-.02em;color:var(--txt);line-height:1}
+.chips{display:flex;gap:2.2mm;justify-content:flex-end;margin-top:3.2mm}
+.chip{border:.3mm solid transparent;border-radius:99px;padding:1.3mm 3.6mm;font-size:7.4pt;color:var(--muted);
+  background:linear-gradient(180deg,#262631,#15151C) padding-box,linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.03)) border-box}
+.chip b{color:var(--txt);font-weight:700;font-family:var(--num);margin-left:1.4mm}
 
-/* blocco importo */
-.hero{margin-top:10mm;border-radius:6mm;padding:9mm 10mm;color:#fff;position:relative;overflow:hidden;
-  display:flex;justify-content:space-between;align-items:flex-end;gap:10mm;
+/* importo */
+.hero{margin-top:6.5mm;padding:6.5mm 8mm;display:flex;justify-content:space-between;align-items:flex-end;gap:8mm;border-radius:5mm;overflow:visible;
   background:
-    radial-gradient(70mm 46mm at 88% -10%,rgba(109,59,245,.55),transparent 70%),
-    radial-gradient(60mm 40mm at 6% 120%,rgba(233,196,106,.22),transparent 70%),
-    linear-gradient(155deg,#1B1A27 0%,#0B0B12 62%);
-  box-shadow:0 .5mm 1mm rgba(11,11,18,.2),0 5mm 8mm -3mm rgba(11,11,18,.4),0 14mm 20mm -10mm rgba(11,11,18,.55),inset 0 .35mm 0 rgba(255,255,255,.16),inset 0 0 0 .25mm rgba(255,255,255,.06)}
-.hero::after{content:"";position:absolute;right:-18mm;top:-26mm;width:70mm;height:70mm;border-radius:50%;border:.3mm solid rgba(255,255,255,.08);box-shadow:0 0 0 9mm rgba(255,255,255,.025)}
+    radial-gradient(80mm 40mm at 92% 0%,rgba(124,92,255,.5),transparent 72%) padding-box,
+    linear-gradient(180deg,#262633 0%,#17171F 50%,#101016 100%) padding-box,
+    linear-gradient(180deg,rgba(255,255,255,.4),rgba(155,123,255,.25) 40%,rgba(255,255,255,.02) 75%,rgba(0,0,0,.6)) border-box}
 .hero .k{color:var(--gold)}
-.hero h2{font-size:14.5pt;font-weight:600;letter-spacing:-.012em;line-height:1.28;margin-top:2.6mm;max-width:92mm}
-.hero p{font-size:8pt;color:#A9A8B6;margin-top:2mm}
-.amt{text-align:right;position:relative;z-index:1;white-space:nowrap}
-.amt .v{font-family:var(--num);font-weight:700;font-size:35pt;letter-spacing:-.03em;line-height:1;margin-top:2mm;color:#fff}
-.amt .v small{font-size:17pt;font-weight:500;margin-right:1.6mm}
+.hero h2{font-size:13.5pt;font-weight:600;color:var(--txt);letter-spacing:-.012em;line-height:1.28;margin-top:2.2mm;max-width:92mm}
+.hero p{font-size:7.8pt;color:var(--muted);margin-top:1.6mm}
+.amt{text-align:right;white-space:nowrap}
+.amt .v{font-family:var(--num);font-weight:700;font-size:34pt;letter-spacing:-.03em;line-height:1;margin-top:1.8mm;color:#fff}
+.amt .v small{font-size:16pt;font-weight:500;margin-right:1.6mm;color:var(--gold)}
 
 /* parti */
-.parts{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:7mm}
-.card{background:#fff;border-radius:4.5mm;padding:6mm 6.5mm 4.5mm;
-  box-shadow:0 .3mm .6mm rgba(11,11,18,.06),0 2.4mm 4mm -1.6mm rgba(11,11,18,.12),0 9mm 14mm -8mm rgba(11,11,18,.22),inset 0 0 0 .25mm rgba(228,226,236,.9)}
+.parts{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm;margin-top:6.5mm}
+.card{padding:4.4mm 5.5mm 3mm}
 .card .k{color:var(--violet)}
-.card h3{font-size:12.5pt;font-weight:700;color:var(--ink);letter-spacing:-.012em;margin-top:1.8mm;line-height:1.2}
-.dl{margin-top:3.6mm;display:grid;gap:0}
-.dl div{display:grid;grid-template-columns:24mm 1fr;gap:2mm;padding:1.9mm 0;border-top:.25mm solid var(--line);font-size:8.1pt;align-items:baseline}
-.dl dt{font-size:6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
-.dl dd{color:var(--ink-2);font-weight:500}
+.card h3{font-size:12pt;font-weight:700;color:var(--txt);letter-spacing:-.012em;margin-top:1.4mm;line-height:1.2}
+.dl{margin-top:2.6mm}
+.dl div{display:grid;grid-template-columns:23mm 1fr;gap:2mm;padding:1.35mm 0;border-top:.2mm solid var(--hair);font-size:7.9pt;align-items:baseline}
+.dl dt{font-size:5.8pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.dl dd{color:var(--txt);font-weight:500}
 .dl dd.iban{font-family:var(--num);font-weight:600;letter-spacing:.02em;white-space:nowrap}
-.dl dd.vuoto{border-bottom:.3mm dotted var(--soft);height:4mm}
+.dl dd.vuoto{border-bottom:.3mm dotted var(--dim);height:4mm}
 
 /* voci */
-.voci{margin-top:7mm}
-table{width:100%;border-collapse:collapse}
-th{font-size:6pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);text-align:left;padding:0 0 2.4mm}
-th.n,td.n{text-align:right}
-td{padding:3.6mm 0;border-top:.25mm solid var(--line);vertical-align:top}
-td b{display:block;font-size:10pt;font-weight:700;color:var(--ink)}
-td span{display:block;font-size:7.8pt;color:var(--muted);margin-top:.5mm}
-td.n{font-family:var(--num);font-size:10.5pt;font-weight:600;color:var(--ink);white-space:nowrap}
-td.q{font-size:8.4pt;color:var(--body)}
-.tot{display:flex;justify-content:flex-end;border-top:.5mm solid var(--ink);padding-top:3.6mm}
-.tot div{display:flex;align-items:baseline;gap:12mm}
-.tot .k{color:var(--ink)}
-.tot b{font-family:var(--num);font-size:17pt;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.st{margin:6.5mm 0 2.6mm;display:flex;align-items:center;gap:3mm}
+.st i{flex:1;height:.2mm;background:linear-gradient(90deg,var(--hair),transparent)}
+.voce{display:grid;grid-template-columns:9mm 1fr auto;gap:4mm;align-items:center;padding:3.6mm 5mm;margin-bottom:3.4mm;border-radius:3.6mm}
+.nb{width:9mm;height:9mm;border-radius:2.6mm;display:grid;place-items:center;font-family:var(--num);font-weight:700;font-size:9pt;color:var(--txt);
+  border:.3mm solid transparent;background:linear-gradient(180deg,#34343F,#1A1A22) padding-box,linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.03)) border-box}
+.voce b{display:block;font-size:10.4pt;font-weight:700;color:var(--txt);line-height:1.25}
+.voce ul{list-style:none;margin-top:.9mm;display:grid;gap:.4mm}
+.voce li{position:relative;padding-left:3.4mm;font-size:7.7pt;color:var(--txt2);line-height:1.4}
+.voce li::before{content:"";position:absolute;left:0;top:1.5mm;width:1.3mm;height:1.3mm;border-radius:50%;background:var(--violet)}
+.voce li em{font-style:normal;color:var(--gold);font-weight:600}
+.px{font-family:var(--num);font-weight:700;font-size:13pt;color:var(--txt);white-space:nowrap;padding:1.6mm 4mm;border-radius:2.6mm;
+  border:.3mm solid transparent;background:linear-gradient(180deg,#0B0B10,#17171F) padding-box,linear-gradient(180deg,rgba(0,0,0,.8),rgba(255,255,255,.16)) border-box}
+.tot{display:flex;justify-content:space-between;align-items:center;padding:3.4mm 5mm 3.4mm 6mm;border-radius:3.6mm;
+  background:linear-gradient(180deg,#FFFFFF,#DAD8E6) padding-box,linear-gradient(180deg,#fff,#8E8CA0) border-box}
+.tot::before{display:none}
+.tot .k{color:#17171F;font-size:7pt}
+.tot span.d{display:block;font-size:7.2pt;color:#5B5A68;letter-spacing:0;text-transform:none;font-weight:500;margin-top:.4mm}
+.tot b{font-family:var(--num);font-size:19pt;font-weight:700;color:#0B0B10;letter-spacing:-.02em}
 
-/* pagamento e firma */
-.low{display:grid;grid-template-columns:1.15fr 1fr;gap:5mm;margin-top:7mm;align-items:stretch}
-.low .card{padding:5mm 6.5mm}
-.nota{font-size:7.2pt;color:var(--muted);line-height:1.5;margin-top:3mm}
-.firma{display:flex;gap:5mm;align-items:flex-end}
-.bollo{flex:0 0 24mm;height:20mm;border:.3mm dashed var(--soft);border-radius:2mm;display:grid;place-items:center;text-align:center;font-size:6pt;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);line-height:1.6}
+/* pagamento */
+.pay{padding:4.4mm 5.5mm 4mm}
+.pay .k{color:var(--violet)}
+.opts{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:3mm;margin-top:2.4mm}
+.opt{display:flex;gap:2.6mm;align-items:flex-start;padding:2.6mm 3mm;border-radius:2.8mm;
+  border:.3mm solid transparent;background:linear-gradient(180deg,#0C0C11,#16161D) padding-box,linear-gradient(180deg,rgba(0,0,0,.85),rgba(255,255,255,.15)) border-box}
+.box{flex:0 0 4.2mm;height:4.2mm;border-radius:1mm;background:linear-gradient(180deg,#fff,#E3E1EE);margin-top:.3mm}
+.opt b{display:block;font-size:8.6pt;color:var(--txt);font-weight:700;line-height:1.25}
+.opt span{display:block;font-size:6.9pt;color:var(--muted);line-height:1.4;margin-top:.3mm}
+.opt u{text-decoration:none;display:inline-block;width:13mm;border-bottom:.3mm solid var(--txt2);margin:0 .6mm}
+.bank{display:grid;grid-template-columns:1fr 1.35fr 1.25fr;gap:5mm;margin-top:3.2mm;padding-top:2.8mm;border-top:.2mm solid var(--hair)}
+.bank dt{font-size:5.8pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.bank dd{font-size:8pt;color:var(--txt);font-weight:500;margin-top:.5mm}
+.bank dd.iban{font-family:var(--num);font-weight:600;white-space:nowrap}
+
+/* firma */
+.low{display:grid;grid-template-columns:1fr 78mm;gap:5mm;margin-top:6.5mm;align-items:end}
+.nota{font-size:6.9pt;color:var(--muted);line-height:1.55}
+.carta{display:flex;gap:4.5mm;align-items:flex-end;padding:3.4mm 4.5mm;border-radius:3.6mm;
+  background:linear-gradient(180deg,#FFFFFF,#E9E7F1) padding-box,linear-gradient(180deg,#fff,#8E8CA0) border-box}
+.carta::before{display:none}
+.bollo{flex:0 0 22mm;height:17mm;border:.3mm dashed #9D9BAB;border-radius:1.6mm;display:grid;place-items:center;text-align:center;font-size:5.6pt;letter-spacing:.12em;text-transform:uppercase;color:#8A8898;line-height:1.6}
 .sig{flex:1}
-.sig i{display:block;height:13mm;border-bottom:.3mm solid var(--ink-2)}
-.sig span{display:block;font-size:7pt;color:var(--muted);margin-top:1.4mm}
+.sig .k{color:#5B5A68}
+.sig i{display:block;height:10mm;border-bottom:.3mm solid #17171F}
+.sig span{display:block;font-size:6.8pt;color:#5B5A68;margin-top:1mm}
 
-.ft{position:absolute;left:16mm;right:16mm;bottom:9mm;display:flex;justify-content:space-between;border-top:.25mm solid var(--line);padding-top:2.6mm;font-size:6pt;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
+.ft{position:absolute;left:15mm;right:15mm;bottom:8mm;display:flex;justify-content:space-between;border-top:.2mm solid var(--hair);padding-top:2.4mm;font-size:5.8pt;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
 /* compattazione */
-.page{padding-top:12mm}
-.hero{margin-top:7mm;padding:7mm 10mm}
-.parts,.voci,.low{margin-top:5mm}
-.card{padding:5mm 6.5mm 3.6mm}
-.low .card{padding:4.4mm 6.5mm 3.6mm}
-.dl div{padding:1.5mm 0}
-td{padding:2.8mm 0}
-.tot{padding-top:2.8mm}
-.nota{margin-top:2mm}
-.firma{align-items:center}
+.page{padding-top:10mm}
+.ring{width:21mm;height:21mm}
+.hero{margin-top:5mm;padding:5.2mm 8mm}
+.amt .v{font-size:31pt}
+.parts{margin-top:5mm}
+.st{margin:5mm 0 2.2mm}
+.voce{padding:2.8mm 5mm;margin-bottom:3mm}
+.tot{padding:2.8mm 5mm 2.8mm 6mm}
+.pay{padding:3.8mm 5.5mm 3.4mm}
+.low{margin-top:5mm}
+.bollo{height:15mm}
+.sig i{height:8mm}
 </style>
 </head>
 <body>
-<div class="page">
+<div class="page"><div class="wrap">
 
   <div class="hd">
     <div class="brand">
-      <div class="logo" role="img" aria-label="Apex Media"></div>
+      <div class="ring"><div class="logo" role="img" aria-label="Apex Media"></div></div>
       <div><div class="w">APEX MEDIA</div><div class="s">Performance Agency</div></div>
     </div>
     <div class="doc">
@@ -124,7 +153,7 @@ td{padding:2.8mm 0}
     </div>
   </div>
 
-  <div class="hero">
+  <div class="hero s3d">
     <div>
       <div class="k">Oggetto</div>
       <h2>Sito web Bagnarino Coworking e dominio per il primo anno</h2>
@@ -137,17 +166,17 @@ td{padding:2.8mm 0}
   </div>
 
   <div class="parts">
-    <div class="card">
+    <div class="card s3d">
       <div class="k">Ricevuta emessa da</div>
       <h3>Alexander Fania</h3>
       <dl class="dl">
-        <div><dt>Cod. fiscale</dt><dd class="vuoto cf"></dd></div>
-        <div><dt>Residenza</dt><dd class="vuoto res"></dd></div>
+        <div><dt>Cod. fiscale</dt><dd class="vuoto"></dd></div>
+        <div><dt>Residenza</dt><dd class="vuoto"></dd></div>
         <div><dt>Telefono</dt><dd>351 594 0685</dd></div>
         <div><dt>Email</dt><dd>studio@infoapex.eu</dd></div>
       </dl>
     </div>
-    <div class="card">
+    <div class="card s3d">
       <div class="k">Intestata a</div>
       <h3>Bagnarino S.r.l.</h3>
       <dl class="dl">
@@ -159,34 +188,59 @@ td{padding:2.8mm 0}
     </div>
   </div>
 
-  <div class="voci">
-    <table>
-      <thead><tr><th>Descrizione</th><th style="width:26mm">Quantità</th><th class="n" style="width:30mm">Importo</th></tr></thead>
-      <tbody>
-        <tr><td><b>Sito web</b><span>Progettazione e realizzazione del sito con prenotazioni online</span></td><td class="q">1</td><td class="n">€ 500,00</td></tr>
-        <tr><td><b>Dominio</b><span>Registrazione e gestione del dominio, primo anno</span></td><td class="q">1 anno</td><td class="n">€ 50,00</td></tr>
-      </tbody>
-    </table>
-    <div class="tot"><div><span class="k">Totale</span><b>€ 550,00</b></div></div>
+  <div class="st"><span class="k">Cosa comprende</span><i></i></div>
+
+  <div class="voce s3d">
+    <div class="nb">1</div>
+    <div>
+      <b>Sito web</b>
+      <ul>
+        <li>Progettazione e realizzazione del sito, con prenotazioni online</li>
+        <li>Gestione completa del sito: <em>compresa nel canone mensile</em></li>
+      </ul>
+    </div>
+    <div class="px">€ 500,00</div>
+  </div>
+  <div class="voce s3d">
+    <div class="nb">2</div>
+    <div>
+      <b>Dominio</b>
+      <ul>
+        <li>Registrazione e gestione del dominio per il primo anno</li>
+      </ul>
+    </div>
+    <div class="px">€ 50,00</div>
+  </div>
+  <div class="tot s3d">
+    <div><span class="k">Totale<span class="d">Sito web € 500,00 + dominio € 50,00</span></span></div>
+    <b>€ 550,00</b>
+  </div>
+
+  <div class="st"><span class="k">Come pagare</span><i></i></div>
+
+  <div class="pay s3d">
+    <div class="k">Scegli una modalità</div>
+    <div class="opts">
+      <div class="opt"><div class="box"></div><div><b>Contanti</b><span>Tutto alla consegna</span></div></div>
+      <div class="opt"><div class="box"></div><div><b>Bonifico</b><span>Tutto sul conto qui sotto</span></div></div>
+      <div class="opt"><div class="box"></div><div><b>Parte e parte</b><span>Contanti €<u></u> · bonifico €<u></u></span></div></div>
+    </div>
+    <dl class="bank">
+      <div><dt>Intestatario</dt><dd>Alexander Fania</dd></div>
+      <div><dt>IBAN</dt><dd class="vuoto"></dd></div>
+      <div><dt>Causale</dt><dd>Ricevuta n. 32 · sito web e dominio</dd></div>
+    </dl>
   </div>
 
   <div class="low">
-    <div class="card">
-      <div class="k">Come pagare</div>
-      <dl class="dl" style="margin-top:2.4mm">
-        <div><dt>Modalità</dt><dd>Bonifico bancario</dd></div>
-        <div><dt>Intestatario</dt><dd>Alexander Fania</dd></div>
-        <div><dt>IBAN</dt><dd class="vuoto iban"></dd></div>
-        <div><dt>Causale</dt><dd>Ricevuta n. 32 · sito web e dominio</dd></div>
-      </dl>
-      <p class="nota">Operazione fuori campo IVA (art. 5 D.P.R. 633/72). Imposta di bollo da € 2,00 assolta sull'originale.</p>
-    </div>
-    <div class="card firma">
+    <p class="nota">Operazione fuori campo IVA (art. 5 D.P.R. 633/72).<br>Imposta di bollo da € 2,00 assolta sull'originale.</p>
+    <div class="carta s3d">
       <div class="bollo">Marca<br>da bollo<br>€ 2,00</div>
       <div class="sig"><div class="k">Firma</div><i></i><span>Alexander Fania</span></div>
     </div>
   </div>
 
+</div>
   <div class="ft"><span>Apex Media · Alessandria</span><span>Ricevuta n. 32</span></div>
 </div>
 </body>
