@@ -14,6 +14,9 @@ export type Servizio = {
   riassunto: string;
   /** percorso in /public/foto, es. "/foto/civili.jpg". null = foto reale non ancora consegnata. */
   foto: string | null;
+  /** proporzioni della foto: decide il taglio del riquadro in home e nella pagina servizio */
+  fotoFormato: "verticale" | "quadrata";
+  fotoAlt: string;
   fotoRichiesta: string;
   problema: { titolo: string; testo: string[] };
   soluzione: { titolo: string; testo: string[] };
@@ -38,7 +41,9 @@ export const servizi: Servizio[] = [
       "Condomini, uffici, studi e appartamenti puliti con la frequenza che scegli tu. Il preventivo arriva in 24 ore.",
     riassunto:
       "Condomini, uffici, studi e appartamenti. Passiamo una volta sola o tutte le settimane, decidi tu.",
-    foto: null,
+    foto: "/foto/civili.webp",
+    fotoFormato: "verticale",
+    fotoAlt: "Pulizia delle vetrate di un ufficio",
     fotoRichiesta: "scala o androne di un condominio appena pulito",
     problema: {
       titolo: "Chi pulisce salta i turni e le scale restano sporche.",
@@ -75,7 +80,9 @@ export const servizi: Servizio[] = [
       "Capannoni, magazzini e officine. Puliamo pavimenti, aree di lavoro e spogliatoi negli orari in cui non ti blocchiamo.",
     riassunto:
       "Capannoni, magazzini e officine. Veniamo negli orari in cui il reparto è fermo.",
-    foto: null,
+    foto: "/foto/industriali.webp",
+    fotoFormato: "quadrata",
+    fotoAlt: "Lavasciuga uomo a bordo al lavoro in un capannone",
     fotoRichiesta: "lavasciuga al lavoro in un capannone",
     problema: {
       titolo: "Polvere e unto sul pavimento rallentano il lavoro.",
@@ -112,7 +119,9 @@ export const servizi: Servizio[] = [
       "Con monospazzola e lavasciuga togliamo lo sporco entrato nel pavimento. Lavoriamo su cemento, gres, marmo e linoleum.",
     riassunto:
       "Monospazzola e lavasciuga tolgono lo sporco che lo straccio non toglie più.",
-    foto: null,
+    foto: "/foto/pavimenti.webp",
+    fotoFormato: "verticale",
+    fotoAlt: "Monospazzola su un pavimento in marmo lucidato",
     fotoRichiesta: "monospazzola su un pavimento, metà già trattata",
     problema: {
       titolo: "Lavi tutti i giorni e il pavimento resta grigio.",

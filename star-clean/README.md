@@ -34,13 +34,12 @@ Senza database e senza Resend il modulo funziona lo stesso in demo: il lead fini
 
 Finché `demo: true` in `content/sito.ts` il sito non è indicizzabile e mostra le recensioni di esempio con un'etichetta. Per pubblicare:
 
-- [ ] Telefono vero in `content/sito.ts`
-- [ ] Ragione sociale, P.IVA, sede, PEC, email
-- [ ] Foto reali: hero, tre servizi, casi prima/dopo (stessa inquadratura, formato 4:3)
+- [ ] Ragione sociale, sede e PEC in `content/sito.ts`, P.IVA nella variabile `NEXT_PUBLIC_VAT`
+- [ ] Prima/dopo: le tre coppie attuali sono immagini generate. Vanno sostituite con foto vere degli interventi (stessa inquadratura, formato quadrato) e `esempio: false` in `content/casi.ts`. Se non ci sono, la sezione sparisce da sola
+- [ ] Un caso prima/dopo per le pulizie industriali, che oggi non ne ha
 - [ ] Recensioni Google reali con nome e data, `esempio: false`. Se non ci sono, lista vuota e la sezione sparisce
 - [ ] Conferma del titolare su: elenco "cosa è incluso", risposte FAQ su prodotti e assicurazione, "risponde Jonathan Germanò"
 - [ ] Privacy policy riletta da chi segue la privacy del cliente
-- [ ] Logo vettoriale al posto del marchio tipografico (`components/Logo.tsx`)
 - [ ] `demo: false`
 
 ## Tracciamento

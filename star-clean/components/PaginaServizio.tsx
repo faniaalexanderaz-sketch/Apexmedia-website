@@ -15,7 +15,7 @@ export function metadataServizio(slug: SlugServizio): Metadata {
 /** Struttura unica delle tre pagine servizio: problema, cosa facciamo, prima/dopo, cosa è incluso, modulo. */
 export function PaginaServizio({ slug }: { slug: SlugServizio }) {
   const s = servizioDaSlug(slug);
-  const casiServizio = casi.filter((c) => c.chiave === s.chiave);
+  const casiServizio = casi.filter((c) => c.chiavi.includes(s.chiave) && (sito.demo || !c.esempio));
 
   return (
     <>
@@ -33,7 +33,7 @@ export function PaginaServizio({ slug }: { slug: SlugServizio }) {
             </div>
           </div>
           <div className="col-span-12 lg:col-span-5">
-            <Foto src={s.foto} alt={s.nome} richiesta={s.fotoRichiesta} className="aspect-[4/3] lg:aspect-[4/5]" sizes="(min-width: 1024px) 480px, 100vw" priority />
+            <Foto src={s.foto} alt={s.fotoAlt} richiesta={s.fotoRichiesta} className={`aspect-square ${s.fotoFormato === "verticale" ? "lg:aspect-[4/5]" : ""}`} sizes="(min-width: 1024px) 480px, 100vw" subito />
           </div>
         </div>
       </section>
@@ -54,13 +54,16 @@ export function PaginaServizio({ slug }: { slug: SlugServizio }) {
         </div>
       </section>
 
-      <section className="sezione bg-petrolio text-white">
-        <div className="contenitore">
-          <p className="occhiello">Prima e dopo</p>
-          <h2 className="titolo-2 mt-6 mb-10 max-w-[18ch] lg:mb-16">Trascina la linea e guarda cosa cambia.</h2>
-          <Casi casi={casiServizio} />
-        </div>
-      </section>
+      {/* senza un caso di questo servizio la sezione non compare */}
+      {casiServizio.length > 0 && (
+        <section className="sezione bg-petrolio text-white">
+          <div className="contenitore">
+            <p className="occhiello">Prima e dopo</p>
+            <h2 className="titolo-2 mt-6 mb-10 max-w-[18ch] lg:mb-16">Trascina la linea e guarda cosa cambia.</h2>
+            <Casi casi={casiServizio} />
+          </div>
+        </section>
+      )}
 
       <section className="sezione">
         <div className="contenitore griglia gap-y-10">

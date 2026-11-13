@@ -14,20 +14,21 @@ export const sito = {
   anniAttivita: 30,
   oreRisposta: 24,
 
-  // DA SOSTITUIRE con il numero vero (anche in formato internazionale per il link).
-  telefono: { mostrato: "0131 000000", href: "tel:+390131000000", segnaposto: true },
+  telefono: { mostrato: "349 308 7310", href: "tel:+393493087310", segnaposto: false },
 
   // DA COMPILARE con i dati reali. Vuoto = "da inserire" in demo, nascosto online.
   legale: {
     ragioneSociale: "",
-    piva: "",
+    // Come nel progetto Vercel esistente: si imposta con la variabile NEXT_PUBLIC_VAT (solo il numero).
+    piva: process.env.NEXT_PUBLIC_VAT ?? "",
     sede: "",
     pec: "",
-    email: "",
+    email: "info@starclean.it",
   },
 
-  // Foto dell'hero in /public/foto (verticale, almeno 1200px di larghezza). null = segnaposto.
-  fotoHero: null as string | null,
+  // Foto in /public/foto. L'hero ha due tagli: orizzontale su mobile, verticale accanto al titolo su desktop.
+  fotoHero: { orizzontale: "/foto/hero.webp", verticale: "/foto/hero-verticale.webp" } as { orizzontale: string; verticale: string } | null,
+  fotoFurgone: "/foto/furgone.webp" as string | null,
 
   zone: ["Alessandria", "Valenza", "Casale Monferrato", "Tortona", "Novi Ligure"],
 } as const;
@@ -36,5 +37,5 @@ export function urlSito(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  return "http://localhost:3000";
+  return "https://starclean.it";
 }

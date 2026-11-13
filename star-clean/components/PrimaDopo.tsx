@@ -16,7 +16,7 @@ function Lato({ src, tipo, alt }: { src: string | null; tipo: "prima" | "dopo"; 
       className={`absolute inset-0 flex items-center ${tipo === "prima" ? "justify-start bg-[#93a5aa] pl-6 md:pl-10" : "justify-end bg-[#e6f1f3] pr-6 md:pr-10"}`}
     >
       <p className="text-petrolio max-w-[9em] text-[0.8125rem] leading-snug font-bold md:text-[0.9375rem]">
-        Foto reale da inserire, {tipo === "prima" ? "prima del lavoro" : "a lavoro finito"}
+        Foto da inserire, {tipo === "prima" ? "prima del lavoro" : "a lavoro finito"}
       </p>
     </div>
   );
@@ -37,7 +37,7 @@ export function PrimaDopo({ caso }: { caso: Caso }) {
   return (
     <div
       ref={riquadro}
-      className="rounded-ui relative aspect-[4/3] cursor-ew-resize touch-pan-y overflow-hidden select-none lg:aspect-[16/10]"
+      className="rounded-ui relative aspect-square cursor-ew-resize touch-pan-y overflow-hidden select-none"
       onPointerDown={(e) => {
         trascina.current = true;
         e.currentTarget.setPointerCapture(e.pointerId);
