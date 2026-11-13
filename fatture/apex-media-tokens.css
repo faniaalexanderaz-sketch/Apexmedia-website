@@ -1,0 +1,57 @@
+/* =========================================================
+   APEX MEDIA — DESIGN TOKENS v1.0
+   Da includere in ogni HTML che poi viene convertito in PDF
+   (o usato come sito) con il brand Apex Media.
+   Font richiesti nella stessa cartella: /fonts/*.woff2
+   ========================================================= */
+
+/* ---- FONT FACES ---- */
+@font-face { font-family:'Inter'; src:url('fonts/Inter-Regular.woff2') format('woff2'); font-weight:400; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-Medium.woff2') format('woff2'); font-weight:500; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-SemiBold.woff2') format('woff2'); font-weight:600; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-Bold.woff2') format('woff2'); font-weight:700; }
+@font-face { font-family:'Space Grotesk'; src:url('fonts/SpaceGrotesk-Medium.woff2') format('woff2'); font-weight:500; }
+@font-face { font-family:'Space Grotesk'; src:url('fonts/SpaceGrotesk-SemiBold.woff2') format('woff2'); font-weight:600; }
+@font-face { font-family:'Space Grotesk'; src:url('fonts/SpaceGrotesk-Bold.woff2') format('woff2'); font-weight:700; }
+
+:root {
+  /* Brand core */
+  --apex-purple:        #5B2EFF;   /* Primary Purple — badge, titoli, brand primario */
+  --apex-purple-dark:   #1B0B2E;   /* Purple Dark — sfondi scuri, header card, testo titoli */
+  --apex-blue:          #2F6BFF;   /* Tech Blue — sottotitoli, elementi secondari */
+  --apex-blue-dark:     #0A1B3D;   /* Blue Dark — stat box, blocchi dati scuri */
+  --apex-yellow:        #FFD84D;   /* Conversion Yellow — UNICO accento CTA */
+  --apex-black:         #070A12;   /* Neutral Base — sfondo scuro assoluto */
+
+  /* Neutri documento (light mode / print) */
+  --apex-surface:       #FFFFFF;
+  --apex-tint-purple:   #F5F2FF;   /* callout standard */
+  --apex-tint-blue:     #EEF3FF;   /* callout informativo */
+  --apex-tint-yellow:   #FFFAEA;   /* callout sintesi/prezzo */
+  --apex-border:        #E8E6F2;
+  --apex-text:          #1A1A2E;
+  --apex-text-soft:     #3A3A4A;
+  --apex-text-muted:    #6A6A7A;
+  --apex-text-faint:    #9A9AA5;
+
+  /* Font */
+  --apex-font-display:  'Space Grotesk', sans-serif;  /* titoli, numeri, wordmark */
+  --apex-font-body:     'Inter', sans-serif;          /* corpo testo, tabelle, liste */
+}
+
+/* ---- BASE ---- */
+body { font-family: var(--apex-font-body); color: var(--apex-text); font-size: 11.3px; line-height: 1.55; }
+h1, h2, h3 { font-family: var(--apex-font-display); color: var(--apex-purple-dark); }
+
+/* ---- REGOLE D'USO RAPIDE ----
+   1. Il giallo (--apex-yellow) è SEMPRE riservato a: prezzo finale, bottone
+      primario, badge urgenza. Mai come sfondo decorativo.
+   2. Space Grotesk SOLO su titoli, numeri e parole brevi in evidenza.
+      Mai su paragrafi lunghi (perde leggibilità sotto i 12px).
+   3. Wordmark "APEX MEDIA": sempre su sfondo scuro, "MEDIA" in giallo,
+      "APEX" in bianco, Space Grotesk Bold, letter-spacing ampio.
+   4. Callout: viola = concetto strategico, blu = nota informativa,
+      giallo = sintesi/prezzo/conclusione.
+   Vedi Apex_Media_Design_System_v1.pdf per gli esempi visivi completi
+   di ogni componente (stat box, price card, badge, tabelle, bottoni).
+*/

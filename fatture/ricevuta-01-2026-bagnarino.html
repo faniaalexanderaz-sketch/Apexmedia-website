@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<title>Ricevuta 1/2026 — Bagnarino S.r.l.</title>
+<link rel="stylesheet" href="apex-media-tokens.css" />
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #E9E9EE; }
+  body { font-family: var(--apex-font-body); color: var(--apex-text); }
+
+  /* ---- FOGLIO A4 ---- */
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 24px auto;
+    background: var(--apex-surface);
+    padding: 16mm 14mm 14mm 14mm;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 24px rgba(10,10,20,.12);
+  }
+  @media print {
+    body { background: #fff; }
+    .sheet { margin: 0; box-shadow: none; }
+  }
+
+  /* ---- CAMPI COMPILABILI ---- */
+  .field {
+    border: 1px solid var(--apex-border);
+    border-radius: 6px;
+    background: #fff;
+    padding: 7px 10px;
+    font-size: 11.3px;
+    color: var(--apex-text);
+    min-height: 30px;
+  }
+  .field.sm { padding: 5px 8px; min-height: 24px; }
+  .field[contenteditable]:empty:before {
+    content: attr(data-placeholder);
+    color: var(--apex-text-faint);
+  }
+  label.tag {
+    display: block;
+    font-family: var(--apex-font-body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--apex-text-muted);
+    margin: 0 0 5px;
+  }
+
+  /* ---- HEADER ---- */
+  .header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 46px; height: 46px; border-radius: 10px; flex: 0 0 auto;
+    background: var(--apex-black);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .brand-name { font-family: var(--apex-font-display); font-weight: 700; font-size: 19px; letter-spacing: .01em; color: var(--apex-text); line-height: 1.1; }
+  .brand-sub { font-size: 9px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--apex-text-muted); margin-top: 3px; }
+
+  .doc-meta { text-align: right; }
+  .doc-title { font-family: var(--apex-font-display); font-weight: 700; font-size: 28px; color: var(--apex-text); letter-spacing: .02em; margin: 0 0 10px; }
+  .doc-meta-row { display: flex; gap: 10px; justify-content: flex-end; }
+  .doc-meta-row .cell { width: 118px; }
+
+  .gradient-bar { height: 4px; width: 100%; margin: 16px 0 22px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--apex-purple) 0%, var(--apex-blue) 55%, var(--apex-yellow) 100%); }
+
+  /* ---- DA / A ---- */
+  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel { background: #F7F7FA; border: 1px solid var(--apex-border); border-radius: 10px; padding: 16px 18px; }
+  .panel .tag { color: var(--apex-purple); }
+  .panel h3 { font-family: var(--apex-font-display); font-size: 14px; margin: 0 0 2px; color: var(--apex-text); }
+  .panel .muted { color: var(--apex-text-muted); font-size: 11px; margin: 0 0 10px; }
+  .panel .row { margin-bottom: 10px; }
+  .panel .row:last-child { margin-bottom: 0; }
+  .panel strong { font-weight: 600; }
+  .panel .contact { font-size: 11.3px; margin: 2px 0; }
+
+  /* ---- OGGETTO ---- */
+  .subject { margin-top: 22px; }
+
+  /* ---- SEZIONE TITOLO ---- */
+  .section-title { margin-top: 26px; margin-bottom: 10px; }
+  .section-title .rule { height: 3px; width: 46px; border-radius: 2px; margin-bottom: 8px;
+    background: linear-gradient(90deg, var(--apex-purple), var(--apex-blue)); }
+  .section-title h2 { font-family: var(--apex-font-display); font-size: 15px; margin: 0; color: var(--apex-text); }
+
+  /* ---- TABELLA SERVIZI ---- */
+  table.items { width: 100%; border-collapse: collapse; }
+  table.items thead th {
+    background: var(--apex-tint-purple);
+    color: var(--apex-purple);
+    font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    text-align: left; padding: 9px 10px;
+  }
+  table.items thead th.num { text-align: right; }
+  table.items thead tr :first-child { border-radius: 6px 0 0 6px; }
+  table.items thead tr :last-child { border-radius: 0 6px 6px 0; }
+  table.items td { padding: 6px 10px; vertical-align: top; }
+  table.items td .field { width: 100%; }
+  table.items td.price .field { background: var(--apex-tint-yellow); border-color: #F0E2B8; text-align: right; }
+  table.items col.desc { width: 46%; }
+  table.items col.qty { width: 18%; }
+  table.items col.unit { width: 17%; }
+  table.items col.total { width: 19%; }
+
+  /* ---- TOTALI ---- */
+  .totals { margin-top: 4px; display: flex; justify-content: flex-end; }
+  .totals-box { width: 60%; }
+  .totals-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 4px; font-size: 11.3px; }
+  .totals-row .lbl { color: var(--apex-text-soft); }
+  .totals-row .field { width: 130px; text-align: right; }
+  .totals-row.grand {
+    margin-top: 4px;
+    background: var(--apex-tint-yellow);
+    border: 1px solid var(--apex-yellow);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .totals-row.grand .lbl { font-family: var(--apex-font-display); font-weight: 700; font-size: 13px; color: var(--apex-text); text-transform: uppercase; letter-spacing: .04em; }
+  .totals-row.grand .field { background: transparent; border: none; font-family: var(--apex-font-display); font-weight: 700; font-size: 17px; width: auto; }
+
+  /* ---- NOTA FISCALE ---- */
+  .fiscal-note { margin-top: 14px; font-size: 10px; color: var(--apex-text-muted); font-style: italic; }
+  .fiscal-note .field { font-style: normal; }
+
+  /* ---- DETTAGLI OPERATIVI ---- */
+  .ops { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 10px; }
+  .ops .panel-lite { border: 1px solid var(--apex-border); border-radius: 10px; padding: 13px 14px; }
+  .ops .tag { color: var(--apex-blue); }
+
+  /* ---- FOOTER ---- */
+  .foot { margin-top: auto; padding-top: 18px; }
+  .foot hr { border: none; border-top: 1px solid var(--apex-border); margin: 0 0 10px; }
+  .foot-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .foot-left { font-size: 9px; color: var(--apex-text-faint); max-width: 65%; line-height: 1.5; }
+  .foot-right { font-size: 10px; font-weight: 700; color: var(--apex-text); text-align: right; white-space: nowrap; }
+
+  /* ---- RICEVUTA PRESTAZIONE OCCASIONALE ---- */
+  .doc-title { font-size: 26px; margin-bottom: 2px; }
+  .doc-kind { font-size: 9px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--apex-text-muted); margin-bottom: 10px; }
+  .field { display: flex; align-items: center; }
+  .doc-meta .field, table.items td.num .field, .totals-row .field { justify-content: flex-end; }
+  .field.todo { background: #FFFDF3; border-style: dashed; border-color: #D9C88A; }
+  table.items col.desc { width: 52%; } table.items col.qty { width: 12%; }
+  .desc-sub { display:block; font-size: 9.6px; color: var(--apex-text-muted); margin-top: 2px; }
+  table.items td .field { display:block; }
+  table.items td.num .field { text-align:right; }
+  .totals-row.minus .field { color: #B4232A; }
+  .legal { margin-top: 16px; background: var(--apex-tint-blue); border-radius: 8px; padding: 11px 14px; font-size: 9.6px; line-height: 1.55; color: var(--apex-text-soft); }
+  .legal p { margin: 0 0 4px; } .legal p:last-child { margin: 0; }
+  .sign { display:flex; justify-content: space-between; align-items:flex-end; gap: 24px; margin-top: 22px; }
+  .bollo { width: 30mm; height: 22mm; border: 1px dashed var(--apex-text-faint); border-radius: 6px; font-size: 8.5px; color: var(--apex-text-faint); display:flex; align-items:center; justify-content:center; text-align:center; padding: 4px; }
+  .sign-line { width: 70mm; text-align:center; font-size: 9.5px; color: var(--apex-text-muted); border-top: 1px solid var(--apex-text-soft); padding-top: 5px; }
+
+  /* ---- compattazione: una sola pagina A4 ---- */
+  .sheet { padding: 11mm 13mm 9mm; height: 297mm; min-height: 0; overflow: hidden; }
+  .gradient-bar { margin: 10px 0 12px; }
+  .panel { padding: 10px 14px; } .panel .muted { margin-bottom: 6px; } .panel .row { margin-bottom: 5px; }
+  label.tag { margin-bottom: 3px; }
+  .field.sm { min-height: 22px; padding: 3px 8px; } .field { min-height: 26px; padding: 5px 10px; }
+  .subject { margin-top: 12px; }
+  .section-title { margin-top: 14px; margin-bottom: 6px; }
+  table.items td { padding: 4px 10px; } table.items thead th { padding: 7px 10px; }
+  .totals-row { padding: 3px 4px; } .totals-row.grand { padding: 7px 14px; }
+  .legal { margin-top: 10px; padding: 8px 12px; font-size: 9.2px; }
+  .ops { margin-top: 6px; } .ops .panel-lite { padding: 9px 12px; }
+  .sign { margin-top: 12px; } .bollo { height: 17mm; }
+  .foot { padding-top: 8px; } .foot hr { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="46" height="46" viewBox="0 0 46 46">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#5B2EFF"/>
+              <stop offset="55%" stop-color="#2F6BFF"/>
+              <stop offset="100%" stop-color="#FFD84D"/>
+            </linearGradient>
+          </defs>
+          <polygon points="23,9 34,34 12,34" fill="url(#g1)"/>
+          <polygon points="23,9 28,34 18,34" fill="#ffffff" opacity=".18"/>
+        </svg>
+      </span>
+      <div>
+        <div class="brand-name">ALEXANDER FANIA</div>
+        <div class="brand-sub">Apex Media · Siti web e marketing</div>
+      </div>
+    </div>
+
+    <div class="doc-meta">
+      <div class="doc-title">RICEVUTA</div>
+      <div class="doc-kind">Prestazione di lavoro autonomo occasionale</div>
+      <div class="doc-meta-row">
+        <div class="cell">
+          <label class="tag">N.</label>
+          <div class="field sm" contenteditable="true">1/2026</div>
+        </div>
+        <div class="cell">
+          <label class="tag">Data emissione</label>
+          <div class="field sm" contenteditable="true">13/11/2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gradient-bar"></div>
+
+  <!-- DA / A -->
+  <div class="parties">
+    <div class="panel">
+      <label class="tag">Prestatore</label>
+      <h3>Alexander Fania</h3>
+      <p class="muted">351 594 0685 · studio@infoapex.eu</p>
+      <div class="row">
+        <label class="tag">Codice fiscale</label>
+        <div class="field sm todo" contenteditable="true" data-placeholder="Codice fiscale"></div>
+      </div>
+      <div class="row">
+        <label class="tag">Nato a / il</label>
+        <div class="field sm todo" contenteditable="true" data-placeholder="Luogo e data di nascita"></div>
+      </div>
+      <div class="row">
+        <label class="tag">Residenza</label>
+        <div class="field sm todo" contenteditable="true" data-placeholder="Via, CAP, città (provincia)"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <label class="tag">Committente</label>
+      <h3>Bagnarino S.r.l.</h3>
+      <p class="muted">Bagnarino Coworking</p>
+      <div class="row">
+        <label class="tag">P.IVA / Codice fiscale</label>
+        <div class="field sm" contenteditable="true">01588170066</div>
+      </div>
+      <div class="row">
+        <label class="tag">Sede</label>
+        <div class="field sm" contenteditable="true">Corso Lamarmora 46, 15121 Alessandria (AL)</div>
+      </div>
+      <div class="row">
+        <label class="tag">PEC</label>
+        <div class="field sm" contenteditable="true">bagnarinosrl@cgn.legalmail.it</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OGGETTO -->
+  <div class="subject">
+    <label class="tag" style="color:var(--apex-purple)">Oggetto</label>
+    <div class="field" contenteditable="true">Realizzazione del sito web Bagnarino Coworking e dominio per il primo anno</div>
+  </div>
+
+  <!-- PRESTAZIONI -->
+  <div class="section-title">
+    <div class="rule"></div>
+    <h2>Prestazioni</h2>
+  </div>
+
+  <table class="items">
+    <colgroup>
+      <col class="desc"><col class="qty"><col class="unit"><col class="total">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Descrizione</th>
+        <th>Quantità</th>
+        <th class="num">Prezzo unitario</th>
+        <th class="num">Importo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="field sm" contenteditable="true">Sito web<span class="desc-sub">Progettazione e realizzazione del sito con prenotazioni online, consegnato e funzionante</span></div></td>
+        <td><div class="field sm" contenteditable="true">1</div></td>
+        <td class="num"><div class="field sm" contenteditable="true">€ 500,00</div></td>
+        <td class="price"><div class="field sm" contenteditable="true">€ 500,00</div></td>
+      </tr>
+      <tr>
+        <td><div class="field sm" contenteditable="true">Dominio<span class="desc-sub">Registrazione e gestione del dominio, primo anno</span></div></td>
+        <td><div class="field sm" contenteditable="true">1 anno</div></td>
+        <td class="num"><div class="field sm" contenteditable="true">€ 50,00</div></td>
+        <td class="price"><div class="field sm" contenteditable="true">€ 50,00</div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOTALI -->
+  <div class="totals">
+    <div class="totals-box">
+      <div class="totals-row">
+        <span class="lbl"><strong>Compenso lordo</strong></span>
+        <div class="field sm" contenteditable="true"><strong>€ 550,00</strong></div>
+      </div>
+      <div class="totals-row minus">
+        <span class="lbl">Ritenuta d'acconto 20% (art. 25 D.P.R. 600/73)</span>
+        <div class="field sm" contenteditable="true">− € 110,00</div>
+      </div>
+      <div class="totals-row grand">
+        <span class="lbl">Netto a pagare</span>
+        <div class="field" contenteditable="true">€ 440,00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal">
+    <p>Prestazione di lavoro autonomo occasionale ai sensi dell'art. 2222 del Codice Civile, svolta senza vincolo di subordinazione e senza carattere di abitualità.</p>
+    <p>Operazione fuori campo IVA per mancanza del presupposto soggettivo (art. 5 D.P.R. 633/72). Compenso soggetto a ritenuta d'acconto del 20%, che il committente versa come sostituto d'imposta.</p>
+    <p>Il prestatore dichiara di non aver superato, nell'anno in corso, il limite di € 5.000 di compensi per prestazioni occasionali (art. 44 D.L. 269/2003). Imposta di bollo da € 2,00 assolta sull'originale.</p>
+  </div>
+
+  <!-- PAGAMENTO -->
+  <div class="section-title">
+    <div class="rule"></div>
+    <h2>Dettagli pagamento</h2>
+  </div>
+
+  <div class="ops">
+    <div class="panel-lite">
+      <label class="tag">Modalità di pagamento</label>
+      <div class="field sm" contenteditable="true">Bonifico bancario</div>
+    </div>
+    <div class="panel-lite">
+      <label class="tag">IBAN</label>
+      <div class="field sm todo" contenteditable="true" data-placeholder="IBAN"></div>
+    </div>
+    <div class="panel-lite">
+      <label class="tag">Scadenza</label>
+      <div class="field sm" contenteditable="true">Alla ricezione</div>
+    </div>
+  </div>
+
+  <div class="sign">
+    <div class="bollo">Marca da bollo<br>€ 2,00</div>
+    <div class="sign-line">Firma del prestatore — Alexander Fania</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <hr>
+    <div class="foot-row">
+      <div class="foot-left">Ricevuta emessa da Alexander Fania per prestazione occasionale. Per chiarimenti: 351 594 0685 · studio@infoapex.eu</div>
+      <div class="foot-right">Ricevuta n. 1/2026</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
