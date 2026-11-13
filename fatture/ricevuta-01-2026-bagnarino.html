@@ -1,349 +1,179 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8">
 <title>Ricevuta 1/2026 — Bagnarino S.r.l.</title>
-<link rel="stylesheet" href="apex-media-tokens.css" />
 <style>
-  @page { size: A4; margin: 0; }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: #E9E9EE; }
-  body { font-family: var(--apex-font-body); color: var(--apex-text); }
+@font-face{font-family:"Inter";src:url(fonts/Inter-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:"Inter";src:url(fonts/Inter-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:"Inter";src:url(fonts/Inter-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:"Inter";src:url(fonts/Inter-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:"Space Grotesk";src:url(fonts/SpaceGrotesk-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:"Space Grotesk";src:url(fonts/SpaceGrotesk-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:"Space Grotesk";src:url(fonts/SpaceGrotesk-Bold.woff2) format("woff2");font-weight:700}
+:root{
+  --ink:#0B0B12; --ink-2:#23222E; --body:#44434F; --muted:#7C7B88; --soft:#B1B0BA;
+  --paper:#F6F5F9; --line:#E4E2EC; --violet:#6D3BF5; --gold:#E9C46A;
+  --num:"Space Grotesk","Inter",sans-serif;
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#DDDCE3}
+body{font-family:"Inter",system-ui,sans-serif;color:var(--body);font-size:9.2pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;margin:0 auto;position:relative;overflow:hidden;padding:15mm 16mm 0;
+  background:
+    radial-gradient(120mm 80mm at 100% 0%,rgba(109,59,245,.07),transparent 70%),
+    radial-gradient(110mm 90mm at 0% 100%,rgba(233,196,106,.09),transparent 70%),
+    var(--paper)}
+@media print{html,body{background:#fff}}
+.k{font-size:6.2pt;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
 
-  /* ---- FOGLIO A4 ---- */
-  .sheet {
-    width: 210mm;
-    min-height: 297mm;
-    margin: 24px auto;
-    background: var(--apex-surface);
-    padding: 16mm 14mm 14mm 14mm;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 24px rgba(10,10,20,.12);
-  }
-  @media print {
-    body { background: #fff; }
-    .sheet { margin: 0; box-shadow: none; }
-  }
+/* testata */
+.hd{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:5mm}
+.logo{width:23mm;height:23mm;border-radius:50%;background:url(apex-logo.png) center/101% no-repeat #000;
+  box-shadow:0 .4mm .6mm rgba(11,11,18,.25),0 3mm 5mm -1.5mm rgba(11,11,18,.38),0 8mm 12mm -5mm rgba(11,11,18,.42),inset 0 .35mm 0 rgba(255,255,255,.22)}
+.brand .w{font-family:var(--num);font-weight:700;font-size:14pt;letter-spacing:.3em;color:var(--ink);line-height:1.1}
+.brand .s{font-size:6pt;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:1.4mm}
+.doc{text-align:right}
+.doc h1{font-family:var(--num);font-weight:500;font-size:27pt;letter-spacing:-.02em;color:var(--ink);line-height:1}
+.chips{display:flex;gap:2.4mm;justify-content:flex-end;margin-top:3.4mm}
+.chip{background:#fff;border-radius:99px;padding:1.5mm 3.6mm;font-size:7.6pt;color:var(--muted);
+  box-shadow:0 .3mm .5mm rgba(11,11,18,.08),0 1.6mm 3mm -1.2mm rgba(11,11,18,.16),inset 0 0 0 .25mm var(--line)}
+.chip b{color:var(--ink);font-weight:700;font-family:var(--num);margin-left:1.4mm}
 
-  /* ---- CAMPI COMPILABILI ---- */
-  .field {
-    border: 1px solid var(--apex-border);
-    border-radius: 6px;
-    background: #fff;
-    padding: 7px 10px;
-    font-size: 11.3px;
-    color: var(--apex-text);
-    min-height: 30px;
-  }
-  .field.sm { padding: 5px 8px; min-height: 24px; }
-  .field[contenteditable]:empty:before {
-    content: attr(data-placeholder);
-    color: var(--apex-text-faint);
-  }
-  label.tag {
-    display: block;
-    font-family: var(--apex-font-body);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--apex-text-muted);
-    margin: 0 0 5px;
-  }
+/* blocco importo */
+.hero{margin-top:10mm;border-radius:6mm;padding:9mm 10mm;color:#fff;position:relative;overflow:hidden;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:10mm;
+  background:
+    radial-gradient(70mm 46mm at 88% -10%,rgba(109,59,245,.55),transparent 70%),
+    radial-gradient(60mm 40mm at 6% 120%,rgba(233,196,106,.22),transparent 70%),
+    linear-gradient(155deg,#1B1A27 0%,#0B0B12 62%);
+  box-shadow:0 .5mm 1mm rgba(11,11,18,.2),0 5mm 8mm -3mm rgba(11,11,18,.4),0 14mm 20mm -10mm rgba(11,11,18,.55),inset 0 .35mm 0 rgba(255,255,255,.16),inset 0 0 0 .25mm rgba(255,255,255,.06)}
+.hero::after{content:"";position:absolute;right:-18mm;top:-26mm;width:70mm;height:70mm;border-radius:50%;border:.3mm solid rgba(255,255,255,.08);box-shadow:0 0 0 9mm rgba(255,255,255,.025)}
+.hero .k{color:var(--gold)}
+.hero h2{font-size:14.5pt;font-weight:600;letter-spacing:-.012em;line-height:1.28;margin-top:2.6mm;max-width:92mm}
+.hero p{font-size:8pt;color:#A9A8B6;margin-top:2mm}
+.amt{text-align:right;position:relative;z-index:1;white-space:nowrap}
+.amt .v{font-family:var(--num);font-weight:700;font-size:35pt;letter-spacing:-.03em;line-height:1;margin-top:2mm;color:#fff}
+.amt .v small{font-size:17pt;font-weight:500;margin-right:1.6mm}
 
-  /* ---- HEADER ---- */
-  .header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
-  .brand { display: flex; align-items: center; gap: 12px; }
-  .brand-mark {
-    width: 46px; height: 46px; border-radius: 10px; flex: 0 0 auto;
-    background: var(--apex-black);
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-  }
-  .brand-name { font-family: var(--apex-font-display); font-weight: 700; font-size: 19px; letter-spacing: .01em; color: var(--apex-text); line-height: 1.1; }
-  .brand-sub { font-size: 9px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--apex-text-muted); margin-top: 3px; }
+/* parti */
+.parts{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:7mm}
+.card{background:#fff;border-radius:4.5mm;padding:6mm 6.5mm 4.5mm;
+  box-shadow:0 .3mm .6mm rgba(11,11,18,.06),0 2.4mm 4mm -1.6mm rgba(11,11,18,.12),0 9mm 14mm -8mm rgba(11,11,18,.22),inset 0 0 0 .25mm rgba(228,226,236,.9)}
+.card .k{color:var(--violet)}
+.card h3{font-size:12.5pt;font-weight:700;color:var(--ink);letter-spacing:-.012em;margin-top:1.8mm;line-height:1.2}
+.dl{margin-top:3.6mm;display:grid;gap:0}
+.dl div{display:grid;grid-template-columns:24mm 1fr;gap:2mm;padding:1.9mm 0;border-top:.25mm solid var(--line);font-size:8.1pt;align-items:baseline}
+.dl dt{font-size:6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.dl dd{color:var(--ink-2);font-weight:500}
+.dl dd.vuoto{border-bottom:.3mm dotted var(--soft);height:4mm}
 
-  .doc-meta { text-align: right; }
-  .doc-title { font-family: var(--apex-font-display); font-weight: 700; font-size: 28px; color: var(--apex-text); letter-spacing: .02em; margin: 0 0 10px; }
-  .doc-meta-row { display: flex; gap: 10px; justify-content: flex-end; }
-  .doc-meta-row .cell { width: 118px; }
+/* voci */
+.voci{margin-top:7mm}
+table{width:100%;border-collapse:collapse}
+th{font-size:6pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);text-align:left;padding:0 0 2.4mm}
+th.n,td.n{text-align:right}
+td{padding:3.6mm 0;border-top:.25mm solid var(--line);vertical-align:top}
+td b{display:block;font-size:10pt;font-weight:700;color:var(--ink)}
+td span{display:block;font-size:7.8pt;color:var(--muted);margin-top:.5mm}
+td.n{font-family:var(--num);font-size:10.5pt;font-weight:600;color:var(--ink);white-space:nowrap}
+td.q{font-size:8.4pt;color:var(--body)}
+.tot{display:flex;justify-content:flex-end;border-top:.5mm solid var(--ink);padding-top:3.6mm}
+.tot div{display:flex;align-items:baseline;gap:12mm}
+.tot .k{color:var(--ink)}
+.tot b{font-family:var(--num);font-size:17pt;font-weight:700;color:var(--ink);letter-spacing:-.02em}
 
-  .gradient-bar { height: 4px; width: 100%; margin: 16px 0 22px; border-radius: 2px;
-    background: linear-gradient(90deg, var(--apex-purple) 0%, var(--apex-blue) 55%, var(--apex-yellow) 100%); }
+/* pagamento e firma */
+.low{display:grid;grid-template-columns:1.15fr 1fr;gap:5mm;margin-top:7mm;align-items:stretch}
+.low .card{padding:5mm 6.5mm}
+.nota{font-size:7.2pt;color:var(--muted);line-height:1.5;margin-top:3mm}
+.firma{display:flex;gap:5mm;align-items:flex-end}
+.bollo{flex:0 0 24mm;height:20mm;border:.3mm dashed var(--soft);border-radius:2mm;display:grid;place-items:center;text-align:center;font-size:6pt;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);line-height:1.6}
+.sig{flex:1}
+.sig i{display:block;height:13mm;border-bottom:.3mm solid var(--ink-2)}
+.sig span{display:block;font-size:7pt;color:var(--muted);margin-top:1.4mm}
 
-  /* ---- DA / A ---- */
-  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .panel { background: #F7F7FA; border: 1px solid var(--apex-border); border-radius: 10px; padding: 16px 18px; }
-  .panel .tag { color: var(--apex-purple); }
-  .panel h3 { font-family: var(--apex-font-display); font-size: 14px; margin: 0 0 2px; color: var(--apex-text); }
-  .panel .muted { color: var(--apex-text-muted); font-size: 11px; margin: 0 0 10px; }
-  .panel .row { margin-bottom: 10px; }
-  .panel .row:last-child { margin-bottom: 0; }
-  .panel strong { font-weight: 600; }
-  .panel .contact { font-size: 11.3px; margin: 2px 0; }
-
-  /* ---- OGGETTO ---- */
-  .subject { margin-top: 22px; }
-
-  /* ---- SEZIONE TITOLO ---- */
-  .section-title { margin-top: 26px; margin-bottom: 10px; }
-  .section-title .rule { height: 3px; width: 46px; border-radius: 2px; margin-bottom: 8px;
-    background: linear-gradient(90deg, var(--apex-purple), var(--apex-blue)); }
-  .section-title h2 { font-family: var(--apex-font-display); font-size: 15px; margin: 0; color: var(--apex-text); }
-
-  /* ---- TABELLA SERVIZI ---- */
-  table.items { width: 100%; border-collapse: collapse; }
-  table.items thead th {
-    background: var(--apex-tint-purple);
-    color: var(--apex-purple);
-    font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
-    text-align: left; padding: 9px 10px;
-  }
-  table.items thead th.num { text-align: right; }
-  table.items thead tr :first-child { border-radius: 6px 0 0 6px; }
-  table.items thead tr :last-child { border-radius: 0 6px 6px 0; }
-  table.items td { padding: 6px 10px; vertical-align: top; }
-  table.items td .field { width: 100%; }
-  table.items td.price .field { background: var(--apex-tint-yellow); border-color: #F0E2B8; text-align: right; }
-  table.items col.desc { width: 46%; }
-  table.items col.qty { width: 18%; }
-  table.items col.unit { width: 17%; }
-  table.items col.total { width: 19%; }
-
-  /* ---- TOTALI ---- */
-  .totals { margin-top: 4px; display: flex; justify-content: flex-end; }
-  .totals-box { width: 60%; }
-  .totals-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 4px; font-size: 11.3px; }
-  .totals-row .lbl { color: var(--apex-text-soft); }
-  .totals-row .field { width: 130px; text-align: right; }
-  .totals-row.grand {
-    margin-top: 4px;
-    background: var(--apex-tint-yellow);
-    border: 1px solid var(--apex-yellow);
-    border-radius: 8px;
-    padding: 10px 14px;
-  }
-  .totals-row.grand .lbl { font-family: var(--apex-font-display); font-weight: 700; font-size: 13px; color: var(--apex-text); text-transform: uppercase; letter-spacing: .04em; }
-  .totals-row.grand .field { background: transparent; border: none; font-family: var(--apex-font-display); font-weight: 700; font-size: 17px; width: auto; }
-
-  /* ---- NOTA FISCALE ---- */
-  .fiscal-note { margin-top: 14px; font-size: 10px; color: var(--apex-text-muted); font-style: italic; }
-  .fiscal-note .field { font-style: normal; }
-
-  /* ---- DETTAGLI OPERATIVI ---- */
-  .ops { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 10px; }
-  .ops .panel-lite { border: 1px solid var(--apex-border); border-radius: 10px; padding: 13px 14px; }
-  .ops .tag { color: var(--apex-blue); }
-
-  /* ---- FOOTER ---- */
-  .foot { margin-top: auto; padding-top: 18px; }
-  .foot hr { border: none; border-top: 1px solid var(--apex-border); margin: 0 0 10px; }
-  .foot-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-  .foot-left { font-size: 9px; color: var(--apex-text-faint); max-width: 65%; line-height: 1.5; }
-  .foot-right { font-size: 10px; font-weight: 700; color: var(--apex-text); text-align: right; white-space: nowrap; }
-
-  /* ---- RICEVUTA PRESTAZIONE OCCASIONALE ---- */
-  .doc-title { font-size: 26px; margin-bottom: 10px; }
-  .doc-kind { font-size: 9px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--apex-text-muted); margin-bottom: 10px; }
-  .field { display: flex; align-items: center; }
-  .doc-meta .field, table.items td.num .field, .totals-row .field { justify-content: flex-end; }
-  .field.todo { background: #FFFDF3; border-style: dashed; border-color: #D9C88A; }
-  table.items col.desc { width: 52%; } table.items col.qty { width: 12%; }
-  .desc-sub { display:block; font-size: 9.6px; color: var(--apex-text-muted); margin-top: 2px; }
-  table.items td .field { display:block; }
-  table.items td.num .field { text-align:right; }
-  .totals-row.minus .field { color: #B4232A; }
-  .legal { margin-top: 16px; background: var(--apex-tint-blue); border-radius: 8px; padding: 11px 14px; font-size: 9.6px; line-height: 1.55; color: var(--apex-text-soft); }
-  .legal p { margin: 0 0 4px; } .legal p:last-child { margin: 0; }
-  .sign { display:flex; justify-content: space-between; align-items:flex-end; gap: 24px; margin-top: 22px; }
-  .bollo { width: 30mm; height: 22mm; border: 1px dashed var(--apex-text-faint); border-radius: 6px; font-size: 8.5px; color: var(--apex-text-faint); display:flex; align-items:center; justify-content:center; text-align:center; padding: 4px; }
-  .sign-line { width: 70mm; text-align:center; font-size: 9.5px; color: var(--apex-text-muted); border-top: 1px solid var(--apex-text-soft); padding-top: 5px; }
-
-  /* ---- compattazione: una sola pagina A4 ---- */
-  .sheet { padding: 11mm 13mm 9mm; height: 297mm; min-height: 0; overflow: hidden; }
-  .gradient-bar { margin: 10px 0 12px; }
-  .panel { padding: 10px 14px; } .panel .muted { margin-bottom: 6px; } .panel .row { margin-bottom: 5px; }
-  label.tag { margin-bottom: 3px; }
-  .field.sm { min-height: 22px; padding: 3px 8px; } .field { min-height: 26px; padding: 5px 10px; }
-  .subject { margin-top: 12px; }
-  .section-title { margin-top: 14px; margin-bottom: 6px; }
-  table.items td { padding: 4px 10px; } table.items thead th { padding: 7px 10px; }
-  .totals-row { padding: 3px 4px; } .totals-row.grand { padding: 7px 14px; }
-  .legal { margin-top: 10px; padding: 8px 12px; font-size: 9.2px; }
-  .ops { margin-top: 6px; } .ops .panel-lite { padding: 9px 12px; }
-  .sign { margin-top: 12px; } .bollo { height: 17mm; }
-  .foot { padding-top: 8px; } .foot hr { margin-bottom: 6px; }
+.ft{position:absolute;left:16mm;right:16mm;bottom:9mm;display:flex;justify-content:space-between;border-top:.25mm solid var(--line);padding-top:2.6mm;font-size:6pt;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
 </style>
 </head>
 <body>
+<div class="page">
 
-<div class="sheet">
-
-  <!-- HEADER -->
-  <div class="header">
+  <div class="hd">
     <div class="brand">
-      <span class="brand-mark" aria-hidden="true">
-        <svg width="46" height="46" viewBox="0 0 46 46">
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#5B2EFF"/>
-              <stop offset="55%" stop-color="#2F6BFF"/>
-              <stop offset="100%" stop-color="#FFD84D"/>
-            </linearGradient>
-          </defs>
-          <polygon points="23,9 34,34 12,34" fill="url(#g1)"/>
-          <polygon points="23,9 28,34 18,34" fill="#ffffff" opacity=".18"/>
-        </svg>
-      </span>
-      <div>
-        <div class="brand-name">ALEXANDER FANIA</div>
-        <div class="brand-sub">Apex Media · Siti web e marketing</div>
-      </div>
+      <div class="logo" role="img" aria-label="Apex Media"></div>
+      <div><div class="w">APEX MEDIA</div><div class="s">Performance Agency</div></div>
     </div>
-
-    <div class="doc-meta">
-      <div class="doc-title">RICEVUTA</div>
-      <div class="doc-meta-row">
-        <div class="cell">
-          <label class="tag">N.</label>
-          <div class="field sm" contenteditable="true">1/2026</div>
-        </div>
-        <div class="cell">
-          <label class="tag">Data emissione</label>
-          <div class="field sm" contenteditable="true">13/11/2026</div>
-        </div>
-      </div>
+    <div class="doc">
+      <h1>Ricevuta</h1>
+      <div class="chips"><span class="chip">N.<b>1/2026</b></span><span class="chip">Data<b>13/11/2026</b></span></div>
     </div>
   </div>
 
-  <div class="gradient-bar"></div>
+  <div class="hero">
+    <div>
+      <div class="k">Oggetto</div>
+      <h2>Sito web Bagnarino Coworking e dominio per il primo anno</h2>
+      <p>Sito consegnato e funzionante.</p>
+    </div>
+    <div class="amt">
+      <div class="k">Totale pagato</div>
+      <div class="v"><small>€</small>550,00</div>
+    </div>
+  </div>
 
-  <!-- DA / A -->
-  <div class="parties">
-    <div class="panel">
-      <label class="tag">Prestatore</label>
+  <div class="parts">
+    <div class="card">
+      <div class="k">Ricevuta emessa da</div>
       <h3>Alexander Fania</h3>
-      <p class="muted">351 594 0685 · studio@infoapex.eu</p>
-      <div class="row">
-        <label class="tag">Codice fiscale</label>
-        <div class="field sm todo" contenteditable="true" data-placeholder="Codice fiscale"></div>
-      </div>
-      <div class="row">
-        <label class="tag">Residenza</label>
-        <div class="field sm todo" contenteditable="true" data-placeholder="Via, CAP, città (provincia)"></div>
-      </div>
+      <dl class="dl">
+        <div><dt>Cod. fiscale</dt><dd class="vuoto"></dd></div>
+        <div><dt>Residenza</dt><dd class="vuoto"></dd></div>
+        <div><dt>Telefono</dt><dd>351 594 0685</dd></div>
+        <div><dt>Email</dt><dd>studio@infoapex.eu</dd></div>
+      </dl>
     </div>
-
-    <div class="panel">
-      <label class="tag">Committente</label>
+    <div class="card">
+      <div class="k">Intestata a</div>
       <h3>Bagnarino S.r.l.</h3>
-      <p class="muted">Bagnarino Coworking</p>
-      <div class="row">
-        <label class="tag">P.IVA / Codice fiscale</label>
-        <div class="field sm" contenteditable="true">01588170066</div>
-      </div>
-      <div class="row">
-        <label class="tag">Sede</label>
-        <div class="field sm" contenteditable="true">Corso Lamarmora 46, 15121 Alessandria (AL)</div>
-      </div>
-      <div class="row">
-        <label class="tag">PEC</label>
-        <div class="field sm" contenteditable="true">bagnarinosrl@cgn.legalmail.it</div>
-      </div>
+      <dl class="dl">
+        <div><dt>P. IVA / C.F.</dt><dd>01588170066</dd></div>
+        <div><dt>Sede</dt><dd>Corso Lamarmora 46, 15121 Alessandria (AL)</dd></div>
+        <div><dt>PEC</dt><dd>bagnarinosrl@cgn.legalmail.it</dd></div>
+        <div><dt>Attività</dt><dd>Bagnarino Coworking</dd></div>
+      </dl>
     </div>
   </div>
 
-  <!-- OGGETTO -->
-  <div class="subject">
-    <label class="tag" style="color:var(--apex-purple)">Oggetto</label>
-    <div class="field" contenteditable="true">Realizzazione del sito web Bagnarino Coworking e dominio per il primo anno</div>
+  <div class="voci">
+    <table>
+      <thead><tr><th>Descrizione</th><th style="width:26mm">Quantità</th><th class="n" style="width:30mm">Importo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Sito web</b><span>Progettazione e realizzazione del sito con prenotazioni online</span></td><td class="q">1</td><td class="n">€ 500,00</td></tr>
+        <tr><td><b>Dominio</b><span>Registrazione e gestione del dominio, primo anno</span></td><td class="q">1 anno</td><td class="n">€ 50,00</td></tr>
+      </tbody>
+    </table>
+    <div class="tot"><div><span class="k">Totale pagato</span><b>€ 550,00</b></div></div>
   </div>
 
-  <!-- PRESTAZIONI -->
-  <div class="section-title">
-    <div class="rule"></div>
-    <h2>Prestazioni</h2>
-  </div>
-
-  <table class="items">
-    <colgroup>
-      <col class="desc"><col class="qty"><col class="unit"><col class="total">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Descrizione</th>
-        <th>Quantità</th>
-        <th class="num">Prezzo unitario</th>
-        <th class="num">Importo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><div class="field sm" contenteditable="true">Sito web<span class="desc-sub">Progettazione e realizzazione del sito con prenotazioni online, consegnato e funzionante</span></div></td>
-        <td><div class="field sm" contenteditable="true">1</div></td>
-        <td class="num"><div class="field sm" contenteditable="true">€ 500,00</div></td>
-        <td class="price"><div class="field sm" contenteditable="true">€ 500,00</div></td>
-      </tr>
-      <tr>
-        <td><div class="field sm" contenteditable="true">Dominio<span class="desc-sub">Registrazione e gestione del dominio, primo anno</span></div></td>
-        <td><div class="field sm" contenteditable="true">1 anno</div></td>
-        <td class="num"><div class="field sm" contenteditable="true">€ 50,00</div></td>
-        <td class="price"><div class="field sm" contenteditable="true">€ 50,00</div></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- TOTALI -->
-  <div class="totals">
-    <div class="totals-box">
-      <div class="totals-row grand">
-        <span class="lbl">Totale pagato</span>
-        <div class="field" contenteditable="true">€ 550,00</div>
-      </div>
+  <div class="low">
+    <div class="card">
+      <div class="k">Pagamento</div>
+      <dl class="dl" style="margin-top:2.4mm">
+        <div><dt>Modalità</dt><dd>Bonifico bancario</dd></div>
+        <div><dt>IBAN</dt><dd class="vuoto"></dd></div>
+      </dl>
+      <p class="nota">Operazione fuori campo IVA (art. 5 D.P.R. 633/72). Imposta di bollo da € 2,00 assolta sull'originale.</p>
+    </div>
+    <div class="card firma">
+      <div class="bollo">Marca<br>da bollo<br>€ 2,00</div>
+      <div class="sig"><div class="k">Firma</div><i></i><span>Alexander Fania</span></div>
     </div>
   </div>
 
-  <div class="legal">
-    <p>Operazione fuori campo IVA (art. 5 D.P.R. 633/72). Imposta di bollo da € 2,00 assolta sull'originale.</p>
-  </div>
-
-  <!-- PAGAMENTO -->
-  <div class="section-title">
-    <div class="rule"></div>
-    <h2>Dettagli pagamento</h2>
-  </div>
-
-  <div class="ops">
-    <div class="panel-lite">
-      <label class="tag">Modalità di pagamento</label>
-      <div class="field sm" contenteditable="true">Bonifico bancario</div>
-    </div>
-    <div class="panel-lite">
-      <label class="tag">IBAN</label>
-      <div class="field sm todo" contenteditable="true" data-placeholder="IBAN"></div>
-    </div>
-    <div class="panel-lite">
-      <label class="tag">Scadenza</label>
-      <div class="field sm" contenteditable="true">Alla ricezione</div>
-    </div>
-  </div>
-
-  <div class="sign">
-    <div class="bollo">Marca da bollo<br>€ 2,00</div>
-    <div class="sign-line">Firma del prestatore — Alexander Fania</div>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="foot">
-    <hr>
-    <div class="foot-row">
-      <div class="foot-left">Ricevuta emessa da Alexander Fania. Per chiarimenti: 351 594 0685 · studio@infoapex.eu</div>
-      <div class="foot-right">Ricevuta n. 1/2026</div>
-    </div>
-  </div>
-
+  <div class="ft"><span>Apex Media · Alessandria</span><span>Ricevuta n. 1/2026</span></div>
 </div>
-
 </body>
 </html>
