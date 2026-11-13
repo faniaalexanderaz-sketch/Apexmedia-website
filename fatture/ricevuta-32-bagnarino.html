@@ -159,6 +159,20 @@ html,body{background:#fff}
 .tot,.carta{background:linear-gradient(180deg,#F7F6FB,#E7E5F0) padding-box,linear-gradient(180deg,#DAD8E5,#A5A3B5) border-box}
 .tot::after,.carta::after{background:linear-gradient(180deg,rgba(18,18,34,.20),rgba(18,18,34,0))}
 .dl dd,.bank dd{overflow-wrap:anywhere}
+/* firme preinserite */
+@font-face{font-family:"SigA";src:url(fonts/SigA.woff2) format("woff2")}
+@font-face{font-family:"SigF";src:url(fonts/SigF.woff2) format("woff2")}
+.low{grid-template-columns:1fr 112mm}
+.carta{align-items:center;padding:3mm 5mm 3mm 4.5mm}
+.firme{flex:1;min-width:0}
+.firme .k{color:#5B5A68}
+.sigs{display:flex;gap:7mm;align-items:flex-end;margin-top:1.6mm}
+.sgn{position:relative}
+.sgn .nm{line-height:1;white-space:nowrap}
+.sgn.a .nm{font-family:"SigA",cursive;font-size:17pt;color:#6D28D9;transform:rotate(-3deg);transform-origin:left bottom}
+.sgn.f .nm{font-family:"SigF",cursive;font-size:20pt;color:#1E2A78;transform:rotate(-1.5deg);transform-origin:left bottom}
+.sgn svg{display:block;margin-top:-1.4mm}
+.sgn .who{font-size:5.4pt;letter-spacing:.16em;text-transform:uppercase;color:#6F6E7C;font-weight:600;margin-top:.6mm;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -258,7 +272,13 @@ html,body{background:#fff}
     <p class="nota">Operazione fuori campo IVA (art. 5 D.P.R. 633/72).<br>Imposta di bollo da € 2,00 assolta sull'originale.</p>
     <div class="carta s3d">
       <div class="bollo">Marca<br>da bollo<br>€ 2,00</div>
-      <div class="sig"><div class="k">Firma</div><i></i><span>Alexander Fania</span></div>
+      <div class="firme">
+        <div class="k">Firme</div>
+        <div class="sigs">
+          <div class="sgn a"><div class="nm">Alexander Fania</div><svg width="30mm" height="3.4mm" viewBox="0 0 176 20"><path d="M2 14 C 40 4, 90 2, 130 9 S 168 16, 174 6" fill="none" stroke="#6D28D9" stroke-width="1.8" stroke-linecap="round"/></svg><div class="who">Alexander Fania</div></div>
+          <div class="sgn f"><div class="nm">Federico Delfino</div><svg width="28mm" height="3.4mm" viewBox="0 0 160 20"><path d="M4 8 C 30 18, 60 16, 92 10 C 112 6, 126 4, 132 10 C 136 15, 126 17, 120 12 M 120 12 L 156 9" fill="none" stroke="#1E2A78" stroke-width="1.7" stroke-linecap="round"/></svg><div class="who">Federico Delfino</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
