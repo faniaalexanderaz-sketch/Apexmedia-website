@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Apex Media — copertina Google e carosello</title>
+<style>
+@font-face{font-family:"Montserrat";src:url(fonts/montserrat-latin-400-normal.woff2) format("woff2");font-weight:400}
+@font-face{font-family:"Montserrat";src:url(fonts/montserrat-latin-500-normal.woff2) format("woff2");font-weight:500}
+@font-face{font-family:"Montserrat";src:url(fonts/montserrat-latin-600-normal.woff2) format("woff2");font-weight:600}
+@font-face{font-family:"Montserrat";src:url(fonts/montserrat-latin-700-normal.woff2) format("woff2");font-weight:700}
+@font-face{font-family:"Montserrat";src:url(fonts/montserrat-latin-800-normal.woff2) format("woff2");font-weight:800}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#777;font-family:"Montserrat",sans-serif;display:grid;gap:40px;padding:40px;justify-items:start;-webkit-font-smoothing:antialiased}
+.ab{position:relative;overflow:hidden;--fg:#fff;--bg:#0A0A0A;--mid:#8E8E8E;--hair:rgba(255,255,255,.18);background:var(--bg);color:var(--fg)}
+.ab.l{--fg:#0A0A0A;--bg:#F4F3EF;--mid:#6E6D69;--hair:rgba(10,10,10,.16)}
+img.mark,img.logo{display:block;object-fit:contain}
+.ab.l img.mark,.ab.l img.logo{filter:invert(1)}
+
+/* ---------- slide 1080 ---------- */
+.s{width:1080px;height:1080px;padding:84px 88px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top .b{display:flex;align-items:center;gap:16px;font-weight:700;font-size:17px;letter-spacing:.3em}
+.top .mark{width:52px;height:36px}
+.top .n{font-weight:500;font-size:17px;letter-spacing:.14em;color:var(--mid)}
+.mid{flex:1;display:flex;flex-direction:column;justify-content:center}
+.lab{font-weight:600;font-size:18px;letter-spacing:.3em;text-transform:uppercase;color:var(--mid);margin-bottom:34px}
+h1{font-weight:800;font-size:100px;line-height:1.02;letter-spacing:-.035em}
+h2{font-weight:800;font-size:80px;line-height:1.05;letter-spacing:-.032em}
+.sub{font-weight:400;font-size:31px;line-height:1.42;color:var(--mid);margin-top:40px;max-width:800px}
+.sub b{color:var(--fg);font-weight:600}
+.bot{display:flex;justify-content:space-between;align-items:center;border-top:1.5px solid var(--hair);padding-top:26px;font-weight:500;font-size:17px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid)}
+.arr{width:64px;height:14px;position:relative}
+.arr::before{content:"";position:absolute;left:0;right:2px;top:6px;height:2px;background:var(--fg)}
+.arr::after{content:"";position:absolute;right:0;top:1px;width:11px;height:11px;border-top:2px solid var(--fg);border-right:2px solid var(--fg);transform:rotate(45deg)}
+
+/* metodo */
+.steps{margin-top:52px;border-top:1.5px solid var(--hair)}
+.step{display:grid;grid-template-columns:96px 300px 1fr;align-items:baseline;padding:30px 0;border-bottom:1.5px solid var(--hair)}
+.step i{font-style:normal;font-weight:500;font-size:20px;letter-spacing:.14em;color:var(--mid)}
+.step b{font-weight:700;font-size:36px;letter-spacing:-.02em}
+.step span{font-weight:400;font-size:23px;line-height:1.42;color:var(--mid)}
+
+/* risultato */
+.res{display:grid;grid-template-columns:1fr 230px;gap:44px;align-items:end}
+.big{font-weight:800;font-size:176px;line-height:.9;letter-spacing:-.055em;margin-left:-8px}
+.res p{font-weight:500;font-size:34px;line-height:1.3;margin-top:34px;letter-spacing:-.01em}
+.bars{display:flex;gap:26px;align-items:flex-end;height:420px}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.bar u{display:block;text-decoration:none;background:var(--fg)}
+.bar.a u{background:transparent;border:2px solid var(--fg)}
+.bar em{font-style:normal;font-weight:800;font-size:38px;letter-spacing:-.02em;margin-bottom:12px}
+.bar small{font-weight:500;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-top:14px}
+.note{font-weight:400;font-size:19px;line-height:1.5;color:var(--mid);margin-top:44px}
+
+/* contatto */
+.end{align-items:center;text-align:center}
+.end .logo{width:300px;height:276px;margin-bottom:56px}
+.end h2{font-size:66px;max-width:820px}
+.cta{margin-top:50px;display:inline-flex;align-items:center;gap:22px;border:2px solid var(--fg);border-radius:999px;padding:22px 42px;font-weight:700;font-size:28px;letter-spacing:-.005em}
+.cta s{text-decoration:none;width:1.5px;height:26px;background:var(--hair)}
+
+/* ---------- copertina Google 16:9 ---------- */
+.cv{width:1600px;height:900px;display:grid;grid-template-columns:1fr 400px;align-items:center;gap:90px;padding:0 220px}
+.cv .lab{font-size:17px;margin-bottom:28px}
+.cv h1{font-size:82px}
+.cv .sub{font-size:25px;margin-top:32px;max-width:none}
+.cv .logo{width:400px;height:368px}
+.cv .rule{position:absolute;left:220px;right:220px;bottom:150px;height:1.5px;background:var(--hair)}
+.cv .city{position:absolute;left:220px;right:220px;bottom:108px;display:flex;justify-content:space-between;font-weight:500;font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:var(--mid)}
+</style>
+</head>
+<body>
+
+<section class="ab cv" id="copertina">
+  <div>
+    <div class="lab">Performance Agency</div>
+    <h1>Marketing misurato sul fatturato.</h1>
+    <p class="sub">Funnel di conversione, advertising e siti web per attività locali e PMI.</p>
+  </div>
+  <img class="logo" src="assets/logo-white.png" alt="Apex Media">
+  <div class="rule"></div>
+  <div class="city"><span>Alessandria</span><span>Funnel · Google Ads · Meta Ads · Siti web</span></div>
+</section>
+
+<section class="ab s" id="slide-1">
+  <div class="top"><div class="b"><img class="mark" src="assets/mark-white.png" alt="">APEX MEDIA</div><div class="n">01 / 05</div></div>
+  <div class="mid">
+    <div class="lab">Performance Agency</div>
+    <h1>Il marketing<br>si misura in<br>fatturato.</h1>
+    <p class="sub">Funnel di conversione, advertising e siti web per attività locali e PMI.</p>
+  </div>
+  <div class="bot"><span>Alessandria</span><div class="arr"></div></div>
+</section>
+
+<section class="ab s l" id="slide-2">
+  <div class="top"><div class="b"><img class="mark" src="assets/mark-white.png" alt="">APEX MEDIA</div><div class="n">02 / 05</div></div>
+  <div class="mid">
+    <div class="lab">Il punto di partenza</div>
+    <h2>Visualizzazioni<br>e follower non sono un risultato.</h2>
+    <p class="sub">Un'attività cresce quando aumentano <b>richieste, prenotazioni e vendite</b>. Sono gli unici numeri su cui valutiamo il nostro lavoro.</p>
+  </div>
+  <div class="bot"><span>Il metodo</span><div class="arr"></div></div>
+</section>
+
+<section class="ab s" id="slide-3">
+  <div class="top"><div class="b"><img class="mark" src="assets/mark-white.png" alt="">APEX MEDIA</div><div class="n">03 / 05</div></div>
+  <div class="mid">
+    <div class="lab">Il metodo</div>
+    <h2>Funnel di conversione.</h2>
+    <div class="steps">
+      <div class="step"><i>01</i><b>Annuncio</b><span>Campagne Google Ads e Meta Ads rivolte a chi sta già cercando il servizio.</span></div>
+      <div class="step"><i>02</i><b>Landing page</b><span>Una pagina progettata per trasformare la visita in un contatto.</span></div>
+      <div class="step"><i>03</i><b>Conversione</b><span>Richiesta, prenotazione o acquisto: tracciati e ottimizzati ogni mese.</span></div>
+    </div>
+  </div>
+  <div class="bot"><span>Un risultato</span><div class="arr"></div></div>
+</section>
+
+<section class="ab s l" id="slide-4">
+  <div class="top"><div class="b"><img class="mark" src="assets/mark-white.png" alt="">APEX MEDIA</div><div class="n">04 / 05</div></div>
+  <div class="mid">
+    <div class="lab">Un risultato</div>
+    <div class="res">
+      <div>
+        <div class="big">+369%</div>
+        <p>Da 13 a 61 clienti al mese<br>in cinque mesi.</p>
+      </div>
+      <div class="bars">
+        <div class="bar a"><em>13</em><u style="height:62px"></u><small>Marzo</small></div>
+        <div class="bar"><em>61</em><u style="height:292px"></u><small>Agosto</small></div>
+      </div>
+    </div>
+    <p class="note">Attività locale, marzo–agosto 2026. Dati da agenda e prenotazioni registrate.</p>
+  </div>
+  <div class="bot"><span>Il prossimo passo</span><div class="arr"></div></div>
+</section>
+
+<section class="ab s" id="slide-5">
+  <div class="top"><div class="b"><img class="mark" src="assets/mark-white.png" alt="">APEX MEDIA</div><div class="n">05 / 05</div></div>
+  <div class="mid end">
+    <img class="logo" src="assets/logo-white.png" alt="Apex Media">
+    <h2>Analisi gratuita della tua presenza online.</h2>
+    <div class="cta"><span>studio@infoapex.eu</span><s></s><span>351 594 0685</span></div>
+  </div>
+  <div class="bot"><span>Alessandria</span><span>Performance Agency</span></div>
+</section>
+
+</body>
+</html>
