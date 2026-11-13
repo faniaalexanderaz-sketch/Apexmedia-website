@@ -12,6 +12,8 @@ export type Servizio = {
   intro: string;
   /** riga usata in home e nel passo 1 del form */
   riassunto: string;
+  /** percorso in /public/foto, es. "/foto/civili.jpg". null = foto reale non ancora consegnata. */
+  foto: string | null;
   fotoRichiesta: string;
   problema: { titolo: string; testo: string[] };
   soluzione: { titolo: string; testo: string[] };
@@ -36,6 +38,7 @@ export const servizi: Servizio[] = [
       "Condomini, uffici, studi e appartamenti puliti con la frequenza che scegli tu. Il preventivo arriva in 24 ore.",
     riassunto:
       "Condomini, uffici, studi e appartamenti. Passiamo una volta sola o tutte le settimane, decidi tu.",
+    foto: null,
     fotoRichiesta: "scala o androne di un condominio appena pulito",
     problema: {
       titolo: "Chi pulisce salta i turni e le scale restano sporche.",
@@ -72,6 +75,7 @@ export const servizi: Servizio[] = [
       "Capannoni, magazzini e officine. Puliamo pavimenti, aree di lavoro e spogliatoi negli orari in cui non ti blocchiamo.",
     riassunto:
       "Capannoni, magazzini e officine. Veniamo negli orari in cui il reparto è fermo.",
+    foto: null,
     fotoRichiesta: "lavasciuga al lavoro in un capannone",
     problema: {
       titolo: "Polvere e unto sul pavimento rallentano il lavoro.",
@@ -108,6 +112,7 @@ export const servizi: Servizio[] = [
       "Con monospazzola e lavasciuga togliamo lo sporco entrato nel pavimento. Lavoriamo su cemento, gres, marmo e linoleum.",
     riassunto:
       "Monospazzola e lavasciuga tolgono lo sporco che lo straccio non toglie più.",
+    foto: null,
     fotoRichiesta: "monospazzola su un pavimento, metà già trattata",
     problema: {
       titolo: "Lavi tutti i giorni e il pavimento resta grigio.",

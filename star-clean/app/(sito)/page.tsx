@@ -74,6 +74,7 @@ export default function Home() {
           </div>
           <div className="col-span-12 lg:col-span-5">
             <Foto
+              src={sito.fotoHero}
               alt="Jonathan Germanò e la squadra Star Clean al lavoro"
               richiesta="Jonathan Germanò al lavoro con la lavasciuga, inquadratura verticale"
               className="aspect-[4/3] lg:-mb-16 lg:aspect-auto lg:h-[calc(100%+64px)] lg:min-h-[520px]"
@@ -127,6 +128,7 @@ export default function Home() {
               return (
                 <article key={s.slug} className="griglia items-center gap-y-6">
                   <Foto
+                    src={s.foto}
                     alt={s.nome}
                     richiesta={s.fotoRichiesta}
                     className={`col-span-12 aspect-[4/3] ${pari ? "lg:col-span-7" : "lg:col-span-6 lg:col-start-7 lg:row-start-1"} ${i === 1 ? "lg:aspect-[5/4]" : "lg:aspect-[16/10]"}`}

@@ -26,6 +26,9 @@ export const sito = {
     email: "",
   },
 
+  // Foto dell'hero in /public/foto (verticale, almeno 1200px di larghezza). null = segnaposto.
+  fotoHero: null as string | null,
+
   zone: ["Alessandria", "Valenza", "Casale Monferrato", "Tortona", "Novi Ligure"],
 } as const;
 

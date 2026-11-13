@@ -33,7 +33,7 @@ export function PaginaServizio({ slug }: { slug: SlugServizio }) {
             </div>
           </div>
           <div className="col-span-12 lg:col-span-5">
-            <Foto alt={s.nome} richiesta={s.fotoRichiesta} className="aspect-[4/3] lg:aspect-[4/5]" sizes="(min-width: 1024px) 480px, 100vw" priority />
+            <Foto src={s.foto} alt={s.nome} richiesta={s.fotoRichiesta} className="aspect-[4/3] lg:aspect-[4/5]" sizes="(min-width: 1024px) 480px, 100vw" priority />
           </div>
         </div>
       </section>
