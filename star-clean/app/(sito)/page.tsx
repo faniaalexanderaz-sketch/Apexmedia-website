@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BloccoPreventivo } from "@/components/BloccoPreventivo";
 import { Casi } from "@/components/Casi";
 import { Faq } from "@/components/Faq";
-import { Foto } from "@/components/Foto";
+import { Foto, FotoHero } from "@/components/Foto";
 import { casi } from "@/content/casi";
 import { faq } from "@/content/faq";
 import { recensioni } from "@/content/recensioni";
@@ -28,6 +28,8 @@ export default function Home() {
   // Online vanno solo recensioni vere. Quelle di esempio si vedono soltanto in demo.
   const visibili = recensioni.filter((r) => sito.demo || !r.esempio);
   const soloEsempi = visibili.length > 0 && visibili.every((r) => r.esempio);
+  // Stessa regola per i prima/dopo: le coppie dimostrative si vedono solo in demo.
+  const casiVisibili = casi.filter((c) => sito.demo || !c.esempio);
 
   const datiStrutturati = {
     "@context": "https://schema.org",
@@ -73,14 +75,19 @@ export default function Home() {
             </div>
           </div>
           <div className="col-span-12 lg:col-span-5">
-            <Foto
-              src={sito.fotoHero}
-              alt="Jonathan Germanò e la squadra Star Clean al lavoro"
-              richiesta="Jonathan Germanò al lavoro con la lavasciuga, inquadratura verticale"
-              className="aspect-[4/3] lg:-mb-16 lg:aspect-auto lg:h-[calc(100%+64px)] lg:min-h-[520px]"
-              sizes="(min-width: 1024px) 480px, 100vw"
-              priority
-            />
+            {sito.fotoHero ? (
+              <FotoHero
+                {...sito.fotoHero}
+                alt="Lucidatura di un pavimento in marmo con la monospazzola"
+                className="aspect-[3/2] lg:-mb-16 lg:aspect-auto lg:h-[calc(100%+64px)] lg:min-h-[520px]"
+              />
+            ) : (
+              <Foto
+                alt=""
+                richiesta="Jonathan Germanò al lavoro con la lavasciuga, inquadratura verticale"
+                className="aspect-[3/2] lg:-mb-16 lg:aspect-auto lg:h-[calc(100%+64px)] lg:min-h-[520px]"
+              />
+            )}
           </div>
         </div>
       </section>
@@ -108,13 +115,15 @@ export default function Home() {
       </section>
 
       {/* PRIMA E DOPO */}
-      <section className="sezione bg-petrolio text-white">
-        <div className="contenitore">
-          <p className="occhiello">Prima e dopo</p>
-          <h2 className="titolo-2 mt-6 mb-10 max-w-[18ch] lg:mb-16">Trascina la linea e guarda cosa cambia.</h2>
-          <Casi casi={casi} />
-        </div>
-      </section>
+      {casiVisibili.length > 0 && (
+        <section className="sezione bg-petrolio text-white">
+          <div className="contenitore">
+            <p className="occhiello">Prima e dopo</p>
+            <h2 className="titolo-2 mt-6 mb-10 max-w-[18ch] lg:mb-16">Trascina la linea e guarda cosa cambia.</h2>
+            <Casi casi={casiVisibili} />
+          </div>
+        </section>
+      )}
 
       {/* SERVIZI: tre blocchi alternati, proporzioni diverse */}
       <section className="sezione">
@@ -125,16 +134,19 @@ export default function Home() {
           <div className="mt-10 space-y-16 lg:mt-16 lg:space-y-24">
             {servizi.map((s, i) => {
               const pari = i % 2 === 0;
+              // Il riquadro segue le proporzioni della foto: verticale più stretto, quadrata più larga.
+              const verticale = s.fotoFormato === "verticale";
+              const colonneFoto = verticale ? "lg:col-span-5" : "lg:col-span-6";
               return (
                 <article key={s.slug} className="griglia items-center gap-y-6">
                   <Foto
                     src={s.foto}
-                    alt={s.nome}
+                    alt={s.fotoAlt}
                     richiesta={s.fotoRichiesta}
-                    className={`col-span-12 aspect-[4/3] ${pari ? "lg:col-span-7" : "lg:col-span-6 lg:col-start-7 lg:row-start-1"} ${i === 1 ? "lg:aspect-[5/4]" : "lg:aspect-[16/10]"}`}
-                    sizes="(min-width: 1024px) 700px, 100vw"
+                    className={`col-span-12 aspect-square ${colonneFoto} ${verticale ? "lg:aspect-[4/5]" : ""} ${pari ? "" : verticale ? "lg:col-start-8 lg:row-start-1" : "lg:col-start-7 lg:row-start-1"}`}
+                    sizes="(min-width: 1024px) 600px, 100vw"
                   />
-                  <div className={`col-span-12 ${pari ? "lg:col-span-4 lg:col-start-9" : "lg:col-span-5 lg:col-start-1 lg:row-start-1"}`}>
+                  <div className={`col-span-12 lg:col-span-4 ${pari ? (verticale ? "lg:col-start-7" : "lg:col-start-8") : "lg:col-start-2 lg:row-start-1"}`}>
                     <p className="text-turchese text-[0.9375rem] font-extrabold tabular-nums" aria-hidden>0{i + 1}</p>
                     <h3 className="mt-2 text-[1.75rem] lg:text-[2.125rem]">{s.nome}</h3>
                     <p className="testo-2 mt-4">{s.riassunto}</p>
@@ -152,8 +164,21 @@ export default function Home() {
       {/* COME FUNZIONA */}
       <section className="sezione bg-carta">
         <div className="contenitore">
-          <p className="occhiello">Come funziona</p>
-          <h2 className="titolo-2 mt-6 max-w-[18ch]">Dal primo messaggio al lavoro finito, in tre passi.</h2>
+          <div className="griglia items-end gap-y-10">
+            <div className="col-span-12 lg:col-span-6">
+              <p className="occhiello">Come funziona</p>
+              <h2 className="titolo-2 mt-6 max-w-[18ch]">Dal primo messaggio al lavoro finito, in tre passi.</h2>
+            </div>
+            {sito.fotoFurgone && (
+              <Foto
+                src={sito.fotoFurgone}
+                alt="Furgone Star Clean in una piazza di Alessandria"
+                richiesta="furgone Star Clean"
+                className="col-span-12 aspect-[3/2] lg:col-span-5 lg:col-start-8"
+                sizes="(min-width: 1024px) 500px, 100vw"
+              />
+            )}
+          </div>
           <ol className="griglia mt-10 gap-y-0 lg:mt-16">
             {passi.map((p, i) => (
               <li key={p.titolo} className="border-petrolio col-span-12 border-t-2 py-6 lg:col-span-4 lg:pr-10">

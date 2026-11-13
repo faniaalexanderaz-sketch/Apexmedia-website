@@ -31,11 +31,16 @@ export function Casi({ casi }: { casi: Caso[] }) {
         </ul>
       )}
 
-      <div className={`col-span-12 ${casi.length > 1 ? "lg:col-span-8" : "lg:col-span-9"}`}>
+      <div className={`col-span-12 ${casi.length > 1 ? "lg:col-span-7 lg:col-start-6" : "lg:col-span-7"}`}>
         <PrimaDopo key={caso.id} caso={caso} />
         <p className="mt-4 text-[0.9375rem] text-white/75">
           <strong className="text-white">{caso.ambiente}.</strong> {caso.servizio}.
         </p>
+        {caso.esempio && (
+          <p className="border-turchese mt-4 border-l-2 pl-4 text-[0.875rem] text-white/60">
+            Immagini dimostrative per la demo. Online vanno le foto dei lavori fatti da Star Clean.
+          </p>
+        )}
       </div>
     </div>
   );

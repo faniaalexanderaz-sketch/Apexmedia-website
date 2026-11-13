@@ -1,9 +1,10 @@
 import { SERVIZI_FORM, type Lead } from "./lead";
 
 const chiave = process.env.RESEND_API_KEY;
-const destinatario = process.env.LEAD_NOTIFY_EMAIL;
+// OWNER_EMAIL ed EMAIL_FROM sono i nomi usati dal progetto Vercel già esistente: valgono come riserva.
+const destinatario = process.env.LEAD_NOTIFY_EMAIL ?? process.env.OWNER_EMAIL;
 // Finché il dominio non è verificato su Resend si può usare onboarding@resend.dev.
-const mittente = process.env.RESEND_FROM ?? "Star Clean <onboarding@resend.dev>";
+const mittente = process.env.RESEND_FROM ?? process.env.EMAIL_FROM ?? "Star Clean <onboarding@resend.dev>";
 
 export const emailConfigurata = Boolean(chiave && destinatario);
 
