@@ -1,0 +1,45 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; color: var(--color-ink); perspective: 1400px; }
+    .cond { font-family: "Big Shoulders Display", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 0.92; letter-spacing: 0.01em; white-space: nowrap; }
+    .wide { font-family: "Unbounded", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; }
+    .cap { font-family: "Unbounded", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; white-space: nowrap; }
+    .acc { color: var(--color-accent); }
+    .ch, .wd { display: inline-block; }
+    .abs { position: absolute; left: 76px; width: 930px; }
+    .sh { text-shadow: 0 0 22px rgba(0,0,0,0.95), 0 4px 34px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,1); }
+    #ad-n { top: 232px; font-size: 34px; color: var(--color-accent); }
+    #ad-t { top: 284px; font-size: 196px; }
+    #ad-1 { top: 488px; font-size: 104px; }
+    #ad-2 { top: 588px; font-size: 104px; }
+    #ad-s { top: 710px; font-size: 30px; opacity: 0.9; }
+
+  </style>
+  <div id="root" data-composition-id="t-ads" data-width="1080" data-height="1920">
+    <div id="ad-n" class="abs cap sh"><span class="wd ad-nn">02 / 03</span></div>
+    <div id="ad-t" class="abs cond sh"><span class="ch ad-c">A</span><span class="ch ad-c">d</span><span class="ch ad-c">v</span><span class="ch ad-c">e</span><span class="ch ad-c">r</span><span class="ch ad-c">t</span><span class="ch ad-c">i</span><span class="ch ad-c">s</span><span class="ch ad-c">i</span><span class="ch ad-c">n</span><span class="ch ad-c">g</span></div>
+    <div id="ad-1" class="abs cond sh"><span class="wd ad-x">Contatti qualificati,</span></div>
+    <div id="ad-2" class="abs cond acc sh"><span class="wd ad-y">non solo click.</span></div>
+    <div id="ad-s" class="abs cap sh"><span class="wd ad-z">Campagne Meta &amp; TikTok</span></div>
+  </div>
+  <script>
+    (function () {
+      const B = 60 / 140;
+      const tl = gsap.timeline({ paused: true });
+      const flip = (sel, t, st) => tl.fromTo(sel, { rotationX: -90, opacity: 0 }, { rotationX: 0, opacity: 1, duration: 0.26, ease: "expo.out", stagger: st || 0, transformOrigin: "50% 0%" }, t);
+      const slam = (sel, t, st) => tl.fromTo(sel, { scale: 2.8, opacity: 0, filter: "blur(14px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.17, ease: "expo.out", stagger: st || 0 }, t);
+      const punch = (sel, t, o) => tl.fromTo(sel, { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false, transformOrigin: o || "0% 50%" }, t);
+      const exit = (t, vars) => tl.fromTo("#root", { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)" }, Object.assign({ opacity: 0, filter: "blur(20px)", duration: 0.24, ease: "power3.in" }, vars), t);
+      tl.fromTo(".ad-nn", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.2, ease: "expo.out" }, 0.04);
+      tl.fromTo(".ad-c", { rotationY: 95, z: -400, opacity: 0 }, { rotationY: 0, z: 0, opacity: 1, duration: 0.24, ease: "expo.out", stagger: 0.016 }, 0.06);
+      flip(".ad-x", 2 * B); slam(".ad-y", 4 * B); punch(".ad-y", 6 * B);
+      tl.fromTo(".ad-z", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 5 * B);
+      exit(10 * B - 0.36, { x: -1000 });
+
+      window.__timelines["t-ads"] = tl;
+    })();
+  </script>
+</template>

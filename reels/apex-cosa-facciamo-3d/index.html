@@ -1,0 +1,53 @@
+<!doctype html>
+<html
+  lang="it"
+  data-composition-variables='[
+    {"id":"color-accent","type":"color","label":"Arancio fluo (converte)","default":"#FF5A1F"},
+    {"id":"color-problem","type":"color","label":"Grigio (post inutili)","default":"#5A5A5A"},
+    {"id":"color-ink","type":"color","label":"Testo","default":"#FFFFFF"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="assets/vendor/three.min.js"></script>
+    <style>
+      :root {
+        --color-accent: #ff5a1f;
+        --color-problem: #5a5a5a;
+        --color-ink: #ffffff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="31.6" data-width="1080" data-height="1920">
+      <div id="world" data-composition-id="world" data-composition-src="compositions/world.html" data-start="0" data-duration="31.6" data-track-index="0" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 1"></div>
+      <div id="t-hook" data-composition-id="t-hook" data-composition-src="compositions/t-hook.html" data-start="0.0" data-duration="2.5714" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 2"></div>
+      <div id="t-problem" data-composition-id="t-problem" data-composition-src="compositions/t-problem.html" data-start="2.5714" data-duration="4.2857" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 3"></div>
+      <div id="t-turn" data-composition-id="t-turn" data-composition-src="compositions/t-turn.html" data-start="6.8571" data-duration="1.7143" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 4"></div>
+      <div id="t-social" data-composition-id="t-social" data-composition-src="compositions/t-social.html" data-start="8.5714" data-duration="4.2857" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 5"></div>
+      <div id="t-ads" data-composition-id="t-ads" data-composition-src="compositions/t-ads.html" data-start="12.8571" data-duration="4.2857" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 6"></div>
+      <div id="t-lead" data-composition-id="t-lead" data-composition-src="compositions/t-lead.html" data-start="17.1429" data-duration="4.2857" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 7"></div>
+      <div id="t-result" data-composition-id="t-result" data-composition-src="compositions/t-result.html" data-start="21.4286" data-duration="4.2857" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 8"></div>
+      <div id="t-brand" data-composition-id="t-brand" data-composition-src="compositions/t-brand.html" data-start="25.7143" data-duration="5.8857" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 9"></div>
+      <audio id="bed" src="assets/audio/bed.mp3" data-start="0" data-duration="31.6" data-media-start="5.178" data-volume="1" data-fade-out="0.7" data-track-index="2"></audio>
+      <audio id="sfx-w1" src="assets/audio/whoosh.mp3" data-start="2.0714" data-duration="1.6" data-volume="0.6" data-fade-out="0.4" data-track-index="3"></audio>
+      <audio id="sfx-w2" src="assets/audio/whoosh.mp3" data-start="12.3571" data-duration="1.6" data-volume="0.5" data-fade-out="0.4" data-track-index="3"></audio>
+      <audio id="sfx-w3" src="assets/audio/whoosh.mp3" data-start="16.6429" data-duration="1.6" data-volume="0.5" data-fade-out="0.4" data-track-index="3"></audio>
+      <audio id="sfx-w4" src="assets/audio/whoosh.mp3" data-start="20.9286" data-duration="1.6" data-volume="0.5" data-fade-out="0.4" data-track-index="3"></audio>
+      <audio id="sfx-s1" src="assets/audio/swish.mp3" data-start="13.6543" data-duration="0.3" data-volume="0.8" data-track-index="3"></audio>
+      <audio id="sfx-s2" src="assets/audio/swish.mp3" data-start="14.5114" data-duration="0.3" data-volume="0.8" data-track-index="3"></audio>
+      <audio id="sfx-s3" src="assets/audio/swish.mp3" data-start="15.3686" data-duration="0.3" data-volume="0.8" data-track-index="3"></audio>
+      <audio id="sfx-s4" src="assets/audio/swish.mp3" data-start="10.2557" data-duration="0.3" data-volume="0.7" data-track-index="3"></audio>
+      <audio id="sfx-hit" src="assets/audio/hit.mp3" data-start="25.7143" data-duration="3" data-volume="0.45" data-fade-out="1.5" data-track-index="3"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
