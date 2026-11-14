@@ -1,0 +1,37 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; color: var(--color-ink); perspective: 1400px; }
+    .cond { font-family: "Big Shoulders Display", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: 0.01em; white-space: nowrap; }
+    .wide { font-family: "Unbounded", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; }
+    .cap { font-family: "Unbounded", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; }
+    .acc { color: var(--color-accent); }
+    .dim { color: #8a8a8a; }
+    .ch, .wd { display: inline-block; }
+    .abs { position: absolute; left: 70px; width: 940px; }
+    .sh { text-shadow: 0 4px 30px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.9); }
+    #hk-a { top: 250px; font-size: 250px; }
+    #hk-b { top: 496px; font-size: 150px; }
+
+  </style>
+  <div id="root" data-composition-id="t-hook" data-width="1080" data-height="1920">
+    <div id="hk-a" class="abs cond sh"><span id="hk-aa" class="wd">100 post.</span></div>
+    <div id="hk-b" class="abs wide acc sh"><span class="ch hk-c">0</span> <span class="ch hk-c">C</span><span class="ch hk-c">L</span><span class="ch hk-c">I</span><span class="ch hk-c">E</span><span class="ch hk-c">N</span><span class="ch hk-c">T</span><span class="ch hk-c">I</span><span class="ch hk-c">.</span></div>
+  </div>
+  <script>
+    (function () {
+      const B = 60 / 140;
+      const tl = gsap.timeline({ paused: true });
+      // frame 0: the hook is already there. Beat 1: the wall slams, the answer slams.
+      tl.fromTo("#hk-aa", { y: 0 }, { y: 26, duration: 0.05, ease: "power2.out", immediateRender: false }, B);
+      tl.fromTo("#hk-aa", { y: 26 }, { y: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, B + 0.05);
+      tl.fromTo(".hk-c", { scale: 3.2, opacity: 0, filter: "blur(14px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "expo.out", stagger: 0.014 }, B);
+      // exit with the whip: everything smears left
+      tl.fromTo("#root", { x: 0, opacity: 1, filter: "blur(0px)" }, { x: -900, opacity: 0, filter: "blur(22px)", duration: 0.26, ease: "power3.in" }, 1.42);
+
+      window.__timelines["t-hook"] = tl;
+    })();
+  </script>
+</template>

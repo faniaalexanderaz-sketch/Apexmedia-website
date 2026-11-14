@@ -1,0 +1,52 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; color: var(--color-ink); perspective: 1400px; }
+    .cond { font-family: "Big Shoulders Display", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: 0.01em; white-space: nowrap; }
+    .wide { font-family: "Unbounded", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; }
+    .cap { font-family: "Unbounded", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; }
+    .acc { color: var(--color-accent); }
+    .dim { color: #8a8a8a; }
+    .ch, .wd { display: inline-block; }
+    .abs { position: absolute; left: 70px; width: 940px; }
+    .sh { text-shadow: 0 4px 30px rgba(0,0,0,0.85), 0 0 4px rgba(0,0,0,0.9); }
+    .dmw { top: 296px; }
+    #dm-0 { font-size: 110px; }
+    #dm-1 { font-size: 216px; }
+    #dm-2 { font-size: 124px; }
+    #dm-n { top: 240px; font-size: 30px; color: var(--color-accent); }
+    #dm-f { position: absolute; left: 0; top: 800px; width: 1080px; text-align: center; font-size: 164px; color: #000; }
+
+  </style>
+  <div id="root" data-composition-id="t-domino" data-width="1080" data-height="1920">
+    <div id="dm-0" class="abs wide sh dmw"><span class="ch dm-c0">C</span><span class="ch dm-c0">O</span><span class="ch dm-c0">N</span><span class="ch dm-c0">T</span><span class="ch dm-c0">E</span><span class="ch dm-c0">N</span><span class="ch dm-c0">U</span><span class="ch dm-c0">T</span><span class="ch dm-c0">O</span></div>
+    <div id="dm-1" class="abs wide sh dmw"><span class="ch dm-c1">C</span><span class="ch dm-c1">L</span><span class="ch dm-c1">I</span><span class="ch dm-c1">C</span><span class="ch dm-c1">K</span></div>
+    <div id="dm-2" class="abs wide sh dmw"><span class="ch dm-c2">C</span><span class="ch dm-c2">O</span><span class="ch dm-c2">N</span><span class="ch dm-c2">T</span><span class="ch dm-c2">A</span><span class="ch dm-c2">T</span><span class="ch dm-c2">T</span><span class="ch dm-c2">O</span></div>
+    <div id="dm-n" class="abs cap sh"><span id="dm-nn" class="wd">1 / 4</span></div>
+    <div id="dm-f" class="wide"><span class="ch dm-cf">C</span><span class="ch dm-cf">L</span><span class="ch dm-cf">I</span><span class="ch dm-cf">E</span><span class="ch dm-cf">N</span><span class="ch dm-cf">T</span><span class="ch dm-cf">E</span></div>
+  </div>
+  <script>
+    (function () {
+      const B = 60 / 140;
+      const tl = gsap.timeline({ paused: true });
+      const step = 3 * B;
+      const cnt = document.querySelector("#dm-nn");
+      [0, 1, 2].forEach((i) => {
+        const t0 = i * step;
+        tl.fromTo(".dm-c" + i, { rotationY: 95, z: -400, opacity: 0 }, { rotationY: 0, z: 0, opacity: 1, duration: 0.2, ease: "expo.out", stagger: 0.016 }, t0 + 0.02);
+        tl.fromTo(".dm-c" + i, { y: 0, opacity: 1, filter: "blur(0px)" }, { y: -90, opacity: 0, filter: "blur(10px)", duration: 0.14, ease: "power3.in", stagger: 0.008, immediateRender: false }, t0 + step - 0.2);
+      });
+      const n = { v: 1 };
+      tl.fromTo("#dm-nn", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.02);
+      tl.fromTo(n, { v: 0 }, { v: 3 * step, duration: 3 * step, ease: "none", onUpdate: () => (cnt.textContent = Math.min(3, Math.floor(n.v / step + 0.02) + 1) + " / 4") }, 0);
+      tl.fromTo("#dm-nn", { opacity: 1 }, { opacity: 0, duration: 0.12, immediateRender: false }, 3 * step - 0.2);
+      // full orange frame: the last word, black on orange, dead still through the silence
+      tl.fromTo(".dm-cf", { scale: 2.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.14, ease: "expo.out", stagger: 0.012 }, 11 * B);
+      cnt.textContent = "1 / 4";
+
+      window.__timelines["t-domino"] = tl;
+    })();
+  </script>
+</template>

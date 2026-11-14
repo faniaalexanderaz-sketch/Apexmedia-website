@@ -1,0 +1,404 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #w-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    #w-flash { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #fff; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="world" data-width="1080" data-height="1920">
+    <canvas id="w-canvas" width="1080" height="1920"></canvas>
+    <div id="w-flash"></div>
+  </div>
+  <script>
+    (function () {
+      /* APEX "100 post, 0 clienti" — one 3D world, every frame a pure function of t.
+         Beat grid 140 BPM: B = 0.428571 s. Scene changes sit on bars (4 B). */
+      const B = 60 / 140;
+      const D = 18.4;
+      const T1 = 4 * B, // corridor
+        T_ASK = 10 * B, // "E I CLIENTI?"
+        T2 = 12 * B, // domino
+        T_HERO = 9.55, // domino reaches the big slab
+        T_DROP = 24 * B, // tower
+        T_BRAND = 32 * B;
+
+      const css = getComputedStyle(document.documentElement);
+      const ACC = new THREE.Color((css.getPropertyValue("--color-accent") || "#FF5A1F").trim() || "#FF5A1F");
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      const lerp = (a, b, p) => a + (b - a) * p;
+      const seg = (t, a, b) => clamp((t - a) / (b - a));
+      const E = {
+        out: (p) => 1 - Math.pow(1 - p, 4),
+        expo: (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)),
+        in2: (p) => p * p,
+        in3: (p) => p * p * p,
+        io: (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2),
+      };
+      function rng(seed) {
+        return function () {
+          seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
+          let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const R = rng(777);
+
+      /* ---------- renderer: WebGL offscreen, accumulated into a 2D canvas for real motion blur ---------- */
+      const out = document.querySelector("#w-canvas");
+      const ctx = out.getContext("2d");
+      const glc = document.createElement("canvas");
+      glc.width = 1080; glc.height = 1920;
+      const renderer = new THREE.WebGLRenderer({ canvas: glc, antialias: true, alpha: false, preserveDrawingBuffer: true });
+      renderer.setPixelRatio(1);
+      renderer.setSize(1080, 1920, false);
+      renderer.setClearColor(0x000000, 1);
+      const scene = new THREE.Scene();
+      const cam = new THREE.PerspectiveCamera(60, 1080 / 1920, 0.05, 500);
+
+      /* ---------- world layout ---------- */
+      const SW = 1.6, SH = 2.0, SD = 0.12; // one "post": 4:5 slab
+      // A) wall
+      const WC = 5, WR = 8, WALL_Z = -6;
+      const NW = WC * WR;
+      // B) corridor along +x
+      const NC = 100, COR_Z = 19.5, COR_X0 = 10, COR_DX = 3.5;
+      // C) spiral domino
+      const CX = 150, CZ = 19.5, TURNS = 1.75, R0 = 15, R1 = 2.0;
+      const path = [];
+      {
+        const M = 3000; let L = 0; const pts = []; let px = 0, pz = 0;
+        for (let i = 0; i <= M; i++) {
+          const u = i / M, th = Math.PI + u * TURNS * Math.PI * 2, r = R0 + (R1 - R0) * u;
+          const x = CX + Math.cos(th) * r, z = CZ + Math.sin(th) * r;
+          if (i > 0) L += Math.hypot(x - px, z - pz);
+          pts.push([x, z, L]); px = x; pz = z;
+        }
+        const n = Math.floor(L / 0.92);
+        let j = 0;
+        for (let k = 0; k < n; k++) {
+          const target = (k / (n - 1)) * L;
+          while (j < M - 1 && pts[j + 1][2] < target) j++;
+          const a = pts[j], b = pts[Math.min(M, j + 1)];
+          const f = b[2] > a[2] ? (target - a[2]) / (b[2] - a[2]) : 0;
+          const x = lerp(a[0], b[0], f), z = lerp(a[1], b[1], f);
+          let tx = b[0] - a[0], tz = b[1] - a[1]; const tl = Math.hypot(tx, tz) || 1;
+          path.push({ x: x, z: z, tx: tx / tl, tz: tz / tl });
+        }
+      }
+      const NS = path.length;
+      const fallAt = (k) => T2 + 0.1 + Math.pow(k / (NS - 1), 0.9) * (T_HERO - T2 - 0.1);
+      const frontK = (t) => (NS - 1) * Math.pow(seg(t, T2 + 0.1, T_HERO), 1 / 0.9);
+      const HERO_A = Math.PI / 2 - 0.3; // hero slab faces the arriving camera
+      const HN = [Math.cos(HERO_A), Math.sin(HERO_A)];
+      // D) tower
+      const TX = 0, TZ = -200, NT = 170, TSTEP = 0.2;
+      const N = NW + NC + NS + 1 + NT;
+      const iCor = NW, iSp = NW + NC, iHero = iSp + NS, iTow = iHero + 1;
+      const rnd = new Float32Array(N * 4);
+      for (let i = 0; i < N * 4; i++) rnd[i] = R();
+
+      /* ---------- slabs: instanced, mirrored copy below the floor = reflection ---------- */
+      const geo = new THREE.BoxGeometry(1, 1, 1);
+      const aOn = new THREE.InstancedBufferAttribute(new Float32Array(N), 1);
+      geo.setAttribute("aOn", aOn);
+      const mkMat = (mirror) =>
+        new THREE.ShaderMaterial({
+          extensions: { derivatives: true },
+          side: THREE.DoubleSide,
+          uniforms: { uAcc: { value: ACC.clone() }, uMirror: { value: mirror }, uFogN: { value: 20 }, uFogF: { value: 90 } },
+          vertexShader: `
+            attribute float aOn;
+            varying vec2 vUv; varying vec3 vNo; varying vec3 vNw; varying vec3 vW; varying float vD; varying float vOn;
+            void main(){
+              vUv = uv; vNo = normal; vOn = aOn;
+              vNw = normalize(mat3(instanceMatrix) * normal);
+              vec4 w = instanceMatrix * vec4(position, 1.0); vW = w.xyz;
+              vec4 mv = viewMatrix * w; vD = -mv.z;
+              gl_Position = projectionMatrix * mv;
+            }`,
+          fragmentShader: `
+            uniform vec3 uAcc; uniform float uMirror; uniform float uFogN; uniform float uFogF;
+            varying vec2 vUv; varying vec3 vNo; varying vec3 vNw; varying vec3 vW; varying float vD; varying float vOn;
+            void main(){
+              if (uMirror > 0.5 && vW.y > 0.0) discard;
+              float face = step(0.5, abs(vNo.z));
+              vec2 q = min(vUv, 1.0 - vUv); vec2 fw = fwidth(vUv);
+              float edge = max(1.0 - smoothstep(fw.x * 1.2, fw.x * 3.0, q.x), 1.0 - smoothstep(fw.y * 1.2, fw.y * 3.0, q.y));
+              float img = step(0.08, vUv.x) * step(vUv.x, 0.92) * step(0.30, vUv.y) * step(vUv.y, 0.90);
+              float l1 = step(0.08, vUv.x) * step(vUv.x, 0.66) * step(0.17, vUv.y) * step(vUv.y, 0.215);
+              float l2 = step(0.08, vUv.x) * step(vUv.x, 0.44) * step(0.09, vUv.y) * step(vUv.y, 0.135);
+              float dot1 = 1.0 - smoothstep(0.03, 0.036, distance(vUv * vec2(0.8, 1.0), vec2(0.86 * 0.8, 0.19)));
+              float marks = clamp(l1 + l2 + dot1, 0.0, 1.0) * face;
+              vec3 n = normalize(vNw);
+              float ndl = max(dot(n, normalize(vec3(0.35, 0.8, 0.45))), 0.0);
+              float ndl2 = max(dot(n, normalize(vec3(-0.5, 0.3, -0.6))), 0.0);
+              float lit = 0.30 + 0.60 * ndl + 0.22 * ndl2;
+              vec3 offC = (vec3(0.20) + vec3(0.22) * img * face * (0.55 + 0.45 * vUv.y) + vec3(0.36) * marks) * lit + vec3(0.62) * edge;
+              vec3 onC = uAcc * (0.38 + 0.62 * img * face * (0.7 + 0.3 * vUv.y)) * (0.62 + 0.38 * ndl + 0.2 * ndl2);
+              onC = mix(onC, vec3(1.0), marks * 0.92) + (uAcc * 0.5 + vec3(0.5)) * edge;
+              vec3 col = mix(offC, onC, clamp(vOn, 0.0, 1.0));
+              col *= 1.0 - smoothstep(uFogN, uFogF, vD);
+              if (uMirror > 0.5) col *= 0.5 * exp(vW.y * 0.32);
+              gl_FragColor = vec4(col, 1.0);
+            }`,
+        });
+      const matReal = mkMat(0), matMir = mkMat(1);
+      const slabs = new THREE.InstancedMesh(geo, matReal, N);
+      const mirror = new THREE.InstancedMesh(geo, matMir, N);
+      slabs.frustumCulled = false; mirror.frustumCulled = false;
+      mirror.renderOrder = 0; slabs.renderOrder = 2;
+      scene.add(mirror); scene.add(slabs);
+      const floor = new THREE.Mesh(new THREE.PlaneGeometry(900, 900), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.42, depthWrite: false }));
+      floor.rotation.x = -Math.PI / 2; floor.position.set(60, 0, -60); floor.renderOrder = 1;
+      scene.add(floor);
+
+      const m4 = new THREE.Matrix4(), mm = new THREE.Matrix4(), MIR = new THREE.Matrix4().makeScale(1, -1, 1);
+      const vX = new THREE.Vector3(), vY = new THREE.Vector3(), vZ = new THREE.Vector3(), vS = new THREE.Vector3(), eu = new THREE.Euler();
+      function put(i, cx, cy, cz, w, h, d, on) {
+        // uses vX,vY,vZ as the basis
+        m4.makeBasis(vX, vY, vZ); vS.set(w, h, d); m4.scale(vS); m4.setPosition(cx, cy, cz);
+        slabs.setMatrixAt(i, m4); mm.copy(m4).premultiply(MIR); mirror.setMatrixAt(i, mm);
+        aOn.array[i] = on;
+      }
+      function hide(i) { m4.makeScale(0, 0, 0); slabs.setMatrixAt(i, m4); mirror.setMatrixAt(i, m4); aOn.array[i] = 0; }
+      // slab standing on base point (bx,bz), facing fall direction (fx,fz), tipped forward by phi
+      function hinged(i, bx, bz, fx, fz, phi, w, h, d, on, lift) {
+        const c = Math.cos(phi), s = Math.sin(phi);
+        vX.set(fz, 0, -fx); // Y x f
+        vY.set(fx * s, c, fz * s);
+        vZ.crossVectors(vX, vY);
+        const hh = h / 2;
+        put(i, bx + vY.x * hh, (lift || 0) + Math.max(d / 2, vY.y * hh), bz + vY.z * hh, w, h, d, on);
+      }
+
+      function layout(t) {
+        /* A) the wall of posts falls on the camera and slams on the first beat */
+        if (t < T1 + 0.6) {
+          const p = seg(t, 0, B);
+          const phi = (16 + 74 * Math.pow(p, 2.1)) * (Math.PI / 180);
+          const tau = Math.max(0, t - B), sp = 1 - Math.exp(-6 * tau);
+          for (let r = 0; r < WR; r++)
+            for (let c = 0; c < WC; c++) {
+              const i = r * WC + c, yr = (r + 0.5) * 2.1;
+              const cs = Math.cos(phi), sn = Math.sin(phi);
+              const psi = (rnd[i * 4] - 0.5) * 0.5 * sp;
+              vX.set(Math.cos(psi), 0, -Math.sin(psi) * sn);
+              vY.set(Math.sin(psi) * sn, cs, sn * Math.cos(psi)).normalize();
+              vZ.crossVectors(vX, vY).normalize(); vX.crossVectors(vY, vZ);
+              const bounce = 0.7 * Math.exp(-7 * tau) * Math.abs(Math.sin(17 * tau)) * (0.4 + rnd[i * 4 + 1]) * (tau > 0 ? 1 : 0);
+              put(i, (c - 2) * 1.7 * (1 + 0.14 * sp), Math.max(SD / 2, cs * yr) + bounce, WALL_Z + sn * yr * (1 + 0.05 * sp), SW, SH, SD, 0);
+            }
+        } else for (let i = 0; i < NW; i++) hide(i);
+
+        /* B) corridor: grey posts flip up out of the floor just ahead of the camera */
+        if (t > 1.2 && t < T2 + 1.0) {
+          const cx = corX(t);
+          for (let k = 0; k < NC; k++) {
+            const i = iCor + k, side = k % 2 ? 1 : -1, x = COR_X0 + (k >> 1) * COR_DX;
+            const ahead = x - cx;
+            const up = E.out(seg(44 - ahead, 0, 18));
+            const fx = -0.8, fz = -side * 0.6;
+            hinged(i, x, COR_Z + side * 4.0, fx, fz, (1 - up) * 1.5, 4.4, 5.5, 0.2, 0);
+          }
+        } else for (let k = 0; k < NC; k++) hide(iCor + k);
+
+        /* C) spiral domino: each post that falls turns on */
+        if (t > T2 - 1.6 && t < T_DROP + 0.05) {
+          for (let k = 0; k < NS; k++) {
+            const p = path[k], tf = fallAt(k);
+            const f = E.in2(seg(t, tf, tf + 0.24));
+            const on = k === 0 ? seg(t, T2, T2 + 0.08) : seg(t, tf - 0.03, tf + 0.08);
+            hinged(iSp + k, p.x, p.z, p.tx, p.tz, f * 1.12, SW, SH, SD, on);
+          }
+          const hon = seg(t, T_HERO - 0.15, T_HERO);
+          hinged(iHero, CX, CZ, HN[0], HN[1], 0, 3.6, 4.5, 0.22, hon);
+        } else for (let k = 0; k <= NS; k++) hide(iSp + k);
+
+        /* D) tower: every post flies in and stacks, twisting upward */
+        if (t >= T_DROP - 0.02) {
+          for (let k = 0; k < NT; k++) {
+            const i = iTow + k, ta = T_DROP + 0.04 + (k / (NT - 1)) * 2.55;
+            const p = E.expo(seg(t, ta - 0.42, ta));
+            if (p <= 0) { hide(i); continue; }
+            const yaw = k * 0.16, a0 = rnd[i * 4] * 6.283, q = 1 - p;
+            eu.set(Math.PI / 2 + q * (rnd[i * 4 + 1] - 0.5) * 5, yaw + q * 4, q * (rnd[i * 4 + 2] - 0.5) * 4, "YXZ");
+            m4.makeRotationFromEuler(eu); m4.extractBasis(vX, vY, vZ);
+            const rr = q * (11 + rnd[i * 4 + 3] * 8);
+            put(i, TX + Math.cos(a0) * rr, 0.1 + k * TSTEP + q * (rnd[i * 4 + 2] * 10 - 3), TZ + Math.sin(a0) * rr, SW * 1.5, SH * 1.5, 0.15, 1);
+          }
+        } else for (let k = 0; k < NT; k++) hide(iTow + k);
+        slabs.instanceMatrix.needsUpdate = true; mirror.instanceMatrix.needsUpdate = true; aOn.needsUpdate = true;
+      }
+      const towerH = (t) => (NT - 1) * TSTEP * seg(t, T_DROP + 0.04, T_DROP + 2.59);
+
+      /* ---------- Apex logo (geometry from the brand SVG) ---------- */
+      const LOGO = new THREE.Vector3(TX, 45, TZ);
+      const logo = new THREE.Group();
+      {
+        const S = 0.27, cx = 15, cy = 18;
+        const P = (x, y) => new THREE.Vector2((x - cx) * S, (cy - y) * S);
+        const tri = [[15, 3], [27.5, 29], [2.5, 29]], inc = [15, 21.14];
+        const sc = (k) => tri.map((p) => P(inc[0] + (p[0] - inc[0]) * k, inc[1] + (p[1] - inc[1]) * k));
+        const outer = new THREE.Shape(sc(1.165)); outer.holes.push(new THREE.Path(sc(0.835).reverse()));
+        const inner = new THREE.Shape([P(15, 13.5), P(20, 24), P(10, 24)]);
+        const opt = { depth: 0.9, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.05, bevelSegments: 2 };
+        const mat = new THREE.ShaderMaterial({
+          uniforms: { uAcc: { value: ACC.clone() } },
+          vertexShader: `varying vec3 vNv; void main(){ vNv = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+          fragmentShader: `uniform vec3 uAcc; varying vec3 vNv;
+            void main(){ vec3 n = normalize(vNv); float d = max(dot(n, normalize(vec3(0.22, 0.34, 0.92))), 0.0);
+              gl_FragColor = vec4(uAcc * (0.10 + 1.12 * pow(d, 1.1)) + vec3(1.0) * pow(d, 36.0) * 0.3, 1.0); }`,
+        });
+        [outer, inner].forEach((sh) => { const g = new THREE.ExtrudeGeometry(sh, opt); g.translate(0, 0, -0.45); logo.add(new THREE.Mesh(g, mat)); });
+        logo.position.copy(LOGO);
+      }
+      scene.add(logo);
+
+      /* ---------- sparks: impact dust, domino chips, drop ring, logo burst ---------- */
+      const NP = 400 + NS * 4 + 300 + 700;
+      const ev = new Float32Array(NP * 9); // te, ox,oy,oz, vx,vy,vz, life, kind
+      {
+        let n = 0;
+        const add = (te, ox, oy, oz, vx, vy, vz, life, kind) => { ev.set([te, ox, oy, oz, vx, vy, vz, life, kind], n * 9); n++; };
+        for (let i = 0; i < 400; i++) add(B, (R() - 0.5) * 9.5, 0.1, WALL_Z + R() * 17.5, (R() - 0.5) * 9, 1.5 + R() * 7, 1 + R() * 9, 0.7 + R() * 0.5, 0);
+        for (let k = 0; k < NS; k++) for (let j = 0; j < 4; j++) { const p = path[k]; add(fallAt(k) + 0.2, p.x + p.tx * 1.3, 0.25, p.z + p.tz * 1.3, p.tx * 4 + (R() - 0.5) * 6, 2 + R() * 5, p.tz * 4 + (R() - 0.5) * 6, 0.35 + R() * 0.3, 1); }
+        for (let i = 0; i < 300; i++) { const a = R() * 6.283, s = 8 + R() * 22; add(T_DROP, TX, 0.2, TZ, Math.cos(a) * s, 0.5 + R() * 5, Math.sin(a) * s, 0.8 + R() * 0.6, 1); }
+        for (let i = 0; i < 700; i++) { const a = R() * 6.283, cz = R() * 2 - 1, sz = Math.sqrt(1 - cz * cz), s = 7 + R() * 26; add(T_BRAND, LOGO.x, LOGO.y, LOGO.z - 1.5, Math.cos(a) * sz * s, Math.sin(a) * sz * s * 1.2, cz * s * 0.5 - 2, 9, R() < 0.3 ? 2 : 1); }
+      }
+      const pPos = new Float32Array(NP * 3), pCol = new Float32Array(NP * 4), pSize = new Float32Array(NP);
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+      pGeo.setAttribute("aCol", new THREE.BufferAttribute(pCol, 4));
+      pGeo.setAttribute("aSize", new THREE.BufferAttribute(pSize, 1));
+      const pMat = new THREE.ShaderMaterial({
+        uniforms: { uScale: { value: 1700 } }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+        vertexShader: `attribute vec4 aCol; attribute float aSize; uniform float uScale; varying vec4 vCol;
+          void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); float d = max(-mv.z, 0.01);
+            vCol = vec4(aCol.rgb, aCol.a * smoothstep(0.3, 2.0, d));
+            gl_PointSize = clamp(aSize * uScale / d, 1.5, 40.0); gl_Position = projectionMatrix * mv; }`,
+        fragmentShader: `varying vec4 vCol; void main(){ float r = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.2, r);
+          if (a * vCol.a < 0.004) discard; gl_FragColor = vec4(vCol.rgb, vCol.a * a); }`,
+      });
+      const points = new THREE.Points(pGeo, pMat); points.frustumCulled = false; points.renderOrder = 3; scene.add(points);
+      function sparks(t) {
+        for (let i = 0; i < NP; i++) {
+          const o = i * 9, tau = t - ev[o], life = ev[o + 7], kind = ev[o + 8];
+          let a = 0;
+          if (tau > 0 && tau < life) {
+            const dr = kind === 0 ? 2.2 : 3.0, k = (1 - Math.exp(-dr * tau)) / dr;
+            const g = ev[o] === T_BRAND ? 0 : 9;
+            pPos[i * 3] = ev[o + 1] + ev[o + 4] * k;
+            pPos[i * 3 + 1] = Math.max(0.05, ev[o + 2] + ev[o + 5] * k - 0.5 * g * tau * tau);
+            pPos[i * 3 + 2] = ev[o + 3] + ev[o + 6] * k;
+            a = ev[o] === T_BRAND ? 0.9 - 0.6 * seg(tau, 0.2, 1.3) : 1 - tau / life;
+          }
+          pCol[i * 4] = kind === 1 ? ACC.r : kind === 2 ? 1 : 0.7;
+          pCol[i * 4 + 1] = kind === 1 ? ACC.g + 0.15 : kind === 2 ? 1 : 0.7;
+          pCol[i * 4 + 2] = kind === 1 ? ACC.b : kind === 2 ? 1 : 0.7;
+          pCol[i * 4 + 3] = a;
+          pSize[i] = kind === 0 ? 0.09 : 0.075;
+        }
+        pGeo.attributes.position.needsUpdate = true; pGeo.attributes.aCol.needsUpdate = true; pGeo.attributes.aSize.needsUpdate = true;
+      }
+
+      /* ---------- camera: never still, never constant ---------- */
+      function corX(t) { return 3 + 112 * E.io(seg(t, T1 - 0.2, T_ASK)) + 4 * E.out(seg(t, T_ASK, T2)); }
+      const pose = { p: [0, 0, 0], l: [0, 0, 0], roll: 0, fov: 60 };
+      const A = { p: [0, 0, 0], l: [0, 0, 0], roll: 0, fov: 60 }, Bq = { p: [0, 0, 0], l: [0, 0, 0], roll: 0, fov: 60 };
+      function camWall(t, o) {
+        const p = E.out(seg(t, 0, B)), d = seg(t, B, T1);
+        o.p[0] = lerp(0.9, 0.3, p); o.p[1] = lerp(1.9, 3.3, p) + d * 0.4; o.p[2] = lerp(9.5, 19.5, p) + d * 1.2;
+        o.l[0] = 0; o.l[1] = lerp(7.5, 0.6, p); o.l[2] = lerp(-5, 5, p); o.roll = lerp(-7, 0, p); o.fov = lerp(70, 60, p);
+      }
+      function camCor(t, o) {
+        const x = corX(t), sp = seg(t, T1, T1 + 0.5) * (1 - seg(t, T_ASK - 0.25, T_ASK));
+        o.p[0] = x; o.p[1] = 2.5 + 0.3 * Math.sin(x * 0.11); o.p[2] = COR_Z + 0.5 * Math.sin(x * 0.07);
+        o.l[0] = x + 10; o.l[1] = 2.7; o.l[2] = COR_Z; o.roll = 17 * Math.sin((t - T1) * 2.9) * sp; o.fov = 62 + 20 * sp;
+      }
+      function camChase(t, o) {
+        const k = frontK(t), k0 = Math.floor(k), f = k - k0;
+        const a = path[Math.min(NS - 1, k0)], b = path[Math.min(NS - 1, k0 + 1)];
+        const fx = lerp(a.x, b.x, f), fz = lerp(a.z, b.z, f);
+        const ang = Math.atan2(fz - CZ, fx - CX) - 0.62, rad = Math.hypot(fx - CX, fz - CZ) + 5.2;
+        const q = path[Math.min(NS - 1, k0 + 5)];
+        o.p[0] = CX + Math.cos(ang) * rad; o.p[1] = 2.9 - 1.1 * seg(t, T2, T_HERO); o.p[2] = CZ + Math.sin(ang) * rad;
+        o.l[0] = lerp(fx, q.x, 0.6); o.l[1] = 0.9; o.l[2] = lerp(fz, q.z, 0.6);
+        o.roll = -9 * Math.sin((t - T2) * 1.6); o.fov = 66;
+      }
+      function camDive(t, o) {
+        const d = lerp(7.5, 0.72, E.io(seg(t, 9.45, 9.86))) - 0.14 * seg(t, 9.84, T_DROP);
+        o.p[0] = CX + HN[0] * d; o.p[1] = 2.1; o.p[2] = CZ + HN[1] * d;
+        o.l[0] = CX - HN[0] * 2; o.l[1] = 2.1; o.l[2] = CZ - HN[1] * 2; o.roll = 0; o.fov = 66;
+      }
+      function camTower(t, o) {
+        const tt = t - T_DROP, h = towerH(t), a = 0.5 + tt * 1.25, rad = 11 - 3.2 * E.out(seg(tt, 0, 2.8));
+        o.p[0] = TX + Math.cos(a) * rad; o.p[1] = h * 0.93 + 2.0 + 1.2 * seg(tt, 0, 0.5); o.p[2] = TZ + Math.sin(a) * rad;
+        o.l[0] = TX; o.l[1] = h * 0.9 + 0.7; o.l[2] = TZ; o.roll = 10 * Math.sin(tt * 1.7); o.fov = 66;
+      }
+      function camBrand(t, o) {
+        o.p[0] = TX; o.p[1] = LOGO.y; o.p[2] = TZ + 16.6; o.l[0] = TX; o.l[1] = LOGO.y - 4.6; o.l[2] = TZ; o.roll = 0; o.fov = 54;
+      }
+      function mix(o, a, b, w) {
+        for (let i = 0; i < 3; i++) { o.p[i] = lerp(a.p[i], b.p[i], w); o.l[i] = lerp(a.l[i], b.l[i], w); }
+        o.roll = lerp(a.roll, b.roll, w); o.fov = lerp(a.fov, b.fov, w);
+      }
+      function setCamera(t) {
+        if (t < 1.4) camWall(t, pose);
+        else if (t < T1 + 0.12) { camWall(t, A); camCor(t, Bq); mix(pose, A, Bq, E.io(seg(t, 1.4, T1 + 0.12))); }
+        else if (t < T2 - 0.25) camCor(t, pose);
+        else if (t < T2 + 0.55) { camCor(t, A); camChase(t, Bq); mix(pose, A, Bq, E.io(seg(t, T2 - 0.25, T2 + 0.55))); }
+        else if (t < 9.4) camChase(t, pose);
+        else if (t < T_DROP) { camChase(Math.min(t, T_HERO), A); camDive(t, Bq); mix(pose, A, Bq, E.io(seg(t, 9.4, 9.72))); }
+        else if (t < T_BRAND - 0.5) camTower(t, pose);
+        else { camTower(t, A); camBrand(t, Bq); mix(pose, A, Bq, E.in2(seg(t, T_BRAND - 0.5, T_BRAND))); }
+        const sh = (t0, amp) => { const k = t - t0; return k < 0 || k > 0.5 ? 0 : amp * Math.exp(-k * 8) * Math.sin(k * 75); };
+        const s = sh(B, 0.34) + sh(T_DROP, 0.3) + sh(T_BRAND, 0.3) + sh(T_ASK, 0.1);
+        cam.position.set(pose.p[0] + s * 0.4, pose.p[1] + s, pose.p[2]);
+        cam.up.set(0, 1, 0);
+        cam.lookAt(pose.l[0], pose.l[1] + s * 0.5, pose.l[2]);
+        cam.rotateZ((pose.roll * Math.PI) / 180);
+        cam.fov = pose.fov; cam.updateProjectionMatrix();
+      }
+
+      function draw(t) {
+        setCamera(t);
+        layout(t);
+        sparks(t);
+        pMat.uniforms.uScale.value = 960 / Math.tan((cam.fov * Math.PI) / 360);
+        const far = t < T1 + 0.1 ? 70 : t < T2 - 0.2 ? 62 : t < T_DROP ? 60 : 110;
+        const near = t < T1 + 0.1 ? 22 : t < T2 - 0.2 ? 9 : t < T_DROP ? 14 : 30;
+        matReal.uniforms.uFogN.value = near; matReal.uniforms.uFogF.value = far;
+        matMir.uniforms.uFogN.value = near; matMir.uniforms.uFogF.value = far;
+        const lin = seg(t, T_BRAND - 0.8, T_BRAND);
+        logo.visible = lin > 0;
+        if (logo.visible) {
+          const lt = t - T_BRAND;
+          logo.rotation.y = (1 - E.out(lin)) * Math.PI * 5 + (lt > 0 ? Math.sin(lt * 1.0) * 0.26 * seg(lt, 0, 1) : 0);
+          logo.rotation.x = lt > 0 ? Math.sin(lt * 0.7 + 1) * 0.07 : 0;
+          const sc = 0.62 * (0.15 + 0.85 * E.out(lin)) * (lt >= 0 ? 1 + 0.18 * Math.exp(-lt * 8) : 1);
+          logo.scale.set(sc, sc, sc);
+        }
+        renderer.render(scene, cam);
+      }
+      /* one output frame = K sub-frames averaged over the shutter */
+      const K = 4, SHUT = 0.55 / 30;
+      function render(t) {
+        for (let j = 0; j < K; j++) {
+          draw(t + (j / (K - 1) - 0.5) * SHUT);
+          ctx.globalAlpha = 1 / (j + 1);
+          ctx.drawImage(glc, 0, 0);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      tl.fromTo("#w-flash", { opacity: 0.45 }, { opacity: 0, duration: 0.18, ease: "power2.out", immediateRender: false }, B);
+      tl.fromTo("#w-flash", { opacity: 1 }, { opacity: 0, duration: 0.24, ease: "power2.out", immediateRender: false }, T_DROP);
+      tl.fromTo("#w-flash", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, T_BRAND);
+      render(0);
+      window.__timelines["world"] = tl;
+    })();
+  </script>
+</template>
