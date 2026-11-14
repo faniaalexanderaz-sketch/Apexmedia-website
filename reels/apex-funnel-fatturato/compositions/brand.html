@@ -1,0 +1,198 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: var(--font-display), sans-serif;
+      color: var(--color-ink);
+    }
+    #br-canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #br-lift {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #br-logo {
+      position: absolute;
+      left: 390px;
+      top: 340px;
+      width: 300px;
+      height: 320px;
+    }
+    #br-logo svg {
+      display: block;
+      width: 300px;
+      height: 320px;
+      overflow: visible;
+    }
+    #br-word {
+      position: absolute;
+      left: 40px;
+      top: 730px;
+      width: 1000px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 132px;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    #br-tag {
+      position: absolute;
+      left: 60px;
+      top: 920px;
+      width: 960px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 62px;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+    .br-w {
+      display: inline-block;
+    }
+    .br-acc {
+      font-family: var(--font-accent), serif;
+      font-style: italic;
+      font-weight: 800;
+      font-size: 74px;
+      color: var(--color-gold);
+    }
+    #br-cta {
+      position: absolute;
+      left: 110px;
+      top: 1120px;
+      width: 860px;
+      height: 120px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--color-gold-hi), var(--color-gold));
+      color: var(--color-ground);
+      font-weight: 800;
+      font-size: 46px;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #br-bio {
+      position: absolute;
+      left: 60px;
+      top: 1262px;
+      width: 960px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 36px;
+      color: var(--color-muted);
+    }
+  </style>
+  <div id="root" data-composition-id="brand" data-width="1080" data-height="1920">
+    <canvas id="br-canvas" width="1080" height="1920"></canvas>
+    <div id="br-lift">
+      <div id="br-logo">
+        <svg viewBox="0 0 30 32" fill="none">
+          <defs>
+            <linearGradient id="br-gold" x1="2" y1="3" x2="28" y2="29" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#F5E3A8" />
+              <stop offset="1" stop-color="#E7C568" />
+            </linearGradient>
+          </defs>
+          <path d="M15 3 L27.5 29 L2.5 29 Z" stroke="url(#br-gold)" stroke-width="1.6" stroke-linejoin="round" />
+          <path id="br-inner" d="M15 13.5 L20 24 L10 24 Z" fill="url(#br-gold)" />
+        </svg>
+      </div>
+    </div>
+    <div id="br-word">APEXMEDIA</div>
+    <div id="br-tag">
+      <span class="br-w">Più</span> <span class="br-w br-acc">clienti,</span><br />
+      <span class="br-w">non</span> <span class="br-w">più</span> <span class="br-w">visualizzazioni.</span>
+    </div>
+    <div id="br-cta">Richiedi l'audit gratuito →</div>
+    <div id="br-bio">link in bio</div>
+  </div>
+  <script>
+    (function () {
+      const D = 5.0;
+      const SLAM = 1.05;
+      const cv = document.querySelector("#br-canvas");
+      const ctx = cv.getContext("2d");
+      function rng(seed) {
+        return function () {
+          seed |= 0;
+          seed = (seed + 0x6d2b79f5) | 0;
+          let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const r = rng(31);
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      const expoOut = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+      const CX = 540,
+        CY = 510;
+      const sparks = [];
+      for (let i = 0; i < 34; i++) {
+        sparks.push({
+          a: (i / 34) * Math.PI * 2 + (r() - 0.5) * 0.12,
+          len: 60 + r() * 140,
+          reach: 420 + r() * 420,
+          d: r() * 0.08,
+          w: 3 + r() * 4,
+          gold: r() < 0.55,
+        });
+      }
+      function draw(t) {
+        ctx.clearRect(0, 0, 1080, 1920);
+        const lt = t - SLAM;
+        if (lt < 0) return;
+        ctx.lineCap = "round";
+        for (let i = 0; i < sparks.length; i++) {
+          const s = sparks[i];
+          const p = clamp((lt - s.d) / 0.75);
+          if (p <= 0 || p >= 1) continue;
+          const e = expoOut(p);
+          const r1 = 190 + s.reach * e;
+          const r2 = r1 + s.len * (1 - p * 0.7);
+          ctx.globalAlpha = 1 - p;
+          ctx.strokeStyle = s.gold ? "#F5E3A8" : "#FF8A3C";
+          ctx.lineWidth = s.w * (1 - p * 0.5);
+          ctx.beginPath();
+          ctx.moveTo(CX + Math.cos(s.a) * r1, CY + Math.sin(s.a) * r1);
+          ctx.lineTo(CX + Math.cos(s.a) * r2, CY + Math.sin(s.a) * r2);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => draw(st.t) }, 0);
+
+      // arrives from below (continuing the whip), still upside-down = the funnel
+      tl.fromTo("#br-lift", { y: 560, filter: "blur(16px)" }, { y: 0, filter: "blur(0px)", duration: 0.42, ease: "expo.out" }, 0);
+      // funnel flips into the Apex mark
+      tl.fromTo("#br-logo", { rotation: 180, scale: 0.9, transformOrigin: "50% 50%" }, { rotation: 360, scale: 1, duration: 0.6, ease: "power3.inOut" }, 0.45);
+      tl.fromTo("#br-inner", { scale: 0, opacity: 0, transformOrigin: "50% 66%" }, { scale: 1, opacity: 1, duration: 0.35, ease: "expo.out" }, 0.95);
+      // one punch on the logo at the slam
+      tl.fromTo("#br-logo", { scale: 1 }, { scale: 1.08, duration: 0.07, ease: "power2.out", immediateRender: false }, SLAM);
+      tl.fromTo("#br-logo", { scale: 1.08 }, { scale: 1, duration: 0.4, ease: "expo.out", immediateRender: false }, SLAM + 0.07);
+
+      tl.fromTo("#br-word", { opacity: 0, scale: 1.35, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out" }, SLAM);
+
+      tl.fromTo(".br-w", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out", stagger: 0.09 }, 1.7);
+
+      tl.fromTo("#br-cta", { opacity: 0, clipPath: "inset(0% 100% 0% 0% round 18px)" }, { opacity: 1, clipPath: "inset(0% 0% 0% 0% round 18px)", duration: 0.45, ease: "expo.out" }, 2.45);
+      tl.fromTo("#br-bio", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.75);
+
+      draw(0);
+      window.__timelines["brand"] = tl;
+    })();
+  </script>
+</template>

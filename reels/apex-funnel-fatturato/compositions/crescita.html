@@ -1,0 +1,214 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: var(--font-display), sans-serif;
+      color: var(--color-ink);
+    }
+    #cr-wrap {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #cr-canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #cr-head {
+      position: absolute;
+      left: 80px;
+      top: 250px;
+      width: 920px;
+      font-weight: 900;
+      font-size: 104px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .cr-w {
+      display: inline-block;
+    }
+    #cr-count {
+      position: absolute;
+      left: 72px;
+      top: 380px;
+      width: 960px;
+      font-weight: 900;
+      font-size: 196px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: var(--color-gold);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    #cr-sub {
+      position: absolute;
+      left: 80px;
+      top: 600px;
+      font-weight: 600;
+      font-size: 40px;
+      color: var(--color-muted);
+    }
+    #cr-badge {
+      position: absolute;
+      left: 760px;
+      top: 628px;
+      width: 240px;
+      text-align: right;
+      font-weight: 900;
+      font-size: 84px;
+      letter-spacing: -0.04em;
+      color: var(--color-orange);
+    }
+    .cr-axis {
+      position: absolute;
+      top: 1276px;
+      font-weight: 600;
+      font-size: 32px;
+      color: var(--color-muted);
+    }
+    #cr-m1 {
+      left: 80px;
+    }
+    #cr-m12 {
+      left: 800px;
+      width: 200px;
+      text-align: right;
+    }
+  </style>
+  <div id="root" data-composition-id="crescita" data-width="1080" data-height="1920">
+    <div id="cr-wrap">
+      <canvas id="cr-canvas" width="1080" height="1920"></canvas>
+      <div id="cr-head"><span class="cr-w">Il</span> <span class="cr-w">fatturato</span> <span class="cr-w">sale.</span></div>
+      <div id="cr-count">€ 12.000</div>
+      <div id="cr-sub">al mese · simulazione</div>
+      <div id="cr-badge">×3,2</div>
+      <div id="cr-m1" class="cr-axis">Mese 1</div>
+      <div id="cr-m12" class="cr-axis">Mese 12</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const D = 4.0;
+      const cv = document.querySelector("#cr-canvas");
+      const ctx = cv.getContext("2d");
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      const expoOut = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+      const inOut = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+      const smooth = (p) => p * p * (3 - 2 * p);
+
+      const N = 12,
+        X0 = 110,
+        STEP = 76,
+        BW = 48,
+        BASE = 1250,
+        HMAX = 470;
+      const vals = [];
+      for (let i = 0; i < N; i++) vals.push(12 + 26.4 * smooth(i / (N - 1))); // k€
+      const top = (i) => BASE - (vals[i] / 40) * HMAX;
+      const cx = (i) => X0 + i * STEP + BW / 2;
+
+      // curve sampled through bar tops (Catmull-Rom)
+      const curve = [];
+      for (let i = 0; i < N - 1; i++) {
+        const p0 = [cx(Math.max(0, i - 1)), top(Math.max(0, i - 1))],
+          p1 = [cx(i), top(i)],
+          p2 = [cx(i + 1), top(i + 1)],
+          p3 = [cx(Math.min(N - 1, i + 2)), top(Math.min(N - 1, i + 2))];
+        for (let s = 0; s < 12; s++) {
+          const u = s / 12,
+            u2 = u * u,
+            u3 = u2 * u;
+          const f = (a, b, c, d) => 0.5 * (2 * b + (-a + c) * u + (2 * a - 5 * b + 4 * c - d) * u2 + (-a + 3 * b - 3 * c + d) * u3);
+          curve.push([f(p0[0], p1[0], p2[0], p3[0]), f(p0[1], p1[1], p2[1], p3[1]) - 26]);
+        }
+      }
+      curve.push([cx(N - 1), top(N - 1) - 26]);
+
+      function draw(t) {
+        ctx.clearRect(0, 0, 1080, 1920);
+        // baseline
+        ctx.globalAlpha = 0.28;
+        ctx.fillStyle = "#AFAFBC";
+        ctx.fillRect(80, BASE + 2, 920, 2);
+        ctx.globalAlpha = 1;
+        // bars
+        for (let i = 0; i < N; i++) {
+          const g = expoOut(clamp((t - 0.35 - i * 0.07) / 0.6));
+          if (g <= 0) continue;
+          const h = (BASE - top(i)) * g;
+          const last = i === N - 1;
+          const grd = ctx.createLinearGradient(0, BASE - h, 0, BASE);
+          if (last) {
+            grd.addColorStop(0, "#F5E3A8");
+            grd.addColorStop(1, "#C39B3F");
+          } else {
+            grd.addColorStop(0, "#5A2EE6");
+            grd.addColorStop(1, "#1E4FD8");
+          }
+          ctx.globalAlpha = last ? 1 : 0.55 + 0.4 * (i / N);
+          ctx.fillStyle = grd;
+          ctx.beginPath();
+          ctx.roundRect(X0 + i * STEP, BASE - h, BW, h, [10, 10, 0, 0]);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        // gold curve draws on, a dot rides its tip
+        const cp = inOut(clamp((t - 0.3) / 1.7));
+        const idx = cp * (curve.length - 1);
+        const k = Math.floor(idx);
+        ctx.strokeStyle = "#E7C568";
+        ctx.lineWidth = 7;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(curve[0][0], curve[0][1]);
+        for (let i = 1; i <= k; i++) ctx.lineTo(curve[i][0], curve[i][1]);
+        let tip = curve[k];
+        if (k < curve.length - 1) {
+          const f = idx - k;
+          tip = [curve[k][0] + (curve[k + 1][0] - curve[k][0]) * f, curve[k][1] + (curve[k + 1][1] - curve[k][1]) * f];
+          ctx.lineTo(tip[0], tip[1]);
+        }
+        ctx.stroke();
+        // the client dot carried in from the funnel: lands large, settles
+        const land = expoOut(clamp(t / 0.35));
+        const rad = 22 - 8 * land;
+        ctx.fillStyle = "#F5E3A8";
+        ctx.beginPath();
+        ctx.arc(tip[0], tip[1], rad, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function fmt(n) {
+        return String(Math.round(n / 100) * 100).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+      const cnt = document.querySelector("#cr-count");
+      const c = { v: 12000 };
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => draw(st.t) }, 0);
+
+      tl.fromTo(".cr-w", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out", stagger: 0.08 }, 0.1);
+      tl.fromTo("#cr-count", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.3);
+      tl.fromTo(c, { v: 12000 }, { v: 38400, duration: 1.7, ease: "power3.inOut", onUpdate: () => (cnt.textContent = "€ " + fmt(c.v)) }, 0.3);
+      tl.fromTo("#cr-sub", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 0.55);
+      tl.fromTo(".cr-axis", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.5);
+      tl.fromTo("#cr-badge", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.35, ease: "expo.out", transformOrigin: "100% 50%" }, 2.05);
+
+      // whip up into the brand
+      tl.fromTo("#cr-wrap", { y: 0, filter: "blur(0px)" }, { y: -620, filter: "blur(16px)", duration: 0.32, ease: "power3.in" }, 3.68);
+
+      draw(0);
+      cnt.textContent = "€ 12.000";
+      window.__timelines["crescita"] = tl;
+    })();
+  </script>
+</template>

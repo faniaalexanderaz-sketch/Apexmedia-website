@@ -1,0 +1,290 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: var(--font-display), sans-serif;
+      color: var(--color-ink);
+    }
+    #fn-cam {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #fn-canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #fn-head {
+      position: absolute;
+      left: 80px;
+      top: 200px;
+      width: 920px;
+      font-weight: 900;
+      font-size: 120px;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+    .fn-w {
+      display: inline-block;
+    }
+    .fn-acc {
+      font-family: var(--font-accent), serif;
+      font-style: italic;
+      font-weight: 800;
+      font-size: 146px;
+      letter-spacing: -0.01em;
+      color: var(--color-gold);
+    }
+    .fn-stage {
+      position: absolute;
+      left: 60px;
+      width: 330px;
+    }
+    .fn-num {
+      display: block;
+      font-weight: 900;
+      font-size: 70px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .fn-lab {
+      display: block;
+      margin-top: 8px;
+      font-weight: 600;
+      font-size: 36px;
+      color: var(--color-muted);
+    }
+    #fn-s1 {
+      top: 560px;
+    }
+    #fn-s2 {
+      top: 820px;
+    }
+    #fn-s3 {
+      top: 1070px;
+    }
+    #fn-s3 .fn-num {
+      color: var(--color-gold);
+      font-size: 84px;
+    }
+  </style>
+  <div id="root" data-composition-id="funnel" data-width="1080" data-height="1920">
+    <div id="fn-cam">
+      <canvas id="fn-canvas" width="1080" height="1920"></canvas>
+      <div id="fn-s1" class="fn-stage"><span class="fn-num" id="fn-n1">10.000</span><span class="fn-lab">Visite</span></div>
+      <div id="fn-s2" class="fn-stage"><span class="fn-num" id="fn-n2">0</span><span class="fn-lab">Contatti (lead)</span></div>
+      <div id="fn-s3" class="fn-stage"><span class="fn-num" id="fn-n3">0</span><span class="fn-lab">Clienti</span></div>
+    </div>
+    <div id="fn-head"><span class="fn-w">Serve</span> <span class="fn-w">un</span> <span class="fn-w fn-acc">funnel.</span></div>
+  </div>
+  <script>
+    (function () {
+      const D = 5.2;
+      const cv = document.querySelector("#fn-canvas");
+      const ctx = cv.getContext("2d");
+      function rng(seed) {
+        return function () {
+          seed |= 0;
+          seed = (seed + 0x6d2b79f5) | 0;
+          let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const r = rng(23);
+      // funnel geometry (inverted Apex triangle)
+      const CX = 690,
+        TOP = 620,
+        HALF = 330,
+        APEX = 1290;
+      const L1 = 880,
+        L2 = 1130; // stage levels: lead, clienti
+      const halfAt = (y) => HALF * (1 - (y - TOP) / (APEX - TOP));
+      const G = 1500; // gravity px/s^2
+
+      const COLS = 13,
+        ROWS = 24,
+        SP = 80;
+      const dots = [];
+      let survivors = 0;
+      for (let j = 0; j < ROWS; j++) {
+        for (let i = 0; i < COLS; i++) {
+          const fate = r() < 0.86 ? 1 : r() < 0.68 ? 2 : 3; // 1 rejected at L1, 2 at L2, 3 becomes client
+          const d = {
+            x0: 60 + i * SP,
+            y0: 60 + j * SP,
+            launch: 0.75 + r() * 2.3,
+            ex: CX + (r() * 2 - 1) * (HALF - 30),
+            fate: fate,
+            side: r() < 0.5 ? -1 : 1,
+            kick: 380 + r() * 420,
+          };
+          if (fate === 3) d.slot = survivors++;
+          dots.push(d);
+        }
+      }
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      const expoOut = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+      const p2in = (p) => p * p;
+      const mix = (a, b, p) => [a[0] + (b[0] - a[0]) * p, a[1] + (b[1] - a[1]) * p, a[2] + (b[2] - a[2]) * p];
+      const GREY = [175, 175, 188],
+        BLUE = [70, 120, 255],
+        VIOLET = [138, 98, 255],
+        GOLD = [231, 197, 104];
+
+      // time to fall from TOP-20 to level y
+      const fallT = (y) => Math.sqrt((2 * (y - (TOP - 20))) / G);
+
+      function dotState(d, t) {
+        const A = 0.45; // grid -> funnel mouth
+        if (t < d.launch) {
+          // waiting in the grid; fades in brightness just before launch
+          return { x: d.x0, y: d.y0, c: GREY, a: 0.3, rad: 7, s: 0 };
+        }
+        const ta = t - d.launch;
+        if (ta < A) {
+          const p = p2in(ta / A);
+          return {
+            x: d.x0 + (d.ex - d.x0) * p,
+            y: d.y0 + (TOP - 20 - d.y0) * p,
+            c: mix(GREY, BLUE, ta / A),
+            a: 0.3 + 0.6 * (ta / A),
+            rad: 7,
+            s: p * 40,
+          };
+        }
+        const tf = ta - A;
+        const yFree = TOP - 20 + 0.5 * G * tf * tf + 260 * tf;
+        const inside = (y) => CX + (d.ex - CX) * (halfAt(Math.max(TOP, y)) / HALF);
+        const stopY = d.fate === 1 ? L1 : d.fate === 2 ? L2 : APEX + 10;
+        if (yFree < stopY) {
+          const col = yFree > L2 ? mix(VIOLET, GOLD, clamp((yFree - L2) / 80)) : yFree > L1 ? mix(BLUE, VIOLET, clamp((yFree - L1) / 60)) : BLUE;
+          return { x: inside(yFree), y: yFree, c: col, a: 0.95, rad: 7, s: Math.min(46, (G * tf + 260) * 0.02) };
+        }
+        // time at which it reached stopY
+        const tStop = (-260 + Math.sqrt(260 * 260 + 2 * G * (stopY - (TOP - 20)))) / G;
+        const tr = tf - tStop;
+        const xs = inside(stopY);
+        if (d.fate !== 3) {
+          // rejected: kicked out sideways through the wall, fades to grey
+          const x = xs + d.side * d.kick * tr;
+          const y = stopY - 160 * tr + 0.5 * 900 * tr * tr;
+          const k = clamp(tr / 0.55);
+          return { x: x, y: y, c: mix(d.fate === 1 ? BLUE : VIOLET, [255, 138, 60], clamp(tr / 0.15)), a: 0.95 * (1 - k), rad: 7 * (1 - 0.5 * k), s: 0 };
+        }
+        // client: drops out of the apex onto a gold stack
+        const col = d.slot % 7,
+          row = Math.floor(d.slot / 7);
+        const tx = CX + (col - 3) * 26 + (row % 2) * 13,
+          ty = 1480 - row * 24;
+        const p = expoOut(clamp(tr / 0.5));
+        return { x: CX + (tx - CX) * p, y: stopY + (ty - stopY) * p, c: GOLD, a: 1, rad: 9, s: 0 };
+      }
+
+      function drawFunnel(t) {
+        // stroke draws on along the perimeter: top-left -> apex -> top-right -> back across the top
+        const pts = [
+          [CX - HALF, TOP],
+          [CX, APEX],
+          [CX + HALF, TOP],
+          [CX - HALF, TOP],
+        ];
+        const lens = [];
+        let total = 0;
+        for (let i = 0; i < 3; i++) {
+          const l = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
+          lens.push(l);
+          total += l;
+        }
+        const p = expoOut(clamp((t - 0.25) / 0.9));
+        let left = p * total;
+        ctx.strokeStyle = "#E7C568";
+        ctx.lineWidth = 7;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0], pts[0][1]);
+        for (let i = 0; i < 3 && left > 0; i++) {
+          const f = Math.min(1, left / lens[i]);
+          ctx.lineTo(pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f);
+          left -= lens[i];
+        }
+        ctx.stroke();
+        // stage lines: label -> funnel wall
+        const lp = expoOut(clamp((t - 0.9) / 0.5));
+        ctx.globalAlpha = 0.35 * lp;
+        ctx.fillStyle = "#AFAFBC";
+        [
+          [TOP, 0.9],
+          [L1, 1.6],
+          [L2, 2.3],
+        ].forEach(function (lv) {
+          const q = expoOut(clamp((t - lv[1]) / 0.5));
+          const xEnd = CX - halfAt(lv[0]) - 14;
+          ctx.globalAlpha = 0.35 * q;
+          ctx.fillRect(330, lv[0] - 1, (xEnd - 330) * q, 2);
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function draw(t) {
+        ctx.clearRect(0, 0, 1080, 1920);
+        // dots behind the funnel stroke
+        for (let n = 0; n < dots.length; n++) {
+          const s = dotState(dots[n], t);
+          if (s.a <= 0.01) continue;
+          ctx.globalAlpha = s.a;
+          ctx.fillStyle = "rgb(" + Math.round(s.c[0]) + "," + Math.round(s.c[1]) + "," + Math.round(s.c[2]) + ")";
+          ctx.beginPath();
+          if (s.s > 2) ctx.roundRect(s.x - s.rad, s.y - s.rad - s.s, s.rad * 2, s.rad * 2 + s.s, s.rad);
+          else ctx.arc(s.x, s.y, s.rad, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        drawFunnel(t);
+      }
+
+      function fmt(n) {
+        return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+      const n2 = document.querySelector("#fn-n2"),
+        n3 = document.querySelector("#fn-n3");
+      const c2 = { v: 0 },
+        c3 = { v: 0 };
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => draw(st.t) }, 0);
+
+      tl.fromTo("#fn-head .fn-w", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out", stagger: 0.09 }, 0.1);
+
+      tl.fromTo("#fn-s1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 0.9);
+      tl.fromTo("#fn-s2", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 1.6);
+      tl.fromTo(c2, { v: 0 }, { v: 600, duration: 2.0, ease: "power2.out", onUpdate: () => (n2.textContent = fmt(c2.v)) }, 1.7);
+      tl.fromTo("#fn-s3", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 2.3);
+      tl.fromTo(c3, { v: 0 }, { v: 120, duration: 1.8, ease: "power2.out", onUpdate: () => (n3.textContent = fmt(c3.v)) }, 2.5);
+
+      // camera pushes into the apex, accelerating -> cut
+      tl.to("#fn-head", { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in" }, 4.55);
+      tl.fromTo(
+        "#fn-cam",
+        { scale: 1, filter: "blur(0px)", transformOrigin: CX + "px " + APEX + "px" },
+        { scale: 3.2, filter: "blur(10px)", duration: 0.55, ease: "power3.in", transformOrigin: CX + "px " + APEX + "px" },
+        4.65,
+      );
+
+      draw(0);
+      n2.textContent = "0";
+      n3.textContent = "0";
+      window.__timelines["funnel"] = tl;
+    })();
+  </script>
+</template>

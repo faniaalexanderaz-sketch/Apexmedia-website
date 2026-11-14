@@ -1,0 +1,146 @@
+<!doctype html>
+<html
+  lang="it"
+  data-composition-variables='[
+    {"id":"color-ground","type":"color","label":"Sfondo","default":"#06080F"},
+    {"id":"color-ink","type":"color","label":"Testo","default":"#F5F5F7"},
+    {"id":"color-muted","type":"color","label":"Testo secondario","default":"#AFAFBC"},
+    {"id":"color-gold","type":"color","label":"Oro (accento)","default":"#E7C568"},
+    {"id":"color-gold-hi","type":"color","label":"Oro chiaro","default":"#F5E3A8"},
+    {"id":"color-orange","type":"color","label":"Arancio (problema)","default":"#FF8A3C"},
+    {"id":"color-violet","type":"color","label":"Viola","default":"#5A2EE6"},
+    {"id":"color-blue","type":"color","label":"Blu","default":"#1E4FD8"},
+    {"id":"font-display","type":"string","label":"Font titoli","default":"Inter"},
+    {"id":"font-accent","type":"string","label":"Font parola accento","default":"Playfair Display"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --color-ground: #06080f;
+        --color-ink: #f5f5f7;
+        --color-muted: #afafbc;
+        --color-gold: #e7c568;
+        --color-gold-hi: #f5e3a8;
+        --color-orange: #ff8a3c;
+        --color-violet: #5a2ee6;
+        --color-blue: #1e4fd8;
+        --font-display: Inter;
+        --font-accent: "Playfair Display";
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--color-ground);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: var(--font-display), sans-serif;
+      }
+      #bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        background:
+          radial-gradient(circle at 88% 8%, rgba(90, 46, 230, 0.22), rgba(90, 46, 230, 0) 48%),
+          radial-gradient(circle at 10% 96%, rgba(30, 79, 216, 0.16), rgba(30, 79, 216, 0) 42%),
+          var(--color-ground);
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="21"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="bg" class="clip" data-start="0" data-duration="21" data-track-index="0"></div>
+
+      <div
+        id="hook"
+        data-composition-id="hook"
+        data-composition-src="compositions/hook.html"
+        data-start="0"
+        data-duration="3.2"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        style="z-index: 1"
+      ></div>
+      <div
+        id="traffico"
+        data-composition-id="traffico"
+        data-composition-src="compositions/traffico.html"
+        data-start="3.2"
+        data-duration="3.6"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        style="z-index: 2"
+      ></div>
+      <div
+        id="funnel"
+        data-composition-id="funnel"
+        data-composition-src="compositions/funnel.html"
+        data-start="6.8"
+        data-duration="5.2"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        style="z-index: 3"
+      ></div>
+      <div
+        id="crescita"
+        data-composition-id="crescita"
+        data-composition-src="compositions/crescita.html"
+        data-start="12"
+        data-duration="4"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        style="z-index: 4"
+      ></div>
+      <div
+        id="brand"
+        data-composition-id="brand"
+        data-composition-src="compositions/brand.html"
+        data-start="16"
+        data-duration="5"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1080"
+        data-height="1920"
+        style="z-index: 5"
+      ></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

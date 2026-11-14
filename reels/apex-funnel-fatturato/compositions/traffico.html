@@ -1,0 +1,169 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: var(--font-display), sans-serif;
+      color: var(--color-ink);
+    }
+    #tr-canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #tr-head {
+      position: absolute;
+      left: 80px;
+      top: 250px;
+      width: 920px;
+      font-weight: 900;
+      font-size: 132px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    #tr-count {
+      position: absolute;
+      left: 72px;
+      top: 410px;
+      width: 940px;
+      font-weight: 900;
+      font-size: 250px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: var(--color-gold);
+      font-variant-numeric: tabular-nums;
+    }
+    #tr-unit {
+      position: absolute;
+      left: 80px;
+      top: 680px;
+      font-weight: 600;
+      font-size: 52px;
+      color: var(--color-muted);
+    }
+    #tr-but {
+      position: absolute;
+      left: 80px;
+      top: 1050px;
+      width: 920px;
+      font-weight: 900;
+      font-size: 92px;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+    .tr-w {
+      display: inline-block;
+    }
+    .tr-bad {
+      color: var(--color-orange);
+    }
+  </style>
+  <div id="root" data-composition-id="traffico" data-width="1080" data-height="1920">
+    <canvas id="tr-canvas" width="1080" height="1920"></canvas>
+    <div id="tr-head"><span class="tr-w tr-hw">Più</span> <span class="tr-w tr-hw">traffico.</span></div>
+    <div id="tr-count">0</div>
+    <div id="tr-unit">visite al mese</div>
+    <div id="tr-but">
+      <span class="tr-w tr-bw">…ma</span> <span class="tr-w tr-bw">il</span> <span class="tr-w tr-bw">fatturato</span><br />
+      <span class="tr-w tr-bw tr-bad">non</span> <span class="tr-w tr-bw tr-bad">sale.</span>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const D = 3.6;
+      const cv = document.querySelector("#tr-canvas");
+      const ctx = cv.getContext("2d");
+      function rng(seed) {
+        return function () {
+          seed |= 0;
+          seed = (seed + 0x6d2b79f5) | 0;
+          let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const r = rng(11);
+      // shared grid (same geometry as the funnel scene's start)
+      const COLS = 13,
+        ROWS = 24,
+        SP = 80;
+      const dots = [];
+      for (let j = 0; j < ROWS; j++) {
+        for (let i = 0; i < COLS; i++) {
+          const k = r();
+          dots.push({
+            x: 60 + i * SP,
+            y: 60 + j * SP,
+            row: ROWS - 1 - j,
+            col: k < 0.72 ? [30, 79, 216] : k < 0.94 ? [90, 46, 230] : [245, 227, 168],
+            jit: r() * 0.12,
+          });
+        }
+      }
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      const expoOut = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
+      const inOut = (p) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
+      // text zones keep dots dim so copy stays legible
+      function zoneDim(y, t) {
+        const head = y > 210 && y < 780 ? 1 : 0;
+        const but = y > 1010 && y < 1280 ? clamp((t - 2.0) / 0.3) : 0;
+        return Math.max(head, but);
+      }
+
+      function draw(t) {
+        ctx.clearRect(0, 0, 1080, 1920);
+        const grey = inOut(clamp((t - 2.1) / 0.6)); // fatturato non sale -> dots go grey
+        for (let n = 0; n < dots.length; n++) {
+          const d = dots[n];
+          const a = expoOut(clamp((t - d.row * 0.022 - d.jit) / 0.7));
+          if (a <= 0) continue;
+          const y = d.y + (1 - a) * 1100;
+          const R = Math.round(d.col[0] + (175 - d.col[0]) * grey);
+          const G = Math.round(d.col[1] + (175 - d.col[1]) * grey);
+          const B = Math.round(d.col[2] + (188 - d.col[2]) * grey);
+          const dim = zoneDim(d.y, t);
+          const base = 0.9 - 0.6 * grey; // ends at 0.3 everywhere
+          const alpha = base * (1 - dim * (1 - grey) * 0.75) * Math.min(1, a * 1.4);
+          // live traffic: a wave rolls up the grid
+          const wave = Math.sin(t * 4.2 - d.y / 140) * 0.5 + 0.5;
+          const rad = (7 + 3 * wave * (1 - grey)) * (0.6 + 0.4 * a);
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = "rgb(" + R + "," + G + "," + B + ")";
+          ctx.beginPath();
+          const streak = (1 - a) * 90;
+          if (streak > 2) ctx.roundRect(d.x - rad, y - rad, rad * 2, rad * 2 + streak, rad);
+          else ctx.arc(d.x, y, rad, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function fmt(n) {
+        return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+      const cnt = document.querySelector("#tr-count");
+      const c = { v: 0 };
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => draw(st.t) }, 0);
+
+      tl.fromTo(".tr-hw", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out", stagger: 0.09 }, 0.1);
+      tl.fromTo("#tr-count", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.35);
+      tl.fromTo(c, { v: 0 }, { v: 10000, duration: 1.3, ease: "expo.out", onUpdate: () => (cnt.textContent = fmt(c.v)) }, 0.35);
+      tl.fromTo("#tr-unit", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 0.6);
+
+      tl.fromTo(".tr-bw", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out", stagger: 0.09 }, 2.0);
+
+      // exit: copy blurs out, grey grid stays for the funnel to pull in
+      tl.to(["#tr-head", "#tr-count", "#tr-unit", "#tr-but"], { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in", stagger: 0.03 }, 3.3);
+
+      draw(0);
+      cnt.textContent = "0";
+      window.__timelines["traffico"] = tl;
+    })();
+  </script>
+</template>
