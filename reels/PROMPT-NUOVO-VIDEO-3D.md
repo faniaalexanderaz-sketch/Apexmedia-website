@@ -5,7 +5,8 @@ Cambia solo le 4 righe sotto "DA DECIDERE" se vuoi un altro tema o altri colori.
 
 ```text
 /hyperframes Devi creare un Reel motion design 3D per Apex Media (agenzia di performance marketing).
-Formato 9:16, 1080x1920, 30 fps, 20-24 secondi, italiano, con musica ed effetti sonori.
+Formato 9:16, 1080x1920, 30 fps, 16-18 secondi, italiano, con musica ed effetti sonori.
+Deve essere MOLTO più veloce e dinamico del video di riferimento, con un gancio che ferma lo scroll, e visivamente diverso.
 Vai fino al render MP4 senza fermarti a chiedere conferme: le decisioni sono già tutte qui sotto.
 
 == DA DECIDERE (già compilato, cambia solo se serve) ==
@@ -37,18 +38,42 @@ Tecnica che funziona (già verificata in questo ambiente, non reinventarla):
   file woff2 in assets/fonts/ (copiali dal progetto di riferimento) con @font-face in ogni file che li usa.
 - Colori come variabili CSS in index.html (data-composition-variables), letti nel mondo 3D con getComputedStyle.
 
+== GANCIO: I PRIMI 1,5 SECONDI DECIDONO TUTTO ==
+- Frame 0: una frase di massimo 4 parole, enorme (occupa almeno il 60% della larghezza), già leggibile,
+  con un oggetto 3D già in movimento dietro. Mai nero, mai logo, mai un'entrata lenta.
+- Entro 0,5 s succede qualcosa di fisico e violento: qualcosa si rompe, cade, esplode o viene verso la camera.
+- Entro 1,5 s lo spettatore ha capito il problema e ha una domanda aperta in testa.
+- Scrivi 3 ganci diversi in SPEC.md (uno che accusa, uno con un numero, uno con una domanda) e scegli il più forte,
+  spiegando in una riga perché. Esempi di tono: "100 POST. 0 CLIENTI." / "STAI PUBBLICANDO A VUOTO." / "E I CLIENTI?"
+
+== RITMO: PIÙ VELOCE DEL RIFERIMENTO ==
+- Musica a 140 BPM (battito 0,43 s, battuta 1,71 s). Ogni cambio di scena cade su una battuta.
+- Una novità visiva a ogni battito o due (ogni 0,4-0,9 s): un taglio, uno slam di testo, un cambio di camera.
+- Nessuna inquadratura ferma più di 1,7 s, tranne la CTA finale (ferma ≥ 2 s).
+- La camera non è mai ferma e non va mai a velocità costante: accelera, frena, ruota, si tuffa.
+  Almeno 4 mosse forti (tuffo, giro a 180°, whip, risalita a razzo), più scosse sui colpi.
+- Testi a raffica: parole singole che entrano in 0,15 s sui battiti. Mai frasi lunghe.
+- Contrasto di velocità: una sola pausa di 0,4 s quasi in silenzio subito prima del drop, poi tutto esplode.
+
+== DEVE ESSERE DIVERSO DAL RIFERIMENTO ==
+Vietato riusare: il funnel a cono, la fila di barre che salgono, il pavimento a griglia di piastrelle, la nuvola di
+puntini come elemento principale, il lime e il rosa. Puoi tenere solo il logo 3D e i due font.
+Scegli UN altro linguaggio visivo e tienilo per tutto il film, per esempio: lastre/schede che si impilano e crollano a
+domino, un nastro o tubo che la camera percorre dall'interno, un oggetto che si frantuma e si ricompone, forme solide
+lucide su pavimento riflettente. Scrivi la scelta in SPEC.md prima di iniziare.
+
 == STORIA (5 momenti, una sola camera continua) ==
 Inventa tu gli oggetti 3D, ma rispetta questa struttura e fai in modo che ogni scena CAUSI la successiva:
-1. GANCIO 0-3 s: frase già leggibile al frame 0 + il problema visibile in 3D
+1. GANCIO 0-1,7 s: frase già leggibile al frame 0 + il problema visibile in 3D
    (es. un muro infinito di "post" grigi, lastre tutte uguali, che scorrono senza che succeda nulla).
-2. IL DATO CHE ILLUDE 3-7 s: un contatore gigante che sale (like, views, post pubblicati) mentre il numero
+2. IL DATO CHE ILLUDE 1,7-5,1 s: un contatore gigante che sale (like, views, post pubblicati) mentre il numero
    "CLIENTI" resta a 0. Parola d'urto: "E I CLIENTI?"
-3. IL MECCANISMO 7-13 s: il cambio. Un post diverso si accende in arancio e fa partire una reazione fisica
+3. IL MECCANISMO 5,1-10,3 s: il cambio. Un post diverso si accende in arancio e fa partire una reazione fisica
    (es. tessere che cadono a domino, un percorso che si illumina, un oggetto che si assembla): contenuto → click →
    contatto → cliente. Qui serve il momento più spettacolare: la camera ENTRA dentro l'oggetto.
-4. IL RISULTATO 13-17 s, sul drop della musica: il mondo grigio si accende tutto in arancio, numero che sale
+4. IL RISULTATO 10,3-13,7 s, sul drop della musica: il mondo grigio si accende tutto in arancio, numero che sale
    (clienti al mese). Se usi numeri non reali, scrivi "SIMULAZIONE" sotto.
-5. BRAND 17-22 s: logo Apex in 3D estruso (triangolo con triangolo pieno interno: la geometria è in world.html del
+5. BRAND 13,7-17 s: logo Apex in 3D estruso (triangolo con triangolo pieno interno: la geometria è in world.html del
    riferimento) che si blocca su un colpo di musica, wordmark APEXMEDIA, messaggio unico, CTA. Ultima riga ferma ≥ 2 s.
 
 == ASTICELLA DI QUALITÀ: deve essere nettamente meglio del riferimento ==
@@ -58,7 +83,6 @@ Il riferimento ha questi limiti, il nuovo video li deve superare:
 - Più profondità: almeno 3 piani (primo piano che passa vicino alla camera, soggetto, sfondo), nebbia, parallasse.
 - Più varietà di materiali: non solo wireframe. Almeno un oggetto con facce piene ombreggiate e riflesso sul pavimento.
 - Motion blur sui movimenti veloci (data-motion-blur="on" sulla root, verifica il costo di render).
-- Niente tempi morti: qualcosa di nuovo ogni 1,5-2 s, tagli e colpi sui battiti, layout nuovo a ogni battuta (2 s).
 - Ogni transizione ha una causa fisica nel mondo (si entra in un oggetto, un oggetto diventa il successivo).
   Nessuna dissolvenza generica.
 - Almeno un momento "come ha fatto?": un tuffo dentro un oggetto, una trasformazione, un'esplosione ordinata.
@@ -66,9 +90,9 @@ Il riferimento ha questi limiti, il nuovo video li deve superare:
   nessun testo che esce dal frame (nel riferimento è successo due volte: controlla con gli snapshot).
 
 == AUDIO (procedura che ha funzionato) ==
-1. Musica: connettore Higgsfield, generate_audio con model "elevenlabs_music_v2_5", duration 24, force_instrumental true.
+1. Musica: connettore Higgsfield, generate_audio con model "elevenlabs_music_v2_5", duration 20, force_instrumental true.
    Prima chiama get_preferences e fai un get_cost. Costa circa 3,5 crediti a traccia: massimo 4 tracce.
-   Prompt musica: stile + BPM esatto (120) + "strong mid and high frequencies, sounds full on phone speakers" +
+   Prompt musica: stile + BPM esatto (140) + "strong mid and high frequencies, sounds full on phone speakers" +
    struttura semplice (build poi drop poi colpo finale). Niente nomi di brand o persone nel prompt.
 2. Misura ogni traccia: `npx hyperframes beats <file> --json` e l'energia per banda con ffmpeg astats
    (sotto 150 Hz, 400-2000 Hz, sopra 5 kHz, finestre da 0,5 s). SCARTA le tracce quasi solo sub-bass.
@@ -86,9 +110,11 @@ Il riferimento ha questi limiti, il nuovo video li deve superare:
 3. Aggiungi testi e audio, poi `npx hyperframes check --json`: zero errori.
 4. Snapshot di nuovo. Per ogni fotogramma chiediti: si capisce cosa sto guardando senza spiegazioni?
    Il testo si legge a 360 px di larghezza? C'è qualcosa che esce dal frame o si sovrappone?
-5. Fai un secondo giro di critica severa (come un direttore creativo che non l'ha fatto lui): elenca i 5 punti
+5. Controlla il ritmo: `npx hyperframes snapshot --range 0,2 --frames 12` sul gancio. Se tra due fotogrammi vicini
+   non cambia quasi nulla, è troppo lento: accelera.
+6. Fai un secondo giro di critica severa (come un direttore creativo che non l'ha fatto lui): elenca i 5 punti
    più deboli e correggili TUTTI prima di consegnare. Non consegnare la prima versione che funziona.
-6. Render in reels/<nome-progetto>/renders/, ricomprimi con ffmpeg (libx264 crf 21, aac 192k, faststart),
+7. Render in reels/<nome-progetto>/renders/, ricomprimi con ffmpeg (libx264 crf 21, aac 192k, faststart),
    scrivi REVIEW.md, commit e push sul branch di lavoro, inviami l'MP4.
 
 == CONSEGNA ==
@@ -102,5 +128,5 @@ Il riferimento ha questi limiti, il nuovo video li deve superare:
 | --- | --- |
 | Altro argomento | le righe TEMA e MESSAGGIO UNICO, e gli esempi tra parentesi nella STORIA |
 | Altri colori | la riga COLORI: sempre 1 solo fluo dominante + bianco + 1 colore "spento" per il problema |
-| Altra durata | "20-24 secondi" in alto e i secondi dei 5 momenti (tienili multipli di 2 s: sono battute a 120 BPM) |
+| Altra durata | "16-18 secondi" in alto e i secondi dei 5 momenti (tienili multipli di 1,71 s: sono battute a 140 BPM) |
 | Formato orizzontale | "9:16, 1080x1920" → "16:9, 1920x1080" e togli la regola "tra y 168 e 1330 px" |
