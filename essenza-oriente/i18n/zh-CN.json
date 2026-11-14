@@ -153,6 +153,20 @@
       }
     ]
   },
+  "lavora": {
+    "label": "加入我们",
+    "h2": "招聘<span class=\"em\">持证美容师。</span>",
+    "testo": "我们正在扩充团队，地址：Via San Lorenzo 46，亚历山德里亚。必备条件：持有美容师文凭（diploma di estetista）。请通过 WhatsApp 简单介绍一下自己，我们会直接回复您。",
+    "punti": [
+      "须持有美容师文凭",
+      "每天营业 9:30 – 22:30",
+      "WhatsApp 直接回复"
+    ],
+    "cta": "发送您的应聘信息",
+    "nota": "或致电",
+    "msg": "Ciao! Vorrei candidarmi come estetista. Ho il diploma di estetista.",
+    "footer": "加入我们"
+  },
   "footer": {
     "descrizione": "亚历山德里亚的养生馆。传统东方理疗，每天营业至 22:30。",
     "contatti": "联系方式",
