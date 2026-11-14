@@ -192,6 +192,22 @@ html,body{background:#fff}
 .tot{background:linear-gradient(180deg,#FFE173,#F7CB34) padding-box,linear-gradient(180deg,#FFF0A8,#C29A12) border-box}
 .tot::after{background:linear-gradient(180deg,rgba(150,112,20,.3),rgba(150,112,20,0))}
 .tot span.d{color:#5E4A0E}
+/* ---- giallo più chiaro + viola chiaro Apex ---- */
+.s3d{background:linear-gradient(180deg,#FFFEF8 0%,#FFF9E3 100%) padding-box,linear-gradient(180deg,#FFFFFF 0%,#F4E8BC 55%,#E2CD86 100%) border-box}
+.s3d::after{background:linear-gradient(180deg,rgba(150,120,40,.14),rgba(150,120,40,.04) 45%,rgba(150,120,40,0))}
+.px,.opt{background:linear-gradient(180deg,#FBF1CC,#FFFCF0) padding-box,linear-gradient(180deg,rgba(170,135,40,.38),rgba(255,255,255,.95)) border-box}
+.s3d.v,.hero.v{--violet:#5B2EFF;--gold:#5B2EFF;--hair:rgba(91,46,255,.13);--muted:#6E6A86;--dim:#9C98B4;
+  background:radial-gradient(80mm 40mm at 92% 0%,rgba(91,46,255,.10),transparent 72%) padding-box,linear-gradient(180deg,#FBFAFF 0%,#F1EDFF 100%) padding-box,linear-gradient(180deg,#FFFFFF 0%,#DCD3FF 55%,#B7A8F5 100%) border-box}
+.s3d.v::after{background:linear-gradient(180deg,rgba(70,40,180,.13),rgba(70,40,180,.04) 45%,rgba(70,40,180,0))}
+.hero.v .amt small{color:#5B2EFF}
+.hero.v p{color:#6E6A86}
+.v .opt{background:linear-gradient(180deg,#E9E3FF,#FAF8FF) padding-box,linear-gradient(180deg,rgba(91,46,255,.32),rgba(255,255,255,.95)) border-box}
+.v .box{box-shadow:inset 0 0 0 .35mm #A796F0}
+.chip{background:linear-gradient(180deg,#FBFAFF,#EFEAFF) padding-box,linear-gradient(180deg,#FFFFFF,#BFB1F5) border-box;color:#6E6A86}
+.tot{background:linear-gradient(180deg,#FFF3C2,#FFE98F) padding-box,linear-gradient(180deg,#FFFFFF,#E3C44E) border-box}
+.tot::after{background:linear-gradient(180deg,rgba(150,120,40,.18),rgba(150,120,40,0))}
+.tot span.d{color:#6B5A22}
+.voce li::before{background:#5B2EFF}
 </style>
 </head>
 <body>
@@ -208,7 +224,7 @@ html,body{background:#fff}
     </div>
   </div>
 
-  <div class="hero s3d">
+  <div class="hero s3d v">
     <div>
       <div class="k">Oggetto</div>
       <h2>Sito web Bagnarino Coworking e dominio per il primo anno</h2>
@@ -273,7 +289,7 @@ html,body{background:#fff}
 
   <div class="st"><span class="k">Come pagare</span><i></i></div>
 
-  <div class="pay s3d">
+  <div class="pay s3d v">
     <div class="k">Scegli una modalità</div>
     <div class="opts">
       <div class="opt"><div class="box"></div><div><b>Contanti</b><span>Tutto alla consegna</span></div></div>
