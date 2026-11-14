@@ -153,6 +153,20 @@
       }
     ]
   },
+  "lavora": {
+    "label": "Lavora con noi",
+    "h2": "Cerchiamo <span class=\"em\">estetista con diploma.</span>",
+    "testo": "Stiamo ampliando il team del centro, in Via San Lorenzo 46 ad Alessandria. Requisito indispensabile: diploma di estetista. Scrivici su WhatsApp con due righe su di te, ti rispondiamo noi.",
+    "punti": [
+      "Diploma di estetista richiesto",
+      "Centro aperto tutti i giorni, 9:30 – 22:30",
+      "Risposta diretta su WhatsApp"
+    ],
+    "cta": "Invia la tua candidatura",
+    "nota": "Oppure chiama il",
+    "msg": "Ciao! Vorrei candidarmi come estetista. Ho il diploma di estetista.",
+    "footer": "Lavora con noi"
+  },
   "footer": {
     "descrizione": "Centro olistico ad Alessandria. Tecniche tradizionali orientali, tutti i giorni fino alle 22:30.",
     "contatti": "Contatti",

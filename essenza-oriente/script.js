@@ -92,7 +92,10 @@
     var el = e.target.closest('a[href], button, [data-prenota]');
     if (!el) return;
     var href = (el.getAttribute('href') || '').toLowerCase();
-    if (href.indexOf('tel:') === 0) {
+    if (el.hasAttribute('data-candidatura')) {
+      /* candidature di lavoro: evento a parte, NON conta come conversione cliente */
+      if (window.EO_COOKIE) window.EO_COOKIE.push({ event: 'click_candidatura' });
+    } else if (href.indexOf('tel:') === 0) {
       traccia({ event: 'click_chiama' });
     } else if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp') !== -1) {
       traccia({ event: 'click_whatsapp' });

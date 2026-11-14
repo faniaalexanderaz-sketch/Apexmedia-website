@@ -181,6 +181,7 @@ function footer(t, pagina) {
           <a href="#prenota">${t.nav.prenota}</a>
           <a href="${sez('recensioni')}">${t.nav.recensioni}</a>
           <a href="${sez('dove')}">${t.nav.dove}</a>
+          <a href="${sez('lavora')}">${t.lavora.footer}</a>
         </div>
         <div class="fondo-col">
           <span class="label">${t.footer.social}</span>
@@ -428,6 +429,26 @@ ${t.faq.items.map((f) => `          <details>
             <summary>${f.q} <span class="plus" aria-hidden="true"></span></summary>
             <p>${f.a}</p>
           </details>`).join('\n')}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LAVORA CON NOI ============ -->
+    <section class="sez sez-tight lavora" id="lavora">
+      <div class="wrap">
+        <div class="lavora-card" data-reveal>
+          <div class="lavora-testo">
+            <span class="label">${t.lavora.label}</span>
+            <h2 style="margin-top:18px">${t.lavora.h2}</h2>
+            <p class="lede">${t.lavora.testo}</p>
+          </div>
+          <div class="lavora-azione">
+            <ul class="lavora-punti">
+${t.lavora.punti.map((p) => `              <li>${p}</li>`).join('\n')}
+            </ul>
+            <a class="btn btn-ink" data-candidatura href="${waUrl(t.lavora.msg)}" target="_blank" rel="noopener">${t.lavora.cta} ${WA_ICO}</a>
+            <p class="lavora-nota">${t.lavora.nota} <a data-candidatura href="tel:${TEL}">${TEL_VIS}</a></p>
+          </div>
         </div>
       </div>
     </section>
