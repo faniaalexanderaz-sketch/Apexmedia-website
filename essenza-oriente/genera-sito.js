@@ -15,6 +15,10 @@ const IT = LINGUE[0];
 const TEL = '+393317153533';
 const TEL_VIS = '331 715 3533';
 const WA = 'https://wa.me/393317153533';
+/* candidature di lavoro: numero dedicato, diverso da quello del centro */
+const TEL_LAVORO = '+393515940685';
+const TEL_LAVORO_VIS = '351 594 0685';
+const WA_LAVORO = 'https://wa.me/393515940685';
 const TREATWELL = 'https://widget.treatwell.it/salone/532986/menu/';
 
 /* ---------- pezzi riutilizzabili ---------- */
@@ -446,8 +450,8 @@ ${t.faq.items.map((f) => `          <details>
             <ul class="lavora-punti">
 ${t.lavora.punti.map((p) => `              <li>${p}</li>`).join('\n')}
             </ul>
-            <a class="btn btn-ink" data-candidatura href="${waUrl(t.lavora.msg)}" target="_blank" rel="noopener">${t.lavora.cta} ${WA_ICO}</a>
-            <p class="lavora-nota">${t.lavora.nota} <a data-candidatura href="tel:${TEL}">${TEL_VIS}</a></p>
+            <a class="btn btn-ink" data-candidatura href="${WA_LAVORO}?text=${encodeURIComponent(t.lavora.msg)}" target="_blank" rel="noopener">${t.lavora.cta} ${WA_ICO}</a>
+            <p class="lavora-nota">${t.lavora.nota} <a data-candidatura href="tel:${TEL_LAVORO}">${TEL_LAVORO_VIS}</a></p>
           </div>
         </div>
       </div>

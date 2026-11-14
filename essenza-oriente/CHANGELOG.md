@@ -52,7 +52,7 @@ Linguaggio visivo Apex Media: carta calda, inchiostro verde profondo, hairline, 
 - Tutto il resto invariato: title, meta, H1 e schema delle altre pagine, GA4, Ads, GTM, widget Treatwell.
 
 ## Novembre 2026 — Cerchiamo personale
-- Nuova sezione `#lavora` in fondo alla home (IT e 中文), dopo le FAQ: "Cerchiamo estetista con diploma", con tasto WhatsApp a messaggio precompilato. Testi in `i18n/*.json` → `lavora`. Link "Lavora con noi" nel footer.
+- Nuova sezione `#lavora` in fondo alla home (IT e 中文), dopo le FAQ: "Cerchiamo estetista con diploma", con tasto WhatsApp a messaggio precompilato. Le candidature vanno al numero dedicato 351 594 0685 (`TEL_LAVORO` / `WA_LAVORO` in `genera-sito.js`), non a quello del centro. Testi in `i18n/*.json` → `lavora`. Link "Lavora con noi" nel footer.
 - Tracking: i click sulla candidatura inviano `click_candidatura` e **non** contano come conversione cliente (`click_whatsapp` / Google Ads).
 - Grafiche social in `social/2026-11-cerchiamo-estetista/` (post 4:5 e storia 9:16).
 - Quando la posizione è coperta: togliere il blocco "LAVORA CON NOI" da `genera-sito.js` e il link nel footer, poi `node genera-sito.js`.
