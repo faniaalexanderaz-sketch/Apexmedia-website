@@ -1,7 +1,7 @@
 # Prompt per un nuovo video 3D Apex Media
 
 Apri una nuova chat di Claude Code su questo repo (branch con la cartella `reels/`) e incolla tutto il blocco.
-Cambia solo le 4 righe sotto "DA DECIDERE" se vuoi un altro tema o altri colori.
+Non c'è niente da compilare: tema, colori, font, gancio e scene sono già decisi.
 
 ```text
 /hyperframes Devi creare un Reel motion design 3D per Apex Media (agenzia di performance marketing).
@@ -9,12 +9,18 @@ Formato 9:16, 1080x1920, 30 fps, 16-18 secondi, italiano, con musica ed effetti 
 Deve essere MOLTO più veloce e dinamico del video di riferimento, con un gancio che ferma lo scroll, e visivamente diverso.
 Vai fino al render MP4 senza fermarti a chiedere conferme: le decisioni sono già tutte qui sotto.
 
-== DA DECIDERE (già compilato, cambia solo se serve) ==
-TEMA: "100 post, 0 clienti" — pubblicare contenuti non è vendere. Servono contenuti che portano a un'azione.
-MESSAGGIO UNICO: "Smettila di pubblicare. Inizia a convertire."
-COLORI: nero puro #000000, arancio fluo #FF5A1F (accento: tutto ciò che funziona), bianco #FFFFFF (testo),
-        grigio spento #5A5A5A (il problema: post inutili). Niente blu, niente lime, niente rosa.
-CTA FINALE: "RICHIEDI L'AUDIT GRATUITO →" + "LINK IN BIO"
+== DECISIONI GIÀ PRESE (non cambiarle, non chiedere conferma) ==
+TEMA: "100 post, 0 clienti" — pubblicare contenuti non è vendere.
+GANCIO (frame 0): "100 POST." e al primo battito "0 CLIENTI."
+MESSAGGIO FINALE: "SMETTILA DI PUBBLICARE. INIZIA A CONVERTIRE."
+CTA: "RICHIEDI L'AUDIT GRATUITO →" + "LINK IN BIO"
+COLORI: nero puro #000000 · arancio fluo #FF5A1F (tutto ciò che converte, numeri chiave, logo, CTA) ·
+        bianco #FFFFFF (testo) · grigio spento #5A5A5A (i post inutili). Nient'altro.
+FONT: Big Shoulders Display 900 (numeri e righe) + Unbounded 900 (parole d'urto) e 500 (etichette).
+LINGUAGGIO VISIVO: lastre lucide verticali in formato 4:5 (sono i "post") su un pavimento nero riflettente,
+        che cadono a domino. Facce piene ombreggiate, bordo luminoso, riflesso sul pavimento. Niente wireframe.
+MUSICA: elettronica aggressiva a 140 BPM, build breve e drop netto.
+NOME PROGETTO: reels/apex-post-clienti-3d
 
 == PRIMA DI SCRIVERE CODICE: LEGGI IL PROGETTO DI RIFERIMENTO ==
 In questo repo c'è già un video 3D finito: reels/apex-funnel-3d/. Leggi nell'ordine:
@@ -22,7 +28,7 @@ In questo repo c'è già un video 3D finito: reels/apex-funnel-3d/. Leggi nell'o
 2. reels/apex-funnel-3d/index.html (variabili colore, host delle scene, tracce audio)
 3. reels/apex-funnel-3d/compositions/world.html (tutto il mondo 3D)
 4. reels/apex-funnel-3d/compositions/t-traffico.html (un overlay di testo tipo)
-Riusa la TECNICA, non il contenuto. Il nuovo video deve avere oggetti, camera e storia diversi.
+Riusa la TECNICA, non il contenuto.
 
 Tecnica che funziona (già verificata in questo ambiente, non reinventarla):
 - Three.js r149 caricato come script classico da assets/vendor/three.min.js (copialo dal progetto di riferimento).
@@ -39,12 +45,10 @@ Tecnica che funziona (già verificata in questo ambiente, non reinventarla):
 - Colori come variabili CSS in index.html (data-composition-variables), letti nel mondo 3D con getComputedStyle.
 
 == GANCIO: I PRIMI 1,5 SECONDI DECIDONO TUTTO ==
-- Frame 0: una frase di massimo 4 parole, enorme (occupa almeno il 60% della larghezza), già leggibile,
-  con un oggetto 3D già in movimento dietro. Mai nero, mai logo, mai un'entrata lenta.
-- Entro 0,5 s succede qualcosa di fisico e violento: qualcosa si rompe, cade, esplode o viene verso la camera.
-- Entro 1,5 s lo spettatore ha capito il problema e ha una domanda aperta in testa.
-- Scrivi 3 ganci diversi in SPEC.md (uno che accusa, uno con un numero, uno con una domanda) e scegli il più forte,
-  spiegando in una riga perché. Esempi di tono: "100 POST. 0 CLIENTI." / "STAI PUBBLICANDO A VUOTO." / "E I CLIENTI?"
+- Frame 0: "100 POST." enorme (almeno il 60% della larghezza), già leggibile, con un muro di lastre grigie
+  che sta già cadendo verso la camera. Mai nero, mai logo, mai un'entrata lenta.
+- A 0,43 s (primo battito): le lastre si schiantano a terra, scossa di camera, slam di "0 CLIENTI." in arancio.
+- Entro 1,5 s il problema è chiaro senza audio.
 
 == RITMO: PIÙ VELOCE DEL RIFERIMENTO ==
 - Musica a 140 BPM (battito 0,43 s, battuta 1,71 s). Ogni cambio di scena cade su una battuta.
@@ -57,24 +61,32 @@ Tecnica che funziona (già verificata in questo ambiente, non reinventarla):
 
 == DEVE ESSERE DIVERSO DAL RIFERIMENTO ==
 Vietato riusare: il funnel a cono, la fila di barre che salgono, il pavimento a griglia di piastrelle, la nuvola di
-puntini come elemento principale, il lime e il rosa. Puoi tenere solo il logo 3D e i due font.
-Scegli UN altro linguaggio visivo e tienilo per tutto il film, per esempio: lastre/schede che si impilano e crollano a
-domino, un nastro o tubo che la camera percorre dall'interno, un oggetto che si frantuma e si ricompone, forme solide
-lucide su pavimento riflettente. Scrivi la scelta in SPEC.md prima di iniziare.
+puntini come elemento principale, il lime e il rosa. Dal riferimento tieni solo il logo 3D e i due font.
 
-== STORIA (5 momenti, una sola camera continua) ==
-Inventa tu gli oggetti 3D, ma rispetta questa struttura e fai in modo che ogni scena CAUSI la successiva:
-1. GANCIO 0-1,7 s: frase già leggibile al frame 0 + il problema visibile in 3D
-   (es. un muro infinito di "post" grigi, lastre tutte uguali, che scorrono senza che succeda nulla).
-2. IL DATO CHE ILLUDE 1,7-5,1 s: un contatore gigante che sale (like, views, post pubblicati) mentre il numero
-   "CLIENTI" resta a 0. Parola d'urto: "E I CLIENTI?"
-3. IL MECCANISMO 5,1-10,3 s: il cambio. Un post diverso si accende in arancio e fa partire una reazione fisica
-   (es. tessere che cadono a domino, un percorso che si illumina, un oggetto che si assembla): contenuto → click →
-   contatto → cliente. Qui serve il momento più spettacolare: la camera ENTRA dentro l'oggetto.
-4. IL RISULTATO 10,3-13,7 s, sul drop della musica: il mondo grigio si accende tutto in arancio, numero che sale
-   (clienti al mese). Se usi numeri non reali, scrivi "SIMULAZIONE" sotto.
-5. BRAND 13,7-17 s: logo Apex in 3D estruso (triangolo con triangolo pieno interno: la geometria è in world.html del
-   riferimento) che si blocca su un colpo di musica, wordmark APEXMEDIA, messaggio unico, CTA. Ultima riga ferma ≥ 2 s.
+== STORIA (5 scene, una sola camera continua, tempi sulle battute a 140 BPM) ==
+1. GANCIO 0-1,7 s
+   3D: muro di lastre grigie che cade verso la camera e si schianta sul pavimento riflettente.
+   Testo: "100 POST." → "0 CLIENTI." (arancio).
+   Camera: arretra di scatto mentre il muro cade, poi whip a destra.
+2. L'ILLUSIONE 1,7-5,1 s
+   3D: corridoio infinito di lastre grigie tutte uguali; la camera ci corre in mezzo a tutta velocità.
+   Testo: contatore gigante "LIKE" da 0 a 12.480; sotto, fisso, "CLIENTI 0". All'ultima battuta slam "E I CLIENTI?".
+   Camera: corsa in avanti accelerando, rollio di 20°, frenata secca sulla domanda.
+3. IL MECCANISMO 5,1-10,3 s
+   3D: una sola lastra si accende in arancio, cade e fa partire un domino lungo un percorso a spirale;
+   ogni lastra colpita diventa arancio.
+   Testo: quattro parole a raffica, una per battuta: "CONTENUTO" → "CLICK" → "CONTATTO" → "CLIENTE".
+   Camera: insegue il domino a pelo del pavimento, gira a 180° attorno alla spirale, poi si tuffa ATTRAVERSO
+   l'ultima lastra. Qui la pausa di 0,4 s quasi in silenzio.
+4. IL RISULTATO 10,3-13,7 s, sul drop
+   3D: tutte le lastre si rialzano arancio e volano a impilarsi in una torre che cresce verso l'alto.
+   Testo: "CLIENTI AL MESE" con contatore da 0 a 37, e sotto in piccolo "SIMULAZIONE".
+   Camera: risalita a razzo lungo la torre, con scossa sul drop.
+5. BRAND 13,7-17 s
+   3D: in cima alla torre il logo Apex estruso (geometria in world.html del riferimento) arriva ruotando e si blocca
+   sul colpo di musica; schegge arancio che esplodono dietro.
+   Testo: "APEXMEDIA" → "SMETTILA DI PUBBLICARE." / "INIZIA A CONVERTIRE." (arancio) → pulsante arancio con la CTA →
+   "LINK IN BIO". Ultima riga ferma ≥ 2 s.
 
 == ASTICELLA DI QUALITÀ: deve essere nettamente meglio del riferimento ==
 Il riferimento ha questi limiti, il nuovo video li deve superare:
@@ -105,7 +117,7 @@ Il riferimento ha questi limiti, il nuovo video li deve superare:
    Nella consegna scrivi che l'audio è misurato, non ascoltato.
 
 == CICLO DI LAVORO OBBLIGATORIO ==
-1. Scrivi SPEC.md: ogni scena con secondi, oggetto 3D, mossa di camera, testo, suono.
+1. Scrivi SPEC.md partendo dalle 5 scene qui sopra: aggiungi solo i fotogrammi esatti, le curve di easing e i suoni.
 2. Costruisci prima solo il mondo 3D, fai snapshot a 12-14 istanti e GUARDALI. Correggi prima di aggiungere i testi.
 3. Aggiungi testi e audio, poi `npx hyperframes check --json`: zero errori.
 4. Snapshot di nuovo. Per ogni fotogramma chiediti: si capisce cosa sto guardando senza spiegazioni?
@@ -122,11 +134,7 @@ Il riferimento ha questi limiti, il nuovo video li deve superare:
 - Una descrizione Instagram pronta (gancio in prima riga, CTA "commenta AUDIT", 8 hashtag).
 ```
 
-## Come cambiare tema e colori
+## Se un giorno vuoi un altro video
 
-| Vuoi | Cambia |
-| --- | --- |
-| Altro argomento | le righe TEMA e MESSAGGIO UNICO, e gli esempi tra parentesi nella STORIA |
-| Altri colori | la riga COLORI: sempre 1 solo fluo dominante + bianco + 1 colore "spento" per il problema |
-| Altra durata | "16-18 secondi" in alto e i secondi dei 5 momenti (tienili multipli di 1,71 s: sono battute a 140 BPM) |
-| Formato orizzontale | "9:16, 1080x1920" → "16:9, 1920x1080" e togli la regola "tra y 168 e 1330 px" |
+Cambia solo il blocco "DECISIONI GIÀ PRESE" e la sezione "STORIA". Regola per i colori: sempre 1 solo fluo dominante,
+bianco per il testo e 1 colore spento per il problema.
