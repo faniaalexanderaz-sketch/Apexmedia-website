@@ -1,0 +1,36 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; color: var(--color-ink); perspective: 1400px; }
+    .cond { font-family: "Big Shoulders Display", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 0.92; letter-spacing: 0.01em; }
+    .wide { font-family: "Unbounded", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; }
+    .cap { font-family: "Unbounded", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; }
+    .acc { color: var(--color-accent); }
+    .bad { color: var(--color-problem); }
+    .ch, .wd { display: inline-block; }
+    .abs { position: absolute; left: 70px; width: 940px; }
+    #hk-a { top: 250px; font-size: 118px; }
+    #hk-b { top: 372px; font-size: 172px; }
+
+  </style>
+  <div id="root" data-composition-id="t-hook" data-width="1080" data-height="1920">
+    <div id="hk-a" class="abs cond"><span class="wd hk-w">Il tuo</span> <span class="wd hk-w">fatturato</span> <span class="wd hk-w">è</span></div>
+    <div id="hk-b" class="abs wide bad"><span class="ch hk-c">F</span><span class="ch hk-c">E</span><span class="ch hk-c">R</span><span class="ch hk-c">M</span><span class="ch hk-c">O</span><span class="ch hk-c">?</span></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // frame 0 is the hook: already on screen. One hard knock when the bars fall back.
+      tl.fromTo("#hk-b", { x: 0 }, { x: -22, duration: 0.05, ease: "power2.out" }, 2.5);
+      tl.fromTo("#hk-b", { x: -22 }, { x: 14, duration: 0.05, ease: "none", immediateRender: false }, 2.55);
+      tl.fromTo("#hk-b", { x: 14 }, { x: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, 2.6);
+      // exit: letters tip backwards in 3D and drop, line folds up
+      tl.fromTo(".hk-c", { rotationX: 0, y: 0, opacity: 1 }, { rotationX: -95, y: 140, opacity: 0, duration: 0.3, ease: "power3.in", stagger: 0.035, transformOrigin: "50% 100%" }, 3.4);
+      tl.fromTo(".hk-w", { rotationX: 0, opacity: 1 }, { rotationX: 90, opacity: 0, duration: 0.22, ease: "power3.in", stagger: 0.04, transformOrigin: "50% 0%" }, 3.42);
+
+      window.__timelines["t-hook"] = tl;
+    })();
+  </script>
+</template>

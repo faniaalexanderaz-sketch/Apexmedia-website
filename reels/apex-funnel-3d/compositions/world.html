@@ -1,0 +1,786 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Big Shoulders Display";
+      font-weight: 900;
+      src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Unbounded";
+      font-weight: 500;
+      src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    #w-canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #w-flash {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      background: #fff;
+      opacity: 0;
+    }
+    .w-anchor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+    }
+    .w-lab {
+      position: absolute;
+      right: 26px;
+      top: -84px;
+      width: 420px;
+      text-align: right;
+      color: #fff;
+    }
+    .w-num {
+      display: block;
+      font-family: "Big Shoulders Display", sans-serif;
+      font-weight: 900;
+      font-size: 108px;
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      font-variant-numeric: tabular-nums;
+    }
+    .w-cap {
+      display: block;
+      margin-top: 8px;
+      font-family: "Unbounded", sans-serif;
+      font-weight: 500;
+      font-size: 30px;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.72);
+    }
+    #w-l3 .w-num {
+      color: var(--color-accent);
+      font-size: 156px;
+    }
+    #w-l3 .w-lab {
+      top: -100px;
+    }
+  </style>
+  <div id="root" data-composition-id="world" data-width="1080" data-height="1920">
+    <canvas id="w-canvas" width="1080" height="1920"></canvas>
+    <div id="w-a1" class="w-anchor"><div id="w-l1" class="w-lab"><span class="w-num" id="w-n1">10.000</span><span class="w-cap">VISITE</span></div></div>
+    <div id="w-a2" class="w-anchor"><div id="w-l2" class="w-lab"><span class="w-num" id="w-n2">0</span><span class="w-cap">CONTATTI</span></div></div>
+    <div id="w-a3" class="w-anchor"><div id="w-l3" class="w-lab"><span class="w-num" id="w-n3">0</span><span class="w-cap">CLIENTI</span></div></div>
+    <div id="w-flash"></div>
+  </div>
+  <script>
+    (function () {
+      /* ------------------------------------------------------------------
+         APEX — one continuous 3D world. Every frame is a pure function of t.
+         Beat grid: 120 BPM (0.5 s per beat, 2 s per bar).
+         ------------------------------------------------------------------ */
+      const D = 21;
+      const T_STREAM = 2.9, // particles start arriving
+        T_TRAF = 4,
+        T_FUN = 8,
+        T_DIVE = 12,
+        T_DROP = 14,
+        T_BRAND = 18;
+
+      const css = getComputedStyle(document.documentElement);
+      const hex = (name, fb) => new THREE.Color((css.getPropertyValue(name) || fb).trim() || fb);
+      const ACC = hex("--color-accent", "#C8FF00");
+      const BAD = hex("--color-problem", "#FF2D78");
+      const WHITE = new THREE.Color(1, 1, 1);
+
+      /* ---------- helpers ---------- */
+      const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v));
+      const lerp = (a, b, p) => a + (b - a) * p;
+      const E = {
+        lin: (p) => p,
+        out: (p) => 1 - Math.pow(1 - p, 4),
+        expo: (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)),
+        in: (p) => p * p * p,
+        in2: (p) => p * p,
+        io: (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2),
+      };
+      const seg = (t, a, b) => clamp((t - a) / (b - a));
+      function rng(seed) {
+        return function () {
+          seed |= 0;
+          seed = (seed + 0x6d2b79f5) | 0;
+          let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      /* ---------- renderer ---------- */
+      const canvas = document.querySelector("#w-canvas");
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false, preserveDrawingBuffer: true });
+      renderer.setPixelRatio(1);
+      renderer.setSize(1080, 1920, false);
+      renderer.setClearColor(0x000000, 1);
+      const scene = new THREE.Scene();
+      const cam = new THREE.PerspectiveCamera(58, 1080 / 1920, 0.05, 400);
+
+      /* ---------- floor tiles (instanced, animated in the shader) ---------- */
+      const TS = 1.5;
+      const tilesX = 29,
+        tilesZ = 76;
+      const tileGeo = new THREE.BoxGeometry(1, 1, 1);
+      const tileMat = new THREE.ShaderMaterial({
+        extensions: { derivatives: true },
+        uniforms: {
+          uRip: { value: -1 },
+          uAcc: { value: ACC.clone() },
+          uLaneCol: { value: BAD.clone() },
+          uLaneAmt: { value: 0 },
+          uPool: { value: 0 },
+          uTry: { value: 0 },
+        },
+        vertexShader: `
+          uniform float uRip; uniform float uTry;
+          varying vec2 vUv; varying vec3 vN; varying float vD; varying float vRise; varying vec2 vXZ;
+          void main(){
+            vec4 ip = instanceMatrix * vec4(0.0,0.0,0.0,1.0);
+            float d = length(ip.xz);
+            float h = 0.10;
+            float rise = 0.0;
+            if (uRip > 0.0) {
+              float front = uRip * 13.0;
+              float k = exp(-pow((d - front) / 2.6, 2.0));
+              rise = k * 2.4 * exp(-uRip * 0.5);
+            }
+            h += rise;
+            vec3 p = position;
+            p.y = (p.y + 0.5) * h;
+            p.xz *= ${(TS * 0.93).toFixed(3)};
+            vec4 w = vec4(ip.xyz + p, 1.0);
+            vec4 mv = viewMatrix * w;
+            vUv = uv; vN = normal; vD = -mv.z; vRise = rise; vXZ = ip.xz;
+            gl_Position = projectionMatrix * mv;
+          }`,
+        fragmentShader: `
+          uniform vec3 uAcc; uniform vec3 uLaneCol; uniform float uLaneAmt; uniform float uPool;
+          varying vec2 vUv; varying vec3 vN; varying float vD; varying float vRise; varying vec2 vXZ;
+          void main(){
+            vec2 q = min(vUv, 1.0 - vUv);
+            vec2 fw = fwidth(vUv);
+            float lx = 1.0 - smoothstep(fw.x * 0.9, fw.x * 2.2, q.x);
+            float ly = 1.0 - smoothstep(fw.y * 0.9, fw.y * 2.2, q.y);
+            float line = max(lx, ly);
+            float top = step(0.5, vN.y);
+            float r = clamp(vRise * 0.9, 0.0, 1.0);
+            vec3 lineCol = mix(vec3(0.17), uAcc, r);
+            vec3 col = vec3(0.010) + lineCol * line * (0.5 + 0.5 * top);
+            col += uAcc * r * 0.10 * top;
+            // emissive bounce from the bar lane and from the funnel spout
+            float lane = exp(-abs(vXZ.x) * 0.55) * smoothstep(-31.0, -27.0, vXZ.y) * (1.0 - smoothstep(-3.0, 0.5, vXZ.y));
+            col += uLaneCol * lane * uLaneAmt * top * (0.10 + 0.35 * line);
+            float pool = exp(-dot(vXZ, vXZ) / 9.0);
+            col += uAcc * pool * uPool * top * (0.04 + 0.5 * line);
+            float fog = smoothstep(14.0, 78.0, vD);
+            col *= 1.0 - fog;
+            gl_FragColor = vec4(col, 1.0);
+          }`,
+      });
+      const tiles = new THREE.InstancedMesh(tileGeo, tileMat, tilesX * tilesZ);
+      {
+        const m = new THREE.Matrix4();
+        let n = 0;
+        for (let j = 0; j < tilesZ; j++)
+          for (let i = 0; i < tilesX; i++) {
+            m.makeTranslation((i - (tilesX - 1) / 2) * TS, 0, 36 - j * TS);
+            tiles.setMatrixAt(n++, m);
+          }
+        tiles.frustumCulled = false;
+      }
+      scene.add(tiles);
+
+      /* ---------- revenue bars: a staircase receding into depth ---------- */
+      const NB = 12;
+      const barZ = (i) => -3 - i * 2.2;
+      const barH = (i) => 1.2 + 14 * Math.pow(i / (NB - 1), 1.75);
+      const barGeo = new THREE.BoxGeometry(1.4, 1, 1.4);
+      barGeo.translate(0, 0.5, 0);
+      const bars = [];
+      for (let i = 0; i < NB; i++) {
+        const mat = new THREE.ShaderMaterial({
+          extensions: { derivatives: true },
+          uniforms: { uTop: { value: new THREE.Color() }, uH: { value: 1 }, uAct: { value: 0 } },
+          vertexShader: `
+            varying vec3 vN; varying vec2 vUv; varying vec3 vW; varying float vD;
+            void main(){
+              vN = normal; vUv = uv;
+              vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz;
+              vec4 mv = viewMatrix * w; vD = -mv.z;
+              gl_Position = projectionMatrix * mv;
+            }`,
+          fragmentShader: `
+            uniform vec3 uTop; uniform float uH; uniform float uAct;
+            varying vec3 vN; varying vec2 vUv; varying vec3 vW; varying float vD;
+            void main(){
+              float top = step(0.5, vN.y);
+              vec2 q = min(vUv, 1.0 - vUv);
+              vec2 fw = fwidth(vUv);
+              float lx = 1.0 - smoothstep(fw.x * 1.4, fw.x * 3.0, q.x);
+              float ly = 1.0 - smoothstep(fw.y * 1.4, fw.y * 3.0, q.y);
+              float line = max(lx, ly);
+              float fy = abs(fract(vW.y + 0.5) - 0.5);
+              float fwy = fwidth(vW.y);
+              float tick = (1.0 - smoothstep(fwy * 0.8, fwy * 2.0, fy)) * (1.0 - top);
+              float glow = exp(-(uH - vW.y) * 0.5) * (1.0 - top);
+              float side = 0.5 + 0.5 * abs(vN.x);
+              vec3 col = vec3(0.012);
+              col += uTop * (top + line * 0.9 + tick * 0.28 * uAct + glow * 0.55 * side * uAct);
+              col *= 1.0 - smoothstep(45.0, 120.0, vD);
+              gl_FragColor = vec4(col, 1.0);
+            }`,
+        });
+        const mesh = new THREE.Mesh(barGeo, mat);
+        mesh.position.set(0, 0, barZ(i));
+        scene.add(mesh);
+        bars.push(mesh);
+      }
+
+      /* ---------- funnel: rings + struts on a trumpet profile ---------- */
+      const Y_TOP = 13.5,
+        Y_BOT = 3.5,
+        R_TOP = 4.6,
+        R_BOT = 0.42;
+      const funR = (y) => R_BOT + (R_TOP - R_BOT) * Math.pow(clamp((y - Y_BOT) / (Y_TOP - Y_BOT)), 1.7);
+      const Y_L1 = Y_TOP - 3.4,
+        Y_L2 = Y_TOP - 6.8;
+      const funnel = new THREE.Group();
+      const ringMat = new THREE.MeshBasicMaterial({ color: ACC.clone(), transparent: true, opacity: 1 });
+      const lvlMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1 });
+      const strutMat = new THREE.MeshBasicMaterial({ color: ACC.clone().multiplyScalar(0.45), transparent: true, opacity: 1 });
+      const rings = [];
+      const NR = 16;
+      for (let k = 0; k < NR; k++) {
+        const y = Y_TOP - (k / (NR - 1)) * (Y_TOP - Y_BOT);
+        const lvl = k === 0 || Math.abs(y - Y_L1) < 0.34 || Math.abs(y - Y_L2) < 0.34;
+        const g = new THREE.TorusGeometry(funR(y), lvl ? 0.07 : 0.034, 6, 96);
+        g.rotateX(Math.PI / 2);
+        const mesh = new THREE.Mesh(g, lvl && k !== 0 ? lvlMat : ringMat);
+        mesh.position.y = y;
+        funnel.add(mesh);
+        rings.push(mesh);
+      }
+      for (let j = 0; j < 10; j++) {
+        const a = (j / 10) * Math.PI * 2;
+        const pts = [];
+        for (let s = 0; s <= 14; s++) {
+          const y = Y_BOT + (s / 14) * (Y_TOP - Y_BOT);
+          pts.push(new THREE.Vector3(Math.cos(a) * funR(y), y, Math.sin(a) * funR(y)));
+        }
+        funnel.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 40, 0.022, 5, false), strutMat));
+      }
+      scene.add(funnel);
+
+      /* ---------- shockwave ring on the floor ---------- */
+      const shockMat = new THREE.MeshBasicMaterial({ color: ACC.clone(), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+      const shockGeo = new THREE.RingGeometry(0.9, 1, 128);
+      shockGeo.rotateX(-Math.PI / 2);
+      const shock = new THREE.Mesh(shockGeo, shockMat);
+      shock.position.y = 0.3;
+      scene.add(shock);
+
+      /* ---------- Apex logo, extruded from the brand SVG ---------- */
+      const LOGO = new THREE.Vector3(0, 30, -27);
+      const logo = new THREE.Group();
+      {
+        const S = 0.27,
+          cx = 15,
+          cy = 18;
+        const P = (x, y) => new THREE.Vector2((x - cx) * S, (cy - y) * S);
+        const tri = [
+          [15, 3],
+          [27.5, 29],
+          [2.5, 29],
+        ];
+        const inc = [15, 21.14]; // incenter of the triangle
+        const sc = (k) => tri.map((p) => P(inc[0] + (p[0] - inc[0]) * k, inc[1] + (p[1] - inc[1]) * k));
+        const outer = new THREE.Shape(sc(1.165));
+        outer.holes.push(new THREE.Path(sc(0.835).reverse()));
+        const inner = new THREE.Shape([P(15, 13.5), P(20, 24), P(10, 24)]);
+        const opt = { depth: 0.9, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.05, bevelSegments: 2 };
+        const mat = new THREE.ShaderMaterial({
+          uniforms: { uAcc: { value: ACC.clone() } },
+          vertexShader: `varying vec3 vNv; void main(){ vNv = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+          fragmentShader: `uniform vec3 uAcc; varying vec3 vNv;
+            void main(){
+              vec3 n = normalize(vNv);
+              float d = max(dot(n, normalize(vec3(0.22, 0.34, 0.92))), 0.0);
+              vec3 col = uAcc * (0.07 + 0.93 * pow(d, 1.5)) + vec3(1.0) * pow(d, 40.0) * 0.25;
+              gl_FragColor = vec4(col, 1.0);
+            }`,
+        });
+        [outer, inner].forEach((sh) => {
+          const g = new THREE.ExtrudeGeometry(sh, opt);
+          g.translate(0, 0, -0.45);
+          logo.add(new THREE.Mesh(g, mat));
+        });
+        logo.position.copy(LOGO);
+      }
+      scene.add(logo);
+
+      /* ---------- particles: every dot is one visitor ---------- */
+      const N = 8000;
+      const r = rng(4242);
+      const sd = new Float32Array(N * 8);
+      for (let i = 0; i < N * 8; i++) sd[i] = r();
+      const cap = new Float32Array(N); // capture time (into the funnel)
+      const fate = new Uint8Array(N); // 1 lost at L1, 2 lost at L2, 3 becomes a client
+      for (let i = 0; i < N; i++) {
+        const v = 26 + sd[i * 8 + 2] * 16,
+          off = sd[i * 8 + 3] * 130;
+        const zs = -42 + sd[i * 8 + 5] * 50; // where on the stream it gets pulled
+        const tmin = T_FUN + 0.25 + sd[i * 8 + 6] * 1.4;
+        let tc = 99;
+        for (let k = 0; k < 8; k++) {
+          const tk = T_STREAM + (zs + 130 * k + 90 + off) / v;
+          if (tk >= tmin) {
+            tc = tk;
+            break;
+          }
+        }
+        cap[i] = tc <= T_DIVE + 0.7 ? tc : 99;
+        const f = sd[i * 8 + 7];
+        fate[i] = f < 0.86 ? 1 : f < 0.955 ? 2 : 3;
+      }
+      // spiral timing: fall(τ) = 1.6τ + 2.6τ²
+      const fallT = (dist) => (-1.6 + Math.sqrt(2.56 + 10.4 * dist)) / 5.2;
+      const TAU_L1 = fallT(3.4),
+        TAU_L2 = fallT(6.8),
+        TAU_EX = fallT(Y_TOP - Y_BOT);
+      const CAPT = 0.8;
+      const o = { x: 0, y: 0, z: 0, a: 0, s: 0, r: 1, g: 1, b: 1 };
+      const setC = (c, k) => {
+        o.r = c.r * k;
+        o.g = c.g * k;
+        o.b = c.b * k;
+      };
+      const mixC = (c1, c2, p) => {
+        o.r = lerp(c1.r, c2.r, p);
+        o.g = lerp(c1.g, c2.g, p);
+        o.b = lerp(c1.b, c2.b, p);
+      };
+
+      function particle(i, t) {
+        const s0 = sd[i * 8],
+          s1 = sd[i * 8 + 1],
+          s2 = sd[i * 8 + 2],
+          s3 = sd[i * 8 + 3],
+          s4 = sd[i * 8 + 4];
+        o.a = 0;
+        o.s = 0.1;
+        /* brand: everything bursts out from behind the logo */
+        if (t >= T_BRAND - 0.04) {
+          const bt = t - T_BRAND;
+          const th = s0 * Math.PI * 2 + bt * 0.05,
+            cz = s1 * 2 - 1,
+            sz = Math.sqrt(1 - cz * cz);
+          const R = (3.2 + 15 * s2) * E.expo(clamp(bt / 1.1)) + 0.35 * Math.max(0, bt) * (0.4 + s3);
+          o.x = LOGO.x + Math.cos(th) * sz * R;
+          o.y = LOGO.y + Math.sin(th) * sz * R * 1.25;
+          o.z = LOGO.z - 2.5 + cz * R * 0.45;
+          o.a = 0.9 - 0.68 * seg(bt, 0.2, 1.4);
+          o.s = 0.05 + 0.07 * s4;
+          if (s4 < 0.72) setC(ACC, 1);
+          else setC(WHITE, 1);
+          return;
+        }
+        const sx = (s0 * 2 - 1) * 7,
+          sy = 2.5 + s1 * 7,
+          v = 26 + s2 * 16,
+          off = s3 * 130;
+        const tc = cap[i];
+        const ts = Math.min(t, tc);
+        let u = -90 - off + v * (ts - T_STREAM);
+        if (u > -90) u = -90 + ((u + 90) % 130);
+        if (t < tc) {
+          /* stream: traffic flying past */
+          if (u < -90) return;
+          o.x = sx;
+          o.y = sy;
+          o.z = u;
+          o.a = 0.85 * (1 - seg(t, T_DROP - 0.6, T_DROP - 0.1));
+          o.s = 0.085 + 0.05 * s4;
+          if (s4 > 0.84) setC(ACC, 1);
+          else setC(WHITE, 0.82);
+          return;
+        }
+        const tau = t - tc;
+        const th0 = s4 * Math.PI * 2;
+        const rho = 0.74 + 0.24 * sd[i * 8 + 5];
+        if (tau < CAPT) {
+          /* pulled out of the stream up to the funnel mouth */
+          const p = E.io(tau / CAPT);
+          const mx = Math.cos(th0) * R_TOP * rho,
+            mz = Math.sin(th0) * R_TOP * rho;
+          o.x = lerp(sx, mx, p);
+          o.y = lerp(sy, Y_TOP + 0.2, p) + Math.sin(p * Math.PI) * 2.2;
+          o.z = lerp(u, mz, p);
+          o.a = 0.9;
+          o.s = 0.1;
+          setC(WHITE, 0.95);
+          return;
+        }
+        const t2 = tau - CAPT;
+        const f = fate[i];
+        const tStop = f === 1 ? TAU_L1 : f === 2 ? TAU_L2 : TAU_EX;
+        const tt = Math.min(t2, tStop);
+        const y = Y_TOP - (1.6 * tt + 2.6 * tt * tt);
+        const th = th0 + 1.8 * tt + 2.4 * tt * tt;
+        const rad = funR(y) * rho;
+        const px = Math.cos(th) * rad,
+          pz = Math.sin(th) * rad;
+        const gone = seg(t, T_DROP, T_DROP + 0.35); // funnel dissolves at the drop
+        if (t2 <= tStop) {
+          o.x = px;
+          o.y = y;
+          o.z = pz;
+          o.a = 0.95 * (1 - gone);
+          o.s = y < Y_L2 ? 0.15 : 0.105;
+          if (y < Y_L2) setC(ACC, 1);
+          else if (y < Y_L1) mixC(WHITE, ACC, 0.55);
+          else setC(WHITE, 0.95);
+          return;
+        }
+        const dt = t2 - tStop;
+        if (f !== 3) {
+          /* lost: thrown out through the wall */
+          const k = 6.5 * (1 - Math.exp(-2.4 * dt));
+          const rx = Math.cos(th),
+            rz = Math.sin(th);
+          o.x = px + (rx * 0.85 - rz * 0.55) * k;
+          o.y = y + 0.6 * k * 0.4 - 1.2 * dt * dt;
+          o.z = pz + (rz * 0.85 + rx * 0.55) * k;
+          o.a = 0.95 * (1 - clamp(dt / 0.85)) * (1 - gone);
+          o.s = 0.095;
+          mixC(WHITE, BAD, clamp(dt / 0.12));
+          return;
+        }
+        /* client: drops out of the spout and pools on the floor */
+        const fall = 7 * dt + 10 * dt * dt;
+        const yy = Y_BOT - fall;
+        if (yy > 0.25) {
+          o.x = px * 0.6;
+          o.y = yy;
+          o.z = pz * 0.6;
+          o.a = 1;
+          o.s = 0.16;
+          setC(ACC, 1);
+          return;
+        }
+        const tFloor = (-7 + Math.sqrt(49 + 40 * (Y_BOT - 0.25))) / 20;
+        const tf = dt - tFloor;
+        const ang = th0 * 3.1;
+        let rr = 0.3 + 2.4 * (1 - Math.exp(-2.2 * tf)) * (0.35 + 0.65 * s2);
+        const boom = Math.max(0, t - T_DROP);
+        rr += boom * 13 * (0.6 + 0.4 * s1); // rides the shockwave out
+        o.x = Math.cos(ang) * rr;
+        o.y = 0.25;
+        o.z = Math.sin(ang) * rr;
+        o.a = 1 - clamp(boom / 1.3);
+        o.s = 0.15;
+        setC(ACC, 1);
+      }
+
+      const pPos = new Float32Array(N * 3),
+        pCol = new Float32Array(N * 4),
+        pSize = new Float32Array(N);
+      const tPos = new Float32Array(N * 6),
+        tCol = new Float32Array(N * 8);
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+      pGeo.setAttribute("aCol", new THREE.BufferAttribute(pCol, 4));
+      pGeo.setAttribute("aSize", new THREE.BufferAttribute(pSize, 1));
+      const pMat = new THREE.ShaderMaterial({
+        uniforms: { uScale: { value: 1700 } },
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexShader: `
+          attribute vec4 aCol; attribute float aSize; uniform float uScale; varying vec4 vCol;
+          void main(){
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            float d = max(-mv.z, 0.01);
+            float fog = 1.0 - smoothstep(60.0, 105.0, d);
+            vCol = vec4(aCol.rgb, aCol.a * fog * smoothstep(0.25, 2.2, d));
+            gl_PointSize = clamp(aSize * uScale / d, 1.6, 54.0);
+            gl_Position = projectionMatrix * mv;
+          }`,
+        fragmentShader: `
+          varying vec4 vCol;
+          void main(){
+            float r = length(gl_PointCoord - 0.5);
+            float a = smoothstep(0.5, 0.28, r);
+            if (a * vCol.a < 0.004) discard;
+            gl_FragColor = vec4(vCol.rgb, vCol.a * a);
+          }`,
+      });
+      const points = new THREE.Points(pGeo, pMat);
+      points.frustumCulled = false;
+      scene.add(points);
+      const tGeo = new THREE.BufferGeometry();
+      tGeo.setAttribute("position", new THREE.BufferAttribute(tPos, 3));
+      tGeo.setAttribute("aCol", new THREE.BufferAttribute(tCol, 4));
+      const tMat = new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexShader: `attribute vec4 aCol; varying vec4 vCol;
+          void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); float d = max(-mv.z, 0.01);
+            vCol = vec4(aCol.rgb, aCol.a * (1.0 - smoothstep(60.0, 105.0, d)) * smoothstep(0.25, 2.2, d));
+            gl_Position = projectionMatrix * mv; }`,
+        fragmentShader: `varying vec4 vCol; void main(){ gl_FragColor = vCol; }`,
+      });
+      const tails = new THREE.LineSegments(tGeo, tMat);
+      tails.frustumCulled = false;
+      scene.add(tails);
+
+      /* ---------- camera choreography ---------- */
+      // [time, pos, look, up, roll°, fov, ease into this key]
+      const K = [
+        [0.0, [3.7, 1.9, 7.8], [0, 0.7, -8], [0, 1, 0], 0, 56, "lin"],
+        [3.45, [3.0, 2.1, 5.6], [0, 0.8, -9], [0, 1, 0], 0, 56, "lin"],
+        [4.1, [2.0, 3.6, 9.6], [0, 6.0, -40], [0, 1, 0], 0, 62, "io"],
+        [7.45, [1.4, 3.9, 8.6], [0, 6.2, -40], [0, 1, 0], 0, 62, "lin"],
+        [8.35, [7.6, 9.6, 26.5], [-3.5, 8.3, 0], [0, 1, 0], 0, 56, "io"],
+        [11.7, [-3.4, 10.6, 27.2], [-3.5, 8.3, 0], [0, 1, 0], 0, 56, "lin"],
+        [12.55, [0, 21.5, 3.0], [0, 8, 0], [0, 0.3, -1], 0, 62, "io"],
+        [14.0, [0, 3.0, 0.02], [0, -6, 0], [0, 0, -1], 360, 96, "in2"],
+        [14.55, [0.6, 2.6, 3.4], [0, 3.2, -14], [0, 1, 0], 360, 60, "out"],
+        [15.3, [4.7, 2.0, 7.6], [0, 5.6, -15], [0, 1, 0], 360, 58, "io"],
+        [17.4, [4.0, 8.6, -6], [0, 13.5, -27], [0, 1, 0], 360, 58, "io"],
+        [18.0, [0, 30.0, -10.4], [0, 25.4, -27], [0, 1, 0], 360, 54, "in2"],
+        [23.0, [0, 30.0, -10.4], [0, 25.4, -27], [0, 1, 0], 360, 54, "lin"],
+      ];
+      const vP = new THREE.Vector3(),
+        vL = new THREE.Vector3(),
+        vU = new THREE.Vector3();
+      function setCamera(t) {
+        let a = K[0],
+          b = K[K.length - 1];
+        for (let i = 0; i < K.length - 1; i++) {
+          if (t >= K[i][0] && t <= K[i + 1][0]) {
+            a = K[i];
+            b = K[i + 1];
+            break;
+          }
+        }
+        const p = E[b[6]](seg(t, a[0], b[0] === a[0] ? a[0] + 1e-6 : b[0]));
+        vP.set(lerp(a[1][0], b[1][0], p), lerp(a[1][1], b[1][1], p), lerp(a[1][2], b[1][2], p));
+        vL.set(lerp(a[2][0], b[2][0], p), lerp(a[2][1], b[2][1], p), lerp(a[2][2], b[2][2], p));
+        vU.set(lerp(a[3][0], b[3][0], p), lerp(a[3][1], b[3][1], p), lerp(a[3][2], b[3][2], p)).normalize();
+        // impact shake on the two hits
+        const sh = (t0, amp) => {
+          const k = t - t0;
+          if (k < 0 || k > 0.45) return 0;
+          return amp * Math.exp(-k * 9) * Math.sin(k * 70);
+        };
+        const shk = sh(T_DROP, 0.22) + sh(T_BRAND, 0.3);
+        vP.y += shk;
+        vL.y += shk * 0.6;
+        cam.position.copy(vP);
+        cam.up.copy(vU);
+        cam.lookAt(vL);
+        cam.rotateZ((lerp(a[4], b[4], p) * Math.PI) / 180);
+        cam.fov = lerp(a[5], b[5], p);
+        cam.updateProjectionMatrix();
+        cam.updateMatrixWorld(true);
+        cam.matrixWorldInverse.copy(cam.matrixWorld).invert();
+      }
+
+      /* ---------- labels that live on the funnel ---------- */
+      const anchors = [
+        [document.querySelector("#w-a1"), Y_TOP],
+        [document.querySelector("#w-a2"), Y_L1],
+        [document.querySelector("#w-a3"), Y_L2],
+      ];
+      const vA = new THREE.Vector3();
+      function placeLabels() {
+        const e = cam.matrixWorld.elements;
+        for (let k = 0; k < 3; k++) {
+          const y = anchors[k][1];
+          const R = funR(y) + 1.5;
+          vA.set(-e[0] * R, y - e[1] * R, -e[2] * R).project(cam);
+          const x = Math.max(372, (vA.x * 0.5 + 0.5) * 1080),
+            yy = (-vA.y * 0.5 + 0.5) * 1920;
+          anchors[k][0].style.transform = "translate(" + x.toFixed(2) + "px," + yy.toFixed(2) + "px)";
+        }
+      }
+
+      /* ---------- one frame ---------- */
+      const cGrey = new THREE.Color(0.2, 0.2, 0.2);
+      function render(t) {
+        setCamera(t);
+        pMat.uniforms.uScale.value = 960 / Math.tan((cam.fov * Math.PI) / 360);
+
+        // floor
+        tileMat.uniforms.uRip.value = t >= T_DROP ? t - T_DROP : -1;
+        const laneOn = 1 - seg(t, T_TRAF - 0.3, T_TRAF + 0.6); // pink while "fermo"
+        const laneUp = seg(t, T_DROP + 0.2, T_DROP + 2.2);
+        tileMat.uniforms.uLaneCol.value.copy(laneUp > 0 ? ACC : BAD);
+        tileMat.uniforms.uLaneAmt.value = Math.max(laneOn * 0.9, laneUp * 1.5);
+        tileMat.uniforms.uPool.value = seg(t, T_FUN + 2.2, T_FUN + 4.5) * (1 - seg(t, T_DROP + 0.2, T_DROP + 1.6)) * 1.3 + (t >= T_DROP ? Math.exp(-(t - T_DROP) * 3) * 0.7 : 0);
+
+        // bars
+        for (let i = 0; i < NB; i++) {
+          const m = bars[i];
+          // shot 1: they try to rise on the bar line, and fall back
+          const tr = seg(t, 2.0 + i * 0.045, 2.0 + i * 0.045 + 0.55);
+          const tryH = Math.sin(tr * Math.PI) * (1 - tr) * 2.2;
+          // drop: they shoot up as the shockwave reaches them
+          const t0 = T_DROP + 0.22 + i * 0.15;
+          const up = seg(t, t0, t0 + 0.75);
+          const e = E.expo(up);
+          const over = 1 + 0.07 * Math.sin(up * Math.PI) * (1 - up);
+          const h = 0.5 + tryH + (barH(i) - 0.5) * e * over;
+          m.scale.y = h;
+          const u = m.material.uniforms;
+          u.uH.value = h;
+          u.uAct.value = e;
+          if (e > 0) u.uTop.value.copy(cGrey).lerp(ACC, clamp(e * 3));
+          else u.uTop.value.copy(BAD).multiplyScalar(0.95).lerp(cGrey, seg(t, T_TRAF - 0.3, T_TRAF + 0.8));
+        }
+
+        // funnel: rings scale on from the top, dissolve at the drop
+        const fin = t - (T_FUN - 0.15);
+        const fout = seg(t, T_DROP, T_DROP + 0.4);
+        funnel.visible = fin > 0 && fout < 1;
+        if (funnel.visible) {
+          for (let k = 0; k < NR; k++) {
+            const s = E.expo(clamp((fin - k * 0.045) / 0.6));
+            rings[k].scale.set(s * (1 + fout * 0.7), 1, s * (1 + fout * 0.7));
+            rings[k].visible = s > 0.001;
+          }
+          const op = 1 - fout;
+          ringMat.opacity = op;
+          lvlMat.opacity = op;
+          strutMat.opacity = op * seg(fin, 0.5, 1.2);
+          funnel.rotation.y = (t - T_FUN) * 0.22;
+        }
+
+        // shockwave
+        const sk = seg(t, T_DROP, T_DROP + 1.5);
+        shock.visible = sk > 0 && sk < 1;
+        if (shock.visible) {
+          const s = 0.5 + 34 * E.out(sk);
+          shock.scale.set(s, 1, s);
+          shockMat.opacity = (1 - sk) * 0.9;
+        }
+
+        // logo: spins in and locks exactly on the hit, then turns slowly
+        const lin = seg(t, T_BRAND - 0.85, T_BRAND);
+        logo.visible = lin > 0;
+        if (logo.visible) {
+          const lt = t - T_BRAND;
+          const spin = (1 - E.out(lin)) * Math.PI * 5;
+          const idle = lt > 0 ? Math.sin(lt * 0.9) * 0.24 * seg(lt, 0, 1.2) : 0;
+          logo.rotation.y = spin + idle;
+          logo.rotation.x = lt > 0 ? Math.sin(lt * 0.6 + 1) * 0.07 : 0;
+          const punch = lt >= 0 ? 1 + 0.16 * Math.exp(-lt * 8) : 1;
+          const sc = 0.62 * (0.15 + 0.85 * E.out(lin)) * punch;
+          logo.scale.set(sc, sc, sc);
+        }
+
+        // particles + speed tails
+        const TAIL = 0.035;
+        for (let i = 0; i < N; i++) {
+          particle(i, t);
+          const i3 = i * 3,
+            i4 = i * 4;
+          const hx = o.x,
+            hy = o.y,
+            hz = o.z,
+            ha = o.a;
+          pPos[i3] = hx;
+          pPos[i3 + 1] = hy;
+          pPos[i3 + 2] = hz;
+          pCol[i4] = o.r;
+          pCol[i4 + 1] = o.g;
+          pCol[i4 + 2] = o.b;
+          pCol[i4 + 3] = ha;
+          pSize[i] = o.s;
+          const i6 = i * 6,
+            i8 = i * 8;
+          tPos[i6] = hx;
+          tPos[i6 + 1] = hy;
+          tPos[i6 + 2] = hz;
+          tCol[i8] = o.r;
+          tCol[i8 + 1] = o.g;
+          tCol[i8 + 2] = o.b;
+          let ta = 0;
+          if (ha > 0.02) {
+            particle(i, t - TAIL);
+            const dx = o.x - hx,
+              dy = o.y - hy,
+              dz = o.z - hz;
+            const d2 = dx * dx + dy * dy + dz * dz;
+            if (o.a > 0.02 && d2 < 9 && d2 > 0.0004) ta = ha * 0.55;
+            tPos[i6 + 3] = o.x;
+            tPos[i6 + 4] = o.y;
+            tPos[i6 + 5] = o.z;
+          } else {
+            tPos[i6 + 3] = hx;
+            tPos[i6 + 4] = hy;
+            tPos[i6 + 5] = hz;
+          }
+          tCol[i8 + 3] = ta;
+          tCol[i8 + 4] = tCol[i8];
+          tCol[i8 + 5] = tCol[i8 + 1];
+          tCol[i8 + 6] = tCol[i8 + 2];
+          tCol[i8 + 7] = 0;
+        }
+        pGeo.attributes.position.needsUpdate = true;
+        pGeo.attributes.aCol.needsUpdate = true;
+        pGeo.attributes.aSize.needsUpdate = true;
+        tGeo.attributes.position.needsUpdate = true;
+        tGeo.attributes.aCol.needsUpdate = true;
+
+        placeLabels();
+        renderer.render(scene, cam);
+      }
+
+      /* ---------- timeline ---------- */
+      function fmt(n) {
+        return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+      const n2 = document.querySelector("#w-n2"),
+        n3 = document.querySelector("#w-n3");
+      const c2 = { v: 0 },
+        c3 = { v: 0 };
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+
+      const labIn = { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.3, ease: "expo.out" };
+      const labFrom = { opacity: 0, x: -60, filter: "blur(10px)" };
+      tl.fromTo("#w-l1", labFrom, labIn, T_FUN + 0.75);
+      tl.fromTo("#w-l2", labFrom, labIn, T_FUN + 1.5);
+      tl.fromTo(c2, { v: 0 }, { v: 600, duration: 1.9, ease: "power2.out", onUpdate: () => (n2.textContent = fmt(c2.v)) }, T_FUN + 1.5);
+      tl.fromTo("#w-l3", labFrom, labIn, T_FUN + 2.25);
+      tl.fromTo(c3, { v: 0 }, { v: 120, duration: 1.4, ease: "power2.out", onUpdate: () => (n3.textContent = fmt(c3.v)) }, T_FUN + 2.25);
+      tl.to(["#w-l1", "#w-l2", "#w-l3"], { opacity: 0, filter: "blur(12px)", duration: 0.18, ease: "power2.in", stagger: 0.04 }, T_DIVE - 0.4);
+
+      tl.fromTo("#w-flash", { opacity: 0.9 }, { opacity: 0, duration: 0.22, ease: "power2.out", immediateRender: false }, T_DROP);
+      tl.fromTo("#w-flash", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, T_BRAND);
+
+      render(0);
+      n2.textContent = "0";
+      n3.textContent = "0";
+      window.__timelines["world"] = tl;
+    })();
+  </script>
+</template>

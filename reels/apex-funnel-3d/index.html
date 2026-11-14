@@ -1,0 +1,47 @@
+<!doctype html>
+<html
+  lang="it"
+  data-composition-variables='[
+    {"id":"color-accent","type":"color","label":"Fluo principale","default":"#C8FF00"},
+    {"id":"color-problem","type":"color","label":"Fluo problema","default":"#FF2D78"},
+    {"id":"color-ink","type":"color","label":"Testo","default":"#FFFFFF"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="assets/vendor/three.min.js"></script>
+    <style>
+      :root {
+        --color-accent: #c8ff00;
+        --color-problem: #ff2d78;
+        --color-ink: #ffffff;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="21" data-width="1080" data-height="1920">
+      <div id="world" data-composition-id="world" data-composition-src="compositions/world.html" data-start="0" data-duration="21" data-track-index="0" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 1"></div>
+      <div id="t-hook" data-composition-id="t-hook" data-composition-src="compositions/t-hook.html" data-start="0" data-duration="4" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 2"></div>
+      <div id="t-traffico" data-composition-id="t-traffico" data-composition-src="compositions/t-traffico.html" data-start="4" data-duration="4" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 3"></div>
+      <div id="t-funnel" data-composition-id="t-funnel" data-composition-src="compositions/t-funnel.html" data-start="8" data-duration="4" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 4"></div>
+      <div id="t-crescita" data-composition-id="t-crescita" data-composition-src="compositions/t-crescita.html" data-start="14" data-duration="4" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 5"></div>
+      <div id="t-brand" data-composition-id="t-brand" data-composition-src="compositions/t-brand.html" data-start="18" data-duration="3" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index: 6"></div>
+      <audio id="bed" src="assets/audio/bed.mp3" data-start="0" data-duration="21" data-media-start="2.03" data-volume="1" data-fade-out="0.4" data-track-index="2"></audio>
+      <audio id="sfx-whoosh-1" src="assets/audio/whoosh.mp3" data-start="3.35" data-duration="2.2" data-volume="0.55" data-track-index="3"></audio>
+      <audio id="sfx-swish-1" src="assets/audio/swish.mp3" data-start="6.22" data-duration="0.3" data-volume="0.7" data-track-index="3"></audio>
+      <audio id="sfx-whoosh-2" src="assets/audio/whoosh.mp3" data-start="7.4" data-duration="2.2" data-volume="0.55" data-track-index="3"></audio>
+      <audio id="sfx-whoosh-3" src="assets/audio/whoosh.mp3" data-start="11.9" data-duration="2.2" data-volume="0.45" data-track-index="3"></audio>
+      <audio id="sfx-swish-2" src="assets/audio/swish.mp3" data-start="16.48" data-duration="0.3" data-volume="0.7" data-track-index="3"></audio>
+      <audio id="sfx-hit" src="assets/audio/hit.mp3" data-start="18" data-duration="3" data-volume="0.5" data-fade-out="1.2" data-track-index="4"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

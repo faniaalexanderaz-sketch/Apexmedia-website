@@ -1,0 +1,39 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; color: var(--color-ink); perspective: 1400px; }
+    .cond { font-family: "Big Shoulders Display", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 0.92; letter-spacing: 0.01em; }
+    .wide { font-family: "Unbounded", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; }
+    .cap { font-family: "Unbounded", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; }
+    .acc { color: var(--color-accent); }
+    .bad { color: var(--color-problem); }
+    .ch, .wd { display: inline-block; }
+    .abs { position: absolute; left: 70px; width: 940px; }
+    .ctr { left: 40px; width: 1000px; text-align: center; }
+    #bd-w { top: 800px; font-size: 100px; letter-spacing: 0; }
+    #bd-t { top: 944px; font-size: 84px; }
+    #bd-cta { position: absolute; left: 90px; top: 1128px; width: 900px; height: 132px; background: var(--color-accent); color: #000; display: flex; align-items: center; justify-content: center; font-size: 72px; }
+    #bd-bio { top: 1284px; font-size: 28px; opacity: 0.8; }
+
+  </style>
+  <div id="root" data-composition-id="t-brand" data-width="1080" data-height="1920">
+    <div id="bd-w" class="abs ctr wide"><span class="ch bd-c">A</span><span class="ch bd-c">P</span><span class="ch bd-c">E</span><span class="ch bd-c">X</span><span class="ch bd-c">M</span><span class="ch bd-c">E</span><span class="ch bd-c">D</span><span class="ch bd-c">I</span><span class="ch bd-c">A</span></div>
+    <div id="bd-t" class="abs ctr cond"><span class="wd bd-x acc">Più clienti.</span> <span class="wd bd-x">Non più views.</span></div>
+    <div id="bd-cta" class="cond"><span id="bd-ct" class="wd">Richiedi l'audit gratuito →</span></div>
+    <div id="bd-bio" class="abs ctr cap"><span id="bd-bb" class="wd">link in bio</span></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo(".bd-c", { scale: 2.4, opacity: 0, filter: "blur(16px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out", stagger: 0.012 }, 0.02);
+      tl.fromTo(".bd-x", { rotationX: -90, opacity: 0 }, { rotationX: 0, opacity: 1, duration: 0.35, ease: "expo.out", stagger: 0.12, transformOrigin: "50% 0%" }, 0.35);
+      tl.fromTo("#bd-cta", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "expo.out" }, 0.65);
+      tl.fromTo("#bd-ct", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out" }, 0.72);
+      tl.fromTo("#bd-bb", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.85);
+
+      window.__timelines["t-brand"] = tl;
+    })();
+  </script>
+</template>

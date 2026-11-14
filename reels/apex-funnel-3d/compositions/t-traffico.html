@@ -1,0 +1,47 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; color: var(--color-ink); perspective: 1400px; }
+    .cond { font-family: "Big Shoulders Display", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 0.92; letter-spacing: 0.01em; }
+    .wide { font-family: "Unbounded", sans-serif; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; }
+    .cap { font-family: "Unbounded", sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; }
+    .acc { color: var(--color-accent); }
+    .bad { color: var(--color-problem); }
+    .ch, .wd { display: inline-block; }
+    .abs { position: absolute; left: 70px; width: 940px; }
+    #tf-a { top: 250px; font-size: 118px; }
+    #tf-n { top: 360px; font-size: 336px; line-height: 0.86; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    #tf-c { top: 668px; font-size: 34px; opacity: 0.8; }
+    #tf-d { top: 1010px; font-size: 118px; }
+    #tf-e { top: 1124px; font-size: 128px; }
+
+  </style>
+  <div id="root" data-composition-id="t-traffico" data-width="1080" data-height="1920">
+    <div id="tf-a" class="abs cond"><span class="wd tf-w">Più</span> <span class="wd tf-w">traffico</span></div>
+    <div id="tf-n" class="abs cond acc"><span id="tf-num" class="wd">0</span></div>
+    <div id="tf-c" class="abs cap"><span id="tf-cc" class="wd">visite al mese</span></div>
+    <div id="tf-d" class="abs cond"><span class="wd tf-x">Ma il</span> <span class="wd tf-x">fatturato</span></div>
+    <div id="tf-e" class="abs wide bad"><span class="ch tf-y">N</span><span class="ch tf-y">O</span><span class="ch tf-y">N</span> <span class="ch tf-y">S</span><span class="ch tf-y">A</span><span class="ch tf-y">L</span><span class="ch tf-y">E</span><span class="ch tf-y">.</span></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+      const num = document.querySelector("#tf-num"); const c = { v: 0 };
+      tl.fromTo(".tf-w", { rotationX: -90, opacity: 0 }, { rotationX: 0, opacity: 1, duration: 0.4, ease: "expo.out", stagger: 0.08, transformOrigin: "50% 0%" }, 0.1);
+      tl.fromTo("#tf-num", { z: -1600, opacity: 0, filter: "blur(14px)" }, { z: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, 0.25);
+      tl.fromTo(c, { v: 0 }, { v: 10000, duration: 1.5, ease: "power3.out", onUpdate: () => (num.textContent = fmt(c.v)) }, 0.25);
+      tl.fromTo("#tf-cc", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.7);
+      tl.fromTo(".tf-x", { rotationX: -90, opacity: 0 }, { rotationX: 0, opacity: 1, duration: 0.35, ease: "expo.out", stagger: 0.07, transformOrigin: "50% 0%" }, 2.0);
+      tl.fromTo(".tf-y", { scale: 2.6, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out", stagger: 0.03 }, 2.25);
+      tl.fromTo("#tf-n", { opacity: 1 }, { opacity: 0.28, duration: 0.3, ease: "power2.out" }, 2.2);
+      // exit: recedes with the camera pull-back
+      tl.fromTo("#root", { scale: 1, opacity: 1, filter: "blur(0px)" }, { scale: 0.45, opacity: 0, filter: "blur(14px)", duration: 0.3, ease: "power3.in", transformOrigin: "50% 40%" }, 3.6);
+      num.textContent = "0";
+
+      window.__timelines["t-traffico"] = tl;
+    })();
+  </script>
+</template>
