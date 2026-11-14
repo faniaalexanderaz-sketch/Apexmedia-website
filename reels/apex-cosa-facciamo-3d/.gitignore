@@ -1,3 +1,6 @@
 .hyperframes/
 .media/
 node_modules/
+renders/work-*/
+renders/.*hf-transaction*/
+renders/raw.mp4
