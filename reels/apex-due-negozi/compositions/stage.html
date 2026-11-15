@@ -1,0 +1,204 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      /* Line-art stage, synced to the voice-over word timings. Every frame is a pure function of t. */
+      const D = 60;
+      const cv = document.querySelector("#st-canvas"), c = cv.getContext("2d");
+      const ACC = (getComputedStyle(document.documentElement).getPropertyValue("--color-accent") || "#FF5A1F").trim() || "#FF5A1F";
+      const WH = "#ffffff", GR = "#8a8a8a";
+      const clamp = (v) => Math.max(0, Math.min(1, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+      const out = (p) => 1 - Math.pow(1 - p, 4), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+      const back = (p) => 1 + 2.6 * Math.pow(p - 1, 3) + 1.6 * Math.pow(p - 1, 2);
+      const pop = (t, t0) => back(seg(t, t0, t0 + 0.32));
+      function rng(seed) { return function () { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const R = rng(5150); const RN = []; for (let i = 0; i < 600; i++) RN.push(R());
+      const fmt = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+      /* ---- drawing kit ---- */
+      function style(col, lw, glow) { c.strokeStyle = col; c.fillStyle = col; c.lineWidth = lw || 5; c.lineCap = "round"; c.lineJoin = "round"; c.shadowColor = col; c.shadowBlur = glow === undefined ? 18 : glow; }
+      function pawn(x, y, s, col, fill) { // y = feet
+        style(col, 4 * s, 14);
+        c.beginPath(); c.arc(x, y - 78 * s, 17 * s, 0, 6.283);
+        c.moveTo(x - 26 * s, y); c.quadraticCurveTo(x - 26 * s, y - 56 * s, x, y - 56 * s); c.quadraticCurveTo(x + 26 * s, y - 56 * s, x + 26 * s, y); c.closePath();
+        if (fill !== false) c.fill(); else c.stroke();
+      }
+      function txt(s, x, y, size, col, font, align, glow) { c.font = (font || '900 ') + size + 'px ' + (font && font.indexOf('"') >= 0 ? '' : '"Big Shoulders Display"'); if (font && font.indexOf('"') >= 0) c.font = font.replace("SZ", size); c.textAlign = align || "center"; c.textBaseline = "alphabetic"; c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 14 : glow; c.fillText(s, x, y); }
+      const CAP = '500 SZpx "Unbounded"';
+      function label(s, x, y, col, size) { txt(s.toUpperCase().split("").join(" "), x, y, size || 26, col || GR, CAP, "center", 0); }
+      function pill(s, x, y, col) { c.font = '900 30px "Unbounded"'; const w = c.measureText(s).width + 56; style(col || WH, 3, 20); c.beginPath(); c.roundRect(x - w / 2, y - 30, w, 60, 30); c.fill(); c.shadowBlur = 0; c.fillStyle = "#000"; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(s, x, y + 2); }
+      function rr(x, y, w, h, r, p) { // rounded rect, drawn on by p
+        c.beginPath(); c.roundRect(x, y, w, h, r);
+        if (p !== undefined && p < 1) { const L = 2 * (w + h); c.setLineDash([L * p, L]); c.stroke(); c.setLineDash([]); } else c.stroke();
+      }
+      function shop(x, y, w, h, p, col, name) { // x,y = bottom centre
+        style(col, 5, 18);
+        rr(x - w / 2, y - h, w, h, 10, p);
+        if (p > 0.35) { const q = seg(p, 0.35, 1); c.beginPath(); const n = 6, aw = w + 30; // awning
+          c.moveTo(x - aw / 2, y - h); for (let i = 0; i < n; i++) { const x0 = x - aw / 2 + (aw / n) * i; c.quadraticCurveTo(x0 + aw / n / 2, y - h + 46 * q, x0 + aw / n, y - h); } c.stroke();
+          c.beginPath(); c.rect(x - w * 0.16, y - h * 0.5 * q, w * 0.32, h * 0.5 * q); c.stroke(); // door
+          c.beginPath(); c.roundRect(x - w * 0.43, y - h * 0.5, w * 0.2, h * 0.26 * q, 6); c.roundRect(x + w * 0.23, y - h * 0.5, w * 0.2, h * 0.26 * q, 6); c.stroke();
+          if (name) label(name, x, y - h - 40, col === ACC ? ACC : GR);
+        }
+      }
+      function eye(x, y, s, col) { style(col, 5 * s, 16); c.beginPath(); c.moveTo(x - 60 * s, y); c.quadraticCurveTo(x, y - 52 * s, x + 60 * s, y); c.quadraticCurveTo(x, y + 52 * s, x - 60 * s, y); c.stroke(); c.beginPath(); c.arc(x, y, 17 * s, 0, 6.283); c.fill(); }
+      function card(x, y, s, col) { style(col, 5 * s, 16); c.beginPath(); c.roundRect(x - 44 * s, y - 54 * s, 88 * s, 108 * s, 12 * s); c.stroke(); c.beginPath(); c.roundRect(x - 30 * s, y - 40 * s, 60 * s, 46 * s, 6 * s); c.fill(); c.beginPath(); c.moveTo(x - 30 * s, y + 24 * s); c.lineTo(x + 22 * s, y + 24 * s); c.moveTo(x - 30 * s, y + 40 * s); c.lineTo(x + 4 * s, y + 40 * s); c.stroke(); }
+      function euro(x, y, s, col, a) { c.globalAlpha *= a === undefined ? 1 : a; style(col, 4, 18); c.beginPath(); c.arc(x, y, 34 * s, 0, 6.283); c.stroke(); txt("€", x, y + 17 * s, 50 * s, col, null, "center", 12); }
+      function line(x1, y1, x2, y2, p) { c.beginPath(); c.moveTo(x1, y1); c.lineTo(lerp(x1, x2, p), lerp(y1, y2, p)); c.stroke(); }
+      function ground(y, p, col) { style(col || "#555", 3, 0); c.setLineDash([4, 14]); line(120, y, 960, y, p === undefined ? 1 : p); c.setLineDash([]); }
+      function phone(x, y, w, h, p, col) { style(col, 6, 18); rr(x - w / 2, y - h / 2, w, h, 44, p); c.beginPath(); c.moveTo(x - 40, y - h / 2 + 30); c.lineTo(x + 40, y - h / 2 + 30); c.stroke(); }
+      function megaphone(x, y, s, col) { style(col, 5 * s, 16); c.beginPath(); c.moveTo(x - 46 * s, y - 16 * s); c.lineTo(x + 30 * s, y - 46 * s); c.lineTo(x + 30 * s, y + 46 * s); c.lineTo(x - 46 * s, y + 16 * s); c.closePath(); c.stroke(); c.beginPath(); c.arc(x + 44 * s, y, 26 * s, -0.9, 0.9); c.stroke(); }
+      function funnel(x, y, s, col) { style(col, 5 * s, 16); c.beginPath(); c.moveTo(x - 52 * s, y - 46 * s); c.lineTo(x + 52 * s, y - 46 * s); c.lineTo(x + 12 * s, y + 4 * s); c.lineTo(x + 12 * s, y + 50 * s); c.lineTo(x - 12 * s, y + 36 * s); c.lineTo(x - 12 * s, y + 4 * s); c.closePath(); c.stroke(); }
+      function logo(x, y, s, p, col) { style(col, 9 * s, 24); const A = [x, y - 130 * s], Bp = [x + 125 * s, y + 130 * s], C = [x - 125 * s, y + 130 * s]; const L = 3; const q = p * L; c.beginPath(); c.moveTo(A[0], A[1]); const P = [A, Bp, C, A]; for (let i = 0; i < 3 && q > i; i++) { const f = Math.min(1, q - i); c.lineTo(lerp(P[i][0], P[i + 1][0], f), lerp(P[i][1], P[i + 1][1], f)); } c.stroke(); if (p >= 1) { c.beginPath(); c.moveTo(x, y - 25 * s); c.lineTo(x + 50 * s, y + 80 * s); c.lineTo(x - 50 * s, y + 80 * s); c.closePath(); c.fill(); } }
+      function scaleAt(x, y, s) { c.translate(x, y); c.scale(s, s); c.translate(-x, -y); }
+
+      const CX = 540, GY = 1330; // stage centre / ground line
+
+      /* ---- scenes (absolute seconds, from the transcript) ---- */
+      const SC = [
+        [0, 5.45, (t) => { // la maggior parte delle aziende crede... farsi vedere di più
+          ground(GY, out(seg(t, 0, 0.6)));
+          for (let i = 0; i < 5; i++) { const p = pop(t, 0.1 + i * 0.12); if (p > 0) { c.save(); scaleAt(240 + i * 150, GY, p); pawn(240 + i * 150, GY, 1.5, i === 4 ? "#555" : WH); c.restore(); } }
+          const b = out(seg(t, 0.3, 0.9)); style(GR, 3, 0); line(210, 1090, lerp(210, 720, b), 1090, 1); if (b > 0.9) label("la maggior parte crede", 465, 1066);
+          const e = pop(t, 3.9); if (e > 0) { c.save(); scaleAt(CX, 860, e * (1 + 0.5 * out(seg(t, 4.2, 5.2)))); eye(CX, 860, 2.2, WH); c.restore(); }
+          for (let i = 0; i < 3; i++) { const q = seg(t, 4.7 + i * 0.15, 5.3 + i * 0.15); if (q > 0 && q < 1) { c.globalAlpha *= 1 - q; style(WH, 3, 10); c.beginPath(); c.arc(CX, 860, 150 + q * 260, 0, 6.283); c.stroke(); c.globalAlpha = 1; } }
+        }],
+        [5.45, 9.45, (t) => { // più post, più follower, più visualizzazioni
+          const rows = [[5.57, "post", 365, card], [6.3, "follower", 4820, null], [7.52, "visualizzazioni", 128400, eye]];
+          rows.forEach((r, i) => { const p = pop(t, r[0]); if (p <= 0) return; const y = 800 + i * 230; c.save(); scaleAt(CX, y, p);
+            if (r[3]) r[3](250, y, 1.1, WH); else pawn(250, y + 55, 1.25, WH);
+            const v = r[2] * out(seg(t, r[0], r[0] + 1.2)); txt("+" + fmt(v), 360, y + 34, i === 2 ? 132 : 110, WH, null, "left"); label(r[1], 0, 0, "rgba(0,0,0,0)");
+            c.textAlign = "left"; txt(r[1].toUpperCase().split("").join(" "), 364, y + 78, 25, GR, CAP, "left", 0); c.restore(); });
+          const up = seg(t, 8.0, 9.2); if (up > 0) { style(WH, 6, 18); const x = 930; line(x, 1300, x, 1300 - 520 * out(up), 1); const yy = 1300 - 520 * out(up); c.beginPath(); c.moveTo(x - 26, yy + 30); c.lineTo(x, yy); c.lineTo(x + 26, yy + 30); c.stroke(); }
+        }],
+        [9.45, 12.85, (t) => { // due negozi nella stessa via
+          ground(GY, out(seg(t, 9.5, 10.2)));
+          shop(300, GY, 330, 380, out(seg(t, 10.35, 11.1)), WH, "negozio a"); shop(780, GY, 330, 380, out(seg(t, 10.6, 11.35)), WH, "negozio b");
+          const s = seg(t, 11.2, 12.3); if (s > 0) { style(GR, 3, 0); c.setLineDash([26, 26]); line(120, GY + 90, 120 + 840 * out(s), GY + 90, 1); c.setLineDash([]); label("stessa via", CX, GY + 150); }
+        }],
+        [12.85, 18.5, (t) => { // primo: mille persone, guardano, girano, escono
+          ground(GY); shop(CX, GY, 640, 560, 1, WH, "negozio a");
+          const n = 46;
+          for (let i = 0; i < n; i++) {
+            const te = 13.3 + RN[i] * 1.9, tx = 17.15 + RN[i + 60] * 0.9;
+            const hx = 290 + RN[i + 120] * 500, hy = GY - 60 - RN[i + 180] * 250;
+            let x, y;
+            if (t < te) continue;
+            const pin = out(seg(t, te, te + 0.5)), pout = io(seg(t, tx, tx + 0.7));
+            const wob = t > 16.6 ? Math.sin((t - 16.6) * 5 + i) * 26 * (1 - pout) : 0, look = Math.sin(t * 3 + i * 2) * 8;
+            x = lerp(-40, hx, pin) + wob + look; y = lerp(GY, hy, pin);
+            x = lerp(x, 1140, pout); y = lerp(y, GY, pout);
+            pawn(x, y, 0.62, "#bdbdbd");
+          }
+          txt("ENTRATI  " + fmt(1000 * out(seg(t, 13.4, 15.2))), CX, 1480, 96, WH);
+          const v = pop(t, 17.3); if (v > 0) { c.save(); scaleAt(CX, 1500, v); txt("VENDITE  0", CX, 1610, 120, GR); c.restore(); }
+        }],
+        [18.5, 25.0, (t) => { // secondo: solo cento, persone giuste, trenta comprano
+          ground(GY); const hot = seg(t, 23.0, 23.6); shop(CX, GY, 640, 560, 1, hot > 0 ? ACC : WH, "negozio b");
+          const n = 10, right = seg(t, 21.7, 22.5);
+          for (let i = 0; i < n; i++) {
+            const te = 19.3 + i * 0.11; if (t < te) continue;
+            const pin = out(seg(t, te, te + 0.55)); const hx = 300 + (i % 5) * 120, hy = GY - 70 - Math.floor(i / 5) * 150;
+            const buy = i < 3 ? out(seg(t, 23.05 + i * 0.12, 23.6 + i * 0.12)) : 0;
+            pawn(lerp(-40, hx, pin), lerp(GY, hy, pin) - buy * 30, 0.95, right > 0.02 * i * 5 ? ACC : WH);
+            if (buy > 0.2) { c.save(); c.globalAlpha = seg(buy, 0.2, 0.6); euro(hx + 46, hy - 130 - buy * 26, 0.7, ACC); c.restore(); }
+          }
+          txt("ENTRATI  " + fmt(100 * out(seg(t, 19.5, 20.6))), CX, 1480, 96, WH);
+          const v = pop(t, 23.1); if (v > 0) { c.save(); scaleAt(CX, 1500, v); txt("VENDITE  " + Math.round(30 * out(seg(t, 23.1, 24.0))), CX, 1610, 120, ACC); c.restore(); }
+        }],
+        [25.0, 29.7, (t) => { // il primo è pieno, il secondo è quello che incassa
+          ground(GY); const inc = seg(t, 28.6, 29.2);
+          shop(300, GY, 380, 420, 1, WH, "negozio a"); shop(780, GY, 380, 420, 1, inc > 0 ? ACC : WH, "negozio b");
+          const full = out(seg(t, 25.2, 26.4));
+          for (let i = 0; i < 30 * full; i++) pawn(150 + RN[i + 240] * 300, GY - 30 - RN[i + 300] * 170 + Math.sin(t * 2 + i) * 4, 0.42, "#9a9a9a");
+          for (let i = 0; i < 4; i++) pawn(690 + i * 60, GY - 40, 0.6, ACC);
+          const p1 = pop(t, 26.4); if (p1 > 0) { c.save(); scaleAt(300, 1470, p1); pill("PIENO", 300, 1470, WH); c.restore(); txt("€ 0", 300, 1590, 96, GR); }
+          for (let i = 0; i < 6; i++) { const q = seg(t, 28.7 + i * 0.12, 29.6 + i * 0.12); if (q > 0 && q < 1) { c.save(); c.globalAlpha = 1 - q; euro(660 + i * 48, GY - 540 - q * 150, 0.7, ACC); c.restore(); } }
+          const p2 = pop(t, 28.75); if (p2 > 0) { c.save(); scaleAt(780, 1470, p2); pill("INCASSA", 780, 1470, ACC); c.restore(); txt("€ €  €", 780, 1590, 96, ACC); }
+        }],
+        [29.7, 32.3, (t) => { // online funziona allo stesso modo
+          const m = io(seg(t, 29.8, 30.7));
+          c.save(); c.globalAlpha *= 1 - m; shop(CX, GY, 520, 520, 1, WH); c.restore();
+          c.save(); c.globalAlpha *= m; scaleAt(CX, 1050, 0.8 + 0.2 * m); phone(CX, 1050, 420, 760, 1, WH); shop(CX, 1230, 260, 260, 1, WH); c.restore();
+          const p = pop(t, 31.1); if (p > 0) { c.save(); scaleAt(CX, 1560, p); pill("ONLINE = STESSA REGOLA", CX, 1560, WH); c.restore(); }
+        }],
+        [32.3, 36.15, (t) => { // le visualizzazioni sono persone che passano davanti alla vetrina
+          phone(CX, 1050, 420, 760, 1, WH); shop(CX, 1230, 260, 260, 1, WH);
+          for (let i = 0; i < 9; i++) { const x = ((i * 190 + (t - 32.3) * 300) % 1500) - 200; pawn(x, 1420, 0.85, "#9a9a9a"); if (x > 300 && x < 780) eye(x, 1290 - 20, 0.42, WH); }
+          txt(fmt(128400 * out(seg(t, 32.4, 35.6))), CX, 770, 120, WH); label("visualizzazioni", CX, 812);
+        }],
+        [36.15, 40.4, (t) => { // i clienti sono quelli che entrano, chiedono e pagano
+          phone(CX, 1050, 420, 760, 1, WH); shop(CX, 1230, 260, 260, 1, t > 38.0 ? ACC : WH);
+          for (let i = 0; i < 5; i++) { const x = ((i * 300 + (t - 32.3) * 300) % 1500) - 200; c.save(); c.globalAlpha *= 0.35; pawn(x, 1420, 0.85, "#9a9a9a"); c.restore(); }
+          const st = out(seg(t, 36.3, 37.1)), en = io(seg(t, 38.0, 38.6));
+          const px = lerp(-60, 300, st), x = lerp(px, CX, en), y = lerp(1420, 1228, en);
+          pawn(x, y, lerp(1.1, 0.8, en), ACC);
+          const q = pop(t, 38.78); if (q > 0 && t < 39.5) { c.save(); scaleAt(CX + 110, 1040, q); style(ACC, 5, 16); c.beginPath(); c.roundRect(CX + 50, 990, 120, 100, 24); c.stroke(); txt("?", CX + 110, 1066, 80, ACC); c.restore(); }
+          const e = pop(t, 39.5); if (e > 0) { c.save(); scaleAt(CX, 800, e); euro(CX, 800, 2.0, ACC); c.restore(); }
+        }],
+        [40.4, 46.4, (t) => { // non conta quanta gente ti vede, conta chi ti vede e cosa fa dopo
+          const a = 1 - seg(t, 43.2, 43.7);
+          if (a > 0) { c.save(); c.globalAlpha *= a; eye(CX, 900, 2.6, WH); txt(fmt(128400), CX, 1150, 150, WH); const s = out(seg(t, 41.1, 41.8)); if (s > 0) { style(ACC, 12, 20); line(250, 1100, lerp(250, 830, s), 1100, 1); } c.restore(); }
+          const b = seg(t, 43.3, 43.9);
+          if (b > 0) { c.save(); c.globalAlpha *= b; ground(GY);
+            for (let i = 0; i < 7; i++) { const hot = i === 3 && t > 44.0; c.save(); if (hot) scaleAt(180 + i * 120, GY, 1 + 0.35 * pop(t, 44.0)); pawn(180 + i * 120, GY, 1.2, hot ? ACC : "#666"); c.restore(); }
+            const r = seg(t, 44.0, 44.5); if (r > 0) { style(ACC, 5, 18); c.beginPath(); c.arc(540, GY - 70, 110, -Math.PI / 2, -Math.PI / 2 + 6.283 * out(r)); c.stroke(); }
+            const ar = out(seg(t, 44.9, 45.6)); if (ar > 0) { style(ACC, 6, 18); line(540, GY - 200, 540, GY - 200 - 250 * ar, 1); const yy = GY - 200 - 250 * ar; c.beginPath(); c.moveTo(514, yy + 30); c.lineTo(540, yy); c.lineTo(566, yy + 30); c.stroke(); }
+            const e = pop(t, 45.5); if (e > 0) { c.save(); scaleAt(540, 760, e); euro(540, 760, 1.7, ACC); c.restore(); }
+            c.restore(); }
+        }],
+        [46.4, 53.6, (t) => { // noi di Apex Media... contenuti, campagne e funnel che portano contatti reali
+          const up = io(seg(t, 48.9, 49.5));
+          c.save(); scaleAt(CX, lerp(1000, 760, up), lerp(1.35, 0.62, up)); logo(CX, lerp(1000, 760, up), 1, out(seg(t, 46.6, 47.5)), ACC); c.restore();
+          const items = [[49.38, card, "contenuti", 230], [50.18, megaphone, "campagne", 540], [50.95, funnel, "funnel", 850]];
+          items.forEach((it) => { const p = pop(t, it[0]); if (p <= 0) return; c.save(); scaleAt(it[3], 1090, p); it[1](it[3], 1090, 1.35, WH); label(it[2], it[3], 1210, WH, 24); c.restore();
+            const l = out(seg(t, 51.5, 52.2)); if (l > 0) { style(ACC, 4, 14); c.setLineDash([6, 12]); line(it[3], 1240, lerp(it[3], 540, l), lerp(1240, 1370, l), 1); c.setLineDash([]); } });
+          for (let i = 0; i < 5; i++) { const p = pop(t, 52.2 + i * 0.07); if (p > 0) { c.save(); scaleAt(380 + i * 80, 1500, p); pawn(380 + i * 80, 1500, 0.95, ACC); c.restore(); } }
+          if (t > 52.7) label("contatti reali", CX, 1560, ACC, 26);
+        }],
+        [53.6, 60.01, (t) => { // smettila di contare le visualizzazioni. inizia a contare i clienti.
+          const o = 1 - io(seg(t, 55.9, 56.4));
+          if (o > 0) { c.save(); c.globalAlpha *= o; eye(CX, 900, 2.0, GR); txt(fmt(128400), CX, 1120, 130, GR); const s = out(seg(t, 54.3, 55.2)); style(WH, 12, 18); line(230, 1074, lerp(230, 850, s), 1074, 1); c.restore(); }
+          const n = seg(t, 56.3, 56.8);
+          if (n > 0) { c.save(); c.globalAlpha *= n; const k = Math.round(37 * out(seg(t, 56.4, 57.9)));
+            txt(String(k), CX, 880, 330, ACC); label("clienti questo mese · esempio", CX, 934, WH, 24);
+            for (let i = 0; i < Math.min(k, 36); i++) pawn(200 + (i % 12) * 62, 1050 + Math.floor(i / 12) * 100, 0.55, ACC);
+            c.restore(); }
+          const b = out(seg(t, 58.0, 58.5));
+          if (b > 0) { c.save(); c.globalAlpha *= b; txt("APEXMEDIA", CX, 1420 + (1 - b) * 30, 92, WH, '900 SZpx "Unbounded"');
+            style(ACC, 3, 26); c.beginPath(); c.roundRect(110, 1462, 860 * out(seg(t, 58.2, 58.8)), 112, 8); c.fill();
+            if (t > 58.5) { c.shadowBlur = 0; txt("PRENOTA LA CONSULENZA GRATUITA →", CX, 1540, 60, "#000", null, "center", 0); }
+            if (t > 58.8) label("link in bio", CX, 1630, WH, 26); c.restore(); }
+        }],
+      ];
+
+      function render(t) {
+        c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.shadowBlur = 0;
+        c.fillStyle = "#000"; c.fillRect(0, 0, 1080, 1920);
+        const g = c.createRadialGradient(CX, 1060, 60, CX, 1060, 760); g.addColorStop(0, "rgba(255,255,255,0.075)"); g.addColorStop(1, "rgba(255,255,255,0)");
+        c.fillStyle = g; c.fillRect(0, 300, 1080, 1500);
+        for (let i = 0; i < SC.length; i++) {
+          const s = SC[i]; if (t < s[0] - 0.02 || t >= s[1] + 0.14) continue;
+          const a = seg(t, s[0] - 0.02, s[0] + 0.14) * (1 - seg(t, s[1], s[1] + 0.14)); if (a <= 0) continue;
+          c.save(); c.globalAlpha = a; scaleAt(CX, 1060, 0.94 + 0.06 * out(seg(t, s[0], s[0] + 0.4)) + 0.03 * seg(t, s[0], s[1])); s[2](t); c.restore();
+        }
+      }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Big Shoulders Display"'), document.fonts.load('500 26px "Unbounded"'), document.fonts.load('900 60px "Unbounded"')]).then(() => render(st.t), () => render(st.t));
+      render(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>
