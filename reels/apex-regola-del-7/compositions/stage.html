@@ -1,0 +1,188 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      /* A real camera (eye + look-at, perspective, near clipping) moving through a line-art city,
+         following a walking man. Synced to the voice-over and the 128 BPM bed. Pure function of t. */
+      const D = 41, BEAT = 60 / 128, B0 = 0.035;
+      const cv = document.querySelector("#st-canvas"), c = cv.getContext("2d");
+      const HOT = (getComputedStyle(document.documentElement).getPropertyValue("--color-accent") || "#00FF85").trim() || "#00FF85";
+      const WH = "#ffffff", GR = "#8c8c8c", DK = "#4c4c4c", DD = "#2b2b2b";
+      const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+      const out = (p) => 1 - Math.pow(1 - p, 4), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+      const back = (p) => 1 + 2.6 * Math.pow(p - 1, 3) + 1.6 * Math.pow(p - 1, 2);
+      const pop = (t, t0, d) => back(seg(t, t0, t0 + (d || 0.28)));
+      const hit = (t, t0, k) => (t >= t0 ? Math.exp(-(t - t0) * (k || 9)) : 0);
+      function rng(seed) { return function () { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const R = rng(7007); const RN = []; for (let i = 0; i < 1500; i++) RN.push(R());
+      const rn = (i) => RN[((i % 1500) + 1500) % 1500];
+
+      /* ---- camera ---- */
+      const CX = 540, CY = 1130, NEAR = 26;
+      let F = 1000, E = [0, 0, 0], Rv = [1, 0, 0], Uv = [0, 1, 0], Fv = [0, 0, -1];
+      function camera(eye, look, f, up) {
+        E = eye; F = f || 1000; up = up || [0, 1, 0];
+        let fx = look[0] - eye[0], fy = look[1] - eye[1], fz = look[2] - eye[2]; const fl = Math.hypot(fx, fy, fz) || 1; fx /= fl; fy /= fl; fz /= fl;
+        let rx = fy * up[2] - fz * up[1], ry = fz * up[0] - fx * up[2], rz = fx * up[1] - fy * up[0]; const rl = Math.hypot(rx, ry, rz) || 1; rx /= rl; ry /= rl; rz /= rl;
+        Fv = [fx, fy, fz]; Rv = [rx, ry, rz]; Uv = [ry * fz - rz * fy, rz * fx - rx * fz, rx * fy - ry * fx];
+      }
+      const cs = (p) => { const x = p[0] - E[0], y = p[1] - E[1], z = p[2] - E[2]; return [x * Rv[0] + y * Rv[1] + z * Rv[2], x * Uv[0] + y * Uv[1] + z * Uv[2], x * Fv[0] + y * Fv[1] + z * Fv[2]]; };
+      const sp = (q) => [CX + (q[0] * F) / q[2], CY - (q[1] * F) / q[2]];
+      const fog = (z) => clamp(1.15 - z / 2600, 0.1, 1);
+      function line(a, b, w, col, glow) { // world-space segment with near clipping and perspective width
+        let A = cs(a), Bq = cs(b);
+        if (A[2] < NEAR && Bq[2] < NEAR) return;
+        if (A[2] < NEAR) { const k = (NEAR - A[2]) / (Bq[2] - A[2]); A = [lerp(A[0], Bq[0], k), lerp(A[1], Bq[1], k), NEAR]; }
+        if (Bq[2] < NEAR) { const k = (NEAR - Bq[2]) / (A[2] - Bq[2]); Bq = [lerp(Bq[0], A[0], k), lerp(Bq[1], A[1], k), NEAR]; }
+        const pa = sp(A), pb = sp(Bq), zm = (A[2] + Bq[2]) / 2;
+        const ga = c.globalAlpha; c.globalAlpha = ga * fog(zm);
+        c.strokeStyle = col; c.lineWidth = clamp((w * F) / zm, 1.3, 80); c.lineCap = "round"; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow;
+        c.beginPath(); c.moveTo(pa[0], pa[1]); c.lineTo(pb[0], pb[1]); c.stroke(); c.globalAlpha = ga;
+      }
+      function loop(pts, w, col, glow) { for (let i = 0; i < pts.length; i++) line(pts[i], pts[(i + 1) % pts.length], w, col, glow); }
+      function quad(pts, col, a) { const q = pts.map(cs); for (let i = 0; i < 4; i++) if (q[i][2] < NEAR) return; const ga = c.globalAlpha; c.globalAlpha = ga * (a === undefined ? 1 : a) * fog(q[0][2]); c.fillStyle = col; c.shadowBlur = 0; c.beginPath(); q.forEach((v, i) => { const p = sp(v); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function dot(p, r, col, glow) { const q = cs(p); if (q[2] < NEAR) return; const s = sp(q), rr = clamp((r * F) / q[2], 1, 420); const ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow; c.beginPath(); c.arc(s[0], s[1], rr, 0, 6.283); c.fill(); c.globalAlpha = ga; }
+      function text(s, p, size, col, font, glow) { const q = cs(p); if (q[2] < NEAR) return; const px = (size * F) / q[2]; if (px < 3 || px > 1400) return; const v = sp(q); const ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.font = (font || '900 SZpx "Big Shoulders Display"').replace("SZ", Math.round(px)); c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 14 : glow; c.fillText(s, v[0], v[1]); c.globalAlpha = ga; }
+      function star(p, r, col) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), rr = (r * F) / q[2]; if (rr < 1 || rr > 900) return; const ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = 16; c.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i * Math.PI) / 5, k = i % 2 ? rr * 0.45 : rr; if (i) c.lineTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); else c.moveTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); } c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function ring(x, y, z, r, col, w) { let prev = null; for (let i = 0; i <= 36; i++) { const a = 6.283 * (i / 36), p = [x + Math.cos(a) * r, y, z + Math.sin(a) * r]; if (prev) line(prev, p, w || 4, col); prev = p; } }
+      const WIDE = '900 SZpx "Unbounded"';
+
+      /* person from 3D joints */
+      function person(x, z, h, ph, col, s, o) {
+        o = o || {}; s = s === undefined ? 1 : s; if (s <= 0.01) return;
+        const dx = Math.cos(h), dz = Math.sin(h), sx = -dz, sz = dx, st = Math.sin(ph) * 26 * s, lf = Math.max(0, Math.cos(ph)) * 11 * s, rf = Math.max(0, -Math.cos(ph)) * 11 * s, bob = Math.abs(Math.sin(ph)) * 3 * s;
+        const hip = [x, 62 * s + bob, z], neck = [x + dx * 4 * s, 108 * s + bob, z + dz * 4 * s], lk = o.look || 0;
+        quad([[x - 22 * s, 0.6, z - 14 * s], [x + 22 * s, 0.6, z - 14 * s], [x + 22 * s, 0.6, z + 14 * s], [x - 22 * s, 0.6, z + 14 * s]], "#000", 0.55);
+        line(hip, [x + dx * st + sx * 8 * s, lf, z + dz * st + sz * 8 * s], 9 * s, col); line(hip, [x - dx * st - sx * 8 * s, rf, z - dz * st - sz * 8 * s], 9 * s, col);
+        line(hip, neck, 15 * s, col);
+        const sl = [neck[0] + sx * 17 * s, neck[1] - 2 * s, neck[2] + sz * 17 * s], sr = [neck[0] - sx * 17 * s, neck[1] - 2 * s, neck[2] - sz * 17 * s];
+        line(sl, sr, 9 * s, col);
+        line(sl, [x + sx * 22 * s - dx * st * 0.8, 68 * s + bob, z + sz * 22 * s - dz * st * 0.8], 7 * s, col); line(sr, [x - sx * 22 * s + dx * st * 0.8, 68 * s + bob, z - sz * 22 * s + dz * st * 0.8], 7 * s, col);
+        dot([neck[0] + dx * 3 * s + sx * lk * 6 * s, 130 * s + bob, neck[2] + dz * 3 * s + sz * lk * 6 * s], 18 * s, col);
+      }
+
+      /* ---- the street ---- */
+      const SPEED = 150;
+      function zm(t) { let z = -SPEED * Math.min(t, 15.95); if (t > 15.95) { const u = Math.min(t, 16.9) - 15.95; z -= SPEED * (u - (u * u) / 1.9); } if (t > 18.08) z -= SPEED * (Math.min(t, 19.05) - 18.08); return z; }
+      const TB = [1.25, 3.55, 6.25, 9.3, 12.0, 14.6, 16.95, 19.05], SIDE = [1, -1, 1, -1, 1, -1, 1, 1];
+      const BZ = TB.map((tb) => zm(tb) - 40);
+      function city(zc, a) {
+        c.save(); c.globalAlpha *= a === undefined ? 1 : a;
+        const z0 = Math.floor(zc / 200) * 200;
+        [-150, 150].forEach((x) => line([x, 0, zc + 500], [x, 0, zc - 2600], 3, DK, 0));
+        for (let i = -2; i < 14; i++) { const z = z0 - i * 200; line([0, 0, z], [0, 0, z - 90], 4, DK, 0); }
+        for (let i = -1; i < 9; i++) { const z = z0 - i * 400, id = Math.round(z / 400);
+          [-1, 1].forEach((sd) => { const h = 380 + rn(id * 7 + sd * 3 + 700) * 700, w = 300, x1 = sd * 330, x2 = sd * (330 + w), col = DD;
+            loop([[x1, 0, z], [x1, h, z], [x1, h, z - 330], [x1, 0, z - 330]], 4, DK, 0);
+            line([x1, h, z], [x2, h, z], 4, col, 0); line([x1, h, z - 330], [x2, h, z - 330], 4, col, 0); line([x2, h, z], [x2, h, z - 330], 4, col, 0);
+            for (let k = 1; k < 4; k++) line([x1, (h * k) / 4, z], [x1, (h * k) / 4, z - 330], 2, DD, 0);
+            line([sd * 170, 0, z - 180], [sd * 170, 260, z - 180], 4, DK, 0); line([sd * 170, 260, z - 180], [sd * 130, 260, z - 180], 4, DK, 0); dot([sd * 130, 252, z - 180], 7, GR, 10); }); }
+        c.restore();
+      }
+      function board(k, lit, num, t) {
+        const sd = SIDE[k], x = sd * 235, z = BZ[k], w = 130, col = lit ? HOT : WH, pl = lit ? HOT : GR;
+        line([x - 80, 0, z], [x - 80, 170, z], 6, DK, 0); line([x + 80, 0, z], [x + 80, 170, z], 6, DK, 0);
+        const P4 = [[x - w, 170, z], [x + w, 170, z], [x + w, 400, z], [x - w, 400, z]];
+        quad(P4, lit ? HOT : "#141414", lit ? 0.16 : 0.9); loop(P4, 6, col);
+        star([x - 60, 300, z + 1], 46, pl); line([x + 10, 320, z + 1], [x + 100, 320, z + 1], 12, pl); line([x + 10, 270, z + 1], [x + 70, 270, z + 1], 12, pl); line([x - 100, 210, z + 1], [x + 100, 210, z + 1], 8, pl);
+        if (num) { const p = pop(t, TB[k] - 0.55); if (p > 0) text(String(k), [x, 520, z], 190 * p, lit ? HOT : WH); }
+      }
+      function passers(zc, t, n) { for (let i = 0; i < n; i++) { const sd = i % 2 ? 1 : -1, v = 110 + rn(i + 300) * 60, z = zc - 1700 + ((rn(i + 320) * 2400 + t * (v + SPEED)) % 2400) + (zc - zm(t)); person(sd * (95 + rn(i + 340) * 40), z, Math.PI / 2, t * v * 0.075 + i, DK, 0.96); } }
+      function man(t, col, o) { const z = zm(t), moving = t < 16.9 || (t > 18.08 && t < 19.05); person(0, z, -Math.PI / 2, -z * 0.075, col || WH, 1.08, o); return z; }
+      function street(t, a, boards) { const z = zm(t); city(z, a); passers(z, t, 8); for (let k = 0; k < 8; k++) if (Math.abs(BZ[k] - z) < 2200) board(k, boards && boards.lit === k, k > 0 && (!boards || boards.num !== false), t); }
+      const jit = (t, a) => [Math.sin(t * 7.3) * a + Math.sin(t * 13.1) * a * 0.5, Math.sin(t * 9.1) * a * 0.8, 0];
+      const add = (p, q) => [p[0] + q[0], p[1] + q[1], p[2] + q[2]];
+
+      /* ---- shots: every 1–2.4 s the camera is somewhere else ---- */
+      const SH = [
+        [0, 1.45, (t) => { const z = zm(t); camera(add([62, 172, z + 250 - t * 30], jit(t, 2.5)), [-20, 125, z - 520], 980); street(t, 1); man(t, WH); }], // over the shoulder
+        [1.45, 2.87, (t) => { const z = zm(t); camera(add([-90 + (t - 1.45) * 60, 46, z - 400], jit(t, 2)), [0, 112, z], 1050); street(t, 1); man(t, WH); }], // low, walking at us
+        [2.87, 3.83, (t) => { const z = zm(t); camera(add([-520, 140, z - 120], jit(t, 2)), [40, 190, z - 80], 1000); street(t, 1); man(t, WH); }], // side dolly, board 1
+        [3.83, 5.4, (t) => { const z = zm(t); camera([0, 980 - (t - 3.83) * 120, z + 30], [0, 0, z - 110], 1000, [0, 0, -1]); street(t, 1); man(t, WH); ring(SIDE[1] * 235, 2, BZ[1], 150 + hit(t, 3.85, 3) * 120, DK, 5); }], // from straight above
+        [5.4, 6.36, (t) => { const z = zm(t); camera(add([-70, 176, z + 240], jit(t, 2.5)), [80, 180, z - 420], 1000); street(t, 1); man(t, WH); }], // behind, board 2 ahead
+        [6.36, 7.18, (t) => { const z = zm(t); camera(add([150, 150, z - 250], jit(t, 2)), [-20, 132, z + 10], 1350); street(t, 1, { lit: 2 }); man(t, WH, { look: 1 }); c.setLineDash([14, 14]); line([8, 132, z - 6], [SIDE[2] * 235 - 60, 300, BZ[2]], 3, HOT); c.setLineDash([]); }], // he looks
+        [7.18, 8.74, (t) => { const z = zm(t); camera(add([40, 40, z - 430 + (t - 7.18) * 40], jit(t, 2)), [0, 118, z], 1000); street(t, 1); man(t, WH); }], // keeps walking at us
+        [8.74, 11.18, (t) => { const z = zm(t), d = io(seg(t, 8.74, 10.8)); camera([lerp(-240, -60, d), lerp(760, 190, d), z + lerp(520, 260, d)], [60, lerp(40, 190, d), z - 380], 1000); street(t, 1, { lit: t > 9.49 ? 3 : -1 }); man(t, WH); if (t > 9.49) text("!", [0, 215, z], 150 * pop(t, 9.49), HOT); }], // crane down behind him
+        [11.18, 13.58, (t) => { const z = zm(t); camera(add([lerp(520, 330, out(seg(t, 11.18, 12.4))), 120, z - 150], jit(t, 2)), [40, 185, z - 110], 1100); street(t, 1, { lit: t > 12.0 ? 4 : -1 }); man(t, WH, { look: 1 });
+          if (t > 12.0) { const k = pop(t, 12.0); loop([[-85 * k - 110, 190, z], [-110 + 85 * k, 190, z], [-110 + 85 * k, 190 + 100 * k, z], [-85 * k - 110, 190 + 100 * k, z]], 5, HOT); star([-110, 240, z + 1], 30 * k, HOT); } }], // side, he remembers the name
+        [13.58, 15.95, (t) => { const z = zm(t), a = lerp(-1.9, -0.5, io(seg(t, 13.58, 15.9))); camera(add([Math.cos(a) * 330, 130, z + Math.sin(a) * 330], jit(t, 2)), [0, 128, z - 20], 1150); street(t, 1, { lit: 5 }); man(t, t > 14.39 ? HOT : WH, { look: -1 }); if (t > 14.39) text("?", [0, 222, z], 150 * pop(t, 14.39), HOT); }], // orbit around him
+        [15.95, 18.08, (t) => { const z = zm(t), d = seg(t, 15.95, 18.08), a = d * 1.6; camera([Math.sin(a) * 140, lerp(900, 430, io(d)), z + 60 + Math.cos(a) * 140], [60, 60, z - 40], 1000, [Math.sin(a), 0, -Math.cos(a)]); street(t, 1, { lit: 6 }); man(t, HOT, { look: 1 });
+          for (let i = 0; i < 3; i++) dot([-70 + i * 46, 200, z], 12 * pop(t, 16.9 + i * 0.22), HOT); }], // spiral down from above, he stops
+        [18.08, 20.44, (t) => { const zz = zm(t), turn = io(seg(t, 19.0, 19.5)), mx = turn * 250, push = out(seg(t, 19.3, 20.2));
+          camera(add([lerp(60, 250, turn), lerp(170, 130, push), zz + lerp(260, -40, push) + 20], jit(t, 2.5)), [lerp(-10, 420, turn), 130, zz - lerp(480, 30, turn)], lerp(1000, 780, push));
+          street(t, 1, { lit: 7 });
+          const dz = BZ[7] + 30, dx = 330; quad([[dx, 0, dz - 110], [dx, 300, dz - 110], [dx, 300, dz + 110], [dx, 0, dz + 110]], HOT, 0.2 + 0.8 * push); loop([[dx, 0, dz - 110], [dx, 300, dz - 110], [dx, 300, dz + 110], [dx, 0, dz + 110]], 8, HOT, 24);
+          person(mx, zz, lerp(-Math.PI / 2, 0, turn), -zz * 0.075 + turn * 9, HOT, 1.08); }], // behind him: he turns and goes in
+        [20.44, 22.87, (t) => { const a = (t - 20.44) * 1.1 + 0.4, d = lerp(1250, 900, out(seg(t, 20.44, 22.8))); camera([Math.cos(a) * d, 260 + 160 * Math.sin(t * 1.4), Math.sin(a) * d], [0, 230, 0], 1000);
+          for (let i = -6; i <= 6; i++) { line([i * 180, 0, -1100], [i * 180, 0, 1100], 2, DD, 0); line([-1100, 0, i * 180], [1100, 0, i * 180], 2, DD, 0); }
+          for (let k = 0; k < 7; k++) { const b = 6.283 * (k / 7), x = Math.cos(b) * 520, z = Math.sin(b) * 520, p = pop(t, 20.5 + k * 0.1); if (p <= 0) continue; const tx = -Math.sin(b) * 110, tz = Math.cos(b) * 110; line([x, 0, z], [x, 150 * p, z], 6, DK, 0); const Q = [[x - tx, 150 * p, z - tz], [x + tx, 150 * p, z + tz], [x + tx, 340 * p, z + tz], [x - tx, 340 * p, z - tz]]; quad(Q, HOT, 0.14); loop(Q, 6, HOT); text(String(k + 1), [x, 245 * p, z], 150 * p, HOT); }
+          text("7", [0, 640 + 30 * Math.sin(t * 3), 0], 520 * pop(t, 21.5, 0.35), WH, null, 30); person(0, 0, a + 2.4, 0, WH, 1.0); }], // seven boards in a ring, the camera circles
+        [22.87, 27.72, (t) => { const d = io(seg(t, 22.9, 26.2)), zc = lerp(300, -1700, d); camera(add([lerp(-330, 300, d), lerp(300, 150, d), zc + 420], jit(t, 2)), [lerp(120, -60, d), 150, zc - 500], 1000);
+          for (let i = -2; i < 16; i++) { line([-260, 0, 400 - i * 200], [-260, 0, 220 - i * 200], 3, DK, 0); line([260, 0, 400 - i * 200], [260, 0, 220 - i * 200], 3, DK, 0); }
+          for (let k = 0; k < 7; k++) { const z = -k * 290, sd = k % 2 ? 1 : -1, x = sd * 200, on = t > 23.2 + k * 0.42, p = pop(t, 22.95 + k * 0.06); const Q = [[x - 105, 150, z], [x + 105, 150, z], [x + 105, 330 * p, z], [x - 105, 330 * p, z]]; line([x, 0, z], [x, 150, z], 6, DK, 0); quad(Q, on ? HOT : "#141414", on ? 0.16 : 0.9); loop(Q, 6, on ? HOT : GR); text(String(k + 1), [x, 240, z + 1], 130 * (1 + 0.5 * hit(t, 23.2 + k * 0.42)), on ? HOT : GR); }
+          const zw = lerp(350, -2050, seg(t, 22.9, 26.6)); person(0, zw, -Math.PI / 2, -zw * 0.075, t > 26.2 ? HOT : WH, 1.05);
+          const dz = -2100; loop([[-130, 0, dz], [-130, 330, dz], [130, 330, dz], [130, 0, dz]], 8, HOT, 24); quad([[-130, 0, dz], [-130, 330, dz], [130, 330, dz], [130, 0, dz]], HOT, 0.25); text("€", [0, 170, dz + 2], 190 * (1 + 0.4 * hit(t, 26.6)), HOT); }], // flying down the row of seven to the door
+        [27.72, 30.92, (t) => { const zc = -(t - 27.72) * 120; camera(add([lerp(-220, 180, seg(t, 27.72, 30.9)), 105, zc + 430], jit(t, 2.5)), [0, 170, zc - 500], 950);
+          for (let i = -2; i < 14; i++) line([0, 0, zc + 400 - i * 200 - (zc % 200)], [0, 0, zc + 310 - i * 200 - (zc % 200)], 4, DK, 0);
+          [-330, 330].forEach((x) => line([x, 0, zc + 500], [x, 0, zc - 2600], 3, DK, 0));
+          const bz = -900, Q = [[-150, 190, bz], [150, 190, bz], [150, 440, bz], [-150, 440, bz]]; line([-90, 0, bz], [-90, 190, bz], 6, DK, 0); line([90, 0, bz], [90, 190, bz], 6, DK, 0); quad(Q, "#141414", 0.9); loop(Q, 6, WH); star([-70, 330, bz + 1], 52, WH); line([10, 350, bz + 1], [120, 350, bz + 1], 13, WH); line([10, 295, bz + 1], [80, 295, bz + 1], 13, WH); text("1", [0, 560, bz], 200, WH);
+          for (let i = 0; i < 26; i++) { const x = -280 + rn(i + 500) * 560, v = 150 + rn(i + 540) * 70, z = zc + 300 - ((rn(i + 580) * 2400 + (t - 27.72) * (v - 120)) % 2400); person(x, z, -Math.PI / 2, (t * v) * 0.075 + i, i % 5 ? GR : WH, 1.0); }
+          const x = out(seg(t, 29.85, 30.3)); if (x > 0) { line([-190, 150, bz + 2], [-190 + 380 * x, 150 + 330 * x, bz + 2], 16, HOT, 24); line([190, 150, bz + 2], [190 - 380 * x, 150 + 330 * x, bz + 2], 16, HOT, 24); } }], // behind a crowd that walks past one lonely board
+        [30.92, 32.98, (t) => { const k = (t - 30.92); camera(add([lerp(-160, 160, k / 2), 40, 520 - k * 60], jit(t, 5)), [0, 330, 0], 950);
+          for (let i = -5; i <= 5; i++) { line([i * 180, 0, -900], [i * 180, 0, 900], 2, DD, 0); line([-900, 0, i * 180], [900, 0, i * 180], 2, DD, 0); }
+          const s = 3.2 * pop(t, 30.95) * (1 + 0.05 * Math.sin(t * 40)); line([0, 0, 0], [0, 240, 0], 10, DK, 0);
+          loop([[-46 * s, 330 - 16 * s, 0], [30 * s, 330 - 46 * s, 0], [30 * s, 330 + 46 * s, 0], [-46 * s, 330 + 16 * s, 0]], 9, WH);
+          for (let i = 0; i < 4; i++) { const r = ((t * 2.2 + i / 4) % 1); c.save(); c.globalAlpha *= 1 - r; let prev = null; for (let j = 0; j <= 12; j++) { const a = -0.9 + 1.8 * (j / 12), p = [40 * s + Math.cos(a) * (60 + r * 420), 330 + Math.sin(a) * (60 + r * 420), 0]; if (prev) line(prev, p, 7, WH); prev = p; } c.restore(); }
+          for (let i = 0; i < 9; i++) { const x = 330 + (i % 3) * 110 + k * 190, z = -160 + Math.floor(i / 3) * 150; person(x, z, 0, t * 15 + i, GR, 1.0); } }], // low angle: the loudest one, people leave
+        [32.98, 35.59, (t) => { const k = t - 32.98, z = -k * 520; camera(add([34, 168, z + 250], jit(t, 4)), [-6, 130, z - 600], lerp(820, 1000, out(seg(t, 32.98, 33.6))));
+          for (let i = -2; i < 16; i++) { const zz = Math.floor(z / 200) * 200 - i * 200; line([0, 0, zz], [0, 0, zz - 90], 4, DK, 0); }
+          [-150, 150].forEach((x) => line([x, 0, z + 500], [x, 0, z - 2600], 3, DK, 0));
+          const DAYS = ["L", "M", "M", "G", "V", "S", "D"];
+          for (let i = -1; i < 13; i++) { const id = Math.floor(z / 260) - i, zz = id * 260, sd = ((id % 2) + 2) % 2 ? 1 : -1, x = sd * 250, near = zz > z - 900, Q = [[x - 105, 150, zz], [x + 105, 150, zz], [x + 105, 350, zz], [x - 105, 350, zz]]; line([x, 0, zz], [x, 150, zz], 6, DK, 0); quad(Q, near ? HOT : "#141414", near ? 0.18 : 0.9); loop(Q, 6, near ? HOT : GR); text(DAYS[((-id % 7) + 7) % 7], [x, 250, zz + 1], 150, near ? HOT : GR); }
+          person(0, z, -Math.PI / 2, k * 520 * 0.075, WH, 1.08); }], // racing behind him down a corridor of days
+        [35.59, 37.95, (t) => { const d = out(seg(t, 35.59, 37.6)); camera(add([lerp(-60, 0, d), lerp(150, 132, d), lerp(-620, -270, d)], jit(t, 1.5)), [0, 122, 0], lerp(1000, 1500, d));
+          for (let i = -5; i <= 5; i++) { line([i * 180, 0, -900], [i * 180, 0, 900], 2, DD, 0); line([-900, 0, i * 180], [900, 0, i * 180], 2, DD, 0); }
+          const turn = io(seg(t, 35.59, 36.1)); person(0, 0, lerp(Math.PI / 2, -Math.PI / 2, turn), 0, HOT, 1.1); ring(0, 2, 0, 120 + 30 * Math.sin(t * 6), HOT, 5);
+          if (t > 36.35) text("× ?", [130, 170, 0], 120 * pop(t, 36.35), WH); }], // he turns to the camera
+        [37.95, 41.01, (t) => { camera([0, 0, 1150], [0, 0, 0], 1150);
+          const d = out(seg(t, 38.0, 38.8)), ry = (1 - out(seg(t, 38.0, 39.0))) * 2.4, cr = Math.cos(ry), T = [[0, 520], [150, 250], [-150, 250], [0, 520]], q = d * 3;
+          for (let i = 0; i < 3 && q > i; i++) { const f = Math.min(1, q - i); line([T[i][0] * cr, T[i][1], T[i][0] * Math.sin(ry)], [lerp(T[i][0], T[i + 1][0], f) * cr, lerp(T[i][1], T[i + 1][1], f), lerp(T[i][0], T[i + 1][0], f) * Math.sin(ry)], 9, HOT, 26); }
+          if (d >= 1) quad([[0, 400, 0], [56 * cr, 290, 0], [-56 * cr, 290, 0], [0, 400, 0]], HOT, 1);
+          const w = pop(t, 38.8); if (w > 0) text("APEXMEDIA", [0, 120, 0], 92 * w, WH, WIDE, 22);
+          if (t > 39.2) text("CAPIRE LA PUBBLICITÀ, PRIMA DI FARLA".split("").join(" "), [0, 20, 0], 27, GR, '500 SZpx "Unbounded"', 0);
+          const b = out(seg(t, 39.5, 40.0)); if (b > 0) { quad([[-430 * b, -178, 0], [430 * b, -178, 0], [430 * b, -62, 0], [-430 * b, -62, 0]], HOT, 1); if (b > 0.9) text("SEGUI APEX MEDIA →", [0, -118, 0], 64, "#000", null, 0); } }],
+      ];
+
+      function render(t) {
+        c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.shadowBlur = 0; c.setLineDash([]);
+        c.fillStyle = "#000"; c.fillRect(0, 0, 1080, 1920);
+        const g = c.createRadialGradient(540, 1150, 60, 540, 1150, 900); g.addColorStop(0, "rgba(255,255,255,0.085)"); g.addColorStop(1, "rgba(255,255,255,0)");
+        c.fillStyle = g; c.fillRect(0, 200, 1080, 1720);
+        const bp = (((t - B0) % BEAT) + BEAT) % BEAT, bump = Math.exp(-bp * 9) * 0.022;
+        for (let i = 0; i < SH.length; i++) {
+          const s = SH[i]; if (t < s[0] || t >= s[1]) continue;
+          const k = 1 - out(seg(t, s[0], s[0] + 0.3)), dir = i % 2 ? 1 : -1; // every cut lands with a roll + zoom punch
+          c.save(); c.translate(540 + k * 260 * dir, 1130); c.rotate(k * 0.16 * dir + Math.sin(t * 0.9 + i) * 0.012); c.scale(1 + bump + k * 0.22, 1 + bump + k * 0.22); c.translate(-540, -1130);
+          s[2](t); c.restore();
+          if (k > 0.5) { c.fillStyle = "rgba(255,255,255," + ((k - 0.5) * 0.36).toFixed(3) + ")"; c.fillRect(0, 0, 1080, 1920); }
+        }
+      }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Big Shoulders Display"'), document.fonts.load('500 26px "Unbounded"'), document.fonts.load('900 60px "Unbounded"')]).then(() => render(st.t), () => render(st.t));
+      render(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>
