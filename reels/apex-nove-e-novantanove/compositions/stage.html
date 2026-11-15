@@ -1,0 +1,352 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      /* "9,99" — 23 designed shots. True perspective camera (eye, target, focal, roll), text drawn on 3D planes,
+         two-layer depth of field, 3-sample motion blur. Every frame is a pure function of t. */
+      const W = [0.11, 0.42, 0.89, 0.98, 1.19, 2.35, 2.42, 2.97, 3.11, 4.56, 4.63, 4.88, 5.4, 5.76, 5.93, 7.04, 7.38, 7.58, 8.32, 8.422, 8.625, 9.124, 9.64, 9.832, 10.025, 10.209, 10.468, 10.745, 11.372, 11.86, 12.35, 13.15, 13.57, 13.66, 13.97, 14.16, 14.93, 14.99, 15.15, 15.31, 16.21, 16.77, 17.19, 17.51, 18.07, 18.15, 18.55, 19.02, 19.38, 19.7, 19.76, 20.0, 20.7, 21.37, 22.19, 23.3, 24.78, 25.14, 25.21, 25.71, 25.86, 26.45, 27.55, 27.835, 28.175, 28.341, 28.966, 29.48, 29.67, 29.86, 30.34, 30.53, 31.12, 31.29, 31.82, 32.38, 32.79, 33.15, 33.3, 34.26, 34.31, 34.69, 34.92, 35.96, 36.5, 37.17, 37.52, 37.88, 38.77, 39.268, 39.71, 39.977, 40.079, 40.558, 40.595, 41.11, 41.21, 41.41, 41.78, 41.99, 42.14, 42.73, 43.09, 43.23, 43.59, 44.45, 44.8, 44.88, 45.74, 46.24, 46.78, 47.55, 47.85];
+      const D = 52, BEAT = 60 / 110, B0 = 0.045;
+      const out = document.querySelector("#st-canvas"), octx = out.getContext("2d");
+      const mk = () => { const k = document.createElement("canvas"); k.width = 1080; k.height = 1920; return k; };
+      const FG = mk(), BG = mk(), FR = mk(); const fgc = FG.getContext("2d"), bgc = BG.getContext("2d"), frc = FR.getContext("2d");
+      let c = fgc;
+      const RED = (getComputedStyle(document.documentElement).getPropertyValue("--color-accent") || "#FF2A3D").trim() || "#FF2A3D";
+      const WH = "#ffffff", GR = "#8c8c8c", DK = "#4c4c4c", DD = "#262626", FILL = "rgba(4,4,6,0.93)";
+      const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+      const o4 = (p) => 1 - Math.pow(1 - p, 4), ex = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2), i2 = (p) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2), in3 = (p) => p * p * p;
+      const back = (p) => 1 + 2.6 * Math.pow(p - 1, 3) + 1.6 * Math.pow(p - 1, 2);
+      const pop = (t, t0, d) => back(seg(t, t0, t0 + (d || 0.28)));
+      const hit = (t, t0, k) => (t >= t0 ? Math.exp(-(t - t0) * (k || 9)) : 0);
+      function rng(seed) { return function () { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const R = rng(999); const RN = []; for (let i = 0; i < 4000; i++) RN.push(R());
+      const rn = (i) => RN[((i % 4000) + 4000) % 4000];
+      const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k], lp3 = (a, b, p) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p), lerp(a[2], b[2], p)];
+      const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], dotp = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+
+      /* ---- camera ---- */
+      const CX = 540, CY = 1150, NEAR = 20;
+      let F = 1000, E = [0, 0, 0], Rv = [1, 0, 0], Uv = [0, 1, 0], Fv = [0, 0, -1];
+      function camera(eye, look, f, roll, up) {
+        E = eye; F = f || 1000; up = up || [0, 1, 0];
+        let fv = [look[0] - eye[0], look[1] - eye[1], look[2] - eye[2]]; const fl = Math.hypot(fv[0], fv[1], fv[2]) || 1; fv = mul(fv, 1 / fl);
+        let rv = cross(fv, up); const rl = Math.hypot(rv[0], rv[1], rv[2]) || 1; rv = mul(rv, 1 / rl); let uv = cross(rv, fv);
+        const r = ((roll || 0) * Math.PI) / 180, cr = Math.cos(r), sr = Math.sin(r);
+        Rv = add(mul(rv, cr), mul(uv, sr)); Uv = add(mul(uv, cr), mul(rv, -sr)); Fv = fv;
+      }
+      const cs = (p) => { const x = p[0] - E[0], y = p[1] - E[1], z = p[2] - E[2]; return [x * Rv[0] + y * Rv[1] + z * Rv[2], x * Uv[0] + y * Uv[1] + z * Uv[2], x * Fv[0] + y * Fv[1] + z * Fv[2]]; };
+      const sp = (q) => [CX + (q[0] * F) / q[2], CY - (q[1] * F) / q[2]];
+      let FOGD = 3400; const fog = (z) => clamp(1.2 - z / FOGD, 0.08, 1);
+      function line(a, b, w, col, glow) {
+        let A = cs(a), Bq = cs(b);
+        if (A[2] < NEAR && Bq[2] < NEAR) return;
+        if (A[2] < NEAR) { const k = (NEAR - A[2]) / (Bq[2] - A[2]); A = [lerp(A[0], Bq[0], k), lerp(A[1], Bq[1], k), NEAR]; }
+        if (Bq[2] < NEAR) { const k = (NEAR - Bq[2]) / (A[2] - Bq[2]); Bq = [lerp(Bq[0], A[0], k), lerp(Bq[1], A[1], k), NEAR]; }
+        const pa = sp(A), pb = sp(Bq), zm = (A[2] + Bq[2]) / 2, ga = c.globalAlpha;
+        c.globalAlpha = ga * fog(zm); c.strokeStyle = col; c.lineWidth = clamp((w * F) / zm, 1.2, 90); c.lineCap = "round"; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow;
+        c.beginPath(); c.moveTo(pa[0], pa[1]); c.lineTo(pb[0], pb[1]); c.stroke(); c.globalAlpha = ga;
+      }
+      const lineP = (a, b, p, w, col, glow) => { if (p > 0) line(a, lp3(a, b, Math.min(1, p)), w, col, glow); };
+      function loop(pts, w, col, glow) { for (let i = 0; i < pts.length; i++) line(pts[i], pts[(i + 1) % pts.length], w, col, glow); }
+      function fillPoly(pts, col, a) { const q = pts.map(cs); for (const v of q) if (v[2] < NEAR) return; const ga = c.globalAlpha; c.globalAlpha = ga * (a === undefined ? 1 : a) * fog(q[0][2]); c.fillStyle = col; c.shadowBlur = 0; c.beginPath(); q.forEach((v, i) => { const p = sp(v); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function dot(p, r, col, glow) { const q = cs(p); if (q[2] < NEAR) return; const s = sp(q), rr = clamp((r * F) / q[2], 0.8, 600), ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow; c.beginPath(); c.arc(s[0], s[1], rr, 0, 6.283); c.fill(); c.globalAlpha = ga; }
+      /* text on an arbitrary 3D plane: affine map of the plane into screen space */
+      function ptext(runs, o, ux, uy, size, font, glow, align) {
+        const A = cs(o), Bq = cs(add(o, mul(ux, 100))), Cq = cs(add(o, mul(uy, 100)));
+        if (A[2] < NEAR || Bq[2] < NEAR || Cq[2] < NEAR) return;
+        const s0 = sp(A), sx = sp(Bq), sy = sp(Cq), px = (size * F) / A[2]; if (px < 3 || px > 5000) return;
+        const ga = c.globalAlpha; c.save(); c.globalAlpha = ga * fog(A[2]);
+        c.setTransform((sx[0] - s0[0]) / 100, (sx[1] - s0[1]) / 100, -(sy[0] - s0[0]) / 100, -(sy[1] - s0[1]) / 100, s0[0], s0[1]);
+        c.font = (font || '900 SZpx "Big Shoulders Display"').replace("SZ", size); c.textBaseline = "middle"; c.textAlign = "left";
+        if (typeof runs === "string") runs = [{ s: runs, col: WH }];
+        let tw = 0; const ws = runs.map((r) => { const w = c.measureText(r.s).width; tw += w; return w; });
+        let x = align === "left" ? 0 : -tw / 2;
+        runs.forEach((r, i) => { if (r.a !== 0) { c.globalAlpha = ga * fog(A[2]) * (r.a === undefined ? 1 : r.a); c.fillStyle = r.col; c.shadowColor = r.col; c.shadowBlur = glow === undefined ? 14 : glow; const s = r.k || 1; if (s !== 1 || r.dy) { c.save(); c.translate(x + ws[i] / 2, r.dy || 0); c.scale(s, s); c.fillText(r.s, -ws[i] / 2, 0); c.restore(); } else c.fillText(r.s, x, 0); } x += ws[i]; });
+        c.restore(); c.globalAlpha = ga;
+      }
+      const facing = (o, n) => dotp(n, [E[0] - o[0], E[1] - o[1], E[2] - o[2]]) > 0;
+      function star(p, r, col) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), rr = (r * F) / q[2]; if (rr < 1 || rr > 900) return; const ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = 16; c.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i * Math.PI) / 5, k = i % 2 ? rr * 0.45 : rr; if (i) c.lineTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); else c.moveTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); } c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function grid(n, step, y, col) { for (let i = -n; i <= n; i++) { line([i * step, y || 0, -n * step], [i * step, y || 0, n * step], 2.5, col || DD, 0); line([-n * step, y || 0, i * step], [n * step, y || 0, i * step], 2.5, col || DD, 0); } }
+      function box(p, hw, h, hd, edge, face, fa, w) { const [x, y, z] = p; const V = [[x - hw, y, z + hd], [x + hw, y, z + hd], [x + hw, y + h, z + hd], [x - hw, y + h, z + hd], [x - hw, y, z - hd], [x + hw, y, z - hd], [x + hw, y + h, z - hd], [x - hw, y + h, z - hd]];
+        const faces = [[0, 1, 2, 3, [0, 0, 1]], [1, 5, 6, 2, [1, 0, 0]], [4, 0, 3, 7, [-1, 0, 0]], [3, 2, 6, 7, [0, 1, 0]], [5, 4, 7, 6, [0, 0, -1]]];
+        faces.forEach((f) => { if (facing(V[f[0]], f[4])) fillPoly([V[f[0]], V[f[1]], V[f[2]], V[f[3]]], face || FILL, fa === undefined ? 1 : fa); });
+        [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]].forEach((e) => line(V[e[0]], V[e[1]], w || 4, edge, 12)); }
+
+      /* ---- the hero: a 3D price tag ---- */
+      const TAGS = [[-120, -38], [-88, -75], [120, -75], [120, 75], [-88, 75], [-120, 38]];
+      function basis(yaw, pitch, roll) { const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), spp = Math.sin(pitch), cr = Math.cos(roll || 0), sr = Math.sin(roll || 0);
+        let ux = [cy, 0, -sy], uy = [sy * spp, cp, cy * spp]; const n0 = cross(ux, uy);
+        const ux2 = add(mul(ux, cr), mul(uy, sr)), uy2 = add(mul(uy, cr), mul(ux, -sr)); return [ux2, uy2, n0]; }
+      /* tag(o, B, s, opt): o = centre, B = basis, s = scale. opt.price runs, opt.edge colour, opt.back = fn(o, ux, uy) for the reverse */
+      function tag(o, B, s, opt) {
+        opt = opt || {}; const [ux, uy, n] = B, th = 6 * s, edge = opt.edge || WH;
+        const P = (x, y, d) => add(o, add(add(mul(ux, x * s), mul(uy, y * s)), mul(n, d)));
+        const F1 = TAGS.map((q) => P(q[0], q[1], th)), B1 = TAGS.map((q) => P(q[0], q[1], -th));
+        const front = facing(o, n);
+        if (opt.string !== false) { const h = P(-96, 0, 0); line(h, add(h, [opt.sx || 0, opt.string || 340, 0]), 2.2 * s, GR, 6); }
+        const far = front ? B1 : F1, near = front ? F1 : B1;
+        fillPoly(far, FILL); for (let i = 0; i < 6; i++) line(F1[i], B1[i], 3 * s, edge, 8);
+        fillPoly(near, opt.fill || FILL, opt.fillA); loop(near, 4.2 * s, edge, opt.glow === undefined ? 16 : opt.glow);
+        const hc = P(-96, 0, front ? th + 0.5 : -th - 0.5); for (let i = 0; i < 12; i++) { const a1 = (i / 12) * 6.283, a2 = ((i + 1) / 12) * 6.283; line(add(hc, add(mul(ux, Math.cos(a1) * 11 * s), mul(uy, Math.sin(a1) * 11 * s))), add(hc, add(mul(ux, Math.cos(a2) * 11 * s), mul(uy, Math.sin(a2) * 11 * s))), 2.6 * s, edge, 6); }
+        if (front) { if (opt.price) ptext(opt.price, P(14, -2, th + 0.8), mul(ux, s), mul(uy, s), opt.size || 104, opt.font, opt.tglow); if (opt.front) opt.front(P, ux, uy, th); }
+        else if (opt.back) opt.back(P, mul(ux, -1), uy, -th - 0.8);
+      }
+      const price = (str, cols, alphas, ks) => str.split("").map((ch, i) => ({ s: ch, col: (cols && cols[i]) || WH, a: alphas ? alphas[i] : 1, k: ks ? ks[i] : 1 }));
+      const H0 = [0, 0, 0];
+      function swing(t, amp) { return [0.22 * Math.sin(t * 1.7) * (amp || 1), 0.05 * Math.sin(t * 2.3) * (amp || 1), 0.035 * Math.sin(t * 1.1) * (amp || 1)]; }
+      const jit = (t, a) => [Math.sin(t * 7.3) * a + Math.sin(t * 13.1) * a * 0.5, Math.sin(t * 9.1) * a * 0.8, Math.sin(t * 5.7) * a * 0.4];
+
+      /* ---- other props ---- */
+      function mannequin(x, z, draw, col, s) {
+        s = s || 1; col = col || WH; const P = (a, b, d) => [x + a * s, b * s, z + d * s];
+        for (let i = 0; i < 18; i++) { const a1 = (i / 18) * 6.283, a2 = ((i + 1) / 18) * 6.283; line(P(Math.cos(a1) * 60, 1, Math.sin(a1) * 60), P(Math.cos(a2) * 60, 1, Math.sin(a2) * 60), 4, DK, 0); }
+        line(P(0, 0, 0), P(0, 120, 0), 6, DK, 0);
+        const d = clamp(draw), sh = 150 + 230, dress = [[-48, 330], [48, 330], [62, 260], [96, 120], [-96, 120], [-62, 260]];
+        lineP(P(-54, 345, 0), P(54, 345, 0), d * 3, 7, col); lineP(P(0, 345, 0), P(0, 375, 0), d * 3, 7, col);
+        if (d > 0.1) { const q = P(0, 412, 0); dot(q, 30 * s * clamp(d * 3), "rgba(0,0,0,0.9)", 0); for (let i = 0; i < 14; i++) { const a1 = (i / 14) * 6.283, a2 = ((i + 1) / 14) * 6.283; lineP(add(q, [Math.cos(a1) * 30 * s, Math.sin(a1) * 30 * s, 0]), add(q, [Math.cos(a2) * 30 * s, Math.sin(a2) * 30 * s, 0]), clamp(d * 3), 5, col); } }
+        const pd = clamp((d - 0.2) / 0.8), fr = dress.map((q) => P(q[0], q[1], 22)), bk = dress.map((q) => P(q[0], q[1], -22));
+        if (pd > 0) { if (pd > 0.95) fillPoly(fr, FILL); for (let i = 0; i < 6; i++) { lineP(fr[i], fr[(i + 1) % 6], pd * 6 - i, 6, col); lineP(bk[i], bk[(i + 1) % 6], pd * 6 - i, 3, DK, 0); lineP(fr[i], bk[i], pd * 6 - i, 3, DK, 0); }
+          for (let k = 1; k < 4; k++) lineP(P(-62 + k * 6, 255 - k * 34, 23), P(62 - k * 6, 255 - k * 34, 23), pd * 4 - k, 2.5, GR, 0); }
+        line(P(0, 120, 0), P(0, 135, 0), 6, DK, 0);
+      }
+      function column(x, z, h, col, w) { if (h <= 1) return; box([x, 0, z], 60, h, 60, col, col === RED ? "rgba(255,42,61,0.2)" : FILL, 1, w || 5); }
+      function head(p, s) { // back of a head + shoulders seen from behind (over-the-shoulder silhouette)
+        const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), r = (130 * s * F) / q[2];
+        c.save(); c.shadowBlur = 0; c.fillStyle = "#060606"; c.beginPath(); c.ellipse(v[0], v[1], r * 0.86, r, 0, 0, 6.283); c.fill();
+        c.beginPath(); c.moveTo(v[0] - r * 2.6, v[1] + r * 3.2); c.quadraticCurveTo(v[0] - r * 2.3, v[1] + r * 1.15, v[0], v[1] + r * 1.0); c.quadraticCurveTo(v[0] + r * 2.3, v[1] + r * 1.15, v[0] + r * 2.6, v[1] + r * 3.2); c.fill();
+        c.strokeStyle = "#5a5a5a"; c.lineWidth = Math.max(2, r * 0.03); c.shadowColor = "#fff"; c.shadowBlur = 10; c.beginPath(); c.ellipse(v[0], v[1], r * 0.86, r, 0, Math.PI * 1.05, Math.PI * 1.95); c.stroke(); c.restore();
+      }
+      const WALLP = []; for (let i = 0; i < 200; i++) WALLP.push(String(1 + Math.floor(rn(i + 900) * 8)) + "," + (rn(i + 1200) < 0.75 ? "99" : "90"));
+
+      /* ---- shot list: [start, end, cut, fn(t, u, d)] ---- */
+      const SH = [
+        // 1 — HOOK. Tele close-up of the swinging tag, dolly in, roll -4 → 0. "9," trembles on "mentendo".
+        [0, W[5], "none", (t, u, d) => {
+          const k = io(seg(u, 0, d)); camera(add([lerp(-60, -20, k), lerp(-30, 10, k), lerp(820, 640, k)], jit(t, 1.5)), [0, 0, 0], 1900, lerp(-4, 0, k));
+          const s = swing(t); const tr = seg(t, W[4] - 0.1, W[5]) * 3; const tremble = (i) => (i < 2 ? Math.sin(t * 70 + i) * tr : 0);
+          tag(H0, basis(s[0], s[1], s[2]), 1, { price: price("9,99 €").map((r, i) => ((r.dy = tremble(i)), r)) });
+          for (let i = 0; i < 40; i++) dot([(rn(i) - 0.5) * 1600, (rn(i + 40) - 0.5) * 2400, -900 - rn(i + 80) * 1500], 3, GR, 6);
+        }],
+        // 2 — Macro push from F1400 to F2600 onto the first 9, slide right. Digits light on the words.
+        [W[5], W[9], "punch", (t, u, d) => {
+          const k = io(seg(u, 0, d)); camera(add([lerp(-30, 10, k), 10, 520], jit(t, 1)), [lerp(-20, -46, k), 0, 0], lerp(1400, 2600, k), lerp(2, -3, k));
+          const on = (tt) => (t >= tt ? 1 : 0.22), s = swing(t, 0.4);
+          tag(H0, basis(s[0], s[1], s[2]), 1, { price: price("9,99 €", [RED, WH, WH, WH, WH, WH], [on(W[5]), on(W[8]), on(W[8]), on(W[8] + 0.1), 1, on(W[6])], [1 + 0.2 * hit(t, W[5], 6), 1, 1 + 0.2 * hit(t, W[8], 6), 1 + 0.2 * hit(t, W[8] + 0.1, 6), 1, 1 + 0.2 * hit(t, W[6], 6)]) });
+        }],
+        // 3 — Whip. Over the shoulder of a viewer; a red reading ray scans the price from left to right.
+        [W[9], W[15], "whip", (t, u, d) => {
+          const k = io(seg(u, 0, d)); const eyeH = [-430, 70, 520];
+          camera(add([lerp(-760, -690, k), lerp(150, 120, k), lerp(880, 820, k)], jit(t, 1.8)), [lerp(-70, -10, k), 0, 0], 2300, lerp(-3, 1, k));
+          const s = swing(t, 0.3); const p = io(seg(t, W[12] - 0.1, W[14] + 0.45)), xs = lerp(-60, 210, p);
+          const lit = (x) => (xs > x ? 1 : 0.35);
+          tag(H0, basis(s[0] + 0.25, s[1], s[2]), 1, { price: price("9,99 €", [RED], [lit(-70), lit(-30), lit(0), lit(30), 1, lit(90)]) });
+          if (p > 0 && p < 1) { line(eyeH, [xs - 60, 0, 8], 5, RED, 26); dot([xs - 60, 0, 8], 9, RED, 26); }
+          head([-575, 20, 640], 0.36);
+        }],
+        // 4 — Dolly along the gaze, hard brake on the 9 (power4.out). Everything else dims.
+        [W[15], W[22], "cut", (t, u, d) => {
+          const k = o4(seg(t, W[15], W[17] + 0.15)); const st = lp3([-380, 60, 470], [-34, 0, 300], k);
+          camera(add(st, jit(t, k > 0.98 ? 0.6 : 0)), [-34, 0, 0], lerp(1000, 1900, k), lerp(-6, 0, k));
+          const dim = 1 - 0.8 * seg(t, W[19] - 0.05, W[19] + 0.3), s = swing(t, 0.15);
+          tag(H0, basis(s[0] + 0.12, s[1], s[2]), 1, { price: price("9,99 €", [RED], [1, dim, dim, dim, 1, dim], [1 + 0.25 * hit(t, W[17], 5)]), edge: t > W[19] ? DK : WH });
+          if (t > W[17]) { const b = pop(t, W[17]); const P = (x, y) => add([-36, 2, 9], [x * b, y * b, 0]); [[-1, 1], [1, 1], [1, -1], [-1, -1]].forEach((q) => { line(P(q[0] * 42, q[1] * 62), P(q[0] * 26, q[1] * 62), 4, RED, 18); line(P(q[0] * 42, q[1] * 62), P(q[0] * 42, q[1] * 46), 4, RED, 18); }); }
+        }],
+        // 5 — Low angle tilt. A giant "10" far behind, a "9" up front. Rack focus 10 → 9 on "nove".
+        [W[22], W[31], "punch", (t, u, d) => {
+          const k = i2(seg(u, 0, d)); camera(add([lerp(160, 40, k), lerp(-120, -40, k), 900], jit(t, 1.2)), [0, lerp(380, 300, k), -800], 900, lerp(5, -2, k));
+          const rf = io(seg(t, W[30] - 0.15, W[30] + 0.25)); FOCUS.bg = lerp(0, 9, rf); FOCUS.fg = lerp(7, 0, rf);
+          c = bgc; ptext(price("10", [WH, WH], null, [1 + 0.1 * hit(t, W[27], 6), 1 + 0.1 * hit(t, W[27], 6)]), [520, 1350, -2600], [1, 0, 0], [0, 1, 0], 2100, null, 30); grid(8, 300, -60, DD);
+          c = fgc; const s = 1 + 0.25 * hit(t, W[30], 6); ptext([{ s: "9", col: rf > 0.5 ? RED : WH, k: s }], [-40, 180, 120], [1, 0, 0], [0, 1, 0], 560, null, 30);
+          if (t > W[25]) { const q = pop(t, W[26]); ptext([{ s: "≈", col: GR }], [330, 330, 0], [1, 0, 0], [0, 1, 0], 260 * q); }
+        }],
+        // 6 — Top-down, rotating 25°. The tag drops onto the floor and cracks in two on "poco".
+        [W[31], W[36], "whip", (t, u, d) => {
+          const rot = lerp(-0.2, 0.25, seg(u, 0, d)), up = [Math.sin(rot), 0, -Math.cos(rot)];
+          camera(add([0, lerp(760, 600, io(seg(u, 0, d))), 1], jit(t, 1)), [0, 0, 0], 1100, 0, up);
+          grid(6, 160, 0, "#303030");
+          const fall = seg(t, W[31] - 0.05, W[33]), y = lerp(480, 7, in3(fall)) + (t > W[33] ? Math.abs(Math.sin((t - W[33]) * 16)) * 40 * Math.exp(-(t - W[33]) * 9) : 0);
+          const flat = [[1, 0, 0], [0, 0, -1], [0, 1, 0]];
+          if (t < W[35] - 0.02) tag([0, y, 0], [flat[0], flat[1], flat[2]], 1.05, { price: price("9,99 €"), string: false });
+          else { const b = o4(seg(t, W[35] - 0.02, W[35] + 0.5)); const L = [[-120, -38], [-88, -75], [10, -75], [-5, -30], [20, 10], [0, 45], [15, 75], [-88, 75], [-120, 38]], Rr = [[10, -75], [120, -75], [120, 75], [15, 75], [0, 45], [20, 10], [-5, -30]];
+            [[L, -1, "9,"], [Rr, 1, "99 €"]].forEach((h) => { const ang = h[1] * 0.35 * b, ox = h[1] * 90 * b, oz = h[1] * 30 * b, ca = Math.cos(ang), sa = Math.sin(ang);
+              const pts = h[0].map((q) => [ox + q[0] * 1.05 * ca - q[1] * 1.05 * sa, 7, oz - (q[0] * 1.05 * sa + q[1] * 1.05 * ca)]); fillPoly(pts, FILL); loop(pts, 4.4, h[1] < 0 ? RED : WH, 16);
+              ptext([{ s: h[2], col: h[1] < 0 ? RED : WH }], [ox + h[1] * 40 * ca, 8, oz - h[1] * 40 * sa], [ca, 0, -sa], [-sa, 0, -ca], 104); });
+            for (let i = 0; i < 26; i++) { const a = rn(i + 300) * 6.283, r = (40 + rn(i + 340) * 260) * b; const p0 = [Math.cos(a) * r, 8, Math.sin(a) * r]; line(p0, add(p0, [Math.cos(a + 1) * 14, 0, Math.sin(a + 1) * 14]), 3, i % 4 ? WH : RED, 10); } }
+        }],
+        // 7 — Crane down from above onto a mannequin; the dress draws itself top to bottom.
+        [W[36], W[41], "punch", (t, u, d) => {
+          const k = io(seg(u, 0, d)); camera(add([lerp(380, 260, k), lerp(1300, 300, k), lerp(260, 720, k)], jit(t, 1)), [0, lerp(0, 230, k), 0], 1000, lerp(12, 0, k));
+          grid(6, 160, 0, "#262626"); mannequin(0, 0, seg(t, W[37], W[40] + 0.2));
+          if (t > W[39]) { c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = seg(t, W[39], W[39] + 0.3); c.font = '500 26px "Unbounded"'; c.textAlign = "center"; c.fillStyle = GR; c.shadowBlur = 0; c.fillText("ANDERSON & SIMESTER, 2003".split("").join("\u200A"), 540, 1700); c.restore(); }
+        }],
+        // 8 — Lateral dolly past three identical mannequins, foreground poles for parallax. Tags pop on "tre prezzi".
+        [W[41], W[52], "cut", (t, u, d) => {
+          const k = i2(seg(u, 0, d)); camera(add([lerp(-760, 520, k), 230, 1000], jit(t, 1.2)), [lerp(-420, 300, k), 230, 0], 1050, lerp(-3, 3, k));
+          grid(8, 160, 0, "#262626");
+          [-380, 0, 380].forEach((x, i) => { mannequin(x, 0, i === 1 ? 1 : seg(t, W[42] + (i ? 0.25 : 0), W[44] + 0.3)); const tp = pop(t, W[50] + i * 0.13); if (tp > 0) tag([x + 120, 250, 60], basis(-0.2 + 0.1 * Math.sin(t * 2 + i), 0, 0.04), 0.55 * tp, { string: 180, price: "?", size: 120 }); });
+          [-900, -420, 120, 640, 1100].forEach((x) => { line([x, 0, 520], [x, 900, 520], 9, "#3a3a3a", 0); });
+        }],
+        // 9–11 — Match cuts on the same framing: each tag flips 180° and reveals 34 / 39 / 44.
+        ...[[W[52], W[54], "34 $"], [W[54], W[55], "39 $"], [W[55], W[56], "44 $"]].map((q, i) => [q[0], q[1], i ? "match" : "punch", (t, u, d) => {
+          const x = [-380, 0, 380][i], tp = [x + 120, 250, 60];
+          camera(add([tp[0] + lerp(70, 40, seg(u, 0, d)), 280, lerp(480, 420, o4(seg(u, 0, d)))], jit(t, 0.8)), [tp[0] - 10, 240, 60], 1600, i === 1 ? 2 : -2);
+          mannequin(x, 0, 1, GR); const f = o4(seg(u, 0.02, 0.4));
+          tag(tp, basis(Math.PI * (1 - f), 0, 0.03 * Math.sin(t * 3)), 0.55, { string: 180, price: price(q[2], [i === 1 ? RED : WH, i === 1 ? RED : WH]), size: 118, back: (P, ux, uy, th) => ptext("?", P(0, 0, th), mul(ux, 0.55), mul(uy, 0.55), 110) });
+        }]),
+        // 12 — Fast pull back to all three, micro orbit 12°. Three sales columns rise to the same height. Suspense.
+        [W[56], W[61], "cut", (t, u, d) => {
+          const k = o4(seg(u, 0, 0.6)), a = lerp(-0.1, 0.11, seg(u, 0, d)); const dist = lerp(600, 1250, k);
+          camera(add([Math.sin(a) * dist, lerp(280, 380, k), Math.cos(a) * dist], jit(t, 1)), [0, 240, 0], lerp(1300, 1000, k));
+          grid(8, 160, 0, "#262626");
+          ["34 $", "39 $", "44 $"].forEach((p, i) => { const x = [-380, 0, 380][i]; mannequin(x, 0, 1, GR); tag([x + 120, 250, 60], basis(-0.15, 0, 0), 0.55, { string: 180, price: p, size: 118 }); column(x, 240, 70 * o4(seg(t, W[57], W[59])) + 6 * Math.sin(t * 9 + i) * seg(t, W[58], W[61]), WH); });
+          if (t > W[59]) ptext([{ s: "?", col: WH, k: 1 + 0.1 * Math.sin(t * 10) }], [0, 620, 240], [1, 0, 0], [0, 1, 0], 260 * pop(t, W[59]));
+        }],
+        // 13 — Snap zoom F900 → 1700 in 0.2 s on the middle one; its column explodes up in red. Ka-ching.
+        [W[61], W[62], "snap", (t, u, d) => {
+          const z = o4(seg(u, 0, 0.2)); camera(add([lerp(0, 160, z), 360, 1900], jit(t, 2.5 * hit(t, W[61], 3))), [0, lerp(220, 420, z), 0], lerp(900, 1700, z));
+          grid(8, 160, 0, "#262626");
+          [-380, 0, 380].forEach((x, i) => { mannequin(x, 0, 1, i === 1 ? WH : DK); tag([x + 120, 250, 60], basis(-0.15, 0, 0), 0.55, { string: 180, price: price(["34 $", "39 $", "44 $"][i], i === 1 ? [RED, RED] : null), size: 118, edge: i === 1 ? WH : DK }); column(x, 240, i === 1 ? lerp(70, 760, ex(seg(t, W[61], W[61] + 0.5))) : 70, i === 1 ? RED : DK); });
+        }],
+        // 14 — Fly up the red column, roll 0 → 8°. At the top the "9" lifts off and crowns. Then dive into the 9.
+        [W[62], W[72], "cut", (t, u, d) => {
+          const k = io(seg(t, W[62], W[67])), dive = in3(seg(t, W[72] - 0.42, W[72]));
+          const top = 760, crown = o4(seg(t, W[69] - 0.1, W[71] + 0.2));
+          const nine = [0, top + 170 + 240 * crown, 240];
+          let eye = add([lerp(260, 90, k), lerp(80, top + 120, k), lerp(760, 560, k)], jit(t, 1)), look = [0, lerp(300, top + 150, k) + 200 * crown, 240];
+          eye = lp3(eye, add(nine, [0, 0, 30]), dive); camera(eye, lp3(look, nine, Math.max(dive, crown * 0.6)), lerp(1000, 1600, dive), lerp(0, 8, k) * (1 - dive));
+          grid(8, 160, 0, "#262626"); mannequin(0, 0, 1, DK);
+          column(0, 240, top, RED, 6); for (let y = 100; y < top; y += 100) line([-62, y, 302], [62, y, 302], 3, RED, 12);
+          tag([0, top + 90, 240], basis(0, 0, 0), 0.8, { string: false, price: [{ s: "3", col: WH }, { s: "9", col: RED, a: crown > 0.05 ? 0 : 1 }, { s: " $", col: WH }], size: 118 });
+          if (crown > 0.05) { ptext([{ s: "9", col: RED, k: 1 + 0.2 * hit(t, W[71], 5) }], nine, [1, 0, 0], [0, 1, 0], 220, null, 36);
+            for (let i = 0; i < 16; i++) { const a = (i / 16) * 6.283 + t * 0.6, r1 = 150 * crown, r2 = (190 + 80 * Math.sin(t * 6 + i)) * crown; line(add(nine, [Math.cos(a) * r1, Math.sin(a) * r1, -4]), add(nine, [Math.cos(a) * r2, Math.sin(a) * r2, -4]), 5, i % 2 ? RED : WH, 20); } }
+          if (t > W[64]) ptext([{ s: "+5 $", col: GR }], [-260, top + 40, 240], [1, 0, 0], [0, 1, 0], 90 * pop(t, W[65]));
+        }],
+        // 15 — Out of the 9 into a wall of prices: every first digit lights red in a wave. Pull back with a yaw.
+        [W[72], W[79], "match", (t, u, d) => {
+          const k = o4(seg(u, 0, d * 0.9)), a = lerp(0, -0.4, io(seg(u, 0, d)));
+          const ct = [-6 * 0, 0, 0]; const dist = lerp(70, 1700, k);
+          camera(add([Math.sin(a) * dist + lerp(-40, -200, k), lerp(0, 160, k), Math.cos(a) * dist], jit(t, 1)), [lerp(-40, 0, k), lerp(0, 60, k), 0], lerp(1500, 1000, k), lerp(-6, 4, k));
+          let idx = 0; for (let r = -7; r <= 7; r++) for (let cI = -4; cI <= 4; cI++) { const x = cI * 300 + (r % 2 ? 150 : 0), y = r * 190, p = WALLP[idx++]; if (Math.abs(r) + Math.abs(cI) > 0 && Math.hypot(x, y) > 2400) continue;
+            const wave = seg(t, W[72] + 0.25 + Math.hypot(x, y) / 2600, W[72] + 0.45 + Math.hypot(x, y) / 2600), hot = (r === 0 && cI === 0) || t > W[76] - 0.1;
+            tag([x - 40, y, -Math.abs(Math.sin(x * 0.01 + y * 0.02)) * 40], basis(0, 0, 0), 1, { string: false, price: [{ s: p[0], col: hot ? RED : WH, a: lerp(0.3, 1, wave), k: 1 + 0.2 * hit(t, W[76] + Math.hypot(x, y) / 4000, 6) }, { s: p.slice(1) + " €", col: GR, a: lerp(0.3, 0.55, wave) }], edge: wave > 0.5 && hot ? WH : DK, glow: 6 }); }
+        }],
+        // 16 — Whip. Dolly along a supermarket shelf, a trolley rolls in from the left. 1,99 / 2,99 / 4,99.
+        [W[79], W[83], "whip", (t, u, d) => {
+          const k = i2(seg(u, 0, d)); camera(add([lerp(-520, 160, k), 230, 820], jit(t, 1.2)), [lerp(-360, 320, k), 200, 0], 1000, lerp(-4, 2, k));
+          for (let s = 0; s < 3; s++) { const y = 60 + s * 190; line([-1600, y, 60], [1600, y, 60], 6, GR, 6); line([-1600, y, 60], [-1600, y, -80], 3, DK, 0); }
+          for (let i = -8; i <= 8; i++) for (let s = 0; s < 3; s++) { const x = i * 190 + (s % 2 ? 60 : 0), y = 60 + s * 190, h = 70 + rn(i * 3 + s + 400) * 70, kind = (i + s + 20) % 3;
+            if (kind === 0) box([x, y, 0], 44, h, 34, GR, FILL, 1, 3); else if (kind === 1) { line([x, y, 0], [x, y + h, 0], 26, "#151515", 0); loop([[x - 22, y, 10], [x + 22, y, 10], [x + 22, y + h * 0.8, 10], [x + 8, y + h, 10], [x - 8, y + h, 10], [x - 22, y + h * 0.8, 10]], 3, GR); } else box([x, y, 0], 34, h * 0.6, 34, GR, FILL, 1, 3);
+            if (s === 1 && i % 2 === 0) { const p = ["1,99", "2,99", "4,99", "0,99"][(i + 8) % 4]; tag([x, y - 40, 70], basis(0, 0, 0), 0.42, { string: false, price: [{ s: p[0], col: RED }, { s: p.slice(1) + " €", col: WH }], size: 118, glow: 8 }); } }
+          const cx = lerp(-1300, -60, o4(seg(t, W[79], W[82] + 0.2))); const C = (a, b, z) => [cx + a, b, 460 + z];
+          loop([C(-110, 70, -70), C(110, 90, -70), C(110, 90, 70), C(-110, 70, 70)], 4, WH); loop([C(-130, 230, -80), C(130, 250, -80), C(130, 250, 80), C(-130, 230, 80)], 4, WH);
+          [[-110, -70], [110, -70], [110, 70], [-110, 70]].forEach((q) => line(C(q[0], 70, q[1]), C(q[0] * 1.18, 240, q[1] * 1.14), 3, WH)); line(C(-130, 240, 0), C(-210, 300, 0), 5, WH);
+          [[-90, -60], [90, -60], [90, 60], [-90, 60]].forEach((q) => dot(C(q[0], 22, q[1]), 20, GR, 0));
+        }],
+        // 17 — Match cut: the shelf sections become three subscription cards. Tilt up from below.
+        [W[83], W[85], "match", (t, u, d) => {
+          const k = io(seg(u, 0, d)); camera(add([0, lerp(-200, -40, k), lerp(980, 860, k)], jit(t, 1)), [0, lerp(380, 260, k), 0], 1000, lerp(3, -2, k));
+          [["9,99", "BASE"], ["14,99", "PRO"], ["19,99", "MAX"]].forEach((q, i) => { const x = (i - 1) * 330, p = pop(t, W[83] + i * 0.08), hot = i === 1; if (p <= 0) return;
+            const P4 = [[x - 140 * p, 0, 0], [x + 140 * p, 0, 0], [x + 140 * p, 520 * p, 0], [x - 140 * p, 520 * p, 0]]; fillPoly(P4, FILL); loop(P4, 5, hot ? RED : WH, 16);
+            ptext([{ s: q[1], col: GR }], [x, 450 * p, 2], [p, 0, 0], [0, p, 0], 34, '500 SZpx "Unbounded"', 0);
+            ptext([{ s: q[0][0], col: RED }, { s: q[0].slice(1), col: WH }], [x, 300 * p, 2], [p, 0, 0], [0, p, 0], 120);
+            ptext([{ s: "/MESE", col: GR }], [x, 200 * p, 2], [p, 0, 0], [0, p, 0], 30, '500 SZpx "Unbounded"', 0); line([x - 90 * p, 110 * p, 2], [x + 90 * p, 110 * p, 2], 4, hot ? RED : DK, 10); });
+        }],
+        // 18 — Match cut into a phone feed, from behind the thumb; ads scroll past.
+        [W[85], W[88], "match", (t, u, d) => {
+          const k = io(seg(u, 0, d)); camera(add([lerp(260, 200, k), lerp(-380, -300, k), 900], jit(t, 1.5)), [0, 30, 0], 1100, lerp(-8, -4, k));
+          const PW = 330, PH = 660, P = (x, y) => [x, y, 0];
+          fillPoly([P(-PW / 2, -PH / 2), P(PW / 2, -PH / 2), P(PW / 2, PH / 2), P(-PW / 2, PH / 2)], "#050505"); loop([P(-PW / 2, -PH / 2), P(PW / 2, -PH / 2), P(PW / 2, PH / 2), P(-PW / 2, PH / 2)], 7, WH, 18); line(P(-40, PH / 2 - 26), P(40, PH / 2 - 26), 6, GR);
+          const sc = (t - W[85]) * 420; const ADS = [["-50%", "29,99 €"], ["NUOVO", "9,99 €"], ["SOLO OGGI", "49,90 €"], ["TOP", "99,99 €"], ["-30%", "19,99 €"]];
+          for (let i = 0; i < 6; i++) { let y = 250 - i * 280 + (sc % 1400); if (y < -480) y += 1400; if (y > 330 || y < -330) continue; const a = ADS[(i + 5) % 5];
+            const C4 = [P(-140, y - 110), P(140, y - 110), P(140, y + 110), P(-140, y + 110)]; loop(C4, 3, DK, 0); loop([P(-120, y - 20), P(-10, y - 20), P(-10, y + 90), P(-120, y + 90)], 3, GR, 0);
+            ptext([{ s: a[0], col: i % 2 ? WH : RED }], P(60, y + 50), [1, 0, 0], [0, 1, 0], 40, '900 SZpx "Unbounded"', 8); ptext([{ s: a[1][0], col: RED }, { s: a[1].slice(1), col: WH }], P(62, y - 30), [1, 0, 0], [0, 1, 0], 62); }
+          const th = [120, -260 + 40 * Math.sin(t * 9), 60]; line(add(th, [80, -260, 40]), th, 46, "#0b0b0b", 0); line(add(th, [80, -260, 40]), th, 4, GR, 6); dot(th, 24, "#0b0b0b", 0);
+        }],
+        // 19 — Long crane up and back: hundreds of tags floating like a constellation.
+        [W[88], W[95], "punch", (t, u, d) => {
+          const k = io(seg(u, 0, d)); const a = lerp(0.4, -0.3, k);
+          camera(add([Math.sin(a) * lerp(500, 2600, k), lerp(0, 1100, k), Math.cos(a) * lerp(500, 2600, k)], jit(t, 1)), [0, 0, 0], lerp(1000, 800, k), lerp(-5, 5, k));
+          FOGD = 6000; constellation(t, 1); tag(H0, basis(t * 0.6, 0.1, 0), 1.4, { string: false, price: price("9,99 €", [RED]) });
+        }],
+        // 20 — Slow push to the single tag; the constellation sits behind, out of focus. A 0.5 s timer sweeps.
+        [W[95], W[105], "cut", (t, u, d) => {
+          const k = i2(seg(u, 0, d)); camera(add([lerp(-160, -40, k), lerp(60, 20, k), lerp(980, 640, k)], jit(t, 0.8)), [0, 0, 0], 1300, lerp(-3, 1, k));
+          FOGD = 6000; FOCUS.bg = 7; c = bgc; constellation(t, 0.8); c = fgc;
+          const s = swing(t, 0.25); tag(H0, basis(s[0], s[1], s[2]), 1, { string: false, price: price("9,99 €", [RED]) });
+          const sw = seg(t, W[103], W[103] + 0.5); if (t > W[102]) { const R0 = 190; let prev = null; for (let i = 0; i <= 48; i++) { const f = i / 48; if (f > 1 - sw && sw < 1) break; const an = -Math.PI / 2 + f * 6.283, p = [Math.cos(an) * R0, -Math.sin(an) * R0, 2]; if (prev) line(prev, p, 7, sw >= 1 ? RED : WH, 20); prev = p; }
+            if (sw > 0) ptext([{ s: "0,5 s", col: RED }], [0, -240, 4], [1, 0, 0], [0, 1, 0], 90 * pop(t, W[103])); }
+        }],
+        // 21 — Tight 90° orbit around the tag; a red selection box "chooses" every character. The 9 rolls like a slot.
+        [W[105], W[111], "cut", (t, u, d) => {
+          const a = lerp(-0.75, 0.8, i2(seg(u, 0, d))); camera(add([Math.sin(a) * 640, lerp(90, 30, seg(u, 0, d)), Math.cos(a) * 640], jit(t, 0.8)), [0, 0, 0], 1300, lerp(4, -4, seg(u, 0, d)));
+          grid(6, 200, -260, "#1c1c1c");
+          const roll = seg(t, W[108] - 0.05, W[109]); const d1 = roll > 0 && roll < 1 ? String(Math.floor(roll * 23) % 10) : "9";
+          const sel = t < W[107] ? 0 : t < W[108] ? 1 : t < W[109] ? 0 : t < W[110] ? 2 : 3;
+          tag(H0, basis(0, 0, 0), 1, { string: false, price: price(d1 + ",99 €", [RED]), front: (P, ux, uy, th) => { const xs = [-38, -10, 16, 44][sel], w = sel === 1 ? 14 : 26, b = pop(t, [W[105], W[107], W[108], W[109], W[110]][Math.min(4, sel === 0 && t > W[108] ? 2 : sel === 0 ? 0 : sel + 1)]);
+            loop([P(xs - w * b, -58, th + 1), P(xs + w * b, -58, th + 1), P(xs + w * b, 56, th + 1), P(xs - w * b, 56, th + 1)], 3.5, RED, 18); } });
+        }],
+        // 22 — Hard cut, frontal, dead still for 0.6 s. Everything goes dark except the 9.
+        [W[111], 48.6, "cut", (t, u, d) => {
+          const k = in3(seg(u, 0.55, d)); camera([0, 0, lerp(560, 470, k)], [0, 0, 0], 1500, 0);
+          const dim = 1 - 0.85 * seg(u, 0.05, 0.3);
+          tag(H0, basis(0, 0, 0), 1, { string: false, price: price("9,99 €", [RED], [1, dim, dim, dim, 1, dim], [1 + 0.25 * hit(t, W[112], 6)]), edge: dim < 0.5 ? DK : WH });
+        }],
+        // 23 — The tag flips 180°: its back is the Apex logo. Pull back, end card.
+        [48.6, 52.01, "none", (t, u, d) => {
+          const f = io(seg(u, 0, 0.7)), k = o4(seg(u, 0.4, 1.6)); camera([0, lerp(0, -150, k), lerp(470, 980, k)], [0, lerp(0, -170, k), 0], 1500, 0);
+          tag(H0, basis(Math.PI * f, 0, 0), 1, { string: false, price: price("9,99 €", [RED], [1, 0.15, 0.15, 0.15, 1, 0.15]), edge: f > 0.5 ? RED : DK,
+            back: (P, ux, uy, th) => { const o = P(10, 2, th), T = [[0, 58], [50, -42], [-50, -42], [0, 58]]; for (let i = 0; i < 3; i++) line(add(o, add(mul(ux, T[i][0]), mul(uy, T[i][1]))), add(o, add(mul(ux, T[i + 1][0]), mul(uy, T[i + 1][1]))), 6, RED, 22);
+              fillPoly([add(o, add(mul(ux, 0), mul(uy, 14))), add(o, add(mul(ux, 21), mul(uy, -26))), add(o, add(mul(ux, -21), mul(uy, -26)))], RED); } });
+          c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.shadowBlur = 0;
+          const w = pop(t, 49.3); if (w > 0) { c.font = '900 ' + Math.round(96 * w) + 'px "Unbounded"'; c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = WH; c.shadowColor = WH; c.shadowBlur = 22; c.fillText("APEXMEDIA", 540, 1430); }
+          if (t > 49.6) { c.globalAlpha = seg(t, 49.6, 49.9); c.shadowBlur = 0; c.font = '500 27px "Unbounded"'; c.fillStyle = GR; c.fillText("CAPIRE LA PUBBLICITÀ, PRIMA DI FARLA".split("").join(" "), 540, 1510); c.globalAlpha = 1; }
+          const b = o4(seg(t, 49.9, 50.4)); if (b > 0) { c.fillStyle = RED; c.shadowColor = RED; c.shadowBlur = 30; c.beginPath(); c.roundRect(540 - 430 * b, 1572, 860 * b, 116, 8); c.fill(); if (b > 0.9) { c.shadowBlur = 0; c.fillStyle = "#000"; c.font = '900 64px "Big Shoulders Display"'; c.fillText("SEGUI APEX MEDIA →", 540, 1632); } }
+          c.restore();
+        }],
+      ];
+      function constellation(t, a) { const ga = c.globalAlpha; c.globalAlpha = ga * a; for (let i = 0; i < 170; i++) { const th = rn(i + 1500) * 6.283, ph = Math.acos(2 * rn(i + 1700) - 1), r = 500 + rn(i + 1900) * 1700;
+        const p = [Math.cos(th) * Math.sin(ph) * r, Math.cos(ph) * r * 0.8, Math.sin(th) * Math.sin(ph) * r]; if (cs(p)[2] < 320) continue; tag(p, basis(rn(i + 2100) * 6.283 + t * 0.2 * (rn(i) - 0.5), rn(i + 2300) - 0.5, rn(i + 2500) - 0.5), 0.6, { string: false, price: [{ s: WALLP[i][0], col: rn(i + 2700) < 0.3 ? RED : WH }, { s: WALLP[i].slice(1), col: GR }], edge: GR, glow: 6, tglow: 6 }); } c.globalAlpha = ga; }
+
+      const FOCUS = { bg: 0, fg: 0 };
+      function drawFrame(t, ctxOut) {
+        let i = 0; while (i < SH.length - 1 && t >= SH[i][1]) i++;
+        const s = SH[i], u = t - s[0], d = s[1] - s[0];
+        FOCUS.bg = 0; FOCUS.fg = 0; FOGD = 3400;
+        [fgc, bgc].forEach((k) => { k.setTransform(1, 0, 0, 1, 0, 0); k.clearRect(0, 0, 1080, 1920); k.globalAlpha = 1; k.shadowBlur = 0; });
+        const bp = (((t - B0) % BEAT) + BEAT) % BEAT, bump = Math.exp(-bp * 9) * 0.018, ty = s[2];
+        const pk = ty === "punch" || ty === "cut" ? 1 - o4(seg(u, 0, 0.28)) : 0, wk = ty === "whip" ? 1 - o4(seg(u, 0, 0.3)) : 0, sn = ty === "snap" ? hit(t, s[0], 10) : 0, dir = i % 2 ? 1 : -1;
+        const sc = 1 + bump + (ty === "punch" ? pk * 0.24 : ty === "cut" ? pk * 0.06 : 0) + sn * 0.1;
+        [fgc, bgc].forEach((k) => { k.translate(540 + wk * 900 * dir, 1150); k.rotate((ty === "punch" ? pk * 0.12 : 0) * dir + wk * 0.05 * dir); k.scale(sc, sc); k.translate(-540, -1150); });
+        c = fgc; s[3](t, u, d); c = fgc;
+        ctxOut.fillStyle = "#000"; ctxOut.fillRect(0, 0, 1080, 1920);
+        const g = ctxOut.createRadialGradient(540, 1150, 60, 540, 1150, 900); g.addColorStop(0, "rgba(255,255,255,0.09)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctxOut.fillStyle = g; ctxOut.fillRect(0, 200, 1080, 1720);
+        ctxOut.filter = FOCUS.bg > 0.3 ? "blur(" + FOCUS.bg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(BG, 0, 0);
+        ctxOut.filter = FOCUS.fg > 0.3 ? "blur(" + FOCUS.fg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(FG, 0, 0); ctxOut.filter = "none";
+        const fl = ty === "match" ? hit(t, s[0], 22) * 0.35 : ty === "punch" ? hit(t, s[0], 14) * 0.3 : ty === "snap" ? hit(t, s[0], 12) * 0.5 : 0;
+        const tg = ctxOut.createLinearGradient(0, 140, 0, 820); tg.addColorStop(0, "rgba(0,0,0,0.78)"); tg.addColorStop(0.7, "rgba(0,0,0,0.5)"); tg.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = tg; ctxOut.fillRect(0, 140, 1080, 680);
+        if (fl > 0.01) { ctxOut.fillStyle = "rgba(255,255,255," + fl.toFixed(3) + ")"; ctxOut.fillRect(0, 0, 1080, 1920); }
+      }
+      const SUB = 3, SHUT = 0.5 / 30;
+      function render(t) {
+        octx.setTransform(1, 0, 0, 1, 0, 0); octx.globalAlpha = 1;
+        for (let j = 0; j < SUB; j++) { drawFrame(Math.max(0, t + (j / (SUB - 1) - 0.5) * SHUT), frc); octx.globalAlpha = 1 / (j + 1); octx.drawImage(FR, 0, 0); }
+        octx.globalAlpha = 1;
+      }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Big Shoulders Display"'), document.fonts.load('500 26px "Unbounded"'), document.fonts.load('900 60px "Unbounded"')]).then(() => render(st.t), () => render(st.t));
+      render(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>
