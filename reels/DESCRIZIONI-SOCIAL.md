@@ -8,7 +8,32 @@ La prima riga è sempre il gancio: è l'unica che si vede senza aprire la descri
 
 ---
 
-## 1. McDonald's — "Non vende hamburger" (1:33)
+## 1. Stipendio — "1.500 € finiti il 15" (1:20)
+File: `apex-stipendio/renders/apex-stipendio-9x16.mp4`
+
+**Instagram**
+```text
+Ti arrivano 1.500 euro. Il 15 del mese sono già spariti. 💸
+
+Affitto, bollette, spesa, auto, abbonamenti: restano 13 euro al giorno.
+Ma c'è di peggio: il giorno dello stipendio spendiamo di più, e con la carta siamo disposti a spendere fino al doppio (esperimento del MIT).
+
+Chi arriva a fine mese fa una cosa al contrario: il giorno dello stipendio mette via il 10% PRIMA di spendere. 150 € al mese, 1.800 € all'anno.
+
+👇 A che giorno del mese arrivi a zero? Scrivi solo il numero.
+
+#soldi #stipendio #finanzapersonale #risparmio #educazionefinanziaria #business #mindset #imprenditori
+```
+
+**TikTok**
+```text
+1.500 € e il 15 del mese sono già finiti. Ecco perché 💸 A che giorno arrivi a zero? Scrivi solo il numero 👇
+#soldi #stipendio #finanzapersonale #risparmio
+```
+
+---
+
+## 2. McDonald's — "Non vende hamburger" (1:33)
 File: `apex-mcdonalds/renders/apex-mcdonalds-9x16.mp4`
 
 **Instagram**
@@ -34,7 +59,7 @@ McDonald's non guadagna con gli hamburger. E l'uomo che l'ha resa famosa non si 
 
 ---
 
-## 2. Liquid Death — "Morte liquida" (1:26)
+## 3. Liquid Death — "Morte liquida" (1:26)
 File: `apex-liquid-death/renders/apex-liquid-death-9x16.mp4`
 
 **Instagram**
@@ -60,7 +85,7 @@ Questa è acqua. Solo acqua. E vale più di un miliardo di dollari. 💀
 
 ---
 
-## 3. Diamante — "Un diamante è per sempre" (1:38)
+## 4. Diamante — "Un diamante è per sempre" (1:38)
 File: `apex-diamante/renders/apex-diamante-9x16.mp4`
 
 **Instagram**
@@ -86,7 +111,7 @@ Il diamante del tuo anello non è raro. L'idea di regalarlo l'ha inventata una p
 
 ---
 
-## 4. Bernays — "Le torce della libertà" (1:37)
+## 5. Bernays — "Le torce della libertà" (1:37)
 File: `apex-bernays/renders/apex-bernays-9x16.mp4`
 
 **Instagram**
@@ -114,7 +139,7 @@ Suono pagine: Koops (CC BY 4.0)
 
 ---
 
-## 5. "9,99" — l'effetto della cifra a sinistra (52 s)
+## 6. "9,99" — l'effetto della cifra a sinistra (52 s)
 File: `apex-nove-e-novantanove/renders/apex-nove-e-novantanove-9x16.mp4`
 
 **Instagram**
@@ -142,7 +167,7 @@ Fonte: Anderson & Simester, 2003 · Suono vetro: Ruben_Uitenweerde (CC BY 3.0)
 
 ---
 
-## 6. La regola del 7 (41 s)
+## 7. La regola del 7 (41 s)
 File: `apex-regola-del-7/renders/apex-regola-del-7-9x16.mp4`
 
 **Instagram**
@@ -168,7 +193,7 @@ Nessuno compra la prima volta che ti vede. 👀 Alla settima, entra.
 
 ---
 
-## 7. La fila — riprova sociale (47 s)
+## 8. La fila — riprova sociale (47 s)
 File: `apex-la-fila/renders/apex-la-fila-9x16.mp4`
 
 **Instagram**
@@ -195,7 +220,7 @@ Due ristoranti uguali: entri sempre in quello con la fila. Ecco perché. 🍝
 
 ---
 
-## 8. Effetto esca — il popcorn medio (47,5 s)
+## 9. Effetto esca — il popcorn medio (47,5 s)
 File: `apex-effetto-esca/renders/apex-effetto-esca-9x16.mp4`
 
 **Instagram**
@@ -221,7 +246,7 @@ Il popcorn medio non è lì per essere comprato. 🍿 Si chiama effetto esca.
 
 ---
 
-## 9. Due negozi (60 s)
+## 10. Due negozi (60 s)
 File: `apex-due-negozi/renders/apex-due-negozi-9x16.mp4`
 
 **Instagram**
@@ -248,7 +273,7 @@ Non conta quanta gente ti vede. Conta chi ti vede, e cosa fa dopo.
 
 ---
 
-## 10. Cosa facciamo — "I like non pagano le fatture" (31,6 s)
+## 11. Cosa facciamo — "I like non pagano le fatture" (31,6 s)
 File: `apex-cosa-facciamo-3d/renders/apex-cosa-facciamo-9x16.mp4`
 
 **Instagram**
@@ -276,7 +301,7 @@ I like non pagano le fatture. 💸 Ecco cosa facciamo invece.
 
 ---
 
-## 11. 100 post, 0 clienti (18 s)
+## 12. 100 post, 0 clienti (18 s)
 File: `apex-post-clienti-3d/renders/apex-post-clienti-9x16.mp4`
 
 **Instagram**
@@ -302,7 +327,7 @@ Smettila di pubblicare. Inizia a convertire.
 
 ---
 
-## 12. Il funnel 3D — "Il tuo fatturato è fermo?" (21 s)
+## 13. Il funnel 3D — "Il tuo fatturato è fermo?" (21 s)
 File: `apex-funnel-3d/renders/apex-funnel-3d-9x16.mp4`
 
 **Instagram**
@@ -333,11 +358,11 @@ Più clienti. Non più views.
 
 ---
 
-## 13. Il funnel 2D — prima versione (21 s)
+## 14. Il funnel 2D — prima versione (21 s)
 File: `apex-funnel-fatturato/renders/apex-funnel-fatturato-9x16.mp4`
 
 Attenzione: questo video è **senza audio**. Su Instagram e TikTok aggiungi una musica di tendenza dall'app prima di pubblicare.
-Ha lo stesso messaggio del video 12: pubblicane uno solo dei due.
+Ha lo stesso messaggio del video 13: pubblicane uno solo dei due.
 
 **Instagram**
 ```text
@@ -365,6 +390,6 @@ Il tuo fatturato è fermo? Serve un funnel, non più traffico. 📊
 ## Prima di pubblicare
 
 - **Commenti con parola chiave** (CLIENTI, AUDIT): rispondi in DM entro poche ore, altrimenti il contatto si raffredda.
-- **"Link in bio"**: i video 10, 11 e 13 lo dicono a schermo, quindi il link alla consulenza o all'audit deve essere davvero in bio.
-- **Crediti audio**: solo i video 4 e 5 richiedono la riga di credito (licenza CC BY). È già inserita qui sopra.
-- **Ordine consigliato**: alterna un video divulgativo (1–8) e uno commerciale (9–12) per non sembrare solo pubblicità.
+- **"Link in bio"**: i video 11, 12 e 14 lo dicono a schermo, quindi il link alla consulenza o all'audit deve essere davvero in bio.
+- **Crediti audio**: solo i video 5 e 6 richiedono la riga di credito (licenza CC BY). È già inserita qui sopra.
+- **Ordine consigliato**: alterna un video divulgativo (1–9) e uno commerciale (10–13) per non sembrare solo pubblicità.
