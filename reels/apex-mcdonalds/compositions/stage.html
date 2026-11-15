@@ -1,0 +1,503 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      /* "Non vende hamburger" — McDonald's — true camera, plane text, extruded 3D type, two-layer depth of field, 3-sample motion blur. Every frame is a pure function of t. */
+      const W = [0.123,  0.875,  1.118,  1.753,  2.007,  2.25,  3.128,  3.627,  3.867,  4.186,  4.506,  4.985,  5.215,  5.644,  5.704,  6.193,  6.832,  7.921,  9.935,  11.102,  11.267,  12.308,  12.541,  13.925,  14.107,  14.659,  14.869,  14.993,  15.356,  15.893,  16.173,  16.861,  17.12,  17.29,  17.659,  18.836,  18.973,  19.064,  19.977,  20.037,  20.288,  21.021,  21.313,  21.393,  21.765,  22.91,  23.179,  23.831,  24.08,  24.576,  25.015,  25.96,  26.226,  26.513,  26.728,  27.28,  27.546,  27.781,  28.17,  28.303,  29.234,  29.609,  30.35,  31.043,  31.302,  31.799,  31.978,  32.425,  33.359,  33.832,  33.892,  34.364,  34.565,  34.626,  35.721,  35.812,  36.024,  36.095,  36.872,  37.437,  38.476,  38.726,  39.077,  39.348,  39.799,  39.92,  40.662,  41.006,  41.916,  42.143,  42.995,  43.624,  43.854,  43.924,  44.453,  44.762,  45.222,  45.291,  46.19,  46.444,  47.062,  47.123,  47.336,  47.478,  48.33,  48.419,  48.698,  49.356,  50.122,  50.66,  51.407,  52.364,  52.598,  52.893,  53.859,  54.193,  55.872,  56.137,  56.874,  56.934,  57.129,  57.836,  58.09,  58.74,  59.359,  59.532,  60.557,  60.908,  61.015,  61.492,  62.193,  62.446,  62.71,  62.862,  63.593,  63.786,  63.897,  64.628,  64.881,  65.327,  66.493,  66.737,  67.704,  67.953,  68.013,  68.291,  68.758,  69.414,  69.475,  69.997,  70.449,  70.9,  71.021,  71.483,  71.613,  71.925,  72.095,  72.487,  72.949,  73.289,  73.97,  74.13,  74.311,  74.441,  75.472,  76.513,  76.763,  77.093,  77.522,  77.732,  78.002,  78.571,  78.991,  79.55,  80.179,  80.3,  81.229,  81.338,  82.092,  82.152,  82.31,  83.213,  83.303,  83.817,  84.099,  84.553,  84.694,  84.825,  85.682,  86.44,  86.62,  87.0,  87.12,  88.06,  88.14,  88.24];
+      const D = 93.31, BEAT = 0.6006, B0 = 0.035;
+      const out = document.querySelector("#st-canvas"), octx = out.getContext("2d");
+      const mk = () => { const k = document.createElement("canvas"); k.width = 1080; k.height = 1920; return k; };
+      const FG = mk(), BG = mk(), FR = mk(); const fgc = FG.getContext("2d"), bgc = BG.getContext("2d"), frc = FR.getContext("2d");
+      let c = fgc;
+      const WH = "#ffffff", GR = "#8c8c8c", DK = "#4c4c4c", DD = "#262626", FILL = "rgba(4,4,6,0.93)";
+      const CH = [[0, "#FF2A3D"], [W[17], "#FFD60A"], [W[60], "#FF7A1A"], [W[80], "#00FF85"], [W[114], "#FF2A3D"], [W[158], "#B45CFF"], [W[174], "#FFD60A"]];
+      let A = "#FF2A3D";
+      const accAt = (t) => { let a = CH[0][1]; for (const q of CH) if (t >= q[0] - 0.02) a = q[1]; return a; };
+      const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+      const o4 = (p) => 1 - Math.pow(1 - p, 4), ex = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2), i2 = (p) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2), in3 = (p) => p * p * p;
+      const back = (p) => 1 + 2.6 * Math.pow(p - 1, 3) + 1.6 * Math.pow(p - 1, 2);
+      const pop = (t, t0, d) => back(seg(t, t0, t0 + (d || 0.28)));
+      const hit = (t, t0, k) => (t >= t0 ? Math.exp(-(t - t0) * (k || 9)) : 0);
+      function rng(seed) { return function () { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const R = rng(1955); const RN = []; for (let i = 0; i < 5000; i++) RN.push(R());
+      const rn = (i) => RN[((i % 5000) + 5000) % 5000];
+      const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k], lp3 = (a, b, p) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p), lerp(a[2], b[2], p)];
+      const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], dotp = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+      const X = [1, 0, 0], Y = [0, 1, 0], Z = [0, 0, 1], NZ = [0, 0, -1];
+
+      /* ---- camera ---- */
+      const CX = 540, CY = 1150, NEAR = 20;
+      let F = 1000, E = [0, 0, 0], Rv = [1, 0, 0], Uv = [0, 1, 0], Fv = [0, 0, -1];
+      function camera(eye, look, f, roll, up) {
+        E = eye; F = f || 1000; up = up || Y;
+        let fv = [look[0] - eye[0], look[1] - eye[1], look[2] - eye[2]]; const fl = Math.hypot(fv[0], fv[1], fv[2]) || 1; fv = mul(fv, 1 / fl);
+        let rv = cross(fv, up); const rl = Math.hypot(rv[0], rv[1], rv[2]) || 1; rv = mul(rv, 1 / rl); const uv = cross(rv, fv);
+        const r = ((roll || 0) * Math.PI) / 180, cr = Math.cos(r), sr = Math.sin(r);
+        Rv = add(mul(rv, cr), mul(uv, sr)); Uv = add(mul(uv, cr), mul(rv, -sr)); Fv = fv;
+      }
+      const cs = (p) => { const x = p[0] - E[0], y = p[1] - E[1], z = p[2] - E[2]; return [x * Rv[0] + y * Rv[1] + z * Rv[2], x * Uv[0] + y * Uv[1] + z * Uv[2], x * Fv[0] + y * Fv[1] + z * Fv[2]]; };
+      const sp = (q) => [CX + (q[0] * F) / q[2], CY - (q[1] * F) / q[2]];
+      let FOGD = 3400; const fog = (z) => clamp(1.2 - z / FOGD, 0.08, 1);
+      function line(a, b, w, col, glow) {
+        let P = cs(a), Q = cs(b);
+        if (P[2] < NEAR && Q[2] < NEAR) return;
+        if (P[2] < NEAR) { const k = (NEAR - P[2]) / (Q[2] - P[2]); P = [lerp(P[0], Q[0], k), lerp(P[1], Q[1], k), NEAR]; }
+        if (Q[2] < NEAR) { const k = (NEAR - Q[2]) / (P[2] - Q[2]); Q = [lerp(Q[0], P[0], k), lerp(Q[1], P[1], k), NEAR]; }
+        const pa = sp(P), pb = sp(Q), zm = (P[2] + Q[2]) / 2, ga = c.globalAlpha;
+        c.globalAlpha = ga * fog(zm); c.strokeStyle = col; c.lineWidth = clamp((w * F) / zm, 1.2, 90); c.lineCap = "round"; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow;
+        c.beginPath(); c.moveTo(pa[0], pa[1]); c.lineTo(pb[0], pb[1]); c.stroke(); c.globalAlpha = ga;
+      }
+      const lineP = (a, b, p, w, col, glow) => { if (p > 0) line(a, lp3(a, b, Math.min(1, p)), w, col, glow); };
+      function loop(pts, w, col, glow) { for (let i = 0; i < pts.length; i++) line(pts[i], pts[(i + 1) % pts.length], w, col, glow); }
+      function pline(pts, w, col, glow) { for (let i = 0; i < pts.length - 1; i++) line(pts[i], pts[i + 1], w, col, glow); }
+      function fillPoly(pts, col, a) { const q = pts.map(cs); for (const v of q) if (v[2] < NEAR) return; const ga = c.globalAlpha; c.globalAlpha = ga * (a === undefined ? 1 : a) * fog(q[0][2]); c.fillStyle = col; c.shadowBlur = 0; c.beginPath(); q.forEach((v, i) => { const p = sp(v); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function dot(p, r, col, glow) { const q = cs(p); if (q[2] < NEAR) return; const s = sp(q), rr = clamp((r * F) / q[2], 0.8, 700), ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow; c.beginPath(); c.arc(s[0], s[1], rr, 0, 6.283); c.fill(); c.globalAlpha = ga; }
+      function ptext(runs, o, ux, uy, size, font, glow, align) {
+        const P0 = cs(o), PX = cs(add(o, mul(ux, 100))), PY = cs(add(o, mul(uy, 100)));
+        if (P0[2] < NEAR || PX[2] < NEAR || PY[2] < NEAR) return;
+        const s0 = sp(P0), sx = sp(PX), sy = sp(PY), px = (size * F) / P0[2]; if (px < 3 || px > 6000) return;
+        const ga = c.globalAlpha; c.save();
+        c.setTransform((sx[0] - s0[0]) / 100, (sx[1] - s0[1]) / 100, -(sy[0] - s0[0]) / 100, -(sy[1] - s0[1]) / 100, s0[0], s0[1]);
+        c.font = (font || '900 SZpx "Big Shoulders Display"').replace("SZ", size); c.textBaseline = "middle"; c.textAlign = "left";
+        if (typeof runs === "string") runs = [{ s: runs, col: WH }];
+        let tw = 0; const ws = runs.map((r) => { const w = c.measureText(r.s).width; tw += w; return w; });
+        let x = align === "left" ? 0 : -tw / 2;
+        runs.forEach((r, i) => { if (r.a !== 0) { c.globalAlpha = ga * fog(P0[2]) * (r.a === undefined ? 1 : r.a); c.fillStyle = r.col; c.shadowColor = r.col; c.shadowBlur = glow === undefined ? 14 : glow; const k = r.k || 1; if (k !== 1 || r.dy) { c.save(); c.translate(x + ws[i] / 2, r.dy || 0); c.scale(k, k); c.fillText(r.s, -ws[i] / 2, 0); c.restore(); } else c.fillText(r.s, x, 0); } x += ws[i]; });
+        c.restore(); c.globalAlpha = ga;
+      }
+      /* extruded 3D type: dark layers stacked along the normal, then the lit face */
+      function etext(s, o, ux, uy, size, col, depth, font) { const n = cross(ux, uy), L = depth || 9; for (let k = L; k >= 1; k--) ptext([{ s: s, col: k === L ? "#2a2a2a" : "#141414" }], add(o, mul(n, -k * 2.4)), ux, uy, size, font, 0); ptext([{ s: s, col: col }], o, ux, uy, size, font, 22); }
+      const facing = (o, n) => dotp(n, [E[0] - o[0], E[1] - o[1], E[2] - o[2]]) > 0;
+      function star(p, r, col) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), rr = (r * F) / q[2]; if (rr < 1 || rr > 900) return; const ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = 18; c.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i * Math.PI) / 5, k = i % 2 ? rr * 0.45 : rr; if (i) c.lineTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); else c.moveTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); } c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function grid(n, step, y, col, ox, oz) { ox = ox || 0; oz = oz || 0; for (let i = -n; i <= n; i++) { line([ox + i * step, y || 0, oz - n * step], [ox + i * step, y || 0, oz + n * step], 2.5, col || DD, 0); line([ox - n * step, y || 0, oz + i * step], [ox + n * step, y || 0, oz + i * step], 2.5, col || DD, 0); } }
+      function box(p, hw, h, hd, edge, face, fa, w) { const [x, y, z] = p; const V = [[x - hw, y, z + hd], [x + hw, y, z + hd], [x + hw, y + h, z + hd], [x - hw, y + h, z + hd], [x - hw, y, z - hd], [x + hw, y, z - hd], [x + hw, y + h, z - hd], [x - hw, y + h, z - hd]];
+        [[0, 1, 2, 3, Z], [1, 5, 6, 2, X], [4, 0, 3, 7, [-1, 0, 0]], [3, 2, 6, 7, Y], [5, 4, 7, 6, NZ]].forEach((f) => { if (facing(V[f[0]], f[4])) fillPoly([V[f[0]], V[f[1]], V[f[2]], V[f[3]]], face || FILL, fa === undefined ? 1 : fa); });
+        [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]].forEach((e) => line(V[e[0]], V[e[1]], w || 4, edge, 12)); }
+      function circ(o, ux, uy, r, w, col, glow, a0, a1, n) { n = n || 28; let prev = null; for (let i = 0; i <= n; i++) { const a = lerp(a0 || 0, a1 === undefined ? 6.283 : a1, i / n), p = add(o, add(mul(ux, Math.cos(a) * r), mul(uy, Math.sin(a) * r))); if (prev) line(prev, p, w, col, glow); prev = p; } }
+      function disk(o, ux, uy, r, col, a) { const pts = []; for (let i = 0; i < 24; i++) { const an = (i / 24) * 6.283; pts.push(add(o, add(mul(ux, Math.cos(an) * r), mul(uy, Math.sin(an) * r)))); } fillPoly(pts, col, a); }
+      const jit = (t, a) => [Math.sin(t * 7.3) * a + Math.sin(t * 13.1) * a * 0.5, Math.sin(t * 9.1) * a * 0.8, Math.sin(t * 5.7) * a * 0.4];
+
+      /* person from 3D joints; o.up raises the arms, o.torch lights a flame in the raised hand */
+      function person(x, z, h, ph, col, s, o) {
+        o = o || {}; s = s === undefined ? 1 : s; if (s <= 0.01) return;
+        const y0 = o.y || 0, dx = Math.cos(h), dz = Math.sin(h), sx = -dz, sz = dx, st = Math.sin(ph) * 26 * s, lf = Math.max(0, Math.cos(ph)) * 11 * s, rf = Math.max(0, -Math.cos(ph)) * 11 * s, bob = Math.abs(Math.sin(ph)) * 3 * s;
+        const hip = [x, y0 + 62 * s + bob, z], neck = [x + dx * 4 * s, y0 + 108 * s + bob, z + dz * 4 * s];
+        if (o.dress) { const D1 = [[x + sx * 12 * s, y0 + 92 * s, z + sz * 12 * s], [x - sx * 12 * s, y0 + 92 * s, z - sz * 12 * s], [x - sx * 26 * s, y0 + 38 * s, z - sz * 26 * s], [x + sx * 26 * s, y0 + 38 * s, z + sz * 26 * s]]; fillPoly(D1, FILL); loop(D1, 5 * s, col); }
+        line(hip, [x + dx * st + sx * 8 * s, y0 + lf, z + dz * st + sz * 8 * s], 9 * s, col); line(hip, [x - dx * st - sx * 8 * s, y0 + rf, z - dz * st - sz * 8 * s], 9 * s, col);
+        line(hip, neck, 15 * s, col);
+        const sl = [neck[0] + sx * 17 * s, neck[1] - 2 * s, neck[2] + sz * 17 * s], sr = [neck[0] - sx * 17 * s, neck[1] - 2 * s, neck[2] - sz * 17 * s];
+        line(sl, sr, 9 * s, col);
+        const up = o.up || 0, hl = [x + sx * 22 * s - dx * st * 0.8, y0 + 68 * s + bob, z + sz * 22 * s - dz * st * 0.8], hr = [x - sx * 22 * s + dx * st * 0.8, y0 + 68 * s + bob, z - sz * 22 * s + dz * st * 0.8];
+        const hu = [x - sx * 26 * s, y0 + 168 * s, z - sz * 26 * s];
+        line(sl, hl, 7 * s, col); line(sr, lp3(hr, hu, up), 7 * s, col);
+        dot([neck[0] + dx * 3 * s, y0 + 130 * s + bob, neck[2] + dz * 3 * s], 18 * s, col);
+        if (o.torch) flame(add(lp3(hr, hu, up), [0, 10 * s, 0]), 0.5 * s * o.torch, o.t || 0, o.torchCol || "#FF7A1A");
+      }
+      function flame(p, s, t, col) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), r = (60 * s * F) / q[2]; if (r < 1) return; const fl = 1 + 0.12 * Math.sin(t * 23 + p[0]) + 0.08 * Math.sin(t * 37 + p[2]);
+        const g = c.createRadialGradient(v[0], v[1] - r * 0.4, 0, v[0], v[1] - r * 0.4, r * 2.2); g.addColorStop(0, "rgba(255,240,200,0.95)"); g.addColorStop(0.3, col); g.addColorStop(1, "rgba(0,0,0,0)");
+        c.save(); c.shadowColor = col; c.shadowBlur = r * 1.4; c.fillStyle = g; c.beginPath(); c.moveTo(v[0], v[1] - r * 2.1 * fl); c.quadraticCurveTo(v[0] + r * 0.95, v[1] - r * 0.4, v[0], v[1] + r * 0.45); c.quadraticCurveTo(v[0] - r * 0.95, v[1] - r * 0.4, v[0], v[1] - r * 2.1 * fl); c.fill(); c.restore(); }
+      function newspaper(o, ux, uy, s, head, sub, col) { const n = cross(ux, uy), P = (x, y) => add(o, add(mul(ux, x * s), mul(uy, y * s)));
+        const Q = [P(-150, -210), P(150, -210), P(150, 210), P(-150, 210)]; fillPoly(Q, "#0d0d0d"); loop(Q, 4 * s, WH, 14);
+        const fr = facing(o, n), sgn = fr ? 1 : -1, ux2 = fr ? ux : mul(ux, -1);
+        const T = (x, y) => add(P(x * sgn, y), mul(n, 0.6 * sgn));
+        ptext([{ s: "THE DAILY NEWS", col: GR }], T(0, 182), mul(ux2, s), mul(uy, s), 30, null, 0); line(T(-135, 162), T(135, 162), 3 * s, GR, 0); line(T(-135, 156), T(135, 156), 1.5 * s, GR, 0);
+        ptext([{ s: head, col: col || WH }], T(0, 112), mul(ux2, s), mul(uy, s), head.length > 9 ? 980 / head.length : 104, null, 18);
+        if (sub) ptext([{ s: sub, col: GR }], T(0, 60), mul(ux2, s), mul(uy, s), 26, '500 SZpx "Unbounded"', 0);
+        for (let i = 0; i < 8; i++) { const y = 20 - i * 26; line(T(-135, y), T(-10, y), 2.2 * s, DK, 0); line(T(10, y), T(135 - (i % 3) * 20, y), 2.2 * s, DK, 0); }
+        const IM = [T(-135, -200), T(-10, -200), T(-10, -190), T(-135, -190)]; }
+      function room(w, h, d, col, door) { col = col || DK; const V = [[-w, 0, -d], [w, 0, -d], [w, h, -d], [-w, h, -d]]; loop(V, 4, col, 0); [[-w, 0], [w, 0], [w, h], [-w, h]].forEach((q) => line([q[0], q[1], -d], [q[0], q[1], d], 4, col, 0)); for (let i = 1; i < 6; i++) line([-w + (2 * w * i) / 6, 0, -d], [-w + (2 * w * i) / 6, 0, d], 2, DD, 0); for (let i = 1; i < 6; i++) line([-w, 0, -d + (2 * d * i) / 6], [w, 0, -d + (2 * d * i) / 6], 2, DD, 0); }
+      function lamp(p, on, col) { line(p, add(p, [0, 160, 0]), 6, GR); line(add(p, [0, 160, 0]), add(p, [60, 200, 0]), 6, GR); const hd = add(p, [80, 190, 0]); loop([add(hd, [-40, 20, 0]), add(hd, [40, 20, 0]), add(hd, [60, -30, 0]), add(hd, [-60, -30, 0])], 5, on > 0 ? col : GR);
+        if (on > 0) { const a = cs(add(hd, [0, -30, 0])), b1 = cs(add(p, [-120, -5, 60])), b2 = cs(add(p, [280, -5, 60])); if (a[2] > NEAR && b1[2] > NEAR && b2[2] > NEAR) { const A1 = sp(a), B1 = sp(b1), B2 = sp(b2); const g = c.createLinearGradient(A1[0], A1[1], (B1[0] + B2[0]) / 2, (B1[1] + B2[1]) / 2); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); c.save(); c.globalAlpha *= 0.32 * on; c.fillStyle = g; c.shadowBlur = 0; c.beginPath(); c.moveTo(A1[0], A1[1]); c.lineTo(B1[0], B1[1]); c.lineTo(B2[0], B2[1]); c.closePath(); c.fill(); c.restore(); } } }
+      function headProfile(o, s, col, ux) { ux = ux || X; const P = (x, y) => add(o, add(mul(ux, x * s), [0, y * s, 0]));
+        const pts = [[-70, -160], [-60, -60], [-90, 0], [-95, 60], [-70, 120], [-10, 160], [60, 150], [100, 100], [110, 40], [100, 10], [125, -30], [100, -40], [105, -60], [95, -75], [100, -95], [80, -110], [60, -120], [50, -160]].map((q) => P(q[0], q[1]));
+        fillPoly(pts, FILL); loop(pts, 5 * s, col, 16); }
+      function heart(o, ux, uy, r, col) { const pts = []; for (let i = 0; i < 30; i++) { const a = (i / 30) * 6.283; pts.push(add(o, add(mul(ux, (16 * Math.pow(Math.sin(a), 3) * r) / 16), mul(uy, ((13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)) * r) / 16)))); } fillPoly(pts, col, 0.25); loop(pts, 5, col, 18); }
+      function crown(o, ux, uy, r, col) { const P = (x, y) => add(o, add(mul(ux, x * r), mul(uy, y * r))); const pts = [P(-1, -0.6), P(1, -0.6), P(1.1, 0.5), P(0.55, 0), P(0, 0.75), P(-0.55, 0), P(-1.1, 0.5)]; fillPoly(pts, col, 0.25); loop(pts, 5, col, 18); }
+      function key(o, ux, uy, r, col) { circ(add(o, mul(ux, -0.6 * r)), ux, uy, 0.4 * r, 5, col, 16); line(add(o, mul(ux, -0.2 * r)), add(o, mul(ux, r)), 5, col, 16); line(add(o, mul(ux, 0.7 * r)), add(o, add(mul(ux, 0.7 * r), mul(uy, -0.3 * r))), 5, col, 16); line(add(o, mul(ux, 0.95 * r)), add(o, add(mul(ux, 0.95 * r), mul(uy, -0.3 * r))), 5, col, 16); }
+      function check(o, r, col, k) { if (k <= 0) return; pline([add(o, [-r * k, 0, 0]), add(o, [-r * 0.3 * k, -r * 0.7 * k, 0]), add(o, [r * k, r * 0.8 * k, 0])], 7, col, 18); }
+      function pressCam(p, yaw, col, flash) { const cy = Math.cos(yaw), sy = Math.sin(yaw), L = (a, b, d) => add(p, [a * cy + d * sy, b, -a * sy + d * cy]);
+        [[-40, 0, 60], [40, 0, 60], [0, 0, -60]].forEach((q) => line(L(0, 140, 0), L(q[0], 0, q[2]), 4, DK, 0));
+        const B = [L(-40, 140, -30), L(40, 140, -30), L(40, 220, -30), L(-40, 220, -30)]; fillPoly(B, FILL); loop(B, 5, GR); loop([L(-30, 150, 40), L(30, 150, 40), L(30, 210, 40), L(-30, 210, 40)], 4, GR); [[-40, 140], [40, 140], [40, 220], [-40, 220]].forEach((q, i) => line(L(q[0], q[1], -30), L(q[0] * 0.75, 150 + (i > 1 ? 60 : 0), 40), 3, DK, 0));
+        circ(L(0, 180, 46), [cy, 0, -sy], Y, 18, 4, GR, 8); const fl = L(48, 250, 0); circ(fl, [cy, 0, -sy], Y, 30, 4, flash > 0.05 ? WH : GR, flash > 0.05 ? 30 : 6); line(L(40, 210, 0), fl, 4, GR, 0); if (flash > 0.05) dot(fl, 40 * flash, WH, 60); }
+      function torch(p, s, t, col) { const P = (y) => add(p, [0, y * s, 0]); pline([add(p, [-14 * s, 0, 0]), add(p, [-24 * s, 170 * s, 0]), add(p, [24 * s, 170 * s, 0]), add(p, [14 * s, 0, 0])], 6, WH); fillPoly([add(p, [-14 * s, 0, 0]), add(p, [-24 * s, 170 * s, 0]), add(p, [24 * s, 170 * s, 0]), add(p, [14 * s, 0, 0])], FILL); circ(P(170), X, Z, 34 * s, 6, WH, 14); flame(P(200), 1.6 * s, t, col); }
+      function egg(o, r, col) { const pts = []; for (let i = 0; i < 18; i++) { const a = (i / 18) * 6.283, k = 1 + 0.18 * Math.sin(a * 3 + i); pts.push(add(o, [Math.cos(a) * r * k, 0, Math.sin(a) * r * k * 0.9])); } fillPoly(pts, "#e9e9e9", 0.9); loop(pts, 3, WH, 10); disk(add(o, [r * 0.1, 2, 0]), X, Z, r * 0.38, col, 1); }
+      function bacon(o, len, col, ph) { const a = [], b = []; for (let i = 0; i <= 16; i++) { const u = i / 16, x = -len / 2 + u * len, y = 6 + Math.sin(u * 9 + (ph || 0)) * 10; a.push(add(o, [x, y, -14])); b.push(add(o, [x, y, 14])); } for (let i = 0; i < 16; i++) fillPoly([a[i], a[i + 1], b[i + 1], b[i]], i % 3 === 1 ? "#5a1a14" : "#9a2e22", 0.95); pline(a, 4, col, 10); pline(b, 4, col, 10); }
+      function cig(p, len, lit, t) { box(p, len / 2, 16, 8, WH, "#e8e8e8", 0.9, 3); box(add(p, [-len / 2 - 20, 0, 0]), 20, 16, 8, "#d08a3a", "#a06020", 0.9, 3); if (lit) for (let k = 0; k < 3; k++) { const pts = []; for (let i = 0; i < 12; i++) { const u = i / 11; pts.push(add(p, [len / 2 + 10 + Math.sin(u * 7 + t * 2 + k) * 20 * u, 10 + u * 260, k * 10])); } c.save(); c.globalAlpha *= 0.35; pline(pts, 3, GR, 6); c.restore(); } }
+      function phone(o, ux, uy, s, col) { const P = (x, y) => add(o, add(mul(ux, x * s), mul(uy, y * s))); const Q = [P(-90, -180), P(90, -180), P(90, 180), P(-90, 180)]; fillPoly(Q, "#050505"); loop(Q, 6 * s, col, 18); line(P(-24, 165), P(24, 165), 4 * s, GR); }
+      function ringLight(p, r, col) { circ(p, X, Y, r, 10, col, 30); circ(p, X, Y, r * 0.8, 3, col, 10); line(add(p, [0, -r, 0]), [p[0], 0, p[2]], 5, DK, 0); }
+      function chess(p, s, col) { const P = (y) => add(p, [0, y * s, 0]); [[0, 40], [10, 30], [20, 26], [40, 18], [70, 14], [90, 22], [100, 16], [120, 20]].forEach((q, i, arr) => { if (i) { circ(P(q[0]), X, Z, q[1] * s, 4, col, 12, 0, 6.283, 20); line(add(P(arr[i - 1][0]), [arr[i - 1][1] * s, 0, 0]), add(P(q[0]), [q[1] * s, 0, 0]), 4, col, 10); line(add(P(arr[i - 1][0]), [-arr[i - 1][1] * s, 0, 0]), add(P(q[0]), [-q[1] * s, 0, 0]), 4, col, 10); } }); dot(P(140), 20 * s, col, 16); }
+      function building(x, z, w, d, h, col, win) { box([x, 0, z], w, h, d, col || DK, FILL, 1, 3); if (win) for (let y = 40; y < h - 20; y += 60) for (let k = -1; k <= 1; k++) if (rn(x * 7 + y + k * 13) > 0.45) line([x + k * w * 0.55 - 8, y, z + d + 1], [x + k * w * 0.55 + 8, y, z + d + 1], 6, rn(x + y + k) > 0.8 ? A : "#3a3a3a", 6); }
+      function church(x, z, col) { box([x, 0, z], 120, 420, 90, col, FILL, 1, 5); [-80, 80].forEach((dx) => { box([x + dx, 420, z], 34, 200, 34, col, FILL, 1, 4); fillPoly([[x + dx - 34, 620, z + 34], [x + dx + 34, 620, z + 34], [x + dx, 820, z]], FILL); loop([[x + dx - 34, 620, z + 34], [x + dx + 34, 620, z + 34], [x + dx, 820, z]], 4, col); });
+        pline([[x - 40, 0, z + 91], [x - 40, 190, z + 91], [x, 250, z + 91], [x + 40, 190, z + 91], [x + 40, 0, z + 91]], 5, col); circ([x, 320, z + 91], X, Y, 46, 5, col, 14); }
+      /* ---- diamond-story primitives ---- */
+      const nrm = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; }, sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+      let LIGHT = nrm([0.5, 0.9, 0.6]);
+      function hexMix(h, k) { const n = parseInt(h.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255; return "rgb(" + Math.round(r * k) + "," + Math.round(g * k) + "," + Math.round(b * k) + ")"; }
+      /* brilliant-cut gem: convex, so back-face culling is enough; facets shaded from a moving light */
+      function gem(o, R, ry, rx, col, op) {
+        if (R <= 0.5) return; op = op === undefined ? 1 : op;
+        const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx || 0), sx = Math.sin(rx || 0);
+        const tf = (p) => { const x = p[0] * cy + p[2] * sy, z = -p[0] * sy + p[2] * cy, y = p[1]; return [o[0] + x * R, o[1] + (y * cx - z * sx) * R, o[2] + (y * sx + z * cx) * R]; };
+        const T = [], G = []; for (let k = 0; k < 8; k++) { const a = (k * Math.PI) / 4; T.push(tf([Math.cos(a) * 0.55, 0.34, Math.sin(a) * 0.55])); }
+        for (let j = 0; j < 16; j++) { const a = (j * Math.PI) / 8; G.push(tf([Math.cos(a), 0, Math.sin(a)])); }
+        const C = tf([0, -0.88, 0]), O = tf([0, -0.15, 0]); const F2 = [T.slice()];
+        for (let k = 0; k < 8; k++) { const k1 = (k + 1) % 8; F2.push([T[k], G[2 * k], G[2 * k + 1]], [T[k], G[2 * k + 1], T[k1]], [T[k1], G[2 * k + 1], G[(2 * k + 2) % 16]]); }
+        for (let j = 0; j < 16; j++) F2.push([G[j], C, G[(j + 1) % 16]]);
+        const ga = c.globalAlpha; c.globalAlpha = ga * op;
+        F2.forEach((f, i) => { const m = [0, 0, 0]; f.forEach((v) => { m[0] += v[0] / f.length; m[1] += v[1] / f.length; m[2] += v[2] / f.length; });
+          let n = nrm(cross(sub(f[1], f[0]), sub(f[2], f[0]))); if (dotp(n, sub(m, O)) < 0) n = mul(n, -1); const vw = sub(E, m); if (dotp(n, vw) <= 0) return;
+          const v = nrm(vw), h = nrm(add(LIGHT, v)), sp1 = Math.pow(Math.max(0, dotp(n, h)), 18), df = Math.max(0, dotp(n, LIGHT)), rim = Math.pow(1 - Math.abs(dotp(n, v)), 2);
+          const tint = i % 5 === 1 || i % 7 === 3 ? col : WH; fillPoly(f, "#05070a", 1); fillPoly(f, tint, clamp(0.08 + df * 0.32 + sp1 * 1.2 + rim * 0.25, 0, 1)); });
+        F2.forEach((f) => { const m = f[0]; let n = nrm(cross(sub(f[1], f[0]), sub(f[2], f[0]))); const cc = [(f[0][0] + f[1][0] + f[2][0]) / 3, (f[0][1] + f[1][1] + f[2][1]) / 3, (f[0][2] + f[1][2] + f[2][2]) / 3]; if (dotp(n, sub(cc, O)) < 0) n = mul(n, -1); if (dotp(n, sub(E, cc)) <= 0) return; c.globalAlpha = ga * op * 0.6; loop(f, R * 0.011, WH, 6); });
+        c.globalAlpha = ga;
+      }
+      function glint(p, s, col, rot) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), r = (s * F) / q[2]; if (r < 2) return; const ga = c.globalAlpha; c.save(); c.globalAlpha = ga * fog(q[2]); c.translate(v[0], v[1]); c.rotate(rot || 0); c.fillStyle = col || WH; c.shadowColor = col || WH; c.shadowBlur = r * 0.8;
+        for (let k = 0; k < 4; k++) { const L = k % 2 ? r * 0.6 : r; c.beginPath(); c.moveTo(0, -L); c.lineTo(r * 0.07, 0); c.lineTo(0, L); c.lineTo(-r * 0.07, 0); c.closePath(); c.fill(); c.rotate(Math.PI / 2); }
+        c.beginPath(); c.arc(0, 0, Math.min(r * 0.12, 14), 0, 6.283); c.fillStyle = "#fff"; c.fill(); c.restore(); }
+      /* engagement ring standing up, gem on top */
+      function ring(o, R, ry, col, gr) { const ux = [Math.cos(ry), 0, -Math.sin(ry)], uz = [Math.sin(ry), 0, Math.cos(ry)], w = R * 0.16;
+        circ(add(o, mul(uz, w)), ux, Y, R, R * 0.05, GR, 10, 0, 6.283, 40); circ(add(o, mul(uz, -w)), ux, Y, R, R * 0.05, GR, 10, 0, 6.283, 40); circ(o, ux, Y, R * 1.06, R * 0.06, WH, 14, 0, 6.283, 40);
+        for (let k = 0; k < 4; k++) { const a = Math.PI / 2 + (k - 1.5) * 0.16; line(add(o, [Math.cos(a) * R * ux[0], Math.sin(a) * R, Math.cos(a) * R * ux[2]]), add(o, [0, R * 1.32, 0]), R * 0.035, WH, 8); }
+        gem(add(o, [0, R * 1.42, 0]), R * 0.5, gr === undefined ? ry : gr, 0, col); }
+      function ringBox(o, s, open, ry, col) { const L = (x, y, z) => { const cy = Math.cos(ry), sy = Math.sin(ry); return add(o, [(x * cy + z * sy) * s, y * s, (-x * sy + z * cy) * s]); };
+        const B = [[-1, 0, 1], [1, 0, 1], [1, 0.8, 1], [-1, 0.8, 1], [-1, 0, -1], [1, 0, -1], [1, 0.8, -1], [-1, 0.8, -1]].map((q) => L(q[0] * 110, q[1] * 110, q[2] * 100));
+        [[0, 1, 2, 3, 0], [1, 5, 6, 2, 1], [4, 0, 3, 7, 2], [5, 4, 7, 6, 3], [3, 2, 6, 7, 4]].forEach((f) => { const P = [B[f[0]], B[f[1]], B[f[2]], B[f[3]]]; const m = mul(add(add(P[0], P[1]), add(P[2], P[3])), 0.25); let n = nrm(cross(sub(P[1], P[0]), sub(P[3], P[0]))); if (dotp(n, sub(m, L(0, 44, 0))) < 0) n = mul(n, -1); if (dotp(n, sub(E, m)) > 0) fillPoly(P, f[4] === 4 ? "#1a0610" : "#0b0b0e", 1); });
+        [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]].forEach((e) => line(B[e[0]], B[e[1]], 3 * s, GR, 8));
+        const a = open * 1.9, hz = (z, y) => [z * Math.cos(a) - y * Math.sin(a), z * Math.sin(a) + y * Math.cos(a)];
+        const lid = [[-1, 0, 0], [1, 0, 0], [1, 0, 1], [-1, 0, 1]].map((q) => { const r2 = hz(q[2] * 200 - 0, q[1]); return L(q[0] * 112, 88 + r2[1] + 0, -100 + r2[0]); });
+        fillPoly(lid, "#0b0b0e", 1); loop(lid, 3 * s, open > 0.1 ? col : GR, 14); }
+      function couple(x, z, s, col, kneel, t) { person(x - 70 * s, z, 0, 0, WH, s, { dress: true }); kneeler(x + 70 * s, z, Math.PI, s, col, kneel); }
+      function kneeler(x, z, h, s, col, k) { const dx = Math.cos(h), dz = Math.sin(h), sx = -dz, sz = dx, hy = lerp(62, 44, k) * s; const hip = [x, hy, z], neck = [x + dx * lerp(4, 18, k) * s, hy + 46 * s, z + dz * lerp(4, 18, k) * s];
+        line(hip, [x + dx * 30 * k * s + sx * 8 * s, lerp(30, 40, k) * s, z + dz * 30 * k * s + sz * 8 * s], 9 * s, col); line([x + dx * 30 * k * s + sx * 8 * s, lerp(30, 40, k) * s, z + dz * 30 * k * s + sz * 8 * s], [x + dx * 34 * k * s + sx * 8 * s, 0, z + dz * 34 * k * s + sz * 8 * s], 9 * s, col);
+        line(hip, [x - dx * 6 * s - sx * 8 * s, lerp(30, 4, k) * s, z - dz * 6 * s - sz * 8 * s], 9 * s, col); line([x - dx * 6 * s - sx * 8 * s, lerp(30, 4, k) * s, z - dz * 6 * s - sz * 8 * s], [x - dx * 40 * k * s - sx * 8 * s, 0, z - dz * 40 * k * s - sz * 8 * s], 9 * s, col);
+        line(hip, neck, 15 * s, col); const hand = [x + dx * 52 * s, hy + 34 * s, z + dz * 52 * s]; line(neck, hand, 7 * s, col); dot([neck[0] + dx * 4 * s, neck[1] + 22 * s, neck[2] + dz * 4 * s], 18 * s, col); return hand; }
+      function billboard(o, w, h, col, lit) { line(add(o, [-w * 0.6, -h * 0.5 - 600, -5]), add(o, [-w * 0.6, -h * 0.5, -5]), 14, DK, 0); line(add(o, [w * 0.6, -h * 0.5 - 600, -5]), add(o, [w * 0.6, -h * 0.5, -5]), 14, DK, 0);
+        const Q = [add(o, [-w / 2, -h / 2, 0]), add(o, [w / 2, -h / 2, 0]), add(o, [w / 2, h / 2, 0]), add(o, [-w / 2, h / 2, 0])]; loop(Q, 14, col, 24); for (let i = -2; i <= 2; i++) { const p = add(o, [i * w * 0.22, h / 2 + 40, 30]); line(add(o, [i * w * 0.22, h / 2, 10]), p, 6, GR, 0); if (lit) dot(p, 14, WH, 40); } }
+      function africa(y, s, col) { const P = [[-17, 21], [-16, 12], [-13, 8], [-8, 4.5], [-3, 5], [5, 6], [9, 4], [10, 1], [9, -2], [12, -6], [13, -12], [12, -17], [14, -22], [15, -27], [17, -30], [18, -34], [20, -35], [25, -34], [28, -33], [31, -29], [33, -26], [35, -24], [35, -20], [38, -17], [40, -15], [40, -11], [39, -7], [40, -3], [42, -1], [46, 2], [49, 6], [51, 11], [48, 11.5], [44, 11], [43, 13], [39, 16], [37, 19], [35, 24], [33, 28], [32, 31], [29, 31], [25, 32], [20, 31], [15, 32], [11, 34], [10, 37], [5, 36.8], [0, 35.8], [-5, 35.8], [-6, 34], [-9, 32], [-10, 29], [-13, 27]].map((q) => [(q[0] - 17) * s, y, -(q[1]) * s]);
+        fillPoly(P, "#0d0b06", 1); loop(P, 5, col, 16); }
+      function bars(o, hs, col, w) { hs.forEach((h, i) => { if (h > 1) box(add(o, [(i - (hs.length - 1) / 2) * (w || 120), 0, 0]), (w || 120) * 0.36, h, 40, i === hs.length - 1 ? col : GR, FILL, 1, 4); }); }
+      function vault(o, close, spin, col) { circ(o, X, Y, 330, 26, DK, 0, 0, 6.283, 40); circ(o, X, Y, 300, 8, GR, 8, 0, 6.283, 40);
+        const a = (1 - close) * 1.6, hx = o[0] - 300, P = (x, y) => [hx + (x + 300) * Math.cos(a), o[1] + y, o[2] + (x + 300) * Math.sin(a) + 30];
+        const pts = []; for (let i = 0; i < 32; i++) { const b = (i / 32) * 6.283; pts.push(P(Math.cos(b) * 290, Math.sin(b) * 290)); } fillPoly(pts, "#0c0c0f", 1); loop(pts, 10, close > 0.98 ? col : WH, close > 0.98 ? 26 : 12);
+        const cc = P(0, 0); for (let k = 0; k < 6; k++) { const b = spin + (k * Math.PI) / 3; line(cc, P(Math.cos(b) * 140, Math.sin(b) * 140), 12, WH, 12); dot(P(Math.cos(b) * 150, Math.sin(b) * 150), 16, WH, 12); } circ(cc, [Math.cos(a), 0, Math.sin(a)], Y, 60, 10, col, 18);
+        for (let k = 0; k < 8; k++) { const b = (k * Math.PI) / 4; dot(P(Math.cos(b) * 250, Math.sin(b) * 250), 12, GR, 6); } }
+      function phoneOld(o, s, shake, col) { const j = [Math.sin(shake * 61) * 6 * shake, Math.abs(Math.sin(shake * 47)) * 6 * shake, 0]; const p = add(o, j);
+        box(p, 130 * s, 90 * s, 100 * s, GR, FILL, 1, 4); fillPoly([add(p, [-130 * s, 90 * s, 100 * s]), add(p, [130 * s, 90 * s, 100 * s]), add(p, [90 * s, 150 * s, 40 * s]), add(p, [-90 * s, 150 * s, 40 * s])], "#0c0c0f", 1);
+        circ(add(p, [0, 122 * s, 72 * s]), X, nrm([0, 0.6, -1]), 54 * s, 4, WH, 10); for (let k = 0; k < 10; k++) { const b = -0.6 + k * 0.5; dot(add(p, [Math.cos(b) * 38 * s, 122 * s + Math.sin(b) * 22 * s, 72 * s - Math.sin(b) * 14 * s]), 6 * s, GR, 0); }
+        const hy = 160 * s + shake * 40 * Math.abs(Math.sin(shake * 30)); pline([add(p, [-150 * s, hy, 0]), add(p, [-110 * s, hy + 40 * s, 0]), add(p, [110 * s, hy + 40 * s, 0]), add(p, [150 * s, hy, 0])], 22 * s, col, 18);
+        if (shake > 0.05) for (let k = 1; k <= 3; k++) { const r = (((shake * 3 + k * 0.33) % 1) * 260 + 120) * s; circ(add(p, [0, 120 * s, 0]), X, Y, r, 4, col, 14, -2.6, -0.5, 10); circ(add(p, [0, 120 * s, 0]), X, Y, r, 4, col, 14, 0.5 - Math.PI + Math.PI, 2.6, 10); } }
+      function typewriter(o, s, col, typed, t) { box(o, 240 * s, 90 * s, 150 * s, GR, FILL, 1, 4); for (let r = 0; r < 4; r++) for (let k = 0; k < 10 - r; k++) { const p = add(o, [(-200 + k * 44 + r * 22) * s, (96 + r * 14) * s, (110 - r * 34) * s]); const hit2 = Math.sin(t * 40 + k * 3 + r) > 0.85 && typed > 0 && typed < 1; dot(p, (hit2 ? 12 : 14) * s, hit2 ? col : WH, hit2 ? 20 : 6); }
+        line(add(o, [-260 * s, 150 * s, -130 * s]), add(o, [260 * s, 150 * s, -130 * s]), 26 * s, DK, 0); const Pp = [add(o, [-150 * s, 160 * s, -130 * s]), add(o, [150 * s, 160 * s, -130 * s]), add(o, [150 * s, 520 * s, -150 * s]), add(o, [-150 * s, 520 * s, -150 * s])]; fillPoly(Pp, "#e8e8e8", 0.95); }
+      function globe(o, r, rot, col) { for (let k = -2; k <= 2; k++) { const la = (k * Math.PI) / 6; circ(add(o, [0, Math.sin(la) * r, 0]), X, Z, Math.cos(la) * r, 3, k ? DK : GR, 4, 0, 6.283, 36); }
+        for (let k = 0; k < 6; k++) { const a = rot + (k * Math.PI) / 6; circ(o, [Math.cos(a), 0, Math.sin(a)], Y, r, 3, DK, 4, 0, 6.283, 36); } }
+      function cushion(o, s) { const pts = []; for (let i = 0; i < 20; i++) { const a = (i / 20) * 6.283; pts.push(add(o, [Math.cos(a) * 120 * s, 0, Math.sin(a) * 90 * s])); } fillPoly(pts, "#120a12", 1); loop(pts, 4, GR, 6); }
+      function heartP(o, r, col, a, w) { const pts = []; for (let i = 0; i < 40; i++) { const t2 = (i / 40) * 6.283; pts.push(add(o, [(16 * Math.pow(Math.sin(t2), 3) * r) / 16, ((13 * Math.cos(t2) - 5 * Math.cos(2 * t2) - 2 * Math.cos(3 * t2) - Math.cos(4 * t2)) * r) / 16, 0])); } const n = Math.max(2, Math.floor(40 * (a === undefined ? 1 : a))); pline(pts.slice(0, n).concat(n >= 40 ? [pts[0]] : []), w || 8, col, 24); }
+      function infinity(o, r, col, a, t, w) { const pts = []; for (let i = 0; i <= 60; i++) { const u = (i / 60) * 6.283; const d = 1 + Math.sin(u) * Math.sin(u); pts.push(add(o, [(r * Math.cos(u)) / d, 0, (r * Math.sin(u) * Math.cos(u)) / d])); } pline(pts.slice(0, Math.max(2, Math.floor(61 * (a === undefined ? 1 : a)))), w || 10, col, 26); if (t !== undefined) { const u = (t * 2.2) % 6.283, d = 1 + Math.sin(u) * Math.sin(u); dot(add(o, [(r * Math.cos(u)) / d, 0, (r * Math.sin(u) * Math.cos(u)) / d]), 22, WH, 40); } }
+      function stack(o, n, col, s) { for (let i = 0; i < n; i++) box(add(o, [0, i * 26 * (s || 1), 0]), 110 * (s || 1), 22 * (s || 1), 60 * (s || 1), i === n - 1 ? col : GR, FILL, 1, 3); }
+      /* ---- McDonald's-story primitives ---- */
+      function bun(o, r, h, top, col) { const n = 26; const rings = top ? [[0, 1], [0.35, 0.96], [0.65, 0.82], [0.88, 0.55], [1, 0.12]] : [[0, 1], [1, 0.98]];
+        for (let k = 0; k < 8; k++) { const f = k / 7, y = top ? f * h : f * h, rr = top ? Math.sqrt(Math.max(0.01, 1 - Math.pow(f * 0.97, 2))) * r : r * 0.99; disk(add(o, [0, y, 0]), X, Z, rr, "#140d06", 1); }
+        for (let k = 0; k < rings.length; k++) circ(add(o, [0, rings[k][0] * h, 0]), X, Z, rings[k][1] * r, 4, k === 0 ? WH : GR, 8, 0, 6.283, n);
+        for (let k = 0; k < 12; k++) { const a = (k / 12) * 6.283; pline(rings.map((q) => add(o, [Math.cos(a) * q[1] * r, q[0] * h, Math.sin(a) * q[1] * r])), 3, DK, 0); }
+        if (top) for (let k = 0; k < 14; k++) { const a = rn(k + 300) * 6.283, rr = rn(k + 340) * 0.6; dot(add(o, [Math.cos(a) * rr * r, h * (0.75 + 0.2 * (1 - rr)), Math.sin(a) * rr * r]), r * 0.035, WH, 6); } }
+      function burger(o, s, ry, col) { const r = 160 * s, R = (p) => { const c2 = Math.cos(ry), s2 = Math.sin(ry); return [o[0] + p[0] * c2 + p[2] * s2, o[1] + p[1], o[2] - p[0] * s2 + p[2] * c2]; };
+        bun(o, r, 40 * s, false, col);
+        const pts = []; for (let k = 0; k < 30; k++) { const a = (k / 30) * 6.283; pts.push(add(o, [Math.cos(a) * r * 1.06, 44 * s + Math.sin(a * 7 + 1) * 6 * s, Math.sin(a) * r * 1.06])); } loop(pts, 6 * s, "#7CFF6A", 10);
+        disk(add(o, [0, 62 * s, 0]), X, Z, r * 1.02, "#1a0d06", 1); circ(add(o, [0, 50 * s, 0]), X, Z, r * 1.02, 6 * s, GR, 6, 0, 6.283, 30); circ(add(o, [0, 76 * s, 0]), X, Z, r * 1.02, 6 * s, GR, 6, 0, 6.283, 30);
+        const ch = [[-1, 0, -1], [1, 0, -1], [1, 0, 1], [-1, 0, 1]].map((q) => R([q[0] * r * 0.78, 80 * s, q[2] * r * 0.78])); fillPoly(ch, col, 0.9); loop(ch, 4 * s, col, 14);
+        [0, 1, 2, 3].forEach((k) => { const a = ch[k], b = ch[(k + 1) % 4], m = lp3(a, b, 0.5); line(m, add(m, [0, -26 * s, 0]), 10 * s, col, 10); });
+        bun(add(o, [0, 84 * s, 0]), r, 110 * s, true, col); }
+      function mixer(o, s, col, spin) { box(o, 90 * s, 40 * s, 70 * s, GR, FILL, 1, 3); box(add(o, [0, 40 * s, -50 * s]), 22 * s, 300 * s, 18 * s, GR, FILL, 1, 3); box(add(o, [0, 300 * s, 0]), 110 * s, 50 * s, 60 * s, WH, FILL, 1, 3);
+        for (let k = 0; k < 5; k++) { const x = (k - 2) * 44 * s, p = add(o, [x, 300 * s, 20 * s]); line(p, add(p, [0, -150 * s, 0]), 4 * s, WH, 6); circ(add(p, [0, -150 * s, 0]), X, Z, 10 * s, 3 * s, col, 10, spin + k, spin + k + 5, 8);
+          pline([add(o, [x - 18 * s, 45 * s, 20 * s]), add(o, [x - 22 * s, 170 * s, 20 * s]), add(o, [x + 22 * s, 170 * s, 20 * s]), add(o, [x + 18 * s, 45 * s, 20 * s])], 3 * s, GR, 4); } }
+      function car(o, h, s, col, lights) { const c2 = Math.cos(h), s2 = Math.sin(h), L = (x, y, z) => add(o, [(x * c2 - z * s2) * s, y * s, (x * s2 + z * c2) * s]);
+        const B = [L(-120, 20, -55), L(120, 20, -55), L(120, 20, 55), L(-120, 20, 55)], T = [L(-120, 60, -55), L(120, 60, -55), L(120, 60, 55), L(-120, 60, 55)];
+        for (let k = 0; k < 4; k++) { line(B[k], B[(k + 1) % 4], 4 * s, WH, 8); line(T[k], T[(k + 1) % 4], 4 * s, WH, 8); line(B[k], T[k], 4 * s, WH, 8); }
+        const C = [L(-60, 60, -45), L(40, 60, -45), L(20, 100, -40), L(-50, 100, -40)], C2 = [L(-60, 60, 45), L(40, 60, 45), L(20, 100, 40), L(-50, 100, 40)]; loop(C, 4 * s, WH, 8); loop(C2, 4 * s, WH, 8); for (let k = 0; k < 4; k++) line(C[k], C2[k], 3 * s, GR, 0);
+        [[-75, -58], [75, -58], [-75, 58], [75, 58]].forEach((q) => circ(L(q[0], 20, q[1]), [c2, 0, s2], Y, 20 * s, 5 * s, GR, 6, 0, 6.283, 14));
+        if (lights) [-35, 35].forEach((z) => { const a = L(122, 40, z); dot(a, 9 * s, col, 30); const q = cs(a), f1 = cs(L(700, 0, z - 160)), f2 = cs(L(700, 0, z + 160)); if (q[2] > NEAR && f1[2] > NEAR && f2[2] > NEAR) { const A1 = sp(q), B1 = sp(f1), B2 = sp(f2), g = c.createLinearGradient(A1[0], A1[1], (B1[0] + B2[0]) / 2, (B1[1] + B2[1]) / 2); g.addColorStop(0, hexA(col, 0.4)); g.addColorStop(1, "rgba(0,0,0,0)"); c.save(); c.fillStyle = g; c.shadowBlur = 0; c.beginPath(); c.moveTo(A1[0], A1[1]); c.lineTo(B1[0], B1[1]); c.lineTo(B2[0], B2[1]); c.closePath(); c.fill(); c.restore(); } }); }
+      function stand(o, s, col, sign, signCol, lit) { const P = (x, y, z) => add(o, [x * s, y * s, z * s]); box(o, 220 * s, 260 * s, 140 * s, WH, FILL, 1, 5);
+        const roof = [P(-260, 260, 180), P(260, 260, 180), P(260, 330, -140), P(-260, 330, -140)]; fillPoly(roof, "#0e0e10", 1); loop(roof, 5 * s, WH, 10);
+        for (let k = -1; k <= 1; k++) { const Q = [P(k * 140 - 55, 70, 141), P(k * 140 + 55, 70, 141), P(k * 140 + 55, 210, 141), P(k * 140 - 55, 210, 141)]; fillPoly(Q, lit ? hexA(col, 0.25) : "#141414", 1); loop(Q, 4 * s, lit ? col : GR, lit ? 16 : 4); }
+        line(P(-200, 330, 0), P(-200, 520, 0), 8 * s, GR, 0); line(P(200, 330, 0), P(200, 520, 0), 8 * s, GR, 0);
+        const Sg = [P(-300, 500, 2), P(300, 500, 2), P(300, 640, 2), P(-300, 640, 2)]; fillPoly(Sg, "#0b0b0e", 1); loop(Sg, 7 * s, signCol || col, 22);
+        if (sign) ptext([{ s: sign, col: signCol || col }], P(0, 570, 4), mul(X, s), mul(Y, s), sign.length > 12 ? 900 / sign.length : 76, null, 18); }
+      function palm(o, h, col) { const top = add(o, [40, h, 0]); pline([o, add(o, [10, h * 0.4, 0]), add(o, [28, h * 0.75, 0]), top], 10, col || GR, 0); for (let k = 0; k < 7; k++) { const a = (k / 7) * 6.283; const p1 = add(top, [Math.cos(a) * 70, 40, Math.sin(a) * 70]), p2 = add(top, [Math.cos(a) * 130, -20, Math.sin(a) * 130]); pline([top, p1, p2], 6, col || GR, 0); } }
+      function usa(y, s, col) { const P = [[-124.7, 48.4], [-124, 46], [-124.5, 42], [-122.4, 37.8], [-120.5, 34.5], [-117.1, 32.5], [-114.7, 32.7], [-111, 31.3], [-108.2, 31.3], [-106.5, 31.8], [-104.5, 29.6], [-103, 29], [-101.4, 29.8], [-99.5, 27.5], [-97.4, 25.9], [-97.4, 27.8], [-94.7, 29.4], [-90, 29.2], [-89, 30.3], [-85.3, 29.7], [-83, 29], [-82.7, 27.5], [-81, 25.2], [-80, 26.7], [-81.4, 30.7], [-79, 33.6], [-75.5, 35.2], [-76.3, 37.9], [-74, 40.5], [-70, 41.6], [-70.7, 43], [-67, 44.8], [-69, 47.4], [-71, 45], [-75, 45], [-79, 43.4], [-82.5, 41.7], [-83.5, 46], [-89, 48], [-95, 49], [-123, 49]].map((q) => [(q[0] + 96) * s, y, -(q[1] - 38) * s]); fillPoly(P, "#0c0a06", 1); loop(P, 6, col, 18); }
+      function pie(o, r, frac, col, ux, uy) { ux = ux || X; uy = uy || Y; disk(o, ux, uy, r, "#141414", 1); circ(o, ux, uy, r, 6, WH, 10, 0, 6.283, 40); if (frac > 0) { const pts = [o]; const n = Math.max(2, Math.ceil(40 * frac)); for (let i = 0; i <= n; i++) { const a = -Math.PI / 2 + (i / n) * frac * 6.283; pts.push(add(o, add(mul(ux, Math.cos(a) * r * 1.08), mul(uy, -Math.sin(a) * r * 1.08)))); } fillPoly(pts, col, 1); loop(pts, 5, col, 20); } }
+      function suit(x, z, h, s, col, o2) { person(x, z, h, (o2 && o2.ph) || 0, col, s, o2); const dx = Math.cos(h), dz = Math.sin(h), sx = -dz, sz = dx; box([x - sx * 34 * s, 0, z - sz * 34 * s], 26 * s, 50 * s, 10 * s, GR, FILL, 1, 3); }
+      function handshake(t, k, col) { person(-130, 0, 0, 0, WH, 1.3); person(130, 0, Math.PI, 0, col, 1.3); const y = 105 + Math.sin(t * 9) * 8 * k; line([-115, 130 * 1.3 - 30, 0], [-10, y, 0], 9, WH, 10); line([115, 130 * 1.3 - 30, 0], [10, y, 0], 9, col, 14); dot([0, y, 0], 16, WH, 20); }
+      function register(o, s, open, col) { box(o, 160 * s, 140 * s, 110 * s, WH, FILL, 1, 4); const Q = [add(o, [-140 * s, 140 * s, 60 * s]), add(o, [140 * s, 140 * s, 60 * s]), add(o, [120 * s, 230 * s, -20 * s]), add(o, [-120 * s, 230 * s, -20 * s])]; fillPoly(Q, "#0d0d0f", 1); loop(Q, 4 * s, GR, 6);
+        for (let r2 = 0; r2 < 3; r2++) for (let k = 0; k < 4; k++) dot(add(o, [(-90 + k * 60) * s, (160 + r2 * 22) * s, (40 - r2 * 24) * s]), 9 * s, GR, 0); box(add(o, [0, 20 * s, 110 * s + open * 140 * s]), 150 * s, 40 * s, 60 * s, col, FILL, 1, 4); }
+      function sign3(o, txt, w, col, a) { const Q = [add(o, [-w / 2, -50, 0]), add(o, [w / 2, -50, 0]), add(o, [w / 2, 50, 0]), add(o, [-w / 2, 50, 0])]; fillPoly(Q, col, a === undefined ? 1 : a); ptext([{ s: txt, col: "#000" }], add(o, [0, 0, 1]), X, Y, 64, null, 0); }
+
+      /* ---- shots ---- */
+      const SH = [
+        // CH1 HOOK (red)
+        [0, W[6], "none", (t, u, d) => { // "McDonald's non guadagna con gli hamburger.": a huge burger fills frame one, coins fly out, then a red X
+          const k = io(seg(u, 0, d)); camera(add([lerp(-40, 120, k), lerp(330, 400, k), lerp(470, 680, k)], jit(t, 1)), [0, lerp(130, 120, k), 0], 1000, lerp(-8, 3, k));
+          grid(8, 200, 0, DD); burger([0, 0, 0], 1.25, t * 0.8, A);
+          for (let i = 0; i < 16; i++) { const p = seg(t, W[2] - 0.1 + i * 0.05, W[2] + 0.9 + i * 0.05); if (p <= 0 || p >= 1) continue; const a = rn(i + 10) * 6.283; const q = [Math.cos(a) * 500 * p, 200 + 500 * Math.sin(p * Math.PI) * (0.6 + rn(i) * 0.6), Math.sin(a) * 300 * p + 100]; circ(q, [Math.cos(t * 6 + i), 0, Math.sin(t * 6 + i)], Y, 22, 5, A, 14, 0, 6.283, 12); ptext([{ s: "$", col: A }], q, X, Y, 26, null, 10); }
+          if (t > W[5] - 0.05) { const x = o4(seg(t, W[5] - 0.05, W[5] + 0.2)); line([-300, 0, 260], [lerp(-300, 300, x), lerp(0, 440, x), 260], 28, A, 30); line([300, 0, 260], [lerp(300, -300, x), lerp(0, 440, x), 260], 28, A, 30); }
+          FLASH = Math.max(FLASH, hit(t, W[5], 10) * 0.3);
+        }],
+        [W[6], W[13], "whip", (t, u, d) => { // "E l'uomo che l'ha resa famosa nel mondo": behind a man in a suit, a globe of lights before him
+          const k = io(seg(u, 0, d)); camera(add([lerp(-160, 60, k), lerp(200, 300, k), lerp(520, 640, k)], jit(t, 1)), [0, lerp(220, 360, k), -500], 1000, lerp(-3, 2, k));
+          FOGD = 5000; grid(8, 200, 0, DD); suit(0, 120, -Math.PI / 2, 1.6, WH); const on = seg(t, W[11] - 0.3, W[12] + 0.4); globe([0, 520, -900], 360, t * 0.6, A);
+          for (let i = 0; i < 40; i++) { const la = (rn(i + 70) - 0.4) * 1.8, lo = rn(i + 30) * 6.283 + t * 0.6; const q = [Math.cos(la) * Math.sin(lo) * 362, 520 + Math.sin(la) * 362, -900 + Math.cos(la) * Math.cos(lo) * 362]; if (rn(i + 5) < on && q[2] > -950) dot(q, 14, A, 24); }
+        }],
+        [W[13], W[17], "punch", (t, u, d) => { // "non si chiamava McDonald.": a name badge spins, the name is struck out
+          const k = io(seg(u, 0, d)); camera(add([lerp(-120, 80, k), 260, lerp(760, 600, k)], jit(t, 1)), [0, 260, 0], 1000, lerp(-4, 2, k));
+          const sp2 = (1 - o4(seg(t, W[13], W[15] + 0.2))) * 6.283, ux = [Math.cos(sp2), 0, -Math.sin(sp2)]; const Q = [add([0, 180, 0], mul(ux, -300)), add([0, 180, 0], mul(ux, 300)), add([0, 340, 0], mul(ux, 300)), add([0, 340, 0], mul(ux, -300))]; fillPoly(Q, "#0b0b0e", 1); loop(Q, 8, WH, 14);
+          if (facing([0, 260, 0], cross(ux, Y))) { ptext([{ s: "CIAO, SONO", col: GR }], [0, 310, 2], ux, Y, 30, '500 SZpx "Unbounded"', 0); ptext([{ s: "McDONALD", col: WH }], [0, 240, 2], ux, Y, 92, null, 10); }
+          if (t > W[16] - 0.05) { const x = o4(seg(t, W[16] - 0.05, W[16] + 0.2)); line([-280, 240, 30], [lerp(-280, 280, x), 240, 30], 22, A, 28); if (x > 0.9) ptext([{ s: "?", col: A }], [0, 520, 30], X, Y, 220 * pop(t, W[16] + 0.25), null, 30); }
+        }],
+        // CH2 1954 (yellow)
+        [W[17], W[18], "punch", (t, u, d) => { // "1954,"
+          const k = io(seg(u, 0, d)); camera(add([lerp(-420, 260, k), lerp(-60, 60, k), lerp(900, 760, k)], jit(t, 1.2)), [lerp(-120, 80, k), 30, 0], 1000, lerp(-8, 4, k));
+          grid(8, 200, -260, DD); "1954".split("").forEach((ch, i) => { const p = pop(t, W[17] + 0.02 + i * 0.1, 0.35); if (p > 0) etext(ch, [-330 + i * 220, 40 + (1 - p) * 300, 0], [p, 0, 0], [0, p, 0], 380, i > 1 ? A : WH, 14); });
+        }],
+        [W[18], W[19], "whip", (t, u, d) => { // "California.": a desert highway at sunset, palms
+          const k = io(seg(u, 0, d)); camera(add([lerp(-100, 60, k), lerp(320, 200, k), lerp(900, 500, k)], jit(t, 1)), [0, 260, -1200], 1000, lerp(-3, 2, k));
+          FOGD = 6000; disk([0, 420, -3200], X, Y, 600, A, 0.85); for (let i = 0; i < 9; i++) line([-1400, 420 - i * 60, -3190], [1400, 420 - i * 60, -3190], 18, "#000", 0);
+          line([-160, 0, 900], [-60, 0, -3000], 5, GR, 0); line([160, 0, 900], [60, 0, -3000], 5, GR, 0); for (let z = 800; z > -3000; z -= 300) line([0, 0, z], [0, 0, z - 140], 6, A, 8);
+          for (let i = 0; i < 6; i++) { palm([-520 - (i % 2) * 120, 0, 400 - i * 600], 520, GR); palm([520 + (i % 2) * 120, 0, 200 - i * 600], 480, GR); }
+          ptext([{ s: "CALIFORNIA", col: WH }], [0, 2, -300], X, NZ, 130 * pop(t, W[18] + 0.1), null, 18);
+        }],
+        [W[19], W[23], "cut", (t, u, d) => { // "Un venditore di frullatori,": the salesman and his five-spindle milkshake mixer
+          const k = io(seg(u, 0, d)); camera(add([lerp(-380, -150, k), lerp(240, 300, k), lerp(700, 620, k)], jit(t, 1)), [40, 220, 0], 1000, lerp(-4, 2, k));
+          grid(8, 200, 0, DD); mixer([160, 0, 0], 1.2, A, t * 30); suit(-200, 60, -0.3, 1.5, WH);
+          if (t > W[22] - 0.1) ptext([{ s: "MULTIMIXER", col: A }], [160, 420, 80], X, Y, 60 * pop(t, W[22] - 0.1), null, 20);
+        }],
+        [W[23], W[29], "punch", (t, u, d) => { // "Ray Kroc, riceve un ordine strano:": nameplate, an order slip slides in, stamp
+          const k = io(seg(u, 0, d)); camera(add([lerp(200, 60, k), lerp(520, 420, k), lerp(560, 480, k)], jit(t, 1 + 2 * hit(t, W[28], 6))), [0, 0, 0], 1000, lerp(5, -1, k));
+          const Dk = [[-600, 0, -400], [600, 0, -400], [600, 0, 400], [-600, 0, 400]]; fillPoly(Dk, "#0a0805", 1); loop(Dk, 4, DK, 0);
+          const np = pop(t, W[23]); box([-80, 0, 150], 200 * np, 50, 30, A, FILL, 1, 3); ptext([{ s: "RAY KROC", col: A }], [-80, 30, 181], [np, 0, 0], [0, np, 0], 48, '900 SZpx "Unbounded"', 14);
+          const sl = o4(seg(t, W[25], W[27] + 0.2)), x = lerp(900, 120, sl); const Q = [[x - 180, 2, -240], [x + 180, 2, -240], [x + 180, 2, 120], [x - 180, 2, 120]]; fillPoly(Q, "#e8e8e8", 0.95); ptext([{ s: "ORDINE", col: "#000" }], [x, 3, -180], X, NZ, 54, null, 0); for (let i = 0; i < 5; i++) line([x - 140, 3, -110 + i * 40], [x + 120 - (i % 2) * 60, 3, -110 + i * 40], 4, "#555", 0);
+          if (t > W[28] - 0.05) { const p = pop(t, W[28] - 0.05); circ([x + 60, 4, 40], X, Z, 80 * p, 8, A, 20); ptext([{ s: "STRANO", col: A }], [x + 60, 5, 40], [Math.cos(-0.3) * p, 0, Math.sin(-0.3) * p], [0, 0, -p], 34, '900 SZpx "Unbounded"', 12); }
+        }],
+        [W[29], W[35], "cut", (t, u, d) => { // "Otto macchine per un solo ristorante.": eight mixers pop in a line, then one tiny stand
+          const k = io(seg(u, 0, d)); camera(add([lerp(-700, 300, k), lerp(300, 420, k), lerp(800, 1000, k)], jit(t, 1)), [lerp(-500, 200, k), 200, 0], 1000, lerp(-3, 3, k));
+          grid(10, 200, 0, DD); let n = 0; for (let i = 0; i < 8; i++) { const p = pop(t, W[29] + i * 0.12, 0.25); if (p > 0) { mixer([-700 + i * 200, 0, 0], 0.55 * p, A, t * 30 + i); n++; } }
+          if (n > 0) etext("×" + n, [-100, 340, -100], X, Y, 150, A, 8);
+          if (t > W[33] - 0.1) { const p = pop(t, W[33] - 0.1); stand([300, 0, -500], 0.7 * p, A, "1", A, true); }
+        }],
+        [W[35], W[38], "whip", (t, u, d) => { // "Va a vedere.": behind his car on a night road toward a glowing stand
+          const k = (t - W[35]); camera(add([0, 260, 900 - k * 260], jit(t, 1.6)), [0, 140, -400 - k * 260], 1000, -2);
+          FOGD = 5000; line([-260, 0, 1200], [-260, 0, -4000], 4, GR, 0); line([260, 0, 1200], [260, 0, -4000], 4, GR, 0); for (let z = 1200; z > -4000; z -= 260) line([0, 0, z], [0, 0, z - 120], 6, A, 8);
+          car([0, 0, 420 - k * 280], -Math.PI / 2, 1.3, A, true); stand([0, 0, -2800], 1.6, A, "McDONALD'S", A, true);
+          for (let i = 0; i < 8; i++) { palm([-520, 0, 400 - i * 500], 480, DK); palm([520, 0, 150 - i * 500], 440, DK); }
+        }],
+        [W[38], W[45], "cut", (t, u, d) => { // "È dei fratelli Mac e Dick McDonald.": the walk-up stand, two brothers light up in turn
+          const k = io(seg(u, 0, d)); camera(add([lerp(-300, 200, k), lerp(240, 300, k), lerp(1100, 950, k)], jit(t, 1)), [0, 300, 0], 1000, lerp(-3, 3, k));
+          grid(8, 200, 0, DD); stand([0, 0, -200], 1.1, A, "McDONALD'S HAMBURGERS", A, true);
+          const m = t > W[41] - 0.05, dk = t > W[43] - 0.05; person(-160, 120, Math.PI / 2, 0, m ? A : GR, 1.35); person(160, 120, Math.PI / 2, 0, dk ? A : GR, 1.35);
+          if (m) ptext([{ s: "MAC", col: A }], [-160, 330, 120], X, Y, 64 * pop(t, W[41] - 0.05), null, 20); if (dk) ptext([{ s: "DICK", col: A }], [160, 330, 120], X, Y, 64 * pop(t, W[43] - 0.05), null, 20);
+        }],
+        [W[45], W[49], "punch", (t, u, d) => { // "Nove prodotti nel menù,": the menu board fills, 1 to 9
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 100, k), 340, lerp(800, 640, k)], jit(t, 1)), [0, 340, 0], 1000, lerp(-4, 2, k));
+          const Bd = [[-380, 80, 0], [380, 80, 0], [380, 620, 0], [-380, 620, 0]]; fillPoly(Bd, "#0b0b0e", 1); loop(Bd, 8, A, 20); ptext([{ s: "MENU", col: A }], [0, 570, 1], X, Y, 64, null, 16);
+          const items = ["HAMBURGER", "CHEESEBURGER", "PATATINE", "FRAPPÈ", "CAFFÈ", "LATTE", "TORTA", "BIBITA", "ARANCIATA"];
+          let n = 0; items.forEach((s2, i) => { const p = pop(t, W[45] + i * 0.13, 0.2); if (p <= 0) return; n++; ptext([{ s: (i + 1) + ". " + s2, col: WH }], [-330, 500 - i * 46, 1], [p, 0, 0], Y, 34, '500 SZpx "Unbounded"', 6, "left"); });
+          etext(String(n), [480, 300, 60], X, Y, 220, A, 8);
+        }],
+        [W[49], W[51], "snap", (t, u, d) => { // "niente camerieri.": a waiter with a tray is struck out
+          camera(add([0, 240, 640], jit(t, 1 + 2 * hit(t, W[50], 6))), [0, 200, 0], 1000, lerp(-6, 0, ex(seg(u, 0, 0.4))));
+          grid(6, 200, 0, DD); person(0, 0, Math.PI / 2, 0, GR, 1.4); line([40, 170, 20], [140, 190, 20], 8, GR, 6); circ([150, 195, 20], X, Z, 60, 5, GR, 6, 0, 6.283, 20); box([150, 195, 20], 18, 40, 18, GR, FILL, 1, 3);
+          if (t > W[50] - 0.05) { const x = o4(seg(t, W[50] - 0.05, W[50] + 0.2)); line([-220, 0, 200], [lerp(-220, 240, x), lerp(0, 420, x), 200], 24, A, 28); line([240, 0, 200], [lerp(240, -220, x), lerp(0, 420, x), 200], 24, A, 28); }
+        }],
+        [W[51], W[60], "cut", (t, u, d) => { // "Una cucina che funziona come una catena di montaggio.": top-down conveyor, burgers flow station to station
+          const k = io(seg(u, 0, d)), rot = lerp(-0.3, 0.3, k), up = [Math.sin(rot), 0, -Math.cos(rot)]; camera(add([lerp(-200, 200, k), lerp(1100, 800, k), 300], jit(t, 0.8)), [lerp(-200, 200, k), 0, 0], 1000, 0, up);
+          grid(8, 200, 0, DD); line([-1200, 40, 70], [1200, 40, 70], 6, GR, 6); line([-1200, 40, -70], [1200, 40, -70], 6, GR, 6);
+          const st = ["GRIGLIA", "PANE", "SALSE", "INCARTA", "CASSA"]; st.forEach((s2, i) => { const x = -800 + i * 400, on = seg(t, W[54] + i * 0.25, W[54] + 0.2 + i * 0.25); box([x, 0, -220], 120, 60, 60, on > 0.5 ? A : GR, FILL, 1, 4); ptext([{ s: s2, col: on > 0.5 ? A : GR }], [x, 62, -150], X, NZ, 40, '900 SZpx "Unbounded"', on > 0.5 ? 14 : 0); person(x, -360, Math.PI / 2, Math.sin(t * 9 + i), WH, 1.0); });
+          for (let i = 0; i < 14; i++) { const x = ((t - W[51]) * 380 + i * 180) % 2400 - 1200; disk([x, 42, 0], X, Z, 40, "#1a120a", 1); circ([x, 46, 0], X, Z, 40, 5, x > 400 ? A : WH, 10, 0, 6.283, 14); }
+          if (t > W[57] - 0.1) etext("30 SEC", [0, 6, 360], X, NZ, 120 * pop(t, W[57] - 0.1), A, 6);
+        }],
+        // CH3 KROC (fire orange)
+        [W[60], W[63], "punch", (t, u, d) => { // "Kroc capisce subito:": push into his head, a spark
+          const k = io(seg(u, 0, d)); camera(add([lerp(-60, 0, k), 10, lerp(1100, 380, k)], jit(t, 1)), [0, 0, 0], 1000, lerp(-4, 2, k));
+          headProfile([0, 0, -40], 2.4, A); if (t > W[61]) { const p = pop(t, W[61]); star([20, 60, 40], 70 * p, A); for (let i = 0; i < 10; i++) { const a = (i / 10) * 6.283; line([20 + Math.cos(a) * 100, 60 + Math.sin(a) * 100, 40], [20 + Math.cos(a) * (100 + 80 * p), 60 + Math.sin(a) * (100 + 80 * p), 40], 6, A, 18); } }
+          if (t > W[62]) ptext([{ s: "$ $ $", col: A }], [0, -170, 60], X, Y, 70 * pop(t, W[62]), null, 18);
+        }],
+        [W[63], W[68], "whip", (t, u, d) => { // "va copiato in tutta l'America.": stands pop across a US map
+          const k = io(seg(u, 0, d)); camera(add([lerp(0, 120, k), lerp(2600, 1700, k), lerp(1200, 1000, k)], jit(t, 1)), [0, 0, lerp(-100, 50, k)], 1000, lerp(-6, 2, k));
+          FOGD = 7000; usa(0, 30, A); for (let i = 0; i < 70; i++) { const x = (rn(i + 200) - 0.5) * 1500, z = (rn(i + 260) - 0.5) * 520, p = pop(t, W[64] + (i / 70) * 1.0, 0.2); if (p > 0) { box([x, 0, z], 16 * p, 40 * p, 16 * p, A, FILL, 1, 3); dot([x, 60 * p, z], 10 * p, A, 18); } }
+          if (t > W[66]) etext(String(Math.round(70 * o4(seg(t, W[66], W[67] + 0.4)))) + "+", [0, 4, 600], X, NZ, 180, WH, 6);
+        }],
+        [W[68], W[74], "cut", (t, u, d) => { // "e ottiene i diritti per i franchising.": a contract is signed and stamped
+          const k = io(seg(u, 0, d)); camera(add([lerp(-160, 120, k), lerp(620, 520, k), lerp(520, 420, k)], jit(t, 0.8)), [0, 0, 0], 1000, lerp(-4, 2, k));
+          const Dk = [[-600, 0, -400], [600, 0, -400], [600, 0, 400], [-600, 0, 400]]; fillPoly(Dk, "#0a0805", 1);
+          const Q = [[-230, 2, -300], [230, 2, -300], [230, 2, 300], [-230, 2, 300]]; fillPoly(Q, "#e8e8e8", 0.95); ptext([{ s: "CONTRATTO", col: "#000" }], [0, 3, -240], X, NZ, 52, null, 0); ptext([{ s: "FRANCHISING", col: A }], [0, 3, -180], X, NZ, 46, '900 SZpx "Unbounded"', 0); for (let i = 0; i < 7; i++) line([-190, 3, -110 + i * 36], [190 - (i % 3) * 50, 3, -110 + i * 36], 4, "#666", 0);
+          const sg = seg(t, W[70], W[73]); const pts = []; for (let i = 0; i <= 30 * sg; i++) { const u2 = i / 30; pts.push([-150 + u2 * 260, 4, 230 + Math.sin(u2 * 18) * 20 - u2 * 30]); } if (pts.length > 1) pline(pts, 5, "#0a2a8a", 0);
+          if (t > W[73]) { const p = pop(t, W[73]); circ([140, 5, 150], X, Z, 70 * p, 8, A, 20); ptext([{ s: "OK", col: A }], [140, 6, 150], X, NZ, 60 * p, null, 14); }
+        }],
+        [W[74], W[80], "punch", (t, u, d) => { // "Ma con i franchising guadagna pochissimo.": a pie with a tiny slice, a nearly empty till
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 120, k), 320, lerp(820, 700, k)], jit(t, 1)), [0, 300, 0], 1000, lerp(-3, 3, k));
+          grid(8, 200, 0, DD); pie([-160, 380, 0], 170, 0.019 * o4(seg(t, W[77], W[78] + 0.4)), A); if (t > W[78]) ptext([{ s: "1,9%", col: A }], [-160, 140, 10], X, Y, 80 * pop(t, W[78]), null, 20);
+          register([250, 0, 0], 0.9, o4(seg(t, W[78], W[79])), A); if (t > W[79]) for (let i = 0; i < 2; i++) dot([230 + i * 40, 30, 200], 12, A, 16);
+        }],
+        // CH4 SONNEBORN (mint)
+        [W[80], W[86], "whip", (t, u, d) => { // "Poi arriva un esperto di finanza,": a man with a briefcase walks in through a door of light
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 80, k), lerp(200, 240, k), lerp(820, 640, k)], jit(t, 1)), [0, 220, -200], 1000, lerp(-3, 2, k));
+          grid(8, 200, 0, DD); const Dr = [[-140, 0, -500], [140, 0, -500], [140, 420, -500], [-140, 420, -500]]; fillPoly(Dr, hexA(A, 0.35), 1); loop(Dr, 8, A, 30);
+          const w = o4(seg(t, W[80], W[83])); suit(0, lerp(-480, -100, w), Math.PI / 2, 1.45, WH, { ph: (1 - w) * 20 });
+          if (t > W[85] - 0.1) { const p = pop(t, W[85] - 0.1); ptext([{ s: "FINANZA", col: A }], [0, 520, -480], X, Y, 80 * p, null, 20); }
+        }],
+        [W[86], W[90], "cut", (t, u, d) => { // "Harry Sonneborn, con un'idea:": nameplate and a bulb
+          const k = io(seg(u, 0, d)); camera(add([lerp(-100, 80, k), 280, lerp(760, 620, k)], jit(t, 1)), [0, 280, 0], 1000, lerp(-3, 2, k));
+          grid(6, 200, 0, DD); suit(-160, 0, Math.PI / 2, 1.4, WH); const np = pop(t, W[86]); box([90, 0, 60], 190 * np, 60, 30, A, FILL, 1, 3); ptext([{ s: "H. SONNEBORN", col: A }], [90, 34, 91], [np, 0, 0], [0, np, 0], 32, '900 SZpx "Unbounded"', 14);
+          const on = seg(t, W[89] - 0.05, W[89] + 0.1); circ([-120, 520, 0], X, Y, 80, 6, on > 0.5 ? A : GR, on > 0.5 ? 40 : 4, 0, 6.283, 30); pline([[-160, 450, 0], [-150, 420, 0], [-90, 420, 0], [-80, 450, 0]], 6, GR, 4); if (on > 0) for (let i = 0; i < 10; i++) { const a = (i / 10) * 6.283; line([-120 + Math.cos(a) * 100, 520 + Math.sin(a) * 100, 0], [-120 + Math.cos(a) * (100 + 50 * on), 520 + Math.sin(a) * (100 + 50 * on), 0], 5, A, 18); }
+        }],
+        [W[90], W[98], "punch", (t, u, d) => { // "Compriamo noi i terreni dove aprono i ristoranti.": land plots get bought, buildings rise
+          const k = io(seg(u, 0, d)); camera(add([lerp(-300, 200, k), lerp(1300, 900, k), lerp(1000, 900, k)], jit(t, 1)), [0, 0, -200], 1000, lerp(-4, 3, k));
+          FOGD = 6000; for (let i = 0; i < 16; i++) { const x = (i % 4 - 1.5) * 360, z = -Math.floor(i / 4) * 360 + 200, w0 = W[93] + i * 0.1, own = seg(t, w0, w0 + 0.2), bld = o4(seg(t, W[95] + i * 0.08, W[95] + 0.4 + i * 0.08));
+            const Q = [[x - 160, 1, z - 160], [x + 160, 1, z - 160], [x + 160, 1, z + 160], [x - 160, 1, z + 160]]; fillPoly(Q, own > 0.5 ? hexA(A, 0.18) : "#0c0c0c", 1); loop(Q, 4, own > 0.5 ? A : DK, own > 0.5 ? 14 : 0);
+            if (own > 0.5) { line([x - 120, 0, z - 120], [x - 120, 120, z - 120], 4, A, 10); fillPoly([[x - 120, 120, z - 120], [x - 50, 100, z - 120], [x - 120, 80, z - 120]], A, 1); }
+            if (bld > 0.02) box([x + 30, 0, z + 20], 80, 140 * bld, 70, WH, FILL, 1, 4); }
+          if (t > W[91] - 0.05) ptext([{ s: "TERRENI: NOSTRI", col: A }], [0, 4, 520], X, NZ, 90 * pop(t, W[91] - 0.05), null, 20);
+        }],
+        [W[98], W[104], "cut", (t, u, d) => { // "E li affittiamo a chi li gestisce.": a key changes hands, rent flows back every month
+          const k = io(seg(u, 0, d)); camera(add([lerp(-260, 160, k), lerp(380, 320, k), lerp(900, 760, k)], jit(t, 1)), [0, 200, 0], 1000, lerp(-3, 3, k));
+          grid(8, 200, 0, DD); box([-360, 0, -100], 140, 420, 120, A, FILL, 1, 5); ptext([{ s: "HQ", col: A }], [-360, 360, 21], X, Y, 70, null, 18); stand([300, 0, -100], 0.6, A, "", A, true); person(300, 120, Math.PI / 2, 0, WH, 1.2);
+          const kp = o4(seg(t, W[99], W[101])); const kx = lerp(-260, 260, kp); circ([kx, 300 + Math.sin(kp * Math.PI) * 120, 60], X, Y, 26, 6, A, 18, 0, 6.283, 14); line([kx + 26, 300 + Math.sin(kp * Math.PI) * 120, 60], [kx + 90, 300 + Math.sin(kp * Math.PI) * 120, 60], 6, A, 18);
+          for (let i = 0; i < 8; i++) { const ph = ((t - W[101]) * 0.9 + i / 8) % 1; if (t < W[101]) continue; const x = lerp(300, -360, ph), y = 120 + Math.sin(ph * Math.PI) * 220; circ([x, y, 80], [Math.cos(t * 5 + i), 0, Math.sin(t * 5 + i)], Y, 22, 5, A, 14, 0, 6.283, 12); ptext([{ s: "$", col: A }], [x, y, 80], X, Y, 26, null, 10); }
+          if (t > W[101]) ptext([{ s: "AFFITTO", col: WH }], [0, 520, 0], X, Y, 70 * pop(t, W[101]), null, 14);
+        }],
+        [W[104], W[111], "whip", (t, u, d) => { // "Da quel momento, McDonald's diventa un'azienda immobiliare.": crane up over a city of tagged properties
+          const k = io(seg(u, 0, d)); camera(add([lerp(0, 300, k), lerp(300, 1700, k), lerp(600, 1900, k)], jit(t, 1)), [0, 200, -600], lerp(1000, 820, k), lerp(0, 8, k));
+          FOGD = 7000; for (let i = -5; i <= 5; i++) for (let j = 0; j < 7; j++) { if (!i) continue; const x = i * 300, z = -j * 400 + 200, h = 260 + rn(i * 13 + j) * 900, on = seg(t, W[107] + Math.hypot(i, j) * 0.07, W[107] + 0.2 + Math.hypot(i, j) * 0.07); building(x, z, 110, 130, h, on > 0.5 ? A : DK, false); if (on > 0.5) { line([x, h, z], [x, h + 120, z], 4, A, 10); fillPoly([[x, h + 120, z], [x + 70, h + 95, z], [x, h + 70, z]], A, 1); } }
+          if (t > W[110] - 0.1) etext("IMMOBILIARE", [0, 900, -600], X, Y, 200 * pop(t, W[110] - 0.1), A, 10);
+        }],
+        [W[111], W[114], "punch", (t, u, d) => { // "Che vende hamburger.": tilt up a skyscraper to a tiny burger on top
+          const k = io(seg(u, 0, d)); camera(add([300, lerp(200, 1500, k), 700], jit(t, 1)), [0, lerp(400, 1500, k), 0], 1000, lerp(4, -2, k));
+          FOGD = 5000; box([0, 0, 0], 180, 1400, 180, A, FILL, 1, 5); for (let y = 80; y < 1360; y += 80) for (let x = -1; x <= 1; x++) line([x * 110 - 25, y, 181], [x * 110 + 25, y, 181], 7, rn(x * 7 + y) > 0.6 ? A : "#2a2a2a", 6);
+          burger([0, 1400, 0], 0.3, t * 2, A); if (t > W[113]) { ptext([{ s: "HAMBURGER", col: WH }], [0, 1600, 0], X, Y, 44 * pop(t, W[113]), '900 SZpx "Unbounded"', 10); line([0, 1560, 0], [0, 1500, 0], 6, WH, 10); }
+        }],
+        // CH5 1961 BETRAYAL (red)
+        [W[114], W[116], "snap", (t, u, d) => { // "Nel 1961,"
+          camera(add([0, 120, 900], jit(t, 1 + 3 * hit(t, W[115] + 0.1, 6))), [0, 120, 0], 1000, lerp(-6, 0, ex(seg(u, 0, 0.4))));
+          grid(8, 200, 0, DD); const p = seg(t, W[115] - 0.1, W[115] + 0.1); if (p > 0) etext("1961", [0, lerp(900, 120, in3(p)), 0], X, Y, 330, A, 14);
+        }],
+        [W[116], W[121], "cut", (t, u, d) => { // "Kroc compra tutto dai fratelli.": low angle, the stand gets a SOLD stamp, a giant shadow
+          const k = io(seg(u, 0, d)); camera(add([lerp(-300, 200, k), 80, lerp(1000, 900, k)], jit(t, 1 + 2 * hit(t, W[117] + 0.1, 6))), [0, 360, 0], 1000, lerp(-5, 3, k));
+          grid(8, 200, 0, DD); stand([0, 0, -200], 1.1, WH, "McDONALD'S HAMBURGERS", WH, false); person(-160, 120, Math.PI / 2, 0, GR, 1.3); person(160, 120, Math.PI / 2, 0, GR, 1.3);
+          const big = o4(seg(t, W[116], W[117] + 0.2)); suit(0, 600, -Math.PI / 2, lerp(0.5, 3.4, big), A);
+          if (t > W[118] - 0.05) { const p = pop(t, W[118] - 0.05); const Q = [[-300 * p, 380, 120], [300 * p, 380, 120], [300 * p, 500, 120], [-300 * p, 500, 120]]; fillPoly(Q, A, 1); ptext([{ s: "VENDUTO", col: "#000" }], [0, 440, 121], [p, 0, 0], Y, 90, null, 0); }
+        }],
+        [W[121], W[126], "punch", (t, u, d) => { // "Per 2,7 milioni di dollari.": cash stacks count up
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 120, k), lerp(300, 380, k), lerp(820, 720, k)], jit(t, 1)), [0, 250, 0], 1000, lerp(-4, 3, k));
+          grid(8, 200, 0, DD); const p = o4(seg(t, W[122], W[125])); for (let i = 0; i < 9; i++) { const n = Math.round(12 * p * (0.6 + rn(i) * 0.4)); stack([(i % 3 - 1) * 260, 0, -Math.floor(i / 3) * 200], n, A, 0.8); }
+          etext("$" + (Math.round(2.7 * p * 10) / 10).toFixed(1).replace(".", ",") + "M", [0, 560, 0], X, Y, 200, A, 10);
+        }],
+        [W[126], W[137], "cut", (t, u, d) => { // "Secondo la famiglia McDonald, c'era anche una promessa fatta a voce:": a handshake, a blank contract, a speech bubble
+          const a = lerp(-0.6, 0.5, i2(seg(u, 0, d))); camera(add([Math.sin(a) * 700, 260, Math.cos(a) * 700], jit(t, 0.8)), [0, 200, 0], 1000, lerp(-3, 3, seg(u, 0, d)));
+          grid(6, 200, 0, DD); handshake(t, seg(t, W[130], W[133]), A);
+          if (t > W[133] - 0.1) { const p = pop(t, W[133] - 0.1); const o = [0, 470, 0]; const Q = [add(o, [-180 * p, -70 * p, 0]), add(o, [180 * p, -70 * p, 0]), add(o, [180 * p, 70 * p, 0]), add(o, [-180 * p, 70 * p, 0])]; fillPoly(Q, "#0b0b0e", 1); loop(Q, 6, A, 20); pline([add(o, [-40 * p, -70 * p, 0]), add(o, [-80 * p, -140 * p, 0]), add(o, [20 * p, -70 * p, 0])], 6, A, 20); ptext([{ s: "PROMESSA", col: A }], o, [p, 0, 0], [0, p, 0], 54, null, 16); }
+          if (t > W[136] - 0.1) { const p = pop(t, W[136] - 0.1); const Q = [[-460, 2, -260], [-260, 2, -260], [-260, 2, -20], [-460, 2, -20]]; fillPoly(Q, "#e8e8e8", 0.9 * p); ptext([{ s: "CONTRATTO", col: "#000" }], [-360, 3, -220], X, NZ, 30, null, 0); ptext([{ s: "(VUOTO)", col: A }], [-360, 3, -120], X, NZ, 34 * p, '900 SZpx "Unbounded"', 10); }
+        }],
+        [W[137], W[142], "punch", (t, u, d) => { // "Una piccola percentuale. Per sempre.": 0.5% glows inside an infinity loop
+          const k = io(seg(u, 0, d)); camera(add([lerp(-160, 120, k), lerp(620, 520, k), lerp(620, 540, k)], jit(t, 0.8)), [0, 200, 0], 1000, lerp(-3, 2, k));
+          grid(8, 200, 0, DD); if (t > W[138]) etext("0,5%", [0, 200, 0], X, Y, 240 * pop(t, W[138]), A, 10); infinity([0, 60, 0], 460, A, o4(seg(t, W[140], W[141] + 0.4)), t, 10);
+        }],
+        [W[142], W[147], "snap", (t, u, d) => { // "Non è mai stata pagata.": the percentage crumbles and falls
+          const k = io(seg(u, 0, d)); camera(add([lerp(-160, 160, k), 260, 900], jit(t, 1 + 2 * hit(t, W[146], 6))), [0, 220, 0], 1000, lerp(-3, 3, k));
+          grid(8, 200, 0, DD); "0,5%".split("").forEach((ch, i) => { const f = seg(t, W[144] + i * 0.12, W[146] + 0.7 + i * 0.12), y = 260 - 900 * f * f, r = f * (i % 2 ? 1.5 : -1.2); etext(ch, [-240 + i * 160, y, 0], [Math.cos(r), Math.sin(r), 0], [-Math.sin(r), Math.cos(r), 0], 230, f > 0 ? GR : A, 8); });
+          if (t > W[146] - 0.05) ptext([{ s: "MAI PAGATA", col: A }], [0, 560, 0], X, Y, 90 * pop(t, W[146] - 0.05), null, 22);
+        }],
+        [W[147], W[158], "cut", (t, u, d) => { // "E i fratelli perdono perfino il diritto di usare il loro nome.": the sign letters fall; it becomes THE BIG M
+          const k = io(seg(u, 0, d)); camera(add([lerp(-240, 160, k), lerp(260, 320, k), lerp(1000, 900, k)], jit(t, 1)), [0, 380, 0], 1000, lerp(-3, 3, k));
+          grid(8, 200, 0, DD); stand([0, 0, -200], 1.1, GR, "", WH, false); person(-160, 120, Math.PI / 2, 0, GR, 1.3); person(160, 120, Math.PI / 2, 0, GR, 1.3);
+          const name = "McDONALD'S"; const repl = seg(t, W[155], W[157]);
+          if (repl < 0.5) name.split("").forEach((ch, i) => { const f = seg(t, W[150] + i * 0.12, W[152] + 0.6 + i * 0.12), y = 625 - 700 * f * f, r = f * (i % 2 ? 1.6 : -1.3); ptext([{ s: ch, col: f > 0 ? GR : WH }], [-250 + i * 56, y, -195], [Math.cos(r), Math.sin(r), 0], [-Math.sin(r), Math.cos(r), 0], 90, null, f > 0 ? 0 : 14); });
+          else ptext([{ s: "THE BIG M", col: A }], [0, 625, -195], X, Y, 100 * pop(t, W[155] + 0.4), null, 22);
+          if (t > W[157] - 0.05) ptext([{ s: "NOME PERSO", col: A }], [0, 2, 260], X, NZ, 70 * pop(t, W[157] - 0.05), null, 18);
+        }],
+        // CH6 TODAY (violet)
+        [W[158], W[165], "whip", (t, u, d) => { // "Oggi McDonald's ha più di 40.000 ristoranti.": a globe floods with dots, a counter rolls
+          const k = io(seg(u, 0, d)); camera(add([0, lerp(240, 420, k), lerp(1200, 1000, k)], jit(t, 1)), [0, 380, 0], 1000, lerp(-5, 3, k));
+          const rot = t * 0.5; globe([0, 380, 0], 380, rot, A); const p = o4(seg(t, W[159], W[164]));
+          for (let i = 0; i < 260; i++) { if (rn(i + 900) > p) continue; const la = (rn(i + 400) - 0.35) * 2.0, lo = rn(i + 600) * 6.283 + rot; const q = [Math.cos(la) * Math.sin(lo) * 382, 380 + Math.sin(la) * 382, Math.cos(la) * Math.cos(lo) * 382]; if (q[2] > -40) dot(q, 8, A, 16); }
+          etext((Math.round(40000 * p / 1000) * 1000).toLocaleString("it-IT") + "+", [0, -20, 300], X, Y, 170, WH, 8);
+        }],
+        [W[165], W[174], "cut", (t, u, d) => { // "E una parte enorme dei suoi guadagni arriva dagli affitti.": rent streams from every store into one tower
+          const k = io(seg(u, 0, d)); camera(add([lerp(-300, 200, k), lerp(600, 900, k), lerp(1200, 1300, k)], jit(t, 1)), [0, 200, -200], 1000, lerp(-4, 3, k));
+          FOGD = 6000; grid(10, 220, 0, DD); box([0, 0, -200], 160, 600, 160, A, FILL, 1, 6); ptext([{ s: "AFFITTI", col: A }], [0, 650, -200], X, Y, 90 * pop(t, W[173] - 0.1), null, 24);
+          for (let i = 0; i < 24; i++) { const a = (i / 24) * 6.283, r = 900, sx = Math.cos(a) * r, sz = -200 + Math.sin(a) * r * 0.7; stand([sx, 0, sz], 0.22, A, "", A, true); const ph = ((t - W[165]) * 0.8 + rn(i)) % 1; if (t > W[167] - 0.2) { const q = [lerp(sx, 0, ph), 60 + Math.sin(ph * Math.PI) * 300, lerp(sz, -200, ph)]; dot(q, 12, A, 18); } }
+        }],
+        // CH7 LESSON (yellow)
+        [W[174], W[176], "cut", (t, u, d) => { // "La lezione?": a spotlight on an empty stage
+          camera(add([0, 220, lerp(1000, 900, seg(u, 0, d))], jit(t, 0.5)), [0, 160, 0], 1000, 0);
+          const on = seg(t, W[174], W[174] + 0.25); const a = sp(cs([0, 1200, 0])), b1 = sp(cs([-260, 0, 0])), b2 = sp(cs([260, 0, 0])); const g = c.createLinearGradient(a[0], a[1], a[0], b1[1]); g.addColorStop(0, "rgba(255,255,255,0.0)"); g.addColorStop(1, "rgba(255,255,255,0.22)");
+          c.save(); c.globalAlpha *= on; c.fillStyle = g; c.beginPath(); c.moveTo(a[0] - 10, a[1]); c.lineTo(a[0] + 10, a[1]); c.lineTo(b2[0], b2[1]); c.lineTo(b1[0], b1[1]); c.closePath(); c.fill(); c.restore();
+          circ([0, 1, 0], X, Z, 260, 5, WH, 16); if (t > W[175]) ptext([{ s: "?", col: A }], [0, 260, 0], X, Y, 320 * pop(t, W[175]), null, 30);
+        }],
+        [W[176], W[181], "punch", (t, u, d) => { // "Il prodotto ti fa entrare.": a door with a burger on it swings open, a customer walks in
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 0, k), 240, lerp(760, 560, k)], jit(t, 0.8)), [0, 240, -200], 1000, lerp(-3, 1, k));
+          grid(6, 200, 0, DD); const Fr = [[-160, 0, -300], [160, 0, -300], [160, 440, -300], [-160, 440, -300]]; fillPoly(Fr, hexA(A, 0.3), 1); loop(Fr, 8, A, 24);
+          const op = o4(seg(t, W[177], W[180])), a = op * 1.4; const Dr = [[-160, 0, -300], [-160 + 320 * Math.cos(a), 0, -300 + 320 * Math.sin(a)], [-160 + 320 * Math.cos(a), 440, -300 + 320 * Math.sin(a)], [-160, 440, -300]]; fillPoly(Dr, "#0c0c0e", 1); loop(Dr, 6, WH, 10);
+          burger([-160 + 160 * Math.cos(a), 200, -300 + 160 * Math.sin(a) + 8], 0.35, 0, A); const w = o4(seg(t, W[178], W[180] + 0.4)); person(0, lerp(300, -260, w), -Math.PI / 2, w * 14, WH, 1.3);
+        }],
+        [W[181], W[188], "whip", (t, u, d) => { // "Il modello di business ti fa vincere.": pull back — the door is the tip of a pyramid-shaped system, crown on top
+          const k = io(seg(u, 0, d)); camera(add([lerp(0, 300, k), lerp(300, 1100, k), lerp(700, 2000, k)], jit(t, 1)), [0, lerp(260, 600, k), 0], 1000, lerp(0, 6, k));
+          FOGD = 7000; grid(10, 260, 0, DD); for (let l = 0; l < 6; l++) { const n = 6 - l; for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { const x = (i - (n - 1) / 2) * 220, z = (j - (n - 1) / 2) * 220, on = seg(t, W[182] + l * 0.2, W[182] + 0.2 + l * 0.2); box([x, l * 150, z], 100, 150, 100, on > 0.5 ? A : DK, FILL, 1, 3); } }
+          if (t > W[187] - 0.1) { const p = pop(t, W[187] - 0.1); crown([0, 1080, 0], X, Y, 140 * p, A); }
+        }],
+        [W[188], 89.45, "cut", (t, u, d) => { // "E tu, stai vendendo un prodotto o un sistema?": one box vs a connected network, slow push, "?"
+          const k = i2(seg(u, 0, d)); camera(add([0, 300, lerp(1100, 900, k)], jit(t, 0.4)), [0, 230, 0], 1000, 0);
+          grid(6, 200, 0, DD); box([-240, 0, 0], 90, 160, 90, GR, FILL, 1, 4); box([-240, 160, 0], 60, 110, 50, t > W[192] - 0.1 ? WH : GR, FILL, 1, 4); ptext([{ s: "PRODOTTO", col: t > W[192] - 0.1 ? WH : GR }], [-240, -40, 100], X, Y, 34, '900 SZpx "Unbounded"', 6);
+          const nodes = [[160, 380], [290, 300], [210, 180], [340, 160], [150, 60], [300, 40]]; const on = t > W[195] - 0.1; nodes.forEach((n2, i) => { nodes.forEach((m2, j) => { if (j > i && Math.hypot(n2[0] - m2[0], n2[1] - m2[1]) < 220) line([n2[0], n2[1], 0], [m2[0], m2[1], 0], 4, on ? A : GR, on ? 14 : 0); }); dot([n2[0], n2[1], 0], 18, on ? A : GR, on ? 24 : 0); });
+          ptext([{ s: "SISTEMA", col: on ? A : GR }], [240, -40, 100], X, Y, 34, '900 SZpx "Unbounded"', on ? 14 : 0);
+          if (t > W[195] + 0.3) ptext([{ s: "?", col: A }], [0, 520, 0], X, Y, 220 * pop(t, W[195] + 0.3), null, 30);
+        }],
+        [89.45, 93.31, "none", (t, u, d) => { // end card
+          camera([0, 0, 1150], [0, 0, 0], 1150, 0);
+          const dd = o4(seg(t, 89.5, 90.25)), ry = (1 - o4(seg(t, 89.5, 90.45))) * 2.4, cr = Math.cos(ry), sr = Math.sin(ry), T = [[0, 520], [150, 250], [-150, 250], [0, 520]], q = dd * 3;
+          for (let i = 0; i < 3 && q > i; i++) { const f = Math.min(1, q - i); line([T[i][0] * cr, T[i][1], T[i][0] * sr], [lerp(T[i][0], T[i + 1][0], f) * cr, lerp(T[i][1], T[i + 1][1], f), lerp(T[i][0], T[i + 1][0], f) * sr], 9, A, 26); }
+          if (dd >= 1) fillPoly([[0, 400, 0], [56 * cr, 290, 0], [-56 * cr, 290, 0]], A, 1);
+          const w = pop(t, 90.25); if (w > 0) ptext([{ s: "APEXMEDIA", col: WH }], [0, 120, 0], X, Y, 92 * w, '900 SZpx "Unbounded"', 22);
+          if (t > 90.65) ptext([{ s: "IL MARKETING È UN SISTEMA".split("").join(" "), col: GR }], [0, 20, 0], X, Y, 27, '500 SZpx "Unbounded"', 0);
+          const b = o4(seg(t, 90.95, 91.45)); if (b > 0) { fillPoly([[-430 * b, -178, 0], [430 * b, -178, 0], [430 * b, -62, 0], [-430 * b, -62, 0]], A, 1); if (b > 0.9) ptext([{ s: "SEGUI APEX MEDIA →", col: "#000" }], [0, -120, 0], X, Y, 64, null, 0); }
+        }],
+      ];
+      const FOCUS = { bg: 0, fg: 0 }; let FLASH = 0;
+      function hexA(h, a) { const n = parseInt(h.slice(1), 16); return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")"; }
+      function drawFrame(t, ctxOut) {
+        let i = 0; while (i < SH.length - 1 && t >= SH[i][1]) i++;
+        const s = SH[i], u = t - s[0], d = s[1] - s[0];
+        A = accAt(t); FOCUS.bg = 0; FOCUS.fg = 0; FOGD = 3400; FLASH = 0; LIGHT = nrm([0.5, 0.9, 0.6]);
+        [fgc, bgc].forEach((k) => { k.setTransform(1, 0, 0, 1, 0, 0); k.clearRect(0, 0, 1080, 1920); k.globalAlpha = 1; k.shadowBlur = 0; });
+        const bp = (((t - B0) % BEAT) + BEAT) % BEAT, bump = Math.exp(-bp * 9) * 0.016, ty = s[2];
+        const pk = ty === "punch" || ty === "cut" ? 1 - o4(seg(u, 0, 0.28)) : 0, wk = ty === "whip" ? 1 - o4(seg(u, 0, 0.3)) : 0, sn = ty === "snap" ? hit(t, s[0], 10) : 0, dir = i % 2 ? 1 : -1;
+        const sc = 1 + bump + (ty === "punch" ? pk * 0.24 : ty === "cut" ? pk * 0.06 : 0) + sn * 0.1;
+        [fgc, bgc].forEach((k) => { k.translate(540 + wk * 900 * dir, 1150); k.rotate((ty === "punch" ? pk * 0.12 : 0) * dir + wk * 0.05 * dir); k.scale(sc, sc); k.translate(-540, -1150); });
+        c = fgc; s[3](t, u, d); c = fgc;
+        ctxOut.fillStyle = "#000"; ctxOut.fillRect(0, 0, 1080, 1920);
+        const g = ctxOut.createRadialGradient(540, 1150, 60, 540, 1150, 950); g.addColorStop(0, hexA(A, 0.1)); g.addColorStop(0.5, "rgba(255,255,255,0.03)"); g.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = g; ctxOut.fillRect(0, 150, 1080, 1770);
+        ctxOut.filter = FOCUS.bg > 0.3 ? "blur(" + FOCUS.bg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(BG, 0, 0);
+        ctxOut.filter = FOCUS.fg > 0.3 ? "blur(" + FOCUS.fg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(FG, 0, 0); ctxOut.filter = "none";
+        const tg = ctxOut.createLinearGradient(0, 140, 0, 820); tg.addColorStop(0, "rgba(0,0,0,0.78)"); tg.addColorStop(0.7, "rgba(0,0,0,0.5)"); tg.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = tg; ctxOut.fillRect(0, 140, 1080, 680);
+        const vg = ctxOut.createRadialGradient(540, 1000, 500, 540, 1000, 1250); vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.55)"); ctxOut.fillStyle = vg; ctxOut.fillRect(0, 0, 1080, 1920);
+        const fl = Math.max(FLASH, ty === "match" ? hit(t, s[0], 22) * 0.35 : ty === "punch" ? hit(t, s[0], 14) * 0.3 : ty === "snap" ? hit(t, s[0], 12) * 0.5 : 0);
+        if (fl > 0.01) { ctxOut.fillStyle = "rgba(255,255,255," + fl.toFixed(3) + ")"; ctxOut.fillRect(0, 0, 1080, 1920); }
+      }
+      const SUB = 3, SHUT = 0.5 / 30;
+      function render(t) { octx.setTransform(1, 0, 0, 1, 0, 0); octx.globalAlpha = 1; for (let j = 0; j < SUB; j++) { drawFrame(Math.max(0, t + (j / (SUB - 1) - 0.5) * SHUT), frc); octx.globalAlpha = 1 / (j + 1); octx.drawImage(FR, 0, 0); } octx.globalAlpha = 1; }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Big Shoulders Display"'), document.fonts.load('500 26px "Unbounded"'), document.fonts.load('900 60px "Unbounded"')]).then(() => render(st.t), () => render(st.t));
+      render(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>

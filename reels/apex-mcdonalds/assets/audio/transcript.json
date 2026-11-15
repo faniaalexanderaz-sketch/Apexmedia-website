@@ -1,0 +1,1178 @@
+[
+  {
+    "text": "McDonald's",
+    "start": 0.06,
+    "end": 0.77,
+    "id": "w0"
+  },
+  {
+    "text": "non",
+    "start": 0.77,
+    "end": 1,
+    "id": "w1"
+  },
+  {
+    "text": "guadagna",
+    "start": 1,
+    "end": 1.6,
+    "id": "w2"
+  },
+  {
+    "text": "con",
+    "start": 1.6,
+    "end": 1.84,
+    "id": "w3"
+  },
+  {
+    "text": "gli",
+    "start": 1.84,
+    "end": 2.07,
+    "id": "w4"
+  },
+  {
+    "text": "hamburger.",
+    "start": 2.07,
+    "end": 2.84,
+    "id": "w5"
+  },
+  {
+    "text": "El'uomo",
+    "start": 2.9,
+    "end": 3.4,
+    "id": "w6"
+  },
+  {
+    "text": "che",
+    "start": 3.4,
+    "end": 3.64,
+    "id": "w7"
+  },
+  {
+    "text": "l'ha",
+    "start": 3.64,
+    "end": 3.96,
+    "id": "w8"
+  },
+  {
+    "text": "resa",
+    "start": 3.96,
+    "end": 4.28,
+    "id": "w9"
+  },
+  {
+    "text": "famosa",
+    "start": 4.28,
+    "end": 4.76,
+    "id": "w10"
+  },
+  {
+    "text": "nel",
+    "start": 4.76,
+    "end": 4.99,
+    "id": "w11"
+  },
+  {
+    "text": "mondo",
+    "start": 4.99,
+    "end": 5.42,
+    "id": "w12"
+  },
+  {
+    "text": "non",
+    "start": 5.42,
+    "end": 5.47,
+    "id": "w13"
+  },
+  {
+    "text": "si",
+    "start": 5.47,
+    "end": 5.97,
+    "id": "w14"
+  },
+  {
+    "text": "chiamava",
+    "start": 5.97,
+    "end": 6.61,
+    "id": "w15"
+  },
+  {
+    "text": "McDonald.",
+    "start": 6.61,
+    "end": 7.64,
+    "id": "w16"
+  },
+  {
+    "text": "1954,",
+    "start": 7.7,
+    "end": 9.99,
+    "id": "w17"
+  },
+  {
+    "text": "California.",
+    "start": 10.04,
+    "end": 10.84,
+    "id": "w18"
+  },
+  {
+    "text": "Un",
+    "start": 10.89,
+    "end": 11.01,
+    "id": "w19"
+  },
+  {
+    "text": "venditore",
+    "start": 11.01,
+    "end": 11.77,
+    "id": "w20"
+  },
+  {
+    "text": "di",
+    "start": 11.77,
+    "end": 11.94,
+    "id": "w21"
+  },
+  {
+    "text": "frullatori,",
+    "start": 11.94,
+    "end": 12.95,
+    "id": "w22"
+  },
+  {
+    "text": "Ray",
+    "start": 12.95,
+    "end": 13.19,
+    "id": "w23"
+  },
+  {
+    "text": "Kroc,",
+    "start": 13.2,
+    "end": 13.63,
+    "id": "w24"
+  },
+  {
+    "text": "riceve",
+    "start": 13.96,
+    "end": 14.22,
+    "id": "w25"
+  },
+  {
+    "text": "un",
+    "start": 14.25,
+    "end": 14.34,
+    "id": "w26"
+  },
+  {
+    "text": "ordine",
+    "start": 14.42,
+    "end": 14.83,
+    "id": "w27"
+  },
+  {
+    "text": "strano.",
+    "start": 14.92,
+    "end": 15.6,
+    "id": "w28"
+  },
+  {
+    "text": "Otto",
+    "start": 15.66,
+    "end": 15.94,
+    "id": "w29"
+  },
+  {
+    "text": "macchine",
+    "start": 15.94,
+    "end": 16.63,
+    "id": "w30"
+  },
+  {
+    "text": "per",
+    "start": 16.63,
+    "end": 16.89,
+    "id": "w31"
+  },
+  {
+    "text": "un",
+    "start": 16.89,
+    "end": 17.06,
+    "id": "w32"
+  },
+  {
+    "text": "solo",
+    "start": 17.06,
+    "end": 17.34,
+    "id": "w33"
+  },
+  {
+    "text": "ristorante.",
+    "start": 17.43,
+    "end": 18.25,
+    "id": "w34"
+  },
+  {
+    "text": "Va",
+    "start": 18.61,
+    "end": 18.76,
+    "id": "w35"
+  },
+  {
+    "text": "a",
+    "start": 18.76,
+    "end": 18.86,
+    "id": "w36"
+  },
+  {
+    "text": "vedere.",
+    "start": 18.86,
+    "end": 19.8,
+    "id": "w37"
+  },
+  {
+    "text": "È",
+    "start": 19.86,
+    "end": 19.89,
+    "id": "w38"
+  },
+  {
+    "text": "dei",
+    "start": 19.89,
+    "end": 20.17,
+    "id": "w39"
+  },
+  {
+    "text": "fratelli",
+    "start": 20.17,
+    "end": 20.9,
+    "id": "w40"
+  },
+  {
+    "text": "Mac",
+    "start": 20.9,
+    "end": 21.14,
+    "id": "w41"
+  },
+  {
+    "text": "e",
+    "start": 21.19,
+    "end": 21.27,
+    "id": "w42"
+  },
+  {
+    "text": "Dick",
+    "start": 21.27,
+    "end": 21.64,
+    "id": "w43"
+  },
+  {
+    "text": "McDonald.",
+    "start": 21.64,
+    "end": 22.43,
+    "id": "w44"
+  },
+  {
+    "text": "Nove",
+    "start": 22.78,
+    "end": 23.04,
+    "id": "w45"
+  },
+  {
+    "text": "prodotti",
+    "start": 23.04,
+    "end": 23.67,
+    "id": "w46"
+  },
+  {
+    "text": "nel",
+    "start": 23.67,
+    "end": 23.91,
+    "id": "w47"
+  },
+  {
+    "text": "menù,",
+    "start": 23.91,
+    "end": 24.39,
+    "id": "w48"
+  },
+  {
+    "text": "niente",
+    "start": 24.39,
+    "end": 24.84,
+    "id": "w49"
+  },
+  {
+    "text": "camerieri.",
+    "start": 24.84,
+    "end": 25.76,
+    "id": "w50"
+  },
+  {
+    "text": "Una",
+    "start": 25.81,
+    "end": 25.96,
+    "id": "w51"
+  },
+  {
+    "text": "cucina",
+    "start": 26.07,
+    "end": 26.35,
+    "id": "w52"
+  },
+  {
+    "text": "che",
+    "start": 26.35,
+    "end": 26.56,
+    "id": "w53"
+  },
+  {
+    "text": "funziona",
+    "start": 26.56,
+    "end": 27.1,
+    "id": "w54"
+  },
+  {
+    "text": "come",
+    "start": 27.1,
+    "end": 27.36,
+    "id": "w55"
+  },
+  {
+    "text": "una",
+    "start": 27.36,
+    "end": 27.5,
+    "id": "w56"
+  },
+  {
+    "text": "catena",
+    "start": 27.59,
+    "end": 27.97,
+    "id": "w57"
+  },
+  {
+    "text": "di",
+    "start": 27.97,
+    "end": 28.1,
+    "id": "w58"
+  },
+  {
+    "text": "montaggio.",
+    "start": 28.1,
+    "end": 28.96,
+    "id": "w59"
+  },
+  {
+    "text": "Kroc",
+    "start": 29.01,
+    "end": 29.4,
+    "id": "w60"
+  },
+  {
+    "text": "capisce",
+    "start": 29.4,
+    "end": 30.17,
+    "id": "w61"
+  },
+  {
+    "text": "subito.",
+    "start": 30.17,
+    "end": 30.84,
+    "id": "w62"
+  },
+  {
+    "text": "Va",
+    "start": 30.89,
+    "end": 31.02,
+    "id": "w63"
+  },
+  {
+    "text": "copiato",
+    "start": 31.15,
+    "end": 31.65,
+    "id": "w64"
+  },
+  {
+    "text": "in",
+    "start": 31.65,
+    "end": 31.83,
+    "id": "w65"
+  },
+  {
+    "text": "tutta",
+    "start": 31.83,
+    "end": 32.28,
+    "id": "w66"
+  },
+  {
+    "text": "l'America.",
+    "start": 32.28,
+    "end": 33.16,
+    "id": "w67"
+  },
+  {
+    "text": "Eottiene",
+    "start": 33.22,
+    "end": 33.69,
+    "id": "w68"
+  },
+  {
+    "text": "i",
+    "start": 33.69,
+    "end": 33.75,
+    "id": "w69"
+  },
+  {
+    "text": "diritti",
+    "start": 33.75,
+    "end": 34.22,
+    "id": "w70"
+  },
+  {
+    "text": "per",
+    "start": 34.22,
+    "end": 34.42,
+    "id": "w71"
+  },
+  {
+    "text": "i",
+    "start": 34.42,
+    "end": 34.48,
+    "id": "w72"
+  },
+  {
+    "text": "franchising.",
+    "start": 34.48,
+    "end": 35.51,
+    "id": "w73"
+  },
+  {
+    "text": "Ma",
+    "start": 35.57,
+    "end": 35.66,
+    "id": "w74"
+  },
+  {
+    "text": "con",
+    "start": 35.66,
+    "end": 35.87,
+    "id": "w75"
+  },
+  {
+    "text": "i",
+    "start": 35.87,
+    "end": 35.94,
+    "id": "w76"
+  },
+  {
+    "text": "franchising",
+    "start": 35.94,
+    "end": 36.71,
+    "id": "w77"
+  },
+  {
+    "text": "guadagna",
+    "start": 36.71,
+    "end": 37.26,
+    "id": "w78"
+  },
+  {
+    "text": "pochissimo.",
+    "start": 37.27,
+    "end": 38.11,
+    "id": "w79"
+  },
+  {
+    "text": "Poi",
+    "start": 38.3,
+    "end": 38.44,
+    "id": "w80"
+  },
+  {
+    "text": "arriva",
+    "start": 38.55,
+    "end": 38.9,
+    "id": "w81"
+  },
+  {
+    "text": "un",
+    "start": 38.9,
+    "end": 39.06,
+    "id": "w82"
+  },
+  {
+    "text": "esperto",
+    "start": 39.17,
+    "end": 39.58,
+    "id": "w83"
+  },
+  {
+    "text": "di",
+    "start": 39.62,
+    "end": 39.74,
+    "id": "w84"
+  },
+  {
+    "text": "finanza,",
+    "start": 39.74,
+    "end": 40.48,
+    "id": "w85"
+  },
+  {
+    "text": "Harry",
+    "start": 40.48,
+    "end": 40.82,
+    "id": "w86"
+  },
+  {
+    "text": "Sonneborn,",
+    "start": 40.82,
+    "end": 41.72,
+    "id": "w87"
+  },
+  {
+    "text": "con",
+    "start": 41.72,
+    "end": 41.96,
+    "id": "w88"
+  },
+  {
+    "text": "un'idea.",
+    "start": 41.96,
+    "end": 42.8,
+    "id": "w89"
+  },
+  {
+    "text": "Compriamo",
+    "start": 42.86,
+    "end": 43.47,
+    "id": "w90"
+  },
+  {
+    "text": "noi",
+    "start": 43.49,
+    "end": 43.62,
+    "id": "w91"
+  },
+  {
+    "text": "i",
+    "start": 43.72,
+    "end": 43.79,
+    "id": "w92"
+  },
+  {
+    "text": "terreni",
+    "start": 43.79,
+    "end": 44.32,
+    "id": "w93"
+  },
+  {
+    "text": "dove",
+    "start": 44.32,
+    "end": 44.54,
+    "id": "w94"
+  },
+  {
+    "text": "aprono",
+    "start": 44.63,
+    "end": 45.09,
+    "id": "w95"
+  },
+  {
+    "text": "i",
+    "start": 45.09,
+    "end": 45.15,
+    "id": "w96"
+  },
+  {
+    "text": "ristoranti.",
+    "start": 45.16,
+    "end": 46,
+    "id": "w97"
+  },
+  {
+    "text": "Eli",
+    "start": 46.06,
+    "end": 46.21,
+    "id": "w98"
+  },
+  {
+    "text": "affittiamo",
+    "start": 46.31,
+    "end": 46.82,
+    "id": "w99"
+  },
+  {
+    "text": "a",
+    "start": 46.92,
+    "end": 46.98,
+    "id": "w100"
+  },
+  {
+    "text": "chi",
+    "start": 46.98,
+    "end": 47.19,
+    "id": "w101"
+  },
+  {
+    "text": "li",
+    "start": 47.19,
+    "end": 47.33,
+    "id": "w102"
+  },
+  {
+    "text": "gestisce.",
+    "start": 47.33,
+    "end": 48.12,
+    "id": "w103"
+  },
+  {
+    "text": "Da",
+    "start": 48.17,
+    "end": 48.26,
+    "id": "w104"
+  },
+  {
+    "text": "quel",
+    "start": 48.26,
+    "end": 48.54,
+    "id": "w105"
+  },
+  {
+    "text": "momento,",
+    "start": 48.54,
+    "end": 49.2,
+    "id": "w106"
+  },
+  {
+    "text": "McDonald's",
+    "start": 49.2,
+    "end": 49.97,
+    "id": "w107"
+  },
+  {
+    "text": "diventa",
+    "start": 49.97,
+    "end": 50.47,
+    "id": "w108"
+  },
+  {
+    "text": "un'azienda",
+    "start": 50.51,
+    "end": 51.26,
+    "id": "w109"
+  },
+  {
+    "text": "immobiliare.",
+    "start": 51.26,
+    "end": 52.16,
+    "id": "w110"
+  },
+  {
+    "text": "Che",
+    "start": 52.22,
+    "end": 52.36,
+    "id": "w111"
+  },
+  {
+    "text": "vende",
+    "start": 52.45,
+    "end": 52.74,
+    "id": "w112"
+  },
+  {
+    "text": "hamburger.",
+    "start": 52.74,
+    "end": 53.64,
+    "id": "w113"
+  },
+  {
+    "text": "Nel",
+    "start": 53.69,
+    "end": 54.03,
+    "id": "w114"
+  },
+  {
+    "text": "1961,",
+    "start": 54.03,
+    "end": 55.74,
+    "id": "w115"
+  },
+  {
+    "text": "Kroc",
+    "start": 55.74,
+    "end": 56.01,
+    "id": "w116"
+  },
+  {
+    "text": "compra",
+    "start": 56.01,
+    "end": 56.23,
+    "id": "w117"
+  },
+  {
+    "text": "tutto",
+    "start": 56.76,
+    "end": 56.81,
+    "id": "w118"
+  },
+  {
+    "text": "dai",
+    "start": 56.81,
+    "end": 57.02,
+    "id": "w119"
+  },
+  {
+    "text": "fratelli.",
+    "start": 57.02,
+    "end": 57.68,
+    "id": "w120"
+  },
+  {
+    "text": "Per",
+    "start": 57.74,
+    "end": 57.87,
+    "id": "w121"
+  },
+  {
+    "text": "2,7",
+    "start": 57.99,
+    "end": 58.63,
+    "id": "w122"
+  },
+  {
+    "text": "milioni",
+    "start": 58.63,
+    "end": 59.24,
+    "id": "w123"
+  },
+  {
+    "text": "di",
+    "start": 59.24,
+    "end": 59.41,
+    "id": "w124"
+  },
+  {
+    "text": "dollari.",
+    "start": 59.41,
+    "end": 60.27,
+    "id": "w125"
+  },
+  {
+    "text": "Secondo",
+    "start": 60.42,
+    "end": 60.78,
+    "id": "w126"
+  },
+  {
+    "text": "la",
+    "start": 60.78,
+    "end": 60.89,
+    "id": "w127"
+  },
+  {
+    "text": "famiglia",
+    "start": 60.89,
+    "end": 61.38,
+    "id": "w128"
+  },
+  {
+    "text": "McDonald's,",
+    "start": 61.38,
+    "end": 62.1,
+    "id": "w129"
+  },
+  {
+    "text": "c'era",
+    "start": 62.1,
+    "end": 62.35,
+    "id": "w130"
+  },
+  {
+    "text": "anche",
+    "start": 62.35,
+    "end": 62.61,
+    "id": "w131"
+  },
+  {
+    "text": "una",
+    "start": 62.61,
+    "end": 62.76,
+    "id": "w132"
+  },
+  {
+    "text": "promessa",
+    "start": 62.76,
+    "end": 62.99,
+    "id": "w133"
+  },
+  {
+    "text": "fatta",
+    "start": 63.48,
+    "end": 63.67,
+    "id": "w134"
+  },
+  {
+    "text": "a",
+    "start": 63.67,
+    "end": 63.74,
+    "id": "w135"
+  },
+  {
+    "text": "voce.",
+    "start": 63.78,
+    "end": 64.35,
+    "id": "w136"
+  },
+  {
+    "text": "Una",
+    "start": 64.5,
+    "end": 64.64,
+    "id": "w137"
+  },
+  {
+    "text": "piccola",
+    "start": 64.75,
+    "end": 65.19,
+    "id": "w138"
+  },
+  {
+    "text": "percentuale.",
+    "start": 65.19,
+    "end": 66.28,
+    "id": "w139"
+  },
+  {
+    "text": "Per",
+    "start": 66.34,
+    "end": 66.47,
+    "id": "w140"
+  },
+  {
+    "text": "sempre.",
+    "start": 66.59,
+    "end": 67.52,
+    "id": "w141"
+  },
+  {
+    "text": "Non",
+    "start": 67.58,
+    "end": 67.71,
+    "id": "w142"
+  },
+  {
+    "text": "è",
+    "start": 67.83,
+    "end": 67.89,
+    "id": "w143"
+  },
+  {
+    "text": "mai",
+    "start": 67.89,
+    "end": 68.17,
+    "id": "w144"
+  },
+  {
+    "text": "stata",
+    "start": 68.17,
+    "end": 68.64,
+    "id": "w145"
+  },
+  {
+    "text": "pagata.",
+    "start": 68.64,
+    "end": 69.24,
+    "id": "w146"
+  },
+  {
+    "text": "Ei",
+    "start": 69.3,
+    "end": 69.36,
+    "id": "w147"
+  },
+  {
+    "text": "fratelli",
+    "start": 69.36,
+    "end": 69.88,
+    "id": "w148"
+  },
+  {
+    "text": "perdono",
+    "start": 69.88,
+    "end": 70.33,
+    "id": "w149"
+  },
+  {
+    "text": "perfino",
+    "start": 70.33,
+    "end": 70.77,
+    "id": "w150"
+  },
+  {
+    "text": "il",
+    "start": 70.78,
+    "end": 70.9,
+    "id": "w151"
+  },
+  {
+    "text": "diritto",
+    "start": 70.9,
+    "end": 71.36,
+    "id": "w152"
+  },
+  {
+    "text": "di",
+    "start": 71.36,
+    "end": 71.49,
+    "id": "w153"
+  },
+  {
+    "text": "usare",
+    "start": 71.49,
+    "end": 71.8,
+    "id": "w154"
+  },
+  {
+    "text": "il",
+    "start": 71.8,
+    "end": 71.84,
+    "id": "w155"
+  },
+  {
+    "text": "loro",
+    "start": 71.97,
+    "end": 72.03,
+    "id": "w156"
+  },
+  {
+    "text": "nome.",
+    "start": 72.36,
+    "end": 72.75,
+    "id": "w157"
+  },
+  {
+    "text": "Oggi,",
+    "start": 72.82,
+    "end": 73.16,
+    "id": "w158"
+  },
+  {
+    "text": "McDonald's",
+    "start": 73.16,
+    "end": 73.84,
+    "id": "w159"
+  },
+  {
+    "text": "ha",
+    "start": 73.84,
+    "end": 73.97,
+    "id": "w160"
+  },
+  {
+    "text": "più",
+    "start": 74,
+    "end": 74.18,
+    "id": "w161"
+  },
+  {
+    "text": "di",
+    "start": 74.18,
+    "end": 74.31,
+    "id": "w162"
+  },
+  {
+    "text": "40.000",
+    "start": 74.31,
+    "end": 75.34,
+    "id": "w163"
+  },
+  {
+    "text": "ristoranti.",
+    "start": 75.34,
+    "end": 76.32,
+    "id": "w164"
+  },
+  {
+    "text": "Euna",
+    "start": 76.38,
+    "end": 76.51,
+    "id": "w165"
+  },
+  {
+    "text": "parte",
+    "start": 76.63,
+    "end": 76.96,
+    "id": "w166"
+  },
+  {
+    "text": "enorme",
+    "start": 76.96,
+    "end": 77.39,
+    "id": "w167"
+  },
+  {
+    "text": "dei",
+    "start": 77.39,
+    "end": 77.6,
+    "id": "w168"
+  },
+  {
+    "text": "suoi",
+    "start": 77.6,
+    "end": 77.87,
+    "id": "w169"
+  },
+  {
+    "text": "guadagni",
+    "start": 77.87,
+    "end": 78.44,
+    "id": "w170"
+  },
+  {
+    "text": "arriva",
+    "start": 78.44,
+    "end": 78.86,
+    "id": "w171"
+  },
+  {
+    "text": "dagli",
+    "start": 78.86,
+    "end": 79.18,
+    "id": "w172"
+  },
+  {
+    "text": "affitti.",
+    "start": 79.42,
+    "end": 80,
+    "id": "w173"
+  },
+  {
+    "text": "La",
+    "start": 80.05,
+    "end": 80.17,
+    "id": "w174"
+  },
+  {
+    "text": "lezione?",
+    "start": 80.17,
+    "end": 81.04,
+    "id": "w175"
+  },
+  {
+    "text": "Il",
+    "start": 81.09,
+    "end": 81.2,
+    "id": "w176"
+  },
+  {
+    "text": "prodotto",
+    "start": 81.2,
+    "end": 81.85,
+    "id": "w177"
+  },
+  {
+    "text": "ti",
+    "start": 81.96,
+    "end": 82.02,
+    "id": "w178"
+  },
+  {
+    "text": "fa",
+    "start": 82.02,
+    "end": 82.18,
+    "id": "w179"
+  },
+  {
+    "text": "entrare.",
+    "start": 82.18,
+    "end": 83.04,
+    "id": "w180"
+  },
+  {
+    "text": "Il",
+    "start": 83.09,
+    "end": 83.18,
+    "id": "w181"
+  },
+  {
+    "text": "modello",
+    "start": 83.18,
+    "end": 83.69,
+    "id": "w182"
+  },
+  {
+    "text": "di",
+    "start": 83.69,
+    "end": 83.83,
+    "id": "w183"
+  },
+  {
+    "text": "business",
+    "start": 83.97,
+    "end": 84.41,
+    "id": "w184"
+  },
+  {
+    "text": "ti",
+    "start": 84.42,
+    "end": 84.56,
+    "id": "w185"
+  },
+  {
+    "text": "fa",
+    "start": 84.56,
+    "end": 84.69,
+    "id": "w186"
+  },
+  {
+    "text": "vincere.",
+    "start": 84.69,
+    "end": 85.48,
+    "id": "w187"
+  },
+  {
+    "text": "Etu,",
+    "start": 85.54,
+    "end": 85.9,
+    "id": "w188"
+  },
+  {
+    "text": "stai",
+    "start": 85.9,
+    "end": 86.24,
+    "id": "w189"
+  },
+  {
+    "text": "vendendo",
+    "start": 86.24,
+    "end": 86.94,
+    "id": "w190"
+  },
+  {
+    "text": "un",
+    "start": 86.94,
+    "end": 87.1,
+    "id": "w191"
+  },
+  {
+    "text": "prodotto",
+    "start": 87.1,
+    "end": 87.8,
+    "id": "w192"
+  },
+  {
+    "text": "o",
+    "start": 87.81,
+    "end": 87.89,
+    "id": "w193"
+  },
+  {
+    "text": "un",
+    "start": 87.89,
+    "end": 88.04,
+    "id": "w194"
+  },
+  {
+    "text": "sistema?",
+    "start": 88.6,
+    "end": 88.99,
+    "id": "w195"
+  }
+]

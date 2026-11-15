@@ -1,0 +1,1166 @@
+[
+  {
+    "text": "Questa",
+    "start": 0.13,
+    "end": 0.59,
+    "id": "w0"
+  },
+  {
+    "text": "è",
+    "start": 0.59,
+    "end": 0.69,
+    "id": "w1"
+  },
+  {
+    "text": "acqua,",
+    "start": 0.69,
+    "end": 1.4,
+    "id": "w2"
+  },
+  {
+    "text": "solo",
+    "start": 1.59,
+    "end": 1.86,
+    "id": "w3"
+  },
+  {
+    "text": "acqua.",
+    "start": 1.86,
+    "end": 2.45,
+    "id": "w4"
+  },
+  {
+    "text": "Eun'azienda",
+    "start": 2.87,
+    "end": 3.6,
+    "id": "w5"
+  },
+  {
+    "text": "la",
+    "start": 3.6,
+    "end": 3.79,
+    "id": "w6"
+  },
+  {
+    "text": "vende",
+    "start": 3.79,
+    "end": 3.95,
+    "id": "w7"
+  },
+  {
+    "text": "così,",
+    "start": 4.35,
+    "end": 4.68,
+    "id": "w8"
+  },
+  {
+    "text": "ha",
+    "start": 4.68,
+    "end": 4.83,
+    "id": "w9"
+  },
+  {
+    "text": "più",
+    "start": 4.83,
+    "end": 5.07,
+    "id": "w10"
+  },
+  {
+    "text": "di",
+    "start": 5.07,
+    "end": 5.24,
+    "id": "w11"
+  },
+  {
+    "text": "un",
+    "start": 5.24,
+    "end": 5.25,
+    "id": "w12"
+  },
+  {
+    "text": "miliardo",
+    "start": 5.4,
+    "end": 6.05,
+    "id": "w13"
+  },
+  {
+    "text": "di",
+    "start": 6.05,
+    "end": 6.21,
+    "id": "w14"
+  },
+  {
+    "text": "dollari.",
+    "start": 6.21,
+    "end": 7.11,
+    "id": "w15"
+  },
+  {
+    "text": "Si",
+    "start": 7.29,
+    "end": 7.35,
+    "id": "w16"
+  },
+  {
+    "text": "chiama",
+    "start": 7.35,
+    "end": 7.92,
+    "id": "w17"
+  },
+  {
+    "text": "Liquid",
+    "start": 7.92,
+    "end": 8.28,
+    "id": "w18"
+  },
+  {
+    "text": "Death,",
+    "start": 8.74,
+    "end": 9.23,
+    "id": "w19"
+  },
+  {
+    "text": "morte",
+    "start": 9.23,
+    "end": 9.57,
+    "id": "w20"
+  },
+  {
+    "text": "liquida.",
+    "start": 10.18,
+    "end": 11.04,
+    "id": "w21"
+  },
+  {
+    "text": "Tutto",
+    "start": 11.17,
+    "end": 11.45,
+    "id": "w22"
+  },
+  {
+    "text": "inizia",
+    "start": 11.45,
+    "end": 11.84,
+    "id": "w23"
+  },
+  {
+    "text": "un",
+    "start": 11.98,
+    "end": 12.09,
+    "id": "w24"
+  },
+  {
+    "text": "concerto",
+    "start": 12.09,
+    "end": 12.72,
+    "id": "w25"
+  },
+  {
+    "text": "punk.",
+    "start": 12.76,
+    "end": 13.4,
+    "id": "w26"
+  },
+  {
+    "text": "Un",
+    "start": 13.53,
+    "end": 13.56,
+    "id": "w27"
+  },
+  {
+    "text": "ex",
+    "start": 13.56,
+    "end": 13.69,
+    "id": "w28"
+  },
+  {
+    "text": "creativo",
+    "start": 13.77,
+    "end": 14.2,
+    "id": "w29"
+  },
+  {
+    "text": "pubblicitario,",
+    "start": 14.34,
+    "end": 15.49,
+    "id": "w30"
+  },
+  {
+    "text": "Mike",
+    "start": 15.5,
+    "end": 15.81,
+    "id": "w31"
+  },
+  {
+    "text": "Sessario,",
+    "start": 15.81,
+    "end": 16.6,
+    "id": "w32"
+  },
+  {
+    "text": "nota",
+    "start": 16.6,
+    "end": 16.92,
+    "id": "w33"
+  },
+  {
+    "text": "una",
+    "start": 16.92,
+    "end": 17.13,
+    "id": "w34"
+  },
+  {
+    "text": "cosa.",
+    "start": 17.16,
+    "end": 17.73,
+    "id": "w35"
+  },
+  {
+    "text": "I",
+    "start": 17.73,
+    "end": 17.93,
+    "id": "w36"
+  },
+  {
+    "text": "musicisti",
+    "start": 17.93,
+    "end": 18.55,
+    "id": "w37"
+  },
+  {
+    "text": "bevono",
+    "start": 18.55,
+    "end": 18.95,
+    "id": "w38"
+  },
+  {
+    "text": "acqua",
+    "start": 19.3,
+    "end": 19.37,
+    "id": "w39"
+  },
+  {
+    "text": "versata",
+    "start": 19.43,
+    "end": 19.89,
+    "id": "w40"
+  },
+  {
+    "text": "nelle",
+    "start": 19.89,
+    "end": 20.21,
+    "id": "w41"
+  },
+  {
+    "text": "lattine",
+    "start": 20.58,
+    "end": 20.81,
+    "id": "w42"
+  },
+  {
+    "text": "di",
+    "start": 20.82,
+    "end": 20.96,
+    "id": "w43"
+  },
+  {
+    "text": "energy",
+    "start": 20.96,
+    "end": 21.42,
+    "id": "w44"
+  },
+  {
+    "text": "drink,",
+    "start": 21.42,
+    "end": 21.88,
+    "id": "w45"
+  },
+  {
+    "text": "per",
+    "start": 22.01,
+    "end": 22.14,
+    "id": "w46"
+  },
+  {
+    "text": "sembrare",
+    "start": 22.14,
+    "end": 22.68,
+    "id": "w47"
+  },
+  {
+    "text": "più",
+    "start": 22.84,
+    "end": 23.03,
+    "id": "w48"
+  },
+  {
+    "text": "cattivi.",
+    "start": 23.19,
+    "end": 23.76,
+    "id": "w49"
+  },
+  {
+    "text": "Elui",
+    "start": 23.86,
+    "end": 24.17,
+    "id": "w50"
+  },
+  {
+    "text": "pensa,",
+    "start": 24.17,
+    "end": 24.9,
+    "id": "w51"
+  },
+  {
+    "text": "e",
+    "start": 24.9,
+    "end": 25.09,
+    "id": "w52"
+  },
+  {
+    "text": "se",
+    "start": 25.09,
+    "end": 25.28,
+    "id": "w53"
+  },
+  {
+    "text": "l'acqua",
+    "start": 25.28,
+    "end": 25.81,
+    "id": "w54"
+  },
+  {
+    "text": "fosse",
+    "start": 25.81,
+    "end": 26.17,
+    "id": "w55"
+  },
+  {
+    "text": "già",
+    "start": 26.17,
+    "end": 26.55,
+    "id": "w56"
+  },
+  {
+    "text": "cattiva?",
+    "start": 26.55,
+    "end": 27.5,
+    "id": "w57"
+  },
+  {
+    "text": "Prima",
+    "start": 27.64,
+    "end": 27.81,
+    "id": "w58"
+  },
+  {
+    "text": "ancora",
+    "start": 27.89,
+    "end": 28.21,
+    "id": "w59"
+  },
+  {
+    "text": "di",
+    "start": 28.21,
+    "end": 28.32,
+    "id": "w60"
+  },
+  {
+    "text": "avere",
+    "start": 28.32,
+    "end": 28.64,
+    "id": "w61"
+  },
+  {
+    "text": "il",
+    "start": 28.64,
+    "end": 28.66,
+    "id": "w62"
+  },
+  {
+    "text": "prodotto,",
+    "start": 29.02,
+    "end": 29.38,
+    "id": "w63"
+  },
+  {
+    "text": "gira",
+    "start": 29.4,
+    "end": 29.61,
+    "id": "w64"
+  },
+  {
+    "text": "uno",
+    "start": 29.64,
+    "end": 29.79,
+    "id": "w65"
+  },
+  {
+    "text": "spot.",
+    "start": 29.82,
+    "end": 30.11,
+    "id": "w66"
+  },
+  {
+    "text": "Lo",
+    "start": 30.49,
+    "end": 30.52,
+    "id": "w67"
+  },
+  {
+    "text": "pubblica,",
+    "start": 30.52,
+    "end": 31.16,
+    "id": "w68"
+  },
+  {
+    "text": "milioni",
+    "start": 31.3,
+    "end": 31.84,
+    "id": "w69"
+  },
+  {
+    "text": "di",
+    "start": 31.91,
+    "end": 32,
+    "id": "w70"
+  },
+  {
+    "text": "visualizzazioni.",
+    "start": 32,
+    "end": 33.48,
+    "id": "w71"
+  },
+  {
+    "text": "Nel",
+    "start": 33.55,
+    "end": 33.7,
+    "id": "w72"
+  },
+  {
+    "text": "2019",
+    "start": 33.7,
+    "end": 34.55,
+    "id": "w73"
+  },
+  {
+    "text": "la",
+    "start": 34.55,
+    "end": 34.62,
+    "id": "w74"
+  },
+  {
+    "text": "lancia",
+    "start": 34.97,
+    "end": 35.17,
+    "id": "w75"
+  },
+  {
+    "text": "davvero.",
+    "start": 35.2,
+    "end": 35.93,
+    "id": "w76"
+  },
+  {
+    "text": "Acqua",
+    "start": 36.09,
+    "end": 36.25,
+    "id": "w77"
+  },
+  {
+    "text": "di",
+    "start": 36.33,
+    "end": 36.42,
+    "id": "w78"
+  },
+  {
+    "text": "montagna,",
+    "start": 36.54,
+    "end": 37.1,
+    "id": "w79"
+  },
+  {
+    "text": "in",
+    "start": 37.1,
+    "end": 37.51,
+    "id": "w80"
+  },
+  {
+    "text": "una",
+    "start": 37.51,
+    "end": 37.61,
+    "id": "w81"
+  },
+  {
+    "text": "lattina",
+    "start": 37.63,
+    "end": 38.05,
+    "id": "w82"
+  },
+  {
+    "text": "da",
+    "start": 38.22,
+    "end": 38.28,
+    "id": "w83"
+  },
+  {
+    "text": "birra",
+    "start": 38.28,
+    "end": 38.68,
+    "id": "w84"
+  },
+  {
+    "text": "con",
+    "start": 38.68,
+    "end": 38.98,
+    "id": "w85"
+  },
+  {
+    "text": "un",
+    "start": 38.98,
+    "end": 39.05,
+    "id": "w86"
+  },
+  {
+    "text": "teschio",
+    "start": 39.05,
+    "end": 39.57,
+    "id": "w87"
+  },
+  {
+    "text": "sopra.",
+    "start": 39.57,
+    "end": 40.2,
+    "id": "w88"
+  },
+  {
+    "text": "Lo",
+    "start": 40.33,
+    "end": 40.38,
+    "id": "w89"
+  },
+  {
+    "text": "slogan,",
+    "start": 40.38,
+    "end": 41,
+    "id": "w90"
+  },
+  {
+    "text": "uccidi",
+    "start": 41.14,
+    "end": 41.68,
+    "id": "w91"
+  },
+  {
+    "text": "la",
+    "start": 41.77,
+    "end": 41.87,
+    "id": "w92"
+  },
+  {
+    "text": "tua",
+    "start": 41.87,
+    "end": 42.15,
+    "id": "w93"
+  },
+  {
+    "text": "sete.",
+    "start": 42.15,
+    "end": 42.65,
+    "id": "w94"
+  },
+  {
+    "text": "Eil",
+    "start": 42.92,
+    "end": 43.08,
+    "id": "w95"
+  },
+  {
+    "text": "marketing",
+    "start": 43.08,
+    "end": 43.64,
+    "id": "w96"
+  },
+  {
+    "text": "è",
+    "start": 43.83,
+    "end": 43.91,
+    "id": "w97"
+  },
+  {
+    "text": "folle.",
+    "start": 43.91,
+    "end": 44.6,
+    "id": "w98"
+  },
+  {
+    "text": "Transformano",
+    "start": 44.73,
+    "end": 45.4,
+    "id": "w99"
+  },
+  {
+    "text": "i",
+    "start": 45.4,
+    "end": 45.42,
+    "id": "w100"
+  },
+  {
+    "text": "commenti",
+    "start": 45.54,
+    "end": 46,
+    "id": "w101"
+  },
+  {
+    "text": "di",
+    "start": 46.12,
+    "end": 46.13,
+    "id": "w102"
+  },
+  {
+    "text": "odio",
+    "start": 46.17,
+    "end": 46.39,
+    "id": "w103"
+  },
+  {
+    "text": "in",
+    "start": 46.39,
+    "end": 46.52,
+    "id": "w104"
+  },
+  {
+    "text": "canzoni",
+    "start": 46.52,
+    "end": 46.98,
+    "id": "w105"
+  },
+  {
+    "text": "metal.",
+    "start": 46.98,
+    "end": 47.6,
+    "id": "w106"
+  },
+  {
+    "text": "Ti",
+    "start": 47.6,
+    "end": 47.73,
+    "id": "w107"
+  },
+  {
+    "text": "fanno",
+    "start": 47.73,
+    "end": 48.05,
+    "id": "w108"
+  },
+  {
+    "text": "vendere",
+    "start": 48.05,
+    "end": 48.4,
+    "id": "w109"
+  },
+  {
+    "text": "l'anima,",
+    "start": 48.54,
+    "end": 49.07,
+    "id": "w110"
+  },
+  {
+    "text": "con",
+    "start": 49.16,
+    "end": 49.26,
+    "id": "w111"
+  },
+  {
+    "text": "tanto",
+    "start": 49.27,
+    "end": 49.58,
+    "id": "w112"
+  },
+  {
+    "text": "di",
+    "start": 49.58,
+    "end": 49.69,
+    "id": "w113"
+  },
+  {
+    "text": "contratto.",
+    "start": 49.7,
+    "end": 50.56,
+    "id": "w114"
+  },
+  {
+    "text": "Vendono",
+    "start": 50.62,
+    "end": 51.01,
+    "id": "w115"
+  },
+  {
+    "text": "skateboard",
+    "start": 51.01,
+    "end": 51.63,
+    "id": "w116"
+  },
+  {
+    "text": "dipinti",
+    "start": 51.63,
+    "end": 52.15,
+    "id": "w117"
+  },
+  {
+    "text": "con",
+    "start": 52.17,
+    "end": 52.35,
+    "id": "w118"
+  },
+  {
+    "text": "il",
+    "start": 52.35,
+    "end": 52.48,
+    "id": "w119"
+  },
+  {
+    "text": "sangue",
+    "start": 52.48,
+    "end": 52.88,
+    "id": "w120"
+  },
+  {
+    "text": "di",
+    "start": 52.88,
+    "end": 53,
+    "id": "w121"
+  },
+  {
+    "text": "una",
+    "start": 53,
+    "end": 53.01,
+    "id": "w122"
+  },
+  {
+    "text": "leggenda",
+    "start": 53.48,
+    "end": 53.74,
+    "id": "w123"
+  },
+  {
+    "text": "dello",
+    "start": 53.74,
+    "end": 54.07,
+    "id": "w124"
+  },
+  {
+    "text": "skate.",
+    "start": 54.07,
+    "end": 54.68,
+    "id": "w125"
+  },
+  {
+    "text": "Ogni",
+    "start": 54.81,
+    "end": 54.97,
+    "id": "w126"
+  },
+  {
+    "text": "mossa",
+    "start": 55.05,
+    "end": 55.43,
+    "id": "w127"
+  },
+  {
+    "text": "fa",
+    "start": 55.43,
+    "end": 55.48,
+    "id": "w128"
+  },
+  {
+    "text": "parlare.",
+    "start": 55.62,
+    "end": 56.52,
+    "id": "w129"
+  },
+  {
+    "text": "Eogni",
+    "start": 56.58,
+    "end": 56.81,
+    "id": "w130"
+  },
+  {
+    "text": "volta",
+    "start": 56.89,
+    "end": 57.19,
+    "id": "w131"
+  },
+  {
+    "text": "che",
+    "start": 57.19,
+    "end": 57.32,
+    "id": "w132"
+  },
+  {
+    "text": "se",
+    "start": 57.46,
+    "end": 57.52,
+    "id": "w133"
+  },
+  {
+    "text": "ne",
+    "start": 57.52,
+    "end": 57.65,
+    "id": "w134"
+  },
+  {
+    "text": "parla,",
+    "start": 57.65,
+    "end": 58.11,
+    "id": "w135"
+  },
+  {
+    "text": "le",
+    "start": 58.13,
+    "end": 58.21,
+    "id": "w136"
+  },
+  {
+    "text": "lattine",
+    "start": 58.24,
+    "end": 58.62,
+    "id": "w137"
+  },
+  {
+    "text": "volano.",
+    "start": 58.78,
+    "end": 59.4,
+    "id": "w138"
+  },
+  {
+    "text": "Nel",
+    "start": 59.47,
+    "end": 59.6,
+    "id": "w139"
+  },
+  {
+    "text": "2024,",
+    "start": 59.6,
+    "end": 60.54,
+    "id": "w140"
+  },
+  {
+    "text": "l'azienda",
+    "start": 60.63,
+    "end": 61.16,
+    "id": "w141"
+  },
+  {
+    "text": "vale",
+    "start": 61.16,
+    "end": 61.43,
+    "id": "w142"
+  },
+  {
+    "text": "un",
+    "start": 61.43,
+    "end": 61.5,
+    "id": "w143"
+  },
+  {
+    "text": "miliardo",
+    "start": 61.66,
+    "end": 61.85,
+    "id": "w144"
+  },
+  {
+    "text": "e",
+    "start": 61.99,
+    "end": 62.16,
+    "id": "w145"
+  },
+  {
+    "text": "quattrocento",
+    "start": 62.16,
+    "end": 62.94,
+    "id": "w146"
+  },
+  {
+    "text": "milioni",
+    "start": 62.98,
+    "end": 63.38,
+    "id": "w147"
+  },
+  {
+    "text": "di",
+    "start": 63.46,
+    "end": 63.54,
+    "id": "w148"
+  },
+  {
+    "text": "dollari.",
+    "start": 63.54,
+    "end": 64.27,
+    "id": "w149"
+  },
+  {
+    "text": "Ricapitoliamo.",
+    "start": 64.53,
+    "end": 65.52,
+    "id": "w150"
+  },
+  {
+    "text": "Il",
+    "start": 65.65,
+    "end": 65.69,
+    "id": "w151"
+  },
+  {
+    "text": "prodotto",
+    "start": 65.69,
+    "end": 66.32,
+    "id": "w152"
+  },
+  {
+    "text": "è",
+    "start": 66.46,
+    "end": 66.47,
+    "id": "w153"
+  },
+  {
+    "text": "acqua,",
+    "start": 66.47,
+    "end": 67.12,
+    "id": "w154"
+  },
+  {
+    "text": "la",
+    "start": 67.15,
+    "end": 67.26,
+    "id": "w155"
+  },
+  {
+    "text": "cosa",
+    "start": 67.26,
+    "end": 67.55,
+    "id": "w156"
+  },
+  {
+    "text": "più",
+    "start": 67.55,
+    "end": 67.62,
+    "id": "w157"
+  },
+  {
+    "text": "banale",
+    "start": 67.78,
+    "end": 68.21,
+    "id": "w158"
+  },
+  {
+    "text": "del",
+    "start": 68.21,
+    "end": 68.54,
+    "id": "w159"
+  },
+  {
+    "text": "mondo.",
+    "start": 68.54,
+    "end": 69.04,
+    "id": "w160"
+  },
+  {
+    "text": "Ma",
+    "start": 69.04,
+    "end": 69.17,
+    "id": "w161"
+  },
+  {
+    "text": "nessuno",
+    "start": 69.17,
+    "end": 69.64,
+    "id": "w162"
+  },
+  {
+    "text": "compra",
+    "start": 69.64,
+    "end": 70.05,
+    "id": "w163"
+  },
+  {
+    "text": "l'acqua.",
+    "start": 70.05,
+    "end": 70.73,
+    "id": "w164"
+  },
+  {
+    "text": "Comprano",
+    "start": 70.89,
+    "end": 71.22,
+    "id": "w165"
+  },
+  {
+    "text": "il",
+    "start": 71.34,
+    "end": 71.42,
+    "id": "w166"
+  },
+  {
+    "text": "sentirsi",
+    "start": 71.42,
+    "end": 71.9,
+    "id": "w167"
+  },
+  {
+    "text": "dalla",
+    "start": 72.27,
+    "end": 72.3,
+    "id": "w168"
+  },
+  {
+    "text": "parte",
+    "start": 72.37,
+    "end": 72.64,
+    "id": "w169"
+  },
+  {
+    "text": "dei",
+    "start": 72.64,
+    "end": 72.83,
+    "id": "w170"
+  },
+  {
+    "text": "ribelli.",
+    "start": 72.83,
+    "end": 73.33,
+    "id": "w171"
+  },
+  {
+    "text": "La",
+    "start": 73.73,
+    "end": 73.77,
+    "id": "w172"
+  },
+  {
+    "text": "lezione?",
+    "start": 73.77,
+    "end": 74.64,
+    "id": "w173"
+  },
+  {
+    "text": "Se",
+    "start": 74.64,
+    "end": 74.77,
+    "id": "w174"
+  },
+  {
+    "text": "il",
+    "start": 74.77,
+    "end": 74.9,
+    "id": "w175"
+  },
+  {
+    "text": "tuo",
+    "start": 74.9,
+    "end": 75.09,
+    "id": "w176"
+  },
+  {
+    "text": "prodotto",
+    "start": 75.09,
+    "end": 75.44,
+    "id": "w177"
+  },
+  {
+    "text": "è",
+    "start": 75.63,
+    "end": 75.7,
+    "id": "w178"
+  },
+  {
+    "text": "uguale",
+    "start": 75.7,
+    "end": 76.09,
+    "id": "w179"
+  },
+  {
+    "text": "agli",
+    "start": 76.16,
+    "end": 76.33,
+    "id": "w180"
+  },
+  {
+    "text": "altri,",
+    "start": 76.36,
+    "end": 76.91,
+    "id": "w181"
+  },
+  {
+    "text": "il",
+    "start": 76.91,
+    "end": 77.08,
+    "id": "w182"
+  },
+  {
+    "text": "tuo",
+    "start": 77.08,
+    "end": 77.09,
+    "id": "w183"
+  },
+  {
+    "text": "brand",
+    "start": 77.66,
+    "end": 77.75,
+    "id": "w184"
+  },
+  {
+    "text": "non",
+    "start": 77.75,
+    "end": 78,
+    "id": "w185"
+  },
+  {
+    "text": "può",
+    "start": 78,
+    "end": 78.25,
+    "id": "w186"
+  },
+  {
+    "text": "esserlo.",
+    "start": 78.25,
+    "end": 78.97,
+    "id": "w187"
+  },
+  {
+    "text": "Eil",
+    "start": 79.21,
+    "end": 79.39,
+    "id": "w188"
+  },
+  {
+    "text": "tuo",
+    "start": 79.4,
+    "end": 79.57,
+    "id": "w189"
+  },
+  {
+    "text": "brand?",
+    "start": 79.7,
+    "end": 80.27,
+    "id": "w190"
+  },
+  {
+    "text": "Fa",
+    "start": 80.27,
+    "end": 80.61,
+    "id": "w191"
+  },
+  {
+    "text": "parlare",
+    "start": 80.61,
+    "end": 80.94,
+    "id": "w192"
+  },
+  {
+    "text": "qualcuno?",
+    "start": 81.06,
+    "end": 81.62,
+    "id": "w193"
+  }
+]
