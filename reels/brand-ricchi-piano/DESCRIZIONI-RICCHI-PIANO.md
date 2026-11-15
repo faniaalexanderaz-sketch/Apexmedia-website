@@ -1,6 +1,6 @@
 # Ricchi Piano — descrizioni per TikTok (e Instagram)
 
-I video sono **senza musica**: voce + effetti sonori. Aggiungi un suono di tendenza dall'app e tienilo al 10–20% di volume.
+I video hanno già una **musica bassa sotto** la voce, più gli effetti sonori. Di ognuno resta anche la versione senza musica (`renders/<nome>-voce-fx.mp4`, non per il token), se vuoi usare un suono di tendenza dell'app.
 La domanda finale chiede un commento facile (un numero o una parola): rispondi ai primi commenti entro un'ora.
 Ordine consigliato: 1 → 2 → 3, uno al giorno.
 
@@ -91,15 +91,15 @@ Sostituisce la prima versione "100 forzieri" (`rp-forzieri`), che aveva il conce
 
 **TikTok**
 ```text
-1 possibilità su 175.000. E tu continui ad aprire forzieri per il token pirata 🏴‍☠️ Questa è la mentalità di chi fa i soldi. Quanti forzieri hai aperto? 👇
+1 possibilità su 137.500. E tu continui ad aprire forzieri per il token pirata 🏴‍☠️ Questa è la mentalità di chi fa i soldi. Quanti forzieri hai aperto? 👇
 #fortnite #tokenpirata #mentalità #soldi
 ```
 
 **Instagram**
 ```text
-Una possibilità su 175.000. E tu continui ad aprire forzieri su Fortnite.
+Una possibilità su 137.500. E tu continui ad aprire forzieri su Fortnite.
 
-Perché dentro può esserci il token pirata: un mese di negozio oggetti gratis. Hai aperto centinaia di forzieri senza trovarlo, eppure non molli.
+Perché dentro può esserci il token pirata: 15 giorni di negozio oggetti gratis. Hai aperto centinaia di forzieri senza trovarlo, eppure non molli.
 Nella vita reale, invece, molliamo al terzo no. Chi ce la fa non è più fortunato: ha solo aperto più forzieri.
 
 👇 Quanti forzieri hai aperto? Scrivilo nei commenti.
