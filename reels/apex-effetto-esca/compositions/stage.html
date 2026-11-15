@@ -1,0 +1,217 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      /* Glowing line-art drawn in a small 3D engine (orbiting camera). Synced to the voice-over word timings
+         and to the 120 BPM bed. Every frame is a pure function of t. */
+      const D = 47.5, BEAT = 0.5, B0 = 0.025;
+      const cv = document.querySelector("#st-canvas"), c = cv.getContext("2d");
+      const HOT = (getComputedStyle(document.documentElement).getPropertyValue("--color-accent") || "#FF2D9A").trim() || "#FF2D9A";
+      const WH = "#ffffff", GR = "#8a8a8a", DK = "#4a4a4a";
+      const clamp = (v) => Math.max(0, Math.min(1, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+      const out = (p) => 1 - Math.pow(1 - p, 4), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+      const back = (p) => 1 + 2.6 * Math.pow(p - 1, 3) + 1.6 * Math.pow(p - 1, 2);
+      const pop = (t, t0, d) => back(seg(t, t0, t0 + (d || 0.3)));
+      const drop = (t, t0) => { const p = seg(t, t0, t0 + 0.34); return p * p; }; // falls in
+      const hit = (t, t0, k) => (t >= t0 ? Math.exp(-(t - t0) * (k || 9)) : 0);
+      function rng(seed) { return function () { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const R = rng(808); const RN = []; for (let i = 0; i < 900; i++) RN.push(R());
+
+      /* ---- camera + projection ---- */
+      const CAM = { yaw: 0, pitch: 0.2, dist: 1250, tx: 0, ty: 150, tz: 0 };
+      const CXs = 540, CYs = 1190, F = 1480;
+      function P(x, y, z) {
+        x -= CAM.tx; y -= CAM.ty; z -= CAM.tz;
+        const cy = Math.cos(CAM.yaw), sy = Math.sin(CAM.yaw);
+        const x1 = x * cy - z * sy, z1 = x * sy + z * cy;
+        const cp = Math.cos(CAM.pitch), sp = Math.sin(CAM.pitch);
+        const y2 = y * cp - z1 * sp, z2 = y * sp + z1 * cp;
+        const s = F / Math.max(120, z2 + CAM.dist);
+        return [CXs + x1 * s, CYs - y2 * s, s, z2];
+      }
+      function style(col, lw, glow) { c.strokeStyle = col; c.fillStyle = col; c.lineWidth = lw; c.lineCap = "round"; c.lineJoin = "round"; c.shadowColor = col; c.shadowBlur = glow === undefined ? 18 : glow; }
+      function poly(pts, close) { c.beginPath(); for (let i = 0; i < pts.length; i++) { const p = P(pts[i][0], pts[i][1], pts[i][2]); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } if (close) c.closePath(); c.stroke(); }
+      function seg3(a, b, p) { const A = P(a[0], a[1], a[2]), Bq = P(lerp(a[0], b[0], p), lerp(a[1], b[1], p), lerp(a[2], b[2], p)); c.beginPath(); c.moveTo(A[0], A[1]); c.lineTo(Bq[0], Bq[1]); c.stroke(); }
+      function txt3(s, x, y, z, size, col, font, glow) { const p = P(x, y, z); c.font = (font || '900 SZpx "Big Shoulders Display"').replace("SZ", Math.round(size * p[2])); c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 14 : glow; c.fillText(s, p[0], p[1]); }
+      const CAP = '500 SZpx "Unbounded"', WIDE = '900 SZpx "Unbounded"';
+      const sp = (s) => s.toUpperCase().split("").join(" ");
+      function pawn3(x, y, z, s, col) { const p = P(x, y, z), k = s * p[2]; style(col, 3, 12); c.beginPath(); c.arc(p[0], p[1] - 78 * k, 17 * k, 0, 6.283); c.moveTo(p[0] - 26 * k, p[1]); c.quadraticCurveTo(p[0] - 26 * k, p[1] - 56 * k, p[0], p[1] - 56 * k); c.quadraticCurveTo(p[0] + 26 * k, p[1] - 56 * k, p[0] + 26 * k, p[1]); c.closePath(); c.fill(); }
+      function ring3(x, y, z, r, col, lw, a0, a1) { style(col, lw || 4, 14); c.beginPath(); const n = 48; for (let i = 0; i <= n; i++) { const a = lerp(a0 || 0, a1 === undefined ? 6.283 : a1, i / n); const p = P(x + Math.cos(a) * r, y, z + Math.sin(a) * r); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } c.stroke(); }
+      function floor(a) { c.save(); c.globalAlpha *= a; style("#3a3a3a", 2, 0); for (let i = -4; i <= 4; i++) { seg3([i * 150, 0, -600], [i * 150, 0, 600], 1); seg3([-600, 0, i * 150], [600, 0, i * 150], 1); } c.restore(); }
+
+      /* popcorn bucket: truncated square prism with stripes + puffs */
+      const SIZES = { S: [150, 62, 46], M: [215, 82, 60], L: [280, 104, 76] }; // h, half top, half bottom
+      function bucket(x, z, size, col, o) {
+        o = o || {}; const sc = o.scale === undefined ? 1 : o.scale; if (sc <= 0.001) return;
+        const S = SIZES[size], h = S[0] * sc, wt = S[1] * sc, wb = S[2] * sc, y0 = o.y || 0, rot = o.rot || 0, dp = o.draw === undefined ? 1 : o.draw;
+        const cr = Math.cos(rot), sr = Math.sin(rot);
+        const V = (lx, ly, lz) => [x + lx * cr - lz * sr, y0 + ly, z + lx * sr + lz * cr];
+        const q = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+        const top = q.map((k) => V(k[0] * wt, h, k[1] * wt)), bot = q.map((k) => V(k[0] * wb, 0, k[1] * wb));
+        style(col, 5, 20);
+        if (dp < 1) { c.save(); c.globalAlpha *= 0.999; }
+        poly(bot.map((p) => p), true);
+        for (let i = 0; i < 4; i++) seg3(bot[i], top[i], dp);
+        if (dp >= 0.98) poly(top, true);
+        // stripes
+        c.save(); c.globalAlpha *= 0.55; c.lineWidth = 3; c.shadowBlur = 8;
+        for (let i = 0; i < 4; i++) { const a = i, b = (i + 1) % 4; for (let k = 1; k < 4; k++) { const f = k / 4; seg3([lerp(bot[a][0], bot[b][0], f), bot[a][1], lerp(bot[a][2], bot[b][2], f)], [lerp(top[a][0], top[b][0], f), top[a][1], lerp(top[a][2], top[b][2], f)], dp); } }
+        c.restore();
+        if (dp < 1) c.restore();
+        // puffs
+        const np = size === "S" ? 7 : size === "M" ? 10 : 14, burst = o.burst || 0, pa = o.puffs === undefined ? 1 : o.puffs;
+        if (pa > 0) for (let i = 0; i < np; i++) { const a = RN[i * 3 + 7] * 6.283, rr = RN[i * 3 + 8] * wt * 0.75, hh = RN[i * 3 + 9] * 46 * sc;
+          const bx = Math.cos(a) * (rr + burst * (160 + RN[i + 40] * 420)), bz = Math.sin(a) * (rr + burst * (160 + RN[i + 40] * 420));
+          const by = h + 14 + hh + burst * (260 + RN[i + 80] * 380) - burst * burst * 240;
+          const p = P(x + bx, y0 + by, z + bz); style(col, 2, 12); c.globalAlpha *= pa; c.beginPath(); c.arc(p[0], p[1], (20 + RN[i + 20] * 10) * sc * p[2] * pa, 0, 6.283); c.fill(); c.globalAlpha /= pa; }
+      }
+      function tag(s, x, y, z, col, k) { const p = P(x, y, z), w = (s.length * 34 + 54) * p[2] * k, hh = 78 * p[2] * k; style(col, 3, 18); c.beginPath(); c.roundRect(p[0] - w / 2, p[1] - hh / 2, w, hh, hh / 2); c.fill(); c.shadowBlur = 0; c.fillStyle = "#000"; c.font = '900 ' + Math.round(62 * p[2] * k) + 'px "Big Shoulders Display"'; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(s, p[0], p[1] + 3 * p[2]); }
+      const XS = -290, XM = 0, XL = 300;
+
+      /* ---- scenes ---- */
+      const SC = [
+        [0, 4.25, (t) => { // Al cinema, il popcorn medio non è lì per essere comprato
+          CAM.yaw = -0.5 + t * 0.22; CAM.pitch = 0.24; CAM.dist = lerp(980, 820, out(seg(t, 0, 4))); CAM.ty = 130;
+          floor(0.7); ring3(0, 0, 0, 190, DK, 3);
+          bucket(0, 0, "M", t > 1.6 ? HOT : WH, { scale: 1.25 + 0.1 * hit(t, 1.64), rot: t * 0.5 });
+          const x = out(seg(t, 2.05, 2.5)); if (x > 0) { style(HOT, 12, 26); c.save(); c.globalAlpha *= 0.95; const a = P(-170, 330, 0), b = P(170, 20, 0), d = P(170, 330, 0), e = P(-170, 20, 0); c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(lerp(a[0], b[0], x), lerp(a[1], b[1], x)); c.stroke(); const x2 = out(seg(t, 2.3, 2.75)); if (x2 > 0) { c.beginPath(); c.moveTo(d[0], d[1]); c.lineTo(lerp(d[0], e[0], x2), lerp(d[1], e[1], x2)); c.stroke(); } c.restore(); }
+          if (t > 3.3) tag("NON IN VENDITA?", 0, -80, 0, WH, pop(t, 3.3) * 0.9);
+        }],
+        [4.25, 7.75, (t) => { // Piccolo: tre euro. Grande: sette.
+          CAM.yaw = -0.28 + (t - 4.25) * 0.14; CAM.pitch = 0.2; CAM.dist = 1250; CAM.ty = 150;
+          floor(0.7);
+          const a = drop(t, 4.25), b = drop(t, 6.02);
+          bucket(XS, 0, "S", WH, { y: (1 - a) * 900, scale: a > 0 ? 1 + 0.12 * hit(t, 4.59) : 0 });
+          bucket(XL, 0, "L", WH, { y: (1 - b) * 900, scale: b > 0 ? 1 + 0.12 * hit(t, 6.36) : 0 });
+          if (t > 5.15) tag("3 €", XS, -70, 0, WH, pop(t, 5.15)); if (t > 6.9) tag("7 €", XL, -70, 0, WH, pop(t, 6.9));
+        }],
+        [7.75, 10.2, (t) => { // E quasi tutti scelgono il piccolo
+          CAM.yaw = 0.2 - (t - 7.75) * 0.2; CAM.pitch = 0.3; CAM.dist = 1300; CAM.ty = 120;
+          floor(0.7); bucket(XS, 0, "S", WH, { scale: 1 + 0.1 * hit(t, 9.36) }); bucket(XL, 0, "L", DK); tag("3 €", XS, -70, 0, WH, 1); tag("7 €", XL, -70, 0, DK, 1);
+          for (let i = 0; i < 10; i++) { const toS = i < 8, p = out(seg(t, 7.9 + i * 0.07, 8.9 + i * 0.07)); const tx = (toS ? XS : XL) + (i % 4 - 1.5) * 62, tz = 190 + Math.floor(i / 4) * 80; pawn3(lerp((i - 5) * 110, tx, p), 0, lerp(620, tz, p), 0.9, toS ? WH : DK); }
+          if (t > 9.3) { const k = pop(t, 9.3); txt3("QUASI TUTTI", XS + 120, 420, 0, 110 * k, WH); }
+        }],
+        [10.2, 13.9, (t) => { // Poi qualcuno aggiunge il medio. A sei e cinquanta.
+          CAM.yaw = -0.18 + (t - 10.2) * 0.1; CAM.pitch = 0.22; CAM.dist = lerp(1300, 1180, out(seg(t, 11.9, 13.5))); CAM.ty = 150;
+          floor(0.7); bucket(XS, 0, "S", WH); bucket(XL, 0, "L", WH); tag("3 €", XS, -70, 0, WH, 1); tag("7 €", XL, -70, 0, WH, 1);
+          const d = drop(t, 11.6); if (d > 0) { bucket(XM, 0, "M", HOT, { y: (1 - d) * 1100, scale: 1 + 0.16 * hit(t, 11.94) }); const r = seg(t, 11.94, 12.5); if (r > 0 && r < 1) { c.save(); c.globalAlpha *= 1 - r; ring3(XM, 2, 0, 90 + r * 380, HOT, 4); c.restore(); } }
+          if (t > 12.6) tag("6,50 €", XM, -70, 0, HOT, pop(t, 12.6));
+        }],
+        [13.9, 19.0, (t) => { // E di colpo il grande sembra un affare. Solo cinquanta centesimi in più!
+          CAM.yaw = 0.34 - (t - 13.9) * 0.09; CAM.pitch = 0.2; CAM.dist = lerp(1180, 1000, io(seg(t, 14.0, 15.4))); CAM.tx = lerp(0, 150, io(seg(t, 14.0, 15.4))); CAM.ty = 170;
+          floor(0.7); c.save(); c.globalAlpha *= 0.35; bucket(XS, 0, "S", WH); c.restore();
+          bucket(XM, 0, "M", HOT); bucket(XL, 0, "L", WH, { scale: 1 + 0.1 * hit(t, 15.94) + 0.04 * Math.sin(t * 6) * seg(t, 15.9, 16.4) });
+          tag("6,50 €", XM, -70, 0, HOT, 1); tag("7 €", XL, -70, 0, WH, 1);
+          if (t > 15.9) tag("AFFARE!", XL, 400, 0, WH, pop(t, 15.9) * 0.9);
+          const br = out(seg(t, 16.7, 17.3)); if (br > 0) { style(WH, 4, 14); seg3([XM, -140, 0], [XM, -180, 0], 1); seg3([XM, -180, 0], [XL, -180, 0], br); if (br > 0.95) seg3([XL, -180, 0], [XL, -140, 0], 1); if (t > 17.0) tag("+ 0,50 €", (XM + XL) / 2, -250, 0, WH, pop(t, 17.0) * 0.95); }
+        }],
+        [19.0, 21.5, (t) => { // Le vendite del grande esplodono
+          CAM.yaw = -0.3 + (t - 19.0) * 0.3; CAM.pitch = 0.26; CAM.dist = lerp(1150, 900, out(seg(t, 20.4, 21.4))); CAM.tx = 180; CAM.ty = 190;
+          floor(0.7); c.save(); c.globalAlpha *= 0.3; bucket(XS, 0, "S", WH); bucket(XM, 0, "M", HOT); c.restore();
+          const b = seg(t, 20.44, 21.4);
+          bucket(XL, 0, "L", WH, { scale: 1 + 0.25 * hit(t, 20.44, 6), burst: out(b) });
+          for (let i = 0; i < 14; i++) { const p = out(seg(t, 19.1 + i * 0.05, 20.0 + i * 0.05)); pawn3(lerp(XL + (i - 7) * 150, XL + (i % 5 - 2) * 70, p), 0, lerp(800, 200 + Math.floor(i / 5) * 78, p), 0.85, WH); }
+          if (b > 0) { const k = pop(t, 20.44); txt3("VENDITE ↑", XL - 150, 480, 0, 104 * k, HOT); for (let i = 0; i < 2; i++) { const r = seg(t, 20.44 + i * 0.15, 21.2 + i * 0.15); if (r > 0 && r < 1) { c.save(); c.globalAlpha *= 1 - r; ring3(XL, 2, 0, 100 + r * 520, i ? HOT : WH, 4); c.restore(); } } }
+        }],
+        [21.5, 27.25, (t) => { // Si chiama effetto esca. Un'opzione messa lì apposta, per farti scegliere un'altra.
+          CAM.yaw = 0.5 - (t - 21.5) * 0.16; CAM.pitch = 0.16; CAM.dist = 1150; CAM.tx = 0; CAM.ty = 260;
+          floor(0.5);
+          const ln = out(seg(t, 22.3, 23.0)), sw = Math.sin((t - 22.9) * 2.4) * 22 * Math.exp(-(t - 22.9) * 0.5) * (t > 22.9 ? 1 : 0);
+          const hx = XM + sw, hy = lerp(900, 330, ln);
+          style(WH, 4, 14); seg3([XM, 800, 0], [hx, hy + 260, 0], 1);
+          style(WH, 7, 18); c.beginPath(); for (let i = 0; i <= 20; i++) { const a = Math.PI * (i / 20) * 1.25; const p = P(hx + 46 - Math.cos(a) * 46, hy + 260 - Math.sin(a) * 60 - (a > Math.PI ? 0 : 0), 0); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } c.stroke();
+          bucket(hx, 0, "M", HOT, { y: hy - 40, rot: sw * 0.012, scale: 0.95 });
+          if (t > 22.9) tag("ESCA", hx, hy - 110, 0, HOT, pop(t, 22.9) * 0.9);
+          const s2 = seg(t, 23.5, 24.2); if (s2 > 0) { c.save(); c.globalAlpha *= s2; bucket(XS - 60, 0, "S", DK); bucket(XL + 60, 0, "L", WH, { scale: 1 + 0.1 * hit(t, 26.6) }); c.restore(); }
+          const pw = out(seg(t, 24.3, 25.2)); if (pw > 0) pawn3(lerp(-700, -40, pw) + io(seg(t, 26.0, 26.9)) * (XL + 60 + 40), 0, 330, 1.25, WH);
+          const ar = out(seg(t, 25.9, 26.7)); if (ar > 0) { style(HOT, 6, 20); c.beginPath(); for (let i = 0; i <= 24 * ar; i++) { const f = i / 24; const p = P(lerp(hx + 110, XL + 60, f), lerp(hy + 40, 330, f) + Math.sin(f * Math.PI) * 190, 0); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } c.stroke(); if (ar > 0.95) { const e = P(XL + 60, 330, 0); c.beginPath(); c.moveTo(e[0] - 30, e[1] - 34); c.lineTo(e[0], e[1]); c.lineTo(e[0] + 34, e[1] - 26); c.stroke(); } }
+        }],
+        [27.25, 30.95, (t) => { // Lo trovi negli abbonamenti. Nei telefoni. Nei menù.
+          const starts = [27.3, 29.1, 30.1], k = t < 29.1 ? 0 : t < 30.1 ? 1 : 2, t0 = starts[k];
+          const sw = out(seg(t, t0, t0 + 0.4));
+          CAM.yaw = lerp(1.1, 0.12, sw) - (t - t0) * 0.1; CAM.pitch = 0.14; CAM.dist = 1200; CAM.tx = 0; CAM.ty = 230;
+          floor(0.5);
+          const hs = [150, 235, 310], lab = [["BASE", "PRO", "MAX"], ["128", "256", "512"], ["S", "M", "L"]][k];
+          for (let i = 0; i < 3; i++) { const x = (i - 1) * 300, h = hs[i] * pop(t, t0 + 0.05 + i * 0.08), col = i === 1 ? HOT : WH; if (h <= 0) continue; style(col, 5, 20);
+            if (k === 0) { poly([[x - 110, 0, 0], [x + 110, 0, 0], [x + 110, h * 1.5, 0], [x - 110, h * 1.5, 0]], true); for (let j = 1; j <= 3; j++) seg3([x - 70, h * 1.5 - 70 - j * 46, 0], [x + 70 - j * 16, h * 1.5 - 70 - j * 46, 0], 1); }
+            else if (k === 1) { const w = 60 + i * 26, hh = h * 1.55; poly([[x - w, 0, 0], [x + w, 0, 0], [x + w, hh, 0], [x - w, hh, 0]], true); poly([[x - w, 0, 30], [x + w, 0, 30], [x + w, hh, 30], [x - w, hh, 30]], true); ring3(x, hh - 50, 0, 0, col, 4); const p = P(x, hh - 46, 0); c.beginPath(); c.arc(p[0], p[1], 14 * p[2], 0, 6.283); c.stroke(); }
+            else { const w = 56 + i * 24; ring3(x, h * 1.3, 0, w, col, 5); ring3(x, 0, 0, w * 0.68, col, 5); for (let a = 0; a < 4; a++) { const an = a * 1.571 + 0.4; seg3([x + Math.cos(an) * w * 0.68, 0, Math.sin(an) * w * 0.68], [x + Math.cos(an) * w, h * 1.3, Math.sin(an) * w], 1); } }
+            txt3(lab[i], x, -70, 0, 64, col); }
+          tag(["ABBONAMENTI", "TELEFONI", "MENÙ"][k], 0, 600, 0, WH, pop(t, t0 + 0.1) * 0.8);
+        }],
+        [30.95, 34.95, (t) => { // Perché non scegli mai nel vuoto. Scegli per confronto.
+          const cmp = io(seg(t, 33.1, 33.7));
+          CAM.yaw = 0.25 - (t - 30.95) * 0.12; CAM.pitch = 0.22; CAM.dist = lerp(lerp(1000, 2300, out(seg(t, 31.4, 32.9))), 1250, cmp); CAM.tx = 0; CAM.ty = 180;
+          floor(0.5 * cmp);
+          bucket(lerp(0, XL, cmp), 0, "L", WH, { rot: (1 - cmp) * t * 0.6 });
+          if (t > 32.4 && cmp < 0.5) txt3("?", 0, 560, 0, 300 * pop(t, 32.4), WH);
+          if (cmp > 0) { c.save(); c.globalAlpha *= cmp; bucket(XS, 0, "S", WH); bucket(XM, 0, "M", HOT); c.restore();
+            const l = out(seg(t, 33.9, 34.6)); if (l > 0) { style(WH, 4, 14); c.setLineDash([10, 16]); seg3([XS, 210, 0], [XS + (XL - XS) * l, 210 + 190 * l, 0], 1); c.setLineDash([]); txt3("<", (XS + XM) / 2, 330, 0, 110 * pop(t, 34.0), WH); txt3("<", (XM + XL) / 2, 400, 0, 110 * pop(t, 34.2), WH); } }
+        }],
+        [34.95, 40.2, (t) => { // E chi fa pubblicità lo sa bene: non vende un prezzo. Costruisce il confronto.
+          const bd = seg(t, 38.5, 38.6);
+          CAM.yaw = -0.4 + (t - 34.95) * 0.12; CAM.pitch = 0.2; CAM.dist = 1200; CAM.tx = 0; CAM.ty = 200;
+          floor(0.5);
+          if (bd < 1) { c.save(); c.globalAlpha *= 1 - bd; const m = pop(t, 35.3);
+            if (m > 0) { style(WH, 6, 20); const s = 2.2 * m; poly([[-46 * s, 300 - 16 * s, 0], [30 * s, 300 - 46 * s, 0], [30 * s, 300 + 46 * s, 0], [-46 * s, 300 + 16 * s, 0]], true); for (let i = 0; i < 3; i++) { const r = seg(((t * 1.6 + i / 3) % 1), 0, 1); c.save(); c.globalAlpha *= 1 - r; const p = P(90 * s, 300, 0); c.beginPath(); c.arc(p[0], p[1], (30 + r * 150) * p[2], -0.8, 0.8); c.stroke(); c.restore(); } }
+            if (t > 37.0) { tag("9,99 €", 0, 20, 0, WH, pop(t, 37.0)); const x = out(seg(t, 37.3, 37.8)); if (x > 0) { style(HOT, 10, 24); seg3([-190, 20, 0], [-190 + 380 * x, 20, 0], 1); } }
+            c.restore(); }
+          if (bd > 0) { const A = [[XS, "S", WH, 38.6], [XM, "M", HOT, 39.0], [XL, "L", WH, 39.4]]; A.forEach((a) => { const d = out(seg(t, a[3], a[3] + 0.55)); if (d > 0) bucket(a[0], 0, a[1], a[2], { draw: d, puffs: seg(d, 0.8, 1) }); });
+            const l = out(seg(t, 39.5, 40.1)); if (l > 0) { style(DK, 3, 0); c.setLineDash([8, 14]); seg3([XS, 150, 120], [XS + (XL - XS) * l, 150 + 130 * l, 120], 1); c.setLineDash([]); } }
+        }],
+        [40.2, 44.3, (t) => { // La prossima volta che vedi tre opzioni, cerca l'esca.
+          const z = io(seg(t, 42.9, 43.5));
+          CAM.yaw = 0.3 - (t - 40.2) * 0.14; CAM.pitch = 0.2; CAM.dist = lerp(1300, 900, z); CAM.tx = 0; CAM.ty = lerp(170, 130, z);
+          floor(0.6);
+          c.save(); c.globalAlpha *= 1 - 0.65 * z; bucket(XS, 0, "S", WH); bucket(XL, 0, "L", WH); c.restore();
+          bucket(XM, 0, "M", z > 0.3 ? HOT : WH, { scale: 1 + 0.14 * hit(t, 43.35) });
+          [XS, XM, XL].forEach((x, i) => { if (t > 41.9 + i * 0.12) txt3(String(i + 1), x, -70, 0, 90 * pop(t, 41.9 + i * 0.12), i === 1 && z > 0.3 ? HOT : WH); });
+          if (z > 0) { style(HOT, 6, 22); const p = P(XM, 130, 0), r = lerp(520, 200, out(z)) * p[2]; c.beginPath(); c.arc(p[0], p[1], r, 0, 6.283); c.stroke(); for (let a = 0; a < 4; a++) { const an = a * 1.571; c.beginPath(); c.moveTo(p[0] + Math.cos(an) * r * 0.86, p[1] + Math.sin(an) * r * 0.86); c.lineTo(p[0] + Math.cos(an) * r * 1.16, p[1] + Math.sin(an) * r * 1.16); c.stroke(); } }
+        }],
+        [44.3, 47.51, (t) => { // end card
+          CAM.yaw = 0; CAM.pitch = 0; CAM.dist = 1150; CAM.tx = 0; CAM.ty = 0;
+          const d = out(seg(t, 44.4, 45.2)), ry = (1 - out(seg(t, 44.4, 45.4))) * 2.2; CAM.yaw = ry;
+          style(HOT, 9, 26); const T = [[0, 520, 0], [150, 250, 0], [-150, 250, 0], [0, 520, 0]]; c.beginPath(); const q = d * 3; let p0 = P(T[0][0], T[0][1], 0); c.moveTo(p0[0], p0[1]); for (let i = 0; i < 3 && q > i; i++) { const f = Math.min(1, q - i), p = P(lerp(T[i][0], T[i + 1][0], f), lerp(T[i][1], T[i + 1][1], f), 0); c.lineTo(p[0], p[1]); } c.stroke();
+          if (d >= 1) { c.beginPath(); [[0, 400, 0], [56, 290, 0], [-56, 290, 0]].forEach((v, i) => { const p = P(v[0], v[1], 0); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.fill(); }
+          CAM.yaw = 0;
+          const w = pop(t, 45.2); if (w > 0) txt3("APEXMEDIA", 0, 120, 0, 104 * w, WH, WIDE, 22);
+          if (t > 45.6) txt3(sp("capire la pubblicità, prima di farla"), 0, 20, 0, 27, GR, CAP, 0);
+          const b = out(seg(t, 45.9, 46.4)); if (b > 0) { const p = P(0, -120, 0); style(HOT, 3, 26); c.beginPath(); c.roundRect(p[0] - 430 * b, p[1] - 58, 860 * b, 116, 8); c.fill(); if (b > 0.9) { c.shadowBlur = 0; c.fillStyle = "#000"; c.font = '900 64px "Big Shoulders Display"'; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText("SEGUI APEX MEDIA →", p[0], p[1] + 4); } }
+        }],
+      ];
+
+      function render(t) {
+        c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.shadowBlur = 0; c.setLineDash([]);
+        c.fillStyle = "#000"; c.fillRect(0, 0, 1080, 1920);
+        const g = c.createRadialGradient(540, 1100, 60, 540, 1100, 800); g.addColorStop(0, "rgba(255,255,255,0.085)"); g.addColorStop(1, "rgba(255,255,255,0)");
+        c.fillStyle = g; c.fillRect(0, 300, 1080, 1600);
+        const bp = ((t - B0) % BEAT + BEAT) % BEAT, bump = Math.exp(-bp * 9) * 0.018; // pulse on every beat of the bed
+        for (let i = 0; i < SC.length; i++) {
+          const s = SC[i]; if (t < s[0] - 0.02 || t >= s[1] + 0.1) continue;
+          const a = seg(t, s[0] - 0.02, s[0] + 0.1) * (1 - seg(t, s[1], s[1] + 0.1)); if (a <= 0) continue;
+          CAM.tx = 0; CAM.tz = 0;
+          c.save(); c.globalAlpha = a;
+          const whip = (1 - out(seg(t, s[0], s[0] + 0.35))) * 420 * (i % 2 ? 1 : -1) - seg(t, s[1] - 0.12, s[1] + 0.1) * 420 * (i % 2 ? 1 : -1);
+          c.translate(540 + whip, 1100); c.scale(1 + bump, 1 + bump); c.translate(-540, -1100);
+          s[2](t); c.restore();
+        }
+      }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Big Shoulders Display"'), document.fonts.load('500 26px "Unbounded"'), document.fonts.load('900 60px "Unbounded"')]).then(() => render(st.t), () => render(st.t));
+      render(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>
