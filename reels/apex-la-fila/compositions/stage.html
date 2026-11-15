@@ -1,0 +1,215 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      /* 3D line-art world: streets seen from above, walking people, a camera that never holds one angle.
+         Synced to the voice-over and to the 124 BPM bed. Every frame is a pure function of t. */
+      const D = 47, BEAT = 60 / 124, B0 = 0.035;
+      const cv = document.querySelector("#st-canvas"), c = cv.getContext("2d");
+      const HOT = (getComputedStyle(document.documentElement).getPropertyValue("--color-accent") || "#E6FF00").trim() || "#E6FF00";
+      const WH = "#ffffff", GR = "#8a8a8a", DK = "#474747";
+      const clamp = (v) => Math.max(0, Math.min(1, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+      const out = (p) => 1 - Math.pow(1 - p, 4), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+      const back = (p) => 1 + 2.6 * Math.pow(p - 1, 3) + 1.6 * Math.pow(p - 1, 2);
+      const pop = (t, t0, d) => back(seg(t, t0, t0 + (d || 0.3)));
+      const hit = (t, t0, k) => (t >= t0 ? Math.exp(-(t - t0) * (k || 9)) : 0);
+      function rng(seed) { return function () { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const R = rng(4711); const RN = []; for (let i = 0; i < 1200; i++) RN.push(R());
+
+      /* ---- camera ---- */
+      const CAM = { yaw: 0, pitch: 0.2, dist: 1400, tx: 0, ty: 100, tz: 0 };
+      let WOFF = 0;
+      const cam = (yaw, pitch, dist, tx, ty, tz) => { CAM.yaw = yaw + WOFF; CAM.pitch = pitch; CAM.dist = dist; CAM.tx = tx || 0; CAM.ty = ty === undefined ? 100 : ty; CAM.tz = tz || 0; };
+      const CXs = 540, CYs = 1180, F = 1500;
+      function P(x, y, z) {
+        x -= CAM.tx; y -= CAM.ty; z -= CAM.tz;
+        const cy = Math.cos(CAM.yaw), sy = Math.sin(CAM.yaw);
+        const x1 = x * cy - z * sy, z1 = x * sy + z * cy;
+        const cp = Math.cos(CAM.pitch), sp = Math.sin(CAM.pitch);
+        const y2 = y * cp - z1 * sp, z2 = y * sp + z1 * cp;
+        const s = F / Math.max(160, z2 + CAM.dist);
+        return [CXs + x1 * s, CYs - y2 * s, s];
+      }
+      function style(col, lw, glow) { c.strokeStyle = col; c.fillStyle = col; c.lineWidth = lw; c.lineCap = "round"; c.lineJoin = "round"; c.shadowColor = col; c.shadowBlur = glow === undefined ? 16 : glow; }
+      function poly(pts, close, fill) { c.beginPath(); for (let i = 0; i < pts.length; i++) { const p = P(pts[i][0], pts[i][1], pts[i][2]); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } if (close) c.closePath(); if (fill) c.fill(); else c.stroke(); }
+      function seg3(a, b, p) { p = p === undefined ? 1 : p; const A = P(a[0], a[1], a[2]), Bq = P(lerp(a[0], b[0], p), lerp(a[1], b[1], p), lerp(a[2], b[2], p)); c.beginPath(); c.moveTo(A[0], A[1]); c.lineTo(Bq[0], Bq[1]); c.stroke(); }
+      function txt3(s, x, y, z, size, col, font, glow) { const p = P(x, y, z); const px = Math.round(size * p[2]); if (px < 2) return; c.font = (font || '900 SZpx "Big Shoulders Display"').replace("SZ", px); c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 14 : glow; c.fillText(s, p[0], p[1]); }
+      const WIDE = '900 SZpx "Unbounded"', CAP = '500 SZpx "Unbounded"';
+      function tag(s, x, y, z, col, k) { if (k <= 0.01) return; const p = P(x, y, z), w = (s.length * 34 + 54) * p[2] * k, hh = 80 * p[2] * k; style(col, 3, 18); c.beginPath(); c.roundRect(p[0] - w / 2, p[1] - hh / 2, w, hh, hh / 2); c.fill(); c.shadowBlur = 0; c.fillStyle = "#000"; c.font = '900 ' + Math.round(64 * p[2] * k) + 'px "Big Shoulders Display"'; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(s, p[0], p[1] + 3 * p[2]); }
+      function ring3(x, y, z, r, col, lw, fill) { style(col, lw || 4, fill ? 0 : 14); c.beginPath(); const n = 40; for (let i = 0; i <= n; i++) { const a = 6.283 * (i / n); const p = P(x + Math.cos(a) * r, y, z + Math.sin(a) * r); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } if (fill) c.fill(); else c.stroke(); }
+      function star(x, y, z, r, col, k) { const p = P(x, y, z), rr = r * p[2] * k; if (rr < 1) return; style(col, 3, 18); c.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i * Math.PI) / 5, q = i % 2 ? rr * 0.45 : rr; if (i) c.lineTo(p[0] + Math.cos(a) * q, p[1] + Math.sin(a) * q); else c.moveTo(p[0] + Math.cos(a) * q, p[1] + Math.sin(a) * q); } c.closePath(); c.fill(); }
+
+      /* a person built from 3D joints: reads from the side AND from straight above */
+      function person(x, z, h, ph, col, s, o) {
+        o = o || {}; s = s === undefined ? 1 : s; if (s <= 0.01) return;
+        const y0 = o.y || 0, dx = Math.cos(h), dz = Math.sin(h), sx = -dz, sz = dx;
+        const st = Math.sin(ph) * 24 * s, lf = Math.max(0, Math.cos(ph)) * 10 * s, rf = Math.max(0, -Math.cos(ph)) * 10 * s;
+        const hip = [x, y0 + 60 * s, z], neck = [x + dx * 3 * s, y0 + 104 * s, z + dz * 3 * s];
+        c.save(); c.globalAlpha *= 0.5; ring3(x, 0.5, z, 20 * s, "#1c1c1c", 1, true); c.restore();
+        style(col, 6 * s * P(x, 60, z)[2] + 1.5, 12);
+        seg3(hip, [x + dx * st + sx * 7 * s, y0 + lf, z + dz * st + sz * 7 * s]); seg3(hip, [x - dx * st - sx * 7 * s, y0 + rf, z - dz * st - sz * 7 * s]);
+        seg3(hip, neck);
+        const a = o.up ? 1 : 0;
+        seg3([neck[0] + sx * 15 * s, neck[1] - 2 * s, neck[2] + sz * 15 * s], [x + sx * 20 * s - dx * st * 0.8, y0 + (a ? 150 : 66) * s, z + sz * 20 * s - dz * st * 0.8]);
+        seg3([neck[0] - sx * 15 * s, neck[1] - 2 * s, neck[2] - sz * 15 * s], [x - sx * 20 * s + dx * st * 0.8, y0 + (a ? 150 : 66) * s, z - sz * 20 * s + dz * st * 0.8]);
+        seg3([neck[0] + sx * 15 * s, neck[1] - 2 * s, neck[2] + sz * 15 * s], [neck[0] - sx * 15 * s, neck[1] - 2 * s, neck[2] - sz * 15 * s]);
+        const hd = P(neck[0] + dx * 2 * s, y0 + 124 * s, neck[2] + dz * 2 * s); c.beginPath(); c.arc(hd[0], hd[1], 16 * s * hd[2], 0, 6.283); c.fill();
+      }
+      const walk = (dist) => dist * 0.075; // leg phase from distance travelled
+
+      function street(a) { c.save(); c.globalAlpha *= a; style("#3d3d3d", 2.5, 0); [110, 470].forEach((z) => seg3([-1400, 0, z], [1400, 0, z])); c.setLineDash([26, 30]); style("#555", 3, 0); seg3([-1400, 0, 290], [1400, 0, 290]); c.setLineDash([]);
+        style("#2c2c2c", 2, 0); for (let i = -9; i <= 9; i++) seg3([i * 150, 0, 110], [i * 150, 0, -260]); c.restore(); }
+      function grid(a, r) { c.save(); c.globalAlpha *= a; style("#2e2e2e", 2, 0); r = r || 900; for (let i = -6; i <= 6; i++) { seg3([(i * r) / 6, 0, -r], [(i * r) / 6, 0, r]); seg3([-r, 0, (i * r) / 6], [r, 0, (i * r) / 6]); } c.restore(); }
+      function bld(x, col, name, k, o) { // restaurant: box + awning + door + sign
+        o = o || {}; if (k <= 0.01) return; const w = 190, d = 110, z0 = -150, zf = 70, h = 300 * k;
+        style(col, 5, 18);
+        const V = (lx, y, z) => [x + lx, y, z];
+        poly([V(-w, 0, zf), V(w, 0, zf), V(w, h, zf), V(-w, h, zf)], true); poly([V(-w, 0, z0), V(w, 0, z0), V(w, h, z0), V(-w, h, z0)], true);
+        [[-w, 0], [w, 0], [w, h], [-w, h]].forEach((q) => seg3(V(q[0], q[1], zf), V(q[0], q[1], z0)));
+        if (k > 0.9) { c.beginPath(); for (let i = 0; i <= 6; i++) { const lx = -w - 10 + ((2 * w + 20) / 6) * i; const a = P(x + lx, h * 0.74, zf + 70), b = P(x + lx, h * 0.86, zf); if (i === 0) c.moveTo(b[0], b[1]); c.lineTo(a[0], a[1]); const n = P(x + lx + (2 * w + 20) / 6, h * 0.86, zf); if (i < 6) { c.moveTo(a[0], a[1]); const a2 = P(x + lx + (2 * w + 20) / 6, h * 0.74, zf + 70); c.lineTo(a2[0], a2[1]); c.moveTo(n[0], n[1]); } } c.stroke();
+          poly([V(-46, 0, zf), V(46, 0, zf), V(46, h * 0.56, zf), V(-46, h * 0.56, zf)], true);
+          poly([V(-160, h * 0.3, zf), V(-76, h * 0.3, zf), V(-76, h * 0.6, zf), V(-160, h * 0.6, zf)], true); poly([V(76, h * 0.3, zf), V(160, h * 0.3, zf), V(160, h * 0.6, zf), V(76, h * 0.6, zf)], true);
+          if (name) txt3(name, x, h + 44, zf, 54, col); }
+      }
+      function box3(x, y, z, hw, hh, col, rot, lw) { style(col, lw || 5, 18); const cr = Math.cos(rot || 0), sr = Math.sin(rot || 0); const V = (a, b, d) => [x + a * cr - d * sr, y + b, z + a * sr + d * cr]; const q = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+        const lo = q.map((k) => V(k[0] * hw, 0, k[1] * hw)), hi = q.map((k) => V(k[0] * hw, hh, k[1] * hw)); poly(lo, true); poly(hi, true); for (let i = 0; i < 4; i++) seg3(lo[i], hi[i]); }
+      const XA = -270, XB = 270, QX = XB, QZ = (i) => 130 + i * 66;
+
+      /* ---- scenes ---- */
+      const SC = [
+        [0, 3.25, (t) => { // Due ristoranti. Uno accanto all'altro.  — crane from straight above down to the street
+          const d = io(seg(t, 0.15, 2.7));
+          cam(lerp(0.75, -0.28, d), lerp(1.38, 0.34, d), lerp(2300, 1500, d), 0, lerp(0, 150, d), lerp(120, 60, d));
+          street(1); bld(XA, WH, "A", pop(t, 0.08, 0.4)); bld(XB, WH, "B", pop(t, 1.5, 0.4));
+          for (let i = 0; i < 14; i++) { const dir = i % 2 ? 1 : -1, sp = 150 + RN[i] * 90, x = ((RN[i + 20] * 2400 + t * sp) % 2400 - 1200) * dir; person(x, 150 + RN[i + 40] * 300, dir > 0 ? 0 : Math.PI, walk(t * sp) + i, WH, 0.9); }
+        }],
+        [3.25, 5.76, (t) => { // Stesso menù. Stessi prezzi. — low, frontal
+          cam(-0.2 + (t - 3.25) * 0.16, lerp(0.02, 0.12, seg(t, 3.25, 5.7)), lerp(1500, 1250, out(seg(t, 3.25, 4.4))), 0, 170, 60);
+          street(1); bld(XA, WH, "A", 1); bld(XB, WH, "B", 1);
+          [XA, XB].forEach((x, i) => { const k = pop(t, 3.25 + i * 0.1); if (k > 0) { style(WH, 5, 18); const y = 430; poly([[x - 70 * k, y, 70], [x + 70 * k, y, 70], [x + 70 * k, y + 190 * k, 70], [x - 70 * k, y + 190 * k, 70]], true); for (let j = 0; j < 3; j++) seg3([x - 44 * k, y + (40 + j * 44) * k, 70], [x + (44 - j * 16) * k, y + (40 + j * 44) * k, 70]); } tag("12 €", x, -70, 70, WH, pop(t, 4.26 + i * 0.1)); });
+          if (t > 3.6) txt3("=", 0, 520, 70, 170 * pop(t, 3.6), HOT); if (t > 4.6) txt3("=", 0, -70, 70, 130 * pop(t, 4.6), HOT);
+          for (let i = 0; i < 5; i++) { const sp = 170, x = ((RN[i + 60] * 2400 + t * sp) % 2400) - 1200; person(x, 330 + (i % 2) * 70, 0, walk(t * sp) + i, GR, 0.9); }
+        }],
+        [5.76, 9.21, (t) => { // Uno è vuoto. Davanti all'altro c'è la fila. — whip from one to the other
+          const w = io(seg(t, 6.85, 7.25));
+          cam(lerp(0.3, -0.42, w) + (t - 5.76) * 0.05, lerp(0.3, 0.42, w), 1080, lerp(XA, XB + 30, w), 150, lerp(60, 230, w));
+          street(1); bld(XA, GR, "A", 1); bld(XB, t > 8.3 ? HOT : WH, "B", 1);
+          if (t > 6.05) tag("VUOTO", XA, 430, 70, WH, pop(t, 6.05));
+          for (let i = 0; i < 9; i++) { const k = pop(t, 7.35 + i * 0.12); person(QX + Math.sin(i * 1.7) * 8, QZ(i), -Math.PI / 2, 0, t > 8.3 ? HOT : WH, 0.95 * k); }
+          for (let i = 0; i < 4; i++) { const sp = 160, x = ((RN[i + 80] * 2400 + t * sp) % 2400) - 1200; person(x, 420, 0, walk(t * sp) + i, GR, 0.9); }
+        }],
+        [9.21, 12.53, (t) => { // Tu dove entri? Nella fila. Sempre. — straight from above
+          cam(0.1 * Math.sin(t), lerp(1.32, 1.12, seg(t, 9.2, 12.5)), lerp(1750, 1380, out(seg(t, 9.2, 10.4))), 0, 0, 330);
+          street(1); bld(XA, DK, "A", 1); bld(XB, WH, "B", 1);
+          for (let i = 0; i < 9; i++) person(QX, QZ(i), -Math.PI / 2, 0, WH, 0.95);
+          const a = seg(t, 9.25, 10.35), b = io(seg(t, 10.43, 11.3));
+          const yx = lerp(0, QX, b), yz = lerp(lerp(900, 640, out(a)), QZ(9), b), hd = b > 0 && b < 1 ? Math.atan2(QZ(9) - 640, QX) : -Math.PI / 2;
+          person(yx, yz, hd, walk((1 - out(a)) * 300 + b * 400), HOT, 1.15);
+          txt3("TU", yx - 90, 5, yz + 10, 80, HOT);
+          if (a > 0.6 && b < 1) { c.save(); c.globalAlpha *= 0.8 * (1 - b); style(DK, 5, 0); c.setLineDash([18, 22]); seg3([0, 2, 620], [XA, 2, 150], out(seg(t, 9.6, 10.2))); c.setLineDash([]); c.restore(); style(HOT, 6, 20); c.setLineDash([18, 22]); seg3([0, 2, 620], [QX, 2, QZ(9)], out(seg(t, 10.3, 10.8))); c.setLineDash([]); }
+          for (let i = 0; i < 2; i++) { const r = seg(t, 11.4 + i * 0.16, 12.2 + i * 0.16); if (r > 0 && r < 1) { c.save(); c.globalAlpha *= 1 - r; ring3(QX, 2, 400, 120 + r * 600, HOT, 5); c.restore(); } }
+        }],
+        [12.53, 17.91, (t) => { // Si chiama riprova sociale. Quando non sai cosa scegliere, copi gli altri. — crowd from above, then they all follow
+          const k = io(seg(t, 16.4, 17.2));
+          cam((t - 12.53) * 0.22, lerp(1.34, 0.86, io(seg(t, 14.6, 17.6))), lerp(1850, 1450, seg(t, 12.5, 17.9)), 0, 40, 0);
+          grid(0.9, 1000);
+          for (let i = 0; i < 52; i++) { const lead = i < 3, h0 = RN[i + 100] * 6.283, sp = 90 + RN[i + 160] * 70;
+            const tt = Math.min(t, 16.5) - 12.53, t2 = Math.max(0, t - 16.5);
+            let x = (RN[i + 220] - 0.5) * 1500 + Math.cos(h0) * sp * tt, z = (RN[i + 280] - 0.5) * 1500 + Math.sin(h0) * sp * tt;
+            const h = lead ? 0.3 : lerp(h0, 0.3 + Math.atan2(Math.sin(h0 - 0.3), Math.cos(h0 - 0.3)) * 0, k) ;
+            const hh = lead ? 0.3 : h0 + Math.atan2(Math.sin(0.3 - h0), Math.cos(0.3 - h0)) * k;
+            x += Math.cos(hh) * sp * 1.7 * t2; z += Math.sin(hh) * sp * 1.7 * t2;
+            if (lead) { x = -500 + i * 90 + 150 * tt; z = -120 + i * 130 + 46 * tt; }
+            x = ((x + 2900) % 1800) - 900; z = ((z + 2900) % 1800) - 900;
+            person(x, z, lead ? 0.3 : hh, walk(sp * (tt + t2 * 1.7)) + i, lead || (k > 0.5 && i % 3 === 0) ? HOT : WH, lead ? 1.25 : 1); }
+        }],
+        [17.91, 24.44, (t) => { // Bastano tre persone ferme, e la quarta si ferma da sola. Poi la quinta. Poi venti. — orbit at street level, then rise
+          const up = io(seg(t, 22.9, 24.0));
+          cam(-0.7 + (t - 17.91) * 0.2, lerp(0.16, 0.95, up), lerp(1150, 1900, up), 0, lerp(110, 30, up), 0);
+          grid(0.8, 800);
+          const P0 = [[-70, 0], [0, -40], [70, 0]];
+          P0.forEach((q, i) => person(q[0], q[1], -1.2 + i * 0.5, 0, WH, 1.15 * pop(t, 18.0 + i * 0.12), { up: i === 1 }));
+          const J = [[19.98, -150, 40], [21.91, 150, 50]];
+          J.forEach((j, i) => { const a = out(seg(t, j[0] - 1.1, j[0])); const x = lerp(i ? 900 : -900, j[1], a); person(x, lerp(210, j[2], a), i ? Math.PI : 0, walk(a * 700), a >= 1 ? HOT : WH, 1.15); });
+          for (let i = 0; i < 20; i++) { const a = 6.283 * (i / 20) + 0.3, r = 190 + (i % 3) * 70, p = out(seg(t, 23.0 + i * 0.03, 23.7 + i * 0.03)); if (p > 0) person(Math.cos(a) * lerp(1100, r, p), Math.sin(a) * lerp(1100, r, p), a + Math.PI, walk(p * 900), HOT, 1.05); }
+          for (let i = 0; i < 5; i++) { const sp = 170, x = ((RN[i + 400] * 2600 + t * sp) % 2600) - 1300; person(x, 330 + (i % 2) * 90, 0, walk(t * sp) + i, DK, 1.0); }
+          const n = t < 19.98 ? 3 : t < 21.91 ? 4 : t < 23.1 ? 5 : Math.round(lerp(5, 20, out(seg(t, 23.1, 23.9))));
+          const tn = t < 19.98 ? 18.3 : t < 21.91 ? 19.98 : t < 23.1 ? 21.91 : 23.1;
+          if (t > 18.3) txt3(String(n), 0, 330 + up * 100, 0, 230 * (0.8 + 0.2 * pop(t, tn)) * (1 + up * 0.6), HOT);
+          style(WH, 4, 12); if (t < 22.9) { seg3([0, 190, -40], [0, 250, -40]); const p = P(0, 250, -40); c.beginPath(); c.moveTo(p[0] - 14, p[1] + 16); c.lineTo(p[0], p[1]); c.lineTo(p[0] + 14, p[1] + 16); c.stroke(); }
+        }],
+        [24.44, 32.51, (t) => { // La pubblicità lo usa ogni giorno. Le recensioni. Il più venduto. Mille persone lo hanno già comprato.
+          const up = io(seg(t, 29.5, 30.5));
+          cam((t - 24.44) * 0.42, lerp(0.26, 1.2, up), lerp(1050, 1950, up), 0, lerp(190, 0, up), 0);
+          grid(0.7, 900); ring3(0, 0, 0, 170, WH, 4); ring3(0, 40, 0, 150, WH, 4);
+          for (let i = 0; i < 8; i++) { const a = i * 0.785; seg3([Math.cos(a) * 170, 0, Math.sin(a) * 170], [Math.cos(a) * 150, 40, Math.sin(a) * 150]); }
+          box3(0, 40 + 12 * Math.sin(t * 3) + 40 * hit(t, 24.6, 5), 0, 95, 210, WH, t * 0.9 - (t - 24.44) * 0.42, 6);
+          for (let i = 0; i < 5; i++) { const k = pop(t, 26.94 + i * 0.08); if (k > 0) { const a = t * 1.4 + i * 1.2566; star(Math.cos(a) * 250, 330 + Math.sin(t * 3 + i) * 14, Math.sin(a) * 250, 46, HOT, k * (1 - up * 0.5)); } }
+          if (t > 28.17 && up < 0.6) tag("N° 1 · PIÙ VENDUTO", 0, 420, 0, HOT, pop(t, 28.17) * 0.95);
+          if (up > 0) for (let i = 0; i < 120; i++) { const ring = 1 + Math.floor(i / 20), a = 6.283 * ((i % 20) / 20) + ring * 0.16, r = 250 + ring * 105, k = pop(t, 29.9 + ring * 0.16 + (i % 20) * 0.012); person(Math.cos(a) * r, Math.sin(a) * r, a + Math.PI, 0, i % 7 === 0 ? HOT : WH, 0.9 * k); }
+          if (t > 29.76) txt3(String(Math.round(1000 * out(seg(t, 29.76, 31.3)))).replace(/\B(?=(\d{3})+(?!\d))/g, "."), 0, 300, 0, 300 * pop(t, 29.76), HOT, null, 30);
+        }],
+        [32.51, 37.23, (t) => { // Non ti stanno dicendo che è buono. Ti stanno dicendo che non sei solo.
+          const up = io(seg(t, 34.67, 36.2));
+          cam(0.5 - (t - 32.51) * 0.24, lerp(0.2, 1.22, up), lerp(900, 1650, up), 0, lerp(140, 0, up), 0);
+          grid(0.7, 900);
+          person(0, 0, Math.PI / 2 + 0.3 * Math.sin(t * 2), 0, t > 36.5 ? HOT : WH, 1.5);
+          if (up < 0.5) { star(0, 330, 0, 70, WH, pop(t, 33.3)); const x = out(seg(t, 33.75, 34.2)); if (x > 0) { style(HOT, 12, 24); seg3([-110, 250, 0], [-110 + 220 * x, 250 + 160 * x, 0]); } }
+          if (up > 0) for (let i = 0; i < 66; i++) { const ring = i < 10 ? 1 : i < 30 ? 2 : 3, n = ring === 1 ? 10 : ring === 2 ? 20 : 36, j = ring === 1 ? i : ring === 2 ? i - 10 : i - 30, a = 6.283 * (j / n) + ring, r = 130 + ring * 150, k = out(seg(t, 34.9 + ring * 0.3 + (j / n) * 0.3, 35.5 + ring * 0.3 + (j / n) * 0.3)); person(Math.cos(a) * lerp(r + 700, r, k), Math.sin(a) * lerp(r + 700, r, k), a + Math.PI, walk(k * 700), WH, 0.95 * Math.min(1, k * 3)); }
+          for (let i = 0; i < 2; i++) { const r = seg(t, 36.5 + i * 0.15, 37.2 + i * 0.15); if (r > 0 && r < 1) { c.save(); c.globalAlpha *= 1 - r; ring3(0, 2, 0, 60 + r * 700, HOT, 5); c.restore(); } }
+        }],
+        [37.23, 43.95, (t) => { // Quindi la domanda non è: quanto è buono il tuo prodotto? La domanda è: chi c'è già in fila?
+          const up = io(seg(t, 40.9, 42.2));
+          cam(-0.5 + (t - 37.23) * 0.16, lerp(0.22, 1.18, up), lerp(1000, 2050, up), lerp(0, 120, up), lerp(190, 0, up), lerp(0, 420, up));
+          grid(0.7, 1300); ring3(0, 0, 0, 170, WH, 4);
+          box3(0, 12 * Math.sin(t * 3), 0, 95, 210, up > 0.5 ? HOT : WH, t * 0.8, 6);
+          if (up < 0.5) { for (let i = 0; i < 5; i++) star((i - 2) * 100, 330, 0, 40, i < 4 ? WH : DK, pop(t, 38.86 + i * 0.07)); if (t > 39.6) txt3("?", 0, 500, 0, 240 * pop(t, 39.6), WH); const x = out(seg(t, 38.2, 38.7)); }
+          const NQ = 46; for (let i = 0; i < NQ; i++) { const u = i / NQ, k = pop(t, 41.2 + u * 1.5, 0.25); if (k <= 0) continue; const z = 190 + u * 1500, x = Math.sin(u * 9.4) * 330 * Math.min(1, u * 3); const nx = Math.sin((u + 0.01) * 9.4) * 330; person(x, z, -Math.PI / 2 + (x - nx) * 0.02, 0, t > 42.3 + u * 0.8 ? HOT : WH, 1.0 * k); }
+          for (let i = 0; i < 6; i++) { const a = out(seg(t, 42.0 + i * 0.2, 43.4 + i * 0.2)); if (a > 0 && a < 1) person(lerp((i % 2 ? 1 : -1) * 1200, Math.sin(9.4) * 330, a), lerp(1300 + i * 80, 1700 + i * 20, a), i % 2 ? Math.PI : 0, walk(a * 900), WH, 1.0); }
+        }],
+        [43.95, 47.01, (t) => { // end card
+          cam(0, 0, 1150, 0, 0, 0);
+          const d = out(seg(t, 44.0, 44.8)), ry = (1 - out(seg(t, 44.0, 45.0))) * 2.4; CAM.yaw = ry;
+          style(HOT, 9, 26); const T = [[0, 520, 0], [150, 250, 0], [-150, 250, 0], [0, 520, 0]]; c.beginPath(); const q = d * 3; const p0 = P(T[0][0], T[0][1], 0); c.moveTo(p0[0], p0[1]); for (let i = 0; i < 3 && q > i; i++) { const f = Math.min(1, q - i), p = P(lerp(T[i][0], T[i + 1][0], f), lerp(T[i][1], T[i + 1][1], f), 0); c.lineTo(p[0], p[1]); } c.stroke();
+          if (d >= 1) poly([[0, 400, 0], [56, 290, 0], [-56, 290, 0]], true, true);
+          CAM.yaw = 0;
+          const w = pop(t, 44.8); if (w > 0) txt3("APEXMEDIA", 0, 120, 0, 78 * w, WH, WIDE, 22);
+          if (t > 45.2) txt3("CAPIRE LA PUBBLICITÀ, PRIMA DI FARLA".split("").join(" "), 0, 20, 0, 27, GR, CAP, 0);
+          const b = out(seg(t, 45.5, 46.0)); if (b > 0) { const p = P(0, -120, 0); style(HOT, 3, 26); c.beginPath(); c.roundRect(p[0] - 430 * b, p[1] - 58, 860 * b, 116, 8); c.fill(); if (b > 0.9) { c.shadowBlur = 0; c.fillStyle = "#000"; c.font = '900 64px "Big Shoulders Display"'; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText("SEGUI APEX MEDIA →", p[0], p[1] + 4); } }
+        }],
+      ];
+
+      function render(t) {
+        c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.shadowBlur = 0; c.setLineDash([]);
+        c.fillStyle = "#000"; c.fillRect(0, 0, 1080, 1920);
+        const g = c.createRadialGradient(540, 1150, 60, 540, 1150, 860); g.addColorStop(0, "rgba(255,255,255,0.09)"); g.addColorStop(1, "rgba(255,255,255,0)");
+        c.fillStyle = g; c.fillRect(0, 250, 1080, 1670);
+        const bp = (((t - B0) % BEAT) + BEAT) % BEAT, bump = Math.exp(-bp * 9) * 0.02;
+        for (let i = 0; i < SC.length; i++) {
+          const s = SC[i]; if (t < s[0] - 0.02 || t >= s[1] + 0.08) continue;
+          const a = seg(t, s[0] - 0.02, s[0] + 0.08) * (1 - seg(t, s[1], s[1] + 0.08)); if (a <= 0) continue;
+          const dir = i % 2 ? 1 : -1; // real 3D whip: the camera swings in and out of every scene
+          WOFF = (1 - out(seg(t, s[0], s[0] + 0.45))) * 1.1 * dir - Math.pow(seg(t, s[1] - 0.16, s[1] + 0.08), 2) * 0.9 * dir;
+          c.save(); c.globalAlpha = a; c.translate(540, 1150); c.scale(1 + bump, 1 + bump); c.translate(-540, -1150);
+          s[2](t); c.restore();
+        }
+      }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Big Shoulders Display"'), document.fonts.load('500 26px "Unbounded"'), document.fonts.load('900 60px "Unbounded"')]).then(() => render(st.t), () => render(st.t));
+      render(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>
