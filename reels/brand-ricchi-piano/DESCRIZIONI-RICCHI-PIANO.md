@@ -131,3 +131,106 @@ Chi arriva a fine mese fa il contrario: mette via il 10% subito, in automatico. 
 Contenuto educativo, non è una consulenza finanziaria.
 #soldi #stipendio #finanzapersonale #risparmio #educazionefinanziaria #mindset #business #ricchipiano
 ```
+
+---
+
+## 6. Il cervello ricco (0:56) · NUOVO 3D, testa che gira in apertura
+File: `rp-cervello-ricco/renders/rp-cervello-ricco-9x16.mp4`
+
+**TikTok**
+```text
+Se il tuo cervello continua a pensare a come diventare ricco, è perché sa già che lo sarai 🧠 A che cifra stai pensando? Scrivila 👇
+#soldi #ricco #mindset #finanzapersonale
+```
+
+**Instagram**
+```text
+Se il tuo cervello continua a pensare a come diventare ricco, è perché sa già che lo sarai.
+
+Non è magia, è attenzione: noti solo quello che ritieni importante. Ma pensarci non basta.
+1. Scrivi una cifra precisa e una data
+2. Metti da parte il 10% prima di spendere
+3. Ogni mese impara una cosa che ti fa guadagnare di più
+
+👇 A che cifra stai pensando? Scrivila nei commenti.
+
+Contenuto educativo, non è una consulenza finanziaria.
+#soldi #ricco #mindset #finanzapersonale #risparmio #educazionefinanziaria #crescitapersonale #ricchipiano
+```
+
+---
+
+## 7. Ricco è chi tiene (0:50) · NUOVO 3D
+File: `rp-chi-tiene/renders/rp-chi-tiene-9x16.mp4`
+
+**TikTok**
+```text
+Ricco non è chi guadagna tanto, è chi tiene tanto 💰 Tu quanto tieni di quello che guadagni? 👇
+#ricco #soldi #risparmio #stipendio
+```
+
+**Instagram**
+```text
+Ricco non è chi guadagna tanto. È chi tiene tanto.
+
+4.000 € al mese e a fine mese zero, oppure 1.600 € e 300 messi via ogni mese: in 5 anni sono 18.000 €.
+Lo stipendio è quanto entra. La ricchezza è quanto resta.
+Il trucco: quando lo stipendio sale, alza prima il risparmio, poi le spese.
+
+👇 Quanto tieni di quello che guadagni? Scrivi la percentuale.
+
+Contenuto educativo, non è una consulenza finanziaria.
+#ricco #soldi #risparmio #stipendio #finanzapersonale #educazionefinanziaria #mindset #ricchipiano
+```
+
+---
+
+## 8. Tre conti (0:50) · NUOVO 3D
+File: `rp-tre-conti/renders/rp-tre-conti-9x16.mp4`
+
+**TikTok**
+```text
+I soldi su un conto solo spariscono. Dividili in tre 🏦 Tu quanti conti hai? 👇
+#soldi #conto #risparmio #finanzapersonale
+```
+
+**Instagram**
+```text
+I soldi su un conto solo spariscono. Dividili in tre e cambia tutto.
+
+Conto 1: le spese (qui arriva lo stipendio)
+Conto 2: le emergenze, tre mesi di spese
+Conto 3: il futuro, anche solo 100 € al mese
+
+Il trucco è il bonifico automatico il giorno dopo lo stipendio: quello che non vedi, non lo spendi.
+
+👇 Tu quanti conti hai? Scrivilo nei commenti.
+
+Contenuto educativo, non è una consulenza finanziaria.
+#soldi #conto #risparmio #finanzapersonale #stipendio #educazionefinanziaria #budget #ricchipiano
+```
+
+---
+
+## 9. Attivi e passivi (0:49) · NUOVO 3D
+File: `rp-attivi-passivi/renders/rp-attivi-passivi-9x16.mp4`
+
+**TikTok**
+```text
+Il ricco compra cose che lo pagano. Tutti gli altri, cose che gli costano 🚗 L'ultima cosa che hai comprato ti paga o ti costa? 👇
+#ricco #soldi #investire #finanzapersonale
+```
+
+**Instagram**
+```text
+Il ricco compra cose che lo pagano. Tutti gli altri, cose che gli costano.
+
+Un'auto da 30.000 € dopo cinque anni ne vale 15.000, e intanto paghi assicurazione, bollo e benzina: è un passivo.
+Gli stessi 30.000 € investiti, per esempio al 5%, danno 1.500 € l'anno: è un attivo.
+Prima gli attivi. Poi, con quello che rendono, i lussi.
+
+👇 L'ultima cosa che hai comprato ti paga o ti costa?
+
+Il 5% è un esempio, non un rendimento garantito. Contenuto educativo, non è una consulenza finanziaria.
+#ricco #soldi #investire #finanzapersonale #attivi #educazionefinanziaria #mindset #ricchipiano
+```
