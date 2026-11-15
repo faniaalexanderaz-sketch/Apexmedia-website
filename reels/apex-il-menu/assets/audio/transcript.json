@@ -1,0 +1,788 @@
+[
+  {
+    "text": "Il",
+    "start": 0.01,
+    "end": 0.12,
+    "id": "w0"
+  },
+  {
+    "text": "menu",
+    "start": 0.12,
+    "end": 0.33,
+    "id": "w1"
+  },
+  {
+    "text": "del",
+    "start": 0.38,
+    "end": 0.55,
+    "id": "w2"
+  },
+  {
+    "text": "ristorante",
+    "start": 0.55,
+    "end": 1.17,
+    "id": "w3"
+  },
+  {
+    "text": "è",
+    "start": 1.17,
+    "end": 1.22,
+    "id": "w4"
+  },
+  {
+    "text": "progettato",
+    "start": 1.3,
+    "end": 1.83,
+    "id": "w5"
+  },
+  {
+    "text": "per",
+    "start": 1.83,
+    "end": 1.98,
+    "id": "w6"
+  },
+  {
+    "text": "farti",
+    "start": 2.07,
+    "end": 2.32,
+    "id": "w7"
+  },
+  {
+    "text": "spendere",
+    "start": 2.32,
+    "end": 2.79,
+    "id": "w8"
+  },
+  {
+    "text": "di",
+    "start": 2.89,
+    "end": 2.93,
+    "id": "w9"
+  },
+  {
+    "text": "più,",
+    "start": 2.93,
+    "end": 3.24,
+    "id": "w10"
+  },
+  {
+    "text": "e",
+    "start": 3.24,
+    "end": 3.5,
+    "id": "w11"
+  },
+  {
+    "text": "quasi",
+    "start": 3.5,
+    "end": 3.74,
+    "id": "w12"
+  },
+  {
+    "text": "nessuno",
+    "start": 3.74,
+    "end": 4.18,
+    "id": "w13"
+  },
+  {
+    "text": "se",
+    "start": 4.2,
+    "end": 4.33,
+    "id": "w14"
+  },
+  {
+    "text": "ne",
+    "start": 4.34,
+    "end": 4.46,
+    "id": "w15"
+  },
+  {
+    "text": "accorge.",
+    "start": 4.46,
+    "end": 5.1,
+    "id": "w16"
+  },
+  {
+    "text": "Primo",
+    "start": 5.74,
+    "end": 5.75,
+    "id": "w17"
+  },
+  {
+    "text": "trucco,",
+    "start": 5.75,
+    "end": 6.55,
+    "id": "w18"
+  },
+  {
+    "text": "niente",
+    "start": 6.55,
+    "end": 6.96,
+    "id": "w19"
+  },
+  {
+    "text": "simbolo",
+    "start": 6.96,
+    "end": 7.42,
+    "id": "w20"
+  },
+  {
+    "text": "dell'euro.",
+    "start": 7.42,
+    "end": 8.3,
+    "id": "w21"
+  },
+  {
+    "text": "In",
+    "start": 8.3,
+    "end": 8.525,
+    "id": "w22"
+  },
+  {
+    "text": "uno",
+    "start": 8.525,
+    "end": 8.75,
+    "id": "w23"
+  },
+  {
+    "text": "studio",
+    "start": 8.75,
+    "end": 9.03,
+    "id": "w24"
+  },
+  {
+    "text": "della",
+    "start": 9.03,
+    "end": 9.34,
+    "id": "w25"
+  },
+  {
+    "text": "Cornell",
+    "start": 9.35,
+    "end": 9.75,
+    "id": "w26"
+  },
+  {
+    "text": "University,",
+    "start": 9.84,
+    "end": 10.66,
+    "id": "w27"
+  },
+  {
+    "text": "i",
+    "start": 10.66,
+    "end": 10.72,
+    "id": "w28"
+  },
+  {
+    "text": "clienti",
+    "start": 10.72,
+    "end": 11.24,
+    "id": "w29"
+  },
+  {
+    "text": "con",
+    "start": 11.24,
+    "end": 11.45,
+    "id": "w30"
+  },
+  {
+    "text": "il",
+    "start": 11.46,
+    "end": 11.53,
+    "id": "w31"
+  },
+  {
+    "text": "menu",
+    "start": 11.61,
+    "end": 11.81,
+    "id": "w32"
+  },
+  {
+    "text": "senza",
+    "start": 12.24,
+    "end": 12.26,
+    "id": "w33"
+  },
+  {
+    "text": "simbolo",
+    "start": 12.26,
+    "end": 12.82,
+    "id": "w34"
+  },
+  {
+    "text": "hanno",
+    "start": 12.82,
+    "end": 13.11,
+    "id": "w35"
+  },
+  {
+    "text": "speso",
+    "start": 13.11,
+    "end": 13.4,
+    "id": "w36"
+  },
+  {
+    "text": "di",
+    "start": 13.4,
+    "end": 13.5,
+    "id": "w37"
+  },
+  {
+    "text": "più.",
+    "start": 13.52,
+    "end": 13.84,
+    "id": "w38"
+  },
+  {
+    "text": "Il",
+    "start": 13.84,
+    "end": 14.33,
+    "id": "w39"
+  },
+  {
+    "text": "numero",
+    "start": 14.33,
+    "end": 14.55,
+    "id": "w40"
+  },
+  {
+    "text": "da",
+    "start": 14.55,
+    "end": 14.65,
+    "id": "w41"
+  },
+  {
+    "text": "solo",
+    "start": 14.71,
+    "end": 14.96,
+    "id": "w42"
+  },
+  {
+    "text": "fa",
+    "start": 15.07,
+    "end": 15.2,
+    "id": "w43"
+  },
+  {
+    "text": "meno",
+    "start": 15.2,
+    "end": 15.53,
+    "id": "w44"
+  },
+  {
+    "text": "male.",
+    "start": 15.53,
+    "end": 16.14,
+    "id": "w45"
+  },
+  {
+    "text": "Secondo,",
+    "start": 16.67,
+    "end": 17.06,
+    "id": "w46"
+  },
+  {
+    "text": "il",
+    "start": 17.06,
+    "end": 17.26,
+    "id": "w47"
+  },
+  {
+    "text": "piatto",
+    "start": 17.26,
+    "end": 17.87,
+    "id": "w48"
+  },
+  {
+    "text": "esca.",
+    "start": 17.87,
+    "end": 18.61,
+    "id": "w49"
+  },
+  {
+    "text": "Una",
+    "start": 18.61,
+    "end": 19.01,
+    "id": "w50"
+  },
+  {
+    "text": "tagliata",
+    "start": 19.01,
+    "end": 19.46,
+    "id": "w51"
+  },
+  {
+    "text": "a",
+    "start": 19.46,
+    "end": 19.53,
+    "id": "w52"
+  },
+  {
+    "text": "45",
+    "start": 19.53,
+    "end": 19.99,
+    "id": "w53"
+  },
+  {
+    "text": "euro",
+    "start": 19.99,
+    "end": 20.22,
+    "id": "w54"
+  },
+  {
+    "text": "in",
+    "start": 20.3,
+    "end": 20.42,
+    "id": "w55"
+  },
+  {
+    "text": "cima",
+    "start": 20.46,
+    "end": 20.72,
+    "id": "w56"
+  },
+  {
+    "text": "alla",
+    "start": 20.78,
+    "end": 20.98,
+    "id": "w57"
+  },
+  {
+    "text": "pagina.",
+    "start": 21.07,
+    "end": 21.79,
+    "id": "w58"
+  },
+  {
+    "text": "Non",
+    "start": 21.79,
+    "end": 22.11,
+    "id": "w59"
+  },
+  {
+    "text": "serve",
+    "start": 22.11,
+    "end": 22.35,
+    "id": "w60"
+  },
+  {
+    "text": "a",
+    "start": 22.35,
+    "end": 22.41,
+    "id": "w61"
+  },
+  {
+    "text": "venderla,",
+    "start": 22.41,
+    "end": 23.07,
+    "id": "w62"
+  },
+  {
+    "text": "serve",
+    "start": 23.07,
+    "end": 23.32,
+    "id": "w63"
+  },
+  {
+    "text": "a",
+    "start": 23.4,
+    "end": 23.46,
+    "id": "w64"
+  },
+  {
+    "text": "far",
+    "start": 23.46,
+    "end": 23.64,
+    "id": "w65"
+  },
+  {
+    "text": "sembrare",
+    "start": 23.73,
+    "end": 24.19,
+    "id": "w66"
+  },
+  {
+    "text": "un",
+    "start": 24.19,
+    "end": 24.24,
+    "id": "w67"
+  },
+  {
+    "text": "affare",
+    "start": 24.32,
+    "end": 24.72,
+    "id": "w68"
+  },
+  {
+    "text": "quella",
+    "start": 24.72,
+    "end": 25.11,
+    "id": "w69"
+  },
+  {
+    "text": "da",
+    "start": 25.11,
+    "end": 25.17,
+    "id": "w70"
+  },
+  {
+    "text": "28.",
+    "start": 25.6,
+    "end": 25.94,
+    "id": "w71"
+  },
+  {
+    "text": "Terzo,",
+    "start": 26.36,
+    "end": 26.61,
+    "id": "w72"
+  },
+  {
+    "text": "i",
+    "start": 26.61,
+    "end": 26.69,
+    "id": "w73"
+  },
+  {
+    "text": "riquadri.",
+    "start": 26.75,
+    "end": 27.81,
+    "id": "w74"
+  },
+  {
+    "text": "Il",
+    "start": 28.21,
+    "end": 28.31,
+    "id": "w75"
+  },
+  {
+    "text": "piatto",
+    "start": 28.31,
+    "end": 28.65,
+    "id": "w76"
+  },
+  {
+    "text": "nel",
+    "start": 28.65,
+    "end": 28.8,
+    "id": "w77"
+  },
+  {
+    "text": "riquadro",
+    "start": 28.81,
+    "end": 29.21,
+    "id": "w78"
+  },
+  {
+    "text": "è",
+    "start": 29.3,
+    "end": 29.31,
+    "id": "w79"
+  },
+  {
+    "text": "quello",
+    "start": 29.31,
+    "end": 29.62,
+    "id": "w80"
+  },
+  {
+    "text": "su",
+    "start": 29.66,
+    "end": 29.73,
+    "id": "w81"
+  },
+  {
+    "text": "cui",
+    "start": 29.83,
+    "end": 29.92,
+    "id": "w82"
+  },
+  {
+    "text": "il",
+    "start": 29.98,
+    "end": 30.04,
+    "id": "w83"
+  },
+  {
+    "text": "locale",
+    "start": 30.04,
+    "end": 30.34,
+    "id": "w84"
+  },
+  {
+    "text": "guadagna",
+    "start": 30.42,
+    "end": 30.82,
+    "id": "w85"
+  },
+  {
+    "text": "di",
+    "start": 30.83,
+    "end": 30.94,
+    "id": "w86"
+  },
+  {
+    "text": "più.",
+    "start": 30.94,
+    "end": 31.27,
+    "id": "w87"
+  },
+  {
+    "text": "Quarto,",
+    "start": 31.84,
+    "end": 32.17,
+    "id": "w88"
+  },
+  {
+    "text": "le",
+    "start": 32.22,
+    "end": 32.4,
+    "id": "w89"
+  },
+  {
+    "text": "descrizioni.",
+    "start": 32.4,
+    "end": 33.56,
+    "id": "w90"
+  },
+  {
+    "text": "Pomodoro",
+    "start": 33.96,
+    "end": 34.2,
+    "id": "w91"
+  },
+  {
+    "text": "diventa",
+    "start": 34.2,
+    "end": 34.75,
+    "id": "w92"
+  },
+  {
+    "text": "Pomodoro",
+    "start": 34.75,
+    "end": 35.37,
+    "id": "w93"
+  },
+  {
+    "text": "San",
+    "start": 35.37,
+    "end": 35.61,
+    "id": "w94"
+  },
+  {
+    "text": "Marzano",
+    "start": 35.61,
+    "end": 36.1,
+    "id": "w95"
+  },
+  {
+    "text": "raccolto",
+    "start": 36.18,
+    "end": 36.75,
+    "id": "w96"
+  },
+  {
+    "text": "a",
+    "start": 36.75,
+    "end": 36.85,
+    "id": "w97"
+  },
+  {
+    "text": "mano.",
+    "start": 36.85,
+    "end": 37.5,
+    "id": "w98"
+  },
+  {
+    "text": "Stesso",
+    "start": 37.82,
+    "end": 37.93,
+    "id": "w99"
+  },
+  {
+    "text": "piatto,",
+    "start": 37.93,
+    "end": 38.46,
+    "id": "w100"
+  },
+  {
+    "text": "prezzo",
+    "start": 38.5,
+    "end": 38.83,
+    "id": "w101"
+  },
+  {
+    "text": "più",
+    "start": 38.92,
+    "end": 39.13,
+    "id": "w102"
+  },
+  {
+    "text": "alto.",
+    "start": 39.13,
+    "end": 39.67,
+    "id": "w103"
+  },
+  {
+    "text": "Non",
+    "start": 39.67,
+    "end": 39.88,
+    "id": "w104"
+  },
+  {
+    "text": "è",
+    "start": 39.88,
+    "end": 40.09,
+    "id": "w105"
+  },
+  {
+    "text": "una",
+    "start": 40.09,
+    "end": 40.28,
+    "id": "w106"
+  },
+  {
+    "text": "truffa,",
+    "start": 40.28,
+    "end": 40.96,
+    "id": "w107"
+  },
+  {
+    "text": "è",
+    "start": 40.96,
+    "end": 41.03,
+    "id": "w108"
+  },
+  {
+    "text": "marketing,",
+    "start": 41.03,
+    "end": 41.99,
+    "id": "w109"
+  },
+  {
+    "text": "guidare",
+    "start": 41.99,
+    "end": 42.6,
+    "id": "w110"
+  },
+  {
+    "text": "la",
+    "start": 42.6,
+    "end": 42.77,
+    "id": "w111"
+  },
+  {
+    "text": "scelta,",
+    "start": 42.77,
+    "end": 43.49,
+    "id": "w112"
+  },
+  {
+    "text": "e",
+    "start": 43.49,
+    "end": 43.58,
+    "id": "w113"
+  },
+  {
+    "text": "vale",
+    "start": 43.58,
+    "end": 43.81,
+    "id": "w114"
+  },
+  {
+    "text": "per",
+    "start": 43.81,
+    "end": 44.01,
+    "id": "w115"
+  },
+  {
+    "text": "qualsiasi",
+    "start": 44.01,
+    "end": 44.58,
+    "id": "w116"
+  },
+  {
+    "text": "attività,",
+    "start": 44.58,
+    "end": 45.18,
+    "id": "w117"
+  },
+  {
+    "text": "anche",
+    "start": 45.18,
+    "end": 45.56,
+    "id": "w118"
+  },
+  {
+    "text": "la",
+    "start": 45.56,
+    "end": 45.68,
+    "id": "w119"
+  },
+  {
+    "text": "tua.",
+    "start": 45.81,
+    "end": 46.16,
+    "id": "w120"
+  },
+  {
+    "text": "Quale",
+    "start": 46.16,
+    "end": 46.425,
+    "id": "w121"
+  },
+  {
+    "text": "di",
+    "start": 46.425,
+    "end": 46.69,
+    "id": "w122"
+  },
+  {
+    "text": "questi",
+    "start": 46.69,
+    "end": 46.97,
+    "id": "w123"
+  },
+  {
+    "text": "trucchi",
+    "start": 46.97,
+    "end": 47.32,
+    "id": "w124"
+  },
+  {
+    "text": "avevi",
+    "start": 47.43,
+    "end": 47.69,
+    "id": "w125"
+  },
+  {
+    "text": "già",
+    "start": 47.78,
+    "end": 47.9,
+    "id": "w126"
+  },
+  {
+    "text": "notato?",
+    "start": 47.98,
+    "end": 48.52,
+    "id": "w127"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 48.84,
+    "end": 49.04,
+    "id": "w128"
+  },
+  {
+    "text": "nei",
+    "start": 49.04,
+    "end": 49.24,
+    "id": "w129"
+  },
+  {
+    "text": "commenti.",
+    "start": 49.24,
+    "end": 50,
+    "id": "w130"
+  }
+]

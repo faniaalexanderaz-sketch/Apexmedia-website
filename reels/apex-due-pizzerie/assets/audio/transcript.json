@@ -1,0 +1,752 @@
+[
+  {
+    "text": "Due",
+    "start": 0.02,
+    "end": 0.29,
+    "id": "w0"
+  },
+  {
+    "text": "pizzerie.",
+    "start": 0.3,
+    "end": 1.29,
+    "id": "w1"
+  },
+  {
+    "text": "Stessa",
+    "start": 1.29,
+    "end": 1.63,
+    "id": "w2"
+  },
+  {
+    "text": "pizza.",
+    "start": 1.63,
+    "end": 2.03,
+    "id": "w3"
+  },
+  {
+    "text": "Una",
+    "start": 2.03,
+    "end": 2.29,
+    "id": "w4"
+  },
+  {
+    "text": "ha",
+    "start": 2.29,
+    "end": 2.55,
+    "id": "w5"
+  },
+  {
+    "text": "la",
+    "start": 2.55,
+    "end": 2.69,
+    "id": "w6"
+  },
+  {
+    "text": "fila,",
+    "start": 2.69,
+    "end": 3.17,
+    "id": "w7"
+  },
+  {
+    "text": "l'altra",
+    "start": 3.17,
+    "end": 3.75,
+    "id": "w8"
+  },
+  {
+    "text": "è",
+    "start": 3.75,
+    "end": 3.77,
+    "id": "w9"
+  },
+  {
+    "text": "vuota.",
+    "start": 3.84,
+    "end": 4.43,
+    "id": "w10"
+  },
+  {
+    "text": "Ela",
+    "start": 4.43,
+    "end": 4.98,
+    "id": "w11"
+  },
+  {
+    "text": "differenza",
+    "start": 4.98,
+    "end": 5.58,
+    "id": "w12"
+  },
+  {
+    "text": "non",
+    "start": 5.58,
+    "end": 5.82,
+    "id": "w13"
+  },
+  {
+    "text": "è",
+    "start": 5.82,
+    "end": 5.89,
+    "id": "w14"
+  },
+  {
+    "text": "l'impasto,",
+    "start": 5.89,
+    "end": 6.74,
+    "id": "w15"
+  },
+  {
+    "text": "è",
+    "start": 6.8,
+    "end": 6.87,
+    "id": "w16"
+  },
+  {
+    "text": "quello",
+    "start": 6.87,
+    "end": 7,
+    "id": "w17"
+  },
+  {
+    "text": "che",
+    "start": 7,
+    "end": 7.51,
+    "id": "w18"
+  },
+  {
+    "text": "succede",
+    "start": 7.51,
+    "end": 7.92,
+    "id": "w19"
+  },
+  {
+    "text": "prima",
+    "start": 8.03,
+    "end": 8.27,
+    "id": "w20"
+  },
+  {
+    "text": "che",
+    "start": 8.54,
+    "end": 8.55,
+    "id": "w21"
+  },
+  {
+    "text": "tu",
+    "start": 8.55,
+    "end": 8.69,
+    "id": "w22"
+  },
+  {
+    "text": "entri.",
+    "start": 8.69,
+    "end": 9.21,
+    "id": "w23"
+  },
+  {
+    "text": "Hai",
+    "start": 9.21,
+    "end": 9.78,
+    "id": "w24"
+  },
+  {
+    "text": "fame?",
+    "start": 9.78,
+    "end": 10.46,
+    "id": "w25"
+  },
+  {
+    "text": "Apri",
+    "start": 10.46,
+    "end": 10.69,
+    "id": "w26"
+  },
+  {
+    "text": "Google",
+    "start": 11.04,
+    "end": 11.22,
+    "id": "w27"
+  },
+  {
+    "text": "Maps",
+    "start": 11.22,
+    "end": 11.51,
+    "id": "w28"
+  },
+  {
+    "text": "e",
+    "start": 11.51,
+    "end": 11.55,
+    "id": "w29"
+  },
+  {
+    "text": "cerchi",
+    "start": 11.6,
+    "end": 12.05,
+    "id": "w30"
+  },
+  {
+    "text": "Pizzeria.",
+    "start": 12.05,
+    "end": 12.92,
+    "id": "w31"
+  },
+  {
+    "text": "La",
+    "start": 12.92,
+    "end": 13.46,
+    "id": "w32"
+  },
+  {
+    "text": "prima",
+    "start": 13.46,
+    "end": 13.53,
+    "id": "w33"
+  },
+  {
+    "text": "ha",
+    "start": 13.56,
+    "end": 13.72,
+    "id": "w34"
+  },
+  {
+    "text": "4",
+    "start": 13.72,
+    "end": 13.95,
+    "id": "w35"
+  },
+  {
+    "text": "foto",
+    "start": 13.95,
+    "end": 14.3,
+    "id": "w36"
+  },
+  {
+    "text": "buie",
+    "start": 14.3,
+    "end": 14.7,
+    "id": "w37"
+  },
+  {
+    "text": "e",
+    "start": 14.72,
+    "end": 14.77,
+    "id": "w38"
+  },
+  {
+    "text": "12",
+    "start": 14.84,
+    "end": 15.32,
+    "id": "w39"
+  },
+  {
+    "text": "recensioni.",
+    "start": 15.32,
+    "end": 16.4,
+    "id": "w40"
+  },
+  {
+    "text": "La",
+    "start": 16.4,
+    "end": 16.95,
+    "id": "w41"
+  },
+  {
+    "text": "seconda",
+    "start": 16.95,
+    "end": 17.21,
+    "id": "w42"
+  },
+  {
+    "text": "ha",
+    "start": 17.22,
+    "end": 17.34,
+    "id": "w43"
+  },
+  {
+    "text": "foto",
+    "start": 17.39,
+    "end": 17.69,
+    "id": "w44"
+  },
+  {
+    "text": "che",
+    "start": 17.69,
+    "end": 17.84,
+    "id": "w45"
+  },
+  {
+    "text": "fanno",
+    "start": 18.02,
+    "end": 18.33,
+    "id": "w46"
+  },
+  {
+    "text": "venire",
+    "start": 18.33,
+    "end": 18.8,
+    "id": "w47"
+  },
+  {
+    "text": "fame,",
+    "start": 18.8,
+    "end": 19.31,
+    "id": "w48"
+  },
+  {
+    "text": "300",
+    "start": 19.47,
+    "end": 20.05,
+    "id": "w49"
+  },
+  {
+    "text": "recensioni.",
+    "start": 20.05,
+    "end": 20.92,
+    "id": "w50"
+  },
+  {
+    "text": "Erisponde",
+    "start": 21.12,
+    "end": 21.54,
+    "id": "w51"
+  },
+  {
+    "text": "a",
+    "start": 21.54,
+    "end": 21.62,
+    "id": "w52"
+  },
+  {
+    "text": "tutti.",
+    "start": 21.62,
+    "end": 22.06,
+    "id": "w53"
+  },
+  {
+    "text": "Quale",
+    "start": 22.4,
+    "end": 22.61,
+    "id": "w54"
+  },
+  {
+    "text": "scegli?",
+    "start": 22.62,
+    "end": 23.15,
+    "id": "w55"
+  },
+  {
+    "text": "Esatto.",
+    "start": 23.92,
+    "end": 24.64,
+    "id": "w56"
+  },
+  {
+    "text": "La",
+    "start": 24.64,
+    "end": 24.78,
+    "id": "w57"
+  },
+  {
+    "text": "pizzeria",
+    "start": 24.78,
+    "end": 25.39,
+    "id": "w58"
+  },
+  {
+    "text": "piena",
+    "start": 25.39,
+    "end": 25.77,
+    "id": "w59"
+  },
+  {
+    "text": "ha",
+    "start": 25.77,
+    "end": 25.92,
+    "id": "w60"
+  },
+  {
+    "text": "fatto",
+    "start": 25.92,
+    "end": 25.96,
+    "id": "w61"
+  },
+  {
+    "text": "3",
+    "start": 26.47,
+    "end": 26.54,
+    "id": "w62"
+  },
+  {
+    "text": "cose.",
+    "start": 26.54,
+    "end": 27.16,
+    "id": "w63"
+  },
+  {
+    "text": "1.",
+    "start": 27.59,
+    "end": 27.98,
+    "id": "w64"
+  },
+  {
+    "text": "Foto",
+    "start": 28.05,
+    "end": 28.37,
+    "id": "w65"
+  },
+  {
+    "text": "vere,",
+    "start": 28.37,
+    "end": 28.88,
+    "id": "w66"
+  },
+  {
+    "text": "fatte",
+    "start": 28.88,
+    "end": 29.28,
+    "id": "w67"
+  },
+  {
+    "text": "bene,",
+    "start": 29.28,
+    "end": 29.78,
+    "id": "w68"
+  },
+  {
+    "text": "aggiornate.",
+    "start": 30.11,
+    "end": 30.68,
+    "id": "w69"
+  },
+  {
+    "text": "2.",
+    "start": 31.12,
+    "end": 31.18,
+    "id": "w70"
+  },
+  {
+    "text": "Chiede",
+    "start": 31.18,
+    "end": 31.65,
+    "id": "w71"
+  },
+  {
+    "text": "una",
+    "start": 31.67,
+    "end": 31.9,
+    "id": "w72"
+  },
+  {
+    "text": "recensione",
+    "start": 31.9,
+    "end": 32.75,
+    "id": "w73"
+  },
+  {
+    "text": "a",
+    "start": 32.75,
+    "end": 32.83,
+    "id": "w74"
+  },
+  {
+    "text": "ogni",
+    "start": 32.83,
+    "end": 33.13,
+    "id": "w75"
+  },
+  {
+    "text": "cliente",
+    "start": 33.66,
+    "end": 33.74,
+    "id": "w76"
+  },
+  {
+    "text": "contento.",
+    "start": 33.74,
+    "end": 34.44,
+    "id": "w77"
+  },
+  {
+    "text": "3.",
+    "start": 34.44,
+    "end": 34.99,
+    "id": "w78"
+  },
+  {
+    "text": "Pubblica",
+    "start": 34.99,
+    "end": 35.49,
+    "id": "w79"
+  },
+  {
+    "text": "ogni",
+    "start": 35.49,
+    "end": 35.78,
+    "id": "w80"
+  },
+  {
+    "text": "giorno,",
+    "start": 35.78,
+    "end": 36.37,
+    "id": "w81"
+  },
+  {
+    "text": "anche",
+    "start": 36.37,
+    "end": 36.73,
+    "id": "w82"
+  },
+  {
+    "text": "solo",
+    "start": 36.73,
+    "end": 36.98,
+    "id": "w83"
+  },
+  {
+    "text": "la",
+    "start": 36.98,
+    "end": 37.51,
+    "id": "w84"
+  },
+  {
+    "text": "pizza",
+    "start": 37.51,
+    "end": 37.54,
+    "id": "w85"
+  },
+  {
+    "text": "che",
+    "start": 37.54,
+    "end": 37.76,
+    "id": "w86"
+  },
+  {
+    "text": "esce",
+    "start": 37.76,
+    "end": 38.04,
+    "id": "w87"
+  },
+  {
+    "text": "dal",
+    "start": 38.04,
+    "end": 38.26,
+    "id": "w88"
+  },
+  {
+    "text": "forno.",
+    "start": 38.26,
+    "end": 38.92,
+    "id": "w89"
+  },
+  {
+    "text": "Costo?",
+    "start": 39.44,
+    "end": 39.87,
+    "id": "w90"
+  },
+  {
+    "text": "Quasi",
+    "start": 39.92,
+    "end": 40.3,
+    "id": "w91"
+  },
+  {
+    "text": "zero.",
+    "start": 40.3,
+    "end": 40.96,
+    "id": "w92"
+  },
+  {
+    "text": "La",
+    "start": 40.96,
+    "end": 41.6,
+    "id": "w93"
+  },
+  {
+    "text": "pizzeria",
+    "start": 41.6,
+    "end": 41.81,
+    "id": "w94"
+  },
+  {
+    "text": "vuota,",
+    "start": 41.81,
+    "end": 42.37,
+    "id": "w95"
+  },
+  {
+    "text": "invece,",
+    "start": 42.37,
+    "end": 43.11,
+    "id": "w96"
+  },
+  {
+    "text": "aspetta.",
+    "start": 43.11,
+    "end": 43.99,
+    "id": "w97"
+  },
+  {
+    "text": "Edice",
+    "start": 44.06,
+    "end": 44.32,
+    "id": "w98"
+  },
+  {
+    "text": "che",
+    "start": 44.32,
+    "end": 44.52,
+    "id": "w99"
+  },
+  {
+    "text": "la",
+    "start": 44.52,
+    "end": 44.56,
+    "id": "w100"
+  },
+  {
+    "text": "gente",
+    "start": 44.67,
+    "end": 44.91,
+    "id": "w101"
+  },
+  {
+    "text": "non",
+    "start": 44.91,
+    "end": 45.18,
+    "id": "w102"
+  },
+  {
+    "text": "esce",
+    "start": 45.18,
+    "end": 45.37,
+    "id": "w103"
+  },
+  {
+    "text": "più.",
+    "start": 45.44,
+    "end": 45.85,
+    "id": "w104"
+  },
+  {
+    "text": "Oggi",
+    "start": 45.85,
+    "end": 46.12,
+    "id": "w105"
+  },
+  {
+    "text": "il",
+    "start": 46.12,
+    "end": 46.39,
+    "id": "w106"
+  },
+  {
+    "text": "locale",
+    "start": 46.39,
+    "end": 46.66,
+    "id": "w107"
+  },
+  {
+    "text": "si",
+    "start": 46.72,
+    "end": 46.85,
+    "id": "w108"
+  },
+  {
+    "text": "sceglie",
+    "start": 46.85,
+    "end": 47.28,
+    "id": "w109"
+  },
+  {
+    "text": "dal",
+    "start": 47.28,
+    "end": 47.66,
+    "id": "w110"
+  },
+  {
+    "text": "telefono,",
+    "start": 47.66,
+    "end": 48.26,
+    "id": "w111"
+  },
+  {
+    "text": "non",
+    "start": 48.26,
+    "end": 48.39,
+    "id": "w112"
+  },
+  {
+    "text": "dalla",
+    "start": 48.39,
+    "end": 48.91,
+    "id": "w113"
+  },
+  {
+    "text": "strada.",
+    "start": 48.91,
+    "end": 49.52,
+    "id": "w114"
+  },
+  {
+    "text": "Eil",
+    "start": 49.52,
+    "end": 49.83,
+    "id": "w115"
+  },
+  {
+    "text": "tuo",
+    "start": 49.83,
+    "end": 50.14,
+    "id": "w116"
+  },
+  {
+    "text": "locale,",
+    "start": 50.14,
+    "end": 50.64,
+    "id": "w117"
+  },
+  {
+    "text": "su",
+    "start": 50.64,
+    "end": 50.8,
+    "id": "w118"
+  },
+  {
+    "text": "Google,",
+    "start": 50.8,
+    "end": 51.45,
+    "id": "w119"
+  },
+  {
+    "text": "come",
+    "start": 51.45,
+    "end": 51.75,
+    "id": "w120"
+  },
+  {
+    "text": "messo?",
+    "start": 51.81,
+    "end": 52.48,
+    "id": "w121"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 53,
+    "end": 53.06,
+    "id": "w122"
+  },
+  {
+    "text": "nei",
+    "start": 53.06,
+    "end": 53.28,
+    "id": "w123"
+  },
+  {
+    "text": "commenti.",
+    "start": 53.28,
+    "end": 53.94,
+    "id": "w124"
+  }
+]

@@ -387,6 +387,114 @@ Il tuo fatturato è fermo? Serve un funnel, non più traffico. 📊
 
 ---
 
+## 15. Due pizzerie, stessa pizza (58 s) — 3D + musica
+
+File: `apex-due-pizzerie/renders/apex-due-pizzerie-9x16.mp4`
+
+**Instagram**
+```text
+Due pizzerie. Stessa pizza. Una ha la fila, l'altra è vuota. 🍕
+
+La differenza non è l'impasto: è quello che succede PRIMA che tu entri.
+Foto vere, una recensione chiesta a ogni cliente contento, un post al giorno. Costo: quasi zero.
+
+Oggi il locale si sceglie dal telefono, non dalla strada.
+
+👇 E il tuo locale, su Google, com'è messo? Scrivilo nei commenti.
+
+#ristorazione #pizzeria #marketinglocale #googlemaps #recensioni #ristoratori #marketingristoranti #attivitalocali
+```
+
+**TikTok**
+```text
+Stessa pizza, una ha la fila e l'altra è vuota. Ecco perché 🍕 E il tuo locale su Google com'è messo?
+#pizzeria #ristorazione #marketing #googlemaps
+```
+
+---
+
+## 16. Una stella in più (53 s) — 3D + musica
+
+File: `apex-una-stella/renders/apex-una-stella-9x16.mp4`
+
+**Instagram**
+```text
+Una stella in più nelle recensioni può valere fino al 9% di fatturato. ⭐
+
+Lo dice uno studio di Harvard sui ristoranti. Eppure quasi nessun locale le chiede.
+
+Il cliente contento non scrive niente. Quello arrabbiato scrive subito.
+Se non le chiedi, online resti con le peggiori.
+
+Chiedila a voce, metti un QR alla cassa, rispondi a tutte.
+
+👇 L'ultima recensione quando l'hai chiesta? Scrivilo nei commenti.
+
+#recensioni #ristorazione #marketinglocale #google #ristoratori #attivitalocali #reputazioneonline #marketingdigitale
+```
+
+**TikTok**
+```text
+Una stella in più = fino al 9% di fatturato (studio Harvard) ⭐ Tu l'ultima recensione quando l'hai chiesta?
+#recensioni #ristorazione #marketing #attivita
+```
+
+---
+
+## 17. Il menu ti fa spendere di più (54 s) — 3D + musica
+
+File: `apex-il-menu/renders/apex-il-menu-9x16.mp4`
+
+**Instagram**
+```text
+Il menu del ristorante è progettato per farti spendere di più. E quasi nessuno se ne accorge. 🍽️
+
+1. Niente simbolo dell'euro
+2. Il piatto esca da 45 €
+3. I riquadri
+4. Le descrizioni
+
+Non è una truffa, è marketing: guidare la scelta. E vale per qualsiasi attività.
+
+👇 Quale di questi trucchi avevi già notato? Scrivi il numero nei commenti.
+
+#menu #ristorazione #psicologiadelprezzo #marketing #neuromarketing #ristoratori #pricing #attivitalocali
+```
+
+**TikTok**
+```text
+4 trucchi con cui il menu ti fa spendere di più 🍽️ Quale avevi già notato?
+#menu #ristorante #marketing #psicologia
+```
+
+---
+
+## 18. Il secchio bucato (52 s) — 3D + musica
+
+File: `apex-secchio-bucato/renders/apex-secchio-bucato-9x16.mp4`
+
+**Instagram**
+```text
+Trovare un cliente nuovo costa almeno 5 volte di più che tenerne uno. 🪣
+
+E tu stai spendendo tutto per quelli nuovi, mentre il cliente di ieri non torna.
+È come riempire un secchio bucato.
+
+Prima tappa i buchi: una tessera, un messaggio, il nome ricordato alla cassa.
+
+👇 Tu cosa fai per far tornare i tuoi clienti? Scrivilo nei commenti.
+
+#fidelizzazione #clienti #marketinglocale #bar #negozi #attivitalocali #imprenditori #marketingdigitale
+```
+
+**TikTok**
+```text
+Un cliente nuovo costa 5 volte di più che tenerne uno 🪣 Tu cosa fai per farli tornare?
+#clienti #marketing #attivita #bar
+```
+
+---
+
 ## Prima di pubblicare
 
 - **Commenti con parola chiave** (CLIENTI, AUDIT): rispondi in DM entro poche ore, altrimenti il contatto si raffredda.
