@@ -1,0 +1,542 @@
+<template>
+  <style>
+    @font-face { font-family: "Big Shoulders Display"; font-weight: 900; src: url("assets/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 500; src: url("assets/fonts/unbounded-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      /* "Un diamante è per sempre" — 47 shots in 8 colour chapters. True camera, shaded brilliant-cut gems, plane text,
+         extruded 3D type, two-layer depth of field, 3-sample motion blur. Every frame is a pure function of t. */
+      const W = [0.131,  0.223,  0.881,  1.112,  1.353,  1.835,  2.066,  2.14,  2.65,  2.71,  3.205,  3.379,  4.131,  4.654,  5.362,  5.569,  6.658,  7.086,  7.164,  7.33,  7.826,  8.244,  8.682,  9.257,  9.587,  9.841,  10.726,  11.014,  12.013,  13.278,  13.703,  14.112,  14.592,  14.757,  15.213,  15.764,  15.969,  16.11,  16.496,  17.204,  17.267,  17.991,  18.858,  19.092,  19.638,  19.794,  20.643,  20.703,  21.101,  21.161,  21.286,  21.754,  21.988,  22.436,  23.099,  23.351,  23.818,  23.935,  24.636,  25.109,  26.054,  26.239,  27.008,  27.628,  28.221,  28.36,  29.193,  29.258,  29.894,  29.959,  30.52,  30.725,  30.866,  31.276,  31.524,  32.128,  32.69,  33.041,  33.25,  33.593,  34.012,  34.907,  35.777,  35.847,  36.645,  36.755,  37.135,  37.364,  37.963,  38.475,  39.388,  39.502,  39.705,  40.213,  40.627,  41.169,  41.376,  41.514,  42.376,  42.815,  43.237,  43.47,  43.702,  43.814,  44.693,  44.919,  45.53,  45.914,  46.852,  47.322,  47.657,  49.294,  49.5,  49.988,  50.751,  51.384,  51.834,  52.341,  52.785,  53.705,  53.765,  54.478,  54.687,  55.815,  55.941,  56.719,  56.817,  57.099,  58.072,  58.321,  58.819,  59.124,  59.447,  59.844,  60.065,  60.896,  61.505,  61.961,  62.344,  62.406,  63.297,  63.414,  63.875,  64.191,  64.616,  64.733,  65.131,  65.303,  65.402,  66.252,  66.824,  67.752,  67.96,  69.275,  69.463,  70.452,  70.74,  70.911,  71.244,  71.676,  72.117,  72.63,  72.774,  73.864,  74.103,  75.519,  75.721,  77.3,  77.4,  77.74,  78.0,  78.08,  78.829,  79.17,  79.486,  79.908,  80.038,  80.744,  80.983,  82.286,  82.371,  83.006,  83.239,  83.313,  83.546,  84.34,  84.4,  84.984,  85.044,  85.388,  85.57,  85.694,  85.999,  86.618,  87.261,  87.417,  88.101,  88.682,  89.342,  90.053,  90.113,  90.946,  91.143,  91.395,  92.27,  92.496,  92.949,  93.166];
+      const D = 97.81, BEAT = 0.6006, B0 = 0.035;
+      const out = document.querySelector("#st-canvas"), octx = out.getContext("2d");
+      const mk = () => { const k = document.createElement("canvas"); k.width = 1080; k.height = 1920; return k; };
+      const FG = mk(), BG = mk(), FR = mk(); const fgc = FG.getContext("2d"), bgc = BG.getContext("2d"), frc = FR.getContext("2d");
+      let c = fgc;
+      const WH = "#ffffff", GR = "#8c8c8c", DK = "#4c4c4c", DD = "#262626", FILL = "rgba(4,4,6,0.93)";
+      const CH = [[0, "#00E5FF"], [W[26], "#FFB020"], [W[60], "#FF7A1A"], [W[82], "#FF2D9A"], [W[108], "#00E5FF"], [W[136], "#B45CFF"], [W[151], "#FF2A3D"], [W[179], "#00E5FF"]];
+      let A = "#00E5FF";
+      const accAt = (t) => { let a = CH[0][1]; for (const q of CH) if (t >= q[0] - 0.02) a = q[1]; return a; };
+      const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+      const o4 = (p) => 1 - Math.pow(1 - p, 4), ex = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2), i2 = (p) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2), in3 = (p) => p * p * p;
+      const back = (p) => 1 + 2.6 * Math.pow(p - 1, 3) + 1.6 * Math.pow(p - 1, 2);
+      const pop = (t, t0, d) => back(seg(t, t0, t0 + (d || 0.28)));
+      const hit = (t, t0, k) => (t >= t0 ? Math.exp(-(t - t0) * (k || 9)) : 0);
+      function rng(seed) { return function () { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const R = rng(1947); const RN = []; for (let i = 0; i < 5000; i++) RN.push(R());
+      const rn = (i) => RN[((i % 5000) + 5000) % 5000];
+      const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k], lp3 = (a, b, p) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p), lerp(a[2], b[2], p)];
+      const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], dotp = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+      const X = [1, 0, 0], Y = [0, 1, 0], Z = [0, 0, 1], NZ = [0, 0, -1];
+
+      /* ---- camera ---- */
+      const CX = 540, CY = 1150, NEAR = 20;
+      let F = 1000, E = [0, 0, 0], Rv = [1, 0, 0], Uv = [0, 1, 0], Fv = [0, 0, -1];
+      function camera(eye, look, f, roll, up) {
+        E = eye; F = f || 1000; up = up || Y;
+        let fv = [look[0] - eye[0], look[1] - eye[1], look[2] - eye[2]]; const fl = Math.hypot(fv[0], fv[1], fv[2]) || 1; fv = mul(fv, 1 / fl);
+        let rv = cross(fv, up); const rl = Math.hypot(rv[0], rv[1], rv[2]) || 1; rv = mul(rv, 1 / rl); const uv = cross(rv, fv);
+        const r = ((roll || 0) * Math.PI) / 180, cr = Math.cos(r), sr = Math.sin(r);
+        Rv = add(mul(rv, cr), mul(uv, sr)); Uv = add(mul(uv, cr), mul(rv, -sr)); Fv = fv;
+      }
+      const cs = (p) => { const x = p[0] - E[0], y = p[1] - E[1], z = p[2] - E[2]; return [x * Rv[0] + y * Rv[1] + z * Rv[2], x * Uv[0] + y * Uv[1] + z * Uv[2], x * Fv[0] + y * Fv[1] + z * Fv[2]]; };
+      const sp = (q) => [CX + (q[0] * F) / q[2], CY - (q[1] * F) / q[2]];
+      let FOGD = 3400; const fog = (z) => clamp(1.2 - z / FOGD, 0.08, 1);
+      function line(a, b, w, col, glow) {
+        let P = cs(a), Q = cs(b);
+        if (P[2] < NEAR && Q[2] < NEAR) return;
+        if (P[2] < NEAR) { const k = (NEAR - P[2]) / (Q[2] - P[2]); P = [lerp(P[0], Q[0], k), lerp(P[1], Q[1], k), NEAR]; }
+        if (Q[2] < NEAR) { const k = (NEAR - Q[2]) / (P[2] - Q[2]); Q = [lerp(Q[0], P[0], k), lerp(Q[1], P[1], k), NEAR]; }
+        const pa = sp(P), pb = sp(Q), zm = (P[2] + Q[2]) / 2, ga = c.globalAlpha;
+        c.globalAlpha = ga * fog(zm); c.strokeStyle = col; c.lineWidth = clamp((w * F) / zm, 1.2, 90); c.lineCap = "round"; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow;
+        c.beginPath(); c.moveTo(pa[0], pa[1]); c.lineTo(pb[0], pb[1]); c.stroke(); c.globalAlpha = ga;
+      }
+      const lineP = (a, b, p, w, col, glow) => { if (p > 0) line(a, lp3(a, b, Math.min(1, p)), w, col, glow); };
+      function loop(pts, w, col, glow) { for (let i = 0; i < pts.length; i++) line(pts[i], pts[(i + 1) % pts.length], w, col, glow); }
+      function pline(pts, w, col, glow) { for (let i = 0; i < pts.length - 1; i++) line(pts[i], pts[i + 1], w, col, glow); }
+      function fillPoly(pts, col, a) { const q = pts.map(cs); for (const v of q) if (v[2] < NEAR) return; const ga = c.globalAlpha; c.globalAlpha = ga * (a === undefined ? 1 : a) * fog(q[0][2]); c.fillStyle = col; c.shadowBlur = 0; c.beginPath(); q.forEach((v, i) => { const p = sp(v); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); }); c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function dot(p, r, col, glow) { const q = cs(p); if (q[2] < NEAR) return; const s = sp(q), rr = clamp((r * F) / q[2], 0.8, 700), ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = glow === undefined ? 12 : glow; c.beginPath(); c.arc(s[0], s[1], rr, 0, 6.283); c.fill(); c.globalAlpha = ga; }
+      function ptext(runs, o, ux, uy, size, font, glow, align) {
+        const P0 = cs(o), PX = cs(add(o, mul(ux, 100))), PY = cs(add(o, mul(uy, 100)));
+        if (P0[2] < NEAR || PX[2] < NEAR || PY[2] < NEAR) return;
+        const s0 = sp(P0), sx = sp(PX), sy = sp(PY), px = (size * F) / P0[2]; if (px < 3 || px > 6000) return;
+        const ga = c.globalAlpha; c.save();
+        c.setTransform((sx[0] - s0[0]) / 100, (sx[1] - s0[1]) / 100, -(sy[0] - s0[0]) / 100, -(sy[1] - s0[1]) / 100, s0[0], s0[1]);
+        c.font = (font || '900 SZpx "Big Shoulders Display"').replace("SZ", size); c.textBaseline = "middle"; c.textAlign = "left";
+        if (typeof runs === "string") runs = [{ s: runs, col: WH }];
+        let tw = 0; const ws = runs.map((r) => { const w = c.measureText(r.s).width; tw += w; return w; });
+        let x = align === "left" ? 0 : -tw / 2;
+        runs.forEach((r, i) => { if (r.a !== 0) { c.globalAlpha = ga * fog(P0[2]) * (r.a === undefined ? 1 : r.a); c.fillStyle = r.col; c.shadowColor = r.col; c.shadowBlur = glow === undefined ? 14 : glow; const k = r.k || 1; if (k !== 1 || r.dy) { c.save(); c.translate(x + ws[i] / 2, r.dy || 0); c.scale(k, k); c.fillText(r.s, -ws[i] / 2, 0); c.restore(); } else c.fillText(r.s, x, 0); } x += ws[i]; });
+        c.restore(); c.globalAlpha = ga;
+      }
+      /* extruded 3D type: dark layers stacked along the normal, then the lit face */
+      function etext(s, o, ux, uy, size, col, depth, font) { const n = cross(ux, uy), L = depth || 9; for (let k = L; k >= 1; k--) ptext([{ s: s, col: k === L ? "#2a2a2a" : "#141414" }], add(o, mul(n, -k * 2.4)), ux, uy, size, font, 0); ptext([{ s: s, col: col }], o, ux, uy, size, font, 22); }
+      const facing = (o, n) => dotp(n, [E[0] - o[0], E[1] - o[1], E[2] - o[2]]) > 0;
+      function star(p, r, col) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), rr = (r * F) / q[2]; if (rr < 1 || rr > 900) return; const ga = c.globalAlpha; c.globalAlpha = ga * fog(q[2]); c.fillStyle = col; c.shadowColor = col; c.shadowBlur = 18; c.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i * Math.PI) / 5, k = i % 2 ? rr * 0.45 : rr; if (i) c.lineTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); else c.moveTo(v[0] + Math.cos(a) * k, v[1] + Math.sin(a) * k); } c.closePath(); c.fill(); c.globalAlpha = ga; }
+      function grid(n, step, y, col, ox, oz) { ox = ox || 0; oz = oz || 0; for (let i = -n; i <= n; i++) { line([ox + i * step, y || 0, oz - n * step], [ox + i * step, y || 0, oz + n * step], 2.5, col || DD, 0); line([ox - n * step, y || 0, oz + i * step], [ox + n * step, y || 0, oz + i * step], 2.5, col || DD, 0); } }
+      function box(p, hw, h, hd, edge, face, fa, w) { const [x, y, z] = p; const V = [[x - hw, y, z + hd], [x + hw, y, z + hd], [x + hw, y + h, z + hd], [x - hw, y + h, z + hd], [x - hw, y, z - hd], [x + hw, y, z - hd], [x + hw, y + h, z - hd], [x - hw, y + h, z - hd]];
+        [[0, 1, 2, 3, Z], [1, 5, 6, 2, X], [4, 0, 3, 7, [-1, 0, 0]], [3, 2, 6, 7, Y], [5, 4, 7, 6, NZ]].forEach((f) => { if (facing(V[f[0]], f[4])) fillPoly([V[f[0]], V[f[1]], V[f[2]], V[f[3]]], face || FILL, fa === undefined ? 1 : fa); });
+        [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]].forEach((e) => line(V[e[0]], V[e[1]], w || 4, edge, 12)); }
+      function circ(o, ux, uy, r, w, col, glow, a0, a1, n) { n = n || 28; let prev = null; for (let i = 0; i <= n; i++) { const a = lerp(a0 || 0, a1 === undefined ? 6.283 : a1, i / n), p = add(o, add(mul(ux, Math.cos(a) * r), mul(uy, Math.sin(a) * r))); if (prev) line(prev, p, w, col, glow); prev = p; } }
+      function disk(o, ux, uy, r, col, a) { const pts = []; for (let i = 0; i < 24; i++) { const an = (i / 24) * 6.283; pts.push(add(o, add(mul(ux, Math.cos(an) * r), mul(uy, Math.sin(an) * r)))); } fillPoly(pts, col, a); }
+      const jit = (t, a) => [Math.sin(t * 7.3) * a + Math.sin(t * 13.1) * a * 0.5, Math.sin(t * 9.1) * a * 0.8, Math.sin(t * 5.7) * a * 0.4];
+
+      /* person from 3D joints; o.up raises the arms, o.torch lights a flame in the raised hand */
+      function person(x, z, h, ph, col, s, o) {
+        o = o || {}; s = s === undefined ? 1 : s; if (s <= 0.01) return;
+        const y0 = o.y || 0, dx = Math.cos(h), dz = Math.sin(h), sx = -dz, sz = dx, st = Math.sin(ph) * 26 * s, lf = Math.max(0, Math.cos(ph)) * 11 * s, rf = Math.max(0, -Math.cos(ph)) * 11 * s, bob = Math.abs(Math.sin(ph)) * 3 * s;
+        const hip = [x, y0 + 62 * s + bob, z], neck = [x + dx * 4 * s, y0 + 108 * s + bob, z + dz * 4 * s];
+        if (o.dress) { const D1 = [[x + sx * 12 * s, y0 + 92 * s, z + sz * 12 * s], [x - sx * 12 * s, y0 + 92 * s, z - sz * 12 * s], [x - sx * 26 * s, y0 + 38 * s, z - sz * 26 * s], [x + sx * 26 * s, y0 + 38 * s, z + sz * 26 * s]]; fillPoly(D1, FILL); loop(D1, 5 * s, col); }
+        line(hip, [x + dx * st + sx * 8 * s, y0 + lf, z + dz * st + sz * 8 * s], 9 * s, col); line(hip, [x - dx * st - sx * 8 * s, y0 + rf, z - dz * st - sz * 8 * s], 9 * s, col);
+        line(hip, neck, 15 * s, col);
+        const sl = [neck[0] + sx * 17 * s, neck[1] - 2 * s, neck[2] + sz * 17 * s], sr = [neck[0] - sx * 17 * s, neck[1] - 2 * s, neck[2] - sz * 17 * s];
+        line(sl, sr, 9 * s, col);
+        const up = o.up || 0, hl = [x + sx * 22 * s - dx * st * 0.8, y0 + 68 * s + bob, z + sz * 22 * s - dz * st * 0.8], hr = [x - sx * 22 * s + dx * st * 0.8, y0 + 68 * s + bob, z - sz * 22 * s + dz * st * 0.8];
+        const hu = [x - sx * 26 * s, y0 + 168 * s, z - sz * 26 * s];
+        line(sl, hl, 7 * s, col); line(sr, lp3(hr, hu, up), 7 * s, col);
+        dot([neck[0] + dx * 3 * s, y0 + 130 * s + bob, neck[2] + dz * 3 * s], 18 * s, col);
+        if (o.torch) flame(add(lp3(hr, hu, up), [0, 10 * s, 0]), 0.5 * s * o.torch, o.t || 0, o.torchCol || "#FF7A1A");
+      }
+      function flame(p, s, t, col) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), r = (60 * s * F) / q[2]; if (r < 1) return; const fl = 1 + 0.12 * Math.sin(t * 23 + p[0]) + 0.08 * Math.sin(t * 37 + p[2]);
+        const g = c.createRadialGradient(v[0], v[1] - r * 0.4, 0, v[0], v[1] - r * 0.4, r * 2.2); g.addColorStop(0, "rgba(255,240,200,0.95)"); g.addColorStop(0.3, col); g.addColorStop(1, "rgba(0,0,0,0)");
+        c.save(); c.shadowColor = col; c.shadowBlur = r * 1.4; c.fillStyle = g; c.beginPath(); c.moveTo(v[0], v[1] - r * 2.1 * fl); c.quadraticCurveTo(v[0] + r * 0.95, v[1] - r * 0.4, v[0], v[1] + r * 0.45); c.quadraticCurveTo(v[0] - r * 0.95, v[1] - r * 0.4, v[0], v[1] - r * 2.1 * fl); c.fill(); c.restore(); }
+      function newspaper(o, ux, uy, s, head, sub, col) { const n = cross(ux, uy), P = (x, y) => add(o, add(mul(ux, x * s), mul(uy, y * s)));
+        const Q = [P(-150, -210), P(150, -210), P(150, 210), P(-150, 210)]; fillPoly(Q, "#0d0d0d"); loop(Q, 4 * s, WH, 14);
+        const fr = facing(o, n), sgn = fr ? 1 : -1, ux2 = fr ? ux : mul(ux, -1);
+        const T = (x, y) => add(P(x * sgn, y), mul(n, 0.6 * sgn));
+        ptext([{ s: "THE DAILY NEWS", col: GR }], T(0, 182), mul(ux2, s), mul(uy, s), 30, null, 0); line(T(-135, 162), T(135, 162), 3 * s, GR, 0); line(T(-135, 156), T(135, 156), 1.5 * s, GR, 0);
+        ptext([{ s: head, col: col || WH }], T(0, 112), mul(ux2, s), mul(uy, s), head.length > 9 ? 980 / head.length : 104, null, 18);
+        if (sub) ptext([{ s: sub, col: GR }], T(0, 60), mul(ux2, s), mul(uy, s), 26, '500 SZpx "Unbounded"', 0);
+        for (let i = 0; i < 8; i++) { const y = 20 - i * 26; line(T(-135, y), T(-10, y), 2.2 * s, DK, 0); line(T(10, y), T(135 - (i % 3) * 20, y), 2.2 * s, DK, 0); }
+        const IM = [T(-135, -200), T(-10, -200), T(-10, -190), T(-135, -190)]; }
+      function room(w, h, d, col, door) { col = col || DK; const V = [[-w, 0, -d], [w, 0, -d], [w, h, -d], [-w, h, -d]]; loop(V, 4, col, 0); [[-w, 0], [w, 0], [w, h], [-w, h]].forEach((q) => line([q[0], q[1], -d], [q[0], q[1], d], 4, col, 0)); for (let i = 1; i < 6; i++) line([-w + (2 * w * i) / 6, 0, -d], [-w + (2 * w * i) / 6, 0, d], 2, DD, 0); for (let i = 1; i < 6; i++) line([-w, 0, -d + (2 * d * i) / 6], [w, 0, -d + (2 * d * i) / 6], 2, DD, 0); }
+      function lamp(p, on, col) { line(p, add(p, [0, 160, 0]), 6, GR); line(add(p, [0, 160, 0]), add(p, [60, 200, 0]), 6, GR); const hd = add(p, [80, 190, 0]); loop([add(hd, [-40, 20, 0]), add(hd, [40, 20, 0]), add(hd, [60, -30, 0]), add(hd, [-60, -30, 0])], 5, on > 0 ? col : GR);
+        if (on > 0) { const a = cs(add(hd, [0, -30, 0])), b1 = cs(add(p, [-120, -5, 60])), b2 = cs(add(p, [280, -5, 60])); if (a[2] > NEAR && b1[2] > NEAR && b2[2] > NEAR) { const A1 = sp(a), B1 = sp(b1), B2 = sp(b2); const g = c.createLinearGradient(A1[0], A1[1], (B1[0] + B2[0]) / 2, (B1[1] + B2[1]) / 2); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); c.save(); c.globalAlpha *= 0.32 * on; c.fillStyle = g; c.shadowBlur = 0; c.beginPath(); c.moveTo(A1[0], A1[1]); c.lineTo(B1[0], B1[1]); c.lineTo(B2[0], B2[1]); c.closePath(); c.fill(); c.restore(); } } }
+      function headProfile(o, s, col, ux) { ux = ux || X; const P = (x, y) => add(o, add(mul(ux, x * s), [0, y * s, 0]));
+        const pts = [[-70, -160], [-60, -60], [-90, 0], [-95, 60], [-70, 120], [-10, 160], [60, 150], [100, 100], [110, 40], [100, 10], [125, -30], [100, -40], [105, -60], [95, -75], [100, -95], [80, -110], [60, -120], [50, -160]].map((q) => P(q[0], q[1]));
+        fillPoly(pts, FILL); loop(pts, 5 * s, col, 16); }
+      function heart(o, ux, uy, r, col) { const pts = []; for (let i = 0; i < 30; i++) { const a = (i / 30) * 6.283; pts.push(add(o, add(mul(ux, (16 * Math.pow(Math.sin(a), 3) * r) / 16), mul(uy, ((13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)) * r) / 16)))); } fillPoly(pts, col, 0.25); loop(pts, 5, col, 18); }
+      function crown(o, ux, uy, r, col) { const P = (x, y) => add(o, add(mul(ux, x * r), mul(uy, y * r))); const pts = [P(-1, -0.6), P(1, -0.6), P(1.1, 0.5), P(0.55, 0), P(0, 0.75), P(-0.55, 0), P(-1.1, 0.5)]; fillPoly(pts, col, 0.25); loop(pts, 5, col, 18); }
+      function key(o, ux, uy, r, col) { circ(add(o, mul(ux, -0.6 * r)), ux, uy, 0.4 * r, 5, col, 16); line(add(o, mul(ux, -0.2 * r)), add(o, mul(ux, r)), 5, col, 16); line(add(o, mul(ux, 0.7 * r)), add(o, add(mul(ux, 0.7 * r), mul(uy, -0.3 * r))), 5, col, 16); line(add(o, mul(ux, 0.95 * r)), add(o, add(mul(ux, 0.95 * r), mul(uy, -0.3 * r))), 5, col, 16); }
+      function check(o, r, col, k) { if (k <= 0) return; pline([add(o, [-r * k, 0, 0]), add(o, [-r * 0.3 * k, -r * 0.7 * k, 0]), add(o, [r * k, r * 0.8 * k, 0])], 7, col, 18); }
+      function pressCam(p, yaw, col, flash) { const cy = Math.cos(yaw), sy = Math.sin(yaw), L = (a, b, d) => add(p, [a * cy + d * sy, b, -a * sy + d * cy]);
+        [[-40, 0, 60], [40, 0, 60], [0, 0, -60]].forEach((q) => line(L(0, 140, 0), L(q[0], 0, q[2]), 4, DK, 0));
+        const B = [L(-40, 140, -30), L(40, 140, -30), L(40, 220, -30), L(-40, 220, -30)]; fillPoly(B, FILL); loop(B, 5, GR); loop([L(-30, 150, 40), L(30, 150, 40), L(30, 210, 40), L(-30, 210, 40)], 4, GR); [[-40, 140], [40, 140], [40, 220], [-40, 220]].forEach((q, i) => line(L(q[0], q[1], -30), L(q[0] * 0.75, 150 + (i > 1 ? 60 : 0), 40), 3, DK, 0));
+        circ(L(0, 180, 46), [cy, 0, -sy], Y, 18, 4, GR, 8); const fl = L(48, 250, 0); circ(fl, [cy, 0, -sy], Y, 30, 4, flash > 0.05 ? WH : GR, flash > 0.05 ? 30 : 6); line(L(40, 210, 0), fl, 4, GR, 0); if (flash > 0.05) dot(fl, 40 * flash, WH, 60); }
+      function torch(p, s, t, col) { const P = (y) => add(p, [0, y * s, 0]); pline([add(p, [-14 * s, 0, 0]), add(p, [-24 * s, 170 * s, 0]), add(p, [24 * s, 170 * s, 0]), add(p, [14 * s, 0, 0])], 6, WH); fillPoly([add(p, [-14 * s, 0, 0]), add(p, [-24 * s, 170 * s, 0]), add(p, [24 * s, 170 * s, 0]), add(p, [14 * s, 0, 0])], FILL); circ(P(170), X, Z, 34 * s, 6, WH, 14); flame(P(200), 1.6 * s, t, col); }
+      function egg(o, r, col) { const pts = []; for (let i = 0; i < 18; i++) { const a = (i / 18) * 6.283, k = 1 + 0.18 * Math.sin(a * 3 + i); pts.push(add(o, [Math.cos(a) * r * k, 0, Math.sin(a) * r * k * 0.9])); } fillPoly(pts, "#e9e9e9", 0.9); loop(pts, 3, WH, 10); disk(add(o, [r * 0.1, 2, 0]), X, Z, r * 0.38, col, 1); }
+      function bacon(o, len, col, ph) { const a = [], b = []; for (let i = 0; i <= 16; i++) { const u = i / 16, x = -len / 2 + u * len, y = 6 + Math.sin(u * 9 + (ph || 0)) * 10; a.push(add(o, [x, y, -14])); b.push(add(o, [x, y, 14])); } for (let i = 0; i < 16; i++) fillPoly([a[i], a[i + 1], b[i + 1], b[i]], i % 3 === 1 ? "#5a1a14" : "#9a2e22", 0.95); pline(a, 4, col, 10); pline(b, 4, col, 10); }
+      function cig(p, len, lit, t) { box(p, len / 2, 16, 8, WH, "#e8e8e8", 0.9, 3); box(add(p, [-len / 2 - 20, 0, 0]), 20, 16, 8, "#d08a3a", "#a06020", 0.9, 3); if (lit) for (let k = 0; k < 3; k++) { const pts = []; for (let i = 0; i < 12; i++) { const u = i / 11; pts.push(add(p, [len / 2 + 10 + Math.sin(u * 7 + t * 2 + k) * 20 * u, 10 + u * 260, k * 10])); } c.save(); c.globalAlpha *= 0.35; pline(pts, 3, GR, 6); c.restore(); } }
+      function phone(o, ux, uy, s, col) { const P = (x, y) => add(o, add(mul(ux, x * s), mul(uy, y * s))); const Q = [P(-90, -180), P(90, -180), P(90, 180), P(-90, 180)]; fillPoly(Q, "#050505"); loop(Q, 6 * s, col, 18); line(P(-24, 165), P(24, 165), 4 * s, GR); }
+      function ringLight(p, r, col) { circ(p, X, Y, r, 10, col, 30); circ(p, X, Y, r * 0.8, 3, col, 10); line(add(p, [0, -r, 0]), [p[0], 0, p[2]], 5, DK, 0); }
+      function chess(p, s, col) { const P = (y) => add(p, [0, y * s, 0]); [[0, 40], [10, 30], [20, 26], [40, 18], [70, 14], [90, 22], [100, 16], [120, 20]].forEach((q, i, arr) => { if (i) { circ(P(q[0]), X, Z, q[1] * s, 4, col, 12, 0, 6.283, 20); line(add(P(arr[i - 1][0]), [arr[i - 1][1] * s, 0, 0]), add(P(q[0]), [q[1] * s, 0, 0]), 4, col, 10); line(add(P(arr[i - 1][0]), [-arr[i - 1][1] * s, 0, 0]), add(P(q[0]), [-q[1] * s, 0, 0]), 4, col, 10); } }); dot(P(140), 20 * s, col, 16); }
+      function building(x, z, w, d, h, col, win) { box([x, 0, z], w, h, d, col || DK, FILL, 1, 3); if (win) for (let y = 40; y < h - 20; y += 60) for (let k = -1; k <= 1; k++) if (rn(x * 7 + y + k * 13) > 0.45) line([x + k * w * 0.55 - 8, y, z + d + 1], [x + k * w * 0.55 + 8, y, z + d + 1], 6, rn(x + y + k) > 0.8 ? A : "#3a3a3a", 6); }
+      function church(x, z, col) { box([x, 0, z], 120, 420, 90, col, FILL, 1, 5); [-80, 80].forEach((dx) => { box([x + dx, 420, z], 34, 200, 34, col, FILL, 1, 4); fillPoly([[x + dx - 34, 620, z + 34], [x + dx + 34, 620, z + 34], [x + dx, 820, z]], FILL); loop([[x + dx - 34, 620, z + 34], [x + dx + 34, 620, z + 34], [x + dx, 820, z]], 4, col); });
+        pline([[x - 40, 0, z + 91], [x - 40, 190, z + 91], [x, 250, z + 91], [x + 40, 190, z + 91], [x + 40, 0, z + 91]], 5, col); circ([x, 320, z + 91], X, Y, 46, 5, col, 14); }
+      /* ---- diamond-story primitives ---- */
+      const nrm = (a) => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; }, sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+      let LIGHT = nrm([0.5, 0.9, 0.6]);
+      function hexMix(h, k) { const n = parseInt(h.slice(1), 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255; return "rgb(" + Math.round(r * k) + "," + Math.round(g * k) + "," + Math.round(b * k) + ")"; }
+      /* brilliant-cut gem: convex, so back-face culling is enough; facets shaded from a moving light */
+      function gem(o, R, ry, rx, col, op) {
+        if (R <= 0.5) return; op = op === undefined ? 1 : op;
+        const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx || 0), sx = Math.sin(rx || 0);
+        const tf = (p) => { const x = p[0] * cy + p[2] * sy, z = -p[0] * sy + p[2] * cy, y = p[1]; return [o[0] + x * R, o[1] + (y * cx - z * sx) * R, o[2] + (y * sx + z * cx) * R]; };
+        const T = [], G = []; for (let k = 0; k < 8; k++) { const a = (k * Math.PI) / 4; T.push(tf([Math.cos(a) * 0.55, 0.34, Math.sin(a) * 0.55])); }
+        for (let j = 0; j < 16; j++) { const a = (j * Math.PI) / 8; G.push(tf([Math.cos(a), 0, Math.sin(a)])); }
+        const C = tf([0, -0.88, 0]), O = tf([0, -0.15, 0]); const F2 = [T.slice()];
+        for (let k = 0; k < 8; k++) { const k1 = (k + 1) % 8; F2.push([T[k], G[2 * k], G[2 * k + 1]], [T[k], G[2 * k + 1], T[k1]], [T[k1], G[2 * k + 1], G[(2 * k + 2) % 16]]); }
+        for (let j = 0; j < 16; j++) F2.push([G[j], C, G[(j + 1) % 16]]);
+        const ga = c.globalAlpha; c.globalAlpha = ga * op;
+        F2.forEach((f, i) => { const m = [0, 0, 0]; f.forEach((v) => { m[0] += v[0] / f.length; m[1] += v[1] / f.length; m[2] += v[2] / f.length; });
+          let n = nrm(cross(sub(f[1], f[0]), sub(f[2], f[0]))); if (dotp(n, sub(m, O)) < 0) n = mul(n, -1); const vw = sub(E, m); if (dotp(n, vw) <= 0) return;
+          const v = nrm(vw), h = nrm(add(LIGHT, v)), sp1 = Math.pow(Math.max(0, dotp(n, h)), 18), df = Math.max(0, dotp(n, LIGHT)), rim = Math.pow(1 - Math.abs(dotp(n, v)), 2);
+          const tint = i % 5 === 1 || i % 7 === 3 ? col : WH; fillPoly(f, "#05070a", 1); fillPoly(f, tint, clamp(0.08 + df * 0.32 + sp1 * 1.2 + rim * 0.25, 0, 1)); });
+        F2.forEach((f) => { const m = f[0]; let n = nrm(cross(sub(f[1], f[0]), sub(f[2], f[0]))); const cc = [(f[0][0] + f[1][0] + f[2][0]) / 3, (f[0][1] + f[1][1] + f[2][1]) / 3, (f[0][2] + f[1][2] + f[2][2]) / 3]; if (dotp(n, sub(cc, O)) < 0) n = mul(n, -1); if (dotp(n, sub(E, cc)) <= 0) return; c.globalAlpha = ga * op * 0.6; loop(f, R * 0.011, WH, 6); });
+        c.globalAlpha = ga;
+      }
+      function glint(p, s, col, rot) { const q = cs(p); if (q[2] < NEAR) return; const v = sp(q), r = (s * F) / q[2]; if (r < 2) return; const ga = c.globalAlpha; c.save(); c.globalAlpha = ga * fog(q[2]); c.translate(v[0], v[1]); c.rotate(rot || 0); c.fillStyle = col || WH; c.shadowColor = col || WH; c.shadowBlur = r * 0.8;
+        for (let k = 0; k < 4; k++) { const L = k % 2 ? r * 0.6 : r; c.beginPath(); c.moveTo(0, -L); c.lineTo(r * 0.07, 0); c.lineTo(0, L); c.lineTo(-r * 0.07, 0); c.closePath(); c.fill(); c.rotate(Math.PI / 2); }
+        c.beginPath(); c.arc(0, 0, Math.min(r * 0.12, 14), 0, 6.283); c.fillStyle = "#fff"; c.fill(); c.restore(); }
+      /* engagement ring standing up, gem on top */
+      function ring(o, R, ry, col, gr) { const ux = [Math.cos(ry), 0, -Math.sin(ry)], uz = [Math.sin(ry), 0, Math.cos(ry)], w = R * 0.16;
+        circ(add(o, mul(uz, w)), ux, Y, R, R * 0.05, GR, 10, 0, 6.283, 40); circ(add(o, mul(uz, -w)), ux, Y, R, R * 0.05, GR, 10, 0, 6.283, 40); circ(o, ux, Y, R * 1.06, R * 0.06, WH, 14, 0, 6.283, 40);
+        for (let k = 0; k < 4; k++) { const a = Math.PI / 2 + (k - 1.5) * 0.16; line(add(o, [Math.cos(a) * R * ux[0], Math.sin(a) * R, Math.cos(a) * R * ux[2]]), add(o, [0, R * 1.32, 0]), R * 0.035, WH, 8); }
+        gem(add(o, [0, R * 1.42, 0]), R * 0.5, gr === undefined ? ry : gr, 0, col); }
+      function ringBox(o, s, open, ry, col) { const L = (x, y, z) => { const cy = Math.cos(ry), sy = Math.sin(ry); return add(o, [(x * cy + z * sy) * s, y * s, (-x * sy + z * cy) * s]); };
+        const B = [[-1, 0, 1], [1, 0, 1], [1, 0.8, 1], [-1, 0.8, 1], [-1, 0, -1], [1, 0, -1], [1, 0.8, -1], [-1, 0.8, -1]].map((q) => L(q[0] * 110, q[1] * 110, q[2] * 100));
+        [[0, 1, 2, 3, 0], [1, 5, 6, 2, 1], [4, 0, 3, 7, 2], [5, 4, 7, 6, 3], [3, 2, 6, 7, 4]].forEach((f) => { const P = [B[f[0]], B[f[1]], B[f[2]], B[f[3]]]; const m = mul(add(add(P[0], P[1]), add(P[2], P[3])), 0.25); let n = nrm(cross(sub(P[1], P[0]), sub(P[3], P[0]))); if (dotp(n, sub(m, L(0, 44, 0))) < 0) n = mul(n, -1); if (dotp(n, sub(E, m)) > 0) fillPoly(P, f[4] === 4 ? "#1a0610" : "#0b0b0e", 1); });
+        [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]].forEach((e) => line(B[e[0]], B[e[1]], 3 * s, GR, 8));
+        const a = open * 1.9, hz = (z, y) => [z * Math.cos(a) - y * Math.sin(a), z * Math.sin(a) + y * Math.cos(a)];
+        const lid = [[-1, 0, 0], [1, 0, 0], [1, 0, 1], [-1, 0, 1]].map((q) => { const r2 = hz(q[2] * 200 - 0, q[1]); return L(q[0] * 112, 88 + r2[1] + 0, -100 + r2[0]); });
+        fillPoly(lid, "#0b0b0e", 1); loop(lid, 3 * s, open > 0.1 ? col : GR, 14); }
+      function couple(x, z, s, col, kneel, t) { person(x - 70 * s, z, 0, 0, WH, s, { dress: true }); kneeler(x + 70 * s, z, Math.PI, s, col, kneel); }
+      function kneeler(x, z, h, s, col, k) { const dx = Math.cos(h), dz = Math.sin(h), sx = -dz, sz = dx, hy = lerp(62, 44, k) * s; const hip = [x, hy, z], neck = [x + dx * lerp(4, 18, k) * s, hy + 46 * s, z + dz * lerp(4, 18, k) * s];
+        line(hip, [x + dx * 30 * k * s + sx * 8 * s, lerp(30, 40, k) * s, z + dz * 30 * k * s + sz * 8 * s], 9 * s, col); line([x + dx * 30 * k * s + sx * 8 * s, lerp(30, 40, k) * s, z + dz * 30 * k * s + sz * 8 * s], [x + dx * 34 * k * s + sx * 8 * s, 0, z + dz * 34 * k * s + sz * 8 * s], 9 * s, col);
+        line(hip, [x - dx * 6 * s - sx * 8 * s, lerp(30, 4, k) * s, z - dz * 6 * s - sz * 8 * s], 9 * s, col); line([x - dx * 6 * s - sx * 8 * s, lerp(30, 4, k) * s, z - dz * 6 * s - sz * 8 * s], [x - dx * 40 * k * s - sx * 8 * s, 0, z - dz * 40 * k * s - sz * 8 * s], 9 * s, col);
+        line(hip, neck, 15 * s, col); const hand = [x + dx * 52 * s, hy + 34 * s, z + dz * 52 * s]; line(neck, hand, 7 * s, col); dot([neck[0] + dx * 4 * s, neck[1] + 22 * s, neck[2] + dz * 4 * s], 18 * s, col); return hand; }
+      function billboard(o, w, h, col, lit) { line(add(o, [-w * 0.6, -h * 0.5 - 600, -5]), add(o, [-w * 0.6, -h * 0.5, -5]), 14, DK, 0); line(add(o, [w * 0.6, -h * 0.5 - 600, -5]), add(o, [w * 0.6, -h * 0.5, -5]), 14, DK, 0);
+        const Q = [add(o, [-w / 2, -h / 2, 0]), add(o, [w / 2, -h / 2, 0]), add(o, [w / 2, h / 2, 0]), add(o, [-w / 2, h / 2, 0])]; loop(Q, 14, col, 24); for (let i = -2; i <= 2; i++) { const p = add(o, [i * w * 0.22, h / 2 + 40, 30]); line(add(o, [i * w * 0.22, h / 2, 10]), p, 6, GR, 0); if (lit) dot(p, 14, WH, 40); } }
+      function africa(y, s, col) { const P = [[-17, 21], [-16, 12], [-13, 8], [-8, 4.5], [-3, 5], [5, 6], [9, 4], [10, 1], [9, -2], [12, -6], [13, -12], [12, -17], [14, -22], [15, -27], [17, -30], [18, -34], [20, -35], [25, -34], [28, -33], [31, -29], [33, -26], [35, -24], [35, -20], [38, -17], [40, -15], [40, -11], [39, -7], [40, -3], [42, -1], [46, 2], [49, 6], [51, 11], [48, 11.5], [44, 11], [43, 13], [39, 16], [37, 19], [35, 24], [33, 28], [32, 31], [29, 31], [25, 32], [20, 31], [15, 32], [11, 34], [10, 37], [5, 36.8], [0, 35.8], [-5, 35.8], [-6, 34], [-9, 32], [-10, 29], [-13, 27]].map((q) => [(q[0] - 17) * s, y, -(q[1]) * s]);
+        fillPoly(P, "#0d0b06", 1); loop(P, 5, col, 16); }
+      function bars(o, hs, col, w) { hs.forEach((h, i) => { if (h > 1) box(add(o, [(i - (hs.length - 1) / 2) * (w || 120), 0, 0]), (w || 120) * 0.36, h, 40, i === hs.length - 1 ? col : GR, FILL, 1, 4); }); }
+      function vault(o, close, spin, col) { circ(o, X, Y, 330, 26, DK, 0, 0, 6.283, 40); circ(o, X, Y, 300, 8, GR, 8, 0, 6.283, 40);
+        const a = (1 - close) * 1.6, hx = o[0] - 300, P = (x, y) => [hx + (x + 300) * Math.cos(a), o[1] + y, o[2] + (x + 300) * Math.sin(a) + 30];
+        const pts = []; for (let i = 0; i < 32; i++) { const b = (i / 32) * 6.283; pts.push(P(Math.cos(b) * 290, Math.sin(b) * 290)); } fillPoly(pts, "#0c0c0f", 1); loop(pts, 10, close > 0.98 ? col : WH, close > 0.98 ? 26 : 12);
+        const cc = P(0, 0); for (let k = 0; k < 6; k++) { const b = spin + (k * Math.PI) / 3; line(cc, P(Math.cos(b) * 140, Math.sin(b) * 140), 12, WH, 12); dot(P(Math.cos(b) * 150, Math.sin(b) * 150), 16, WH, 12); } circ(cc, [Math.cos(a), 0, Math.sin(a)], Y, 60, 10, col, 18);
+        for (let k = 0; k < 8; k++) { const b = (k * Math.PI) / 4; dot(P(Math.cos(b) * 250, Math.sin(b) * 250), 12, GR, 6); } }
+      function phoneOld(o, s, shake, col) { const j = [Math.sin(shake * 61) * 6 * shake, Math.abs(Math.sin(shake * 47)) * 6 * shake, 0]; const p = add(o, j);
+        box(p, 130 * s, 90 * s, 100 * s, GR, FILL, 1, 4); fillPoly([add(p, [-130 * s, 90 * s, 100 * s]), add(p, [130 * s, 90 * s, 100 * s]), add(p, [90 * s, 150 * s, 40 * s]), add(p, [-90 * s, 150 * s, 40 * s])], "#0c0c0f", 1);
+        circ(add(p, [0, 122 * s, 72 * s]), X, nrm([0, 0.6, -1]), 54 * s, 4, WH, 10); for (let k = 0; k < 10; k++) { const b = -0.6 + k * 0.5; dot(add(p, [Math.cos(b) * 38 * s, 122 * s + Math.sin(b) * 22 * s, 72 * s - Math.sin(b) * 14 * s]), 6 * s, GR, 0); }
+        const hy = 160 * s + shake * 40 * Math.abs(Math.sin(shake * 30)); pline([add(p, [-150 * s, hy, 0]), add(p, [-110 * s, hy + 40 * s, 0]), add(p, [110 * s, hy + 40 * s, 0]), add(p, [150 * s, hy, 0])], 22 * s, col, 18);
+        if (shake > 0.05) for (let k = 1; k <= 3; k++) { const r = (((shake * 3 + k * 0.33) % 1) * 260 + 120) * s; circ(add(p, [0, 120 * s, 0]), X, Y, r, 4, col, 14, -2.6, -0.5, 10); circ(add(p, [0, 120 * s, 0]), X, Y, r, 4, col, 14, 0.5 - Math.PI + Math.PI, 2.6, 10); } }
+      function typewriter(o, s, col, typed, t) { box(o, 240 * s, 90 * s, 150 * s, GR, FILL, 1, 4); for (let r = 0; r < 4; r++) for (let k = 0; k < 10 - r; k++) { const p = add(o, [(-200 + k * 44 + r * 22) * s, (96 + r * 14) * s, (110 - r * 34) * s]); const hit2 = Math.sin(t * 40 + k * 3 + r) > 0.85 && typed > 0 && typed < 1; dot(p, (hit2 ? 12 : 14) * s, hit2 ? col : WH, hit2 ? 20 : 6); }
+        line(add(o, [-260 * s, 150 * s, -130 * s]), add(o, [260 * s, 150 * s, -130 * s]), 26 * s, DK, 0); const Pp = [add(o, [-150 * s, 160 * s, -130 * s]), add(o, [150 * s, 160 * s, -130 * s]), add(o, [150 * s, 520 * s, -150 * s]), add(o, [-150 * s, 520 * s, -150 * s])]; fillPoly(Pp, "#e8e8e8", 0.95); }
+      function globe(o, r, rot, col) { for (let k = -2; k <= 2; k++) { const la = (k * Math.PI) / 6; circ(add(o, [0, Math.sin(la) * r, 0]), X, Z, Math.cos(la) * r, 3, k ? DK : GR, 4, 0, 6.283, 36); }
+        for (let k = 0; k < 6; k++) { const a = rot + (k * Math.PI) / 6; circ(o, [Math.cos(a), 0, Math.sin(a)], Y, r, 3, DK, 4, 0, 6.283, 36); } }
+      function cushion(o, s) { const pts = []; for (let i = 0; i < 20; i++) { const a = (i / 20) * 6.283; pts.push(add(o, [Math.cos(a) * 120 * s, 0, Math.sin(a) * 90 * s])); } fillPoly(pts, "#120a12", 1); loop(pts, 4, GR, 6); }
+      function heartP(o, r, col, a, w) { const pts = []; for (let i = 0; i < 40; i++) { const t2 = (i / 40) * 6.283; pts.push(add(o, [(16 * Math.pow(Math.sin(t2), 3) * r) / 16, ((13 * Math.cos(t2) - 5 * Math.cos(2 * t2) - 2 * Math.cos(3 * t2) - Math.cos(4 * t2)) * r) / 16, 0])); } const n = Math.max(2, Math.floor(40 * (a === undefined ? 1 : a))); pline(pts.slice(0, n).concat(n >= 40 ? [pts[0]] : []), w || 8, col, 24); }
+      function infinity(o, r, col, a, t, w) { const pts = []; for (let i = 0; i <= 60; i++) { const u = (i / 60) * 6.283; const d = 1 + Math.sin(u) * Math.sin(u); pts.push(add(o, [(r * Math.cos(u)) / d, 0, (r * Math.sin(u) * Math.cos(u)) / d])); } pline(pts.slice(0, Math.max(2, Math.floor(61 * (a === undefined ? 1 : a)))), w || 10, col, 26); if (t !== undefined) { const u = (t * 2.2) % 6.283, d = 1 + Math.sin(u) * Math.sin(u); dot(add(o, [(r * Math.cos(u)) / d, 0, (r * Math.sin(u) * Math.cos(u)) / d]), 22, WH, 40); } }
+      function stack(o, n, col, s) { for (let i = 0; i < n; i++) box(add(o, [0, i * 26 * (s || 1), 0]), 110 * (s || 1), 22 * (s || 1), 60 * (s || 1), i === n - 1 ? col : GR, FILL, 1, 3); }
+
+      /* ---- shots ---- */
+      const SH = [
+        // CH1 HOOK (ice cyan)
+        [0, W[5], "none", (t, u, d) => { // "Il diamante del tuo anello": macro on a huge spinning gem from frame one, pull back to the ring in its box
+          const k = io(seg(u, 0, d)); LIGHT = nrm([Math.sin(t * 2.4), 0.8, Math.cos(t * 2.4)]);
+          camera(add([lerp(30, 150, k), lerp(290, 340, k), lerp(175, 760, k)], jit(t, 1)), [0, lerp(268, 220, k), 0], 1000, lerp(-10, 3, k));
+          grid(8, 200, 0, DD); ringBox([0, 0, 0], 1.1, 1, 0.3, A); ring([0, 110, 10], 110, 0.3 + t * 0.4, A, t * 1.6);
+                    for (let i = 0; i < 5; i++) { const p = hit(t, 0.05 + i * 0.36, 5); if (p > 0.02) glint([Math.cos(i * 2.1) * 60, 290 + Math.sin(i * 1.7) * 40, 60], 120 * p, i % 2 ? WH : A, i); }
+          FLASH = Math.max(FLASH, hit(t, 0.12, 10) * 0.3);
+          if (t > W[4] - 0.05) { const p = pop(t, W[4] - 0.05); circ([0, 2, 0], X, Z, 260 * p, 6, A, 26); }
+        }],
+        [W[5], W[8], "snap", (t, u, d) => { // "non è raro": crane up — the gem is one of thousands
+          const k = ex(seg(u, 0, 0.6)); LIGHT = nrm([Math.sin(t * 3), 0.8, Math.cos(t * 3)]);
+          camera(add([lerp(0, 300, k), lerp(380, 2300, k), lerp(380, 1200, k)], jit(t, 1)), [0, 0, lerp(0, -400, k)], lerp(1000, 820, k), lerp(0, 10, k));
+          FOGD = 6000; gem([0, 60, 0], 70, t * 1.2, 0.2, A);
+          for (let i = 0; i < 420; i++) { const a = i * 2.39996, r = 140 + Math.sqrt(i) * 78; const p = pop(t, W[5] + (i / 420) * 0.5, 0.25); if (p <= 0) continue; const q = [Math.cos(a) * r, 40, Math.sin(a) * r - 300]; if (i % 3) dot(q, 26 * p, i % 7 ? WH : A, 14); else gem(q, 40 * p, t + i, 0.3, A); }
+          if (t > W[7] - 0.05) { const p = pop(t, W[7] - 0.05); etext("RARO", [0, 30, 500], X, NZ, 260 * p, WH, 6); const x = o4(seg(t, W[7] + 0.15, W[7] + 0.4)); if (x > 0) { line([-300, 32, 380], [lerp(-300, 300, x), 32, lerp(380, 640, x)], 26, A, 30); } }
+        }],
+        [W[8], W[12], "whip", (t, u, d) => { // "e l'idea di regalarlo": the proposal, camera behind the kneeling figure
+          const k = io(seg(u, 0, d)); LIGHT = nrm([0.4, 0.9, 0.5]);
+          camera(add([lerp(380, 250, k), lerp(150, 200, k), lerp(320, 420, k)], jit(t, 1)), [-40, lerp(140, 120, k), -40], 1000, lerp(4, -2, k));
+          grid(8, 200, 0, DD); const kn = o4(seg(t, W[8], W[10])); person(-90, 0, 0, 0, WH, 1.25, { dress: true }); const hand = kneeler(70, 0, Math.PI, 1.25, A, kn);
+          const op = seg(t, W[11] - 0.2, W[11] + 0.3); if (kn > 0.6) { ringBox(add(hand, [-12, -14, 0]), 0.22, op, Math.PI / 2, A); if (op > 0.5) { gem(add(hand, [-12, 30, 0]), 16, t * 2, 0.2, A); glint(add(hand, [-12, 40, 0]), 60 * (0.6 + 0.4 * Math.sin(t * 9)), A, t); } }
+          if (t > W[11]) heartP([0, 380, -120], 70 * pop(t, W[11]), A, 1, 6);
+        }],
+        [W[12], W[16], "punch", (t, u, d) => { // "l'ha inventata una pubblicità": pull back — the proposal is a billboard
+          const k = io(seg(u, 0, d)); LIGHT = nrm([0.4, 0.9, 0.5]);
+          camera(add([lerp(60, -120, k), lerp(240, 260, k), lerp(600, 1500, k)], jit(t, 1)), [0, lerp(200, 230, k), 0], 1000, lerp(-3, 4, k));
+          FOGD = 6000; grid(10, 260, -900, DD); person(-90, 0, 0, 0, WH, 1.25, { dress: true }); const hand = kneeler(70, 0, Math.PI, 1.25, A, 1); gem(add(hand, [-12, 30, 0]), 16, t * 2, 0.2, A);
+          const bb = seg(t, W[13] - 0.2, W[13] + 0.1); if (bb > 0) billboard([0, 200, -60], 900, 640, bb > 0.5 ? A : WH, t > W[15] - 0.1);
+          if (t > W[15] - 0.1) { const p = pop(t, W[15] - 0.1); const Q = [[-300 * p, -170, -40], [300 * p, -170, -40], [300 * p, -80, -40], [-300 * p, -80, -40]]; fillPoly(Q, A, 1); ptext([{ s: "PUBBLICITÀ", col: "#000" }], [0, -125, -39], [p, 0, 0], Y, 70, null, 0); }
+        }],
+        [W[16], W[21], "whip", (t, u, d) => { // "Questa è la storia": dolly along a timeline of years etched in the floor
+          const k = i2(seg(u, 0, d)); camera(add([lerp(-900, 500, k), 560, 620], jit(t, 1)), [lerp(-760, 640, k), 0, 40], 1000, -4);
+          grid(10, 200, 0, DD); line([-2000, 1, 0], [2000, 1, 0], 6, GR, 8);
+          ["1870", "1888", "1938", "1947", "1968", "1981", "OGGI"].forEach((y, i) => { const x = -1200 + i * 400, on = Math.abs(x - lerp(-700, 700, k)) < 260; line([x, 1, -40], [x, 1, 40], 8, on ? A : WH, 12); ptext([{ s: y, col: on ? A : WH }], [x, 2, 130], X, NZ, on ? 130 : 96, null, on ? 22 : 6); });
+        }],
+        [W[21], W[26], "cut", (t, u, d) => { // "dello slogan più potente del secolo": spotlit pedestal, covered plaque, gem
+          const a = lerp(-0.5, 0.5, i2(seg(u, 0, d))); LIGHT = nrm([Math.sin(t * 2), 0.9, Math.cos(t * 2)]); camera(add([Math.sin(a) * 760, lerp(320, 260, seg(u, 0, d)), Math.cos(a) * 760], jit(t, 1)), [0, 250, 0], 1000, lerp(-3, 3, seg(u, 0, d)));
+          grid(8, 200, 0, DD); box([0, 0, 0], 110, 200, 110, GR, FILL, 1, 5); gem([0, 300, 0], 90, t * 1.1, 0.25, A); glint([30, 360, 60], 90 * (0.5 + 0.5 * Math.sin(t * 5)), WH, t);
+          const pl = [[-240, 40, 115], [240, 40, 115], [240, 150, 115], [-240, 150, 115]]; fillPoly(pl, "#0b0b0e", 1); loop(pl, 5, A, 16);
+          ptext([{ s: "A DIAMOND IS ", col: WH }, { s: "••••••", col: A }], [0, 95, 117], X, Y, 40, '900 SZpx "Unbounded"', 10);
+          if (t > W[23]) { const p = pop(t, W[23]); for (let i = 0; i < 3; i++) line([-160 + i * 160, 160, 115], [-160 + i * 160, lerp(160, 220 + i * 40, p), 115], 6, A, 18); }
+          if (t > W[25] - 0.05) ptext([{ s: "1900 – 1999", col: A }], [0, -20, 140], X, Y, 46 * pop(t, W[25] - 0.05), '500 SZpx "Unbounded"', 10);
+        }],
+        // CH2 SOUTH AFRICA (gold)
+        [W[26], W[28], "punch", (t, u, d) => { // "Fine Ottocento.": extruded 1870 in a dust storm
+          const k = io(seg(u, 0, d)); camera(add([lerp(-420, 260, k), lerp(-60, 60, k), lerp(900, 760, k)], jit(t, 1.2)), [lerp(-120, 80, k), 30, 0], 1000, lerp(-8, 4, k));
+          grid(8, 200, -260, DD); "1870".split("").forEach((ch, i) => { const p = pop(t, W[26] + 0.02 + i * 0.1, 0.35); if (p > 0) etext(ch, [-330 + i * 220, 40 + (1 - p) * 300, 0], [p, 0, 0], [0, p, 0], 380, i > 1 ? A : WH, 14); });
+          for (let i = 0; i < 60; i++) { const ph = ((t * 0.5 + rn(i)) % 1); dot([lerp(-900, 900, ph), -200 + rn(i + 9) * 600, -300 + rn(i + 3) * 600], 4, A, 6); }
+        }],
+        [W[28], W[29], "match", (t, u, d) => { // "Sudafrica.": aerial over Africa, pin drops on Kimberley
+          const k = io(seg(u, 0, d)); camera(add([lerp(0, 120, k), lerp(2600, 1500, k), lerp(900, 700, k)], jit(t, 1)), [lerp(0, 160, k), 0, lerp(0, 450, k)], 1000, lerp(-6, 2, k));
+          FOGD = 6000; africa(0, 22, A); const p = pop(t, W[28] + 0.15); const pin = [(24.8 - 17) * 22, 0, 28.7 * 22]; if (p > 0) { line(pin, add(pin, [0, 240 * p, 0]), 10, A, 20); dot(add(pin, [0, 260 * p, 0]), 34 * p, A, 30); circ(add(pin, [0, 2, 0]), X, Z, 120 * p, 5, A, 20); ptext([{ s: "KIMBERLEY", col: WH }], add(pin, [260, 4, 0]), X, NZ, 70 * p, null, 14); }
+        }],
+        [W[29], W[35], "cut", (t, u, d) => { // "Nelle miniere trovano così tanti diamanti": crane down into the Big Hole, the floor lights with gems
+          const k = io(seg(u, 0, d)); LIGHT = nrm([0.3, 1, 0.4]); camera(add([lerp(0, 160, k), lerp(1500, 260, k), lerp(1300, 900, k)], jit(t, 1)), [0, lerp(-200, -560, k), 0], lerp(850, 1000, k), lerp(8, -2, k));
+          FOGD = 5000; for (let i = 0; i < 9; i++) { const y = -i * 75, r = 980 - i * 95; circ([0, y, 0], X, Z, r, 5, i % 2 ? DK : GR, 0, 0, 6.283, 48); if (i < 8) for (let j = 0; j < 12; j++) { const a = (j / 12) * 6.283; line([Math.cos(a) * r, y, Math.sin(a) * r], [Math.cos(a) * (r - 95), y - 75, Math.sin(a) * (r - 95)], 2.5, DD, 0); } }
+          for (let i = 0; i < 6; i++) { const ph = ((t - W[29]) * 0.12 + i / 6) % 1, a = ph * 6.283 * 1.5, r = lerp(900, 300, ph); box([Math.cos(a) * r, -ph * 560, Math.sin(a) * r], 30, 30, 22, GR, FILL, 1, 3); }
+          for (let i = 0; i < 160; i++) { const a = i * 2.39996, r = Math.sqrt(i) * 24, p = pop(t, W[33] + (i / 160) * 0.6, 0.2); if (p > 0) { const q = [Math.cos(a) * r, -600, Math.sin(a) * r]; dot(q, 9 * p, i % 5 ? WH : A, 14); if (i % 23 === 0) glint(add(q, [0, 6, 0]), 80 * p * (0.6 + 0.4 * Math.sin(t * 7 + i)), A, i); } }
+        }],
+        [W[35], W[41], "whip", (t, u, d) => { // "che il prezzo rischia di crollare": price bars, the last one collapses
+          const k = io(seg(u, 0, d)); camera(add([lerp(-300, 200, k), lerp(160, 260, k), lerp(900, 800, k)], jit(t, 1)), [100, 260, 0], 1000, lerp(-3, 4, k));
+          grid(8, 200, 0, DD); const f = in3(seg(t, W[39], W[40] + 0.5)); bars([-100, 0, 0], [180, 260, 360, 480, lerp(620, 80, f)], A, 150);
+          const p = pop(t, W[37]); if (p > 0) { const y = lerp(560, 140, f); ptext([{ s: "PREZZO", col: f > 0.5 ? A : WH }], [200, y, 60], [p, 0, 0], Y, 64, null, 16); }
+          if (f > 0) { const x0 = 200, y0 = 660; pline([[-500, 200, 60], [-200, 330, 60], [x0, y0, 60], [x0 + 120, lerp(y0, 60, f), 60]], 12, A, 26); }
+        }],
+        [W[41], W[44], "punch", (t, u, d) => { // "Un'azienda, De Beers,": crane up a company tower, the sign lights
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 120, k), lerp(80, 520, k), lerp(900, 1000, k)], jit(t, 1)), [0, lerp(400, 560, k), 0], 1000, lerp(-4, 2, k));
+          FOGD = 5000; grid(8, 200, 0, DD); [-1, 1].forEach((sd) => building(sd * 520, -200, 140, 140, 700, DK, true)); box([0, 0, 0], 220, 900, 160, WH, FILL, 1, 5);
+          for (let y = 80; y < 860; y += 70) for (let x = -2; x <= 2; x++) line([x * 80 - 18, y, 161], [x * 80 + 18, y, 161], 7, rn(x * 9 + y) > 0.6 ? A : "#2a2a2a", 6);
+          const p = pop(t, W[42] - 0.05); if (p > 0) { const Q = [[-260, 920, 170], [260, 920, 170], [260, 1060, 170], [-260, 1060, 170]]; fillPoly(Q, A, 1); ptext([{ s: "DE BEERS", col: "#000" }], [0, 990, 171], [p, 0, 0], [0, p, 0], 100, null, 0); ptext([{ s: "DAL 1888", col: A }], [0, 870, 171], X, Y, 34, '500 SZpx "Unbounded"', 10); }
+        }],
+        [W[44], W[48], "cut", (t, u, d) => { // "li compra quasi tutti": top-down, gems stream from everywhere into one point
+          const rot = lerp(-0.2, 0.25, seg(u, 0, d)), up = [Math.sin(rot), 0, -Math.cos(rot)]; camera(add([0, lerp(1500, 1150, io(seg(u, 0, d))), 1], jit(t, 0.8)), [0, 0, 0], 1000, 0, up);
+          grid(8, 200, 0, DD); circ([0, 2, 0], X, Z, 120, 8, A, 26); ptext([{ s: "DE BEERS", col: A }], [0, 3, 0], X, NZ, 40, '900 SZpx "Unbounded"', 16);
+          for (let i = 0; i < 220; i++) { const a = rn(i) * 6.283, r0 = 400 + rn(i + 40) * 700, p = io(seg(t, W[45] - 0.2 + rn(i + 90) * 0.6, W[45] + 0.6 + rn(i + 90) * 0.9)), keep = i % 11 === 0; const r = keep ? r0 : lerp(r0, 60, p); if (!keep && p > 0.97) continue; dot([Math.cos(a + p * 0.8) * r, 4, Math.sin(a + p * 0.8) * r], 15, keep ? GR : WH, 12); }
+          if (t > W[47]) etext("90%", [0, 4, 330], X, NZ, 120 * pop(t, W[47]), A, 6);
+        }],
+        [W[48], W[54], "whip", (t, u, d) => { // "e li chiude in cassaforte": the vault door swings shut and locks
+          const k = io(seg(u, 0, d)); camera(add([lerp(500, 160, k), lerp(380, 300, k), lerp(900, 1050, k)], jit(t, 1 + 3 * hit(t, W[52] + 0.1, 5))), [0, 300, 0], 1000, lerp(6, 0, k));
+          const Wl = [[-800, -100, -20], [800, -100, -20], [800, 900, -20], [-800, 900, -20]]; fillPoly(Wl, "#08080a", 1); for (let i = 0; i < 8; i++) line([-800, -100 + i * 140, -19], [800, -100 + i * 140, -19], 2, DD, 0);
+          const cl = in3(seg(t, W[50], W[52] + 0.1)), sp2 = io(seg(t, W[52] + 0.1, W[53] + 0.4)) * 3.2; vault([0, 300, 0], cl, sp2, A);
+          if (cl < 0.9) for (let i = 0; i < 7; i++) gem([-120 + (i % 4) * 80, 260 + Math.floor(i / 4) * 80, -10], 30, t + i, 0.2, A);
+        }],
+        [W[54], W[58], "cut", (t, u, d) => { // "Pochi diamanti in vetrina": shop window from the street, one gem, one spotlight
+          const k = io(seg(u, 0, d)); LIGHT = nrm([0, 1, 0.3]); camera(add([lerp(-300, -60, k), 200, lerp(900, 640, k)], jit(t, 0.8)), [0, 220, 0], 1000, lerp(-3, 1, k));
+          grid(6, 200, 0, DD); const Wd = [[-420, 40, 0], [420, 40, 0], [420, 520, 0], [-420, 520, 0]]; loop(Wd, 10, GR, 8); fillPoly([[-420, 0, 0], [420, 0, 0], [420, 40, 0], [-420, 40, 0]], "#151515", 1);
+          cushion([0, 130, -100], 1); box([0, 40, -100], 90, 90, 70, DK, FILL, 1, 3); gem([0, 190, -100], 52, t * 1.4, 0.3, A); glint([20, 220, -80], 80 * (0.5 + 0.5 * Math.sin(t * 6)), WH, t);
+          const a = cs([0, 700, -100]), b1 = cs([-120, 130, -100]), b2 = cs([120, 130, -100]); if (a[2] > NEAR) { const A1 = sp(a), B1 = sp(b1), B2 = sp(b2); const g = c.createLinearGradient(A1[0], A1[1], A1[0], B1[1]); g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(1, "rgba(255,255,255,0.18)"); c.save(); c.fillStyle = g; c.beginPath(); c.moveTo(A1[0] - 8, A1[1]); c.lineTo(A1[0] + 8, A1[1]); c.lineTo(B2[0], B2[1]); c.lineTo(B1[0], B1[1]); c.closePath(); c.fill(); c.restore(); }
+          line([-380, 480, 2], [-200, 300, 2], 3, "#555", 0); line([300, 500, 2], [400, 400, 2], 3, "#555", 0);
+          for (let i = 0; i < 4; i++) person(-700 + ((t - W[54]) * 120 + i * 380) % 1500, 300 + i * 30, 0, (t - W[54]) * 8 + i, DK, 1);
+        }],
+        [W[58], W[60], "snap", (t, u, d) => { // "prezzo alto.": the price tag swings up, number rolls
+          const k = ex(seg(u, 0, 0.5)); LIGHT = nrm([0.2, 1, 0.5]); camera(add([0, 240, lerp(500, 700, k)], jit(t, 1.5 * hit(t, W[59], 5))), [0, 260, 0], 1000, lerp(-8, 0, k));
+          gem([-160, 240, -60], 70, t * 1.5, 0.3, A); const sw = Math.sin((t - W[58]) * 7) * Math.exp(-(t - W[58]) * 2) * 0.5, up = o4(seg(t, W[58], W[58] + 0.4));
+          const ux = [Math.cos(sw), Math.sin(sw), 0], uy = [-Math.sin(sw), Math.cos(sw), 0], o = [140, lerp(-200, 260, up), 0]; line([-120, 260, -40], o, 4, GR, 6);
+          const P = (x, y) => add(o, add(mul(ux, x), mul(uy, y))); const Q = [P(-20, 70), P(260, 70), P(260, -70), P(-20, -70), P(-70, 0)]; fillPoly(Q, A, 1); circ(P(-30, 0), X, Y, 12, 4, "#000", 0);
+          ptext([{ s: "$" + String(Math.round(lerp(99, 4999, o4(seg(t, W[58] + 0.2, W[59] + 0.4))))), col: "#000" }], P(120, 0), ux, uy, 80, null, 0);
+        }],
+        // CH3 1938 CRISIS (fire orange)
+        [W[60], W[63], "punch", (t, u, d) => { // "Ma nel 1938": the year slams down, papers blow
+          const k = io(seg(u, 0, d)); camera(add([lerp(-300, 200, k), lerp(200, 120, k), lerp(900, 800, k)], jit(t, 1 + 3 * hit(t, W[62] + 0.15, 6))), [0, 120, 0], 1000, lerp(-6, 3, k));
+          grid(8, 200, 0, DD); const p = seg(t, W[62] - 0.1, W[62] + 0.15); if (p > 0) etext("1938", [0, lerp(900, 120, in3(p)), 0], X, Y, 330, A, 14);
+          for (let i = 0; i < 14; i++) { const ph = ((t - W[60]) * 0.7 + rn(i)) % 1; const q = [lerp(-900, 900, ph), 60 + Math.sin(ph * 9 + i) * 80 + rn(i + 5) * 300, -200 + rn(i + 2) * 500], an = ph * 8 + i; fillPoly([add(q, [-40 * Math.cos(an), -30, 0]), add(q, [40 * Math.cos(an), -30, 0]), add(q, [40 * Math.cos(an), 30, 20 * Math.sin(an)]), add(q, [-40 * Math.cos(an), 30, 20 * Math.sin(an)])], "#bbb", 0.6); }
+        }],
+        [W[63], W[66], "cut", (t, u, d) => { // "arriva la crisi.": a stock line plunges through the floor
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 100, k), lerp(300, 200, k), 900], jit(t, 1 + 2 * hit(t, W[65], 5))), [0, 200, 0], 1000, lerp(4, -6, k));
+          grid(8, 200, 0, DD); const pts = []; const pl = o4(seg(t, W[63], W[65] + 0.3)); for (let i = 0; i <= 30; i++) { const x = -600 + i * 40, y = i < 18 ? 420 + Math.sin(i * 1.3) * 40 + i * 6 : 520 - (i - 18) * (i - 18) * 7; pts.push([x, y, 0]); } pline(pts.slice(0, Math.max(2, Math.floor(31 * pl))), 12, A, 26);
+          if (t > W[65] - 0.05) etext("CRISI", [0, -40, 160], X, Y, 200 * pop(t, W[65] - 0.05), A, 10);
+        }],
+        [W[66], W[68], "whip", (t, u, d) => { // "In America,": aerial night city, a jeweller's sign
+          const k = io(seg(u, 0, d)); camera(add([lerp(300, 120, k), lerp(2000, 500, k), lerp(1400, 1000, k)], jit(t, 1)), [0, lerp(0, 220, k), lerp(-600, -300, k)], lerp(820, 1000, k), lerp(10, 0, k));
+          FOGD = 6000; for (let i = -5; i <= 5; i++) for (let j = 0; j < 8; j++) { if (Math.abs(i) < 1) continue; building(i * 320, -j * 420, 120, 140, 300 + rn(i * 31 + j * 7) * 1300, DK, true); }
+          if (t > W[67] - 0.1) { const p = pop(t, W[67] - 0.1); ptext([{ s: "USA", col: A }], [0, 4, 200], [p, 0, 0], NZ, 200, null, 24); }
+        }],
+        [W[68], W[76], "cut", (t, u, d) => { // "i diamanti non li compra quasi più nessuno": behind passers-by, a jeweller nobody enters
+          const k = (t - W[68]); camera(add([-60, 190, 760 - k * 30], jit(t, 1.4)), [40, 200, -100 - k * 30], 1000, -2);
+          FOGD = 4000; grid(8, 200, 0, DD); box([0, 0, -300], 420, 500, 60, GR, FILL, 1, 5); const off = seg(t, W[75] - 0.2, W[75] + 0.3);
+          const Q = [[-300, 520, -239], [300, 520, -239], [300, 620, -239], [-300, 620, -239]]; fillPoly(Q, off > 0.5 ? "#151515" : A, 1); ptext([{ s: "GIOIELLERIA", col: off > 0.5 ? DK : "#000" }], [0, 570, -238], X, Y, 64, null, 0);
+          loop([[-120, 0, -239], [120, 0, -239], [120, 330, -239], [-120, 330, -239]], 6, GR, 6); gem([-260, 260, -238], 40, t, 0.3, off > 0.5 ? DK : A, off > 0.5 ? 0.3 : 1); gem([260, 260, -238], 40, -t, 0.3, off > 0.5 ? DK : A, off > 0.5 ? 0.3 : 1);
+          for (let i = 0; i < 10; i++) { const sd = i % 2 ? 1 : -1, x = sd * (-900 + (((t - W[68]) * 110 + i * 260) % 1800)); person(x, -80 + (i % 3) * 70, sd > 0 ? 0 : Math.PI, (t + i) * 7, WH, 1.1); }
+          if (t > W[75]) { const p = pop(t, W[75]); ptext([{ s: "0", col: A }], [0, 160, -237], X, Y, 200 * p, null, 26); }
+        }],
+        [W[76], W[80], "punch", (t, u, d) => { // "Così De Beers chiama": a 1930s phone rings itself off the desk
+          const k = io(seg(u, 0, d)); camera(add([lerp(-260, 140, k), lerp(380, 300, k), lerp(700, 560, k)], jit(t, 1)), [0, 120, 0], 1000, lerp(-5, 3, k));
+          const Dk = [[-600, 0, -400], [600, 0, -400], [600, 0, 400], [-600, 0, 400]]; fillPoly(Dk, "#0a0805", 1); loop(Dk, 4, DK, 0);
+          const ringing = t > W[79] - 0.1 ? 0.6 + 0.4 * Math.sin(t * 9) : 0; phoneOld([0, 0, 0], 1, ringing, A);
+        }],
+        [W[80], W[82], "whip", (t, u, d) => { // "un'agenzia pubblicitaria": the cable runs to an agency, its sign lights
+          const k = io(seg(u, 0, d)); camera(add([lerp(-400, 0, k), lerp(200, 380, k), lerp(900, 1100, k)], jit(t, 1)), [lerp(-200, 0, k), 360, 0], 1000, lerp(-6, 0, k));
+          FOGD = 5000; grid(8, 200, 0, DD); box([0, 0, -100], 360, 700, 140, WH, FILL, 1, 5); for (let y = 80; y < 660; y += 80) for (let x = -3; x <= 3; x++) line([x * 90 - 20, y, 41], [x * 90 + 20, y, 41], 7, rn(x + y) > 0.5 ? A : "#2a2a2a", 6);
+          const p = pop(t, W[81] - 0.2); if (p > 0) { const Q = [[-340, 730, 50], [340, 730, 50], [340, 850, 50], [-340, 850, 50]]; fillPoly(Q, A, 1); ptext([{ s: "N.W. AYER & SON", col: "#000" }], [0, 790, 51], [p, 0, 0], [0, p, 0], 70, null, 0); ptext([{ s: "AGENZIA PUBBLICITARIA · 1938", col: A }], [0, 690, 51], X, Y, 26, '500 SZpx "Unbounded"', 8); }
+          lineP([-1200, 100, 300], [-360, 300, 40], o4(seg(u, 0, 0.6)), 6, A, 20);
+        }],
+        // CH4 THE IDEA (magenta)
+        [W[82], W[88], "cut", (t, u, d) => { // "e l'agenzia non vende una pietra": orbit a rough grey rock on a pedestal, struck out
+          const a = lerp(-0.6, 0.6, i2(seg(u, 0, d))); camera(add([Math.sin(a) * 700, 300, Math.cos(a) * 700], jit(t, 1)), [0, 260, 0], 1000, lerp(3, -3, seg(u, 0, d)));
+          grid(8, 200, 0, DD); box([0, 0, 0], 100, 180, 100, GR, FILL, 1, 4); const R = rng(7); const pts = []; for (let i = 0; i < 9; i++) { const b = (i / 9) * 6.283, r = 80 + R() * 40; pts.push([Math.cos(b) * r, 270 + Math.sin(b) * r * 0.8, 20]); } fillPoly(pts, "#2a2a2a", 1); loop(pts, 5, GR, 6);
+          if (t > W[87] - 0.05) { const x = o4(seg(t, W[87] - 0.05, W[87] + 0.25)); line([-180, 140, 150], [lerp(-180, 180, x), lerp(140, 420, x), 150], 20, A, 26); line([180, 140, 150], [lerp(180, -180, x), lerp(140, 420, x), 150], 20, A, 26); }
+          if (t > W[84]) ptext([{ s: "PIETRA", col: GR }], [0, 70, 101], X, Y, 46, '900 SZpx "Unbounded"', 0);
+        }],
+        [W[88], W[90], "punch", (t, u, d) => { // "Vende un'idea:": a light bulb turns on with a gem inside
+          const k = io(seg(u, 0, d)); LIGHT = nrm([Math.sin(t * 3), 0.8, Math.cos(t * 3)]); camera(add([lerp(0, 120, k), 260, lerp(900, 640, k)], jit(t, 1)), [0, 300, 0], 1000, lerp(-4, 2, k));
+          const on = seg(t, W[89] - 0.05, W[89] + 0.1); circ([0, 330, 0], X, Y, 170, 8, on > 0.5 ? A : GR, on > 0.5 ? 40 : 6, 0, 6.283, 40); pline([[-80, 180, 0], [-70, 120, 0], [70, 120, 0], [80, 180, 0]], 8, GR, 6); for (let i = 0; i < 3; i++) line([-70, 110 - i * 24, 0], [70, 110 - i * 24, 0], 8, GR, 6);
+          if (on > 0) { gem([0, 330, 0], 80, t * 2, 0.3, A, on); for (let i = 0; i < 12; i++) { const b = (i / 12) * 6.283; line([Math.cos(b) * 200, 330 + Math.sin(b) * 200, 0], [Math.cos(b) * (200 + 80 * on), 330 + Math.sin(b) * (200 + 80 * on), 0], 6, A, 20); } FLASH = Math.max(FLASH, hit(t, W[89], 10) * 0.35); }
+        }],
+        [W[90], W[98], "cut", (t, u, d) => { // "Se la ami, glielo dimostri con un diamante.": orbit the couple, a heart traces, the gem appears between them
+          const a = lerp(-0.9, 0.7, i2(seg(u, 0, d))); LIGHT = nrm([0.3, 1, 0.6]); camera(add([Math.sin(a) * 620, lerp(240, 200, seg(u, 0, d)), Math.cos(a) * 620], jit(t, 1)), [0, 170, 0], 1000, lerp(-4, 3, seg(u, 0, d)));
+          grid(6, 200, 0, DD); person(-80, 0, 0, 0, WH, 1.3, { dress: true }); person(80, 0, Math.PI, 0, t > W[92] ? A : WH, 1.3);
+          const hp = seg(t, W[91], W[93] + 0.3); if (hp > 0) heartP([0, 430, 0], 110, A, hp, 8);
+          if (t > W[97] - 0.1) { const p = pop(t, W[97] - 0.1); gem([0, 190, 0], 46 * p, t * 2.5, 0.3, A); glint([0, 220, 30], 120 * p * (0.6 + 0.4 * Math.sin(t * 8)), WH, t); FLASH = Math.max(FLASH, hit(t, W[97], 9) * 0.3); }
+        }],
+        [W[98], W[104], "whip", (t, u, d) => { // "Prestano gioielli alle star di Hollywood": red carpet, flashes, marquee
+          const k = io(seg(u, 0, d)); camera(add([lerp(-420, -200, k), lerp(160, 260, k), lerp(500, 760, k)], jit(t, 1.2)), [lerp(-40, 40, k), 200, -150], 1000, lerp(-4, 2, k));
+          FOGD = 4200; grid(8, 200, 0, DD); fillPoly([[-120, 1, 800], [120, 1, 800], [120, 1, -800], [-120, 1, -800]], "#3a0820", 1); line([-120, 2, 800], [-120, 2, -800], 4, A, 10); line([120, 2, 800], [120, 2, -800], 4, A, 10);
+          for (let i = 0; i < 6; i++) { const fl = hit(t, W[98] + 0.2 + i * 0.37, 8); pressCam([-330 - (i % 2) * 70, 0, 400 - i * 200], -1.4, WH, fl); pressCam([330 + (i % 2) * 70, 0, 300 - i * 200], 1.4, WH, hit(t, W[98] + 0.4 + i * 0.31, 8)); FLASH = Math.max(FLASH, fl * 0.18); }
+          const w = (t - W[98]) * 60; person(0, 100 - w, -Math.PI / 2, w * 0.08, A, 1.3, { dress: true }); if (t > W[99]) { gem([10, 120 * 1.3 + 8, 100 - w + 10], 14, t * 3, 0, A); glint([10, 168, 100 - w + 14], 70 * (0.5 + 0.5 * Math.sin(t * 9)), WH, t); }
+          const mq = [[-500, 520, -700], [500, 520, -700], [500, 700, -700], [-500, 700, -700]]; fillPoly(mq, "#0b0b0e", 1); loop(mq, 8, A, 24); for (let i = 0; i < 22; i++) dot([-480 + i * 45.7, 530, -699], 7, rn(i + Math.floor(t * 8)) > 0.4 ? WH : DK, 10);
+          if (t > W[103] - 0.1) ptext([{ s: "HOLLYWOOD", col: A }], [0, 610, -698], X, Y, 120 * pop(t, W[103] - 0.1), null, 24); else ptext([{ s: "PREMIERE", col: WH }], [0, 610, -698], X, Y, 100, null, 10);
+        }],
+        [W[104], W[108], "cut", (t, u, d) => { // "Mandano relatori nelle scuole.": behind the students, a lecturer draws diamond = love
+          const k = io(seg(u, 0, d)); camera(add([lerp(-120, 80, k), lerp(260, 230, k), lerp(820, 680, k)], jit(t, 0.8)), [0, 220, -300], 1000, lerp(-2, 2, k));
+          grid(8, 200, 0, DD); const Bb = [[-460, 160, -520], [460, 160, -520], [460, 520, -520], [-460, 520, -520]]; fillPoly(Bb, "#0b140f", 1); loop(Bb, 8, GR, 6);
+          for (let r = 0; r < 4; r++) for (let q = -2; q <= 2; q++) { const x = q * 190, z = 340 - r * 160; box([x, 0, z], 60, 70, 36, DK, FILL, 1, 3); person(x, z + 40, -Math.PI / 2, 0, r === 0 && q === 0 ? A : GR, 0.8); }
+          person(-300, -440, Math.PI / 2, 0, WH, 1.15, { up: 0.5 + 0.2 * Math.sin(t * 3) });
+          const dr = seg(t, W[105], W[107] + 0.2); if (dr > 0) { gem([-160, 360, -515], 60, 0.3, -0.2, A); } if (dr > 0.3) ptext([{ s: "=", col: WH }], [0, 360, -515], X, Y, 120, null, 8); if (dr > 0.5) heartP([170, 380, -515], 70, A, seg(dr, 0.5, 1), 8);
+        }],
+        // CH5 THE SLOGAN (ice cyan)
+        [W[108], W[111], "whip", (t, u, d) => { // "Poi, nel 1947,": calendar riffles from 1938 to 1947
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 120, k), 200, lerp(820, 680, k)], jit(t, 1)), [0, 380, 0], 1000, lerp(-4, 2, k));
+          const yr = Math.min(1947, 1938 + Math.floor(seg(t, W[108], W[110] + 0.1) * 9.99)); const fl = hit(t, W[108] + (yr - 1938) * ((W[110] + 0.1 - W[108]) / 9), 14);
+          const Q = [[-260, 230, -100], [260, 230, -100], [260, 560, -100], [-260, 560, -100]]; fillPoly(Q, FILL, 1); loop(Q, 6, yr === 1947 ? A : WH, 16); ptext([{ s: String(yr), col: yr === 1947 ? A : WH, k: 1 + fl * 0.15 }], [0, 395, -99], X, Y, 190);
+          for (let i = 0; i < 4; i++) { const ph = seg(t, W[108] + i * 0.3, W[108] + 0.5 + i * 0.3); if (ph > 0 && ph < 1) { const a = ph * 3; fillPoly([[-260, 560, -98], [260, 560, -98], [260, 560 - 330 * Math.cos(a), -98 + 330 * Math.sin(a)], [-260, 560 - 330 * Math.cos(a), -98 + 330 * Math.sin(a)]], "#1c1c1c", 0.9); } }
+        }],
+        [W[111], W[114], "cut", (t, u, d) => { // "una giovane copywriter,": top-down over her shoulder onto the typewriter
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, -80, k), lerp(760, 620, k), lerp(520, 420, k)], jit(t, 0.8)), [0, 100, -60], 1000, lerp(-6, 0, k));
+          const Dk = [[-600, 0, -400], [600, 0, -400], [600, 0, 400], [-600, 0, 400]]; fillPoly(Dk, "#0a0805", 1); loop(Dk, 4, DK, 0);
+          typewriter([0, 0, 0], 1, A, seg(t, W[112], W[114]), t); lamp([-420, 0, -200], 1, A);
+          for (let i = 0; i < 4; i++) { const p = seg(t, W[112] + i * 0.2, W[112] + 0.3 + i * 0.2); lineP([-120, 161 + 340 - i * 40, -138 - i * 3], [120, 161 + 340 - i * 40, -138 - i * 3], p, 4, "#444", 0); }
+        }],
+        [W[114], W[119], "punch", (t, u, d) => { // "Frances Gerety scrive quattro parole.": the paper, a nameplate, four blanks light up
+          const k = io(seg(u, 0, d)); camera(add([lerp(120, 0, k), lerp(340, 330, k), lerp(760, 560, k)], jit(t, 0.8)), [0, 330, -140], 1000, lerp(3, -1, k));
+          typewriter([0, 0, 0], 1, A, seg(t, W[116], W[118] + 0.3), t);
+          const np = pop(t, W[114]); if (np > 0) { box([-330, 0, 120], 160 * np, 50, 26, A, FILL, 1, 3); ptext([{ s: "F. GERETY", col: A }], [-330, 26, 147], [np, 0, 0], [0, np, 0], 34, '900 SZpx "Unbounded"', 14); }
+          [70, 150, 60, 190].forEach((w2, i) => { const p = seg(t, W[117] + i * 0.12, W[117] + 0.2 + i * 0.12); const x0 = -150 + [0, 90, 260, 340][i] - 20; lineP([x0, 360, -144], [x0 + w2 * 0.7, 360, -144], p, 10, A, 18); });
+          if (t > W[118]) etext("4", [210, 470, -120], X, Y, 150 * pop(t, W[118]), A, 7);
+        }],
+        [W[119], W[123], "snap", (t, u, d) => { // "A diamond is forever.": the slogan rises word by word, giant gem behind, orbit
+          const a = lerp(-0.45, 0.35, io(seg(u, 0, d))); LIGHT = nrm([Math.sin(t * 2), 0.8, Math.cos(t * 2)]); camera(add([Math.sin(a) * 980, lerp(240, 330, seg(u, 0, d)), Math.cos(a) * 980], jit(t, 1 + 2 * hit(t, W[122], 5))), [0, 250, 0], 1000, lerp(-5, 3, seg(u, 0, d)));
+          grid(8, 200, 0, DD); gem([0, 470, -420], 260, t * 0.8, 0.25, A); for (let i = 0; i < 4; i++) glint([Math.cos(i * 1.7) * 200, 470 + Math.sin(i * 2.3) * 120, -300], 160 * (0.5 + 0.5 * Math.sin(t * 4 + i * 2)), i % 2 ? A : WH, t + i);
+          [["A", -360, 260], ["DIAMOND", 40, 260], ["IS", -300, 70], ["FOREVER", 70, 70]].forEach((wd, i) => { const p = pop(t, W[119 + i] - 0.03, 0.3); if (p > 0) etext(wd[0], [wd[1], wd[2] + (1 - p) * -200, 120], [Math.cos(a) * p, 0, -Math.sin(a) * p], [0, p, 0], i === 3 ? 170 : 150, i === 3 ? A : WH, 10); });
+          FLASH = Math.max(FLASH, hit(t, W[122], 8) * 0.4);
+        }],
+        [W[123], W[128], "cut", (t, u, d) => { // "Un diamante è per sempre.": an infinity loop of light traced around the gem
+          const k = io(seg(u, 0, d)); LIGHT = nrm([Math.sin(t * 2), 0.9, Math.cos(t * 2)]); camera(add([lerp(-200, 160, k), lerp(700, 520, k), lerp(600, 520, k)], jit(t, 0.8)), [0, 200, 0], 1000, lerp(-3, 2, k));
+          grid(8, 200, 0, DD); gem([0, 260, 0], 80, t * 1.2, 0.3, A); const ip = o4(seg(t, W[123], W[127] + 0.2)); infinity([0, 200, 0], 420, A, ip, t, 10);
+        }],
+        [W[128], W[136], "whip", (t, u, d) => { // "E per sempre vuol dire anche: non rivenderlo mai.": a SELL sign is padlocked shut
+          const k = io(seg(u, 0, d)); camera(add([lerp(300, -100, k), lerp(300, 260, k), lerp(820, 700, k)], jit(t, 1 + 2 * hit(t, W[135], 6))), [0, 260, 0], 1000, lerp(4, -3, k));
+          grid(8, 200, 0, DD); ringBox([0, 0, 0], 1, lerp(1, 0, in3(seg(t, W[133], W[135] - 0.05))), 0.4, A); if (t < W[135]) ring([0, 90, 0], 70, 0.4 + t * 0.3, A, t * 2);
+          const Sg = [[-280, 420, -120], [280, 420, -120], [280, 540, -120], [-280, 540, -120]]; fillPoly(Sg, "#0b0b0e", 1); loop(Sg, 6, GR, 8); ptext([{ s: "RIVENDESI", col: WH }], [0, 480, -119], X, Y, 70, null, 8);
+          if (t > W[134]) { const x = o4(seg(t, W[134], W[134] + 0.3)); line([-300, 400, -100], [lerp(-300, 300, x), lerp(400, 560, x), -100], 20, A, 26); line([300, 400, -100], [lerp(300, -300, x), lerp(400, 560, x), -100], 20, A, 26); }
+          if (t > W[135] - 0.05) { const p = pop(t, W[135] - 0.05); circ([0, 200 * p + 60, 160], X, Y, 50 * p, 12, A, 26, Math.PI, 6.283, 14); box([0, 60 + 120 * p, 150], 80 * p, 100 * p, 30, A, FILL, 1, 6); }
+        }],
+        // CH6 RESALE (violet)
+        [W[136], W[140], "cut", (t, u, d) => { // "Infatti prova a rivenderlo:": over the shoulder at a pawn counter
+          const k = io(seg(u, 0, d)); camera(add([lerp(-160, -90, k), lerp(300, 270, k), lerp(560, 420, k)], jit(t, 1)), [60, 190, -300], 1000, -2);
+          grid(8, 200, 0, DD); box([0, 0, -300], 420, 150, 80, GR, FILL, 1, 5); const Sg = [[-300, 520, -460], [300, 520, -460], [300, 640, -460], [-300, 640, -460]]; fillPoly(Sg, A, 1); ptext([{ s: "COMPRO ORO", col: "#000" }], [0, 580, -459], X, Y, 80, null, 0);
+          person(80, -520, Math.PI / 2, 0, DK, 1.25); const w = o4(seg(t, W[136], W[138])); person(-60, lerp(300, 30, w), -Math.PI / 2, (1 - w) * 20, WH, 1.3);
+          if (t > W[139] - 0.2) { const p = pop(t, W[139] - 0.2); ring([40, 160, -300], 30 * p, 0.6, A, t * 2); }
+        }],
+        [W[140], W[149], "punch", (t, u, d) => { // "ti offrono una frazione di quello che hai pagato.": paid vs offered, the bar shrinks
+          const k = io(seg(u, 0, d)); camera(add([lerp(-300, 200, k), lerp(240, 300, k), lerp(900, 820, k)], jit(t, 1)), [0, 300, 0], 1000, lerp(-4, 3, k));
+          grid(8, 200, 0, DD); const gp = o4(seg(t, W[140], W[141] + 0.3)), sh = io(seg(t, W[143] - 0.1, W[143] + 0.6));
+          box([-200, 0, 0], 110, 640 * gp, 80, WH, FILL, 1, 5); box([200, 0, 0], 110, Math.max(2, 640 * gp * lerp(1, 0.25, sh)), 80, A, FILL, 1, 5);
+          ptext([{ s: "PAGATO", col: WH }], [-200, -50, 82], X, Y, 48, '900 SZpx "Unbounded"', 10); ptext([{ s: "OFFERTA", col: A }], [200, -50, 82], X, Y, 48, '900 SZpx "Unbounded"', 10);
+          if (sh > 0.5) { c.setLineDash([18, 14]); line([90, 640, 82], [310, 640, 82], 5, A, 16); c.setLineDash([]); ptext([{ s: "?", col: A }], [200, 470, 82], X, Y, 200 * pop(t, W[143] + 0.5), null, 24); }
+        }],
+        [W[149], W[151], "whip", (t, u, d) => { // "Funziona ovunque.": a wireframe globe, gems light up worldwide
+          const k = io(seg(u, 0, d)); LIGHT = nrm([0.4, 0.9, 0.6]); camera(add([0, lerp(200, 380, k), lerp(1100, 900, k)], jit(t, 1)), [0, 300, 0], 1000, lerp(-6, 4, k));
+          const rot = t * 0.8; globe([0, 300, 0], 360, rot, A); for (let i = 0; i < 18; i++) { const la = (rn(i) - 0.5) * 2.2, lo = rn(i + 30) * 6.283 + rot, p = pop(t, W[149] + i * 0.08); const q = [Math.cos(la) * Math.sin(lo) * 362, 300 + Math.sin(la) * 362, Math.cos(la) * Math.cos(lo) * 362]; if (p > 0 && q[2] > -50) { dot(q, 14 * p, A, 24); if (i % 4 === 0) glint(q, 70 * p, WH, i); } }
+        }],
+        // CH7 JAPAN (red)
+        [W[151], W[155], "punch", (t, u, d) => { // "Nel 1968, in Giappone,": rising sun, a mountain, the year
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 120, k), lerp(140, 240, k), lerp(1100, 900, k)], jit(t, 1)), [0, 380, -400], 1000, lerp(-3, 2, k));
+          FOGD = 6000; disk([0, 600, -1600], X, Y, 520, A, 0.9); for (let i = 0; i < 16; i++) { const b = (i / 16) * 6.283; line([Math.cos(b) * 560, 600 + Math.sin(b) * 560, -1601], [Math.cos(b) * 1500, 600 + Math.sin(b) * 1500, -1601], 30, A, 0); }
+          const M = [[-1300, 0, -1200], [-300, 760, -1200], [-120, 800, -1200], [80, 790, -1200], [260, 740, -1200], [1300, 0, -1200]]; fillPoly(M, "#060606", 1); pline(M, 8, WH, 12); pline([[-300, 760, -1199], [-200, 680, -1199], [-90, 720, -1199], [20, 660, -1199], [140, 710, -1199], [260, 740, -1199]], 6, WH, 10);
+          if (t > W[152] - 0.05) etext("1968", [0, 90, 0], X, Y, 260 * pop(t, W[152] - 0.05), WH, 12);
+        }],
+        [W[155], W[163], "cut", (t, u, d) => { // "solo il 5% delle spose riceve un diamante": aerial grid of 100 brides, 5 light up
+          const k = io(seg(u, 0, d)); camera(add([lerp(0, 200, k), lerp(1100, 1500, k), lerp(900, 1100, k)], jit(t, 1)), [0, 0, -200], 950, lerp(-2, 4, k));
+          FOGD = 6000; grid(10, 220, 0, DD); const pick = [13, 37, 58, 71, 94];
+          for (let i = 0; i < 100; i++) { const x = (i % 10 - 4.5) * 140, z = -Math.floor(i / 10) * 140 + 400, on = pick.indexOf(i) >= 0 && t > W[157] - 0.05; person(x, z, Math.PI / 2, 0, on ? A : GR, 0.95, { dress: true }); if (on) { const p = pop(t, W[157] - 0.05 + pick.indexOf(i) * 0.1); gem([x, 230, z], 22 * p, t * 2 + i, 0.2, A); } }
+          if (t > W[157] - 0.05) etext("5%", [0, 520, -300], X, Y, 260 * pop(t, W[157] - 0.05), A, 10);
+        }],
+        [W[163], W[167], "punch", (t, u, d) => { // "Nel 1981, il 60%.": a wave lights 60 of them, the counter rolls
+          const k = io(seg(u, 0, d)); camera(add([lerp(200, -100, k), lerp(1500, 1200, k), lerp(1100, 1000, k)], jit(t, 1)), [0, 0, -200], 950, lerp(4, -2, k));
+          FOGD = 6000; grid(10, 220, 0, DD); const wv = seg(t, W[165] - 0.2, W[166] + 0.4);
+          for (let i = 0; i < 100; i++) { const x = (i % 10 - 4.5) * 140, z = -Math.floor(i / 10) * 140 + 400, on = rn(i * 3 + 1) < 0.6 && rn(i * 3 + 1) / 0.6 < wv; person(x, z, Math.PI / 2, 0, on ? A : GR, 0.95, { dress: true }); if (on) gem([x, 230, z], 22, t * 2 + i, 0.2, A); }
+          ptext([{ s: "1981", col: WH }], [0, 860, -300], X, Y, 120, null, 10); etext(Math.round(lerp(5, 60, o4(wv))) + "%", [0, 520, -300], X, Y, 280, A, 10);
+        }],
+        [W[167], W[172], "whip", (t, u, d) => { // "e arriva anche la regola.": a rulebook slams open
+          const k = io(seg(u, 0, d)); camera(add([lerp(-200, 100, k), lerp(600, 520, k), lerp(600, 520, k)], jit(t, 1 + 2 * hit(t, W[171], 6))), [0, 60, 0], 1000, lerp(-5, 2, k));
+          const Dk = [[-600, 0, -400], [600, 0, -400], [600, 0, 400], [-600, 0, 400]]; fillPoly(Dk, "#0a0505", 1); const op = o4(seg(t, W[170] - 0.2, W[171] + 0.1)), a = lerp(0, Math.PI, op);
+          const L1 = [[-300, 10, -200], [0, 10, -200], [0, 10, 200], [-300, 10, 200]], Rp = [[0, 10, -200], [300 * Math.cos(Math.PI - a), 10 + 300 * Math.sin(Math.PI - a), -200], [300 * Math.cos(Math.PI - a), 10 + 300 * Math.sin(Math.PI - a), 200], [0, 10, 200]];
+          fillPoly(L1, "#1a1a1a", 1); loop(L1, 5, WH, 10); fillPoly([[0, 10, -200], [300, 10, -200], [300, 10, 200], [0, 10, 200]], "#1a1a1a", 1); fillPoly(Rp, op > 0.5 ? "#141414" : A, 1); loop(Rp, 5, WH, 10);
+          if (op > 0.6) { ptext([{ s: "REGOLA", col: A }], [150, 12, -40], X, NZ, 70, null, 18); ptext([{ s: "N. 1", col: WH }], [150, 12, 60], X, NZ, 60, null, 8); for (let i = 0; i < 5; i++) line([-260, 11, -120 + i * 60], [-40, 11, -120 + i * 60], 3, GR, 0); }
+        }],
+        [W[172], W[177], "cut", (t, u, d) => { // "Quanto deve costare un anello?": the ring spins under a swinging price tag "?"
+          const k = io(seg(u, 0, d)); LIGHT = nrm([Math.sin(t * 2), 0.9, Math.cos(t * 2)]); camera(add([lerp(-160, 160, k), 280, lerp(700, 560, k)], jit(t, 0.8)), [0, 230, 0], 1000, lerp(-3, 3, k));
+          grid(6, 200, 0, DD); ring([0, 120, 0], 120, t * 0.9, A, t * 1.5); const sw = Math.sin((t - W[172]) * 4) * 0.35, o = [120, 430, 40], ux = [Math.cos(sw), Math.sin(sw), 0], uy = [-Math.sin(sw), Math.cos(sw), 0], P = (x, y) => add(o, add(mul(ux, x), mul(uy, y)));
+          line([0, 330, 0], P(-60, 0), 4, GR, 6); const Q = [P(-40, 50), P(180, 50), P(180, -50), P(-40, -50), P(-75, 0)]; fillPoly(Q, A, 1); ptext([{ s: "$ ?", col: "#000" }], P(80, 0), ux, uy, 70, null, 0);
+        }],
+        [W[177], W[179], "snap", (t, u, d) => { // "Due stipendi.": two pay stacks slam onto a scale against the ring
+          const k = ex(seg(u, 0, 0.4)); camera(add([0, 300, lerp(600, 800, k)], jit(t, 1 + 3 * hit(t, W[178], 6))), [0, 250, 0], 1000, lerp(-8, 0, k));
+          grid(6, 200, 0, DD); const tilt = lerp(-0.25, 0.08, o4(seg(t, W[178], W[178] + 0.4))); line([0, 0, 0], [0, 360, 0], 10, GR, 6); const L = [Math.cos(tilt) * -260, 360 + Math.sin(tilt) * -260, 0], Rr = [Math.cos(tilt) * 260, 360 + Math.sin(tilt) * 260, 0]; line(L, Rr, 10, WH, 10);
+          ring(add(L, [0, -60, 0]), 50, t, A, t * 2); for (let i = 0; i < 2; i++) { const p = seg(t, W[177] + i * 0.3, W[177] + 0.25 + i * 0.3); if (p > 0) stack(add(Rr, [(i - 0.5) * 120, lerp(400, -40, in3(p)), 0]), 6, A, 0.5); }
+          if (t > W[178]) etext("×2", [0, 560, 0], X, Y, 180 * pop(t, W[178]), A, 8);
+        }],
+        // CH8 THE LESSON (ice cyan)
+        [W[179], W[185], "cut", (t, u, d) => { // "Il diamante non è mai cambiato,": the same gem as in the hook, alone, slow push
+          const k = i2(seg(u, 0, d)); LIGHT = nrm([Math.sin(t * 1.6), 0.8, Math.cos(t * 1.6)]); camera(add([0, 300, lerp(900, 520, k)], jit(t, 0.4)), [0, 280, 0], 1000, 0);
+          grid(6, 200, 0, DD); gem([0, 290, 0], 120, t * 0.8, 0.28, A); glint([40, 340, 60], 110 * (0.5 + 0.5 * Math.sin(t * 4)), WH, t);
+          ["1888", "1947", "OGGI"].forEach((y, i) => { const p = pop(t, W[181] + i * 0.25); if (p > 0) ptext([{ s: y, col: i === 2 ? A : GR }], [(i - 1) * 165, 80, 100], X, Y, 34 * p, '500 SZpx "Unbounded"', 6); });
+          if (t > W[184] - 0.05) { const p = pop(t, W[184] - 0.05); ptext([{ s: "=", col: A }], [-82, 80, 100], X, Y, 50 * p, null, 14); ptext([{ s: "=", col: A }], [82, 80, 100], X, Y, 50 * p, null, 14); }
+        }],
+        [W[185], W[194], "punch", (t, u, d) => { // "È cambiata la storia che ci hanno raccontato sopra.": ads, films, papers orbit the gem in rings; pull back
+          const k = io(seg(u, 0, d)); LIGHT = nrm([Math.sin(t * 1.6), 0.8, Math.cos(t * 1.6)]); camera(add([lerp(0, 200, k), lerp(320, 640, k), lerp(600, 1050, k)], jit(t, 1)), [0, 260, 0], 1000, lerp(0, 6, k));
+          grid(8, 220, 0, DD); gem([0, 290, 0], 120, t * 0.8, 0.28, A);
+          const labels = ["SPOT", "CINEMA", "GIORNALI", "STAR", "SCUOLE", "SLOGAN", "TV", "RIVISTE"];
+          for (let i = 0; i < 8; i++) { const p = pop(t, W[186] + i * 0.25, 0.35); if (p <= 0) continue; const r = 300 + (i % 3) * 120, a = t * (0.5 + (i % 3) * 0.15) + (i * 6.283) / 8, o = [Math.cos(a) * r, 290 + ((i % 3) - 1) * 120, Math.sin(a) * r]; let ux = [-Math.sin(a), 0, Math.cos(a)]; if (!facing(o, cross(ux, Y))) ux = mul(ux, -1);
+            const Q = [add(o, mul(ux, -110 * p)), add(o, mul(ux, 110 * p)), add(add(o, mul(ux, 110 * p)), [0, 70 * p, 0]), add(add(o, mul(ux, -110 * p)), [0, 70 * p, 0])]; fillPoly(Q, "#0b0b0e", 1); loop(Q, 5, i % 2 ? A : WH, 14); ptext([{ s: labels[i], col: i % 2 ? A : WH }], add(o, [0, 35 * p, 0]), mul(ux, p), [0, p, 0], 34, '900 SZpx "Unbounded"', 8); }
+          if (t > W[192]) { const p = o4(seg(t, W[192], W[193] + 0.4)); infinity([0, 120, 0], 560 * p, A, 1, undefined, 6); }
+        }],
+        [W[194], W[197], "snap", (t, u, d) => { // "Non vendevano pietre,": the grey rock is struck out
+          camera(add([0, 300, 700], jit(t, 1 + 2 * hit(t, W[196], 6))), [0, 260, 0], 1000, lerp(-6, 0, ex(seg(u, 0, 0.4))));
+          grid(6, 200, 0, DD); const R = rng(7); const pts = []; for (let i = 0; i < 9; i++) { const b = (i / 9) * 6.283, r = 110 + R() * 50; pts.push([Math.cos(b) * r, 270 + Math.sin(b) * r * 0.8, 20]); } fillPoly(pts, "#2a2a2a", 1); loop(pts, 6, GR, 6);
+          if (t > W[196] - 0.05) { const x = o4(seg(t, W[196] - 0.05, W[196] + 0.2)); line([-220, 100, 150], [lerp(-220, 220, x), lerp(100, 440, x), 150], 22, A, 28); line([220, 100, 150], [lerp(220, -220, x), lerp(100, 440, x), 150], 22, A, 28); }
+        }],
+        [W[197], W[201], "punch", (t, u, d) => { // "vendevano l'amore per sempre.": the couple inside a glowing heart and infinity loop
+          const a = lerp(-0.5, 0.5, i2(seg(u, 0, d))); LIGHT = nrm([0.3, 1, 0.6]); camera(add([Math.sin(a) * 700, 300, Math.cos(a) * 700], jit(t, 0.8)), [0, 220, 0], 1000, lerp(-3, 3, seg(u, 0, d)));
+          grid(6, 200, 0, DD); person(-80, 0, 0, 0, WH, 1.3, { dress: true }); person(80, 0, Math.PI, 0, A, 1.3); gem([0, 200, 0], 30, t * 2, 0.3, A);
+          heartP([0, 420, 0], 140, A, o4(seg(t, W[198] - 0.1, W[198] + 0.5)), 10); infinity([0, 2, 0], 360, A, o4(seg(t, W[199], W[200] + 0.4)), t, 8);
+        }],
+        [W[201], 93.95, "cut", (t, u, d) => { // "E il tuo prodotto... che storia sta raccontando?": your product on the pedestal, a blank story frame, "?"
+          const k = i2(seg(u, 0, d)); camera(add([lerp(-120, 0, k), 260, lerp(900, 600, k)], jit(t, 0.4)), [0, 260, 0], 1000, lerp(-2, 0, k));
+          grid(6, 200, 0, DD); box([0, 0, 0], 110, 160, 110, DK, FILL, 1, 4); box([0, 160, 0], 70, 150, 60, A, FILL, 1, 5); ptext([{ s: "TUO", col: A }], [0, 250, 61], X, Y, 40, '900 SZpx "Unbounded"', 12);
+          const a = cs([0, 1300, 0]), b1 = cs([-220, 0, 0]), b2 = cs([220, 0, 0]); if (a[2] > NEAR) { const A1 = sp(a), B1 = sp(b1), B2 = sp(b2); const g = c.createLinearGradient(A1[0], A1[1], A1[0], B1[1]); g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(1, "rgba(255,255,255,0.16)"); c.save(); c.fillStyle = g; c.beginPath(); c.moveTo(A1[0] - 8, A1[1]); c.lineTo(A1[0] + 8, A1[1]); c.lineTo(B2[0], B2[1]); c.lineTo(B1[0], B1[1]); c.closePath(); c.fill(); c.restore(); }
+          if (t > W[204] - 0.1) { const p = pop(t, W[204] - 0.1); const Q = [[-260 * p, 420, -40], [260 * p, 420, -40], [260 * p, 640, -40], [-260 * p, 640, -40]]; fillPoly(Q, "#0b0b0e", 1); loop(Q, 6, A, 20); for (let i = 0; i < 3; i++) lineP([-200, 590 - i * 50, -39], [200 - i * 60, 590 - i * 50, -39], seg(t, W[205] + i * 0.15, W[205] + 0.4 + i * 0.15), 5, GR, 0); }
+          if (t > W[207]) ptext([{ s: "?", col: A }], [300, 380, 0], X, Y, 260 * pop(t, W[207]), null, 30);
+        }],
+        [93.95, 97.81, "none", (t, u, d) => { // end card
+          camera([0, 0, 1150], [0, 0, 0], 1150, 0); LIGHT = nrm([Math.sin(t * 2), 0.8, Math.cos(t * 2)]);
+          const dd = o4(seg(t, 94.0, 94.75)), ry = (1 - o4(seg(t, 94.0, 94.95))) * 2.4, cr = Math.cos(ry), sr = Math.sin(ry), T = [[0, 520], [150, 250], [-150, 250], [0, 520]], q = dd * 3;
+          for (let i = 0; i < 3 && q > i; i++) { const f = Math.min(1, q - i); line([T[i][0] * cr, T[i][1], T[i][0] * sr], [lerp(T[i][0], T[i + 1][0], f) * cr, lerp(T[i][1], T[i + 1][1], f), lerp(T[i][0], T[i + 1][0], f) * sr], 9, A, 26); }
+          if (dd >= 1) fillPoly([[0, 400, 0], [56 * cr, 290, 0], [-56 * cr, 290, 0]], A, 1);
+          const w = pop(t, 94.75); if (w > 0) ptext([{ s: "APEXMEDIA", col: WH }], [0, 120, 0], X, Y, 92 * w, '900 SZpx "Unbounded"', 22);
+          if (t > 95.15) ptext([{ s: "OGNI PRODOTTO HA UNA STORIA".split("").join(" "), col: GR }], [0, 20, 0], X, Y, 27, '500 SZpx "Unbounded"', 0);
+          const b = o4(seg(t, 95.45, 95.95)); if (b > 0) { fillPoly([[-430 * b, -178, 0], [430 * b, -178, 0], [430 * b, -62, 0], [-430 * b, -62, 0]], A, 1); if (b > 0.9) ptext([{ s: "SEGUI APEX MEDIA →", col: "#000" }], [0, -120, 0], X, Y, 64, null, 0); }
+        }],
+      ];
+      const FOCUS = { bg: 0, fg: 0 }; let FLASH = 0;
+      function hexA(h, a) { const n = parseInt(h.slice(1), 16); return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")"; }
+      function drawFrame(t, ctxOut) {
+        let i = 0; while (i < SH.length - 1 && t >= SH[i][1]) i++;
+        const s = SH[i], u = t - s[0], d = s[1] - s[0];
+        A = accAt(t); FOCUS.bg = 0; FOCUS.fg = 0; FOGD = 3400; FLASH = 0; LIGHT = nrm([0.5, 0.9, 0.6]);
+        [fgc, bgc].forEach((k) => { k.setTransform(1, 0, 0, 1, 0, 0); k.clearRect(0, 0, 1080, 1920); k.globalAlpha = 1; k.shadowBlur = 0; });
+        const bp = (((t - B0) % BEAT) + BEAT) % BEAT, bump = Math.exp(-bp * 9) * 0.016, ty = s[2];
+        const pk = ty === "punch" || ty === "cut" ? 1 - o4(seg(u, 0, 0.28)) : 0, wk = ty === "whip" ? 1 - o4(seg(u, 0, 0.3)) : 0, sn = ty === "snap" ? hit(t, s[0], 10) : 0, dir = i % 2 ? 1 : -1;
+        const sc = 1 + bump + (ty === "punch" ? pk * 0.24 : ty === "cut" ? pk * 0.06 : 0) + sn * 0.1;
+        [fgc, bgc].forEach((k) => { k.translate(540 + wk * 900 * dir, 1150); k.rotate((ty === "punch" ? pk * 0.12 : 0) * dir + wk * 0.05 * dir); k.scale(sc, sc); k.translate(-540, -1150); });
+        c = fgc; s[3](t, u, d); c = fgc;
+        ctxOut.fillStyle = "#000"; ctxOut.fillRect(0, 0, 1080, 1920);
+        const g = ctxOut.createRadialGradient(540, 1150, 60, 540, 1150, 950); g.addColorStop(0, hexA(A, 0.1)); g.addColorStop(0.5, "rgba(255,255,255,0.03)"); g.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = g; ctxOut.fillRect(0, 150, 1080, 1770);
+        ctxOut.filter = FOCUS.bg > 0.3 ? "blur(" + FOCUS.bg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(BG, 0, 0);
+        ctxOut.filter = FOCUS.fg > 0.3 ? "blur(" + FOCUS.fg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(FG, 0, 0); ctxOut.filter = "none";
+        const tg = ctxOut.createLinearGradient(0, 140, 0, 820); tg.addColorStop(0, "rgba(0,0,0,0.78)"); tg.addColorStop(0.7, "rgba(0,0,0,0.5)"); tg.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = tg; ctxOut.fillRect(0, 140, 1080, 680);
+        const vg = ctxOut.createRadialGradient(540, 1000, 500, 540, 1000, 1250); vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.55)"); ctxOut.fillStyle = vg; ctxOut.fillRect(0, 0, 1080, 1920);
+        const fl = Math.max(FLASH, ty === "match" ? hit(t, s[0], 22) * 0.35 : ty === "punch" ? hit(t, s[0], 14) * 0.3 : ty === "snap" ? hit(t, s[0], 12) * 0.5 : 0);
+        if (fl > 0.01) { ctxOut.fillStyle = "rgba(255,255,255," + fl.toFixed(3) + ")"; ctxOut.fillRect(0, 0, 1080, 1920); }
+      }
+      const SUB = 3, SHUT = 0.5 / 30;
+      function render(t) { octx.setTransform(1, 0, 0, 1, 0, 0); octx.globalAlpha = 1; for (let j = 0; j < SUB; j++) { drawFrame(Math.max(0, t + (j / (SUB - 1) - 0.5) * SHUT), frc); octx.globalAlpha = 1 / (j + 1); octx.drawImage(FR, 0, 0); } octx.globalAlpha = 1; }
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => render(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Big Shoulders Display"'), document.fonts.load('500 26px "Unbounded"'), document.fonts.load('900 60px "Unbounded"')]).then(() => render(st.t), () => render(st.t));
+      render(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>

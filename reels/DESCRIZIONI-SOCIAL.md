@@ -8,7 +8,33 @@ La prima riga è sempre il gancio: è l'unica che si vede senza aprire la descri
 
 ---
 
-## 1. Bernays — "Le torce della libertà" (1:37)
+## 1. Diamante — "Un diamante è per sempre" (1:38)
+File: `apex-diamante/renders/apex-diamante-9x16.mp4`
+
+**Instagram**
+```text
+Il diamante del tuo anello non è raro. E l'idea di regalarlo l'ha inventata una pubblicità. 💎
+
+1938: nessuno compra più diamanti. De Beers chiama un'agenzia, e l'agenzia non vende una pietra: vende un'idea.
+Gioielli alle star di Hollywood, relatori nelle scuole, e nel 1947 quattro parole: "A diamond is forever".
+
+In Giappone, nel 1968, solo il 5% delle spose riceveva un diamante. Nel 1981, il 60%.
+Il diamante non è mai cambiato. È cambiata la storia che ci hanno raccontato sopra.
+
+👇 E il tuo prodotto, che storia sta raccontando? Scrivilo nei commenti.
+
+#storiadelmarketing #diamanti #pubblicità #storytelling #marketing #copywriting #brand #losapevi
+```
+
+**TikTok**
+```text
+Il diamante del tuo anello non è raro. L'idea di regalarlo l'ha inventata una pubblicità. 💎
+#storiadelmarketing #storytelling #losapevi #marketing
+```
+
+---
+
+## 2. Bernays — "Le torce della libertà" (1:37)
 File: `apex-bernays/renders/apex-bernays-9x16.mp4`
 
 **Instagram**
@@ -36,7 +62,7 @@ Suono pagine: Koops (CC BY 4.0)
 
 ---
 
-## 2. "9,99" — l'effetto della cifra a sinistra (52 s)
+## 3. "9,99" — l'effetto della cifra a sinistra (52 s)
 File: `apex-nove-e-novantanove/renders/apex-nove-e-novantanove-9x16.mp4`
 
 **Instagram**
@@ -64,7 +90,7 @@ Fonte: Anderson & Simester, 2003 · Suono vetro: Ruben_Uitenweerde (CC BY 3.0)
 
 ---
 
-## 3. La regola del 7 (41 s)
+## 4. La regola del 7 (41 s)
 File: `apex-regola-del-7/renders/apex-regola-del-7-9x16.mp4`
 
 **Instagram**
@@ -90,7 +116,7 @@ Nessuno compra la prima volta che ti vede. 👀 Alla settima, entra.
 
 ---
 
-## 4. La fila — riprova sociale (47 s)
+## 5. La fila — riprova sociale (47 s)
 File: `apex-la-fila/renders/apex-la-fila-9x16.mp4`
 
 **Instagram**
@@ -117,7 +143,7 @@ Due ristoranti uguali: entri sempre in quello con la fila. Ecco perché. 🍝
 
 ---
 
-## 5. Effetto esca — il popcorn medio (47,5 s)
+## 6. Effetto esca — il popcorn medio (47,5 s)
 File: `apex-effetto-esca/renders/apex-effetto-esca-9x16.mp4`
 
 **Instagram**
@@ -143,7 +169,7 @@ Il popcorn medio non è lì per essere comprato. 🍿 Si chiama effetto esca.
 
 ---
 
-## 6. Due negozi (60 s)
+## 7. Due negozi (60 s)
 File: `apex-due-negozi/renders/apex-due-negozi-9x16.mp4`
 
 **Instagram**
@@ -170,7 +196,7 @@ Non conta quanta gente ti vede. Conta chi ti vede, e cosa fa dopo.
 
 ---
 
-## 7. Cosa facciamo — "I like non pagano le fatture" (31,6 s)
+## 8. Cosa facciamo — "I like non pagano le fatture" (31,6 s)
 File: `apex-cosa-facciamo-3d/renders/apex-cosa-facciamo-9x16.mp4`
 
 **Instagram**
@@ -198,7 +224,7 @@ I like non pagano le fatture. 💸 Ecco cosa facciamo invece.
 
 ---
 
-## 8. 100 post, 0 clienti (18 s)
+## 9. 100 post, 0 clienti (18 s)
 File: `apex-post-clienti-3d/renders/apex-post-clienti-9x16.mp4`
 
 **Instagram**
@@ -224,7 +250,7 @@ Smettila di pubblicare. Inizia a convertire.
 
 ---
 
-## 9. Il funnel 3D — "Il tuo fatturato è fermo?" (21 s)
+## 10. Il funnel 3D — "Il tuo fatturato è fermo?" (21 s)
 File: `apex-funnel-3d/renders/apex-funnel-3d-9x16.mp4`
 
 **Instagram**
@@ -255,11 +281,11 @@ Più clienti. Non più views.
 
 ---
 
-## 10. Il funnel 2D — prima versione (21 s)
+## 11. Il funnel 2D — prima versione (21 s)
 File: `apex-funnel-fatturato/renders/apex-funnel-fatturato-9x16.mp4`
 
 Attenzione: questo video è **senza audio**. Su Instagram e TikTok aggiungi una musica di tendenza dall'app prima di pubblicare.
-Ha lo stesso messaggio del video 9: pubblicane uno solo dei due.
+Ha lo stesso messaggio del video 10: pubblicane uno solo dei due.
 
 **Instagram**
 ```text
@@ -287,6 +313,6 @@ Il tuo fatturato è fermo? Serve un funnel, non più traffico. 📊
 ## Prima di pubblicare
 
 - **Commenti con parola chiave** (CLIENTI, AUDIT): rispondi in DM entro poche ore, altrimenti il contatto si raffredda.
-- **"Link in bio"**: i video 7, 8 e 10 lo dicono a schermo, quindi il link alla consulenza o all'audit deve essere davvero in bio.
-- **Crediti audio**: solo i video 1 e 2 richiedono la riga di credito (licenza CC BY). È già inserita qui sopra.
-- **Ordine consigliato**: alterna un video divulgativo (1, 2, 3, 4, 5) e uno commerciale (6, 7, 8, 9) per non sembrare solo pubblicità.
+- **"Link in bio"**: i video 8, 9 e 11 lo dicono a schermo, quindi il link alla consulenza o all'audit deve essere davvero in bio.
+- **Crediti audio**: solo i video 2 e 3 richiedono la riga di credito (licenza CC BY). È già inserita qui sopra.
+- **Ordine consigliato**: alterna un video divulgativo (1, 2, 3, 4, 5, 6) e uno commerciale (7, 8, 9, 10) per non sembrare solo pubblicità.
