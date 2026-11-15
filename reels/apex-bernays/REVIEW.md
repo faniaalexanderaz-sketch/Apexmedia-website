@@ -20,7 +20,7 @@ palco con occhio di bue, specchio.
 Voce ElevenLabs v4 (preset "Callum"), base cinematografica 100 BPM (ElevenLabs Music v2.5), via Higgsfield.
 Effetti: whoosh, scatti fotografici, pagine, colpi bassi, riser, tick. Due con licenza CC BY da citare:
 vetro non usato; "Page_Turn_24.wav" di Koops (CC BY 4.0). Crediti completi: `assets/audio/CREDITS.txt`.
-Misurato, non ascoltato.
+Misurato, non ascoltato: −14,4 LUFS, true peak −1,7 dB dopo limitatore sul file finale, zero clipping.
 
 ## Correzioni prima del render
 Nastro dei prodotti e cinepresa avvicinati; "TORCHES OF FREEDOM" e insegna "AMERICAN BREAKFAST" spostati
