@@ -85,23 +85,49 @@ Esempi a scopo educativo: i rendimenti non sono garantiti. Non è una consulenza
 
 ---
 
-## 4. 100 forzieri — mentalità (0:51)
-File: `rp-forzieri/renders/rp-forzieri-9x16.mp4`
+## 4. Il token pirata — mentalità (0:52) · NUOVO 3D
+File: `rp-token/renders/rp-token-9x16.mp4`
+Sostituisce la prima versione "100 forzieri" (`rp-forzieri`), che aveva il concetto sbagliato.
 
 **TikTok**
 ```text
-Se hai aperto 100 forzieri su Fortnite per un leggendario, hai già la mentalità per diventare ricco 🎮💰 A quale "forziere" ti sei fermato nella vita? 👇
-#mentalità #motivazione #soldi #fortnite
+1 possibilità su 175.000. E tu continui ad aprire forzieri per il token pirata 🏴‍☠️ Questa è la mentalità di chi fa i soldi. Quanti forzieri hai aperto? 👇
+#fortnite #tokenpirata #mentalità #soldi
 ```
 
 **Instagram**
 ```text
-Se hai aperto 100 forzieri su Fortnite per trovare un oggetto leggendario, hai già la mentalità per diventare ricco.
+Una possibilità su 175.000. E tu continui ad aprire forzieri su Fortnite.
 
-99 forzieri vuoti, e tu apri il centesimo. Nella vita reale invece molliamo al terzo: un colloquio andato male, un progetto che non parte, un cliente che dice no.
-Chi ce la fa non è più fortunato. Ha solo aperto più forzieri.
+Perché dentro può esserci il token pirata: un mese di negozio oggetti gratis. Hai aperto centinaia di forzieri senza trovarlo, eppure non molli.
+Nella vita reale, invece, molliamo al terzo no. Chi ce la fa non è più fortunato: ha solo aperto più forzieri.
 
-👇 A quale forziere ti sei fermato? Scrivilo nei commenti.
+👇 Quanti forzieri hai aperto? Scrivilo nei commenti.
 
-#mentalità #motivazione #soldi #business #crescitapersonale #fortnite #mindset #ricchipiano
+#fortnite #tokenpirata #mentalità #motivazione #soldi #business #mindset #ricchipiano
+```
+
+---
+
+## 5. 1.500 € di stipendio, il 15 sei a zero (0:53) · NUOVO 3D, hook immediato
+File: `rp-stipendio-v2/renders/rp-stipendio-v2-9x16.mp4`
+
+**TikTok**
+```text
+1.500 € di stipendio e il 15 del mese sei già a zero. Ecco dove finiscono 💸 A che giorno arrivi a zero? Scrivi solo il numero 👇
+#soldi #stipendio #finanzapersonale #risparmio
+```
+
+**Instagram**
+```text
+1.500 € di stipendio. E il 15 del mese sei già a zero.
+
+Affitto 600, bollette e spesa 400, auto 200, telefono e abbonamenti 100: te ne restano 200 per 15 giorni.
+Ma il vero problema è un altro: il giorno dello stipendio ti senti ricco e spendi di più, e con la carta fino al doppio (esperimento del MIT).
+Chi arriva a fine mese fa il contrario: mette via il 10% subito, in automatico. 150 € al mese, 1.800 € in un anno.
+
+👇 A che giorno del mese arrivi a zero? Scrivi solo il numero.
+
+Contenuto educativo, non è una consulenza finanziaria.
+#soldi #stipendio #finanzapersonale #risparmio #educazionefinanziaria #mindset #business #ricchipiano
 ```
