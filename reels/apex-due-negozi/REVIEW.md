@@ -14,7 +14,7 @@ clienti = chi entra, chiede e paga → conta chi ti vede e cosa fa dopo → Apex
 "Smettila di contare le visualizzazioni. Inizia a contare i clienti." + CTA.
 
 ## Audio
-Voce: ElevenLabs v4 via Higgsfield, voce preset "Callum". Musica: base tech leggera (ElevenLabs Music v2.5), volume 0,11.
+Voce: ElevenLabs v4 via Higgsfield, voce preset "Callum". Musica: sottofondo di suspense senza batteria (ElevenLabs Music v2.5), volume 0,55.
 Misurato, non ascoltato: −14,8 LUFS, true peak −1,0 dB, zero clipping.
 
 ## Da verificare a orecchio
