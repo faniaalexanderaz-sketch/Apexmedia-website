@@ -1,0 +1,866 @@
+[
+  {
+    "text": "Hai",
+    "start": 0.06,
+    "end": 0.14,
+    "id": "w0"
+  },
+  {
+    "text": "10.000",
+    "start": 0.14,
+    "end": 0.91,
+    "id": "w1"
+  },
+  {
+    "text": "euro",
+    "start": 1,
+    "end": 1.19,
+    "id": "w2"
+  },
+  {
+    "text": "fermi",
+    "start": 1.19,
+    "end": 1.42,
+    "id": "w3"
+  },
+  {
+    "text": "sul",
+    "start": 1.42,
+    "end": 1.56,
+    "id": "w4"
+  },
+  {
+    "text": "conto?",
+    "start": 1.56,
+    "end": 1.79,
+    "id": "w5"
+  },
+  {
+    "text": "Ogni",
+    "start": 2.1,
+    "end": 2.32,
+    "id": "w6"
+  },
+  {
+    "text": "anno",
+    "start": 2.32,
+    "end": 2.65,
+    "id": "w7"
+  },
+  {
+    "text": "ne",
+    "start": 2.65,
+    "end": 2.81,
+    "id": "w8"
+  },
+  {
+    "text": "perdi",
+    "start": 2.81,
+    "end": 3.22,
+    "id": "w9"
+  },
+  {
+    "text": "un",
+    "start": 3.22,
+    "end": 3.38,
+    "id": "w10"
+  },
+  {
+    "text": "pezzo.",
+    "start": 3.38,
+    "end": 3.88,
+    "id": "w11"
+  },
+  {
+    "text": "Senza",
+    "start": 3.94,
+    "end": 4.24,
+    "id": "w12"
+  },
+  {
+    "text": "vedere",
+    "start": 4.24,
+    "end": 4.68,
+    "id": "w13"
+  },
+  {
+    "text": "uscire",
+    "start": 4.68,
+    "end": 5.09,
+    "id": "w14"
+  },
+  {
+    "text": "un",
+    "start": 5.1,
+    "end": 5.2,
+    "id": "w15"
+  },
+  {
+    "text": "euro.",
+    "start": 5.27,
+    "end": 5.67,
+    "id": "w16"
+  },
+  {
+    "text": "Si",
+    "start": 5.67,
+    "end": 5.99,
+    "id": "w17"
+  },
+  {
+    "text": "chiama",
+    "start": 5.99,
+    "end": 6.48,
+    "id": "w18"
+  },
+  {
+    "text": "inflazione.",
+    "start": 6.48,
+    "end": 7.46,
+    "id": "w19"
+  },
+  {
+    "text": "I",
+    "start": 7.74,
+    "end": 7.76,
+    "id": "w20"
+  },
+  {
+    "text": "prezzi",
+    "start": 7.76,
+    "end": 8.24,
+    "id": "w21"
+  },
+  {
+    "text": "salgono,",
+    "start": 8.24,
+    "end": 8.96,
+    "id": "w22"
+  },
+  {
+    "text": "i",
+    "start": 8.96,
+    "end": 9,
+    "id": "w23"
+  },
+  {
+    "text": "tuoi",
+    "start": 9.1,
+    "end": 9.35,
+    "id": "w24"
+  },
+  {
+    "text": "soldi",
+    "start": 9.35,
+    "end": 9.76,
+    "id": "w25"
+  },
+  {
+    "text": "restano",
+    "start": 9.79,
+    "end": 10.32,
+    "id": "w26"
+  },
+  {
+    "text": "uguali.",
+    "start": 10.32,
+    "end": 11.08,
+    "id": "w27"
+  },
+  {
+    "text": "Nel",
+    "start": 11.14,
+    "end": 11.3,
+    "id": "w28"
+  },
+  {
+    "text": "2022,",
+    "start": 11.33,
+    "end": 12.37,
+    "id": "w29"
+  },
+  {
+    "text": "in",
+    "start": 12.37,
+    "end": 12.52,
+    "id": "w30"
+  },
+  {
+    "text": "Italia,",
+    "start": 12.52,
+    "end": 13.16,
+    "id": "w31"
+  },
+  {
+    "text": "i",
+    "start": 13.18,
+    "end": 13.25,
+    "id": "w32"
+  },
+  {
+    "text": "prezzi",
+    "start": 13.25,
+    "end": 13.78,
+    "id": "w33"
+  },
+  {
+    "text": "sono",
+    "start": 13.85,
+    "end": 14.14,
+    "id": "w34"
+  },
+  {
+    "text": "saliti",
+    "start": 14.22,
+    "end": 14.66,
+    "id": "w35"
+  },
+  {
+    "text": "dell'8,1%.",
+    "start": 15.03,
+    "end": 16.39,
+    "id": "w36"
+  },
+  {
+    "text": "La",
+    "start": 16.46,
+    "end": 16.54,
+    "id": "w37"
+  },
+  {
+    "text": "spesa",
+    "start": 16.54,
+    "end": 16.9,
+    "id": "w38"
+  },
+  {
+    "text": "che",
+    "start": 16.9,
+    "end": 17.12,
+    "id": "w39"
+  },
+  {
+    "text": "costava",
+    "start": 17.12,
+    "end": 17.61,
+    "id": "w40"
+  },
+  {
+    "text": "100",
+    "start": 17.61,
+    "end": 18.17,
+    "id": "w41"
+  },
+  {
+    "text": "euro",
+    "start": 18.5,
+    "end": 18.58,
+    "id": "w42"
+  },
+  {
+    "text": "l'anno",
+    "start": 18.58,
+    "end": 19,
+    "id": "w43"
+  },
+  {
+    "text": "dopo",
+    "start": 19,
+    "end": 19.3,
+    "id": "w44"
+  },
+  {
+    "text": "ne",
+    "start": 19.3,
+    "end": 19.44,
+    "id": "w45"
+  },
+  {
+    "text": "costava",
+    "start": 19.44,
+    "end": 19.92,
+    "id": "w46"
+  },
+  {
+    "text": "108.",
+    "start": 20.36,
+    "end": 20.92,
+    "id": "w47"
+  },
+  {
+    "text": "Eanche",
+    "start": 20.98,
+    "end": 21.3,
+    "id": "w48"
+  },
+  {
+    "text": "negli",
+    "start": 21.3,
+    "end": 21.62,
+    "id": "w49"
+  },
+  {
+    "text": "anni",
+    "start": 21.62,
+    "end": 21.83,
+    "id": "w50"
+  },
+  {
+    "text": "tranquilli,",
+    "start": 21.92,
+    "end": 22.63,
+    "id": "w51"
+  },
+  {
+    "text": "l'obiettivo",
+    "start": 22.63,
+    "end": 23.04,
+    "id": "w52"
+  },
+  {
+    "text": "della",
+    "start": 23.04,
+    "end": 23.3,
+    "id": "w53"
+  },
+  {
+    "text": "Banca",
+    "start": 23.3,
+    "end": 23.56,
+    "id": "w54"
+  },
+  {
+    "text": "Centrale",
+    "start": 23.56,
+    "end": 23.98,
+    "id": "w55"
+  },
+  {
+    "text": "Europea",
+    "start": 24.06,
+    "end": 24.76,
+    "id": "w56"
+  },
+  {
+    "text": "è",
+    "start": 24.82,
+    "end": 24.86,
+    "id": "w57"
+  },
+  {
+    "text": "un'inflazione",
+    "start": 24.86,
+    "end": 26.19,
+    "id": "w58"
+  },
+  {
+    "text": "del",
+    "start": 26.19,
+    "end": 26.5,
+    "id": "w59"
+  },
+  {
+    "text": "2%,",
+    "start": 26.5,
+    "end": 27.12,
+    "id": "w60"
+  },
+  {
+    "text": "ogni",
+    "start": 27.12,
+    "end": 27.45,
+    "id": "w61"
+  },
+  {
+    "text": "anno.",
+    "start": 27.53,
+    "end": 28.26,
+    "id": "w62"
+  },
+  {
+    "text": "Fai",
+    "start": 28.34,
+    "end": 28.46,
+    "id": "w63"
+  },
+  {
+    "text": "i",
+    "start": 28.46,
+    "end": 28.51,
+    "id": "w64"
+  },
+  {
+    "text": "conti.",
+    "start": 28.52,
+    "end": 29.01,
+    "id": "w65"
+  },
+  {
+    "text": "10.000",
+    "start": 29.01,
+    "end": 30.05,
+    "id": "w66"
+  },
+  {
+    "text": "euro",
+    "start": 30.05,
+    "end": 30.39,
+    "id": "w67"
+  },
+  {
+    "text": "fermi,",
+    "start": 30.39,
+    "end": 30.87,
+    "id": "w68"
+  },
+  {
+    "text": "con",
+    "start": 30.87,
+    "end": 31.13,
+    "id": "w69"
+  },
+  {
+    "text": "un'inflazione",
+    "start": 31.13,
+    "end": 32.23,
+    "id": "w70"
+  },
+  {
+    "text": "al",
+    "start": 32.27,
+    "end": 32.4,
+    "id": "w71"
+  },
+  {
+    "text": "3%.",
+    "start": 32.4,
+    "end": 32.94,
+    "id": "w72"
+  },
+  {
+    "text": "Dopo",
+    "start": 33.1,
+    "end": 33.33,
+    "id": "w73"
+  },
+  {
+    "text": "10",
+    "start": 33.33,
+    "end": 33.77,
+    "id": "w74"
+  },
+  {
+    "text": "anni,",
+    "start": 33.77,
+    "end": 34.2,
+    "id": "w75"
+  },
+  {
+    "text": "comprano",
+    "start": 34.2,
+    "end": 34.77,
+    "id": "w76"
+  },
+  {
+    "text": "quello",
+    "start": 34.77,
+    "end": 35.22,
+    "id": "w77"
+  },
+  {
+    "text": "che",
+    "start": 35.22,
+    "end": 35.44,
+    "id": "w78"
+  },
+  {
+    "text": "oggi",
+    "start": 35.44,
+    "end": 35.73,
+    "id": "w79"
+  },
+  {
+    "text": "compri",
+    "start": 35.73,
+    "end": 36.1,
+    "id": "w80"
+  },
+  {
+    "text": "con",
+    "start": 36.18,
+    "end": 36.31,
+    "id": "w81"
+  },
+  {
+    "text": "7.400.",
+    "start": 36.38,
+    "end": 37.7,
+    "id": "w82"
+  },
+  {
+    "text": "Sul",
+    "start": 37.82,
+    "end": 37.94,
+    "id": "w83"
+  },
+  {
+    "text": "conto",
+    "start": 37.94,
+    "end": 38.24,
+    "id": "w84"
+  },
+  {
+    "text": "vedi",
+    "start": 38.24,
+    "end": 38.48,
+    "id": "w85"
+  },
+  {
+    "text": "sempre",
+    "start": 38.48,
+    "end": 38.84,
+    "id": "w86"
+  },
+  {
+    "text": "10.000,",
+    "start": 38.84,
+    "end": 40.12,
+    "id": "w87"
+  },
+  {
+    "text": "ma",
+    "start": 40.12,
+    "end": 40.29,
+    "id": "w88"
+  },
+  {
+    "text": "il",
+    "start": 40.29,
+    "end": 40.45,
+    "id": "w89"
+  },
+  {
+    "text": "carrello",
+    "start": 40.46,
+    "end": 41.13,
+    "id": "w90"
+  },
+  {
+    "text": "è",
+    "start": 41.13,
+    "end": 41.21,
+    "id": "w91"
+  },
+  {
+    "text": "più",
+    "start": 41.21,
+    "end": 41.34,
+    "id": "w92"
+  },
+  {
+    "text": "vuoto.",
+    "start": 41.63,
+    "end": 42.16,
+    "id": "w93"
+  },
+  {
+    "text": "È",
+    "start": 42.22,
+    "end": 42.24,
+    "id": "w94"
+  },
+  {
+    "text": "un",
+    "start": 42.24,
+    "end": 42.39,
+    "id": "w95"
+  },
+  {
+    "text": "ladro",
+    "start": 42.4,
+    "end": 42.8,
+    "id": "w96"
+  },
+  {
+    "text": "che",
+    "start": 42.8,
+    "end": 43.04,
+    "id": "w97"
+  },
+  {
+    "text": "non",
+    "start": 43.04,
+    "end": 43.28,
+    "id": "w98"
+  },
+  {
+    "text": "fa",
+    "start": 43.28,
+    "end": 43.44,
+    "id": "w99"
+  },
+  {
+    "text": "rumore.",
+    "start": 43.44,
+    "end": 43.94,
+    "id": "w100"
+  },
+  {
+    "text": "Per",
+    "start": 44.3,
+    "end": 44.43,
+    "id": "w101"
+  },
+  {
+    "text": "questo,",
+    "start": 44.43,
+    "end": 44.93,
+    "id": "w102"
+  },
+  {
+    "text": "chi",
+    "start": 44.93,
+    "end": 45.12,
+    "id": "w103"
+  },
+  {
+    "text": "ha",
+    "start": 45.12,
+    "end": 45.15,
+    "id": "w104"
+  },
+  {
+    "text": "i",
+    "start": 45.24,
+    "end": 45.29,
+    "id": "w105"
+  },
+  {
+    "text": "soldi",
+    "start": 45.29,
+    "end": 45.56,
+    "id": "w106"
+  },
+  {
+    "text": "non",
+    "start": 45.63,
+    "end": 45.79,
+    "id": "w107"
+  },
+  {
+    "text": "li",
+    "start": 45.79,
+    "end": 45.91,
+    "id": "w108"
+  },
+  {
+    "text": "lascia",
+    "start": 45.91,
+    "end": 46.29,
+    "id": "w109"
+  },
+  {
+    "text": "fermi.",
+    "start": 46.35,
+    "end": 46.83,
+    "id": "w110"
+  },
+  {
+    "text": "Li",
+    "start": 46.9,
+    "end": 46.99,
+    "id": "w111"
+  },
+  {
+    "text": "fa",
+    "start": 46.99,
+    "end": 47.14,
+    "id": "w112"
+  },
+  {
+    "text": "lavorare,",
+    "start": 47.14,
+    "end": 47.89,
+    "id": "w113"
+  },
+  {
+    "text": "almeno",
+    "start": 47.89,
+    "end": 48.34,
+    "id": "w114"
+  },
+  {
+    "text": "quanto",
+    "start": 48.34,
+    "end": 48.62,
+    "id": "w115"
+  },
+  {
+    "text": "l'inflazione.",
+    "start": 48.86,
+    "end": 49.9,
+    "id": "w116"
+  },
+  {
+    "text": "Tenere",
+    "start": 50.02,
+    "end": 50.4,
+    "id": "w117"
+  },
+  {
+    "text": "i",
+    "start": 50.4,
+    "end": 50.47,
+    "id": "w118"
+  },
+  {
+    "text": "soldi",
+    "start": 50.47,
+    "end": 50.83,
+    "id": "w119"
+  },
+  {
+    "text": "fermi",
+    "start": 50.83,
+    "end": 51.17,
+    "id": "w120"
+  },
+  {
+    "text": "sembra",
+    "start": 51.18,
+    "end": 51.61,
+    "id": "w121"
+  },
+  {
+    "text": "sicuro.",
+    "start": 51.61,
+    "end": 52.32,
+    "id": "w122"
+  },
+  {
+    "text": "In",
+    "start": 52.38,
+    "end": 52.5,
+    "id": "w123"
+  },
+  {
+    "text": "realtà,",
+    "start": 52.5,
+    "end": 53.2,
+    "id": "w124"
+  },
+  {
+    "text": "è",
+    "start": 53.2,
+    "end": 53.23,
+    "id": "w125"
+  },
+  {
+    "text": "perderli",
+    "start": 53.32,
+    "end": 53.98,
+    "id": "w126"
+  },
+  {
+    "text": "piano",
+    "start": 53.98,
+    "end": 54.44,
+    "id": "w127"
+  },
+  {
+    "text": "piano.",
+    "start": 54.44,
+    "end": 55.2,
+    "id": "w128"
+  },
+  {
+    "text": "Etu,",
+    "start": 55.26,
+    "end": 55.59,
+    "id": "w129"
+  },
+  {
+    "text": "i",
+    "start": 55.59,
+    "end": 55.67,
+    "id": "w130"
+  },
+  {
+    "text": "tuoi",
+    "start": 55.67,
+    "end": 55.98,
+    "id": "w131"
+  },
+  {
+    "text": "soldi",
+    "start": 55.98,
+    "end": 56.36,
+    "id": "w132"
+  },
+  {
+    "text": "li",
+    "start": 56.36,
+    "end": 56.52,
+    "id": "w133"
+  },
+  {
+    "text": "tieni",
+    "start": 56.52,
+    "end": 56.9,
+    "id": "w134"
+  },
+  {
+    "text": "fermi",
+    "start": 56.9,
+    "end": 57.28,
+    "id": "w135"
+  },
+  {
+    "text": "o",
+    "start": 57.3,
+    "end": 57.36,
+    "id": "w136"
+  },
+  {
+    "text": "li",
+    "start": 57.36,
+    "end": 57.52,
+    "id": "w137"
+  },
+  {
+    "text": "fai",
+    "start": 57.52,
+    "end": 57.75,
+    "id": "w138"
+  },
+  {
+    "text": "lavorare?",
+    "start": 57.75,
+    "end": 58.7,
+    "id": "w139"
+  },
+  {
+    "text": "Scrivi",
+    "start": 58.78,
+    "end": 59.29,
+    "id": "w140"
+  },
+  {
+    "text": "Fermi",
+    "start": 59.29,
+    "end": 59.76,
+    "id": "w141"
+  },
+  {
+    "text": "o",
+    "start": 59.76,
+    "end": 59.85,
+    "id": "w142"
+  },
+  {
+    "text": "Lavorano.",
+    "start": 59.85,
+    "end": 60.96,
+    "id": "w143"
+  }
+]

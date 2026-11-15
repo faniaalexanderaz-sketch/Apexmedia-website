@@ -1,0 +1,1010 @@
+[
+  {
+    "text": "Due",
+    "start": 0.07,
+    "end": 0.29,
+    "id": "w0"
+  },
+  {
+    "text": "ragazzi,",
+    "start": 0.3,
+    "end": 1.16,
+    "id": "w1"
+  },
+  {
+    "text": "stesso",
+    "start": 1.35,
+    "end": 1.66,
+    "id": "w2"
+  },
+  {
+    "text": "lavoro,",
+    "start": 1.66,
+    "end": 2.32,
+    "id": "w3"
+  },
+  {
+    "text": "stesso",
+    "start": 2.42,
+    "end": 2.81,
+    "id": "w4"
+  },
+  {
+    "text": "stipendio,",
+    "start": 2.84,
+    "end": 3.72,
+    "id": "w5"
+  },
+  {
+    "text": "1300",
+    "start": 3.72,
+    "end": 4.48,
+    "id": "w6"
+  },
+  {
+    "text": "euro",
+    "start": 4.48,
+    "end": 4.73,
+    "id": "w7"
+  },
+  {
+    "text": "al",
+    "start": 4.73,
+    "end": 4.85,
+    "id": "w8"
+  },
+  {
+    "text": "mese.",
+    "start": 4.85,
+    "end": 5.23,
+    "id": "w9"
+  },
+  {
+    "text": "Tra",
+    "start": 5.23,
+    "end": 5.82,
+    "id": "w10"
+  },
+  {
+    "text": "dieci",
+    "start": 5.82,
+    "end": 5.83,
+    "id": "w11"
+  },
+  {
+    "text": "anni,",
+    "start": 5.89,
+    "end": 6.2,
+    "id": "w12"
+  },
+  {
+    "text": "uno",
+    "start": 6.22,
+    "end": 6.36,
+    "id": "w13"
+  },
+  {
+    "text": "avrà",
+    "start": 6.43,
+    "end": 6.64,
+    "id": "w14"
+  },
+  {
+    "text": "20.000",
+    "start": 7.02,
+    "end": 7.75,
+    "id": "w15"
+  },
+  {
+    "text": "euro",
+    "start": 7.75,
+    "end": 8.16,
+    "id": "w16"
+  },
+  {
+    "text": "da",
+    "start": 8.16,
+    "end": 8.18,
+    "id": "w17"
+  },
+  {
+    "text": "parte,",
+    "start": 8.24,
+    "end": 8.75,
+    "id": "w18"
+  },
+  {
+    "text": "l'altro",
+    "start": 8.75,
+    "end": 9.93,
+    "id": "w19"
+  },
+  {
+    "text": "zero,",
+    "start": 9.98,
+    "end": 10.82,
+    "id": "w20"
+  },
+  {
+    "text": "e",
+    "start": 10.82,
+    "end": 10.9,
+    "id": "w21"
+  },
+  {
+    "text": "la",
+    "start": 10.9,
+    "end": 11.04,
+    "id": "w22"
+  },
+  {
+    "text": "differenza",
+    "start": 11.04,
+    "end": 11.89,
+    "id": "w23"
+  },
+  {
+    "text": "sono",
+    "start": 11.89,
+    "end": 12.21,
+    "id": "w24"
+  },
+  {
+    "text": "150",
+    "start": 12.21,
+    "end": 12.98,
+    "id": "w25"
+  },
+  {
+    "text": "euro.",
+    "start": 12.98,
+    "end": 13.62,
+    "id": "w26"
+  },
+  {
+    "text": "Lui",
+    "start": 13.62,
+    "end": 14.05,
+    "id": "w27"
+  },
+  {
+    "text": "è",
+    "start": 14.05,
+    "end": 14.48,
+    "id": "w28"
+  },
+  {
+    "text": "Marco.",
+    "start": 14.48,
+    "end": 15.23,
+    "id": "w29"
+  },
+  {
+    "text": "Marco",
+    "start": 15.23,
+    "end": 15.94,
+    "id": "w30"
+  },
+  {
+    "text": "non",
+    "start": 15.94,
+    "end": 16.05,
+    "id": "w31"
+  },
+  {
+    "text": "spreca,",
+    "start": 16.05,
+    "end": 16.62,
+    "id": "w32"
+  },
+  {
+    "text": "si",
+    "start": 16.62,
+    "end": 16.7,
+    "id": "w33"
+  },
+  {
+    "text": "fa",
+    "start": 16.75,
+    "end": 16.77,
+    "id": "w34"
+  },
+  {
+    "text": "solo",
+    "start": 17.1,
+    "end": 17.17,
+    "id": "w35"
+  },
+  {
+    "text": "qualche",
+    "start": 17.23,
+    "end": 17.7,
+    "id": "w36"
+  },
+  {
+    "text": "regalo.",
+    "start": 17.7,
+    "end": 18.4,
+    "id": "w37"
+  },
+  {
+    "text": "Due",
+    "start": 18.4,
+    "end": 18.88,
+    "id": "w38"
+  },
+  {
+    "text": "cene",
+    "start": 18.88,
+    "end": 18.99,
+    "id": "w39"
+  },
+  {
+    "text": "a",
+    "start": 19.01,
+    "end": 19.08,
+    "id": "w40"
+  },
+  {
+    "text": "domicilio,",
+    "start": 19.08,
+    "end": 20.02,
+    "id": "w41"
+  },
+  {
+    "text": "50",
+    "start": 20.23,
+    "end": 20.55,
+    "id": "w42"
+  },
+  {
+    "text": "euro.",
+    "start": 20.55,
+    "end": 21.24,
+    "id": "w43"
+  },
+  {
+    "text": "Il",
+    "start": 21.24,
+    "end": 21.7,
+    "id": "w44"
+  },
+  {
+    "text": "telefono",
+    "start": 21.7,
+    "end": 22.05,
+    "id": "w45"
+  },
+  {
+    "text": "nuovo",
+    "start": 22.05,
+    "end": 22.41,
+    "id": "w46"
+  },
+  {
+    "text": "a",
+    "start": 22.46,
+    "end": 22.48,
+    "id": "w47"
+  },
+  {
+    "text": "rate,",
+    "start": 22.84,
+    "end": 23.04,
+    "id": "w48"
+  },
+  {
+    "text": "40.",
+    "start": 23.04,
+    "end": 23.62,
+    "id": "w49"
+  },
+  {
+    "text": "Un",
+    "start": 23.62,
+    "end": 24.28,
+    "id": "w50"
+  },
+  {
+    "text": "paio",
+    "start": 24.28,
+    "end": 24.31,
+    "id": "w51"
+  },
+  {
+    "text": "di",
+    "start": 24.34,
+    "end": 24.47,
+    "id": "w52"
+  },
+  {
+    "text": "abbonamenti,",
+    "start": 24.47,
+    "end": 25.47,
+    "id": "w53"
+  },
+  {
+    "text": "30.",
+    "start": 25.63,
+    "end": 26.21,
+    "id": "w54"
+  },
+  {
+    "text": "Aperitivi",
+    "start": 26.7,
+    "end": 27.01,
+    "id": "w55"
+  },
+  {
+    "text": "e",
+    "start": 27.01,
+    "end": 27.07,
+    "id": "w56"
+  },
+  {
+    "text": "caffè,",
+    "start": 27.08,
+    "end": 27.54,
+    "id": "w57"
+  },
+  {
+    "text": "30.",
+    "start": 27.93,
+    "end": 28.55,
+    "id": "w58"
+  },
+  {
+    "text": "Totale,",
+    "start": 29.07,
+    "end": 29.71,
+    "id": "w59"
+  },
+  {
+    "text": "150",
+    "start": 29.72,
+    "end": 30.55,
+    "id": "w60"
+  },
+  {
+    "text": "euro",
+    "start": 30.55,
+    "end": 30.91,
+    "id": "w61"
+  },
+  {
+    "text": "al",
+    "start": 30.91,
+    "end": 30.98,
+    "id": "w62"
+  },
+  {
+    "text": "mese,",
+    "start": 31.19,
+    "end": 31.51,
+    "id": "w63"
+  },
+  {
+    "text": "che",
+    "start": 31.52,
+    "end": 31.65,
+    "id": "w64"
+  },
+  {
+    "text": "spariscono",
+    "start": 31.75,
+    "end": 32.2,
+    "id": "w65"
+  },
+  {
+    "text": "senza",
+    "start": 32.59,
+    "end": 32.7,
+    "id": "w66"
+  },
+  {
+    "text": "che",
+    "start": 32.7,
+    "end": 32.9,
+    "id": "w67"
+  },
+  {
+    "text": "se",
+    "start": 32.9,
+    "end": 33.03,
+    "id": "w68"
+  },
+  {
+    "text": "ne",
+    "start": 33.03,
+    "end": 33.15,
+    "id": "w69"
+  },
+  {
+    "text": "accorga.",
+    "start": 33.16,
+    "end": 33.88,
+    "id": "w70"
+  },
+  {
+    "text": "Lui",
+    "start": 33.88,
+    "end": 34.32,
+    "id": "w71"
+  },
+  {
+    "text": "è",
+    "start": 34.32,
+    "end": 34.76,
+    "id": "w72"
+  },
+  {
+    "text": "Luca,",
+    "start": 34.76,
+    "end": 34.99,
+    "id": "w73"
+  },
+  {
+    "text": "stesso",
+    "start": 34.99,
+    "end": 35.49,
+    "id": "w74"
+  },
+  {
+    "text": "stipendio,",
+    "start": 35.94,
+    "end": 36.7,
+    "id": "w75"
+  },
+  {
+    "text": "ma",
+    "start": 37.06,
+    "end": 37.08,
+    "id": "w76"
+  },
+  {
+    "text": "il",
+    "start": 37.14,
+    "end": 37.23,
+    "id": "w77"
+  },
+  {
+    "text": "giorno",
+    "start": 37.24,
+    "end": 37.69,
+    "id": "w78"
+  },
+  {
+    "text": "in",
+    "start": 37.72,
+    "end": 37.89,
+    "id": "w79"
+  },
+  {
+    "text": "cui",
+    "start": 37.89,
+    "end": 37.93,
+    "id": "w80"
+  },
+  {
+    "text": "arriva,",
+    "start": 38.31,
+    "end": 38.8,
+    "id": "w81"
+  },
+  {
+    "text": "150",
+    "start": 38.8,
+    "end": 39.54,
+    "id": "w82"
+  },
+  {
+    "text": "euro",
+    "start": 39.54,
+    "end": 39.85,
+    "id": "w83"
+  },
+  {
+    "text": "partono",
+    "start": 39.85,
+    "end": 40.4,
+    "id": "w84"
+  },
+  {
+    "text": "in",
+    "start": 40.4,
+    "end": 40.58,
+    "id": "w85"
+  },
+  {
+    "text": "automatico,",
+    "start": 40.58,
+    "end": 41.55,
+    "id": "w86"
+  },
+  {
+    "text": "prima",
+    "start": 41.55,
+    "end": 41.82,
+    "id": "w87"
+  },
+  {
+    "text": "ancora",
+    "start": 41.83,
+    "end": 42.17,
+    "id": "w88"
+  },
+  {
+    "text": "di",
+    "start": 42.17,
+    "end": 42.24,
+    "id": "w89"
+  },
+  {
+    "text": "vederli.",
+    "start": 42.32,
+    "end": 42.87,
+    "id": "w90"
+  },
+  {
+    "text": "Dopo",
+    "start": 42.87,
+    "end": 43.21,
+    "id": "w91"
+  },
+  {
+    "text": "un",
+    "start": 43.21,
+    "end": 43.55,
+    "id": "w92"
+  },
+  {
+    "text": "anno,",
+    "start": 43.55,
+    "end": 43.96,
+    "id": "w93"
+  },
+  {
+    "text": "Luca",
+    "start": 43.96,
+    "end": 44.26,
+    "id": "w94"
+  },
+  {
+    "text": "ha",
+    "start": 44.26,
+    "end": 44.34,
+    "id": "w95"
+  },
+  {
+    "text": "1800",
+    "start": 44.71,
+    "end": 45.43,
+    "id": "w96"
+  },
+  {
+    "text": "euro,",
+    "start": 45.82,
+    "end": 46.13,
+    "id": "w97"
+  },
+  {
+    "text": "Marco",
+    "start": 46.23,
+    "end": 46.64,
+    "id": "w98"
+  },
+  {
+    "text": "zero.",
+    "start": 47.07,
+    "end": 47.8,
+    "id": "w99"
+  },
+  {
+    "text": "Dopo",
+    "start": 47.8,
+    "end": 48.36,
+    "id": "w100"
+  },
+  {
+    "text": "cinque",
+    "start": 48.36,
+    "end": 48.53,
+    "id": "w101"
+  },
+  {
+    "text": "anni,",
+    "start": 48.53,
+    "end": 48.91,
+    "id": "w102"
+  },
+  {
+    "text": "Luca",
+    "start": 48.96,
+    "end": 49.17,
+    "id": "w103"
+  },
+  {
+    "text": "ne",
+    "start": 49.17,
+    "end": 49.56,
+    "id": "w104"
+  },
+  {
+    "text": "ha",
+    "start": 49.56,
+    "end": 49.58,
+    "id": "w105"
+  },
+  {
+    "text": "9.000.",
+    "start": 49.6,
+    "end": 50.96,
+    "id": "w106"
+  },
+  {
+    "text": "Dopo",
+    "start": 51.47,
+    "end": 51.66,
+    "id": "w107"
+  },
+  {
+    "text": "dieci",
+    "start": 51.66,
+    "end": 51.95,
+    "id": "w108"
+  },
+  {
+    "text": "anni,",
+    "start": 52.01,
+    "end": 52.25,
+    "id": "w109"
+  },
+  {
+    "text": "18.000,",
+    "start": 52.62,
+    "end": 53.71,
+    "id": "w110"
+  },
+  {
+    "text": "e",
+    "start": 53.74,
+    "end": 53.76,
+    "id": "w111"
+  },
+  {
+    "text": "con",
+    "start": 53.82,
+    "end": 53.97,
+    "id": "w112"
+  },
+  {
+    "text": "un",
+    "start": 53.97,
+    "end": 54.05,
+    "id": "w113"
+  },
+  {
+    "text": "investimento",
+    "start": 54.15,
+    "end": 54.6,
+    "id": "w114"
+  },
+  {
+    "text": "prudente,",
+    "start": 54.99,
+    "end": 55.51,
+    "id": "w115"
+  },
+  {
+    "text": "al",
+    "start": 55.55,
+    "end": 55.68,
+    "id": "w116"
+  },
+  {
+    "text": "2",
+    "start": 55.68,
+    "end": 55.88,
+    "id": "w117"
+  },
+  {
+    "text": "o",
+    "start": 55.88,
+    "end": 55.94,
+    "id": "w118"
+  },
+  {
+    "text": "3%",
+    "start": 55.94,
+    "end": 56.2,
+    "id": "w119"
+  },
+  {
+    "text": "l'anno,",
+    "start": 56.2,
+    "end": 56.63,
+    "id": "w120"
+  },
+  {
+    "text": "diventano",
+    "start": 56.82,
+    "end": 57.31,
+    "id": "w121"
+  },
+  {
+    "text": "circa",
+    "start": 57.31,
+    "end": 57.64,
+    "id": "w122"
+  },
+  {
+    "text": "20.000.",
+    "start": 57.64,
+    "end": 59.2,
+    "id": "w123"
+  },
+  {
+    "text": "Marco",
+    "start": 59.2,
+    "end": 59.54,
+    "id": "w124"
+  },
+  {
+    "text": "e",
+    "start": 59.54,
+    "end": 59.88,
+    "id": "w125"
+  },
+  {
+    "text": "Luca",
+    "start": 59.88,
+    "end": 59.93,
+    "id": "w126"
+  },
+  {
+    "text": "hanno",
+    "start": 59.93,
+    "end": 60.3,
+    "id": "w127"
+  },
+  {
+    "text": "guadagnato",
+    "start": 60.3,
+    "end": 61.02,
+    "id": "w128"
+  },
+  {
+    "text": "esattamente",
+    "start": 61.07,
+    "end": 61.77,
+    "id": "w129"
+  },
+  {
+    "text": "gli",
+    "start": 61.77,
+    "end": 61.83,
+    "id": "w130"
+  },
+  {
+    "text": "stessi",
+    "start": 62.16,
+    "end": 62.47,
+    "id": "w131"
+  },
+  {
+    "text": "soldi.",
+    "start": 62.47,
+    "end": 63.02,
+    "id": "w132"
+  },
+  {
+    "text": "Uno",
+    "start": 63.02,
+    "end": 63.26,
+    "id": "w133"
+  },
+  {
+    "text": "li",
+    "start": 63.26,
+    "end": 63.5,
+    "id": "w134"
+  },
+  {
+    "text": "ha",
+    "start": 63.5,
+    "end": 63.74,
+    "id": "w135"
+  },
+  {
+    "text": "spesi",
+    "start": 63.74,
+    "end": 64.06,
+    "id": "w136"
+  },
+  {
+    "text": "in",
+    "start": 64.06,
+    "end": 64.21,
+    "id": "w137"
+  },
+  {
+    "text": "cose",
+    "start": 64.21,
+    "end": 64.46,
+    "id": "w138"
+  },
+  {
+    "text": "che",
+    "start": 64.46,
+    "end": 64.55,
+    "id": "w139"
+  },
+  {
+    "text": "non",
+    "start": 64.91,
+    "end": 64.97,
+    "id": "w140"
+  },
+  {
+    "text": "ricorda,",
+    "start": 65.03,
+    "end": 65.64,
+    "id": "w141"
+  },
+  {
+    "text": "l'altro",
+    "start": 65.79,
+    "end": 66.19,
+    "id": "w142"
+  },
+  {
+    "text": "li",
+    "start": 66.19,
+    "end": 66.32,
+    "id": "w143"
+  },
+  {
+    "text": "ha",
+    "start": 66.32,
+    "end": 66.45,
+    "id": "w144"
+  },
+  {
+    "text": "fatti",
+    "start": 66.45,
+    "end": 66.78,
+    "id": "w145"
+  },
+  {
+    "text": "lavorare.",
+    "start": 66.78,
+    "end": 67.6,
+    "id": "w146"
+  },
+  {
+    "text": "Non",
+    "start": 67.6,
+    "end": 68.24,
+    "id": "w147"
+  },
+  {
+    "text": "conta",
+    "start": 68.24,
+    "end": 68.25,
+    "id": "w148"
+  },
+  {
+    "text": "quanto",
+    "start": 68.26,
+    "end": 68.73,
+    "id": "w149"
+  },
+  {
+    "text": "guadagni,",
+    "start": 68.73,
+    "end": 69.48,
+    "id": "w150"
+  },
+  {
+    "text": "conta",
+    "start": 69.55,
+    "end": 69.95,
+    "id": "w151"
+  },
+  {
+    "text": "dove",
+    "start": 69.95,
+    "end": 70.15,
+    "id": "w152"
+  },
+  {
+    "text": "vanno",
+    "start": 70.36,
+    "end": 70.68,
+    "id": "w153"
+  },
+  {
+    "text": "gli",
+    "start": 70.68,
+    "end": 70.85,
+    "id": "w154"
+  },
+  {
+    "text": "ultimi",
+    "start": 70.95,
+    "end": 71.37,
+    "id": "w155"
+  },
+  {
+    "text": "150",
+    "start": 71.79,
+    "end": 72.13,
+    "id": "w156"
+  },
+  {
+    "text": "euro.",
+    "start": 72.2,
+    "end": 72.8,
+    "id": "w157"
+  },
+  {
+    "text": "Etu,",
+    "start": 72.8,
+    "end": 73.54,
+    "id": "w158"
+  },
+  {
+    "text": "sei",
+    "start": 73.54,
+    "end": 73.64,
+    "id": "w159"
+  },
+  {
+    "text": "più",
+    "start": 73.64,
+    "end": 73.96,
+    "id": "w160"
+  },
+  {
+    "text": "Marco",
+    "start": 73.96,
+    "end": 74.26,
+    "id": "w161"
+  },
+  {
+    "text": "o",
+    "start": 74.26,
+    "end": 74.71,
+    "id": "w162"
+  },
+  {
+    "text": "più",
+    "start": 74.71,
+    "end": 74.92,
+    "id": "w163"
+  },
+  {
+    "text": "Luca?",
+    "start": 74.92,
+    "end": 75.46,
+    "id": "w164"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 76.2,
+    "end": 76.28,
+    "id": "w165"
+  },
+  {
+    "text": "nei",
+    "start": 76.28,
+    "end": 76.49,
+    "id": "w166"
+  },
+  {
+    "text": "commenti.",
+    "start": 76.49,
+    "end": 77.07,
+    "id": "w167"
+  }
+]
