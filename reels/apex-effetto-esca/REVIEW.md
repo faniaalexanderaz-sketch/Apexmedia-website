@@ -8,7 +8,7 @@ come unico accento. Gli oggetti sono disegnati in un piccolo motore 3D (camera c
 la scena pulsa sui battiti della base (120 BPM). Sottotitoli in alto sincronizzati parola per parola (98 parole).
 
 ## Audio
-Voce ElevenLabs v4 (preset "Callum") + base ElevenLabs Music v2.5, via Higgsfield. Misurato, non ascoltato.
+Voce ElevenLabs v4 (preset "Callum") + sottofondo storytelling di suspense a 120 BPM (ElevenLabs Music v2.5, volume 0,14), via Higgsfield. Misurato, non ascoltato.
 Le ultime 11 parole hanno tempi stimati dalle pause (la trascrizione automatica si è fermata a 38,5 s).
 
 ## Note
