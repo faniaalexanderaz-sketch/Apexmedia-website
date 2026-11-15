@@ -82,3 +82,26 @@ Ma funziona anche al contrario: un debito al 20% raddoppia in meno di 4 anni.
 Esempi a scopo educativo: i rendimenti non sono garantiti. Non è una consulenza finanziaria.
 #soldi #investire #finanzapersonale #regoladel72 #interessecomposto #educazionefinanziaria #debiti #ricchipiano
 ```
+
+---
+
+## 4. 100 forzieri — mentalità (0:51)
+File: `rp-forzieri/renders/rp-forzieri-9x16.mp4`
+
+**TikTok**
+```text
+Se hai aperto 100 forzieri su Fortnite per un leggendario, hai già la mentalità per diventare ricco 🎮💰 A quale "forziere" ti sei fermato nella vita? 👇
+#mentalità #motivazione #soldi #fortnite
+```
+
+**Instagram**
+```text
+Se hai aperto 100 forzieri su Fortnite per trovare un oggetto leggendario, hai già la mentalità per diventare ricco.
+
+99 forzieri vuoti, e tu apri il centesimo. Nella vita reale invece molliamo al terzo: un colloquio andato male, un progetto che non parte, un cliente che dice no.
+Chi ce la fa non è più fortunato. Ha solo aperto più forzieri.
+
+👇 A quale forziere ti sei fermato? Scrivilo nei commenti.
+
+#mentalità #motivazione #soldi #business #crescitapersonale #fortnite #mindset #ricchipiano
+```
