@@ -12,3 +12,4 @@ renders/cache-*
 renders/.seq-*
 renders/progress.log
 renders/*.rejected.mp4
+renders/master.mp4
