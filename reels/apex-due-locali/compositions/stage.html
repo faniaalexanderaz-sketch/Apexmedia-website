@@ -825,7 +825,7 @@
         return G; }); }
       function bar() { return G3.grp("env|bar", () => { const T = G3.THREE, G = new T.Group(), P = { box: [], cyl: [], band: [], sph: [] };
         floorMesh(G, 5000, 5000, texTile("#2a2c36", "#e9e6df", 12, { grout: "rgba(0,0,0,0.15)" }), 24, 0.25);
-        wallTex(G, [0, 0, -1100], 2800, 520, 0, texTile("#2b5a4a", "#2f6352", 6, { grout: "rgba(255,255,255,0.08)" }), 6); bx(G, [-1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [0, 520, -300], [2800, 10, 1800], "#3a3530", {});
+        wallTex(G, [0, 0, -1100], 2800, 520, 0, texTile("#2b5a4a", "#2f6352", 6, { grout: "rgba(255,255,255,0.08)" }), 6); bx(G, [-1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [0, 520, -300], [2800, 10, 1800], "#9a8f80", {});
         // counter
         bx(G, [0, 0, -500], [1300, 105, 110], "#8a5a2b", { r: 0.5 }); bx(G, [0, 105, -500], [1320, 8, 130], "#f2ead8", { r: 0.25, m: 0.1 }); bx(G, [0, 0, -440], [1300, 12, 4], "#ffd60a", { e: "#ffd60a", ei: 0.8 });
         bx(G, [-260, 113, -520], [150, 120, 70], "#c9ccd2", { m: 0.9, r: 0.2 }); bx(G, [-260, 233, -520], [154, 12, 74], "#1c1d22", {}); for (let i = 0; i < 3; i++) cy(G, [-310 + i * 50, 140, -476], 9, 14, "#111216", {}); bx(G, [-260, 200, -484], [60, 14, 2], "#ff7a1a", { e: "#ff7a1a", ei: 1.2 });
@@ -846,7 +846,7 @@
         bx(G, [0, 0, 1100], [6000, 2, 900], "#2a2c33", { r: 0.8 }); for (let x = -2800; x < 2800; x += 300) bx(G, [x, 2.5, 1100], [120, 1, 10], "#e9e6df", {});
         facade(G, -560, -650, "TRATTORIA DA GINO", true, "#2b9a5c"); facade(G, 560, -650, "OSTERIA BELLAVISTA", false, "#3d4a72"); bx(G, [0, 0, -650], [100, 900, 300], "#d9cbb6", {});
         for (let k = 0; k < 2; k++) { const x = k ? 1900 : -1900; bx(G, [x, 0, -800], [700, 1300, 400], "#4a4d55", { r: 0.8 }); for (let r = 0; r < 9; r++) for (let c = 0; c < 4; c++) if (rnf(x + r * 7 + c * 3) > 0.35) bx(G, [x - 240 + c * 160, 120 + r * 130, -599], [70, 70, 2], "#ffd27a", { e: "#ffb84d", ei: 1.1 }); }
-        [-1200, 0, 1200].forEach((x) => { cy(G, [x, 0, 650], 6, 420, "#2a2c36", {}); const l = new T.Mesh(new T.SphereGeometry(16, 12, 10), new T.MeshStandardMaterial({ color: 0xfff1d6, emissive: 0xffd27a, emissiveIntensity: 2 })); l.position.set(x, 420, 650); G.add(l); }); return G; }); }
+        [-1300, 1300].forEach((x) => { cy(G, [x, 0, 650], 6, 420, "#2a2c36", {}); const l = new T.Mesh(new T.SphereGeometry(16, 12, 10), new T.MeshStandardMaterial({ color: 0xfff1d6, emissive: 0xffd27a, emissiveIntensity: 2 })); l.position.set(x, 420, 650); G.add(l); }); return G; }); }
       ENV.pizza = () => envFix(pizzeria()); ENV.bar = () => envFix(bar()); ENV.vie = () => envFix(localStreet());
       LOOK.pizza = { sky: "#ffd9a8", ground: "#3a2416", hemi: 0.42, key: 0.45, keyC: "#ffd9a8", keyDir: [-600, 1500, 900], fog: "#3a2a20", fogN: 2400, fogF: 6500, exp: 0.9, rim: 0.35 };
       LOOK.bar = { sky: "#fff1dc", ground: "#3a3530", hemi: 0.48, key: 0.5, keyDir: [500, 1500, 1100], fog: "#5a5248", fogN: 2400, fogF: 6500, exp: 0.88, rim: 0.3 };
@@ -889,7 +889,7 @@
         // CH2 The choice happens on the phone (cyan)
         [W[16], W[34], "whip", (t, u, d) => { useEnv("vie");
           shot(u, d, t, [[150, 220, 600], [60, 230, 420]], [[0, 180, 200], [40, 220, 150]], { f: 1050, shake: 0.4 });
-          char3("hero", HERO, [-60, 0, 220], 0.3, "phone", t, { emo: "curious" }); phoneSearch("lo", [70, 230, 300], 0.62 * pop(t, W[25] - 0.2), -0.25, "ristorante", 1, RES, seg(t, W[27], W[33]), t > W[31] ? 0 : -1);
+          char3("hero", HERO, [-60, 0, 220], 0.3, "phone", t, { emo: "curious" }); phoneSearch("lo", [70, 230, 300], 0.62 * pop(t, W[25] - 0.2), -0.25, "ristorante", 1, RES, seg(t, W[25], W[30]), t > W[31] ? 0 : -1);
           stag(t < W[25] ? "HA GIÀ SCELTO" : t < W[29] ? "STELLE" : t < W[31] ? "FOTO" : "RECENSIONI", A, pop(t, t < W[25] ? W[17] : t < W[29] ? W[27] : t < W[31] ? W[29] : W[31] - 0.1), { fs: 70 });
         }],
         // CH3 Harvard: +1 star = +5-9% (yellow)
@@ -909,7 +909,7 @@
         [W[78], W[107], "cut", (t, u, d) => { useEnv("pizza"); G3.light([-250, 300, 200], "#ffd9a8", 1.2, 900);
           shot(u, d, t, [[0, 230, 420], [60, 215, 330]], [[-250, 150, 50], [-230, 150, 40]], { f: 1050, shake: 0.4 });
           char3("own", OWNER, [-340, 0, 120], 0.8, t < W[91] ? "talk" : t < W[98] ? "phone" : "point", t, { emo: "happy" }); char3("cl", HERO, [-140, 0, 140], -0.8, t < W[86] ? "idle" : "phone", t, { emo: "happy" });
-          if (t > W[86] && t < W[91]) for (let i = 0; i < 5; i++) star3([-240 + (i - 2) * 40, 300, 160], 16 * pop(t, W[86] + i * 0.08), GOLD, t + i); if (t > W[99]) camera3([-250, 84, 50], 0.35, 0.3, Math.sin(t * 8) > 0.8 ? 1 : 0);
+          if (t > W[86] && t < W[91]) for (let i = 0; i < 5; i++) star3([-240 + (i - 2) * 40, 300, 160], 16 * pop(t, W[86] + i * 0.08), GOLD, 0.5); if (t > W[99]) camera3([-250, 84, 50], 0.35, 0.3, Math.sin(t * 8) > 0.8 ? 1 : 0);
           stag(t < W[91] - 0.1 ? "1 · CHIEDI UNA RECENSIONE" : t < W[99] - 0.1 ? "2 · RISPONDI A TUTTE" : "3 · FOTO VERE E BELLE", "#2b9a5c", pop(t, t < W[91] - 0.1 ? W[84] - 0.1 : t < W[99] - 0.1 ? W[91] - 0.1 : W[99] - 0.1), { fs: 64 });
         }],
         // CH6 Played on the phone (violet)

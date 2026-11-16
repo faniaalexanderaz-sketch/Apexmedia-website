@@ -825,7 +825,7 @@
         return G; }); }
       function bar() { return G3.grp("env|bar", () => { const T = G3.THREE, G = new T.Group(), P = { box: [], cyl: [], band: [], sph: [] };
         floorMesh(G, 5000, 5000, texTile("#2a2c36", "#e9e6df", 12, { grout: "rgba(0,0,0,0.15)" }), 24, 0.25);
-        wallTex(G, [0, 0, -1100], 2800, 520, 0, texTile("#2b5a4a", "#2f6352", 6, { grout: "rgba(255,255,255,0.08)" }), 6); bx(G, [-1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [0, 520, -300], [2800, 10, 1800], "#3a3530", {});
+        wallTex(G, [0, 0, -1100], 2800, 520, 0, texTile("#2b5a4a", "#2f6352", 6, { grout: "rgba(255,255,255,0.08)" }), 6); bx(G, [-1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [0, 520, -300], [2800, 10, 1800], "#9a8f80", {});
         // counter
         bx(G, [0, 0, -500], [1300, 105, 110], "#8a5a2b", { r: 0.5 }); bx(G, [0, 105, -500], [1320, 8, 130], "#f2ead8", { r: 0.25, m: 0.1 }); bx(G, [0, 0, -440], [1300, 12, 4], "#ffd60a", { e: "#ffd60a", ei: 0.8 });
         bx(G, [-260, 113, -520], [150, 120, 70], "#c9ccd2", { m: 0.9, r: 0.2 }); bx(G, [-260, 233, -520], [154, 12, 74], "#1c1d22", {}); for (let i = 0; i < 3; i++) cy(G, [-310 + i * 50, 140, -476], 9, 14, "#111216", {}); bx(G, [-260, 200, -484], [60, 14, 2], "#ff7a1a", { e: "#ff7a1a", ei: 1.2 });
@@ -846,7 +846,7 @@
         bx(G, [0, 0, 1100], [6000, 2, 900], "#2a2c33", { r: 0.8 }); for (let x = -2800; x < 2800; x += 300) bx(G, [x, 2.5, 1100], [120, 1, 10], "#e9e6df", {});
         facade(G, -560, -650, "TRATTORIA DA GINO", true, "#2b9a5c"); facade(G, 560, -650, "OSTERIA BELLAVISTA", false, "#3d4a72"); bx(G, [0, 0, -650], [100, 900, 300], "#d9cbb6", {});
         for (let k = 0; k < 2; k++) { const x = k ? 1900 : -1900; bx(G, [x, 0, -800], [700, 1300, 400], "#4a4d55", { r: 0.8 }); for (let r = 0; r < 9; r++) for (let c = 0; c < 4; c++) if (rnf(x + r * 7 + c * 3) > 0.35) bx(G, [x - 240 + c * 160, 120 + r * 130, -599], [70, 70, 2], "#ffd27a", { e: "#ffb84d", ei: 1.1 }); }
-        [-1200, 0, 1200].forEach((x) => { cy(G, [x, 0, 650], 6, 420, "#2a2c36", {}); const l = new T.Mesh(new T.SphereGeometry(16, 12, 10), new T.MeshStandardMaterial({ color: 0xfff1d6, emissive: 0xffd27a, emissiveIntensity: 2 })); l.position.set(x, 420, 650); G.add(l); }); return G; }); }
+        [-1300, 1300].forEach((x) => { cy(G, [x, 0, 650], 6, 420, "#2a2c36", {}); const l = new T.Mesh(new T.SphereGeometry(16, 12, 10), new T.MeshStandardMaterial({ color: 0xfff1d6, emissive: 0xffd27a, emissiveIntensity: 2 })); l.position.set(x, 420, 650); G.add(l); }); return G; }); }
       ENV.pizza = () => envFix(pizzeria()); ENV.bar = () => envFix(bar()); ENV.vie = () => envFix(localStreet());
       LOOK.pizza = { sky: "#ffd9a8", ground: "#3a2416", hemi: 0.42, key: 0.45, keyC: "#ffd9a8", keyDir: [-600, 1500, 900], fog: "#3a2a20", fogN: 2400, fogF: 6500, exp: 0.9, rim: 0.35 };
       LOOK.bar = { sky: "#fff1dc", ground: "#3a3530", hemi: 0.48, key: 0.5, keyDir: [500, 1500, 1100], fog: "#5a5248", fogN: 2400, fogF: 6500, exp: 0.88, rim: 0.3 };
@@ -885,7 +885,7 @@
         [0, W[13], "none", (t, u, d) => { useEnv("super"); G3.light([FX + 300, 260, FZ], "#ffd9d9", 1.4, 900);
           shot(u, d, t, [[FX + 520, 220, FZ + 260], [FX + 330, 190, FZ + 90]], [[FX + 40, 150, FZ], [FX + 60, 150, FZ - 10]], { f: 1000, shake: 0.4 });
           fridge(t, NAMES, t < W[5] ? 0 : seg(t, W[5], W[8])); const big = t < W[5] - 0.05 ? "LOGO" : "MARCO"; bottleName([FX + 190, 0, FZ - 10], 1.6 * (t < W[5] - 0.05 ? 1 : 1 + 0.1 * hit(t, W[5], 6)), big, "#c81e1e", Math.PI / 2);
-          if (t > W[5] - 0.1 && t < W[10]) stag("VIA IL LOGO", RED, pop(t, W[5] - 0.1), { fs: 78 }); if (t > W[10] - 0.1) stag("E HA VENDUTO DI PIÙ", "#2b9a5c", pop(t, W[10] - 0.1), { fs: 74 });
+          if (t > W[5] - 0.1 && t < W[10]) stag("VIA IL LOGO", RED, pop(t, W[5] - 0.1), { fs: 78, y: 930 }); if (t > W[10] - 0.1) stag("E HA VENDUTO DI PIÙ", "#2b9a5c", pop(t, W[10] - 0.1), { fs: 74 });
         }],
         // CH2 AUSTRALIA 2011: names (yellow)
         [W[13], W[30], "whip", (t, u, d) => { useEnv("super");
@@ -921,9 +921,9 @@
         }],
         // CH7 LESSON (green)
         [W[103], W[118], "whip", (t, u, d) => { useEnv("store"); G3.light([0, 300, 300], "#fff1d6", 1.0, 1200);
-          shot(u, d, t, [[-80, 230, 700], [20, 215, 560]], [[0, 170, 0], [40, 170, -40]], { f: 1000, shake: 0.4 });
-          char3("own", { role: "commessa", seed: 61, ov: { apron: "#2b9a5c", topC: "#2b9a5c" } }, [-150, 0, 40], 0.5, "talk", t, { emo: "happy" }); char3("cl", HERO, [120, 0, 60], -0.5, "hold", t, { emo: "happy", prod: "#2b9a5c" });
-          [[W[110], "IL SUO NOME"], [W[113], "LA SUA STORIA"], [W[116], "LA SUA FOTO"]].forEach((q, i) => { if (t > q[0] - 0.1) sign3x([-120 + i * 150, 330 + (i % 2) * 40, -60], 140, 52, q[1], { bg: "#ffffff", fg: "#2b9a5c", d: 3, s: pop(t, q[0] - 0.1) }); });
+          shot(u, d, t, [[-220, 260, -60], [-130, 235, -190]], [[0, 170, -750], [0, 170, -750]], { f: 1000, shake: 0.4 });
+          char3("own", { role: "commessa", seed: 61, ov: { apron: "#2b9a5c", topC: "#2b9a5c" } }, [-150, 0, -720], 0.5, "talk", t, { emo: "happy" }); char3("cl", HERO, [120, 0, -700], -0.5, "hold", t, { emo: "happy", prod: "#2b9a5c" });
+          [[W[110], "IL SUO NOME"], [W[113], "LA SUA STORIA"], [W[116], "LA SUA FOTO"]].forEach((q, i) => { if (t > q[0] - 0.1) sign3x([-150 + i * 150, 330 + (i % 2) * 40, -820], 140, 52, q[1], { bg: "#ffffff", fg: "#2b9a5c", d: 3, s: pop(t, q[0] - 0.1) }); });
           stag("RENDI IL CLIENTE PROTAGONISTA", "#2b9a5c", pop(t, W[105] - 0.1), { fs: 58 });
         }],
         // CH8 QUESTION

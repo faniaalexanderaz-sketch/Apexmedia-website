@@ -857,6 +857,166 @@ Ha tolto gli sconti finti e ha perso quasi 1 miliardo 🏷️ La storia di J.C. 
 
 ---
 
+## 31. Domino's: «la nostra pizza faceva schifo» (52 s) · NUOVO MOTORE 3D
+
+File: `apex-dominos/renders/apex-dominos-9x16.mp4`
+
+**Instagram**
+```text
+Domino's ha detto in TV che la sua pizza faceva schifo. E ha venduto di più. 🍕
+
+Fine 2009: i clienti dicono che la crosta sa di cartone e il sugo di ketchup.
+Invece di nasconderlo, Domino's mette quelle critiche in uno spot e dice: avete ragione.
+Poi rifà la pizza da zero: nuovo impasto, nuovo sugo, nuovo formaggio.
+
+Risultato: nei tre mesi dopo, vendite USA +14%. Uno dei salti più grandi mai visti nel fast food.
+
+Perché ha funzionato? Ammettere un errore ti rende credibile.
+
+Per la tua attività: leggi le recensioni negative, rispondi, e se hanno ragione migliora. E dillo a tutti.
+
+👇 Tu risponderesti a una recensione negativa?
+
+(Fonte: campagna "Pizza Turnaround", risultati Domino's primo trimestre 2010.)
+#dominos #marketing #recensioni #pizza #brand #business #imprenditori #ristorazione
+```
+
+**TikTok**
+```text
+Domino's ha detto in TV che la sua pizza faceva schifo 🍕 e ha venduto il 14% in più. Tu risponderesti a una recensione negativa?
+#dominos #marketing #pizza #business
+```
+
+---
+
+## 32. Coca-Cola ha tolto il logo dalle bottiglie (50 s) · NUOVO MOTORE 3D
+
+File: `apex-nomi-bottiglie/renders/apex-nomi-bottiglie-9x16.mp4`
+
+**Instagram**
+```text
+Coca-Cola ha tolto il suo logo dalle bottiglie. E ha venduto di più. 🥤
+
+Australia, 2011: al posto del logo, i 150 nomi più comuni del paese.
+La gente cerca il suo nome, poi quello degli amici, poi fa la foto e la pubblica.
+
+Secondo Coca-Cola: oltre 250 milioni di bottiglie e lattine in un'estate, in un paese di 23 milioni di persone. E la campagna è arrivata in più di 80 paesi.
+
+Perché funziona? Le persone non comprano solo un prodotto. Comprano qualcosa che parla di loro.
+
+La lezione: rendi il cliente protagonista. Il suo nome, la sua storia, la sua foto.
+
+👇 Hai mai cercato il tuo nome su una bottiglia?
+
+(Fonte: dati dichiarati da The Coca-Cola Company sulla campagna "Share a Coke".)
+#cocacola #shareacoke #marketing #personalizzazione #brand #business #imprenditori
+```
+
+**TikTok**
+```text
+Coca-Cola ha tolto il logo e ci ha messo il tuo nome 🥤 250 milioni di bottiglie in un'estate. Tu l'hai cercato il tuo?
+#cocacola #marketing #brand #business
+```
+
+---
+
+## 33. Due locali uno accanto all'altro (51 s) · NUOVO MOTORE 3D
+
+File: `apex-due-locali/renders/apex-due-locali-9x16.mp4`
+
+**Instagram**
+```text
+Due locali, uno accanto all'altro. Stesso cibo, stessi prezzi. Uno ha la fila, l'altro è vuoto. Perché? 🍝
+
+Prima di entrare il cliente ha già scelto. Sul telefono: stelle, foto, recensioni.
+
+Uno studio di Harvard: una stella in più nelle recensioni fa crescere gli incassi di un ristorante dal 5 al 9%.
+E la fila attira altra fila: si chiama riprova sociale.
+
+3 cose da fare subito:
+1. Chiedi una recensione a ogni cliente contento.
+2. Rispondi a tutte, anche alle negative.
+3. Metti foto vere e belle del tuo locale.
+
+Il tuo locale non si gioca sulla strada. Si gioca sul telefono.
+
+👇 Scegli un locale dalle recensioni?
+
+(Fonte: M. Luca, Harvard Business School, studio su Yelp e ristoranti indipendenti.)
+#ristorante #recensioni #locali #marketing #googlemaps #ristorazione #business #imprenditori
+```
+
+**TikTok**
+```text
+Stesso cibo, stessi prezzi: uno ha la fila, l'altro è vuoto 🍝 La differenza è sul telefono. Tu scegli dalle recensioni?
+#ristorante #recensioni #marketing #locali
+```
+
+---
+
+## 34. La tessera fedeltà che funziona il doppio (48 s) · NUOVO MOTORE 3D
+
+File: `apex-tessera-fedelta/renders/apex-tessera-fedelta-9x16.mp4`
+
+**Instagram**
+```text
+Due tessere fedeltà. Una: caffè gratis dopo 8 timbri. L'altra: dopo 10, ma i primi 2 sono già fatti. ☕
+
+In pratica sono uguali. Ma la seconda funziona quasi il doppio.
+
+Uno studio americano in un autolavaggio: tessera normale completata dal 19% dei clienti, tessera "già iniziata" dal 34%.
+
+Perché? Quando senti di essere già partito, vuoi arrivare alla fine. Si chiama effetto del progresso.
+
+Per il tuo bar: non far partire il cliente da zero. Regalagli i primi timbri e tornerà per finire la tessera. E ogni volta che torna ordina anche qualcos'altro.
+
+👇 Quante tessere fedeltà hai nel portafoglio?
+
+(Fonte: Nunes e Drèze, "The Endowed Progress Effect", 2006.)
+#fedelta #bar #caffe #marketing #psicologia #clienti #business #imprenditori
+```
+
+**TikTok**
+```text
+La tessera fedeltà coi primi 2 timbri già fatti funziona quasi il doppio ☕ (19% contro 34%). Quante ne hai nel portafoglio?
+#bar #marketing #fedelta #business
+```
+
+---
+
+## 35. «Pizzeria vicino a me» (47 s) · NUOVO MOTORE 3D
+
+File: `apex-vicino-a-me/renders/apex-vicino-a-me-9x16.mp4`
+
+**Instagram**
+```text
+In questo momento qualcuno sta cercando "pizzeria vicino a me". Se non ci sei, sta mangiando dal tuo concorrente. 📍
+
+Secondo Google: il 76% di chi cerca dal telefono qualcosa vicino va in un'attività entro 24 ore. E quasi una ricerca su tre finisce con un acquisto.
+
+Il cliente è pronto: ha fame, ha il telefono in mano e sceglie i primi risultati.
+
+Due mosse:
+1. Scheda Google della tua attività completa: orari, foto, recensioni.
+2. Una campagna Google sulla tua zona, anche con pochi euro al giorno, che ti mette in cima quando ti cercano.
+
+Non devi convincere nessuno. Devi solo farti trovare.
+
+👇 Sei sulla prima pagina quando cercano il tuo lavoro?
+Vuoi farti trovare? Scrivici in DM.
+
+(Fonte: Think with Google, ricerche locali da smartphone.)
+#google #googleads #localseo #marketing #attivitalocali #pizzeria #business #imprenditori
+```
+
+**TikTok**
+```text
+Qualcuno sta cercando "pizzeria vicino a me" proprio adesso 📍 Se non ci sei, mangia dal concorrente. Tu sei in prima pagina?
+#google #marketing #attivitalocali #business
+```
+
+---
+
 ## Prima di pubblicare
 
 - **Commenti con parola chiave** (CLIENTI, AUDIT): rispondi in DM entro poche ore, altrimenti il contatto si raffredda.

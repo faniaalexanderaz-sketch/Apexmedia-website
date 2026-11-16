@@ -825,7 +825,7 @@
         return G; }); }
       function bar() { return G3.grp("env|bar", () => { const T = G3.THREE, G = new T.Group(), P = { box: [], cyl: [], band: [], sph: [] };
         floorMesh(G, 5000, 5000, texTile("#2a2c36", "#e9e6df", 12, { grout: "rgba(0,0,0,0.15)" }), 24, 0.25);
-        wallTex(G, [0, 0, -1100], 2800, 520, 0, texTile("#2b5a4a", "#2f6352", 6, { grout: "rgba(255,255,255,0.08)" }), 6); bx(G, [-1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [0, 520, -300], [2800, 10, 1800], "#3a3530", {});
+        wallTex(G, [0, 0, -1100], 2800, 520, 0, texTile("#2b5a4a", "#2f6352", 6, { grout: "rgba(255,255,255,0.08)" }), 6); bx(G, [-1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [1400, 0, -300], [20, 520, 1800], "#e9dfcf", {}); bx(G, [0, 520, -300], [2800, 10, 1800], "#9a8f80", {});
         // counter
         bx(G, [0, 0, -500], [1300, 105, 110], "#8a5a2b", { r: 0.5 }); bx(G, [0, 105, -500], [1320, 8, 130], "#f2ead8", { r: 0.25, m: 0.1 }); bx(G, [0, 0, -440], [1300, 12, 4], "#ffd60a", { e: "#ffd60a", ei: 0.8 });
         bx(G, [-260, 113, -520], [150, 120, 70], "#c9ccd2", { m: 0.9, r: 0.2 }); bx(G, [-260, 233, -520], [154, 12, 74], "#1c1d22", {}); for (let i = 0; i < 3; i++) cy(G, [-310 + i * 50, 140, -476], 9, 14, "#111216", {}); bx(G, [-260, 200, -484], [60, 14, 2], "#ff7a1a", { e: "#ff7a1a", ei: 1.2 });
@@ -846,7 +846,7 @@
         bx(G, [0, 0, 1100], [6000, 2, 900], "#2a2c33", { r: 0.8 }); for (let x = -2800; x < 2800; x += 300) bx(G, [x, 2.5, 1100], [120, 1, 10], "#e9e6df", {});
         facade(G, -560, -650, "TRATTORIA DA GINO", true, "#2b9a5c"); facade(G, 560, -650, "OSTERIA BELLAVISTA", false, "#3d4a72"); bx(G, [0, 0, -650], [100, 900, 300], "#d9cbb6", {});
         for (let k = 0; k < 2; k++) { const x = k ? 1900 : -1900; bx(G, [x, 0, -800], [700, 1300, 400], "#4a4d55", { r: 0.8 }); for (let r = 0; r < 9; r++) for (let c = 0; c < 4; c++) if (rnf(x + r * 7 + c * 3) > 0.35) bx(G, [x - 240 + c * 160, 120 + r * 130, -599], [70, 70, 2], "#ffd27a", { e: "#ffb84d", ei: 1.1 }); }
-        [-1200, 0, 1200].forEach((x) => { cy(G, [x, 0, 650], 6, 420, "#2a2c36", {}); const l = new T.Mesh(new T.SphereGeometry(16, 12, 10), new T.MeshStandardMaterial({ color: 0xfff1d6, emissive: 0xffd27a, emissiveIntensity: 2 })); l.position.set(x, 420, 650); G.add(l); }); return G; }); }
+        [-1300, 1300].forEach((x) => { cy(G, [x, 0, 650], 6, 420, "#2a2c36", {}); const l = new T.Mesh(new T.SphereGeometry(16, 12, 10), new T.MeshStandardMaterial({ color: 0xfff1d6, emissive: 0xffd27a, emissiveIntensity: 2 })); l.position.set(x, 420, 650); G.add(l); }); return G; }); }
       ENV.pizza = () => envFix(pizzeria()); ENV.bar = () => envFix(bar()); ENV.vie = () => envFix(localStreet());
       LOOK.pizza = { sky: "#ffd9a8", ground: "#3a2416", hemi: 0.42, key: 0.45, keyC: "#ffd9a8", keyDir: [-600, 1500, 900], fog: "#3a2a20", fogN: 2400, fogF: 6500, exp: 0.9, rim: 0.35 };
       LOOK.bar = { sky: "#fff1dc", ground: "#3a3530", hemi: 0.48, key: 0.5, keyDir: [500, 1500, 1100], fog: "#5a5248", fogN: 2400, fogF: 6500, exp: 0.88, rim: 0.3 };
@@ -895,7 +895,7 @@
         [W[19], W[49], "punch", (t, u, d) => { useEnv("vie"); G3.st.tilt = 3;
           shot(u, d, t, [[200, 760, 1600], [150, 600, 1300]], [[0, 260, -300], [0, 260, -350]], { f: 1000, shake: 0.2 });
           for (let i = 0; i < 6; i++) { const k = seg(t, W[22] + i * 0.3, W[22] + 0.6 + i * 0.3); if (k > 0) pin3([-1500 + i * 600, 700 + (i % 2) * 120, -450 - (i % 3) * 200], 60 * o4(k), ["#2b9a5c", "#2f6fdd", "#e8553f", "#7a5af8", "#f08c00", "#1fb5c2"][i]); }
-          for (let i = 0; i < 8; i++) { const w = walkPath(t, W[22] + i * 0.7, [[-1600 + i * 400, 0, 900], [-560 + (i % 2) * 1120, 0, -380]], 140); char3("p" + i, { role: "cliente", seed: 300 + i * 5 }, w[0], w[1], w[2] ? "idle" : (i % 2 ? "walk" : "phone"), t, { s: 1.2 }); }
+          for (let i = 0; i < 8; i++) { const w = walkPath(t, W[22] + i * 0.7, [[-1600 + i * 400, 0, 450], [-560 + (i % 2) * 1120, 0, -380]], 140); char3("p" + i, { role: "cliente", seed: 300 + i * 5 }, w[0], w[1], w[2] ? "idle" : (i % 2 ? "walk" : "phone"), t, { s: 1.2 }); }
           stag(t < W[39] ? "76% VA IN UN'ATTIVITÀ ENTRO 24 ORE" : "1 RICERCA SU 3 = ACQUISTO", t < W[39] ? A : "#2b9a5c", pop(t, t < W[39] ? W[22] - 0.1 : W[44] - 0.1), { fs: 54 });
         }],
         // CH3 ready to buy (orange)
@@ -906,9 +906,9 @@
         }],
         // CH4 move 1: complete listing (green)
         [W[65], W[81], "whip", (t, u, d) => { useEnv("vie"); myShopOn(o4(seg(t, W[70], W[72])));
-          shot(u, d, t, [[700, 300, 900], [500, 280, 700]], [[500, 300, -450], [500, 300, -450]], { f: 1000, shake: 0.3 });
-          char3("own", OWNER, [460, 0, -360], 0, "phone", t, { emo: "happy" }); const g = dynPanel("listing", 480, 400, (x, w, h) => { x.fillStyle = "#ffffff"; x.fillRect(0, 0, w, h); x.fillStyle = "#202124"; x.font = '800 44px "Unbounded"'; x.fillText("Osteria Bellavista", 30, 70); stars2d(x, 50, 120, 22, 4.8); [["Orari", W[77]], ["Foto", W[78]], ["Recensioni", W[80]]].forEach((q, i) => { const on = G3.st.t > q[1] - 0.1; x.fillStyle = on ? "#188038" : "#9aa0aa"; x.font = '700 38px "Unbounded"'; x.fillText((on ? "✓ " : "○ ") + q[0], 40, 210 + i * 80); }); }, 768, 640);
-          placeG(g, [820, 400, -150], -0.5); g.scale.set(pop(t, W[68]), pop(t, W[68]), 1);
+          shot(u, d, t, [[660, 300, 520], [580, 280, 380]], [[540, 280, -450], [540, 280, -450]], { f: 1000, shake: 0.3 });
+          char3("own", OWNER, [460, 0, -360], 0, "phone", t, { emo: "happy" }); const g = dynPanel("listing", 480, 400, (x, w, h) => { x.fillStyle = "#ffffff"; x.fillRect(0, 0, w, h); x.fillStyle = "#111111"; x.font = '900 52px "Unbounded"'; x.fillText("Osteria Bellavista", 30, 76); stars2d(x, 50, 120, 22, 4.8); [["Orari", W[77]], ["Foto", W[78]], ["Recensioni", W[80]]].forEach((q, i) => { const on = G3.st.t > q[1] - 0.1; x.fillStyle = on ? "#0b6b2a" : "#70757a"; x.font = '900 46px "Unbounded"'; x.fillText((on ? "✓ " : "○ ") + q[0], 40, 210 + i * 80); }); }, 768, 640);
+          placeG(g, [700, 400, -260], -0.3); g.scale.set(pop(t, W[68]), pop(t, W[68]), 1);
           stag("1 · SCHEDA GOOGLE COMPLETA", "#2b9a5c", pop(t, W[68] - 0.1), { fs: 62 });
         }],
         // CH5 move 2: local campaign (violet)
