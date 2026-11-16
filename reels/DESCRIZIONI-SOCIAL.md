@@ -1175,7 +1175,7 @@ Perché non vende un taglio. Vende il caffè all'arrivo, il massaggio al lavates
 Chi cerca il prezzo più basso ti lascia per un euro. Chi sceglie te, torna.
 Il prezzo basso non riempie il conto. Riempie solo l'agenda.
 
-Se vuoi sapere come creo questi video in poco tempo, da casa, scrivi MOTION nei commenti e ti spiego tutto.
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
 
 I numeri sono un esempio semplificato, ogni salone ha costi diversi.
 #parrucchiere #barbiere #salone #prezzi #posizionamento #attività #marketing #apexmedia
