@@ -1,0 +1,214 @@
+<template>
+  <style>
+    @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; color: #fff; font-family: "Unbounded", sans-serif; perspective: 900px; }
+    .grp { position: absolute; left: 30px; '+('top: auto; bottom: 350px;' if __import__('os').environ.get('CAPLOW') else 'top: 214px;')+' width: 1020px; text-align: center; opacity: 0; }
+    .ln { display: block; line-height: 1.08; margin-bottom: 0.14em; }
+    .w { display: inline-block; margin: 0 0.12em; font-weight: 900; font-size: 64px; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 0 16px rgba(0,0,0,1), 0 6px 30px rgba(0,0,0,0.95); }
+    .big { font-size: 108px; line-height: 1; color: var(--acc); text-shadow: 0 0 34px var(--glow), 0 0 16px rgba(0,0,0,1); }
+    .hot { color: #000; background: var(--acc); padding: 0.04em 0.16em 0.06em; margin: 0.08em 0.1em; text-shadow: none; box-shadow: 0 0 50px var(--glow); }
+    .jl { margin-right: 0; padding-right: 0; }
+    .jl + .w { margin-left: 0; padding-left: 0; }
+    #c30 { font-size: 86px; }
+    #c43 { font-size: 102px; }
+    #c62 { font-size: 113px; }
+    #c72 { font-size: 94px; }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+    <div id="g0" class="grp" style="--acc: #FF2A3D; --glow: rgba(255,42,61,0.55);"><span class="ln"><span id="c0" class="w">Ha</span> <span id="c1" class="w">un</span> </span><span class="ln"><span id="c2" class="w big">negozio</span> </span><span class="ln"><span id="c3" class="w">tutto</span> <span id="c4" class="w">suo.</span> </span></div>
+    <div id="g1" class="grp" style="--acc: #FF2A3D; --glow: rgba(255,42,61,0.55);"><span class="ln"><span id="c5" class="w">E</span> <span id="c6" class="w">guadagna</span> </span><span class="ln"><span id="c7" class="w big">quattro</span> </span><span class="ln"><span id="c8" class="w big hot">euro</span> </span><span class="ln"><span id="c9" class="w">l&#x27;ora.</span> </span></div>
+    <div id="g2" class="grp" style="--acc: #00E5FF; --glow: rgba(0,229,255,0.55);"><span class="ln"><span id="c10" class="w">Apre</span> </span><span class="ln"><span id="c11" class="w">alle</span> <span id="c12" class="w big hot">otto,</span> </span></div>
+    <div id="g3" class="grp" style="--acc: #00E5FF; --glow: rgba(0,229,255,0.55);"><span class="ln"><span id="c13" class="w">chiude</span> </span><span class="ln"><span id="c14" class="w">alle</span> <span id="c15" class="w big hot">otto.</span> </span></div>
+    <div id="g4" class="grp" style="--acc: #00E5FF; --glow: rgba(0,229,255,0.55);"><span class="ln"><span id="c16" class="w big">Sei</span> </span><span class="ln"><span id="c17" class="w">giorni</span> </span><span class="ln"><span id="c18" class="w">su</span> <span id="c19" class="w">sette.</span> </span></div>
+    <div id="g5" class="grp" style="--acc: #00E5FF; --glow: rgba(0,229,255,0.55);"><span class="ln"><span id="c20" class="w">Sono</span> </span><span class="ln"><span id="c21" class="w big">trecento</span> </span><span class="ln"><span id="c22" class="w">ore</span> </span><span class="ln"><span id="c23" class="w">al</span> <span id="c24" class="w">mese.</span> </span></div>
+    <div id="g6" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c25" class="w">A</span> <span id="c26" class="w">fine</span> </span><span class="ln"><span id="c27" class="w">mese</span> </span><span class="ln"><span id="c28" class="w">gli</span> <span id="c29" class="w">restano</span> </span></div>
+    <div id="g7" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c30" class="w big">milleduecento</span> </span><span class="ln"><span id="c31" class="w">euro.</span> </span></div>
+    <div id="g8" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c32" class="w">Milleduecento</span> </span><span class="ln"><span id="c33" class="w">diviso</span> </span><span class="ln"><span id="c34" class="w big hot">trecento:</span> </span></div>
+    <div id="g9" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c35" class="w big">quattro</span> </span><span class="ln"><span id="c36" class="w">euro</span> </span><span class="ln"><span id="c37" class="w big hot">l&#x27;ora.</span> </span></div>
+    <div id="g10" class="grp" style="--acc: #FF7A1A; --glow: rgba(255,122,26,0.55);"><span class="ln"><span id="c38" class="w">Meno</span> </span><span class="ln"><span id="c39" class="w">di</span> <span id="c40" class="w">quanto</span> </span><span class="ln"><span id="c41" class="w">pagherebbe</span> </span></div>
+    <div id="g11" class="grp" style="--acc: #FF7A1A; --glow: rgba(255,122,26,0.55);"><span class="ln"><span id="c42" class="w">un</span> <span id="c43" class="w big">dipendente.</span> </span></div>
+    <div id="g12" class="grp" style="--acc: #FF7A1A; --glow: rgba(255,122,26,0.55);"><span class="ln"><span id="c44" class="w">Il</span> <span id="c45" class="w big hot">problema?</span> </span></div>
+    <div id="g13" class="grp" style="--acc: #FF7A1A; --glow: rgba(255,122,26,0.55);"><span class="ln"><span id="c46" class="w">Non</span> <span id="c47" class="w">ha</span> </span><span class="ln"><span id="c48" class="w">mai</span> </span><span class="ln"><span id="c49" class="w">contato</span> </span></div>
+    <div id="g14" class="grp" style="--acc: #FF7A1A; --glow: rgba(255,122,26,0.55);"><span class="ln"><span id="c50" class="w">il</span> <span id="c51" class="w">suo</span> </span><span class="ln"><span id="c52" class="w big">tempo</span> </span><span class="ln"><span id="c53" class="w">come</span> <span id="c54" class="w">un</span> </span><span class="ln"><span id="c55" class="w big hot">costo.</span> </span></div>
+    <div id="g15" class="grp" style="--acc: #B45CFF; --glow: rgba(180,92,255,0.55);"><span class="ln"><span id="c56" class="w">Chi</span> <span id="c57" class="w">ha</span> </span><span class="ln"><span id="c58" class="w">un&#x27;attività</span> </span></div>
+    <div id="g16" class="grp" style="--acc: #B45CFF; --glow: rgba(180,92,255,0.55);"><span class="ln"><span id="c59" class="w">deve</span> </span><span class="ln"><span id="c60" class="w">pagarsi</span> </span><span class="ln"><span id="c61" class="w">uno</span> <span id="c62" class="w big">stipendio.</span> </span></div>
+    <div id="g17" class="grp" style="--acc: #B45CFF; --glow: rgba(180,92,255,0.55);"><span class="ln"><span id="c63" class="w">E</span> <span id="c64" class="w">se</span> </span><span class="ln"><span id="c65" class="w">l&#x27;attività</span> </span><span class="ln"><span id="c66" class="w">non</span> <span id="c67" class="w">riesce</span> </span><span class="ln"><span id="c68" class="w">a</span> <span id="c69" class="w big hot">pagarlo,</span> </span></div>
+    <div id="g18" class="grp" style="--acc: #B45CFF; --glow: rgba(180,92,255,0.55);"><span class="ln"><span id="c70" class="w">non</span> <span id="c71" class="w">è</span> </span><span class="ln"><span id="c72" class="w big hot">un&#x27;attività.</span> </span></div>
+    <div id="g19" class="grp" style="--acc: #B45CFF; --glow: rgba(180,92,255,0.55);"><span class="ln"><span id="c73" class="w">È</span> <span id="c74" class="w">un</span> </span><span class="ln"><span id="c75" class="w">lavoro</span> </span><span class="ln"><span id="c76" class="w big">pagato</span> </span><span class="ln"><span id="c77" class="w big">male.</span> </span></div>
+    <div id="g20" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c78" class="w">La</span> <span id="c79" class="w big hot">regola:</span> </span></div>
+    <div id="g21" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c80" class="w">prima</span> </span><span class="ln"><span id="c81" class="w">calcola</span> </span><span class="ln"><span id="c82" class="w">quanto</span> </span><span class="ln"><span id="c83" class="w">vale</span> </span></div>
+    <div id="g22" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c84" class="w">la</span> <span id="c85" class="w">tua</span> </span><span class="ln"><span id="c86" class="w big">ora.</span> </span></div>
+    <div id="g23" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c87" class="w">Poi</span> <span id="c88" class="w">decidi</span> </span><span class="ln"><span id="c89" class="w big hot">prezzi,</span> </span><span class="ln"><span id="c90" class="w big hot">orari,</span> </span></div>
+    <div id="g24" class="grp" style="--acc: #00FF85; --glow: rgba(0,255,133,0.55);"><span class="ln"><span id="c91" class="w">e</span> <span id="c92" class="w">cosa</span> </span><span class="ln"><span id="c93" class="w big">smettere</span> </span><span class="ln"><span id="c94" class="w">di</span> <span id="c95" class="w">fare.</span> </span></div>
+    <div id="g25" class="grp" style="--acc: #FFD60A; --glow: rgba(255,214,10,0.55);"><span class="ln"><span id="c96" class="w">E</span> <span id="c97" class="w">tu,</span> </span><span class="ln"><span id="c98" class="w">quanto</span> </span><span class="ln"><span id="c99" class="w">guadagni</span> </span></div>
+    <div id="g26" class="grp" style="--acc: #FFD60A; --glow: rgba(255,214,10,0.55);"><span class="ln"><span id="c100" class="w">davvero</span> </span><span class="ln"><span id="c101" class="w big">all&#x27;ora?</span> </span></div>
+    <div id="g27" class="grp" style="--acc: #FFD60A; --glow: rgba(255,214,10,0.55);"><span class="ln"><span id="c102" class="w">Scrivilo</span> </span><span class="ln"><span id="c103" class="w">nei</span> <span id="c104" class="w big">commenti.</span> </span></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#g0", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 0.000);
+      tl.fromTo("#g0", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 1.590);
+      tl.fromTo("#g1", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 1.650);
+      tl.fromTo("#g1", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 3.542);
+      tl.fromTo("#g2", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 3.602);
+      tl.fromTo("#g2", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 4.543);
+      tl.fromTo("#g3", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 4.603);
+      tl.fromTo("#g3", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 5.609);
+      tl.fromTo("#g4", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 5.669);
+      tl.fromTo("#g4", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 6.768);
+      tl.fromTo("#g5", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 6.828);
+      tl.fromTo("#g5", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 9.024);
+      tl.fromTo("#g6", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 9.084);
+      tl.fromTo("#g6", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 10.330);
+      tl.fromTo("#g7", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 10.390);
+      tl.fromTo("#g7", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 11.855);
+      tl.fromTo("#g8", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 11.915);
+      tl.fromTo("#g8", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 13.996);
+      tl.fromTo("#g9", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 14.056);
+      tl.fromTo("#g9", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 15.291);
+      tl.fromTo("#g10", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 15.351);
+      tl.fromTo("#g10", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 16.520);
+      tl.fromTo("#g11", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 16.580);
+      tl.fromTo("#g11", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 17.333);
+      tl.fromTo("#g12", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 17.393);
+      tl.fromTo("#g12", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 18.194);
+      tl.fromTo("#g13", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 18.254);
+      tl.fromTo("#g13", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 19.090);
+      tl.fromTo("#g14", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 19.150);
+      tl.fromTo("#g14", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 20.891);
+      tl.fromTo("#g15", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 20.951);
+      tl.fromTo("#g15", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 21.730);
+      tl.fromTo("#g16", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 21.790);
+      tl.fromTo("#g16", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 23.553);
+      tl.fromTo("#g17", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 23.613);
+      tl.fromTo("#g17", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 25.437);
+      tl.fromTo("#g18", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 25.497);
+      tl.fromTo("#g18", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 26.714);
+      tl.fromTo("#g19", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 26.774);
+      tl.fromTo("#g19", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 28.291);
+      tl.fromTo("#g20", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 28.351);
+      tl.fromTo("#g20", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 29.074);
+      tl.fromTo("#g21", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 29.134);
+      tl.fromTo("#g21", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 30.700);
+      tl.fromTo("#g22", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 30.760);
+      tl.fromTo("#g22", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 31.586);
+      tl.fromTo("#g23", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 31.646);
+      tl.fromTo("#g23", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 33.020);
+      tl.fromTo("#g24", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 33.080);
+      tl.fromTo("#g24", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 35.120);
+      tl.fromTo("#g25", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 35.180);
+      tl.fromTo("#g25", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 36.400);
+      tl.fromTo("#g26", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 36.460);
+      tl.fromTo("#g26", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 37.676);
+      tl.fromTo("#g27", { opacity: 0 }, { opacity: 1, duration: 0.02 }, 37.736);
+      tl.fromTo("#g27", { opacity: 1, scale: 1, filter: "blur(0px)" }, { opacity: 0, scale: 0.84, filter: "blur(10px)", duration: 0.08, immediateRender: false }, 39.180);
+      tl.fromTo("#c0", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 0.000);
+      tl.fromTo("#c1", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 0.120);
+      tl.fromTo("#c2", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 0.290);
+      tl.fromTo("#c3", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 0.920);
+      tl.fromTo("#c4", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 1.290);
+      tl.fromTo("#c5", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 1.660);
+      tl.fromTo("#c6", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 1.720);
+      tl.fromTo("#c7", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 2.330);
+      tl.fromTo("#c8", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 2.580);
+      tl.fromTo("#c9", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 2.870);
+      tl.fromTo("#c10", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 3.612);
+      tl.fromTo("#c11", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 3.830);
+      tl.fromTo("#c12", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 4.160);
+      tl.fromTo("#c13", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 4.613);
+      tl.fromTo("#c14", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 4.950);
+      tl.fromTo("#c15", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 5.180);
+      tl.fromTo("#c16", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 5.679);
+      tl.fromTo("#c17", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 5.770);
+      tl.fromTo("#c18", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 6.290);
+      tl.fromTo("#c19", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 6.450);
+      tl.fromTo("#c20", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 6.838);
+      tl.fromTo("#c21", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 7.260);
+      tl.fromTo("#c22", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 8.000);
+      tl.fromTo("#c23", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 8.160);
+      tl.fromTo("#c24", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 8.320);
+      tl.fromTo("#c25", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 9.094);
+      tl.fromTo("#c26", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 9.154);
+      tl.fromTo("#c27", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 9.330);
+      tl.fromTo("#c28", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 9.630);
+      tl.fromTo("#c29", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 9.950);
+      tl.fromTo("#c30", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 10.400);
+      tl.fromTo("#c31", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 11.340);
+      tl.fromTo("#c32", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 11.925);
+      tl.fromTo("#c33", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 12.670);
+      tl.fromTo("#c34", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 13.190);
+      tl.fromTo("#c35", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 14.066);
+      tl.fromTo("#c36", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 14.430);
+      tl.fromTo("#c37", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 14.690);
+      tl.fromTo("#c38", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 15.361);
+      tl.fromTo("#c39", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 15.840);
+      tl.fromTo("#c40", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 15.930);
+      tl.fromTo("#c41", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 16.300);
+      tl.fromTo("#c42", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 16.590);
+      tl.fromTo("#c43", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 16.670);
+      tl.fromTo("#c44", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 17.403);
+      tl.fromTo("#c45", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 17.490);
+      tl.fromTo("#c46", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 18.264);
+      tl.fromTo("#c47", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 18.390);
+      tl.fromTo("#c48", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 18.520);
+      tl.fromTo("#c49", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 18.710);
+      tl.fromTo("#c50", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 19.160);
+      tl.fromTo("#c51", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 19.420);
+      tl.fromTo("#c52", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 19.480);
+      tl.fromTo("#c53", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 19.850);
+      tl.fromTo("#c54", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 20.120);
+      tl.fromTo("#c55", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 20.250);
+      tl.fromTo("#c56", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 20.961);
+      tl.fromTo("#c57", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 21.021);
+      tl.fromTo("#c58", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 21.120);
+      tl.fromTo("#c59", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 21.800);
+      tl.fromTo("#c60", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 22.050);
+      tl.fromTo("#c61", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 22.490);
+      tl.fromTo("#c62", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 22.680);
+      tl.fromTo("#c63", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 23.623);
+      tl.fromTo("#c64", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 23.683);
+      tl.fromTo("#c65", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 23.743);
+      tl.fromTo("#c66", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 24.210);
+      tl.fromTo("#c67", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 24.580);
+      tl.fromTo("#c68", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 24.690);
+      tl.fromTo("#c69", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 24.760);
+      tl.fromTo("#c70", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 25.507);
+      tl.fromTo("#c71", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 25.567);
+      tl.fromTo("#c72", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 25.670);
+      tl.fromTo("#c73", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 26.784);
+      tl.fromTo("#c74", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 26.844);
+      tl.fromTo("#c75", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 26.904);
+      tl.fromTo("#c76", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 27.320);
+      tl.fromTo("#c77", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 27.700);
+      tl.fromTo("#c78", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 28.361);
+      tl.fromTo("#c79", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 28.421);
+      tl.fromTo("#c80", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 29.144);
+      tl.fromTo("#c81", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 29.450);
+      tl.fromTo("#c82", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 30.050);
+      tl.fromTo("#c83", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 30.490);
+      tl.fromTo("#c84", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 30.770);
+      tl.fromTo("#c85", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 30.990);
+      tl.fromTo("#c86", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 31.280);
+      tl.fromTo("#c87", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 31.656);
+      tl.fromTo("#c88", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 32.150);
+      tl.fromTo("#c89", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 32.370);
+      tl.fromTo("#c90", { opacity: 0, scale: 2.5, skewX: -30, rotation: 6 }, { opacity: 1, scale: 1, skewX: -9, rotation: -2, duration: 0.22, ease: "back.out(2.4)" }, 33.030);
+      tl.fromTo("#c91", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 33.090);
+      tl.fromTo("#c92", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 33.370);
+      tl.fromTo("#c93", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 33.630);
+      tl.fromTo("#c94", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 34.240);
+      tl.fromTo("#c95", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 34.380);
+      tl.fromTo("#c96", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 35.190);
+      tl.fromTo("#c97", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 35.250);
+      tl.fromTo("#c98", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 35.310);
+      tl.fromTo("#c99", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 35.820);
+      tl.fromTo("#c100", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 36.470);
+      tl.fromTo("#c101", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 36.960);
+      tl.fromTo("#c102", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 37.746);
+      tl.fromTo("#c103", { opacity: 0, y: 40, rotationX: -70 }, { opacity: 1, y: 0, rotationX: 0, duration: 0.16, ease: "power3.out" }, 38.180);
+      tl.fromTo("#c104", { opacity: 0, scale: 1.9, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" }, 38.260);
+      window.__timelines["captions"] = tl;
+    })();
+  </script>
+</template>
