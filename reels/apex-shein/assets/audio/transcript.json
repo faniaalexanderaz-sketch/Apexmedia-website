@@ -1,0 +1,800 @@
+[
+  {
+    "text": "Shane",
+    "start": 0.04,
+    "end": 0.32,
+    "id": "w0"
+  },
+  {
+    "text": "ti",
+    "start": 0.39,
+    "end": 0.53,
+    "id": "w1"
+  },
+  {
+    "text": "ha",
+    "start": 0.56,
+    "end": 0.63,
+    "id": "w2"
+  },
+  {
+    "text": "detto",
+    "start": 0.74,
+    "end": 1.1,
+    "id": "w3"
+  },
+  {
+    "text": "che",
+    "start": 1.1,
+    "end": 1.34,
+    "id": "w4"
+  },
+  {
+    "text": "era",
+    "start": 1.34,
+    "end": 1.57,
+    "id": "w5"
+  },
+  {
+    "text": "Green.",
+    "start": 1.57,
+    "end": 2.22,
+    "id": "w6"
+  },
+  {
+    "text": "L'Antitrust,",
+    "start": 2.22,
+    "end": 3.15,
+    "id": "w7"
+  },
+  {
+    "text": "no.",
+    "start": 3.15,
+    "end": 3.56,
+    "id": "w8"
+  },
+  {
+    "text": "Agosto",
+    "start": 3.6,
+    "end": 4.16,
+    "id": "w9"
+  },
+  {
+    "text": "2025.",
+    "start": 4.16,
+    "end": 5.44,
+    "id": "w10"
+  },
+  {
+    "text": "L'autorità",
+    "start": 5.49,
+    "end": 5.99,
+    "id": "w11"
+  },
+  {
+    "text": "italiana",
+    "start": 5.99,
+    "end": 6.45,
+    "id": "w12"
+  },
+  {
+    "text": "multa",
+    "start": 6.47,
+    "end": 6.91,
+    "id": "w13"
+  },
+  {
+    "text": "Shane",
+    "start": 7.11,
+    "end": 7.36,
+    "id": "w14"
+  },
+  {
+    "text": "per",
+    "start": 7.47,
+    "end": 7.52,
+    "id": "w15"
+  },
+  {
+    "text": "un",
+    "start": 7.52,
+    "end": 7.62,
+    "id": "w16"
+  },
+  {
+    "text": "milione",
+    "start": 7.62,
+    "end": 8.08,
+    "id": "w17"
+  },
+  {
+    "text": "di",
+    "start": 8.08,
+    "end": 8.2,
+    "id": "w18"
+  },
+  {
+    "text": "euro.",
+    "start": 8.2,
+    "end": 9.12,
+    "id": "w19"
+  },
+  {
+    "text": "Il",
+    "start": 9.12,
+    "end": 9.29,
+    "id": "w20"
+  },
+  {
+    "text": "motivo?",
+    "start": 9.3,
+    "end": 10.16,
+    "id": "w21"
+  },
+  {
+    "text": "Messaggi",
+    "start": 10.19,
+    "end": 10.78,
+    "id": "w22"
+  },
+  {
+    "text": "ambientali",
+    "start": 10.78,
+    "end": 11.55,
+    "id": "w23"
+  },
+  {
+    "text": "vaghi,",
+    "start": 11.55,
+    "end": 12.08,
+    "id": "w24"
+  },
+  {
+    "text": "fuorvianti",
+    "start": 12.17,
+    "end": 12.84,
+    "id": "w25"
+  },
+  {
+    "text": "o",
+    "start": 12.84,
+    "end": 12.91,
+    "id": "w26"
+  },
+  {
+    "text": "addirittura",
+    "start": 12.91,
+    "end": 13.75,
+    "id": "w27"
+  },
+  {
+    "text": "falsi.",
+    "start": 13.75,
+    "end": 14.47,
+    "id": "w28"
+  },
+  {
+    "text": "Parole",
+    "start": 14.48,
+    "end": 14.83,
+    "id": "w29"
+  },
+  {
+    "text": "come",
+    "start": 14.83,
+    "end": 15.08,
+    "id": "w30"
+  },
+  {
+    "text": "sostenibile,",
+    "start": 15.08,
+    "end": 16.28,
+    "id": "w31"
+  },
+  {
+    "text": "responsabile,",
+    "start": 16.32,
+    "end": 17.38,
+    "id": "w32"
+  },
+  {
+    "text": "riciclato,",
+    "start": 17.38,
+    "end": 18.22,
+    "id": "w33"
+  },
+  {
+    "text": "usate",
+    "start": 18.29,
+    "end": 18.61,
+    "id": "w34"
+  },
+  {
+    "text": "per",
+    "start": 18.61,
+    "end": 18.74,
+    "id": "w35"
+  },
+  {
+    "text": "vendere",
+    "start": 18.88,
+    "end": 19.2,
+    "id": "w36"
+  },
+  {
+    "text": "moda",
+    "start": 19.38,
+    "end": 19.8,
+    "id": "w37"
+  },
+  {
+    "text": "che",
+    "start": 19.83,
+    "end": 20.06,
+    "id": "w38"
+  },
+  {
+    "text": "costa",
+    "start": 20.19,
+    "end": 20.52,
+    "id": "w39"
+  },
+  {
+    "text": "pochi",
+    "start": 20.52,
+    "end": 20.96,
+    "id": "w40"
+  },
+  {
+    "text": "euro",
+    "start": 20.96,
+    "end": 21.27,
+    "id": "w41"
+  },
+  {
+    "text": "e",
+    "start": 21.27,
+    "end": 21.73,
+    "id": "w42"
+  },
+  {
+    "text": "dura",
+    "start": 21.73,
+    "end": 21.78,
+    "id": "w43"
+  },
+  {
+    "text": "poco.",
+    "start": 21.78,
+    "end": 22.48,
+    "id": "w44"
+  },
+  {
+    "text": "Pochi",
+    "start": 22.52,
+    "end": 22.8,
+    "id": "w45"
+  },
+  {
+    "text": "mesi",
+    "start": 22.87,
+    "end": 23.07,
+    "id": "w46"
+  },
+  {
+    "text": "prima,",
+    "start": 23.07,
+    "end": 23.54,
+    "id": "w47"
+  },
+  {
+    "text": "in",
+    "start": 23.54,
+    "end": 23.61,
+    "id": "w48"
+  },
+  {
+    "text": "Francia,",
+    "start": 23.66,
+    "end": 24.16,
+    "id": "w49"
+  },
+  {
+    "text": "un'altra",
+    "start": 24.4,
+    "end": 24.8,
+    "id": "w50"
+  },
+  {
+    "text": "multa,",
+    "start": 24.8,
+    "end": 25.35,
+    "id": "w51"
+  },
+  {
+    "text": "40",
+    "start": 25.35,
+    "end": 25.4,
+    "id": "w52"
+  },
+  {
+    "text": "milioni.",
+    "start": 26.03,
+    "end": 26.89,
+    "id": "w53"
+  },
+  {
+    "text": "Si",
+    "start": 26.96,
+    "end": 27.09,
+    "id": "w54"
+  },
+  {
+    "text": "chiama",
+    "start": 27.09,
+    "end": 27.47,
+    "id": "w55"
+  },
+  {
+    "text": "Greenwashing.",
+    "start": 27.93,
+    "end": 28.88,
+    "id": "w56"
+  },
+  {
+    "text": "Fai",
+    "start": 28.91,
+    "end": 29.03,
+    "id": "w57"
+  },
+  {
+    "text": "sembrare",
+    "start": 29.03,
+    "end": 29.41,
+    "id": "w58"
+  },
+  {
+    "text": "un",
+    "start": 29.44,
+    "end": 29.51,
+    "id": "w59"
+  },
+  {
+    "text": "prodotto",
+    "start": 29.62,
+    "end": 29.93,
+    "id": "w60"
+  },
+  {
+    "text": "più",
+    "start": 29.93,
+    "end": 30.07,
+    "id": "w61"
+  },
+  {
+    "text": "ecologico",
+    "start": 30.07,
+    "end": 30.51,
+    "id": "w62"
+  },
+  {
+    "text": "di",
+    "start": 30.51,
+    "end": 30.54,
+    "id": "w63"
+  },
+  {
+    "text": "quello",
+    "start": 30.89,
+    "end": 30.94,
+    "id": "w64"
+  },
+  {
+    "text": "che",
+    "start": 30.94,
+    "end": 31.09,
+    "id": "w65"
+  },
+  {
+    "text": "è,",
+    "start": 31.09,
+    "end": 31.32,
+    "id": "w66"
+  },
+  {
+    "text": "perché",
+    "start": 31.32,
+    "end": 31.75,
+    "id": "w67"
+  },
+  {
+    "text": "sai",
+    "start": 31.75,
+    "end": 31.977,
+    "id": "w68"
+  },
+  {
+    "text": "che",
+    "start": 31.977,
+    "end": 32.203,
+    "id": "w69"
+  },
+  {
+    "text": "il",
+    "start": 32.203,
+    "end": 32.43,
+    "id": "w70"
+  },
+  {
+    "text": "cliente",
+    "start": 32.43,
+    "end": 32.84,
+    "id": "w71"
+  },
+  {
+    "text": "si",
+    "start": 32.84,
+    "end": 33,
+    "id": "w72"
+  },
+  {
+    "text": "sente",
+    "start": 33.04,
+    "end": 33.31,
+    "id": "w73"
+  },
+  {
+    "text": "meglio",
+    "start": 33.32,
+    "end": 33.63,
+    "id": "w74"
+  },
+  {
+    "text": "a",
+    "start": 33.73,
+    "end": 33.76,
+    "id": "w75"
+  },
+  {
+    "text": "comprarlo.",
+    "start": 33.76,
+    "end": 34.45,
+    "id": "w76"
+  },
+  {
+    "text": "Funziona,",
+    "start": 34.51,
+    "end": 35.14,
+    "id": "w77"
+  },
+  {
+    "text": "finché",
+    "start": 35.14,
+    "end": 35.46,
+    "id": "w78"
+  },
+  {
+    "text": "qualcuno",
+    "start": 35.6,
+    "end": 35.9,
+    "id": "w79"
+  },
+  {
+    "text": "non",
+    "start": 35.9,
+    "end": 36.55,
+    "id": "w80"
+  },
+  {
+    "text": "controlla.",
+    "start": 36.55,
+    "end": 37.08,
+    "id": "w81"
+  },
+  {
+    "text": "Equando",
+    "start": 37.08,
+    "end": 37.92,
+    "id": "w82"
+  },
+  {
+    "text": "succede,",
+    "start": 37.92,
+    "end": 38.44,
+    "id": "w83"
+  },
+  {
+    "text": "il",
+    "start": 38.48,
+    "end": 38.58,
+    "id": "w84"
+  },
+  {
+    "text": "danno",
+    "start": 38.58,
+    "end": 38.94,
+    "id": "w85"
+  },
+  {
+    "text": "non",
+    "start": 38.94,
+    "end": 39.07,
+    "id": "w86"
+  },
+  {
+    "text": "è",
+    "start": 39.17,
+    "end": 39.23,
+    "id": "w87"
+  },
+  {
+    "text": "la",
+    "start": 39.23,
+    "end": 39.37,
+    "id": "w88"
+  },
+  {
+    "text": "multa.",
+    "start": 39.37,
+    "end": 39.89,
+    "id": "w89"
+  },
+  {
+    "text": "È",
+    "start": 39.93,
+    "end": 40.01,
+    "id": "w90"
+  },
+  {
+    "text": "che",
+    "start": 40.01,
+    "end": 40.09,
+    "id": "w91"
+  },
+  {
+    "text": "il",
+    "start": 40.09,
+    "end": 40.46,
+    "id": "w92"
+  },
+  {
+    "text": "cliente",
+    "start": 40.46,
+    "end": 40.88,
+    "id": "w93"
+  },
+  {
+    "text": "non",
+    "start": 40.88,
+    "end": 41.1,
+    "id": "w94"
+  },
+  {
+    "text": "ti",
+    "start": 41.1,
+    "end": 41.24,
+    "id": "w95"
+  },
+  {
+    "text": "crede",
+    "start": 41.24,
+    "end": 41.6,
+    "id": "w96"
+  },
+  {
+    "text": "più,",
+    "start": 41.6,
+    "end": 42.04,
+    "id": "w97"
+  },
+  {
+    "text": "neanche",
+    "start": 42.04,
+    "end": 42.59,
+    "id": "w98"
+  },
+  {
+    "text": "quando",
+    "start": 42.59,
+    "end": 42.97,
+    "id": "w99"
+  },
+  {
+    "text": "dici",
+    "start": 43.01,
+    "end": 43.33,
+    "id": "w100"
+  },
+  {
+    "text": "la",
+    "start": 43.33,
+    "end": 43.43,
+    "id": "w101"
+  },
+  {
+    "text": "verità.",
+    "start": 43.57,
+    "end": 43.76,
+    "id": "w102"
+  },
+  {
+    "text": "La",
+    "start": 43.8,
+    "end": 43.92,
+    "id": "w103"
+  },
+  {
+    "text": "lezione",
+    "start": 43.92,
+    "end": 44.39,
+    "id": "w104"
+  },
+  {
+    "text": "per",
+    "start": 44.5,
+    "end": 44.73,
+    "id": "w105"
+  },
+  {
+    "text": "chi",
+    "start": 44.73,
+    "end": 44.97,
+    "id": "w106"
+  },
+  {
+    "text": "ha",
+    "start": 44.97,
+    "end": 45.13,
+    "id": "w107"
+  },
+  {
+    "text": "un'attività.",
+    "start": 45.13,
+    "end": 46.22,
+    "id": "w108"
+  },
+  {
+    "text": "Se",
+    "start": 46.36,
+    "end": 46.4,
+    "id": "w109"
+  },
+  {
+    "text": "dici",
+    "start": 46.4,
+    "end": 46.65,
+    "id": "w110"
+  },
+  {
+    "text": "Green,",
+    "start": 46.73,
+    "end": 47.3,
+    "id": "w111"
+  },
+  {
+    "text": "devi",
+    "start": 47.31,
+    "end": 47.56,
+    "id": "w112"
+  },
+  {
+    "text": "poterlo",
+    "start": 47.67,
+    "end": 48.29,
+    "id": "w113"
+  },
+  {
+    "text": "dimostrare.",
+    "start": 48.33,
+    "end": 49,
+    "id": "w114"
+  },
+  {
+    "text": "Numeri,",
+    "start": 49.11,
+    "end": 49.92,
+    "id": "w115"
+  },
+  {
+    "text": "certificazioni,",
+    "start": 49.95,
+    "end": 51.18,
+    "id": "w116"
+  },
+  {
+    "text": "fatti.",
+    "start": 51.18,
+    "end": 51.6,
+    "id": "w117"
+  },
+  {
+    "text": "Altrimenti,",
+    "start": 51.93,
+    "end": 52.72,
+    "id": "w118"
+  },
+  {
+    "text": "meglio",
+    "start": 52.72,
+    "end": 52.82,
+    "id": "w119"
+  },
+  {
+    "text": "non",
+    "start": 52.82,
+    "end": 53.47,
+    "id": "w120"
+  },
+  {
+    "text": "dirlo.",
+    "start": 53.47,
+    "end": 54.16,
+    "id": "w121"
+  },
+  {
+    "text": "Etu,",
+    "start": 54.16,
+    "end": 54.91,
+    "id": "w122"
+  },
+  {
+    "text": "ti",
+    "start": 54.91,
+    "end": 55.37,
+    "id": "w123"
+  },
+  {
+    "text": "fidi",
+    "start": 55.37,
+    "end": 55.84,
+    "id": "w124"
+  },
+  {
+    "text": "quando",
+    "start": 55.84,
+    "end": 56.04,
+    "id": "w125"
+  },
+  {
+    "text": "un",
+    "start": 56.04,
+    "end": 56.16,
+    "id": "w126"
+  },
+  {
+    "text": "marchio",
+    "start": 56.16,
+    "end": 56.52,
+    "id": "w127"
+  },
+  {
+    "text": "dice",
+    "start": 56.52,
+    "end": 56.76,
+    "id": "w128"
+  },
+  {
+    "text": "sostenibile?",
+    "start": 56.8,
+    "end": 57.76,
+    "id": "w129"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 57.76,
+    "end": 58.33,
+    "id": "w130"
+  },
+  {
+    "text": "nei",
+    "start": 58.33,
+    "end": 58.44,
+    "id": "w131"
+  },
+  {
+    "text": "commenti.",
+    "start": 58.77,
+    "end": 59.4,
+    "id": "w132"
+  }
+]
