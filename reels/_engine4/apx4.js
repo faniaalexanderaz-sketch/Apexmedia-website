@@ -59,56 +59,70 @@
   root.C4 = C4;
   if (typeof THREE === "undefined") return;
 
-  /* ================= renderer ================= */
+  /* ================= renderer =================
+     One scene pass per frame into a float target (colour + depth). A single post pass then does camera motion blur
+     (velocity from depth re-projection with the previous camera), lens depth of field, ACES tone mapping and grading;
+     a second small pass does FXAA. Nothing is accumulated over sub-frames. */
   const T = THREE, W = 1080, H = 1920; if (T.ColorManagement) T.ColorManagement.legacyMode = false; /* hex colours are sRGB, lighting is linear */
-  const Q = (C4.quality = { sub: 6, scale: 0.75, shutter: 0.5, soft: 14, bloom: 0.6, grain: 0.045 });
-  let GW = W, GH = H, R3, GLC, scene, camera, ACC, actx, TMP, tctx, BL, bctx, GRAIN, out, octx, film, RIG, lights = {}, prevCache = {};
+  const Q = (C4.quality = { scale: 0.75, post: true, shadows: true, fxaa: true, bloom: 0.6, grain: 0.045, shutter: 0.5, exposure: 1.0, preview: false, profile: false });
+  let GW = W, GH = H, R3, GLC, scene, camera, pcam, RT, RT2, postScene, postCam, postMat, fxMat, quad, BL, bctx, GRAIN, out, octx, film, RIG, lights = {}, prevCache = {};
+  const stat = (C4.stat = { scene: 0, post: 0, compose: 0, n: 0 });
+  const VS = "varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }";
+  const FS_POST = [
+    "precision highp float; varying vec2 vUv; uniform sampler2D tC; uniform sampler2D tD; uniform mat4 uInvVP; uniform mat4 uPrevVP; uniform vec2 uRes; uniform float uNear, uFar, uFocus, uCocK, uBlur, uExp, uCon, uSat, uSeed;",
+    "float lin(float d){ float z = d * 2.0 - 1.0; return 2.0 * uNear * uFar / (uFar + uNear - z * (uFar - uNear)); }",
+    "vec3 fit(vec3 v){ vec3 a = v * (v + 0.0245786) - 0.000090537; vec3 b = v * (0.983729 * v + 0.4329510) + 0.238081; return a / b; }",
+    "vec3 aces(vec3 c){ const mat3 I = mat3(vec3(0.59719, 0.07600, 0.02840), vec3(0.35458, 0.90834, 0.13383), vec3(0.04823, 0.01566, 0.83777)); const mat3 O = mat3(vec3(1.60475, -0.10208, -0.00327), vec3(-0.53108, 1.10813, -0.07276), vec3(-0.07367, -0.00605, 1.07602)); c *= uExp / 0.6; return clamp(O * fit(I * c), 0.0, 1.0); }",
+    "void main(){ float d = texture2D(tD, vUv).x; vec4 wp = uInvVP * vec4(vUv * 2.0 - 1.0, d * 2.0 - 1.0, 1.0); wp /= wp.w; vec4 pp = uPrevVP * wp; vec2 vel = (vUv - (pp.xy / pp.w * 0.5 + 0.5)) * uBlur; float vl = length(vel * uRes); if (vl > 40.0) vel *= 40.0 / vl;",
+    "  float z = lin(d); float coc = min(uCocK * abs(z - uFocus) / z, 22.0); float ph = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715)) + uSeed)) * 6.2831853; vec3 acc = vec3(0.0); float ws = 0.0;",
+    "  for (int i = 0; i < 12; i++) { float fi = (float(i) + 0.5) / 12.0; float a = ph + float(i) * 2.3999632; vec2 o = vec2(cos(a), sin(a)) * sqrt(fi) * max(coc, 0.35) / uRes + vel * (fi - 0.5); vec2 uv = vUv + o; float zs = lin(texture2D(tD, uv).x); float cs = min(uCocK * abs(zs - uFocus) / zs, 22.0);",
+    "    float w = (zs < z - 12.0 && cs < coc * 0.5) ? 0.15 : 1.0; acc += texture2D(tC, uv).rgb * w; ws += w; }",
+    "  vec3 c = aces(acc / ws); c = mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), c)); c = (c - 0.5) * uCon + 0.5; float l = dot(c, vec3(0.299, 0.587, 0.114)); c = mix(vec3(l), c, uSat); gl_FragColor = vec4(clamp(c, 0.0, 1.0), 1.0); }"].join("\n");
+  const FS_FXAA = [
+    "precision highp float; varying vec2 vUv; uniform sampler2D tC; uniform vec2 uRes;",
+    "void main(){ vec2 px = 1.0 / uRes; vec3 nw = texture2D(tC, vUv + vec2(-1.0, -1.0) * px).rgb, ne = texture2D(tC, vUv + vec2(1.0, -1.0) * px).rgb, sw = texture2D(tC, vUv + vec2(-1.0, 1.0) * px).rgb, se = texture2D(tC, vUv + vec2(1.0, 1.0) * px).rgb, m = texture2D(tC, vUv).rgb; const vec3 L = vec3(0.299, 0.587, 0.114);",
+    "  float lnw = dot(nw, L), lne = dot(ne, L), lsw = dot(sw, L), lse = dot(se, L), lm = dot(m, L), lmin = min(lm, min(min(lnw, lne), min(lsw, lse))), lmax = max(lm, max(max(lnw, lne), max(lsw, lse)));",
+    "  vec2 dir = vec2(-((lnw + lne) - (lsw + lse)), (lnw + lsw) - (lne + lse)); float red = max((lnw + lne + lsw + lse) * 0.03125, 0.0078125); float rc = 1.0 / (min(abs(dir.x), abs(dir.y)) + red); dir = clamp(dir * rc, vec2(-8.0), vec2(8.0)) * px;",
+    "  vec3 a = 0.5 * (texture2D(tC, vUv + dir * (1.0 / 3.0 - 0.5)).rgb + texture2D(tC, vUv + dir * (2.0 / 3.0 - 0.5)).rgb); vec3 b = a * 0.5 + 0.25 * (texture2D(tC, vUv + dir * -0.5).rgb + texture2D(tC, vUv + dir * 0.5).rgb); float lb = dot(b, L); gl_FragColor = vec4((lb < lmin || lb > lmax) ? a : b, 1.0); }"].join("\n");
   function init(canvas, f) {
-    film = f; out = canvas; octx = out.getContext("2d");
+    film = f; out = canvas; octx = out.getContext("2d"); if (Q.preview) Object.assign(Q, { scale: 0.5, post: false, shadows: false, bloom: 0, grain: 0 });
     GW = Math.round(W * Q.scale); GH = Math.round(H * Q.scale); GLC = document.createElement("canvas"); GLC.width = GW; GLC.height = GH;
-    R3 = new T.WebGLRenderer({ canvas: GLC, antialias: !!Q.msaa, alpha: false, preserveDrawingBuffer: true, powerPreference: "high-performance" }); /* no MSAA: the jittered sub-frames already anti-alias */
-    R3.setPixelRatio(1); R3.setSize(GW, GH, false); R3.outputEncoding = T.sRGBEncoding; R3.toneMapping = T.ACESFilmicToneMapping; R3.toneMappingExposure = 1.0; R3.shadowMap.enabled = true; R3.shadowMap.type = T.PCFShadowMap; /* softness comes from jittering the key light across sub-frames */
-    scene = new T.Scene(); camera = new T.PerspectiveCamera(32, W / H, 8, 6000);
-    const mk = (w, h) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
-    ACC = mk(W, H); actx = ACC.getContext("2d"); actx.imageSmoothingQuality = "high"; TMP = mk(W, H); tctx = TMP.getContext("2d"); BL = mk(W / 4, H / 4); bctx = BL.getContext("2d");
+    R3 = new T.WebGLRenderer({ canvas: GLC, antialias: false, alpha: false, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+    R3.setPixelRatio(1); R3.setSize(GW, GH, false); R3.outputEncoding = T.sRGBEncoding; R3.toneMapping = T.ACESFilmicToneMapping; R3.toneMappingExposure = Q.exposure; R3.shadowMap.enabled = Q.shadows; R3.shadowMap.type = T.PCFSoftShadowMap;
+    scene = new T.Scene(); camera = new T.PerspectiveCamera(32, W / H, 8, 6000); pcam = new T.PerspectiveCamera(32, W / H, 8, 6000);
+    const mk = (w, h) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; }; BL = mk(W / 8, H / 8); bctx = BL.getContext("2d");
     GRAIN = mk(256, 256); { const g = GRAIN.getContext("2d"), im = g.createImageData(256, 256), r = rng(77); for (let i = 0; i < 65536; i++) { const v = 96 + r() * 64; im.data[i * 4] = im.data[i * 4 + 1] = im.data[i * 4 + 2] = v; im.data[i * 4 + 3] = 255; } g.putImageData(im, 0, 0); }
-    /* image-based light for believable reflections: a tiny studio of warm and cool panels */
+    if (Q.post) { RT = new T.WebGLRenderTarget(GW, GH, { type: T.HalfFloatType, minFilter: T.LinearFilter, magFilter: T.LinearFilter, depthTexture: new T.DepthTexture(GW, GH) }); RT2 = new T.WebGLRenderTarget(GW, GH, { minFilter: T.LinearFilter, magFilter: T.LinearFilter, depthBuffer: false });
+      postCam = new T.OrthographicCamera(-1, 1, 1, -1, 0, 1); postScene = new T.Scene(); const U = (v) => ({ value: v });
+      postMat = new T.ShaderMaterial({ vertexShader: VS, fragmentShader: FS_POST, depthTest: false, depthWrite: false, toneMapped: false, uniforms: { tC: U(RT.texture), tD: U(RT.depthTexture), uInvVP: U(new T.Matrix4()), uPrevVP: U(new T.Matrix4()), uRes: U(new T.Vector2(GW, GH)), uNear: U(8), uFar: U(6000), uFocus: U(300), uCocK: U(0), uBlur: U(1), uExp: U(Q.exposure), uCon: U(1.06), uSat: U(1.08), uSeed: U(0) } });
+      fxMat = new T.ShaderMaterial({ vertexShader: VS, fragmentShader: FS_FXAA, depthTest: false, depthWrite: false, toneMapped: false, uniforms: { tC: U(RT2.texture), uRes: U(new T.Vector2(GW, GH)) } }); quad = new T.Mesh(new T.PlaneGeometry(2, 2), postMat); quad.frustumCulled = false; postScene.add(quad); }
+    /* image-based light for believable reflections: a tiny studio of warm and cool panels, used only by glossy materials */
     const pm = new T.PMREMGenerator(R3), es = new T.Scene(); es.background = new T.Color(film.envBg || "#0c0a09");
     (film.envPanels || [["#ffc890", [6, 5, 2], 5], ["#8fb4ff", [-7, 4, -3], 4], ["#ffe6c8", [0, 8, 0], 6], ["#ff9a5c", [2, 1, -7], 3]]).forEach((p) => { const m = new T.Mesh(new T.SphereGeometry(p[2] * 0.5, 16, 12), new T.MeshBasicMaterial({ color: p[0] })); m.position.set(p[1][0], p[1][1], p[1][2]); es.add(m); });
-    C4.ENV = pm.fromScene(es, 0.04).texture; /* assigned only to glossy materials: image-based light on every rough surface is too slow in software GL */
-    RIG = rig(film.shots); C4.scene = scene; C4.camera = camera; C4.R3 = R3; C4.RIG = RIG;
-    film.build(scene);
+    C4.ENV = pm.fromScene(es, 0.04).texture;
+    RIG = rig(film.shots); C4.scene = scene; C4.camera = camera; C4.R3 = R3; C4.RIG = RIG; film.build(scene);
   }
-  function drawGL(ts, k, N, frame) {
-    const c = RIG.cam(ts); film.update(ts, c);
-    /* lens: sample a point on the aperture disc, keep the focus point fixed -> real depth of field */
-    const a = halton(k + frame * 3, 2) * 6.2832, rr = Math.sqrt((k + 0.5) / N) * c.aperture, e = new T.Vector3(c.eye[0], c.eye[1], c.eye[2]), l = new T.Vector3(c.look[0], c.look[1], c.look[2]);
-    const dir = l.clone().sub(e).normalize(), right = new T.Vector3().crossVectors(dir, new T.Vector3(0, 1, 0)).normalize(), up = new T.Vector3().crossVectors(right, dir), fp = e.clone().addScaledVector(dir, c.focusDist);
-    camera.position.copy(e).addScaledVector(right, Math.cos(a) * rr).addScaledVector(up, Math.sin(a) * rr); camera.up.set(0, 1, 0); camera.lookAt(fp);
-    /* keep the framing of the un-jittered camera: aim along the original axis through the focus plane */
-    camera.fov = c.fov; camera.setViewOffset(GW, GH, halton(k, 2) - 0.5, halton(k, 3) - 0.5, GW, GH); camera.updateProjectionMatrix();
-    if (lights.key) { lights.key.shadow.autoUpdate = false; lights.key.shadow.needsUpdate = k === 0; /* the shadow map is the most expensive pass in software GL: one update per frame */ }
-    R3.render(scene, camera);
-  }
-  function composeShot(t, frame) {
-    const i = RIG.shotIndex(t), s = RIG.shots[i], N = Q.sub, sh = Q.shutter / C4.FPS, TR = 0.42, sliding = s.trans === "slide" && i > 0 && t - s.t0 < TR;
-    if (sliding && !prevCache[i]) { const p = RIG.shots[i - 1], tp = p.t1 - 1 / C4.FPS, c = document.createElement("canvas"); c.width = W; c.height = H; const cx = c.getContext("2d"); for (let k = 0; k < N; k++) { drawGL(tp, k, N, 0); cx.globalAlpha = 1 / (k + 1); cx.drawImage(GLC, 0, 0, W, H); } prevCache[i] = c; }
-    actx.setTransform(1, 0, 0, 1, 0, 0);
-    for (let k = 0; k < N; k++) {
-      const ts = Math.min(s.t1 - 1e-4, Math.max(s.t0, t + ((k + 0.5) / N - 0.5) * sh)); drawGL(ts, k, N, frame); actx.globalAlpha = 1 / (k + 1);
-      if (sliding) { const off = (1 - smooth(seg(ts, s.t0, s.t0 + TR))) * W; tctx.globalAlpha = 1; tctx.drawImage(prevCache[i], off - W, 0); tctx.drawImage(GLC, off, 0, W, H); actx.drawImage(TMP, 0, 0); } else actx.drawImage(GLC, 0, 0, W, H);
-    }
-    actx.globalAlpha = 1; return s;
+  function aim(cam, c) { cam.position.set(c.eye[0], c.eye[1], c.eye[2]); cam.up.set(0, 1, 0); cam.lookAt(c.look[0], c.look[1], c.look[2]); cam.fov = c.fov; cam.updateProjectionMatrix(); cam.updateMatrixWorld(true); }
+  const sync = () => { if (Q.profile) R3.getContext().finish(); };
+  function drawGL(t, frame) {
+    const c = RIG.cam(t), s = c.shot, t0 = performance.now(); (s.update || film.update)(t, c, s); aim(camera, c);
+    if (!Q.post) { R3.setRenderTarget(null); R3.render(scene, camera); sync(); stat.scene += performance.now() - t0; return; }
+    R3.setRenderTarget(RT); R3.render(scene, camera); sync(); const t1 = performance.now(); stat.scene += t1 - t0;
+    aim(pcam, RIG.cam(Math.max(s.t0, t - Q.shutter / C4.FPS))); const u = postMat.uniforms, g = s.grade || film.grade || {};
+    u.uInvVP.value.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse).invert(); u.uPrevVP.value.multiplyMatrices(pcam.projectionMatrix, pcam.matrixWorldInverse);
+    u.uFocus.value = c.focusDist; u.uCocK.value = (c.aperture * GH) / (2 * Math.tan((c.fov * Math.PI) / 360)) / c.focusDist; u.uCon.value = g.contrast || 1.06; u.uSat.value = g.sat || 1.08; u.uSeed.value = halton(frame, 2);
+    quad.material = postMat; R3.setRenderTarget(Q.fxaa ? RT2 : null); R3.render(postScene, postCam); if (Q.fxaa) { quad.material = fxMat; R3.setRenderTarget(null); R3.render(postScene, postCam); } sync(); stat.post += performance.now() - t1;
   }
   function render(t) {
-    const frame = Math.round(t * C4.FPS); t = Math.min(film.D - 1e-4, Math.max(0, frame / C4.FPS)); const s = composeShot(t, frame), g = s.grade || film.grade || {};
-    octx.setTransform(1, 0, 0, 1, 0, 0); octx.globalCompositeOperation = "source-over"; octx.globalAlpha = 1; octx.filter = "contrast(" + (g.contrast || 1.06) + ") saturate(" + (g.sat || 1.08) + ")"; octx.drawImage(ACC, 0, 0); octx.filter = "none";
-    /* bloom: bright pass at quarter res, two blur radii, added back */
-    bctx.filter = "brightness(0.6) contrast(4.5)"; bctx.drawImage(ACC, 0, 0, W / 4, H / 4); bctx.filter = "none";
-    octx.globalCompositeOperation = "lighter"; octx.globalAlpha = Q.bloom * 0.55; octx.filter = "blur(14px)"; octx.drawImage(BL, 0, 0, W, H); octx.globalAlpha = Q.bloom * 0.4; octx.filter = "blur(46px)"; octx.drawImage(BL, 0, 0, W, H); octx.filter = "none"; octx.globalAlpha = 1; octx.globalCompositeOperation = "source-over";
+    const frame = Math.round(t * C4.FPS); t = Math.min(film.D - 1e-4, Math.max(0, frame / C4.FPS)); const i = RIG.shotIndex(t), s = RIG.shots[i], g = s.grade || film.grade || {}, TR = 0.42, sliding = s.trans === "slide" && i > 0 && t - s.t0 < TR;
+    if (sliding && !prevCache[i]) { const c = document.createElement("canvas"); c.width = W; c.height = H; drawGL(RIG.shots[i - 1].t1 - 1 / C4.FPS, frame); c.getContext("2d").drawImage(GLC, 0, 0, W, H); prevCache[i] = c; }
+    drawGL(t, frame); const t0 = performance.now(), SC = out.width / W; octx.setTransform(SC, 0, 0, SC, 0, 0); /* the output canvas may be smaller than 1080x1920 (preview) */ octx.globalCompositeOperation = "source-over"; octx.globalAlpha = 1; octx.filter = "none"; octx.imageSmoothingQuality = "high";
+    if (sliding) { /* lateral slide between shots, smeared along its own motion */ const off = (u) => (1 - smooth(seg(u, s.t0, s.t0 + TR))) * W, o1 = off(t), o0 = off(t - Q.shutter / C4.FPS), K = 6; for (let k = 0; k < K; k++) { const o = lerp(o0, o1, (k + 0.5) / K); octx.globalAlpha = 1 / (k + 1); octx.drawImage(prevCache[i], o - W, 0); octx.drawImage(GLC, o, 0, W, H); } octx.globalAlpha = 1; } else octx.drawImage(GLC, 0, 0, W, H);
+    if (Q.bloom > 0) { bctx.filter = "brightness(0.6) contrast(4.5) blur(3px)"; bctx.drawImage(out, 0, 0, W / 8, H / 8); bctx.filter = "none"; octx.globalCompositeOperation = "lighter"; octx.globalAlpha = Q.bloom * 0.6; octx.drawImage(BL, 0, 0, W, H); octx.globalAlpha = 1; octx.globalCompositeOperation = "source-over"; }
     const vg = octx.createRadialGradient(W / 2, H * 0.48, 420, W / 2, H * 0.48, 1250); vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0," + (g.vignette === undefined ? 0.5 : g.vignette) + ")"); octx.fillStyle = vg; octx.fillRect(0, 0, W, H);
     if (film.overlay) film.overlay(octx, t, s);
-    octx.globalCompositeOperation = "overlay"; octx.globalAlpha = Q.grain * 4; const gx = Math.floor(halton(frame, 2) * 256), gy = Math.floor(halton(frame, 3) * 256); for (let y = -gy; y < H; y += 256) for (let x = -gx; x < W; x += 256) octx.drawImage(GRAIN, x, y); octx.globalAlpha = 1; octx.globalCompositeOperation = "source-over";
+    if (Q.grain > 0) { octx.globalCompositeOperation = "overlay"; octx.globalAlpha = Q.grain * 4; const gx = Math.floor(halton(frame, 2) * 256), gy = Math.floor(halton(frame, 3) * 256); for (let y = -gy; y < H; y += 256) for (let x = -gx; x < W; x += 256) octx.drawImage(GRAIN, x, y); octx.globalAlpha = 1; octx.globalCompositeOperation = "source-over"; }
+    stat.compose += performance.now() - t0; stat.n++;
   }
   Object.assign(C4, { init, render, W, H });
 
@@ -141,6 +155,7 @@
     glow(color, k) { const c = new T.Color(color); c.multiplyScalar(k || 1); return new T.MeshBasicMaterial({ color: c, toneMapped: true, fog: false }); },
   });
 
+  Object.keys(MAT).forEach((k) => { const f = MAT[k], memo = {}; MAT[k] = function () { const key = Array.prototype.join.call(arguments, "|"); return memo[key] || (memo[key] = f.apply(MAT, arguments)); }; });
   /* ================= geometry helpers ================= */
   const GEO = {};
   function rboxGeo(w, h, d, r) { const key = [w, h, d, r].join("_"); if (GEO[key]) return GEO[key]; r = Math.min(r, w / 2 - 0.01, h / 2 - 0.01, d / 2 - 0.01); const g = new T.BoxGeometry(w, h, d, 4, 4, 4), p = g.attributes.position, n = g.attributes.normal, v = new T.Vector3(), q = new T.Vector3();
@@ -157,7 +172,7 @@
   /* ================= characters ================= */
   const SKIN = ["#f2c9a5", "#e0a880", "#c98d62", "#8d5a3b", "#f6d6ba"];
   function limb(l, r, mat) { return cap(r, Math.max(0.1, l - r * 0.6), mat, [0, -l / 2, 0]); }
-  function hand(side, skinM) { const g = grp([0, 0, 0]); g.add(rbox(7.2, 8.4, 3.2, 1.5, skinM, [0, -4.4, 0])); const F = []; for (let i = 0; i < 4; i++) { const f = grp([-2.7 + i * 1.8, -8.2, 0]); f.add(cap(0.95, 3.2 - Math.abs(i - 1.5) * 0.5, skinM, [0, -2, 0])); const f2 = grp([0, -4, 0]); f2.add(cap(0.85, 2.2, skinM, [0, -1.5, 0])); f.add(f2); f.userData.tip = f2; g.add(f); F.push(f); } const th = grp([side * 3.6, -3.2, 1]); th.add(cap(1.05, 3.2, skinM, [0, -2, 0])); th.rotation.set(-0.3, 0, side * 0.75); g.add(th); g.userData.fingers = F; return g; }
+  function hand(side, skinM, lod) { const g = grp([0, 0, 0]); if (lod) { g.add(rbox(7.4, 13.5, 3.6, 1.7, skinM, [0, -6.6, 0])); g.userData.fingers = []; return g; } g.add(rbox(7.2, 8.4, 3.2, 1.5, skinM, [0, -4.4, 0])); const F = []; for (let i = 0; i < 4; i++) { const f = grp([-2.7 + i * 1.8, -8.2, 0]); f.add(cap(0.95, 3.2 - Math.abs(i - 1.5) * 0.5, skinM, [0, -2, 0])); const f2 = grp([0, -4, 0]); f2.add(cap(0.85, 2.2, skinM, [0, -1.5, 0])); f.add(f2); f.userData.tip = f2; g.add(f); F.push(f); } const th = grp([side * 3.6, -3.2, 1]); th.add(cap(1.05, 3.2, skinM, [0, -2, 0])); th.rotation.set(-0.3, 0, side * 0.75); g.add(th); g.userData.fingers = F; return g; }
   function character(o) {
     o = o || {}; const skinM = MAT.skin(o.skin || SKIN[0]), topM = MAT.cloth(o.top || "#f1efe9", 7, 7), botM = MAT.cloth(o.bottom || "#23262e", 7, 7), shoeM = MAT.paint(o.shoe || "#141414", 0.45), hairM = new T.MeshStandardMaterial({ color: o.hair || "#3a2416", roughness: 0.55, metalness: 0, envMapIntensity: 0.6 });
     const g = grp([0, 0, 0]), hips = grp([0, 84, 0]), spine = grp([0, 0, 0]); g.add(hips); hips.add(spine);
@@ -175,12 +190,12 @@
     if (hs === "long") { hair.add(lathe([[13, 6], [16.6, -2], [17, -14], [15, -26], [11, -34], [0, -36]], hairM, [0, 0, -4.5], { s: [1, 1, 0.72] })); }
     if (hs === "bun") hair.add(sph(7, hairM, [0, 15, -9]));
     let hat = null; if (o.hat === "chef") { hat = grp([0, 13, 0]); hat.add(cyl(13.2, 13.6, 9, MAT.cloth("#f7f5f0", 2, 1), [0, 4, 0])); hat.add(sph(16.5, MAT.cloth("#f7f5f0", 2, 2), [0, 17, 0], { s: [1, 0.72, 1] })); for (let i = 0; i < 7; i++) hat.add(sph(6.2, MAT.cloth("#f7f5f0", 1, 1), [Math.cos(i * 0.9) * 10.5, 15, Math.sin(i * 0.9) * 10.5])); head.add(hat); }
-    const arms = [], legs = []; [-1, 1].forEach((s) => { const sh = grp([s * 17.6, 45, 0]); spine.add(sh); sh.add(sph(5.6, topM, [0, 0, 0])); sh.add(limb(25, 4.9, topM)); const el = grp([0, -25, 0]); sh.add(el); el.add(limb(22, o.sleeves === "short" ? 3.8 : 4.3, o.sleeves === "short" ? skinM : topM)); if (o.sleeves !== "short") el.add(cyl(4.7, 4.7, 3, topM, [0, -20.5, 0])); const hd = grp([0, -22.5, 0]); hd.add(hand(s, skinM)); el.add(hd); arms.push({ sh, el, hd, fingers: hd.children[0].userData.fingers });
+    const arms = [], legs = []; [-1, 1].forEach((s) => { const sh = grp([s * 17.6, 45, 0]); spine.add(sh); sh.add(sph(5.6, topM, [0, 0, 0])); sh.add(limb(25, 4.9, topM)); const el = grp([0, -25, 0]); sh.add(el); el.add(limb(22, o.sleeves === "short" ? 3.8 : 4.3, o.sleeves === "short" ? skinM : topM)); if (o.sleeves !== "short") el.add(cyl(4.7, 4.7, 3, topM, [0, -20.5, 0])); const hd = grp([0, -22.5, 0]); hd.add(hand(s, skinM, o.lod)); el.add(hd); arms.push({ sh, el, hd, fingers: hd.children[0].userData.fingers });
       const hp = grp([s * 7.6, -2, 0]); hips.add(hp); hp.add(limb(40, 6.7, botM)); const kn = grp([0, -40, 0]); hp.add(kn); kn.add(limb(37, 5.3, botM)); const ft = grp([0, -37, 0]); ft.add(rbox(9.4, 6.4, 22, 2.8, shoeM, [0, -2, 4.5])); kn.add(ft); legs.push({ hp, kn, ft }); });
     let apron = null; if (o.apron) { apron = grp([0, 30, 0]); const am = MAT.cloth(o.apron, 2, 3); apron.add(rbox(22, 46, 1.6, 0.7, am, [0, -23, 11.6])); apron.add(rbox(24, 3, 24, 1.2, am, [0, -3, 0])); spine.add(apron); }
     if (o.buttons) for (let i = 0; i < 4; i++) [-1, 1].forEach((s) => spine.add(sph(1.1, MAT.paint(o.buttons, 0.3, 0.2), [s * 3.6, 12 + i * 8.5, 11.2 - (i > 2 ? 0.6 : 0)])));
     if (o.bow) { const bm = MAT.cloth(o.bow, 1, 1); [-1, 1].forEach((s) => spine.add(rbox(4.6, 3.6, 1.6, 0.7, bm, [s * 2.9, 50, 11.2], { r: [0, 0, s * 0.25] }))); spine.add(sph(1.3, bm, [0, 50, 11.8])); }
-    g.traverse((m) => { if (m.isMesh) m.frustumCulled = false; });
+    g.traverse((m) => { if (m.isMesh) { m.frustumCulled = false; if (!m.geometry.boundingSphere) m.geometry.computeBoundingSphere(); const sc2 = m.scale; m.castShadow = m.castShadow && m.geometry.boundingSphere.radius * Math.max(sc2.x, sc2.y, sc2.z) > 4.5; } });
     const P = { g, hips, spine, head, hair, hat, apron, arms, legs, eyes, lids, brows, smile, mouth };
     /* pose(p): p = {pos:[x,y,z], yaw, hipY, lean, twist, headYaw, headPitch, headRoll, arm:[[shX,shZ,el,wrist,curl],[..]], leg:[[hip,knee,foot],[..]], blink, smile, open, brow, sway} */
     P.pose = (p) => { g.position.set(p.pos[0], p.pos[1] || 0, p.pos[2]); g.rotation.y = p.yaw || 0; hips.position.y = p.hipY === undefined ? 84 : p.hipY; hips.rotation.set(p.pitch || 0, 0, p.roll || 0); spine.rotation.set(p.lean || 0, p.twist || 0, -(p.roll || 0) * 0.6); spine.scale.set(1, 1 + (p.breath || 0), 1 + (p.breath || 0) * 1.4);
@@ -206,7 +221,7 @@
     plate(r) { return lathe([[0, 0.6], [r * 0.6, 0.5], [r * 0.72, 1.1], [r, 2.2], [r, 2.7], [r * 0.7, 1.6], [0, 1.2]], new T.MeshStandardMaterial({ color: "#f6f4ef", roughness: 0.18, envMapIntensity: 1, envMap: C4.ENV }), null, { seg: 24 }); },
     glass(wine) { const g = grp(); g.add(lathe([[0, 0], [3.4, 0.2], [3.4, 0.6], [0.5, 1], [0.5, 8.5], [3.6, 12], [4.2, 16], [3.5, 21]], MAT.glass("#ffffff", 0.3), [0, 0, 0], { cast: false })); if (wine) g.add(lathe([[0, 9.2], [3.2, 12], [3.9, 15.2], [0, 15.2]], new T.MeshStandardMaterial({ color: wine, roughness: 0.1, transparent: true, opacity: 0.88, envMapIntensity: 1.4 }), [0, 0, 0], { cast: false })); return g; },
     bottle(col) { return lathe([[0, 0], [3.9, 0], [4.1, 1], [4.1, 17], [3.2, 21], [1.5, 24], [1.4, 31], [1.8, 31.4], [1.8, 32.4], [0, 32.4]], new T.MeshStandardMaterial({ color: col || "#234a2c", roughness: 0.08, metalness: 0, envMapIntensity: 1.1, envMap: C4.ENV }), null, { seg: 14 }); },
-    candle() { const g = grp(); g.add(cyl(3.2, 3.6, 4.4, MAT.glass("#ffd9a0", 0.45), [0, 2.2, 0], { cast: false })); g.add(cyl(1.6, 1.6, 3.2, new T.MeshStandardMaterial({ color: "#f3e9d2", roughness: 0.6, emissive: "#ff9a3c", emissiveIntensity: 0.5 }), [0, 1.9, 0], { cast: false })); const f = sph(1, MAT.glow("#ffc070", 3.2), [0, 5.2, 0], { s: [0.75, 1.7, 0.75], cast: false }); g.add(f); g.userData.flame = f; return g; },
+    candle() { const g = grp(); g.add(cyl(3.2, 3.6, 4.4, MAT.glass("#ffd9a0", 0.45), [0, 2.2, 0], { cast: false })); g.add(cyl(1.6, 1.6, 3.2, new T.MeshStandardMaterial({ color: "#f3e9d2", roughness: 0.6, emissive: "#ff9a3c", emissiveIntensity: 0.5 }), [0, 1.9, 0], { cast: false })); const f = sph(1, MAT.glow("#ffc070", 3.2), [0, 5.2, 0], { s: [0.75, 1.7, 0.75], cast: false }); f.userData.dyn = true; g.add(f); g.userData.flame = f; return g; },
     pendant(len, shadeCol) { const g = grp(); g.add(cyl(0.35, 0.35, len, MAT.paint("#111", 0.6), [0, -len / 2, 0], { cast: false })); g.add(lathe([[2, 0], [3, -2], [15, -14], [16, -15.5], [15.4, -15.5], [2.4, -1], [0, -1]], MAT.paint(shadeCol || "#b0762c", 0.35, 0.9), [0, -len, 0], { cast: false })); g.add(sph(3.6, MAT.glow("#ffd9a0", 4.5), [0, -len - 10, 0], { cast: false })); g.userData.bulbY = -len - 10; return g; },
     frame(w, h, hue) { const g = grp(); g.add(rbox(w + 5, h + 5, 2.6, 1, MAT.wood(1, 1, "#2a1a10", true), [0, 0, 0], { cast: false })); const c = cnv(128, (x, s) => { const gr = x.createLinearGradient(0, 0, s, s); gr.addColorStop(0, "hsl(" + hue + ",38%,46%)"); gr.addColorStop(1, "hsl(" + (hue + 40) + ",30%,22%)"); x.fillStyle = gr; x.fillRect(0, 0, s, s); x.fillStyle = "rgba(255,240,210,0.5)"; x.beginPath(); x.arc(s * 0.62, s * 0.4, s * 0.16, 0, 6.3); x.fill(); x.fillStyle = "rgba(20,14,10,0.55)"; x.fillRect(0, s * 0.68, s, s * 0.32); }); g.add(mesh(new T.PlaneGeometry(w, h), new T.MeshStandardMaterial({ map: tx(c, 1, 1, true), roughness: 0.5 }), [0, 0, 1.5], { cast: false })); return g; },
     plant(s) { const g = grp(); g.add(lathe([[0, 0], [9, 0], [12, 20], [10.5, 20], [8.4, 2], [0, 2]], MAT.paint("#8a4f33", 0.8), [0, 0, 0])); const lm = new T.MeshStandardMaterial({ color: "#2f5a34", roughness: 0.6, envMapIntensity: 0.6 }), r = rng(s || 3); for (let i = 0; i < 16; i++) { const a = r() * 6.3, e = 0.3 + r() * 1.1, l = sph(1, lm, [Math.cos(a) * 9 * Math.sin(e), 26 + Math.cos(e) * 18 + r() * 8, Math.sin(a) * 9 * Math.sin(e)], { s: [3.4, 11, 6.5], r: [Math.sin(a) * e * 0.8, a, Math.cos(a) * e * 0.8] }); g.add(l); } return g; },
@@ -218,11 +233,22 @@
     const c = cnv(32, (x) => { const gr = x.createRadialGradient(16, 16, 0, 16, 16, 16); gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(1, "rgba(255,255,255,0)"); x.fillStyle = gr; x.fillRect(0, 0, 32, 32); }), pts = new T.Points(g, new T.PointsMaterial({ map: new T.CanvasTexture(c), size: 1.5, transparent: true, opacity: 0.22, color: "#ffd9a8", blending: T.AdditiveBlending, depthWrite: false, sizeAttenuation: true, fog: false })); pts.frustumCulled = false;
     pts.userData.update = (t) => { for (let i = 0; i < n; i++) { const b = base[i]; pos[i * 3] = b[0] + Math.sin(t * b[4] + b[3]) * 9; pos[i * 3 + 1] = b[1] + Math.sin(t * b[4] * 0.7 + b[3] * 2) * 6 + ((t * 2.2 * b[4]) % 30); pos[i * 3 + 2] = b[2] + Math.cos(t * b[4] * 0.9 + b[3]) * 9; } g.attributes.position.needsUpdate = true; }; return pts; }
   /* three-point light rig around a subject + ambient bounce; key casts soft high-resolution shadows */
-  function threePoint(sc, o) { const key = new T.SpotLight(o.keyCol || "#ffd2a0", o.key || 2.2, 0, o.angle || 0.75, 1, 0); key.position.set(o.keyPos[0], o.keyPos[1], o.keyPos[2]); key.target.position.set(o.target[0], o.target[1], o.target[2]); key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.6; key.shadow.radius = 5; key.shadow.camera.near = 50; key.shadow.camera.far = 1800; sc.add(key); sc.add(key.target);
+  function threePoint(sc, o) { const key = new T.SpotLight(o.keyCol || "#ffd2a0", o.key || 2.2, 0, o.angle || 0.75, 1, 0); key.position.set(o.keyPos[0], o.keyPos[1], o.keyPos[2]); key.target.position.set(o.target[0], o.target[1], o.target[2]); key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.6; key.shadow.radius = 3; key.shadow.camera.near = 50; key.shadow.camera.far = 1800; sc.add(key); sc.add(key.target);
     const fill = new T.DirectionalLight(o.fillCol || "#9db8ff", o.fill === undefined ? 0.35 : o.fill); fill.position.set(o.fillPos[0], o.fillPos[1], o.fillPos[2]); sc.add(fill); const rim = new T.DirectionalLight(o.rimCol || "#ffb070", o.rim === undefined ? 1.1 : o.rim); rim.position.set(o.rimPos[0], o.rimPos[1], o.rimPos[2]); rim.target.position.set(o.target[0], o.target[1], o.target[2]); sc.add(rim); sc.add(rim.target);
     const hemi = new T.HemisphereLight(o.sky || "#6a5a52", o.ground || "#2a160c", o.amb === undefined ? 0.5 : o.amb); sc.add(hemi); lights.key = key; lights.keyBase = o.keyPos.slice(); return { key, fill, rim, hemi }; }
   /* additive light pool: a cheap stand-in for a practical light that does not need a real light source */
   function pool(w, h, col, op) { const c = cnv(128, (x) => { const g = x.createRadialGradient(64, 64, 0, 64, 64, 64); g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(0.5, "rgba(255,255,255,0.35)"); g.addColorStop(1, "rgba(255,255,255,0)"); x.fillStyle = g; x.fillRect(0, 0, 128, 128); }), m = new T.Mesh(new T.PlaneGeometry(w, h), new T.MeshBasicMaterial({ map: new T.CanvasTexture(c), color: col, transparent: true, opacity: op, blending: T.AdditiveBlending, depthWrite: false, fog: false })); return m; }
   const noShadow = (o) => { o.traverse((m) => { if (m.isMesh) { m.castShadow = false; } }); return o; }, noRecv = (o) => { o.traverse((m) => { if (m.isMesh) m.receiveShadow = false; }); return o; };
-  Object.assign(C4, { dust, threePoint, lights, pool, noShadow, noRecv });
+  /* contact shadow: baked stand-in for the shadow / occlusion of static furniture */
+  function blob(w, d, op) { const c = cnv(64, (x) => { const g = x.createRadialGradient(32, 32, 0, 32, 32, 32); g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(0.55, "rgba(0,0,0,0.55)"); g.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = g; x.fillRect(0, 0, 64, 64); }), k = "blob" + op, m = new T.Mesh(new T.PlaneGeometry(w, d), (blob[k] = blob[k] || new T.MeshBasicMaterial({ map: new T.CanvasTexture(c), transparent: true, opacity: op || 0.5, depthWrite: false, fog: false }))); m.rotation.x = -Math.PI / 2; m.castShadow = false; m.receiveShadow = false; return m; }
+  /* merge every static mesh under `root` into one mesh per material: static geometry costs a handful of draw calls */
+  function bake(root) { root.updateMatrixWorld(true); const groups = new Map(), rm = []; root.traverse((m) => { if (!m.isMesh) return; for (let q = m; q && q !== root.parent; q = q.parent) if (q.userData && q.userData.dyn) return; const key = m.material.uuid + (m.receiveShadow ? "r" : "") + (m.renderOrder || 0); if (!groups.has(key)) groups.set(key, []); groups.get(key).push(m); rm.push(m); });
+    const v = new T.Vector3(), nm = new T.Matrix3(); let before = rm.length, after = 0;
+    groups.forEach((list) => { let nv = 0, ni = 0; list.forEach((m) => { const g = m.geometry; nv += g.attributes.position.count; ni += g.index ? g.index.count : g.attributes.position.count; }); const P = new Float32Array(nv * 3), N = new Float32Array(nv * 3), U = new Float32Array(nv * 2), I = new Uint32Array(ni); let vo = 0, io = 0;
+      list.forEach((m) => { const g = m.geometry, p = g.attributes.position, n = g.attributes.normal, u = g.attributes.uv, flip = m.matrixWorld.determinant() < 0; nm.getNormalMatrix(m.matrixWorld);
+        for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(m.matrixWorld); P[(vo + i) * 3] = v.x; P[(vo + i) * 3 + 1] = v.y; P[(vo + i) * 3 + 2] = v.z; v.fromBufferAttribute(n, i).applyMatrix3(nm).normalize(); N[(vo + i) * 3] = v.x; N[(vo + i) * 3 + 1] = v.y; N[(vo + i) * 3 + 2] = v.z; if (u) { U[(vo + i) * 2] = u.getX(i); U[(vo + i) * 2 + 1] = u.getY(i); } }
+        const cnt = g.index ? g.index.count : p.count; for (let j = 0; j < cnt; j += 3) { const a = g.index ? g.index.getX(j) : j, b = g.index ? g.index.getX(j + 1) : j + 1, c = g.index ? g.index.getX(j + 2) : j + 2; I[io++] = vo + a; I[io++] = vo + (flip ? c : b); I[io++] = vo + (flip ? b : c); } vo += p.count; });
+      const G = new T.BufferGeometry(); G.setAttribute("position", new T.BufferAttribute(P, 3)); G.setAttribute("normal", new T.BufferAttribute(N, 3)); G.setAttribute("uv", new T.BufferAttribute(U, 2)); G.setIndex(new T.BufferAttribute(I, 1)); const M = new T.Mesh(G, list[0].material); M.castShadow = false; M.receiveShadow = list[0].receiveShadow; M.renderOrder = list[0].renderOrder; M.frustumCulled = false; M.userData.baked = true; root.add(M); after++; });
+    rm.forEach((m) => m.parent.remove(m)); return { before, after }; }
+  Object.assign(C4, { dust, threePoint, lights, pool, noShadow, noRecv, blob, bake });
 })(typeof window !== "undefined" ? window : globalThis);
