@@ -234,3 +234,87 @@ Prima gli attivi. Poi, con quello che rendono, i lussi.
 Il 5% è un esempio, non un rendimento garantito. Contenuto educativo, non è una consulenza finanziaria.
 #ricco #soldi #investire #finanzapersonale #attivi #educazionefinanziaria #mindset #ricchipiano
 ```
+
+---
+
+## 10. Il caffè dal tuo bro (0:45) · NUOVO stile glow, formato "bro"
+File: `rp-moka/renders/rp-moka-9x16.mp4`
+
+**TikTok**
+```text
+Bere il caffè dal tuo bro ti renderà ricchissimo ☕ Se anche tu hai già un piano d'investimento, scrivi MOKA 👇
+#soldi #risparmio #bro #caffè #ricchipiano
+```
+
+**Instagram**
+```text
+Bere il caffè dal tuo bro ti renderà ricchissimo. ☕
+
+Al bar: 1,20 €. Dal tuo bro, con la moka: 0,10 €.
+3 caffè al giorno = 3,30 € risparmiati.
+In un anno: più di 1.200 €. E il tuo bro risparmia uguale.
+
+Investimento long term: il caffè al bar dura 3 secondi, quello dal bro 40 minuti di chiacchiere.
+
+👇 Se anche tu hai già un piano d'investimento, scrivi MOKA.
+
+Prezzi medi indicativi: possono cambiare da città a città.
+#soldi #risparmio #caffè #moka #bro #finanzapersonale #educazionefinanziaria #ricchipiano
+```
+
+---
+
+## 11. Gli abbonamenti dimenticati (0:47) · NUOVO stile glow
+File: `rp-abbonamenti/renders/rp-abbonamenti-9x16.mp4`
+
+**TikTok**
+```text
+Ogni anno regali quasi 1.000 € a gente che non conosci 💸 Tu quanti abbonamenti stai pagando? 👇
+#abbonamenti #soldi #risparmio #ricchipiano
+```
+
+**Instagram**
+```text
+Ogni anno regali quasi 1.000 € a gente che non conosci. 💸
+
+Netflix 14 €, Spotify 12, Prime 5, spazio cloud 3, la palestra dove non vai da marzo 40, l'app provata una volta 9.
+Da soli sembrano niente. Insieme: 83 € al mese, 996 € l'anno.
+
+Gli abbonamenti non sono fatti per farti spendere tanto. Sono fatti per farti dimenticare.
+
+Fai questo, oggi: apri l'app della banca → pagamenti ricorrenti → cancella tutto quello che non hai usato negli ultimi 30 giorni.
+
+👇 Quanti abbonamenti stai pagando?
+
+Prezzi indicativi, possono variare per piano e periodo.
+#abbonamenti #soldi #risparmio #budget #finanzapersonale #educazionefinanziaria #stipendio #ricchipiano
+```
+
+---
+
+## 12. Paga prima te stesso (0:50) · NUOVO stile glow
+File: `rp-paga-te-stesso/renders/rp-paga-te-stesso-9x16.mp4`
+
+**TikTok**
+```text
+Prendi 1.300 € e a fine mese non ti resta niente? Non è colpa dello stipendio. È colpa dell'ordine 💡 Tu quanto metteresti via? 👇
+#stipendio #risparmio #soldi #ricchipiano
+```
+
+**Instagram**
+```text
+Prendi 1.300 € al mese e a fine mese non ti resta niente?
+Non è colpa dello stipendio. È colpa dell'ordine.
+
+❌ Stipendio → affitto, spesa, uscite → risparmi quello che avanza. Cioè zero.
+✅ Stipendio → il giorno stesso il 10% (130 €) parte da solo su un altro conto → vivi con il resto.
+
+In 20 anni: 31.200 € messi da parte. Investiti al 6% l'anno (ipotesi), circa 60.000 €. Senza un aumento.
+
+Si chiama pagare prima te stesso. Domani imposta un bonifico automatico.
+
+👇 Quanto metteresti via ogni mese?
+
+Il 6% è un'ipotesi, non un rendimento garantito. Contenuto educativo, non è una consulenza finanziaria.
+#stipendio #risparmio #pagaprimatestesso #soldi #investire #finanzapersonale #educazionefinanziaria #ricchipiano
+```
