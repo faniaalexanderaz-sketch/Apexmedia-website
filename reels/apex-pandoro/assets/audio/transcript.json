@@ -1,0 +1,842 @@
+[
+  {
+    "text": "Un",
+    "start": 0,
+    "end": 0.13,
+    "id": "w0"
+  },
+  {
+    "text": "pandoro",
+    "start": 0.17,
+    "end": 0.64,
+    "id": "w1"
+  },
+  {
+    "text": "è",
+    "start": 0.74,
+    "end": 0.76,
+    "id": "w2"
+  },
+  {
+    "text": "costato",
+    "start": 0.76,
+    "end": 1.3,
+    "id": "w3"
+  },
+  {
+    "text": "oltre",
+    "start": 1.3,
+    "end": 1.61,
+    "id": "w4"
+  },
+  {
+    "text": "un",
+    "start": 1.7,
+    "end": 1.82,
+    "id": "w5"
+  },
+  {
+    "text": "milione",
+    "start": 1.82,
+    "end": 2.36,
+    "id": "w6"
+  },
+  {
+    "text": "di",
+    "start": 2.36,
+    "end": 2.51,
+    "id": "w7"
+  },
+  {
+    "text": "euro",
+    "start": 2.51,
+    "end": 2.82,
+    "id": "w8"
+  },
+  {
+    "text": "di",
+    "start": 2.82,
+    "end": 2.97,
+    "id": "w9"
+  },
+  {
+    "text": "multa.",
+    "start": 2.97,
+    "end": 3.48,
+    "id": "w10"
+  },
+  {
+    "text": "Natale",
+    "start": 3.84,
+    "end": 4.07,
+    "id": "w11"
+  },
+  {
+    "text": "2022.",
+    "start": 4.07,
+    "end": 5.28,
+    "id": "w12"
+  },
+  {
+    "text": "Esce",
+    "start": 5.28,
+    "end": 5.69,
+    "id": "w13"
+  },
+  {
+    "text": "il",
+    "start": 5.69,
+    "end": 5.79,
+    "id": "w14"
+  },
+  {
+    "text": "pandoro",
+    "start": 5.79,
+    "end": 6.32,
+    "id": "w15"
+  },
+  {
+    "text": "firmato",
+    "start": 6.42,
+    "end": 6.97,
+    "id": "w16"
+  },
+  {
+    "text": "Chiara",
+    "start": 6.97,
+    "end": 7.47,
+    "id": "w17"
+  },
+  {
+    "text": "Ferragni,",
+    "start": 7.47,
+    "end": 8.33,
+    "id": "w18"
+  },
+  {
+    "text": "zucchero",
+    "start": 8.33,
+    "end": 8.82,
+    "id": "w19"
+  },
+  {
+    "text": "rosa",
+    "start": 8.92,
+    "end": 9.06,
+    "id": "w20"
+  },
+  {
+    "text": "e",
+    "start": 9.06,
+    "end": 9.46,
+    "id": "w21"
+  },
+  {
+    "text": "confezione",
+    "start": 9.46,
+    "end": 9.8,
+    "id": "w22"
+  },
+  {
+    "text": "speciale.",
+    "start": 9.8,
+    "end": 10.48,
+    "id": "w23"
+  },
+  {
+    "text": "Costa",
+    "start": 10.84,
+    "end": 11.06,
+    "id": "w24"
+  },
+  {
+    "text": "9,37",
+    "start": 11.06,
+    "end": 12.32,
+    "id": "w25"
+  },
+  {
+    "text": "euro,",
+    "start": 12.32,
+    "end": 12.95,
+    "id": "w26"
+  },
+  {
+    "text": "quello",
+    "start": 12.96,
+    "end": 13.46,
+    "id": "w27"
+  },
+  {
+    "text": "normale",
+    "start": 13.46,
+    "end": 13.91,
+    "id": "w28"
+  },
+  {
+    "text": "3,68",
+    "start": 14.08,
+    "end": 14.95,
+    "id": "w29"
+  },
+  {
+    "text": "euro.",
+    "start": 14.95,
+    "end": 15.32,
+    "id": "w30"
+  },
+  {
+    "text": "Il",
+    "start": 15.32,
+    "end": 15.84,
+    "id": "w31"
+  },
+  {
+    "text": "messaggio",
+    "start": 15.84,
+    "end": 16.14,
+    "id": "w32"
+  },
+  {
+    "text": "fa",
+    "start": 16.14,
+    "end": 16.29,
+    "id": "w33"
+  },
+  {
+    "text": "pensare",
+    "start": 16.29,
+    "end": 16.81,
+    "id": "w34"
+  },
+  {
+    "text": "che,",
+    "start": 16.82,
+    "end": 17.19,
+    "id": "w35"
+  },
+  {
+    "text": "comprandolo,",
+    "start": 17.29,
+    "end": 18.04,
+    "id": "w36"
+  },
+  {
+    "text": "aiuti",
+    "start": 18.05,
+    "end": 18.34,
+    "id": "w37"
+  },
+  {
+    "text": "i",
+    "start": 18.34,
+    "end": 18.4,
+    "id": "w38"
+  },
+  {
+    "text": "bambini",
+    "start": 18.4,
+    "end": 18.82,
+    "id": "w39"
+  },
+  {
+    "text": "dell'ospedale",
+    "start": 18.82,
+    "end": 19.6,
+    "id": "w40"
+  },
+  {
+    "text": "Regina",
+    "start": 19.6,
+    "end": 19.97,
+    "id": "w41"
+  },
+  {
+    "text": "Margherita",
+    "start": 19.97,
+    "end": 20.57,
+    "id": "w42"
+  },
+  {
+    "text": "di",
+    "start": 20.57,
+    "end": 20.69,
+    "id": "w43"
+  },
+  {
+    "text": "Torino.",
+    "start": 20.69,
+    "end": 21.16,
+    "id": "w44"
+  },
+  {
+    "text": "Ma",
+    "start": 21.16,
+    "end": 21.4,
+    "id": "w45"
+  },
+  {
+    "text": "la",
+    "start": 21.4,
+    "end": 21.64,
+    "id": "w46"
+  },
+  {
+    "text": "donazione",
+    "start": 21.64,
+    "end": 22.15,
+    "id": "w47"
+  },
+  {
+    "text": "era",
+    "start": 22.15,
+    "end": 22.28,
+    "id": "w48"
+  },
+  {
+    "text": "già",
+    "start": 22.38,
+    "end": 22.61,
+    "id": "w49"
+  },
+  {
+    "text": "stata",
+    "start": 22.61,
+    "end": 22.99,
+    "id": "w50"
+  },
+  {
+    "text": "fatta",
+    "start": 23.09,
+    "end": 23.37,
+    "id": "w51"
+  },
+  {
+    "text": "mesi",
+    "start": 23.38,
+    "end": 23.68,
+    "id": "w52"
+  },
+  {
+    "text": "prima.",
+    "start": 23.68,
+    "end": 24.36,
+    "id": "w53"
+  },
+  {
+    "text": "50.000",
+    "start": 24.76,
+    "end": 25.56,
+    "id": "w54"
+  },
+  {
+    "text": "euro,",
+    "start": 25.66,
+    "end": 26.08,
+    "id": "w55"
+  },
+  {
+    "text": "una",
+    "start": 26.08,
+    "end": 26.27,
+    "id": "w56"
+  },
+  {
+    "text": "volta",
+    "start": 26.27,
+    "end": 26.58,
+    "id": "w57"
+  },
+  {
+    "text": "sola,",
+    "start": 26.58,
+    "end": 26.95,
+    "id": "w58"
+  },
+  {
+    "text": "dall'azienda.",
+    "start": 26.95,
+    "end": 27.89,
+    "id": "w59"
+  },
+  {
+    "text": "Le",
+    "start": 27.89,
+    "end": 28.32,
+    "id": "w60"
+  },
+  {
+    "text": "vendite",
+    "start": 28.32,
+    "end": 28.55,
+    "id": "w61"
+  },
+  {
+    "text": "non",
+    "start": 28.55,
+    "end": 28.76,
+    "id": "w62"
+  },
+  {
+    "text": "c'entravano.",
+    "start": 28.76,
+    "end": 29.67,
+    "id": "w63"
+  },
+  {
+    "text": "A",
+    "start": 29.67,
+    "end": 30.16,
+    "id": "w64"
+  },
+  {
+    "text": "dicembre",
+    "start": 30.16,
+    "end": 30.39,
+    "id": "w65"
+  },
+  {
+    "text": "2023,",
+    "start": 30.39,
+    "end": 31.34,
+    "id": "w66"
+  },
+  {
+    "text": "l'antitrust",
+    "start": 31.43,
+    "end": 32.13,
+    "id": "w67"
+  },
+  {
+    "text": "multa",
+    "start": 32.14,
+    "end": 32.48,
+    "id": "w68"
+  },
+  {
+    "text": "le",
+    "start": 32.49,
+    "end": 32.63,
+    "id": "w69"
+  },
+  {
+    "text": "società",
+    "start": 32.63,
+    "end": 33.12,
+    "id": "w70"
+  },
+  {
+    "text": "di",
+    "start": 33.12,
+    "end": 33.25,
+    "id": "w71"
+  },
+  {
+    "text": "Ferragni",
+    "start": 33.25,
+    "end": 33.82,
+    "id": "w72"
+  },
+  {
+    "text": "per",
+    "start": 34,
+    "end": 34.03,
+    "id": "w73"
+  },
+  {
+    "text": "oltre",
+    "start": 34.03,
+    "end": 34.38,
+    "id": "w74"
+  },
+  {
+    "text": "un",
+    "start": 34.38,
+    "end": 34.51,
+    "id": "w75"
+  },
+  {
+    "text": "milione",
+    "start": 34.53,
+    "end": 34.98,
+    "id": "w76"
+  },
+  {
+    "text": "di",
+    "start": 35.05,
+    "end": 35.12,
+    "id": "w77"
+  },
+  {
+    "text": "euro",
+    "start": 35.14,
+    "end": 35.36,
+    "id": "w78"
+  },
+  {
+    "text": "e",
+    "start": 35.36,
+    "end": 35.76,
+    "id": "w79"
+  },
+  {
+    "text": "Balocco",
+    "start": 35.76,
+    "end": 36,
+    "id": "w80"
+  },
+  {
+    "text": "per",
+    "start": 36,
+    "end": 36.2,
+    "id": "w81"
+  },
+  {
+    "text": "420.000.",
+    "start": 36.2,
+    "end": 37.87,
+    "id": "w82"
+  },
+  {
+    "text": "Pratica",
+    "start": 38.28,
+    "end": 38.37,
+    "id": "w83"
+  },
+  {
+    "text": "commerciale",
+    "start": 38.37,
+    "end": 39.09,
+    "id": "w84"
+  },
+  {
+    "text": "scorretta.",
+    "start": 39.15,
+    "end": 40,
+    "id": "w85"
+  },
+  {
+    "text": "Ferragni",
+    "start": 40.52,
+    "end": 40.56,
+    "id": "w86"
+  },
+  {
+    "text": "chiede",
+    "start": 40.56,
+    "end": 40.98,
+    "id": "w87"
+  },
+  {
+    "text": "scusa",
+    "start": 40.98,
+    "end": 41.32,
+    "id": "w88"
+  },
+  {
+    "text": "e",
+    "start": 41.32,
+    "end": 41.39,
+    "id": "w89"
+  },
+  {
+    "text": "annuncia",
+    "start": 41.42,
+    "end": 41.87,
+    "id": "w90"
+  },
+  {
+    "text": "una",
+    "start": 41.97,
+    "end": 42.13,
+    "id": "w91"
+  },
+  {
+    "text": "donazione",
+    "start": 42.22,
+    "end": 42.8,
+    "id": "w92"
+  },
+  {
+    "text": "da",
+    "start": 42.8,
+    "end": 42.93,
+    "id": "w93"
+  },
+  {
+    "text": "un",
+    "start": 42.94,
+    "end": 43.08,
+    "id": "w94"
+  },
+  {
+    "text": "milione.",
+    "start": 43.08,
+    "end": 43.84,
+    "id": "w95"
+  },
+  {
+    "text": "La",
+    "start": 43.84,
+    "end": 44.32,
+    "id": "w96"
+  },
+  {
+    "text": "lezione?",
+    "start": 44.32,
+    "end": 44.96,
+    "id": "w97"
+  },
+  {
+    "text": "Il",
+    "start": 44.96,
+    "end": 45.41,
+    "id": "w98"
+  },
+  {
+    "text": "marketing",
+    "start": 45.41,
+    "end": 45.87,
+    "id": "w99"
+  },
+  {
+    "text": "solidale",
+    "start": 45.87,
+    "end": 46.5,
+    "id": "w100"
+  },
+  {
+    "text": "funziona.",
+    "start": 46.5,
+    "end": 47.4,
+    "id": "w101"
+  },
+  {
+    "text": "Ma",
+    "start": 47.4,
+    "end": 47.8,
+    "id": "w102"
+  },
+  {
+    "text": "solo",
+    "start": 47.8,
+    "end": 47.89,
+    "id": "w103"
+  },
+  {
+    "text": "se",
+    "start": 47.89,
+    "end": 48.04,
+    "id": "w104"
+  },
+  {
+    "text": "è",
+    "start": 48.05,
+    "end": 48.13,
+    "id": "w105"
+  },
+  {
+    "text": "vero,",
+    "start": 48.13,
+    "end": 48.61,
+    "id": "w106"
+  },
+  {
+    "text": "chiaro",
+    "start": 48.67,
+    "end": 49.11,
+    "id": "w107"
+  },
+  {
+    "text": "e",
+    "start": 49.11,
+    "end": 49.15,
+    "id": "w108"
+  },
+  {
+    "text": "verificabile.",
+    "start": 49.25,
+    "end": 50.48,
+    "id": "w109"
+  },
+  {
+    "text": "Se",
+    "start": 50.48,
+    "end": 50.89,
+    "id": "w110"
+  },
+  {
+    "text": "prometti",
+    "start": 50.89,
+    "end": 51.34,
+    "id": "w111"
+  },
+  {
+    "text": "beneficenza,",
+    "start": 51.34,
+    "end": 52.46,
+    "id": "w112"
+  },
+  {
+    "text": "di",
+    "start": 52.46,
+    "end": 52.63,
+    "id": "w113"
+  },
+  {
+    "text": "quanto,",
+    "start": 52.63,
+    "end": 53.3,
+    "id": "w114"
+  },
+  {
+    "text": "a",
+    "start": 53.33,
+    "end": 53.4,
+    "id": "w115"
+  },
+  {
+    "text": "chi",
+    "start": 53.4,
+    "end": 53.66,
+    "id": "w116"
+  },
+  {
+    "text": "e",
+    "start": 53.66,
+    "end": 53.73,
+    "id": "w117"
+  },
+  {
+    "text": "quando.",
+    "start": 53.73,
+    "end": 54.27,
+    "id": "w118"
+  },
+  {
+    "text": "Altrimenti",
+    "start": 55.04,
+    "end": 55.24,
+    "id": "w119"
+  },
+  {
+    "text": "la",
+    "start": 55.24,
+    "end": 55.37,
+    "id": "w120"
+  },
+  {
+    "text": "fiducia",
+    "start": 55.37,
+    "end": 55.81,
+    "id": "w121"
+  },
+  {
+    "text": "che",
+    "start": 55.81,
+    "end": 56,
+    "id": "w122"
+  },
+  {
+    "text": "hai",
+    "start": 56,
+    "end": 56.19,
+    "id": "w123"
+  },
+  {
+    "text": "costruito",
+    "start": 56.19,
+    "end": 56.77,
+    "id": "w124"
+  },
+  {
+    "text": "in",
+    "start": 56.77,
+    "end": 56.9,
+    "id": "w125"
+  },
+  {
+    "text": "anni",
+    "start": 56.9,
+    "end": 57.15,
+    "id": "w126"
+  },
+  {
+    "text": "la",
+    "start": 57.16,
+    "end": 57.29,
+    "id": "w127"
+  },
+  {
+    "text": "perdi",
+    "start": 57.29,
+    "end": 57.61,
+    "id": "w128"
+  },
+  {
+    "text": "in",
+    "start": 57.61,
+    "end": 57.74,
+    "id": "w129"
+  },
+  {
+    "text": "un",
+    "start": 57.74,
+    "end": 57.87,
+    "id": "w130"
+  },
+  {
+    "text": "giorno.",
+    "start": 57.87,
+    "end": 58.42,
+    "id": "w131"
+  },
+  {
+    "text": "Etu,",
+    "start": 59,
+    "end": 59.27,
+    "id": "w132"
+  },
+  {
+    "text": "l'avevi",
+    "start": 59.27,
+    "end": 59.64,
+    "id": "w133"
+  },
+  {
+    "text": "comprato",
+    "start": 59.65,
+    "end": 60.11,
+    "id": "w134"
+  },
+  {
+    "text": "quel",
+    "start": 60.11,
+    "end": 60.34,
+    "id": "w135"
+  },
+  {
+    "text": "pandoro?",
+    "start": 60.34,
+    "end": 61,
+    "id": "w136"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 61.44,
+    "end": 61.57,
+    "id": "w137"
+  },
+  {
+    "text": "nei",
+    "start": 61.61,
+    "end": 61.8,
+    "id": "w138"
+  },
+  {
+    "text": "commenti!",
+    "start": 61.8,
+    "end": 62.62,
+    "id": "w139"
+  }
+]

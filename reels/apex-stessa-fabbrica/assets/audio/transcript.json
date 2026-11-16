@@ -1,0 +1,896 @@
+[
+  {
+    "text": "Questo",
+    "start": 0,
+    "end": 0.36,
+    "id": "w0"
+  },
+  {
+    "text": "biscotto",
+    "start": 0.36,
+    "end": 0.78,
+    "id": "w1"
+  },
+  {
+    "text": "del",
+    "start": 0.84,
+    "end": 1.02,
+    "id": "w2"
+  },
+  {
+    "text": "supermercato",
+    "start": 1.02,
+    "end": 1.75,
+    "id": "w3"
+  },
+  {
+    "text": "lo",
+    "start": 1.77,
+    "end": 1.89,
+    "id": "w4"
+  },
+  {
+    "text": "fa",
+    "start": 1.89,
+    "end": 2.02,
+    "id": "w5"
+  },
+  {
+    "text": "la",
+    "start": 2.02,
+    "end": 2.15,
+    "id": "w6"
+  },
+  {
+    "text": "stessa",
+    "start": 2.15,
+    "end": 2.51,
+    "id": "w7"
+  },
+  {
+    "text": "azienda",
+    "start": 2.54,
+    "end": 3.04,
+    "id": "w8"
+  },
+  {
+    "text": "di",
+    "start": 3.04,
+    "end": 3.1,
+    "id": "w9"
+  },
+  {
+    "text": "quello",
+    "start": 3.17,
+    "end": 3.52,
+    "id": "w10"
+  },
+  {
+    "text": "famoso,",
+    "start": 3.52,
+    "end": 4.07,
+    "id": "w11"
+  },
+  {
+    "text": "e",
+    "start": 4.07,
+    "end": 4.19,
+    "id": "w12"
+  },
+  {
+    "text": "costa",
+    "start": 4.19,
+    "end": 4.44,
+    "id": "w13"
+  },
+  {
+    "text": "la",
+    "start": 4.53,
+    "end": 4.68,
+    "id": "w14"
+  },
+  {
+    "text": "metà.",
+    "start": 4.68,
+    "end": 5.03,
+    "id": "w15"
+  },
+  {
+    "text": "Si",
+    "start": 5.03,
+    "end": 5.56,
+    "id": "w16"
+  },
+  {
+    "text": "chiama",
+    "start": 5.56,
+    "end": 5.85,
+    "id": "w17"
+  },
+  {
+    "text": "Marca",
+    "start": 5.85,
+    "end": 6.21,
+    "id": "w18"
+  },
+  {
+    "text": "del",
+    "start": 6.23,
+    "end": 6.46,
+    "id": "w19"
+  },
+  {
+    "text": "Distributore.",
+    "start": 6.46,
+    "end": 7.63,
+    "id": "w20"
+  },
+  {
+    "text": "Il",
+    "start": 7.63,
+    "end": 8.04,
+    "id": "w21"
+  },
+  {
+    "text": "supermercato",
+    "start": 8.04,
+    "end": 8.67,
+    "id": "w22"
+  },
+  {
+    "text": "non",
+    "start": 8.67,
+    "end": 8.88,
+    "id": "w23"
+  },
+  {
+    "text": "ha",
+    "start": 8.89,
+    "end": 9.04,
+    "id": "w24"
+  },
+  {
+    "text": "una",
+    "start": 9.04,
+    "end": 9.26,
+    "id": "w25"
+  },
+  {
+    "text": "fabbrica.",
+    "start": 9.26,
+    "end": 10.11,
+    "id": "w26"
+  },
+  {
+    "text": "Chiede",
+    "start": 10.4,
+    "end": 10.47,
+    "id": "w27"
+  },
+  {
+    "text": "a",
+    "start": 10.47,
+    "end": 10.57,
+    "id": "w28"
+  },
+  {
+    "text": "un",
+    "start": 10.57,
+    "end": 10.67,
+    "id": "w29"
+  },
+  {
+    "text": "produttore",
+    "start": 10.67,
+    "end": 11.3,
+    "id": "w30"
+  },
+  {
+    "text": "di",
+    "start": 11.3,
+    "end": 11.42,
+    "id": "w31"
+  },
+  {
+    "text": "fare",
+    "start": 11.42,
+    "end": 11.63,
+    "id": "w32"
+  },
+  {
+    "text": "il",
+    "start": 11.71,
+    "end": 11.79,
+    "id": "w33"
+  },
+  {
+    "text": "prodotto,",
+    "start": 11.79,
+    "end": 12.47,
+    "id": "w34"
+  },
+  {
+    "text": "con",
+    "start": 12.48,
+    "end": 12.64,
+    "id": "w35"
+  },
+  {
+    "text": "il",
+    "start": 12.74,
+    "end": 12.8,
+    "id": "w36"
+  },
+  {
+    "text": "suo",
+    "start": 12.8,
+    "end": 12.99,
+    "id": "w37"
+  },
+  {
+    "text": "nome",
+    "start": 12.99,
+    "end": 13.25,
+    "id": "w38"
+  },
+  {
+    "text": "sopra.",
+    "start": 13.25,
+    "end": 13.64,
+    "id": "w39"
+  },
+  {
+    "text": "Espesso",
+    "start": 14,
+    "end": 14.07,
+    "id": "w40"
+  },
+  {
+    "text": "quel",
+    "start": 14.17,
+    "end": 14.37,
+    "id": "w41"
+  },
+  {
+    "text": "produttore",
+    "start": 14.37,
+    "end": 15.03,
+    "id": "w42"
+  },
+  {
+    "text": "è",
+    "start": 15.04,
+    "end": 15.1,
+    "id": "w43"
+  },
+  {
+    "text": "un",
+    "start": 15.1,
+    "end": 15.23,
+    "id": "w44"
+  },
+  {
+    "text": "marchio",
+    "start": 15.23,
+    "end": 15.7,
+    "id": "w45"
+  },
+  {
+    "text": "che",
+    "start": 15.7,
+    "end": 15.9,
+    "id": "w46"
+  },
+  {
+    "text": "conosci.",
+    "start": 15.9,
+    "end": 16.67,
+    "id": "w47"
+  },
+  {
+    "text": "Secondo",
+    "start": 16.67,
+    "end": 17.24,
+    "id": "w48"
+  },
+  {
+    "text": "diverse",
+    "start": 17.24,
+    "end": 17.75,
+    "id": "w49"
+  },
+  {
+    "text": "inchieste,",
+    "start": 17.84,
+    "end": 18.71,
+    "id": "w50"
+  },
+  {
+    "text": "Balocco",
+    "start": 18.79,
+    "end": 19.15,
+    "id": "w51"
+  },
+  {
+    "text": "ha",
+    "start": 19.22,
+    "end": 19.33,
+    "id": "w52"
+  },
+  {
+    "text": "prodotto",
+    "start": 19.33,
+    "end": 19.88,
+    "id": "w53"
+  },
+  {
+    "text": "biscotti",
+    "start": 19.88,
+    "end": 20.43,
+    "id": "w54"
+  },
+  {
+    "text": "per",
+    "start": 20.43,
+    "end": 20.57,
+    "id": "w55"
+  },
+  {
+    "text": "Lidl,",
+    "start": 20.64,
+    "end": 21.04,
+    "id": "w56"
+  },
+  {
+    "text": "Colussi",
+    "start": 21.04,
+    "end": 21.62,
+    "id": "w57"
+  },
+  {
+    "text": "fette",
+    "start": 21.62,
+    "end": 22.03,
+    "id": "w58"
+  },
+  {
+    "text": "biscottate",
+    "start": 22.03,
+    "end": 22.88,
+    "id": "w59"
+  },
+  {
+    "text": "per",
+    "start": 22.88,
+    "end": 23.13,
+    "id": "w60"
+  },
+  {
+    "text": "Cope,",
+    "start": 23.13,
+    "end": 23.62,
+    "id": "w61"
+  },
+  {
+    "text": "Maina",
+    "start": 24.12,
+    "end": 24.14,
+    "id": "w62"
+  },
+  {
+    "text": "panettoni",
+    "start": 24.14,
+    "end": 24.89,
+    "id": "w63"
+  },
+  {
+    "text": "per",
+    "start": 24.89,
+    "end": 25.14,
+    "id": "w64"
+  },
+  {
+    "text": "Esselunga.",
+    "start": 25.14,
+    "end": 26.19,
+    "id": "w65"
+  },
+  {
+    "text": "Ma",
+    "start": 26.56,
+    "end": 26.65,
+    "id": "w66"
+  },
+  {
+    "text": "attenzione,",
+    "start": 26.73,
+    "end": 27.55,
+    "id": "w67"
+  },
+  {
+    "text": "stessa",
+    "start": 27.55,
+    "end": 27.98,
+    "id": "w68"
+  },
+  {
+    "text": "fabbrica",
+    "start": 27.98,
+    "end": 28.55,
+    "id": "w69"
+  },
+  {
+    "text": "non",
+    "start": 28.55,
+    "end": 28.72,
+    "id": "w70"
+  },
+  {
+    "text": "vuol",
+    "start": 28.75,
+    "end": 29.04,
+    "id": "w71"
+  },
+  {
+    "text": "dire",
+    "start": 29.05,
+    "end": 29.33,
+    "id": "w72"
+  },
+  {
+    "text": "stessa",
+    "start": 29.33,
+    "end": 29.76,
+    "id": "w73"
+  },
+  {
+    "text": "ricetta.",
+    "start": 29.76,
+    "end": 30.39,
+    "id": "w74"
+  },
+  {
+    "text": "Ingredienti",
+    "start": 30.92,
+    "end": 31.28,
+    "id": "w75"
+  },
+  {
+    "text": "e",
+    "start": 31.28,
+    "end": 31.31,
+    "id": "w76"
+  },
+  {
+    "text": "quantità",
+    "start": 31.37,
+    "end": 31.85,
+    "id": "w77"
+  },
+  {
+    "text": "possono",
+    "start": 31.9,
+    "end": 32.34,
+    "id": "w78"
+  },
+  {
+    "text": "cambiare.",
+    "start": 32.34,
+    "end": 33.08,
+    "id": "w79"
+  },
+  {
+    "text": "Allora,",
+    "start": 33.6,
+    "end": 33.67,
+    "id": "w80"
+  },
+  {
+    "text": "perché",
+    "start": 33.67,
+    "end": 34.11,
+    "id": "w81"
+  },
+  {
+    "text": "il",
+    "start": 34.11,
+    "end": 34.25,
+    "id": "w82"
+  },
+  {
+    "text": "marchio",
+    "start": 34.25,
+    "end": 34.75,
+    "id": "w83"
+  },
+  {
+    "text": "famoso",
+    "start": 34.75,
+    "end": 35.18,
+    "id": "w84"
+  },
+  {
+    "text": "costa",
+    "start": 35.18,
+    "end": 35.51,
+    "id": "w85"
+  },
+  {
+    "text": "di",
+    "start": 35.58,
+    "end": 35.67,
+    "id": "w86"
+  },
+  {
+    "text": "più?",
+    "start": 35.67,
+    "end": 36.16,
+    "id": "w87"
+  },
+  {
+    "text": "Perché",
+    "start": 36.16,
+    "end": 36.64,
+    "id": "w88"
+  },
+  {
+    "text": "paghi",
+    "start": 36.64,
+    "end": 37,
+    "id": "w89"
+  },
+  {
+    "text": "la",
+    "start": 37,
+    "end": 37.15,
+    "id": "w90"
+  },
+  {
+    "text": "pubblicità,",
+    "start": 37.15,
+    "end": 38.08,
+    "id": "w91"
+  },
+  {
+    "text": "lo",
+    "start": 38.08,
+    "end": 38.21,
+    "id": "w92"
+  },
+  {
+    "text": "scaffale",
+    "start": 38.21,
+    "end": 38.73,
+    "id": "w93"
+  },
+  {
+    "text": "migliore,",
+    "start": 38.73,
+    "end": 39.29,
+    "id": "w94"
+  },
+  {
+    "text": "e",
+    "start": 39.38,
+    "end": 39.4,
+    "id": "w95"
+  },
+  {
+    "text": "soprattutto",
+    "start": 39.4,
+    "end": 40.23,
+    "id": "w96"
+  },
+  {
+    "text": "la",
+    "start": 40.23,
+    "end": 40.45,
+    "id": "w97"
+  },
+  {
+    "text": "fiducia.",
+    "start": 40.45,
+    "end": 41.28,
+    "id": "w98"
+  },
+  {
+    "text": "Il",
+    "start": 41.28,
+    "end": 41.72,
+    "id": "w99"
+  },
+  {
+    "text": "trucco",
+    "start": 41.72,
+    "end": 41.81,
+    "id": "w100"
+  },
+  {
+    "text": "per",
+    "start": 41.89,
+    "end": 42.11,
+    "id": "w101"
+  },
+  {
+    "text": "scoprirlo,",
+    "start": 42.17,
+    "end": 42.95,
+    "id": "w102"
+  },
+  {
+    "text": "gira",
+    "start": 43.03,
+    "end": 43.35,
+    "id": "w103"
+  },
+  {
+    "text": "la",
+    "start": 43.35,
+    "end": 43.53,
+    "id": "w104"
+  },
+  {
+    "text": "confezione",
+    "start": 43.53,
+    "end": 44.39,
+    "id": "w105"
+  },
+  {
+    "text": "e",
+    "start": 44.46,
+    "end": 44.51,
+    "id": "w106"
+  },
+  {
+    "text": "cerca",
+    "start": 44.51,
+    "end": 44.82,
+    "id": "w107"
+  },
+  {
+    "text": "la",
+    "start": 44.89,
+    "end": 45.02,
+    "id": "w108"
+  },
+  {
+    "text": "scritta",
+    "start": 45.02,
+    "end": 45.53,
+    "id": "w109"
+  },
+  {
+    "text": "prodotto",
+    "start": 45.91,
+    "end": 46.35,
+    "id": "w110"
+  },
+  {
+    "text": "da",
+    "start": 46.35,
+    "end": 46.51,
+    "id": "w111"
+  },
+  {
+    "text": "e",
+    "start": 46.58,
+    "end": 46.62,
+    "id": "w112"
+  },
+  {
+    "text": "lo",
+    "start": 46.62,
+    "end": 46.73,
+    "id": "w113"
+  },
+  {
+    "text": "stabilimento.",
+    "start": 46.73,
+    "end": 47.69,
+    "id": "w114"
+  },
+  {
+    "text": "La",
+    "start": 47.69,
+    "end": 48.2,
+    "id": "w115"
+  },
+  {
+    "text": "lezione",
+    "start": 48.2,
+    "end": 48.27,
+    "id": "w116"
+  },
+  {
+    "text": "per",
+    "start": 48.37,
+    "end": 48.49,
+    "id": "w117"
+  },
+  {
+    "text": "chi",
+    "start": 48.49,
+    "end": 48.68,
+    "id": "w118"
+  },
+  {
+    "text": "ha",
+    "start": 48.68,
+    "end": 48.81,
+    "id": "w119"
+  },
+  {
+    "text": "un'attività?",
+    "start": 48.81,
+    "end": 49.76,
+    "id": "w120"
+  },
+  {
+    "text": "Il",
+    "start": 49.76,
+    "end": 50.16,
+    "id": "w121"
+  },
+  {
+    "text": "cliente",
+    "start": 50.16,
+    "end": 50.43,
+    "id": "w122"
+  },
+  {
+    "text": "non",
+    "start": 50.43,
+    "end": 50.65,
+    "id": "w123"
+  },
+  {
+    "text": "compra",
+    "start": 50.65,
+    "end": 51.09,
+    "id": "w124"
+  },
+  {
+    "text": "solo",
+    "start": 51.1,
+    "end": 51.39,
+    "id": "w125"
+  },
+  {
+    "text": "un",
+    "start": 51.47,
+    "end": 51.55,
+    "id": "w126"
+  },
+  {
+    "text": "prodotto,",
+    "start": 51.55,
+    "end": 52.32,
+    "id": "w127"
+  },
+  {
+    "text": "compra",
+    "start": 52.32,
+    "end": 52.8,
+    "id": "w128"
+  },
+  {
+    "text": "un",
+    "start": 52.8,
+    "end": 52.96,
+    "id": "w129"
+  },
+  {
+    "text": "nome",
+    "start": 52.96,
+    "end": 53.26,
+    "id": "w130"
+  },
+  {
+    "text": "di",
+    "start": 53.33,
+    "end": 53.44,
+    "id": "w131"
+  },
+  {
+    "text": "cui",
+    "start": 53.44,
+    "end": 53.68,
+    "id": "w132"
+  },
+  {
+    "text": "si",
+    "start": 53.68,
+    "end": 53.83,
+    "id": "w133"
+  },
+  {
+    "text": "fida.",
+    "start": 53.83,
+    "end": 54.4,
+    "id": "w134"
+  },
+  {
+    "text": "Etu,",
+    "start": 54.92,
+    "end": 55.22,
+    "id": "w135"
+  },
+  {
+    "text": "quale",
+    "start": 55.22,
+    "end": 55.43,
+    "id": "w136"
+  },
+  {
+    "text": "prodotto",
+    "start": 55.52,
+    "end": 56.02,
+    "id": "w137"
+  },
+  {
+    "text": "del",
+    "start": 56.02,
+    "end": 56.15,
+    "id": "w138"
+  },
+  {
+    "text": "supermercato",
+    "start": 56.23,
+    "end": 56.93,
+    "id": "w139"
+  },
+  {
+    "text": "compri",
+    "start": 56.93,
+    "end": 57.3,
+    "id": "w140"
+  },
+  {
+    "text": "al",
+    "start": 57.3,
+    "end": 57.42,
+    "id": "w141"
+  },
+  {
+    "text": "posto",
+    "start": 57.42,
+    "end": 57.73,
+    "id": "w142"
+  },
+  {
+    "text": "di",
+    "start": 57.73,
+    "end": 57.83,
+    "id": "w143"
+  },
+  {
+    "text": "quello",
+    "start": 57.84,
+    "end": 58.22,
+    "id": "w144"
+  },
+  {
+    "text": "famoso?",
+    "start": 58.22,
+    "end": 58.75,
+    "id": "w145"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 59.28,
+    "end": 59.37,
+    "id": "w146"
+  },
+  {
+    "text": "nei",
+    "start": 59.45,
+    "end": 59.65,
+    "id": "w147"
+  },
+  {
+    "text": "commenti.",
+    "start": 59.65,
+    "end": 60.47,
+    "id": "w148"
+  }
+]

@@ -638,9 +638,167 @@ Ha alzato i prezzi da 15 a 25 €, ha perso 3 clienti su 10 e guadagna di più �
 
 ---
 
+## 24. Stessa fabbrica, metà prezzo (65 s) — 3D cinematico
+
+File: `apex-stessa-fabbrica/renders/apex-stessa-fabbrica-9x16.mp4`
+
+**Instagram**
+```text
+Questo biscotto del supermercato lo fa la stessa azienda di quello famoso. E costa la metà. 🍪
+
+Si chiama marca del distributore: il supermercato non ha una fabbrica, chiede a un produttore di fare il prodotto con il suo nome sopra.
+Secondo diverse inchieste: Balocco per Lidl, Colussi per Coop, Maina per Esselunga.
+
+⚠️ Stessa fabbrica non vuol dire stessa ricetta.
+
+Il trucco: gira la confezione e cerca "prodotto da" e lo stabilimento.
+
+La lezione per chi ha un'attività: il cliente non compra solo un prodotto. Compra un nome di cui si fida.
+
+👇 Quale prodotto del supermercato compri al posto di quello famoso?
+
+(Fonti: inchieste giornalistiche sulle marche del distributore. Gli accordi di produzione possono cambiare nel tempo.)
+#supermercato #marchiodeldistributore #spesa #marketing #brand #fiducia #business #imprenditori
+```
+
+**TikTok**
+```text
+Il biscotto del supermercato lo fa la stessa azienda di quello famoso 🍪 Ecco come scoprirlo. Tu quale compri?
+#supermercato #spesa #marketing #brand
+```
+
+---
+
+## 25. Il pandoro da un milione (67 s) — 3D cinematico
+
+File: `apex-pandoro/renders/apex-pandoro-9x16.mp4`
+
+**Instagram**
+```text
+Un pandoro è costato oltre 1 milione di euro di multa. 🎄
+
+Natale 2022: pandoro firmato Chiara Ferragni, 9,37 € contro 3,68 € di quello normale.
+Il messaggio faceva pensare che comprandolo aiutassi l'ospedale Regina Margherita di Torino.
+Ma la donazione (50.000 €) era già stata fatta mesi prima, una volta sola, dall'azienda.
+
+Dicembre 2023: l'Antitrust multa le società di Ferragni per oltre 1 milione e Balocco per 420.000 €. Pratica commerciale scorretta.
+
+La lezione: il marketing solidale funziona, ma solo se è vero, chiaro e verificabile. Di quanto, a chi, quando.
+Altrimenti la fiducia costruita in anni la perdi in un giorno.
+
+👇 L'avevi comprato quel pandoro?
+
+(Fonte: provvedimento AGCM, dicembre 2023.)
+#pandoro #ferragni #antitrust #marketing #beneficenza #brand #fiducia #business
+```
+
+**TikTok**
+```text
+Il pandoro che è costato oltre 1 milione di multa 🎄 Cosa insegna a chi fa marketing. Tu l'avevi comprato?
+#pandoro #ferragni #marketing #antitrust
+```
+
+---
+
+## 26. Shrinkflation: stesso prezzo, meno prodotto (60 s) — 3D cinematico
+
+File: `apex-shrinkflation/renders/apex-shrinkflation-9x16.mp4`
+
+**Instagram**
+```text
+Il prezzo è uguale. Il pacco no. 📦
+
+Si chiama shrinkflation: invece di alzare il prezzo, l'azienda toglie prodotto.
+Biscotti da 500 a 400 g. Bottiglia da 1 litro a 900 ml. Stesso scaffale, stesso prezzo. Paghi di più senza saperlo.
+
+In Italia c'è una nuova regola: se la quantità cala e il prezzo al chilo sale, va scritto sulla confezione per 6 mesi.
+
+Il trucco per difenderti: guarda il prezzo al chilo sul cartellino. Non mente mai.
+
+Per chi ha un'attività: i clienti se ne accorgono, prima o poi. E si sentono presi in giro.
+Meglio dire la verità: "costa di più, ed ecco perché".
+
+👇 Quale prodotto ti ha fatto questo scherzo?
+
+(Esempi di quantità a scopo illustrativo.)
+#shrinkflation #spesa #supermercato #prezzi #marketing #consumatori #business
+```
+
+**TikTok**
+```text
+Stesso prezzo, meno prodotto: si chiama shrinkflation 📦 Il trucco per accorgertene. Quale prodotto ti ha fregato?
+#shrinkflation #spesa #prezzi #marketing
+```
+
+---
+
+## 27. Temu: multa da 200 milioni (64 s) — 3D cinematico
+
+File: `apex-temu/renders/apex-temu-9x16.mp4`
+
+**Instagram**
+```text
+Temu ha appena preso una multa da 200 milioni di euro. 📦
+
+Commissione Europea, maggio 2026: secondo Bruxelles Temu non ha valutato bene il rischio dei prodotti illegali venduti sulla piattaforma (giocattoli e caricabatterie non sicuri). Temu la definisce sproporzionata.
+
+Ma come fa a farti comprare così tanto?
+Ruota da girare, buono che scade tra 10 minuti, prezzi da 1 €, regali se inviti un amico.
+È un videogioco. Solo che alla fine paghi tu. Si chiama gamification.
+
+Il limite: convinci qualcuno a comprare una volta. Se quello che arriva delude, non torna più.
+
+La lezione: usa il gioco per attirare, tieni il cliente con la qualità.
+
+👇 Hai mai comprato su Temu? Com'era?
+
+(Fonte: Commissione Europea, decisione ai sensi del Digital Services Act, maggio 2026.)
+#temu #gamification #ecommerce #marketing #dsa #shopping #business
+```
+
+**TikTok**
+```text
+Temu multata per 200 milioni 📦 E il trucco con cui ti fa comprare così tanto. Tu hai mai comprato lì?
+#temu #gamification #marketing #ecommerce
+```
+
+---
+
+## 28. Shein e il greenwashing (60 s) — 3D cinematico
+
+File: `apex-shein/renders/apex-shein-9x16.mp4`
+
+**Instagram**
+```text
+Shein ti ha detto che era green. L'Antitrust no. 🌿
+
+Agosto 2025: l'Autorità italiana multa Shein per 1 milione di euro per messaggi ambientali vaghi, fuorvianti o falsi. "Sostenibile", "responsabile", "riciclato", usati per vendere moda che costa poco e dura poco.
+Pochi mesi prima, in Francia: 40 milioni.
+
+Si chiama greenwashing: fai sembrare un prodotto più ecologico di quello che è.
+Funziona, finché qualcuno non controlla. E il danno vero non è la multa: è che il cliente non ti crede più.
+
+La lezione per chi ha un'attività: se dici green, devi poterlo dimostrare. Numeri, certificazioni, fatti.
+Altrimenti meglio non dirlo.
+
+👇 Ti fidi quando un marchio dice "sostenibile"?
+
+(Fonti: provvedimento AGCM, agosto 2025; autorità francese per la concorrenza e i consumatori, 2025.)
+#shein #greenwashing #sostenibilita #moda #antitrust #marketing #brand #business
+```
+
+**TikTok**
+```text
+Shein multata per greenwashing 🌿 1 milione in Italia, 40 in Francia. Ti fidi quando un marchio dice "sostenibile"?
+#shein #greenwashing #moda #marketing
+```
+
+---
+
 ## Prima di pubblicare
 
 - **Commenti con parola chiave** (CLIENTI, AUDIT): rispondi in DM entro poche ore, altrimenti il contatto si raffredda.
 - **"Link in bio"**: i video 11, 12 e 14 lo dicono a schermo, quindi il link alla consulenza o all'audit deve essere davvero in bio.
 - **Crediti audio**: solo i video 5 e 6 richiedono la riga di credito (licenza CC BY). È già inserita qui sopra.
+- **Video 24–28 (aziende reali)**: citano fatti pubblici con fonte in descrizione. Non aggiungere nei commenti accuse non verificate su marchi specifici.
 - **Ordine consigliato**: alterna un video divulgativo (1–9) e uno commerciale (10–13) per non sembrare solo pubblicità.
