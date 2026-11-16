@@ -1,1 +1,788 @@
-[{"text": "Coca-Cola", "start": 0.05, "end": 0.538}, {"text": "ha", "start": 0.538, "end": 0.716}, {"text": "tolto", "start": 0.716, "end": 1.027}, {"text": "il", "start": 1.027, "end": 1.204}, {"text": "suo", "start": 1.204, "end": 1.426}, {"text": "logo", "start": 1.426, "end": 1.693}, {"text": "dalle", "start": 1.693, "end": 2.003}, {"text": "bottiglie.", "start": 2.003, "end": 2.503}, {"text": "E", "start": 2.803, "end": 2.936}, {"text": "ha", "start": 2.936, "end": 3.113}, {"text": "venduto", "start": 3.113, "end": 3.513}, {"text": "di", "start": 3.513, "end": 3.691}, {"text": "pi\u00f9.", "start": 3.691, "end": 4.191}, {"text": "Australia,", "start": 4.223, "end": 4.723}, {"text": "2011.", "start": 4.845, "end": 5.345}, {"text": "Al", "start": 5.422, "end": 5.6}, {"text": "posto", "start": 5.6, "end": 5.91}, {"text": "del", "start": 5.91, "end": 6.132}, {"text": "logo,", "start": 6.132, "end": 6.532}, {"text": "sulle", "start": 6.532, "end": 6.843}, {"text": "bottiglie", "start": 6.843, "end": 7.331}, {"text": "ci", "start": 7.331, "end": 7.509}, {"text": "sono", "start": 7.509, "end": 7.775}, {"text": "i", "start": 7.775, "end": 7.908}, {"text": "nomi", "start": 7.908, "end": 8.175}, {"text": "delle", "start": 8.175, "end": 8.485}, {"text": "persone.", "start": 8.485, "end": 8.985}, {"text": "Marco,", "start": 9.196, "end": 9.64}, {"text": "Giulia,", "start": 9.64, "end": 10.128}, {"text": "Luca.", "start": 10.128, "end": 10.628}, {"text": "I", "start": 10.705, "end": 10.838}, {"text": "centocinquanta", "start": 10.838, "end": 11.338}, {"text": "nomi", "start": 11.549, "end": 11.815}, {"text": "pi\u00f9", "start": 11.815, "end": 12.037}, {"text": "comuni", "start": 12.037, "end": 12.392}, {"text": "del", "start": 12.392, "end": 12.614}, {"text": "paese.", "start": 12.614, "end": 13.114}, {"text": "La", "start": 13.236, "end": 13.413}, {"text": "gente", "start": 13.413, "end": 13.724}, {"text": "entra", "start": 13.724, "end": 14.035}, {"text": "al", "start": 14.035, "end": 14.213}, {"text": "supermercato", "start": 14.213, "end": 14.713}, {"text": "e", "start": 14.834, "end": 14.967}, {"text": "cerca", "start": 14.967, "end": 15.278}, {"text": "il", "start": 15.278, "end": 15.456}, {"text": "suo", "start": 15.456, "end": 15.678}, {"text": "nome.", "start": 15.678, "end": 16.178}, {"text": "Poi", "start": 16.255, "end": 16.477}, {"text": "quello", "start": 16.477, "end": 16.832}, {"text": "degli", "start": 16.832, "end": 17.143}, {"text": "amici.", "start": 17.143, "end": 17.643}, {"text": "Poi", "start": 17.764, "end": 17.986}, {"text": "fa", "start": 17.986, "end": 18.164}, {"text": "la", "start": 18.164, "end": 18.341}, {"text": "foto", "start": 18.341, "end": 18.608}, {"text": "e", "start": 18.608, "end": 18.741}, {"text": "la", "start": 18.741, "end": 18.919}, {"text": "pubblica.", "start": 18.919, "end": 19.419}, {"text": "Secondo", "start": 19.673, "end": 20.073}, {"text": "Coca-Cola,", "start": 20.073, "end": 20.573}, {"text": "in", "start": 20.694, "end": 20.872}, {"text": "un'estate", "start": 20.872, "end": 21.36}, {"text": "vendono", "start": 21.36, "end": 21.76}, {"text": "oltre", "start": 21.76, "end": 22.071}, {"text": "duecentocinquanta", "start": 22.071, "end": 22.571}, {"text": "milioni", "start": 22.914, "end": 23.314}, {"text": "di", "start": 23.314, "end": 23.491}, {"text": "bottiglie", "start": 23.491, "end": 23.98}, {"text": "e", "start": 23.98, "end": 24.113}, {"text": "lattine,", "start": 24.113, "end": 24.613}, {"text": "in", "start": 24.646, "end": 24.823}, {"text": "un", "start": 24.823, "end": 25.001}, {"text": "paese", "start": 25.001, "end": 25.312}, {"text": "di", "start": 25.312, "end": 25.489}, {"text": "ventitr\u00e9", "start": 25.489, "end": 25.933}, {"text": "milioni", "start": 25.933, "end": 26.333}, {"text": "di", "start": 26.333, "end": 26.51}, {"text": "persone.", "start": 26.51, "end": 27.01}, {"text": "E", "start": 27.221, "end": 27.354}, {"text": "la", "start": 27.354, "end": 27.532}, {"text": "campagna", "start": 27.532, "end": 27.975}, {"text": "arriva", "start": 27.975, "end": 28.331}, {"text": "in", "start": 28.331, "end": 28.508}, {"text": "pi\u00f9", "start": 28.508, "end": 28.73}, {"text": "di", "start": 28.73, "end": 28.908}, {"text": "ottanta", "start": 28.908, "end": 29.307}, {"text": "paesi.", "start": 29.307, "end": 29.807}, {"text": "Perch\u00e9", "start": 29.929, "end": 30.284}, {"text": "funziona?", "start": 30.284, "end": 30.784}, {"text": "Perch\u00e9", "start": 31.039, "end": 31.394}, {"text": "le", "start": 31.394, "end": 31.572}, {"text": "persone", "start": 31.572, "end": 31.971}, {"text": "non", "start": 31.971, "end": 32.193}, {"text": "comprano", "start": 32.193, "end": 32.637}, {"text": "solo", "start": 32.637, "end": 32.904}, {"text": "un", "start": 32.904, "end": 33.081}, {"text": "prodotto.", "start": 33.081, "end": 33.581}, {"text": "Comprano", "start": 33.836, "end": 34.28}, {"text": "qualcosa", "start": 34.28, "end": 34.724}, {"text": "che", "start": 34.724, "end": 34.946}, {"text": "parla", "start": 34.946, "end": 35.257}, {"text": "di", "start": 35.257, "end": 35.434}, {"text": "loro.", "start": 35.434, "end": 35.934}, {"text": "La", "start": 36.011, "end": 36.189}, {"text": "lezione:", "start": 36.189, "end": 36.689}, {"text": "rendi", "start": 36.899, "end": 37.21}, {"text": "il", "start": 37.21, "end": 37.388}, {"text": "cliente", "start": 37.388, "end": 37.787}, {"text": "protagonista.", "start": 37.787, "end": 38.287}, {"text": "Il", "start": 38.719, "end": 38.897}, {"text": "suo", "start": 38.897, "end": 39.119}, {"text": "nome,", "start": 39.119, "end": 39.519}, {"text": "la", "start": 39.519, "end": 39.696}, {"text": "sua", "start": 39.696, "end": 39.918}, {"text": "storia,", "start": 39.918, "end": 40.407}, {"text": "la", "start": 40.407, "end": 40.584}, {"text": "sua", "start": 40.584, "end": 40.806}, {"text": "foto.", "start": 40.806, "end": 41.306}, {"text": "E", "start": 41.383, "end": 41.516}, {"text": "tu,", "start": 41.516, "end": 41.827}, {"text": "hai", "start": 41.827, "end": 42.049}, {"text": "mai", "start": 42.049, "end": 42.271}, {"text": "cercato", "start": 42.271, "end": 42.671}, {"text": "il", "start": 42.671, "end": 42.848}, {"text": "tuo", "start": 42.848, "end": 43.07}, {"text": "nome", "start": 43.07, "end": 43.337}, {"text": "su", "start": 43.337, "end": 43.514}, {"text": "una", "start": 43.514, "end": 43.736}, {"text": "bottiglia?", "start": 43.736, "end": 44.236}, {"text": "Scrivilo", "start": 44.535, "end": 44.979}, {"text": "nei", "start": 44.979, "end": 45.201}, {"text": "commenti.", "start": 45.201, "end": 45.701}]
+[
+  {
+    "text": "Coca-Cola",
+    "start": 0.03,
+    "end": 0.58,
+    "id": "w0"
+  },
+  {
+    "text": "ha",
+    "start": 0.67,
+    "end": 0.73,
+    "id": "w1"
+  },
+  {
+    "text": "tolto",
+    "start": 0.73,
+    "end": 0.99,
+    "id": "w2"
+  },
+  {
+    "text": "il",
+    "start": 1.06,
+    "end": 1.18,
+    "id": "w3"
+  },
+  {
+    "text": "suo",
+    "start": 1.18,
+    "end": 1.38,
+    "id": "w4"
+  },
+  {
+    "text": "logo",
+    "start": 1.38,
+    "end": 1.65,
+    "id": "w5"
+  },
+  {
+    "text": "dalle",
+    "start": 1.65,
+    "end": 1.98,
+    "id": "w6"
+  },
+  {
+    "text": "bottiglie",
+    "start": 1.98,
+    "end": 2.48,
+    "id": "w7"
+  },
+  {
+    "text": "e",
+    "start": 2.48,
+    "end": 2.77,
+    "id": "w8"
+  },
+  {
+    "text": "ha",
+    "start": 2.77,
+    "end": 2.9,
+    "id": "w9"
+  },
+  {
+    "text": "venduto",
+    "start": 2.9,
+    "end": 3.38,
+    "id": "w10"
+  },
+  {
+    "text": "di",
+    "start": 3.49,
+    "end": 3.64,
+    "id": "w11"
+  },
+  {
+    "text": "più,",
+    "start": 3.64,
+    "end": 4.06,
+    "id": "w12"
+  },
+  {
+    "text": "Australia,",
+    "start": 4.08,
+    "end": 4.96,
+    "id": "w13"
+  },
+  {
+    "text": "2011.",
+    "start": 4.96,
+    "end": 5.72,
+    "id": "w14"
+  },
+  {
+    "text": "Al",
+    "start": 5.75,
+    "end": 5.81,
+    "id": "w15"
+  },
+  {
+    "text": "posto",
+    "start": 5.87,
+    "end": 6.17,
+    "id": "w16"
+  },
+  {
+    "text": "del",
+    "start": 6.17,
+    "end": 6.3,
+    "id": "w17"
+  },
+  {
+    "text": "logo,",
+    "start": 6.39,
+    "end": 6.71,
+    "id": "w18"
+  },
+  {
+    "text": "sulle",
+    "start": 6.78,
+    "end": 7.07,
+    "id": "w19"
+  },
+  {
+    "text": "bottiglie",
+    "start": 7.07,
+    "end": 7.64,
+    "id": "w20"
+  },
+  {
+    "text": "ci",
+    "start": 7.65,
+    "end": 7.74,
+    "id": "w21"
+  },
+  {
+    "text": "sono",
+    "start": 7.84,
+    "end": 8.03,
+    "id": "w22"
+  },
+  {
+    "text": "i",
+    "start": 8.03,
+    "end": 8.1,
+    "id": "w23"
+  },
+  {
+    "text": "nomi",
+    "start": 8.1,
+    "end": 8.35,
+    "id": "w24"
+  },
+  {
+    "text": "delle",
+    "start": 8.49,
+    "end": 8.68,
+    "id": "w25"
+  },
+  {
+    "text": "persone,",
+    "start": 8.68,
+    "end": 9.36,
+    "id": "w26"
+  },
+  {
+    "text": "Marco,",
+    "start": 9.66,
+    "end": 9.97,
+    "id": "w27"
+  },
+  {
+    "text": "Giulia,",
+    "start": 9.97,
+    "end": 10.64,
+    "id": "w28"
+  },
+  {
+    "text": "Luca,",
+    "start": 10.64,
+    "end": 11.44,
+    "id": "w29"
+  },
+  {
+    "text": "i",
+    "start": 11.47,
+    "end": 11.51,
+    "id": "w30"
+  },
+  {
+    "text": "150",
+    "start": 11.51,
+    "end": 12.17,
+    "id": "w31"
+  },
+  {
+    "text": "nomi",
+    "start": 12.27,
+    "end": 12.43,
+    "id": "w32"
+  },
+  {
+    "text": "più",
+    "start": 12.5,
+    "end": 12.72,
+    "id": "w33"
+  },
+  {
+    "text": "comuni",
+    "start": 12.77,
+    "end": 13.18,
+    "id": "w34"
+  },
+  {
+    "text": "del",
+    "start": 13.18,
+    "end": 13.4,
+    "id": "w35"
+  },
+  {
+    "text": "Paese.",
+    "start": 13.4,
+    "end": 13.92,
+    "id": "w36"
+  },
+  {
+    "text": "La",
+    "start": 14.11,
+    "end": 14.17,
+    "id": "w37"
+  },
+  {
+    "text": "gente",
+    "start": 14.23,
+    "end": 14.54,
+    "id": "w38"
+  },
+  {
+    "text": "entra",
+    "start": 14.54,
+    "end": 14.81,
+    "id": "w39"
+  },
+  {
+    "text": "al",
+    "start": 14.91,
+    "end": 15,
+    "id": "w40"
+  },
+  {
+    "text": "supermercato",
+    "start": 15,
+    "end": 15.77,
+    "id": "w41"
+  },
+  {
+    "text": "e",
+    "start": 15.77,
+    "end": 15.83,
+    "id": "w42"
+  },
+  {
+    "text": "cerca",
+    "start": 15.83,
+    "end": 16.1,
+    "id": "w43"
+  },
+  {
+    "text": "il",
+    "start": 16.21,
+    "end": 16.29,
+    "id": "w44"
+  },
+  {
+    "text": "suo",
+    "start": 16.29,
+    "end": 16.48,
+    "id": "w45"
+  },
+  {
+    "text": "nome,",
+    "start": 16.48,
+    "end": 16.92,
+    "id": "w46"
+  },
+  {
+    "text": "poi",
+    "start": 16.92,
+    "end": 17.12,
+    "id": "w47"
+  },
+  {
+    "text": "quello",
+    "start": 17.12,
+    "end": 17.46,
+    "id": "w48"
+  },
+  {
+    "text": "degli",
+    "start": 17.57,
+    "end": 17.72,
+    "id": "w49"
+  },
+  {
+    "text": "amici,",
+    "start": 18,
+    "end": 18.36,
+    "id": "w50"
+  },
+  {
+    "text": "poi",
+    "start": 18.36,
+    "end": 18.59,
+    "id": "w51"
+  },
+  {
+    "text": "fa",
+    "start": 18.6,
+    "end": 18.62,
+    "id": "w52"
+  },
+  {
+    "text": "la",
+    "start": 18.83,
+    "end": 18.9,
+    "id": "w53"
+  },
+  {
+    "text": "foto",
+    "start": 18.9,
+    "end": 19.33,
+    "id": "w54"
+  },
+  {
+    "text": "e",
+    "start": 19.41,
+    "end": 19.45,
+    "id": "w55"
+  },
+  {
+    "text": "la",
+    "start": 19.45,
+    "end": 19.59,
+    "id": "w56"
+  },
+  {
+    "text": "pubblica.",
+    "start": 19.59,
+    "end": 20.37,
+    "id": "w57"
+  },
+  {
+    "text": "Secondo",
+    "start": 20.41,
+    "end": 20.87,
+    "id": "w58"
+  },
+  {
+    "text": "Coca-Cola,",
+    "start": 20.87,
+    "end": 21.64,
+    "id": "w59"
+  },
+  {
+    "text": "in",
+    "start": 21.71,
+    "end": 21.78,
+    "id": "w60"
+  },
+  {
+    "text": "un'estate",
+    "start": 21.78,
+    "end": 22.4,
+    "id": "w61"
+  },
+  {
+    "text": "vendono",
+    "start": 22.4,
+    "end": 22.86,
+    "id": "w62"
+  },
+  {
+    "text": "oltre",
+    "start": 22.97,
+    "end": 23.25,
+    "id": "w63"
+  },
+  {
+    "text": "250",
+    "start": 23.25,
+    "end": 23.89,
+    "id": "w64"
+  },
+  {
+    "text": "milioni",
+    "start": 23.89,
+    "end": 24.38,
+    "id": "w65"
+  },
+  {
+    "text": "di",
+    "start": 24.38,
+    "end": 24.43,
+    "id": "w66"
+  },
+  {
+    "text": "bottiglie",
+    "start": 24.57,
+    "end": 25.15,
+    "id": "w67"
+  },
+  {
+    "text": "e",
+    "start": 25.15,
+    "end": 25.22,
+    "id": "w68"
+  },
+  {
+    "text": "lattine,",
+    "start": 25.22,
+    "end": 25.84,
+    "id": "w69"
+  },
+  {
+    "text": "in",
+    "start": 25.84,
+    "end": 25.88,
+    "id": "w70"
+  },
+  {
+    "text": "un",
+    "start": 25.88,
+    "end": 25.93,
+    "id": "w71"
+  },
+  {
+    "text": "Paese",
+    "start": 26.03,
+    "end": 26.35,
+    "id": "w72"
+  },
+  {
+    "text": "di",
+    "start": 26.35,
+    "end": 26.49,
+    "id": "w73"
+  },
+  {
+    "text": "23",
+    "start": 26.49,
+    "end": 26.91,
+    "id": "w74"
+  },
+  {
+    "text": "milioni",
+    "start": 26.91,
+    "end": 27.4,
+    "id": "w75"
+  },
+  {
+    "text": "di",
+    "start": 27.4,
+    "end": 27.54,
+    "id": "w76"
+  },
+  {
+    "text": "persone,",
+    "start": 27.54,
+    "end": 28.17,
+    "id": "w77"
+  },
+  {
+    "text": "e",
+    "start": 28.17,
+    "end": 28.24,
+    "id": "w78"
+  },
+  {
+    "text": "la",
+    "start": 28.24,
+    "end": 28.38,
+    "id": "w79"
+  },
+  {
+    "text": "campagna",
+    "start": 28.38,
+    "end": 28.94,
+    "id": "w80"
+  },
+  {
+    "text": "arriva",
+    "start": 28.94,
+    "end": 29.36,
+    "id": "w81"
+  },
+  {
+    "text": "in",
+    "start": 29.36,
+    "end": 29.5,
+    "id": "w82"
+  },
+  {
+    "text": "più",
+    "start": 29.5,
+    "end": 29.64,
+    "id": "w83"
+  },
+  {
+    "text": "di",
+    "start": 29.64,
+    "end": 29.94,
+    "id": "w84"
+  },
+  {
+    "text": "80",
+    "start": 29.94,
+    "end": 30.27,
+    "id": "w85"
+  },
+  {
+    "text": "paesi.",
+    "start": 30.27,
+    "end": 30.88,
+    "id": "w86"
+  },
+  {
+    "text": "Perché",
+    "start": 30.91,
+    "end": 31.23,
+    "id": "w87"
+  },
+  {
+    "text": "funziona?",
+    "start": 31.23,
+    "end": 31.87,
+    "id": "w88"
+  },
+  {
+    "text": "Perché",
+    "start": 31.91,
+    "end": 32.24,
+    "id": "w89"
+  },
+  {
+    "text": "le",
+    "start": 32.24,
+    "end": 32.36,
+    "id": "w90"
+  },
+  {
+    "text": "persone",
+    "start": 32.36,
+    "end": 32.78,
+    "id": "w91"
+  },
+  {
+    "text": "non",
+    "start": 32.78,
+    "end": 32.96,
+    "id": "w92"
+  },
+  {
+    "text": "comprano",
+    "start": 32.96,
+    "end": 33.44,
+    "id": "w93"
+  },
+  {
+    "text": "solo",
+    "start": 33.44,
+    "end": 33.68,
+    "id": "w94"
+  },
+  {
+    "text": "un",
+    "start": 33.68,
+    "end": 33.79,
+    "id": "w95"
+  },
+  {
+    "text": "prodotto,",
+    "start": 33.79,
+    "end": 34.36,
+    "id": "w96"
+  },
+  {
+    "text": "comprano",
+    "start": 34.64,
+    "end": 34.88,
+    "id": "w97"
+  },
+  {
+    "text": "qualcosa",
+    "start": 34.88,
+    "end": 35.26,
+    "id": "w98"
+  },
+  {
+    "text": "che",
+    "start": 35.37,
+    "end": 35.52,
+    "id": "w99"
+  },
+  {
+    "text": "parla",
+    "start": 35.72,
+    "end": 35.84,
+    "id": "w100"
+  },
+  {
+    "text": "di",
+    "start": 35.84,
+    "end": 36,
+    "id": "w101"
+  },
+  {
+    "text": "loro.",
+    "start": 36,
+    "end": 36.43,
+    "id": "w102"
+  },
+  {
+    "text": "La",
+    "start": 36.57,
+    "end": 36.63,
+    "id": "w103"
+  },
+  {
+    "text": "lezione,",
+    "start": 36.69,
+    "end": 37.27,
+    "id": "w104"
+  },
+  {
+    "text": "rendi",
+    "start": 37.37,
+    "end": 37.67,
+    "id": "w105"
+  },
+  {
+    "text": "il",
+    "start": 37.67,
+    "end": 37.81,
+    "id": "w106"
+  },
+  {
+    "text": "cliente",
+    "start": 37.87,
+    "end": 38.31,
+    "id": "w107"
+  },
+  {
+    "text": "protagonista,",
+    "start": 38.31,
+    "end": 39.3,
+    "id": "w108"
+  },
+  {
+    "text": "il",
+    "start": 39.31,
+    "end": 39.44,
+    "id": "w109"
+  },
+  {
+    "text": "suo",
+    "start": 39.44,
+    "end": 39.64,
+    "id": "w110"
+  },
+  {
+    "text": "nome,",
+    "start": 39.64,
+    "end": 40.07,
+    "id": "w111"
+  },
+  {
+    "text": "la",
+    "start": 40.07,
+    "end": 40.18,
+    "id": "w112"
+  },
+  {
+    "text": "sua",
+    "start": 40.18,
+    "end": 40.48,
+    "id": "w113"
+  },
+  {
+    "text": "storia,",
+    "start": 40.48,
+    "end": 40.97,
+    "id": "w114"
+  },
+  {
+    "text": "la",
+    "start": 40.97,
+    "end": 41.09,
+    "id": "w115"
+  },
+  {
+    "text": "sua",
+    "start": 41.29,
+    "end": 41.33,
+    "id": "w116"
+  },
+  {
+    "text": "foto.",
+    "start": 41.33,
+    "end": 41.95,
+    "id": "w117"
+  },
+  {
+    "text": "Etu,",
+    "start": 41.99,
+    "end": 42.26,
+    "id": "w118"
+  },
+  {
+    "text": "hai",
+    "start": 42.26,
+    "end": 42.44,
+    "id": "w119"
+  },
+  {
+    "text": "mai",
+    "start": 42.44,
+    "end": 42.54,
+    "id": "w120"
+  },
+  {
+    "text": "cercato",
+    "start": 42.63,
+    "end": 43.05,
+    "id": "w121"
+  },
+  {
+    "text": "il",
+    "start": 43.05,
+    "end": 43.17,
+    "id": "w122"
+  },
+  {
+    "text": "tuo",
+    "start": 43.29,
+    "end": 43.35,
+    "id": "w123"
+  },
+  {
+    "text": "nome",
+    "start": 43.35,
+    "end": 43.6,
+    "id": "w124"
+  },
+  {
+    "text": "su",
+    "start": 43.6,
+    "end": 43.72,
+    "id": "w125"
+  },
+  {
+    "text": "una",
+    "start": 43.72,
+    "end": 43.89,
+    "id": "w126"
+  },
+  {
+    "text": "bottiglia?",
+    "start": 43.9,
+    "end": 44.72,
+    "id": "w127"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 44.75,
+    "end": 45.16,
+    "id": "w128"
+  },
+  {
+    "text": "nei",
+    "start": 45.16,
+    "end": 45.29,
+    "id": "w129"
+  },
+  {
+    "text": "commenti.",
+    "start": 45.39,
+    "end": 45.84,
+    "id": "w130"
+  }
+]

@@ -1,1 +1,740 @@
-[{"text": "Due", "start": 0.05, "end": 0.279}, {"text": "locali,", "start": 0.279, "end": 0.779}, {"text": "uno", "start": 0.784, "end": 1.013}, {"text": "accanto", "start": 1.013, "end": 1.426}, {"text": "all'altro.", "start": 1.426, "end": 1.926}, {"text": "Stesso", "start": 2.251, "end": 2.618}, {"text": "cibo,", "start": 2.618, "end": 3.031}, {"text": "stessi", "start": 3.031, "end": 3.398}, {"text": "prezzi.", "start": 3.398, "end": 3.898}, {"text": "Uno", "start": 4.086, "end": 4.315}, {"text": "ha", "start": 4.315, "end": 4.498}, {"text": "la", "start": 4.498, "end": 4.682}, {"text": "fila.", "start": 4.682, "end": 5.182}, {"text": "L'altro", "start": 5.278, "end": 5.691}, {"text": "\u00e8", "start": 5.691, "end": 5.828}, {"text": "vuoto.", "start": 5.828, "end": 6.328}, {"text": "Perch\u00e9?", "start": 6.47, "end": 6.97}, {"text": "Prima", "start": 7.158, "end": 7.479}, {"text": "di", "start": 7.479, "end": 7.663}, {"text": "entrare,", "start": 7.663, "end": 8.163}, {"text": "il", "start": 8.213, "end": 8.396}, {"text": "cliente", "start": 8.396, "end": 8.809}, {"text": "ha", "start": 8.809, "end": 8.992}, {"text": "gi\u00e0", "start": 8.992, "end": 9.222}, {"text": "scelto.", "start": 9.222, "end": 9.722}, {"text": "Sul", "start": 9.91, "end": 10.139}, {"text": "telefono.", "start": 10.139, "end": 10.639}, {"text": "Guarda", "start": 10.918, "end": 11.285}, {"text": "le", "start": 11.285, "end": 11.469}, {"text": "stelle,", "start": 11.469, "end": 11.969}, {"text": "le", "start": 11.973, "end": 12.157}, {"text": "foto,", "start": 12.157, "end": 12.569}, {"text": "le", "start": 12.569, "end": 12.753}, {"text": "recensioni.", "start": 12.753, "end": 13.253}, {"text": "Uno", "start": 13.624, "end": 13.853}, {"text": "studio", "start": 13.853, "end": 14.22}, {"text": "di", "start": 14.22, "end": 14.404}, {"text": "Harvard", "start": 14.404, "end": 14.816}, {"text": "ha", "start": 14.816, "end": 15.0}, {"text": "scoperto", "start": 15.0, "end": 15.458}, {"text": "che", "start": 15.458, "end": 15.688}, {"text": "una", "start": 15.688, "end": 15.917}, {"text": "stella", "start": 15.917, "end": 16.284}, {"text": "in", "start": 16.284, "end": 16.467}, {"text": "pi\u00f9", "start": 16.467, "end": 16.697}, {"text": "nelle", "start": 16.697, "end": 17.018}, {"text": "recensioni", "start": 17.018, "end": 17.518}, {"text": "fa", "start": 17.568, "end": 17.751}, {"text": "crescere", "start": 17.751, "end": 18.21}, {"text": "gli", "start": 18.21, "end": 18.439}, {"text": "incassi", "start": 18.439, "end": 18.852}, {"text": "di", "start": 18.852, "end": 19.035}, {"text": "un", "start": 19.035, "end": 19.219}, {"text": "ristorante", "start": 19.219, "end": 19.719}, {"text": "dal", "start": 19.769, "end": 19.998}, {"text": "cinque", "start": 19.998, "end": 20.365}, {"text": "al", "start": 20.365, "end": 20.549}, {"text": "nove", "start": 20.549, "end": 20.824}, {"text": "per", "start": 20.824, "end": 21.053}, {"text": "cento.", "start": 21.053, "end": 21.553}, {"text": "E", "start": 21.695, "end": 21.833}, {"text": "la", "start": 21.833, "end": 22.016}, {"text": "fila", "start": 22.016, "end": 22.291}, {"text": "attira", "start": 22.291, "end": 22.658}, {"text": "altra", "start": 22.658, "end": 22.979}, {"text": "fila:", "start": 22.979, "end": 23.479}, {"text": "se", "start": 23.575, "end": 23.759}, {"text": "vediamo", "start": 23.759, "end": 24.172}, {"text": "gente", "start": 24.172, "end": 24.493}, {"text": "dentro,", "start": 24.493, "end": 24.993}, {"text": "pensiamo", "start": 24.997, "end": 25.456}, {"text": "che", "start": 25.456, "end": 25.685}, {"text": "sia", "start": 25.685, "end": 25.914}, {"text": "buono.", "start": 25.914, "end": 26.414}, {"text": "Si", "start": 26.556, "end": 26.74}, {"text": "chiama", "start": 26.74, "end": 27.107}, {"text": "riprova", "start": 27.107, "end": 27.519}, {"text": "sociale.", "start": 27.519, "end": 28.019}, {"text": "Quindi,", "start": 28.253, "end": 28.753}, {"text": "tre", "start": 28.757, "end": 28.987}, {"text": "cose", "start": 28.987, "end": 29.262}, {"text": "da", "start": 29.262, "end": 29.445}, {"text": "fare", "start": 29.445, "end": 29.72}, {"text": "subito.", "start": 29.72, "end": 30.22}, {"text": "Chiedi", "start": 30.408, "end": 30.775}, {"text": "una", "start": 30.775, "end": 31.005}, {"text": "recensione", "start": 31.005, "end": 31.505}, {"text": "a", "start": 31.555, "end": 31.692}, {"text": "ogni", "start": 31.692, "end": 31.968}, {"text": "cliente", "start": 31.968, "end": 32.38}, {"text": "contento.", "start": 32.38, "end": 32.88}, {"text": "Rispondi", "start": 33.16, "end": 33.618}, {"text": "a", "start": 33.618, "end": 33.756}, {"text": "tutte,", "start": 33.756, "end": 34.215}, {"text": "anche", "start": 34.215, "end": 34.536}, {"text": "a", "start": 34.536, "end": 34.673}, {"text": "quelle", "start": 34.673, "end": 35.04}, {"text": "negative.", "start": 35.04, "end": 35.54}, {"text": "E", "start": 35.82, "end": 35.957}, {"text": "metti", "start": 35.957, "end": 36.278}, {"text": "foto", "start": 36.278, "end": 36.553}, {"text": "vere", "start": 36.553, "end": 36.829}, {"text": "e", "start": 36.829, "end": 36.966}, {"text": "belle", "start": 36.966, "end": 37.287}, {"text": "del", "start": 37.287, "end": 37.516}, {"text": "tuo", "start": 37.516, "end": 37.746}, {"text": "locale.", "start": 37.746, "end": 38.246}, {"text": "Il", "start": 38.434, "end": 38.617}, {"text": "tuo", "start": 38.617, "end": 38.846}, {"text": "locale", "start": 38.846, "end": 39.213}, {"text": "non", "start": 39.213, "end": 39.442}, {"text": "si", "start": 39.442, "end": 39.626}, {"text": "gioca", "start": 39.626, "end": 39.947}, {"text": "sulla", "start": 39.947, "end": 40.268}, {"text": "strada.", "start": 40.268, "end": 40.768}, {"text": "Si", "start": 40.956, "end": 41.139}, {"text": "gioca", "start": 41.139, "end": 41.46}, {"text": "sul", "start": 41.46, "end": 41.69}, {"text": "telefono.", "start": 41.69, "end": 42.19}, {"text": "E", "start": 42.469, "end": 42.607}, {"text": "tu,", "start": 42.607, "end": 42.928}, {"text": "scegli", "start": 42.928, "end": 43.295}, {"text": "un", "start": 43.295, "end": 43.478}, {"text": "locale", "start": 43.478, "end": 43.845}, {"text": "dalle", "start": 43.845, "end": 44.166}, {"text": "recensioni?", "start": 44.166, "end": 44.666}, {"text": "Scrivilo", "start": 45.037, "end": 45.496}, {"text": "nei", "start": 45.496, "end": 45.725}, {"text": "commenti.", "start": 45.725, "end": 46.225}]
+[
+  {
+    "text": "Due",
+    "start": 0.08,
+    "end": 0.25,
+    "id": "w0"
+  },
+  {
+    "text": "locali.",
+    "start": 0.25,
+    "end": 1,
+    "id": "w1"
+  },
+  {
+    "text": "Uno",
+    "start": 1.03,
+    "end": 1.18,
+    "id": "w2"
+  },
+  {
+    "text": "accanto",
+    "start": 1.18,
+    "end": 1.55,
+    "id": "w3"
+  },
+  {
+    "text": "all'altro.",
+    "start": 1.61,
+    "end": 2.19,
+    "id": "w4"
+  },
+  {
+    "text": "Stesso",
+    "start": 2.47,
+    "end": 2.81,
+    "id": "w5"
+  },
+  {
+    "text": "cibo,",
+    "start": 2.81,
+    "end": 3.19,
+    "id": "w6"
+  },
+  {
+    "text": "stessi",
+    "start": 3.37,
+    "end": 3.76,
+    "id": "w7"
+  },
+  {
+    "text": "prezzi.",
+    "start": 3.76,
+    "end": 4.2,
+    "id": "w8"
+  },
+  {
+    "text": "Uno",
+    "start": 4.49,
+    "end": 4.56,
+    "id": "w9"
+  },
+  {
+    "text": "alla",
+    "start": 4.56,
+    "end": 4.88,
+    "id": "w10"
+  },
+  {
+    "text": "fila.",
+    "start": 4.88,
+    "end": 5.27,
+    "id": "w11"
+  },
+  {
+    "text": "L'altro",
+    "start": 5.57,
+    "end": 5.88,
+    "id": "w12"
+  },
+  {
+    "text": "è",
+    "start": 5.88,
+    "end": 5.93,
+    "id": "w13"
+  },
+  {
+    "text": "vuoto.",
+    "start": 5.93,
+    "end": 6.33,
+    "id": "w14"
+  },
+  {
+    "text": "Perché?",
+    "start": 6.63,
+    "end": 6.95,
+    "id": "w15"
+  },
+  {
+    "text": "Prima",
+    "start": 7.15,
+    "end": 7.38,
+    "id": "w16"
+  },
+  {
+    "text": "di",
+    "start": 7.38,
+    "end": 7.5,
+    "id": "w17"
+  },
+  {
+    "text": "entrare,",
+    "start": 7.5,
+    "end": 8.14,
+    "id": "w18"
+  },
+  {
+    "text": "il",
+    "start": 8.16,
+    "end": 8.22,
+    "id": "w19"
+  },
+  {
+    "text": "cliente",
+    "start": 8.22,
+    "end": 8.57,
+    "id": "w20"
+  },
+  {
+    "text": "ha",
+    "start": 8.57,
+    "end": 8.59,
+    "id": "w21"
+  },
+  {
+    "text": "già",
+    "start": 8.67,
+    "end": 8.83,
+    "id": "w22"
+  },
+  {
+    "text": "scelto.",
+    "start": 8.84,
+    "end": 9.6,
+    "id": "w23"
+  },
+  {
+    "text": "Sul",
+    "start": 9.76,
+    "end": 9.8,
+    "id": "w24"
+  },
+  {
+    "text": "telefono.",
+    "start": 9.81,
+    "end": 10.4,
+    "id": "w25"
+  },
+  {
+    "text": "Guarda",
+    "start": 10.7,
+    "end": 11.05,
+    "id": "w26"
+  },
+  {
+    "text": "le",
+    "start": 11.05,
+    "end": 11.16,
+    "id": "w27"
+  },
+  {
+    "text": "stelle,",
+    "start": 11.22,
+    "end": 11.66,
+    "id": "w28"
+  },
+  {
+    "text": "le",
+    "start": 11.76,
+    "end": 11.85,
+    "id": "w29"
+  },
+  {
+    "text": "foto,",
+    "start": 11.95,
+    "end": 12.33,
+    "id": "w30"
+  },
+  {
+    "text": "le",
+    "start": 12.33,
+    "end": 12.41,
+    "id": "w31"
+  },
+  {
+    "text": "recensioni.",
+    "start": 12.53,
+    "end": 13.29,
+    "id": "w32"
+  },
+  {
+    "text": "Uno",
+    "start": 13.58,
+    "end": 13.72,
+    "id": "w33"
+  },
+  {
+    "text": "studio",
+    "start": 13.72,
+    "end": 14.05,
+    "id": "w34"
+  },
+  {
+    "text": "di",
+    "start": 14.14,
+    "end": 14.22,
+    "id": "w35"
+  },
+  {
+    "text": "Harvard",
+    "start": 14.53,
+    "end": 14.81,
+    "id": "w36"
+  },
+  {
+    "text": "ha",
+    "start": 14.81,
+    "end": 14.95,
+    "id": "w37"
+  },
+  {
+    "text": "scoperto",
+    "start": 14.95,
+    "end": 15.42,
+    "id": "w38"
+  },
+  {
+    "text": "che",
+    "start": 15.53,
+    "end": 15.68,
+    "id": "w39"
+  },
+  {
+    "text": "una",
+    "start": 15.95,
+    "end": 15.96,
+    "id": "w40"
+  },
+  {
+    "text": "stella",
+    "start": 15.97,
+    "end": 16.39,
+    "id": "w41"
+  },
+  {
+    "text": "in",
+    "start": 16.39,
+    "end": 16.53,
+    "id": "w42"
+  },
+  {
+    "text": "più",
+    "start": 16.53,
+    "end": 16.68,
+    "id": "w43"
+  },
+  {
+    "text": "nelle",
+    "start": 16.89,
+    "end": 17.11,
+    "id": "w44"
+  },
+  {
+    "text": "recensioni",
+    "start": 17.11,
+    "end": 17.83,
+    "id": "w45"
+  },
+  {
+    "text": "fa",
+    "start": 17.83,
+    "end": 17.99,
+    "id": "w46"
+  },
+  {
+    "text": "crescere",
+    "start": 17.99,
+    "end": 18.54,
+    "id": "w47"
+  },
+  {
+    "text": "gli",
+    "start": 18.54,
+    "end": 18.77,
+    "id": "w48"
+  },
+  {
+    "text": "incassi",
+    "start": 18.77,
+    "end": 19.24,
+    "id": "w49"
+  },
+  {
+    "text": "di",
+    "start": 19.3,
+    "end": 19.41,
+    "id": "w50"
+  },
+  {
+    "text": "un",
+    "start": 19.41,
+    "end": 19.55,
+    "id": "w51"
+  },
+  {
+    "text": "ristorante",
+    "start": 19.55,
+    "end": 20.24,
+    "id": "w52"
+  },
+  {
+    "text": "dal",
+    "start": 20.3,
+    "end": 20.44,
+    "id": "w53"
+  },
+  {
+    "text": "5",
+    "start": 20.44,
+    "end": 20.75,
+    "id": "w54"
+  },
+  {
+    "text": "al",
+    "start": 20.75,
+    "end": 20.85,
+    "id": "w55"
+  },
+  {
+    "text": "9%.",
+    "start": 20.85,
+    "end": 21.5,
+    "id": "w56"
+  },
+  {
+    "text": "Ela",
+    "start": 21.5,
+    "end": 21.75,
+    "id": "w57"
+  },
+  {
+    "text": "fila",
+    "start": 21.75,
+    "end": 22.09,
+    "id": "w58"
+  },
+  {
+    "text": "attira",
+    "start": 22.09,
+    "end": 22.6,
+    "id": "w59"
+  },
+  {
+    "text": "altra",
+    "start": 22.6,
+    "end": 22.98,
+    "id": "w60"
+  },
+  {
+    "text": "fila.",
+    "start": 23.26,
+    "end": 23.65,
+    "id": "w61"
+  },
+  {
+    "text": "Se",
+    "start": 23.78,
+    "end": 23.83,
+    "id": "w62"
+  },
+  {
+    "text": "vediamo",
+    "start": 23.83,
+    "end": 24.25,
+    "id": "w63"
+  },
+  {
+    "text": "gente",
+    "start": 24.29,
+    "end": 24.42,
+    "id": "w64"
+  },
+  {
+    "text": "dentro,",
+    "start": 24.73,
+    "end": 25.18,
+    "id": "w65"
+  },
+  {
+    "text": "pensiamo",
+    "start": 25.18,
+    "end": 25.62,
+    "id": "w66"
+  },
+  {
+    "text": "che",
+    "start": 25.73,
+    "end": 25.88,
+    "id": "w67"
+  },
+  {
+    "text": "sia",
+    "start": 25.88,
+    "end": 26.17,
+    "id": "w68"
+  },
+  {
+    "text": "buono.",
+    "start": 26.17,
+    "end": 26.65,
+    "id": "w69"
+  },
+  {
+    "text": "Si",
+    "start": 26.65,
+    "end": 26.77,
+    "id": "w70"
+  },
+  {
+    "text": "chiama",
+    "start": 26.77,
+    "end": 27.15,
+    "id": "w71"
+  },
+  {
+    "text": "riprova",
+    "start": 27.22,
+    "end": 27.64,
+    "id": "w72"
+  },
+  {
+    "text": "sociale.",
+    "start": 27.64,
+    "end": 28.32,
+    "id": "w73"
+  },
+  {
+    "text": "Quindi,",
+    "start": 28.32,
+    "end": 28.86,
+    "id": "w74"
+  },
+  {
+    "text": "tre",
+    "start": 28.86,
+    "end": 28.97,
+    "id": "w75"
+  },
+  {
+    "text": "cose",
+    "start": 29.28,
+    "end": 29.33,
+    "id": "w76"
+  },
+  {
+    "text": "da",
+    "start": 29.33,
+    "end": 29.44,
+    "id": "w77"
+  },
+  {
+    "text": "fare",
+    "start": 29.5,
+    "end": 29.67,
+    "id": "w78"
+  },
+  {
+    "text": "subito.",
+    "start": 29.72,
+    "end": 30.44,
+    "id": "w79"
+  },
+  {
+    "text": "Chiedi",
+    "start": 30.5,
+    "end": 30.88,
+    "id": "w80"
+  },
+  {
+    "text": "una",
+    "start": 30.94,
+    "end": 31.08,
+    "id": "w81"
+  },
+  {
+    "text": "recensione",
+    "start": 31.08,
+    "end": 31.73,
+    "id": "w82"
+  },
+  {
+    "text": "a",
+    "start": 31.73,
+    "end": 31.76,
+    "id": "w83"
+  },
+  {
+    "text": "ogni",
+    "start": 31.87,
+    "end": 31.97,
+    "id": "w84"
+  },
+  {
+    "text": "cliente",
+    "start": 32.07,
+    "end": 32.51,
+    "id": "w85"
+  },
+  {
+    "text": "contento.",
+    "start": 32.51,
+    "end": 33.18,
+    "id": "w86"
+  },
+  {
+    "text": "Rispondi",
+    "start": 33.3,
+    "end": 33.8,
+    "id": "w87"
+  },
+  {
+    "text": "a",
+    "start": 33.8,
+    "end": 33.86,
+    "id": "w88"
+  },
+  {
+    "text": "tutte,",
+    "start": 33.86,
+    "end": 34.32,
+    "id": "w89"
+  },
+  {
+    "text": "anche",
+    "start": 34.33,
+    "end": 34.62,
+    "id": "w90"
+  },
+  {
+    "text": "a",
+    "start": 34.62,
+    "end": 34.74,
+    "id": "w91"
+  },
+  {
+    "text": "quelle",
+    "start": 34.74,
+    "end": 35.1,
+    "id": "w92"
+  },
+  {
+    "text": "negative.",
+    "start": 35.1,
+    "end": 35.9,
+    "id": "w93"
+  },
+  {
+    "text": "Emetti",
+    "start": 35.9,
+    "end": 36.37,
+    "id": "w94"
+  },
+  {
+    "text": "foto",
+    "start": 36.37,
+    "end": 36.71,
+    "id": "w95"
+  },
+  {
+    "text": "vere",
+    "start": 36.72,
+    "end": 37.04,
+    "id": "w96"
+  },
+  {
+    "text": "e",
+    "start": 37.04,
+    "end": 37.07,
+    "id": "w97"
+  },
+  {
+    "text": "belle",
+    "start": 37.11,
+    "end": 37.48,
+    "id": "w98"
+  },
+  {
+    "text": "del",
+    "start": 37.48,
+    "end": 37.79,
+    "id": "w99"
+  },
+  {
+    "text": "tuo",
+    "start": 37.79,
+    "end": 38.01,
+    "id": "w100"
+  },
+  {
+    "text": "locale.",
+    "start": 38.01,
+    "end": 38.57,
+    "id": "w101"
+  },
+  {
+    "text": "Il",
+    "start": 38.88,
+    "end": 38.93,
+    "id": "w102"
+  },
+  {
+    "text": "tuo",
+    "start": 38.93,
+    "end": 39.12,
+    "id": "w103"
+  },
+  {
+    "text": "locale",
+    "start": 39.12,
+    "end": 39.48,
+    "id": "w104"
+  },
+  {
+    "text": "non",
+    "start": 39.48,
+    "end": 39.63,
+    "id": "w105"
+  },
+  {
+    "text": "si",
+    "start": 39.63,
+    "end": 39.93,
+    "id": "w106"
+  },
+  {
+    "text": "gioca",
+    "start": 39.93,
+    "end": 40.1,
+    "id": "w107"
+  },
+  {
+    "text": "sulla",
+    "start": 40.14,
+    "end": 40.25,
+    "id": "w108"
+  },
+  {
+    "text": "strada.",
+    "start": 40.54,
+    "end": 41.1,
+    "id": "w109"
+  },
+  {
+    "text": "Si",
+    "start": 41.1,
+    "end": 41.25,
+    "id": "w110"
+  },
+  {
+    "text": "gioca",
+    "start": 41.25,
+    "end": 41.57,
+    "id": "w111"
+  },
+  {
+    "text": "sul",
+    "start": 41.67,
+    "end": 41.84,
+    "id": "w112"
+  },
+  {
+    "text": "telefono.",
+    "start": 41.84,
+    "end": 42.7,
+    "id": "w113"
+  },
+  {
+    "text": "Etu,",
+    "start": 42.7,
+    "end": 43,
+    "id": "w114"
+  },
+  {
+    "text": "scegli",
+    "start": 43,
+    "end": 43.37,
+    "id": "w115"
+  },
+  {
+    "text": "un",
+    "start": 43.37,
+    "end": 43.42,
+    "id": "w116"
+  },
+  {
+    "text": "locale",
+    "start": 43.68,
+    "end": 43.87,
+    "id": "w117"
+  },
+  {
+    "text": "dalle",
+    "start": 43.87,
+    "end": 44.18,
+    "id": "w118"
+  },
+  {
+    "text": "recensioni?",
+    "start": 44.18,
+    "end": 44.9,
+    "id": "w119"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 45.06,
+    "end": 45.5,
+    "id": "w120"
+  },
+  {
+    "text": "nei",
+    "start": 45.5,
+    "end": 45.69,
+    "id": "w121"
+  },
+  {
+    "text": "commenti.",
+    "start": 45.69,
+    "end": 46.47,
+    "id": "w122"
+  }
+]
