@@ -1,0 +1,141 @@
+<template>
+  <style>
+    @font-face { font-family: "Montserrat"; font-weight: 500; src: url("assets/fonts/montserrat-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Montserrat"; font-weight: 600; src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Montserrat"; font-weight: 700; src: url("assets/fonts/montserrat-latin-700-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Montserrat"; font-weight: 800; src: url("assets/fonts/montserrat-latin-800-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Montserrat"; font-weight: 900; src: url("assets/fonts/montserrat-latin-900-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; src: url("assets/fonts/instrument-serif-latin-400-italic.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; }
+    #st-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  </style>
+  <div id="root" data-composition-id="stage" data-width="1080" data-height="1920">
+    <canvas id="st-canvas" width="1080" height="1920"></canvas>
+  </div>
+  <script>
+    (function () {
+      const W = [0.02, 0.39, 1.21, 1.47, 1.61, 1.84, 1.915, 1.99, 2.27, 2.52, 2.72, 2.87, 3.18, 3.943, 4.11, 4.17, 4.55, 4.8, 5.588, 5.648, 5.91, 6.869, 6.96, 7.5, 8.126, 8.28, 8.79, 9.16, 9.72, 9.98, 10.677, 10.78, 11.04, 11.31, 11.48, 12.26, 12.789, 13.512, 13.68, 14.14, 14.52, 14.6, 14.73, 15.601, 15.71, 16.4, 16.779, 16.94, 17.09, 17.55, 18.03, 18.18, 18.388, 18.512, 18.72, 19.11, 19.5, 19.57, 19.72, 19.87, 20.26, 21.059, 21.8, 22.424, 22.62, 22.92, 23.17, 23.3, 23.978, 24.15, 24.27, 24.39, 24.998, 25.33, 25.58, 25.95, 26.08, 26.23, 26.45, 26.931, 27.05, 27.811, 27.871, 28.14, 28.27, 28.58, 29.79, 30.128, 30.188, 30.35, 30.54, 31.253, 31.37, 31.47, 32.04, 32.56, 32.78, 32.859, 32.938, 33.07, 33.5, 34.01, 34.67, 35.04, 36.613, 36.93, 37.08, 37.889, 38.01, 38.749, 39.01, 39.43, 39.6, 40.464, 41.118, 41.36, 41.51, 42.09, 42.984, 43.044, 43.104, 43.65, 44.32, 44.52, 44.85, 45.34, 45.72, 45.87];
+      const D = 50.09;
+      /* ---- flat glow engine: spotlight, glowing line icons, chips, cards. Pure function of t. ---- */
+      const cv = document.getElementById("st-canvas"), c = cv.getContext("2d");
+      const WH = "#ffffff", DIM = "rgba(255,255,255,0.42)", FAINT = "rgba(255,255,255,0.16)";
+      const clamp = (x, a, b) => Math.max(a, Math.min(b, x)), lerp = (a, b, k) => a + (b - a) * k;
+      const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1), o3 = (k) => 1 - Math.pow(1 - k, 3), io = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+      const pop = (t, t0, d) => { const k = seg(t, t0, t0 + (d || 0.32)); if (k <= 0) return 0; const s = 1.70158 * 1.4; return 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2); };
+      const fin = (t, t0, d) => o3(seg(t, t0, t0 + (d || 0.3)));
+      const fmt = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); const rn = (i) => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+      let A = WH, SPX = 540, SPI = 1, SPW = 1;
+      function glow(b, col) { c.shadowBlur = b; c.shadowColor = col || "rgba(255,255,255,0.9)"; }
+      function noglow() { c.shadowBlur = 0; }
+      function rr(x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+      function font(w, s, fam) { c.font = (fam === "serif" ? "italic 400 " : w + " ") + s + "px " + (fam === "serif" ? '"Instrument Serif"' : '"Montserrat"'); }
+      function txt(s, x, y, size, w, col, al, fam, ls) { font(w || 700, size, fam); c.fillStyle = col || WH; c.textAlign = al || "center"; c.textBaseline = "middle"; if (ls) { c.letterSpacing = ls + "px"; } c.fillText(s, x, y); c.letterSpacing = "0px"; }
+      function label(s, x, y, a) { c.globalAlpha *= a === undefined ? 1 : a; txt(s, x, y, 22, 600, DIM, "center", null, 7); c.globalAlpha = 1; }
+      /* person: white filled bean + head, optional cap / sunglasses; facing f (-1/1) */
+      function person(x, y, s, o) { o = o || {}; const a = o.a === undefined ? 1 : o.a; if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); glow(o.dim ? 10 : 28); c.fillStyle = o.dim ? "#bfbfbf" : WH;
+        rr(-62, -150, 124, 150, 58); c.fill(); c.beginPath(); c.arc(0, -205, 48, 0, 7); c.fill(); noglow();
+        if (o.glasses) { c.fillStyle = "#000"; rr(-40, -218, 34, 22, 9); c.fill(); rr(6, -218, 34, 22, 9); c.fill(); c.fillRect(-8, -212, 16, 5); }
+        if (o.cap) { c.fillStyle = "#000"; c.beginPath(); c.arc(0, -212, 50, Math.PI, 0); c.fill(); c.fillStyle = WH; c.strokeStyle = "#000"; c.lineWidth = 5; c.beginPath(); c.arc(0, -214, 44, Math.PI * 1.04, -0.04 * Math.PI); c.stroke(); c.fillStyle = "#000"; rr(o.cap * 10, -224, o.cap * 62 - (o.cap < 0 ? 0 : 0), 12, 6); c.fill(); }
+        if (o.arm) { c.strokeStyle = WH; c.lineWidth = 22; c.lineCap = "round"; glow(14); c.beginPath(); c.moveTo(o.arm * 40, -110); c.lineTo(o.arm * 86, -150 - (o.armUp || 0)); c.stroke(); noglow(); }
+        c.restore(); if (o.lab) label(o.lab, x, y + 40 * s, a); }
+      /* stroked outline helper */
+      function line(w, col, b) { c.lineWidth = w; c.strokeStyle = col || WH; c.lineCap = "round"; c.lineJoin = "round"; glow(b === undefined ? 14 : b); }
+      function chip(x, y, s, p, o) { if (p <= 0) return; o = o || {}; font(700, o.size || 26); c.letterSpacing = "4px"; const w = c.measureText(s).width + 64, h = (o.size || 26) * 2.1; c.letterSpacing = "0px"; c.save(); c.translate(x, y); c.scale(p, p);
+        if (o.fill) { glow(30); c.fillStyle = WH; rr(-w / 2, -h / 2, w, h, h / 2); c.fill(); noglow(); txt(s, 0, 2, o.size || 26, 800, "#000", "center", null, 4); } else { line(3, WH, 10); rr(-w / 2, -h / 2, w, h, h / 2); c.stroke(); noglow(); txt(s, 0, 2, o.size || 26, 700, WH, "center", null, 4); } c.restore(); }
+      function card(x, y, w, h, p, title) { if (p <= 0) return; c.save(); c.globalAlpha = Math.min(1, p); c.translate(x, y); const k = 0.9 + 0.1 * p; c.scale(k, k); c.fillStyle = "rgba(10,10,12,0.92)"; rr(-w / 2, -h / 2, w, h, 26); c.fill(); line(3, "rgba(255,255,255,0.75)", 18); rr(-w / 2, -h / 2, w, h, 26); c.stroke(); noglow(); if (title) txt(title, 0, -h / 2 + 46, 20, 700, DIM, "center", null, 6); c.restore(); }
+      function row(x, y, w, l, r, a, big) { if (a <= 0) return; c.globalAlpha = a; txt(l, x - w / 2, y, big ? 30 : 27, big ? 800 : 600, big ? WH : "rgba(255,255,255,0.8)", "left", null, 2); glow(big ? 20 : 8); txt(r, x + w / 2, y, big ? 44 : 34, 800, WH, "right"); noglow(); c.globalAlpha = 1; }
+      function money(v, x, y, size, a, sub) { if (a <= 0) return; c.globalAlpha = a; glow(36); txt(v, x, y, size, 900, WH); noglow(); if (sub) txt(sub, x, y + size * 0.62, 20, 700, DIM, "center", null, 6); c.globalAlpha = 1; }
+      function bar(x, y, w, k, l, r, a) { if (a <= 0) return; c.globalAlpha = a; txt(l, x - w / 2, y - 34, 20, 700, DIM, "left", null, 6); txt(r, x + w / 2, y - 34, 20, 700, DIM, "right", null, 4); c.fillStyle = "rgba(255,255,255,0.12)"; rr(x - w / 2, y - 8, w, 16, 8); c.fill(); glow(22); c.fillStyle = WH; rr(x - w / 2, y - 8, Math.max(16, w * k), 16, 8); c.fill(); noglow(); c.globalAlpha = 1; }
+      function coins(x, y, t, t0, n, r) { for (let i = 0; i < n; i++) { const k = seg(t, t0 + i * 0.03, t0 + 0.9 + i * 0.03); if (k <= 0 || k >= 1) continue; const a = rn(i) * 6.28, d = (120 + rn(i + 9) * 220) * o3(k); line(4, WH, 12); c.globalAlpha = 1 - k; c.beginPath(); c.arc(x + Math.cos(a) * d, y + Math.sin(a) * d * 0.7 - 80 * k, (r || 14) * (0.6 + rn(i + 3) * 0.6), 0, 7); c.stroke(); c.globalAlpha = 1; } noglow(); }
+      function moka(x, y, s, a, steamT) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); line(6); c.beginPath(); c.moveTo(-60, 0); c.lineTo(-48, -110); c.lineTo(48, -110); c.lineTo(60, 0); c.closePath(); c.stroke(); c.beginPath(); c.moveTo(-44, -120); c.lineTo(-58, -230); c.lineTo(58, -230); c.lineTo(44, -120); c.closePath(); c.stroke(); c.beginPath(); c.moveTo(-50, -120); c.lineTo(50, -120); c.stroke(); c.beginPath(); c.moveTo(-58, -230); c.lineTo(-90, -205); c.stroke(); c.beginPath(); c.moveTo(-10, -230); c.quadraticCurveTo(0, -262, 12, -232); c.stroke(); c.beginPath(); c.moveTo(58, -200); c.quadraticCurveTo(110, -190, 96, -140); c.quadraticCurveTo(84, -110, 50, -112); c.stroke(); noglow(); if (steamT !== undefined) steam(-75, -235, 1, steamT); c.restore(); }
+      function steam(x, y, s, t) { line(4, "rgba(255,255,255,0.8)", 10); for (let k = 0; k < 2; k++) { c.beginPath(); for (let i = 0; i <= 12; i++) { const yy = y - i * 9 * s, xx = x + k * 26 * s + Math.sin(i * 0.7 + t * 4 + k) * 9 * s; i ? c.lineTo(xx, yy) : c.moveTo(xx, yy); } c.stroke(); } noglow(); }
+      function cup(x, y, s, a, t) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); line(6); c.beginPath(); c.moveTo(-50, -80); c.lineTo(-40, -10); c.quadraticCurveTo(0, 6, 40, -10); c.lineTo(50, -80); c.stroke(); c.beginPath(); c.moveTo(50, -66); c.quadraticCurveTo(84, -60, 70, -34); c.quadraticCurveTo(62, -24, 44, -28); c.stroke(); c.beginPath(); c.ellipse(0, 4, 78, 12, 0, 0, 7); c.stroke(); noglow(); if (t !== undefined) steam(-18, -96, 0.8, t); c.restore(); }
+      function sofa(x, y, w, a) { if (a <= 0) return; c.globalAlpha = a; line(5); rr(x - w / 2, y - 190, w, 150, 26); c.stroke(); rr(x - w / 2 - 34, y - 120, 60, 100, 22); c.stroke(); rr(x + w / 2 - 26, y - 120, 60, 100, 22); c.stroke(); c.beginPath(); c.moveTo(x - w / 2 + 10, y - 20); c.lineTo(x - w / 2 + 10, y + 6); c.moveTo(x + w / 2 - 10, y - 20); c.lineTo(x + w / 2 - 10, y + 6); c.stroke(); noglow(); c.globalAlpha = 1; }
+      function counterBox(x, y, w, h, a) { if (a <= 0) return; c.globalAlpha = a; line(5); c.beginPath(); c.moveTo(x - w / 2, y - h); c.lineTo(x + w / 2, y - h); c.lineTo(x + w / 2, y); c.lineTo(x - w / 2, y); c.closePath(); c.stroke(); c.beginPath(); c.moveTo(x - w / 2 - 20, y - h); c.lineTo(x + w / 2 + 20, y - h); c.stroke(); noglow(); c.globalAlpha = 1; }
+      function crown(x, y, s, a) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); line(6, WH, 26); c.beginPath(); c.moveTo(-90, 40); c.lineTo(-90, -30); c.lineTo(-45, 5); c.lineTo(0, -50); c.lineTo(45, 5); c.lineTo(90, -30); c.lineTo(90, 40); c.closePath(); c.stroke(); c.beginPath(); c.moveTo(-90, 62); c.lineTo(90, 62); c.stroke(); noglow(); c.restore(); }
+      function heart(x, y, s, a) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); glow(20); c.fillStyle = WH; c.beginPath(); c.moveTo(0, 12); c.bezierCurveTo(-26, -6, -16, -28, 0, -16); c.bezierCurveTo(16, -28, 26, -6, 0, 12); c.fill(); noglow(); c.restore(); }
+      function piggy(x, y, s, a, fillK) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); line(5); c.beginPath(); c.ellipse(0, -60, 80, 60, 0, 0, 7); c.stroke(); c.beginPath(); c.ellipse(84, -66, 14, 18, 0, 0, 7); c.stroke(); c.beginPath(); c.moveTo(-30, -112); c.lineTo(-14, -140); c.lineTo(0, -116); c.stroke(); [-40, 40].forEach((k) => { c.beginPath(); c.moveTo(k, -8); c.lineTo(k, 12); c.stroke(); }); c.beginPath(); c.moveTo(-20, -122); c.lineTo(20, -122); c.stroke(); c.fillStyle = WH; c.beginPath(); c.arc(40, -76, 5, 0, 7); c.fill(); if (fillK > 0) { c.save(); c.beginPath(); c.ellipse(0, -60, 74, 54, 0, 0, 7); c.clip(); c.fillStyle = "rgba(255,255,255,0.85)"; c.fillRect(-80, -6 - 110 * fillK, 160, 110 * fillK); c.restore(); } noglow(); c.restore(); }
+      function factory(x, y, s, a, t) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); line(5); c.beginPath(); c.moveTo(-160, 0); c.lineTo(-160, -120); c.lineTo(-100, -80); c.lineTo(-100, -120); c.lineTo(-40, -80); c.lineTo(-40, -120); c.lineTo(20, -80); c.lineTo(20, -260); c.lineTo(70, -260); c.lineTo(70, -80); c.lineTo(160, -80); c.lineTo(160, 0); c.closePath(); c.stroke(); for (let i = 0; i < 3; i++) { const k = (t * 0.5 + i / 3) % 1; c.globalAlpha = a * (1 - k); c.beginPath(); c.arc(45 + k * 30, -290 - k * 160, 14 + k * 26, 0, 7); c.stroke(); } noglow(); c.restore(); }
+      function phone(x, y, s, a) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); c.fillStyle = "rgba(10,10,12,0.95)"; rr(-150, -300, 300, 600, 44); c.fill(); line(5, WH, 20); rr(-150, -300, 300, 600, 44); c.stroke(); c.beginPath(); c.moveTo(-30, -276); c.lineTo(30, -276); c.stroke(); noglow(); c.restore(); }
+      function calendar(x, y, s, a, top, sub) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); line(5); rr(-80, -80, 160, 160, 18); c.stroke(); c.beginPath(); c.moveTo(-80, -36); c.lineTo(80, -36); c.moveTo(-40, -96); c.lineTo(-40, -66); c.moveTo(40, -96); c.lineTo(40, -66); c.stroke(); noglow(); txt(top, 0, 16, 56, 900, WH); if (sub) txt(sub, 0, 58, 16, 700, DIM, "center", null, 4); c.restore(); }
+      function arrow(x0, y0, x1, y1, k, a) { if (k <= 0 || a <= 0) return; c.globalAlpha = a; const x = lerp(x0, x1, k), y = lerp(y0, y1, k), an = Math.atan2(y1 - y0, x1 - x0); line(5); c.beginPath(); c.moveTo(x0, y0); c.lineTo(x, y); c.stroke(); c.beginPath(); c.moveTo(x - Math.cos(an - 0.5) * 24, y - Math.sin(an - 0.5) * 24); c.lineTo(x, y); c.lineTo(x - Math.cos(an + 0.5) * 24, y - Math.sin(an + 0.5) * 24); c.stroke(); noglow(); c.globalAlpha = 1; }
+      function xmark(x, y, r, k) { if (k <= 0) return; line(10, WH, 26); c.beginPath(); c.moveTo(x - r, y - r); c.lineTo(lerp(x - r, x + r, k), lerp(y - r, y + r, k)); c.stroke(); if (k > 0.5) { const k2 = (k - 0.5) * 2; c.beginPath(); c.moveTo(x + r, y - r); c.lineTo(lerp(x + r, x - r, k2), lerp(y - r, y + r, k2)); c.stroke(); } noglow(); }
+      function check(x, y, r, k) { if (k <= 0) return; line(10, WH, 26); c.beginPath(); c.moveTo(x - r, y); c.lineTo(x - r * 0.3, y + r * 0.7); c.lineTo(lerp(x - r * 0.3, x + r, k), lerp(y + r * 0.7, y - r * 0.7, k)); c.stroke(); noglow(); }
+      function cursor(x, y, s, a) { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); glow(16); c.fillStyle = WH; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 56); c.lineTo(14, 44); c.lineTo(26, 68); c.lineTo(36, 63); c.lineTo(24, 40); c.lineTo(42, 40); c.closePath(); c.fill(); noglow(); c.restore(); }
+      function commentBox(x, y, a, t, t0, who) { if (a <= 0) return; card(x, y, 520, 320, a, "COMMENTI"); c.globalAlpha = a; c.fillStyle = "rgba(255,255,255,0.08)"; rr(x - 230, y + 92, 460, 50, 25); c.fill(); txt("Aggiungi un commento...", x - 200, y + 117, 20, 500, DIM, "left"); if (who && t > t0) { const k = fin(t, t0, 0.3); c.globalAlpha = a * k; c.fillStyle = WH; c.beginPath(); c.arc(x - 200, y - 40, 20, 0, 7); c.fill(); txt(who, x - 165, y - 40, 26, 800, WH, "left", null, 2); txt("ora", x + 210, y - 40, 18, 600, DIM, "right"); } c.globalAlpha = 1; }
+      function follow(x, y, a, k) { if (a <= 0) return; c.globalAlpha = a; const on = k > 0.5; if (on) { glow(30); c.fillStyle = WH; rr(x - 120, y - 32, 240, 64, 32); c.fill(); noglow(); txt("SEGUITO ✓", x, y + 2, 24, 800, "#000", "center", null, 3); } else { line(3, WH, 10); rr(x - 120, y - 32, 240, 64, 32); c.stroke(); noglow(); txt("SEGUI", x, y + 2, 24, 800, WH, "center", null, 3); } c.globalAlpha = 1; }
+      function bigNum(s, x, y, size, a) { if (a <= 0) return; c.globalAlpha = a; glow(44); txt(s, x, y, size, 900, WH); noglow(); c.globalAlpha = 1; }
+      function floorLine(y, a) { const g = c.createLinearGradient(0, 0, 1080, 0); g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(0.5, "rgba(255,255,255," + 0.32 * a + ")"); g.addColorStop(1, "rgba(255,255,255,0)"); c.fillStyle = g; c.fillRect(0, y, 1080, 2); }
+      function bg(t) { c.fillStyle = "#000"; c.fillRect(0, 0, 1080, 1920);
+        for (let i = 0; i < 9; i++) { const x = rn(i) * 1080 + Math.sin(t * 0.15 + i) * 30, y = 500 + rn(i + 20) * 1300 + Math.cos(t * 0.12 + i) * 30, r = 40 + rn(i + 40) * 90; const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, "rgba(255,255,255,0.045)"); g.addColorStop(1, "rgba(255,255,255,0)"); c.fillStyle = g; c.fillRect(x - r, y - r, r * 2, r * 2); }
+        if (SPI > 0.01) { const fy = 1330, w0 = 70 * SPW, w1 = 420 * SPW; const g = c.createLinearGradient(0, 0, 0, fy); g.addColorStop(0, "rgba(255,255,255," + 0.2 * SPI + ")"); g.addColorStop(1, "rgba(255,255,255," + 0.035 * SPI + ")"); c.fillStyle = g; c.beginPath(); c.moveTo(SPX - w0, -20); c.lineTo(SPX + w0, -20); c.lineTo(SPX + w1, fy); c.lineTo(SPX - w1, fy); c.closePath(); c.fill();
+          const e = c.createRadialGradient(SPX, fy, 0, SPX, fy, w1 * 1.1); e.addColorStop(0, "rgba(255,255,255," + 0.13 * SPI + ")"); e.addColorStop(1, "rgba(255,255,255,0)"); c.fillStyle = e; c.save(); c.translate(SPX, fy); c.scale(1, 0.18); c.translate(-SPX, -fy); c.fillRect(SPX - w1 * 1.2, fy - w1 * 1.2, w1 * 2.4, w1 * 2.4); c.restore(); }
+        floorLine(1330, 1); }
+      function drawFrame(t) { let i = 0; while (i < SH.length - 1 && t >= SH[i][1]) i++; const s = SH[i], u = t - s[0], d = s[1] - s[0]; SPX = 540; SPI = 1; SPW = 1;
+        c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; noglow(); const tr = s[2] || "fade", k = fin(t, s[0], 0.35), z = 1 + 0.035 * seg(u, 0, d) + (tr === "zoom" ? 0.12 * (1 - k) : 0);
+        c.fillStyle = "#000"; c.fillRect(0, 0, 1080, 1920); c.save(); c.translate(540, 1230); c.scale(1.12 * z, 1.12 * z); c.translate(-540, -1150); bg(t); c.globalAlpha = 1; s[3](t, u, d); c.restore();
+        if (tr !== "none" && k < 1) { c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.fillStyle = "rgba(0,0,0," + (1 - k) * 0.85 + ")"; c.fillRect(0, 0, 1080, 1920); }
+        c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; const vg = c.createRadialGradient(540, 1000, 450, 540, 1000, 1250); vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.6)"); c.fillStyle = vg; c.fillRect(0, 0, 1080, 1920); }
+
+      const VOEND = 46.54;
+      /* ---- "Pagare prima te stesso" ---- */
+      const VE = VOEND, FY = 1330;
+      function endCard(t, t0) { const k = fin(t, t0, 0.5); SPI = 1.2; bigNum("RICCHI PIANO", 540, 900, 96, k); c.globalAlpha = k; txt("SOLDI SPIEGATI A GENTE NORMALE", 540, 990, 24, 700, DIM, "center", null, 6); c.globalAlpha = 1; follow(540, 1140, k, seg(t, t0 + 0.9, t0 + 1)); cursor(560 + 60 * (1 - fin(t, t0 + 0.5, 0.4)), 1150, 1, fin(t, t0 + 0.4, 0.2)); }
+      /* salary bar: segments [label, value, color alpha, t0]; total 1300 */
+      function sbar(x, y, w, segs, t, title) { label(title || "STIPENDIO · 1.300 €", x, y - 130, 1); c.fillStyle = "rgba(255,255,255,0.08)"; rr(x - w / 2, y - 34, w, 68, 18); c.fill(); line(3, "rgba(255,255,255,0.7)", 10); rr(x - w / 2, y - 34, w, 68, 18); c.stroke(); noglow(); let xo = x - w / 2;
+        segs.forEach((s) => { const k = fin(t, s[3], 0.4), sw = (w * s[1]) / 1300 * k; if (sw > 1) { c.fillStyle = "rgba(255,255,255," + s[2] + ")"; if (s[2] > 0.8) glow(26); rr(xo + 3, y - 31, Math.max(0, sw - 6), 62, 15); c.fill(); noglow(); if (k > 0.8 && sw > 60) { c.globalAlpha = (k - 0.8) * 5; txt(s[0], xo + sw / 2, y + 66, 18, 800, s[2] > 0.8 ? WH : DIM, "center", null, 3); txt(fmt(s[1]) + " €", xo + sw / 2, y - 64, 22, 900, s[2] > 0.8 ? WH : "rgba(255,255,255,0.75)"); c.globalAlpha = 1; } } xo += sw; }); }
+      const SH = [
+        [0, W[13], "none", (t, u, d) => { // Prendi 1.300 euro al mese e a fine mese non ti resta niente?
+          person(540, FY - 70, 1, { lab: "TU" }); const v = t < W[7] ? 1300 : Math.round(1300 * (1 - o3(seg(t, W[7], W[12])))); card(540, 790, 460, 260, fin(t, 0.05, 0.25), "STIPENDIO"); money(fmt(v) + " €", 540, 830, 120, 1);
+          if (t > W[7]) for (let i = 0; i < 16; i++) { const k = ((t - W[7]) * 0.9 + i / 16) % 1; if (t > W[12] + 0.3) break; c.globalAlpha = Math.sin(k * Math.PI); txt("€", 540 + (rn(i) - 0.5) * 500 * k, 980 + k * 300, 34, 900, WH); c.globalAlpha = 1; }
+          if (t > W[12] - 0.1) chip("FINE MESE", 540, 960, pop(t, W[12] - 0.1), { fill: true, size: 22 });
+        }],
+        [W[13], W[21], "fade", (t, u, d) => { // Non è colpa dello stipendio. È colpa dell'ordine
+          SPI = 0.8; card(540, 880, 460, 200, 1, "STIPENDIO"); money("1.300 €", 540, 910, 90, 1); if (t > W[15] && t < W[18]) check(800, 880, 40, fin(t, W[16], 0.3));
+          const items = ["1 · SPESE", "2 · USCITE", "3 · RISPARMIO"]; for (let i = 0; i < 3; i++) { const sw = t > W[20] - 0.1 ? io(seg(t, W[20] - 0.1, W[20] + 0.5)) : 0, y0 = 1100 + i * 100, y1 = 1100 + (2 - i) * 100, y = i === 1 ? y0 : lerp(y0, y1, sw); chip(items[i], 540, y, pop(t, W[18] + i * 0.12), { size: 22, fill: i === 2 && sw > 0.5 }); }
+        }],
+        [W[21], W[37], "fade", (t, u, d) => { // Lo stipendio arriva. Paghi l'affitto, la spesa, le uscite. E risparmi quello che avanza. Cioè, zero
+          SPI = 0.7; sbar(540, 980, 860, [["AFFITTO", 550, 0.35, W[25] - 0.1], ["SPESA", 300, 0.25, W[27] - 0.1], ["USCITE", 450, 0.18, W[29] - 0.1]], t); person(540, FY - 70, 0.8, { lab: "TU" });
+          if (t > W[31]) { piggy(820, FY - 30, 0.8, fin(t, W[31], 0.3), 0); } if (t > W[35]) { money("0 €", 820, FY - 240, 80 * pop(t, W[35]), 1); }
+        }],
+        [W[37], W[63], "zoom", (t, u, d) => { // Chi diventa ricco fa al contrario ... 10% parte da solo su un altro conto. Centotrenta euro
+          SPI = 0.75; calendar(220, 760, 0.8, fin(t, W[47] - 0.1, 0.3), "27", "STIPENDIO"); const mv = io(seg(t, W[54], W[57] + 0.3));
+          sbar(540, 980, 860, [["", 130 * (1 - mv) + 0.01, 0.95, W[50] - 0.1], ["DA SPENDERE", 1170, 0.2, W[43] - 0.1]], t); if (t > W[50] - 0.1 && mv < 1) { c.globalAlpha = 1 - mv; txt("10%", 120, 1050, 28, 900, WH); c.globalAlpha = 1; }
+          card(800, 1260, 380, 220, fin(t, W[57] - 0.1, 0.3), "ALTRO CONTO"); if (mv > 0 && mv < 1) { const x = lerp(170, 800, mv), y = lerp(980, 1270, mv) - Math.sin(mv * Math.PI) * 160; glow(30); c.fillStyle = WH; rr(x - 60, y - 30, 120, 60, 15); c.fill(); noglow(); txt("130 €", x, y + 2, 24, 900, "#000"); }
+          if (t > W[61] - 0.1) money("130 €", 800, 1290, 70, fin(t, W[61] - 0.1, 0.2)); person(330, FY - 70, 0.7, { lab: "TU" });
+        }],
+        [W[63], W[79], "fade", (t, u, d) => { // Poi vivi con il resto. Non te ne accorgi, perché quei soldi non li vedi mai
+          SPI = 0.85; person(380, FY - 70, 1, { lab: "TU" }); card(380, 880, 340, 180, 1, "CONTO CORRENTE"); money("1.170 €", 380, 910, 70, 1);
+          card(780, 1100, 300, 200, 1, "ALTRO CONTO"); const hid = fin(t, W[75], 0.5); c.globalAlpha = 1 - hid; txt("130 €", 780, 1130, 56, 900, WH); c.globalAlpha = hid; txt("• • • •", 780, 1130, 56, 900, WH); c.globalAlpha = 1; if (hid > 0.5) { line(5); c.beginPath(); c.moveTo(720, 1010); c.lineTo(840, 1020); c.stroke(); noglow(); }
+        }],
+        [W[79], W[87], "zoom", (t, u, d) => { // In vent'anni, hai messo da parte trentunomila euro
+          SPI = 1; calendar(260, 760, 0.9, fin(t, W[79], 0.3), "20", "ANNI"); txt("130 € × 240 MESI", 700, 760, 30, 800, DIM, "center", null, 3); piggy(540, FY - 30, 1.5, 1, o3(seg(t, W[80], W[86]))); const v = Math.round(31200 * o3(seg(t, W[80], W[86]))); money(fmt(v) + " €", 540, 960, 120, fin(t, W[80], 0.2), "VERSATI"); coins(540, 960, t, W[86], 16, 14);
+        }],
+        [W[87], W[104], "fade", (t, u, d) => { // E se li investi, con un rendimento ipotetico del sei per cento l'anno, circa sessantamila
+          SPI = 0.6; const x0 = 170, x1 = 900, y0 = 1400, h = 560, k = io(seg(t, W[90], W[103])); line(3, "rgba(255,255,255,0.45)", 0); c.beginPath(); c.moveTo(x0, y0 - h - 20); c.lineTo(x0, y0); c.lineTo(x1 + 20, y0); c.stroke(); txt("0", x0, y0 + 36, 18, 700, DIM); txt("20 ANNI", x1, y0 + 36, 18, 700, DIM, "right", null, 3);
+          const F = (n, r) => (r ? 130 * ((Math.pow(1 + r, n) - 1) / r) : 130 * n), Y = (v) => y0 - (v / 62000) * h; line(4, "rgba(255,255,255,0.55)", 0); c.setLineDash([10, 10]); c.beginPath(); for (let i = 0; i <= 240 * k; i += 4) { const xx = x0 + (i / 240) * (x1 - x0); i ? c.lineTo(xx, Y(F(i, 0))) : c.moveTo(xx, Y(0)); } c.stroke(); c.setLineDash([]);
+          line(7, WH, 22); c.beginPath(); for (let i = 0; i <= 240 * k; i += 2) { const xx = x0 + (i / 240) * (x1 - x0); i ? c.lineTo(xx, Y(F(i, 0.005))) : c.moveTo(xx, Y(0)); } c.stroke(); noglow();
+          if (k > 0.98) { txt("31.200 €", x1 + 10, Y(31200) + 60, 30, 800, DIM, "right"); money("≈ 60.000 €", x1 - 150, Y(60065) - 60, 76, fin(t, W[103] - 0.1, 0.2)); } chip("6% L'ANNO · IPOTETICO, NON GARANTITO", 540, 760, pop(t, W[93]), { size: 18 });
+        }],
+        [W[104], W[113], "zoom", (t, u, d) => { // Senza un aumento. Si chiama: pagare prima te stesso
+          person(540, FY - 70, 1, { lab: "TU" }); card(540, 740, 420, 180, fin(t, W[104], 0.3), "STIPENDIO"); money("1.300 €", 540, 770, 70, 1); check(800, 740, 34, fin(t, W[106], 0.3)); crown(540, FY - 360, 0.8, fin(t, W[110], 0.4)); chip("PAGA PRIMA TE STESSO", 540, 1490, pop(t, W[109] - 0.1), { fill: true, size: 24 });
+        }],
+        [W[113], W[118], "fade", (t, u, d) => { // Domani, imposta un bonifico automatico
+          SPI = 0.6; phone(540, 1060, 1.3, 1); txt("NUOVO BONIFICO", 540, 740, 22, 800, DIM, "center", null, 6); row(540, 840, 300, "IMPORTO", "130 €", fin(t, W[114], 0.2), true); row(540, 910, 300, "OGNI MESE", "27", fin(t, W[115], 0.2)); row(540, 980, 300, "A", "ALTRO CONTO", fin(t, W[115] + 0.15, 0.2));
+          const on = seg(t, W[117] - 0.05, W[117] + 0.15); txt("AUTOMATICO", 410, 1090, 22, 800, WH, "left", null, 3); c.fillStyle = on > 0.5 ? WH : "rgba(255,255,255,0.15)"; if (on > 0.5) glow(24); rr(600, 1066, 100, 50, 25); c.fill(); noglow(); c.fillStyle = on > 0.5 ? "#000" : WH; c.beginPath(); c.arc(lerp(625, 675, on), 1091, 19, 0, 7); c.fill(); cursor(660, 1100, 1, fin(t, W[116], 0.3));
+        }],
+        [W[118], VE + 0.35, "fade", (t, u, d) => { // E tu, quanto metteresti via ogni mese?
+          person(380, FY - 70, 1, { lab: "TU" }); card(720, 980, 440, 240, fin(t, W[118], 0.3), "OGNI MESE METTO VIA"); money("___ €", 720, 1010, 80, fin(t, W[120], 0.3)); bigNum("?", 380, 860, 200 * pop(t, W[121] - 0.1), 1);
+        }],
+        [VE + 0.35, D, "fade", (t, u, d) => { endCard(t, VE + 0.35); }],
+      ];
+
+      const st = { t: 0 };
+      const tl = gsap.timeline({ paused: true });
+      tl.to(st, { t: D, duration: D, ease: "none", onUpdate: () => drawFrame(st.t) }, 0);
+      Promise.all([document.fonts.load('900 60px "Montserrat"'), document.fonts.load('700 30px "Montserrat"'), document.fonts.load('600 30px "Montserrat"'), document.fonts.load('800 30px "Montserrat"'), document.fonts.load('italic 400 60px "Instrument Serif"')]).then(() => drawFrame(st.t), () => drawFrame(st.t));
+      drawFrame(0);
+      window.__timelines["stage"] = tl;
+    })();
+  </script>
+</template>
