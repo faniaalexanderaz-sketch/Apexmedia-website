@@ -1150,3 +1150,33 @@ Se quel numero ti sembra impossibile, il problema non sono i clienti. È il mode
 Esempio semplificato. Contenuto educativo, non è una consulenza.
 #puntodipareggio #bar #caffè #costifissi #attività #soldi #marketing #apexmedia
 ```
+
+---
+
+## 40. Il parrucchiere da 10 euro ha chiuso. Quello da 35 ha la fila
+
+File: `apex-parrucchiere-35/renders/apex-parrucchiere-35-9x16.mp4`
+
+**TikTok**
+```text
+Il parrucchiere da 10 euro ha chiuso. Quello da 35 ha la fila. Stessa via. Il prezzo basso riempie l'agenda, non il conto. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#parrucchiere #barbiere #prezzi #apexmedia
+```
+
+**Instagram**
+```text
+Il parrucchiere da 10 euro ha chiuso. Quello da 35 ha la fila. Stessa via.
+
+Il primo: 20 tagli al giorno a 10 € = 200 €. Tolti affitto, prodotti e tasse, gliene restavano 30.
+Il secondo: 8 tagli al giorno a 35 € = 280 €. Lavora meno della metà e incassa di più.
+
+Perché non vende un taglio. Vende il caffè all'arrivo, il massaggio al lavatesta, il consiglio giusto, la foto del prima e dopo.
+
+Chi cerca il prezzo più basso ti lascia per un euro. Chi sceglie te, torna.
+Il prezzo basso non riempie il conto. Riempie solo l'agenda.
+
+Se vuoi sapere come creo questi video in poco tempo, da casa, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato, ogni salone ha costi diversi.
+#parrucchiere #barbiere #salone #prezzi #posizionamento #attività #marketing #apexmedia
+```
