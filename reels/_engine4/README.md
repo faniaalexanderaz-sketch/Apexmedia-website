@@ -12,9 +12,12 @@ Approved standard (restaurant demo, `engine4-demo`). Existing videos made with o
 
 ## Call to action (spoken and on screen)
 - Around second 15 a banner appears and the voiceover says, in the same voice and tone as the rest:
-  "Se vuoi sapere come creo questi video da casa, scrivi MOTION nei commenti." Then the story continues.
+  "Se vuoi sapere come creo questi video, scrivi MOTION nei commenti." Then the story continues.
+  Banner text: "Vuoi sapere come creo questi video? / Scrivi MOTION nei commenti".
 - On the closing card the voiceover says:
-  "Se vuoi sapere come creo questi video in poco tempo, da casa, scrivi MOTION e ti spiego tutto."
+  "Se vuoi sapere come creo questi video, scrivi MOTION e ti spiego tutto."
+- Never say "da casa", "dallo studio" or "se vuoi imparare": Apex Media is an agency. (The first video, apex-parrucchiere-35, still has the old wording.)
+- No exclamation marks, no emoji, no glow on the banner or the closing card.
 - Both lines are part of the single voiceover take (same ElevenLabs voice, same prompt), not separate clips.
 - The banner and the closing text are timed from the aligned word times of those sentences: the text appears on the first word of the spoken line.
 
