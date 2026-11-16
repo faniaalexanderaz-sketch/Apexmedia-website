@@ -1,0 +1,692 @@
+[
+  {
+    "text": "Una",
+    "start": 0.01,
+    "end": 0.18,
+    "id": "w0"
+  },
+  {
+    "text": "caramella",
+    "start": 0.24,
+    "end": 0.75,
+    "id": "w1"
+  },
+  {
+    "text": "insieme",
+    "start": 0.75,
+    "end": 1.19,
+    "id": "w2"
+  },
+  {
+    "text": "al",
+    "start": 1.19,
+    "end": 1.31,
+    "id": "w3"
+  },
+  {
+    "text": "conto,",
+    "start": 1.36,
+    "end": 1.79,
+    "id": "w4"
+  },
+  {
+    "text": "e",
+    "start": 1.79,
+    "end": 1.85,
+    "id": "w5"
+  },
+  {
+    "text": "le",
+    "start": 1.85,
+    "end": 1.98,
+    "id": "w6"
+  },
+  {
+    "text": "mance",
+    "start": 1.98,
+    "end": 2.31,
+    "id": "w7"
+  },
+  {
+    "text": "salgono.",
+    "start": 2.31,
+    "end": 2.8,
+    "id": "w8"
+  },
+  {
+    "text": "Lo",
+    "start": 2.8,
+    "end": 3.005,
+    "id": "w9"
+  },
+  {
+    "text": "hanno",
+    "start": 3.005,
+    "end": 3.21,
+    "id": "w10"
+  },
+  {
+    "text": "testato",
+    "start": 3.21,
+    "end": 3.6,
+    "id": "w11"
+  },
+  {
+    "text": "in",
+    "start": 3.6,
+    "end": 3.71,
+    "id": "w12"
+  },
+  {
+    "text": "un",
+    "start": 3.71,
+    "end": 3.82,
+    "id": "w13"
+  },
+  {
+    "text": "ristorante",
+    "start": 3.82,
+    "end": 4.38,
+    "id": "w14"
+  },
+  {
+    "text": "americano.",
+    "start": 4.38,
+    "end": 5.16,
+    "id": "w15"
+  },
+  {
+    "text": "Senza",
+    "start": 5.16,
+    "end": 5.53,
+    "id": "w16"
+  },
+  {
+    "text": "caramella,",
+    "start": 5.53,
+    "end": 6.27,
+    "id": "w17"
+  },
+  {
+    "text": "mance",
+    "start": 6.27,
+    "end": 6.63,
+    "id": "w18"
+  },
+  {
+    "text": "normali.",
+    "start": 6.63,
+    "end": 7.4,
+    "id": "w19"
+  },
+  {
+    "text": "Una",
+    "start": 7.4,
+    "end": 7.88,
+    "id": "w20"
+  },
+  {
+    "text": "caramella",
+    "start": 7.88,
+    "end": 8.36,
+    "id": "w21"
+  },
+  {
+    "text": "col",
+    "start": 8.36,
+    "end": 8.57,
+    "id": "w22"
+  },
+  {
+    "text": "conto,",
+    "start": 8.6,
+    "end": 9.08,
+    "id": "w23"
+  },
+  {
+    "text": "più",
+    "start": 9.08,
+    "end": 9.38,
+    "id": "w24"
+  },
+  {
+    "text": "3%.",
+    "start": 9.6,
+    "end": 10.43,
+    "id": "w25"
+  },
+  {
+    "text": "Due",
+    "start": 10.43,
+    "end": 10.81,
+    "id": "w26"
+  },
+  {
+    "text": "caramelle,",
+    "start": 10.81,
+    "end": 11.98,
+    "id": "w27"
+  },
+  {
+    "text": "più",
+    "start": 11.98,
+    "end": 12.3,
+    "id": "w28"
+  },
+  {
+    "text": "14%.",
+    "start": 12.52,
+    "end": 13.38,
+    "id": "w29"
+  },
+  {
+    "text": "Poi",
+    "start": 13.38,
+    "end": 13.695,
+    "id": "w30"
+  },
+  {
+    "text": "il",
+    "start": 13.695,
+    "end": 14.01,
+    "id": "w31"
+  },
+  {
+    "text": "trucco.",
+    "start": 14.01,
+    "end": 15,
+    "id": "w32"
+  },
+  {
+    "text": "Il",
+    "start": 15,
+    "end": 15.45,
+    "id": "w33"
+  },
+  {
+    "text": "cameriere",
+    "start": 15.45,
+    "end": 15.72,
+    "id": "w34"
+  },
+  {
+    "text": "lascia",
+    "start": 15.72,
+    "end": 16.12,
+    "id": "w35"
+  },
+  {
+    "text": "una",
+    "start": 16.12,
+    "end": 16.32,
+    "id": "w36"
+  },
+  {
+    "text": "caramella,",
+    "start": 16.32,
+    "end": 16.95,
+    "id": "w37"
+  },
+  {
+    "text": "si",
+    "start": 17.15,
+    "end": 17.2,
+    "id": "w38"
+  },
+  {
+    "text": "allontana,",
+    "start": 17.2,
+    "end": 17.91,
+    "id": "w39"
+  },
+  {
+    "text": "torna",
+    "start": 17.92,
+    "end": 18.18,
+    "id": "w40"
+  },
+  {
+    "text": "indietro",
+    "start": 18.5,
+    "end": 18.88,
+    "id": "w41"
+  },
+  {
+    "text": "e",
+    "start": 18.88,
+    "end": 18.93,
+    "id": "w42"
+  },
+  {
+    "text": "ne",
+    "start": 18.93,
+    "end": 19.02,
+    "id": "w43"
+  },
+  {
+    "text": "aggiunge",
+    "start": 19.1,
+    "end": 19.43,
+    "id": "w44"
+  },
+  {
+    "text": "un'altra.",
+    "start": 19.43,
+    "end": 20,
+    "id": "w45"
+  },
+  {
+    "text": "Per",
+    "start": 20,
+    "end": 20.41,
+    "id": "w46"
+  },
+  {
+    "text": "voi,",
+    "start": 20.41,
+    "end": 21.01,
+    "id": "w47"
+  },
+  {
+    "text": "più",
+    "start": 21.01,
+    "end": 21.39,
+    "id": "w48"
+  },
+  {
+    "text": "23%.",
+    "start": 21.39,
+    "end": 22.67,
+    "id": "w49"
+  },
+  {
+    "text": "Stessa",
+    "start": 22.67,
+    "end": 23.17,
+    "id": "w50"
+  },
+  {
+    "text": "caramella,",
+    "start": 23.17,
+    "end": 24,
+    "id": "w51"
+  },
+  {
+    "text": "effetto",
+    "start": 24,
+    "end": 24.55,
+    "id": "w52"
+  },
+  {
+    "text": "diverso.",
+    "start": 24.55,
+    "end": 25.35,
+    "id": "w53"
+  },
+  {
+    "text": "Si",
+    "start": 25.35,
+    "end": 25.85,
+    "id": "w54"
+  },
+  {
+    "text": "chiama",
+    "start": 25.85,
+    "end": 26.12,
+    "id": "w55"
+  },
+  {
+    "text": "reciprocità.",
+    "start": 26.12,
+    "end": 27.34,
+    "id": "w56"
+  },
+  {
+    "text": "Quando",
+    "start": 27.85,
+    "end": 28.14,
+    "id": "w57"
+  },
+  {
+    "text": "ricevi",
+    "start": 28.14,
+    "end": 28.44,
+    "id": "w58"
+  },
+  {
+    "text": "qualcosa",
+    "start": 28.44,
+    "end": 28.85,
+    "id": "w59"
+  },
+  {
+    "text": "che",
+    "start": 28.85,
+    "end": 29,
+    "id": "w60"
+  },
+  {
+    "text": "non",
+    "start": 29,
+    "end": 29.15,
+    "id": "w61"
+  },
+  {
+    "text": "ti",
+    "start": 29.15,
+    "end": 29.25,
+    "id": "w62"
+  },
+  {
+    "text": "aspettavi,",
+    "start": 29.25,
+    "end": 29.84,
+    "id": "w63"
+  },
+  {
+    "text": "senti",
+    "start": 29.84,
+    "end": 30.15,
+    "id": "w64"
+  },
+  {
+    "text": "il",
+    "start": 30.15,
+    "end": 30.28,
+    "id": "w65"
+  },
+  {
+    "text": "bisogno",
+    "start": 30.28,
+    "end": 30.72,
+    "id": "w66"
+  },
+  {
+    "text": "di",
+    "start": 30.73,
+    "end": 30.85,
+    "id": "w67"
+  },
+  {
+    "text": "ricambiare.",
+    "start": 31.03,
+    "end": 31.72,
+    "id": "w68"
+  },
+  {
+    "text": "Esembra",
+    "start": 32.12,
+    "end": 32.2,
+    "id": "w69"
+  },
+  {
+    "text": "un",
+    "start": 32.2,
+    "end": 32.3,
+    "id": "w70"
+  },
+  {
+    "text": "gesto",
+    "start": 32.36,
+    "end": 32.68,
+    "id": "w71"
+  },
+  {
+    "text": "personale,",
+    "start": 32.68,
+    "end": 33.42,
+    "id": "w72"
+  },
+  {
+    "text": "non",
+    "start": 33.42,
+    "end": 33.62,
+    "id": "w73"
+  },
+  {
+    "text": "una",
+    "start": 33.62,
+    "end": 33.85,
+    "id": "w74"
+  },
+  {
+    "text": "regola.",
+    "start": 33.85,
+    "end": 34.52,
+    "id": "w75"
+  },
+  {
+    "text": "Nel",
+    "start": 34.52,
+    "end": 34.765,
+    "id": "w76"
+  },
+  {
+    "text": "tuo",
+    "start": 34.765,
+    "end": 35.01,
+    "id": "w77"
+  },
+  {
+    "text": "locale",
+    "start": 35.01,
+    "end": 35.36,
+    "id": "w78"
+  },
+  {
+    "text": "può",
+    "start": 35.36,
+    "end": 35.57,
+    "id": "w79"
+  },
+  {
+    "text": "essere",
+    "start": 35.57,
+    "end": 36,
+    "id": "w80"
+  },
+  {
+    "text": "un",
+    "start": 36,
+    "end": 36.14,
+    "id": "w81"
+  },
+  {
+    "text": "assaggio,",
+    "start": 36.14,
+    "end": 36.92,
+    "id": "w82"
+  },
+  {
+    "text": "un",
+    "start": 36.92,
+    "end": 37.04,
+    "id": "w83"
+  },
+  {
+    "text": "caffè",
+    "start": 37.07,
+    "end": 37.39,
+    "id": "w84"
+  },
+  {
+    "text": "offerto,",
+    "start": 37.39,
+    "end": 38.03,
+    "id": "w85"
+  },
+  {
+    "text": "un",
+    "start": 38.03,
+    "end": 38.2,
+    "id": "w86"
+  },
+  {
+    "text": "biglietto",
+    "start": 38.2,
+    "end": 38.58,
+    "id": "w87"
+  },
+  {
+    "text": "scritto",
+    "start": 38.66,
+    "end": 39.04,
+    "id": "w88"
+  },
+  {
+    "text": "a",
+    "start": 39.04,
+    "end": 39.08,
+    "id": "w89"
+  },
+  {
+    "text": "mano",
+    "start": 39.09,
+    "end": 39.31,
+    "id": "w90"
+  },
+  {
+    "text": "dentro",
+    "start": 39.31,
+    "end": 39.65,
+    "id": "w91"
+  },
+  {
+    "text": "l'ordine.",
+    "start": 39.65,
+    "end": 40.12,
+    "id": "w92"
+  },
+  {
+    "text": "Costa",
+    "start": 40.69,
+    "end": 40.74,
+    "id": "w93"
+  },
+  {
+    "text": "pochi",
+    "start": 40.74,
+    "end": 41.15,
+    "id": "w94"
+  },
+  {
+    "text": "centesimi.",
+    "start": 41.15,
+    "end": 41.95,
+    "id": "w95"
+  },
+  {
+    "text": "Eil",
+    "start": 41.95,
+    "end": 42.33,
+    "id": "w96"
+  },
+  {
+    "text": "cliente",
+    "start": 42.33,
+    "end": 42.79,
+    "id": "w97"
+  },
+  {
+    "text": "se",
+    "start": 42.79,
+    "end": 42.96,
+    "id": "w98"
+  },
+  {
+    "text": "lo",
+    "start": 42.96,
+    "end": 43.13,
+    "id": "w99"
+  },
+  {
+    "text": "ricorda.",
+    "start": 43.13,
+    "end": 43.83,
+    "id": "w100"
+  },
+  {
+    "text": "Etu?",
+    "start": 44.44,
+    "end": 44.96,
+    "id": "w101"
+  },
+  {
+    "text": "Cosa",
+    "start": 44.96,
+    "end": 45.19,
+    "id": "w102"
+  },
+  {
+    "text": "regali",
+    "start": 45.19,
+    "end": 45.56,
+    "id": "w103"
+  },
+  {
+    "text": "ai",
+    "start": 45.56,
+    "end": 45.68,
+    "id": "w104"
+  },
+  {
+    "text": "tuoi",
+    "start": 45.68,
+    "end": 45.92,
+    "id": "w105"
+  },
+  {
+    "text": "clienti",
+    "start": 45.92,
+    "end": 46.35,
+    "id": "w106"
+  },
+  {
+    "text": "senza",
+    "start": 46.35,
+    "end": 46.63,
+    "id": "w107"
+  },
+  {
+    "text": "che",
+    "start": 46.66,
+    "end": 46.84,
+    "id": "w108"
+  },
+  {
+    "text": "se",
+    "start": 46.84,
+    "end": 46.91,
+    "id": "w109"
+  },
+  {
+    "text": "lo",
+    "start": 46.95,
+    "end": 47.08,
+    "id": "w110"
+  },
+  {
+    "text": "aspettino?",
+    "start": 47.08,
+    "end": 47.88,
+    "id": "w111"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 48.28,
+    "end": 48.44,
+    "id": "w112"
+  },
+  {
+    "text": "nei",
+    "start": 48.44,
+    "end": 48.65,
+    "id": "w113"
+  },
+  {
+    "text": "commenti.",
+    "start": 48.65,
+    "end": 49.44,
+    "id": "w114"
+  }
+]

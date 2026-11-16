@@ -495,6 +495,149 @@ Un cliente nuovo costa 5 volte di più che tenerne uno 🪣 Tu cosa fai per farl
 
 ---
 
+## 19. Più scelta, meno vendi (55 s) — 3D cinematico
+
+File: `apex-troppa-scelta/renders/apex-troppa-scelta-9x16.mp4`
+
+**Instagram**
+```text
+Più scelta dai ai clienti, meno vendi. 🍓
+
+Esperimento in un supermercato in California: con 24 gusti di marmellata comprava il 3% di chi si fermava. Con 6 gusti, il 30%. Dieci volte di più.
+
+Quando le opzioni sono troppe il cervello si blocca, e la decisione più facile è non decidere.
+Menu da 60 piatti, sito con 10 servizi, listino con 20 pacchetti: stesso problema.
+
+La soluzione: tre opzioni al massimo, e una evidenziata.
+
+👇 Quante opzioni dai ai tuoi clienti? Scrivilo nei commenti.
+
+#marketing #psicologiadelconsumatore #vendite #ristorazione #attivitalocali #pricing #imprenditori #conversioni
+```
+
+**TikTok**
+```text
+24 gusti = 3% di vendite. 6 gusti = 30%. Più scelta dai, meno vendi 🍓 Tu quante opzioni dai?
+#marketing #vendite #psicologia #business
+```
+
+---
+
+## 20. La caramella col conto (54 s) — 3D cinematico
+
+File: `apex-caramella/renders/apex-caramella-9x16.mp4`
+
+**Instagram**
+```text
+Una caramella insieme al conto, e le mance salgono. 🍬
+
+Esperimento in un ristorante americano:
+1 caramella col conto → +3%
+2 caramelle → +14%
+1 caramella, il cameriere si allontana, torna e ne aggiunge un'altra "per voi" → +23%
+
+Si chiama reciprocità: quando ricevi qualcosa che non ti aspettavi, senti il bisogno di ricambiare. E deve sembrare un gesto personale, non una regola.
+
+Un assaggio, un caffè offerto, un biglietto scritto a mano nell'ordine. Costa pochi centesimi, il cliente se lo ricorda.
+
+👇 Cosa regali ai tuoi clienti senza che se lo aspettino?
+
+#ristorazione #marketing #reciprocità #fidelizzazione #customerexperience #attivitalocali #bar #ristoratori
+```
+
+**TikTok**
+```text
+Una caramella col conto e le mance salgono del 23%. Ma solo se fai così 🍬 Tu cosa regali ai clienti?
+#ristorante #marketing #psicologia #clienti
+```
+
+---
+
+## 21. Rispondi in 5 minuti (56 s) — 3D cinematico
+
+File: `apex-5-minuti/renders/apex-5-minuti-9x16.mp4`
+
+**Instagram**
+```text
+Se rispondi a un cliente dopo un'ora, l'hai già perso. ⏱️
+
+Studio pubblicato su Harvard Business Review: chi risponde entro un'ora ha quasi 7 volte più probabilità di trasformare il contatto in una trattativa, rispetto a chi risponde anche solo un'ora dopo. Il tempo medio di risposta? 42 ore.
+
+Scrivi a tre idraulici: chiami il primo che risponde, non il migliore.
+
+Non serve assumere nessuno: messaggio automatico su WhatsApp, notifica sul telefono, una regola. Si risponde entro 5 minuti.
+
+👇 Tu in quanto tempo rispondi? Scrivilo nei commenti.
+
+#leadgeneration #vendite #whatsappbusiness #marketing #clienti #artigiani #attivitalocali #imprenditori
+```
+
+**TikTok**
+```text
+Rispondi dopo un'ora? Hai 7 volte meno probabilità di chiudere ⏱️ Tu in quanto tempo rispondi?
+#vendite #clienti #marketing #whatsapp
+```
+
+---
+
+## 22. Il sito che non si apre (55 s) — 3D cinematico
+
+File: `apex-3-secondi/renders/apex-3-secondi-9x16.mp4`
+
+**Instagram**
+```text
+Metà dei tuoi clienti se ne va prima ancora di vedere il tuo sito. 📱
+
+Secondo Google, il 53% delle visite da telefono viene abbandonato se il sito ci mette più di 3 secondi a caricare.
+Tu paghi la pubblicità, il cliente clicca, e mentre la pagina carica è già tornato indietro.
+
+Le cause sono quasi sempre le stesse: foto enormi, troppi plug-in, hosting da 2 € al mese.
+La soluzione: comprimi le immagini, togli quello che non serve e prova il sito con PageSpeed di Google (gratis, un minuto).
+
+👇 Il tuo sito in quanti secondi si apre?
+
+#sitoweb #webdesign #pagespeed #marketingdigitale #seo #pubblicitaonline #conversioni #attivitalocali
+```
+
+**TikTok**
+```text
+Il 53% chiude il sito se ci mette più di 3 secondi 📱 Il tuo in quanti secondi si apre?
+#sitoweb #marketing #google #business
+```
+
+---
+
+## 23. Ha alzato i prezzi e guadagna di più (54 s) — 3D cinematico
+
+File: `apex-prezzo-alto/renders/apex-prezzo-alto-9x16.mp4`
+
+**Instagram**
+```text
+Ha alzato i prezzi, ha perso clienti, e guadagna di più. 💈
+
+Barbiere: taglio a 15 €, 100 clienti al mese = 1.500 €.
+Alza a 25 €, 3 clienti su 10 se ne vanno, ne restano 70 = 1.750 €.
+Guadagna di più e fa 30 tagli in meno.
+
+Chi sceglie solo per il prezzo ti lascia per uno che costa 1 € in meno. Chi sceglie te, resta.
+Ma il prezzo alto va giustificato: esperienza migliore, nome curato, foto e recensioni che lo dimostrano.
+
+Il prezzo basso non è una strategia. È una gara che vince chi fallisce per ultimo.
+
+👇 Quando hai alzato i prezzi l'ultima volta?
+
+(Esempio semplificato: i numeri cambiano per ogni attività.)
+#prezzi #pricing #barbiere #imprenditori #attivitalocali #marketing #business #posizionamento
+```
+
+**TikTok**
+```text
+Ha alzato i prezzi da 15 a 25 €, ha perso 3 clienti su 10 e guadagna di più 💈 Tu quando li hai alzati?
+#prezzi #barbiere #business #marketing
+```
+
+---
+
 ## Prima di pubblicare
 
 - **Commenti con parola chiave** (CLIENTI, AUDIT): rispondi in DM entro poche ore, altrimenti il contatto si raffredda.

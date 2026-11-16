@@ -1,0 +1,782 @@
+[
+  {
+    "text": "Se",
+    "start": 0.08,
+    "end": 0.12,
+    "id": "w0"
+  },
+  {
+    "text": "rispondi",
+    "start": 0.12,
+    "end": 0.6,
+    "id": "w1"
+  },
+  {
+    "text": "a",
+    "start": 0.6,
+    "end": 0.65,
+    "id": "w2"
+  },
+  {
+    "text": "un",
+    "start": 0.72,
+    "end": 0.78,
+    "id": "w3"
+  },
+  {
+    "text": "cliente",
+    "start": 0.78,
+    "end": 1.18,
+    "id": "w4"
+  },
+  {
+    "text": "dopo",
+    "start": 1.24,
+    "end": 1.46,
+    "id": "w5"
+  },
+  {
+    "text": "un'ora,",
+    "start": 1.46,
+    "end": 2,
+    "id": "w6"
+  },
+  {
+    "text": "l'hai",
+    "start": 2.08,
+    "end": 2.42,
+    "id": "w7"
+  },
+  {
+    "text": "già",
+    "start": 2.42,
+    "end": 2.66,
+    "id": "w8"
+  },
+  {
+    "text": "perso.",
+    "start": 2.71,
+    "end": 3.42,
+    "id": "w9"
+  },
+  {
+    "text": "Uno",
+    "start": 3.47,
+    "end": 3.61,
+    "id": "w10"
+  },
+  {
+    "text": "studio",
+    "start": 3.61,
+    "end": 3.99,
+    "id": "w11"
+  },
+  {
+    "text": "pubblicato",
+    "start": 3.99,
+    "end": 4.6,
+    "id": "w12"
+  },
+  {
+    "text": "su",
+    "start": 4.66,
+    "end": 4.74,
+    "id": "w13"
+  },
+  {
+    "text": "Harvard",
+    "start": 4.74,
+    "end": 5.12,
+    "id": "w14"
+  },
+  {
+    "text": "Business",
+    "start": 5.41,
+    "end": 5.69,
+    "id": "w15"
+  },
+  {
+    "text": "Review",
+    "start": 5.69,
+    "end": 6.12,
+    "id": "w16"
+  },
+  {
+    "text": "ha",
+    "start": 6.2,
+    "end": 6.27,
+    "id": "w17"
+  },
+  {
+    "text": "analizzato",
+    "start": 6.27,
+    "end": 7.04,
+    "id": "w18"
+  },
+  {
+    "text": "centinaia",
+    "start": 7.04,
+    "end": 7.72,
+    "id": "w19"
+  },
+  {
+    "text": "di",
+    "start": 7.73,
+    "end": 7.82,
+    "id": "w20"
+  },
+  {
+    "text": "aziende.",
+    "start": 7.88,
+    "end": 8.69,
+    "id": "w21"
+  },
+  {
+    "text": "Chi",
+    "start": 8.75,
+    "end": 8.89,
+    "id": "w22"
+  },
+  {
+    "text": "risponde",
+    "start": 8.89,
+    "end": 9.36,
+    "id": "w23"
+  },
+  {
+    "text": "entro",
+    "start": 9.41,
+    "end": 9.65,
+    "id": "w24"
+  },
+  {
+    "text": "un'ora",
+    "start": 9.71,
+    "end": 10.12,
+    "id": "w25"
+  },
+  {
+    "text": "ha",
+    "start": 10.12,
+    "end": 10.26,
+    "id": "w26"
+  },
+  {
+    "text": "quasi",
+    "start": 10.26,
+    "end": 10.4,
+    "id": "w27"
+  },
+  {
+    "text": "sette",
+    "start": 10.69,
+    "end": 11.02,
+    "id": "w28"
+  },
+  {
+    "text": "volte",
+    "start": 11.02,
+    "end": 11.42,
+    "id": "w29"
+  },
+  {
+    "text": "più",
+    "start": 11.47,
+    "end": 11.59,
+    "id": "w30"
+  },
+  {
+    "text": "probabilità",
+    "start": 11.59,
+    "end": 12.23,
+    "id": "w31"
+  },
+  {
+    "text": "di",
+    "start": 12.23,
+    "end": 12.34,
+    "id": "w32"
+  },
+  {
+    "text": "trasformare",
+    "start": 12.34,
+    "end": 12.97,
+    "id": "w33"
+  },
+  {
+    "text": "il",
+    "start": 12.97,
+    "end": 13.08,
+    "id": "w34"
+  },
+  {
+    "text": "contatto",
+    "start": 13.08,
+    "end": 13.62,
+    "id": "w35"
+  },
+  {
+    "text": "in",
+    "start": 13.62,
+    "end": 13.75,
+    "id": "w36"
+  },
+  {
+    "text": "una",
+    "start": 13.86,
+    "end": 14,
+    "id": "w37"
+  },
+  {
+    "text": "trattativa",
+    "start": 14.04,
+    "end": 14.9,
+    "id": "w38"
+  },
+  {
+    "text": "rispetto",
+    "start": 14.95,
+    "end": 15.46,
+    "id": "w39"
+  },
+  {
+    "text": "a",
+    "start": 15.46,
+    "end": 15.53,
+    "id": "w40"
+  },
+  {
+    "text": "chi",
+    "start": 15.53,
+    "end": 15.74,
+    "id": "w41"
+  },
+  {
+    "text": "risponde",
+    "start": 15.74,
+    "end": 16.3,
+    "id": "w42"
+  },
+  {
+    "text": "anche",
+    "start": 16.3,
+    "end": 16.6,
+    "id": "w43"
+  },
+  {
+    "text": "solo",
+    "start": 16.89,
+    "end": 16.93,
+    "id": "w44"
+  },
+  {
+    "text": "un'ora",
+    "start": 16.93,
+    "end": 17.35,
+    "id": "w45"
+  },
+  {
+    "text": "dopo.",
+    "start": 17.35,
+    "end": 17.74,
+    "id": "w46"
+  },
+  {
+    "text": "Eil",
+    "start": 17.96,
+    "end": 18.09,
+    "id": "w47"
+  },
+  {
+    "text": "tempo",
+    "start": 18.09,
+    "end": 18.43,
+    "id": "w48"
+  },
+  {
+    "text": "medio",
+    "start": 18.43,
+    "end": 18.77,
+    "id": "w49"
+  },
+  {
+    "text": "di",
+    "start": 18.77,
+    "end": 18.85,
+    "id": "w50"
+  },
+  {
+    "text": "risposta?",
+    "start": 18.91,
+    "end": 19.6,
+    "id": "w51"
+  },
+  {
+    "text": "42",
+    "start": 19.78,
+    "end": 20.64,
+    "id": "w52"
+  },
+  {
+    "text": "ore.",
+    "start": 20.64,
+    "end": 21.4,
+    "id": "w53"
+  },
+  {
+    "text": "Pensa",
+    "start": 21.66,
+    "end": 22.04,
+    "id": "w54"
+  },
+  {
+    "text": "a",
+    "start": 22.04,
+    "end": 22.13,
+    "id": "w55"
+  },
+  {
+    "text": "te.",
+    "start": 22.13,
+    "end": 22.62,
+    "id": "w56"
+  },
+  {
+    "text": "Scrivi",
+    "start": 22.69,
+    "end": 23.07,
+    "id": "w57"
+  },
+  {
+    "text": "a",
+    "start": 23.07,
+    "end": 23.14,
+    "id": "w58"
+  },
+  {
+    "text": "tre",
+    "start": 23.14,
+    "end": 23.37,
+    "id": "w59"
+  },
+  {
+    "text": "idraulici.",
+    "start": 23.37,
+    "end": 24.32,
+    "id": "w60"
+  },
+  {
+    "text": "Il",
+    "start": 24.42,
+    "end": 24.49,
+    "id": "w61"
+  },
+  {
+    "text": "primo",
+    "start": 24.49,
+    "end": 24.86,
+    "id": "w62"
+  },
+  {
+    "text": "risponde",
+    "start": 24.86,
+    "end": 25.44,
+    "id": "w63"
+  },
+  {
+    "text": "subito.",
+    "start": 25.44,
+    "end": 26.04,
+    "id": "w64"
+  },
+  {
+    "text": "Gli",
+    "start": 26.21,
+    "end": 26.36,
+    "id": "w65"
+  },
+  {
+    "text": "altri",
+    "start": 26.36,
+    "end": 26.73,
+    "id": "w66"
+  },
+  {
+    "text": "due",
+    "start": 26.73,
+    "end": 26.95,
+    "id": "w67"
+  },
+  {
+    "text": "il",
+    "start": 26.95,
+    "end": 27.09,
+    "id": "w68"
+  },
+  {
+    "text": "giorno",
+    "start": 27.15,
+    "end": 27.55,
+    "id": "w69"
+  },
+  {
+    "text": "dopo.",
+    "start": 27.55,
+    "end": 28.1,
+    "id": "w70"
+  },
+  {
+    "text": "Chi",
+    "start": 28.15,
+    "end": 28.36,
+    "id": "w71"
+  },
+  {
+    "text": "chiami?",
+    "start": 28.44,
+    "end": 29.26,
+    "id": "w72"
+  },
+  {
+    "text": "Esatto.",
+    "start": 29.31,
+    "end": 30.18,
+    "id": "w73"
+  },
+  {
+    "text": "Il",
+    "start": 30.26,
+    "end": 30.31,
+    "id": "w74"
+  },
+  {
+    "text": "cliente",
+    "start": 30.31,
+    "end": 30.77,
+    "id": "w75"
+  },
+  {
+    "text": "non",
+    "start": 30.77,
+    "end": 30.97,
+    "id": "w76"
+  },
+  {
+    "text": "sceglie",
+    "start": 30.97,
+    "end": 31.36,
+    "id": "w77"
+  },
+  {
+    "text": "il",
+    "start": 31.42,
+    "end": 31.54,
+    "id": "w78"
+  },
+  {
+    "text": "migliore.",
+    "start": 31.55,
+    "end": 32.14,
+    "id": "w79"
+  },
+  {
+    "text": "Sceglie",
+    "start": 32.21,
+    "end": 32.65,
+    "id": "w80"
+  },
+  {
+    "text": "il",
+    "start": 32.65,
+    "end": 32.79,
+    "id": "w81"
+  },
+  {
+    "text": "primo",
+    "start": 32.8,
+    "end": 33.17,
+    "id": "w82"
+  },
+  {
+    "text": "che",
+    "start": 33.17,
+    "end": 33.38,
+    "id": "w83"
+  },
+  {
+    "text": "risponde.",
+    "start": 33.39,
+    "end": 34.06,
+    "id": "w84"
+  },
+  {
+    "text": "Enon",
+    "start": 34.12,
+    "end": 34.3,
+    "id": "w85"
+  },
+  {
+    "text": "serve",
+    "start": 34.4,
+    "end": 34.63,
+    "id": "w86"
+  },
+  {
+    "text": "assumere",
+    "start": 34.63,
+    "end": 35.13,
+    "id": "w87"
+  },
+  {
+    "text": "nessuno.",
+    "start": 35.13,
+    "end": 35.76,
+    "id": "w88"
+  },
+  {
+    "text": "Un",
+    "start": 35.9,
+    "end": 35.93,
+    "id": "w89"
+  },
+  {
+    "text": "messaggio",
+    "start": 35.93,
+    "end": 36.45,
+    "id": "w90"
+  },
+  {
+    "text": "automatico",
+    "start": 36.45,
+    "end": 37,
+    "id": "w91"
+  },
+  {
+    "text": "su",
+    "start": 37.06,
+    "end": 37.13,
+    "id": "w92"
+  },
+  {
+    "text": "WhatsApp.",
+    "start": 37.13,
+    "end": 37.82,
+    "id": "w93"
+  },
+  {
+    "text": "Una",
+    "start": 37.9,
+    "end": 37.98,
+    "id": "w94"
+  },
+  {
+    "text": "notifica",
+    "start": 37.98,
+    "end": 38.42,
+    "id": "w95"
+  },
+  {
+    "text": "sul",
+    "start": 38.42,
+    "end": 38.58,
+    "id": "w96"
+  },
+  {
+    "text": "telefono",
+    "start": 38.58,
+    "end": 39,
+    "id": "w97"
+  },
+  {
+    "text": "quando",
+    "start": 39.06,
+    "end": 39.44,
+    "id": "w98"
+  },
+  {
+    "text": "arriva",
+    "start": 39.44,
+    "end": 39.81,
+    "id": "w99"
+  },
+  {
+    "text": "un",
+    "start": 39.81,
+    "end": 39.93,
+    "id": "w100"
+  },
+  {
+    "text": "contatto.",
+    "start": 39.93,
+    "end": 40.64,
+    "id": "w101"
+  },
+  {
+    "text": "Una",
+    "start": 40.71,
+    "end": 40.89,
+    "id": "w102"
+  },
+  {
+    "text": "regola.",
+    "start": 40.89,
+    "end": 41.58,
+    "id": "w103"
+  },
+  {
+    "text": "Si",
+    "start": 41.66,
+    "end": 41.74,
+    "id": "w104"
+  },
+  {
+    "text": "risponde",
+    "start": 41.74,
+    "end": 42.36,
+    "id": "w105"
+  },
+  {
+    "text": "entro",
+    "start": 42.36,
+    "end": 42.75,
+    "id": "w106"
+  },
+  {
+    "text": "cinque",
+    "start": 42.75,
+    "end": 43.22,
+    "id": "w107"
+  },
+  {
+    "text": "minuti.",
+    "start": 43.22,
+    "end": 43.91,
+    "id": "w108"
+  },
+  {
+    "text": "Il",
+    "start": 44.06,
+    "end": 44.1,
+    "id": "w109"
+  },
+  {
+    "text": "cliente",
+    "start": 44.1,
+    "end": 44.53,
+    "id": "w110"
+  },
+  {
+    "text": "più",
+    "start": 44.53,
+    "end": 44.71,
+    "id": "w111"
+  },
+  {
+    "text": "facile",
+    "start": 44.71,
+    "end": 45.08,
+    "id": "w112"
+  },
+  {
+    "text": "da",
+    "start": 45.08,
+    "end": 45.16,
+    "id": "w113"
+  },
+  {
+    "text": "conquistare",
+    "start": 45.22,
+    "end": 45.94,
+    "id": "w114"
+  },
+  {
+    "text": "è",
+    "start": 45.94,
+    "end": 46.02,
+    "id": "w115"
+  },
+  {
+    "text": "quello",
+    "start": 46.02,
+    "end": 46.39,
+    "id": "w116"
+  },
+  {
+    "text": "che",
+    "start": 46.39,
+    "end": 46.59,
+    "id": "w117"
+  },
+  {
+    "text": "ti",
+    "start": 46.59,
+    "end": 46.72,
+    "id": "w118"
+  },
+  {
+    "text": "ha",
+    "start": 46.72,
+    "end": 46.85,
+    "id": "w119"
+  },
+  {
+    "text": "appena",
+    "start": 46.85,
+    "end": 47.24,
+    "id": "w120"
+  },
+  {
+    "text": "scritto.",
+    "start": 47.24,
+    "end": 47.94,
+    "id": "w121"
+  },
+  {
+    "text": "Etu?",
+    "start": 48.02,
+    "end": 48.58,
+    "id": "w122"
+  },
+  {
+    "text": "In",
+    "start": 48.66,
+    "end": 48.71,
+    "id": "w123"
+  },
+  {
+    "text": "quanto",
+    "start": 48.71,
+    "end": 49.11,
+    "id": "w124"
+  },
+  {
+    "text": "tempo",
+    "start": 49.11,
+    "end": 49.44,
+    "id": "w125"
+  },
+  {
+    "text": "rispondi?",
+    "start": 49.44,
+    "end": 50.18,
+    "id": "w126"
+  },
+  {
+    "text": "Scrivilo",
+    "start": 50.26,
+    "end": 51,
+    "id": "w127"
+  },
+  {
+    "text": "nei",
+    "start": 51,
+    "end": 51.31,
+    "id": "w128"
+  },
+  {
+    "text": "commenti.",
+    "start": 51.31,
+    "end": 52.46,
+    "id": "w129"
+  }
+]
