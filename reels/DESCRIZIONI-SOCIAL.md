@@ -795,6 +795,68 @@ Shein multata per greenwashing 🌿 1 milione in Italia, 40 in Francia. Ti fidi 
 
 ---
 
+## 29. Il supermercato è progettato per farti spendere (58 s) · NUOVO MOTORE 3D
+
+File: `apex-supermercato/renders/apex-supermercato-9x16.mp4`
+
+**Instagram**
+```text
+Il supermercato è progettato per farti spendere di più. E funziona. 🛒
+
+1. Frutta e fiori all'ingresso: colori e profumi, abbassi la guardia.
+2. Latte e pane in fondo: attraversi tutto il negozio.
+3. I prodotti più cari all'altezza degli occhi, quelli convenienti in basso.
+4. Musica lenta: in uno studio del 1982 (Milliman) la gente camminava più piano e il supermercato incassava il 38% in più rispetto alla musica veloce.
+5. Caramelle alla cassa: l'ultimo acquisto, quando sei stanco.
+
+Per difenderti: fai la lista e guarda gli scaffali in basso.
+
+Se hai un'attività: il cliente non decide solo cosa comprare. Decide dove lo porti tu. Progetta il percorso.
+
+👇 Quale trucco del supermercato ti frega sempre?
+
+(Fonte musica: R. Milliman, Journal of Marketing, 1982.)
+#supermercato #marketing #neuromarketing #spesa #customerjourney #business #imprenditori #vendite
+```
+
+**TikTok**
+```text
+Il supermercato è progettato per farti spendere di più 🛒 5 trucchi (il 4° è assurdo). Quale ti frega sempre?
+#supermercato #marketing #spesa #neuromarketing
+```
+
+---
+
+## 30. Ha tolto gli sconti finti e ha perso quasi un miliardo (57 s) · NUOVO MOTORE 3D
+
+File: `apex-sconti-finti/renders/apex-sconti-finti-9x16.mp4`
+
+**Instagram**
+```text
+Un'azienda ha tolto gli sconti finti. E in un anno ha perso quasi un miliardo di dollari. 🏷️
+
+USA, 2012: J.C. Penney, catena di grandi magazzini, smette di gonfiare i prezzi per poi scontarli. Solo prezzi bassi tutti i giorni.
+Risultato: vendite -25%, quasi 1 miliardo di perdita, CEO licenziato. E gli sconti tornano.
+
+Perché? Le persone non comprano il prezzo. Comprano la sensazione di fare un affare. Il cartellino barrato è un'emozione.
+
+Se compri: quando vedi -50%, non stai risparmiando. Stai spendendo. Guarda il prezzo finale.
+Se vendi: il tuo prezzo deve raccontare un valore, non solo un numero.
+
+👇 Compri più volentieri quando vedi uno sconto?
+
+(Fonti: bilancio J.C. Penney 2012, vendite da 17,3 a 13 miliardi $, perdita netta 985 milioni $; uscita del CEO nell'aprile 2013.)
+#marketing #sconti #prezzi #pricing #psicologia #retail #business #imprenditori
+```
+
+**TikTok**
+```text
+Ha tolto gli sconti finti e ha perso quasi 1 miliardo 🏷️ La storia di J.C. Penney. Tu compri di più con lo sconto?
+#marketing #sconti #pricing #business
+```
+
+---
+
 ## Prima di pubblicare
 
 - **Commenti con parola chiave** (CLIENTI, AUDIT): rispondi in DM entro poche ore, altrimenti il contatto si raffredda.
