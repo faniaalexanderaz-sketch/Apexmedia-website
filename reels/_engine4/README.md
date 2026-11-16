@@ -10,6 +10,14 @@ Approved standard (restaurant demo, `engine4-demo`). Existing videos made with o
 - Three-point light on the main subject plus practical lights in the set; captions sit over the set.
 - Ricchi Piano: micro-sounds only, no music bed.
 
+## Call to action (spoken and on screen)
+- Around second 15 a banner appears and the voiceover says, in the same voice and tone as the rest:
+  "Se vuoi sapere come creo questi video da casa, scrivi MOTION nei commenti." Then the story continues.
+- On the closing card the voiceover says:
+  "Se vuoi sapere come creo questi video in poco tempo, da casa, scrivi MOTION e ti spiego tutto."
+- Both lines are part of the single voiceover take (same ElevenLabs voice, same prompt), not separate clips.
+- The banner and the closing text are timed from the aligned word times of those sentences: the text appears on the first word of the spoken line.
+
 ## Workflow
 1. `node _engine4/render4.cjs <project> preview` — 540x960, 15 fps, no shadows/blur. For approving moves, timing and text.
 2. After approval: `node _engine4/render4.cjs <project> final` — full quality.
