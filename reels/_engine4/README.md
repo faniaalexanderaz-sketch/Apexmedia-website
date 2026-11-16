@@ -1,0 +1,23 @@
+# Apex Engine 4 — standard for every new reel
+
+Approved standard (restaurant demo, `engine4-demo`). Existing videos made with older engines are not touched.
+
+## Rules
+- Always a real set: no scene is text on a black background. If the script names no place, pick one that fits the topic.
+- Clean cuts on the rhythm of the sentence, or the lateral slide (`trans: "slide"`). Inside a shot the camera never stops abruptly.
+- Camera on arc-length splines with eased speed and a damped look target (`C4.rig`). No shake.
+- 30 fps, 1080x1920, constant frame rate.
+- Three-point light on the main subject plus practical lights in the set; captions sit over the set.
+- Ricchi Piano: micro-sounds only, no music bed.
+
+## Workflow
+1. `node _engine4/render4.cjs <project> preview` — 540x960, 15 fps, no shadows/blur. For approving moves, timing and text.
+2. After approval: `node _engine4/render4.cjs <project> final` — full quality.
+   The render log (`renders/progress.log`) shows clock time, frames done/total, measured s/frame and remaining time.
+   Frames are cached per shot: only edited shots are rendered again.
+3. Nothing is delivered unless the gate passes: camera smoothness (`camcheck.cjs`), frame count, constant frame rate, zero duplicated frames.
+
+## Measured on the demo (cloud VM, 4 vCPU, software GL — no GPU)
+- Final: 0.88 s/frame, 10 s of video in 4 min 52 s. Preview: 0.27 s/frame, 10 s in 47 s.
+- Extra workers do not help (software GL already uses every core).
+- Never quote a render time that has not been measured.
