@@ -11,7 +11,7 @@
   </div>
   <script>
     (function () {
-      /* Ricchi Piano — true camera, plane text, extruded 3D type, two-layer depth of field, 3-sample motion blur. Every frame is a pure function of t. */
+      /* Apex — true camera, plane text, extruded 3D type, two-layer depth of field, 3-sample motion blur. Every frame is a pure function of t. */
       const W = [0.02,  0.39,  1.41,  1.63,  1.74,  2.177,  2.237,  2.68,  2.98,  3.11,  3.24,  4.146,  4.36,  4.919,  5.52,  5.66,  5.76,  6.682,  7.04,  7.725,  7.98,  8.16,  8.28,  9.032,  10.492,  11.323,  12.157,  12.46,  13.093,  14.369,  15.137,  16.246,  16.68,  16.76,  17.412,  18.661,  19.23,  19.9,  20.41,  20.47,  20.88,  21.09,  21.23,  21.68,  21.8,  22.445,  22.6,  23.2,  23.26,  23.7,  23.91,  24.356,  24.57,  25.12,  25.19,  25.63,  25.85,  26.35,  26.54,  26.6,  27.02,  27.32,  27.44,  28.141,  28.49,  28.71,  29.13,  29.34,  29.814,  30.15,  30.29,  30.71,  31.364,  31.55,  31.68,  32.39,  32.692,  33.06,  33.59,  33.916,  34.736,  35.14,  35.58,  35.67,  36.211,  36.307,  36.774,  36.93,  37.31,  37.64,  38.07,  38.22,  38.37,  38.51,  39.509,  39.95,  40.34];
       const D = 44.96, BEAT = 0.6006, B0 = 0.035;
       const out = document.querySelector("#st-canvas"), octx = out.getContext("2d");
@@ -20,7 +20,7 @@
       let c = fgc;
       const WH = "#ffffff", GR = "#8c8c8c", DK = "#4c4c4c", DD = "#262626", FILL = "rgba(4,4,6,0.93)";
       const CH = [[0,"#FF2A3D"],[W[11],"#00E5FF"],[W[19],"#FF7A1A"],[W[35],"#FF2A3D"],[W[45],"#B45CFF"],[W[68],"#00FF85"],[W[84],"#FFD60A"]];
-      let A = "#FFD60A";
+      let A = "#FF2A3D";
       const accAt = (t) => { let a = CH[0][1]; for (const q of CH) if (t >= q[0] - 0.02) a = q[1]; return a; };
       const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
       const o4 = (p) => 1 - Math.pow(1 - p, 4), ex = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2), i2 = (p) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2), in3 = (p) => p * p * p;
@@ -632,7 +632,7 @@
           tag([90, 720, 60], "INCASSO", WH, pop(t, W[79] - 0.05), 470); tag([90, 610, 60], "- TUTTI I COSTI", WH, pop(t, W[80] - 0.05), 470); tag([90, 490, 60], "= GUADAGNO VERO", A, pop(t, W[83] + 0.25), 520);
         }],
         [W[84], ASKEND, "cut", (t, u, d) => { G3.st.floor = false; rpAsk(t, W[84], ASKEND, "Quanto resta davvero?", A); }],
-        [ASKEND, DEND, "none", (t, u, d) => { G3.st.floor = false; rpEnd(t, ASKEND); }],
+        [ASKEND, DEND, "none", (t, u, d) => { G3.st.floor = false; apEnd(t, ASKEND, "IL FATTURATO NON È GUADAGNO"); }],
       ];
       const FOCUS = { bg: 0, fg: 0 }; let FLASH = 0;
       function hexA(h, a) { const n = parseInt(h.slice(1), 16); return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")"; }

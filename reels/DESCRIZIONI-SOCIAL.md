@@ -1024,3 +1024,129 @@ Qualcuno sta cercando "pizzeria vicino a me" proprio adesso 📍 Se non ci sei, 
 - **Crediti audio**: solo i video 5 e 6 richiedono la riga di credito (licenza CC BY). È già inserita qui sopra.
 - **Video 24–28 (aziende reali)**: citano fatti pubblici con fonte in descrizione. Non aggiungere nei commenti accuse non verificate su marchi specifici.
 - **Ordine consigliato**: alterna un video divulgativo (1–9) e uno commerciale (10–13) per non sembrare solo pubblicità.
+
+---
+
+## 36. Incassa 10.000 € e guadagna meno di un dipendente
+
+File: `apex-incasso-bar/renders/apex-incasso-bar-9x16.mp4`
+
+**TikTok**
+```text
+Incassa 10.000 € al mese e guadagna meno di un dipendente 😳 Il fatturato è quello che entra, il guadagno è quello che resta. Lo sapevi? 👇
+#attività #fatturato #soldi #apexmedia
+```
+
+**Instagram**
+```text
+Incassa 10.000 € al mese. E guadagna meno di un dipendente.
+
+Un bar, 10.000 € di incasso. Poi togli:
+– merce 3.500 €
+– affitto 2.000 €
+– un dipendente 1.800 €
+– bollette 700 €
+– tasse e contributi 1.200 €
+
+Restano 800 €. Per 12 ore di lavoro al giorno.
+
+Il fatturato è quello che entra. Il guadagno è quello che resta.
+
+👇 Sapevi quanto resta davvero a chi ha un'attività?
+
+I numeri sono un esempio semplificato, ogni attività ha costi diversi. Contenuto educativo, non è una consulenza.
+#attività #fatturato #guadagno #imprenditore #partitaiva #soldi #marketing #apexmedia
+```
+
+---
+
+## 37. Ha un negozio tutto suo e guadagna 4 € l'ora
+
+File: `apex-quattro-euro/renders/apex-quattro-euro-9x16.mp4`
+
+**TikTok**
+```text
+Ha un negozio tutto suo e guadagna 4 € l'ora 😳 Non ha mai contato il suo tempo come un costo. Tu quanto guadagni davvero all'ora? 👇
+#negozio #lavoro #soldi #apexmedia
+```
+
+**Instagram**
+```text
+Ha un negozio tutto suo. E guadagna 4 € l'ora.
+
+Apre alle 8, chiude alle 20. Sei giorni su sette: circa 300 ore al mese.
+A fine mese gli restano 1.200 €.
+1.200 : 300 = 4 € l'ora.
+
+Il problema? Non ha mai contato il suo tempo come un costo.
+Se l'attività non riesce a pagarti uno stipendio, non è un'attività. È un lavoro pagato male.
+
+La regola: prima calcola quanto vale la tua ora. Poi decidi prezzi, orari e cosa smettere di fare.
+
+👇 Tu quanto guadagni davvero all'ora?
+
+Esempio semplificato. Contenuto educativo, non è una consulenza.
+#negozio #attività #tempo #stipendio #imprenditore #soldi #marketing #apexmedia
+```
+
+---
+
+## 38. Ha fatto il 20% di sconto e deve vendere il doppio
+
+File: `apex-sconto-doppio/renders/apex-sconto-doppio-9x16.mp4`
+
+**TikTok**
+```text
+Ha fatto il 20% di sconto e adesso deve vendere il doppio per guadagnare uguale 😳 Guarda il margine, non il prezzo. Lo sapevi? 👇
+#sconto #negozio #soldi #apexmedia
+```
+
+**Instagram**
+```text
+Ha fatto il 20% di sconto. E adesso deve vendere il doppio per guadagnare uguale.
+
+Una giacca a 100 €. A lui costa 60. Guadagna 40.
+Con lo sconto del 20%: prezzo 80, costo sempre 60. Guadagna 20. La metà.
+
+Lo sconto non toglie il 20% del guadagno. In questo caso ne toglie il 50%.
+Per questo chi vive di sconti lavora di più e guadagna meno.
+
+Prima di fare uno sconto guarda il margine, non il prezzo.
+
+👇 Lo sapevi che uno sconto pesa così tanto?
+
+Esempio semplificato: il risultato cambia in base al margine. Contenuto educativo, non è una consulenza.
+#sconto #margine #negozio #prezzi #attività #soldi #marketing #apexmedia
+```
+
+---
+
+## 39. I primi 133 caffè di oggi, questo bar li fa gratis
+
+File: `apex-pareggio/renders/apex-pareggio-9x16.mp4`
+
+**TikTok**
+```text
+I primi 133 caffè di oggi questo bar li fa gratis ☕ Si chiama punto di pareggio e quasi nessuno lo calcola. Tu sai il tuo? 👇
+#bar #caffè #soldi #apexmedia
+```
+
+**Instagram**
+```text
+I primi 133 caffè di oggi, questo bar li fa gratis.
+
+Ogni mese ha 4.000 € di costi fissi: affitto, bollette, stipendi. Li paga anche se non entra nessuno.
+Su ogni caffè gli resta 1 €.
+Quindi gli servono 4.000 caffè al mese solo per andare in pari: 133 al giorno.
+Il guadagno comincia dal caffè numero 134.
+
+Si chiama punto di pareggio:
+costi fissi : quanto ti resta su ogni vendita.
+
+Se quel numero ti sembra impossibile, il problema non sono i clienti. È il modello.
+
+👇 Sai qual è il tuo punto di pareggio?
+
+Esempio semplificato. Contenuto educativo, non è una consulenza.
+#puntodipareggio #bar #caffè #costifissi #attività #soldi #marketing #apexmedia
+```

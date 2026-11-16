@@ -11,7 +11,7 @@
   </div>
   <script>
     (function () {
-      /* Ricchi Piano — true camera, plane text, extruded 3D type, two-layer depth of field, 3-sample motion blur. Every frame is a pure function of t. */
+      /* Apex — true camera, plane text, extruded 3D type, two-layer depth of field, 3-sample motion blur. Every frame is a pure function of t. */
       const W = [0.02,  0.08,  0.42,  1.1,  1.45,  1.56,  1.81,  2.26,  2.49,  2.62,  2.75,  3.3,  3.66,  3.87,  4.01,  5.07,  5.48,  5.6,  5.92,  6.639,  7.093,  7.752,  8.818,  8.878,  8.938,  9.29,  9.4,  9.7,  10.01,  10.947,  11.007,  11.22,  11.68,  11.88,  12.21,  12.36,  12.909,  13.15,  13.35,  13.88,  14.84,  15.15,  15.36,  15.436,  15.83,  16.03,  16.42,  16.58,  16.916,  17.8,  17.98,  18.573,  18.95,  19.55,  20.18,  20.4,  20.76,  21.23,  21.998,  22.23,  22.7,  23.02,  23.17,  23.889,  23.949,  24.2,  24.62,  24.73,  25.13,  25.48,  25.65,  26.212,  26.4,  26.61,  26.69,  27.446,  27.8,  28.389,  28.87,  29.16,  29.3,  29.65,  29.84,  30.07,  30.824,  30.91,  31.13,  31.46,  31.57,  31.9,  32.702,  32.94,  33.16,  33.36,  33.67,  33.73,  34.568,  34.628,  34.688,  35.549,  35.609,  36.114,  36.174,  36.27,  36.34,  36.46,  36.65,  36.99,  37.13,  37.938,  38.39,  38.62];
       const D = 43.3, BEAT = 0.6006, B0 = 0.035;
       const out = document.querySelector("#st-canvas"), octx = out.getContext("2d");
@@ -20,7 +20,7 @@
       let c = fgc;
       const WH = "#ffffff", GR = "#8c8c8c", DK = "#4c4c4c", DD = "#262626", FILL = "rgba(4,4,6,0.93)";
       const CH = [[0,"#FFD60A"],[W[11],"#FF2A3D"],[W[29],"#00FF85"],[W[36],"#00E5FF"],[W[51],"#FFD60A"],[W[58],"#B45CFF"],[W[71],"#00FF85"],[W[84],"#FF7A1A"],[W[99],"#FFD60A"]];
-      let A = "#FFD60A";
+      let A = "#FF2A3D";
       const accAt = (t) => { let a = CH[0][1]; for (const q of CH) if (t >= q[0] - 0.02) a = q[1]; return a; };
       const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
       const o4 = (p) => 1 - Math.pow(1 - p, 4), ex = (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)), io = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2), i2 = (p) => (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2), in3 = (p) => p * p * p;
@@ -638,7 +638,7 @@
           if (t < W[96] - 0.1) { tag([0, 620, 40], t < W[90] ? "IMPOSSIBILE?" : "I CLIENTI", WH, t < W[90] ? pop(t, W[88] - 0.1) : pop(t, W[93] - 0.1), 440); if (t > W[94]) xm3([0, 620, 60], 80 * pop(t, W[94]), RED); } else tag([0, 620, 40], "IL MODELLO", A, pop(t, W[97] - 0.1), 460);
         }],
         [W[99], ASKEND, "cut", (t, u, d) => { G3.st.floor = false; rpAsk(t, W[99], ASKEND, "Il mio: ... al giorno", A); }],
-        [ASKEND, DEND, "none", (t, u, d) => { G3.st.floor = false; rpEnd(t, ASKEND); }],
+        [ASKEND, DEND, "none", (t, u, d) => { G3.st.floor = false; apEnd(t, ASKEND, "CALCOLA IL TUO PUNTO DI PAREGGIO"); }],
       ];
       const FOCUS = { bg: 0, fg: 0 }; let FLASH = 0;
       function hexA(h, a) { const n = parseInt(h.slice(1), 16); return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")"; }
