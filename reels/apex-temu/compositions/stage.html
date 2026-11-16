@@ -19,7 +19,7 @@
       const FG = mk(), BG = mk(), FR = mk(); const fgc = FG.getContext("2d"), bgc = BG.getContext("2d"), frc = FR.getContext("2d");
       let c = fgc;
       const WH = "#ffffff", GR = "#8c8c8c", DK = "#4c4c4c", DD = "#262626", FILL = "rgba(4,4,6,0.93)";
-      const CH = [[0, "#FF2A3D"], [W[19], "#00E5FF"], [W[54], "#FF7A1A"], [W[100], "#B45CFF"], [W[125], "#00FF85"], [W[143], "#FFD60A"]];
+      const CH = [[0,"#FF2A3D"],[W[19],"#00E5FF"],[W[54],"#FF7A1A"],[W[100],"#B45CFF"],[W[125],"#00FF85"],[W[143],"#FFD60A"]];
       let A = "#FF2A3D";
       const accAt = (t) => { let a = CH[0][1]; for (const q of CH) if (t >= q[0] - 0.02) a = q[1]; return a; };
       const clamp = (v, a, b) => Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
@@ -35,7 +35,7 @@
       const X = [1, 0, 0], Y = [0, 1, 0], Z = [0, 0, 1], NZ = [0, 0, -1];
 
       /* ---- camera ---- */
-      const CX = 540, CY = 1150, NEAR = 20;
+      const CX = 540, CY = 900, NEAR = 20;
       let LOOKP = [0, 0, 0]; let F = 1000, E = [0, 0, 0], Rv = [1, 0, 0], Uv = [0, 1, 0], Fv = [0, 0, -1];
       function camera(eye, look, f, roll, up) {
         E = eye; LOOKP = look; F = f || 1000; up = up || Y;
@@ -654,7 +654,7 @@
         const g = ctxOut.createRadialGradient(540, 1150, 60, 540, 1150, 950); g.addColorStop(0, hexA(A, 0.1)); g.addColorStop(0.5, "rgba(255,255,255,0.03)"); g.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = g; ctxOut.fillRect(0, 150, 1080, 1770);
         ctxOut.filter = FOCUS.bg > 0.3 ? "blur(" + FOCUS.bg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(BG, 0, 0);
         ctxOut.filter = FOCUS.fg > 0.3 ? "blur(" + FOCUS.fg.toFixed(1) + "px)" : "none"; ctxOut.drawImage(FG, 0, 0); ctxOut.filter = "none";
-        const tg = ctxOut.createLinearGradient(0, 140, 0, 820); tg.addColorStop(0, "rgba(0,0,0,0.78)"); tg.addColorStop(0.7, "rgba(0,0,0,0.5)"); tg.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = tg; ctxOut.fillRect(0, 140, 1080, 680);
+        const tg = ctxOut.createLinearGradient(0, 1900, 0, 1080); tg.addColorStop(0, "rgba(0,0,0,0.78)"); tg.addColorStop(0.7, "rgba(0,0,0,0.5)"); tg.addColorStop(1, "rgba(0,0,0,0)"); ctxOut.fillStyle = tg; ctxOut.fillRect(0, 1080, 1080, 840);
         const vg = ctxOut.createRadialGradient(540, 1000, 500, 540, 1000, 1250); vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.55)"); ctxOut.fillStyle = vg; ctxOut.fillRect(0, 0, 1080, 1920);
         const fl = Math.max(FLASH, ty === "match" ? hit(t, s[0], 22) * 0.35 : ty === "punch" ? hit(t, s[0], 14) * 0.3 : ty === "snap" ? hit(t, s[0], 12) * 0.5 : 0);
         if (fl > 0.01) { ctxOut.fillStyle = "rgba(255,255,255," + fl.toFixed(3) + ")"; ctxOut.fillRect(0, 0, 1080, 1920); }

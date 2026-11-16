@@ -2,7 +2,7 @@
   <style>
     @font-face { font-family: "Unbounded"; font-weight: 900; src: url("assets/fonts/unbounded-latin-900-normal.woff2") format("woff2"); }
     #root { position: absolute; inset: 0; overflow: hidden; color: #fff; font-family: "Unbounded", sans-serif; perspective: 900px; }
-    .grp { position: absolute; left: 30px; top: 214px; width: 1020px; text-align: center; opacity: 0; }
+    .grp { position: absolute; left: 30px; '+('top: auto; bottom: 350px;' if __import__('os').environ.get('CAPLOW') else 'top: 214px;')+' width: 1020px; text-align: center; opacity: 0; }
     .ln { display: block; line-height: 1.08; margin-bottom: 0.14em; }
     .w { display: inline-block; margin: 0 0.12em; font-weight: 900; font-size: 64px; letter-spacing: -0.03em; text-transform: uppercase; text-shadow: 0 0 16px rgba(0,0,0,1), 0 6px 30px rgba(0,0,0,0.95); }
     .big { font-size: 108px; line-height: 1; color: var(--acc); text-shadow: 0 0 34px var(--glow), 0 0 16px rgba(0,0,0,1); }
