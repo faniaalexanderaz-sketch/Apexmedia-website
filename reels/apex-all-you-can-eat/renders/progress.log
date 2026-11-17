@@ -1,0 +1,17 @@
+13:01:51  render apex-all-you-can-eat mode=preview workers=1
+13:01:55  scene loaded in 4.5 s (build 4.2 s) · 1250 frames at 30 fps · preview renders 1 frame in 2 at 540x960
+13:01:56  frames to render 625 · from cache 0
+13:02:06  frames 48/625 · 0.21 s/frame (wall) · elapsed 10 s · remaining 120 s
+13:02:16  frames 104/625 · 0.19 s/frame (wall) · elapsed 20 s · remaining 100 s
+13:02:26  frames 174/625 · 0.17 s/frame (wall) · elapsed 30 s · remaining 78 s
+13:02:36  frames 236/625 · 0.17 s/frame (wall) · elapsed 40 s · remaining 66 s
+13:02:46  frames 291/625 · 0.17 s/frame (wall) · elapsed 50 s · remaining 57 s
+13:02:56  frames 354/625 · 0.17 s/frame (wall) · elapsed 60 s · remaining 46 s
+13:03:06  frames 412/625 · 0.17 s/frame (wall) · elapsed 70 s · remaining 36 s
+13:03:16  frames 473/625 · 0.17 s/frame (wall) · elapsed 80 s · remaining 26 s
+13:03:26  frames 540/625 · 0.17 s/frame (wall) · elapsed 90 s · remaining 14 s
+13:03:36  frames 621/625 · 0.16 s/frame (wall) · elapsed 100 s · remaining 1 s
+13:03:36  frames done 625 in 100.7 s · 0.16 s/frame wall · per worker: frame compute 0.15 s, jpeg+write 0.007 s
+13:03:42  phases: load 4.5 s · render 100.7 s · encode 5.7 s · TOTAL 111.1 s
+13:03:42  gate: stream 15/1,15/1,625 · expected frames 625 → GATE-OK
+13:03:42  output /home/user/Apexmedia-website/reels/apex-all-you-can-eat/renders/apex-all-you-can-eat-preview.mp4
