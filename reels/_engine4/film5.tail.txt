@@ -1,0 +1,4 @@
+  if (typeof module !== "undefined" && module.exports) module.exports = FILM;
+  root.FILM4 = FILM;
+  if (typeof THREE !== "undefined") C4.film5Browser(FILM);
+})(typeof window !== "undefined" ? window : globalThis);

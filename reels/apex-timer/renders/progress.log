@@ -1,0 +1,17 @@
+12:52:10  render apex-timer mode=preview workers=1
+12:52:15  scene loaded in 5.2 s (build 4.7 s) · 1318 frames at 30 fps · preview renders 1 frame in 2 at 540x960
+12:52:15  frames to render 659 · from cache 0
+12:52:25  frames 52/659 · 0.19 s/frame (wall) · elapsed 10 s · remaining 117 s
+12:52:35  frames 99/659 · 0.20 s/frame (wall) · elapsed 20 s · remaining 113 s
+12:52:45  frames 162/659 · 0.19 s/frame (wall) · elapsed 30 s · remaining 92 s
+12:52:55  frames 230/659 · 0.17 s/frame (wall) · elapsed 40 s · remaining 75 s
+12:53:05  frames 293/659 · 0.17 s/frame (wall) · elapsed 50 s · remaining 62 s
+12:53:15  frames 353/659 · 0.17 s/frame (wall) · elapsed 60 s · remaining 52 s
+12:53:25  frames 418/659 · 0.17 s/frame (wall) · elapsed 70 s · remaining 40 s
+12:53:35  frames 488/659 · 0.16 s/frame (wall) · elapsed 80 s · remaining 28 s
+12:53:45  frames 550/659 · 0.16 s/frame (wall) · elapsed 90 s · remaining 18 s
+12:53:55  frames 631/659 · 0.16 s/frame (wall) · elapsed 100 s · remaining 4 s
+12:53:59  frames done 659 in 103.5 s · 0.16 s/frame wall · per worker: frame compute 0.14 s, jpeg+write 0.007 s
+12:54:05  phases: load 5.2 s · render 103.5 s · encode 6.5 s · TOTAL 115.3 s
+12:54:05  gate: stream 15/1,15/1,659 · expected frames 659 → GATE-OK
+12:54:05  output /home/user/Apexmedia-website/reels/apex-timer/renders/apex-timer-preview.mp4
