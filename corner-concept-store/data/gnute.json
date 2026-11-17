@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Franco",
+    "quartiere": "Borgo Rovereto",
+    "src": "https://images.unsplash.com/photo-1770058428159-50cca6566c19?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.38&fp-z=1.15&sat=-100"
+  },
+  {
+    "name": "Marisa",
+    "quartiere": "Pista",
+    "src": "https://images.unsplash.com/photo-1652226825940-46ad2a55d132?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.48&fp-y=0.42&fp-z=1.25&sat=-100"
+  },
+  {
+    "name": "Dario",
+    "quartiere": "Cristo",
+    "src": "https://images.unsplash.com/photo-1545167622-3a6ac756afa4?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.42&fp-z=1&sat=-100"
+  },
+  {
+    "name": "Gianni",
+    "quartiere": "Orti",
+    "src": "https://images.unsplash.com/photo-1533101585792-27f81a845550?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.33&fp-z=1.3&sat=-100"
+  },
+  {
+    "name": "Paola",
+    "quartiere": "Centro",
+    "src": "https://images.unsplash.com/photo-1770058428154-9eee8a6a1fbb?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.48&fp-y=0.42&fp-z=1&sat=-100"
+  },
+  {
+    "name": "Beppe",
+    "quartiere": "Borgo Cittadella",
+    "src": "https://images.unsplash.com/photo-1668621819576-e5a92bcd7e15?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.42&fp-y=0.42&fp-z=1&sat=-100"
+  },
+  {
+    "name": "Luca",
+    "quartiere": "Galimberti",
+    "src": "https://images.unsplash.com/photo-1552058544-f2b08422138a?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.52&fp-y=0.42&fp-z=1&sat=-100"
+  },
+  {
+    "name": "Rina",
+    "quartiere": "Spinetta Marengo",
+    "src": "https://images.unsplash.com/photo-1498757581981-8ddb3c0b9b07?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.28&fp-z=1.4&sat=-100"
+  }
+]

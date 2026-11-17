@@ -1,0 +1,398 @@
+@import "tailwindcss";
+
+/*
+  CORNER Concept Store — identità visiva
+  Crema come carta (mai bianco puro), verde scuro per testi e azioni,
+  arancione solo su "pezzo unico" e contatore del carrello.
+*/
+@theme {
+  --color-crema: #e9e4d8;
+  --color-carta: #f2eee4;
+  --color-ombra: #ddd6c6;
+  --color-oliva: #6b6a4e;
+  --color-terracotta: #a8694a;
+  --color-marrone: #6b4330;
+  --color-ocra: #b3934f;
+  --color-verde: #1e3326;
+  --color-notte: #10201a;
+  --color-arancio: #e2581c;
+  --color-ruggine: #9a4a30;
+  --color-rosa: #d2a99b;
+  --color-errore: #8c2f1b;
+  /* bordo standard: marrone al 20% */
+  --color-linea: rgb(107 67 48 / 0.2);
+  --color-linea-forte: rgb(107 67 48 / 0.45);
+  --color-linea-chiara: rgb(233 228 216 / 0.22);
+
+  --font-display: var(--font-bodoni), "Bodoni Moda", "Didot", "Bodoni 72", "Times New Roman", serif;
+  --font-sans: var(--font-montserrat), "Montserrat", "Helvetica Neue", Arial, sans-serif;
+
+  --breakpoint-xs: 24.375rem;
+
+  --ease-uscita: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-crema);
+    color: var(--color-verde);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6.5rem;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-verde);
+    color: var(--color-crema);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-verde);
+    outline-offset: 3px;
+  }
+
+  .su-verde :focus-visible,
+  .su-verde:focus-visible {
+    outline-color: var(--color-ocra);
+  }
+
+  a,
+  button,
+  summary,
+  label,
+  select,
+  input {
+    touch-action: manipulation;
+  }
+
+  button,
+  [role="button"],
+  summary,
+  select,
+  label[for] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  /* niente sfondo giallo dell'autofill sui campi crema */
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-verde);
+    box-shadow: 0 0 0 100px var(--color-carta) inset;
+  }
+
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+/* ---------- tipografia ---------- */
+
+@utility titolo {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.012em;
+  font-optical-sizing: auto;
+}
+
+@utility occhiello {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@utility cifre {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* ---------- pillole: l'unico elemento arrotondato del sito ---------- */
+
+@utility pillola {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-linea-forte);
+  padding-inline: 1rem;
+  min-height: 2.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    background-color 160ms ease-out,
+    color 160ms ease-out,
+    border-color 160ms ease-out;
+}
+
+@utility pillola-piccola {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-linea-forte);
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- bottoni: angoli netti ---------- */
+
+@utility bottone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-align: center;
+  transition:
+    background-color 160ms ease-out,
+    color 160ms ease-out,
+    border-color 160ms ease-out;
+}
+
+@utility bottone-pieno {
+  background: var(--color-verde);
+  color: var(--color-crema);
+  border: 1px solid var(--color-verde);
+  &:hover {
+    background: var(--color-notte);
+    border-color: var(--color-notte);
+  }
+  &:disabled,
+  &[aria-disabled="true"] {
+    background: var(--color-ombra);
+    border-color: var(--color-ombra);
+    color: var(--color-marrone);
+  }
+}
+
+@utility bottone-contorno {
+  background: transparent;
+  color: var(--color-verde);
+  border: 1px solid var(--color-verde);
+  &:hover {
+    background: var(--color-verde);
+    color: var(--color-crema);
+  }
+}
+
+@utility bottone-crema {
+  background: var(--color-crema);
+  color: var(--color-verde);
+  border: 1px solid var(--color-crema);
+  &:hover {
+    background: var(--color-ocra);
+    border-color: var(--color-ocra);
+    color: var(--color-notte);
+  }
+}
+
+@utility link-riga {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 160ms ease-out, color 160ms ease-out;
+  &:hover {
+    text-decoration-color: transparent;
+  }
+}
+
+/* contenitore di pagina */
+@utility pagina {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (min-width: 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* ---------- carta da parati anni '70 ---------- */
+
+@utility carta-da-parati {
+  background-image: url("/pattern/parati.svg");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: left center;
+}
+
+/* ---------- campi del checkout ---------- */
+
+@utility campo {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  border: 1px solid var(--color-linea-forte);
+  background: var(--color-carta);
+  padding: 0.6875rem 0.875rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--color-verde);
+  border-radius: 0;
+  appearance: none;
+  transition: border-color 160ms ease-out, background-color 160ms ease-out;
+  &::placeholder {
+    color: rgb(107 67 48 / 0.6);
+  }
+  &:hover {
+    border-color: var(--color-marrone);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-verde);
+    outline-offset: 0;
+    border-color: var(--color-verde);
+  }
+  &[aria-invalid="true"] {
+    border-color: var(--color-errore);
+  }
+}
+
+/* ---------- pannelli (carrello, filtri, guida taglie): <dialog> nativo ---------- */
+
+dialog.pannello {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  max-width: none;
+  max-height: none;
+  background: var(--color-crema);
+  color: var(--color-verde);
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    transform 200ms var(--ease-uscita),
+    opacity 200ms ease-out,
+    overlay 200ms allow-discrete,
+    display 200ms allow-discrete;
+}
+
+dialog.pannello[open] {
+  opacity: 1;
+}
+
+dialog.pannello::backdrop {
+  background: rgb(16 32 26 / 0.5);
+  opacity: 0;
+  transition:
+    opacity 200ms ease-out,
+    overlay 200ms allow-discrete,
+    display 200ms allow-discrete;
+}
+
+dialog.pannello[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  dialog.pannello[open] {
+    opacity: 0;
+  }
+  dialog.pannello[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+dialog.pannello-destra {
+  inset: 0 0 0 auto;
+  width: min(27.5rem, 100vw);
+  height: 100dvh;
+  border-left: 1px solid var(--color-linea);
+  transform: translateX(2rem);
+}
+
+dialog.pannello-sinistra {
+  inset: 0 auto 0 0;
+  width: min(24rem, 100vw);
+  height: 100dvh;
+  border-right: 1px solid var(--color-linea);
+  transform: translateX(-2rem);
+}
+
+dialog.pannello-basso {
+  inset: auto 0 0 0;
+  width: 100vw;
+  max-height: 88dvh;
+  border-top: 1px solid var(--color-linea);
+  transform: translateY(2rem);
+}
+
+dialog.pannello-centro {
+  inset: 0;
+  margin: auto;
+  width: min(42rem, calc(100vw - 2rem));
+  height: fit-content;
+  max-height: min(44rem, calc(100dvh - 2rem));
+  border: 1px solid var(--color-linea);
+  transform: translateY(0.75rem);
+}
+
+dialog.pannello-destra[open],
+dialog.pannello-sinistra[open],
+dialog.pannello-basso[open],
+dialog.pannello-centro[open] {
+  transform: none;
+}
+
+@starting-style {
+  dialog.pannello-destra[open] {
+    transform: translateX(2rem);
+  }
+  dialog.pannello-sinistra[open] {
+    transform: translateX(-2rem);
+  }
+  dialog.pannello-basso[open] {
+    transform: translateY(2rem);
+  }
+  dialog.pannello-centro[open] {
+    transform: translateY(0.75rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* corsivo Bodoni: una voce a parte, usata con parsimonia */
+@utility corsivo {
+  font-family: var(--font-bodoni-corsivo), var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}

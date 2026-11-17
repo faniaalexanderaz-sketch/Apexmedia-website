@@ -1,0 +1,1338 @@
+[
+  {
+    "slug": "giacca-field-camo",
+    "name": "Giacca field camo, fodera arancione",
+    "brand": "Selezione Corner",
+    "price": 235,
+    "categories": [
+      "giacche"
+    ],
+    "color": "Camo verde",
+    "colorFamily": "verde",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 2
+      },
+      {
+        "label": "M",
+        "stock": 4
+      },
+      {
+        "label": "L",
+        "stock": 3
+      },
+      {
+        "label": "XL",
+        "stock": 0
+      }
+    ],
+    "newRank": 1,
+    "description": "Tela di cotone pesante stampata camo, con gilet interno trapuntato arancione che si stacca dai bottoni a pressione. Veste comoda e squadrata: se la vuoi asciutta, scendi di una taglia.",
+    "details": [
+      "100% cotone, 340 g/m²",
+      "Gilet interno staccabile in nylon trapuntato",
+      "Quattro tasche, zip coperta e bottoni a pressione",
+      "Vestibilità ampia"
+    ],
+    "images": [
+      {
+        "src": "/products/giacca-field-camo-1.jpg",
+        "alt": "Giacca field camo indossata dal manichino, aperta sulla fodera arancione"
+      },
+      {
+        "src": "/products/giacca-field-camo-2.jpg",
+        "alt": "Dettaglio della fodera trapuntata arancione con bottoni a pressione"
+      },
+      {
+        "src": "/products/giacca-field-camo-3.jpg",
+        "alt": "Dettaglio del colletto e della tasca sul petto"
+      },
+      {
+        "src": "/products/giacca-field-camo-4.jpg",
+        "alt": "La giacca in negozio, davanti alla carta da parati"
+      }
+    ],
+    "pairsWith": [
+      "jeans-denim-grezzo",
+      "berretto-coste-oliva",
+      "felpa-canvas-ruggine"
+    ],
+    "id": "01"
+  },
+  {
+    "slug": "felpa-canvas-ruggine",
+    "name": "Felpa con cappuccio in canvas ruggine",
+    "brand": "Selezione Corner",
+    "price": 175,
+    "categories": [
+      "felpe"
+    ],
+    "color": "Ruggine",
+    "colorFamily": "marrone",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 3
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 4
+      },
+      {
+        "label": "XL",
+        "stock": 2
+      }
+    ],
+    "newRank": 2,
+    "description": "Canvas di cotone tinto in capo color ruggine, tasca a marsupio e zip laterale. Rigida i primi giorni, poi prende la tua forma. Veste larga e corta.",
+    "details": [
+      "100% cotone canvas, tinto in capo",
+      "Cappuccio con coulisse, tasca a marsupio",
+      "Zip laterale in metallo",
+      "Vestibilità larga e corta"
+    ],
+    "images": [
+      {
+        "src": "/products/felpa-canvas-ruggine-1.jpg",
+        "alt": "Felpa in canvas ruggine con il cappuccio alzato, sulla sedia in vetrina"
+      },
+      {
+        "src": "/products/felpa-canvas-ruggine-2.jpg",
+        "alt": "La felpa piegata accanto al manichino"
+      },
+      {
+        "src": "/products/felpa-canvas-ruggine-3.jpg",
+        "alt": "Dettaglio della tasca a marsupio e della zip laterale"
+      },
+      {
+        "src": "/products/felpa-canvas-ruggine-4.jpg",
+        "alt": "La felpa in vetrina con il giubbino in denim"
+      }
+    ],
+    "pairsWith": [
+      "jeans-denim-grezzo",
+      "berretto-coste-oliva",
+      "giacca-field-camo"
+    ],
+    "id": "02"
+  },
+  {
+    "slug": "jeans-denim-grezzo",
+    "name": "Jeans in denim grezzo cimosato",
+    "brand": "Sundek",
+    "price": 155,
+    "categories": [
+      "denim"
+    ],
+    "color": "Indaco grezzo",
+    "colorFamily": "blu",
+    "sizeType": "denim",
+    "sizes": [
+      {
+        "label": "30",
+        "stock": 1
+      },
+      {
+        "label": "31",
+        "stock": 2
+      },
+      {
+        "label": "32",
+        "stock": 3
+      },
+      {
+        "label": "33",
+        "stock": 2
+      },
+      {
+        "label": "34",
+        "stock": 1
+      },
+      {
+        "label": "36",
+        "stock": 0
+      }
+    ],
+    "newRank": 4,
+    "description": "Denim cimosato da 14 once, mai lavato: duro e scuro, si segna dove ti pieghi tu. Gamba dritta e ampia, vita regolare. Per i primi sei mesi non lavarlo, se ci riesci.",
+    "details": [
+      "100% cotone, denim cimosato 14 oz",
+      "Non lavato: cede e si schiarisce con l'uso",
+      "Cinque tasche, bottoni in metallo",
+      "Gamba dritta, vita regolare"
+    ],
+    "images": [
+      {
+        "src": "/products/jeans-grezzo-1.jpg",
+        "alt": "Jeans in denim grezzo indossati dal manichino"
+      },
+      {
+        "src": "/products/jeans-grezzo-2.jpg",
+        "alt": "Dettaglio del risvolto con la cimosa"
+      },
+      {
+        "src": "/products/jeans-grezzo-3.jpg",
+        "alt": "I jeans in vetrina sotto la giacca camo"
+      }
+    ],
+    "pairsWith": [
+      "giubbino-denim-grezzo",
+      "felpa-canvas-ruggine",
+      "giacca-field-camo"
+    ],
+    "id": "03"
+  },
+  {
+    "slug": "tacchini-navy-rosso",
+    "name": "Giacca da tuta navy, bordo rosso",
+    "brand": "Sergio Tacchini",
+    "price": 110,
+    "categories": [
+      "felpe"
+    ],
+    "color": "Navy e rosso",
+    "colorFamily": "blu",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 2
+      },
+      {
+        "label": "M",
+        "stock": 3
+      },
+      {
+        "label": "L",
+        "stock": 3
+      },
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "newRank": 3,
+    "description": "Felpa di cotone garzata, collo alto con zip, spalle a contrasto e profili bianchi. Linea anni Settanta: asciutta sul busto, corta in vita.",
+    "details": [
+      "80% cotone, 20% poliestere",
+      "Collo alto con zip in metallo",
+      "Spalle a contrasto, profili bianchi",
+      "Vestibilità asciutta"
+    ],
+    "images": [
+      {
+        "src": "/products/tacchini-navy-1.jpg",
+        "alt": "Giacca da tuta Sergio Tacchini navy con spalle rosse, piegata sulla cassa"
+      },
+      {
+        "src": "/products/tacchini-navy-2.jpg",
+        "alt": "Dettaglio del collo alto con zip e profilo bianco"
+      },
+      {
+        "src": "/products/tacchini-navy-3.jpg",
+        "alt": "Dettaglio del logo ricamato sul petto"
+      },
+      {
+        "src": "/products/tacchini-navy-4.jpg",
+        "alt": "Le tute Sergio Tacchini sulla cassa di legno in negozio"
+      }
+    ],
+    "pairsWith": [
+      "trucker-cap-new-york",
+      "jeans-lavaggio-medio",
+      "tacchini-gessata"
+    ],
+    "id": "04"
+  },
+  {
+    "slug": "parka-sabbia-pile",
+    "name": "Parka sabbia con interno in pile",
+    "brand": "Selezione Corner",
+    "price": 395,
+    "categories": [
+      "giacche"
+    ],
+    "color": "Sabbia",
+    "colorFamily": "beige",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 1
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 2
+      },
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "newRank": 7,
+    "description": "Cotone e nylon idrorepellente color sabbia, interno e cappuccio in pile verde scuro. Lungo fino a metà coscia, largo quanto basta per starci sotto con un maglione grosso.",
+    "details": [
+      "Esterno 60% cotone, 40% nylon idrorepellente",
+      "Interno e cappuccio in pile",
+      "Zip a due cursori, tasca sul petto con zip",
+      "Vestibilità ampia, lunghezza a metà coscia"
+    ],
+    "images": [
+      {
+        "src": "/products/parka-sabbia-1.jpg",
+        "alt": "Parka sabbia indossato aperto dal manichino in vetrina"
+      },
+      {
+        "src": "/products/parka-sabbia-2.jpg",
+        "alt": "Dettaglio della tasca con zip sul petto"
+      },
+      {
+        "src": "/products/parka-sabbia-3.jpg",
+        "alt": "Dettaglio del cappuccio foderato in pile"
+      },
+      {
+        "src": "/products/parka-sabbia-4.jpg",
+        "alt": "Il parka visto dal fianco, con la zip a due cursori"
+      }
+    ],
+    "pairsWith": [
+      "maglione-pescatore-ecru",
+      "berretto-ciniglia-bordeaux",
+      "jeans-denim-grezzo"
+    ],
+    "id": "05"
+  },
+  {
+    "slug": "barbour-bedale-verde-salvia",
+    "name": "Barbour Bedale vintage, verde salvia",
+    "brand": "Barbour",
+    "price": 240,
+    "categories": [
+      "vintage",
+      "giacche"
+    ],
+    "color": "Verde salvia",
+    "colorFamily": "verde",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "M",
+        "stock": 1
+      }
+    ],
+    "vintage": true,
+    "unique": true,
+    "dropNumber": 1,
+    "description": "Cerata originale anni Novanta, lavata e ricerata a mano. Collo in velluto a coste, fodera tartan, zip in ottone. Taglia Barbour C40 (102 cm): veste come una M comoda.",
+    "details": [
+      "Cotone cerato, ricerato a mano",
+      "Collo in velluto a coste, fodera tartan",
+      "Taglia originale C40 / 102 cm",
+      "Usato in buone condizioni: i segni del tempo ci sono e si vedono"
+    ],
+    "measurements": "Petto 58 cm · Lunghezza 76 cm · Manica 82 cm dal collo",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1719312817199-4d6b8fa0e316?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.58&fp-y=0.52&fp-z=1",
+        "alt": "Barbour Bedale vintage verde salvia indossato, con collo in velluto e tasche a toppa"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1719312817199-4d6b8fa0e316?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.66&fp-y=0.36&fp-z=3.2",
+        "alt": "Dettaglio del collo in velluto a coste marrone"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1719312817199-4d6b8fa0e316?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.41&fp-y=0.77&fp-z=3",
+        "alt": "Dettaglio della tasca a toppa con bottone a pressione"
+      }
+    ],
+    "pairsWith": [
+      "maglione-pescatore-ecru",
+      "jeans-denim-grezzo",
+      "berretto-coste-oliva"
+    ],
+    "id": "06"
+  },
+  {
+    "slug": "polo-maglia-grigio",
+    "name": "Polo in maglia grigio melange",
+    "brand": "Selezione Corner",
+    "price": 115,
+    "categories": [
+      "maglieria"
+    ],
+    "color": "Grigio melange",
+    "colorFamily": "grigio",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 2
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 1
+      },
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "newRank": 8,
+    "description": "Cotone e lana a maglia fitta, colletto morbido e tre bottoni in legno. Veste regolare: è una polo, ma tiene caldo come un maglione leggero.",
+    "details": [
+      "70% cotone, 30% lana",
+      "Colletto a maglia, tre bottoni in legno",
+      "Polsi e fondo a costine",
+      "Vestibilità regolare"
+    ],
+    "images": [
+      {
+        "src": "/products/polo-maglia-grigio-1.jpg",
+        "alt": "Polo in maglia grigio melange piegata sul tavolo della vetrina"
+      },
+      {
+        "src": "/products/polo-maglia-grigio-2.jpg",
+        "alt": "Dettaglio del colletto e dei bottoni in legno"
+      },
+      {
+        "src": "/products/polo-maglia-grigio-3.jpg",
+        "alt": "La polo in vetrina accanto alla felpa navy"
+      }
+    ],
+    "pairsWith": [
+      "jeans-lavaggio-medio",
+      "giaccone-marina-blu",
+      "berretto-coste-oliva"
+    ],
+    "id": "07"
+  },
+  {
+    "slug": "trucker-cap-new-york",
+    "name": "Trucker cap patch New York",
+    "brand": "Selezione Corner",
+    "price": 55,
+    "categories": [
+      "accessori"
+    ],
+    "color": "Panna e navy",
+    "colorFamily": "beige",
+    "sizeType": "unica",
+    "sizes": [
+      {
+        "label": "Unica",
+        "stock": 2
+      }
+    ],
+    "newRank": 5,
+    "description": "Frontale in cotone con patch ricamata, retro in rete bordeaux e chiusura regolabile. Da stazione di servizio americana anni Settanta, taglia unica.",
+    "details": [
+      "Frontale in cotone, retro in rete",
+      "Patch ricamata",
+      "Chiusura regolabile a scatto",
+      "Taglia unica"
+    ],
+    "images": [
+      {
+        "src": "/products/trucker-ny-1.jpg",
+        "alt": "Trucker cap panna e navy con patch New York"
+      },
+      {
+        "src": "/products/trucker-ny-2.jpg",
+        "alt": "Dettaglio della patch ricamata"
+      },
+      {
+        "src": "/products/trucker-ny-3.jpg",
+        "alt": "Il cappellino in negozio, sopra le tute Sergio Tacchini"
+      }
+    ],
+    "pairsWith": [
+      "tacchini-navy-rosso",
+      "tacchini-bordeaux",
+      "jeans-lavaggio-medio"
+    ],
+    "id": "08"
+  },
+  {
+    "slug": "giubbino-denim-grezzo",
+    "name": "Giubbino in denim grezzo",
+    "brand": "Sundek",
+    "price": 195,
+    "categories": [
+      "denim",
+      "giacche"
+    ],
+    "color": "Indaco grezzo",
+    "colorFamily": "blu",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 1
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 2
+      },
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "description": "Lo stesso denim grezzo dei jeans, tagliato corto con due tasche sul petto e bottoni in metallo. Veste giusto: sotto ci sta una felpa, un maglione grosso no.",
+    "details": [
+      "100% cotone, denim 14 oz",
+      "Due tasche con patta sul petto",
+      "Etichetta in cuoio",
+      "Vestibilità regolare, lunghezza in vita"
+    ],
+    "images": [
+      {
+        "src": "/products/giubbino-denim-1.jpg",
+        "alt": "Giubbino in denim grezzo Sundek appeso in vetrina"
+      },
+      {
+        "src": "/products/giubbino-denim-2.jpg",
+        "alt": "Dettaglio dell'etichetta Sundek in cuoio"
+      },
+      {
+        "src": "/products/giubbino-denim-3.jpg",
+        "alt": "Il giubbino in vetrina accanto alla felpa in canvas"
+      }
+    ],
+    "pairsWith": [
+      "jeans-denim-grezzo",
+      "polo-maglia-grigio",
+      "trucker-cap-beach-races"
+    ],
+    "id": "09"
+  },
+  {
+    "slug": "maglione-jacquard-bordeaux",
+    "name": "Maglione jacquard bordeaux",
+    "brand": "SKFK",
+    "price": 145,
+    "categories": [
+      "donna",
+      "maglieria"
+    ],
+    "color": "Bordeaux e panna",
+    "colorFamily": "rosso",
+    "sizeType": "donna",
+    "sizes": [
+      {
+        "label": "XS",
+        "stock": 1
+      },
+      {
+        "label": "S",
+        "stock": 2
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 0
+      }
+    ],
+    "newRank": 6,
+    "description": "Lana e cotone riciclato con motivo jacquard panna su fondo bordeaux. Veste morbido e scende lungo sui fianchi.",
+    "details": [
+      "50% lana, 50% cotone riciclato",
+      "Motivo jacquard sul davanti e sulle maniche",
+      "Girocollo a costine",
+      "Vestibilità morbida"
+    ],
+    "images": [
+      {
+        "src": "/products/maglione-jacquard-1.jpg",
+        "alt": "Maglione jacquard bordeaux e panna piegato in vetrina"
+      },
+      {
+        "src": "/products/maglione-jacquard-2.jpg",
+        "alt": "Dettaglio del motivo jacquard"
+      },
+      {
+        "src": "/products/maglione-jacquard-3.jpg",
+        "alt": "Il maglione in vetrina con il listino scritto a mano"
+      }
+    ],
+    "pairsWith": [
+      "berretto-ciniglia-bordeaux",
+      "maglia-girocollo-verde-bosco",
+      "parka-sabbia-pile"
+    ],
+    "id": "10"
+  },
+  {
+    "slug": "tacchini-gessata",
+    "name": "Giacca da tuta gessata navy",
+    "brand": "Sergio Tacchini",
+    "price": 125,
+    "categories": [
+      "felpe"
+    ],
+    "color": "Navy gessato",
+    "colorFamily": "blu",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 1
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 0
+      },
+      {
+        "label": "XL",
+        "stock": 2
+      }
+    ],
+    "description": "Maglia di cotone pesante a righe sottili, collo a costine e zip in metallo. Vestibilità regolare: sta bene anche sotto un cappotto.",
+    "details": [
+      "85% cotone, 15% poliestere",
+      "Gessatura tessuta, non stampata",
+      "Collo a costine, zip in metallo",
+      "Vestibilità regolare"
+    ],
+    "images": [
+      {
+        "src": "/products/tacchini-gessata-1.jpg",
+        "alt": "Giacca da tuta Sergio Tacchini navy gessata"
+      },
+      {
+        "src": "/products/tacchini-gessata-2.jpg",
+        "alt": "Dettaglio del collo a costine e della zip"
+      },
+      {
+        "src": "/products/tacchini-gessata-3.jpg",
+        "alt": "La giacca gessata in negozio con le altre tute"
+      }
+    ],
+    "pairsWith": [
+      "jeans-lavaggio-medio",
+      "trucker-cap-new-york",
+      "tacchini-navy-rosso"
+    ],
+    "id": "11"
+  },
+  {
+    "slug": "barbour-border-navy",
+    "name": "Barbour Border vintage, navy",
+    "brand": "Barbour",
+    "price": 320,
+    "categories": [
+      "vintage",
+      "giacche"
+    ],
+    "color": "Navy",
+    "colorFamily": "blu",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "vintage": true,
+    "unique": true,
+    "dropNumber": 3,
+    "description": "Il più lungo dei classici: copre la giacca. Cerata navy, meno comune del verde, con fodera tartan in ottimo stato. Taglia Barbour C44 (112 cm): veste come una XL.",
+    "details": [
+      "Cotone cerato, ricerato a mano",
+      "Collo in velluto a coste, fodera tartan",
+      "Taglia originale C44 / 112 cm",
+      "Usato in ottime condizioni"
+    ],
+    "measurements": "Petto 64 cm · Lunghezza 92 cm · Manica 88 cm dal collo",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1684406641659-c2aaedefbaa1?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.62&fp-y=0.55&fp-z=1",
+        "alt": "Barbour Border vintage navy indossato accanto a un'auto d'epoca"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1684406641659-c2aaedefbaa1?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.63&fp-y=0.58&fp-z=1.9",
+        "alt": "Dettaglio delle tasche a toppa e dei bottoni a pressione"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1721746749092-6ac1a54d15f5?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.82&fp-y=0.62&fp-z=3",
+        "alt": "Dettaglio della fodera tartan e della zip in ottone"
+      }
+    ],
+    "pairsWith": [
+      "polo-maglia-grigio",
+      "jeans-lavaggio-medio",
+      "berretto-coste-oliva"
+    ],
+    "id": "12"
+  },
+  {
+    "slug": "berretto-coste-oliva",
+    "name": "Berretto a coste verde oliva",
+    "brand": "Selezione Corner",
+    "price": 45,
+    "categories": [
+      "accessori"
+    ],
+    "color": "Verde oliva",
+    "colorFamily": "verde",
+    "sizeType": "unica",
+    "sizes": [
+      {
+        "label": "Unica",
+        "stock": 6
+      }
+    ],
+    "description": "Lana a coste larghe con risvolto alto. Taglia unica: copre le orecchie quando la nebbia sale dal Tanaro.",
+    "details": [
+      "100% lana",
+      "Risvolto alto",
+      "Taglia unica",
+      "Lavare a mano"
+    ],
+    "images": [
+      {
+        "src": "/products/berretto-oliva-1.jpg",
+        "alt": "Berretto a coste verde oliva appoggiato su un libro in vetrina"
+      },
+      {
+        "src": "/products/berretto-oliva-2.jpg",
+        "alt": "Il berretto sul tavolo della vetrina"
+      },
+      {
+        "src": "/products/tavolo-vetrina.jpg",
+        "alt": "Il tavolo della vetrina visto dall'alto"
+      }
+    ],
+    "pairsWith": [
+      "giacca-field-camo",
+      "felpa-canvas-ruggine",
+      "gilet-maglia-oliva"
+    ],
+    "id": "13"
+  },
+  {
+    "slug": "giaccone-marina-blu",
+    "name": "Giaccone da marina in panno blu",
+    "brand": "Selezione Corner",
+    "price": 455,
+    "categories": [
+      "giacche"
+    ],
+    "color": "Blu marina",
+    "colorFamily": "blu",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 0
+      },
+      {
+        "label": "M",
+        "stock": 1
+      },
+      {
+        "label": "L",
+        "stock": 1
+      },
+      {
+        "label": "XL",
+        "stock": 0
+      }
+    ],
+    "description": "Panno di lana da 600 grammi, doppiopetto con collo alto da alzare quando tira vento. Veste dritto e pesa come deve: è un cappotto, non una felpa.",
+    "details": [
+      "80% lana, 20% poliammide, 600 g/m²",
+      "Doppiopetto a sei bottoni",
+      "Tasche scaldamani foderate",
+      "Vestibilità dritta"
+    ],
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1646236258127-af19ea2c9c3a?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.56&fp-y=0.6&fp-z=1.5",
+        "alt": "Giaccone da marina in panno blu indossato"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1639270601211-9265bafae0f9?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.5&fp-z=1",
+        "alt": "Dettaglio del doppiopetto e dei bottoni"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1646236258127-af19ea2c9c3a?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.58&fp-y=0.55&fp-z=2.6",
+        "alt": "Il giaccone visto da vicino"
+      }
+    ],
+    "pairsWith": [
+      "polo-maglia-grigio",
+      "jeans-denim-grezzo",
+      "berretto-coste-oliva"
+    ],
+    "id": "14"
+  },
+  {
+    "slug": "gilet-maglia-oliva",
+    "name": "Gilet in maglia verde oliva",
+    "brand": "Selezione Corner",
+    "price": 98,
+    "categories": [
+      "maglieria"
+    ],
+    "color": "Verde oliva",
+    "colorFamily": "verde",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 1
+      },
+      {
+        "label": "M",
+        "stock": 3
+      },
+      {
+        "label": "L",
+        "stock": 2
+      },
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "description": "Lana lavorata a punto fantasia, scollo a V e fondo dritto. Sopra la camicia o sotto la giacca: scalda dove serve e lascia libere le braccia.",
+    "details": [
+      "100% lana",
+      "Lavorazione a punto fantasia",
+      "Scollo a V",
+      "Vestibilità regolare"
+    ],
+    "images": [
+      {
+        "src": "/products/gilet-maglia-oliva-1.jpg",
+        "alt": "Gilet in maglia verde oliva steso sul tavolo della vetrina"
+      },
+      {
+        "src": "/products/gilet-maglia-oliva-2.jpg",
+        "alt": "Il gilet in vetrina, sopra la foto d'epoca della città"
+      },
+      {
+        "src": "/products/tavolo-vetrina.jpg",
+        "alt": "Il tavolo della vetrina visto dall'alto"
+      }
+    ],
+    "pairsWith": [
+      "giacca-lavoro-ecru",
+      "jeans-lavaggio-medio",
+      "berretto-coste-oliva"
+    ],
+    "id": "15"
+  },
+  {
+    "slug": "tacchini-bordeaux",
+    "name": "Giacca da tuta bordeaux, fascia navy",
+    "brand": "Sergio Tacchini",
+    "price": 110,
+    "categories": [
+      "felpe"
+    ],
+    "color": "Bordeaux e navy",
+    "colorFamily": "rosso",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 2
+      },
+      {
+        "label": "M",
+        "stock": 1
+      },
+      {
+        "label": "L",
+        "stock": 2
+      },
+      {
+        "label": "XL",
+        "stock": 0
+      }
+    ],
+    "description": "Cotone felpato bordeaux con fascia navy sul petto e logo ricamato. Taglio dritto, polsi e fondo a costine.",
+    "details": [
+      "80% cotone, 20% poliestere",
+      "Fascia a contrasto sul petto",
+      "Zip intera, collo alto",
+      "Vestibilità regolare"
+    ],
+    "images": [
+      {
+        "src": "/products/tacchini-bordeaux-1.jpg",
+        "alt": "Giacca da tuta Sergio Tacchini bordeaux con fascia navy"
+      },
+      {
+        "src": "/products/tacchini-bordeaux-2.jpg",
+        "alt": "Dettaglio della fascia navy e del logo ricamato"
+      },
+      {
+        "src": "/products/tacchini-bordeaux-3.jpg",
+        "alt": "La giacca in negozio tra i cimeli dei Grigi"
+      }
+    ],
+    "pairsWith": [
+      "trucker-cap-new-york",
+      "jeans-denim-grezzo",
+      "tacchini-navy-rosso"
+    ],
+    "id": "16"
+  },
+  {
+    "slug": "barbour-beaufort-verde-oliva",
+    "name": "Barbour Beaufort vintage, verde oliva",
+    "brand": "Barbour",
+    "price": 280,
+    "categories": [
+      "vintage",
+      "giacche"
+    ],
+    "color": "Verde oliva",
+    "colorFamily": "verde",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "L",
+        "stock": 0
+      }
+    ],
+    "vintage": true,
+    "unique": true,
+    "dropNumber": 2,
+    "description": "Il modello lungo, con il tascone posteriore. Cera rifatta, polsini interni in maglia, qualche segno sul colletto che non abbiamo voluto togliere. Taglia Barbour C42 (107 cm).",
+    "details": [
+      "Cotone cerato, ricerato a mano",
+      "Tascone posteriore, polsini interni in maglia",
+      "Taglia originale C42 / 107 cm",
+      "Usato in buone condizioni"
+    ],
+    "measurements": "Petto 61 cm · Lunghezza 84 cm · Manica 86 cm dal collo",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1570884592003-a0d8c967e355?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.54&fp-y=0.62&fp-z=1",
+        "alt": "Barbour Beaufort vintage verde oliva indossato in un bosco"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1570884592003-a0d8c967e355?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.54&fp-y=0.66&fp-z=2",
+        "alt": "La giacca vista da vicino, con il collo in velluto"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1570884592003-a0d8c967e355?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.86&fp-z=2.4",
+        "alt": "Dettaglio delle tasche basse"
+      }
+    ],
+    "pairsWith": [
+      "maglione-pescatore-ecru",
+      "jeans-denim-grezzo",
+      "berretto-coste-oliva"
+    ],
+    "id": "17"
+  },
+  {
+    "slug": "maglione-pescatore-ecru",
+    "name": "Maglione da pescatore ecru",
+    "brand": "Selezione Corner",
+    "price": 135,
+    "categories": [
+      "maglieria"
+    ],
+    "color": "Ecru",
+    "colorFamily": "beige",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 1
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 2
+      },
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "description": "Lana grossa non tinta lavorata a coste inglesi, quella dei maglioni da barca. Veste abbondante, come da tradizione: anche se qui c'è solo il Tanaro.",
+    "details": [
+      "100% lana non tinta",
+      "Lavorazione a coste inglesi",
+      "Girocollo alto a costine",
+      "Vestibilità abbondante"
+    ],
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1574201635302-388dd92a4c3f?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.42&fp-y=0.6&fp-z=1",
+        "alt": "Maglione da pescatore ecru a coste grosse"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1634653131107-ecc30d4501ac?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.18&fp-z=2.2",
+        "alt": "Dettaglio della lavorazione a coste"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1634901581982-6b408cf4226a?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.48&fp-y=0.45&fp-z=1.7",
+        "alt": "Il maglione ecru accanto ad altri colori"
+      }
+    ],
+    "pairsWith": [
+      "parka-sabbia-pile",
+      "jeans-denim-grezzo",
+      "berretto-coste-oliva"
+    ],
+    "id": "18"
+  },
+  {
+    "slug": "jeans-lavaggio-medio",
+    "name": "Jeans dritto, lavaggio medio",
+    "brand": "Sundek",
+    "price": 135,
+    "categories": [
+      "denim"
+    ],
+    "color": "Blu medio",
+    "colorFamily": "blu",
+    "sizeType": "denim",
+    "sizes": [
+      {
+        "label": "30",
+        "stock": 2
+      },
+      {
+        "label": "31",
+        "stock": 1
+      },
+      {
+        "label": "32",
+        "stock": 2
+      },
+      {
+        "label": "33",
+        "stock": 0
+      },
+      {
+        "label": "34",
+        "stock": 2
+      },
+      {
+        "label": "36",
+        "stock": 1
+      }
+    ],
+    "description": "Denim di cotone da 12 once lavato a pietra, morbido dal primo giorno. Gamba dritta, cavallo regolare, cinque tasche.",
+    "details": [
+      "100% cotone, denim 12 oz",
+      "Lavaggio a pietra",
+      "Cinque tasche",
+      "Gamba dritta"
+    ],
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1714143136372-ddaf8b606da7?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.52&fp-y=0.5&fp-z=1",
+        "alt": "Jeans dritto lavaggio medio steso su fondo chiaro"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1555689502-c4b22d76c56f?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.5&fp-z=1",
+        "alt": "I jeans indossati, gamba dritta"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1637069585336-827b298fe84a?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.55&fp-z=1",
+        "alt": "Jeans piegati in diversi lavaggi"
+      }
+    ],
+    "pairsWith": [
+      "tacchini-navy-rosso",
+      "polo-maglia-grigio",
+      "trucker-cap-new-york"
+    ],
+    "id": "19"
+  },
+  {
+    "slug": "giacca-lavoro-ecru",
+    "name": "Giacca da lavoro in velluto ecru",
+    "brand": "Selezione Corner",
+    "price": 185,
+    "categories": [
+      "giacche"
+    ],
+    "color": "Ecru",
+    "colorFamily": "beige",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 2
+      },
+      {
+        "label": "M",
+        "stock": 2
+      },
+      {
+        "label": "L",
+        "stock": 1
+      },
+      {
+        "label": "XL",
+        "stock": 1
+      }
+    ],
+    "description": "Velluto di cotone a coste fini color ecru, tasche applicate e bottoni a pressione. Taglio dritto da giacca d'officina: va portata aperta, sopra a tutto.",
+    "details": [
+      "100% cotone, velluto a coste fini",
+      "Tasche applicate sul petto e sui fianchi",
+      "Bottoni a pressione",
+      "Vestibilità dritta"
+    ],
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1545272957-4a9a90740ce1?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.6&fp-y=0.36&fp-z=1",
+        "alt": "Giacca da lavoro in tela ecru indossata, vista di fianco"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1545272957-4a9a90740ce1?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.64&fp-y=0.27&fp-z=2.2",
+        "alt": "Dettaglio della tasca applicata e del polsino"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1776631111366-c5121c5e28e0?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.5&fp-z=1.8",
+        "alt": "La giacca indossata aperta sopra una camicia"
+      }
+    ],
+    "pairsWith": [
+      "gilet-maglia-oliva",
+      "jeans-denim-grezzo",
+      "trucker-cap-beach-races"
+    ],
+    "id": "20"
+  },
+  {
+    "slug": "berretto-ciniglia-bordeaux",
+    "name": "Berretto in ciniglia bordeaux",
+    "brand": "Selezione Corner",
+    "price": 55,
+    "categories": [
+      "accessori",
+      "donna"
+    ],
+    "color": "Bordeaux",
+    "colorFamily": "rosso",
+    "sizeType": "unica",
+    "sizes": [
+      {
+        "label": "Unica",
+        "stock": 3
+      }
+    ],
+    "description": "Ciniglia di cotone a maglia grossa, risvolto doppio. Morbido, caldo, sta su da solo.",
+    "details": [
+      "Ciniglia di cotone",
+      "Risvolto doppio",
+      "Taglia unica",
+      "Lavare a mano"
+    ],
+    "images": [
+      {
+        "src": "/products/berretto-bordeaux-1.jpg",
+        "alt": "Berretto in ciniglia bordeaux sul manichino in vetrina"
+      },
+      {
+        "src": "/products/berretto-bordeaux-2.jpg",
+        "alt": "Dettaglio della maglia in ciniglia"
+      },
+      {
+        "src": "/products/berretto-bordeaux-3.jpg",
+        "alt": "Il berretto in vetrina con il parka sabbia"
+      }
+    ],
+    "pairsWith": [
+      "maglione-jacquard-bordeaux",
+      "parka-sabbia-pile",
+      "maglia-girocollo-verde-bosco"
+    ],
+    "id": "21"
+  },
+  {
+    "slug": "trucker-cap-beach-races",
+    "name": "Trucker cap patch Beach Races",
+    "brand": "Selezione Corner",
+    "price": 55,
+    "categories": [
+      "accessori"
+    ],
+    "color": "Rosso e kaki",
+    "colorFamily": "rosso",
+    "sizeType": "unica",
+    "sizes": [
+      {
+        "label": "Unica",
+        "stock": 4
+      }
+    ],
+    "description": "Frontale rosso slavato con patch, visiera navy e retro in rete kaki. Chiusura regolabile, taglia unica.",
+    "details": [
+      "Frontale in cotone, retro in rete",
+      "Patch ricamata",
+      "Chiusura regolabile a scatto",
+      "Taglia unica"
+    ],
+    "images": [
+      {
+        "src": "/products/trucker-races-1.jpg",
+        "alt": "Trucker cap rosso e kaki con patch Beach Races"
+      },
+      {
+        "src": "/products/trucker-races-2.jpg",
+        "alt": "Dettaglio della patch ricamata"
+      },
+      {
+        "src": "/products/trucker-races-3.jpg",
+        "alt": "Il cappellino in vetrina sulla giacca ecru"
+      }
+    ],
+    "pairsWith": [
+      "giubbino-denim-grezzo",
+      "giacca-lavoro-ecru",
+      "felpa-canvas-ruggine"
+    ],
+    "id": "22"
+  },
+  {
+    "slug": "maglia-girocollo-verde-bosco",
+    "name": "Maglia girocollo verde bosco",
+    "brand": "SKFK",
+    "price": 130,
+    "categories": [
+      "donna",
+      "maglieria"
+    ],
+    "color": "Verde bosco",
+    "colorFamily": "verde",
+    "sizeType": "donna",
+    "sizes": [
+      {
+        "label": "XS",
+        "stock": 1
+      },
+      {
+        "label": "S",
+        "stock": 2
+      },
+      {
+        "label": "M",
+        "stock": 1
+      },
+      {
+        "label": "L",
+        "stock": 1
+      }
+    ],
+    "description": "Maglia fine in lana merino verde bosco, girocollo e polsi a costine. Linea dritta, facile da infilare sotto un parka.",
+    "details": [
+      "100% lana merino",
+      "Girocollo e polsi a costine",
+      "Maglia rasata fine",
+      "Vestibilità dritta"
+    ],
+    "images": [
+      {
+        "src": "/products/maglia-verde-1.jpg",
+        "alt": "Maglia girocollo verde bosco indossata sotto il parka"
+      },
+      {
+        "src": "/products/maglia-verde-2.jpg",
+        "alt": "Dettaglio dello scollo a costine"
+      },
+      {
+        "src": "/products/parka-sabbia-1.jpg",
+        "alt": "La maglia in vetrina con parka e collana"
+      }
+    ],
+    "pairsWith": [
+      "parka-sabbia-pile",
+      "berretto-ciniglia-bordeaux",
+      "maglione-jacquard-bordeaux"
+    ],
+    "id": "23"
+  },
+  {
+    "slug": "barbour-gamefair-verde",
+    "name": "Barbour Gamefair vintage, verde",
+    "brand": "Barbour",
+    "price": 220,
+    "categories": [
+      "vintage",
+      "giacche"
+    ],
+    "color": "Verde scuro",
+    "colorFamily": "verde",
+    "sizeType": "abbigliamento",
+    "sizes": [
+      {
+        "label": "S",
+        "stock": 1
+      }
+    ],
+    "vintage": true,
+    "unique": true,
+    "dropNumber": 4,
+    "description": "Modello fuori catalogo da anni, per questo se ne trovano pochi. Cerata verde scuro rifatta quest'autunno, tasche con patta sul petto. Taglia Barbour C38 (97 cm): veste come una S.",
+    "details": [
+      "Cotone cerato, ricerato a mano",
+      "Tasche con patta sul petto",
+      "Taglia originale C38 / 97 cm",
+      "Usato in buone condizioni"
+    ],
+    "measurements": "Petto 55 cm · Lunghezza 80 cm · Manica 80 cm dal collo",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1548883354-a3fb8460973f?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.5&fp-z=1",
+        "alt": "Barbour Gamefair vintage verde, visto da vicino mentre viene chiuso"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1548883354-a3fb8460973f?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.72&fp-y=0.42&fp-z=2.1",
+        "alt": "Dettaglio della tasca con patta sul petto"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1611302802014-8047aa39d4d0?fit=crop&ar=4:5&crop=focalpoint&fp-x=0.5&fp-y=0.5&fp-z=1",
+        "alt": "Dettaglio del cotone cerato dopo la ricerata"
+      }
+    ],
+    "pairsWith": [
+      "gilet-maglia-oliva",
+      "jeans-lavaggio-medio",
+      "berretto-coste-oliva"
+    ],
+    "id": "24"
+  }
+]
