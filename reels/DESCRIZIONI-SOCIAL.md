@@ -1509,3 +1509,206 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 I numeri sono un esempio semplificato.
 #negozio #clienti #messaggi #whatsapp #vendita #attività #marketing #apexmedia
 ```
+
+---
+
+> Nota: i video 46 (palestra) e 47 (vetrina 300 €) sono stati rifatti nello stile nuovo: sfondo nero, oggetti 3D a ogni parola, invito MOTION solo alla fine. I video 44, 45, 48, 49, 50 (bar, ristorante, nail, forno, bici) restano nello stile vecchio con i personaggi e non sono stati consegnati.
+
+---
+
+## 51. Spedizione gratis sopra i 49 euro: ecco perché spendi di più
+
+Stile: sfondo nero, oggetti 3D a ogni parola (motore 5). File: `apex-spedizione-gratis/renders/apex-spedizione-gratis-9x16.mp4`
+
+**TikTok**
+```text
+Spedizione gratis sopra i 49 euro. Ecco perché spendi di più: compri calzini che non ti servivano per risparmiare 6 euro. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#shopping #spedizionegratis #psicologia #apexmedia
+```
+
+**Instagram**
+```text
+Spedizione gratis sopra i 49 euro. Ecco perché spendi di più.
+
+Hai nel carrello una maglietta da 30 €. La spedizione costa 6 €. Ti sembra un furto.
+Poi leggi: "gratis sopra i 49".
+E aggiungi un paio di calzini da 20 €. Non ti servivano.
+
+Hai speso 50 € invece di 36, per risparmiarne 6.
+
+Il negozio lo sa: nessuno vuole pagare la spedizione, ma quasi tutti comprano di più pur di non pagarla.
+Quella soglia non è messa a caso: è appena sopra quello che spendi di solito.
+
+La prossima volta guarda la soglia e chiediti: questa cosa la volevo davvero?
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#shopping #spedizionegratis #ecommerce #psicologia #prezzi #marketing #apexmedia
+```
+
+---
+
+## 52. L'offerta scade tra 10 minuti. Molte volte non è vero
+
+Stile: sfondo nero, oggetti 3D a ogni parola (motore 5). File: `apex-timer/renders/apex-timer-9x16.mp4`
+
+**TikTok**
+```text
+L'offerta scade tra 10 minuti. Molte volte non è vero: quel timer non conta il tempo dell'offerta, conta il tuo. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#offerta #timer #psicologia #apexmedia
+```
+
+**Instagram**
+```text
+L'offerta scade tra dieci minuti. Molte volte non è vero.
+
+Apri un sito e parte un conto alla rovescia: dieci minuti per avere lo sconto.
+Il cuore accelera. Compri.
+
+Ma spesso, se chiudi la pagina e la riapri, il timer riparte da dieci.
+Quell'orologio non conta il tempo dell'offerta. Conta il tuo.
+
+Si chiama urgenza: quando hai fretta smetti di confrontare i prezzi, smetti di pensare, e paghi.
+È lo stesso motivo di "ultimi 3 pezzi" e "solo per oggi".
+
+Un'offerta vera non ha bisogno di metterti fretta.
+Quando vedi un timer, fai una cosa sola: aspetta.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#offerta #timer #urgenza #psicologia #shopping #marketing #apexmedia
+```
+
+---
+
+## 53. Il cinema non guadagna dal film. Guadagna dal popcorn
+
+Stile: sfondo nero, oggetti 3D a ogni parola (motore 5). File: `apex-popcorn/renders/apex-popcorn-9x16.mp4`
+
+**TikTok**
+```text
+Il cinema non guadagna dal film. Guadagna dal popcorn. La cosa che ti attira non è quasi mai quella su cui guadagnano. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#cinema #popcorn #business #apexmedia
+```
+
+**Instagram**
+```text
+Il cinema non guadagna dal film. Guadagna dal popcorn.
+
+Compri un biglietto da 9 €: più di metà va a chi ha fatto il film. Al cinema resta poco.
+Poi passi dal bar. Un secchiello di popcorn: 6 €. Dentro c'è mais per pochi centesimi.
+Lì quasi tutto è guadagno.
+
+Per questo il bar è davanti all'ingresso e il profumo si sente fin dalla strada.
+Il film serve a farti entrare. Il popcorn serve a pagare le bollette.
+
+Funziona così in tanti posti: la stampante costa poco, le cartucce tanto. Il rasoio costa poco, le lamette tanto.
+
+La cosa che ti attira non è quasi mai quella su cui guadagnano.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#cinema #popcorn #business #margine #prezzi #marketing #apexmedia
+```
+
+---
+
+## 54. All you can eat a 15 euro: come fa a guadagnarci
+
+Stile: sfondo nero, oggetti 3D a ogni parola (motore 5). File: `apex-all-you-can-eat/renders/apex-all-you-can-eat-9x16.mp4`
+
+**TikTok**
+```text
+All you can eat a 15 euro. Come fa a guadagnarci? 4 trucchi: non stai battendo il sistema, sei dentro al sistema. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#allyoucaneat #ristorante #business #apexmedia
+```
+
+**Instagram**
+```text
+All you can eat a 15 euro. Come fa a guadagnarci?
+
+Tu entri convinto di fregarli: "mangerò per 30 euro". Ma il locale ha già fatto i conti.
+
+1. Ti riempie subito con riso, pane e fritti: costano poco e saziano tanto.
+2. Le bevande non sono comprese: è lì che guadagna di più.
+3. Per ogni cliente che mangia per tre, ce ne sono cinque che mangiano poco. Paga la media, non tu.
+4. I piatti arrivano piccoli e lenti: dopo venti minuti il tuo stomaco dice basta.
+
+Non stai battendo il sistema. Sei dentro al sistema.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#allyoucaneat #sushi #ristorante #business #prezzi #marketing #apexmedia
+```
+
+---
+
+## 55. Il primo mese è gratis. Ed è il più caro di tutti
+
+Stile: sfondo nero, oggetti 3D a ogni parola (motore 5). File: `apex-primo-mese/renders/apex-primo-mese-9x16.mp4`
+
+**TikTok**
+```text
+Il primo mese è gratis. Ed è il più caro di tutti: disdire richiede uno sforzo, non fare niente è facile. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#abbonamenti #provagratis #soldi #apexmedia
+```
+
+**Instagram**
+```text
+Il primo mese è gratis. Ed è il più caro di tutti.
+
+Ti chiedono la carta: "tanto non paghi niente".
+Provi il servizio una settimana. Poi te ne dimentichi.
+Il mese dopo partono 10 €. E quello dopo. E quello dopo ancora. Nessuno ti avvisa.
+
+Le aziende lo sanno: disdire richiede uno sforzo, non fare niente è facile.
+E noi scegliamo quasi sempre di non fare niente.
+
+10 € al mese sembrano pochi. In un anno sono 120. Per una cosa che non usi.
+
+Stasera apri l'estratto conto e conta gli abbonamenti.
+Scommetto che ne trovi almeno uno che avevi dimenticato.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#abbonamenti #provagratis #soldi #risparmio #psicologia #marketing #apexmedia
+```
+
+---
+
+## 56. Tre rate da 33 euro: ecco perché compri cose che non ti servono
+
+Stile: sfondo nero, oggetti 3D a ogni parola (motore 5). File: `apex-tre-rate/renders/apex-tre-rate-9x16.mp4`
+
+**TikTok**
+```text
+Tre rate da 33 euro. Ecco perché compri cose che non ti servono: le rate non abbassano il prezzo, spostano il dolore. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#rate #shopping #soldi #apexmedia
+```
+
+**Instagram**
+```text
+Tre rate da 33 euro. Ecco perché compri cose che non ti servono.
+
+Un paio di scarpe a 100 €: ci pensi.
+Le stesse scarpe a 33 € per tre mesi: le compri subito.
+
+Il prezzo è identico. Ma il tuo cervello guarda solo il primo numero.
+33 sembra poco. 100 sembra tanto.
+
+Così il carrello si riempie: "tanto sono solo piccole rate".
+Poi arrivano tutte insieme. Scarpe, telefono, giacca.
+
+Le rate non abbassano il prezzo. Spostano il dolore.
+Prima di dividere un prezzo, guarda sempre il totale.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#rate #shopping #soldi #risparmio #psicologia #prezzi #marketing #apexmedia
+```
