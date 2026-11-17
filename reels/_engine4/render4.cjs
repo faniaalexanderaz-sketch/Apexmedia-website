@@ -29,7 +29,7 @@ const ARGS = ["--no-sandbox", "--enable-webgl", "--ignore-gpu-blocklist", "--use
   /* encode at constant frame rate */
   t = Date.now(); const seq = path.join(proj, "renders", ".seq-" + mode); fs.rmSync(seq, { recursive: true, force: true }); fs.mkdirSync(seq); files.forEach((f, i) => fs.symlinkSync(f, path.join(seq, String(i).padStart(6, "0") + ".jpg")));
   const ofps = fps / step, outF = path.join(proj, "renders", name + (PRE ? "-preview.mp4" : "-9x16.mp4")), au = path.join(proj, "assets/audio/mix.m4a"), a = ["-v", "error", "-y", "-framerate", String(ofps), "-i", path.join(seq, "%06d.jpg")];
-  if (fs.existsSync(au)) a.push("-i", au, "-c:a", "aac", "-b:a", "192k", "-shortest"); a.push("-c:v", "libx264", "-preset", PRE ? "veryfast" : "medium", "-crf", PRE ? "24" : "15", "-pix_fmt", "yuv420p", "-r", String(ofps), "-fps_mode", "cfr", "-movflags", "+faststart", outF);
+  if (fs.existsSync(au)) a.push("-i", au, "-af", "apad", "-c:a", "aac", "-b:a", "192k"); a.push("-frames:v", String(files.length)); /* the video length is decided by the frames, the audio is padded to it */ a.push("-c:v", "libx264", "-preset", PRE ? "veryfast" : "medium", "-crf", PRE ? "24" : "15", "-pix_fmt", "yuv420p", "-r", String(ofps), "-fps_mode", "cfr", "-t", (files.length / ofps).toFixed(4), "-movflags", "+faststart", outF);
   cp.execFileSync("ffmpeg", a); fs.rmSync(seq, { recursive: true, force: true }); ph.encode = (Date.now() - t) / 1000;
   /* gate */
   const pr = cp.execFileSync("ffprobe", ["-v", "error", "-select_streams", "v", "-show_entries", "stream=r_frame_rate,avg_frame_rate,nb_frames", "-of", "csv=p=0", outF]).toString().trim().split(","); let ok = pr[0] === ofps + "/1" && pr[1] === ofps + "/1" && +pr[2] === files.length, dup = 0;
