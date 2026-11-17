@@ -20,9 +20,14 @@
         if (k % 3 === 1) return Object.assign({}, c, { eye: [lerp3(e0, l0, 0.24), lerp3(e1, l1, 0.36)], fov: fv(0.84) });
         if (k % 3 === 2) { const d = sub(l0, e0), L = Math.hypot(d[0], d[2]) || 1, sg = k % 2 ? 1 : -1, pp = [(d[2] / L) * len(d) * 0.17 * sg, 6, (-d[0] / L) * len(d) * 0.17 * sg]; return Object.assign({}, c, { eye: [add(e0, pp), add(e1, mul(pp, 0.35))], fov: fv(0.93) }); }
         return Object.assign({}, c, { eye: [e0, e1], fov: fv(1) }); };
-      const out = []; let vk = 0; shots.forEach((s) => { const dur = s.t1 - s.t0; if (s.end || s.nosplit) { out.push(s); return; } const n = Math.max(1, Math.round(dur / (MAXLEN * 0.75))), cuts = [s.t0];
+      /* no face close-ups: a camera aimed at head height always frames the whole figure (diorama distance), seen slightly from above */
+      const wide = (c) => { if (spec.look === "set" || !Array.isArray(c.eye) || !Array.isArray(c.look)) return c; const f = Array.isArray(c.fov) ? c.fov : [c.fov || 32, c.fov || 32], n = c.eye.length - 1, MINH = spec.minH || 200; let ch = false;
+        const E = c.eye.map((e, i) => { const l = c.look[Math.min(i, c.look.length - 1)], fv = f[i === 0 ? 0 : 1], d = sub(e, l), H = len(d) * Math.tan((fv * Math.PI) / 360); if (l[1] < 135 || H >= MINH) return e; ch = true; const q = add(l, mul(d, MINH / H)); q[1] += 45; return q; });
+        return ch ? Object.assign({}, c, { eye: E, look: c.look.map((l) => [l[0], Math.min(l[1], 118), l[2]]), aperture: 0.5, focus: undefined }) : c; };
+      const vary0 = vary, varyW = (c, k) => wide(vary0(c, k));
+      const out = []; let vk = 0; shots.forEach((s) => { const dur = s.t1 - s.t0; if (s.end || s.nosplit) { out.push(s.end ? s : Object.assign({}, s, { cam: wide(s.cam) })); return; } const n = Math.max(1, Math.round(dur / (MAXLEN * 0.75))), cuts = [s.t0];
         for (let j = 1; j < n; j++) { const tg = s.t0 + (dur * j) / n; let best = tg, bd = 0.4; for (let i = (s.a || 0) + 1; i < s.b; i++) { const d = Math.abs(WT[i] - 0.04 - tg); if (d < bd) { bd = d; best = WT[i] - 0.04; } } if (best - cuts[cuts.length - 1] > 0.8 && s.t1 - best > 0.8) cuts.push(best); } cuts.push(s.t1);
-        for (let j = 0; j < cuts.length - 1; j++) { out.push(Object.assign({}, s, { t0: cuts[j], t1: cuts[j + 1], cam: vary(s.cam, vk + j), trans: j ? "cut" : s.trans, sub: j })); if (j) sfx.push(["whoosh", cuts[j], 0.1]); } vk += cuts.length; });
+        for (let j = 0; j < cuts.length - 1; j++) { out.push(Object.assign({}, s, { t0: cuts[j], t1: cuts[j + 1], cam: varyW(s.cam, vk + j), trans: j ? "cut" : s.trans, sub: j })); if (j) sfx.push(["whoosh", cuts[j], 0.1]); } vk += cuts.length; });
       shots.length = 0; out.forEach((x) => shots.push(x)); }
     sfx.push(["swoosh", CTA1 - 0.1, 0.3]); (spec.motion || []).forEach((m) => sfx.push(["ding", WT[m], 0.24])); (spec.sfx || []).forEach((x) => sfx.push([x[0], tw(x[1], x[3]), x[2]]));
     return { D, fps: 30, WT, END, CTA1, CTA1E, shots, sfx, envBg: "#0d0a08", spec, grade: { contrast: 1.07, sat: 1.1, vignette: 0.55 } };
@@ -251,7 +256,9 @@
       const mk = (o, d) => { const c = C4.character(o); if (d) C4.dress(c, d); sc.add(c.g); A.all.push(c); return c; }, ex = (m) => { sc.add(m); A.extras.push(m); return m; };
       spec.cast(A, mk, ex, sc); A.caps = C4.parseCaps(spec.caps); };
     A.put = (c, p) => { c.g.visible = true; c.g.rotation.x = 0; c.pose(p); }; /* lying on a bed: head towards -z, face up */ A.lie = (c, p, x, z, y) => { A.put(c, Object.assign({}, p, { pos: [x, 0, z], yaw: 0 })); c.g.rotation.x = -Math.PI / 2; c.g.position.y = y; }; A.face = (a, b) => Math.atan2(b[0] - a[0], b[2] - a[2]);
-    FILM.update = (t, c, sh) => { const d = spec.sets[sh.set], L = Object.assign({}, C4.LIGHTS[d.light](d.off || 0), sh.light || {}), R = A.L, s = Math.sin; C4.scene.background.set(L.bg); C4.scene.fog.color.set(L.fog[0]); C4.scene.fog.density = L.fog[1];
+    FILM.update = (t, c, sh) => { const d = spec.sets[sh.set], L = Object.assign({}, C4.LIGHTS[d.light](d.off || 0), sh.light || {}), R = A.L, s = Math.sin; const VOID = spec.look !== "set", lk = Array.isArray(sh.cam.look) ? sh.cam.look[0] : L.target;
+      if (VOID) { /* black void: only a pool of light on the action, everything else falls to black */ L.bg = "#030304"; L.fog = ["#030304", 0.0011]; L.amb *= 0.16; L.fill *= 0.4; L.key *= 1.25; L.keyPos = [lk[0] + 90, 430, lk[2] + 250]; L.target = [lk[0], 60, lk[2]]; L.pt = [L.pt[0], L.pt[1] * 0.45, L.pt[2]]; R.key.angle = sh.end ? 0.5 : 0.36; R.key.penumbra = 1; }
+      C4.scene.background.set(L.bg); C4.scene.fog.color.set(L.fog[0]); C4.scene.fog.density = L.fog[1];
       Object.keys(A.sets).forEach((k) => { A.sets[k].visible = k === sh.set; const dd = A.S[k].dust; if (dd) { dd.visible = k === sh.set; if (k === sh.set) dd.userData.update(t); } if (k === sh.set && A.S[k].tick) A.S[k].tick(t); });
       R.key.position.set(L.keyPos[0], L.keyPos[1], L.keyPos[2]); R.key.target.position.set(L.target[0], L.target[1], L.target[2]); R.key.target.updateMatrixWorld(); R.key.color.set(L.keyCol); R.key.intensity = L.key; R.fill.position.set(L.fillPos[0], L.fillPos[1], L.fillPos[2]); R.fill.color.set(L.fillCol); R.fill.intensity = L.fill;
       R.rim.position.set(L.rimPos[0], L.rimPos[1], L.rimPos[2]); R.rim.target.position.set(L.target[0], L.target[1], L.target[2]); R.rim.target.updateMatrixWorld(); R.rim.color.set(L.rimCol); R.rim.intensity = L.rim; R.hemi.color.set(L.sky); R.hemi.groundColor.set(L.ground); R.hemi.intensity = L.amb;
