@@ -16,8 +16,6 @@ export function Contact({ numero = "07" }: { numero?: string }) {
         <SectionLabel numero={numero} testo="Contatti" />
         <SplitHeading
           as="h2"
-          type="words"
-          stagger={0.04}
           className="h-display mt-6 max-w-[14ch] text-[clamp(2.5rem,1rem+5vw,6rem)]"
         >
           Parliamo della tua attività.

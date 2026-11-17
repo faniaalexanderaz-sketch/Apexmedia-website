@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { AccordionItem } from "@/components/ui/Accordion";
 import { Reveal } from "@/components/ui/Reveal";
+import { SplitHeading } from "@/components/ui/SplitHeading";
 import { faq } from "@/data/faq";
 
 export function Faq({ numero = "06" }: { numero?: string }) {
@@ -17,9 +18,12 @@ export function Faq({ numero = "06" }: { numero?: string }) {
             {/* Il titolo resta fisso con position: sticky (CSS), non con pin */}
             <Reveal className="lg:sticky lg:top-[calc(var(--nav-h)+40px)]">
               <SectionLabel numero={numero} testo="FAQ" />
-              <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
+              <SplitHeading
+                as="h2"
+                className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]"
+              >
                 Domande frequenti.
-              </h2>
+              </SplitHeading>
             </Reveal>
           </div>
           <div className="lg:col-span-7">

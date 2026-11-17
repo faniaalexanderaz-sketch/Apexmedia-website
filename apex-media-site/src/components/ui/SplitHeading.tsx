@@ -24,8 +24,8 @@ export function SplitHeading({
   as: Tag = "h2",
   children,
   className = "",
-  type = "words",
-  stagger = 0.04,
+  type = "lines",
+  stagger = 0.1,
 }: Props) {
   const ref = useRef<HTMLElement>(null);
 
@@ -41,12 +41,13 @@ export function SplitHeading({
             SplitText.create(el, {
               type,
               mask: type,
+              linesClass: "split-line",
               autoSplit: true,
               onSplit: (self) =>
                 gsap.from(type === "words" ? self.words : self.lines, {
-                  yPercent: 100,
-                  duration: 0.8,
-                  ease: EASE.reveal,
+                  yPercent: 110,
+                  duration: 1.1,
+                  ease: EASE.title,
                   stagger,
                   scrollTrigger: enterAt(el),
                 }),

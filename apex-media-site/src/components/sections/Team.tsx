@@ -12,6 +12,7 @@ import {
   MEDIA,
   EASE,
   enterAt,
+  splitLinesIn,
   CLIP_HIDDEN_BOTTOM,
   CLIP_VISIBLE,
 } from "@/lib/gsap";
@@ -29,7 +30,9 @@ export function Team() {
           if (!root) return;
           const mm = gsap.matchMedia();
           mm.add([MEDIA.desktop, MEDIA.mobile], () => {
-            gsap.from("[data-team-head] > *", {
+            const title = root.querySelector<HTMLElement>("[data-team-head] h2");
+            if (title) splitLinesIn(title);
+            gsap.from("[data-team-head] > :not(h2)", {
               opacity: 0,
               y: 16,
               duration: 0.7,

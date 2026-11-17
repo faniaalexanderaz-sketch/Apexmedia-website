@@ -15,6 +15,7 @@ import {
   EASE,
   enterAt,
   splitWordsIn,
+  splitLinesIn,
   CLIP_HIDDEN_BOTTOM,
   CLIP_VISIBLE,
   SplitText,
@@ -57,7 +58,7 @@ export function Pricing({ numero = "04" }: { numero?: string }) {
             const title = root.querySelector<HTMLElement>(
               "[data-pricing-title]",
             );
-            if (title) splits.push(splitWordsIn(title));
+            if (title) splits.push(splitLinesIn(title));
             gsap.from("[data-pricing-head] p", {
               opacity: 0,
               y: 16,

@@ -21,6 +21,8 @@ export const EASE = {
   enter: "power3.out",
   reveal: "expo.out",
   scrub: "none",
+  /** Titoli che salgono da una maschera, riga per riga */
+  title: "power4.out",
 } as const;
 
 /** ScrollTrigger standard per gli ingressi: parte quando l’elemento è all’85% della finestra, una sola volta. */
@@ -104,4 +106,102 @@ export function splitWordsIn(
         scrollTrigger: enterAt(trigger, start),
       }),
   });
+}
+
+/** Titolo di sezione: righe che salgono da una maschera, una dopo l’altra. Restituisce lo SplitText da revertire. */
+export function splitLinesIn(
+  el: Element,
+  trigger: Element = el,
+  stagger = 0.1,
+  start = "top 85%",
+) {
+  return SplitText.create(el, {
+    type: "lines",
+    mask: "lines",
+    linesClass: "split-line",
+    autoSplit: true,
+    onSplit: (self) =>
+      gsap.from(self.lines, {
+        yPercent: 110,
+        duration: 1.1,
+        ease: EASE.title,
+        stagger,
+        scrollTrigger: enterAt(trigger, start),
+      }),
+  });
+}
+
+/**
+ * Immagine che entra da una maschera (clip-path dal basso) e poi si muove appena più lenta della pagina.
+ * `wrap` è il contenitore con overflow nascosto, `img` l’immagine al suo interno.
+ */
+export function revealImage(
+  wrap: Element,
+  img: Element | null,
+  trigger: Element = wrap,
+  start = "top 85%",
+) {
+  gsap.fromTo(
+    wrap,
+    { clipPath: CLIP_HIDDEN_BOTTOM },
+    {
+      clipPath: CLIP_VISIBLE,
+      duration: 1.1,
+      ease: EASE.reveal,
+      clearProps: "clipPath",
+      scrollTrigger: enterAt(trigger, start),
+    },
+  );
+  if (img)
+    gsap.fromTo(
+      img,
+      { yPercent: -3, scale: 1.08 },
+      {
+        yPercent: 3,
+        scale: 1.08,
+        ease: EASE.scrub,
+        scrollTrigger: {
+          trigger: wrap,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      },
+    );
+}
+
+/** Contatore: da 0 al valore di data-number (data-decimals per i decimali), una volta sola, quando entra in vista. */
+export function countUp(
+  el: HTMLElement,
+  trigger: Element = el,
+  start = "top 85%",
+) {
+  const target = Number(el.dataset.number ?? el.textContent ?? 0);
+  const decimals = Number(el.dataset.decimals ?? 0);
+  const fmt = new Intl.NumberFormat("it-IT", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+  const obj = { v: 0 };
+  el.textContent = fmt.format(0);
+  return gsap.to(obj, {
+    v: target,
+    duration: 1.3,
+    ease: "power2.out",
+    onUpdate: () => {
+      el.textContent = fmt.format(obj.v);
+    },
+    scrollTrigger: enterAt(trigger, start),
+  });
+}
+
+let refreshTimer: number | undefined;
+/** Dopo aver creato un pin: riordina e ricalcola tutti gli ScrollTrigger, una volta sola anche se chiamato più volte. */
+export function refreshSoon(delay = 600) {
+  if (typeof window === "undefined") return;
+  window.clearTimeout(refreshTimer);
+  refreshTimer = window.setTimeout(() => {
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
+  }, delay);
 }

@@ -306,13 +306,6 @@ details[open] > summary .plus-icon {
   pointer-events: none;
 }
 
-/* Hero: due schermate di altezza solo su desktop con le animazioni attive (i clienti cambiano con lo scroll) */
-@media (min-width: 1024px) {
-  [data-scroll-hero] {
-    min-height: 200svh;
-  }
-}
-
 /* Hero: con JS attivo gli elementi animati partono nascosti (così non lampeggiano prima dell’idratazione).
    Senza JS, o con prefers-reduced-motion, restano visibili. Dopo 3 s tornano visibili comunque. */
 @media (prefers-reduced-motion: no-preference) {
@@ -320,9 +313,7 @@ details[open] > summary .plus-icon {
   html.js [data-hero-title],
   html.js [data-hero-sub],
   html.js [data-hero-cta] > *,
-  html.js [data-hero-24h],
-  html.js [data-hero-shot="0"] [data-phone-frame],
-  html.js [data-hero-shot="0"] figcaption {
+  html.js [data-hero-foot] {
     opacity: 0;
     animation: hero-fallback 0s linear 3s forwards;
   }
@@ -337,4 +328,175 @@ details[open] > summary .plus-icon {
 [data-tone="ink"] [data-plan-cta] {
   background: var(--giallo);
   color: var(--ink);
+}
+
+/* ---------- Redesign home ---------- */
+
+/* Grana leggera sopra lo sfondo dell’hero: rumore SVG, appena percepibile */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+/* Indicatore di scroll: una linea verticale con un tratto che scende */
+.scroll-hint {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 44px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ink) 18%, transparent);
+}
+.scroll-hint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: translateY(-100%);
+  animation: scroll-hint 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes scroll-hint {
+  0% {
+    transform: translateY(-100%);
+  }
+  55%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Titoli divisi in righe: la maschera non deve tagliare le discendenti (g, p, q) */
+.split-line-mask {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+/* ---------- Portatile in CSS ---------- */
+.mac {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+  perspective: 2600px;
+  perspective-origin: 50% 100%;
+}
+.mac-lid {
+  width: 84%;
+  margin: 0 auto;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+.mac-bezel {
+  position: relative;
+  aspect-ratio: 16 / 10.4;
+  padding: 1.7cqw 1.7cqw 2.1cqw;
+  background: #0c0d11;
+  border-radius: 2.1cqw 2.1cqw 0.5cqw 0.5cqw;
+  box-shadow:
+    inset 0 0 0 1px #2b2d35,
+    0 0 0 1px #9c9fa6;
+}
+.mac-cam {
+  position: absolute;
+  top: 0.6cqw;
+  left: 50%;
+  width: 0.55cqw;
+  height: 0.55cqw;
+  border-radius: 50%;
+  background: #23262e;
+  transform: translateX(-50%);
+}
+.mac-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0.45cqw;
+  background: #05060a;
+}
+/* Schermo spento: si accende mentre il coperchio si apre */
+.mac-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #05060a;
+  opacity: 0;
+  pointer-events: none;
+}
+.mac-base {
+  position: relative;
+  width: 100%;
+  height: 1.9cqw;
+  margin-top: -1px;
+  background: linear-gradient(#e6e7ea, #cbcdd2 55%, #a3a6ad);
+  border-radius: 0.25cqw 0.25cqw 1.5cqw 1.5cqw;
+}
+.mac-scoop {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 13%;
+  height: 36%;
+  background: #b4b7be;
+  border-radius: 0 0 0.9cqw 0.9cqw;
+  transform: translateX(-50%);
+}
+.mac-shadow {
+  width: 92%;
+  height: 1.6cqw;
+  margin: 0 auto;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--ink) 20%, transparent),
+    transparent 70%
+  );
+}
+
+/* Showcase: senza JS (o con reduced-motion) si vede il primo sito e l’elenco completo dei lavori.
+   Con le animazioni attive le schede sono sovrapposte e ne resta visibile una alla volta. */
+[data-slide]:not(:first-child) {
+  visibility: hidden;
+}
+[data-showcase-info] {
+  display: grid;
+  gap: 2rem;
+}
+[data-showcase-progress] {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-showcase-info] {
+    gap: 0;
+  }
+  html.js [data-showcase-info] > li {
+    grid-area: 1 / 1;
+  }
+  html.js [data-showcase-info] > li:not(:first-child) {
+    visibility: hidden;
+    opacity: 0;
+  }
+  html.js [data-showcase-progress] {
+    display: flex;
+  }
+}
+
+/* Fascia servizi senza animazioni: le voci vanno a capo invece di scorrere */
+@media (prefers-reduced-motion: reduce) {
+  [data-marquee-track] {
+    width: auto;
+    flex-wrap: wrap;
+    padding-inline: 1.25rem;
+  }
+  [data-marquee-track] > ul {
+    flex-wrap: wrap;
+    flex-shrink: 1;
+  }
+  [data-marquee-track] ul[aria-hidden="true"],
+  [data-marquee-track] li[aria-hidden="true"] {
+    display: none;
+  }
 }

@@ -2,13 +2,14 @@
 
 import { useRef } from "react";
 import { Container } from "@/components/ui/Container";
+import { PanelBg } from "@/components/ui/PanelBg";
 import {
   deferSetup,
   gsap,
   useGSAP,
   MEDIA,
   enterAt,
-  splitWordsIn,
+  splitLinesIn,
 } from "@/lib/gsap";
 
 const steps = [
@@ -43,7 +44,7 @@ export function Impact() {
           const mm = gsap.matchMedia();
           mm.add([MEDIA.desktop, MEDIA.mobile], () => {
             const h2 = root.querySelector<HTMLElement>("h2");
-            if (h2) splitWordsIn(h2);
+            if (h2) splitLinesIn(h2);
             gsap.from("[data-impact-sub]", {
               opacity: 0,
               y: 16,
@@ -73,9 +74,10 @@ export function Impact() {
     <section
       ref={ref}
       id="approccio"
-      className="bg-ink py-20 text-paper lg:py-28"
+      className="relative isolate py-20 text-paper lg:py-32"
       data-section="approccio"
     >
+      <PanelBg />
       <Container>
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-12 lg:items-end lg:gap-8">
           <h2 className="h-display text-[clamp(2.25rem,0.9rem+5.6vw,6rem)] text-paper lg:col-span-8">

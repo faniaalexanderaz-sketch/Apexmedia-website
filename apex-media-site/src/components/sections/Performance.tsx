@@ -19,6 +19,7 @@ import {
   MEDIA,
   EASE,
   enterAt,
+  splitLinesIn,
 } from "@/lib/gsap";
 
 /** Forma dell’imbuto: 5 fasce, dalla più larga alla più stretta (viewBox 100 x 100) */
@@ -52,23 +53,8 @@ export function Performance({ numero = "03" }: { numero?: string }) {
             const head = root.querySelector<HTMLElement>("[data-perf-head]");
             const title = root.querySelector<HTMLElement>("[data-perf-title]");
 
-            // Intro: titolo a parole da maschera, testo in dissolvenza
-            if (title)
-              splits.push(
-                SplitText.create(title, {
-                  type: "words",
-                  mask: "words",
-                  autoSplit: true,
-                  onSplit: (self) =>
-                    gsap.from(self.words, {
-                      yPercent: 100,
-                      duration: 0.8,
-                      ease: EASE.reveal,
-                      stagger: 0.04,
-                      scrollTrigger: enterAt(head ?? title),
-                    }),
-                }),
-              );
+            // Intro: titolo riga per riga da maschera, testo in dissolvenza
+            if (title) splits.push(splitLinesIn(title, head ?? title));
             gsap.from("[data-perf-head] p", {
               opacity: 0,
               y: 16,

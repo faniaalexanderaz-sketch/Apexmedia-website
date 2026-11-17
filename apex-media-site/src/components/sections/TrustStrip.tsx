@@ -31,6 +31,7 @@ const badges = [
 export function TrustStrip() {
   return (
     <section
+      id="certificazioni"
       aria-label="Certificazioni"
       className="border-y border-ink/10 bg-surface"
       data-section="certificazioni"

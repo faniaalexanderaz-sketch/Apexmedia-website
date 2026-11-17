@@ -13,10 +13,9 @@ import {
   gsap,
   useGSAP,
   MEDIA,
-  EASE,
   enterAt,
-  CLIP_HIDDEN_BOTTOM,
-  CLIP_VISIBLE,
+  splitLinesIn,
+  revealImage,
 } from "@/lib/gsap";
 
 /** Versione compatta per la home: solo 3 lavori, tutti gli altri e il dettaglio sono in /portfolio. */
@@ -37,27 +36,25 @@ export function Work() {
           );
           const mm = gsap.matchMedia();
           mm.add([MEDIA.desktop, MEDIA.mobile], () => {
-            gsap.from("[data-work-head] > *", {
+            const title = root.querySelector<HTMLElement>("[data-work-head] h2");
+            const split = title ? splitLinesIn(title) : null;
+            gsap.from("[data-work-head] > p", {
               opacity: 0,
               y: 16,
               duration: 0.7,
-              stagger: 0.08,
+              delay: 0.15,
               scrollTrigger: enterAt(root),
             });
             cards.forEach((card) => {
               const frame = card.querySelector("[data-browser-frame]");
               const text = card.querySelector("[data-work-text]");
+              // Maschera dal basso + lo screenshot si muove appena più lento della cornice
               if (frame)
-                gsap.fromTo(
+                revealImage(
                   frame,
-                  { clipPath: CLIP_HIDDEN_BOTTOM },
-                  {
-                    clipPath: CLIP_VISIBLE,
-                    duration: 0.9,
-                    ease: EASE.reveal,
-                    clearProps: "clipPath",
-                    scrollTrigger: enterAt(card, "top 82%"),
-                  },
+                  card.querySelector("[data-browser-viewport] img"),
+                  card,
+                  "top 82%",
                 );
               if (text)
                 gsap.from(text, {
@@ -78,6 +75,9 @@ export function Work() {
                 "top 92%",
               ),
             });
+            return () => {
+              split?.revert();
+            };
           });
         },
         120,

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { TricolorStripe } from "@/components/ui/TricolorStripe";
+import { PanelBg } from "@/components/ui/PanelBg";
 import { methodSteps, methodNumbers } from "@/data/services";
 import {
   deferSetup,
@@ -13,23 +14,10 @@ import {
   MEDIA,
   EASE,
   enterAt,
-  splitWordsIn,
+  splitLinesIn,
+  countUp,
+  refreshSoon,
 } from "@/lib/gsap";
-
-/** Conta da 0 al valore, una sola volta, quando entra in vista. */
-function countUp(el: HTMLElement, trigger: Element) {
-  const target = Number(el.dataset.number ?? el.textContent ?? 0);
-  const obj = { v: 0 };
-  return gsap.to(obj, {
-    v: target,
-    duration: 0.9,
-    ease: "power2.out",
-    onUpdate: () => {
-      el.textContent = String(Math.round(obj.v));
-    },
-    scrollTrigger: enterAt(trigger, "top 80%"),
-  });
-}
 
 export function Method({ numero = "03" }: { numero?: string }) {
   const ref = useRef<HTMLElement>(null);
@@ -69,7 +57,7 @@ export function Method({ numero = "03" }: { numero?: string }) {
             if (!fillH) return;
             gsap.set(dots, { opacity: 0, scale: 0.6 });
             const mt = root.querySelector<HTMLElement>("[data-method-head] h2");
-            if (mt) splitWordsIn(mt);
+            if (mt) splitLinesIn(mt);
             gsap.from("[data-method-head] p", {
               opacity: 0,
               y: 16,
@@ -102,8 +90,13 @@ export function Method({ numero = "03" }: { numero?: string }) {
               },
             );
             numbers.forEach((n) =>
-              countUp(n, root.querySelector("[data-method-numbers]") ?? root),
+              countUp(
+                n,
+                root.querySelector("[data-method-numbers]") ?? root,
+                "top 80%",
+              ),
             );
+            refreshSoon();
           });
 
           mm.add(MEDIA.mobile, () => {
@@ -112,7 +105,7 @@ export function Method({ numero = "03" }: { numero?: string }) {
             const mt2 = root.querySelector<HTMLElement>(
               "[data-method-head] h2",
             );
-            if (mt2) splitWordsIn(mt2);
+            if (mt2) splitLinesIn(mt2);
             gsap.from("[data-method-head] p", {
               opacity: 0,
               y: 12,
@@ -143,7 +136,7 @@ export function Method({ numero = "03" }: { numero?: string }) {
                 },
               },
             );
-            numbers.forEach((n) => countUp(n, n));
+            numbers.forEach((n) => countUp(n, n, "top 80%"));
           });
 
           mm.add(MEDIA.reduce, () => {
@@ -159,9 +152,10 @@ export function Method({ numero = "03" }: { numero?: string }) {
     <section
       ref={ref}
       id="metodo"
-      className="bg-ink py-20 text-paper lg:py-28"
+      className="relative isolate py-20 text-paper lg:py-28"
       data-section="metodo"
     >
+      <PanelBg />
       <Container>
         <div
           className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"

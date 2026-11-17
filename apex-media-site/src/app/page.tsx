@@ -3,7 +3,9 @@ import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { Impact } from "@/components/sections/Impact";
-import { ClientsBar } from "@/components/sections/ClientsBar";
+import { ServicesMarquee } from "@/components/sections/ServicesMarquee";
+import { Showcase } from "@/components/sections/Showcase";
+import { Campaigns } from "@/components/sections/Campaigns";
 import { Work } from "@/components/sections/Work";
 import { Services } from "@/components/sections/Services";
 import { Performance } from "@/components/sections/Performance";
@@ -14,6 +16,7 @@ import { Faq } from "@/components/sections/Faq";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
+import { CustomCursor } from "@/components/CustomCursor";
 import { showTeam } from "@/data/team";
 
 export default function Home() {
@@ -32,9 +35,17 @@ export default function Home() {
         {/* Ogni sezione sotto la piega è un confine di Suspense: React la idrata in un task separato,
             così il browser può dipingere l’hero prima di finire tutto il JavaScript */}
         <Suspense>
+          <ServicesMarquee />
+        </Suspense>
+        <Suspense>
           <Impact />
         </Suspense>
-        <ClientsBar />
+        <Suspense>
+          <Showcase />
+        </Suspense>
+        <Suspense>
+          <Campaigns />
+        </Suspense>
         <Suspense>
           <Work />
         </Suspense>
@@ -61,6 +72,7 @@ export default function Home() {
       <Suspense>
         <Footer />
         <MobileCtaBar />
+        <CustomCursor />
       </Suspense>
     </>
   );

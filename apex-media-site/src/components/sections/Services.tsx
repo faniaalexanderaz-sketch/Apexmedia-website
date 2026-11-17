@@ -18,6 +18,7 @@ import {
   EASE,
   enterAt,
   splitWordsIn,
+  splitLinesIn,
 } from "@/lib/gsap";
 
 /** Colore del nome attivo e dei dettagli. Il giallo non si usa mai come testo: diventa un evidenziatore. */
@@ -70,7 +71,7 @@ export function Services() {
             const title = root.querySelector<HTMLElement>(
               "[data-services-title]",
             );
-            if (title) splits.push(splitWordsIn(title));
+            if (title) splits.push(splitLinesIn(title));
             gsap.from("[data-services-head] p", {
               opacity: 0,
               y: 16,
