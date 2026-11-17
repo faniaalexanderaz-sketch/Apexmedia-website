@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Apex Media · Bagnarino – Checklist domani mattina</title>
+<style>
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@page { size: A4; margin: 0; }
+:root { --testo: #111; --grigio: #4A4A4A; --linea: #9A9A9A; --tenue: #D5D5D5; --fondo: #EDEDED; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; }
+body { font-family: 'Hanken Grotesk', system-ui, sans-serif; color: var(--testo); font-size: 9.2pt; line-height: 1.32; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pagina { width: 210mm; height: 297mm; padding: 11mm 13mm 9mm; display: flex; flex-direction: column; overflow: hidden; page-break-after: always; }
+.pagina:last-child { page-break-after: auto; }
+
+.testa { display: flex; align-items: center; gap: 3mm; padding-bottom: 3mm; border-bottom: .6mm solid var(--testo); }
+.testa img { width: 9mm; height: 9mm; border-radius: 2mm; }
+.testa-nome b { display: block; font-size: 9pt; letter-spacing: .26em; }
+.testa-nome span { font-size: 6pt; letter-spacing: .14em; text-transform: uppercase; color: var(--grigio); font-weight: 700; }
+.testa h1 { margin: 0 0 0 auto; font-family: 'Fraunces', serif; font-weight: 500; font-size: 16pt; letter-spacing: -.01em; text-align: right; line-height: 1.1; }
+.testa h1 small { display: block; font-family: 'Hanken Grotesk', sans-serif; font-size: 7.6pt; color: var(--grigio); font-weight: 400; letter-spacing: 0; margin-top: 1mm; }
+
+.dati { display: flex; gap: 8mm; margin: 2.6mm 0 0; font-size: 8.2pt; }
+.dati span { white-space: nowrap; }
+.dati .riga { flex: 1; display: flex; align-items: flex-end; gap: 1.5mm; }
+.dati .vuoto { flex: 1; border-bottom: .3mm solid var(--linea); height: 4mm; }
+
+h2 { display: flex; align-items: baseline; gap: 2.4mm; margin: 5mm 0 1.6mm; padding-bottom: 1.2mm; border-bottom: .3mm solid var(--testo); font-size: 10.4pt; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+h2 .n { font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 9pt; }
+h2 small { margin-left: auto; font-size: 7.4pt; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--grigio); }
+h3 { margin: 3.2mm 0 1mm; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 7.4pt; letter-spacing: .12em; text-transform: uppercase; color: var(--grigio); }
+
+ul.lista { list-style: none; margin: 0; padding: 0; }
+ul.lista li { display: flex; gap: 2.6mm; padding: 1.15mm 0; border-bottom: .2mm solid var(--tenue); }
+ul.lista li:last-child { border-bottom: 0; }
+.box { flex: 0 0 3.6mm; width: 3.6mm; height: 3.6mm; border: .4mm solid var(--testo); border-radius: .5mm; margin-top: .35mm; }
+.num { flex: 0 0 3.6mm; font-family: 'IBM Plex Mono', monospace; font-size: 8pt; margin-top: .2mm; }
+li b { font-weight: 700; }
+.dove { font-family: 'IBM Plex Mono', monospace; font-size: 7.2pt; color: var(--grigio); }
+.colonne { display: grid; grid-template-columns: 1fr 1fr; gap: 0 9mm; }
+
+table { width: 100%; border-collapse: collapse; font-size: 8.4pt; }
+th { text-align: left; font-size: 6.6pt; letter-spacing: .1em; text-transform: uppercase; font-weight: 800; padding: 1.2mm 1.6mm 1.2mm 0; border-bottom: .3mm solid var(--testo); vertical-align: bottom; }
+td { padding: 1.5mm 1.6mm 1.5mm 0; border-bottom: .2mm solid var(--tenue); vertical-align: top; }
+td.c { text-align: center; white-space: nowrap; }
+th.c { text-align: center; }
+td .dove { display: block; margin-top: .4mm; word-break: break-all; }
+td.box-td { width: 6mm; }
+td.box-td .box { display: block; }
+.stampa td:nth-child(2) { width: 44%; }
+
+.prezzi td, .prezzi th { padding-left: 2mm; padding-right: 2mm; }
+.prezzi tr.sì td { background: var(--fondo); border-top: .6mm solid var(--testo); border-bottom: .6mm solid var(--testo); }
+.prezzi tr.sì td:first-child { border-left: .6mm solid var(--testo); }
+.prezzi tr.sì td:last-child { border-right: .6mm solid var(--testo); }
+.tag { display: inline-block; margin-top: 1mm; padding: .3mm 1.6mm; border: .35mm solid var(--testo); font-family: 'IBM Plex Mono', monospace; font-size: 6.6pt; letter-spacing: .1em; background: #fff; }
+.prezzo { font-family: 'IBM Plex Mono', monospace; font-size: 8pt; white-space: nowrap; }
+.listino { margin: 0 0 1.6mm; font-size: 8.4pt; }
+.perche { margin: 2.2mm 0 0; padding-left: 3mm; border-left: .8mm solid var(--testo); font-size: 8.8pt; }
+.nota { margin: 2mm 0 0; font-size: 7.8pt; color: var(--grigio); }
+.dv { font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: .9em; white-space: nowrap; border: .3mm solid var(--testo); padding: 0 1mm; }
+.aperti { margin: 0; font-size: 8.4pt; line-height: 1.4; }
+
+.piede { display: flex; justify-content: space-between; margin-top: auto; padding-top: 2.4mm; border-top: .3mm solid var(--tenue); font-size: 6.6pt; color: var(--grigio); letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<section class="pagina">
+  <div class="testa">
+    <img src="identita/apex-logo.png" alt="">
+    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
+    <h1>Bagnarino – Checklist domani mattina<small>Incontro di presentazione con Marcella Bagnarino · mercoledì 18 novembre 2026</small></h1>
+  </div>
+  <div class="dati">
+    <div class="riga"><span>Ora</span><span class="vuoto"></span></div>
+    <div class="riga"><span>Luogo</span><span class="vuoto"></span></div>
+    <div class="riga"><span>Presenti per Apex</span><span class="vuoto"></span></div>
+  </div>
+
+  <h2><span class="n">1</span>Cose da fare<small>in ordine operativo</small></h2>
+
+  <h3>Stasera</h3>
+  <ul class="lista">
+    <li><span class="box"></span><span><b>Stampare i 7 documenti della sezione 2</b> (28 pagine, più la seconda copia di pagina 9). L’Identità visiva a colori, il resto va bene in bianco e nero.</span></li>
+    <li><span class="box"></span><span><b>Prova completa dal telefono</b> su bagnarinocoworking.it: prenotazione, email al cliente, avviso, Accetta / È arrivato / Incassa. Poi eliminarla dall’area riservata.</span></li>
+    <li><span class="box"></span><span><b>Entrare in bagnarinocoworking.it/admin</b> con la password. Riserva se il dominio non risponde: bagnarino-coworking.vercel.app/admin.</span></li>
+    <li><span class="box"></span><span><b>Recuperare le password</b> di area riservata, Gmail del coworking, Instagram, TikTok, Facebook, WhatsApp Business. Nel repo non ci sono: si scrivono a penna sul foglio credenziali, mai per messaggio.</span></li>
+    <li><span class="box"></span><span><b>Salvare sul telefono o tablet, visibili senza rete,</b> i materiali social del punto 6 qui sotto.</span></li>
+    <li><span class="box"></span><span><b>Caricare</b> telefono e tablet o portatile.</span></li>
+  </ul>
+
+  <h3>Da portare</h3>
+  <div class="colonne">
+    <ul class="lista">
+      <li><span class="box"></span><span>Cartellina con le stampe, nell’ordine della sezione 2</span></li>
+      <li><span class="box"></span><span>Due penne (firme e scheda da compilare)</span></li>
+      <li><span class="box"></span><span>Telefono carico, con hotspot attivo</span></li>
+    </ul>
+    <ul class="lista">
+      <li><span class="box"></span><span>Tablet o portatile, per il sito da computer e i social</span></li>
+      <li><span class="box"></span><span>Le password, a mente o nel gestore: non su fogli sciolti</span></li>
+      <li><span class="box"></span><span>Caricabatterie</span></li>
+    </ul>
+  </div>
+
+  <h3>Durante l’incontro, in quest’ordine</h3>
+  <ul class="lista">
+    <li><span class="num">1</span><span class="box"></span><span><b>Identità visiva.</b> Logo, colori, caratteri: pagine 2–4 del documento. Tre minuti, senza leggerlo tutto.</span></li>
+    <li><span class="num">2</span><span class="box"></span><span><b>Il sito dal telefono di Marcella.</b> Home, posti liberi, poi far fare a lei una prenotazione in tre passi.</span></li>
+    <li><span class="num">3</span><span class="box"></span><span><b>Come funziona il sito.</b> Pagine 2–6. Far segnare Sì / Da cambiare su prezzi (pag. 4), Card (pag. 5), vantaggi del mese e offerta prima volta (pag. 6).</span></li>
+    <li><span class="num">4</span><span class="box"></span><span><b>Scelta del prezzo.</b> Sezione 3 di questo foglio: proporre l’opzione B e scrivere la decisione sulla scheda.</span></li>
+    <li><span class="num">5</span><span class="box"></span><span><b>Dashboard.</b> Salvare l’area riservata sulla Home del suo telefono. I tre gesti con una prenotazione finta: Accetta, È arrivato, Incassa. Poi eliminarla e consegnare la Guida rapida.</span></li>
+    <li><span class="num">6</span><span class="box"></span><span><b>Social, da far approvare.</b> Foto profilo (due varianti, ne sceglie una), teaser, 4 post di lancio, carosello, video TikTok, le 6 email automatiche.<br><span class="dove">bagnarino/social-profilo · teaser · post-lancio · carosello-come-funziona · video-tiktok/bagnarino-teaser-tiktok.mp4 · avvio</span></span></li>
+    <li><span class="num">7</span><span class="box"></span><span><b>Scheda da compilare.</b> A penna, insieme: orari, chiusure, scrivanie, servizi, prezzi, contatti, accessi.</span></li>
+    <li><span class="num">8</span><span class="box"></span><span><b>Credenziali.</b> Scrivere le password a penna, mettere la data di consegna, doppia firma in fondo.</span></li>
+    <li><span class="num">9</span><span class="box"></span><span><b>Firma della lista “Da approvare”.</b> Come funziona il sito, pagina 9: una copia firmata a lei, una ad Apex.</span></li>
+  </ul>
+
+  <h3>Prima di andare via</h3>
+  <div class="colonne">
+    <ul class="lista">
+      <li><span class="box"></span><span>Pagina 9 firmata da entrambi, copia Apex in cartellina</span></li>
+      <li><span class="box"></span><span>Scheda compilata e Piano di avvio tornano ad Apex</span></li>
+      <li><span class="box"></span><span>Email di Marcella per gli avvisi di prenotazione</span></li>
+    </ul>
+    <ul class="lista">
+      <li><span class="box"></span><span>Accesso da Gestore al profilo Google del negozio</span></li>
+      <li><span class="box"></span><span>Date fissate: servizio fotografico e lancio sui social</span></li>
+      <li><span class="box"></span><span>Prossimo appuntamento in agenda</span></li>
+    </ul>
+  </div>
+
+  <div class="piede"><span>Apex Media · Bagnarino Coworking · uso interno</span><span>1 / 2</span></div>
+</section>
+
+<section class="pagina">
+  <div class="testa">
+    <img src="identita/apex-logo.png" alt="">
+    <div class="testa-nome"><b>APEX MEDIA</b><span>Performance marketing agency</span></div>
+    <h1>Bagnarino – Checklist domani mattina<small>Stampe, scelta del prezzo, punti aperti</small></h1>
+  </div>
+
+  <h2><span class="n">2</span>Da stampare<small>nell’ordine in cui servono · tutti A4</small></h2>
+  <table class="stampa">
+    <tr><th></th><th>Documento e percorso nel repo</th><th class="c">Pagine</th><th class="c">Copie</th><th>Per chi e note</th></tr>
+    <tr><td class="box-td"><span class="box"></span></td><td><b>Direzione artistica (Identità visiva)</b><span class="dove">bagnarino/Bagnarino-Identita-Visiva.pdf</span></td><td class="c">8</td><td class="c">1</td><td>Resta a Marcella. A colori: a pagina 3 c’è la palette.</td></tr>
+    <tr><td class="box-td"><span class="box"></span></td><td><b>Come funziona il sito</b><span class="dove">bagnarino/Bagnarino-Come-funziona-il-sito.pdf</span></td><td class="c">9</td><td class="c">1 + pag. 9</td><td>Resta a Marcella. Pagina 9 in doppia copia: è la lista da firmare.</td></tr>
+    <tr><td class="box-td"><span class="box"></span></td><td><b>Guida rapida per la titolare</b> · nuovo PDF<span class="dove">bagnarino/Bagnarino-Guida-Titolare.pdf</span></td><td class="c">1</td><td class="c">1</td><td>Resta a Marcella, vicino alla cassa. Prima era solo testo nel repo.</td></tr>
+    <tr><td class="box-td"><span class="box"></span></td><td><b>Scheda da compilare</b><span class="dove">bagnarino/Bagnarino-Scheda-da-Compilare.pdf</span></td><td class="c">1</td><td class="c">1</td><td>Si compila a penna insieme. Torna ad Apex.</td></tr>
+    <tr><td class="box-td"><span class="box"></span></td><td><b>Foglio credenziali</b><span class="dove">bagnarino/Bagnarino-Credenziali-Consegna.pdf</span></td><td class="c">1</td><td class="c">1</td><td>Resta a Marcella. Le colonne utente e password sono vuote: si scrivono a penna sul posto.</td></tr>
+    <tr><td class="box-td"><span class="box"></span></td><td><b>Piano di avvio</b><span class="dove">bagnarino/Bagnarino-Piano-di-Avvio.pdf</span></td><td class="c">6</td><td class="c">1</td><td>Uso interno Apex, non si consegna. Serve la tabella “Da confermare” a pagina 3.</td></tr>
+    <tr><td class="box-td"><span class="box"></span></td><td><b>Questa checklist</b><span class="dove">bagnarino/Bagnarino-Checklist-Incontro.pdf</span></td><td class="c">2</td><td class="c">1</td><td>Uso interno Apex. Fronte e retro.</td></tr>
+  </table>
+  <p class="nota">Non si stampano, si mostrano a schermo: post, storie, carosello, video e anteprime delle email (percorsi al punto 6 della sezione 1).</p>
+
+  <h2><span class="n">3</span>Scelta del prezzo<small>listino del coworking, da far approvare a Marcella</small></h2>
+  <p class="listino"><b>Listino oggi sul sito:</b> Giornata €25 · Carnet 10 ingressi €200 (valido 3 mesi) · Mese flessibile €270 · Mese, postazione fissa €320.</p>
+  <table class="prezzi">
+    <tr><th>Opzione</th><th>Cosa include</th><th>Prezzo</th><th>Pro</th><th>Contro</th></tr>
+    <tr>
+      <td><b>A · Listino così com’è</b></td>
+      <td>Le 4 formule già online, senza offerte.</td>
+      <td class="prezzo">25 / 200 /<br>270 / 320</td>
+      <td>Nessuna modifica. “Da €25” resta il prezzo di annunci e Google.</td>
+      <td>Chi prova una giornata non ha una spinta immediata a tornare.</td>
+    </tr>
+    <tr class="sì">
+      <td><b>B · Listino + offerta prima volta</b><br><span class="tag">CONSIGLIATA</span></td>
+      <td>Le 4 formule, più la seconda giornata scontata se il cliente torna entro 7 giorni dalla prima.</td>
+      <td class="prezzo">25 / 200 /<br>270 / 320<br>2ª giornata €20</td>
+      <td>È già nel sito, spenta: si accende subito e si spegne quando si vuole. Costa al massimo €5 a cliente nuovo.</td>
+      <td>€5 in meno sulla seconda visita. Una regola in più da spiegare al banco.</td>
+    </tr>
+    <tr>
+      <td><b>C · Listino + mezza giornata</b></td>
+      <td>Le 4 formule, più una formula a mezza giornata.</td>
+      <td class="prezzo">25 / 200 /<br>270 / 320<br>mezza: <span class="dv">DA VERIFICARE</span></td>
+      <td>Soglia d’ingresso più bassa per chi ha poche ore.</td>
+      <td>Prezzo non definito e formula non presente sul sito: va sviluppata. Può togliere vendite alla giornata da €25.</td>
+    </tr>
+  </table>
+  <p class="perche"><b>Perché la B.</b> Il guadagno non è nella giornata singola ma nella seconda visita, quella che porta a carnet e mese (€200–€320): l’offerta la compra per €5 e solo se il cliente torna davvero. È reversibile: dopo 30 giorni si guarda “Clienti che tornano” nella scheda Crescita e si decide se tenerla.</p>
+  <p class="nota">Il compenso di Apex Media per il progetto non è nel repo: se domani si parla anche di quello, la cifra è <span class="dv">DA VERIFICARE</span>.</p>
+
+  <h2><span class="n">4</span>Punti aperti<small>non trovati nel repo, li decidi tu</small></h2>
+  <p class="aperti">Ora e luogo dell’incontro · compenso Apex e condizioni · password degli account · scrivanie prenotabili: 6 nei documenti per Marcella, 8 sul sito e nella scheda · prezzi IVA inclusa sì o no · prezzo mezza giornata · sala riunioni, caffè e climatizzazione · date di separè, servizio fotografico e lancio social · quale foto profilo · cartello con QR per la vetrina (non esiste ancora) · recapito Apex da scrivere sul foglio credenziali · Apex Media Design System v1.1: non è nel repo, qui è usato lo stile dei documenti Apex già presenti.</p>
+
+  <div class="piede"><span>Apex Media · Bagnarino Coworking · uso interno</span><span>2 / 2</span></div>
+</section>
+
+</body>
+</html>

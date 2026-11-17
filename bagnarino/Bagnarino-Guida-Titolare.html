@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Bagnarino Coworking · Guida rapida per Marcella</title>
+<style>
+@font-face { font-family: 'Fraunces'; src: url('identita/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('identita/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('identita/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@page { size: A4; margin: 0; }
+:root { --testo: #111; --grigio: #4A4A4A; --linea: #9A9A9A; --tenue: #D5D5D5; --fondo: #EDEDED; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; }
+body { font-family: 'Hanken Grotesk', system-ui, sans-serif; color: var(--testo); font-size: 10.3pt; line-height: 1.36; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pagina { width: 210mm; height: 297mm; padding: 11mm 13mm 9mm; display: flex; flex-direction: column; overflow: hidden; }
+
+.testa { display: flex; align-items: center; gap: 3mm; padding-bottom: 3mm; border-bottom: .6mm solid var(--testo); }
+.testa img.bgn { height: 10mm; }
+.testa h1 { margin: 0 0 0 auto; font-family: 'Fraunces', serif; font-weight: 500; font-size: 17pt; letter-spacing: -.01em; text-align: right; line-height: 1.1; }
+.testa h1 small { display: block; font-family: 'Hanken Grotesk', sans-serif; font-size: 7.8pt; color: var(--grigio); font-weight: 400; letter-spacing: 0; margin-top: 1mm; }
+
+.colonne { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10mm; margin-top: 1mm; }
+h2 { display: flex; align-items: baseline; gap: 2.2mm; margin: 5mm 0 1.8mm; padding-bottom: 1.2mm; border-bottom: .3mm solid var(--testo); font-size: 11.4pt; font-weight: 800; }
+h2 .n { font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 8.6pt; }
+ol, ul { margin: 0; padding-left: 4.6mm; }
+li { margin: 0 0 1.3mm; padding-left: .6mm; }
+p { margin: 0 0 1.4mm; }
+b { font-weight: 700; }
+.mono { font-family: "IBM Plex Mono", monospace; font-size: 9.8pt; }
+.riquadro { margin-top: 2mm; padding: 2.2mm 3mm; background: var(--fondo); font-size: 9.8pt; }
+
+.piede { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 2.4mm; border-top: .3mm solid var(--tenue); font-size: 6.6pt; color: var(--grigio); letter-spacing: .08em; text-transform: uppercase; }
+.piede img { width: 4mm; height: 4mm; border-radius: 1mm; vertical-align: -1mm; margin-right: 1.4mm; }
+</style>
+</head>
+<body>
+<section class="pagina">
+  <div class="testa">
+    <img class="bgn" src="identita/logo.svg" alt="Bagnarino Coworking">
+    <h1>Guida rapida per Marcella<small>L’area riservata del sito, in una pagina sola. Da tenere a portata di mano.</small></h1>
+  </div>
+
+  <div class="colonne">
+    <div>
+      <h2><span class="n">1</span>Come entrare</h2>
+      <ol>
+        <li>Sul telefono apri <span class="mono">bagnarinocoworking.it/admin</span> oppure, in fondo a qualsiasi pagina del sito, tocca <b>Area riservata</b>.</li>
+        <li>Scrivi la password e tocca <b>Entra</b>. Il telefono ti ricorda per 30 giorni.</li>
+        <li>Consiglio: su iPhone tocca <b>Condividi</b>, poi <b>Aggiungi alla schermata Home</b>; su Android tocca i tre puntini, poi <b>Aggiungi a schermata Home</b>. Compare l’icona <b>Gestione</b>: da lì entri direttamente, come un’app.</li>
+      </ol>
+      <p class="riquadro">In basso trovi 5 pulsanti: <b>Oggi</b>, <b>Calendario</b>, <b>Clienti</b>, <b>Incassi</b>, <b>Crescita</b>. Le <b>Impostazioni</b> (prezzi, orari, chiusure) sono nell’ingranaggio in alto.</p>
+
+      <h2><span class="n">2</span>Quando arriva un cliente</h2>
+      <ol>
+        <li>Apri <b>Oggi</b>: sotto “Chi arriva oggi” c’è il suo nome.</li>
+        <li>Tocca <b>È arrivato</b>. Il timbro sulla sua Bagnarino Card si aggiunge da solo. Al decimo timbro il sito ti avvisa che ha una giornata in omaggio.</li>
+        <li>Quando paga, tocca <b>Incassato in contanti</b> oppure <b>Incassato con carta</b>.</li>
+        <li>Se non si presenta, tocca <b>Non è venuto</b>. Hai sbagliato? Tocca <b>Correggi</b>.</li>
+      </ol>
+
+      <h2><span class="n">3</span>Quando qualcuno prenota in negozio o al telefono</h2>
+      <ol>
+        <li>Apri <b>Calendario</b> e tocca <b>+ Aggiungi una prenotazione</b>.</li>
+        <li>Scrivi nome, cognome, telefono, scegli la formula e il giorno. L’email non è obbligatoria: serve solo per mandargli la conferma.</li>
+        <li>Tocca <b>Salva la prenotazione</b>.</li>
+      </ol>
+    </div>
+
+    <div>
+      <h2><span class="n">4</span>Come chiudere un giorno</h2>
+      <p>Per ferie, un ponte o un imprevisto.</p>
+      <ul>
+        <li><b>Calendario</b>: sul giorno tocca <b>Chiudi questo giorno</b> e scrivi il motivo.</li>
+        <li>Oppure <b>Impostazioni</b>, “Giorni di chiusura”: scegli il giorno e tocca <b>Chiudi questo giorno</b>.</li>
+        <li>Da quel momento nessuno può prenotarlo. Se c’erano già prenotazioni il sito te lo dice: avvisa quei clienti.</li>
+        <li>Le feste nazionali (Natale, Pasquetta e le altre) sono già chiuse da sole.</li>
+      </ul>
+
+      <h2><span class="n">5</span>Come cambiare un prezzo</h2>
+      <ol>
+        <li><b>Impostazioni</b>, “Prezzi”: scrivi il nuovo prezzo.</li>
+        <li>Tocca <b>Salva le modifiche</b> in basso. Il sito si aggiorna entro un minuto.</li>
+      </ol>
+      <p>Nello stesso posto puoi cambiare il numero di scrivanie, l’orario e i messaggi WhatsApp già scritti.</p>
+
+      <h2><span class="n">6</span>Ogni giorno, senza fare niente</h2>
+      <ul>
+        <li>A ogni nuova prenotazione o annullamento ti arriva un’<b>email</b>.</li>
+        <li>Ogni sera ti arriva l’email <b>“Domani al coworking”</b> con chi arriva.</li>
+        <li>Il primo giorno del mese ti arriva il <b>report del mese</b>: prenotazioni, incassi, da dove arrivano i clienti.</li>
+        <li>Per il commercialista: <b>Incassi</b>, poi <b>Scarica il file per il commercialista</b>.</li>
+      </ul>
+
+      <h2><span class="n">7</span>Come sta andando: la scheda Crescita</h2>
+      <p>Tocca <b>Crescita</b> in basso. In cima c’è una frase che riassume il mese; sotto, i numeri grandi con la freccia verde in su (meglio del mese prima) o rossa in giù (peggio). Con le due frecce ai lati guardi i mesi passati.</p>
+      <p>Prenotazioni e incassi si aggiornano da soli. I numeri di Instagram, Facebook e Google li inserisce Apex Media ogni mese, insieme a una nota su cosa ha fatto.</p>
+
+      <p class="riquadro"><b>Problemi o dubbi?</b> Scrivi ad Apex Media.</p>
+    </div>
+  </div>
+
+  <div class="piede"><span><img src="identita/apex-logo.png" alt="">Realizzato da Apex Media</span><span>Bagnarino Coworking · corso Lamarmora 46, Alessandria</span></div>
+</section>
+</body>
+</html>
