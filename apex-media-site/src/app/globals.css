@@ -500,3 +500,151 @@ details[open] > summary .plus-icon {
     display: none;
   }
 }
+
+/* ---------- "Non vendiamo visibilità. Vendiamo clienti." ---------- */
+/* Di base (mobile, senza JS, reduced-motion) tutto è in colonna e già leggibile.
+   Da 768px, con le animazioni attive, lo stesso markup diventa un palco a tutto schermo
+   dove manifesto, parole e riga finale stanno nello stesso punto e si danno il cambio. */
+.impact-stage {
+  padding-block: 5.5rem;
+}
+.impact-heavy {
+  display: grid;
+  gap: 4.5rem;
+}
+.impact-manifesto,
+.impact-word,
+.impact-final {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+.impact-manifesto {
+  font-size: 12.4vw;
+  line-height: 0.93;
+  letter-spacing: -0.04em;
+}
+/* Maschera della riga: il testo che esce viene tagliato qui */
+.impact-line {
+  display: block;
+  overflow: hidden;
+}
+.impact-line > span {
+  display: block;
+}
+.impact-words {
+  display: grid;
+  gap: 3.25rem;
+}
+/* Maschera della parola: le lettere entrano ed escono dentro questo riquadro */
+.impact-word {
+  width: max-content;
+  max-width: 100%;
+  overflow: hidden;
+  padding-block: 0.08em;
+  /* "Analizziamo" sta su una riga anche a 320px */
+  font-size: 16vw;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+.impact-sub {
+  margin-top: 0.6rem;
+  max-width: 30ch;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--paper) 62%, transparent);
+}
+.impact-final,
+.impact-progress {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .impact-stage {
+    padding-block: 8rem;
+  }
+  .impact-heavy {
+    gap: 6rem;
+  }
+  .impact-manifesto {
+    font-size: 8.4vw;
+  }
+  .impact-word {
+    font-size: 9vw;
+  }
+  .impact-sub {
+    max-width: none;
+    font-size: clamp(1.05rem, 0.6rem + 1vw, 1.5rem);
+  }
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  html.js .impact-stage {
+    position: relative;
+    height: 100svh;
+    padding-block: 0;
+    overflow: hidden;
+  }
+  html.js .impact-heavy {
+    position: relative;
+    height: 100%;
+    gap: 0;
+    place-items: center;
+  }
+  html.js .impact-heavy > * {
+    grid-area: 1 / 1;
+  }
+  html.js .impact-manifesto {
+    text-align: center;
+    white-space: nowrap;
+  }
+  html.js .impact-words {
+    gap: 0;
+    visibility: hidden;
+  }
+  html.js .impact-words > li {
+    grid-area: 1 / 1;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+  html.js .impact-word {
+    font-size: 13vw;
+  }
+  html.js .impact-sub {
+    margin-top: 1.4vw;
+  }
+  html.js .impact-final {
+    display: block;
+    visibility: hidden;
+    white-space: nowrap;
+    font-size: clamp(1.5rem, 3.3vw, 3.75rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+  /* Ogni parola della riga finale ha la sua maschera */
+  html.js .impact-slot > span {
+    display: inline-block;
+  }
+  html.js .impact-slot {
+    display: inline-block;
+    overflow: hidden;
+    padding-block: 0.08em;
+    vertical-align: bottom;
+  }
+  html.js .impact-slot + .impact-slot {
+    margin-left: 0.28em;
+  }
+  html.js .impact-progress {
+    display: block;
+    visibility: hidden;
+    position: absolute;
+    /* Sotto 1024px in basso c’è la barra fissa con il pulsante: l’indicatore sta sopra */
+    inset: auto 0 6.5rem;
+  }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  html.js .impact-progress {
+    inset: auto 0 2.75rem;
+  }
+}
