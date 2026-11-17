@@ -17,12 +17,13 @@ const badges = [
     sizes: "(min-width: 1024px) 72px, 56px",
   },
   {
-    src: "/badges/meta-business-partner.webp",
+    src: "/badges/meta-business-partner-badge.webp",
     alt: "Meta Business Partner",
-    width: 450,
-    height: 377,
-    className: "h-[120px] lg:h-40",
-    sizes: "(min-width: 1024px) 191px, 143px",
+    width: 1200,
+    height: 900,
+    // Il file ha molto margine trasparente sopra e sotto: il margine negativo lo riassorbe, senza ritagliare l’immagine
+    className: "-my-7 h-[124px] lg:-my-11 lg:h-44",
+    sizes: "(min-width: 1024px) 235px, 166px",
   },
 ] as const;
 
