@@ -2,7 +2,7 @@
 <script>
   const QS = new URLSearchParams(location.search), P = QS.get("p"), add = (src) => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   const font = (fam, w, st, file) => new FontFace(fam, 'url("file://' + P + "/assets/fonts/" + file + '")', { weight: w, style: st }).load().then((f) => document.fonts.add(f), () => 0);
-  window.boot = async (q) => { await add("file://" + P + "/assets/vendor/three.min.js"); await add("file://" + P + "/assets/vendor/apx4.js"); await add("file://" + P + "/assets/vendor/kit4.js").catch(() => 0); await add("file://" + P + "/assets/vendor/film.js");
+  window.boot = async (q) => { await add("file://" + P + "/assets/vendor/three.min.js"); await add("file://" + P + "/assets/vendor/apx4.js"); await add("file://" + P + "/assets/vendor/kit4.js").catch(() => 0); await add("file://" + P + "/assets/vendor/kit5.js").catch(() => 0); await add("file://" + P + "/assets/vendor/film.js");
     await Promise.all([font("Unbounded", "900", "normal", "unbounded-latin-900-normal.woff2"), font("Unbounded", "500", "normal", "unbounded-latin-500-normal.woff2"), font("Instrument Serif", "400", "italic", "instrument-serif-latin-400-italic.woff2"), font("Big Shoulders Display", "900", "normal", "big-shoulders-display-latin-900-normal.woff2")]);
     Object.assign(C4.quality, q); C4.FPS = FILM4.fps; if (q.preview) { const c = document.getElementById("c"); c.width = 540; c.height = 960; } const t0 = performance.now(); C4.init(document.getElementById("c"), FILM4); C4.render(0); document.getElementById("c").getContext("2d").getImageData(0, 0, 1, 1);
     const fn = (v) => JSON.stringify(v, (k, x) => (typeof x === "function" ? String(x) : x));
