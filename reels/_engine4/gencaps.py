@@ -7,8 +7,16 @@ out=[]; g=[]; closing=None
 for i,w in enumerate(words):
     if w=='Se' and ' '.join(words[i:i+3])=='Se vuoi sapere': closing=i; break
     g.append(w)
-    if re.search(r'[.?!:]$',w) or (len(g)>=5) or (re.search(r',$',w) and len(g)>=3):
-        out.append(g); g=[]
+    if re.search(r'[.?!:]$',w):
+        # one sentence -> balanced groups of at most 5 words, never a one-word leftover; prefer breaking after a comma
+        n=-(-len(g)//5); size=-(-len(g)//n); k=0
+        while k<len(g):
+            e=min(len(g),k+size)
+            for c in range(e,k+1,-1):
+                if c<len(g) and g[c-1].endswith(',') and len(g)-c>=2 and c-k>=2: e=c; break
+            if len(g)-e==1: e=len(g)
+            out.append(g[k:e]); k=e
+        g=[]
 if g: out.append(g)
 lines=[]
 for g in out:

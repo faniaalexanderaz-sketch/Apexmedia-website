@@ -1712,3 +1712,107 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 I numeri sono un esempio semplificato.
 #rate #shopping #soldi #risparmio #psicologia #prezzi #marketing #apexmedia
 ```
+
+---
+
+## 57. Questo telefono non costa 1.200 euro. Costa 150 ore della tua vita
+
+Serie soldi (motore 5, tagli variati, struttura a promesse aperte). File: `apex-ore-di-vita/renders/apex-ore-di-vita-9x16.mp4`
+
+**TikTok**
+```text
+Questo telefono non costa 1.200 euro. Costa 150 ore della tua vita. Mandalo a chi sta per comprarlo a rate.
+#soldi #risparmio #telefono #apexmedia
+```
+
+**Instagram**
+```text
+Questo telefono non costa 1.200 euro. Costa 150 ore della tua vita.
+
+Guadagni 1.400 € al mese e lavori 170 ore: sono 8 € l'ora.
+Quel telefono vale quasi un mese intero di lavoro.
+
+Ma il problema vero è un altro: lo paghi a rate e non te ne accorgi.
+33 € al mese sembrano niente. Sono 4 ore di lavoro, ogni mese, per tre anni.
+
+Il trucco: prima di comprare, dividi il prezzo per 8.
+Una cena da 40 €? 5 ore. Un paio di scarpe da 120? Due giorni.
+
+Se vale quelle ore, compralo. Se no, ti sei appena ripreso un pezzo della tua vita.
+I soldi non sono soldi. Sono ore.
+
+Manda questo video a chi sta per comprare qualcosa a rate.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#soldi #risparmio #stipendio #rate #finanzapersonale #educazionefinanziaria #apexmedia
+```
+
+---
+
+## 58. Hai avuto l'aumento. E a fine mese sei a zero come prima
+
+Serie soldi (motore 5, tagli variati, struttura a promesse aperte). File: `apex-aumento/renders/apex-aumento-9x16.mp4`
+
+**TikTok**
+```text
+Hai avuto l'aumento. E a fine mese sei a zero come prima. Si chiama inflazione dello stile di vita.
+#soldi #stipendio #risparmio #apexmedia
+```
+
+**Instagram**
+```text
+Hai avuto l'aumento. E a fine mese sei a zero come prima.
+
+Prima guadagnavi 1.400 € e ne spendevi 1.400.
+Ora ne guadagni 1.800. E ne spendi 1.800.
+400 € in più, spariti.
+
+Si chiama inflazione dello stile di vita: quando entrano più soldi, alzi l'asticella.
+Casa più grande, macchina nuova, cene fuori. Niente di folle. Solo un po' di più, ovunque.
+Finiscono in cose che dopo un mese non noti più.
+
+La via d'uscita è una sola: il giorno dell'aumento, metà va in automatico su un altro conto, prima che tu la veda. L'altra metà, goditela.
+
+Non diventi ricco quando guadagni di più. Diventi ricco quando la differenza resta.
+
+Manda questo video a chi ha appena avuto un aumento.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#soldi #stipendio #aumento #risparmio #finanzapersonale #educazionefinanziaria #apexmedia
+```
+
+---
+
+## 59. Il tuo stipendio sparisce in tre posti. E nessuno dei tre è l'affitto
+
+Serie soldi (motore 5, tagli variati, struttura a promesse aperte). File: `apex-tre-posti/renders/apex-tre-posti-9x16.mp4`
+
+**TikTok**
+```text
+Il tuo stipendio sparisce in tre posti. E nessuno dei tre è l'affitto. Il terzo è quello che ti costa di più.
+#soldi #stipendio #risparmio #apexmedia
+```
+
+**Instagram**
+```text
+Il tuo stipendio sparisce in tre posti. E nessuno dei tre è l'affitto.
+
+1. Le spese piccole. 3 € al giorno tra caffè e macchinette. Non li senti. Sono 1.000 € l'anno.
+2. Gli abbonamenti. Ne paghi cinque, ne usi due. Altri 300 € l'anno buttati.
+3. Gli acquisti del "me lo merito". Giornata storta, apri il telefono, compri qualcosa. 50 € a settimana per sentirti meglio dieci minuti: 2.600 € l'anno.
+
+Come fermarli tutti e tre: una volta al mese apri l'estratto conto e segna ogni spesa che non rifaresti.
+
+Non devi guadagnare di più. Devi smettere di perdere quello che hai già.
+
+Manda questo video a chi dice sempre "non so dove finiscono i miei soldi".
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#soldi #stipendio #risparmio #abbonamenti #finanzapersonale #educazionefinanziaria #apexmedia
+```
