@@ -1247,3 +1247,37 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 I numeri sono un esempio semplificato, ogni locale ha costi diversi.
 #pizzeria #prezzi #ristorazione #margine #posizionamento #attività #marketing #apexmedia
 ```
+
+---
+
+## 43. Ha fatto il 50% di sconto. E ha riempito l'agenda di clienti che non torneranno (centro estetico)
+
+File: `apex-sconto-estetica/renders/apex-sconto-estetica-9x16.mp4`
+
+**TikTok**
+```text
+Ha fatto il 50% di sconto. E ha riempito l'agenda di clienti che non torneranno. L'offerta giusta non è lo sconto, è un regalo a chi torna. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#centroestetico #estetista #sconti #apexmedia
+```
+
+**Instagram**
+```text
+Ha fatto il 50% di sconto. E ha riempito l'agenda di clienti che non torneranno.
+
+Un centro estetico. Trattamento viso da 60 €, in offerta a 30.
+In un mese arrivano 40 clienti nuove. Sembra un successo.
+
+Ma a 30 € copre appena prodotti e tempo.
+E finita l'offerta, ne tornano 3. Le altre erano lì per lo sconto, non per lei.
+Intanto le clienti di sempre hanno aspettato due settimane per un posto.
+
+L'offerta giusta non è lo sconto. È un regalo a chi torna:
+dopo il terzo trattamento, un massaggio in omaggio.
+
+Così premi chi ti sceglie, non chi ti prova una volta sola.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#centroestetico #estetista #sconti #fidelizzazione #cartafedeltà #attività #marketing #apexmedia
+```
