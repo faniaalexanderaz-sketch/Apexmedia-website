@@ -38,7 +38,7 @@ export default function PrivacyPage() {
                     .
                   </p>
                   <p className="mt-2">
-                    Sede: {site.address}, {site.city}. Partita IVA {site.vat}.
+                    Sede: {site.address}, {site.postalCode} {site.city}. Partita IVA {site.vat}.
                   </p>
                 </section>
 

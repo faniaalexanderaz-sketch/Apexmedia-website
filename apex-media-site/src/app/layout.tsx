@@ -78,6 +78,7 @@ const jsonLd = {
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address,
+    postalCode: site.postalCode,
     addressLocality: site.city,
     addressRegion: site.region,
     addressCountry: "IT",

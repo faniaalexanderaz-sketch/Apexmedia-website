@@ -5,6 +5,7 @@ export const site = {
   city: "Alessandria",
   region: "Piemonte",
   address: "Via Scazzola 17",
+  postalCode: "15121",
   /**
    * SEGNAPOSTO: numero provvisorio di 11 cifre, NON è la partita IVA vera.
    * La cifra di controllo è volutamente sbagliata, così non può coincidere con quella di un’altra azienda.
