@@ -1,3 +1,5 @@
 apex-quattro-parole
 apex-due-euro
 apex-palestra
+apex-vetrina-300
+apex-follower
