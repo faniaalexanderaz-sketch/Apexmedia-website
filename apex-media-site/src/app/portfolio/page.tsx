@@ -9,7 +9,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Portfolio",
   description:
-    "Siti, e-commerce e campagne che abbiamo realizzato per attività locali ad Alessandria: coworking, centro olistico, fioreria, compagnia teatrale.",
+    "Siti, e-commerce e campagne che abbiamo realizzato per attività locali ad Alessandria: coworking, centro olistico, fioreria, compagnia teatrale, impresa di pulizie.",
   alternates: { canonical: "/portfolio" },
   openGraph: { title: "Portfolio · Apex Media", url: `${site.url}/portfolio` },
 };

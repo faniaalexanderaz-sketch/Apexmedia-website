@@ -59,4 +59,14 @@ export const portfolio: PortfolioItem[] = [
     caption: "attounicojovifed.it — sito e iscrizioni al corso",
     shots: { ...shot("attounico"), full: { src: "/work/attounico-full.webp", width: 1200, height: 5579 } },
   },
+  {
+    slug: "starclean",
+    name: "Star Clean",
+    sector: "Impresa di pulizie civili e industriali",
+    work: "Sito orientato ai preventivi, con richiesta in tre domande e confronto prima e dopo",
+    url: "https://star-clean-gamma.vercel.app",
+    domain: "star-clean-gamma.vercel.app",
+    caption: "Star Clean — sito e richieste di preventivo",
+    shots: { ...shot("starclean"), full: { src: "/work/starclean-full.webp", width: 1200, height: 6686 } },
+  },
 ];

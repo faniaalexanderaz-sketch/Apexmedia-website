@@ -46,4 +46,11 @@ export const showcase: ShowcaseItem[] = [
     url: "https://attounicojovifed.it",
     fallback: "attounico",
   },
+  {
+    image: "/showcase/sito-5.jpg",
+    name: "Star Clean",
+    work: "Sito orientato ai preventivi, con richiesta in tre domande e confronto prima e dopo",
+    url: "https://star-clean-gamma.vercel.app",
+    fallback: "starclean",
+  },
 ];
