@@ -4,6 +4,13 @@ export const site = {
   url: "https://infoapex.eu",
   city: "Alessandria",
   region: "Piemonte",
+  address: "Via Scazzola 17",
+  /**
+   * SEGNAPOSTO: numero provvisorio di 11 cifre, NON è la partita IVA vera.
+   * La cifra di controllo è volutamente sbagliata, così non può coincidere con quella di un’altra azienda.
+   * Va sostituito con la partita IVA reale.
+   */
+  vat: "37833969281",
   whatsappNumber: "393515940685",
   whatsappDisplay: "+39 351 594 0685",
   whatsappUrl: "https://wa.me/393515940685",

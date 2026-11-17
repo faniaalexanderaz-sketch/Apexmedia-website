@@ -25,7 +25,7 @@ export default function PrivacyPage() {
             </div>
             <article className="lg:col-span-7">
               <h1 className="h-display text-[clamp(2rem,1rem+3.6vw,4.25rem)]">Informativa sulla privacy.</h1>
-              <p className="label-mono mt-6 text-ink/60">Aggiornata il 29 ottobre 2026</p>
+              <p className="label-mono mt-6 text-ink/60">Aggiornata il 18 novembre 2026</p>
 
               <div className="mt-10 space-y-8 text-[17px] text-ink/85">
                 <section>
@@ -37,8 +37,8 @@ export default function PrivacyPage() {
                     </a>
                     .
                   </p>
-                  <p className="mt-2 border-l-2 border-giallo pl-3 text-ink/70">
-                    [SEGNAPOSTO: ragione sociale, indirizzo e partita IVA]
+                  <p className="mt-2">
+                    Sede: {site.address}, {site.city}. Partita IVA {site.vat}.
                   </p>
                 </section>
 
