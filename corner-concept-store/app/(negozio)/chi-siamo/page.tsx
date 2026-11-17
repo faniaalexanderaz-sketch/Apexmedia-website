@@ -16,9 +16,10 @@ export default function ChiSiamoPage() {
     <>
       <PageIntro eyebrow="Chi siamo" title="Una bottega, non una boutique.">
         <p>
-          CORNER è un negozio di abbigliamento in via Modena 15, nel centro di Alessandria. Teniamo poca roba e la
-          scegliamo con un criterio solo: deve durare.
+          Dal 2017, CORNER è un mix unico di ricerca, passione e stile. Il nostro concept store è un luogo in cui l&apos;arte
+          e la cultura si fondono con il fashion; ogni capo ha una storia e noi saremo felici di raccontarvela.
         </p>
+        <p className="mt-3 font-bold text-verde">CORNER for modern gentlemen &amp; not ordinary women.</p>
       </PageIntro>
 
       <div className="pagina grid gap-x-8 gap-y-10 py-12 md:py-20 lg:grid-cols-12">

@@ -27,7 +27,7 @@ export function Header() {
     <header className="sticky top-0 z-40">
       <TopBar />
       <div className="border-b border-linea bg-crema">
-        <div className="pagina grid h-14 grid-cols-[1fr_auto_1fr] items-center md:h-[4.5rem]">
+        <div className="pagina grid h-16 grid-cols-[1fr_auto_1fr] items-center md:h-[5.25rem]">
           <div className="lg:hidden">
             <MobileMenu />
           </div>
@@ -36,7 +36,7 @@ export function Header() {
             aria-label="CORNER Concept Store, vai alla home"
             className="justify-self-center lg:justify-self-start"
           >
-            <Logo variant="compatto" label={null} className="h-9 w-auto md:h-11" />
+            <Logo variant="testata" label={null} className="h-[2.875rem] w-auto md:h-[3.75rem]" />
           </Link>
           <nav aria-label="Principale" className="hidden lg:block">
             <ul className="flex items-center gap-8">

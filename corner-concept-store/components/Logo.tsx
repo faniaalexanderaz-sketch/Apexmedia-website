@@ -1,7 +1,5 @@
 import { LOGO } from "./logo-data";
 
-const PILL_COLORS = ["var(--color-terracotta)", "var(--color-oliva)", "var(--color-terracotta)"];
-
 /** I tracciati stanno qui una volta sola; i loghi in pagina li richiamano con <use>. */
 export function LogoSprite() {
   return (
@@ -9,14 +7,20 @@ export function LogoSprite() {
       <defs>
         <path id="corner-parola" d={LOGO.parola} />
         <path id="corner-citta" d={LOGO.citta} />
+        <path id="corner-citta-a" d={LOGO.cittaA} />
+        <path id="corner-citta-testata" d={LOGO.cittaTestata} />
+        <path id="corner-citta-testata-a" d={LOGO.cittaTestataA} />
       </defs>
     </svg>
   );
 }
 
 type LogoProps = {
-  /** "completo": parola, tre pillole e ALESSANDRIA. "compatto": senza la città, per le misure piccole. */
-  variant?: "completo" | "compatto";
+  /**
+   * "completo": come sul biglietto da visita. "testata": stesso logo con ALESSANDRIA un po' più grande,
+   * per restare leggibile a misure piccole. "pillole": senza la città, come all'interno del biglietto.
+   */
+  variant?: "completo" | "testata" | "pillole";
   className?: string;
   /** null quando il logo sta dentro un link che ha già il suo nome accessibile. */
   label?: string | null;
@@ -24,20 +28,20 @@ type LogoProps = {
 
 export function Logo({ variant = "completo", className, label = "CORNER Concept Store, Alessandria" }: LogoProps) {
   const a11y = label === null ? { "aria-hidden": true as const } : { role: "img" as const, "aria-label": label };
+  const city = variant === "testata" ? "corner-citta-testata" : "corner-citta";
   return (
     <svg viewBox={LOGO.viewBox} className={className} {...a11y}>
-      {/* a misure piccole le grazie sottili del Bodoni spariscono: un filo di contorno le tiene in vita */}
-      <use
-        href="#corner-parola"
-        fill="currentColor"
-        stroke="currentColor"
-        strokeWidth={variant === "compatto" ? 5 : 3}
-        strokeLinejoin="round"
-      />
-      {LOGO.pillole.map((p, i) => (
-        <rect key={i} x={p.x} y={p.y} width={p.w} height={p.h} rx={p.w / 2} fill={PILL_COLORS[i]} />
+      <use href="#corner-parola" fill="currentColor" />
+      {LOGO.pillole.map((p) => (
+        <rect key={p.x} x={p.x} y={p.y} width={p.w} height={p.h} rx={p.w / 2} fill={p.fill} />
       ))}
-      {variant === "completo" ? <use href="#corner-citta" fill="currentColor" /> : null}
+      {variant !== "pillole" ? (
+        <>
+          <use href={`#${city}`} fill="currentColor" />
+          {/* le tre A stanno sulle pillole chiare: restano scure anche quando il logo è in crema */}
+          <use href={`#${city}-a`} fill="var(--color-notte)" />
+        </>
+      ) : null}
     </svg>
   );
 }

@@ -44,25 +44,46 @@ export function Hero() {
               ))}
             </ul>
           </div>
-          <figcaption className="hidden border-t border-linea px-4 py-2.5 text-xs text-marrone lg:block">
-            La vetrina di via Modena 15. I numeri rimandano al listino qui a fianco.
+          {/* il listino della vetrina: in negozio è scritto a mano, qui è composto */}
+          <figcaption className="hidden border-t border-linea lg:block">
+            <ul className="grid xl:grid-cols-3 xl:divide-x xl:divide-linea">
+              {items.map((item) => (
+                <li key={item.n} className="border-b border-linea last:border-b-0 xl:border-b-0">
+                  <Link href={productHref(item.product)} className="group flex min-h-12 items-baseline gap-2.5 px-4 py-3 text-[0.8125rem]">
+                    <span className="cifre shrink-0 text-xs font-semibold text-ruggine">{item.n}</span>
+                    <span className="font-medium group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">
+                      {item.label}
+                    </span>
+                    <span aria-hidden="true" className="min-w-3 flex-1 -translate-y-1 border-b border-dotted border-linea-forte" />
+                    <span className="cifre font-semibold">{euro(item.product.price)}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </figcaption>
         </figure>
 
         <div className="flex flex-col lg:col-span-4 lg:border-r lg:border-linea">
-          <div className="px-4 pb-8 pt-5 md:px-8 lg:px-7 lg:pb-10 lg:pt-10 xl:px-9">
-            <p className="occhiello text-marrone">Concept store · Alessandria</p>
-            <h1
-              id="hero-titolo"
-              className="titolo mt-3 text-[2.5rem] [text-wrap:balance] xs:text-[2.75rem] md:text-6xl lg:mt-5 lg:text-[3.25rem] xl:text-[4.25rem]"
-            >
-              Vestiti che reggono la <span className="corsivo">nebbia.</span>
-            </h1>
-            <p className="mt-3 max-w-[46ch] text-[0.9375rem] leading-normal text-marrone lg:mt-6 lg:leading-relaxed">
-              Giacche da campo, denim grezzo, Barbour di seconda mano, tute anni Settanta. Scelti uno per uno in via
-              Modena 15, spediti in tutta Italia.
-            </p>
+          <div className="flex flex-1 flex-col px-4 pb-8 pt-5 md:px-8 lg:justify-between lg:px-7 lg:py-9 xl:px-9 xl:py-10">
+            <div>
+              <p className="occhiello text-marrone">Concept store · Alessandria</p>
+              <h1
+                id="hero-titolo"
+                className="titolo mt-3 text-[1.875rem] leading-[1.04] [text-wrap:balance] xs:text-[2rem] md:text-5xl lg:mt-4 lg:text-[2rem] xl:text-[2.625rem]"
+              >
+                Dal 2017, CORNER è un mix unico di ricerca, passione e stile.
+              </h1>
+              <p className="mt-3 max-w-[46ch] text-[0.9375rem] leading-normal text-marrone lg:mt-5 lg:leading-relaxed">
+                Il nostro concept store è un luogo in cui l&apos;arte e la cultura si fondono con il fashion; ogni capo ha
+                una storia e noi saremo felici di raccontarvela.
+              </p>
+            </div>
             <div className="mt-5 flex flex-col items-start gap-3 lg:mt-8">
+              <p className="order-last mt-2 text-[0.9375rem] font-bold leading-snug lg:order-none lg:mb-3 lg:mt-0">
+                CORNER
+                <br />
+                for modern gentlemen &amp; not ordinary women.
+              </p>
               <Link href="/shop?ordina=novita" className="bottone bottone-pieno w-full sm:w-auto">
                 Vedi i nuovi arrivi
                 <span aria-hidden="true">→</span>
@@ -74,20 +95,15 @@ export function Hero() {
             </div>
           </div>
 
-          {/* il listino della vetrina: in negozio è scritto a mano, qui è composto */}
-          <div className="mt-auto border-t border-linea px-4 py-5 md:px-8 lg:px-7 xl:px-9">
+          {/* su mobile il listino resta sotto al testo */}
+          <div className="border-t border-linea px-4 py-5 md:px-8 lg:hidden">
             <h2 className="occhiello text-marrone">In vetrina adesso</h2>
             <ul className="mt-3">
               {items.map((item) => (
                 <li key={item.n}>
-                  <Link
-                    href={productHref(item.product)}
-                    className="group flex min-h-11 items-baseline gap-2.5 py-1.5 text-[0.875rem]"
-                  >
+                  <Link href={productHref(item.product)} className="group flex min-h-11 items-baseline gap-2.5 py-1.5 text-[0.875rem]">
                     <span className="cifre w-5 shrink-0 text-xs font-semibold text-ruggine">{item.n}</span>
-                    <span className="font-medium group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">
-                      {item.label}
-                    </span>
+                    <span className="font-medium">{item.label}</span>
                     <span aria-hidden="true" className="min-w-4 flex-1 -translate-y-1 border-b border-dotted border-linea-forte" />
                     <span className="cifre font-semibold">{euro(item.product.price)}</span>
                   </Link>

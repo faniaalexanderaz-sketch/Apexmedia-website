@@ -10,6 +10,8 @@ const storeJsonLd = {
   "@context": "https://schema.org",
   "@type": "ClothingStore",
   name: SITE.name,
+  slogan: SITE.slogan,
+  foundingDate: String(SITE.since),
   url: SITE.url,
   image: `${SITE.url}/brand/hero-vetrina.jpg`,
   telephone: SITE.phone,

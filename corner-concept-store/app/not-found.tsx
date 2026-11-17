@@ -6,7 +6,7 @@ export default function NotFound() {
     <main className="flex flex-1 flex-col">
       <div className="pagina flex flex-1 flex-col justify-center py-16">
         <Link href="/" aria-label="CORNER Concept Store, vai alla home" className="mb-12 self-start">
-          <Logo variant="compatto" label={null} className="h-10 w-auto" />
+          <Logo variant="testata" label={null} className="h-14 w-auto" />
         </Link>
         <p className="occhiello text-marrone">Errore 404</p>
         <h1 className="titolo mt-3 max-w-[14ch] text-[2.75rem] md:text-[4.5rem]">

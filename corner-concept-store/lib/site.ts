@@ -15,8 +15,10 @@ export const SITE = {
   name: "CORNER Concept Store",
   shortName: "CORNER",
   url: siteUrl(),
+  slogan: "for modern gentlemen & not ordinary women",
+  since: 2017,
   description:
-    "Giacche da campo, denim grezzo, Barbour di seconda mano e tute anni Settanta. Scelti uno per uno in via Modena 15 ad Alessandria, spediti in tutta Italia in 24/48h.",
+    "Dal 2017, CORNER è un mix unico di ricerca, passione e stile: concept store in via Modena 15 ad Alessandria, con spedizione in tutta Italia in 24/48h.",
   address: {
     street: "via Modena 15",
     zip: "15121",

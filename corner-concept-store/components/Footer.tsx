@@ -17,8 +17,9 @@ export function Footer() {
         <div className="md:col-span-5">
           <Logo className="h-auto w-56 text-crema md:w-72" />
           <p className="mt-6 max-w-[34ch] text-sm leading-relaxed text-crema/80">
-            Concept store di abbigliamento ad Alessandria. Dal vivo in via Modena, online in tutta Italia.
+            Dal 2017, un mix unico di ricerca, passione e stile. Dal vivo in via Modena, online in tutta Italia.
           </p>
+          <p className="mt-3 text-sm font-bold text-crema">for modern gentlemen &amp; not ordinary women.</p>
         </div>
 
         <div className="md:col-span-3">

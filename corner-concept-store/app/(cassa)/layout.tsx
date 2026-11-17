@@ -7,7 +7,7 @@ export default function CassaLayout({ children }: { children: React.ReactNode })
   return (
     <>
       <header className="border-b border-linea">
-        <div className="pagina grid h-14 grid-cols-[1fr_auto_1fr] items-center md:h-[4.5rem]">
+        <div className="pagina grid h-16 grid-cols-[1fr_auto_1fr] items-center md:h-[5.25rem]">
           <Link href="/shop" className="link-riga inline-flex min-h-11 items-center justify-self-start text-[0.8125rem] font-medium">
             <span aria-hidden="true" className="mr-1.5">
               ←
@@ -16,7 +16,7 @@ export default function CassaLayout({ children }: { children: React.ReactNode })
             <span className="hidden sm:inline">Torna al negozio</span>
           </Link>
           <Link href="/" aria-label="CORNER Concept Store, vai alla home">
-            <Logo variant="compatto" label={null} className="h-9 w-auto md:h-11" />
+            <Logo variant="testata" label={null} className="h-[2.875rem] w-auto md:h-[3.75rem]" />
           </Link>
           <a
             href={whatsappLink("Ciao Corner, ho una domanda su un ordine.")}

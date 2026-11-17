@@ -31,7 +31,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "CORNER Concept Store | Workwear, vintage e sportswear retrò ad Alessandria",
+    default: "CORNER Concept Store, Alessandria | For modern gentlemen & not ordinary women",
     template: "%s | CORNER Concept Store",
   },
   description: SITE.description,
