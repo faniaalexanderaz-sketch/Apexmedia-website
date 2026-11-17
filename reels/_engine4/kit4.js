@@ -2,7 +2,20 @@
    extra characters options, and the hair-salon / street sets. Loaded after apx4.js, before film.js. */
 (function (root) {
   "use strict";
-  const C4 = root.C4; if (!C4 || typeof THREE === "undefined") return;
+  const C4 = root.C4; if (!C4) return;
+  /* ---------- declarative film builder (pure part: runs in node too) ----------
+     spec: { WT, VOEND, caps, sets:{name:{type,args,off,light,accent,grade}}, cast(A, mk, sc), cta:[firstWord,lastWordExclusive], motion:[wordIdx,wordIdx], end:firstWordOfClosing,
+             shots:[{a,b,da,db,set,cam,key,slide,grade,light,tags:[{w,dt,x,y,txt,col,fg,size,rot,big,until,sfx}],stage(t,A,sh,c)} ..., {end:true,set,cam,stage}] }
+     a/b are word indices (the shot runs from word a to word b); the closing shot runs from the closing sentence to the end. */
+  C4.film = function (spec) {
+    const WT = spec.WT, D = Math.round((spec.VOEND + (spec.tail || 3.0)) * 30) / 30, END = WT[spec.end] - 0.12, CTA1 = WT[spec.cta[0]], CTA1E = WT[spec.cta[1]] - 0.3, tw = (i, d) => (i === 0 ? 0 : WT[i]) + (d || 0);
+    const shots = spec.shots.map((s) => { const t0 = s.end ? END : tw(s.a, s.da), t1 = s.end ? D : tw(s.b, s.db); return Object.assign({}, s, { t0, t1, trans: s.slide ? "slide" : "cut", key: s.key || (s.end ? "end" : undefined), grade: s.grade || (spec.sets[s.set] || {}).grade }); });
+    for (let i = 1; i < shots.length; i++) shots[i].t0 = shots[i - 1].t1;
+    const sfx = []; shots.forEach((s, i) => { if (i) sfx.push(s.slide ? ["swoosh", s.t0 - 0.12, 0.32] : ["whoosh", s.t0, 0.16]); (s.tags || []).forEach((g) => sfx.push([g.sfx || "pop", tw(g.w, (g.dt || 0) - 0.05), g.sfx === "cash" ? 0.32 : g.sfx === "thud" ? 0.5 : g.sfx === "shutter" ? 0.34 : 0.28])); });
+    sfx.push(["swoosh", CTA1 - 0.1, 0.3]); (spec.motion || []).forEach((m) => sfx.push(["ding", WT[m], 0.24])); (spec.sfx || []).forEach((x) => sfx.push([x[0], tw(x[1], x[3]), x[2]]));
+    return { D, fps: 30, WT, END, CTA1, CTA1E, shots, sfx, envBg: "#0d0a08", spec, grade: { contrast: 1.07, sat: 1.1, vignette: 0.55 } };
+  };
+  if (typeof THREE === "undefined") return;
   const T = THREE, { MAT, rbox, cyl, sph, cap, lathe, grp, mesh, cnv, tx, lerp, seg, smooth, c01 } = C4, W = 1080, H = 1920;
   const UB9 = (px) => '900 ' + px + 'px "Unbounded"', UB5 = (px) => '500 ' + px + 'px "Unbounded"', BS = (px) => '900 ' + px + 'px "Big Shoulders Display"';
   const pop = (t, t0, d) => { const u = c01((t - t0) / (d || 0.22)); return u <= 0 ? 0 : 1 + 0.12 * Math.sin(u * Math.PI) * (1 - u) - Math.pow(1 - u, 3); };
@@ -122,4 +135,33 @@
   /* barber working: both hands up at the client's head, small snipping rhythm, weight shifting */
   C4.cutPose = (t, pos, yaw, o) => { o = o || {}; const sn = Math.sin(t * (o.speed || 7)), sl = Math.sin(t * 1.3), k = o.calm ? 0.5 : 1; return C4.standPose(t, pos, yaw, { seed: o.seed, over: Object.assign({ lean: 0.16 + sl * 0.02, twist: sl * 0.08, headPitch: 0.24, headYaw: sl * 0.06, arm: [[-1.0 + sl * 0.06 * k, 0.16, -1.15 + sn * 0.05 * k, 0.1, 0.55], [-1.12 - sl * 0.05 * k, 0.12, -1.05 + sn * 0.1 * k, sn * 0.18 * k, 0.5 + sn * 0.3]], sway: [0.02 * Math.sin(t * 1.3 - 0.5), 0.02 * Math.sin(t * 1.3 - 0.7), 0.04 * Math.sin(t * 1.3 - 0.9)] }, o.over || {}) }); };
   C4.seatPose = (t, pos, yaw, o) => C4.sitPose(t, pos, yaw, o);
+
+  /* ---------- light presets per set type (x = set offset) ---------- */
+  C4.LIGHTS = {
+    street: (x) => ({ keyPos: [x + 560, 430, 640], target: [x + 250, 80, 150], key: 1.25, keyCol: "#ffd2a0", fillPos: [x - 600, 300, 700], fill: 0.9, fillCol: "#6f8fd0", rimPos: [x - 200, 520, 120], rim: 0.75, rimCol: "#9fb4ff", sky: "#3a4a78", ground: "#2a2018", amb: 0.72, pt: [[x + 382, 150, 100], 1.7, "#ffb46a"], bg: "#0e1424", fog: ["#141a2c", 0.00034] }),
+    cold: (x) => ({ keyPos: [x + 130, 305, 270], target: [x, 90, -160], key: 0.85, keyCol: "#e6efff", fillPos: [x - 300, 250, 300], fill: 0.45, fillCol: "#d5e2ff", rimPos: [x + 300, 280, -250], rim: 0.45, rimCol: "#ffffff", sky: "#c5d0dc", ground: "#5a5f66", amb: 0.5, pt: [[x, 250, -100], 0.6, "#e6efff"], bg: "#0d0f12", fog: ["#1a1d22", 0.0002] }),
+    warm: (x) => ({ keyPos: [x - 250, 310, 285], target: [x + 20, 90, -170], key: 1.45, keyCol: "#ffd9b0", fillPos: [x - 400, 220, 100], fill: 0.8, fillCol: "#8fb0ff", rimPos: [x + 320, 260, -280], rim: 1.6, rimCol: "#ff9a50", sky: "#6b5648", ground: "#2c170c", amb: 0.75, pt: [[x, 180, -150], 1.5, "#ffb46a"], bg: "#0b0807", fog: ["#22160d", 0.0006] }),
+    soft: (x) => ({ keyPos: [x - 220, 320, 300], target: [x, 90, -120], key: 1.2, keyCol: "#fff0e0", fillPos: [x + 380, 240, 200], fill: 0.9, fillCol: "#ffe0ea", rimPos: [x + 300, 270, -280], rim: 1.1, rimCol: "#ffd0b0", sky: "#e0d2cc", ground: "#6a5248", amb: 0.8, pt: [[x, 200, -100], 1.0, "#ffe2c8"], bg: "#120e0d", fog: ["#2a2220", 0.0003] }),
+  };
+  C4.GRADES = { cold: { contrast: 1.03, sat: 0.84, vignette: 0.5 }, warm: { contrast: 1.07, sat: 1.1, vignette: 0.55 }, street: { contrast: 1.06, sat: 1.05, vignette: 0.55 }, soft: { contrast: 1.04, sat: 1.04, vignette: 0.45 } };
+  /* ---------- browser part of the film builder ---------- */
+  C4.filmBrowser = function (FILM) { const spec = FILM.spec, WT = FILM.WT, A = (FILM.A = { sets: {}, S: {}, all: [], extras: [] });
+    FILM.build = (sc) => { sc.background = new T.Color("#0b0807"); sc.fog = new T.FogExp2("#22160d", 0.0006);
+      Object.keys(spec.sets).forEach((k) => { const d = spec.sets[k], g = C4.sets[d.type].apply(null, d.args || []); g.position.x = d.off || 0; sc.add(g); g.updateMatrixWorld(true); A.sets[k] = g; A.S[k] = g.userData.A || {}; if (C4.quality.bake !== false) C4.bake(g); if (A.S[k].dust) { A.S[k].dust.position.x = d.off || 0; sc.add(A.S[k].dust); } });
+      A.L = C4.threePoint(sc, Object.assign({}, C4.LIGHTS.warm(0), { angle: 0.85 })); A.pt = new T.PointLight("#ffb46a", 1.4, 520, 1.5); sc.add(A.pt);
+      const mk = (o, d) => { const c = C4.character(o); if (d) C4.dress(c, d); sc.add(c.g); A.all.push(c); return c; }, ex = (m) => { sc.add(m); A.extras.push(m); return m; };
+      spec.cast(A, mk, ex, sc); A.caps = C4.parseCaps(spec.caps); };
+    A.put = (c, p) => { c.g.visible = true; c.pose(p); }; A.face = (a, b) => Math.atan2(b[0] - a[0], b[2] - a[2]);
+    FILM.update = (t, c, sh) => { const d = spec.sets[sh.set], L = Object.assign({}, C4.LIGHTS[d.light](d.off || 0), sh.light || {}), R = A.L, s = Math.sin; C4.scene.background.set(L.bg); C4.scene.fog.color.set(L.fog[0]); C4.scene.fog.density = L.fog[1];
+      Object.keys(A.sets).forEach((k) => { A.sets[k].visible = k === sh.set; const dd = A.S[k].dust; if (dd) { dd.visible = k === sh.set; if (k === sh.set) dd.userData.update(t); } if (k === sh.set && A.S[k].tick) A.S[k].tick(t); });
+      R.key.position.set(L.keyPos[0], L.keyPos[1], L.keyPos[2]); R.key.target.position.set(L.target[0], L.target[1], L.target[2]); R.key.target.updateMatrixWorld(); R.key.color.set(L.keyCol); R.key.intensity = L.key; R.fill.position.set(L.fillPos[0], L.fillPos[1], L.fillPos[2]); R.fill.color.set(L.fillCol); R.fill.intensity = L.fill;
+      R.rim.position.set(L.rimPos[0], L.rimPos[1], L.rimPos[2]); R.rim.target.position.set(L.target[0], L.target[1], L.target[2]); R.rim.target.updateMatrixWorld(); R.rim.color.set(L.rimCol); R.rim.intensity = L.rim; R.hemi.color.set(L.sky); R.hemi.groundColor.set(L.ground); R.hemi.intensity = L.amb;
+      A.pt.position.set(L.pt[0][0], L.pt[0][1], L.pt[0][2]); A.pt.color.set(L.pt[2]); A.pt.intensity = L.pt[1] * (1 + 0.03 * s(t * 2.1) + 0.02 * s(t * 5.3));
+      A.all.forEach((ch) => (ch.g.visible = false)); A.extras.forEach((e) => (e.visible = false)); if (sh.stage) sh.stage(t, A, sh, c); };
+    FILM.overlay = (g, t, sh) => { const tw = (i, dt) => (i === 0 ? 0 : WT[i]) + (dt || 0);
+      (sh.tags || []).forEach((q) => { const t0 = tw(q.w, (q.dt || 0) - 0.05); if (q.until !== undefined && t >= tw(q.until, -0.06)) return; const p = C4.pop2(t, t0); if (q.big) C4.big(g, q.x || 540, q.y || 480, q.txt, { col: q.col, p, size: q.size || 170 }); else C4.tag(g, q.x || 540, q.y || 330, q.txt, { col: q.col || "#fff", fg: q.fg, p, size: q.size || 66, rot: q.rot }); });
+      if (sh.draw) sh.draw(g, t, A, sh); C4.ctaBanner(g, t, FILM.CTA1, FILM.CTA1E - FILM.CTA1);
+      C4.captions(g, t, A.caps, WT, { hide: [[FILM.CTA1 - 0.05, WT[spec.cta[1]] - 0.04], [FILM.END, 1e9]], accent: (spec.sets[sh.set] || {}).accent || "#FF2A3D" });
+      if (sh.end) C4.ctaEnd(g, t, FILM.END, { times: (spec.endTimes || [0, 3, 7, 9]).map((k) => WT[spec.end + k] - 0.05) }); };
+    return FILM; };
 })(typeof window !== "undefined" ? window : globalThis);

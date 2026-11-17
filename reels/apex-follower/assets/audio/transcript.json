@@ -1,0 +1,812 @@
+[
+  {
+    "text": "a",
+    "start": 0,
+    "end": 0.06,
+    "id": "w0"
+  },
+  {
+    "text": "10.000",
+    "start": 0.06,
+    "end": 1.09,
+    "id": "w1"
+  },
+  {
+    "text": "follower",
+    "start": 1.12,
+    "end": 1.59,
+    "id": "w2"
+  },
+  {
+    "text": "e",
+    "start": 1.59,
+    "end": 1.65,
+    "id": "w3"
+  },
+  {
+    "text": "l'agenda",
+    "start": 1.65,
+    "end": 2.04,
+    "id": "w4"
+  },
+  {
+    "text": "vuota.",
+    "start": 2.09,
+    "end": 2.59,
+    "id": "w5"
+  },
+  {
+    "text": "Lei",
+    "start": 2.59,
+    "end": 2.72,
+    "id": "w6"
+  },
+  {
+    "text": "ne",
+    "start": 2.72,
+    "end": 2.8,
+    "id": "w7"
+  },
+  {
+    "text": "ha",
+    "start": 2.8,
+    "end": 2.88,
+    "id": "w8"
+  },
+  {
+    "text": "400,",
+    "start": 2.98,
+    "end": 4.06,
+    "id": "w9"
+  },
+  {
+    "text": "ed",
+    "start": 4.06,
+    "end": 4.11,
+    "id": "w10"
+  },
+  {
+    "text": "è",
+    "start": 4.11,
+    "end": 4.28,
+    "id": "w11"
+  },
+  {
+    "text": "piena",
+    "start": 4.28,
+    "end": 4.63,
+    "id": "w12"
+  },
+  {
+    "text": "fino",
+    "start": 4.63,
+    "end": 4.91,
+    "id": "w13"
+  },
+  {
+    "text": "a",
+    "start": 4.91,
+    "end": 4.99,
+    "id": "w14"
+  },
+  {
+    "text": "marzo.",
+    "start": 4.99,
+    "end": 5.44,
+    "id": "w15"
+  },
+  {
+    "text": "2",
+    "start": 5.44,
+    "end": 5.7,
+    "id": "w16"
+  },
+  {
+    "text": "nail",
+    "start": 5.7,
+    "end": 6.05,
+    "id": "w17"
+  },
+  {
+    "text": "artist,",
+    "start": 6.05,
+    "end": 6.75,
+    "id": "w18"
+  },
+  {
+    "text": "stessa",
+    "start": 6.75,
+    "end": 7.26,
+    "id": "w19"
+  },
+  {
+    "text": "città.",
+    "start": 7.27,
+    "end": 7.8,
+    "id": "w20"
+  },
+  {
+    "text": "La",
+    "start": 7.8,
+    "end": 7.96,
+    "id": "w21"
+  },
+  {
+    "text": "prima",
+    "start": 7.96,
+    "end": 8.26,
+    "id": "w22"
+  },
+  {
+    "text": "pubblica",
+    "start": 8.26,
+    "end": 8.74,
+    "id": "w23"
+  },
+  {
+    "text": "per",
+    "start": 8.78,
+    "end": 8.96,
+    "id": "w24"
+  },
+  {
+    "text": "piacere",
+    "start": 8.97,
+    "end": 9.44,
+    "id": "w25"
+  },
+  {
+    "text": "a",
+    "start": 9.44,
+    "end": 9.5,
+    "id": "w26"
+  },
+  {
+    "text": "tutti.",
+    "start": 9.5,
+    "end": 9.97,
+    "id": "w27"
+  },
+  {
+    "text": "Balletti,",
+    "start": 10.05,
+    "end": 10.72,
+    "id": "w28"
+  },
+  {
+    "text": "tendenze,",
+    "start": 10.99,
+    "end": 11.88,
+    "id": "w29"
+  },
+  {
+    "text": "video",
+    "start": 11.88,
+    "end": 12.02,
+    "id": "w30"
+  },
+  {
+    "text": "che",
+    "start": 12.1,
+    "end": 12.3,
+    "id": "w31"
+  },
+  {
+    "text": "girano",
+    "start": 12.3,
+    "end": 12.7,
+    "id": "w32"
+  },
+  {
+    "text": "in",
+    "start": 12.7,
+    "end": 12.73,
+    "id": "w33"
+  },
+  {
+    "text": "tutta",
+    "start": 12.83,
+    "end": 13.16,
+    "id": "w34"
+  },
+  {
+    "text": "Italia.",
+    "start": 13.16,
+    "end": 13.8,
+    "id": "w35"
+  },
+  {
+    "text": "Se",
+    "start": 13.8,
+    "end": 13.91,
+    "id": "w36"
+  },
+  {
+    "text": "vuoi",
+    "start": 13.92,
+    "end": 14.14,
+    "id": "w37"
+  },
+  {
+    "text": "sapere",
+    "start": 14.14,
+    "end": 14.36,
+    "id": "w38"
+  },
+  {
+    "text": "come",
+    "start": 14.62,
+    "end": 14.74,
+    "id": "w39"
+  },
+  {
+    "text": "creo",
+    "start": 14.74,
+    "end": 14.97,
+    "id": "w40"
+  },
+  {
+    "text": "questi",
+    "start": 14.97,
+    "end": 15.32,
+    "id": "w41"
+  },
+  {
+    "text": "video,",
+    "start": 15.32,
+    "end": 15.72,
+    "id": "w42"
+  },
+  {
+    "text": "scrivi",
+    "start": 15.72,
+    "end": 16.14,
+    "id": "w43"
+  },
+  {
+    "text": "motion",
+    "start": 16.14,
+    "end": 16.63,
+    "id": "w44"
+  },
+  {
+    "text": "nei",
+    "start": 16.71,
+    "end": 16.96,
+    "id": "w45"
+  },
+  {
+    "text": "commenti.",
+    "start": 16.96,
+    "end": 17.96,
+    "id": "w46"
+  },
+  {
+    "text": "10.000",
+    "start": 17.96,
+    "end": 18.64,
+    "id": "w47"
+  },
+  {
+    "text": "follower.",
+    "start": 18.64,
+    "end": 19.08,
+    "id": "w48"
+  },
+  {
+    "text": "Ma",
+    "start": 19.08,
+    "end": 19.21,
+    "id": "w49"
+  },
+  {
+    "text": "vivono",
+    "start": 19.48,
+    "end": 19.71,
+    "id": "w50"
+  },
+  {
+    "text": "a",
+    "start": 19.71,
+    "end": 19.79,
+    "id": "w51"
+  },
+  {
+    "text": "Milano,",
+    "start": 19.79,
+    "end": 20.43,
+    "id": "w52"
+  },
+  {
+    "text": "a",
+    "start": 20.44,
+    "end": 20.48,
+    "id": "w53"
+  },
+  {
+    "text": "Napoli,",
+    "start": 20.55,
+    "end": 21.07,
+    "id": "w54"
+  },
+  {
+    "text": "a",
+    "start": 21.24,
+    "end": 21.26,
+    "id": "w55"
+  },
+  {
+    "text": "Palermo.",
+    "start": 21.26,
+    "end": 21.93,
+    "id": "w56"
+  },
+  {
+    "text": "Nessuno",
+    "start": 21.93,
+    "end": 22.24,
+    "id": "w57"
+  },
+  {
+    "text": "verrà",
+    "start": 22.5,
+    "end": 22.72,
+    "id": "w58"
+  },
+  {
+    "text": "mai",
+    "start": 22.72,
+    "end": 22.99,
+    "id": "w59"
+  },
+  {
+    "text": "da",
+    "start": 22.99,
+    "end": 23.11,
+    "id": "w60"
+  },
+  {
+    "text": "lei.",
+    "start": 23.12,
+    "end": 24.12,
+    "id": "w61"
+  },
+  {
+    "text": "La",
+    "start": 24.12,
+    "end": 24.21,
+    "id": "w62"
+  },
+  {
+    "text": "seconda",
+    "start": 24.24,
+    "end": 24.62,
+    "id": "w63"
+  },
+  {
+    "text": "parla",
+    "start": 24.67,
+    "end": 24.91,
+    "id": "w64"
+  },
+  {
+    "text": "solo",
+    "start": 24.91,
+    "end": 25.14,
+    "id": "w65"
+  },
+  {
+    "text": "a",
+    "start": 25.14,
+    "end": 25.16,
+    "id": "w66"
+  },
+  {
+    "text": "chi",
+    "start": 25.22,
+    "end": 25.35,
+    "id": "w67"
+  },
+  {
+    "text": "abita",
+    "start": 25.35,
+    "end": 25.64,
+    "id": "w68"
+  },
+  {
+    "text": "vicino.",
+    "start": 25.64,
+    "end": 26.17,
+    "id": "w69"
+  },
+  {
+    "text": "Mostra",
+    "start": 26.26,
+    "end": 26.48,
+    "id": "w70"
+  },
+  {
+    "text": "il",
+    "start": 26.48,
+    "end": 26.59,
+    "id": "w71"
+  },
+  {
+    "text": "suo",
+    "start": 26.6,
+    "end": 26.78,
+    "id": "w72"
+  },
+  {
+    "text": "quartiere,",
+    "start": 26.78,
+    "end": 27.41,
+    "id": "w73"
+  },
+  {
+    "text": "i",
+    "start": 27.41,
+    "end": 27.47,
+    "id": "w74"
+  },
+  {
+    "text": "suoi",
+    "start": 27.47,
+    "end": 27.65,
+    "id": "w75"
+  },
+  {
+    "text": "lavori,",
+    "start": 27.73,
+    "end": 28.13,
+    "id": "w76"
+  },
+  {
+    "text": "le",
+    "start": 28.16,
+    "end": 28.34,
+    "id": "w77"
+  },
+  {
+    "text": "sue",
+    "start": 28.34,
+    "end": 28.55,
+    "id": "w78"
+  },
+  {
+    "text": "clienti.",
+    "start": 28.55,
+    "end": 29.26,
+    "id": "w79"
+  },
+  {
+    "text": "400",
+    "start": 29.26,
+    "end": 29.89,
+    "id": "w80"
+  },
+  {
+    "text": "follower.",
+    "start": 29.89,
+    "end": 30.59,
+    "id": "w81"
+  },
+  {
+    "text": "Tutti",
+    "start": 30.86,
+    "end": 31.03,
+    "id": "w82"
+  },
+  {
+    "text": "a",
+    "start": 31.03,
+    "end": 31.1,
+    "id": "w83"
+  },
+  {
+    "text": "10",
+    "start": 31.1,
+    "end": 31.53,
+    "id": "w84"
+  },
+  {
+    "text": "minuti",
+    "start": 31.53,
+    "end": 31.96,
+    "id": "w85"
+  },
+  {
+    "text": "da",
+    "start": 31.96,
+    "end": 32.06,
+    "id": "w86"
+  },
+  {
+    "text": "lei,",
+    "start": 32.28,
+    "end": 32.45,
+    "id": "w87"
+  },
+  {
+    "text": "e",
+    "start": 32.45,
+    "end": 32.62,
+    "id": "w88"
+  },
+  {
+    "text": "quando",
+    "start": 32.62,
+    "end": 32.87,
+    "id": "w89"
+  },
+  {
+    "text": "apre",
+    "start": 32.95,
+    "end": 33.31,
+    "id": "w90"
+  },
+  {
+    "text": "l'agenda",
+    "start": 33.31,
+    "end": 33.88,
+    "id": "w91"
+  },
+  {
+    "text": "si",
+    "start": 33.9,
+    "end": 34.01,
+    "id": "w92"
+  },
+  {
+    "text": "riempia",
+    "start": 34.01,
+    "end": 34.48,
+    "id": "w93"
+  },
+  {
+    "text": "in",
+    "start": 34.48,
+    "end": 34.62,
+    "id": "w94"
+  },
+  {
+    "text": "un",
+    "start": 34.63,
+    "end": 34.76,
+    "id": "w95"
+  },
+  {
+    "text": "giorno.",
+    "start": 34.79,
+    "end": 35.48,
+    "id": "w96"
+  },
+  {
+    "text": "I",
+    "start": 35.48,
+    "end": 35.54,
+    "id": "w97"
+  },
+  {
+    "text": "follower",
+    "start": 35.54,
+    "end": 36.03,
+    "id": "w98"
+  },
+  {
+    "text": "non",
+    "start": 36.04,
+    "end": 36.22,
+    "id": "w99"
+  },
+  {
+    "text": "pagano",
+    "start": 36.22,
+    "end": 36.52,
+    "id": "w100"
+  },
+  {
+    "text": "l'affitto.",
+    "start": 36.58,
+    "end": 37.31,
+    "id": "w101"
+  },
+  {
+    "text": "I",
+    "start": 37.31,
+    "end": 37.36,
+    "id": "w102"
+  },
+  {
+    "text": "clienti",
+    "start": 37.46,
+    "end": 37.86,
+    "id": "w103"
+  },
+  {
+    "text": "sì.",
+    "start": 37.86,
+    "end": 38.19,
+    "id": "w104"
+  },
+  {
+    "text": "Sui",
+    "start": 38.42,
+    "end": 38.56,
+    "id": "w105"
+  },
+  {
+    "text": "social",
+    "start": 38.56,
+    "end": 38.94,
+    "id": "w106"
+  },
+  {
+    "text": "non",
+    "start": 38.94,
+    "end": 39.13,
+    "id": "w107"
+  },
+  {
+    "text": "ti",
+    "start": 39.13,
+    "end": 39.25,
+    "id": "w108"
+  },
+  {
+    "text": "serve",
+    "start": 39.25,
+    "end": 39.48,
+    "id": "w109"
+  },
+  {
+    "text": "essere",
+    "start": 39.58,
+    "end": 39.71,
+    "id": "w110"
+  },
+  {
+    "text": "famosa.",
+    "start": 40,
+    "end": 40.57,
+    "id": "w111"
+  },
+  {
+    "text": "Ti",
+    "start": 40.57,
+    "end": 40.63,
+    "id": "w112"
+  },
+  {
+    "text": "serve",
+    "start": 40.73,
+    "end": 41.01,
+    "id": "w113"
+  },
+  {
+    "text": "essere",
+    "start": 41.01,
+    "end": 41.39,
+    "id": "w114"
+  },
+  {
+    "text": "trovata",
+    "start": 41.39,
+    "end": 41.82,
+    "id": "w115"
+  },
+  {
+    "text": "da",
+    "start": 41.83,
+    "end": 41.94,
+    "id": "w116"
+  },
+  {
+    "text": "chi",
+    "start": 41.94,
+    "end": 42.14,
+    "id": "w117"
+  },
+  {
+    "text": "può",
+    "start": 42.14,
+    "end": 42.25,
+    "id": "w118"
+  },
+  {
+    "text": "venire",
+    "start": 42.52,
+    "end": 42.71,
+    "id": "w119"
+  },
+  {
+    "text": "da",
+    "start": 42.71,
+    "end": 42.83,
+    "id": "w120"
+  },
+  {
+    "text": "te.",
+    "start": 42.83,
+    "end": 43.24,
+    "id": "w121"
+  },
+  {
+    "text": "Se",
+    "start": 43.24,
+    "end": 43.36,
+    "id": "w122"
+  },
+  {
+    "text": "vuoi",
+    "start": 43.37,
+    "end": 43.63,
+    "id": "w123"
+  },
+  {
+    "text": "sapere",
+    "start": 43.63,
+    "end": 44.01,
+    "id": "w124"
+  },
+  {
+    "text": "come",
+    "start": 44.01,
+    "end": 44.27,
+    "id": "w125"
+  },
+  {
+    "text": "creo",
+    "start": 44.27,
+    "end": 44.52,
+    "id": "w126"
+  },
+  {
+    "text": "questi",
+    "start": 44.52,
+    "end": 44.91,
+    "id": "w127"
+  },
+  {
+    "text": "video,",
+    "start": 44.91,
+    "end": 45.37,
+    "id": "w128"
+  },
+  {
+    "text": "scrivi",
+    "start": 45.37,
+    "end": 45.76,
+    "id": "w129"
+  },
+  {
+    "text": "motion",
+    "start": 45.77,
+    "end": 46.12,
+    "id": "w130"
+  },
+  {
+    "text": "e",
+    "start": 46.12,
+    "end": 46.22,
+    "id": "w131"
+  },
+  {
+    "text": "ti",
+    "start": 46.22,
+    "end": 46.29,
+    "id": "w132"
+  },
+  {
+    "text": "spiego",
+    "start": 46.37,
+    "end": 46.72,
+    "id": "w133"
+  },
+  {
+    "text": "tutto.",
+    "start": 46.73,
+    "end": 47.16,
+    "id": "w134"
+  }
+]

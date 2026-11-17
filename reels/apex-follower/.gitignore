@@ -1,0 +1,11 @@
+.hyperframes/
+.media/
+node_modules/
+renders/*.rejected.mp4
+renders/.*hf-transaction*/
+renders/.seq-*
+renders/cache-*
+renders/master.mp4
+renders/progress.log
+renders/raw.mp4
+renders/work-*/

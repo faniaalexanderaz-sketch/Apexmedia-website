@@ -1,0 +1,638 @@
+[
+  {
+    "text": "Questa",
+    "start": 0.01,
+    "end": 0.33,
+    "id": "w0"
+  },
+  {
+    "text": "palestra",
+    "start": 0.33,
+    "end": 0.77,
+    "id": "w1"
+  },
+  {
+    "text": "guadagna",
+    "start": 0.81,
+    "end": 1.21,
+    "id": "w2"
+  },
+  {
+    "text": "da",
+    "start": 1.22,
+    "end": 1.31,
+    "id": "w3"
+  },
+  {
+    "text": "chi",
+    "start": 1.4,
+    "end": 1.5,
+    "id": "w4"
+  },
+  {
+    "text": "non",
+    "start": 1.5,
+    "end": 1.65,
+    "id": "w5"
+  },
+  {
+    "text": "viene.",
+    "start": 1.68,
+    "end": 2.04,
+    "id": "w6"
+  },
+  {
+    "text": "500",
+    "start": 2.33,
+    "end": 2.96,
+    "id": "w7"
+  },
+  {
+    "text": "abbonati.",
+    "start": 3.05,
+    "end": 3.8,
+    "id": "w8"
+  },
+  {
+    "text": "40",
+    "start": 3.99,
+    "end": 4.21,
+    "id": "w9"
+  },
+  {
+    "text": "euro",
+    "start": 4.21,
+    "end": 4.48,
+    "id": "w10"
+  },
+  {
+    "text": "al",
+    "start": 4.48,
+    "end": 4.61,
+    "id": "w11"
+  },
+  {
+    "text": "mese.",
+    "start": 4.61,
+    "end": 5.07,
+    "id": "w12"
+  },
+  {
+    "text": "20.000",
+    "start": 5.38,
+    "end": 6.23,
+    "id": "w13"
+  },
+  {
+    "text": "euro.",
+    "start": 6.23,
+    "end": 6.48,
+    "id": "w14"
+  },
+  {
+    "text": "Ma",
+    "start": 6.55,
+    "end": 6.64,
+    "id": "w15"
+  },
+  {
+    "text": "in",
+    "start": 6.73,
+    "end": 6.78,
+    "id": "w16"
+  },
+  {
+    "text": "sala",
+    "start": 6.85,
+    "end": 7.02,
+    "id": "w17"
+  },
+  {
+    "text": "c'è",
+    "start": 7.15,
+    "end": 7.3,
+    "id": "w18"
+  },
+  {
+    "text": "posto",
+    "start": 7.34,
+    "end": 7.72,
+    "id": "w19"
+  },
+  {
+    "text": "per",
+    "start": 7.72,
+    "end": 7.85,
+    "id": "w20"
+  },
+  {
+    "text": "150",
+    "start": 7.94,
+    "end": 8.49,
+    "id": "w21"
+  },
+  {
+    "text": "persone.",
+    "start": 8.86,
+    "end": 9.44,
+    "id": "w22"
+  },
+  {
+    "text": "Se",
+    "start": 9.44,
+    "end": 9.49,
+    "id": "w23"
+  },
+  {
+    "text": "vuoi",
+    "start": 9.59,
+    "end": 9.8,
+    "id": "w24"
+  },
+  {
+    "text": "sapere",
+    "start": 9.8,
+    "end": 10.16,
+    "id": "w25"
+  },
+  {
+    "text": "come",
+    "start": 10.16,
+    "end": 10.22,
+    "id": "w26"
+  },
+  {
+    "text": "creo",
+    "start": 10.53,
+    "end": 10.66,
+    "id": "w27"
+  },
+  {
+    "text": "questi",
+    "start": 10.66,
+    "end": 11.03,
+    "id": "w28"
+  },
+  {
+    "text": "video,",
+    "start": 11.03,
+    "end": 11.54,
+    "id": "w29"
+  },
+  {
+    "text": "scrivi",
+    "start": 11.54,
+    "end": 11.76,
+    "id": "w30"
+  },
+  {
+    "text": "motion",
+    "start": 11.77,
+    "end": 12.24,
+    "id": "w31"
+  },
+  {
+    "text": "nei",
+    "start": 12.28,
+    "end": 12.49,
+    "id": "w32"
+  },
+  {
+    "text": "commenti.",
+    "start": 12.49,
+    "end": 13.4,
+    "id": "w33"
+  },
+  {
+    "text": "Se",
+    "start": 13.4,
+    "end": 13.51,
+    "id": "w34"
+  },
+  {
+    "text": "venissero",
+    "start": 13.51,
+    "end": 14.02,
+    "id": "w35"
+  },
+  {
+    "text": "tutti,",
+    "start": 14.08,
+    "end": 14.41,
+    "id": "w36"
+  },
+  {
+    "text": "non",
+    "start": 14.41,
+    "end": 14.58,
+    "id": "w37"
+  },
+  {
+    "text": "entrerebbero",
+    "start": 14.58,
+    "end": 15.24,
+    "id": "w38"
+  },
+  {
+    "text": "nemmeno.",
+    "start": 15.24,
+    "end": 16.08,
+    "id": "w39"
+  },
+  {
+    "text": "Infatti,",
+    "start": 16.08,
+    "end": 16.56,
+    "id": "w40"
+  },
+  {
+    "text": "ne",
+    "start": 16.56,
+    "end": 16.67,
+    "id": "w41"
+  },
+  {
+    "text": "vengono",
+    "start": 16.67,
+    "end": 17.08,
+    "id": "w42"
+  },
+  {
+    "text": "150.",
+    "start": 17.09,
+    "end": 18.1,
+    "id": "w43"
+  },
+  {
+    "text": "Gli",
+    "start": 18.1,
+    "end": 18.35,
+    "id": "w44"
+  },
+  {
+    "text": "altri",
+    "start": 18.35,
+    "end": 18.78,
+    "id": "w45"
+  },
+  {
+    "text": "350",
+    "start": 18.78,
+    "end": 19.55,
+    "id": "w46"
+  },
+  {
+    "text": "pagano",
+    "start": 19.55,
+    "end": 20.03,
+    "id": "w47"
+  },
+  {
+    "text": "e",
+    "start": 20.03,
+    "end": 20.13,
+    "id": "w48"
+  },
+  {
+    "text": "restano",
+    "start": 20.13,
+    "end": 20.71,
+    "id": "w49"
+  },
+  {
+    "text": "a",
+    "start": 20.71,
+    "end": 20.74,
+    "id": "w50"
+  },
+  {
+    "text": "casa.",
+    "start": 21.07,
+    "end": 21.48,
+    "id": "w51"
+  },
+  {
+    "text": "È",
+    "start": 21.48,
+    "end": 21.64,
+    "id": "w52"
+  },
+  {
+    "text": "il",
+    "start": 21.64,
+    "end": 21.72,
+    "id": "w53"
+  },
+  {
+    "text": "motivo",
+    "start": 21.72,
+    "end": 22.09,
+    "id": "w54"
+  },
+  {
+    "text": "per",
+    "start": 22.09,
+    "end": 22.17,
+    "id": "w55"
+  },
+  {
+    "text": "cui",
+    "start": 22.17,
+    "end": 22.46,
+    "id": "w56"
+  },
+  {
+    "text": "a",
+    "start": 22.46,
+    "end": 22.51,
+    "id": "w57"
+  },
+  {
+    "text": "gennaio",
+    "start": 22.51,
+    "end": 22.93,
+    "id": "w58"
+  },
+  {
+    "text": "ti",
+    "start": 22.93,
+    "end": 23.05,
+    "id": "w59"
+  },
+  {
+    "text": "offrono",
+    "start": 23.05,
+    "end": 23.54,
+    "id": "w60"
+  },
+  {
+    "text": "l'abbonamento",
+    "start": 23.54,
+    "end": 24.16,
+    "id": "w61"
+  },
+  {
+    "text": "annuale.",
+    "start": 24.17,
+    "end": 24.64,
+    "id": "w62"
+  },
+  {
+    "text": "Pagi",
+    "start": 24.77,
+    "end": 25,
+    "id": "w63"
+  },
+  {
+    "text": "la",
+    "start": 25,
+    "end": 25.12,
+    "id": "w64"
+  },
+  {
+    "text": "versione",
+    "start": 25.12,
+    "end": 25.61,
+    "id": "w65"
+  },
+  {
+    "text": "di",
+    "start": 25.61,
+    "end": 25.73,
+    "id": "w66"
+  },
+  {
+    "text": "te",
+    "start": 25.73,
+    "end": 25.85,
+    "id": "w67"
+  },
+  {
+    "text": "che",
+    "start": 25.85,
+    "end": 26.02,
+    "id": "w68"
+  },
+  {
+    "text": "ci",
+    "start": 26.03,
+    "end": 26.14,
+    "id": "w69"
+  },
+  {
+    "text": "andrà",
+    "start": 26.14,
+    "end": 26.45,
+    "id": "w70"
+  },
+  {
+    "text": "tre",
+    "start": 26.48,
+    "end": 26.63,
+    "id": "w71"
+  },
+  {
+    "text": "volte",
+    "start": 26.63,
+    "end": 26.94,
+    "id": "w72"
+  },
+  {
+    "text": "a",
+    "start": 26.94,
+    "end": 27,
+    "id": "w73"
+  },
+  {
+    "text": "settimana.",
+    "start": 27,
+    "end": 27.81,
+    "id": "w74"
+  },
+  {
+    "text": "Non",
+    "start": 27.81,
+    "end": 28.15,
+    "id": "w75"
+  },
+  {
+    "text": "è",
+    "start": 28.15,
+    "end": 28.16,
+    "id": "w76"
+  },
+  {
+    "text": "una",
+    "start": 28.16,
+    "end": 28.39,
+    "id": "w77"
+  },
+  {
+    "text": "truffa.",
+    "start": 28.45,
+    "end": 29.15,
+    "id": "w78"
+  },
+  {
+    "text": "È",
+    "start": 29.17,
+    "end": 29.22,
+    "id": "w79"
+  },
+  {
+    "text": "un",
+    "start": 29.22,
+    "end": 29.28,
+    "id": "w80"
+  },
+  {
+    "text": "abbonamento.",
+    "start": 29.35,
+    "end": 30.25,
+    "id": "w81"
+  },
+  {
+    "text": "Pagi",
+    "start": 30.25,
+    "end": 30.47,
+    "id": "w82"
+  },
+  {
+    "text": "la",
+    "start": 30.56,
+    "end": 30.63,
+    "id": "w83"
+  },
+  {
+    "text": "possibilità,",
+    "start": 30.63,
+    "end": 31.47,
+    "id": "w84"
+  },
+  {
+    "text": "non",
+    "start": 31.48,
+    "end": 31.66,
+    "id": "w85"
+  },
+  {
+    "text": "l'uso.",
+    "start": 31.66,
+    "end": 32.11,
+    "id": "w86"
+  },
+  {
+    "text": "Vale",
+    "start": 32.21,
+    "end": 32.42,
+    "id": "w87"
+  },
+  {
+    "text": "per",
+    "start": 32.42,
+    "end": 32.59,
+    "id": "w88"
+  },
+  {
+    "text": "la",
+    "start": 32.6,
+    "end": 32.74,
+    "id": "w89"
+  },
+  {
+    "text": "palestra,",
+    "start": 32.74,
+    "end": 33.48,
+    "id": "w90"
+  },
+  {
+    "text": "per",
+    "start": 33.48,
+    "end": 33.83,
+    "id": "w91"
+  },
+  {
+    "text": "lo",
+    "start": 33.84,
+    "end": 33.92,
+    "id": "w92"
+  },
+  {
+    "text": "streaming,",
+    "start": 33.92,
+    "end": 34.4,
+    "id": "w93"
+  },
+  {
+    "text": "per",
+    "start": 34.41,
+    "end": 34.6,
+    "id": "w94"
+  },
+  {
+    "text": "le",
+    "start": 34.6,
+    "end": 34.73,
+    "id": "w95"
+  },
+  {
+    "text": "app.",
+    "start": 34.73,
+    "end": 35.13,
+    "id": "w96"
+  },
+  {
+    "text": "Ese",
+    "start": 35.13,
+    "end": 35.31,
+    "id": "w97"
+  },
+  {
+    "text": "hai",
+    "start": 35.32,
+    "end": 35.52,
+    "id": "w98"
+  },
+  {
+    "text": "un'attività,",
+    "start": 35.52,
+    "end": 36.35,
+    "id": "w99"
+  },
+  {
+    "text": "chiediti",
+    "start": 36.35,
+    "end": 36.9,
+    "id": "w100"
+  },
+  {
+    "text": "cosa",
+    "start": 36.9,
+    "end": 37.17,
+    "id": "w101"
+  },
+  {
+    "text": "posso",
+    "start": 37.17,
+    "end": 37.51,
+    "id": "w102"
+  },
+  {
+    "text": "vendere",
+    "start": 37.51,
+    "end": 37.89,
+    "id": "w103"
+  },
+  {
+    "text": "in",
+    "start": 37.94,
+    "end": 38.06,
+    "id": "w104"
+  },
+  {
+    "text": "abbonamento.",
+    "start": 38.24,
+    "end": 39.15,
+    "id": "w105"
+  }
+]
