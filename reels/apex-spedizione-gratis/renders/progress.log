@@ -2,3 +2,7 @@
 13:17:36  gate: camera smoothness ok
 13:17:40  scene loaded in 3.8 s (build 3.5 s) · 1308 frames at 30 fps · 1080x1920
 13:17:40  frames to render 1308 · from cache 0
+13:17:50  frames 10/1308 · 1.00 s/frame (wall) · elapsed 10 s · remaining 1298 s
+13:18:00  frames 23/1308 · 0.87 s/frame (wall) · elapsed 20 s · remaining 1118 s
+13:18:10  frames 36/1308 · 0.83 s/frame (wall) · elapsed 30 s · remaining 1060 s
+13:18:20  frames 50/1308 · 0.80 s/frame (wall) · elapsed 40 s · remaining 1007 s
