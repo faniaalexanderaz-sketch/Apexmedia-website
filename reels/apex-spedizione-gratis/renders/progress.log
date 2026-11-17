@@ -80,3 +80,6 @@
 13:30:20  frames 1288/1308 · 0.59 s/frame (wall) · elapsed 760 s · remaining 12 s
 13:30:30  frames 1306/1308 · 0.59 s/frame (wall) · elapsed 770 s · remaining 1 s
 13:30:31  frames done 1308 in 771.0 s · 0.59 s/frame wall · per worker: frame compute 0.55 s, jpeg+write 0.027 s
+13:31:49  phases: load 3.8 s · render 771.0 s · encode 73.0 s · TOTAL 853.5 s
+13:31:49  gate: stream 30/1,30/1,1308 · expected frames 1308 · duplicated frames 0 → GATE-OK
+13:31:49  output /home/user/Apexmedia-website/reels/apex-spedizione-gratis/renders/apex-spedizione-gratis-9x16.mp4
