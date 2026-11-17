@@ -1214,3 +1214,36 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 I numeri sono un esempio semplificato.
 #parrucchiera #salone #appuntamenti #noshow #caparra #attività #marketing #apexmedia
 ```
+
+---
+
+## 42. Ha alzato i prezzi. Ha perso clienti. E ora guadagna di più (pizzeria)
+
+File: `apex-prezzi-pizzeria/renders/apex-prezzi-pizzeria-9x16.mp4`
+
+**TikTok**
+```text
+Ha alzato i prezzi. Ha perso clienti. E ora guadagna di più. Non devi piacere a tutti, devi valere di più per chi resta. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#pizzeria #prezzi #ristorazione #apexmedia
+```
+
+**Instagram**
+```text
+Ha alzato i prezzi. Ha perso clienti. E ora guadagna di più.
+
+Una pizzeria. Margherita a 6 €, 100 pizze a sera: 600 €.
+Sala piena, forno sempre acceso, e a fine mese restava poco.
+
+Poi alza la margherita a 9 €. Venti clienti non tornano, ne restano 80.
+80 pizze a 9 € = 720 €.
+120 € in più a sera, con 20 pizze in meno da impastare e servire. In un mese, più di 3.000 €.
+
+Chi è andato via cercava solo il prezzo. Chi è rimasto ha scelto la pizza, non lo sconto.
+
+Il prezzo alto però va giustificato: impasto migliore, ingredienti raccontati, un locale che ricordi.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato, ogni locale ha costi diversi.
+#pizzeria #prezzi #ristorazione #margine #posizionamento #attività #marketing #apexmedia
+```
