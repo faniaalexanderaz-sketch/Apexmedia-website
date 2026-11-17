@@ -1,6 +1,0 @@
-13:32:32  render apex-timer mode=final workers=1
-13:32:32  gate: camera smoothness ok
-13:32:36  scene loaded in 3.8 s (build 3.5 s) · 1318 frames at 30 fps · 1080x1920
-13:32:36  frames to render 1318 · from cache 0
-13:32:46  frames 13/1318 · 0.77 s/frame (wall) · elapsed 10 s · remaining 1004 s
-13:32:56  frames 25/1318 · 0.80 s/frame (wall) · elapsed 20 s · remaining 1035 s
