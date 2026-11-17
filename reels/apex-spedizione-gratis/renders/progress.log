@@ -1,17 +1,4 @@
-12:50:11  render apex-spedizione-gratis mode=preview workers=1
-12:50:16  scene loaded in 5.0 s (build 4.6 s) · 1308 frames at 30 fps · preview renders 1 frame in 2 at 540x960
-12:50:16  frames to render 654 · from cache 0
-12:50:26  frames 55/654 · 0.18 s/frame (wall) · elapsed 10 s · remaining 109 s
-12:50:36  frames 104/654 · 0.19 s/frame (wall) · elapsed 20 s · remaining 106 s
-12:50:46  frames 166/654 · 0.18 s/frame (wall) · elapsed 30 s · remaining 88 s
-12:50:56  frames 220/654 · 0.18 s/frame (wall) · elapsed 40 s · remaining 79 s
-12:51:06  frames 282/654 · 0.18 s/frame (wall) · elapsed 50 s · remaining 66 s
-12:51:16  frames 341/654 · 0.18 s/frame (wall) · elapsed 60 s · remaining 55 s
-12:51:26  frames 394/654 · 0.18 s/frame (wall) · elapsed 70 s · remaining 46 s
-12:51:36  frames 462/654 · 0.17 s/frame (wall) · elapsed 80 s · remaining 33 s
-12:51:46  frames 529/654 · 0.17 s/frame (wall) · elapsed 90 s · remaining 21 s
-12:51:56  frames 606/654 · 0.17 s/frame (wall) · elapsed 100 s · remaining 8 s
-12:52:03  frames done 654 in 106.8 s · 0.16 s/frame wall · per worker: frame compute 0.15 s, jpeg+write 0.007 s
-12:52:09  phases: load 5.0 s · render 106.8 s · encode 6.0 s · TOTAL 117.8 s
-12:52:09  gate: stream 15/1,15/1,654 · expected frames 654 → GATE-OK
-12:52:09  output /home/user/Apexmedia-website/reels/apex-spedizione-gratis/renders/apex-spedizione-gratis-preview.mp4
+13:17:36  render apex-spedizione-gratis mode=final workers=1
+13:17:36  gate: camera smoothness ok
+13:17:40  scene loaded in 3.8 s (build 3.5 s) · 1308 frames at 30 fps · 1080x1920
+13:17:40  frames to render 1308 · from cache 0
