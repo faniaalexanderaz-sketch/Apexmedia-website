@@ -2,8 +2,12 @@
 
 function siteUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  // Su Vercel: in produzione il dominio del progetto, nelle anteprime l'indirizzo dell'anteprima stessa.
+  if (process.env.VERCEL_ENV === "production" && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  const preview = process.env.VERCEL_BRANCH_URL ?? process.env.VERCEL_URL;
+  if (preview) return `https://${preview}`;
   return "http://localhost:3000";
 }
 
