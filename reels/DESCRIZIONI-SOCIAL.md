@@ -1281,3 +1281,231 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 I numeri sono un esempio semplificato.
 #centroestetico #estetista #sconti #fidelizzazione #cartafedeltà #attività #marketing #apexmedia
 ```
+
+---
+
+## 44. Quattro parole gli portano 1.500 euro al mese (bar)
+
+File: `apex-quattro-parole/renders/apex-quattro-parole-9x16.mp4`
+
+**TikTok**
+```text
+Quattro parole gli portano 1.500 euro al mese: "Ci aggiungo un cornetto?". Stessi clienti, stesso bancone, zero pubblicità. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#bar #caffè #vendita #apexmedia
+```
+
+**Instagram**
+```text
+Quattro parole gli portano 1.500 euro al mese.
+
+Un bar, 300 caffè al giorno. Per anni il barista ha chiesto solo: "Zucchero?".
+Poi ha cambiato domanda: "Ci aggiungo un cornetto?".
+
+Una persona su quattro dice sì: 75 cornetti in più al giorno.
+Su ognuno gli restano 70 centesimi: 52 € al giorno.
+In un mese, più di 1.500 €.
+
+Stessi clienti. Stesso bancone. Nessuna pubblicità.
+
+Il modo più veloce per incassare di più non è trovare clienti nuovi. È fare la domanda giusta a quelli che hai già davanti.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#bar #caffè #cornetto #upselling #vendita #attività #marketing #apexmedia
+```
+
+---
+
+## 45. Ha alzato il menù di 2 euro. Nessuno se n'è accorto (ristorante)
+
+File: `apex-due-euro/renders/apex-due-euro-9x16.mp4`
+
+**TikTok**
+```text
+Ha alzato il menù di 2 euro. Nessuno se n'è accorto. Sono 18.000 euro l'anno. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#ristorante #prezzi #menu #apexmedia
+```
+
+**Instagram**
+```text
+Ha alzato il menù di 2 euro. Nessuno se n'è accorto. Sono 18.000 euro l'anno.
+
+Un ristorante, 30 coperti a sera. Il titolare aveva paura: "Se alzo i prezzi, li perdo tutti".
+
+Poi ci ha provato. 2 € in più a coperto = 60 € a sera.
+300 sere l'anno: 18.000 €.
+
+I clienti? Nessuno ha detto niente. Non ricordano il prezzo esatto, ricordano come sono stati.
+E quei 2 € sono quasi tutto guadagno: stessa cucina, stesso affitto, stesso personale.
+
+Molti locali non hanno un problema di clienti. Hanno paura di un piccolo aumento che nessuno noterebbe.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#ristorante #prezzi #menu #coperto #margine #attività #marketing #apexmedia
+```
+
+---
+
+## 46. Questa palestra guadagna da chi non viene
+
+File: `apex-palestra/renders/apex-palestra-9x16.mp4`
+
+**TikTok**
+```text
+Questa palestra guadagna da chi non viene: 500 abbonati, posto per 150. Paghi la possibilità, non l'uso. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#palestra #abbonamento #business #apexmedia
+```
+
+**Instagram**
+```text
+Questa palestra guadagna da chi non viene.
+
+500 abbonati a 40 € al mese: 20.000 €.
+Ma in sala c'è posto per 150 persone. Se venissero tutti, non entrerebbero nemmeno.
+
+Infatti ne vengono 150. Gli altri 350 pagano, e restano a casa.
+È il motivo per cui a gennaio ti offrono l'abbonamento annuale.
+
+Non è una truffa. È un abbonamento: paghi la possibilità, non l'uso.
+Vale per la palestra, per lo streaming, per le app.
+
+E se hai un'attività, chiediti: cosa posso vendere in abbonamento?
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#palestra #abbonamento #entratericorrenti #business #attività #marketing #apexmedia
+```
+
+---
+
+## 47. Ha messo in vetrina un vestito da 300 euro. Per vendere quello da 120
+
+File: `apex-vetrina-300/renders/apex-vetrina-300-9x16.mp4`
+
+**TikTok**
+```text
+Ha messo in vetrina un vestito da 300 euro. Per vendere quello da 120. Si chiama effetto ancora. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#negozio #prezzi #effettoancora #apexmedia
+```
+
+**Instagram**
+```text
+Ha messo in vetrina un vestito da 300 euro. Per vendere quello da 120.
+
+Un negozio di abbigliamento. Il vestito da 120 € non lo comprava nessuno: sembrava caro.
+Poi accanto ne ha messo uno da 300.
+Di colpo, quello da 120 è diventato l'affare. Stesso vestito, stesso prezzo.
+
+Si chiama effetto ancora: il primo prezzo che vedi decide se il secondo ti sembra alto o basso.
+Per questo nei menù il piatto più caro sta in alto. Non serve a essere venduto: serve a far sembrare giusti tutti gli altri.
+
+Un prezzo non è mai alto o basso da solo. Dipende da cosa gli metti accanto.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#negozio #abbigliamento #prezzi #effettoancora #vetrina #attività #marketing #apexmedia
+```
+
+---
+
+## 48. Ha 10.000 follower e l'agenda vuota. Lei ne ha 400 ed è piena fino a marzo
+
+File: `apex-follower/renders/apex-follower-9x16.mp4`
+
+**TikTok**
+```text
+Ha 10.000 follower e l'agenda vuota. Lei ne ha 400 ed è piena fino a marzo. I follower non pagano l'affitto, i clienti sì. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#nailartist #social #follower #apexmedia
+```
+
+**Instagram**
+```text
+Ha 10.000 follower e l'agenda vuota. Lei ne ha 400, ed è piena fino a marzo.
+
+Due nail artist, stessa città.
+La prima pubblica per piacere a tutti: balletti, tendenze, video che girano in tutta Italia.
+10.000 follower. Ma vivono a Milano, a Napoli, a Palermo. Nessuno verrà mai da lei.
+
+La seconda parla solo a chi abita vicino: il suo quartiere, i suoi lavori, le sue clienti.
+400 follower, tutti a dieci minuti da lei. Quando apre l'agenda, si riempie in un giorno.
+
+I follower non pagano l'affitto. I clienti sì.
+Sui social non ti serve essere famosa. Ti serve essere trovata da chi può venire da te.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#nailartist #unghie #social #follower #clienti #attività #marketing #apexmedia
+```
+
+---
+
+## 49. Regala un biscotto a ogni cliente. E incassa 1.000 euro in più al mese (forno)
+
+File: `apex-biscotto/renders/apex-biscotto-9x16.mp4`
+
+**TikTok**
+```text
+Regala un biscotto a ogni cliente. E incassa 1.000 euro in più al mese. Fai provare una cosa piccola e venderai quella grande. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#forno #pasticceria #assaggio #apexmedia
+```
+
+**Instagram**
+```text
+Regala un biscotto a ogni cliente. E incassa 1.000 euro in più al mese.
+
+Un forno pasticceria. Ogni giorno entrano 60 persone: comprano il pane, salutano, escono. I biscotti restano in vetrina.
+
+Poi la titolare mette un vassoio sul bancone. Un assaggio, gratis, a tutti.
+Una persona su cinque compra la confezione da 6 €: 12 confezioni al giorno, 72 €.
+Tolto il costo degli assaggi, ne restano più di 40. In un mese, oltre 1.000 €.
+
+Nessuno sconto. Nessuna pubblicità. Solo un biscotto.
+
+La gente non compra quello che non conosce. Fai provare una cosa piccola, e venderai quella grande.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#forno #pasticceria #assaggio #vendita #clienti #attività #marketing #apexmedia
+```
+
+---
+
+## 50. Risponde ai messaggi dopo sei ore. E il cliente ha già comprato da un altro
+
+File: `apex-sei-ore/renders/apex-sei-ore-9x16.mp4`
+
+**TikTok**
+```text
+Risponde ai messaggi dopo sei ore. E il cliente ha già comprato da un altro. Vince chi risponde per primo. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#negozio #clienti #messaggi #apexmedia
+```
+
+**Instagram**
+```text
+Risponde ai messaggi dopo sei ore. E il cliente ha già comprato da un altro.
+
+Un negozio di biciclette. Alle 10 arriva un messaggio: "Avete questa bici, taglia media?".
+Il titolare è occupato. Risponde alle 16.
+
+Troppo tardi. Alle 10:05 lo stesso cliente aveva scritto a un altro negozio.
+Quello ha risposto subito: "Sì, ce l'abbiamo, passa quando vuoi".
+Alle 11 la bici era venduta. 900 €.
+
+Chi scrive, sta comprando adesso. E scrive a più negozi insieme.
+Vince chi risponde per primo, non chi è più bravo.
+
+Una risposta automatica, un orario fisso per i messaggi, un numero dedicato.
+Rispondere in fretta è la pubblicità che costa meno.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#negozio #clienti #messaggi #whatsapp #vendita #attività #marketing #apexmedia
+```
