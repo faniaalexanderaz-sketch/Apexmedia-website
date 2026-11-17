@@ -24,6 +24,31 @@ export function WhatsAppIcon({ className = "", size = 20 }: P) {
   );
 }
 
+export function InstagramIcon({ className = "", size = 20 }: P) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
+      <rect
+        x="3.5"
+        y="3.5"
+        width="17"
+        height="17"
+        rx="4.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
+      <circle cx="12" cy="12" r="3.9" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="17" cy="7" r="1.1" fill="currentColor" />
+    </svg>
+  );
+}
+
 export function ArrowIcon({ className = "", size = 16 }: P) {
   return (
     <svg

@@ -83,7 +83,7 @@ const jsonLd = {
   },
   areaServed: { "@type": "City", name: site.city },
   founder: site.founders.map((name) => ({ "@type": "Person", name })),
-  sameAs: [site.whatsappUrl],
+  sameAs: [site.instagramUrl, site.whatsappUrl],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Servizi",

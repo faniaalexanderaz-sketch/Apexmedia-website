@@ -15,6 +15,7 @@ export type EventName =
   | "click_whatsapp"
   | "form_submit"
   | "click_email"
+  | "click_instagram"
   | "click_portfolio"
   | "click_pacchetto"
   | "click_cta";

@@ -32,6 +32,18 @@ export function Footer() {
             </li>
             <li>
               <a
+                href={site.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="u-draw hover:text-ink"
+                data-track="click_instagram"
+                data-track-posizione="footer"
+              >
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a
                 href={`mailto:${site.email}`}
                 className="u-draw hover:text-ink"
                 data-track="click_email"

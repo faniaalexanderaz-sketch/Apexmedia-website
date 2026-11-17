@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { TricolorStripe } from "@/components/ui/TricolorStripe";
-import { MenuIcon, WhatsAppIcon } from "@/components/ui/Icons";
+import { InstagramIcon, MenuIcon, WhatsAppIcon } from "@/components/ui/Icons";
 import { Clock } from "@/components/Clock";
 import { navLinks, site } from "@/data/site";
 import { gsap, useGSAP, ScrollTrigger, MEDIA } from "@/lib/gsap";
@@ -127,6 +127,17 @@ export function Nav() {
 
           <div className="flex items-center gap-2 sm:gap-5">
             <Clock className="hidden lg:inline" />
+            <a
+              href={site.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden size-11 items-center justify-center text-ink/75 hover:text-ink lg:inline-flex"
+              aria-label={`Apex Media su Instagram, ${site.instagramHandle} (si apre in una nuova scheda)`}
+              data-track="click_instagram"
+              data-track-posizione="nav"
+            >
+              <InstagramIcon />
+            </a>
             <Button
               href="/#contatti"
               size="sm"
@@ -189,6 +200,16 @@ export function Nav() {
             data-track-posizione="nav"
           >
             <WhatsAppIcon /> {site.whatsappDisplay}
+          </a>
+          <a
+            href={site.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-[17px] font-medium text-ink"
+            data-track="click_instagram"
+            data-track-posizione="nav"
+          >
+            <InstagramIcon /> {site.instagramHandle}
           </a>
           <p className="label-mono text-ink/60">
             <span className="mr-2 inline-block size-2 rounded-full bg-verde align-middle" />

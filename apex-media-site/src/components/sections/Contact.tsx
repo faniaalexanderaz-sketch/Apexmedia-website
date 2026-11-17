@@ -3,6 +3,8 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SplitHeading } from "@/components/ui/SplitHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "./ContactForm";
+import { Button } from "@/components/ui/Button";
+import { InstagramIcon } from "@/components/ui/Icons";
 import { site } from "@/data/site";
 
 export function Contact({ numero = "07" }: { numero?: string }) {
@@ -48,6 +50,22 @@ export function Contact({ numero = "07" }: { numero?: string }) {
               >
                 {site.email}
               </a>
+            </div>
+            <div className="mt-8 border-t border-ink/10 pt-6">
+              <p className="label-mono text-ink/60">Instagram</p>
+              <Button
+                href={site.instagramUrl}
+                variant="secondary"
+                className="mt-4"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-track="click_instagram"
+                data-track-posizione="contatti"
+                aria-label={`Apex Media su Instagram, ${site.instagramHandle} (si apre in una nuova scheda)`}
+              >
+                <InstagramIcon />
+                Seguici su Instagram
+              </Button>
             </div>
             <div className="mt-8 border-t border-ink/10 pt-6">
               <p className="label-mono flex items-center gap-2 text-ink/60">

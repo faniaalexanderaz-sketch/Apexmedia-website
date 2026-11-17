@@ -8,6 +8,8 @@ export const site = {
   whatsappDisplay: "+39 351 594 0685",
   whatsappUrl: "https://wa.me/393515940685",
   email: "studio@infoapex.eu",
+  instagramUrl: "https://www.instagram.com/apexmedia.it",
+  instagramHandle: "@apexmedia.it",
   responseTime: "Rispondiamo entro 24 ore",
   founders: ["Alex Fania", "Federico Delfino"],
   year: 2026,
