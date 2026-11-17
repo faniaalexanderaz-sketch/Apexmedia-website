@@ -1816,3 +1816,32 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 I numeri sono un esempio semplificato.
 #soldi #stipendio #risparmio #abbonamenti #finanzapersonale #educazionefinanziaria #apexmedia
 ```
+
+---
+
+## 60. Il supermercato è fatto per svuotarti il portafoglio
+
+Serie aggressiva (gancio + 3 trucchi, il terzo tenuto per ultimo). File: `apex-supermercato/renders/apex-supermercato-9x16.mp4`
+
+**TikTok**
+```text
+Il supermercato è fatto per svuotarti il portafoglio. 3 trucchi che usano su di te. Il terzo è fuori di testa.
+#supermercato #spesa #soldi #apexmedia
+```
+
+**Instagram**
+```text
+Il supermercato è fatto per svuotarti il portafoglio. Questi sono i tre trucchi che usano su di te. E il terzo è fuori di testa.
+
+1. Pane e latte sempre in fondo. Li compri ogni settimana: per arrivarci attraversi tutto il negozio, e il carrello si riempie da solo.
+2. Quello che costa di più è all'altezza dei tuoi occhi. Quello che conviene è in basso, dove non guardi mai.
+3. La musica. È lenta, apposta. Cammini più piano, guardi di più, compri di più. In uno studio le vendite sono salite di quasi il 40%, solo cambiando canzone.
+
+Non sei tu che fai la spesa. È la spesa che fa te.
+
+Manda questo video a chi fa la spesa con te.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+#supermercato #spesa #soldi #risparmio #marketing #psicologia #apexmedia
+```
+
