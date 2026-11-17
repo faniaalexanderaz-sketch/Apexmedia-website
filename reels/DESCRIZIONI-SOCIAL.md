@@ -1180,3 +1180,37 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 I numeri sono un esempio semplificato, ogni salone ha costi diversi.
 #parrucchiere #barbiere #salone #prezzi #posizionamento #attività #marketing #apexmedia
 ```
+
+---
+
+## 41. Tre clienti a settimana non si presentano. E le costano 6.000 euro l'anno
+
+File: `apex-noshow/renders/apex-noshow-9x16.mp4`
+
+**TikTok**
+```text
+Tre clienti a settimana non si presentano. E le costano 6.000 euro l'anno. Non le servivano più clienti, le serviva che si presentassero. Scrivi MOTION nei commenti se vuoi sapere come creo questi video
+#parrucchiera #appuntamenti #salone #apexmedia
+```
+
+**Instagram**
+```text
+Tre clienti a settimana non si presentano. E le costano 6.000 euro l'anno.
+
+Agenda piena, poltrona vuota. Ogni appuntamento saltato sono 40 € che non tornano più.
+3 a settimana = 120 €. In un anno, 6.000 €.
+
+Poi cambia due cose:
+1. un messaggio il giorno prima, per ricordare l'appuntamento
+2. una piccola caparra per chi prenota il sabato
+
+Gli appuntamenti saltati passano da tre a settimana a uno al mese.
+Stessa agenda. Stesse clienti. 6.000 euro in più.
+
+Non le servivano più clienti. Le serviva che si presentassero.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+I numeri sono un esempio semplificato.
+#parrucchiera #salone #appuntamenti #noshow #caparra #attività #marketing #apexmedia
+```
