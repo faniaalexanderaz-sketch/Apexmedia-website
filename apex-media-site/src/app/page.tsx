@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
+import { TrustStrip } from "@/components/sections/TrustStrip";
+import { Impact } from "@/components/sections/Impact";
 import { ClientsBar } from "@/components/sections/ClientsBar";
 import { Work } from "@/components/sections/Work";
 import { Services } from "@/components/sections/Services";
@@ -26,9 +28,13 @@ export default function Home() {
       <Nav />
       <main className="pt-[calc(var(--nav-h)+4px)]">
         <Hero />
-        <ClientsBar />
+        <TrustStrip />
         {/* Ogni sezione sotto la piega è un confine di Suspense: React la idrata in un task separato,
             così il browser può dipingere l’hero prima di finire tutto il JavaScript */}
+        <Suspense>
+          <Impact />
+        </Suspense>
+        <ClientsBar />
         <Suspense>
           <Work />
         </Suspense>

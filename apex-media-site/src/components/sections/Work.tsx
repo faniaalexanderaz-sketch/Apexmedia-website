@@ -19,7 +19,8 @@ import {
   CLIP_VISIBLE,
 } from "@/lib/gsap";
 
-/** Versione compatta per la home: 4 clienti in griglia, il dettaglio è in /portfolio. */
+/** Versione compatta per la home: solo 3 lavori, tutti gli altri e il dettaglio sono in /portfolio. */
+const inHome = portfolio.slice(0, 3);
 export function Work() {
   const ref = useRef<HTMLElement>(null);
 
@@ -102,20 +103,20 @@ export function Work() {
             </h2>
             <p className="text-body mt-5 text-ink/75 md:text-lg">
               Una selezione dei progetti che seguiamo ogni giorno: coworking,
-              centro olistico, fioreria, compagnia teatrale.
+              centro olistico, fioreria.
             </p>
           </div>
         </div>
 
         <ul
-          className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:mt-16 lg:gap-x-12 lg:gap-y-16"
+          className="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-3 lg:mt-16 lg:gap-x-10"
           role="list"
         >
-          {portfolio.map((item, i) => (
+          {inHome.map((item, i) => (
             <li
               key={item.slug}
               data-work-card
-              className={i % 2 === 1 ? "md:mt-16" : ""}
+              className={i % 2 === 1 ? "md:mt-12" : ""}
             >
               <Link
                 href={`/portfolio#${item.slug}`}
@@ -128,14 +129,14 @@ export function Work() {
                   url={item.domain}
                   shot={item.shots.desktop}
                   alt={`Home page del sito ${item.name} su desktop`}
-                  sizes="(min-width: 1024px) 45vw, (min-width: 768px) 48vw, 92vw"
+                  sizes="(min-width: 768px) 31vw, 92vw"
                 />
                 <div
                   className="mt-5 flex items-baseline justify-between gap-4"
                   data-work-text
                 >
                   <div>
-                    <h3 className="font-display text-[clamp(1.5rem,1rem+1.4vw,2rem)] font-bold leading-none tracking-tightest group-hover:text-viola">
+                    <h3 className="font-display text-[clamp(1.375rem,1rem+0.9vw,1.75rem)] font-bold leading-none tracking-tightest group-hover:text-viola">
                       {item.name}
                     </h3>
                     <p className="mt-2 text-[15px] text-ink/70">
@@ -161,7 +162,7 @@ export function Work() {
             data-track="click_portfolio"
             data-track-cliente="tutti"
           >
-            Scopri il portfolio
+            Vedi tutti i lavori
             <ArrowIcon />
           </Button>
           <Button
