@@ -8,7 +8,7 @@ Approved standard (restaurant demo, `engine4-demo`). Existing videos made with o
 - Camera on arc-length splines with eased speed and a damped look target (`C4.rig`). No shake.
 - 30 fps, 1080x1920, constant frame rate.
 - Three-point light on the main subject plus practical lights in the set; captions sit over the set.
-- Ricchi Piano: micro-sounds only, no music bed.
+- No music bed in any video (Apex Media and Ricchi Piano): voiceover and micro-sounds only. The owner adds the music when publishing.
 
 ## Call to action (spoken and on screen)
 - Around second 15 a banner appears and the voiceover says, in the same voice and tone as the rest:
