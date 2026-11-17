@@ -1,0 +1,47 @@
+/* "Ha fatto il 50% di sconto. E ha riempito l'agenda di clienti che non torneranno." — Apex Media, Engine 4 */
+(function (root) {
+  "use strict";
+  const C4 = root.C4 || require("./apx4.js"), { lerp, seg, smooth } = C4, PI = Math.PI, s = Math.sin;
+  const RED = "#FF2A3D", GRN = "#2fbf5a", GREY = "#b9bec6";
+  const WIDE_L = { eye: [[-290, 220, 440], [-200, 198, 380]], look: [[10, 105, -80], [5, 105, -90]], fov: [60, 56], ease: "drift", aperture: 0.6, focus: [0, 100, -100] };
+  const WIDE_R = { eye: [[290, 220, 440], [200, 198, 380]], look: [[-10, 105, -80], [-5, 105, -90]], fov: [60, 56], ease: "drift", aperture: 0.6, focus: [0, 100, -100] };
+  const BED = { eye: [[60, 178, 0], [25, 168, -45]], look: [[-122, 100, -195], [-124, 102, -198]], fov: [44, 40], ease: "drift", aperture: 1.0 };
+  const FACE = { eye: [[-45, 168, -70], [-62, 165, -105]], look: [[-125, 152, -262], [-125, 154, -262]], fov: [36, 32], ease: "drift", aperture: 1.6, focus: [-125, 154, -262] };
+  const DESK = { eye: [[30, 176, 190], [62, 166, 222]], look: [[230, 124, 338], [232, 126, 338]], fov: [46, 42], ease: "drift", aperture: 0.9 };
+  const SOFA = { eye: [[-40, 128, 405], [-72, 116, 372]], look: [[-236, 98, 300], [-232, 96, 300]], fov: [40, 37], ease: "drift", aperture: 1.3, focus: [-290, 110, 300] };
+  const POSTER = { eye: [[100, 186, 190], [135, 192, 150]], look: [[378, 198, 60], [378, 200, 60]], fov: [44, 40], ease: "drift", aperture: 0.7 };
+  const LD = { keyPos: [-100, 310, 120], target: [230, 90, 340], pt: [[230, 190, 300], 1.0, "#ffe2c8"] }, LS = { target: [-220, 60, 300], pt: [[-205, 160, 300], 1.1, "#ffe2c8"] };
+  const EP = [-125, 0, -262];
+  const treat = (t, A, c, bed, happy) => { const q = A.S.spa.beds[bed], m = s(t * 3.2); A.lie(c, C4.standPose(t, [0, 0, 0], 0, { seed: bed + 3, over: { smile: 0.9, squint: 1, headYaw: 0, arm: [[0.05, 0.02, -0.1, 0, 0.4], [0.05, 0.02, -0.1, 0, 0.4]], hipY: 84 } }), q[0], q[1] + 78, 87); A.tw[bed].visible = true;
+    if (bed === 0) A.put(A.e, C4.standPose(t, EP, 0, { seed: 2, over: { lean: 0.3, headPitch: 0.36, smile: happy === false ? 0.15 : 0.8, brow: happy === false ? -0.4 : 0.2, arm: [[-0.7 + m * 0.04, 0.05, -0.55 - m * 0.06, 0.1, 0.4], [-0.7 - m * 0.04, 0.05, -0.55 + m * 0.06, 0.1, 0.4]], sway: [0.015 * s(t * 3.2 - 0.6), 0.01 * s(t * 1.6), 0] } })); };
+  const atDesk = (t, A, over) => A.put(A.e, C4.standPose(t, [230, 0, 372], PI, { seed: 2, over: Object.assign({ smile: 0.9, headPitch: 0.06, arm: [[-0.6, 0.1, -0.9, 0, 0.3], [-0.5, 0.1, -1.0, 0, 0.4]] }, over || {}) }));
+  const sit = (t, A, c, over) => A.put(c, C4.sitPose(t, [-292, 0, 300], PI / 2, { seed: 6, over: Object.assign({ hipY: 50, smile: 0.5 }, over || {}) }));
+  const FILM = C4.film({ WT: __W__, VOEND: __VOEND__, caps: __CAPS__, cta: [39, 50], motion: [47, 127], end: 119,
+    sets: { spa: { type: "beauty", args: [], off: 0, light: "soft", grade: { contrast: 1.05, sat: 1.06, vignette: 0.6 }, accent: "#FF2A3D" } },
+    cast: (A, mk, ex) => {
+      A.e = mk({ skin: "#f0c4a0", top: "#d9d3c7", bottom: "#cfc8ba", hair: "#3a2416", hairStyle: "bun", seed: 5, eye: "#3a4a2a", sleeves: "short" });
+      A.c = [mk({ skin: "#e6b08a", top: "#c9962a", bottom: "#1f2430", hair: "#5a2e1a", hairStyle: "long", seed: 4 }), mk({ skin: "#f6d6ba", top: "#2f7f78", bottom: "#23262e", hair: "#b08a4a", hairStyle: "long", seed: 8, lod: 1 }), mk({ skin: "#c98d62", top: "#b23a48", bottom: "#2a2a2e", hair: "#17120e", hairStyle: "bun", seed: 7, lod: 1 }), mk({ skin: "#f2c9a5", top: "#6a5aa8", bottom: "#1f2430", hair: "#6a3a22", hairStyle: "long", seed: 3, lod: 1 })];
+      A.tw = [0, 1].map((i) => { const q = [[-125, -128], [135, -128]][i], m = ex(C4.rbox(60, 9, 104, 4, C4.MAT.cloth("#d9cfc0", 3, 5), [q[0], 92, q[1] + 26])); return m; });
+      A.p50 = ex(C4.grp()); const b = C4.rbox(150, 196, 4, 2, C4.MAT.paint("#1c1c1e", 0.5), [0, 0, 0], { cast: false }); A.p50.add(b); A.p50.position.set(376, 200, 60); A.p50.rotation.y = -PI / 2; },
+    shots: [
+      { a: 0, b: 8, set: "spa", cam: WIDE_L, tags: [{ w: 3, txt: "- 50%", big: true, col: RED, y: 430, size: 210, sfx: "thud" }, { w: 7, txt: "SCONTO", y: 580 }], stage: (t, A) => { treat(t, A, A.c[1], 0); } },
+      { a: 8, b: 17, set: "spa", cam: WIDE_R, tags: [{ w: 11, txt: "AGENDA PIENA", x: 330, y: 320, rot: -3 }, { w: 15, txt: "NON TORNERANNO", x: 720, y: 430, col: RED, fg: "#fff", rot: 2 }], stage: (t, A) => { treat(t, A, A.c[1], 0); treat(t, A, A.c[2], 1); sit(t, A, A.c[3], { headPitch: 0.2 }); } },
+      { a: 17, b: 29, set: "spa", cam: BED, tags: [{ w: 20, txt: "TRATTAMENTO VISO", y: 300 }, { w: 23, txt: "60 €", big: true, col: GREY, y: 440, size: 130, until: 27 }, { w: 28, txt: "30 €", big: true, col: RED, y: 440, size: 170, sfx: "thud" }], stage: (t, A) => treat(t, A, A.c[1], 0) },
+      { a: 29, b: 39, set: "spa", cam: DESK, light: LD, tags: [{ w: 33, txt: "+ 40 CLIENTI NUOVE", y: 300, col: GRN, fg: "#fff", size: 70 }, { w: 36, txt: "UN SUCCESSO?", y: 420 }], stage: (t, A) => { atDesk(t, A); [[230, 0, 272], [170, 0, 232], [280, 0, 205]].forEach((p, i) => A.put(A.c[i + 1], C4.standPose(t, p, A.face(p, [230, 0, 372]), { seed: i * 3 + 1, over: { smile: 0.8, headYaw: 0.2 * s(t * 0.8 + i) } }))); } },
+      { a: 39, b: 50, set: "spa", cam: WIDE_L, stage: (t, A) => { treat(t, A, A.c[1], 0); treat(t, A, A.c[2], 1); sit(t, A, A.c[3], { headPitch: 0.2 }); } },
+      { a: 50, b: 59, set: "spa", cam: FACE, tags: [{ w: 52, txt: "30 €", y: 290, size: 76 }, { w: 56, txt: "- PRODOTTI", x: 330, y: 410, col: GREY, rot: -2 }, { w: 58, txt: "- TEMPO", x: 760, y: 410, col: GREY, rot: 2 }, { w: 58, dt: 0.35, txt: "RESTA QUASI ZERO", y: 530, col: RED, fg: "#fff", sfx: "thud" }], stage: (t, A) => treat(t, A, A.c[1], 0, false) },
+      { a: 59, b: 65, slide: true, set: "spa", cam: WIDE_R, tags: [{ w: 60, txt: "FINITA L'OFFERTA", y: 300 }, { w: 64, txt: "3 SU 40", big: true, col: RED, y: 450, size: 170, sfx: "thud" }], stage: (t, A) => A.put(A.e, C4.standPose(t, [10, 0, -40], 0.3, { seed: 2, over: { smile: 0.1, brow: -0.4, browTilt: -0.2, headYaw: 0.4 * s(t * 0.7), headPitch: 0.1 } })) },
+      { a: 65, b: 75, set: "spa", cam: { eye: [[95, 166, 110], [70, 162, 75]], look: [[10, 150, -40], [10, 152, -40]], fov: [36, 32], ease: "drift", aperture: 1.6 }, tags: [{ w: 69, txt: "LÌ PER LO SCONTO", x: 360, y: 310, col: GREY, rot: -3 }, { w: 73, txt: "NON PER LEI", x: 720, y: 420, col: RED, fg: "#fff", rot: 2 }], stage: (t, A) => A.put(A.e, C4.standPose(t, [10, 0, -40], 0.5, { seed: 2, over: { smile: 0.08, brow: -0.5, browTilt: -0.25, headPitch: 0.16, headYaw: -0.1 } })) },
+      { a: 75, b: 87, set: "spa", cam: SOFA, light: LS, tags: [{ w: 77, txt: "LE CLIENTI DI SEMPRE", y: 300, size: 60 }, { w: 82, txt: "2 SETTIMANE DI ATTESA", y: 420, col: RED, fg: "#fff", size: 60 }], stage: (t, A) => sit(t, A, A.c[0], { smile: 0.1, brow: -0.4, headPitch: 0.22, headRoll: 0.1, lean: 0.18, arm: [[-0.5, 0.05, -1.1, 0, 0.6], [-0.9, -0.2, -2.1, 0.2, 0.7]] }) },
+      { a: 87, b: 93, set: "spa", cam: WIDE_L, tags: [{ w: 87, txt: "L'OFFERTA GIUSTA", y: 300 }, { w: 91, txt: "NON È LO SCONTO", y: 420, col: RED, fg: "#fff" }], stage: (t, A) => { treat(t, A, A.c[0], 0); } },
+      { a: 93, b: 99, set: "spa", cam: DESK, light: LD, tags: [{ w: 95, txt: "UN REGALO A CHI TORNA", y: 300, col: GRN, fg: "#fff", size: 64 }], stage: (t, A) => { atDesk(t, A, { arm: [[-0.6, 0.1, -0.9, 0, 0.3], [-0.95, 0.0, -0.7 + 0.04 * s(t * 3), 0, 0.2]] }); const p = [230, 0, 272]; A.put(A.c[0], C4.standPose(t, p, 0, { seed: 4, over: { smile: 1, brow: 0.5, arm: [[0.04, 0, -0.16, 0, 0.5], [-0.85, 0.05, -0.8, 0, 0.3]] } })); } },
+      { a: 99, b: 107, set: "spa", cam: BED, stage: (t, A) => treat(t, A, A.c[0], 0),
+        draw: (g, t) => { const W = FILM.WT, a = smooth(seg(t, W[99], W[99] + 0.35)); if (a <= 0) return; const y = 400 - (1 - a) * 30; g.save(); g.globalAlpha = a; g.shadowColor = "rgba(0,0,0,0.4)"; g.shadowBlur = 26; g.shadowOffsetY = 10; g.fillStyle = "#f6efe4"; g.beginPath(); g.roundRect(130, y - 130, 820, 260, 34); g.fill(); g.shadowColor = "transparent"; g.fillStyle = "#1c1c1e"; g.font = '900 34px "Unbounded"'; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText("CARTA FEDELTÀ", 176, y - 84);
+          for (let i = 0; i < 4; i++) { const cx = 230 + i * 190, p = C4.pop2(t, i < 3 ? W[99] + 0.25 + i * 0.28 : W[103] - 0.05); g.lineWidth = 6; g.strokeStyle = "#c9b9a6"; g.beginPath(); g.arc(cx, y + 24, 58, 0, 6.3); g.stroke(); if (p > 0) { g.save(); g.translate(cx, y + 24); g.scale(p, p); g.fillStyle = i < 3 ? "#2fbf5a" : "#FF2A3D"; g.beginPath(); g.arc(0, 0, 52, 0, 6.3); g.fill(); g.fillStyle = "#fff"; g.textAlign = "center"; g.font = '900 ' + (i < 3 ? 50 : 15) + 'px "Unbounded"'; g.fillText(i < 3 ? String(i + 1) : "OMAGGIO", 0, 4); g.restore(); } } g.restore(); } },
+      { a: 107, b: 119, set: "spa", cam: WIDE_R, tags: [{ w: 108, txt: "PREMIA CHI TI SCEGLIE", y: 300, col: GRN, fg: "#fff", size: 64 }], stage: (t, A) => { treat(t, A, A.c[0], 0); treat(t, A, A.c[3], 1); } },
+      { end: true, set: "spa", cam: { eye: [[-190, 185, 420], [-110, 178, 365]], look: [[0, 120, -90], [10, 120, -90]], fov: [52, 50], ease: "drift", aperture: 5.5, focus: [-130, 175, 290] }, stage: (t, A) => { treat(t, A, A.c[0], 0); treat(t, A, A.c[3], 1); } },
+    ] });
+  if (typeof module !== "undefined" && module.exports) module.exports = FILM;
+  root.FILM4 = FILM;
+  if (typeof THREE !== "undefined") C4.filmBrowser(FILM);
+})(typeof window !== "undefined" ? window : globalThis);
