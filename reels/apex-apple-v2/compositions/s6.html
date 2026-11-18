@@ -1,0 +1,29 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #f4f4f4; overflow: hidden; }
+    #s6-vid { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    #s6-bat { position: absolute; left: 370px; top: 880px; width: 340px; height: 150px; border-radius: 40px; background: rgba(255,255,255,0.92); box-shadow: 0 30px 70px rgba(0,0,0,0.18); display: flex; align-items: center; justify-content: center; gap: 22px; }
+    #s6-bat .b { width: 150px; height: 74px; border: 6px solid #111; border-radius: 20px; position: relative; padding: 6px; }
+    #s6-bat .b::after { content: ""; position: absolute; right: -18px; top: 22px; width: 10px; height: 20px; border-radius: 0 6px 6px 0; background: #111; }
+    #s6-fill { width: 100%; height: 100%; border-radius: 10px; background: #34c759; transform-origin: left center; }
+    #s6-pct { font: 700 52px/1 "Inter"; }
+    #s6-cap { position: absolute; left: 0; right: 0; top: 1090px; text-align: center; font: 900 92px/1.05 "Inter"; letter-spacing: -0.04em; color: #111; }
+    #s6-cap .it { font: italic 400 100px/1 "Playfair Display"; letter-spacing: 0; }
+    .w { display: inline-block; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="s6" data-width="1080" data-height="1920">
+    <div id="s6-stage">
+      <video id="s6-vid" class="clip" src="assets/video/presenter-white.mp4" data-start="0" data-duration="1.87" data-media-start="0.4" muted playsinline></video>
+      <div id="s6-bat"><div class="b"><div id="s6-fill"></div></div><div id="s6-pct">100%</div></div>
+      <div id="s6-cap"><span class="w" id="s6w0">funziona</span><br><span class="w it" id="s6w1">benissimo</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s6-stage", { scale: 1.08, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#s6-bat", { y: 60, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 0.25);
+    tl.fromTo("#s6-fill", { scaleX: 0.2 }, { scaleX: 1, duration: 0.9, ease: "power2.out" }, 0.3);
+    [[0, 0.74], [1, 1.14]].forEach(([i, t]) => tl.fromTo("#s6w" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t));
+    window.__timelines["s6"] = tl;
+  </script>
+</template>

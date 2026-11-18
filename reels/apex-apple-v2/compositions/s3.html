@@ -1,0 +1,36 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    #s3-top { position: absolute; left: 0; right: 0; top: 400px; text-align: center; font: 700 60px/1.15 "Inter"; letter-spacing: -0.02em; }
+    #s3-top .big { font: 900 150px/1 "Inter"; letter-spacing: -0.05em; display: block; margin-top: 14px; }
+    #s3-row { position: absolute; left: 110px; right: 130px; top: 790px; height: 200px; display: flex; justify-content: space-between; }
+    .tile { width: 150px; height: 190px; border-radius: 38px; background: #f2f2f4; display: flex; align-items: center; justify-content: center; font: 900 96px/1 "Inter"; color: #c7c7cc; }
+    #s3-t5 { background: #111113; color: #fff; }
+    #s3-bot { position: absolute; left: 0; right: 0; top: 1080px; text-align: center; font: 900 96px/1.05 "Inter"; letter-spacing: -0.04em; }
+    #s3-bot .it { font: italic 400 100px/1 "Playfair Display"; letter-spacing: 0; }
+    .w { display: inline-block; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="s3" data-width="1080" data-height="1920">
+    <div id="s3-stage" class="clip" data-start="0" data-duration="5.13">
+      <div id="s3-top"><span class="w" id="s3w0">Questi sono</span><span class="big"><span class="w" id="s3w1">5</span> <span class="w" id="s3w2">trucchi</span></span></div>
+      <div id="s3-row"><div class="tile" id="s3-t1">1</div><div class="tile" id="s3-t2">2</div><div class="tile" id="s3-t3">3</div><div class="tile" id="s3-t4">4</div><div class="tile" id="s3-t5">5</div></div>
+      <div id="s3-bot"><span class="w" id="s3w3">che usa</span> <span class="w it" id="s3w4">su di te</span></div>
+      <div id="s3-bot2" style="position:absolute;left:0;right:0;top:1060px;text-align:center;font:900 96px/1.05 Inter;letter-spacing:-0.04em"><span class="w it" id="s3w5" style="font:italic 400 100px/1 'Playfair Display'">l'ultimo</span><br><span class="w" id="s3w6">è il più</span> <span class="w" id="s3w7" style="color:#ff4d00">geniale</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s3-stage", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out" }, 0);
+    const wt = [[0, 0.0], [1, 0.74], [2, 1.05], [3, 1.5], [4, 1.88]];
+    wt.forEach(([i, t]) => tl.fromTo("#s3w" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t));
+    for (let k = 1; k <= 5; k++) tl.fromTo("#s3-t" + k, { y: 120, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 0.74 + (k - 1) * 0.07);
+    tl.to("#s3-bot", { opacity: 0, filter: "blur(8px)", duration: 0.15 }, 2.5);
+    [[5, 2.65], [6, 3.2], [7, 3.65]].forEach(([i, t]) => tl.fromTo("#s3w" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t));
+    for (let k = 1; k <= 4; k++) tl.to("#s3-t" + k, { opacity: 0.25, scale: 0.9, duration: 0.3, ease: "power2.out" }, 2.65);
+    tl.to("#s3-t5", { backgroundColor: "#ff4d00", scale: 1.18, duration: 0.4, ease: "back.out(2)" }, 3.65);
+    tl.to(["#s3-top", "#s3-bot2", "#s3-t2", "#s3-t3", "#s3-t4", "#s3-t5"], { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in" }, 4.6);
+    tl.to("#s3-t1", { opacity: 1, scale: 1, backgroundColor: "#111113", color: "#fff", duration: 0.25 }, 4.6);
+    tl.to("#s3-t1", { x: 400, y: -40, scale: 9, borderRadius: 0, duration: 0.45, ease: "power3.in" }, 4.86);
+    window.__timelines["s3"] = tl;
+  </script>
+</template>

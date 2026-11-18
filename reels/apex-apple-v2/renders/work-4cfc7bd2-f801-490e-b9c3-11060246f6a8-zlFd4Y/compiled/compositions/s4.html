@@ -1,0 +1,51 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    #s4-num { position: absolute; left: 120px; top: 380px; font: 900 64px/1 "Inter"; color: #ff4d00; letter-spacing: -0.02em; }
+    #s4-word { position: absolute; left: 120px; top: 450px; font: italic 400 132px/1 "Playfair Display"; }
+    #s4-cal { position: absolute; left: 120px; top: 650px; width: 820px; height: 640px; border-radius: 48px; background: #fff; box-shadow: 0 40px 90px rgba(0,0,0,0.12), 0 2px 0 rgba(0,0,0,0.04); padding: 56px 64px; }
+    #s4-month { font: 700 64px/1 "Inter"; letter-spacing: -0.02em; display: flex; gap: 22px; align-items: baseline; }
+    #s4-yearbox { height: 70px; overflow: hidden; position: relative; width: 190px; }
+    #s4-years { position: absolute; left: 0; top: 0; }
+    #s4-years div { height: 70px; font: 400 64px/70px "Inter"; color: #8e8e93; }
+    #s4-grid { margin-top: 50px; display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 34px; font: 400 44px/1 "Inter"; color: #3a3a3c; text-align: center; }
+    #s4-grid .h { font: 700 30px/1 "Inter"; color: #8e8e93; }
+    #s4-grid .hot { position: relative; color: #fff; z-index: 1; }
+    #s4-dot { position: absolute; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: #ff3b30; }
+    #s4-phone { position: absolute; left: 600px; top: 760px; width: 380px; }
+    #s4-phone img { width: 100%; display: block; }
+    #s4-cap { position: absolute; left: 120px; top: 440px; text-align: left; font: 900 92px/1.05 "Inter"; letter-spacing: -0.04em; }
+    .w { display: inline-block; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
+    <div id="s4-stage" class="clip" data-start="0" data-duration="4.33">
+      <div id="s4-num">01</div>
+      <div id="s4-word"><span class="w" id="s4w0">settembre.</span></div>
+      <div id="s4-cal">
+        <div id="s4-month">Settembre <div id="s4-yearbox"><div id="s4-years"><div>2023</div><div>2024</div><div>2025</div><div>2026</div></div></div></div>
+        <div id="s4-grid">
+          <div class="h">L</div><div class="h">M</div><div class="h">M</div><div class="h">G</div><div class="h">V</div><div class="h">S</div><div class="h">D</div>
+          <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+          <div>8</div><div class="hot"><div id="s4-dot"></div><span style="position:relative">9</span></div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div>
+          <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+        </div>
+      </div>
+      <div id="s4-phone"><img src="assets/img/phone-orange.png" alt="" /></div>
+      <div id="s4-cap"><span class="w" id="s4w1">nuovo</span> <span class="w" id="s4w2" style="color:#ff4d00">iPhone</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s4-cal", { scale: 1.12, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "expo.out" }, 0.05);
+    tl.fromTo("#s4-num", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 0.0);
+    tl.fromTo("#s4w0", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 0.6);
+    tl.fromTo("#s4-dot", { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(2)" }, 0.65);
+    [1.94, 2.71, 3.2].forEach((t, k) => tl.to("#s4-years", { y: -70 * (k + 1), duration: 0.22, ease: "power3.inOut" }, t));
+    tl.fromTo("#s4-phone", { x: 500, rotation: 14, opacity: 0 }, { x: 0, rotation: -6, opacity: 1, duration: 0.55, ease: "expo.out" }, 3.2);
+    tl.to("#s4-word", { opacity: 0, filter: "blur(8px)", duration: 0.12 }, 3.12);
+    tl.fromTo("#s4w1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14 }, 3.2);
+    tl.fromTo("#s4w2", { opacity: 0, filter: "blur(8px)", scale: 1.2 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, ease: "back.out(1.6)" }, 3.68);
+    tl.to("#s4-stage", { y: -300, opacity: 0, filter: "blur(12px)", duration: 0.25, ease: "power3.in" }, 4.08);
+    window.__timelines["s4"] = tl;
+  </script>
+</template>
