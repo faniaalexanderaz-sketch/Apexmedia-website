@@ -1,24 +1,32 @@
 <template>
   <style>
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; }
-    #s5-img { position: absolute; left: 0; top: 380px; width: 1080px; height: 1440px; object-fit: cover; }
-    #s5-cap { position: absolute; left: 0; right: 0; top: 340px; text-align: center; font: 900 96px/1.05 "Inter"; letter-spacing: -0.04em; }
-    #s5-cap .it { font: italic 400 104px/1 "Playfair Display"; letter-spacing: 0; color: #ff4d00; }
+    #s5-cap { position: absolute; left: 0; right: 0; top: 360px; text-align: center; font: 900 104px/1.02 "Inter"; letter-spacing: -0.05em; color: #111113; }
+    #s5-cap .it { font: italic 400 112px/1 "Playfair Display"; letter-spacing: 0; color: #7a0f24; }
+    #s5-row { position: absolute; left: 0; right: 0; top: 700px; height: 700px; }
+    .s5-p { position: absolute; top: 0; width: 300px; }
+    .s5-p img { width: 100%; display: block; }
+    .s5-y { position: absolute; left: 0; right: 0; top: 560px; text-align: center; font: 700 38px/1 "Inter"; color: #8e8e93; }
+    #s5-p5 .s5-y { color: #7a0f24; }
     .w { display: inline-block; opacity: 0; }
   </style>
   <div id="root" data-composition-id="s5" data-width="1080" data-height="1920">
-    <div id="s5-stage" class="clip" data-start="0" data-duration="1.94">
-      <div id="s5-mask" style="position:absolute;inset:0"><img id="s5-img" src="assets/img/phones-fan.png" alt="" /></div>
-      <div id="s5-cap"><span class="w" id="s5w0">ogni anno</span><br><span class="w" id="s5w1">un colore</span> <span class="w it" id="s5w2">nuovo</span></div>
+    <div id="s5-cap"><span class="w" id="s5w0">ogni anno</span><br><span class="w" id="s5w1">un colore</span> <span class="w it" id="s5w2">nuovo</span></div>
+    <div id="s5-row">
+      <div class="s5-p" id="s5-p1" style="left:20px"><img src="assets/img/ip14-purple.png" alt="" /><div class="s5-y">2022</div></div>
+      <div class="s5-p" id="s5-p2" style="left:210px"><img src="assets/img/ip15-natural.png" alt="" /><div class="s5-y">2023</div></div>
+      <div class="s5-p" id="s5-p3" style="left:400px"><img src="assets/img/ip16-desert.png" alt="" /><div class="s5-y">2024</div></div>
+      <div class="s5-p" id="s5-p4" style="left:590px"><img src="assets/img/ip17-orange-v2.png" alt="" /><div class="s5-y">2025</div></div>
+      <div class="s5-p" id="s5-p5" style="left:760px"><img src="assets/img/ip18-burg-a.png" alt="" /><div class="s5-y">2026</div></div>
     </div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#s5-mask", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "power3.out" }, 0.0);
-    tl.fromTo("#s5-img", { scale: 1.15, x: 60 }, { scale: 1.0, x: 0, duration: 1.94, ease: "power2.out" }, 0);
-    [[0, 0.06], [1, 0.8], [2, 1.32]].forEach(([i, t]) => tl.fromTo("#s5w" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t));
-    tl.fromTo("#s5w2", { scale: 1.3 }, { scale: 1, duration: 0.35, ease: "back.out(1.7)" }, 1.32);
-    tl.to("#s5-stage", { opacity: 0.0, duration: 0.08 }, 1.86);
+    for (let k = 1; k <= 5; k++) tl.fromTo("#s5-p" + k, { x: 700, opacity: 0, rotation: 12 }, { x: 0, opacity: 1, rotation: 0, duration: 0.45, ease: "expo.out" }, 0.02 + (k - 1) * 0.16);
+    tl.to(["#s5-p1", "#s5-p2", "#s5-p3", "#s5-p4"], { opacity: 0.45, duration: 0.3 }, 1.2);
+    tl.fromTo("#s5-p5", { scale: 1 }, { scale: 1.12, y: -20, duration: 0.45, ease: "back.out(1.8)" }, 1.32);
+    [[0, 0.06], [1, 0.8], [2, 1.32]].forEach(([i, t]) => tl.fromTo("#s5w" + i, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, t));
+    tl.fromTo("#s5w2", { scale: 1.35 }, { scale: 1, duration: 0.38, ease: "back.out(1.8)" }, 1.32);
     window.__timelines["s5"] = tl;
   </script>
 </template>

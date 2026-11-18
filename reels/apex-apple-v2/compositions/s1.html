@@ -1,31 +1,40 @@
 <template>
   <style>
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; }
-    #s1-phone { position: absolute; left: 190px; top: 470px; width: 700px; }
-    #s1-phone img { width: 100%; display: block; }
-    #s1-shadow { position: absolute; left: 290px; top: 1180px; width: 460px; height: 60px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,0.22), rgba(0,0,0,0)); }
-    .s1-line { position: absolute; left: 0; right: 0; text-align: center; }
-    #s1-a { top: 380px; font: 700 64px/1 "Inter"; letter-spacing: -0.02em; }
-    #s1-b { top: 1060px; font: 900 112px/1 "Inter"; letter-spacing: -0.045em; }
-    #s1-b .it { font: italic 400 104px/1 "Playfair Display"; letter-spacing: -0.01em; margin-right: 18px; }
+    #s1-macro { position: absolute; inset: 0; }
+    #s1-macro img { position: absolute; left: -120px; top: 0; width: 1320px; height: 1920px; object-fit: cover; }
+    #s1-hero { position: absolute; left: 165px; top: 610px; width: 750px; height: 1340px; }
+    #s1-hero img { width: 100%; display: block; }
+    .s1-line { position: absolute; left: 0; right: 0; text-align: center; color: #111113; }
+    #s1-a { top: 360px; font: 700 70px/1 "Inter"; letter-spacing: -0.03em; }
+    #s1-b { top: 360px; font: 900 118px/1 "Inter"; letter-spacing: -0.05em; }
+    #s1-b .it { font: italic 400 118px/1 "Playfair Display"; letter-spacing: -0.01em; }
     .w { display: inline-block; opacity: 0; }
+    #s1-flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
   </style>
   <div id="root" data-composition-id="s1" data-width="1080" data-height="1920">
-    <div id="s1-stage" class="clip" data-start="0" data-duration="2.53">
-      <div id="s1-shadow"></div>
-      <div id="s1-phone"><img src="assets/img/phone-orange.png" alt="" /></div>
-      <div id="s1-a" class="s1-line"><span class="w" id="s1w0">Apple</span> <span class="w" id="s1w1">ti</span> <span class="w" id="s1w2">fa</span></div>
-      <div id="s1-b" class="s1-line"><span class="w it" id="s1w3">spendere</span><br><span class="w" id="s1w4" style="margin-top:14px">migliaia</span> <span class="w" id="s1w5">di</span> <span class="w" id="s1w6" style="color:#ff4d00">euro</span></div>
-    </div>
+    <div id="s1-macro"><img src="assets/img/ip18-burg-macro.png" alt="" /></div>
+    <div id="s1-hero"><img src="assets/img/ip18-burg-a.png" alt="" /></div>
+    <div id="s1-flash"></div>
+    <div id="s1-a" class="s1-line"><span class="w" id="s1w0">Apple</span> <span class="w" id="s1w1">ti</span> <span class="w" id="s1w2">fa</span></div>
+    <div id="s1-b" class="s1-line"><span class="w it" id="s1w3">spendere</span><br><span class="w" id="s1w4">migliaia</span> <span class="w" id="s1w5">di</span> <span class="w" id="s1w6" style="color:#7a0f24">euro</span></div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#s1-phone", { y: 60, rotation: -9, scale: 0.92 }, { y: -20, rotation: 6, scale: 1.04, duration: 2.53, ease: "power2.out" }, 0);
-    tl.fromTo("#s1-shadow", { scaleX: 0.85, opacity: 0.6 }, { scaleX: 1.05, opacity: 1, duration: 2.53, ease: "power2.out" }, 0);
-    const W = [0.0, 0.43, 0.54, 0.75, 1.29, 1.9, 1.98];
-    W.forEach((t, i) => tl.fromTo("#s1w" + i, { opacity: i < 3 ? 1 : 0, filter: i < 3 ? "blur(0px)" : "blur(10px)", y: i < 3 ? 0 : 18 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.16, ease: "power4.out" }, i < 3 ? 0 : t));
-    tl.fromTo("#s1w6", { scale: 1.25 }, { scale: 1, duration: 0.35, ease: "back.out(1.6)" }, 1.98);
-    tl.to("#s1-stage", { x: -1080, filter: "blur(14px)", duration: 0.22, ease: "power3.in" }, 2.31);
+    /* 0-0.7: macro of the burgundy camera plateau, fast push; then a white flash cut to the hero phone */
+    tl.fromTo("#s1-macro", { scale: 1.0, y: 0 }, { scale: 1.22, y: 60, duration: 0.72, ease: "power2.in" }, 0);
+    tl.set("#s1-hero", { opacity: 0 }, 0);
+    tl.fromTo("#s1-flash", { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 0.66);
+    tl.set("#s1-macro", { opacity: 0 }, 0.72);
+    tl.set("#s1-hero", { opacity: 1 }, 0.72);
+    tl.to("#s1-flash", { opacity: 0, duration: 0.18, ease: "power2.out" }, 0.72);
+    tl.fromTo("#s1-hero", { scale: 1.18, rotation: -7, y: 60 }, { scale: 1, rotation: 3, y: -10, duration: 1.8, ease: "expo.out" }, 0.72);
+    /* words: "Apple ti fa" already on frame 0, then replaced by the two-line hook */
+    ["#s1w0", "#s1w1", "#s1w2"].forEach((s) => tl.set(s, { opacity: 1 }, 0));
+    tl.to("#s1-a", { opacity: 0, filter: "blur(10px)", duration: 0.12 }, 0.68);
+    [[3, 0.75], [4, 1.29], [5, 1.9], [6, 1.98]].forEach(([i, t]) => tl.fromTo("#s1w" + i, { opacity: 0, filter: "blur(12px)", y: 24 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.18, ease: "power4.out" }, t));
+    tl.fromTo("#s1w6", { scale: 1.35 }, { scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 1.98);
+    tl.to(["#s1-hero", "#s1-b"], { x: -1080, filter: "blur(16px)", duration: 0.22, ease: "power3.in" }, 2.31);
     window.__timelines["s1"] = tl;
   </script>
 </template>

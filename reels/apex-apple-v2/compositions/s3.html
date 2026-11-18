@@ -1,36 +1,39 @@
 <template>
   <style>
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; }
-    #s3-top { position: absolute; left: 0; right: 0; top: 400px; text-align: center; font: 700 60px/1.15 "Inter"; letter-spacing: -0.02em; }
-    #s3-top .big { font: 900 150px/1 "Inter"; letter-spacing: -0.05em; display: block; margin-top: 14px; }
-    #s3-row { position: absolute; left: 110px; right: 130px; top: 790px; height: 200px; display: flex; justify-content: space-between; }
-    .tile { width: 150px; height: 190px; border-radius: 38px; background: #f2f2f4; display: flex; align-items: center; justify-content: center; font: 900 96px/1 "Inter"; color: #c7c7cc; }
-    #s3-t5 { background: #111113; color: #fff; }
-    #s3-bot { position: absolute; left: 0; right: 0; top: 1080px; text-align: center; font: 900 96px/1.05 "Inter"; letter-spacing: -0.04em; }
-    #s3-bot .it { font: italic 400 100px/1 "Playfair Display"; letter-spacing: 0; }
+    #s3-five { position: absolute; left: 0; right: 0; top: 420px; text-align: center; font: 900 760px/0.8 "Inter"; letter-spacing: -0.08em; color: #111113; }
+    #s3-l1 { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font: 700 64px/1 "Inter"; letter-spacing: -0.02em; }
+    #s3-l2 { position: absolute; left: 0; right: 0; top: 1060px; text-align: center; font: 900 120px/1 "Inter"; letter-spacing: -0.05em; }
+    #s3-l2 .it { font: italic 400 116px/1 "Playfair Display"; letter-spacing: 0; }
+    #s3-l3 { position: absolute; left: 0; right: 0; top: 960px; text-align: center; font: 900 118px/1.02 "Inter"; letter-spacing: -0.05em; }
+    #s3-l3 .it { font: italic 400 118px/1 "Playfair Display"; letter-spacing: 0; }
+    #s3-ghosts { position: absolute; left: 0; right: 0; top: 520px; display: flex; justify-content: center; gap: 30px; font: 900 220px/1 "Inter"; letter-spacing: -0.06em; color: #e9e9ec; }
     .w { display: inline-block; opacity: 0; }
   </style>
   <div id="root" data-composition-id="s3" data-width="1080" data-height="1920">
-    <div id="s3-stage" class="clip" data-start="0" data-duration="5.13">
-      <div id="s3-top"><span class="w" id="s3w0">Questi sono</span><span class="big"><span class="w" id="s3w1">5</span> <span class="w" id="s3w2">trucchi</span></span></div>
-      <div id="s3-row"><div class="tile" id="s3-t1">1</div><div class="tile" id="s3-t2">2</div><div class="tile" id="s3-t3">3</div><div class="tile" id="s3-t4">4</div><div class="tile" id="s3-t5">5</div></div>
-      <div id="s3-bot"><span class="w" id="s3w3">che usa</span> <span class="w it" id="s3w4">su di te</span></div>
-      <div id="s3-bot2" style="position:absolute;left:0;right:0;top:1060px;text-align:center;font:900 96px/1.05 Inter;letter-spacing:-0.04em"><span class="w it" id="s3w5" style="font:italic 400 100px/1 'Playfair Display'">l'ultimo</span><br><span class="w" id="s3w6">è il più</span> <span class="w" id="s3w7" style="color:#ff4d00">geniale</span></div>
-    </div>
+    <div id="s3-ghosts"><span id="s3-g1">1</span><span id="s3-g2">2</span><span id="s3-g3">3</span><span id="s3-g4">4</span><span id="s3-g5" style="color:#7a0f24">5</span></div>
+    <div id="s3-five">5</div>
+    <div id="s3-l1"><span class="w" id="s3w0">Questi sono</span></div>
+    <div id="s3-l2"><span class="w" id="s3w1">trucchi</span><br><span class="w it" id="s3w2" style="font-size:96px">su di te</span></div>
+    <div id="s3-l3"><span class="w it" id="s3w3">l'ultimo</span><br><span class="w" id="s3w4">il più</span> <span class="w" id="s3w5" style="color:#7a0f24">geniale</span></div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#s3-stage", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out" }, 0);
-    const wt = [[0, 0.0], [1, 0.74], [2, 1.05], [3, 1.5], [4, 1.88]];
-    wt.forEach(([i, t]) => tl.fromTo("#s3w" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t));
-    for (let k = 1; k <= 5; k++) tl.fromTo("#s3-t" + k, { y: 120, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 0.74 + (k - 1) * 0.07);
-    tl.to("#s3-bot", { opacity: 0, filter: "blur(8px)", duration: 0.15 }, 2.5);
-    [[5, 2.65], [6, 3.2], [7, 3.65]].forEach(([i, t]) => tl.fromTo("#s3w" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t));
-    for (let k = 1; k <= 4; k++) tl.to("#s3-t" + k, { opacity: 0.25, scale: 0.9, duration: 0.3, ease: "power2.out" }, 2.65);
-    tl.to("#s3-t5", { backgroundColor: "#ff4d00", scale: 1.18, duration: 0.4, ease: "back.out(2)" }, 3.65);
-    tl.to(["#s3-top", "#s3-bot2", "#s3-t2", "#s3-t3", "#s3-t4", "#s3-t5"], { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in" }, 4.6);
-    tl.to("#s3-t1", { opacity: 1, scale: 1, backgroundColor: "#111113", color: "#fff", duration: 0.25 }, 4.6);
-    tl.to("#s3-t1", { x: 400, y: -40, scale: 9, borderRadius: 0, duration: 0.45, ease: "power3.in" }, 4.86);
+    tl.fromTo("#s3w0", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14 }, 0.0);
+    /* the giant 5 slams in on "cinque" */
+    tl.fromTo("#s3-five", { opacity: 0, scale: 2.6, filter: "blur(30px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.72);
+    tl.fromTo("#s3w1", { opacity: 0, filter: "blur(10px)", y: 30 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.18, ease: "power4.out" }, 1.05);
+    tl.fromTo("#s3w2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16 }, 1.88);
+    /* "E l'ultimo": the 5 shrinks into a row of ghost numbers 1-5, the 5th stays burgundy */
+    tl.to(["#s3-l1", "#s3-l2"], { opacity: 0, filter: "blur(10px)", duration: 0.15 }, 2.5);
+    tl.to("#s3-five", { opacity: 0, scale: 0.3, y: -100, duration: 0.3, ease: "power3.in" }, 2.5);
+    for (let k = 1; k <= 5; k++) tl.fromTo("#s3-g" + k, { opacity: 0, y: 90, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 2.6 + (k - 1) * 0.06);
+    tl.to(["#s3-g1", "#s3-g2", "#s3-g3", "#s3-g4"], { opacity: 0.35, duration: 0.2 }, 3.1);
+    tl.to("#s3-g5", { scale: 1.45, duration: 0.45, ease: "back.out(2)" }, 3.6);
+    [[3, 2.65], [4, 3.3], [5, 3.65]].forEach(([i, t]) => tl.fromTo("#s3w" + i, { opacity: 0, filter: "blur(10px)", y: 24 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.16, ease: "power4.out" }, t));
+    /* exit: the 5 dives into the camera, its burgundy fills the frame */
+    tl.to(["#s3-g1", "#s3-g2", "#s3-g3", "#s3-g4", "#s3-l3"], { opacity: 0, filter: "blur(12px)", duration: 0.18 }, 4.62);
+    tl.to("#s3-g5", { scale: 30, x: -60, duration: 0.5, ease: "power3.in" }, 4.62);
     window.__timelines["s3"] = tl;
   </script>
 </template>
