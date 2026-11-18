@@ -1845,3 +1845,33 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 #supermercato #spesa #soldi #risparmio #marketing #psicologia #apexmedia
 ```
 
+---
+
+## 61. L'iPhone è fatto per svuotarti il portafoglio (3 trucchi di Apple)
+
+Serie aggressiva con oggetti 3D veri. File: `apex-apple/renders/apex-apple-9x16.mp4`
+
+**TikTok**
+```text
+L'iPhone è fatto per svuotarti il portafoglio. 3 trucchi che usa Apple. Il terzo è fuori di testa.
+#apple #iphone #soldi #apexmedia
+```
+
+**Instagram**
+```text
+L'iPhone è fatto per svuotarti il portafoglio. Questi sono i tre trucchi che usa Apple. E il terzo è fuori di testa.
+
+1. La memoria. Il modello base ha poco spazio: dopo un anno di foto e video è pieno, e la volta dopo prendi quello più grande. 100, 200 euro in più. Secondo un'analisi del Wall Street Journal, quello spazio a loro costa circa un terzo di quello che paghi.
+2. Le bolle verdi. Se scrivi da Android il messaggio diventa verde, e tra i ragazzi c'è chi viene escluso dai gruppi. In una causa del governo americano è finita un'email interna: aprire iMessage ad Android avrebbe "tolto un ostacolo" alle famiglie che comprano l'iPhone ai figli.
+3. I rallentamenti. Nel 2018 l'Antitrust italiano ha multato Apple per 10 milioni di euro. Tra le accuse: aggiornamenti spinti sugli iPhone vecchi che li rallentavano, senza avvisare. E un telefono lento, lo cambi.
+
+Non sei tu che scegli l'iPhone. È l'iPhone che sceglie quanto spendi.
+
+Manda questo video a chi cambia iPhone ogni anno.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+Fonti: Wall Street Journal (novembre 2026, ripreso da 9to5Mac); causa antitrust del Dipartimento di Giustizia USA (2024); provvedimento AGCM (ottobre 2018).
+#apple #iphone #soldi #tecnologia #marketing #psicologia #apexmedia
+```
+
