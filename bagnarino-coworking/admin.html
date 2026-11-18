@@ -14,9 +14,9 @@
   <meta name="apple-mobile-web-app-title" content="Gestione">
   <link rel="apple-touch-icon" href="/img/favicon-180.png">
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=43e37a82">
+  <link rel="stylesheet" href="/styles.css?v=dafb0145">
   <link rel="stylesheet" href="/admin.css?v=e79e4347">
-  <script src="/admin.js?v=643e8e8b" defer></script>
+  <script src="/admin.js?v=c4b9081e" defer></script>
 </head>
 <body class="admin">
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -121,8 +121,8 @@
 
     <section class="blocco blocco-richieste" data-blocco-richieste hidden aria-labelledby="t-rich">
       <div class="blocco-testa">
-        <h2 id="t-rich"><span class="pallino pallino-ocra" aria-hidden="true"></span>Nuove richieste da accettare <span class="conta" data-n-richieste></span></h2>
-        <p class="nota">Prenotazioni arrivate dal sito. Il cliente ha già la conferma: tocca <strong>Accetta</strong> se va bene, oppure apri la richiesta per rifiutarla.</p>
+        <h2 id="t-rich"><span class="pallino pallino-ocra" aria-hidden="true"></span>Richieste in attesa di risposta <span class="conta" data-n-richieste></span></h2>
+        <p class="nota">Richieste arrivate dal sito. Il cliente aspetta la tua risposta: tocca <strong>Conferma</strong> e riceve l’email di conferma, oppure apri la richiesta e tocca <strong>Non disponibile</strong>.</p>
       </div>
       <div class="lista-pren" data-richieste></div>
     </section>
@@ -307,13 +307,6 @@
           <button type="button" class="btn-tondo" data-post-piu aria-label="Una scrivania in più">+</button>
         </div>
         <p class="nota">Numero di scrivanie prenotabili sul sito.</p>
-      </article>
-      <article class="riquadro"><h2>Orari</h2>
-        <div class="griglia-campi">
-          <label>Apertura<input type="time" name="apertura" data-imp-apertura></label>
-          <label>Chiusura<input type="time" name="chiusura" data-imp-chiusura></label>
-        </div>
-        <p class="nota">Aperto dal lunedì al venerdì. Per le feste e le chiusure usa la sezione qui sotto.</p>
       </article>
       <article class="riquadro"><h2>Giorni di chiusura</h2>
         <ul class="chiusure" data-imp-chiusure></ul>

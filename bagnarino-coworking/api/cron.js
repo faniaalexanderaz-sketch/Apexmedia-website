@@ -1,7 +1,13 @@
 /* =============================================================
-   GET /api/cron?compito=promemoria|riepilogo|report
+   GET /api/cron?compito=promemoria|riepilogo|report|attese
    Avviato da Vercel Cron (vercel.json). Protetto da CRON_SECRET:
    Vercel lo manda da solo nell'intestazione Authorization.
+   - attese:     promemoria alla titolare (notifica ed email) per le
+                 richieste in attesa da più di due ore. È l'unico
+                 compito che si può chiamare senza segreto: chiamarlo
+                 più volte non fa danni, ogni richiesta viene
+                 sollecitata una volta sola. Lo chiama anche un timer
+                 esterno, più frequente dei cron giornalieri di Vercel.
    - promemoria: email ai clienti che arrivano domani (sera prima),
                  più le email per farli tornare (_fidelizzazione.js)
    - riepilogo:  alla titolare, chi arriva domani
@@ -15,29 +21,37 @@ const cal = require('./_calendario');
 const T = require('./_email-template');
 const { json, errore, sitoUrl } = require('./_http');
 const { euro } = require('./_prenotazioni');
+const avvisi = require('./_avvisi');
 
 async function arriviDel(data, cfg) {
   const r = await q(
-    `SELECT DISTINCT p.id, p.codice, p.pacchetto, to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio,
+    `SELECT DISTINCT p.id, p.codice, p.pacchetto, p.fascia, to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio,
             to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine, p.prezzo_centesimi, p.promemoria_inviato,
             c.nome, c.cognome, c.email, c.telefono
      FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id JOIN clienti c ON c.id = p.cliente_id
      WHERE o.data = $1 AND p.stato IN ('confermata','presente') ORDER BY c.cognome`, [data]);
   return r.map(p => {
     const pk = pacchetto(cfg, p.pacchetto);
-    return Object.assign(p, { nomePacchetto: pk ? pk.nome : p.pacchetto, prezzo: p.prezzo_centesimi,
+    return Object.assign(p, { nomePacchetto: pk ? pk.nome : p.pacchetto, nomeFascia: cal.nomeFascia(p.fascia, cfg), prezzo: p.prezzo_centesimi,
       prezzoTesto: euro(p.prezzo_centesimi), scadenzaDisdetta: cal.scadenzaDisdetta(p.data_inizio, cfg) });
   });
 }
 
 module.exports = async (req, res) => {
-  if (!process.env.CRON_SECRET) { json(res, 501, { errore: 'CRON_SPENTO' }); return; }
-  if (req.headers.authorization !== 'Bearer ' + process.env.CRON_SECRET) { json(res, 401, { errore: 'NON_AUTORIZZATO' }); return; }
+  const compito = req.query.compito;
+  if (compito !== 'attese') {
+    if (!process.env.CRON_SECRET) { json(res, 501, { errore: 'CRON_SPENTO' }); return; }
+    if (req.headers.authorization !== 'Bearer ' + process.env.CRON_SECRET) { json(res, 401, { errore: 'NON_AUTORIZZATO' }); return; }
+  }
   if (!disponibile()) { json(res, 501, { errore: 'DB_ASSENTE' }); return; }
   try {
     const cfg = await impostazioni(), sito = sitoUrl(req);
     const domani = cal.aggiungiGiorni(cal.oraRoma().data, 1);
-    const compito = req.query.compito;
+
+    if (compito === 'attese') {
+      json(res, 200, Object.assign({ compito }, await avvisi.solleciti(cfg, sito)));
+      return;
+    }
 
     if (compito === 'promemoria') {
       /* solo a chi inizia domani (non ogni giorno agli abbonati del mese) */
@@ -45,12 +59,12 @@ module.exports = async (req, res) => {
       let inviate = 0;
       for (const p of lista) {
         const m = T.promemoria(p, cfg, sito);
-        const e = await inviaEmail({ to: p.email, subject: m.oggetto, html: m.html, rispondiA: cfg.azienda.email });
+        const e = await inviaEmail({ to: p.email, subject: m.oggetto, html: m.html });
         if (e.inviata) { inviate++; await q('UPDATE prenotazioni SET promemoria_inviato = true WHERE id = $1', [p.id]); }
       }
       /* nello stesso giro serale: grazie, ci manchi, carnet e mese in scadenza */
       const { inviaFidelizzazione } = require('./_fidelizzazione');
-      const fid = await inviaFidelizzazione(cfg, sito, m => inviaEmail(Object.assign({ rispondiA: cfg.azienda.email }, m)));
+      const fid = await inviaFidelizzazione(cfg, sito, m => inviaEmail(m));
       json(res, 200, { compito, domani, trovate: lista.length, inviate, fidelizzazione: fid });
       return;
     }
@@ -59,7 +73,7 @@ module.exports = async (req, res) => {
       const lista = await arriviDel(domani, cfg);
       const m = T.riepilogoSerale(lista, domani, cfg, sito);
       await avvisaTitolare({ oggetto: m.oggetto, html: m.html,
-        testo: 'Domani: ' + (lista.map(p => p.nome + ' ' + p.cognome + ' (' + p.nomePacchetto + ')').join(', ') || 'nessuna prenotazione') });
+        testo: 'Domani: ' + (lista.map(p => p.nome + ' ' + p.cognome + ' (' + (/^mese/.test(p.pacchetto) ? p.nomePacchetto : p.nomeFascia) + ')').join(', ') || 'nessuna prenotazione') });
       json(res, 200, { compito, domani, arrivi: lista.length });
       return;
     }

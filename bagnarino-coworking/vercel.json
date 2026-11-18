@@ -28,6 +28,14 @@
     {
       "source": "/api/card",
       "destination": "/api/cliente?azione=card"
+    },
+    {
+      "source": "/gestione",
+      "destination": "/api/gestione?pagina=app"
+    },
+    {
+      "source": "/gestione/:pagina",
+      "destination": "/api/gestione?pagina=:pagina"
     }
   ],
   "redirects": [
@@ -93,6 +101,37 @@
       ]
     },
     {
+      "source": "/sw-gestione.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/gestione"
+        }
+      ]
+    },
+    {
+      "source": "/gestione.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/gestione(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -130,6 +169,62 @@
     {
       "path": "/api/cron?compito=report",
       "schedule": "0 7 1 * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "49 7 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "56 8 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "3 9 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "10 10 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "17 11 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "24 12 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "31 13 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "38 14 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "45 15 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "52 16 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "59 17 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "6 18 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "13 19 * * *"
+    },
+    {
+      "path": "/api/cron?compito=attese",
+      "schedule": "20 20 * * *"
     }
   ]
 }

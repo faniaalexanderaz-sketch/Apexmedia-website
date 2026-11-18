@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no, address=no, email=no, date=no">
-  <title>Prenota il coworking ad Alessandria · da €25 al giorno | Bagnarino</title>
-  <meta name="description" content="Prenota una postazione di coworking in centro ad Alessandria in 30 secondi. Giornata €25, carnet 10 ingressi €200, mese €270. Paghi in sede, disdetta gratuita.">
+  <title>Richiedi il tuo posto al coworking di Alessandria · da €25 al giorno | Bagnarino</title>
+  <meta name="description" content="Aperto tutti i giorni su prenotazione: scegli giorno e fascia, ti confermiamo in breve tempo. Mezza giornata €12, giornata €25, mese €270. Paghi in sede, disdetta gratuita.">
   <link rel="canonical" href="/prenota">
   <meta name="theme-color" content="#1B2A3A">
   <meta property="og:type" content="website">
@@ -29,14 +29,14 @@
 
   <link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/fraunces-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=43e37a82">
+  <link rel="stylesheet" href="/styles.css?v=dafb0145">
 
   <script>if (/[?&]pacchetto=/.test(location.search)) document.documentElement.classList.add('con-pacchetto');</script>
-  <script src="/config.js?v=59ad8c50"></script>
+  <script src="/config.js?v=a0a0dd27"></script>
   <script src="/cookie.js?v=47481c84" defer></script>
   <script src="/api/impostazioni" defer></script>
-  <script src="/main.js?v=f32ec351" defer></script>
-  <script src="/prenota.js?v=23dbde9f" defer></script>
+  <script src="/main.js?v=25dbc4d4" defer></script>
+  <script src="/prenota.js?v=0bc92474" defer></script>
 </head>
 <body class="pagina-prenota">
 <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -78,18 +78,19 @@
     <!-- banda scura: titolo, rassicurazioni e i tre passi -->
     <section class="flusso-banda" aria-labelledby="flusso-titolo">
       <div class="contenitore">
-        <p class="flusso-sopra">Prenota in 30 secondi</p>
+        <p class="flusso-sopra">Aperto tutti i giorni, su prenotazione</p>
         <div class="flusso-testa">
-          <h1 id="flusso-titolo">Prenota la tua <em>scrivania.</em></h1>
+          <h1 id="flusso-titolo">Richiedi il tuo <em>posto.</em></h1>
           <ul class="rassicurazioni">
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Conferma in breve tempo, via email</li>
             <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Nessun pagamento online</li>
             <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Paghi in sede il primo giorno</li>
             <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Disdici gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span></span></li>
           </ul>
         </div>
-        <ol class="indicatore" aria-label="Passaggi della prenotazione">
+        <ol class="indicatore" aria-label="Passaggi della richiesta">
           <li data-indicatore="1">1. Formula</li>
-          <li data-indicatore="2">2. Giorno</li>
+          <li data-indicatore="2">2. Giorno e fascia</li>
           <li data-indicatore="3">3. I tuoi dati</li>
         </ol>
       </div>
@@ -98,7 +99,7 @@
     <div class="contenitore flusso-corpo">
       <div class="avviso-demo" data-avviso-demo hidden>
         <svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>
-        <p><strong>Versione di prova.</strong> La prenotazione online non viene ancora salvata: alla fine potrai inviarla con un tocco su WhatsApp per bloccare il posto.</p>
+        <p><strong>Versione di prova.</strong> La richiesta online non viene ancora salvata: alla fine potrai inviarla con un tocco su WhatsApp.</p>
       </div>
 
       <div class="flusso-griglia">
@@ -115,13 +116,13 @@
           </fieldset>
 
           <!-- PASSO 2: giorno -->
-          <fieldset class="blocco" data-blocco="2">
+          <fieldset class="blocco" data-blocco="2" id="giorno">
             <legend class="blocco-titolo"><span class="blocco-num" aria-hidden="true">2</span><span data-etichetta-data>Scegli il giorno</span></legend>
             <p class="giorni-legenda" aria-hidden="true">
               <span><i class="l-ok"></i>Posti liberi</span>
               <span><i class="l-pochi"></i>Ultimi posti</span>
-              <span><i class="l-pieno"></i>Pieno</span>
-              <span><i class="l-chiuso"></i>Chiuso</span>
+              <span><i class="l-pieno"></i>Completo</span>
+              <span><i class="l-chiuso"></i>Non disponibile</span>
             </p>
             <p class="giorni-nota" aria-hidden="true">Ogni pallino è una scrivania: pieno = libera.</p>
             <div class="giorni" data-giorni role="radiogroup" aria-label="Giorno"></div>
@@ -131,6 +132,12 @@
             <div class="blocco-sintesi sintesi-giorno" data-sintesi="2" hidden>
               <p><svg class="ico" aria-hidden="true"><use href="#i-calendar-check"/></svg><span data-sintesi-giorno></span></p>
               <button class="link-cambia" type="button" data-cambia="2">Cambia giorno</button>
+            </div>
+            <!-- mattina, pomeriggio o giornata intera: compare dopo aver scelto il giorno -->
+            <div class="fasce-zona" data-fasce-zona hidden>
+              <p class="fasce-titolo" id="fasce-titolo">Scegli la fascia</p>
+              <div class="fasce" data-fasce role="radiogroup" aria-labelledby="fasce-titolo"></div>
+              <p class="campo-errore" data-errore-fascia style="display:none">Scegli la fascia per continuare.</p>
             </div>
           </fieldset>
 
@@ -153,12 +160,13 @@
               <div class="campo" data-campo="email">
                 <label for="email">Email</label>
                 <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120" aria-describedby="email-aiuto email-errore">
-                <p class="campo-aiuto" id="email-aiuto">Ti mandiamo qui il riepilogo della prenotazione.</p>
+                <p class="campo-aiuto" id="email-aiuto">Ti mandiamo qui la conferma.</p>
                 <p class="campo-errore" id="email-errore">Controlla l’email: deve essere tipo nome@esempio.it.</p>
               </div>
               <div class="campo" data-campo="telefono">
-                <label for="telefono">Cellulare</label>
-                <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" aria-describedby="telefono-errore" placeholder="347 123 4567">
+                <label for="telefono">Telefono</label>
+                <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" aria-describedby="telefono-aiuto telefono-errore" placeholder="347 123 4567">
+                <p class="campo-aiuto" id="telefono-aiuto">Ci serve per chiamarti o scriverti su WhatsApp, se occorre.</p>
                 <p class="campo-errore" id="telefono-errore">Inserisci un numero di cellulare valido, ad esempio 347 123 4567.</p>
               </div>
               <div class="vantaggio" data-vantaggi hidden aria-live="polite"></div>
@@ -189,9 +197,9 @@
                 <div class="campo" data-campo="privacy">
                   <label class="spunta" for="privacy">
                     <input id="privacy" name="privacy" type="checkbox" required aria-describedby="privacy-errore">
-                    <span>Ho letto l’<a href="/privacy" target="_blank" rel="noopener">informativa privacy</a> e accetto il trattamento dei dati per gestire la prenotazione.</span>
+                    <span>Ho letto l’<a href="/privacy" target="_blank" rel="noopener">informativa privacy</a> e accetto il trattamento dei dati per gestire la richiesta.</span>
                   </label>
-                  <p class="campo-errore" id="privacy-errore">Per prenotare serve il tuo consenso al trattamento dei dati.</p>
+                  <p class="campo-errore" id="privacy-errore">Per inviare la richiesta serve il tuo consenso al trattamento dei dati.</p>
                 </div>
                 <label class="spunta" for="marketing">
                   <input id="marketing" name="marketing" type="checkbox">
@@ -203,9 +211,9 @@
 
           <div class="invia-zona">
             <button class="btn btn-ocra btn-grande btn-largo" type="submit" data-invia>
-              Conferma prenotazione <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+              Richiedi il tuo posto <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg>
             </button>
-            <p class="invia-nota">Nessun pagamento ora: paghi in sede il primo giorno.</p>
+            <p class="invia-nota">Ti confermiamo la disponibilità a breve via email. Nessun pagamento ora: paghi in sede.</p>
             <p class="errore-generale" data-errore-generale role="alert"></p>
           </div>
         </form>
@@ -215,26 +223,27 @@
           <dl>
             <div><dt>Formula</dt><dd data-r-formula>—</dd></div>
             <div><dt data-r-etichetta-giorno>Giorno</dt><dd data-r-giorno>da scegliere</dd></div>
-            <div><dt>Orario</dt><dd><span data-cfg="orari.apertura">9:30</span>–<span data-cfg="orari.chiusura">18:30</span></dd></div>
+            <div data-r-fascia-riga hidden><dt>Fascia</dt><dd data-r-fascia>da scegliere</dd></div>
             <div class="riepilogo-totale"><dt>Totale</dt><dd data-r-totale>—</dd></div>
           </dl>
           <p class="riepilogo-paga"><svg class="ico" aria-hidden="true"><use href="#i-credit-card"/></svg><span>Pagamento in sede il primo giorno, contanti o carta.</span></p>
-          <p class="riepilogo-aiuto">Preferisci scriverci? <a data-wa="prenota" data-pos="riepilogo" href="https://wa.me/393472249457">Prenota su WhatsApp</a></p>
+          <p class="riepilogo-aiuto">Preferisci scriverci? <a data-wa="prenota" data-pos="riepilogo" href="https://wa.me/393472249457">Richiedi su WhatsApp</a></p>
         </aside>
       </div>
     </div>
   </div>
 
   <div class="contenitore">
-    <!-- CONFERMA -->
-    <section class="successo" data-successo hidden tabindex="-1" aria-labelledby="successo-titolo">
-      <div class="successo-icona"><svg class="ico" aria-hidden="true"><use href="#i-calendar-check"/></svg></div>
-      <h1 id="successo-titolo" data-successo-titolo>Prenotazione confermata</h1>
-      <p class="successo-sotto" data-successo-sotto>Ti abbiamo mandato il riepilogo via email. Ti aspettiamo!</p>
-      <p class="codice"><span>Codice prenotazione</span><strong data-codice>BGN-0000</strong></p>
+    <!-- RICHIESTA RICEVUTA: il posto è del cliente solo dopo la conferma della titolare -->
+    <section class="successo successo-attesa" data-successo hidden tabindex="-1" aria-labelledby="successo-titolo">
+      <div class="successo-icona"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div>
+      <h1 id="successo-titolo" data-successo-titolo>Richiesta ricevuta.</h1>
+      <p class="successo-sotto" data-successo-sotto>Ti confermiamo la disponibilità a breve via email. Il posto sarà tuo appena ricevi la conferma.</p>
+      <p class="successo-sotto" data-successo-extra hidden></p>
+      <p class="codice"><span>Codice richiesta</span><strong data-codice>BGN-0000</strong></p>
 
       <div class="avviso-demo" data-successo-demo hidden>
-        <p><strong>Ultimo passo: invia la prenotazione su WhatsApp.</strong> Il sito è in versione di prova e non salva ancora le prenotazioni. Con il messaggio già pronto, Marcella ti blocca il posto e ti risponde.</p>
+        <p><strong>Ultimo passo: invia la richiesta su WhatsApp.</strong> Il sito è in versione di prova e non salva ancora le richieste. Con il messaggio già pronto, Marcella ti risponde con la conferma.</p>
         <a class="btn btn-ocra btn-grande" data-wa-conferma data-pos="successo-demo" href="https://wa.me/393472249457">
           <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Invia su WhatsApp</a>
       </div>
@@ -242,20 +251,16 @@
       <dl class="successo-dettagli">
         <div><dt>Formula</dt><dd data-s-formula></dd></div>
         <div><dt data-s-etichetta-giorno>Giorno</dt><dd data-s-giorno></dd></div>
-        <div><dt>Orario</dt><dd><span data-cfg="orari.apertura">9:30</span>–<span data-cfg="orari.chiusura">18:30</span></dd></div>
+        <div data-s-fascia-riga hidden><dt>Fascia</dt><dd data-s-fascia></dd></div>
         <div><dt>Da pagare in sede</dt><dd data-s-totale></dd></div>
         <div><dt>Dove</dt><dd><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.citta">Alessandria</span></dd></div>
       </dl>
 
       <div class="successo-azioni">
-        <button class="btn btn-filo" type="button" data-ics>
-          <svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg>Aggiungi al calendario</button>
-        <a class="btn btn-filo" data-indicazioni data-pos="successo" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria">
-          <svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Come arrivare</a>
         <a class="btn btn-wa" data-wa-domanda data-pos="successo-domanda" href="https://wa.me/393472249457">
-          <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Ho una domanda sulla mia prenotazione</a>
+          <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>Ho una domanda sulla mia richiesta</a>
       </div>
-      <a class="successo-torna" data-gestisci href="/prenotazione" hidden>Gestisci o annulla la prenotazione</a>
+      <a class="successo-torna" data-gestisci href="/prenotazione" hidden>Vedi o ritira la richiesta</a>
       <a class="successo-torna" href="/">Torna al sito</a>
     </section>
   </div>
@@ -264,7 +269,7 @@
 <!-- barra fissa mobile: prezzo sempre in vista + passo successivo -->
 <div class="barra-flusso" data-barra-flusso>
   <div class="barra-flusso-prezzo"><strong data-b-totale>—</strong><span data-b-testo>Scegli la formula</span></div>
-  <button class="btn btn-ocra" type="button" data-b-avanti>Continua</button>
+  <button class="btn btn-ocra" type="button" data-b-avanti>Inizia</button>
 </div>
 
 
@@ -284,16 +289,16 @@
       </ul>
     </div>
     <div>
-      <h2 class="piede-titolo">Orari</h2>
-      <p data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</p>
+      <h2 class="piede-titolo">Apertura</h2>
+      <p class="piede-apertura"><span data-cfg="apertura.testo">Aperto tutti i giorni su prenotazione</span><a class="btn btn-ocra btn-piccolo" href="/prenota" data-pos="piede">Richiedi il tuo posto</a></p>
       <h2 class="piede-titolo">Pagine</h2>
       <ul class="piede-lista">
         <li><a href="/#prezzi">Prezzi</a></li>
-        <li><a href="/prenota">Prenota una postazione</a></li>
+        <li><a href="/prenota">Richiedi il tuo posto</a></li>
         <li><a href="/prenotazione">La mia prenotazione</a></li>
         <li><a href="/privacy">Privacy</a></li>
         <li><a href="/cookie">Cookie</a></li>
-        <li><a href="/admin" rel="nofollow">Area riservata</a></li>
+        <li><a href="/gestione" rel="nofollow">Area riservata</a></li>
       </ul>
     </div>
   </div>
@@ -308,7 +313,7 @@
     <img src="/img/logo.svg" alt="Bagnarino Coworking" width="132" height="37">
     <button class="btn-icona" type="button" data-menu-chiudi aria-label="Chiudi il menu"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
   </div>
-  <a class="btn btn-pieno btn-largo menu-cta" href="/prenota" data-pos="menu">Prenota una scrivania</a>
+  <a class="btn btn-pieno btn-largo menu-cta" href="/prenota" data-pos="menu">Richiedi il tuo posto</a>
   <nav class="menu-voci" aria-label="Pagine">
     <a href="/">Home</a>
     <a href="/#posti">Posti liberi</a>
@@ -326,7 +331,7 @@
       <a class="btn btn-filo" data-tel data-pos="menu" href="tel:+393472249457"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Chiama</a>
       <a class="btn btn-filo" data-indicazioni href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria"><svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Indicazioni</a>
     </div>
-    <p class="menu-orari"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><span data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</span></p>
+    <p class="menu-apertura"><svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg><span data-cfg="apertura.testo">Aperto tutti i giorni su prenotazione</span></p>
   </div>
 </dialog>
 </body>

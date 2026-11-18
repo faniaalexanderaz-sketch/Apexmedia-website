@@ -1,15 +1,22 @@
 # Bagnarino Coworking
 
 Web app del coworking di Bagnarino S.r.l., corso Lamarmora 46, Alessandria:
-sito pubblico, prenotazioni online vere, Bagnarino Card, area riservata per la titolare,
-misurazione per le campagne.
+sito pubblico, prenotazione su richiesta con conferma, Bagnarino Card, app di gestione
+installabile per la titolare, misurazione per le campagne.
 
 HTML + CSS + JavaScript vanilla, **nessun framework e nessun build step**.
-Funzioni serverless Vercel in `api/`, database Neon Postgres, email SendGrid.
+Funzioni serverless Vercel in `api/`, database Neon Postgres, email Resend, notifiche Web Push.
+
+**Come funziona il coworking:** non ha orari fissi. È aperto tutti i giorni, sabato e domenica
+compresi, **solo su prenotazione**. Dal sito il cliente manda una *richiesta* (giorno + fascia:
+mattina, pomeriggio o giornata intera). La titolare, Marcella, risponde *Conferma* o
+*Non disponibile*: il posto è del cliente solo dopo la conferma. I giorni e le mezze giornate
+in cui deve chiudere li segna lei dall'app.
 
 **Regola d'oro:** se manca una variabile d'ambiente il sito non si rompe. Senza database
-torna da solo in modalità dimostrativa (le prenotazioni si inviano su WhatsApp), senza
-SendGrid salva tutto ma non manda email, senza `ADMIN_PASSWORD` l'area riservata resta chiusa.
+torna da solo in modalità dimostrativa (le richieste si inviano su WhatsApp), senza chiave
+email salva tutto ma non manda email, senza chiavi VAPID non partono le notifiche push
+(restano le email).
 
 ## Design
 
@@ -17,7 +24,7 @@ Direzione "carta e inchiostro, Olivetti 1983": il sito deve sembrare stampato, n
 un solo accento ocra (quello del logo) e un rosso da timbro usato soltanto sui timbri della Bagnarino Card.
 
 - **Font** (ospitati in `fonts/`, nessun servizio esterno): *Fraunces* per titoli e numeri grandi (asse ottico alto, corsivo come accento);
-  *Hanken Grotesk* per testi e interfaccia (la grotesk della grafica Olivetti); *IBM Plex Mono* per etichette, orari, numeri di sezione e codici
+  *Hanken Grotesk* per testi e interfaccia (la grotesk della grafica Olivetti); *IBM Plex Mono* per etichette, numeri di sezione e codici
   (la macchina per scrivere).
 - **Colori**: notte `#111922`, inchiostro `#1B2A3A`, ocra `#C9973B`, timbro `#B4302A` (solo Card), carta `#F1EBE0`, avorio `#FAF6EE`.
   Filetti sottili al posto dei bordi delle card, angoli da 4 px, niente ombre 3D né gradienti di sfondo.
@@ -54,56 +61,89 @@ npm test            # test del motore di prenotazione
 ```
 
 `npm run locale` usa un Postgres in memoria (PGlite): niente da configurare, si azzera a
-ogni riavvio, le email non partono. Area riservata: http://localhost:3000/admin, password `prova`.
+ogni riavvio. Le email non partono: vengono catturate e si leggono su http://localhost:3000/__posta.
+App di gestione: http://localhost:3000/gestione (email `info@bagnarino.it`, password `prova`).
+Vecchia area riservata: http://localhost:3000/admin, password `prova`.
+
+Prova completa da telefono simulato (serve Playwright): con il server acceso su `PORT=3311`,
+`xvfb-run -a node strumenti/prova-completa.js`.
 Solo il sito statico, in modalità dimostrativa: `npx serve bagnarino-coworking`.
 
 ## Struttura
 
 | File | A cosa serve |
 |---|---|
-| `config.js` | **Valori di partenza**: azienda, contatti, orari, postazioni, listino, fidelity, testi WhatsApp, codici GA4/Meta. Lo leggono sia il sito sia le API |
-| `index.html` | Home: apertura su carta con la foto della sala, posti liberi (posti liberi giorno per giorno), negozio, storia, listino, una giornata, spazio, Bagnarino Card, per chi è, dove siamo, FAQ, chiusura |
-| `prenota.html` + `prenota.js` | Prenotazione in 3 passi; giornate omaggio e carnet riconosciuti da email + cellulare |
-| `prenotazione.html` + `gestisci.js` | "La mia prenotazione": stato e annullamento con codice + email |
+| `config.js` | **Valori di partenza**: azienda, contatti, fasce, prezzo della mezza giornata, postazioni, listino, fidelity, avviso, foto, testi WhatsApp, codici GA4/Meta. Lo leggono sia il sito sia le API |
+| `index.html` | Home: apertura, prenota, negozio, listino, **come funziona** (aperto tutti i giorni su prenotazione), spazio, Bagnarino Card, per chi è, dove siamo, FAQ, chiusura |
+| `prenota.html` + `prenota.js` | Richiesta in 3 passi: formula → giorno e fascia → dati. Schermata finale "Richiesta ricevuta" |
+| `prenotazione.html` + `gestisci.js` | "La mia prenotazione": stato (in attesa, confermata…) e annullamento con codice + email |
 | `card.html` + `tessera.js` | "La mia Bagnarino Card": timbri, omaggi, carnet |
-| `admin.html` + `admin.js` + `admin.css` | Area riservata della titolare |
-| `main.js` | Script comune: config, festivi, posti liberi, WhatsApp, eventi di misurazione, dati strutturati |
+| `gestione-app.js` + `gestione-app.css` + `sw-gestione.js` + `gestione.webmanifest` | **App di gestione della titolare** (`/gestione`), installabile. Le pagine le serve `api/gestione.js` dopo aver controllato la sessione |
+| `admin.html` + `admin.js` + `admin.css` | Vecchia area riservata (`/admin`): resta per Apex Media (incassi, clienti, CSV, Crescita, prezzi) |
+| `main.js` | Script comune: config, posti liberi, avviso, foto, WhatsApp, eventi di misurazione, dati strutturati |
 | `cookie.js` | Banner cookie (solo se ci sono codici GA4/Meta), Consent Mode v2 |
 | `api/` | Funzioni serverless (vedi sotto). I file che iniziano con `_` sono moduli interni |
 | `test/` | Test `node:test` su Postgres in memoria |
 | `strumenti/server-locale.js` | Server di prova locale |
+| `strumenti/prova-completa.js` | Prova completa dal sito e dall'app, a 390px |
 | `GUIDA-TITOLARE.md` | Guida di una pagina per Marcella |
 
 ### API
 
 | Indirizzo | Cosa fa |
 |---|---|
-| `GET /api/disponibilita?da=&giorni=&pacchetto=` | Posti liberi per giorno (per i mesi: liberi per tutto il periodo) |
-| `POST /api/prenota` | Valida, assegna la postazione in una transazione, aggiorna carnet/fidelity, manda email e avvisi, Meta CAPI |
+| `GET /api/disponibilita?da=&giorni=&pacchetto=` | Posti liberi per giorno e per fascia; `nd` elenca le fasce non disponibili (chiuse o non più richiedibili per oggi) |
+| `POST /api/prenota` | Valida, tiene da parte la postazione in una transazione, salva la richiesta **in attesa**, manda email al cliente, email e notifica alla titolare, Meta CAPI |
 | `GET /api/prenotazione`, `POST /api/annulla`, `/api/vantaggi`, `/api/card` | Area cliente (un'unica funzione `api/cliente.js`) |
-| `GET /api/impostazioni` | Le modifiche fatte in area riservata, applicate al sito |
-| `/api/admin?azione=…` | Area riservata (accesso, dashboard, presenze, incassi, CSV, impostazioni) |
-| `/api/cron?compito=promemoria\|riepilogo\|report` | Lanciati da Vercel Cron |
+| `GET /api/impostazioni` | Le modifiche fatte dall'app e dall'area riservata, applicate al sito (in cache 30 s) |
+| `/gestione`, `/gestione/accedi`, `/gestione/password`, `/gestione/installa`, `/gestione/risposta` | Pagine dell'app, servite da `api/gestione.js` |
+| `/api/gestione?azione=…` | Azioni dell'app (accesso, risposta alle richieste, chiusure, sito, notifiche). Senza sessione rispondono 401 |
+| `GET /api/foto?id=&t=p\|g` | Le foto caricate dall'app |
+| `/api/admin?azione=…` | Vecchia area riservata (incassi, clienti, CSV, impostazioni, Crescita) |
+| `/api/cron?compito=promemoria\|riepilogo\|report\|attese` | Lanciati da Vercel Cron |
 | `POST /api/pagamento` | Stripe Checkout, **spento** finché manca `STRIPE_SECRET_KEY` |
 | `/sitemap.xml`, `/robots.txt` | Generati da `api/seo.js` con il dominio di `SITO_URL` |
 
-Le funzioni sono 8: il piano gratuito di Vercel ne ammette 12 per progetto.
+Le funzioni sono 10: il piano gratuito di Vercel ne ammette 12 per progetto.
 
-### Database (si crea da solo al primo utilizzo)
+### Database (si crea e si aggiorna da solo al primo utilizzo)
 
 `postazioni`, `clienti`, `prenotazioni`, `carnet`, `fidelity`, `chiusure`, `eventi`, più:
-`occupazioni` (una riga per scrivania per giorno, con chiave unica: due persone sullo stesso
-posto lo stesso giorno sono impossibili anche con richieste simultanee), `tentativi`
-(anti-spam, solo impronte cifrate degli IP), `impostazioni` (modifiche dall'area riservata).
+`occupazioni` (una riga per scrivania, giorno e mezza giornata, con chiave unica: due persone sullo
+stesso posto nello stesso momento sono impossibili anche con richieste simultanee), `tentativi`
+(anti-spam, solo impronte cifrate degli IP), `impostazioni` (modifiche dall'app e dall'area riservata),
+`utenti`, `sessioni`, `recuperi` (accesso all'app), `push_iscrizioni` (telefoni che ricevono le
+notifiche), `foto` (galleria caricata dall'app).
+
+Lo schema ha una versione (`VERSIONE_SCHEMA` in `api/_db.js`): quando cambia, al primo avvio girano
+i comandi e i passaggi di `migra()`, che controllano da soli se sono già stati fatti.
 
 ### Regole del motore
 
-- **Giornata**: un posto per un giorno. **Carnet**: 10 ingressi, il primo nel giorno scelto, validi 3 mesi dal primo ingresso; ogni giornata successiva prenotata con la stessa email + cellulare scala un ingresso (costo €0).
-- **Mese flessibile**: un posto ogni giorno di apertura per un mese (preferibilmente lo stesso). **Mese fisso**: la stessa scrivania per tutto il mese.
-- **Bagnarino Card**: ogni giornata pagata (singola o da carnet) segnata "È arrivato" vale un timbro; al 10° timbro una giornata in omaggio, proposta al cliente nella prenotazione successiva. Gli abbonamenti mensili non raccolgono timbri.
-- **Annullamento** gratuito fino alle 20:00 del giorno prima (`config.js` → `disdetta.ora`). Dopo, solo la titolare dall'area riservata.
+- **Richiesta e conferma**: ogni prenotazione dal sito nasce `in_attesa`. Il posto viene tenuto da parte subito (niente doppie richieste sullo stesso posto) ma è del cliente solo quando la titolare conferma. "Non disponibile" libera il posto e restituisce l'eventuale ingresso del carnet. Le prenotazioni inserite a mano dalla titolare nascono già confermate.
+- **Fasce**: mattina, pomeriggio, giornata intera. La stessa scrivania può servire una persona la mattina e un'altra il pomeriggio. Mezza giornata: `prezzoMezzaGiornata` in `config.js` (€12).
+- **Aperto tutti i giorni**: sabato, domenica e festivi compresi. Un giorno o una mezza giornata non sono richiedibili solo se la titolare li ha chiusi dall'app (sul sito: "Non disponibile"). Per il giorno stesso ogni fascia smette di essere richiedibile a una certa ora (`fasce[].ultimaRichiestaOggi` in `config.js`), che sul sito non compare.
+- **Giornata**: un posto per un giorno (o mezza giornata). **Carnet**: 10 ingressi, il primo nel giorno scelto, validi 3 mesi dal primo ingresso; ogni giornata intera successiva prenotata con la stessa email + cellulare scala un ingresso (costo €0).
+- **Mese flessibile**: un posto ogni giorno non chiuso per un mese (preferibilmente lo stesso). **Mese fisso**: la stessa scrivania per tutto il mese.
+- **Bagnarino Card**: ogni giornata intera pagata (singola o da carnet) segnata "È arrivata/o" vale un timbro; al 10° timbro una giornata in omaggio. Mezze giornate e abbonamenti mensili non raccolgono timbri.
+- **Annullamento**: una richiesta in attesa si ritira quando si vuole; una prenotazione confermata fino alle 20:00 del giorno prima (`config.js` → `disdetta.ora`). Dopo, solo la titolare.
 - La stessa persona non può occupare due scrivanie lo stesso giorno.
 - **Anti-spam**: campo trappola, massimo 8 tentativi l'ora per IP, controllo email/telefono lato server.
+
+### Email e notifiche
+
+| Quando | A chi | Cosa |
+|---|---|---|
+| Richiesta inviata | cliente | "Abbiamo ricevuto la tua richiesta, ti confermiamo a breve" con il riepilogo |
+| Richiesta inviata | titolare | Email semplicissima con due pulsanti (*Conferma*, *Non disponibile*) + notifica push |
+| In attesa da più di 2 ore | titolare | Promemoria (email + push), una volta sola, mai di notte |
+| Confermata | cliente | "Prenotazione confermata, ti aspettiamo [giorno] [fascia]", indirizzo, come arrivare, appuntamento allegato |
+| Non disponibile | cliente | "Purtroppo in quella fascia lo spazio non è disponibile…" con il link diretto al calendario |
+| Annullata dalla titolare dopo la conferma | cliente | Scuse e link per riprenotare |
+
+I pulsanti nell'email della titolare funzionano senza accesso: sono link firmati (HMAC, `LINK_SECRET`),
+valgono 7 giorni e solo finché la richiesta è in attesa. Tutte le email al cliente hanno il
+reply-to sull'indirizzo della titolare.
 
 ## Prima di pubblicare
 
@@ -111,12 +151,23 @@ Lancia `python3 strumenti/versiona.py`: aggiunge `?v=<impronta>` a CSS e JS nell
 
 ## Web app (telefono)
 
-- Barra a schede in basso su tutte le pagine pubbliche: **Home · Prezzi · Prenota · Le mie · Contatti**. Nel flusso di prenotazione resta solo la barra con il prezzo e il pulsante.
+- Barra a schede in basso su tutte le pagine pubbliche: **Home · Prezzi · Richiedi · Le mie · Contatti**. Nel flusso di richiesta resta solo la barra con il prezzo e il pulsante.
 - Menu (☰) in alto a destra con tutte le sezioni e i contatti. Su computer il menu è in testata.
-- "Le mie": il telefono ricorda l'ultima prenotazione fatta (localStorage `bgn-ultima`) e la mostra subito, con il pulsante della **Bagnarino Card** (la card non è più nel menu: la vede solo chi ha prenotato).
+- "Le mie": il telefono ricorda l'ultima richiesta fatta (localStorage `bgn-ultima`) e la mostra subito, con il pulsante della **Bagnarino Card**.
 - Codice ed email arrivati dal link nell'email vengono tolti dall'indirizzo, così non finiscono nelle statistiche.
-- Installabile come app: `site.webmanifest` (clienti) e `admin.webmanifest` (titolare, icona "Gestione").
-- Area riservata: `/admin`, link "Area riservata" nel piè di pagina.
+- Installabile come app: `site.webmanifest` (clienti).
+
+## App di gestione della titolare (`/gestione`)
+
+Pensata per una persona poco pratica di tecnologia: testo da 18px in su, pulsanti alti almeno 56px,
+una cosa importante per schermata, parole semplici.
+
+- **Installabile** (PWA): `gestione.webmanifest` (nome "Bagnarino", `display: standalone`), icone in `img/app/`, service worker `sw-gestione.js`. Istruzioni illustrate per iPhone e Android: **`/gestione/installa`**.
+- **Accesso**: email + password una volta, sessione di 90 giorni (cookie HttpOnly, nel database solo l'impronta). Recupero password via email. Il primo accesso nasce da solo: email di `NOTIFICATION_EMAIL`, password di `ADMIN_PASSWORD`.
+- **Protetta lato server**: le pagine le serve `api/gestione.js` solo con una sessione valida, le azioni rispondono 401 senza sessione e accettano solo POST con l'intestazione `X-Bgn-App`.
+- **Notifiche push** (Web Push, chiavi VAPID). Su iPhone funzionano solo con l'app sulla schermata Home (iOS 16.4+): in Impostazioni c'è il pulsante "Attiva le notifiche", che in Safari spiega cosa fare.
+- **Schermate**: *Oggi* (richieste da confermare, chi arriva, "Oggi sono chiusa"), *Calendario* (mese, chiusure per giorno o mezza giornata, "Chiudi più giorni"), *Prenotazioni* (da confermare, confermate, passate; Chiama e WhatsApp), *Sito* (avviso in home, foto, telefono e WhatsApp), *Come va* (tre numeri), *Impostazioni*.
+- La titolare può cambiare solo contenuti: mai layout, colori, prezzi o sezioni. Le foto vengono ridotte sul telefono (1440 e 720 px) prima del caricamento.
 
 ## Crescita (area riservata)
 
@@ -134,14 +185,16 @@ Scheda **Crescita** in `/admin` (icona ↗ in basso): come sta andando il cowork
 | Variabile | Obbligatoria | A cosa serve |
 |---|---|---|
 | `DATABASE_URL` | sì, per le prenotazioni vere | Neon Postgres (Vercel → Storage → Neon la imposta da sola) |
-| `ADMIN_PASSWORD` | sì, per l'area riservata | Password della titolare |
-| `APEX_PASSWORD` | per la scheda Crescita | Password di Apex Media: aggiorna i numeri di social, Google e pubblicità |
+| `NOTIFICATION_EMAIL` | sì | **L'unico punto in cui è scritto l'indirizzo della titolare** (`info@bagnarino.it`): riceve richieste, promemoria, annullamenti, riepilogo serale e report; è il reply-to delle email al cliente e l'email di accesso all'app |
+| `ADMIN_PASSWORD` | sì | Password iniziale dell'app di gestione e password della vecchia area riservata |
+| `LINK_SECRET` | sì, per i pulsanti nelle email | Firma i link *Conferma* / *Non disponibile* (in mancanza si usa `CRON_SECRET`) |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | per le notifiche push | Chiavi Web Push. Si generano con `npx web-push generate-vapid-keys` |
+| `APEX_PASSWORD` | per la scheda Crescita | Password di Apex Media nella vecchia area riservata |
 | `CRON_SECRET` | sì, per i promemoria | Protegge `/api/cron` (Vercel la invia da solo) |
-| `RESEND_API_KEY`, `EMAIL_FROM` | per le email | Chiave Resend (gratis fino a 3.000 email/mese) e mittente su dominio verificato, es. `prenotazioni@dominio.it`. `EMAIL_FROM_NOME` facoltativa |
-| `SENDGRID_API_KEY` | alternativa a Resend | Funziona ancora; SendGrid non ha più il piano gratuito (circa 20 $/mese dopo 60 giorni) |
-| `NOTIFICHE_EMAIL` | per gli avvisi | Email della titolare (nuove prenotazioni, annullamenti, riepilogo serale, report) |
+| `RESEND_API_KEY`, `EMAIL_FROM` | per le email | Chiave Resend e mittente su dominio verificato (oggi `bagnarinocoworking.it`). `EMAIL_FROM_NOME` facoltativa |
+| `SENDGRID_API_KEY` | alternativa a Resend | Funziona ancora |
 | `REPORT_EMAIL` | facoltativa | Altri destinatari del report mensile (es. Apex Media), separati da virgola |
-| `SITO_URL` | quando c'è il dominio | Es. `https://www.dominio.it`, senza barra finale |
+| `SITO_URL` | sì | `https://bagnarinocoworking.it`, senza barra finale |
 | `META_PIXEL_ID`, `META_CAPI_TOKEN` | per le campagne | Conversions API lato server. `META_TEST_CODE` per i test in Gestione eventi |
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | facoltative | Avvisi anche su Telegram |
 | `NOTIFICHE_WHATSAPP=1`, `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_ID`, `WHATSAPP_TO` | facoltative | Avvisi via WhatsApp Business Cloud API |
@@ -151,20 +204,23 @@ Codici **GA4** e **Meta Pixel** lato browser: in `config.js` (`ga4`, `metaPixel`
 
 ## Operazioni comuni
 
-- **Cambiare prezzi, orari, numero di postazioni, messaggi WhatsApp**: area riservata → Impostazioni (salvato nel database, il sito si aggiorna entro un minuto). `config.js` resta il valore di partenza.
-- **Aggiungere un giorno di chiusura**: area riservata → Calendario o Impostazioni → "Chiudi questo giorno". In alternativa, permanente: `config.js` → `chiusure: ['2026-12-24']`. I festivi nazionali, Pasquetta compresa, sono automatici.
-- **Cambiare il numero di postazioni**: area riservata → Impostazioni → Scrivanie (le prenotazioni già fatte restano valide). I testi del sito prendono il numero da lì.
+- **Chiudere un giorno o una mezza giornata**: app di gestione → Calendario (o "Oggi sono chiusa"). I festivi **non** si chiudono da soli: nel calendario dell'app sono segnati, li chiude la titolare.
+- **Avviso in home, foto dello spazio, telefono e WhatsApp**: app di gestione → Sito. Sul sito entro un minuto.
+- **Cambiare prezzi, numero di postazioni, messaggi WhatsApp**: vecchia area riservata (`/admin`) → Impostazioni. `config.js` resta il valore di partenza. Il prezzo della mezza giornata è `prezzoMezzaGiornata` in `config.js`.
 - **Accendere sala riunioni, caffè, climatizzazione, recensioni**: `config.js` (`sala.attiva`, `servizi`, `recensioniAttive`).
 
-## Promemoria automatici (Vercel Cron, orari UTC)
+## Compiti automatici (Vercel Cron, in UTC)
 
 | Quando | Cosa |
 |---|---|
-| ogni giorno 16:00 UTC (18:00 d'estate, 17:00 d'inverno) | Promemoria ai clienti che arrivano domani |
-| ogni giorno 17:30 UTC (19:30 d'estate, 18:30 d'inverno) | Riepilogo "chi arriva domani" alla titolare |
+| ogni ora dalle 7 alle 20 UTC | Promemoria alla titolare per le richieste in attesa da più di 2 ore (`compito=attese`). Sono 14 voci giornaliere, una per ora: così funzionano anche sul piano gratuito |
+| ogni giorno 16:00 UTC | Promemoria ai clienti con prenotazione confermata per domani |
+| ogni giorno 17:30 UTC | Riepilogo "chi arriva domani" alla titolare |
 | giorno 1 del mese, 7:00 UTC | Report mensile alla titolare e a `REPORT_EMAIL` |
 
-Sul piano gratuito Vercel esegue i cron entro l'ora indicata, non al minuto.
+Sul piano gratuito Vercel esegue i cron entro l'ora indicata, non al minuto: il promemoria
+arriva quindi tra 2 e 4 ore dopo la richiesta. `compito=attese` si può chiamare anche da un
+timer esterno, senza segreto: ogni richiesta viene sollecitata una volta sola.
 
 ## Misurazione
 
@@ -180,20 +236,19 @@ nella scheda Google Business `?utm_source=gmb`.
 
 ## Collaudo fatto
 
-- `npm test`: 11 test (disponibilità, doppia prenotazione anche simultanea, stessa persona due volte, mese fisso, carnet, fidelity, annullamento fuori orario, anti-spam).
-- Playwright da mobile (iPhone 13), modalità reale con database: prenotazione completa, gestione e annullamento, carnet usato in prenotazione, card, mese fisso; area riservata: accesso (anche password errata), prenotazione a mano, "È arrivato" con timbro, incasso, clienti, CSV, cambio prezzo che si riflette sul sito, uscita.
-- Playwright a 375 / 768 / 1440 px: nessuno scroll orizzontale, CTA sempre visibili, nessun errore JavaScript.
-- Lighthouse mobile (server locale con compressione): home 96 / 100 / 100 / 100 con le foto, prenota 99 / 100 / 100 / 100 (Prestazioni, Accessibilità, Best Practices, SEO). L'area riservata non è indicizzata di proposito.
-- Animazioni GSAP verificate: 37 animazioni attive, nessun elemento lasciato nascosto, nessun errore.
-- Dati strutturati LocalBusiness + CoworkingSpace + FAQPage generati da `config.js` (verificarli con il Rich Results Test di Google, che esegue JavaScript).
+- `npm test`: 39 test (disponibilità per fascia, doppia prenotazione anche simultanea, chiusure, richiesta → conferma / non disponibile, email e reply-to, link firmati, promemoria dopo 2 ore, notifica push cifrata e firmata VAPID, passaggio dal database precedente, accesso e sessione dell'app, recupero password, protezione lato server, avviso, foto, contatti).
+- `strumenti/prova-completa.js` (Playwright, 390px): 163 controlli dal sito e dall'app, compresi testo ≥ 18px e pulsanti ≥ 56px su ogni schermata dell'app.
+- Dati strutturati LocalBusiness + CoworkingSpace + FAQPage generati da `config.js`, senza orari di apertura (verificarli con il Rich Results Test di Google, che esegue JavaScript).
 
 ## Checklist di lancio
 
 - [x] Vercel → progetto `bagnarino-coworking` → Storage → **database Neon collegato** (`neon-crimson-castle`, crea `DATABASE_URL`)
-- [x] Variabili `ADMIN_PASSWORD`, `CRON_SECRET`, `NOTIFICHE_EMAIL` impostate
-- [ ] Resend: **dominio verificato** (record DNS), poi `RESEND_API_KEY` e `EMAIL_FROM`
-- [ ] Prima prenotazione di prova dal telefono → arrivano email al cliente e alla titolare → annullala dal link nell'email
-- [ ] Dominio scelto e collegato al progetto Vercel → `SITO_URL` impostato
+- [x] Variabili `ADMIN_PASSWORD`, `CRON_SECRET`, `NOTIFICATION_EMAIL`, `LINK_SECRET`, `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` impostate
+- [x] Resend: dominio `bagnarinocoworking.it` verificato, `RESEND_API_KEY` e `EMAIL_FROM` impostate
+- [ ] Resend: verificare anche `bagnarino.it` (record DNS su Register.it) per inviare da `noreply@bagnarino.it`
+- [ ] Prima richiesta di prova dal telefono → arrivano email al cliente e alla titolare → Conferma → arriva l'email di conferma
+- [ ] App installata sul telefono di Marcella (`/gestione/installa`) e notifiche attivate
+- [x] Dominio `bagnarinocoworking.it` collegato al progetto Vercel, `SITO_URL` impostato
 - [ ] Scheda **Google Business** aggiornata con il link di prenotazione (`/prenota?utm_source=gmb`) e la categoria "Spazio di coworking"
 - [ ] Codici GA4 e Meta Pixel in `config.js`; `META_PIXEL_ID` e `META_CAPI_TOKEN` su Vercel; verifica in Gestione eventi di Meta
 - [ ] Servizio fotografico definitivo (`img/foto/`, lista sopra in "Foto da scattare")
@@ -210,7 +265,7 @@ nella scheda Google Business `?utm_source=gmb`.
 6. **Pagamento con carta (POS)** in sede: confermato? Carnet e mensili si pagano tutti il primo giorno?
 7. **Postazione fissa**: quante delle 8 scrivanie sono fisse? La cassettiera ha la chiave?
 8. **Disdetta gratis entro le 20:00 del giorno prima**: va bene come regola?
-9. **Chiusure**: San Baudolino (10 novembre), ferie estive, ponti.
+9. **Timbri della Card per la mezza giornata**: oggi no (solo giornata intera).
 10. **Parcheggio**: ci sono convenzioni o parcheggi vicini da indicare?
 11. **Punti di riferimento vicini al negozio** (parcheggi, piazze): da chiedere a Marcella; per ora il sito dice solo "in pieno centro".
 12. **Videochiamate**: sono ammesse alle postazioni? (il testo del wi-fi le cita)

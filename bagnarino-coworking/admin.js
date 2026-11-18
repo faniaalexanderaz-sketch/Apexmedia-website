@@ -280,11 +280,11 @@
 
     if (!annullata) {
       /* passo 1: accettare */
-      html += passoHtml(1, 'Accetta la richiesta', x.accettata ? 'fatto' : 'ora', x.accettata
+      html += passoHtml(1, 'Rispondi alla richiesta', x.accettata ? 'fatto' : 'ora', x.accettata
         ? fattoHtml(x.manuale ? 'Inserita da te: già accettata' : 'Accettata')
-        : '<p class="nota">Il cliente ha già ricevuto la conferma via email. Se va tutto bene, accettala. Se non va bene (per esempio quel giorno sei chiusa), rifiutala: gli arriva un’email di annullamento e il posto torna libero.</p>' +
-          '<div class="azioni-riga"><button class="btn btn-ocra" type="button" data-accetta="' + id + '"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Accetta</button>' +
-          '<button class="btn btn-rosso-filo" type="button" data-rifiuta="' + id + '" data-chi="' + chi + '"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Rifiuta</button></div>', 'accetta');
+        : '<p class="nota">Il cliente aspetta la tua risposta. Se va bene, conferma: riceve l’email di conferma. Altrimenti tocca Non disponibile: riceve un’email con il link per scegliere un altro momento e il posto torna libero.</p>' +
+          '<div class="azioni-riga"><button class="btn btn-ocra" type="button" data-accetta="' + id + '"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Conferma</button>' +
+          '<button class="btn btn-rosso-filo" type="button" data-rifiuta="' + id + '" data-chi="' + chi + '"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Non disponibile</button></div>', 'accetta');
 
       /* passo 2: arrivo */
       var corpo2, stato2;
@@ -354,16 +354,16 @@
     if ((b = t.closest('[data-accetta]'))) {
       b.disabled = true;
       api('accetta', { dati: { id: +b.getAttribute('data-accetta') } }).then(function () {
-        toast('Richiesta accettata.');
+        toast('Confermata: il cliente riceve l’email di conferma.');
         var badge = $('[data-badge]'); if (!badge.hidden) aggiornaBadge(Math.max(0, (+badge.textContent || 1) - 1));
         aggiorna();
       }).catch(function (x) { b.disabled = false; toast(x.message, true); });
       return;
     }
     if ((b = t.closest('[data-rifiuta]'))) {
-      if (!confirm('Rifiutare la richiesta di ' + b.getAttribute('data-chi') + '?\nGli arriva un’email di annullamento e il posto torna libero.')) return;
+      if (!confirm('Rispondere "non disponibile" a ' + b.getAttribute('data-chi') + '?\nRiceve un’email con il link per scegliere un altro momento e il posto torna libero.')) return;
       api('annulla', { dati: { id: +b.getAttribute('data-rifiuta') } }).then(function () {
-        toast('Richiesta rifiutata: il cliente riceve un’email.'); chiudiDlg(dlgScheda); aggiorna();
+        toast('Fatto: il cliente riceve l’email con il link per scegliere un altro momento.'); chiudiDlg(dlgScheda); aggiorna();
       }).catch(function (x) { toast(x.message, true); });
       return;
     }
@@ -697,8 +697,6 @@
       }).join('');
       $('[data-imp-postazioni]').value = d.postazioni;
       $('[data-imp-postazioni]').textContent = d.postazioni;
-      $('[data-imp-apertura]').value = hhmm(d.orari.apertura);
-      $('[data-imp-chiusura]').value = hhmm(d.orari.chiusura);
       $('[data-imp-chiusure]').innerHTML = d.chiusure.length ? d.chiusure.map(function (c) {
         return '<li><span><strong>' + dataTesto(c.data) + '</strong>' + (c.motivo ? ' · ' + h(c.motivo) : '') + '</span>' +
           '<button class="link-azione" type="button" data-riapri-imp="' + c.data + '">Riapri</button></li>';
@@ -734,7 +732,6 @@
     var dati = {
       listino: (listinoCache ? listinoCache.listino : []).map(function (p) { return { id: p.id, prezzo: f['prezzo-' + p.id].value }; }),
       postazioni: +$('[data-imp-postazioni]').textContent,
-      orari: { apertura: $('[data-imp-apertura]').value, chiusura: $('[data-imp-chiusura]').value },
       whatsappTesti: wa
     };
     api('impostazioni', { dati: dati }).then(function () { toast('Salvato. Il sito si aggiorna entro un minuto.'); caricatori.impostazioni(); $('[data-sel-pacchetto]').innerHTML = ''; })

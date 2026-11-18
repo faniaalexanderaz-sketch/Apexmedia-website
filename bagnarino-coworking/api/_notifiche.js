@@ -1,12 +1,16 @@
 /* =============================================================
    BAGNARINO COWORKING — avvisi alla titolare
-   Sempre via email (NOTIFICHE_EMAIL). Predisposti e SPENTI:
+   - email: sempre, all'indirizzo NOTIFICATION_EMAIL
+   - notifica sul telefono (Web Push): se l'avviso ha la parte "push"
+     e la titolare ha attivato le notifiche nell'app di gestione
+   Predisposti e SPENTI:
    - Telegram: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID
    - WhatsApp Business (Cloud API): NOTIFICHE_WHATSAPP=1 +
      WHATSAPP_TOKEN + WHATSAPP_PHONE_ID + WHATSAPP_TO
    Basta impostare le variabili su Vercel per accenderli.
    ============================================================= */
-const { inviaEmail } = require('./_email');
+const { inviaEmail, emailTitolare } = require('./_email');
+const { inviaPush } = require('./_push');
 
 async function conTimeout(promessa, ms) {
   return Promise.race([promessa, new Promise(r => setTimeout(() => r(null), ms))]);
@@ -36,13 +40,16 @@ async function whatsapp(testo) {
   } catch (e) { return false; }
 }
 
-async function avvisaTitolare({ oggetto, html, testo }) {
-  const destinatario = process.env.NOTIFICHE_EMAIL;
+/* push: { titolo, corpo, url, tag } (facoltativo) */
+async function avvisaTitolare({ oggetto, html, testo, push }) {
+  const destinatario = emailTitolare();
   const esiti = await Promise.allSettled([
-    destinatario ? inviaEmail({ to: destinatario, subject: oggetto, html }) : Promise.resolve({ inviata: false }),
+    destinatario ? inviaEmail({ to: destinatario, subject: oggetto, html, testo }) : Promise.resolve({ inviata: false }),
     telegram(testo || oggetto),
-    whatsapp(testo || oggetto)
+    whatsapp(testo || oggetto),
+    push ? inviaPush(push) : Promise.resolve({ telefoni: 0, inviate: 0 })
   ]);
-  return esiti.map(e => e.status === 'fulfilled' ? e.value : null);
+  const v = esiti.map(e => e.status === 'fulfilled' ? e.value : null);
+  return { email: v[0], telegram: v[1], whatsapp: v[2], push: v[3] };
 }
 module.exports = { avvisaTitolare, telegram, whatsapp };

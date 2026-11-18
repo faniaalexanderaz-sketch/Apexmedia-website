@@ -1,7 +1,9 @@
 /* =============================================================
    BAGNARINO COWORKING — "La mia prenotazione"
-   Codice + email → stato della prenotazione e annullamento
-   (gratis fino alle 20:00 del giorno prima, regola del server).
+   Codice + email → stato della richiesta o della prenotazione.
+   Una richiesta in attesa si può ritirare quando si vuole; una
+   prenotazione confermata si annulla gratis fino alle 20:00 del
+   giorno prima (regola del server).
    ============================================================= */
 (function () {
   'use strict';
@@ -9,7 +11,7 @@
   if (!B) return;
   var C = B.cfg, $ = B.$;
   var form = $('[data-cerca]'), scheda = $('[data-scheda]'), errore = $('[data-errore]');
-  var STATI = { confermata: 'Confermata', annullata: 'Annullata', presente: 'Usata', assente: 'Non presentato' };
+  var STATI = { in_attesa: 'In attesa di conferma', confermata: 'Confermata', annullata: 'Annullata', presente: 'Usata', assente: 'Non presentato' };
   var corrente = null;
 
   function mostraErrore(t) { errore.textContent = t; errore.classList.add('visibile'); }
@@ -19,17 +21,29 @@
     corrente = p;
     try { localStorage.setItem('bgn-ultima', JSON.stringify({ codice: p.codice, email: form.email.value.trim() })); } catch (x) {}
     scheda.hidden = false;
-    $('[data-s-stato]').textContent = STATI[p.stato] || p.stato;
-    $('[data-s-titolo]').textContent = p.stato === 'annullata' ? 'Questa prenotazione è annullata.' : 'Ciao ' + p.nome + ', ecco la tua prenotazione.';
+    var attesa = p.stato === 'in_attesa', nonDisponibile = p.stato === 'annullata' && p.motivo === 'non_disponibile';
+    $('[data-s-stato]').textContent = nonDisponibile ? 'Non disponibile' : (STATI[p.stato] || p.stato);
+    $('[data-s-titolo]').textContent = nonDisponibile ? 'In quella fascia lo spazio non è disponibile.'
+      : p.stato === 'annullata' ? 'Questa prenotazione è annullata.'
+      : attesa ? 'Ciao ' + p.nome + ', abbiamo ricevuto la tua richiesta.'
+      : 'Ciao ' + p.nome + ', ecco la tua prenotazione.';
+    var notaAttesa = $('[data-s-attesa]');
+    notaAttesa.hidden = !(attesa || nonDisponibile);
+    notaAttesa.innerHTML = attesa ? 'Ti confermiamo la disponibilità a breve via email. Il posto sarà tuo appena ricevi la conferma.'
+      : nonDisponibile ? 'Scegli un altro momento, ti confermiamo subito: <a href="/prenota?pacchetto=' + encodeURIComponent(p.pacchetto) + '#giorno">apri il calendario</a>.' : '';
     $('[data-s-codice]').textContent = p.codice;
     $('[data-s-formula]').textContent = p.nomePacchetto;
     var mese = /^mese/.test(p.pacchetto);
     $('[data-s-etichetta]').textContent = mese ? 'Periodo' : p.pacchetto === 'carnet' ? 'Primo ingresso' : 'Giorno';
     $('[data-s-giorno]').textContent = mese ? B.data(B.daIso(p.data_inizio), 'breve') + ' → ' + B.data(B.daIso(p.data_fine), 'breve') : dataLunga(p.data_inizio);
+    $('[data-s-fascia-riga]').hidden = p.pacchetto !== 'giornata';
+    $('[data-s-fascia]').textContent = p.nomeFascia || '';
     $('[data-s-prezzo]').textContent = p.prezzo === 0 ? 'Niente: già pagato' : p.pagato ? p.prezzoTesto + ' (pagato)' : p.prezzoTesto;
     $('[data-zona-annulla]').hidden = !p.annullabile;
     var parti = p.scadenzaDisdetta.split(' ');
-    $('[data-s-scadenza]').textContent = 'Puoi annullare gratis fino alle ' + parti[1] + ' di ' + dataLunga(parti[0]) + '.';
+    $('[data-s-scadenza]').textContent = attesa ? 'Hai cambiato programma? Puoi ritirare la richiesta in qualsiasi momento.'
+      : 'Puoi annullare gratis fino alle ' + parti[1] + ' di ' + dataLunga(parti[0]) + '.';
+    $('[data-annulla-testo]').textContent = attesa ? 'Ritira la richiesta' : 'Annulla la prenotazione';
     var tardi = $('[data-s-tardi]');
     tardi.hidden = !(p.stato === 'confermata' && !p.annullabile);
     tardi.textContent = 'Il termine per annullare online è passato. Se hai un imprevisto scrivici su WhatsApp: troviamo una soluzione.';

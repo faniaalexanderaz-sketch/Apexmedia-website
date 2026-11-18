@@ -1,14 +1,19 @@
 /* =============================================================
-   BAGNARINO COWORKING — flusso di prenotazione
-   Tre passi sulla stessa pagina: formula → giorno → dati.
+   BAGNARINO COWORKING — richiesta di un posto
+   Tre passi sulla stessa pagina: formula → giorno e fascia → dati.
    Il riepilogo e il prezzo restano sempre in vista.
+
+   Il coworking lavora solo su prenotazione: il modulo manda una
+   RICHIESTA. Il posto è del cliente quando la titolare conferma
+   (arriva un'email). Per questo la schermata finale dice
+   "Richiesta ricevuta", mai "Prenotazione confermata".
 
    Modalità:
    - REALE: se /api/disponibilita risponde, i posti sono veri e la
-     prenotazione va a /api/prenota (fase 2).
-   - DIMOSTRATIVA: altrimenti posti finti ma realistici; alla
-     conferma la prenotazione non viene salvata e si propone di
-     inviarla su WhatsApp, così nessun cliente vero va perso.
+     richiesta va a /api/prenota.
+   - DIMOSTRATIVA: altrimenti posti finti ma realistici; alla fine
+     la richiesta non viene salvata e si propone di inviarla su
+     WhatsApp, così nessun cliente vero va perso.
    ============================================================= */
 (function () {
   'use strict';
@@ -16,8 +21,9 @@
   if (!B || !document.querySelector('[data-modulo]')) return;
   var C = B.cfg, $ = B.$, $$ = B.$$;
 
-  var stato = { pacchetto: null, data: null, liberi: {}, reale: false, sceltoGiornoUnaVolta: false };
+  var stato = { pacchetto: null, data: null, fascia: null, liberi: {}, fasce: {}, reale: false, sceltoGiornoUnaVolta: false };
   var modulo = $('[data-modulo]');
+  var FASCE = (C.fasce || []).map(function (f) { return f.id; });
 
   /* ---------- utilità date ---------- */
   function oggi() { var d = new Date(); d.setHours(0, 0, 0, 0); return d; }
@@ -27,6 +33,9 @@
   function dataLunga(s) { return B.data(B.daIso(s), 'lungo'); }
   function fineMese(s) { return aggiungiGiorni(aggiungiMesi(B.daIso(s), 1), -1); }
 
+  /* la fascia si sceglie solo per la formula "Giornata" */
+  function conFascia(p) { return !!p && p.id === 'giornata'; }
+  function nomeFascia(id) { var f = B.fascia(id); return f ? f.nome : ''; }
   function etichettaGiorno(p) {
     if (!p) return 'Giorno';
     if (p.id === 'carnet') return 'Primo ingresso';
@@ -54,15 +63,19 @@
     var p = B.pacchetto(id);
     if (!p) return;
     stato.pacchetto = p;
+    /* carnet e mensili valgono per la giornata intera */
+    stato.fascia = conFascia(p) ? (stato.fasciaScelta || null) : 'giornata';
     var r = $('input[value="' + id + '"]', opzioni);
     if (r) r.checked = true;
-    $('[data-etichetta-data]').textContent = p.etichettaData;
+    $('[data-etichetta-data]').textContent = conFascia(p) ? 'Scegli giorno e fascia' : p.etichettaData;
     /* il passo 1 si chiude in una riga: meno scroll, focus sul giorno */
     opzioni.hidden = true;
     $('[data-sintesi="1"]').hidden = false;
     $('[data-sintesi-testo]').textContent = p.nome + ' · ' + B.euro(p.prezzo);
     $('[data-blocco="1"]').classList.add('completo');
     $('[data-blocco="1"]').setAttribute('data-piano', id);
+    disegnaGiorni();
+    disegnaFasce();
     aggiornaInfoGiorno();
     aggiorna();
     if (scorri) vaiA(2);
@@ -84,22 +97,43 @@
   });
 
   /* =============================================================
-     PASSO 2 — giorno
+     PASSO 2 — giorno e fascia
      ============================================================= */
   var griglia = $('[data-giorni]');
   var inizio = oggi();
   /* giorni mostrati: almeno quelli prenotabili, fino a 5 settimane intere */
   var giorni = Math.max(C.giorniPrenotabili || 28, 35 - (inizio.getDay() + 6) % 7);
 
+  /* stato di una fascia in un giorno: liberi = posti, nd = non disponibile */
+  function statoFascia(s, id) {
+    var f = stato.fasce[s];
+    if (!f) return { liberi: null, nd: false };
+    return { liberi: f[id] || 0, nd: (f.nd || []).indexOf(id) !== -1 };
+  }
+  /* posti liberi del giorno per la formula scelta */
+  function liberiGiorno(s) {
+    var p = stato.pacchetto, f = stato.fasce[s];
+    if (p && !conFascia(p) && p.id !== 'carnet') return stato.liberi[s];           /* mensili: tutto il periodo */
+    if (!f) return stato.liberi[s];
+    return p && p.id === 'carnet' ? f.giornata : Math.max(f.mattina || 0, f.pomeriggio || 0, f.giornata || 0);
+  }
+  /* tutte le fasce utili a questa formula sono "non disponibili"? */
+  function giornoNonDisponibile(s) {
+    var p = stato.pacchetto, f = stato.fasce[s];
+    if (!f) return false;
+    var nd = f.nd || [];
+    if (p && !conFascia(p)) return nd.indexOf('giornata') !== -1;
+    return FASCE.every(function (id) { return nd.indexOf(id) !== -1; });
+  }
+
   function statoGiorno(d) {
-    var s = B.iso(d), liberi = stato.liberi[s];
-    if (!B.aperto(d)) {
-      var festivo = d.getDay() !== 0 && d.getDay() !== 6;
-      return { attivo: false, classe: 'stato-chiuso', testo: festivo ? 'Festivo' : 'Chiuso', aria: festivo ? 'festivo, chiuso' : 'chiuso' };
+    var s = B.iso(d), liberi = liberiGiorno(s);
+    /* chiuso dalla titolare o non più richiedibile per oggi: sempre la stessa etichetta */
+    if (!B.aperto(d) || giornoNonDisponibile(s) || (s === B.iso(oggi()) && !B.oggiPrenotabile())) {
+      return { attivo: false, classe: 'stato-chiuso', testo: 'Non disponibile', aria: 'non disponibile' };
     }
-    if (s === B.iso(oggi()) && !B.oggiPrenotabile()) return { attivo: false, classe: 'stato-chiuso', testo: 'Chiuso', aria: 'non più prenotabile oggi' };
     if (liberi == null) return { attivo: true, classe: 'stato-chiuso', testo: '…', aria: 'disponibilità in caricamento' };
-    if (liberi <= 0) return { attivo: false, classe: 'stato-pieno', testo: 'Pieno', aria: 'completo' };
+    if (liberi <= 0) return { attivo: false, classe: 'stato-pieno', testo: 'Completo', aria: 'completo' };
     if (liberi <= 2) return { attivo: true, classe: 'stato-pochi', testo: liberi === 1 ? 'Ultimo posto' : 'Ultimi ' + liberi, aria: liberi === 1 ? 'un solo posto libero' : liberi + ' posti liberi, ultimi' };
     return { attivo: true, classe: 'stato-ok', testo: liberi + ' liberi', aria: liberi + ' posti liberi' };
   }
@@ -118,7 +152,7 @@
         NOMI_GIORNI.map(function (g) { return '<span class="giorno-intestazione" aria-hidden="true">' + g + '</span>'; }).join('');
       for (var v = 0; v < (m.data.getDay() + 6) % 7; v++) out += '<span class="giorno-vuoto" aria-hidden="true"></span>';
       m.giorni.forEach(function (g) {
-        var d = g.d, s = B.iso(d), st = statoGiorno(d), liberi = stato.liberi[s], scelto = stato.data === s, pallini = '';
+        var d = g.d, s = B.iso(d), st = statoGiorno(d), liberi = liberiGiorno(s), scelto = stato.data === s, pallini = '';
         if (st.classe === 'stato-ok' || st.classe === 'stato-pochi' || st.classe === 'stato-pieno') {
           for (var n = 1; n <= tot; n++) pallini += '<i' + (liberi != null && n <= liberi ? ' class="l"' : '') + '></i>';
         }
@@ -136,12 +170,48 @@
     griglia.innerHTML = html;
   }
 
+  /* ---------- le tre fasce del giorno scelto ---------- */
+  var zonaFasce = $('[data-fasce-zona]'), boxFasce = $('[data-fasce]');
+  function disegnaFasce() {
+    var mostra = conFascia(stato.pacchetto) && !!stato.data;
+    zonaFasce.hidden = !mostra;
+    if (!mostra) return;
+    /* la fascia scelta non è più disponibile in questo giorno: si riparte */
+    if (stato.fascia) { var sc = statoFascia(stato.data, stato.fascia); if (sc.nd || sc.liberi === 0) { stato.fascia = null; stato.fasciaScelta = null; } }
+    boxFasce.innerHTML = (C.fasce || []).map(function (f) {
+      var st = statoFascia(stato.data, f.id), scelta = stato.fascia === f.id;
+      var ok = !st.nd && st.liberi !== 0;
+      var nota = st.nd ? 'Non disponibile' : st.liberi === 0 ? 'Completo' : B.euro(B.prezzoFascia(f.id));
+      return '<button type="button" class="fascia' + (scelta ? ' scelta' : '') + (ok ? '' : ' fascia-no') + '" data-fascia="' + f.id + '"' +
+        (ok ? '' : ' disabled') + ' role="radio" aria-checked="' + scelta + '">' +
+        '<span class="fascia-nome">' + f.nome + '</span><span class="fascia-nota">' + nota + '</span></button>';
+    }).join('');
+  }
+  boxFasce.addEventListener('click', function (e) {
+    var b = e.target.closest('.fascia');
+    if (!b || b.disabled) return;
+    stato.fascia = stato.fasciaScelta = b.getAttribute('data-fascia');
+    $('[data-errore-fascia]').style.display = 'none';
+    disegnaFasce();
+    aggiornaSintesiGiorno();
+    aggiornaInfoGiorno();
+    aggiorna();
+    controllaVantaggi();
+    if (!stato.sceltaFasciaUnaVolta) { stato.sceltaFasciaUnaVolta = true; vaiA(3); }
+  });
+
   /* il giorno scelto chiude il calendario in una riga, "Cambia giorno" lo riapre */
+  function aggiornaSintesiGiorno() {
+    if (!stato.data) return;
+    $('[data-sintesi-giorno]').textContent = maiuscola(B.data(B.daIso(stato.data), 'lungo')) +
+      (conFascia(stato.pacchetto) && stato.fascia ? ' · ' + nomeFascia(stato.fascia) : '');
+    $('[data-blocco="2"]').classList.toggle('completo', !!stato.data && !!stato.fascia);
+  }
   function chiudiCalendario() {
     if (!stato.data) return;
     $('[data-blocco="2"]').classList.add('chiuso');
     $('[data-sintesi="2"]').hidden = false;
-    $('[data-sintesi-giorno]').textContent = maiuscola(B.data(B.daIso(stato.data), 'lungo'));
+    aggiornaSintesiGiorno();
   }
   function apriCalendario() {
     $('[data-blocco="2"]').classList.remove('chiuso');
@@ -157,7 +227,7 @@
       b.setAttribute('aria-checked', si);
     });
     $('[data-errore-giorno]').style.display = 'none';
-    $('[data-blocco="2"]').classList.add('completo');
+    disegnaFasce();
     aggiornaInfoGiorno();
     aggiorna();
     chiudiCalendario();
@@ -190,13 +260,13 @@
     if (!s) { info.innerHTML = ''; return; }
     var d = B.daIso(s), testo;
     if (!p || p.id === 'giornata') {
-      testo = '<strong>' + maiuscola(B.data(d, 'lungo')) + '</strong>, dalle ' + C.orari.apertura + ' alle ' + C.orari.chiusura + '.';
+      testo = '<strong>' + maiuscola(B.data(d, 'lungo')) + (stato.fascia ? ', ' + nomeFascia(stato.fascia).toLowerCase() : '') + '</strong>. Ti confermiamo la disponibilità in breve tempo.';
     } else if (p.id === 'carnet') {
       var resto = C.carnet.ingressi - 1;
       testo = 'Primo ingresso <strong>' + B.data(d, 'lungo') + '</strong>. Gli altri ' + resto +
-        ' li prenoti quando vuoi, entro il ' + aggiungiMesi(d, C.carnet.validitaMesi).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) + '.';
+        ' li richiedi quando vuoi, entro il ' + aggiungiMesi(d, C.carnet.validitaMesi).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) + '.';
     } else {
-      testo = 'Dal <strong>' + B.data(d, 'lungo') + '</strong> al <strong>' + B.data(fineMese(s), 'lungo') + '</strong>, tutti i giorni di apertura.';
+      testo = 'Dal <strong>' + B.data(d, 'lungo') + '</strong> al <strong>' + B.data(fineMese(s), 'lungo') + '</strong>, tutti i giorni su prenotazione.';
     }
     info.innerHTML = testo;
   }
@@ -204,11 +274,13 @@
   /* =============================================================
      Riepilogo, indicatore, barra mobile
      ============================================================= */
-  /* con giornata omaggio o carnet attivo la giornata non si paga */
+  /* con giornata omaggio o carnet attivo la giornata intera non si paga */
   function prezzoAttuale() {
     var p = stato.pacchetto, v = stato.vantaggi;
     if (!p) return null;
-    if (p.id === 'giornata' && v) {
+    if (p.id !== 'giornata') return p.prezzo;
+    if (stato.fascia && stato.fascia !== 'giornata') return B.prezzoFascia(stato.fascia);
+    if (v && stato.fascia === 'giornata') {
       var omaggio = $('#usa_omaggio');
       if (v.omaggi > 0 && omaggio && omaggio.checked) return 0;
       if (v.carnet) return 0;
@@ -216,15 +288,17 @@
     return p.prezzo;
   }
   function aggiorna() {
-    var p = stato.pacchetto, s = stato.data, prezzo = prezzoAttuale();
+    var p = stato.pacchetto, s = stato.data, prezzo = prezzoAttuale(), serveFascia = conFascia(p);
     $('[data-r-formula]').textContent = p ? p.nome : '—';
     $('[data-r-etichetta-giorno]').textContent = etichettaGiorno(p);
     $('[data-r-giorno]').textContent = s ? (p && p.tipoData === 'inizio' && p.id !== 'carnet'
       ? B.data(B.daIso(s), 'breve') + ' → ' + B.data(fineMese(s), 'breve')
       : maiuscola(B.data(B.daIso(s), 'lungo'))) : 'da scegliere';
+    $('[data-r-fascia-riga]').hidden = !serveFascia;
+    $('[data-r-fascia]').textContent = stato.fascia && serveFascia ? nomeFascia(stato.fascia) : 'da scegliere';
     $('[data-r-totale]').textContent = p ? B.euro(prezzo) : '—';
 
-    var passo = !p ? 1 : !s ? 2 : 3;
+    var passo = !p ? 1 : (!s || !stato.fascia) ? 2 : 3;
     $$('[data-indicatore]').forEach(function (li) {
       var n = +li.getAttribute('data-indicatore');
       li.classList.toggle('fatto', n < passo);
@@ -232,13 +306,14 @@
       if (n === passo) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
     });
 
-    $('[data-b-totale]').textContent = p ? B.euro(prezzo) : 'da ' + B.euro(Math.min.apply(null, C.listino.map(function (x) { return x.prezzo; })));
-    $('[data-b-testo]').textContent = !p ? 'Scegli la formula' : p.nome + (s ? ' · ' + B.data(B.daIso(s), 'breve') : '');
-    $('[data-b-avanti]').textContent = !p ? 'Inizia' : !s ? 'Scegli il giorno' : 'Conferma';
+    $('[data-b-totale]').textContent = p ? B.euro(prezzo) : 'da ' + B.euro(Math.min(C.prezzoMezzaGiornata, Math.min.apply(null, C.listino.map(function (x) { return x.prezzo; }))));
+    $('[data-b-testo]').textContent = !p ? 'Scegli la formula' : p.nome + (s ? ' · ' + B.data(B.daIso(s), 'breve') : '') +
+      (s && serveFascia && stato.fascia ? ' · ' + nomeFascia(stato.fascia).toLowerCase() : '');
+    $('[data-b-avanti]').textContent = !p ? 'Inizia' : !s ? 'Scegli il giorno' : !stato.fascia ? 'Scegli la fascia' : 'Richiedi';
   }
   $('[data-b-avanti]').addEventListener('click', function () {
     if (!stato.pacchetto) return vaiA(1);
-    if (!stato.data) return vaiA(2);
+    if (!stato.data || !stato.fascia) return vaiA(2);
     if (modulo.requestSubmit) modulo.requestSubmit(); else $('[data-invia]').click();
   });
 
@@ -280,13 +355,14 @@
   });
 
   /* Giornate omaggio e carnet: si chiedono al server quando email e
-     telefono sono validi. Il server risponde solo se combaciano. */
+     telefono sono validi. Il server risponde solo se combaciano.
+     Valgono per la giornata intera. */
   var boxVantaggi = $('[data-vantaggi]'), ultimaChiave = '';
   function controllaVantaggi() {
     if (!boxVantaggi) return;
     var f = modulo.elements, p = stato.pacchetto;
-    var ok = stato.reale && p && p.id === 'giornata' && REGOLE.email(f.email.value) && REGOLE.telefono(f.telefono.value);
-    if (!ok) { stato.vantaggi = null; boxVantaggi.hidden = true; aggiorna(); return; }
+    var ok = stato.reale && p && p.id === 'giornata' && stato.fascia === 'giornata' && REGOLE.email(f.email.value) && REGOLE.telefono(f.telefono.value);
+    if (!ok) { stato.vantaggi = null; ultimaChiave = ''; boxVantaggi.hidden = true; aggiorna(); return; }
     var chiave = f.email.value.trim().toLowerCase() + '|' + f.telefono.value + '|' + (stato.data || '');
     if (chiave === ultimaChiave) return;
     ultimaChiave = chiave;
@@ -314,7 +390,8 @@
     e.preventDefault();
     erroreGenerale.classList.remove('visibile');
     if (!stato.pacchetto) { vaiA(1); return; }
-    if (!stato.data) { $('[data-errore-giorno]').style.display = 'block'; vaiA(2); return; }
+    if (!stato.data) { apriCalendario(); $('[data-errore-giorno]').style.display = 'block'; vaiA(2); return; }
+    if (!stato.fascia) { $('[data-errore-fascia]').style.display = 'block'; vaiA(2); return; }
     var primoErrore = null;
     Object.keys(REGOLE).forEach(function (n) { if (!controlla(n) && !primoErrore) primoErrore = modulo.elements[n]; });
     if (primoErrore) { primoErrore.focus(); return; }
@@ -335,6 +412,7 @@
     return {
       pacchetto: stato.pacchetto.id,
       data: stato.data,
+      fascia: stato.fascia,
       nome: f.nome.value.trim(),
       cognome: f.cognome.value.trim(),
       email: f.email.value.trim().toLowerCase(),
@@ -367,25 +445,26 @@
       bottone.disabled = false;
       bottone.innerHTML = testoBottone;
       var wa = '<a href="' + B.linkWa('giorno', { giorno: dataLunga(dati.data) }) + '" target="_blank" rel="noopener">scrivici su WhatsApp</a>';
-      if (err && err.stato === 409 && err.dati && err.dati.errore === 'POSTO_ESAURITO') {
-        /* il posto è stato preso nel frattempo: si ricaricano i posti */
-        mostraErrore('Questo giorno si è appena riempito. Scegline un altro qui sopra oppure ' + wa + '.');
-        stato.data = null;
+      var codice = err && err.dati && err.dati.errore;
+      if (err && (err.stato === 409 && codice === 'POSTO_ESAURITO' || codice === 'DATA')) {
+        /* il posto è stato preso nel frattempo, o quel momento non è più disponibile: si ricaricano i posti */
+        mostraErrore((codice === 'DATA' ? 'In quel momento lo spazio non è disponibile.' : 'Quel momento si è appena riempito.') +
+          ' Scegline un altro qui sopra oppure ' + wa + '.');
+        stato.data = null; stato.fascia = conFascia(stato.pacchetto) ? null : 'giornata'; stato.fasciaScelta = null;
+        apriCalendario(); disegnaFasce(); aggiorna();
         caricaDisponibilita().then(function () { vaiA(2); });
       } else {
         mostraErrore((err && err.dati && err.dati.messaggio) ||
-          'Non siamo riusciti a registrare la prenotazione. Riprova tra un momento oppure ' + wa + ': ti rispondiamo in giornata.');
+          'Non siamo riusciti a registrare la richiesta. Riprova tra un momento oppure ' + wa + ': ti rispondiamo in giornata.');
       }
     });
   }
 
   /* =============================================================
-     Conferma
+     Richiesta ricevuta
      ============================================================= */
-  var ultima = null;
   function mostraSuccesso(dati, r) {
     var p = stato.pacchetto, demo = !!r.demo || !stato.reale;
-    ultima = { codice: r.codice, dati: dati, pacchetto: p };
 
     $('[data-modulo-zona]').hidden = true;
     $('[data-barra-flusso]').hidden = true;
@@ -398,17 +477,19 @@
     $('[data-s-giorno]').textContent = p.tipoData === 'inizio' && p.id !== 'carnet'
       ? B.data(B.daIso(dati.data), 'breve') + ' → ' + B.data(fineMese(dati.data), 'breve')
       : maiuscola(dataLunga(dati.data));
-    var prezzoFinale = r.prezzo != null ? r.prezzo / 100 : p.prezzo;
+    $('[data-s-fascia-riga]').hidden = !conFascia(p);
+    $('[data-s-fascia]').textContent = nomeFascia(dati.fascia);
+    var prezzoFinale = r.prezzo != null ? r.prezzo / 100 : prezzoAttuale();
     $('[data-s-totale]').textContent = prezzoFinale === 0 ? 'Niente: già pagato' : B.euro(prezzoFinale);
 
     if (demo) {
-      $('[data-successo-titolo]').textContent = 'Prenotazione pronta, ' + dati.nome + '!';
+      $('[data-successo-titolo]').textContent = 'Richiesta pronta, ' + dati.nome + '.';
       $('[data-successo-sotto]').textContent = 'Manca solo l’invio: un tocco e il messaggio parte già compilato.';
       $('[data-successo-demo]').hidden = false;
       var riepilogo = [
         'Codice: ' + r.codice,
-        'Formula: ' + p.nome + ' (' + B.euro(p.prezzo) + ')',
-        etichettaGiorno(p) + ': ' + $('[data-s-giorno]').textContent,
+        'Formula: ' + p.nome + ' (' + B.euro(prezzoFinale) + ')',
+        etichettaGiorno(p) + ': ' + $('[data-s-giorno]').textContent + (conFascia(p) ? ', ' + nomeFascia(dati.fascia).toLowerCase() : ''),
         'Nome: ' + dati.nome + ' ' + dati.cognome,
         'Cellulare: ' + dati.telefono,
         'Email: ' + dati.email
@@ -419,14 +500,15 @@
       $('[data-wa-conferma]').target = '_blank';
       $('[data-wa-conferma]').rel = 'noopener';
     } else {
-      $('[data-successo-titolo]').textContent = 'Prenotazione confermata, ' + dati.nome + '!';
-      var sotto = r.emailInviata ? 'Ti abbiamo mandato il riepilogo a ' + dati.email + '. Ti aspettiamo!'
-        : 'Salva il codice qui sotto: ti serve per gestire la prenotazione. Ti aspettiamo!';
-      if (r.omaggio) sotto += ' Questa giornata è in omaggio con la tua Bagnarino Card.';
-      else if (r.carnet) sotto += ' Ti restano ' + r.carnet.residui + ' ingressi nel carnet.';
-      $('[data-successo-sotto]').textContent = sotto;
+      /* il testo della schermata è già nella pagina: qui si aggiunge solo
+         ciò che dipende dalla richiesta */
+      var extra = '';
+      if (r.omaggio) extra = 'Questa giornata è in omaggio con la tua Bagnarino Card.';
+      else if (r.carnet && p.id === 'giornata') extra = 'Con la conferma ti resteranno ' + r.carnet.residui + ' ingressi nel carnet.';
+      var nota = $('[data-successo-extra]');
+      nota.textContent = extra; nota.hidden = !extra;
       var g = $('[data-gestisci]');
-      /* il telefono ricorda la prenotazione: la scheda "Le mie" la mostra subito,
+      /* il telefono ricorda la richiesta: la scheda "Le mie" la mostra subito,
          senza mettere l'email nell'indirizzo (che finirebbe nelle statistiche) */
       try { localStorage.setItem('bgn-ultima', JSON.stringify({ codice: r.codice, email: dati.email })); } catch (x) {}
       g.href = '/prenotazione';
@@ -436,42 +518,13 @@
     dom.href = B.linkWa('domanda', { codice: r.codice });
     dom.target = '_blank'; dom.rel = 'noopener';
 
-    /* in modalità dimostrativa non è un acquisto vero: evento separato,
-       così le campagne non imparano da prenotazioni mai salvate */
-    if (demo) B.traccia('prenotazione_demo', { value: p.prezzo, item_id: p.id });
+    /* in modalità dimostrativa non è una richiesta vera: evento separato,
+       così le campagne non imparano da richieste mai salvate */
+    if (demo) B.traccia('prenotazione_demo', { value: prezzoFinale, item_id: p.id });
     else B.traccia('purchase', { value: prezzoFinale, currency: 'EUR', transaction_id: r.codice, item_id: p.id, event_id: dati.event_id });
     window.scrollTo(0, 0);
     box.focus({ preventScroll: true });
   }
-
-  /* file .ics: si apre nel calendario del telefono */
-  $('[data-ics]').addEventListener('click', function () {
-    if (!ultima) return;
-    var d = ultima.dati.data.replace(/-/g, ''), p = ultima.pacchetto;
-    function ora(hhmm) { var x = hhmm.split(':'); return (x[0].length < 2 ? '0' : '') + x[0] + x[1] + '00'; }
-    function esc(t) { return String(t).replace(/([,;\\])/g, '\\$1').replace(/\n/g, '\\n'); }
-    var luogo = C.azienda.indirizzo + ', ' + C.azienda.cap + ' ' + C.azienda.citta;
-    var descr = 'Codice prenotazione ' + ultima.codice + '\n' + p.nome + ' – ' + B.euro(p.prezzo) + ', da pagare in sede.\n' +
-      'Domande? WhatsApp ' + C.contatti.cellulareVisibile;
-    var ics = [
-      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Bagnarino Coworking//Prenotazioni//IT', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      'UID:' + ultima.codice + '@bagnarino-coworking',
-      'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''),
-      'DTSTART:' + d + 'T' + ora(C.orari.apertura),
-      'DTEND:' + d + 'T' + ora(C.orari.chiusura),
-      'SUMMARY:' + esc('Coworking Bagnarino – ' + p.nome),
-      'LOCATION:' + esc(luogo),
-      'DESCRIPTION:' + esc(descr),
-      'BEGIN:VALARM', 'TRIGGER:-PT1H', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc('Coworking Bagnarino tra un’ora'), 'END:VALARM',
-      'END:VEVENT', 'END:VCALENDAR'
-    ].join('\r\n');
-    var url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-    var a = document.createElement('a');
-    a.href = url; a.download = 'bagnarino-coworking-' + ultima.codice + '.ics';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
-  });
 
   /* =============================================================
      Avvio
@@ -480,14 +533,19 @@
     return B.disponibilita(inizio, giorni, stato.pacchetto && stato.pacchetto.id).then(function (r) {
       stato.reale = r.reale;
       stato.liberi = r.giorni;
+      stato.fasce = r.fasce || {};
       /* il giorno scelto non è più disponibile con questa formula */
-      if (stato.data && !(r.giorni[stato.data] > 0)) {
+      if (stato.data && !statoGiorno(B.daIso(stato.data)).attivo) {
         stato.data = null; apriCalendario();
+        if (conFascia(stato.pacchetto)) { stato.fascia = null; stato.fasciaScelta = null; }
         $('[data-blocco="2"]').classList.remove('completo');
-        aggiornaInfoGiorno(); aggiorna();
       }
       $('[data-avviso-demo]').hidden = r.reale;
       disegnaGiorni();
+      disegnaFasce();
+      aggiornaSintesiGiorno();
+      aggiornaInfoGiorno();
+      aggiorna();
       return r;
     });
   }
@@ -500,9 +558,12 @@
 
   caricaDisponibilita().then(function () {
     var dq = q.get('data');
-    /* arrivo dalla home con il giorno già scelto: si va dritti ai dati */
+    /* arrivo dalla home con il giorno già scelto: si va dritti alla fascia */
     if (dq && /^\d{4}-\d{2}-\d{2}$/.test(dq) && scegliGiorno(dq, false) && stato.pacchetto) {
       stato.sceltoGiornoUnaVolta = true;
+      setTimeout(function () { vaiA(2); }, 150);
+    } else if (location.hash === '#giorno' && stato.pacchetto) {
+      /* arrivo dal link nell'email "scegli un altro momento": dritti al calendario */
       setTimeout(function () { vaiA(2); }, 150);
     }
   });

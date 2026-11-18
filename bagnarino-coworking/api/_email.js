@@ -3,6 +3,10 @@
    Senza chiave o mittente non invia nulla e non genera errori:
    la prenotazione viene salvata lo stesso.
    Variabili:
+   - NOTIFICATION_EMAIL: l'indirizzo della titolare. È l'UNICO punto
+     in cui è scritto: lì arrivano nuove richieste, promemoria,
+     annullamenti, riepiloghi e report, ed è anche l'indirizzo a cui
+     risponde il cliente (reply-to) e quello dell'accesso all'app.
    - RESEND_API_KEY  → usa Resend (gratis fino a 3.000 email/mese)
    - SENDGRID_API_KEY → in alternativa usa SendGrid
    - EMAIL_FROM: indirizzo mittente su un dominio verificato
@@ -39,13 +43,26 @@ function corpoSendgrid({ to, subject, html, testo, allegati, rispondiA }, mitten
   return m;
 }
 
+/* l'indirizzo della titolare: si legge solo da qui */
+function emailTitolare() { return pulisci(process.env.NOTIFICATION_EMAIL).toLowerCase(); }
+
+/* per le prove: invece di spedire, consegna l'email a una funzione */
+let trasporto = null;
+function impostaTrasporto(f) { trasporto = f || null; }
+
 async function inviaEmail(email) {
+  if (!email || !email.to || /\.invalid$/.test(email.to)) return { inviata: false };
+  /* se il cliente risponde a un'email del coworking, scrive alla titolare */
+  const titolare = emailTitolare();
+  if (!email.rispondiA && titolare && String(email.to).toLowerCase() !== titolare) email = Object.assign({}, email, { rispondiA: titolare });
+  if (trasporto) { await trasporto(email); return { inviata: true }; }
+
   const resend = (process.env.RESEND_API_KEY || '').replace(/\s+/g, '');
   const sendgrid = (process.env.SENDGRID_API_KEY || '').replace(/\s+/g, '');
   const mittente = pulisci(process.env.EMAIL_FROM || process.env.SENDGRID_FROM);
   const nome = pulisci(process.env.EMAIL_FROM_NOME || process.env.SENDGRID_FROM_NOME) || 'Bagnarino Coworking';
   const chiave = resend || sendgrid;
-  if (!chiave || !mittente || !email.to || /\.invalid$/.test(email.to)) return { inviata: false };
+  if (!chiave || !mittente) return { inviata: false };
 
   const servizio = resend ? 'Resend' : 'SendGrid';
   const url = resend ? 'https://api.resend.com/emails' : 'https://api.sendgrid.com/v3/mail/send';
@@ -66,4 +83,4 @@ async function inviaEmail(email) {
     return { inviata: false };
   }
 }
-module.exports = { inviaEmail };
+module.exports = { inviaEmail, emailTitolare, impostaTrasporto };

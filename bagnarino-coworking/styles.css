@@ -7,7 +7,7 @@
    - Tre caratteri, tutti in fonts/ (nessun servizio esterno):
      Fraunces per titoli e numeri grandi, Hanken Grotesk per testo e
      interfaccia (la grotesk della grafica Olivetti), IBM Plex Mono
-     per etichette, orari e codici (la macchina per scrivere).
+     per etichette e codici (la macchina per scrivere).
    - Filetti sottili al posto dei bordi delle card, angoli quasi vivi,
      niente ombre 3D, niente pill, niente gradienti di sfondo.
    - Contrasti AA: su carta il testo ocra è sempre --ocra-testo.
@@ -18,7 +18,7 @@
 @font-face { font-family: 'Hanken Grotesk'; src: url('/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Mono'; src: url('/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Mono'; src: url('/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
-/* la macchina da scrivere del negozio: solo per i fogli battuti a macchina e il cartellino dell'orario */
+/* la macchina da scrivere del negozio: solo per i fogli battuti a macchina */
 @font-face { font-family: 'Courier Prime'; src: url('/fonts/courier-prime-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Courier Prime'; src: url('/fonts/courier-prime-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
 
@@ -138,7 +138,7 @@ strong { font-weight: 600; }
   font-family: var(--f-display); font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums;
   font-variation-settings: 'opsz' 120;
 }
-.mono, .apertura-fatti dt, .disp-live, .disp-vetrina, .disp-num, .disp-legenda, .tappa-quando, .prezzo-unita, .prezzo-valuta-testo, .giornata time, .piede-titolo, .tessera-num, .tessera-piede, .premi-n, .indicatore li, .codice span, .riepilogo dt, .giorno-sett, .giorno-mese, .foto-cornice figcaption, .apertura-didascalia, .dove-orari, .piede-legale {
+.mono, .apertura-fatti dt, .disp-live, .disp-vetrina, .disp-num, .disp-legenda, .tappa-quando, .prezzo-unita, .prezzo-valuta-testo, .giornata time, .piede-titolo, .tessera-num, .tessera-piede, .premi-n, .indicatore li, .codice span, .riepilogo dt, .giorno-sett, .giorno-mese, .foto-cornice figcaption, .apertura-didascalia, .dove-apertura, .piede-legale {
   font-family: var(--f-mono); font-weight: 400; letter-spacing: .04em;
 }
 
@@ -277,7 +277,9 @@ strong { font-weight: 600; }
 .apertura-fatti > div { display: flex; flex-direction: column-reverse; gap: 4px; }
 .apertura-fatti dt { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chiaro-70); }
 .apertura-fatti dd { margin: 0; font-size: 1.5rem; line-height: 1; color: var(--avorio); }
-.apertura-orari { font-family: var(--f-mono) !important; font-size: .9rem !important; letter-spacing: .04em; padding-top: .45rem; }
+.apertura-quando { font-family: var(--f-mono) !important; font-size: .9rem !important; line-height: 1.35 !important; letter-spacing: .04em; padding-top: .3rem; }
+/* quattro dati su telefono: l'apertura sta su una riga sua, così non si spezza */
+@media (max-width: 699px) { .apertura-fatti .fatto-quando { grid-column: 1 / -1; margin-top: 16px; } }
 /* il bollo "dal 1983" che gira piano: dettaglio fisico, non decorazione */
 .bollo { position: absolute; right: var(--margine); top: calc(var(--testata) + 18px); width: 78px; height: 78px; border-radius: 50%; background: var(--avorio); color: var(--inchiostro); display: grid; place-items: center; }
 .bollo svg { width: 100%; height: 100%; animation: gira 24s linear infinite; }
@@ -475,10 +477,11 @@ strong { font-weight: 600; }
 .dove-vicino::first-letter { text-transform: uppercase; }
 .dove-indirizzo { font-family: var(--f-display); font-size: 1.5rem; line-height: 1.25; margin-bottom: 14px; }
 .dove-indirizzo strong { font-weight: 400; }
-.dove-orari { display: flex; gap: 10px; align-items: flex-start; font-size: .82rem; letter-spacing: .04em; color: var(--inchiostro-morbido); }
-.dove-orari .ico { margin-top: 3px; width: 16px; height: 16px; }
+.dove-apertura { display: flex; gap: 10px; align-items: flex-start; font-size: .82rem; letter-spacing: .04em; color: var(--inchiostro-morbido); }
+.dove-apertura .ico { margin-top: 3px; width: 16px; height: 16px; }
 .dove-cta { display: flex; gap: 10px; flex-wrap: wrap; margin: 1.4rem 0 1.2rem; }
 .dove-cta .btn { flex: 1 1 140px; }
+.dove-cta .dove-richiedi { flex-basis: 100%; }
 .dove-visita { color: var(--inchiostro-morbido); margin: 0; }
 .dove-visita a, .faq-altro a { font-weight: 600; color: var(--inchiostro); }
 .mappa { margin: 0; }
@@ -595,8 +598,8 @@ strong { font-weight: 600; }
 .menu-azioni { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .menu-azioni .btn { padding: 10px 12px; }
 .menu-azioni .btn:first-child { grid-column: 1 / -1; }
-.menu-orari { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 0; font-size: .92rem; color: var(--inchiostro-morbido); }
-.menu-orari .ico { width: 16px; height: 16px; flex-shrink: 0; margin-top: 4px; }
+.menu-apertura { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 0; font-size: .92rem; color: var(--inchiostro-morbido); }
+.menu-apertura .ico { width: 16px; height: 16px; flex-shrink: 0; margin-top: 4px; }
 body.menu-aperto { overflow: hidden; }
 .menu-app.solo-contatti .menu-cta, .menu-app.solo-contatti .menu-voci { display: none; }
 
@@ -927,7 +930,7 @@ body.menu-aperto { overflow: hidden; }
 .dove-sezione { background: var(--inchiostro); color: var(--avorio); border-top: 0; }
 .dove-sezione .titolo-sezione { color: var(--avorio); }
 .dove-sezione .titolo-sezione em { color: var(--ocra-vivo); }
-.dove-vicino, .dove-orari, .dove-visita, .mappa-nota { color: var(--chiaro-70); }
+.dove-vicino, .dove-apertura, .dove-visita, .mappa-nota { color: var(--chiaro-70); }
 .dove-visita a { color: var(--avorio); }
 .mappa-anteprima { border-color: var(--linea-scura); background: var(--notte) repeating-linear-gradient(0deg, transparent 0 31px, var(--linea-scura) 31px 32px), var(--notte) repeating-linear-gradient(90deg, transparent 0 31px, var(--linea-scura) 31px 32px); }
 .mappa-carica { background: var(--avorio); color: var(--inchiostro); }
@@ -1011,7 +1014,7 @@ body.menu-aperto { overflow: hidden; }
 .dove-sezione { background: var(--sabbia-1) radial-gradient(800px 500px at 10% 100%, rgba(201, 151, 59, .10), transparent 65%); color: var(--inchiostro); }
 .dove-sezione .titolo-sezione { color: var(--inchiostro); }
 .dove-sezione .titolo-sezione em { color: var(--ocra-testo); }
-.dove-vicino, .dove-orari, .dove-visita, .mappa-nota { color: var(--inchiostro-morbido); }
+.dove-vicino, .dove-apertura, .dove-visita, .mappa-nota { color: var(--inchiostro-morbido); }
 .dove-visita a { color: var(--inchiostro); }
 .mappa { position: relative; background: var(--avorio); border-radius: 14px; padding: 12px; box-shadow: 0 26px 48px -28px rgba(17, 25, 34, .5); }
 .mappa-qui { position: absolute; z-index: 3; left: 24px; bottom: 24px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: var(--inchiostro); color: var(--avorio); font-family: var(--f-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; box-shadow: 0 10px 24px -10px rgba(17, 25, 34, .7); pointer-events: none; }
@@ -1162,7 +1165,7 @@ body.menu-aperto { overflow: hidden; }
 }
 
 /* prenotazione: giorno già scelto → il calendario si chiude in una riga */
-.blocco.chiuso > :not(legend):not(.sintesi-giorno) { display: none !important; }
+.blocco.chiuso > :not(legend):not(.sintesi-giorno):not(.fasce-zona) { display: none !important; }
 .sintesi-giorno { margin-top: 4px; background: var(--avorio) !important; color: var(--inchiostro) !important; box-shadow: 0 0 0 2px var(--ocra) !important; }
 .sintesi-giorno p { display: inline-flex; align-items: center; gap: 10px; }
 .sintesi-giorno .ico { width: 22px; height: 22px; color: var(--ocra-testo); flex-shrink: 0; }
@@ -1275,7 +1278,7 @@ body.menu-aperto { overflow: hidden; }
 @keyframes mc-pianta { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2deg); } }
 
 /* =============================================================
-   02 · IL NEGOZIO: la porta giusta e l'orario appeso
+   02 · IL NEGOZIO: la porta giusta e il cartello appeso
    ============================================================= */
 .neg { display: grid; gap: 40px; }
 .neg-foto { position: relative; margin: 0 calc(var(--margine) * -1); }
@@ -1292,7 +1295,7 @@ body.menu-aperto { overflow: hidden; }
 .neg-lead { margin: 0 0 34px; max-width: 40ch; font-size: 1.12rem; line-height: 1.6; color: var(--inchiostro-morbido); }
 .neg-info { display: grid; gap: 34px; align-items: start; }
 
-/* il cartellino dell'orario, appeso a un chiodo */
+/* il cartello "aperto su prenotazione", appeso a un chiodo */
 .cartellino { position: relative; width: min(100%, 260px); padding-top: 40px; transform-origin: 50% 4px; }
 .cartellino-filo { position: absolute; top: 0; left: 0; width: 100%; height: 46px; overflow: visible; }
 .cartellino-filo path { fill: none; stroke: var(--inchiostro); stroke-width: 1.4; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
@@ -1308,9 +1311,10 @@ body.menu-aperto { overflow: hidden; }
 .cartellino-luce { flex-shrink: 0; width: 11px; height: 11px; border-radius: 50%; background: var(--inchiostro-morbido); }
 .cartellino.aperto .cartellino-luce { background: var(--verde); box-shadow: 0 0 0 4px rgba(30, 138, 76, .16); }
 .cartellino-quando { margin: 0 0 14px; font-size: .9rem; color: var(--inchiostro-morbido); }
-.cartellino-orari { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--linea); }
-.cartellino-orari div { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--linea); font-family: var(--f-macchina); font-size: 1rem; }
-.cartellino-orari dt { font-weight: 700; } .cartellino-orari dd { margin: 0; }
+.cartellino-link { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0 2px; border-top: 1px solid var(--linea);
+  font-family: var(--f-macchina); font-size: .9rem; font-weight: 700; color: var(--inchiostro); text-decoration: none; white-space: nowrap; }
+.cartellino-link .ico { width: 18px; height: 18px; flex-shrink: 0; transition: transform .25s var(--curva); }
+.cartellino-link:hover .ico { transform: translateX(4px); }
 @media (prefers-reduced-motion: no-preference) {
   .cartellino.visto { animation: cartellino-dondola 2.6s cubic-bezier(.3, .6, .4, 1) both; }
   .cartellino:hover { animation: cartellino-dondola 2s cubic-bezier(.3, .6, .4, 1); }
@@ -1538,53 +1542,72 @@ body.menu-aperto { overflow: hidden; }
 }
 
 /* =============================================================
-   04 · UNA GIORNATA: una schermata, l'orologio gira da solo
+   04 · COME FUNZIONA: aperto tutti i giorni, su prenotazione.
+   Tre passaggi in riga (in colonna su telefono), divisi da un
+   filetto: niente numeri grandi, niente card.
    ============================================================= */
-.gg.banda-blu { position: relative; overflow: hidden; padding: 72px 0 80px; border-bottom: 4px solid var(--ocra);
-  background: linear-gradient(180deg, var(--cielo-alto, #24384D) 0%, var(--cielo-basso, var(--inchiostro)) 100%); }
-.gg-cielo { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-.gg-stelle { position: absolute; inset: 0; opacity: var(--stelle, 0);
-  background-image: radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 27% 34%, #fff, transparent), radial-gradient(1.5px 1.5px at 44% 12%, #fff, transparent),
-    radial-gradient(1px 1px at 63% 26%, #fff, transparent), radial-gradient(1.5px 1.5px at 78% 9%, #fff, transparent), radial-gradient(1px 1px at 88% 31%, #fff, transparent),
-    radial-gradient(1px 1px at 35% 7%, #fff, transparent), radial-gradient(1.5px 1.5px at 7% 40%, #fff, transparent), radial-gradient(1px 1px at 92% 52%, #fff, transparent); }
-.gg-griglia { position: relative; z-index: 1; display: grid; gap: 36px; }
-.gg-titolo { margin: 0 0 14px; }
-.gg-sotto { margin: 0 0 24px; max-width: 36ch; font-size: 1.08rem; line-height: 1.55; color: var(--chiaro-70); }
-
-/* l'orologio a rulli */
-.gg-ora { display: flex; align-items: flex-start; margin: 0 0 14px; font-family: var(--f-display); font-weight: 400; font-size: clamp(4.2rem, 22vw, 8.5rem); line-height: 1; letter-spacing: -.02em; color: var(--avorio); font-variant-numeric: lining-nums; }
-.gg-cifra { display: inline-block; width: .62em; height: 1em; overflow: hidden; text-align: center; }
-.gg-rullo { display: flex; flex-direction: column; }
-.gg-rullo span { display: block; height: 1em; }
-.gg-due-punti { width: .3em; text-align: center; color: var(--ocra-vivo); transform: translateY(-.06em); }
-@media (prefers-reduced-motion: no-preference) { .gg-due-punti { animation: gg-lampeggia 1s steps(1) infinite; } }
-@keyframes gg-lampeggia { 50% { opacity: .25; } }
-.gg-barra { margin: 0 0 22px; }
-.gg-binario { position: relative; display: block; height: 3px; border-radius: 2px; background: rgba(250, 246, 238, .16); }
-.gg-pieno { position: absolute; inset: 0; border-radius: 2px; background: linear-gradient(90deg, var(--ocra), var(--ocra-vivo)); transform-origin: left center; transform: scaleX(0); }
-.gg-punto { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; border-radius: 50%; background: var(--ocra-vivo); transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 5px rgba(221, 176, 92, .22), 0 0 20px 3px rgba(221, 176, 92, .55); }
-.gg-tacche { position: relative; display: block; height: 20px; margin-top: 8px; }
-.gg-tacche span { position: absolute; top: 0; transform: translateX(-50%); font-family: var(--f-mono); font-size: .62rem; letter-spacing: .06em; color: var(--chiaro-70); transition: color .3s; }
-.gg-tacche span::before { content: ''; position: absolute; left: 50%; top: -11px; width: 1px; height: 5px; background: currentColor; opacity: .6; }
-.gg-tacche span.passata { color: var(--ocra-vivo); }
-
-/* i momenti della giornata */
-.gg-momenti { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.gg-momento { display: grid; grid-template-columns: 22px auto 1fr; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; border: 1px solid transparent; color: rgba(250, 246, 238, .45); font-size: .95rem; transition: color .35s var(--curva), border-color .35s var(--curva), background-color .35s var(--curva); }
-.gg-momento .ico { width: 20px; height: 20px; stroke-width: 1.9; }
-.gg-quando { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; }
-.gg-momento.acceso { color: var(--avorio); border-color: rgba(221, 176, 92, .35); background: rgba(221, 176, 92, .07); }
-.gg-momento.acceso .ico, .gg-momento.acceso .gg-quando { color: var(--ocra-vivo); }
-@media (hover: hover) { .gg-momento { cursor: default; } .gg-momento:hover { color: var(--avorio); border-color: rgba(250, 246, 238, .25); } }
+.come-sezione.banda-blu { border-bottom: 4px solid var(--ocra); }
+.come-testa { max-width: 780px; }
+.come-titolo { margin: 0 0 18px; }
+.come-testo { margin: 0; font-size: 1.12rem; line-height: 1.65; color: var(--chiaro-70); }
+.come-passi { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--linea-scura); }
+.come-passi li { padding: 20px 0; border-bottom: 1px solid var(--linea-scura); }
+.come-passi h3 { margin: 0 0 6px; font-family: var(--f-display); font-weight: 400; font-style: italic; font-size: 1.45rem; line-height: 1.15; color: var(--ocra-vivo); }
+.come-passi p { margin: 0; font-size: 1.02rem; line-height: 1.5; color: var(--avorio); max-width: 34ch; }
+.come-fondo { margin-top: 36px; display: grid; gap: 18px; justify-items: start; }
+.come-nota { margin: 0; max-width: 60ch; font-size: .9rem; line-height: 1.55; color: var(--chiaro-70); }
 @media (min-width: 900px) {
-  .gg.banda-blu { padding: 96px 0; min-height: min(100vh, 820px); display: flex; align-items: center; }
-  .gg-griglia { width: 100%; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; align-items: center; }
-  .gg-ora { font-size: clamp(6rem, 9.5vw, 9rem); }
-  .gg-momenti { grid-template-columns: 1fr 1fr; gap: 8px 12px; }
-  .gg-momento:last-child { grid-column: 1 / -1; }
+  .come-passi { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 56px; border-bottom: 1px solid var(--linea-scura); }
+  .come-passi li { padding: 28px 32px 30px 0; border-bottom: 0; }
+  .come-passi li + li { padding-left: 32px; border-left: 1px solid var(--linea-scura); }
+  .come-fondo { margin-top: 44px; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 32px; }
 }
-@media (max-width: 899px) and (max-height: 760px) { .gg-ora { font-size: clamp(3.6rem, 18vw, 5.5rem); } .gg-momento { padding: 7px 10px; font-size: .9rem; } }
+
+/* =============================================================
+   Avviso in evidenza (home): lo scrive la titolare dall'app
+   ============================================================= */
+.avviso-home { background: var(--ocra); color: var(--notte); }
+.avviso-home[hidden] { display: none; }
+.avviso-home p { margin: 0 auto; max-width: var(--larghezza); padding: 11px var(--margine); text-align: center; font-size: .98rem; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+
+/* =============================================================
+   Apertura nel piè di pagina: la frase e il pulsante
+   ============================================================= */
+.piede-apertura > span { display: block; }
+.piede-apertura .btn { margin-top: 14px; }
+
+/* =============================================================
+   Richiesta: mattina, pomeriggio o giornata intera
+   ============================================================= */
+.fasce-zona { margin-top: 22px; }
+.fasce-zona[hidden] { display: none; }
+.fasce-titolo { margin: 0 0 10px; font-family: var(--f-display); font-weight: 400; font-size: 1.35rem; line-height: 1.1; color: var(--avorio); }
+.fasce { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.fascia {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px;
+  border-radius: 8px; border: 1px solid transparent; background: #DDF0E2; color: var(--notte); cursor: pointer; text-align: center;
+  font-family: var(--f-testo); line-height: 1.15; -webkit-tap-highlight-color: transparent;
+  transition: transform .2s var(--curva), background-color .2s, box-shadow .2s;
+}
+.fascia-nome { font-size: 1rem; font-weight: 600; }
+.fascia-nota { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .02em; color: #166A3A; }
+.fascia:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 18px -8px rgba(0, 0, 0, .6); }
+.fascia.scelta { background: var(--ocra); border-color: var(--avorio); box-shadow: 0 12px 24px -8px rgba(0, 0, 0, .65); }
+.fascia.scelta .fascia-nota { color: var(--notte); }
+.fascia.fascia-no { background: transparent; border: 1px dashed rgba(250, 246, 238, .3); color: rgba(250, 246, 238, .55); cursor: not-allowed; }
+.fascia.fascia-no .fascia-nota { color: rgba(250, 246, 238, .7); }
+.fascia:focus-visible { outline: 3px solid var(--avorio); outline-offset: 2px; }
+.pagina-prenota .blocco[data-blocco="2"] .fasce-zona .campo-errore { margin-top: 10px; }
+
+/* richiesta ricevuta: in attesa di conferma, non ancora confermata */
+.pagina-prenota .successo-attesa .successo-icona { background: var(--ocra); color: var(--notte); }
+
+/* foto dello spazio: con una sola foto o con più di due la griglia resta ordinata */
+.galleria-spazio[data-n="1"] { grid-template-columns: 1fr; }
+@media (min-width: 900px) {
+  .galleria-spazio .foto-cornice:nth-child(even) .foto-maschera img { aspect-ratio: 4 / 5; }
+  .galleria-spazio[data-n="1"] .foto-maschera img { aspect-ratio: 16 / 9; }
+}
 
 /* Safari su iPhone: niente sottolineature automatiche su indirizzi e numeri */
 a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font: inherit !important; }

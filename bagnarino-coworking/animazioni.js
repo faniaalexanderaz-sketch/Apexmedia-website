@@ -8,7 +8,7 @@
    - i titoli di sezione salgono parola per parola ruotando, le
      etichette si stringono, i testi passano da sfocati a nitidi,
      i pulsanti saltano fuori, ogni blocco ha il suo ingresso;
-   - le scene (storia, giornata, servizi, tessera) hanno i loro gesti.
+   - le scene (storia, come funziona, servizi, tessera) hanno i loro gesti.
    Regola d'oro: il pulsante "Prenota" è visibile entro ~1 secondo.
    Rispetta "riduci movimento"; senza GSAP la pagina è già completa.
    ============================================================= */
@@ -163,190 +163,12 @@
     /* ======================================================
        4) LE SCENE
        ====================================================== */
-      /* 1b) una giornata: entra una volta sola. Il titolo sale parola per parola (già nel blocco 2),
-         la barra si disegna, l'orologio gira da 9:30 a 18:30 in ~3 secondi, i momenti si accendono
-         passando, il cielo si fa sera. Niente pin, niente scrub: lo scroll resta libero */
-      var gg = $('.gg'), C = window.BGN_CONFIG || {};
-      if (gg) {
-        var min = function (t) { var x = String(t).split(':'); return (+x[0]) * 60 + (+x[1] || 0); };
-        var INIZIO = min((C.orari && C.orari.apertura) || '9:30'), FINE = min((C.orari && C.orari.chiusura) || '18:30');
-        var rulli = $$('[data-gg-cifra] .gg-rullo', gg), pieno = $('[data-gg-pieno]', gg), punto = $('[data-gg-punto]', gg);
-        var momenti = $$('.gg-momento', gg).map(function (m) { return { el: m, min: min(m.getAttribute('data-ora')) }; });
-        var tacche = $('[data-gg-tacche]', gg), segni = [];
-        for (var h = Math.ceil(INIZIO / 60); h * 60 <= FINE; h++) {
-          var t = document.createElement('span'); t.textContent = h; t.style.left = ((h * 60 - INIZIO) / (FINE - INIZIO) * 100) + '%';
-          tacche.appendChild(t); segni.push({ el: t, min: h * 60 });
-        }
-        var cieloAlto = gsap.utils.interpolate(['#3A5878', '#4B6D8E', '#5A5A63', '#8A5634', '#141E2A']);
-        var cieloBasso = gsap.utils.interpolate(['#1E3044', '#22374C', '#2A2C38', '#3A2A2A', '#0C1219']);
-        var ultimo = '';
-        var mostra = function (p) {
-          var m = INIZIO + (FINE - INIZIO) * p, hh = Math.floor(m / 60), mm = Math.floor(m % 60);
-          var cifre = (hh < 10 ? '0' + hh : '' + hh) + (mm < 10 ? '0' + mm : '' + mm);
-          if (cifre !== ultimo) { ultimo = cifre; rulli.forEach(function (r, i) { r.style.transform = 'translateY(' + (-(+cifre[i])) + 'em)'; }); }
-          pieno.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-          punto.style.left = (p * 100).toFixed(2) + '%';
-          segni.forEach(function (sg) { sg.el.classList.toggle('passata', m >= sg.min); });
-          gg.style.setProperty('--cielo-alto', cieloAlto(p));
-          gg.style.setProperty('--cielo-basso', cieloBasso(p));
-          gg.style.setProperty('--stelle', Math.max(0, (p - 0.82) * 5.5).toFixed(3));
-          momenti.forEach(function (x) { x.el.classList.toggle('acceso', m >= x.min - 1); });
-        };
-        var giorno = { p: 0 };
-        var vai = gsap.to(giorno, { p: 1, duration: 3.2, ease: 'power1.inOut', paused: true, onUpdate: function () { mostra(giorno.p); } });
-        var ridotto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (ridotto) { mostra(1); }
-        else {
-          mostra(0);
-          var scenaGg = $('.gg-scena', gg);
-          gsap.set($$('.gg-cifra', gg), { yPercent: 60, opacity: 0 });
-          gsap.set($$('.gg-momento', gg), { opacity: 0, x: -14 });
-          gsap.set(pieno.parentNode, { scaleX: 0, transformOrigin: 'left center' });
-          gsap.set($$('.gg-tacche span', gg), { opacity: 0 });
-          var tlGg = gsap.timeline({ defaults: { ease: 'power3.out' }, scrollTrigger: { trigger: gg, start: 'top 60%', once: true } });
-          tlGg.to($$('.gg-cifra', gg), { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.07, clearProps: 'opacity,transform' }, 0)
-            .to(pieno.parentNode, { scaleX: 1, duration: 0.9, ease: 'power2.inOut', clearProps: 'transform' }, 0.2)
-            .to($$('.gg-tacche span', gg), { opacity: 1, duration: 0.4, stagger: 0.04, clearProps: 'opacity' }, 0.5)
-            .to($$('.gg-momento', gg), { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, clearProps: 'opacity,transform' }, 0.6)
-            .add(function () { vai.play(0); }, 0.9);
-          /* col mouse su un momento, l'orologio salta a quell'ora (solo con puntatore) */
-          if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            var salta = gsap.quickTo(giorno, 'p', { duration: 0.6, ease: 'power3.out', onUpdate: function () { mostra(giorno.p); } });
-            momenti.forEach(function (x) {
-              x.el.addEventListener('pointerenter', function () { if (vai.isActive()) return; salta((x.min - INIZIO) / (FINE - INIZIO)); });
-              x.el.addEventListener('pointerleave', function () { if (vai.isActive()) return; salta(1); });
-            });
-          }
-        }
+      /* 04 · come funziona: i tre passaggi entrano uno dopo l'altro, una volta sola */
+      var passi = $$('.come-passi li');
+      if (passi.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.from(passi, { opacity: 0, y: 24, duration: 0.7, ease: 'power3.out', stagger: 0.14, clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: '.come-passi', start: 'top 85%', once: true } });
       }
-
-      /* 2d) il listino: le colonne salgono una dopo l'altra, quella del mese si apre per ultima */
-      var colonne = $$('.prezzo');
-      if (colonne.length && sottoLaPiega(colonne[0])) {
-        var normali = colonne.filter(function (c) { return !c.classList.contains('prezzo-evidenza'); }), mese = $('.prezzo-evidenza');
-        var tl = gsap.timeline({ scrollTrigger: { trigger: '.prezzi', start: 'top 82%', once: true } });
-        tl.from(normali, { opacity: 0, y: 40, duration: 0.7, ease: 'power3.out', stagger: 0.12, clearProps: 'opacity,transform' });
-        if (mese) tl.from(mese, { opacity: 0, scaleY: 0.6, transformOrigin: '50% 50%', duration: 0.7, ease: 'back.out(1.6)', clearProps: 'opacity,transform' }, 0.3)
-          .from($('.prezzo-etichetta', mese), { scale: 2.2, opacity: 0, rotation: -20, duration: 0.4, ease: 'power3.in', clearProps: 'opacity,transform' }, 0.8);
-        $$('.prezzo-valore', mese || document).forEach(function () {});
-      }
-
-      /* 2e-ter) servizi inclusi: le card si alzano in 3D una dopo l'altra,
-         le icone saltano fuori e ognuna fa il suo gesto (la spina si infila,
-         la chiave gira, la stampante vibra, il cassetto si apre) */
-      var servizi = $$('.servizio:not([hidden])');
-      var muoviIcona = function (card, ritardo) {
-        var ico = $('.servizio-icona .ico', card), moto = card.getAttribute('data-moto'), d = ritardo || 0;
-        if (!ico || gsap.isTweening(ico)) return;
-        if (moto === 'salta') gsap.to(ico, { y: -7, duration: 0.2, yoyo: true, repeat: 3, ease: 'power1.inOut', delay: d, clearProps: 'transform' });
-        else if (moto === 'spina') gsap.fromTo(ico, { y: -12 }, { y: 0, duration: 0.7, ease: 'bounce.out', delay: d, clearProps: 'transform' });
-        else if (moto === 'scuoti') gsap.fromTo(ico, { x: -3 }, { x: 3, duration: 0.06, yoyo: true, repeat: 9, ease: 'none', delay: d, clearProps: 'transform' });
-        else if (moto === 'gira') gsap.fromTo(ico, { rotation: 0 }, { rotation: 360, duration: 0.9, ease: 'power3.inOut', delay: d, transformOrigin: '50% 50%', clearProps: 'transform' });
-        else if (moto === 'cassetto') gsap.to(ico, { x: 7, duration: 0.28, yoyo: true, repeat: 1, ease: 'power2.inOut', delay: d, clearProps: 'transform' });
-        else if (moto === 'onde') gsap.fromTo($('.servizio-icona', card), { boxShadow: '0 0 0 0 rgba(201,151,59,.55)' }, { boxShadow: '0 0 0 22px rgba(201,151,59,0)', duration: 1.1, ease: 'power2.out', delay: d, clearProps: 'boxShadow' });
-      };
-      if (servizi.length && sottoLaPiega(servizi[0])) {
-        /* ogni card entra appena spunta dal fondo dello schermo, senza aspettare le altre */
-        gsap.set(servizi, { opacity: 0, y: 46, rotationX: -22, scale: 0.96, transformPerspective: 900, transformOrigin: '50% 100%' });
-        ScrollTrigger.batch(servizi, { start: 'top 98%', once: true, onEnter: function (g) {
-          gsap.to(g, { opacity: 1, y: 0, rotationX: 0, scale: 1, duration: 0.6, ease: 'back.out(1.4)', stagger: 0.07, clearProps: 'opacity,transform' });
-          gsap.from(g.map(function (c) { return $('.servizio-icona', c); }), { scale: 0, rotation: -90, duration: 0.5, ease: 'back.out(2.4)', stagger: 0.07, delay: 0.12, clearProps: 'transform',
-            onComplete: function () { g.forEach(function (c, i) { muoviIcona(c, i * 0.08); }); } });
-        } });
-      }
-      if (servizi.length) {
-        /* finché la griglia è in vista, ogni tanto un'icona "si sveglia" */
-        var griglia = $('.servizi-griglia'), attiva = false;
-        ScrollTrigger.create({ trigger: griglia, start: 'top bottom', end: 'bottom top', onToggle: function (st) { attiva = st.isActive; } });
-        setInterval(function () { if (attiva && !document.hidden) muoviIcona(servizi[Math.floor(Math.random() * servizi.length)]); }, 3200);
-        servizi.forEach(function (c) { c.addEventListener('pointerenter', function () { muoviIcona(c); }); });
-      }
-
-      /* 2e-sexies) la scena della macchina da scrivere sale piano mentre arrivi */
-      var scenaMc = $('.pz-scena');
-      if (scenaMc && sottoLaPiega(scenaMc)) {
-        gsap.from(scenaMc, { y: 90, rotation: 1.5, ease: 'none', scrollTrigger: { trigger: '#posti', start: 'top bottom', end: 'top 25%', scrub: 0.6 } });
-      }
-
-      /* 2e-septies) la foto del negozio si apre dal centro */
-      var negFoto = $('.neg-foto');
-      if (negFoto && sottoLaPiega(negFoto)) {
-        gsap.fromTo(negFoto, { clipPath: 'inset(14% 14% 14% 14% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 1.2, ease: 'expo.out', clearProps: 'clipPath',
-          scrollTrigger: { trigger: negFoto, start: 'top 85%', once: true } });
-        gsap.fromTo($('img', negFoto), { scale: 1.2 }, { scale: 1, duration: 1.6, ease: 'expo.out', clearProps: 'transform',
-          scrollTrigger: { trigger: negFoto, start: 'top 85%', once: true } });
-      }
-
-      /* 2e-novies) i pulsanti principali seguono un poco il mouse */
-      if (window.matchMedia('(hover: hover)').matches) {
-        $$('.tasto').forEach(function (b) {
-          var vx = gsap.quickTo(b, 'x', { duration: 0.4, ease: 'power3.out' }), vy = gsap.quickTo(b, 'y', { duration: 0.4, ease: 'power3.out' });
-          b.addEventListener('pointermove', function (e) {
-            var r = b.getBoundingClientRect();
-            vx((e.clientX - r.left - r.width / 2) * 0.18); vy((e.clientY - r.top - r.height / 2) * 0.3);
-          });
-          b.addEventListener('pointerleave', function () { vx(0); vy(0); });
-        });
-      }
-
-      /* 2f) la mappa e i pulsanti: su e dentro */
-      $$('.mappa, .dove-cta .btn').filter(sottoLaPiega).forEach(function (el, i) {
-        gsap.from(el, { opacity: 0, y: 30, duration: 0.7, delay: i * 0.08, ease: 'power2.out', clearProps: 'opacity,transform',
-          scrollTrigger: { trigger: el, start: 'top 92%', once: true } });
-      });
-
-      /* 2g) i prezzi contano fino alla cifra, una volta sola */
-      $$('[data-cifra]').forEach(function (el) {
-        var fine = +el.getAttribute('data-cifra');
-        if (!fine || !sottoLaPiega(el)) return;
-        var conta = { v: 0 };
-        gsap.to(conta, { v: fine, duration: 1.1, ease: 'power2.out', snap: { v: 1 },
-          onUpdate: function () { el.textContent = String(Math.round(conta.v)); },
-          scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
-      });
-
-      /* 2i) barra di lettura in alto, ocra */
-      var barra = document.createElement('div'); barra.className = 'avanzamento'; barra.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(barra);
-      gsap.to(barra, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
-
-      /* 4) le foto si scoprono a tendina, con un filo di zoom e di parallasse */
-      $$('[data-foto-rivela]').forEach(function (fig) {
-        var mask = $('.foto-maschera', fig), img = $('img', fig);
-        if (!mask || !img) return;
-        if (sottoLaPiega(fig)) {
-          var tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 85%', once: true } });
-          tl.fromTo(mask, { clipPath: 'inset(100% 0% 0% 0% round 4px)' }, { clipPath: 'inset(0% 0% 0% 0% round 4px)', duration: 1.1, ease: 'expo.out', clearProps: 'clipPath' })
-            .fromTo(img, { scale: 1.18 }, { scale: 1.06, duration: 1.4, ease: 'expo.out' }, 0);
-          var cap = $('figcaption', fig);
-          if (cap) tl.from(cap, { opacity: 0, y: 8, duration: 0.5, ease: 'power2.out', clearProps: 'opacity,transform' }, 0.45);
-        } else gsap.set(img, { scale: 1.06 });
-        gsap.fromTo(img, { yPercent: -3 }, { yPercent: 3, ease: 'none', scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
-      });
-
-
-    /* ======================================================
-       5) DI PIÙ, SEZIONE PER SEZIONE
-       ====================================================== */
-    var desktop = window.matchMedia('(hover: hover) and (min-width: 900px)').matches;
-    function inVista(el, tween) { /* un'animazione continua che gira solo quando la sezione si vede */
-      ScrollTrigger.create({ trigger: el, start: 'top bottom', end: 'bottom top', onToggle: function (st) { st.isActive ? tween.play() : tween.pause(); } });
-      tween.pause();
-    }
-    function inclina3d(el, forza) { /* card che si inclina in 3D seguendo il mouse */
-      if (!desktop || !el) return;
-      gsap.set(el, { transformPerspective: 900 });
-      var rx = gsap.quickTo(el, 'rotationX', { duration: 0.5, ease: 'power3.out' }), ry = gsap.quickTo(el, 'rotationY', { duration: 0.5, ease: 'power3.out' });
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        ry(((e.clientX - r.left) / r.width - 0.5) * forza); rx(-((e.clientY - r.top) / r.height - 0.5) * forza);
-      });
-      el.addEventListener('pointerleave', function () { rx(0); ry(0); });
-    }
-
-    /* apertura: il bollo gira mentre scorri */
-    var bolloAp = $('.apertura .bollo');
-    if (bolloAp) gsap.to(bolloAp, { rotation: 200, ease: 'none', scrollTrigger: { trigger: '.apertura', start: 'top top', end: 'bottom top', scrub: 0.5 } });
 
     /* 01 · prenota: il pulsante "respira" finché la sezione è in vista */
     var tastoPz = $('.pz .tasto');
@@ -471,7 +293,7 @@
       if (interno) tlM.fromTo(interno, { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(75% at 50% 50%)', duration: 1.3, ease: 'expo.out', clearProps: 'clipPath' }, 0);
       tlM.to(qui, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(2)', clearProps: 'opacity,transform' }, 0.7)
         .to($('.ico', qui), { y: -4, duration: 0.3, yoyo: true, repeat: 3, ease: 'power1.inOut', clearProps: 'transform' }, 1.3);
-      var indirizzo = $$('.dove-indirizzo, .dove-orari');
+      var indirizzo = $$('.dove-indirizzo, .dove-apertura');
       if (indirizzo.length) gsap.from(indirizzo, { x: -30, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12, clearProps: 'opacity,transform', scrollTrigger: { trigger: '.dove-scheda', start: 'top 85%', once: true } });
     }
     var pin = $('.mappa-carica .ico');

@@ -2,43 +2,55 @@
 
 Una pagina sola, da tenere a portata di mano.
 
-## Come entrare
-1. Sul telefono apri **bagnarino-coworking.vercel.app/admin** (oppure, in fondo a qualsiasi pagina del sito, tocca **Area riservata**).
-2. Scrivi la password e tocca **Entra**. Il telefono ti ricorda per 30 giorni.
-3. Consiglio: su iPhone tocca **Condividi → "Aggiungi alla schermata Home"**; su Android tocca **⋮ → "Aggiungi a schermata Home"**. Comparirà l'icona **Gestione**: da lì entri direttamente, come un'app.
+Il coworking è **aperto tutti i giorni, su prenotazione**. Dal sito le persone mandano una **richiesta**: scelgono giorno e fascia (mattina, pomeriggio o giornata intera). Il posto è loro solo quando tu **confermi**.
 
-In basso trovi 5 pulsanti: **Oggi**, **Calendario**, **Clienti**, **Incassi**, **Crescita**. Le **Impostazioni** (prezzi, orari, chiusure) sono nell'ingranaggio ⚙ in alto.
+## L'app sul telefono
+- L'app si chiama **Bagnarino** e sta sulla schermata Home, come le altre app.
+- Per metterla sul telefono: **bagnarinocoworking.it/gestione/installa** (le istruzioni sono lì, con i disegni).
+- Si entra una volta sola con email e password: il telefono resta dentro.
+- Password dimenticata? Nella pagina di accesso tocca **Password dimenticata?**: ti arriva un'email con il pulsante per sceglierne una nuova.
 
-## Quando arriva un cliente
-1. Apri **Oggi**: sotto "Chi arriva oggi" c'è il suo nome.
-2. Tocca **È arrivato**. Il timbro sulla sua Bagnarino Card si aggiunge da solo. Al decimo timbro il sito ti avvisa che ha una giornata in omaggio.
-3. Quando paga, tocca **Incassato in contanti** oppure **Incassato con carta**.
-4. Se non si presenta, tocca **Non è venuto**. Hai sbagliato? Tocca **Correggi**.
+In basso ci sono quattro voci: **Oggi**, **Calendario**, **Prenotazioni**, **Sito**. L'omino in alto a destra apre **Come va** e **Impostazioni**.
 
-## Quando qualcuno prenota in negozio o al telefono
-1. Apri **Calendario** e tocca **+ Aggiungi una prenotazione**.
-2. Scrivi nome, cognome, telefono, scegli la formula e il giorno. L'email non è obbligatoria: serve solo per mandargli la conferma.
-3. Tocca **Salva la prenotazione**.
+## Quando arriva una richiesta
+Ti arrivano una **notifica** sul telefono e un'**email** con due pulsanti.
+- **Conferma**: la persona riceve l'email "Prenotazione confermata" con l'indirizzo.
+- **Non disponibile**: riceve un'email gentile con il link per scegliere un altro momento.
 
-## Come chiudere un giorno (ferie, ponte, imprevisto)
-- **Calendario** → sul giorno tocca **Chiudi questo giorno** e scrivi il motivo.
-- Oppure **Impostazioni** → "Giorni di chiusura" → scegli il giorno → **Chiudi questo giorno**.
-- Da quel momento nessuno può prenotarlo. Se c'erano già prenotazioni il sito te lo dice: avvisa quei clienti.
-- Le feste nazionali (Natale, Pasquetta, ecc.) sono già chiuse da sole.
+Puoi rispondere in tre modi, è uguale: dalla notifica, dall'email, oppure dall'app in **Oggi**.
+Dopo aver toccato un pulsante nell'app hai qualche secondo per toccare **Annulla** se hai sbagliato.
+Se una richiesta resta senza risposta per più di due ore, ti arriva un promemoria.
 
-## Come cambiare un prezzo
-1. **Impostazioni** → "Prezzi" → scrivi il nuovo prezzo.
-2. Tocca **Salva le modifiche** in basso. Il sito si aggiorna entro un minuto.
+## Quando arriva una persona
+In **Oggi**, sotto "Chi arriva oggi", tocca **È arrivata/o**. Se è una giornata intera, il timbro sulla sua Bagnarino Card si aggiunge da solo.
 
-Nello stesso posto puoi cambiare il numero di scrivanie, l'orario e i messaggi WhatsApp già scritti.
+## Se devi chiudere
+- **Oggi**: in fondo a "Oggi" tocca **Oggi sono chiusa** e conferma.
+- **Un altro giorno**: **Calendario** → tocca il giorno → **Chiuso tutto il giorno**, **Chiuso la mattina** oppure **Chiuso il pomeriggio**.
+- **Più giorni di fila** (ferie, ponti): **Calendario** → **Chiudi più giorni**.
+
+Sul sito quei momenti risultano "Non disponibile". Se qualcuno aveva già prenotato, l'app te lo dice e ti propone di mandare un messaggio di scuse con il link per scegliere un altro giorno.
+Per riaprire: tocca il giorno e poi **Riapri questo giorno**.
+Anche le feste (Natale, Pasquetta…) sono aperte finché non le chiudi tu: nel calendario sono segnate.
+
+## Chiamare o scrivere a un cliente
+**Prenotazioni** → tocca il nome → **Chiama** oppure **Scrivi su WhatsApp**. Il numero è già inserito.
+Dalla stessa pagina puoi annullare una prenotazione confermata: la persona riceve le scuse e il link per riprenotare.
+
+## Cambiare qualcosa sul sito
+In **Sito** puoi cambiare tre cose. Si vedono sul sito entro un minuto.
+- **Avviso in prima pagina**: una frase in cima al sito. Con l'interruttore la mostri o la nascondi.
+- **Foto dello spazio**: aggiungi una foto dal telefono, cambia l'ordine con Su e Giù, togline una.
+- **Telefono e WhatsApp**: i numeri dei pulsanti "Chiama" e "WhatsApp".
+
+Tutto il resto del sito (colori, testi, prezzi) non si può cambiare da qui: se serve, scrivi ad Apex Media.
 
 ## Ogni giorno, senza fare niente
-- A ogni nuova prenotazione o annullamento ti arriva un'**email**.
 - Ogni sera ti arriva l'email **"Domani al coworking"** con chi arriva.
-- Il primo giorno del mese ti arriva il **report del mese** (prenotazioni, incassi, da dove arrivano i clienti).
-- Per il commercialista: **Incassi** → **Scarica il file per il commercialista**.
+- Chi ha una prenotazione confermata riceve da solo il promemoria la sera prima.
+- Il primo giorno del mese ti arriva il **report del mese**.
+
+## Incassi, clienti e file per il commercialista
+Li segue Apex Media dall'area riservata di prima (`/admin`), che continua a funzionare.
 
 Problemi o dubbi? Scrivi ad Apex Media.
-
-## Come sta andando: la scheda Crescita
-Tocca **Crescita** in basso. In cima c'è una frase che riassume il mese; sotto, i numeri grandi con la freccia verde ▲ (meglio del mese prima) o rossa ▼ (peggio). Con le frecce ‹ › guardi i mesi passati. Prenotazioni e incassi si aggiornano da soli; i numeri di Instagram, Facebook e Google li inserisce Apex Media ogni mese, insieme a una nota su cosa ha fatto.

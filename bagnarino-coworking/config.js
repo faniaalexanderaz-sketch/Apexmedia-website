@@ -1,7 +1,7 @@
 /* =============================================================
    BAGNARINO COWORKING — tutti i dati del sito in un punto solo.
 
-   Prezzi, orari, numero di postazioni, contatti, testi WhatsApp
+   Prezzi, fasce, numero di postazioni, contatti, testi WhatsApp
    e fidelity si cambiano QUI. Ogni pagina li legge da questo file:
    non serve toccare l'HTML.
 
@@ -44,20 +44,32 @@ var BGN_CONFIG = {
     whatsapp: '393472249457'
   },
 
-  /* Giorni: 1 = lunedì … 5 = venerdì, 6 = sabato, 0 = domenica */
-  orari: {
-    giorni: [1, 2, 3, 4, 5],
-    apertura: '9:30',
-    chiusura: '18:30',
-    testoBreve: 'Lun–Ven 9:30–18:30',
-    testoLungo: 'Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.',
-    /* dopo quest'ora non si prenota più per oggi */
-    ultimaPrenotazioneOggi: '17:00'
+  /* Il coworking non ha orari fissi: è aperto tutti i giorni, sabato
+     e domenica compresi, ma solo su prenotazione. Il cliente sceglie
+     giorno e fascia, la titolare conferma: il posto è suo dopo la
+     conferma. Questi sono i due testi usati in tutto il sito. */
+  apertura: {
+    testo: 'Aperto tutti i giorni su prenotazione',
+    breve: 'Su prenotazione, tutti i giorni'
   },
 
-  /* Chiusure straordinarie oltre ai festivi nazionali (che il sito
-     conosce già da solo, Pasquetta compresa). Formato 'AAAA-MM-GG'.
-     [DA CONFERMARE] San Baudolino (10 novembre) e ponti/ferie estive. */
+  /* Fasce prenotabili per la formula "Giornata".
+     ultimaRichiestaOggi = ora (di Roma) dopo la quale quella fascia
+     non si può più chiedere per il giorno stesso. È una regola
+     interna: sul sito la fascia risulta "Non disponibile". */
+  fasce: [
+    { id: 'mattina', nome: 'Mattina', ultimaRichiestaOggi: 11 },
+    { id: 'pomeriggio', nome: 'Pomeriggio', ultimaRichiestaOggi: 16 },
+    { id: 'giornata', nome: 'Giornata intera', ultimaRichiestaOggi: 11 }
+  ],
+
+  /* Prezzo (euro) di mattina o pomeriggio. La giornata intera è il
+     prezzo della formula "Giornata" nel listino qui sotto. */
+  prezzoMezzaGiornata: 12,
+
+  /* Giorni chiusi fissi, formato 'AAAA-MM-GG'. Di norma resta vuoto:
+     i giorni e le mezze giornate di chiusura li segna la titolare
+     dall'app di gestione (Calendario), festivi compresi. */
   chiusure: [],
 
   /* Postazioni prenotabili. Aumentale quando arrivano nuove scrivanie. */
@@ -80,10 +92,10 @@ var BGN_CONFIG = {
       nome: 'Giornata',
       prezzo: 25,
       unita: 'al giorno',
-      nota: 'Nessun impegno',
+      nota: 'Mezza giornata a €12',
       perChi: 'Per una prova o un uso occasionale',
-      include: ['Scrivania dalle 9:30 alle 18:30', 'Wi-fi in fibra', 'Stampe e scansioni Olivetti'],
-      cta: 'Prenota la giornata',
+      include: ['Scrivania pronta al tuo arrivo', 'Wi-fi in fibra', 'Stampe e scansioni Olivetti'],
+      cta: 'Richiedi il tuo posto',
       tipoData: 'giorno',
       etichettaData: 'Scegli il giorno'
     },
@@ -95,7 +107,7 @@ var BGN_CONFIG = {
       nota: '€20 al giorno · risparmi €50',
       perChi: 'Per chi viene una o due volte a settimana',
       include: ['10 giornate da usare quando vuoi', 'Valido 3 mesi dal primo ingresso', 'Tutto quello della giornata'],
-      cta: 'Prenota il carnet',
+      cta: 'Richiedi il tuo posto',
       tipoData: 'inizio',
       etichettaData: 'Scegli il giorno del primo ingresso'
     },
@@ -106,8 +118,8 @@ var BGN_CONFIG = {
       unita: 'al mese',
       nota: 'Circa €13 al giorno',
       perChi: 'Per chi lavora in sede quasi ogni giorno',
-      include: ['Tutti i giorni di apertura', 'Una scrivania libera a scelta', 'Stampe, scansioni e wi-fi inclusi'],
-      cta: 'Prenota il mese',
+      include: ['Tutti i giorni, su prenotazione', 'Una scrivania libera a scelta', 'Stampe, scansioni e wi-fi inclusi'],
+      cta: 'Richiedi il tuo posto',
       tipoData: 'inizio',
       etichettaData: 'Da che giorno inizi?',
       evidenza: true,
@@ -123,7 +135,7 @@ var BGN_CONFIG = {
       nota: 'Circa €15 al giorno',
       perChi: 'Per chi vuole una postazione riservata',
       include: ['Sempre la stessa scrivania', 'Cassettiera personale', 'Lasci le tue cose dove sono'],
-      cta: 'Prenota la postazione',
+      cta: 'Richiedi il tuo posto',
       tipoData: 'inizio',
       etichettaData: 'Da che giorno inizi?'
     }
@@ -186,16 +198,29 @@ var BGN_CONFIG = {
     testo: 'Prima volta? Se torni entro 7 giorni, la seconda giornata costa €20.'
   },
 
+  /* Avviso in evidenza in cima alla home. Lo scrive e lo accende la
+     titolare dall'app di gestione (Sito → Avviso). */
+  avviso: { attivo: false, testo: '' },
+
+  /* Foto della sezione "Lo spazio". La titolare le aggiunge, toglie e
+     riordina dall'app di gestione (Sito → Foto). p = piccola, g = grande. */
+  galleria: [
+    { id: 'base-1', p: '/img/foto/sala-stampa-720.webp', g: '/img/foto/sala-stampa-1280.webp', l: 1280, a: 960,
+      alt: 'Le postazioni vicino alla finestra e l’angolo stampa con le multifunzione Olivetti', didascalia: 'Le postazioni e l’angolo stampa' },
+    { id: 'base-2', p: '/img/foto/sala-coworking-720.webp', g: '/img/foto/sala-coworking-1280.webp', l: 1280, a: 960,
+      alt: 'La sala del coworking con il tavolo rotondo per lavorare insieme', didascalia: 'Il tavolo per lavorare insieme' }
+  ],
+
   /* Messaggi WhatsApp precompilati. {giorno}, {pacchetto}, {codice},
      {riepilogo} vengono sostituiti dal sito. */
   whatsappTesti: {
     generico: 'Ciao, vorrei informazioni sul coworking Bagnarino.',
-    prenota: 'Ciao, vorrei prenotare una postazione al coworking Bagnarino.',
-    giorno: 'Ciao, vorrei prenotare una postazione per {giorno}.',
+    prenota: 'Ciao, vorrei richiedere una postazione al coworking Bagnarino.',
+    giorno: 'Ciao, vorrei richiedere una postazione per {giorno}.',
     pacchetto: 'Ciao, vorrei informazioni sul pacchetto {pacchetto}.',
     visita: 'Ciao, vorrei passare a vedere lo spazio prima di prenotare. Quando posso venire?',
     domanda: 'Ciao, ho una domanda sulla mia prenotazione {codice}.',
-    conferma: 'Ciao, vorrei confermare questa prenotazione:\n{riepilogo}'
+    conferma: 'Ciao, vorrei richiedere questa postazione:\n{riepilogo}'
   },
 
   /* Misurazione (fase 3): si attivano da sole quando i codici sono

@@ -78,7 +78,7 @@ async function inviaFidelizzazione(cfg, sito, invia, adesso) {
   const mesi = await q(
     `SELECT p.id, p.pacchetto, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine, c.nome, c.email
      FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id
-     WHERE p.pacchetto LIKE 'mese%' AND p.stato <> 'annullata' AND NOT p.avviso_rinnovo
+     WHERE p.pacchetto LIKE 'mese%' AND p.stato IN ('confermata', 'presente') AND NOT p.avviso_rinnovo
        AND p.data_fine BETWEEN $1::date AND $1::date + ${GIORNI_RINNOVO}
        AND NOT EXISTS (SELECT 1 FROM prenotazioni p2 WHERE p2.cliente_id = p.cliente_id AND p2.id <> p.id
                        AND p2.pacchetto LIKE 'mese%' AND p2.stato <> 'annullata' AND p2.data_inizio > p.data_fine)`, [oggi]);

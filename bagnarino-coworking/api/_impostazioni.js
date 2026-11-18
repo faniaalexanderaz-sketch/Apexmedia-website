@@ -28,23 +28,31 @@ function fondi(base, extra) {
   return base;
 }
 
-/* le modifiche salvate (oggetto parziale) */
+/* le modifiche salvate (oggetto parziale). Gli orari fissi non esistono
+   più: se sono rimasti salvati da prima, non tornano sul sito. */
 async function modifiche() {
   if (!disponibile()) return {};
   try {
     const r = await q("SELECT valore FROM impostazioni WHERE chiave = 'config'");
-    return r.length ? r[0].valore : {};
+    const m = r.length ? r[0].valore : {};
+    if (m && m.orari) delete m.orari;
+    return m || {};
   } catch (e) { return {}; }
 }
 
-/* impostazioni complete: config.js + modifiche + chiusure dal database */
+/* impostazioni complete: config.js + modifiche + chiusure dal database.
+   chiusureTutte = giorni chiusi per intero; chiusureFasce = mezze giornate */
 async function impostazioni() {
   const cfg = fondi(copia(BASE), await modifiche());
   cfg.chiusureTutte = (cfg.chiusure || []).slice();
+  cfg.chiusureFasce = {};
   if (disponibile()) {
     try {
-      const r = await q("SELECT to_char(data, 'YYYY-MM-DD') AS d FROM chiusure WHERE data >= CURRENT_DATE - 1");
-      r.forEach(x => cfg.chiusureTutte.push(x.d));
+      const r = await q("SELECT to_char(data, 'YYYY-MM-DD') AS d, fascia FROM chiusure");
+      r.forEach(x => {
+        if (x.fascia === 'mattina' || x.fascia === 'pomeriggio') cfg.chiusureFasce[x.d] = x.fascia;
+        else cfg.chiusureTutte.push(x.d);
+      });
     } catch (e) { /* tabella non pronta: solo config.js */ }
   }
   return cfg;
