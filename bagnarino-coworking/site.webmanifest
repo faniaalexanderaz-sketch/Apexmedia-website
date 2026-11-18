@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Bagnarino Coworking",
   "short_name": "Bagnarino",
-  "description": "Prenota una scrivania in centro ad Alessandria.",
+  "description": "Coworking in centro ad Alessandria, aperto tutti i giorni su prenotazione.",
   "start_url": "/?utm_source=app",
   "scope": "/",
   "display": "standalone",
@@ -18,7 +18,7 @@
     { "src": "/img/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Prenota una postazione", "short_name": "Prenota", "url": "/prenota?utm_source=app" },
+    { "name": "Richiedi il tuo posto", "short_name": "Richiedi", "url": "/prenota?utm_source=app" },
     { "name": "La mia prenotazione", "short_name": "Le mie", "url": "/prenotazione" }
   ]
 }

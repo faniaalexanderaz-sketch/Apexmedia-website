@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no, address=no, email=no, date=no">
   <title>Coworking Alessandria centro · Scrivania da €25 al giorno | Bagnarino</title>
-  <meta name="description" content="Coworking nel centro di Alessandria, corso Lamarmora 46, nel negozio Olivetti Bagnarino dal 1983. Scrivania, wi-fi in fibra e stampante incluse: €25 al giorno, €270 al mese. Prenoti online, paghi in sede.">
+  <meta name="description" content="Coworking in centro ad Alessandria, aperto tutti i giorni su prenotazione. Scrivania, wi-fi in fibra e stampante incluse: €25 al giorno. Richiedi il posto online, paghi in sede.">
   <link rel="canonical" href="/">
   <meta name="theme-color" content="#111922">
 
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Bagnarino Coworking">
   <meta property="og:title" content="Coworking in centro ad Alessandria · da €25 al giorno">
-  <meta property="og:description" content="Scrivania, wi-fi in fibra e stampante incluse. Niente iscrizione: prenoti online in 30 secondi, paghi quando arrivi.">
+  <meta property="og:description" content="Scrivania, wi-fi in fibra e stampante incluse. Aperto tutti i giorni su prenotazione: richiedi il posto online in 30 secondi, paghi quando arrivi.">
   <meta property="og:url" content="/">
   <meta property="og:image" content="/img/og-bagnarino-coworking.jpg">
   <meta property="og:image:width" content="1200">
@@ -88,6 +88,9 @@
 
 <a class="salta" href="#contenuto">Vai al contenuto</a>
 
+<!-- avviso in evidenza: testo e accensione dall'app di gestione (Sito → Avviso) -->
+<div class="avviso-home" data-avviso role="status" hidden><p data-avviso-testo></p></div>
+
 <header class="testata">
   <div class="contenitore testata-riga">
     <a class="testata-logo" href="/" aria-label="Bagnarino Coworking, torna all’inizio">
@@ -106,7 +109,7 @@
       <a class="btn-icona btn-icona-wa" data-wa="prenota" data-pos="testata" href="https://wa.me/393472249457" aria-label="Scrivici su WhatsApp">
         <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>
       </a>
-      <a class="btn btn-pieno btn-piccolo solo-desktop" href="/prenota" data-pos="testata">Prenota</a>
+      <a class="btn btn-pieno btn-piccolo solo-desktop" href="/prenota" data-pos="testata">Richiedi il tuo posto</a>
       <button class="btn-icona btn-menu" type="button" data-menu-apri aria-label="Apri il menu" aria-controls="menu" aria-expanded="false"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></button>
     </div>
   </div>
@@ -130,10 +133,10 @@
         <span><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span>, <span data-cfg="azienda.citta">Alessandria</span></span>
       </p>
       <h1 class="apertura-titolo" id="titolo-apertura">Coworking in centro ad Alessandria, <em>da <span data-prezzo="giornata">€25</span> al giorno.</em></h1>
-      <p class="apertura-sotto"><span data-cfg="postazioni">8</span> postazioni nel negozio Olivetti di corso Lamarmora, attivo dal <span data-cfg="azienda.dal">1983</span>. Wi-fi in fibra e stampante incluse. Prenotazione online in 30 secondi, pagamento in sede.</p>
+      <p class="apertura-sotto"><span data-cfg="postazioni">8</span> postazioni nel negozio Olivetti di corso Lamarmora, attivo dal <span data-cfg="azienda.dal">1983</span>. Wi-fi in fibra e stampante incluse. Su prenotazione, tutti i giorni: richiedi il posto online, paghi in sede.</p>
       <div class="apertura-cta">
         <a class="tasto" href="/prenota" data-pos="hero">
-          <span class="tasto-faccia">Prenota una scrivania<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+          <span class="tasto-faccia">Richiedi il tuo posto<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
         </a>
         <a class="cta-wa" data-wa="prenota" data-pos="hero" href="https://wa.me/393472249457">
           <span class="cta-wa-ico" aria-hidden="true"><svg class="ico"><use href="#i-whatsapp"/></svg></span>Scrivici su WhatsApp</a>
@@ -142,7 +145,7 @@
         <div><dt>In centro dal</dt><dd data-cfg="azienda.dal">1983</dd></div>
         <div class="fatto-olivetti"><dt>Concessionario ufficiale</dt><dd><span class="targa-olivetti"><img src="/img/olivetti.png" alt="Olivetti" width="366" height="130"></span></dd></div>
         <div><dt>Scrivanie</dt><dd data-cfg="postazioni">8</dd></div>
-        <div><dt>Orari</dt><dd class="apertura-orari" data-cfg="orari.testoBreve">Lun–Ven 9:30–18:30</dd></div>
+        <div class="fatto-quando"><dt>Apertura</dt><dd class="apertura-quando" data-cfg="apertura.breve">Su prenotazione, tutti i giorni</dd></div>
       </dl>
       <div class="bollo" aria-hidden="true">
         <svg viewBox="0 0 100 100"><defs><path id="cerchio" d="M50 50 m-36 0 a36 36 0 1 1 72 0 a36 36 0 1 1 -72 0"/></defs><text><textPath href="#cerchio">Bagnarino · Alessandria · 1983 · </textPath></text></svg>
@@ -167,10 +170,10 @@
       <div class="pz-testo">
         <p class="occhiello occhiello-chiaro"><span>01</span>Prenota</p>
         <h2 id="disp-titolo" class="disp-titolo pz-titolo">Prenoti oggi,<br><em>lavori domani.</em></h2>
-        <p class="pz-sotto">Scegli il giorno dal calendario e lascia nome e telefono. Il pagamento avviene in sede, all’arrivo.</p>
+        <p class="pz-sotto">Scegli giorno e fascia dal calendario e lascia nome e telefono. Ti confermiamo la disponibilità in breve tempo; il pagamento avviene in sede, all’arrivo.</p>
         <p class="pz-posti"><span class="punto-vivo" aria-hidden="true"></span><span data-posti-oggi>Posti liberi ogni giorno</span></p>
         <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="disponibilita">
-          <span class="tasto-faccia">Scegli il giorno<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+          <span class="tasto-faccia">Richiedi il tuo posto<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
         </a>
         <p class="pz-nota">Disdetta gratis <span data-cfg="disdetta.testo">entro le 20:00 del giorno prima</span>. <a href="/prenota" data-pos="disponibilita-formule">Carnet e mensile</a></p>
       </div>
@@ -311,7 +314,7 @@
     </div>
   </section>
 
-  <!-- ============ 02 · IL NEGOZIO: la porta giusta e l'orario appeso ============ -->
+  <!-- ============ 02 · IL NEGOZIO: la porta giusta e il cartello "aperto su prenotazione" ============ -->
   <section class="sezione negozio" id="negozio" aria-labelledby="negozio-titolo">
     <div class="contenitore neg">
       <figure class="neg-foto">
@@ -329,17 +332,15 @@
         <p class="neg-lead">Bagnarino vende e assiste macchine per l’ufficio dal <span data-cfg="azienda.dal">1983</span>. Oggi il negozio ospita anche <span data-cfg="postazioni">8</span> postazioni di coworking, prenotabili a giornata, a carnet o al mese.</p>
 
         <div class="neg-info">
-          <div class="cartellino" data-cartellino>
+          <div class="cartellino aperto" data-cartellino>
             <svg class="cartellino-filo" viewBox="0 0 120 44" aria-hidden="true">
               <path d="M18 42 L60 6 L102 42"/>
               <circle cx="60" cy="6" r="4.5"/>
             </svg>
             <div class="cartellino-carta">
-              <p class="cartellino-stato" data-stato-negozio><span class="cartellino-luce" aria-hidden="true"></span><span data-stato-testo>Orario</span></p>
-              <dl class="cartellino-orari" data-orari-tabella>
-                <div><dt>Lun – Ven</dt><dd>9:30 – 18:30</dd></div>
-                <div><dt>Sab – Dom</dt><dd>chiuso</dd></div>
-              </dl>
+              <p class="cartellino-stato"><span class="cartellino-luce" aria-hidden="true"></span><span>Aperto tutti i giorni</span></p>
+              <p class="cartellino-quando">Su prenotazione, sabato e domenica compresi.</p>
+              <a class="cartellino-link" href="/prenota" data-pos="cartellino">Richiedi il tuo posto<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </div>
           </div>
 
@@ -385,10 +386,10 @@
       <!-- le colonne si generano da config.js (listino); questo è il contenuto
            di partenza per chi non esegue JavaScript -->
       <div class="prezzi" data-listino>
-        <article class="prezzo prezzo-giornata"><div class="prezzo-testa"><h3 class="prezzo-nome">Giornata</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">25</span><span class="prezzo-unita">al giorno</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=giornata">Prenota la giornata</a></article>
-        <article class="prezzo prezzo-carnet"><div class="prezzo-testa"><h3 class="prezzo-nome">Carnet 10 ingressi</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">200</span><span class="prezzo-unita">10 giornate</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=carnet">Prenota il carnet</a></article>
-        <article class="prezzo prezzo-mese_flessibile prezzo-evidenza"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese flessibile</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">270</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-pieno btn-prezzo-top" href="/prenota?pacchetto=mese_flessibile">Prenota il mese</a></article>
-        <article class="prezzo prezzo-mese_fisso"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese, postazione fissa</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">320</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=mese_fisso">Prenota la fissa</a></article>
+        <article class="prezzo prezzo-giornata"><div class="prezzo-testa"><h3 class="prezzo-nome">Giornata</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">25</span><span class="prezzo-unita">al giorno</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=giornata">Richiedi il tuo posto</a></article>
+        <article class="prezzo prezzo-carnet"><div class="prezzo-testa"><h3 class="prezzo-nome">Carnet 10 ingressi</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">200</span><span class="prezzo-unita">10 giornate</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=carnet">Richiedi il tuo posto</a></article>
+        <article class="prezzo prezzo-mese_flessibile prezzo-evidenza"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese flessibile</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">270</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-pieno btn-prezzo-top" href="/prenota?pacchetto=mese_flessibile">Richiedi il tuo posto</a></article>
+        <article class="prezzo prezzo-mese_fisso"><div class="prezzo-testa"><h3 class="prezzo-nome">Mese, postazione fissa</h3></div><p class="prezzo-cifra"><span class="prezzo-valuta">€</span><span class="prezzo-valore">320</span><span class="prezzo-unita">al mese</span></p><a class="btn btn-largo btn-prezzo" href="/prenota?pacchetto=mese_fisso">Richiedi il tuo posto</a></article>
       </div>
 
       <ul class="prezzi-garanzie">
@@ -403,30 +404,22 @@
     </div>
   </section>
 
-  <!-- ============ 04 · UNA GIORNATA: tutto in una schermata, l'orologio gira da solo ============ -->
-  <section class="sezione giornata-sezione banda-blu gg" id="giornata" aria-labelledby="giornata-titolo">
-    <div class="gg-cielo" aria-hidden="true"><span class="gg-stelle"></span></div>
-    <div class="contenitore gg-griglia">
-      <div class="gg-testo">
-        <p class="occhiello occhiello-chiaro"><span>04</span>Una giornata da noi</p>
-        <h2 id="giornata-titolo" class="titolo-sezione gg-titolo">Dalle <span data-cfg="orari.apertura">9:30</span> alle <span data-cfg="orari.chiusura">18:30</span>, <em>la scrivania è tua.</em></h2>
-        <p class="gg-sotto">Postazione pronta all’arrivo, servizi compresi, pagamento in sede a fine giornata.</p>
-        <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="giornata"><span class="tasto-faccia">Prenota la tua giornata<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span></a>
+  <!-- ============ 04 · COME FUNZIONA: al posto degli orari. Solo su prenotazione, tutti i giorni ============ -->
+  <section class="sezione come-sezione banda-blu" id="come-funziona" aria-labelledby="come-titolo">
+    <div class="contenitore">
+      <div class="come-testa">
+        <p class="occhiello occhiello-chiaro"><span>04</span>Come funziona</p>
+        <h2 id="come-titolo" class="titolo-sezione come-titolo">Aperto tutti i giorni, <em>su prenotazione.</em></h2>
+        <p class="come-testo">Il Bagnarino non è un open space dove si entra e si esce. È uno spazio curato, dove ogni persona viene accolta di persona. Per questo lavoriamo solo su prenotazione: scegli giorno e orario, ti confermiamo la disponibilità in breve tempo e trovi tutto pronto al tuo arrivo.</p>
       </div>
-
-      <div class="gg-scena">
-        <p class="gg-ora" aria-hidden="true"><span class="gg-cifra" data-gg-cifra="0"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gg-cifra" data-gg-cifra="1"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gg-due-punti">:</span><span class="gg-cifra" data-gg-cifra="2"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span><span class="gg-cifra" data-gg-cifra="3"><span class="gg-rullo"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></span></span></p>
-        <div class="gg-barra" aria-hidden="true">
-          <span class="gg-binario"><span class="gg-pieno" data-gg-pieno></span><span class="gg-punto" data-gg-punto></span></span>
-          <span class="gg-tacche" data-gg-tacche></span>
-        </div>
-        <ol class="gg-momenti" data-gg-momenti>
-          <li class="gg-momento" data-ora="9:30"><svg class="ico" aria-hidden="true"><use href="#i-scrivania"/></svg><span class="gg-quando" data-cfg="orari.apertura">9:30</span><span>Arrivo, postazione pronta</span></li>
-          <li class="gg-momento" data-ora="11:00"><svg class="ico" aria-hidden="true"><use href="#i-printer"/></svg><span class="gg-quando">11:00</span><span>Stampe e scansioni incluse</span></li>
-          <li class="gg-momento" data-ora="13:00"><svg class="ico" aria-hidden="true"><use href="#i-caffe"/></svg><span class="gg-quando">13:00</span><span>Pausa in centro</span></li>
-          <li class="gg-momento" data-ora="15:30"><svg class="ico" aria-hidden="true"><use href="#i-wifi"/></svg><span class="gg-quando">15:30</span><span>Videochiamata in fibra</span></li>
-          <li class="gg-momento" data-ora="18:30"><svg class="ico" aria-hidden="true"><use href="#i-banconota"/></svg><span class="gg-quando" data-cfg="orari.chiusura">18:30</span><span>Pagamento in sede, <span data-prezzo="giornata">€25</span></span></li>
-        </ol>
+      <ol class="come-passi">
+        <li><h3>Scegli</h3><p>Giorno e fascia oraria, anche sabato e domenica.</p></li>
+        <li><h3>Ricevi la conferma</h3><p>Ti rispondiamo in breve tempo con la conferma o un orario alternativo.</p></li>
+        <li><h3>Arriva e lavora</h3><p>Il tuo posto è pronto, senza attese e senza sorprese.</p></li>
+      </ol>
+      <div class="come-fondo">
+        <a class="tasto" href="/prenota" data-pos="come-funziona"><span class="tasto-faccia">Richiedi il tuo posto<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span></a>
+        <p class="come-nota">Preferisci organizzarti con anticipo? Prenota qualche giorno prima: hai la certezza del tuo posto.</p>
       </div>
     </div>
   </section>
@@ -438,12 +431,12 @@
         <p class="occhiello"><span>05</span>Lo spazio</p>
         <h2 id="spazio-titolo" class="titolo-sezione"><span data-cfg="postazioni">8</span> postazioni di lavoro <em>nel centro di Alessandria.</em></h2>
       </div>
-      <div class="galleria-spazio" aria-label="Foto dello spazio">
-        <figure class="foto-cornice" data-foto-rivela>
+      <div class="galleria-spazio" data-galleria aria-label="Foto dello spazio">
+        <figure class="foto-cornice" data-foto-rivela data-foto-id="base-1">
           <div class="foto-maschera"><img src="/img/foto/sala-stampa-720.webp" srcset="/img/foto/sala-stampa-720.webp 720w, /img/foto/sala-stampa-1280.webp 1280w" sizes="(min-width: 900px) 56vw, 100vw" width="1280" height="960" loading="lazy" decoding="async" alt="Le postazioni vicino alla finestra e l’angolo stampa con le multifunzione Olivetti"></div>
           <figcaption><span>Le postazioni e l’angolo stampa</span><span>Foto dello spazio</span></figcaption>
         </figure>
-        <figure class="foto-cornice" data-foto-rivela>
+        <figure class="foto-cornice" data-foto-rivela data-foto-id="base-2">
           <div class="foto-maschera"><img src="/img/foto/sala-coworking-720.webp" srcset="/img/foto/sala-coworking-720.webp 720w, /img/foto/sala-coworking-1280.webp 1280w" sizes="(min-width: 900px) 38vw, 100vw" width="1280" height="960" loading="lazy" decoding="async" alt="La sala del coworking con il tavolo rotondo per lavorare insieme"></div>
           <figcaption><span>Il tavolo per lavorare insieme</span><span>Foto dello spazio</span></figcaption>
         </figure>
@@ -505,7 +498,7 @@
           <a class="bc-link" href="/prenota?pacchetto=mese_flessibile" data-pos="vantaggi-mese">Scegli il mese flessibile, <span data-prezzo="mese_flessibile">€270</span><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </details>
         <div class="bc-azioni">
-          <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="fidelity"><span class="tasto-faccia">Inizia dalla prima giornata<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span></a>
+          <a class="tasto" href="/prenota?pacchetto=giornata" data-pos="fidelity"><span class="tasto-faccia">Richiedi il tuo posto<span class="tasto-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span></a>
           <a class="bc-link" href="/card">Hai già la card? Guarda i tuoi timbri<svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </div>
@@ -551,7 +544,7 @@
           <p class="pc-card-testo">Postazione riservata, cassettiera personale, fattura intestata.</p>
           <a class="pc-cta" href="/prenota?pacchetto=mese_fisso" data-pos="perchi-freelance">
             <span class="pc-prezzo"><span data-prezzo="mese_fisso">€320</span><small>al mese</small></span>
-            <span class="pc-cta-testo">Prenota il mese<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+            <span class="pc-cta-testo">Richiedi il tuo posto<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
           </a>
         </li>
         <li class="profilo pc-card pc-burro" data-indice="02">
@@ -560,7 +553,7 @@
           <p class="pc-card-testo">Una sede di lavoro stabile in centro, con wi-fi in fibra. Circa €13 al giorno.</p>
           <a class="pc-cta" href="/prenota?pacchetto=mese_flessibile" data-pos="perchi-remoto">
             <span class="pc-prezzo"><span data-prezzo="mese_flessibile">€270</span><small>al mese</small></span>
-            <span class="pc-cta-testo">Prenota il mese<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+            <span class="pc-cta-testo">Richiedi il tuo posto<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
           </a>
         </li>
         <li class="profilo pc-card pc-salvia" data-indice="03">
@@ -569,7 +562,7 @@
           <p class="pc-card-testo">Un ambiente silenzioso per la sessione o l’esame di Stato. Con il carnet, €20 al giorno.</p>
           <a class="pc-cta" href="/prenota?pacchetto=carnet" data-pos="perchi-studenti">
             <span class="pc-prezzo"><span data-prezzo="carnet">€200</span><small>10 giornate</small></span>
-            <span class="pc-cta-testo">Prenota il carnet<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
+            <span class="pc-cta-testo">Richiedi il tuo posto<span class="pc-freccia" aria-hidden="true"><svg class="ico"><use href="#i-arrow-right"/></svg></span></span>
           </a>
         </li>
         <li class="profilo pc-card pc-polvere" data-indice="04">
@@ -596,8 +589,10 @@
           <strong><span data-cfg="azienda.indirizzo">Corso Lamarmora 46</span></strong><br>
           <span data-cfg="azienda.cap">15121</span> <span data-cfg="azienda.citta">Alessandria</span> (<span data-cfg="azienda.provincia">AL</span>)
         </address>
-        <p class="dove-orari"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><span data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</span></p>
+        <p class="dove-apertura"><svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg><span data-cfg="apertura.testo">Aperto tutti i giorni su prenotazione</span></p>
         <div class="dove-cta">
+          <a class="btn btn-ocra dove-richiedi" href="/prenota" data-pos="dove">Richiedi il tuo posto
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
           <a class="btn btn-pieno" data-indicazioni data-pos="dove" href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria">
             <svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Indicazioni</a>
           <a class="btn btn-filo" data-tel data-pos="dove" href="tel:+393472249457">
@@ -639,7 +634,11 @@
       <div class="faq">
         <details>
           <summary>Serve un’iscrizione o una quota da socio?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
-          <div class="faq-risposta"><p>No. Niente iscrizione e niente quota annuale: prenoti e vieni. La Bagnarino Card per i timbri è gratis e te la diamo alla prima giornata.</p></div>
+          <div class="faq-risposta"><p>No. Niente iscrizione e niente quota annuale: richiedi il posto e vieni. La Bagnarino Card per i timbri è gratis e te la diamo alla prima giornata.</p></div>
+        </details>
+        <details>
+          <summary>Siete aperti anche sabato e domenica?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+          <div class="faq-risposta"><p>Sì. Siamo aperti tutti i giorni, sabato e domenica compresi, su prenotazione: scegli giorno e fascia (mattina, pomeriggio o giornata intera) e ti confermiamo la disponibilità in breve tempo.</p></div>
         </details>
         <details>
           <summary>Posso disdire una prenotazione?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
@@ -659,7 +658,7 @@
         </details>
         <details>
           <summary>Si può venire senza prenotare?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
-          <div class="faq-risposta"><p>Se c’è una scrivania libera sì, ma le postazioni sono <span data-cfg="postazioni">8</span>: prenotando sei sicuro di trovare il tuo posto. Ci vogliono 30 secondi.</p></div>
+          <div class="faq-risposta"><p>Lavoriamo solo su prenotazione: così ogni persona viene accolta di persona e trova la postazione pronta. Scegli giorno e fascia online, ci vogliono 30 secondi, e ti confermiamo la disponibilità in breve tempo.</p></div>
         </details>
         <details>
           <summary>C’è parcheggio?<svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
@@ -681,7 +680,7 @@
       <p>La prima giornata costa <span data-prezzo="giornata">€25</span>: si paga in sede e la disdetta è gratuita.</p>
       <p class="offerta" data-cfg-attivo="offertaPrimaVolta.attiva" hidden><span data-cfg="offertaPrimaVolta.testo"></span></p>
       <div class="apertura-cta">
-        <a class="btn btn-pieno btn-grande" href="/prenota?pacchetto=giornata" data-pos="finale">Prenota la prima giornata
+        <a class="btn btn-pieno btn-grande" href="/prenota?pacchetto=giornata" data-pos="finale">Richiedi il tuo posto
           <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         <a class="btn btn-filo btn-grande" data-wa="prenota" data-pos="finale" href="https://wa.me/393472249457">
           <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
@@ -707,16 +706,16 @@
       </ul>
     </div>
     <div>
-      <h2 class="piede-titolo">Orari</h2>
-      <p data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</p>
+      <h2 class="piede-titolo">Apertura</h2>
+      <p class="piede-apertura"><span data-cfg="apertura.testo">Aperto tutti i giorni su prenotazione</span><a class="btn btn-ocra btn-piccolo" href="/prenota" data-pos="piede">Richiedi il tuo posto</a></p>
       <h2 class="piede-titolo">Pagine</h2>
       <ul class="piede-lista">
         <li><a href="/#prezzi">Prezzi</a></li>
-        <li><a href="/prenota">Prenota una postazione</a></li>
+        <li><a href="/prenota">Richiedi il tuo posto</a></li>
         <li><a href="/prenotazione">La mia prenotazione</a></li>
         <li><a href="/privacy">Privacy</a></li>
         <li><a href="/cookie">Cookie</a></li>
-        <li><a href="/admin" rel="nofollow">Area riservata</a></li>
+        <li><a href="/gestione" rel="nofollow">Area riservata</a></li>
       </ul>
     </div>
   </div>
@@ -729,7 +728,7 @@
 <nav class="tab-app" aria-label="Navigazione principale">
   <a class="tab" href="/" data-tab="home"><svg class="ico" aria-hidden="true"><use href="#i-house"/></svg><span>Home</span></a>
   <a class="tab" href="/#prezzi" data-tab="prezzi"><svg class="ico" aria-hidden="true"><use href="#i-tag"/></svg><span>Prezzi</span></a>
-  <a class="tab tab-prenota" href="/prenota" data-tab="prenota" data-pos="tab"><span class="tab-cerchio"><svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg></span><span>Prenota</span></a>
+  <a class="tab tab-prenota" href="/prenota" data-tab="prenota" data-pos="tab"><span class="tab-cerchio"><svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg></span><span>Richiedi</span></a>
   <a class="tab" href="/prenotazione" data-tab="prenotazione" aria-label="Le mie prenotazioni"><svg class="ico" aria-hidden="true"><use href="#i-ticket"/></svg><span>Le mie</span></a>
   <button class="tab" type="button" data-menu-apri="contatti"><svg class="ico" aria-hidden="true"><use href="#i-message-circle"/></svg><span>Contatti</span></button>
 </nav>
@@ -738,7 +737,7 @@
     <img src="/img/logo.svg" alt="Bagnarino Coworking" width="132" height="37">
     <button class="btn-icona" type="button" data-menu-chiudi aria-label="Chiudi il menu"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
   </div>
-  <a class="btn btn-pieno btn-largo menu-cta" href="/prenota" data-pos="menu">Prenota una scrivania</a>
+  <a class="btn btn-pieno btn-largo menu-cta" href="/prenota" data-pos="menu">Richiedi il tuo posto</a>
   <nav class="menu-voci" aria-label="Pagine">
     <a href="/">Home</a>
     <a href="/#posti">Posti liberi</a>
@@ -756,7 +755,7 @@
       <a class="btn btn-filo" data-tel data-pos="menu" href="tel:+393472249457"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Chiama</a>
       <a class="btn btn-filo" data-indicazioni href="https://www.google.com/maps/dir/?api=1&amp;destination=Corso+Lamarmora+46+Alessandria"><svg class="ico" aria-hidden="true"><use href="#i-navigation"/></svg>Indicazioni</a>
     </div>
-    <p class="menu-orari"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><span data-orari>Dal lunedì al venerdì, 9:30–18:30. Sabato e domenica chiuso.</span></p>
+    <p class="menu-apertura"><svg class="ico" aria-hidden="true"><use href="#i-calendar-plus"/></svg><span data-cfg="apertura.testo">Aperto tutti i giorni su prenotazione</span></p>
   </div>
 </dialog>
 </body>

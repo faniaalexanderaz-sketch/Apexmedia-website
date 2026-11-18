@@ -1,7 +1,7 @@
 /* =============================================================
    BAGNARINO COWORKING — script comune a tutte le pagine
    Legge config.js e riempie la pagina: prezzi, contatti, link
-   WhatsApp, orari, posti liberi, dati strutturati per Google.
+   WhatsApp, posti liberi, avviso, foto, dati strutturati per Google.
    Espone window.BGN con le utilità usate anche da prenota.js.
    ============================================================= */
 (function () {
@@ -16,7 +16,6 @@
   function euro(n) { return '€' + String(n).replace('.', ','); }
   function iso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
   function daIso(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
-  function minuti(hhmm) { var p = String(hhmm).split(':'); return (+p[0]) * 60 + (+p[1] || 0); }
   function leggi(percorso) {
     return percorso.split('.').reduce(function (o, k) { return o == null ? o : o[k]; }, C);
   }
@@ -25,40 +24,37 @@
     return null;
   }
 
-  /* ---------- calendario: festivi, aperture ---------- */
-  var cacheFestivi = {};
-  function pasqua(y) { /* algoritmo di Gauss/Meeus */
-    var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4,
-        f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3),
-        h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4,
-        l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451),
-        mese = Math.floor((h + l - 7 * m + 114) / 31), giorno = ((h + l - 7 * m + 114) % 31) + 1;
-    return new Date(y, mese - 1, giorno);
+  /* ---------- calendario ----------
+     Il coworking è aperto tutti i giorni su prenotazione. I giorni e le
+     mezze giornate chiusi dalla titolare arrivano con i posti liberi
+     (/api/disponibilita); qui restano solo le chiusure fisse di config.js. */
+  var FASCE = ['mattina', 'pomeriggio', 'giornata'];
+  function aperto(d) { return (C.chiusure || []).indexOf(iso(d)) === -1; }
+  function fascia(id) {
+    for (var i = 0; i < (C.fasce || []).length; i++) if (C.fasce[i].id === id) return C.fasce[i];
+    return null;
   }
-  function festivi(y) {
-    if (cacheFestivi[y]) return cacheFestivi[y];
-    var f = ['01-01', '01-06', '04-25', '05-01', '06-02', '08-15', '11-01', '12-08', '12-25', '12-26']
-      .map(function (md) { return y + '-' + md; });
-    var p = pasqua(y); p.setDate(p.getDate() + 1); f.push(iso(p)); /* Pasquetta */
-    return (cacheFestivi[y] = f);
-  }
-  function aperto(d) {
-    var s = iso(d);
-    return C.orari.giorni.indexOf(d.getDay()) !== -1 &&
-      festivi(d.getFullYear()).indexOf(s) === -1 &&
-      (C.chiusure || []).indexOf(s) === -1;
+  /* quella fascia si può ancora chiedere per oggi? */
+  function fasciaOggi(id, ora) {
+    var f = fascia(id);
+    return (ora || new Date()).getHours() < (f && f.ultimaRichiestaOggi != null ? f.ultimaRichiestaOggi : 11);
   }
   function oggiPrenotabile(ora) {
     ora = ora || new Date();
-    return aperto(ora) && ora.getHours() * 60 + ora.getMinutes() < minuti(C.orari.ultimaPrenotazioneOggi);
+    return aperto(ora) && FASCE.some(function (id) { return fasciaOggi(id, ora); });
   }
-  /* primo giorno in cui si può ancora prenotare */
+  /* primo giorno in cui si può ancora chiedere un posto */
   function primoGiornoUtile(ora) {
     ora = ora || new Date();
     var d = new Date(ora.getFullYear(), ora.getMonth(), ora.getDate());
     if (oggiPrenotabile(ora)) return d;
     for (var i = 0; i < 30; i++) { d.setDate(d.getDate() + 1); if (aperto(d)) return d; }
     return d;
+  }
+  /* prezzo della formula "Giornata" per la fascia scelta */
+  function prezzoFascia(id) {
+    var g = pacchetto('giornata');
+    return id && id !== 'giornata' ? C.prezzoMezzaGiornata : (g ? g.prezzo : 0);
   }
 
   /* ---------- posti liberi in modalità dimostrativa ----------
@@ -150,20 +146,28 @@
       return r.json().then(function (j) { if (!r.ok) { var e = new Error(j.errore || 'errore'); e.dati = j; e.stato = r.status; throw e; } return j; });
     });
   }
+  /* giorni[data] = posti liberi; fasce[data] = { mattina, pomeriggio,
+     giornata, nd } dove nd elenca le fasce non disponibili */
   function disponibilita(da, giorni, pacchettoId) {
     return chiamaApi(C.api.disponibilita + '?da=' + iso(da) + '&giorni=' + giorni + (pacchettoId ? '&pacchetto=' + pacchettoId : ''))
-      .then(function (j) { if (j.modalita === 'demo' || !j.giorni) throw new Error('demo'); return { reale: true, giorni: j.giorni }; })
+      .then(function (j) { if (j.modalita === 'demo' || !j.giorni) throw new Error('demo'); return { reale: true, giorni: j.giorni, fasce: j.fasce || {} }; })
       .catch(function () {
         if (console && console.info) console.info('[Bagnarino] Motore di prenotazione non attivo: modalità dimostrativa.');
-        var out = {}, d = new Date(da);
-        for (var i = 0; i < giorni; i++) { out[iso(d)] = liberiDemo(d); d.setDate(d.getDate() + 1); }
-        return { reale: false, giorni: out };
+        var out = {}, fasce = {}, d = new Date(da), oggi = iso(new Date());
+        for (var i = 0; i < giorni; i++) {
+          var s = iso(d), n = liberiDemo(d), f = { mattina: n, pomeriggio: n, giornata: n, nd: [] };
+          FASCE.forEach(function (id) { if (!aperto(d) || (s === oggi && !fasciaOggi(id))) { f[id] = 0; f.nd.push(id); } });
+          fasce[s] = f; out[s] = Math.max(f.mattina, f.pomeriggio, f.giornata);
+          d.setDate(d.getDate() + 1);
+        }
+        return { reale: false, giorni: out, fasce: fasce };
       });
   }
 
   window.BGN = {
     cfg: C, $: $, $$: $$, euro: euro, iso: iso, daIso: daIso, pacchetto: pacchetto,
     aperto: aperto, oggiPrenotabile: oggiPrenotabile, primoGiornoUtile: primoGiornoUtile,
+    fascia: fascia, prezzoFascia: prezzoFascia,
     data: data, relativa: relativa, testoWa: testoWa, linkWa: linkWa, traccia: traccia,
     origine: origine, chiamaApi: chiamaApi, disponibilita: disponibilita, consensoMisurazione: consensoMisurazione
   };
@@ -288,42 +292,39 @@
     disponibilita(giornoBadge, 1).then(function (r) { if (r.reale && r.giorni[iso(giornoBadge)] != null) mostraBadge(r.giorni[iso(giornoBadge)]); });
   }
 
-  /* ---------- orari (piè di pagina, dove siamo) ---------- */
-  $$('[data-orari]').forEach(function (el) { el.textContent = C.orari.testoLungo; });
+  /* ---------- avviso in evidenza (home) ----------
+     Lo scrive e lo accende la titolare dall'app di gestione. Solo testo:
+     niente HTML, niente link, il disegno resta quello del sito. */
+  var avviso = $('[data-avviso]');
+  if (avviso) {
+    var testoAvviso = C.avviso && C.avviso.attivo ? String(C.avviso.testo || '').trim() : '';
+    if (testoAvviso) {
+      $('[data-avviso-testo]', avviso).textContent = testoAvviso;
+      avviso.hidden = false;
+      document.body.classList.add('con-avviso');
+    } else avviso.hidden = true;
+  }
 
-  /* ---------- il cartellino dell'orario: tabella dai giorni di config.js e stato adesso ---------- */
-  var cartellino = $('[data-cartellino]');
-  if (cartellino) {
-    var NOMI = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-    var ordine = [1, 2, 3, 4, 5, 6, 0], gruppi = [];
-    ordine.forEach(function (g) {
-      var ap = C.orari.giorni.indexOf(g) !== -1, ultimo = gruppi[gruppi.length - 1];
-      if (ultimo && ultimo.ap === ap) ultimo.giorni.push(g); else gruppi.push({ ap: ap, giorni: [g] });
-    });
-    var orario = C.orari.apertura + ' – ' + C.orari.chiusura;
-    var tabella = $('[data-orari-tabella]', cartellino);
-    if (tabella) tabella.innerHTML = gruppi.map(function (gr) {
-      var n = gr.giorni, giorni = NOMI[n[0]] + (n.length > 1 ? ' – ' + NOMI[n[n.length - 1]] : '');
-      return '<div><dt>' + giorni + '</dt><dd>' + (gr.ap ? orario : 'chiuso') + '</dd></div>';
-    }).join('');
-    var ora = new Date(), adesso = ora.getHours() * 60 + ora.getMinutes();
-    var oggi = new Date(ora.getFullYear(), ora.getMonth(), ora.getDate());
-    var dentro = aperto(oggi) && adesso >= minuti(C.orari.apertura) && adesso < minuti(C.orari.chiusura);
-    var quando;
-    if (dentro) quando = 'Fino alle ' + C.orari.chiusura;
-    else if (aperto(oggi) && adesso < minuti(C.orari.apertura)) quando = 'Apre oggi alle ' + C.orari.apertura;
-    else {
-      var prossimo = new Date(oggi);
-      for (var gi = 0; gi < 30; gi++) { prossimo.setDate(prossimo.getDate() + 1); if (aperto(prossimo)) break; }
-      quando = 'Riapre ' + relativa(prossimo).toLowerCase() + ' alle ' + C.orari.apertura;
+  /* ---------- foto dello spazio ----------
+     Le due foto di partenza sono già nella pagina. Se la titolare ne ha
+     aggiunte, tolte o riordinate dall'app, la galleria si ridisegna con
+     lo stesso identico markup (stesse cornici, stessa animazione). */
+  var galleria = $('[data-galleria]');
+  if (galleria && C.galleria && C.galleria.length) {
+    var gia = $$('[data-foto-id]', galleria).map(function (f) { return f.getAttribute('data-foto-id'); }).join(',');
+    var adesso = C.galleria.map(function (f) { return f.id; }).join(',');
+    if (gia !== adesso) {
+      var esc = function (t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
+      galleria.setAttribute('data-n', C.galleria.length);
+      galleria.innerHTML = C.galleria.map(function (f, i) {
+        var alt = f.alt || 'Foto dello spazio del Bagnarino Coworking';
+        return '<figure class="foto-cornice" data-foto-rivela data-foto-id="' + esc(f.id) + '">' +
+          '<div class="foto-maschera"><img src="' + esc(f.p) + '" srcset="' + esc(f.p) + ' 720w, ' + esc(f.g) + ' 1280w" ' +
+          'sizes="(min-width: 900px) ' + (i % 2 ? '38vw' : '56vw') + ', 100vw" width="' + (f.l || 1280) + '" height="' + (f.a || 960) + '" ' +
+          'loading="lazy" decoding="async" alt="' + esc(alt) + '"></div>' +
+          '<figcaption>' + (f.didascalia ? '<span>' + esc(f.didascalia) + '</span>' : '<span></span>') + '<span>Foto dello spazio</span></figcaption></figure>';
+      }).join('');
     }
-    cartellino.classList.toggle('aperto', dentro);
-    var statoTesto = $('[data-stato-testo]', cartellino);
-    if (statoTesto) statoTesto.textContent = dentro ? 'Aperto adesso' : 'Chiuso adesso';
-    var riga = document.createElement('p');
-    riga.className = 'cartellino-quando';
-    riga.textContent = quando;
-    $('[data-stato-negozio]', cartellino).insertAdjacentElement('afterend', riga);
   }
 
   /* ---------- quando entrano in vista: la freccia sulla foto, il cartellino che dondola ---------- */
@@ -560,7 +561,7 @@
       '@id': base + '/#coworking',
       name: C.azienda.marchio,
       legalName: C.azienda.ragioneSociale,
-      description: 'Coworking nel centro di Alessandria: postazioni a giornata, carnet e mensili con wi-fi in fibra e stampante incluse. Da ' + euro(C.listino[0].prezzo) + ' al giorno.',
+      description: 'Coworking nel centro di Alessandria, ' + C.apertura.testo.toLowerCase() + ': postazioni a giornata, carnet e mensili con wi-fi in fibra e stampante incluse. Da ' + euro(C.listino[0].prezzo) + ' al giorno.',
       areaServed: { '@type': 'City', name: C.azienda.citta },
       url: base + '/',
       logo: base + '/img/logo-quadrato.png',
@@ -575,12 +576,6 @@
         addressLocality: C.azienda.citta, addressRegion: C.azienda.provincia, addressCountry: 'IT'
       },
       geo: { '@type': 'GeoCoordinates', latitude: C.azienda.geo.lat, longitude: C.azienda.geo.lng },
-      openingHoursSpecification: [{
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].filter(function (_, i) { return C.orari.giorni.indexOf(i + 1) !== -1; }),
-        opens: C.orari.apertura.length === 4 ? '0' + C.orari.apertura : C.orari.apertura,
-        closes: C.orari.chiusura
-      }],
       makesOffer: C.listino.map(function (p) {
         return {
           '@type': 'Offer', name: p.nome, price: p.prezzo, priceCurrency: 'EUR',
