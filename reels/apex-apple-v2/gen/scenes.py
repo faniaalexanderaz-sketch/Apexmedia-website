@@ -9,7 +9,7 @@ S['s1']=(2.53,'''
         <img id="s1-mac" src="assets/img/ip18-burg-macro.png" style="position:absolute;left:0;top:610px;width:1080px;display:block" alt="" />
       </div>
       <div id="s1-B" data-layout-allow-overlap style="position:absolute;left:0;top:335px;transform-origin:50% 19%;width:1080px;height:1920px;mix-blend-mode:multiply;opacity:0">
-        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.5" data-duration="1.9" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.56" data-duration="1.94" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
       </div>
       <div class="zone" data-layout-allow-overlap>
         <span class="line"><span id="s1-l1" class="t-it" style="font-size:118px">Apple ti fa</span></span>
@@ -30,11 +30,14 @@ S['s1']=(2.53,'''
     rise(tl, "#s1-l2", 0.64);
     tl.set("#s1-l3", { yPercent: 115 }, 0);
     rise(tl, "#s1-l3", 1.24);
-    tl.to("#s1-B", { scale: 0.99, duration: 0.75, ease: "none" }, 1.13);
+    tl.to("#s1-B", { scale: 0.99, duration: 0.11, ease: "none" }, 1.13);
+    /* cut-in: jump to a tight shot of the back */
+    tl.set("#s1-B", { scale: 1.42 }, 1.24);
+    tl.to("#s1-B", { scale: 1.5, duration: 0.72, ease: "none" }, 1.25);
     tl.set("#s1-euro", { opacity: 1 }, 0);
     tl.set(L("#s1-euro"), { opacity: 0 }, 0);
     flip(tl, "#s1-euro", 1.96, 0.05);
-    tl.to("#s1-B", { scale: 1.06, duration: 0.3, ease: "back.out(2.6)" }, 1.98);
+    tl.to("#s1-B", { scale: 1.62, duration: 0.3, ease: "back.out(2.6)" }, 1.98);
     select(tl, "#s1-sel", "#s1-cur", 2.12);
     tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.29);''')
 # ---------- s2 "e tu la ringrazi pure" (2.53 - 3.99): dark scene, a sent message with a heart ----------
@@ -85,6 +88,10 @@ S['s3']=(5.13,'''
     flip(tl, "#s3-l1", 0.0, 0.025);
     tl.fromTo("#s3-col", { y: 0 }, { y: -470 * 4, duration: 0.62, ease: "expo.out" }, 0.66);
     rise(tl, "#s3-l2", 1.02);
+    tl.fromTo("#s3-num", { scale: 0.86, rotation: -5 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2)" }, 0.66);
+    tl.to("#s3-num", { scale: 1.1, duration: 1.4, ease: "none" }, 1.2);
+    tl.fromTo("#s3-sdt", { scale: 1.5, transformOrigin: "50% 60%" }, { scale: 1, duration: 0.3, ease: "expo.out" }, 1.86);
+    tl.to("#s3-num", { scale: 1, duration: 0.3, ease: "back.out(3)" }, 3.15);
     tl.fromTo("#s3-sdt", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.86);
     sink(tl, "#s3-l1", 2.5);
     sink(tl, "#s3-l2", 2.5);
@@ -156,6 +163,7 @@ S['s5']=(1.94,'''
     tl.set(L("#s5-l2"), { opacity: 0 }, 0);
     rise(tl, "#s5-l1", 0.04);
     for (let k = 1; k <= 5; k++) tl.fromTo("#s5-p" + k, { x: 900, rotationY: -55, opacity: 0 }, { x: 0, rotationY: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, 0.05 + (k - 1) * 0.13);
+    tl.fromTo("#s5-row", { x: 70, scale: 1.06 }, { x: 0, scale: 1, duration: 1.2, ease: "power2.out" }, 0);
     flip(tl, "#s5-l2", 1.3, 0.05);
     tl.to(["#s5-p1", "#s5-p2", "#s5-p3", "#s5-p4"], { opacity: 0.35, duration: 0.25 }, 1.25);
     select(tl, "#s5-sel", null, 1.42);''','''
@@ -171,12 +179,16 @@ S['s6']=(1.87,'''
         <div style="position:absolute;left:0;top:0;width:470px;height:250px;border:14px solid #1d1d1f;border-radius:64px;padding:16px"><div id="s6-fill" style="width:100%;height:100%;border-radius:40px;background:#34c759;transform-origin:left center"></div></div>
         <div style="position:absolute;left:482px;top:80px;width:30px;height:90px;border-radius:0 18px 18px 0;background:#1d1d1f"></div>
       </div>
-      <div id="s6-pct" style="position:absolute;left:0;right:0;top:1140px;text-align:center;font:600 120px/1 Inter;letter-spacing:-0.04em"><span id="s6-n">100</span>%</div>
+      <div id="s6-pct" style="position:absolute;left:0;right:0;top:1140px;text-align:center;font:600 120px/1 Inter;letter-spacing:-0.04em"><span id="s6-n">12</span>%</div>
     </div>''','''
     tl.fromTo("#s6-sheet", { yPercent: 100 }, { yPercent: 0, duration: 0.45, ease: "expo.out" }, 0.78);
     tl.set("#s6-l1", { yPercent: 115 }, 0);
     rise(tl, "#s6-l1", 1.02);
-    tl.fromTo("#s6-fill", { scaleX: 0.15 }, { scaleX: 1, duration: 0.8, ease: "power2.out" }, 0.95);''')
+    tl.fromTo("#s6-fill", { scaleX: 0.12 }, { scaleX: 1, duration: 0.7, ease: "power3.out" }, 0.95);
+    const s6o = { v: 12 }; const s6n = document.querySelector("#s6-n");
+    tl.to(s6o, { v: 100, duration: 0.7, ease: "power3.out", onUpdate: () => { s6n.textContent = String(Math.round(s6o.v)); } }, 0.95);
+    tl.fromTo("#s6-bat", { scale: 0.8 }, { scale: 1, duration: 0.4, ease: "back.out(2.4)" }, 0.9);
+    tl.fromTo("#s6-pct", { scale: 1.25 }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, 1.6);''')
 # ---------- s7 last year's phone (17.26 - 19.66) ----------
 S['s7']=(2.40,'''
     <div class="zone" data-layout-allow-overlap>
@@ -192,6 +204,8 @@ S['s7']=(2.40,'''
     rise(tl, "#s7-l2", 1.26);
     tl.fromTo("#s7-in", { rotationY: -22, scale: 1.06 }, { rotationY: 8, scale: 0.98, duration: 2.4, ease: "power2.out" }, 0);
     tl.fromTo("#s7-g", { opacity: 0 }, { opacity: 1, duration: 0.7, ease: "power2.inOut" }, 0.5);
+    tl.fromTo("#s7-ph", { y: 60 }, { y: 0, duration: 0.5, ease: "expo.out" }, 0);
+    tl.fromTo("#s7-ph", { scale: 1.1 }, { scale: 1, duration: 0.32, ease: "back.out(3)", immediateRender: false }, 1.22);
     select(tl, "#s7-sel", null, 1.2);
     pop(tl, "#s7-pill", 1.3);''')
 for sid,v in S.items():

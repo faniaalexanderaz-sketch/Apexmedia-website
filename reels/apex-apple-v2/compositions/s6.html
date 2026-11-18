@@ -34,7 +34,7 @@
         <div style="position:absolute;left:0;top:0;width:470px;height:250px;border:14px solid #1d1d1f;border-radius:64px;padding:16px"><div id="s6-fill" style="width:100%;height:100%;border-radius:40px;background:#34c759;transform-origin:left center"></div></div>
         <div style="position:absolute;left:482px;top:80px;width:30px;height:90px;border-radius:0 18px 18px 0;background:#1d1d1f"></div>
       </div>
-      <div id="s6-pct" style="position:absolute;left:0;right:0;top:1140px;text-align:center;font:600 120px/1 'SF Pro Display';letter-spacing:-0.04em"><span id="s6-n">100</span>%</div>
+      <div id="s6-pct" style="position:absolute;left:0;right:0;top:1140px;text-align:center;font:600 120px/1 'SF Pro Display';letter-spacing:-0.04em"><span id="s6-n">12</span>%</div>
     </div>
   </div>
   <script>
@@ -43,12 +43,13 @@
     document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
     const L = (sel) => document.querySelectorAll(sel + " .ch");
     /* letters flip up into place one by one (the reference's per-letter entrance) */
-    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.42, ease: "back.out(2.2)", stagger: st || 0.03 }, t);
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
     /* a whole line rises from behind its own baseline mask */
-    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, t);
-    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.3, ease: "power3.in" }, t);
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.22, ease: "power3.in" }, t);
     /* dashed selection box with handles, then a cursor that clicks it */
     const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
@@ -56,7 +57,11 @@
     tl.fromTo("#s6-sheet", { yPercent: 100 }, { yPercent: 0, duration: 0.45, ease: "expo.out" }, 0.78);
     tl.set("#s6-l1", { yPercent: 115 }, 0);
     rise(tl, "#s6-l1", 1.02);
-    tl.fromTo("#s6-fill", { scaleX: 0.15 }, { scaleX: 1, duration: 0.8, ease: "power2.out" }, 0.95);
+    tl.fromTo("#s6-fill", { scaleX: 0.12 }, { scaleX: 1, duration: 0.7, ease: "power3.out" }, 0.95);
+    const s6o = { v: 12 }; const s6n = document.querySelector("#s6-n");
+    tl.to(s6o, { v: 100, duration: 0.7, ease: "power3.out", onUpdate: () => { s6n.textContent = String(Math.round(s6o.v)); } }, 0.95);
+    tl.fromTo("#s6-bat", { scale: 0.8 }, { scale: 1, duration: 0.4, ease: "back.out(2.4)" }, 0.9);
+    tl.fromTo("#s6-pct", { scale: 1.25 }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, 1.6);
     window.__timelines["s6"] = tl;
   </script>
 </template>

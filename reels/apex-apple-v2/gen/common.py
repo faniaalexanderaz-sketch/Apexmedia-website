@@ -29,12 +29,13 @@ JS = r'''
     document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
     const L = (sel) => document.querySelectorAll(sel + " .ch");
     /* letters flip up into place one by one (the reference's per-letter entrance) */
-    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.42, ease: "back.out(2.2)", stagger: st || 0.03 }, t);
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
     /* a whole line rises from behind its own baseline mask */
-    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, t);
-    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.3, ease: "power3.in" }, t);
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.22, ease: "power3.in" }, t);
     /* dashed selection box with handles, then a cursor that clicks it */
     const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 '''
 import re

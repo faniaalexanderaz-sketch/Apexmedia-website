@@ -32,7 +32,7 @@
         <img id="s1-mac" src="assets/img/ip18-burg-macro.png" style="position:absolute;left:0;top:610px;width:1080px;display:block" alt="" />
       </div>
       <div id="s1-B" data-layout-allow-overlap style="position:absolute;left:0;top:335px;transform-origin:50% 19%;width:1080px;height:1920px;mix-blend-mode:multiply;opacity:0">
-        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.5" data-duration="1.9" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.56" data-duration="1.94" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
       </div>
       <div class="zone" data-layout-allow-overlap>
         <span class="line"><span id="s1-l1" class="t-it" style="font-size:118px">Apple ti fa</span></span>
@@ -49,12 +49,13 @@
     document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
     const L = (sel) => document.querySelectorAll(sel + " .ch");
     /* letters flip up into place one by one (the reference's per-letter entrance) */
-    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.42, ease: "back.out(2.2)", stagger: st || 0.03 }, t);
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
     /* a whole line rises from behind its own baseline mask */
-    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, t);
-    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.3, ease: "power3.in" }, t);
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.22, ease: "power3.in" }, t);
     /* dashed selection box with handles, then a cursor that clicks it */
     const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
@@ -70,11 +71,14 @@
     rise(tl, "#s1-l2", 0.64);
     tl.set("#s1-l3", { yPercent: 115 }, 0);
     rise(tl, "#s1-l3", 1.24);
-    tl.to("#s1-B", { scale: 0.99, duration: 0.75, ease: "none" }, 1.13);
+    tl.to("#s1-B", { scale: 0.99, duration: 0.11, ease: "none" }, 1.13);
+    /* cut-in: jump to a tight shot of the back */
+    tl.set("#s1-B", { scale: 1.42 }, 1.24);
+    tl.to("#s1-B", { scale: 1.5, duration: 0.72, ease: "none" }, 1.25);
     tl.set("#s1-euro", { opacity: 1 }, 0);
     tl.set(L("#s1-euro"), { opacity: 0 }, 0);
     flip(tl, "#s1-euro", 1.96, 0.05);
-    tl.to("#s1-B", { scale: 1.06, duration: 0.3, ease: "back.out(2.6)" }, 1.98);
+    tl.to("#s1-B", { scale: 1.62, duration: 0.3, ease: "back.out(2.6)" }, 1.98);
     select(tl, "#s1-sel", "#s1-cur", 2.12);
     tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.29);
     window.__timelines["s1"] = tl;
