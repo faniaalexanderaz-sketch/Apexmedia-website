@@ -44,14 +44,22 @@
     .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
 
 
+    .o-r { position: absolute; left: 81px; width: 918px; display: flex; justify-content: space-between; }
+    .o-d { display: block; width: 72px; height: 72px; border-radius: 50%; background-color: #2a2140; }
+    .o-t { position: absolute; left: 81px; font: 700 34px/1 'SF Pro Display'; color: #a59fb8; letter-spacing: 0.04em; }
   </style>
   <div id="root" data-composition-id="g14" data-width="1080" data-height="1920">
     <div id="g14-st" class="st" data-layout-allow-overlap>
       <div id="g14-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
       <div id="g14-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="z-l1" class="t-sans">pubblicità</span></span><span class="line" style="margin-top:-22px"><span id="z-l2" class="t-it split grad" style="font-size:170px">gratis</span></span></div>
-      <div id="z-n" style="position:absolute;left:0;right:0;top:800px;text-align:center;font:italic 800 330px/1.05 'SF Pro Display';letter-spacing:-0.04em;white-space:nowrap"><span id="z-nv">900.000</span> €</div>
-      <div class="zone" data-layout-allow-overlap style="top:1220px"><span class="line"><span id="z-l3" class="t-sans t-mut">fatta dal pubblico</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="o-l1" class="t-it split" style="font-size:120px">risultato?</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="o-l2" class="t-sans">quasi nove su dieci</span></span><span class="line" style="margin-top:-22px"><span id="o-l3" class="t-it grad" style="font-size:126px">la più cara</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="o-l4" class="t-sans t-mut">di solito</span></span><span class="line" style="margin-top:-22px"><span id="o-l5" class="t-it" style="font-size:136px">uno o due</span></span></div>
+      <div id="o-ta" class="o-t" style="top:770px">GTA 6</div>
+      <div class="o-r" id="o-ra" style="top:830px"><i class="o-d oa" id="oa0"></i><i class="o-d oa" id="oa1"></i><i class="o-d oa" id="oa2"></i><i class="o-d oa" id="oa3"></i><i class="o-d oa" id="oa4"></i><i class="o-d oa" id="oa5"></i><i class="o-d oa" id="oa6"></i><i class="o-d oa" id="oa7"></i><i class="o-d oa" id="oa8"></i><i class="o-d oa" id="oa9"></i></div>
+      <div id="o-tb" class="o-t" style="top:1040px">di solito</div>
+      <div class="o-r" id="o-rb" style="top:1100px"><i class="o-d ob" id="ob0"></i><i class="o-d ob" id="ob1"></i><i class="o-d ob" id="ob2"></i><i class="o-d ob" id="ob3"></i><i class="o-d ob" id="ob4"></i><i class="o-d ob" id="ob5"></i><i class="o-d ob" id="ob6"></i><i class="o-d ob" id="ob7"></i><i class="o-d ob" id="ob8"></i><i class="o-d ob" id="ob9"></i></div>
+      <div class="tag" id="o-tag" style="top:1270px">Stima Sensor Tower sui preordini (quota dell'edizione più cara)</div>
     </div>
   </div>
   <script>
@@ -75,16 +83,23 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g14-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 2.29, ease: "none" }, 0);
-    tl.fromTo("#g14-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 2.29, ease: "none" }, 0);
+    tl.fromTo("#g14-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 7.06, ease: "none" }, 0);
+    tl.fromTo("#g14-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 7.06, ease: "none" }, 0);
     enter(tl, "#g14-st", "U");
-    rise(tl, "#z-l1", 0.05);
-    flip(tl, "#z-l2", 0.52 - 0.06, 0.04);
-    tl.fromTo("#z-n", { opacity: 0, scale: 0.34 }, { opacity: 1, scale: 0.42, duration: 0.25, ease: "expo.out" }, 0.1);
-    count(tl, "#z-nv", 900000, 0, 0.52 - 0.1, 0.6, (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."));
-    tl.to("#z-n", { scale: 1, duration: 0.4, ease: "back.out(2)" }, 0.52 + 0.42);
-    rise(tl, "#z-l3", 1.16 - 0.08);
-    exit(tl, "#g14-st", "L", 2.29 - 0.2);
+    flip(tl, "#o-l1", 0.03, 0.03);
+    sink(tl, "#o-l1", 0.93 - 0.16);
+    tl.fromTo(["#o-ta", "#o-ra"], { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 0.93 - 0.1);
+    tl.fromTo("#o-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.93 + 0.1);
+    rise(tl, "#o-l2", 1.87 - 0.3);
+    for (let k = 0; k < 9; k++) tl.to("#oa" + k, { backgroundImage: "linear-gradient(135deg,#ff2d95,#ff8a3c)", scale: 1.12, duration: 0.1, yoyo: false }, 1.87 - 0.25 + k * 0.055);
+    for (let k = 0; k < 9; k++) tl.to("#oa" + k, { scale: 1, duration: 0.12 }, 1.87 - 0.13 + k * 0.055);
+    rise(tl, "#o-l3", 3.83 - 0.35);
+    sink(tl, "#o-l2", 4.51 - 0.16); sink(tl, "#o-l3", 4.51 - 0.16);
+    rise(tl, "#o-l4", 4.51);
+    tl.fromTo(["#o-tb", "#o-rb"], { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 4.51);
+    rise(tl, "#o-l5", 5.37 - 0.06);
+    for (let k = 0; k < 2; k++) { tl.to("#ob" + k, { backgroundColor: "#ffffff", duration: 0.1 }, 5.37 + k * 0.25); tl.fromTo("#ob" + k, { scale: 1.3 }, { scale: 1, duration: 0.3, ease: "back.out(3)", immediateRender: false }, 5.37 + k * 0.25); }
+    exit(tl, "#g14-st", "L", 7.06 - 0.2);
     window.__timelines["g14"] = tl;
   </script>
 </template>

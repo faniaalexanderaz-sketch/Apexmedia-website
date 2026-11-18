@@ -44,17 +44,21 @@
     .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
 
 
-    .n-c { position: absolute; left: 130px; width: 820px; height: 190px; border-radius: 30px; background: #fff; padding: 30px 38px; box-shadow: 0 30px 90px rgba(0,0,0,0.5); }
-    .n-c span { display: inline-block; padding: 8px 18px; border-radius: 10px; background: linear-gradient(92deg, #ff2d95, #ff8a3c); color: #fff; font: 800 28px/1 'SF Pro Display'; letter-spacing: 0.06em; }
-    .n-c i { display: block; height: 22px; border-radius: 11px; background: #1b1430; margin-top: 20px; }
-    .n-c i + i { background: #b9b3cc; height: 16px; margin-top: 16px; }
+    .d-c { position: absolute; top: 800px; width: 170px; height: 220px; border-radius: 32px; border: 3px solid #3a2f55; background: #120b22; text-align: center; }
+    .d-c b { display: block; font: 800 110px/1 'SF Pro Display'; margin-top: 34px; }
+    .d-c small { display: block; font: 600 32px/1 'SF Pro Display'; color: #8f88a6; margin-top: 8px; }
   </style>
   <div id="root" data-composition-id="g7" data-width="1080" data-height="1920">
     <div id="g7-st" class="st" data-layout-allow-overlap>
       <div id="g7-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
       <div id="g7-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="n-l1" class="t-sans">ogni loro mossa</span></span><span class="line" style="margin-top:-22px"><span id="n-l2" class="t-it grad" style="font-size:128px">una notizia</span></span></div>
-      <div class="n-c" id="n-c1" style="top:760px;transform:rotate(-4deg)"><span>ULTIM'ORA</span><i style="width:92%"></i><i style="width:64%"></i></div><div class="n-c" id="n-c2" style="top:980px;transform:rotate(3deg)"><span>ULTIM'ORA</span><i style="width:80%"></i><i style="width:88%"></i></div><div class="n-c" id="n-c3" style="top:1200px;transform:rotate(-2deg)"><span>ULTIM'ORA</span><i style="width:96%"></i><i style="width:52%"></i></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="d-l1" class="t-sans">quattro giorni dopo</span></span><span class="line" style="margin-top:-22px"><span id="d-l2" class="t-it grad" style="font-size:112px">senza avvisare</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="d-l3" class="t-sans t-mut">esce</span></span><span class="line" style="margin-top:-22px"><span id="d-l4" class="t-it" style="font-size:92px">il secondo trailer</span></span></div>
+      <div class="d-c" id="d-c0" style="left:70px"><b>2</b><small>mag</small></div><div class="d-c" id="d-c1" style="left:260px"><b>3</b><small>mag</small></div><div class="d-c" id="d-c2" style="left:450px"><b>4</b><small>mag</small></div><div class="d-c" id="d-c3" style="left:640px"><b>5</b><small>mag</small></div><div class="d-c" id="d-c4" style="left:830px"><b>6</b><small>mag</small></div>
+      <div id="d-hl" style="position:absolute;left:62px;top:792px;width:186px;height:236px;border-radius:38px;border:6px solid #ff2d95;box-shadow:0 0 50px rgba(255,45,149,0.6)"></div>
+      <div id="d-tag" style="position:absolute;left:70px;top:1050px;width:170px;text-align:center;font:700 30px/1 'SF Pro Display';color:#ff3b30;letter-spacing:0.04em">RINVIO</div>
+      <div id="d-play" style="position:absolute;left:856px;top:1050px;width:118px"><svg viewBox="0 0 100 100" width="118" height="118"><circle cx="50" cy="50" r="48" fill="url(#gp)"/><path d="M41 31v38l31-19z" fill="#fff"/><defs><linearGradient id="gp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff2d95"/><stop offset="1" stop-color="#ff8a3c"/></linearGradient></defs></svg></div>
+      <div id="d-pill" class="pill" style="left:650px;top:1200px;font-size:60px;padding:18px 36px">trailer 2</div>
     </div>
   </div>
   <script>
@@ -78,14 +82,22 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g7-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 2.67, ease: "none" }, 0);
-    tl.fromTo("#g7-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 2.67, ease: "none" }, 0);
+    tl.fromTo("#g7-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 3.88, ease: "none" }, 0);
+    tl.fromTo("#g7-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 3.88, ease: "none" }, 0);
     enter(tl, "#g7-st", "U");
-    rise(tl, "#n-l1", 0.15);
-    tl.fromTo(".n-c", { opacity: 0, x: 900 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out", stagger: 0.14 }, 0.83 - 0.1);
-    rise(tl, "#n-l2", 1.91 - 0.3);
-    tl.fromTo(".n-c", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, stagger: 0.05, immediateRender: false }, 1.91);
-    exit(tl, "#g7-st", "L", 2.67 - 0.2);
+    rise(tl, "#d-l1", 0.05);
+    tl.fromTo(".d-c", { opacity: 0, y: 140 }, { opacity: 1, y: 0, duration: 0.34, ease: "back.out(2)", stagger: 0.05 }, 0.05);
+    tl.fromTo("#d-hl", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.2);
+    tl.fromTo("#d-tag", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.25);
+    for (let k = 1; k <= 4; k++) tl.to("#d-hl", { x: 190 * k, duration: 0.12, ease: "power3.inOut" }, 0.35 + k * 0.17);
+    rise(tl, "#d-l2", 1.20 - 0.08);
+    sink(tl, "#d-l1", 2.26 - 0.16); sink(tl, "#d-l2", 2.26 - 0.16);
+    rise(tl, "#d-l3", 2.26);
+    rise(tl, "#d-l4", 2.26 + 0.25);
+    tl.fromTo("#d-play", { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.8)" }, 2.26 + 0.1);
+    pop(tl, "#d-pill", 2.26 + 0.3);
+    tl.fromTo("#d-c4", { scale: 1 }, { scale: 1.12, duration: 0.3, ease: "back.out(3)", immediateRender: false }, 2.26 + 0.1);
+    exit(tl, "#g7-st", "L", 3.88 - 0.2);
     window.__timelines["g7"] = tl;
   </script>
 </template>

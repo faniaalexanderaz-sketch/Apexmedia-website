@@ -51,7 +51,7 @@
       <div id="g5-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
       <div class="seg" id="g5-seg" style="left:330px;width:420px"><i><b id="g5-sg"></b></i><i></i><i></i></div>
       <div class="bignum" id="g5-num"><div id="g5-col"><div></div><div>1</div></div></div>
-      <div class="zone" data-layout-allow-overlap style="top:1060px"><span class="line"><span id="g5-w" class="t-it split grad" style="font-size:118px">il silenzio</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:1060px"><span class="line"><span id="g5-w" class="t-it split grad" style="font-size:92px">la brutta notizia</span></span></div>
     </div>
   </div>
   <script>
@@ -75,15 +75,15 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g5-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 1.70, ease: "none" }, 0);
-    tl.fromTo("#g5-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 1.70, ease: "none" }, 0);
+    tl.fromTo("#g5-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 1.99, ease: "none" }, 0);
+    tl.fromTo("#g5-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 1.99, ease: "none" }, 0);
     enter(tl, "#g5-st", "U");
     tl.fromTo("#g5-col", { y: 0 }, { y: -470, duration: 0.42, ease: "expo.out" }, 0.08);
     tl.fromTo("#g5-num", { scale: 0.8 }, { scale: 1, duration: 0.5, ease: "back.out(2.2)" }, 0.08);
-    tl.to("#g5-num", { scale: 1.1, duration: 1.70 - 0.7, ease: "none" }, 0.58);
+    tl.to("#g5-num", { scale: 1.1, duration: 1.99 - 0.7, ease: "none" }, 0.58);
     tl.fromTo("#g5-sg", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 0.2);
-    flip(tl, "#g5-w", 0.62 - 0.04, 0.03);
-    exit(tl, "#g5-st", "Z", 1.70 - 0.18);
+    flip(tl, "#g5-w", 0.60 - 0.04, 0.03);
+    exit(tl, "#g5-st", "Z", 1.99 - 0.18);
     window.__timelines["g5"] = tl;
   </script>
 </template>

@@ -44,20 +44,18 @@
     .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
 
 
-    .r-ad { position: absolute; top: 800px; width: 300px; height: 380px; border-radius: 34px; border: 3px solid #3a2f55; background: #120b22; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; }
-    .r-ad b { font: 700 36px/1 'SF Pro Display'; letter-spacing: 0.06em; color: #d9d4ea; }
-    .r-sh { height: 120px; display: flex; align-items: center; }
-    .r-x { position: absolute; left: -20px; right: -20px; top: 50%; height: 12px; margin-top: -6px; border-radius: 6px; background: #ff3b30; transform: rotate(-24deg); transform-origin: left center; }
   </style>
   <div id="root" data-composition-id="g3" data-width="1080" data-height="1920">
     <div id="g3-st" class="st" data-layout-allow-overlap>
       <div id="g3-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
       <div id="g3-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="r-l1" class="t-sans">per anni, Rockstar</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="r-l2" class="t-sans t-mut">quasi nessuna</span></span><span class="line" style="margin-top:-22px"><span id="r-l3" class="t-it split grad" style="font-size:128px">pubblicità</span></span></div>
-      <div class="r-ad" id="r-ad1" style="left:70px"><div class="r-sh"><svg viewBox="0 0 100 70" width="170"><rect x="6" y="4" width="88" height="52" rx="6" fill="none" stroke="#a59fb8" stroke-width="4"/><path d="M34 66h32" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/><path d="M44 20v20l16-10z" fill="#a59fb8"/></svg></div><b>SPOT TV</b><i id="r-x1" class="r-x"></i></div>
-      <div class="r-ad" id="r-ad2" style="left:390px"><div class="r-sh"><svg viewBox="0 0 100 70" width="170"><rect x="6" y="4" width="88" height="40" rx="5" fill="none" stroke="#a59fb8" stroke-width="4"/><path d="M26 44v22M74 44v22" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/><path d="M20 18h40M20 30h26" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/></svg></div><b>CARTELLONI</b><i id="r-x2" class="r-x"></i></div>
-      <div class="r-ad" id="r-ad3" style="left:710px"><div class="r-sh"><svg viewBox="0 0 100 70" width="170"><rect x="6" y="14" width="88" height="42" rx="5" fill="none" stroke="#a59fb8" stroke-width="4"/><rect x="16" y="24" width="24" height="22" rx="3" fill="#a59fb8"/><path d="M50 28h34M50 40h22" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/></svg></div><b>BANNER</b><i id="r-x3" class="r-x"></i></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="t-l1" class="t-sans split">non è fortuna</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="t-l3" class=""><span class="t-it grad" style="padding:0 0.1em">il terzo</span> <span class="t-sans">lo puoi</span></span></span><span class="line" style="margin-top:-22px"><span id="t-l4" class="t-sans">copiare anche tu</span></span></div>
+      <div class="bignum" id="t-num" style="top:600px"><div id="t-col"><div>1</div><div>2</div><div id="t-three">3</div></div></div>
+      <div class="zone" data-layout-allow-overlap style="top:1110px"><span class="line"><span id="t-l2" class="t-sans t-mut">trucchi di marketing</span></span></div>
+      <div id="t-sel" class="sel" style="left:360px;top:630px;width:360px;height:420px"><i></i><i></i><i></i><i></i></div>
+      <div id="t-cur" class="cur" style="left:700px;top:990px"><svg viewBox="0 0 24 24" width="54" height="54"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#ffffff" stroke="#07040d" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+      <div id="t-pill" class="pill" style="left:700px;top:640px;transform:rotate(5deg)">copialo</div>
     </div>
   </div>
   <script>
@@ -81,16 +79,22 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g3-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 3.36, ease: "none" }, 0);
-    tl.fromTo("#g3-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 3.36, ease: "none" }, 0);
+    tl.fromTo("#g3-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 5.26, ease: "none" }, 0);
+    tl.fromTo("#g3-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 5.26, ease: "none" }, 0);
     enter(tl, "#g3-st", "Z");
-    rise(tl, "#r-l1", 0.05);
-    tl.fromTo(".r-ad", { opacity: 0, y: 220, rotation: 6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.8)", stagger: 0.09 }, 0.12);
-    sink(tl, "#r-l1", 1.60 - 0.2);
-    rise(tl, "#r-l2", 1.60 - 0.04);
-    for (let k = 1; k <= 3; k++) { tl.fromTo("#r-x" + k, { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, 1.60 + (k - 1) * 0.16); tl.to("#r-ad" + k, { opacity: 0.35, scale: 0.94, duration: 0.2 }, 1.60 + 0.1 + (k - 1) * 0.16); }
-    flip(tl, "#r-l3", 2.44 - 0.06, 0.03);
-    exit(tl, "#g3-st", "L", 3.36 - 0.2);
+    flip(tl, "#t-l1", 0.03, 0.025);
+    tl.fromTo("#t-col", { y: 0 }, { y: -470 * 2, duration: 0.55, ease: "expo.out" }, 1.49 - 0.14);
+    tl.fromTo("#t-num", { scale: 0.86, rotation: -5 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2)" }, 1.49 - 0.14);
+    rise(tl, "#t-l2", 1.49 + 0.12);
+    tl.to("#t-num", { scale: 1.08, duration: 1.0, ease: "none" }, 1.49 + 0.4);
+    sink(tl, "#t-l1", 3.18 - 0.18); sink(tl, "#t-l2", 3.18 - 0.18);
+    rise(tl, "#t-l3", 3.18);
+    tl.to("#t-num", { scale: 1, duration: 0.3, ease: "back.out(3)" }, 3.32);
+    select(tl, "#t-sel", "#t-cur", 3.32 + 0.1);
+    rise(tl, "#t-l4", 4.15 - 0.08);
+    pop(tl, "#t-pill", 4.15 + 0.1);
+    tl.to(["#t-sel", "#t-cur", "#t-pill"], { opacity: 0, duration: 0.12 }, 5.26 - 0.5);
+    tl.to("#t-num", { scale: 14, duration: 0.42, ease: "power3.in" }, 5.26 - 0.44);
     window.__timelines["g3"] = tl;
   </script>
 </template>

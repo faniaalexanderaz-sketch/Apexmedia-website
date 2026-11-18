@@ -44,16 +44,26 @@
     .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
 
 
-    .f-p { font-size: 84px; padding: 22px 46px; box-shadow: 0 20px 70px rgba(0,0,0,0.5); }
+    .e-c { position: absolute; width: 450px; border-radius: 40px; border: 3px solid #3a2f55; background: #120b22; padding: 44px 40px; }
+    .e-c small { display: block; font: 700 34px/1 'SF Pro Display'; letter-spacing: 0.1em; color: #a59fb8; }
+    .e-c b { display: block; font: italic 800 92px/1.1 'SF Pro Display'; letter-spacing: -0.03em; margin: 22px 0 34px; white-space: nowrap; transform-origin: left center; }
+    .e-c > i { display: block; height: 18px; border-radius: 9px; background: #3a2f55; margin-top: 22px; }
+    .e-c span { display: flex; align-items: center; gap: 16px; margin-top: 22px; }
+    .e-c span i { display: block; height: 18px; border-radius: 9px; background: #5a4a80; }
+    .e-u { border: 4px solid #ff2d95; background: linear-gradient(180deg, rgba(255,45,149,0.16), rgba(255,138,60,0.06)); box-shadow: 0 0 80px rgba(255,45,149,0.3); }
+    .e-u small { color: #ff8a3c; }
   </style>
   <div id="root" data-composition-id="g13" data-width="1080" data-height="1920">
     <div id="g13-st" class="st" data-layout-allow-overlap>
-      <div class="vid" id="f-v-w" data-layout-allow-overlap><video id="f-v" class="clip" src="assets/video/crowd.mp4" data-start="0" data-duration="5.35" data-media-start="0" muted playsinline></video></div><div class="shade"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="f-l1" class="t-sans">ogni fotogramma</span></span><span class="line" style="margin-top:-22px"><span id="f-l2" class="t-it grad" style="font-size:132px">analizzato</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="f-l3" class="t-sans">da milioni</span></span><span class="line" style="margin-top:-22px"><span id="f-l4" class="t-it grad" style="font-size:150px">di fan</span></span></div>
-      <div id="f-p1" class="pill f-p" style="left:110px;top:900px;transform:rotate(-6deg)">teorie</div>
-      <div id="f-p2" class="pill f-p" style="left:560px;top:1060px;transform:rotate(5deg)">video</div>
-      <div id="f-p3" class="pill f-p" style="left:280px;top:1230px;transform:rotate(-3deg)">meme</div>
+      <div id="g13-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
+      <div id="g13-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="e-l1" class="t-sans t-mut">la versione base</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="e-l2" class="t-sans">quella speciale</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="e-l3" class="t-sans">solo venti euro</span></span><span class="line" style="margin-top:-22px"><span id="e-l4" class="t-it grad" style="font-size:140px">in più</span></span></div>
+      <div class="e-c" id="e-c1" style="left:70px;top:760px;height:480px"><small>BASE</small><b id="e-p1">79,99 €</b><i style="width:78%"></i><i style="width:56%"></i></div>
+      <div class="e-c e-u" id="e-c2" style="left:560px;top:700px;height:600px"><small>ULTIMATE</small><b id="e-p2" class="grad">99,99 €</b>
+        <span><svg viewBox="0 0 24 24" width="34" height="34"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#ff8a3c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="width:230px"></i></span><span><svg viewBox="0 0 24 24" width="34" height="34"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#ff8a3c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="width:270px"></i></span><span><svg viewBox="0 0 24 24" width="34" height="34"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#ff8a3c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="width:200px"></i></span><span><svg viewBox="0 0 24 24" width="34" height="34"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#ff8a3c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="width:250px"></i></span></div>
+      <div id="e-plus" class="pill" style="left:356px;top:1310px;font-size:96px;padding:22px 50px">+20 €</div>
     </div>
   </div>
   <script>
@@ -77,17 +87,23 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#g13-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 5.01, ease: "none" }, 0);
+    tl.fromTo("#g13-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 5.01, ease: "none" }, 0);
     enter(tl, "#g13-st", "L");
-    tl.fromTo("#f-v-w", { scale: 1.18 }, { scale: 1.02, duration: 5.35, ease: "none" }, 0);
-    rise(tl, "#f-l1", 0.05);
-    rise(tl, "#f-l2", 1.12 - 0.08);
-    sink(tl, "#f-l1", 1.82 - 0.18); sink(tl, "#f-l2", 1.82 - 0.18);
-    rise(tl, "#f-l3", 1.82 - 0.02);
-    rise(tl, "#f-l4", 1.82 + 0.3);
-    pop(tl, "#f-p1", 3.18);
-    pop(tl, "#f-p2", 3.85);
-    pop(tl, "#f-p3", 4.53);
-    exit(tl, "#g13-st", "Z", 5.35 - 0.18);
+    rise(tl, "#e-l1", 0.05);
+    tl.fromTo("#e-c1", { opacity: 0, y: 260, rotation: -5 }, { opacity: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.8)" }, 0.1);
+    tl.fromTo("#e-p1", { scale: 1.4 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 1.30);
+    sink(tl, "#e-l1", 2.31 - 0.16);
+    rise(tl, "#e-l2", 2.31);
+    tl.fromTo("#e-c2", { opacity: 0, y: 300, rotation: 6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.8)" }, 2.31 + 0.05);
+    tl.fromTo("#e-p2", { scale: 1.4 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 3.19);
+    tl.to("#e-c1", { opacity: 0.55, scale: 0.95, duration: 0.3 }, 3.19);
+    sink(tl, "#e-l2", 3.92 - 0.16);
+    rise(tl, "#e-l3", 3.92);
+    rise(tl, "#e-l4", 4.37 - 0.08);
+    pop(tl, "#e-plus", 3.92 + 0.25);
+    tl.fromTo("#e-c2", { scale: 1 }, { scale: 1.06, duration: 0.3, ease: "back.out(3)", immediateRender: false }, 4.37);
+    exit(tl, "#g13-st", "Z", 5.01 - 0.18);
     window.__timelines["g13"] = tl;
   </script>
 </template>

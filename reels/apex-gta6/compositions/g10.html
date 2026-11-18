@@ -44,24 +44,20 @@
     .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
 
 
-    .a-d { position: absolute; width: 240px; height: 130px; border-radius: 30px; border: 4px solid #3a2f55; background: #120b22; display: flex; align-items: center; justify-content: center; }
-    .a-d b { font: 700 42px/1 'SF Pro Display'; color: #a59fb8; white-space: nowrap; }
-    .a-ok { border-color: #ff2d95; background: rgba(255,45,149,0.14); }
-    .a-ok b { color: #fff; }
-    .a-x { position: absolute; left: 14px; right: 14px; top: 50%; height: 8px; margin-top: -4px; border-radius: 4px; background: #ff3b30; transform-origin: left center; }
   </style>
   <div id="root" data-composition-id="g10" data-width="1080" data-height="1920">
     <div id="g10-st" class="st" data-layout-allow-overlap>
       <div id="g10-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
       <div id="g10-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="a-l1" class="t-it grad" style="font-size:124px">tredici anni</span></span><span class="line" style="margin-top:-22px"><span id="a-l2" class="t-sans t-mut">dall'ultimo capitolo</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="a-l3" class="t-it" style="font-size:150px">due rinvii</span></span></div>
-      <div id="a-yr" style="position:absolute;left:0;right:0;top:640px;height:260px;overflow:hidden;text-align:center;font:italic 800 250px/260px 'SF Pro Display';letter-spacing:-0.04em"><div id="a-ys"><span style="display:block">2013</span><span style="display:block">2014</span><span style="display:block">2015</span><span style="display:block">2016</span><span style="display:block">2017</span><span style="display:block">2018</span><span style="display:block">2019</span><span style="display:block">2020</span><span style="display:block">2021</span><span style="display:block">2022</span><span style="display:block">2023</span><span style="display:block">2024</span><span style="display:block">2025</span><span style="display:block">2026</span></div></div>
-      <div class="a-d" id="a-d1" style="left:70px;top:1010px"><b>2025</b><i class="a-x"></i></div>
-      <div class="a-d" id="a-d2" style="left:340px;top:1010px;width:330px"><b>26 MAG 2026</b><i class="a-x"></i></div>
-      <div class="a-d a-ok" id="a-d3" style="left:700px;top:1010px;width:310px"><b>19 NOV 2026</b></div>
-      <div id="a-s1" class="pill" style="left:60px;top:960px;transform:rotate(-8deg);background:#ff3b30">rinviato</div>
-      <div id="a-s2" class="pill" style="left:400px;top:960px;transform:rotate(6deg);background:#ff3b30">rinviato</div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="x-l1" class="t-sans t-mut">un video di</span></span><span class="line" style="margin-top:-22px"><span id="x-l2" class="t-it grad" style="font-size:112px">quasi mezz'ora</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="x-l3" class="t-sans t-mut">in anteprima su</span></span><span class="line" style="margin-top:-10px"><span id="x-l4" class="split" style="font:900 150px/1.06 'SF Pro Display';letter-spacing:0.02em;color:#e50914">NETFLIX</span></span></div>
+      <div id="x-card" data-layout-allow-overlap style="position:absolute;left:110px;top:740px;width:860px;height:484px;border-radius:40px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.6);background:#000">
+        <video id="x-vid" class="clip" src="assets/video/city.mp4" data-start="0" data-duration="3.09" data-media-start="2.0" muted playsinline style="position:absolute;left:0;top:-520px;width:860px;height:1529px;object-fit:cover"></video>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.75))"></div>
+        <div style="position:absolute;left:36px;right:190px;bottom:40px;height:10px;border-radius:5px;background:rgba(255,255,255,0.3)"><div id="x-bar" style="height:100%;border-radius:5px;background:#e50914;transform-origin:left center"></div></div>
+        <div style="position:absolute;right:36px;bottom:26px;font:700 38px/1 'SF Pro Display';color:#fff">26:59</div>
+      </div>
+      <div id="x-pill" class="pill" style="left:120px;top:690px;background:#e50914;transform:rotate(-4deg)">anteprima</div>
     </div>
   </div>
   <script>
@@ -87,21 +83,17 @@
     const tl = gsap.timeline({ paused: true });
     tl.fromTo("#g10-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 3.09, ease: "none" }, 0);
     tl.fromTo("#g10-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 3.09, ease: "none" }, 0);
-    enter(tl, "#g10-st", "U");
-    rise(tl, "#a-l1", 0.05);
-    tl.fromTo("#a-ys", { y: 0 }, { y: -260 * 13, duration: 1.0, ease: "power3.inOut" }, 0.1);
-    tl.fromTo("#a-yr", { scale: 0.85 }, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.08);
-    rise(tl, "#a-l2", 0.61 - 0.1);
-    sink(tl, "#a-l1", 2.06 - 0.18); sink(tl, "#a-l2", 2.06 - 0.18);
-    tl.to("#a-yr", { scale: 0.62, y: -30, opacity: 0.5, duration: 0.3, ease: "expo.out" }, 2.06 - 0.15);
-    rise(tl, "#a-l3", 2.06 - 0.04);
-    tl.fromTo(".a-d", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.36, ease: "back.out(2)", stagger: 0.08 }, 2.06 - 0.1);
-    tl.fromTo("#a-s1", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, 2.06 + 0.28);
-    tl.fromTo("#a-s2", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, 2.06 + 0.5);
-    tl.fromTo("#a-d1 .a-x", { scaleX: 0 }, { scaleX: 1, duration: 0.14 }, 2.06 + 0.3);
-    tl.fromTo("#a-d2 .a-x", { scaleX: 0 }, { scaleX: 1, duration: 0.14 }, 2.06 + 0.52);
-    tl.fromTo("#a-d3", { scale: 1 }, { scale: 1.1, duration: 0.3, ease: "back.out(3)", immediateRender: false }, 2.06 + 0.72);
-    exit(tl, "#g10-st", "L", 3.09 - 0.2);
+    enter(tl, "#g10-st", "L");
+    rise(tl, "#x-l1", 0.05);
+    tl.fromTo("#x-card", { y: 300, opacity: 0, rotation: -5 }, { y: 0, opacity: 1, rotation: 0, duration: 0.45, ease: "expo.out" }, 0.08);
+    tl.fromTo("#x-bar", { scaleX: 0.02 }, { scaleX: 1, duration: 3.09, ease: "none" }, 0);
+    rise(tl, "#x-l2", 0.75 - 0.3);
+    tl.fromTo("#x-card", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 0.75);
+    sink(tl, "#x-l1", 1.30 - 0.16); sink(tl, "#x-l2", 1.30 - 0.16);
+    rise(tl, "#x-l3", 1.30);
+    pop(tl, "#x-pill", 1.30 + 0.1);
+    flip(tl, "#x-l4", 2.15 - 0.06, 0.04);
+    exit(tl, "#g10-st", "Z", 3.09 - 0.18);
     window.__timelines["g10"] = tl;
   </script>
 </template>

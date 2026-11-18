@@ -1916,26 +1916,24 @@ Stile scuro al neon, con clip video generate (auto al tramonto, città, folla). 
 
 **TikTok**
 ```text
-GTA 6 ha già incassato un miliardo di dollari. Prima ancora di uscire. I 3 trucchi di marketing di Rockstar: il terzo lo puoi copiare anche tu.
+GTA 6 ha già incassato più di un miliardo di dollari. Prima ancora di uscire. I 3 trucchi di marketing di Rockstar: il terzo lo puoi copiare anche tu.
 #gta6 #marketing #rockstar #apexmedia
 ```
 
 **Instagram**
 ```text
-GTA 6 ha già incassato un miliardo di dollari. Prima ancora di uscire. Almeno secondo le stime sui preordini. E per anni Rockstar non ha fatto quasi nessuna pubblicità.
+GTA 6 ha già incassato più di un miliardo di dollari. Prima ancora di uscire. Almeno secondo le stime sui preordini. E non è fortuna: sono tre trucchi di marketing. Il terzo lo puoi copiare anche tu.
 
-Questi sono i tre trucchi che ha usato. Il terzo lo puoi copiare anche tu.
+1. La brutta notizia. Maggio 2025: Rockstar annuncia il rinvio e i fan ci restano male. Quattro giorni dopo, senza avvisare, esce il secondo trailer: 475 milioni di visualizzazioni in un giorno. E del rinvio non parla più nessuno.
+2. Lo spot su Netflix. Un video di quasi mezz'ora, in anteprima su Netflix: primo in classifica in 87 Paesi. Era uno spot, e la gente l'ha scelto come un film.
+3. L'esca. La versione base costa 80 euro, quella speciale 100: solo venti in più. Risultato? Secondo le stime, quasi 9 su 10 hanno preso la più cara. Di solito sono 1 o 2 su 10.
 
-1. Il silenzio. Per quasi tre anni, due trailer. E in mezzo, niente. Così ogni loro mossa diventava una notizia: il secondo trailer ha fatto 475 milioni di visualizzazioni in un giorno.
-2. L'attesa. Tredici anni dall'ultimo capitolo. Due rinvii. E ogni rinvio ha fatto il giro del mondo. Più aspetti una cosa, più la vuoi.
-3. Far lavorare gli altri. Ogni fotogramma veniva analizzato da milioni di fan: teorie, video, meme. Pubblicità gratis, fatta dal pubblico. Il capo di Take-Two l'ha detto chiaro: non spendiamo in marketing finché non siamo vicini all'uscita.
-
-La lezione? Non devi parlare di più. Devi farti aspettare.
+La lezione? Non abbassare il prezzo. Mettici accanto un'offerta che lo fa sembrare un affare.
 
 Manda questo video a chi sta aspettando GTA 6.
 
 Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
 
-Fonti: stima Sensor Tower sui preordini digitali (novembre 2026); dato sul trailer dichiarato da Rockstar (maggio 2025); dichiarazioni di Strauss Zelnick, CEO di Take-Two.
+Fonti: stime Sensor Tower sui preordini (novembre 2026); dato sul trailer dichiarato da Rockstar (maggio 2025); classifiche Netflix (agosto 2026).
 #gta6 #gta #rockstar #marketing #videogiochi #business #apexmedia
 ```

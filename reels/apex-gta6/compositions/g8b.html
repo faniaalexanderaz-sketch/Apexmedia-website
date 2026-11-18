@@ -44,18 +44,18 @@
     .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
 
 
+    .n-c { position: absolute; left: 130px; width: 820px; height: 190px; border-radius: 30px; background: #fff; padding: 30px 38px; box-shadow: 0 30px 90px rgba(0,0,0,0.5); }
+    .n-c span { display: inline-block; padding: 8px 18px; border-radius: 10px; background: linear-gradient(92deg, #ff2d95, #ff8a3c); color: #fff; font: 800 28px/1 'SF Pro Display'; letter-spacing: 0.06em; }
+    .n-c i { display: block; height: 22px; border-radius: 11px; background: #1b1430; margin-top: 20px; }
+    .n-c i + i { background: #b9b3cc; height: 16px; margin-top: 16px; }
   </style>
-  <div id="root" data-composition-id="g4" data-width="1080" data-height="1920">
-    <div id="g4-st" class="st" data-layout-allow-overlap>
-      <div id="g4-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
-      <div id="g4-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="t-l1" class="t-sans split">questi sono i</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="t-l3" class=""><span class="t-it grad" style="padding:0 0.1em">il terzo</span> <span class="t-sans">lo puoi</span></span></span><span class="line" style="margin-top:-22px"><span id="t-l4" class="t-sans">copiare anche tu</span></span></div>
-      <div class="bignum" id="t-num" style="top:600px"><div id="t-col"><div>1</div><div>2</div><div id="t-three">3</div></div></div>
-      <div class="zone" data-layout-allow-overlap style="top:1110px"><span class="line"><span id="t-l2" class="t-sans t-mut">trucchi che ha usato</span></span></div>
-      <div id="t-sel" class="sel" style="left:360px;top:630px;width:360px;height:420px"><i></i><i></i><i></i><i></i></div>
-      <div id="t-cur" class="cur" style="left:700px;top:990px"><svg viewBox="0 0 24 24" width="54" height="54"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#ffffff" stroke="#07040d" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
-      <div id="t-pill" class="pill" style="left:700px;top:640px;transform:rotate(5deg)">copialo</div>
+  <div id="root" data-composition-id="g8b" data-width="1080" data-height="1920">
+    <div id="g8b-st" class="st" data-layout-allow-overlap>
+      <div id="g8b-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
+      <div id="g8b-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="n-l1" class="t-sans t-mut">e del rinvio</span></span><span class="line" style="margin-top:-18px"><span id="n-l2" class="t-it grad" style="font-size:66px">non parla più nessuno</span></span></div>
+      <div id="n-st" class="pill" style="left:230px;top:900px;font-size:110px;padding:26px 54px;background:#ff3b30;transform:rotate(-9deg);opacity:1">rinviato</div>
+      <div class="n-c" id="n-c1" style="top:760px;transform:rotate(-4deg)"><span>TRAILER 2</span><i style="width:92%"></i><i style="width:64%"></i></div><div class="n-c" id="n-c2" style="top:980px;transform:rotate(3deg)"><span>TRAILER 2</span><i style="width:80%"></i><i style="width:88%"></i></div><div class="n-c" id="n-c3" style="top:1200px;transform:rotate(-2deg)"><span>TRAILER 2</span><i style="width:96%"></i><i style="width:52%"></i></div>
     </div>
   </div>
   <script>
@@ -79,22 +79,15 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g4-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 4.42, ease: "none" }, 0);
-    tl.fromTo("#g4-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 4.42, ease: "none" }, 0);
-    enter(tl, "#g4-st", "U");
-    flip(tl, "#t-l1", 0.02, 0.022);
-    tl.fromTo("#t-col", { y: 0 }, { y: -470 * 2, duration: 0.55, ease: "expo.out" }, 0.72 - 0.12);
-    tl.fromTo("#t-num", { scale: 0.86, rotation: -5 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2)" }, 0.72 - 0.12);
-    rise(tl, "#t-l2", 0.92 - 0.06);
-    tl.to("#t-num", { scale: 1.08, duration: 1.0, ease: "none" }, 0.92);
-    sink(tl, "#t-l1", 2.35 - 0.18); sink(tl, "#t-l2", 2.35 - 0.18);
-    rise(tl, "#t-l3", 2.35);
-    tl.to("#t-num", { scale: 1, duration: 0.3, ease: "back.out(3)" }, 2.51);
-    select(tl, "#t-sel", "#t-cur", 2.51 + 0.1);
-    rise(tl, "#t-l4", 3.22 - 0.08);
-    pop(tl, "#t-pill", 3.22 + 0.1);
-    tl.to(["#t-sel", "#t-cur", "#t-pill"], { opacity: 0, duration: 0.12 }, 4.42 - 0.5);
-    tl.to("#t-num", { scale: 14, duration: 0.42, ease: "power3.in" }, 4.42 - 0.44);
-    window.__timelines["g4"] = tl;
+    tl.fromTo("#g8b-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 2.26, ease: "none" }, 0);
+    tl.fromTo("#g8b-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 2.26, ease: "none" }, 0);
+    enter(tl, "#g8b-st", "U");
+    rise(tl, "#n-l1", 0.05);
+    tl.fromTo("#n-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0.05);
+    tl.fromTo(".n-c", { opacity: 0, x: 1000 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out", stagger: 0.13 }, 0.78 - 0.25);
+    tl.to("#n-st", { opacity: 0.12, scale: 0.8, duration: 0.5, ease: "power2.out" }, 0.78 - 0.2);
+    rise(tl, "#n-l2", 0.78 - 0.08);
+    exit(tl, "#g8b-st", "L", 2.26 - 0.2);
+    window.__timelines["g8b"] = tl;
   </script>
 </template>

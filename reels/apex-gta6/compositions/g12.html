@@ -51,7 +51,7 @@
       <div id="g12-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
       <div class="seg" id="g12-seg" style="left:330px;width:420px"><i><b></b></i><i><b></b></i><i><b id="g12-sg"></b></i></div>
       <div class="bignum" id="g12-num"><div id="g12-col"><div>2</div><div>3</div></div></div>
-      <div class="zone" data-layout-allow-overlap style="top:1060px"><span class="line"><span id="g12-w" class="t-it split grad" style="font-size:66px">far lavorare gli altri</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:1060px"><span class="line"><span id="g12-w" class="t-it split grad" style="font-size:150px">l'esca</span></span></div>
     </div>
   </div>
   <script>
@@ -75,15 +75,15 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g12-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 2.01, ease: "none" }, 0);
-    tl.fromTo("#g12-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 2.01, ease: "none" }, 0);
+    tl.fromTo("#g12-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 1.33, ease: "none" }, 0);
+    tl.fromTo("#g12-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 1.33, ease: "none" }, 0);
     enter(tl, "#g12-st", "U");
     tl.fromTo("#g12-col", { y: 0 }, { y: -470, duration: 0.42, ease: "expo.out" }, 0.08);
     tl.fromTo("#g12-num", { scale: 0.8 }, { scale: 1, duration: 0.5, ease: "back.out(2.2)" }, 0.08);
-    tl.to("#g12-num", { scale: 1.1, duration: 2.01 - 0.7, ease: "none" }, 0.58);
+    tl.to("#g12-num", { scale: 1.1, duration: 1.33 - 0.7, ease: "none" }, 0.58);
     tl.fromTo("#g12-sg", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 0.2);
     flip(tl, "#g12-w", 0.51 - 0.04, 0.03);
-    exit(tl, "#g12-st", "Z", 2.01 - 0.18);
+    exit(tl, "#g12-st", "Z", 1.33 - 0.18);
     window.__timelines["g12"] = tl;
   </script>
 </template>

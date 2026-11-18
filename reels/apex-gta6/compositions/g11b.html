@@ -45,21 +45,11 @@
 
 
   </style>
-  <div id="root" data-composition-id="g15" data-width="1080" data-height="1920">
-    <div id="g15-st" class="st" data-layout-allow-overlap>
-      <div id="g15-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
-      <div id="g15-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="c-l1" class="t-sans t-mut">il loro capo</span></span><span class="line" style="margin-top:-22px"><span id="c-l2" class="t-it" style="font-size:96px">l'ha detto chiaro</span></span></div>
-      <div id="c-card" style="position:absolute;left:80px;top:700px;width:920px;border-radius:44px;background:#120b22;border:3px solid #3a2f55;padding:40px 56px 54px">
-        <div class="grad" style="font:italic 900 200px/0.8 'SF Pro Display';height:110px">“</div>
-        <div style="font:italic 700 74px/1.2 'SF Pro Display';letter-spacing:-0.02em">
-          <div id="c-q1" class="split">Non spendiamo</div>
-          <div><span class="hl"><i id="c-hl"></i><span id="c-q2" class="split">in marketing</span></span></div>
-          <div id="c-q3" class="split">finché non siamo</div>
-          <div id="c-q4" class="split">vicini all'uscita.</div>
-        </div>
-      </div>
-      <div class="tag" id="c-tag" style="top:1330px;color:#d9d4ea">Strauss Zelnick, CEO di Take-Two Interactive</div>
+  <div id="root" data-composition-id="g11b" data-width="1080" data-height="1920">
+    <div id="g11b-st" class="st" data-layout-allow-overlap>
+      <div class="vid" id="f-v-w" data-layout-allow-overlap><video id="f-v" class="clip" src="assets/video/crowd.mp4" data-start="0" data-duration="3.27" data-media-start="0" muted playsinline></video></div><div class="shade"></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="f-l1" class="t-sans">era uno</span></span><span class="line" style="margin-top:-30px"><span id="f-l2" class="t-it split" style="font-size:210px">spot</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="f-l3" class="t-sans">la gente l'ha scelto</span></span><span class="line" style="margin-top:-22px"><span id="f-l4" class="t-it grad" style="font-size:126px">come un film</span></span></div>
     </div>
   </div>
   <script>
@@ -83,20 +73,14 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g15-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 5.08, ease: "none" }, 0);
-    tl.fromTo("#g15-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 5.08, ease: "none" }, 0);
-    enter(tl, "#g15-st", "Z");
-    rise(tl, "#c-l1", 0.05);
-    rise(tl, "#c-l2", 1.08 - 0.4);
-    tl.fromTo("#c-card", { opacity: 0, y: 260, rotation: 3 }, { opacity: 1, y: 0, rotation: 0, duration: 0.45, ease: "expo.out" }, 1.08 - 0.3);
-    typeIn(tl, "#c-q1", 1.74, 0.04);
-    typeIn(tl, "#c-q2", 2.28, 0.04);
-    tl.fromTo("#c-hl", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 2.28 + 0.45);
-    typeIn(tl, "#c-q3", 2.92, 0.035);
-    typeIn(tl, "#c-q4", 3.72, 0.035);
-    tl.fromTo("#c-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 1.74 + 0.3);
-    tl.to("#c-card", { scale: 1.04, duration: 3.0, ease: "none" }, 1.74);
-    exit(tl, "#g15-st", "U", 5.08 - 0.2);
-    window.__timelines["g15"] = tl;
+    enter(tl, "#g11b-st", "L");
+    tl.fromTo("#f-v-w", { scale: 1.18 }, { scale: 1.02, duration: 3.27, ease: "none" }, 0);
+    rise(tl, "#f-l1", 0.05);
+    flip(tl, "#f-l2", 0.46 - 0.06, 0.05);
+    sink(tl, "#f-l1", 1.15 - 0.16); sink(tl, "#f-l2", 1.15 - 0.16);
+    rise(tl, "#f-l3", 1.15);
+    rise(tl, "#f-l4", 2.61 - 0.4);
+    exit(tl, "#g11b-st", "Z", 3.27 - 0.18);
+    window.__timelines["g11b"] = tl;
   </script>
 </template>

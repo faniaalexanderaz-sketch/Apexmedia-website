@@ -47,7 +47,7 @@
   </style>
   <div id="root" data-composition-id="g2" data-width="1080" data-height="1920">
     <div id="g2-st" class="st" data-layout-allow-overlap>
-      <div class="vid" id="p-v-w" data-layout-allow-overlap><video id="p-v" class="clip" src="assets/video/city.mp4" data-start="0" data-duration="3.56" data-media-start="0" muted playsinline></video></div><div class="shade"></div>
+      <div class="vid" id="p-v-w" data-layout-allow-overlap><video id="p-v" class="clip" src="assets/video/city.mp4" data-start="0" data-duration="3.70" data-media-start="0" muted playsinline></video></div><div class="shade"></div>
       <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="p-l1" class="t-sans">prima ancora</span></span><span class="line" style="margin-top:-22px"><span id="p-l2" class="t-it grad" style="font-size:136px">di uscire</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="p-l3" class="t-sans t-mut">secondo le stime</span></span><span class="line" style="margin-top:-22px"><span id="p-l4" class="t-it" style="font-size:104px">sui preordini</span></span></div>
       <div id="p-chip" style="position:absolute;left:300px;top:780px;width:480px;border-radius:44px;background:#fff;color:#07040d;text-align:center;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.55)">
@@ -80,16 +80,16 @@
 
     const tl = gsap.timeline({ paused: true });
     enter(tl, "#g2-st", "L");
-    tl.fromTo("#p-v-w", { scale: 1.2 }, { scale: 1.04, duration: 3.56, ease: "none" }, 0);
+    tl.fromTo("#p-v-w", { scale: 1.2 }, { scale: 1.04, duration: 3.70, ease: "none" }, 0);
     rise(tl, "#p-l1", 0.05);
-    rise(tl, "#p-l2", 0.79 - 0.28);
-    tl.fromTo("#p-chip", { opacity: 0, scale: 0.5, rotation: -8 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.4, ease: "back.out(2)" }, 0.79 - 0.1);
-    sink(tl, "#p-l1", 1.37 - 0.16); sink(tl, "#p-l2", 1.37 - 0.16);
-    rise(tl, "#p-l3", 1.37);
-    rise(tl, "#p-l4", 2.23 + 0.25);
-    tl.to("#p-chip", { scale: 0.86, rotation: 2, duration: 0.4, ease: "expo.out" }, 1.37);
-    tl.fromTo("#p-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 2.23);
-    exit(tl, "#g2-st", "Z", 3.56 - 0.18);
+    rise(tl, "#p-l2", 0.91 - 0.28);
+    tl.fromTo("#p-chip", { opacity: 0, scale: 0.5, rotation: -8 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.4, ease: "back.out(2)" }, 0.91 - 0.1);
+    sink(tl, "#p-l1", 1.45 - 0.16); sink(tl, "#p-l2", 1.45 - 0.16);
+    rise(tl, "#p-l3", 1.45);
+    rise(tl, "#p-l4", 2.32 + 0.25);
+    tl.to("#p-chip", { scale: 0.86, rotation: 2, duration: 0.4, ease: "expo.out" }, 1.45);
+    tl.fromTo("#p-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 2.32);
+    exit(tl, "#g2-st", "Z", 3.70 - 0.18);
     window.__timelines["g2"] = tl;
   </script>
 </template>

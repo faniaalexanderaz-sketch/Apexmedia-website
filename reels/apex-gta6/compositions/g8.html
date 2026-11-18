@@ -49,9 +49,9 @@
     <div id="g8-st" class="st" data-layout-allow-overlap>
       <div id="g8-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
       <div id="g8-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="v-l1" class="t-sans">il secondo trailer</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="v-l1" class="t-sans t-mut">il secondo trailer</span></span></div>
       <div id="v-card" data-layout-allow-overlap style="position:absolute;left:110px;top:520px;width:860px;height:484px;border-radius:40px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.6);background:#000">
-        <video id="v-vid" class="clip" src="assets/video/city.mp4" data-start="0" data-duration="5.81" data-media-start="0.3" muted playsinline style="position:absolute;left:0;top:-520px;width:860px;height:1529px;object-fit:cover"></video>
+        <video id="v-vid" class="clip" src="assets/video/city.mp4" data-start="0" data-duration="3.87" data-media-start="0.3" muted playsinline style="position:absolute;left:0;top:-520px;width:860px;height:1529px;object-fit:cover"></video>
         <div style="position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.75))"></div>
         <div style="position:absolute;left:36px;right:36px;bottom:34px;height:10px;border-radius:5px;background:rgba(255,255,255,0.3)"><div id="v-bar" style="height:100%;border-radius:5px;background:#ff2d95;transform-origin:left center"></div></div>
       </div>
@@ -82,19 +82,19 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g8-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 5.81, ease: "none" }, 0);
-    tl.fromTo("#g8-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 5.81, ease: "none" }, 0);
+    tl.fromTo("#g8-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 3.87, ease: "none" }, 0);
+    tl.fromTo("#g8-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 3.87, ease: "none" }, 0);
     enter(tl, "#g8-st", "Z");
-    rise(tl, "#v-l1", 0.05);
-    tl.fromTo("#v-card", { y: 300, opacity: 0, rotation: 5 }, { y: 0, opacity: 1, rotation: 0, duration: 0.45, ease: "expo.out" }, 0.08);
-    tl.fromTo("#v-bar", { scaleX: 0.05 }, { scaleX: 0.9, duration: 5.81, ease: "none" }, 0);
-    tl.fromTo("#v-n", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 1.95 - 0.2);
-    count(tl, "#v-nv", 0, 475000000, 1.95 - 0.15, 1.1, (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."));
-    tl.fromTo("#v-n", { scale: 1.16 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 2.76 + 0.1);
-    rise(tl, "#v-l2", 3.54 - 0.08);
-    tl.fromTo("#v-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 3.54 + 0.2);
-    pop(tl, "#v-pill", 4.72 + 0.1);
-    exit(tl, "#g8-st", "L", 5.81 - 0.2);
+    rise(tl, "#v-l1", 0.03);
+    tl.fromTo("#v-card", { y: 300, opacity: 0, rotation: 5 }, { y: 0, opacity: 1, rotation: 0, duration: 0.4, ease: "expo.out" }, 0.02);
+    tl.fromTo("#v-bar", { scaleX: 0.05 }, { scaleX: 0.9, duration: 3.87, ease: "none" }, 0);
+    tl.fromTo("#v-n", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.25, ease: "expo.out" }, 0.04);
+    count(tl, "#v-nv", 0, 475000000, 0.06, 1.1, (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+    tl.fromTo("#v-n", { scale: 1.16 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 0.90 + 0.1);
+    rise(tl, "#v-l2", 1.47 - 0.08);
+    tl.fromTo("#v-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 1.47 + 0.2);
+    pop(tl, "#v-pill", 2.82 + 0.05);
+    exit(tl, "#g8-st", "L", 3.87 - 0.2);
     window.__timelines["g8"] = tl;
   </script>
 </template>

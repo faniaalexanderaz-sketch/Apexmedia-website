@@ -58,7 +58,7 @@ DOTS = '.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ".")'
 # ------------------------------------------------------------------ hook
 add('g1', 0, 'prima', f'''      {vid('h-v', 'car.mp4', T['prima'])}
       <div id="h-t" style="position:absolute;left:0;right:0;top:230px;text-align:center;font:italic 900 300px/1 Inter;letter-spacing:-0.04em;white-space:nowrap"><span>GTA</span> <span class="grad" style="padding:0 0.1em 0 0.02em">6</span></div>
-      {zone(ln('h-l1', 'ha già incassato', 't-sans'), top=560)}
+      {zone(ln('h-l1', 'ha già incassato più di', 't-sans'), top=560)}
       <div id="h-n" style="position:absolute;left:0;right:0;top:690px;text-align:center;font:italic 800 124px/1.1 Inter;letter-spacing:-0.03em;white-space:nowrap;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,0.7)"><span id="h-nv">0</span> $</div>
       <div id="h-sel" class="sel" style="left:50px;top:680px;width:980px;height:160px">{SEL}</div>''', f'''    tl.fromTo("#h-v-w", {{ scale: 1.22 }}, {{ scale: 1.04, duration: DUR, ease: "none" }}, 0);
     tl.fromTo("#h-t", {{ scale: 1.5 }}, {{ scale: 1, duration: 0.38, ease: "expo.out" }}, 0);
@@ -72,7 +72,7 @@ add('g1', 0, 'prima', f'''      {vid('h-v', 'car.mp4', T['prima'])}
     exit(tl, "#g1-st", "L", DUR - 0.2);''', glow=False,
     fx=[('impact-bass-1', 0, 0.0, 0.3), ('whoosh-short', 0, 0.02, 0.25), ('typing', 'miliardo', -0.18, 0.22), ('pop', 'dollari', 0.0, 0.34), ('whoosh', 'prima', -0.2, 0.32)])
 
-add('g2', 'prima', 'eper', f'''      {vid('p-v', 'city.mp4', T['eper'] - T['prima'])}
+add('g2', 'prima', 'enon', f'''      {vid('p-v', 'city.mp4', T['enon'] - T['prima'])}
       {zone(ln('p-l1', 'prima ancora', 't-sans'), ln('p-l2', 'di uscire', 't-it grad', 'font-size:136px', mt=-22))}
       {zone(ln('p-l3', 'secondo le stime', 't-sans t-mut'), ln('p-l4', 'sui preordini', 't-it', 'font-size:104px', mt=-22))}
       <div id="p-chip" style="position:absolute;left:300px;top:780px;width:480px;border-radius:44px;background:#fff;color:#07040d;text-align:center;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.55)">
@@ -93,39 +93,20 @@ add('g2', 'prima', 'eper', f'''      {vid('p-v', 'city.mp4', T['eper'] - T['prim
     exit(tl, "#g2-st", "Z", DUR - 0.18);''', glow=False,
     fx=[('pop', 'uscire', -0.1, 0.32), ('whoosh-short', 'almeno', -0.16, 0.22), ('key-press', 'stime', 0.2, 0.2)])
 
-def adcard(i, left, label, shape):
-    return (f'<div class="r-ad" id="r-ad{i}" style="left:{left}px"><div class="r-sh">{shape}</div><b>{label}</b>'
-            f'<i id="r-x{i}" class="r-x"></i></div>')
-add('g3', 'eper', 'questi', f'''      {zone(ln('r-l1', 'per anni, Rockstar', 't-sans'))}
-      {zone(ln('r-l2', 'quasi nessuna', 't-sans t-mut'), ln('r-l3', 'pubblicità', 't-it split grad', 'font-size:128px', mt=-22))}
-      {adcard(1, 70, 'SPOT TV', '<svg viewBox="0 0 100 70" width="170"><rect x="6" y="4" width="88" height="52" rx="6" fill="none" stroke="#a59fb8" stroke-width="4"/><path d="M34 66h32" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/><path d="M44 20v20l16-10z" fill="#a59fb8"/></svg>')}
-      {adcard(2, 390, 'CARTELLONI', '<svg viewBox="0 0 100 70" width="170"><rect x="6" y="4" width="88" height="40" rx="5" fill="none" stroke="#a59fb8" stroke-width="4"/><path d="M26 44v22M74 44v22" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/><path d="M20 18h40M20 30h26" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/></svg>')}
-      {adcard(3, 710, 'BANNER', '<svg viewBox="0 0 100 70" width="170"><rect x="6" y="14" width="88" height="42" rx="5" fill="none" stroke="#a59fb8" stroke-width="4"/><rect x="16" y="24" width="24" height="22" rx="3" fill="#a59fb8"/><path d="M50 28h34M50 40h22" stroke="#a59fb8" stroke-width="4" stroke-linecap="round"/></svg>')}''', '''    enter(tl, "#g3-st", "Z");
-    rise(tl, "#r-l1", 0.05);
-    tl.fromTo(".r-ad", { opacity: 0, y: 220, rotation: 6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.8)", stagger: 0.09 }, 0.12);
-    sink(tl, "#r-l1", «quasi» - 0.2);
-    rise(tl, "#r-l2", «quasi» - 0.04);
-    for (let k = 1; k <= 3; k++) { tl.fromTo("#r-x" + k, { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, «quasi» + (k - 1) * 0.16); tl.to("#r-ad" + k, { opacity: 0.35, scale: 0.94, duration: 0.2 }, «quasi» + 0.1 + (k - 1) * 0.16); }
-    flip(tl, "#r-l3", «pubblicita» - 0.06, 0.03);
-    exit(tl, "#g3-st", "L", DUR - 0.2);''', '''
-    .r-ad { position: absolute; top: 800px; width: 300px; height: 380px; border-radius: 34px; border: 3px solid #3a2f55; background: #120b22; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; }
-    .r-ad b { font: 700 36px/1 "Inter Display"; letter-spacing: 0.06em; color: #d9d4ea; }
-    .r-sh { height: 120px; display: flex; align-items: center; }
-    .r-x { position: absolute; left: -20px; right: -20px; top: 50%; height: 12px; margin-top: -6px; border-radius: 6px; background: #ff3b30; transform: rotate(-24deg); transform-origin: left center; }''',
-    fx=[('whoosh-cinematic', 'eper', -0.06, 0.22), ('pop', 'eper', 0.2, 0.24), ('click-soft', 'quasi', 0.0, 0.36), ('click-soft', 'quasi', 0.16, 0.36), ('click-soft', 'quasi', 0.32, 0.36), ('key-press', 'pubblicita', -0.06, 0.24)])
-
-add('g4', 'questi', 'uno', f'''      {zone(ln('t-l1', 'questi sono i', 't-sans split'))}
+PLAY = '<svg viewBox="0 0 100 100" width="118" height="118"><circle cx="50" cy="50" r="48" fill="url(#gp)"/><path d="M41 31v38l31-19z" fill="#fff"/><defs><linearGradient id="gp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff2d95"/><stop offset="1" stop-color="#ff8a3c"/></linearGradient></defs></svg>'
+# ------------------------------------------------------------------ "non è fortuna: tre trucchi"
+add('g3', 'enon', 'uno', f'''      {zone(ln('t-l1', 'non è fortuna', 't-sans split'))}
       {zone(ln('t-l3', '<span class="t-it grad" style="padding:0 0.1em">il terzo</span> <span class="t-sans">lo puoi</span>', ''), ln('t-l4', 'copiare anche tu', 't-sans', mt=-22))}
       <div class="bignum" id="t-num" style="top:600px"><div id="t-col"><div>1</div><div>2</div><div id="t-three">3</div></div></div>
-      {zone(ln('t-l2', 'trucchi che ha usato', 't-sans t-mut'), top=1110)}
+      {zone(ln('t-l2', 'trucchi di marketing', 't-sans t-mut'), top=1110)}
       <div id="t-sel" class="sel" style="left:360px;top:630px;width:360px;height:420px">{SEL}</div>
       <div id="t-cur" class="cur" style="left:700px;top:990px">{CURSOR}</div>
-      <div id="t-pill" class="pill" style="left:700px;top:640px;transform:rotate(5deg)">copialo</div>''', '''    enter(tl, "#g4-st", "U");
-    flip(tl, "#t-l1", 0.02, 0.022);
-    tl.fromTo("#t-col", { y: 0 }, { y: -470 * 2, duration: 0.55, ease: "expo.out" }, «tre» - 0.12);
-    tl.fromTo("#t-num", { scale: 0.86, rotation: -5 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2)" }, «tre» - 0.12);
-    rise(tl, "#t-l2", «trucchi» - 0.06);
-    tl.to("#t-num", { scale: 1.08, duration: 1.0, ease: "none" }, «trucchi»);
+      <div id="t-pill" class="pill" style="left:700px;top:640px;transform:rotate(5deg)">copialo</div>''', '''    enter(tl, "#g3-st", "Z");
+    flip(tl, "#t-l1", 0.03, 0.025);
+    tl.fromTo("#t-col", { y: 0 }, { y: -470 * 2, duration: 0.55, ease: "expo.out" }, «tre» - 0.14);
+    tl.fromTo("#t-num", { scale: 0.86, rotation: -5 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2)" }, «tre» - 0.14);
+    rise(tl, "#t-l2", «tre» + 0.12);
+    tl.to("#t-num", { scale: 1.08, duration: 1.0, ease: "none" }, «tre» + 0.4);
     sink(tl, "#t-l1", «eil» - 0.18); sink(tl, "#t-l2", «eil» - 0.18);
     rise(tl, "#t-l3", «eil»);
     tl.to("#t-num", { scale: 1, duration: 0.3, ease: "back.out(3)" }, «terzo»);
@@ -134,54 +115,63 @@ add('g4', 'questi', 'uno', f'''      {zone(ln('t-l1', 'questi sono i', 't-sans s
     pop(tl, "#t-pill", «copiare» + 0.1);
     tl.to(["#t-sel", "#t-cur", "#t-pill"], { opacity: 0, duration: 0.12 }, DUR - 0.5);
     tl.to("#t-num", { scale: 14, duration: 0.42, ease: "power3.in" }, DUR - 0.44);''',
-    fx=[('whoosh-short', 'questi', -0.04, 0.3), ('typing', 'questi', 0.0, 0.18), ('pop', 'tre', -0.1, 0.3), ('click-soft', 'terzo', 0.36, 0.4), ('pop', 'copiare', 0.1, 0.3), ('whoosh-cinematic', 'uno', -0.5, 0.3)])
+    fx=[('whoosh-cinematic', 'enon', -0.06, 0.22), ('typing', 'enon', 0.03, 0.18), ('pop', 'tre', -0.12, 0.3), ('click-soft', 'terzo', 0.36, 0.4), ('pop', 'copiare', 0.1, 0.3), ('whoosh-cinematic', 'uno', -0.5, 0.3)])
 
-# ------------------------------------------------------------------ 1: il silenzio
-title('g5', 'uno', 'per', 1, 'il silenzio', 'silenzio')
+# ------------------------------------------------------------------ 1: la brutta notizia
+title('g5', 'uno', 'maggio', 1, 'la brutta notizia', 'brutta', wsize=92)
 
-PLAY = '<svg viewBox="0 0 100 100" width="118" height="118"><circle cx="50" cy="50" r="48" fill="url(#gp)"/><path d="M41 31v38l31-19z" fill="#fff"/><defs><linearGradient id="gp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff2d95"/><stop offset="1" stop-color="#ff8a3c"/></linearGradient></defs></svg>'
-add('g6', 'per', 'cosi', f'''      {zone(ln('s-l1', 'per quasi tre anni', 't-sans t-mut'), ln('s-l2', 'due trailer', 't-it grad', 'font-size:128px', mt=-22))}
-      {zone(ln('s-l3', 'e in mezzo', 't-sans t-mut'), ln('s-l4', 'niente', 't-it split', 'font-size:170px', mt=-22))}
-      <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><line id="s-line" x1="90" y1="1000" x2="990" y2="1000" stroke="#4a3d6b" stroke-width="8" stroke-linecap="round"/><rect id="s-gap" x="236" y="900" width="372" height="200" rx="26" fill="rgba(255,45,149,0.1)" stroke="#ff2d95" stroke-width="4" stroke-dasharray="14 12"/></svg>
-      <div class="s-p" id="s-p1" style="left:101px">{PLAY}<b>Trailer 1</b><small>dic 2023</small></div>
-      <div class="s-p" id="s-p2" style="left:623px">{PLAY}<b>Trailer 2</b><small>mag 2025</small></div>
-      <div id="s-end" style="position:absolute;left:890px;top:1080px;width:160px;text-align:center;font:600 34px/1 Inter;color:#8f88a6">2026</div>
-      <div id="s-mid" class="pill" style="left:236px;top:1200px">17 mesi di silenzio</div>''', '''    enter(tl, "#g6-st", "L");
-    rise(tl, "#s-l1", 0.05);
-    draw(tl, "#s-line", 0.1, 0.6);
-    tl.fromTo("#s-end", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.6);
-    rise(tl, "#s-l2", «due» - 0.08);
-    tl.fromTo("#s-p1", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.6)" }, «due» - 0.02);
-    tl.fromTo("#s-p2", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.6)" }, «trailer» - 0.02);
-    sink(tl, "#s-l1", «emezzo» - 0.16); sink(tl, "#s-l2", «emezzo» - 0.16);
-    rise(tl, "#s-l3", «emezzo»);
-    tl.fromTo("#s-gap", { opacity: 0 }, { opacity: 1, duration: 0.2 }, «emezzo» + 0.05);
-    flip(tl, "#s-l4", «niente» - 0.06, 0.04);
-    pop(tl, "#s-mid", «niente» + 0.12);
+SAD = '<svg viewBox="0 0 100 100" width="130" height="130"><circle cx="50" cy="50" r="46" fill="#2a2140" stroke="#ff3b30" stroke-width="5"/><circle cx="34" cy="42" r="6" fill="#fff"/><circle cx="66" cy="42" r="6" fill="#fff"/><path d="M30 72 Q50 54 70 72" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/></svg>'
+def chip(i, month, day, sub, style):
+    return (f'<div id="{i}" style="position:absolute;width:480px;border-radius:44px;background:#fff;color:#07040d;text-align:center;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.55);{style}">'
+            f'<div style="background:linear-gradient(92deg,#ff2d95,#ff8a3c);color:#fff;font:700 40px/1 Inter;padding:24px 0;letter-spacing:0.08em">{month}</div>'
+            f'<div style="font:800 240px/1.08 Inter;letter-spacing:-0.04em">{day}</div><div style="font:600 36px/1 Inter;color:#6b6480;padding:0 0 34px">{sub}</div></div>')
+add('g6', 'maggio', 'quattro', f'''      {zone(ln('b-l1', 'maggio 2025', 't-sans t-mut'), ln('b-l2', 'il rinvio', 't-it', 'font-size:150px', mt=-22))}
+      {zone(ln('b-l3', 'i fan', 't-sans t-mut'), ln('b-l4', 'ci restano male', 't-it', 'font-size:104px', mt=-22))}
+      {chip('b-chip', 'MAGGIO 2025', '2', 'annuncio ufficiale', 'left:300px;top:780px')}
+      <div id="b-st" class="pill" style="left:230px;top:960px;font-size:110px;padding:26px 54px;background:#ff3b30;transform:rotate(-9deg)">rinviato</div>
+      <div class="b-s" id="b-s1" style="left:90px;top:760px">{SAD}</div><div class="b-s" id="b-s2" style="left:850px;top:880px">{SAD}</div><div class="b-s" id="b-s3" style="left:130px;top:1150px">{SAD}</div>''', '''    enter(tl, "#g6-st", "L");
+    rise(tl, "#b-l1", 0.05);
+    tl.fromTo("#b-chip", { opacity: 0, scale: 0.5, rotation: 6 }, { opacity: 1, scale: 1, rotation: 2, duration: 0.4, ease: "back.out(2)" }, 0.1);
+    rise(tl, "#b-l2", «rinvio» - 0.25);
+    tl.fromTo("#b-st", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, «rinvio»);
+    tl.fromTo("#b-chip", { x: 0 }, { x: 14, duration: 0.05, yoyo: true, repeat: 5, immediateRender: false }, «rinvio» + 0.18);
+    sink(tl, "#b-l1", «ifan» - 0.16); sink(tl, "#b-l2", «ifan» - 0.16);
+    rise(tl, "#b-l3", «ifan»);
+    rise(tl, "#b-l4", «ifan» + 0.28);
+    tl.fromTo(".b-s", { opacity: 0, scale: 0.2, y: 80 }, { opacity: 1, scale: 1, y: 0, duration: 0.36, ease: "back.out(2.6)", stagger: 0.12 }, «ifan» + 0.1);
     exit(tl, "#g6-st", "U", DUR - 0.2);''', '''
-    .s-p { position: absolute; top: 941px; width: 118px; text-align: center; }
-    .s-p svg { display: block; }
-    .s-p b { display: block; margin: 24px -70px 0; font: 700 40px/1 "Inter Display"; white-space: nowrap; }
-    .s-p small { display: block; margin: 10px -70px 0; font: 500 32px/1 "Inter Display"; color: #8f88a6; white-space: nowrap; }''',
-    fx=[('whoosh', 'per', -0.04, 0.3), ('pop', 'due', 0.0, 0.32), ('pop', 'trailer', 0.0, 0.32), ('whoosh-short', 'emezzo', -0.16, 0.22), ('impact-bass-1', 'niente', -0.04, 0.24), ('pop', 'niente', 0.12, 0.26)])
+    .b-s { position: absolute; width: 130px; height: 130px; }''',
+    fx=[('whoosh', 'maggio', -0.04, 0.3), ('pop', 'maggio', 0.1, 0.28), ('impact-bass-1', 'rinvio', 0.14, 0.3), ('whoosh-short', 'ifan', -0.16, 0.22), ('pop', 'ifan', 0.1, 0.26), ('pop', 'ifan', 0.22, 0.26), ('pop', 'ifan', 0.34, 0.26)])
 
-def news(i, top, rot, w1, w2):
-    return (f'<div class="n-c" id="n-c{i}" style="top:{top}px;transform:rotate({rot}deg)"><span>ULTIM\'ORA</span>'
-            f'<i style="width:{w1}%"></i><i style="width:{w2}%"></i></div>')
-add('g7', 'cosi', 'ilsecondo', f'''      {zone(ln('n-l1', 'ogni loro mossa', 't-sans'), ln('n-l2', 'una notizia', 't-it grad', 'font-size:128px', mt=-22))}
-      {news(1, 760, -4, 92, 64)}{news(2, 980, 3, 80, 88)}{news(3, 1200, -2, 96, 52)}''', '''    enter(tl, "#g7-st", "U");
-    rise(tl, "#n-l1", 0.15);
-    tl.fromTo(".n-c", { opacity: 0, x: 900 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out", stagger: 0.14 }, «mossa» - 0.1);
-    rise(tl, "#n-l2", «notizia» - 0.3);
-    tl.fromTo(".n-c", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, stagger: 0.05, immediateRender: false }, «notizia»);
+def day(k, d):
+    return f'<div class="d-c" id="d-c{k}" style="left:{70 + k * 190}px"><b>{d}</b><small>mag</small></div>'
+add('g7', 'quattro', 'q475', f'''      {zone(ln('d-l1', 'quattro giorni dopo', 't-sans'), ln('d-l2', 'senza avvisare', 't-it grad', 'font-size:112px', mt=-22))}
+      {zone(ln('d-l3', 'esce', 't-sans t-mut'), ln('d-l4', 'il secondo trailer', 't-it', 'font-size:92px', mt=-22))}
+      {''.join(day(k, d) for k, d in enumerate((2, 3, 4, 5, 6)))}
+      <div id="d-hl" style="position:absolute;left:62px;top:792px;width:186px;height:236px;border-radius:38px;border:6px solid #ff2d95;box-shadow:0 0 50px rgba(255,45,149,0.6)"></div>
+      <div id="d-tag" style="position:absolute;left:70px;top:1050px;width:170px;text-align:center;font:700 30px/1 Inter;color:#ff3b30;letter-spacing:0.04em">RINVIO</div>
+      <div id="d-play" style="position:absolute;left:856px;top:1050px;width:118px">{PLAY}</div>
+      <div id="d-pill" class="pill" style="left:650px;top:1200px;font-size:60px;padding:18px 36px">trailer 2</div>''', '''    enter(tl, "#g7-st", "U");
+    rise(tl, "#d-l1", 0.05);
+    tl.fromTo(".d-c", { opacity: 0, y: 140 }, { opacity: 1, y: 0, duration: 0.34, ease: "back.out(2)", stagger: 0.05 }, 0.05);
+    tl.fromTo("#d-hl", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.2);
+    tl.fromTo("#d-tag", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.25);
+    for (let k = 1; k <= 4; k++) tl.to("#d-hl", { x: 190 * k, duration: 0.12, ease: "power3.inOut" }, 0.35 + k * 0.17);
+    rise(tl, "#d-l2", «senza» - 0.08);
+    sink(tl, "#d-l1", «esce» - 0.16); sink(tl, "#d-l2", «esce» - 0.16);
+    rise(tl, "#d-l3", «esce»);
+    rise(tl, "#d-l4", «esce» + 0.25);
+    tl.fromTo("#d-play", { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.8)" }, «esce» + 0.1);
+    pop(tl, "#d-pill", «esce» + 0.3);
+    tl.fromTo("#d-c4", { scale: 1 }, { scale: 1.12, duration: 0.3, ease: "back.out(3)", immediateRender: false }, «esce» + 0.1);
     exit(tl, "#g7-st", "L", DUR - 0.2);''', '''
-    .n-c { position: absolute; left: 130px; width: 820px; height: 190px; border-radius: 30px; background: #fff; padding: 30px 38px; box-shadow: 0 30px 90px rgba(0,0,0,0.5); }
-    .n-c span { display: inline-block; padding: 8px 18px; border-radius: 10px; background: linear-gradient(92deg, #ff2d95, #ff8a3c); color: #fff; font: 800 28px/1 "Inter Display"; letter-spacing: 0.06em; }
-    .n-c i { display: block; height: 22px; border-radius: 11px; background: #1b1430; margin-top: 20px; }
-    .n-c i + i { background: #b9b3cc; height: 16px; margin-top: 16px; }''',
-    fx=[('whoosh-short', 'cosi', -0.04, 0.3), ('pop', 'mossa', -0.1, 0.26), ('pop', 'mossa', 0.04, 0.26), ('pop', 'mossa', 0.18, 0.26), ('ping', 'notizia', -0.1, 0.2)])
+    .d-c { position: absolute; top: 800px; width: 170px; height: 220px; border-radius: 32px; border: 3px solid #3a2f55; background: #120b22; text-align: center; }
+    .d-c b { display: block; font: 800 110px/1 "Inter Display"; margin-top: 34px; }
+    .d-c small { display: block; font: 600 32px/1 "Inter Display"; color: #8f88a6; margin-top: 8px; }''',
+    fx=[('whoosh-short', 'quattro', -0.04, 0.3), ('key-press', 'quattro', 0.52, 0.24), ('key-press', 'quattro', 0.69, 0.24), ('key-press', 'quattro', 0.86, 0.24), ('key-press', 'quattro', 1.03, 0.24),
+        ('whoosh-short', 'esce', -0.16, 0.22), ('pop', 'esce', 0.1, 0.34), ('sparkle', 'esce', 0.3, 0.14)])
 
-add('g8', 'ilsecondo', 'due2', f'''      {zone(ln('v-l1', 'il secondo trailer', 't-sans'))}
+add('g8', 'q475', 'edel', f'''      {zone(ln('v-l1', 'il secondo trailer', 't-sans t-mut'))}
       <div id="v-card" data-layout-allow-overlap style="position:absolute;left:110px;top:520px;width:860px;height:484px;border-radius:40px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.6);background:#000">
         <video id="v-vid" class="clip" src="assets/video/city.mp4" data-start="0" data-duration="VDUR" data-media-start="0.3" muted playsinline style="position:absolute;left:0;top:-520px;width:860px;height:1529px;object-fit:cover"></video>
         <div style="position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.75))"></div>
@@ -191,156 +181,171 @@ add('g8', 'ilsecondo', 'due2', f'''      {zone(ln('v-l1', 'il secondo trailer', 
       {zone(ln('v-l2', 'visualizzazioni', 't-sans'), top=1230)}
       <div id="v-pill" class="pill" style="left:690px;top:1010px;transform:rotate(4deg)">in un giorno</div>
       <div class="tag" id="v-tag" style="top:1400px">Dato dichiarato da Rockstar, su tutte le piattaforme</div>''', f'''    enter(tl, "#g8-st", "Z");
-    rise(tl, "#v-l1", 0.05);
-    tl.fromTo("#v-card", {{ y: 300, opacity: 0, rotation: 5 }}, {{ y: 0, opacity: 1, rotation: 0, duration: 0.45, ease: "expo.out" }}, 0.08);
+    rise(tl, "#v-l1", 0.03);
+    tl.fromTo("#v-card", {{ y: 300, opacity: 0, rotation: 5 }}, {{ y: 0, opacity: 1, rotation: 0, duration: 0.4, ease: "expo.out" }}, 0.02);
     tl.fromTo("#v-bar", {{ scaleX: 0.05 }}, {{ scaleX: 0.9, duration: DUR, ease: "none" }}, 0);
-    tl.fromTo("#v-n", {{ opacity: 0, y: 80 }}, {{ opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }}, «q475» - 0.2);
-    count(tl, "#v-nv", 0, 475000000, «q475» - 0.15, 1.1, (v) => String(Math.round(v)){DOTS});
+    tl.fromTo("#v-n", {{ opacity: 0, y: 80 }}, {{ opacity: 1, y: 0, duration: 0.25, ease: "expo.out" }}, 0.04);
+    count(tl, "#v-nv", 0, 475000000, 0.06, 1.1, (v) => String(Math.round(v)){DOTS});
     tl.fromTo("#v-n", {{ scale: 1.16 }}, {{ scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }}, «milioni» + 0.1);
     rise(tl, "#v-l2", «visual» - 0.08);
     tl.fromTo("#v-tag", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.25 }}, «visual» + 0.2);
-    pop(tl, "#v-pill", «ingiorno» + 0.1);
+    pop(tl, "#v-pill", «ingiorno» + 0.05);
     exit(tl, "#g8-st", "L", DUR - 0.2);''',
-    fx=[('whoosh', 'ilsecondo', -0.04, 0.3), ('typing', 'q475', -0.15, 0.22), ('typing', 'q475', 0.5, 0.2), ('impact-bass-1', 'milioni', 0.08, 0.24), ('pop', 'ingiorno', 0.1, 0.32)])
+    fx=[('whoosh', 'q475', -0.04, 0.3), ('typing', 'q475', 0.06, 0.22), ('typing', 'q475', 0.7, 0.2), ('impact-bass-1', 'milioni', 0.08, 0.24), ('pop', 'ingiorno', 0.05, 0.32)])
 
-# ------------------------------------------------------------------ 2: l'attesa
-title('g9', 'due2', 'tredici', 2, "l'attesa", 'attesa')
+def news(i, top, rot, w1, w2):
+    return (f'<div class="n-c" id="n-c{i}" style="top:{top}px;transform:rotate({rot}deg)"><span>TRAILER 2</span>'
+            f'<i style="width:{w1}%"></i><i style="width:{w2}%"></i></div>')
+add('g8b', 'edel', 'due2', f'''      {zone(ln('n-l1', 'e del rinvio', 't-sans t-mut'), ln('n-l2', 'non parla più nessuno', 't-it grad', 'font-size:66px', mt=-18))}
+      <div id="n-st" class="pill" style="left:230px;top:900px;font-size:110px;padding:26px 54px;background:#ff3b30;transform:rotate(-9deg);opacity:1">rinviato</div>
+      {news(1, 760, -4, 92, 64)}{news(2, 980, 3, 80, 88)}{news(3, 1200, -2, 96, 52)}''', '''    enter(tl, "#g8b-st", "U");
+    rise(tl, "#n-l1", 0.05);
+    tl.fromTo("#n-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0.05);
+    tl.fromTo(".n-c", { opacity: 0, x: 1000 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out", stagger: 0.13 }, «nonparla» - 0.25);
+    tl.to("#n-st", { opacity: 0.12, scale: 0.8, duration: 0.5, ease: "power2.out" }, «nonparla» - 0.2);
+    rise(tl, "#n-l2", «nonparla» - 0.08);
+    exit(tl, "#g8b-st", "L", DUR - 0.2);''', '''
+    .n-c { position: absolute; left: 130px; width: 820px; height: 190px; border-radius: 30px; background: #fff; padding: 30px 38px; box-shadow: 0 30px 90px rgba(0,0,0,0.5); }
+    .n-c span { display: inline-block; padding: 8px 18px; border-radius: 10px; background: linear-gradient(92deg, #ff2d95, #ff8a3c); color: #fff; font: 800 28px/1 "Inter Display"; letter-spacing: 0.06em; }
+    .n-c i { display: block; height: 22px; border-radius: 11px; background: #1b1430; margin-top: 20px; }
+    .n-c i + i { background: #b9b3cc; height: 16px; margin-top: 16px; }''',
+    fx=[('whoosh-short', 'edel', -0.04, 0.3), ('pop', 'nonparla', -0.25, 0.26), ('pop', 'nonparla', -0.12, 0.26), ('pop', 'nonparla', 0.01, 0.26)])
 
-YRS = ''.join(f'<span style="display:block">{y}</span>' for y in range(2013, 2027))
-add('g10', 'tredici', 'eogni', f'''      {zone(ln('a-l1', 'tredici anni', 't-it grad', 'font-size:124px'), ln('a-l2', "dall'ultimo capitolo", 't-sans t-mut', mt=-22))}
-      {zone(ln('a-l3', 'due rinvii', 't-it', 'font-size:150px'))}
-      <div id="a-yr" style="position:absolute;left:0;right:0;top:640px;height:260px;overflow:hidden;text-align:center;font:italic 800 250px/260px Inter;letter-spacing:-0.04em"><div id="a-ys">{YRS}</div></div>
-      <div class="a-d" id="a-d1" style="left:70px;top:1010px"><b>2025</b><i class="a-x"></i></div>
-      <div class="a-d" id="a-d2" style="left:340px;top:1010px;width:330px"><b>26 MAG 2026</b><i class="a-x"></i></div>
-      <div class="a-d a-ok" id="a-d3" style="left:700px;top:1010px;width:310px"><b>19 NOV 2026</b></div>
-      <div id="a-s1" class="pill" style="left:60px;top:960px;transform:rotate(-8deg);background:#ff3b30">rinviato</div>
-      <div id="a-s2" class="pill" style="left:400px;top:960px;transform:rotate(6deg);background:#ff3b30">rinviato</div>''', '''    enter(tl, "#g10-st", "U");
-    rise(tl, "#a-l1", 0.05);
-    tl.fromTo("#a-ys", { y: 0 }, { y: -260 * 13, duration: 1.0, ease: "power3.inOut" }, 0.1);
-    tl.fromTo("#a-yr", { scale: 0.85 }, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.08);
-    rise(tl, "#a-l2", «ultimo» - 0.1);
-    sink(tl, "#a-l1", «duerinvii» - 0.18); sink(tl, "#a-l2", «duerinvii» - 0.18);
-    tl.to("#a-yr", { scale: 0.62, y: -30, opacity: 0.5, duration: 0.3, ease: "expo.out" }, «duerinvii» - 0.15);
-    rise(tl, "#a-l3", «duerinvii» - 0.04);
-    tl.fromTo(".a-d", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.36, ease: "back.out(2)", stagger: 0.08 }, «duerinvii» - 0.1);
-    tl.fromTo("#a-s1", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, «duerinvii» + 0.28);
-    tl.fromTo("#a-s2", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, «duerinvii» + 0.5);
-    tl.fromTo("#a-d1 .a-x", { scaleX: 0 }, { scaleX: 1, duration: 0.14 }, «duerinvii» + 0.3);
-    tl.fromTo("#a-d2 .a-x", { scaleX: 0 }, { scaleX: 1, duration: 0.14 }, «duerinvii» + 0.52);
-    tl.fromTo("#a-d3", { scale: 1 }, { scale: 1.1, duration: 0.3, ease: "back.out(3)", immediateRender: false }, «duerinvii» + 0.72);
-    exit(tl, "#g10-st", "L", DUR - 0.2);''', '''
-    .a-d { position: absolute; width: 240px; height: 130px; border-radius: 30px; border: 4px solid #3a2f55; background: #120b22; display: flex; align-items: center; justify-content: center; }
-    .a-d b { font: 700 42px/1 "Inter Display"; color: #a59fb8; white-space: nowrap; }
-    .a-ok { border-color: #ff2d95; background: rgba(255,45,149,0.14); }
-    .a-ok b { color: #fff; }
-    .a-x { position: absolute; left: 14px; right: 14px; top: 50%; height: 8px; margin-top: -4px; border-radius: 4px; background: #ff3b30; transform-origin: left center; }''',
-    fx=[('whoosh', 'tredici', -0.04, 0.3), ('typing', 'tredici', 0.1, 0.22), ('typing', 'tredici', 0.6, 0.2), ('whoosh-short', 'duerinvii', -0.18, 0.24), ('impact-bass-1', 'duerinvii', 0.3, 0.24), ('impact-bass-1', 'duerinvii', 0.52, 0.24), ('pop', 'duerinvii', 0.72, 0.3)])
+# ------------------------------------------------------------------ 2: lo spot su Netflix
+title('g9', 'due2', 'unvideo', 2, 'lo spot su Netflix', 'spot', wsize=84)
 
-add('g11', 'eogni', 'tre3', f'''      {zone(ln('w-l1', 'ogni rinvio', 't-sans t-mut'), ln('w-l2', 'il giro del mondo', 't-it grad', 'font-size:84px', mt=-22))}
-      {zone(ln('w-l3', 'più aspetti una cosa', 't-sans'), ln('w-l4', 'più la vuoi', 't-it split grad', 'font-size:140px', mt=-22))}
-      <div id="w-globe" style="position:absolute;left:260px;top:790px;width:560px;height:560px">
-        <svg viewBox="0 0 560 560" width="560" height="560"><g fill="none" stroke="#7b5cff" stroke-width="5"><circle cx="280" cy="280" r="270"/><ellipse cx="280" cy="280" rx="270" ry="100"/><ellipse cx="280" cy="280" rx="270" ry="200"/><ellipse id="w-m1" cx="280" cy="280" rx="110" ry="270"/><ellipse id="w-m2" cx="280" cy="280" rx="210" ry="270"/><line x1="280" y1="10" x2="280" y2="550"/></g></svg>
-        <i class="w-ring" style="border-color:#ff2d95"></i><i class="w-ring" style="border-color:#ff8a3c"></i><i class="w-ring" style="border-color:#ff2d95"></i>
+add('g10', 'unvideo', 'primo', f'''      {zone(ln('x-l1', 'un video di', 't-sans t-mut'), ln('x-l2', "quasi mezz'ora", 't-it grad', 'font-size:112px', mt=-22))}
+      {zone(ln('x-l3', 'in anteprima su', 't-sans t-mut'), ln('x-l4', 'NETFLIX', 'split', 'font:900 150px/1.06 Inter;letter-spacing:0.02em;color:#e50914', mt=-10))}
+      <div id="x-card" data-layout-allow-overlap style="position:absolute;left:110px;top:740px;width:860px;height:484px;border-radius:40px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.6);background:#000">
+        <video id="x-vid" class="clip" src="assets/video/city.mp4" data-start="0" data-duration="VDUR" data-media-start="2.0" muted playsinline style="position:absolute;left:0;top:-520px;width:860px;height:1529px;object-fit:cover"></video>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,0.75))"></div>
+        <div style="position:absolute;left:36px;right:190px;bottom:40px;height:10px;border-radius:5px;background:rgba(255,255,255,0.3)"><div id="x-bar" style="height:100%;border-radius:5px;background:#e50914;transform-origin:left center"></div></div>
+        <div style="position:absolute;right:36px;bottom:26px;font:700 38px/1 Inter;color:#fff">26:59</div>
       </div>
-      <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path id="w-ax" d="M150 760 V1420 H950" fill="none" stroke="#4a3d6b" stroke-width="6" stroke-linecap="round"/><path id="w-curve" d="M150 1400 C 480 1390, 720 1250, 930 800" fill="none" stroke="url(#wg)" stroke-width="14" stroke-linecap="round"/><defs><linearGradient id="wg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff2d95"/><stop offset="1" stop-color="#ff8a3c"/></linearGradient></defs></svg>
-      <div id="w-dot" style="position:absolute;left:902px;top:772px;width:56px;height:56px;border-radius:50%;background:#ff8a3c;box-shadow:0 0 50px #ff8a3c"></div>
-      <div id="w-lx" style="position:absolute;left:800px;top:1440px;font:600 34px/1 Inter;color:#8f88a6">attesa</div>
-      <div id="w-ly" style="position:absolute;left:170px;top:770px;font:600 34px/1 Inter;color:#8f88a6">desiderio</div>''', '''    enter(tl, "#g11-st", "Z");
-    rise(tl, "#w-l1", 0.05);
-    tl.fromTo("#w-globe", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 0.1);
-    tl.fromTo("#w-m1", { attr: { rx: 110 } }, { attr: { rx: 270 }, duration: 2.4, ease: "none" }, 0.1);
-    tl.fromTo("#w-m2", { attr: { rx: 210 } }, { attr: { rx: 40 }, duration: 2.4, ease: "none" }, 0.1);
-    rise(tl, "#w-l2", «giro» - 0.08);
-    tl.fromTo(".w-ring", { scale: 1, opacity: 0.9 }, { scale: 1.9, opacity: 0, duration: 0.9, ease: "power2.out", stagger: 0.22 }, «giro»);
-    sink(tl, "#w-l1", «piuaspetti» - 0.18); sink(tl, "#w-l2", «piuaspetti» - 0.18);
-    tl.to("#w-globe", { opacity: 0, scale: 0.6, duration: 0.25, ease: "power3.in" }, «piuaspetti» - 0.22);
-    rise(tl, "#w-l3", «piuaspetti»);
-    draw(tl, "#w-ax", «piuaspetti» - 0.05, 0.4);
-    tl.fromTo(["#w-lx", "#w-ly"], { opacity: 0 }, { opacity: 1, duration: 0.2 }, «piuaspetti» + 0.3);
-    draw(tl, "#w-curve", «piuaspetti» + 0.2, 1.3);
-    flip(tl, "#w-l4", «piuvuoi» - 0.06, 0.035);
-    pop(tl, "#w-dot", «piuvuoi» + 0.3);
-    exit(tl, "#g11-st", "U", DUR - 0.2);''', '''
-    .w-ring { position: absolute; inset: 0; border-radius: 50%; border: 6px solid; opacity: 0; }''',
-    fx=[('whoosh-cinematic', 'eogni', -0.06, 0.24), ('ping', 'giro', 0.0, 0.22), ('whoosh-short', 'piuaspetti', -0.2, 0.24), ('riser', 'piuaspetti', 0.2, 0.12), ('pop', 'piuvuoi', 0.3, 0.32)])
+      <div id="x-pill" class="pill" style="left:120px;top:690px;background:#e50914;transform:rotate(-4deg)">anteprima</div>''', '''    enter(tl, "#g10-st", "L");
+    rise(tl, "#x-l1", 0.05);
+    tl.fromTo("#x-card", { y: 300, opacity: 0, rotation: -5 }, { y: 0, opacity: 1, rotation: 0, duration: 0.45, ease: "expo.out" }, 0.08);
+    tl.fromTo("#x-bar", { scaleX: 0.02 }, { scaleX: 1, duration: DUR, ease: "none" }, 0);
+    rise(tl, "#x-l2", «mezzora» - 0.3);
+    tl.fromTo("#x-card", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, «mezzora»);
+    sink(tl, "#x-l1", «anteprima» - 0.16); sink(tl, "#x-l2", «anteprima» - 0.16);
+    rise(tl, "#x-l3", «anteprima»);
+    pop(tl, "#x-pill", «anteprima» + 0.1);
+    flip(tl, "#x-l4", «netflix» - 0.06, 0.04);
+    exit(tl, "#g10-st", "Z", DUR - 0.18);''',
+    fx=[('whoosh', 'unvideo', -0.04, 0.3), ('pop', 'mezzora', 0.0, 0.26), ('whoosh-short', 'anteprima', -0.16, 0.22), ('pop', 'anteprima', 0.1, 0.28), ('impact-bass-1', 'netflix', -0.04, 0.28)])
 
-# ------------------------------------------------------------------ 3: far lavorare gli altri
-title('g12', 'tre3', 'ognifoto', 3, 'far lavorare gli altri', 'lavorare', wsize=66)
+add('g11', 'primo', 'erauno', f'''      {zone(ln('k-l1', 'primo in classifica', 't-sans'))}
+      <div id="k-one" class="grad" style="position:absolute;left:0;right:0;top:500px;text-align:center;font:italic 900 430px/1.1 Inter;letter-spacing:-0.05em">#1</div>
+      <div id="k-in" style="position:absolute;left:0;right:0;top:1030px;text-align:center;font:italic 800 120px/1.1 Inter;letter-spacing:-0.02em;white-space:nowrap">IN <span id="k-nv">0</span> PAESI</div>
+      <div class="tag" id="k-tag" style="top:1220px">Dati Netflix: 31,1 milioni di visualizzazioni in quattro giorni</div>''', '''    enter(tl, "#g11-st", "U");
+    rise(tl, "#k-l1", 0.05);
+    tl.fromTo("#k-one", { opacity: 0, scale: 0.4, rotation: -8 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.42, ease: "back.out(2.2)" }, 0.08);
+    tl.fromTo("#k-in", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, «ottantasette» - 0.3);
+    count(tl, "#k-nv", 0, 87, «ottantasette» - 0.25, 0.6);
+    tl.fromTo("#k-in", { scale: 1.16 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «paesi»);
+    tl.fromTo("#k-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, «paesi» + 0.1);
+    tl.to("#k-one", { scale: 1.07, duration: 1.2, ease: "none" }, 0.5);
+    exit(tl, "#g11-st", "L", DUR - 0.2);''',
+    fx=[('whoosh-short', 'primo', -0.04, 0.3), ('impact-bass-1', 'primo', 0.1, 0.26), ('typing', 'ottantasette', -0.25, 0.22), ('pop', 'paesi', 0.0, 0.3)])
 
-add('g13', 'ognifoto', 'pubgratis', f'''      {vid('f-v', 'crowd.mp4', T['pubgratis'] - T['ognifoto'])}
-      {zone(ln('f-l1', 'ogni fotogramma', 't-sans'), ln('f-l2', 'analizzato', 't-it grad', 'font-size:132px', mt=-22))}
-      {zone(ln('f-l3', 'da milioni', 't-sans'), ln('f-l4', 'di fan', 't-it grad', 'font-size:150px', mt=-22))}
-      <div id="f-p1" class="pill f-p" style="left:110px;top:900px;transform:rotate(-6deg)">teorie</div>
-      <div id="f-p2" class="pill f-p" style="left:560px;top:1060px;transform:rotate(5deg)">video</div>
-      <div id="f-p3" class="pill f-p" style="left:280px;top:1230px;transform:rotate(-3deg)">meme</div>''', '''    enter(tl, "#g13-st", "L");
+add('g11b', 'erauno', 'tre3', f'''      {vid('f-v', 'crowd.mp4', T['tre3'] - T['erauno'])}
+      {zone(ln('f-l1', 'era uno', 't-sans'), ln('f-l2', 'spot', 't-it split', 'font-size:210px', mt=-30))}
+      {zone(ln('f-l3', "la gente l'ha scelto", 't-sans'), ln('f-l4', 'come un film', 't-it grad', 'font-size:126px', mt=-22))}''', '''    enter(tl, "#g11b-st", "L");
     tl.fromTo("#f-v-w", { scale: 1.18 }, { scale: 1.02, duration: DUR, ease: "none" }, 0);
     rise(tl, "#f-l1", 0.05);
-    rise(tl, "#f-l2", «analizzato» - 0.08);
-    sink(tl, "#f-l1", «milionifan» - 0.18); sink(tl, "#f-l2", «milionifan» - 0.18);
-    rise(tl, "#f-l3", «milionifan» - 0.02);
-    rise(tl, "#f-l4", «milionifan» + 0.3);
-    pop(tl, "#f-p1", «teorie»);
-    pop(tl, "#f-p2", «video»);
-    pop(tl, "#f-p3", «meme»);
+    flip(tl, "#f-l2", «spot2» - 0.06, 0.05);
+    sink(tl, "#f-l1", «elagente» - 0.16); sink(tl, "#f-l2", «elagente» - 0.16);
+    rise(tl, "#f-l3", «elagente»);
+    rise(tl, "#f-l4", «film» - 0.4);
+    exit(tl, "#g11b-st", "Z", DUR - 0.18);''', glow=False,
+    fx=[('whoosh', 'erauno', -0.04, 0.3), ('impact-bass-1', 'spot2', -0.04, 0.26), ('whoosh-short', 'elagente', -0.16, 0.22), ('sparkle', 'film', -0.3, 0.16)])
+
+# ------------------------------------------------------------------ 3: l'esca
+title('g12', 'tre3', 'versione', 3, "l'esca", 'esca', wsize=150)
+
+CK = '<svg viewBox="0 0 24 24" width="34" height="34"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#ff8a3c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+add('g13', 'versione', 'risultato', f'''      {zone(ln('e-l1', 'la versione base', 't-sans t-mut'))}
+      {zone(ln('e-l2', 'quella speciale', 't-sans'))}
+      {zone(ln('e-l3', 'solo venti euro', 't-sans'), ln('e-l4', 'in più', 't-it grad', 'font-size:140px', mt=-22))}
+      <div class="e-c" id="e-c1" style="left:70px;top:760px;height:480px"><small>BASE</small><b id="e-p1">79,99 €</b><i style="width:78%"></i><i style="width:56%"></i></div>
+      <div class="e-c e-u" id="e-c2" style="left:560px;top:700px;height:600px"><small>ULTIMATE</small><b id="e-p2" class="grad">99,99 €</b>
+        <span>{CK}<i style="width:230px"></i></span><span>{CK}<i style="width:270px"></i></span><span>{CK}<i style="width:200px"></i></span><span>{CK}<i style="width:250px"></i></span></div>
+      <div id="e-plus" class="pill" style="left:356px;top:1310px;font-size:96px;padding:22px 50px">+20 €</div>''', '''    enter(tl, "#g13-st", "L");
+    rise(tl, "#e-l1", 0.05);
+    tl.fromTo("#e-c1", { opacity: 0, y: 260, rotation: -5 }, { opacity: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.8)" }, 0.1);
+    tl.fromTo("#e-p1", { scale: 1.4 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «ottanta»);
+    sink(tl, "#e-l1", «quella» - 0.16);
+    rise(tl, "#e-l2", «quella»);
+    tl.fromTo("#e-c2", { opacity: 0, y: 300, rotation: 6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.8)" }, «quella» + 0.05);
+    tl.fromTo("#e-p2", { scale: 1.4 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «cento»);
+    tl.to("#e-c1", { opacity: 0.55, scale: 0.95, duration: 0.3 }, «cento»);
+    sink(tl, "#e-l2", «soloventi» - 0.16);
+    rise(tl, "#e-l3", «soloventi»);
+    rise(tl, "#e-l4", «inpiu» - 0.08);
+    pop(tl, "#e-plus", «soloventi» + 0.25);
+    tl.fromTo("#e-c2", { scale: 1 }, { scale: 1.06, duration: 0.3, ease: "back.out(3)", immediateRender: false }, «inpiu»);
     exit(tl, "#g13-st", "Z", DUR - 0.18);''', '''
-    .f-p { font-size: 84px; padding: 22px 46px; box-shadow: 0 20px 70px rgba(0,0,0,0.5); }''', glow=False,
-    fx=[('whoosh', 'ognifoto', -0.04, 0.3), ('key-press', 'analizzato', -0.08, 0.22), ('whoosh-short', 'milionifan', -0.18, 0.22), ('pop', 'teorie', 0.0, 0.34), ('pop', 'video', 0.0, 0.34), ('pop', 'meme', 0.0, 0.34)])
+    .e-c { position: absolute; width: 450px; border-radius: 40px; border: 3px solid #3a2f55; background: #120b22; padding: 44px 40px; }
+    .e-c small { display: block; font: 700 34px/1 "Inter Display"; letter-spacing: 0.1em; color: #a59fb8; }
+    .e-c b { display: block; font: italic 800 92px/1.1 "Inter Display"; letter-spacing: -0.03em; margin: 22px 0 34px; white-space: nowrap; transform-origin: left center; }
+    .e-c > i { display: block; height: 18px; border-radius: 9px; background: #3a2f55; margin-top: 22px; }
+    .e-c span { display: flex; align-items: center; gap: 16px; margin-top: 22px; }
+    .e-c span i { display: block; height: 18px; border-radius: 9px; background: #5a4a80; }
+    .e-u { border: 4px solid #ff2d95; background: linear-gradient(180deg, rgba(255,45,149,0.16), rgba(255,138,60,0.06)); box-shadow: 0 0 80px rgba(255,45,149,0.3); }
+    .e-u small { color: #ff8a3c; }''',
+    fx=[('whoosh', 'versione', -0.04, 0.3), ('pop', 'versione', 0.12, 0.26), ('key-press', 'ottanta', 0.0, 0.26), ('pop', 'quella', 0.07, 0.28), ('key-press', 'cento', 0.0, 0.26), ('whoosh-short', 'soloventi', -0.16, 0.22), ('pop', 'soloventi', 0.25, 0.34), ('sparkle', 'inpiu', 0.0, 0.14)])
 
-add('g14', 'pubgratis', 'eilloro', f'''      {zone(ln('z-l1', 'pubblicità', 't-sans'), ln('z-l2', 'gratis', 't-it split grad', 'font-size:170px', mt=-22))}
-      <div id="z-n" style="position:absolute;left:0;right:0;top:800px;text-align:center;font:italic 800 330px/1.05 Inter;letter-spacing:-0.04em;white-space:nowrap"><span id="z-nv">900.000</span> €</div>
-      {zone(ln('z-l3', 'fatta dal pubblico', 't-sans t-mut'), top=1220)}''', f'''    enter(tl, "#g14-st", "U");
-    rise(tl, "#z-l1", 0.05);
-    flip(tl, "#z-l2", «gratis» - 0.06, 0.04);
-    tl.fromTo("#z-n", {{ opacity: 0, scale: 0.34 }}, {{ opacity: 1, scale: 0.42, duration: 0.25, ease: "expo.out" }}, 0.1);
-    count(tl, "#z-nv", 900000, 0, «gratis» - 0.1, 0.6, (v) => String(Math.round(v)){DOTS});
-    tl.to("#z-n", {{ scale: 1, duration: 0.4, ease: "back.out(2)" }}, «gratis» + 0.42);
-    rise(tl, "#z-l3", «fatta» - 0.08);
-    exit(tl, "#g14-st", "L", DUR - 0.2);''',
-    fx=[('whoosh-short', 'pubgratis', -0.04, 0.3), ('typing', 'gratis', -0.1, 0.22), ('impact-bass-1', 'gratis', 0.42, 0.26), ('key-press', 'fatta', -0.08, 0.2)])
-
-add('g15', 'eilloro', 'lezione', f'''      {zone(ln('c-l1', 'il loro capo', 't-sans t-mut'), ln('c-l2', "l'ha detto chiaro", 't-it', 'font-size:96px', mt=-22))}
-      <div id="c-card" style="position:absolute;left:80px;top:700px;width:920px;border-radius:44px;background:#120b22;border:3px solid #3a2f55;padding:40px 56px 54px">
-        <div class="grad" style="font:italic 900 200px/0.8 Inter;height:110px">“</div>
-        <div style="font:italic 700 74px/1.2 Inter;letter-spacing:-0.02em">
-          <div id="c-q1" class="split">Non spendiamo</div>
-          <div><span class="hl"><i id="c-hl"></i><span id="c-q2" class="split">in marketing</span></span></div>
-          <div id="c-q3" class="split">finché non siamo</div>
-          <div id="c-q4" class="split">vicini all'uscita.</div>
-        </div>
-      </div>
-      <div class="tag" id="c-tag" style="top:1330px;color:#d9d4ea">Strauss Zelnick, CEO di Take-Two Interactive</div>''', '''    enter(tl, "#g15-st", "Z");
-    rise(tl, "#c-l1", 0.05);
-    rise(tl, "#c-l2", «chiaro» - 0.4);
-    tl.fromTo("#c-card", { opacity: 0, y: 260, rotation: 3 }, { opacity: 1, y: 0, rotation: 0, duration: 0.45, ease: "expo.out" }, «chiaro» - 0.3);
-    typeIn(tl, "#c-q1", «nonspendiamo», 0.04);
-    typeIn(tl, "#c-q2", «inmarketing», 0.04);
-    tl.fromTo("#c-hl", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, «inmarketing» + 0.45);
-    typeIn(tl, "#c-q3", «finche», 0.035);
-    typeIn(tl, "#c-q4", «vicini», 0.035);
-    tl.fromTo("#c-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, «nonspendiamo» + 0.3);
-    tl.to("#c-card", { scale: 1.04, duration: 3.0, ease: "none" }, «nonspendiamo»);
-    exit(tl, "#g15-st", "U", DUR - 0.2);''',
-    fx=[('whoosh-cinematic', 'eilloro', -0.06, 0.24), ('pop', 'chiaro', -0.3, 0.26), ('typing', 'nonspendiamo', 0.0, 0.22), ('typing', 'inmarketing', 0.0, 0.22), ('sparkle', 'inmarketing', 0.45, 0.14), ('typing', 'finche', 0.0, 0.22), ('typing', 'vicini', 0.0, 0.22)])
+DOTSROW = lambda p: ''.join(f'<i class="o-d {p}" id="{p}{k}"></i>' for k in range(10))
+add('g14', 'risultato', 'lezione', f'''      {zone(ln('o-l1', 'risultato?', 't-it split', 'font-size:120px'))}
+      {zone(ln('o-l2', 'quasi nove su dieci', 't-sans'), ln('o-l3', 'la più cara', 't-it grad', 'font-size:126px', mt=-22))}
+      {zone(ln('o-l4', 'di solito', 't-sans t-mut'), ln('o-l5', 'uno o due', 't-it', 'font-size:136px', mt=-22))}
+      <div id="o-ta" class="o-t" style="top:770px">GTA 6</div>
+      <div class="o-r" id="o-ra" style="top:830px">{DOTSROW('oa')}</div>
+      <div id="o-tb" class="o-t" style="top:1040px">di solito</div>
+      <div class="o-r" id="o-rb" style="top:1100px">{DOTSROW('ob')}</div>
+      <div class="tag" id="o-tag" style="top:1270px">Stima Sensor Tower sui preordini (quota dell'edizione più cara)</div>''', '''    enter(tl, "#g14-st", "U");
+    flip(tl, "#o-l1", 0.03, 0.03);
+    sink(tl, "#o-l1", «secondo2» - 0.16);
+    tl.fromTo(["#o-ta", "#o-ra"], { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, «secondo2» - 0.1);
+    tl.fromTo("#o-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, «secondo2» + 0.1);
+    rise(tl, "#o-l2", «nove» - 0.3);
+    for (let k = 0; k < 9; k++) tl.to("#oa" + k, { backgroundImage: "linear-gradient(135deg,#ff2d95,#ff8a3c)", scale: 1.12, duration: 0.1, yoyo: false }, «nove» - 0.25 + k * 0.055);
+    for (let k = 0; k < 9; k++) tl.to("#oa" + k, { scale: 1, duration: 0.12 }, «nove» - 0.13 + k * 0.055);
+    rise(tl, "#o-l3", «cara» - 0.35);
+    sink(tl, "#o-l2", «disolito» - 0.16); sink(tl, "#o-l3", «disolito» - 0.16);
+    rise(tl, "#o-l4", «disolito»);
+    tl.fromTo(["#o-tb", "#o-rb"], { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, «disolito»);
+    rise(tl, "#o-l5", «unodue» - 0.06);
+    for (let k = 0; k < 2; k++) { tl.to("#ob" + k, { backgroundColor: "#ffffff", duration: 0.1 }, «unodue» + k * 0.25); tl.fromTo("#ob" + k, { scale: 1.3 }, { scale: 1, duration: 0.3, ease: "back.out(3)", immediateRender: false }, «unodue» + k * 0.25); }
+    exit(tl, "#g14-st", "L", DUR - 0.2);''', '''
+    .o-r { position: absolute; left: 81px; width: 918px; display: flex; justify-content: space-between; }
+    .o-d { display: block; width: 72px; height: 72px; border-radius: 50%; background-color: #2a2140; }
+    .o-t { position: absolute; left: 81px; font: 700 34px/1 "Inter Display"; color: #a59fb8; letter-spacing: 0.04em; }''',
+    fx=[('whoosh-short', 'risultato', -0.04, 0.3), ('key-press', 'risultato', 0.03, 0.24), ('whoosh-short', 'secondo2', -0.16, 0.2), ('typing', 'nove', -0.25, 0.24), ('impact-bass-1', 'cara', -0.1, 0.24),
+        ('whoosh-short', 'disolito', -0.16, 0.22), ('pop', 'unodue', 0.0, 0.3), ('pop', 'unodue', 0.25, 0.3)])
 
 # ------------------------------------------------------------------ lesson + CTA
-add('g16', 'lezione', 'sevuoi', f'''      {vid('l-v', 'car.mp4', T['sevuoi'] - T['lezione'], 0.2)}
+add('g16', 'lezione', 'sevuoi', f'''      {vid('l-v', 'car.mp4', T['sevuoi'] - T['lezione'], 0.0)}
       <div style="position:absolute;inset:0;background:rgba(7,4,13,0.28)"></div>
-      {zone(ln('l-l1', 'la lezione è questa', 't-sans'))}
-      {zone(ln('l-l2', 'non devi parlare di più<i id="l-x" style="position:absolute;left:-6px;right:-6px;top:54%;height:9px;border-radius:5px;background:#ff3b30;transform-origin:left center"></i>', 't-sans', 'position:relative;font-size:74px'))}
-      <div style="position:absolute;left:0;right:0;top:640px;text-align:center">
-        <div id="l-b1" class="split" style="font:italic 900 168px/1 Inter;letter-spacing:-0.03em">DEVI FARTI</div>
-        <div id="l-b2" class="split grad" style="font:italic 900 150px/1.1 Inter;letter-spacing:-0.03em">ASPETTARE</div>
+      {zone(ln('l-l1', 'la lezione?', 't-sans'))}
+      {zone(ln('l-l2', 'non abbassare il prezzo', 't-sans', 'font-size:76px'))}
+      {zone(ln('l-l3', "mettici accanto un'offerta", 't-sans', 'font-size:70px'))}
+      <div style="position:absolute;left:0;right:0;top:620px;text-align:center">
+        <div id="l-b1" class="split" style="font:italic 900 76px/1.1 Inter;letter-spacing:-0.02em">CHE LO FA SEMBRARE</div>
+        <div id="l-b2" class="split grad" style="font:italic 900 158px/1.1 Inter;letter-spacing:-0.03em">UN AFFARE</div>
       </div>''', '''    enter(tl, "#g16-st", "L");
     tl.fromTo("#l-v-w", { scale: 1.2 }, { scale: 1.04, duration: DUR, ease: "none" }, 0);
     rise(tl, "#l-l1", 0.05);
-    sink(tl, "#l-l1", «nondevi» - 0.18);
-    rise(tl, "#l-l2", «nondevi»);
-    tl.fromTo("#l-x", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, «dipiu» + 0.15);
-    flip(tl, "#l-b1", «devifarti» - 0.06, 0.03);
-    flip(tl, "#l-b2", «aspettare» - 0.08, 0.035);
-    tl.fromTo("#l-b2", { scale: 1.25 }, { scale: 1, duration: 0.4, ease: "back.out(2.6)", immediateRender: false }, «aspettare» + 0.2);
+    sink(tl, "#l-l1", «nonabb» - 0.18);
+    rise(tl, "#l-l2", «nonabb»);
+    sink(tl, "#l-l2", «mettici» - 0.18);
+    rise(tl, "#l-l3", «mettici»);
+    flip(tl, "#l-b1", «chelofa» - 0.06, 0.02);
+    flip(tl, "#l-b2", «affare» - 0.12, 0.035);
+    tl.fromTo("#l-b2", { scale: 1.25 }, { scale: 1, duration: 0.4, ease: "back.out(2.6)", immediateRender: false }, «affare» + 0.15);
     exit(tl, "#g16-st", "Z", DUR - 0.18);''', glow=False,
-    fx=[('whoosh', 'lezione', -0.04, 0.3), ('whoosh-short', 'nondevi', -0.18, 0.22), ('click-soft', 'dipiu', 0.15, 0.36), ('key-press', 'devifarti', -0.06, 0.26), ('impact-bass-1', 'aspettare', 0.1, 0.3), ('sparkle', 'aspettare', 0.1, 0.16)])
+    fx=[('whoosh', 'lezione', -0.04, 0.3), ('whoosh-short', 'nonabb', -0.18, 0.22), ('whoosh-short', 'mettici', -0.18, 0.2), ('key-press', 'chelofa', -0.06, 0.24), ('impact-bass-1', 'affare', 0.05, 0.3), ('sparkle', 'affare', 0.05, 0.16)])
 
 add('g17', 'sevuoi', 'END', f'''      {zone(ln('m-a1', 'vuoi sapere come', 't-sans t-mut'), ln('m-a2', 'creo questi video?', 't-sans', mt=-22))}
       {zone(ln('m-b1', 'scrivi', 't-sans t-mut'))}

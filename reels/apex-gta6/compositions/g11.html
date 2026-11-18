@@ -44,22 +44,15 @@
     .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
 
 
-    .w-ring { position: absolute; inset: 0; border-radius: 50%; border: 6px solid; opacity: 0; }
   </style>
   <div id="root" data-composition-id="g11" data-width="1080" data-height="1920">
     <div id="g11-st" class="st" data-layout-allow-overlap>
       <div id="g11-g1" style="position:absolute;left:-260px;top:120px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,45,149,0.34),rgba(255,45,149,0))"></div>
       <div id="g11-g2" style="position:absolute;right:-300px;top:900px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(91,43,214,0.42),rgba(91,43,214,0))"></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="w-l1" class="t-sans t-mut">ogni rinvio</span></span><span class="line" style="margin-top:-22px"><span id="w-l2" class="t-it grad" style="font-size:84px">il giro del mondo</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="w-l3" class="t-sans">più aspetti una cosa</span></span><span class="line" style="margin-top:-22px"><span id="w-l4" class="t-it split grad" style="font-size:140px">più la vuoi</span></span></div>
-      <div id="w-globe" style="position:absolute;left:260px;top:790px;width:560px;height:560px">
-        <svg viewBox="0 0 560 560" width="560" height="560"><g fill="none" stroke="#7b5cff" stroke-width="5"><circle cx="280" cy="280" r="270"/><ellipse cx="280" cy="280" rx="270" ry="100"/><ellipse cx="280" cy="280" rx="270" ry="200"/><ellipse id="w-m1" cx="280" cy="280" rx="110" ry="270"/><ellipse id="w-m2" cx="280" cy="280" rx="210" ry="270"/><line x1="280" y1="10" x2="280" y2="550"/></g></svg>
-        <i class="w-ring" style="border-color:#ff2d95"></i><i class="w-ring" style="border-color:#ff8a3c"></i><i class="w-ring" style="border-color:#ff2d95"></i>
-      </div>
-      <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path id="w-ax" d="M150 760 V1420 H950" fill="none" stroke="#4a3d6b" stroke-width="6" stroke-linecap="round"/><path id="w-curve" d="M150 1400 C 480 1390, 720 1250, 930 800" fill="none" stroke="url(#wg)" stroke-width="14" stroke-linecap="round"/><defs><linearGradient id="wg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff2d95"/><stop offset="1" stop-color="#ff8a3c"/></linearGradient></defs></svg>
-      <div id="w-dot" style="position:absolute;left:902px;top:772px;width:56px;height:56px;border-radius:50%;background:#ff8a3c;box-shadow:0 0 50px #ff8a3c"></div>
-      <div id="w-lx" style="position:absolute;left:800px;top:1440px;font:600 34px/1 'SF Pro Display';color:#8f88a6">attesa</div>
-      <div id="w-ly" style="position:absolute;left:170px;top:770px;font:600 34px/1 'SF Pro Display';color:#8f88a6">desiderio</div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="k-l1" class="t-sans">primo in classifica</span></span></div>
+      <div id="k-one" class="grad" style="position:absolute;left:0;right:0;top:500px;text-align:center;font:italic 900 430px/1.1 'SF Pro Display';letter-spacing:-0.05em">#1</div>
+      <div id="k-in" style="position:absolute;left:0;right:0;top:1030px;text-align:center;font:italic 800 120px/1.1 'SF Pro Display';letter-spacing:-0.02em;white-space:nowrap">IN <span id="k-nv">0</span> PAESI</div>
+      <div class="tag" id="k-tag" style="top:1220px">Dati Netflix: 31,1 milioni di visualizzazioni in quattro giorni</div>
     </div>
   </div>
   <script>
@@ -83,24 +76,17 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#g11-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 4.60, ease: "none" }, 0);
-    tl.fromTo("#g11-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 4.60, ease: "none" }, 0);
-    enter(tl, "#g11-st", "Z");
-    rise(tl, "#w-l1", 0.05);
-    tl.fromTo("#w-globe", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 0.1);
-    tl.fromTo("#w-m1", { attr: { rx: 110 } }, { attr: { rx: 270 }, duration: 2.4, ease: "none" }, 0.1);
-    tl.fromTo("#w-m2", { attr: { rx: 210 } }, { attr: { rx: 40 }, duration: 2.4, ease: "none" }, 0.1);
-    rise(tl, "#w-l2", 1.23 - 0.08);
-    tl.fromTo(".w-ring", { scale: 1, opacity: 0.9 }, { scale: 1.9, opacity: 0, duration: 0.9, ease: "power2.out", stagger: 0.22 }, 1.23);
-    sink(tl, "#w-l1", 2.47 - 0.18); sink(tl, "#w-l2", 2.47 - 0.18);
-    tl.to("#w-globe", { opacity: 0, scale: 0.6, duration: 0.25, ease: "power3.in" }, 2.47 - 0.22);
-    rise(tl, "#w-l3", 2.47);
-    draw(tl, "#w-ax", 2.47 - 0.05, 0.4);
-    tl.fromTo(["#w-lx", "#w-ly"], { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.47 + 0.3);
-    draw(tl, "#w-curve", 2.47 + 0.2, 1.3);
-    flip(tl, "#w-l4", 3.75 - 0.06, 0.035);
-    pop(tl, "#w-dot", 3.75 + 0.3);
-    exit(tl, "#g11-st", "U", 4.60 - 0.2);
+    tl.fromTo("#g11-g1", { x: -70, y: 50 }, { x: 110, y: -70, duration: 2.61, ease: "none" }, 0);
+    tl.fromTo("#g11-g2", { x: 60, y: -40 }, { x: -100, y: 80, duration: 2.61, ease: "none" }, 0);
+    enter(tl, "#g11-st", "U");
+    rise(tl, "#k-l1", 0.05);
+    tl.fromTo("#k-one", { opacity: 0, scale: 0.4, rotation: -8 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.42, ease: "back.out(2.2)" }, 0.08);
+    tl.fromTo("#k-in", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 1.22 - 0.3);
+    count(tl, "#k-nv", 0, 87, 1.22 - 0.25, 0.6);
+    tl.fromTo("#k-in", { scale: 1.16 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 1.82);
+    tl.fromTo("#k-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 1.82 + 0.1);
+    tl.to("#k-one", { scale: 1.07, duration: 1.2, ease: "none" }, 0.5);
+    exit(tl, "#g11-st", "L", 2.61 - 0.2);
     window.__timelines["g11"] = tl;
   </script>
 </template>

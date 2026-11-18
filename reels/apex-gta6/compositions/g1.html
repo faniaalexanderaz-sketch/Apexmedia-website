@@ -47,9 +47,9 @@
   </style>
   <div id="root" data-composition-id="g1" data-width="1080" data-height="1920">
     <div id="g1-st" class="st" data-layout-allow-overlap>
-      <div class="vid" id="h-v-w" data-layout-allow-overlap><video id="h-v" class="clip" src="assets/video/car.mp4" data-start="0" data-duration="2.98" data-media-start="0" muted playsinline></video></div><div class="shade"></div>
+      <div class="vid" id="h-v-w" data-layout-allow-overlap><video id="h-v" class="clip" src="assets/video/car.mp4" data-start="0" data-duration="3.36" data-media-start="0" muted playsinline></video></div><div class="shade"></div>
       <div id="h-t" style="position:absolute;left:0;right:0;top:230px;text-align:center;font:italic 900 300px/1 'SF Pro Display';letter-spacing:-0.04em;white-space:nowrap"><span>GTA</span> <span class="grad" style="padding:0 0.1em 0 0.02em">6</span></div>
-      <div class="zone" data-layout-allow-overlap style="top:560px"><span class="line"><span id="h-l1" class="t-sans">ha già incassato</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:560px"><span class="line"><span id="h-l1" class="t-sans">ha già incassato più di</span></span></div>
       <div id="h-n" style="position:absolute;left:0;right:0;top:690px;text-align:center;font:italic 800 124px/1.1 'SF Pro Display';letter-spacing:-0.03em;white-space:nowrap;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,0.7)"><span id="h-nv">0</span> $</div>
       <div id="h-sel" class="sel" style="left:50px;top:680px;width:980px;height:160px"><i></i><i></i><i></i><i></i></div>
     </div>
@@ -75,16 +75,16 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#h-v-w", { scale: 1.22 }, { scale: 1.04, duration: 2.98, ease: "none" }, 0);
+    tl.fromTo("#h-v-w", { scale: 1.22 }, { scale: 1.04, duration: 3.36, ease: "none" }, 0);
     tl.fromTo("#h-t", { scale: 1.5 }, { scale: 1, duration: 0.38, ease: "expo.out" }, 0);
     tl.fromTo("#h-t", { rotation: -3 }, { rotation: 0, duration: 0.38, ease: "expo.out" }, 0);
-    rise(tl, "#h-l1", 0.66 - 0.08);
-    tl.fromTo("#h-n", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 1.39 - 0.22);
-    count(tl, "#h-nv", 0, 1000000000, 1.39 - 0.18, 0.75, (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."));
-    tl.fromTo("#h-n", { scale: 1.2 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 2.05);
-    select(tl, "#h-sel", null, 2.05);
-    tl.fromTo("#h-t", { scale: 1 }, { scale: 1.08, duration: 0.12, yoyo: true, repeat: 1, immediateRender: false }, 1.39 - 0.2);
-    exit(tl, "#g1-st", "L", 2.98 - 0.2);
+    rise(tl, "#h-l1", 0.72 - 0.08);
+    tl.fromTo("#h-n", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 1.86 - 0.22);
+    count(tl, "#h-nv", 0, 1000000000, 1.86 - 0.18, 0.75, (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+    tl.fromTo("#h-n", { scale: 1.2 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 2.58);
+    select(tl, "#h-sel", null, 2.58);
+    tl.fromTo("#h-t", { scale: 1 }, { scale: 1.08, duration: 0.12, yoyo: true, repeat: 1, immediateRender: false }, 1.86 - 0.2);
+    exit(tl, "#g1-st", "L", 3.36 - 0.2);
     window.__timelines["g1"] = tl;
   </script>
 </template>
