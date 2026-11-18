@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "2f0d7017-adfa-498e-9a04-d7dfd7ee91d0",
-  "currentRevision": "b510140a-132e-46e3-90e8-b69c5c111550",
+  "currentRevision": "48930741-22da-4be2-89c6-9de1e5b7e4dc",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -407,14 +407,6 @@
     "compositions/s9.html": {
       "hash": "7ff3dbb92fdc48ee35142291702f6323364cbb3d691e573d9906ca6539c37050",
       "content": "/root/.cache/hyperframes/history/2f0d7017-adfa-498e-9a04-d7dfd7ee91d0/blobs/7f/7ff3dbb92fdc48ee35142291702f6323364cbb3d691e573d9906ca6539c37050"
-    },
-    "gen/__pycache__/common.cpython-313.pyc": {
-      "hash": "9e81355b2b646fef90139540827ff12d2e5218f78151bfe8569fac9b3a9b7367",
-      "content": "/root/.cache/hyperframes/history/2f0d7017-adfa-498e-9a04-d7dfd7ee91d0/blobs/9e/9e81355b2b646fef90139540827ff12d2e5218f78151bfe8569fac9b3a9b7367"
-    },
-    "gen/__pycache__/scenes2.cpython-313.pyc": {
-      "hash": "2e47dd063f7564f1c1ca695183eadf9e6e949854b6b75594a26b0e558d5e173c",
-      "content": "/root/.cache/hyperframes/history/2f0d7017-adfa-498e-9a04-d7dfd7ee91d0/blobs/2e/2e47dd063f7564f1c1ca695183eadf9e6e949854b6b75594a26b0e558d5e173c"
     },
     "gen/build_full.py": {
       "hash": "c51711cb379d951269ff0e52c7638cefd26a4558e3318adb0600a0a63265d83a",
@@ -1635,6 +1627,25 @@
         "script.txt": {
           "before": "/root/.cache/hyperframes/history/2f0d7017-adfa-498e-9a04-d7dfd7ee91d0/blobs/b5/b5e226254a488a85662598a5a30e6a38a18be1afba2e035e533e93e1f15425d5",
           "after": "/root/.cache/hyperframes/history/2f0d7017-adfa-498e-9a04-d7dfd7ee91d0/blobs/76/7620f5228dd6805a54560a96eec96b30697e9297cc3728d38a3f7718c17e70da"
+        }
+      }
+    },
+    "48930741-22da-4be2-89c6-9de1e5b7e4dc": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1795035244447,
+      "endedAt": 1795035244449,
+      "files": {
+        "gen/__pycache__/common.cpython-313.pyc": {
+          "before": "/root/.cache/hyperframes/history/2f0d7017-adfa-498e-9a04-d7dfd7ee91d0/blobs/9e/9e81355b2b646fef90139540827ff12d2e5218f78151bfe8569fac9b3a9b7367",
+          "after": null
+        },
+        "gen/__pycache__/scenes2.cpython-313.pyc": {
+          "before": "/root/.cache/hyperframes/history/2f0d7017-adfa-498e-9a04-d7dfd7ee91d0/blobs/2e/2e47dd063f7564f1c1ca695183eadf9e6e949854b6b75594a26b0e558d5e173c",
+          "after": null
         }
       }
     }

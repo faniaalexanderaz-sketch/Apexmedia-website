@@ -1,3 +1,6 @@
 __pycache__/
 node_modules/
 reels/apex-apple-v2/assets/fonts/SF-Pro-*.otf
+reels/*/renders/.*hf-transaction*/
+reels/*/renders/work-*/
+reels/*/renders/_*.mp4
