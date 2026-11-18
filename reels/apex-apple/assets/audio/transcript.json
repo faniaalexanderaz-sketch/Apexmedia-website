@@ -1,0 +1,1196 @@
+[
+  {
+    "text": "L'iPhone",
+    "start": 0.02,
+    "end": 0.42,
+    "id": "w0"
+  },
+  {
+    "text": "è",
+    "start": 0.42,
+    "end": 0.57,
+    "id": "w1"
+  },
+  {
+    "text": "fatto",
+    "start": 0.57,
+    "end": 0.85,
+    "id": "w2"
+  },
+  {
+    "text": "per",
+    "start": 0.95,
+    "end": 1.02,
+    "id": "w3"
+  },
+  {
+    "text": "svuotarti",
+    "start": 1.06,
+    "end": 1.56,
+    "id": "w4"
+  },
+  {
+    "text": "il",
+    "start": 1.63,
+    "end": 1.72,
+    "id": "w5"
+  },
+  {
+    "text": "portafoglio.",
+    "start": 1.72,
+    "end": 2.46,
+    "id": "w6"
+  },
+  {
+    "text": "Questi",
+    "start": 2.66,
+    "end": 3.1,
+    "id": "w7"
+  },
+  {
+    "text": "sono",
+    "start": 3.23,
+    "end": 3.31,
+    "id": "w8"
+  },
+  {
+    "text": "i",
+    "start": 3.45,
+    "end": 3.48,
+    "id": "w9"
+  },
+  {
+    "text": "tre",
+    "start": 3.48,
+    "end": 3.68,
+    "id": "w10"
+  },
+  {
+    "text": "trucchi",
+    "start": 3.72,
+    "end": 4.22,
+    "id": "w11"
+  },
+  {
+    "text": "che",
+    "start": 4.29,
+    "end": 4.47,
+    "id": "w12"
+  },
+  {
+    "text": "usa",
+    "start": 4.47,
+    "end": 4.69,
+    "id": "w13"
+  },
+  {
+    "text": "Apple,",
+    "start": 4.69,
+    "end": 5.12,
+    "id": "w14"
+  },
+  {
+    "text": "e",
+    "start": 5.12,
+    "end": 5.28,
+    "id": "w15"
+  },
+  {
+    "text": "il",
+    "start": 5.28,
+    "end": 5.44,
+    "id": "w16"
+  },
+  {
+    "text": "terzo",
+    "start": 5.44,
+    "end": 5.86,
+    "id": "w17"
+  },
+  {
+    "text": "è",
+    "start": 5.86,
+    "end": 5.95,
+    "id": "w18"
+  },
+  {
+    "text": "fuori",
+    "start": 5.95,
+    "end": 6.33,
+    "id": "w19"
+  },
+  {
+    "text": "di",
+    "start": 6.46,
+    "end": 6.57,
+    "id": "w20"
+  },
+  {
+    "text": "testa.",
+    "start": 6.69,
+    "end": 7.28,
+    "id": "w21"
+  },
+  {
+    "text": "Primo,",
+    "start": 7.33,
+    "end": 7.75,
+    "id": "w22"
+  },
+  {
+    "text": "la",
+    "start": 7.89,
+    "end": 7.97,
+    "id": "w23"
+  },
+  {
+    "text": "memoria.",
+    "start": 8.11,
+    "end": 8.84,
+    "id": "w24"
+  },
+  {
+    "text": "Il",
+    "start": 8.85,
+    "end": 9,
+    "id": "w25"
+  },
+  {
+    "text": "modello",
+    "start": 9,
+    "end": 9.49,
+    "id": "w26"
+  },
+  {
+    "text": "base",
+    "start": 9.63,
+    "end": 9.86,
+    "id": "w27"
+  },
+  {
+    "text": "ha",
+    "start": 9.9,
+    "end": 10.03,
+    "id": "w28"
+  },
+  {
+    "text": "poco",
+    "start": 10.03,
+    "end": 10.35,
+    "id": "w29"
+  },
+  {
+    "text": "spazio,",
+    "start": 10.35,
+    "end": 10.87,
+    "id": "w30"
+  },
+  {
+    "text": "apposta.",
+    "start": 10.96,
+    "end": 11.79,
+    "id": "w31"
+  },
+  {
+    "text": "Dopo",
+    "start": 11.81,
+    "end": 12.04,
+    "id": "w32"
+  },
+  {
+    "text": "un",
+    "start": 12.11,
+    "end": 12.23,
+    "id": "w33"
+  },
+  {
+    "text": "anno",
+    "start": 12.37,
+    "end": 12.45,
+    "id": "w34"
+  },
+  {
+    "text": "di",
+    "start": 12.59,
+    "end": 12.65,
+    "id": "w35"
+  },
+  {
+    "text": "foto",
+    "start": 12.75,
+    "end": 13,
+    "id": "w36"
+  },
+  {
+    "text": "e",
+    "start": 13,
+    "end": 13.09,
+    "id": "w37"
+  },
+  {
+    "text": "video",
+    "start": 13.09,
+    "end": 13.45,
+    "id": "w38"
+  },
+  {
+    "text": "è",
+    "start": 13.45,
+    "end": 13.52,
+    "id": "w39"
+  },
+  {
+    "text": "pieno,",
+    "start": 13.52,
+    "end": 13.98,
+    "id": "w40"
+  },
+  {
+    "text": "e",
+    "start": 13.98,
+    "end": 14.03,
+    "id": "w41"
+  },
+  {
+    "text": "la",
+    "start": 14.03,
+    "end": 14.13,
+    "id": "w42"
+  },
+  {
+    "text": "prossima",
+    "start": 14.13,
+    "end": 14.54,
+    "id": "w43"
+  },
+  {
+    "text": "volta",
+    "start": 14.58,
+    "end": 14.75,
+    "id": "w44"
+  },
+  {
+    "text": "prendi",
+    "start": 14.82,
+    "end": 15.11,
+    "id": "w45"
+  },
+  {
+    "text": "quello",
+    "start": 15.11,
+    "end": 15.42,
+    "id": "w46"
+  },
+  {
+    "text": "più",
+    "start": 15.42,
+    "end": 15.47,
+    "id": "w47"
+  },
+  {
+    "text": "grande.",
+    "start": 15.6,
+    "end": 16.24,
+    "id": "w48"
+  },
+  {
+    "text": "100-200",
+    "start": 16.24,
+    "end": 17.27,
+    "id": "w49"
+  },
+  {
+    "text": "euro",
+    "start": 17.3,
+    "end": 17.43,
+    "id": "w50"
+  },
+  {
+    "text": "in",
+    "start": 17.53,
+    "end": 17.62,
+    "id": "w51"
+  },
+  {
+    "text": "più.",
+    "start": 17.62,
+    "end": 17.97,
+    "id": "w52"
+  },
+  {
+    "text": "Ma",
+    "start": 18,
+    "end": 18.09,
+    "id": "w53"
+  },
+  {
+    "text": "secondo",
+    "start": 18.09,
+    "end": 18.4,
+    "id": "w54"
+  },
+  {
+    "text": "un'analisi",
+    "start": 18.55,
+    "end": 19.06,
+    "id": "w55"
+  },
+  {
+    "text": "del",
+    "start": 19.06,
+    "end": 19.17,
+    "id": "w56"
+  },
+  {
+    "text": "Wall",
+    "start": 19.27,
+    "end": 19.46,
+    "id": "w57"
+  },
+  {
+    "text": "Street",
+    "start": 19.46,
+    "end": 19.81,
+    "id": "w58"
+  },
+  {
+    "text": "Journal,",
+    "start": 19.81,
+    "end": 20.28,
+    "id": "w59"
+  },
+  {
+    "text": "quello",
+    "start": 20.28,
+    "end": 20.69,
+    "id": "w60"
+  },
+  {
+    "text": "spazio",
+    "start": 20.69,
+    "end": 21.08,
+    "id": "w61"
+  },
+  {
+    "text": "a",
+    "start": 21.08,
+    "end": 21.13,
+    "id": "w62"
+  },
+  {
+    "text": "loro",
+    "start": 21.23,
+    "end": 21.41,
+    "id": "w63"
+  },
+  {
+    "text": "costa",
+    "start": 21.41,
+    "end": 21.74,
+    "id": "w64"
+  },
+  {
+    "text": "circa",
+    "start": 21.74,
+    "end": 22.01,
+    "id": "w65"
+  },
+  {
+    "text": "un",
+    "start": 22.08,
+    "end": 22.18,
+    "id": "w66"
+  },
+  {
+    "text": "terzo",
+    "start": 22.24,
+    "end": 22.54,
+    "id": "w67"
+  },
+  {
+    "text": "di",
+    "start": 22.54,
+    "end": 22.67,
+    "id": "w68"
+  },
+  {
+    "text": "quello",
+    "start": 22.67,
+    "end": 23.08,
+    "id": "w69"
+  },
+  {
+    "text": "che",
+    "start": 23.08,
+    "end": 23.23,
+    "id": "w70"
+  },
+  {
+    "text": "paghi",
+    "start": 23.3,
+    "end": 23.61,
+    "id": "w71"
+  },
+  {
+    "text": "tu.",
+    "start": 23.61,
+    "end": 23.95,
+    "id": "w72"
+  },
+  {
+    "text": "Secondo,",
+    "start": 24.08,
+    "end": 24.73,
+    "id": "w73"
+  },
+  {
+    "text": "le",
+    "start": 24.87,
+    "end": 24.93,
+    "id": "w74"
+  },
+  {
+    "text": "bolle",
+    "start": 25.03,
+    "end": 25.27,
+    "id": "w75"
+  },
+  {
+    "text": "verdi.",
+    "start": 25.37,
+    "end": 25.98,
+    "id": "w76"
+  },
+  {
+    "text": "Se",
+    "start": 26.05,
+    "end": 26.16,
+    "id": "w77"
+  },
+  {
+    "text": "scrivi",
+    "start": 26.16,
+    "end": 26.48,
+    "id": "w78"
+  },
+  {
+    "text": "da",
+    "start": 26.61,
+    "end": 26.65,
+    "id": "w79"
+  },
+  {
+    "text": "un",
+    "start": 26.65,
+    "end": 26.69,
+    "id": "w80"
+  },
+  {
+    "text": "Android,",
+    "start": 26.83,
+    "end": 27.38,
+    "id": "w81"
+  },
+  {
+    "text": "il",
+    "start": 27.38,
+    "end": 27.49,
+    "id": "w82"
+  },
+  {
+    "text": "tuo",
+    "start": 27.49,
+    "end": 27.6,
+    "id": "w83"
+  },
+  {
+    "text": "messaggio",
+    "start": 27.67,
+    "end": 28.18,
+    "id": "w84"
+  },
+  {
+    "text": "diventa",
+    "start": 28.18,
+    "end": 28.5,
+    "id": "w85"
+  },
+  {
+    "text": "verde.",
+    "start": 28.82,
+    "end": 29.08,
+    "id": "w86"
+  },
+  {
+    "text": "Sembra",
+    "start": 29.09,
+    "end": 29.42,
+    "id": "w87"
+  },
+  {
+    "text": "un",
+    "start": 29.42,
+    "end": 29.52,
+    "id": "w88"
+  },
+  {
+    "text": "dettaglio.",
+    "start": 29.65,
+    "end": 30.24,
+    "id": "w89"
+  },
+  {
+    "text": "Ma",
+    "start": 30.25,
+    "end": 30.38,
+    "id": "w90"
+  },
+  {
+    "text": "tra",
+    "start": 30.38,
+    "end": 30.59,
+    "id": "w91"
+  },
+  {
+    "text": "i",
+    "start": 30.59,
+    "end": 30.66,
+    "id": "w92"
+  },
+  {
+    "text": "ragazzi,",
+    "start": 30.66,
+    "end": 31.32,
+    "id": "w93"
+  },
+  {
+    "text": "chi",
+    "start": 31.32,
+    "end": 31.43,
+    "id": "w94"
+  },
+  {
+    "text": "ha",
+    "start": 31.53,
+    "end": 31.62,
+    "id": "w95"
+  },
+  {
+    "text": "la",
+    "start": 31.62,
+    "end": 31.74,
+    "id": "w96"
+  },
+  {
+    "text": "bolla",
+    "start": 31.74,
+    "end": 31.97,
+    "id": "w97"
+  },
+  {
+    "text": "verde,",
+    "start": 32.04,
+    "end": 32.5,
+    "id": "w98"
+  },
+  {
+    "text": "viene",
+    "start": 32.5,
+    "end": 32.7,
+    "id": "w99"
+  },
+  {
+    "text": "escluso",
+    "start": 33.02,
+    "end": 33.32,
+    "id": "w100"
+  },
+  {
+    "text": "dai",
+    "start": 33.39,
+    "end": 33.55,
+    "id": "w101"
+  },
+  {
+    "text": "gruppi.",
+    "start": 33.55,
+    "end": 34,
+    "id": "w102"
+  },
+  {
+    "text": "Ein",
+    "start": 34.02,
+    "end": 34.16,
+    "id": "w103"
+  },
+  {
+    "text": "una",
+    "start": 34.16,
+    "end": 34.33,
+    "id": "w104"
+  },
+  {
+    "text": "causa",
+    "start": 34.33,
+    "end": 34.62,
+    "id": "w105"
+  },
+  {
+    "text": "del",
+    "start": 34.62,
+    "end": 34.65,
+    "id": "w106"
+  },
+  {
+    "text": "governo",
+    "start": 34.79,
+    "end": 35.2,
+    "id": "w107"
+  },
+  {
+    "text": "americano,",
+    "start": 35.29,
+    "end": 35.83,
+    "id": "w108"
+  },
+  {
+    "text": "è",
+    "start": 35.83,
+    "end": 35.87,
+    "id": "w109"
+  },
+  {
+    "text": "finita",
+    "start": 35.88,
+    "end": 36.21,
+    "id": "w110"
+  },
+  {
+    "text": "un'email",
+    "start": 36.21,
+    "end": 36.66,
+    "id": "w111"
+  },
+  {
+    "text": "interna.",
+    "start": 36.78,
+    "end": 37.36,
+    "id": "w112"
+  },
+  {
+    "text": "Aprire",
+    "start": 37.37,
+    "end": 37.78,
+    "id": "w113"
+  },
+  {
+    "text": "i",
+    "start": 37.78,
+    "end": 37.93,
+    "id": "w114"
+  },
+  {
+    "text": "messaggi",
+    "start": 37.93,
+    "end": 38.46,
+    "id": "w115"
+  },
+  {
+    "text": "ad",
+    "start": 38.46,
+    "end": 38.55,
+    "id": "w116"
+  },
+  {
+    "text": "Android,",
+    "start": 38.65,
+    "end": 39.25,
+    "id": "w117"
+  },
+  {
+    "text": "avrebbe",
+    "start": 39.25,
+    "end": 39.56,
+    "id": "w118"
+  },
+  {
+    "text": "tolto",
+    "start": 39.56,
+    "end": 39.8,
+    "id": "w119"
+  },
+  {
+    "text": "un",
+    "start": 39.8,
+    "end": 39.82,
+    "id": "w120"
+  },
+  {
+    "text": "ostacolo",
+    "start": 40.1,
+    "end": 40.42,
+    "id": "w121"
+  },
+  {
+    "text": "alle",
+    "start": 40.42,
+    "end": 40.62,
+    "id": "w122"
+  },
+  {
+    "text": "famiglie",
+    "start": 40.62,
+    "end": 41.03,
+    "id": "w123"
+  },
+  {
+    "text": "che",
+    "start": 41.16,
+    "end": 41.21,
+    "id": "w124"
+  },
+  {
+    "text": "comprano",
+    "start": 41.21,
+    "end": 41.67,
+    "id": "w125"
+  },
+  {
+    "text": "l'iPhone",
+    "start": 41.67,
+    "end": 42,
+    "id": "w126"
+  },
+  {
+    "text": "ai",
+    "start": 42.11,
+    "end": 42.22,
+    "id": "w127"
+  },
+  {
+    "text": "figli.",
+    "start": 42.22,
+    "end": 42.71,
+    "id": "w128"
+  },
+  {
+    "text": "Eil",
+    "start": 42.78,
+    "end": 42.95,
+    "id": "w129"
+  },
+  {
+    "text": "terzo,",
+    "start": 42.95,
+    "end": 43.4,
+    "id": "w130"
+  },
+  {
+    "text": "quello",
+    "start": 43.4,
+    "end": 43.78,
+    "id": "w131"
+  },
+  {
+    "text": "fuori",
+    "start": 43.82,
+    "end": 44.11,
+    "id": "w132"
+  },
+  {
+    "text": "di",
+    "start": 44.11,
+    "end": 44.24,
+    "id": "w133"
+  },
+  {
+    "text": "testa?",
+    "start": 44.24,
+    "end": 44.79,
+    "id": "w134"
+  },
+  {
+    "text": "I",
+    "start": 44.82,
+    "end": 44.87,
+    "id": "w135"
+  },
+  {
+    "text": "rallentamenti.",
+    "start": 44.87,
+    "end": 46.12,
+    "id": "w136"
+  },
+  {
+    "text": "Nel",
+    "start": 46.14,
+    "end": 46.3,
+    "id": "w137"
+  },
+  {
+    "text": "2018,",
+    "start": 46.3,
+    "end": 47.14,
+    "id": "w138"
+  },
+  {
+    "text": "l'antitrast",
+    "start": 47.18,
+    "end": 47.82,
+    "id": "w139"
+  },
+  {
+    "text": "italiano",
+    "start": 47.82,
+    "end": 48.31,
+    "id": "w140"
+  },
+  {
+    "text": "ha",
+    "start": 48.31,
+    "end": 48.42,
+    "id": "w141"
+  },
+  {
+    "text": "multato",
+    "start": 48.43,
+    "end": 48.85,
+    "id": "w142"
+  },
+  {
+    "text": "Apple",
+    "start": 48.9,
+    "end": 49.16,
+    "id": "w143"
+  },
+  {
+    "text": "per",
+    "start": 49.16,
+    "end": 49.34,
+    "id": "w144"
+  },
+  {
+    "text": "10",
+    "start": 49.34,
+    "end": 49.71,
+    "id": "w145"
+  },
+  {
+    "text": "milioni",
+    "start": 49.71,
+    "end": 50.03,
+    "id": "w146"
+  },
+  {
+    "text": "di",
+    "start": 50.15,
+    "end": 50.23,
+    "id": "w147"
+  },
+  {
+    "text": "euro.",
+    "start": 50.3,
+    "end": 50.76,
+    "id": "w148"
+  },
+  {
+    "text": "Tra",
+    "start": 50.81,
+    "end": 50.99,
+    "id": "w149"
+  },
+  {
+    "text": "le",
+    "start": 50.99,
+    "end": 51.12,
+    "id": "w150"
+  },
+  {
+    "text": "accuse,",
+    "start": 51.12,
+    "end": 51.64,
+    "id": "w151"
+  },
+  {
+    "text": "aggiornamenti",
+    "start": 51.64,
+    "end": 52.48,
+    "id": "w152"
+  },
+  {
+    "text": "spinti",
+    "start": 52.48,
+    "end": 52.83,
+    "id": "w153"
+  },
+  {
+    "text": "sugli",
+    "start": 52.92,
+    "end": 53.18,
+    "id": "w154"
+  },
+  {
+    "text": "iPhone",
+    "start": 53.18,
+    "end": 53.2,
+    "id": "w155"
+  },
+  {
+    "text": "vecchi,",
+    "start": 53.58,
+    "end": 54.15,
+    "id": "w156"
+  },
+  {
+    "text": "che",
+    "start": 54.15,
+    "end": 54.26,
+    "id": "w157"
+  },
+  {
+    "text": "li",
+    "start": 54.36,
+    "end": 54.42,
+    "id": "w158"
+  },
+  {
+    "text": "rallentavano,",
+    "start": 54.42,
+    "end": 55.17,
+    "id": "w159"
+  },
+  {
+    "text": "senza",
+    "start": 55.17,
+    "end": 55.44,
+    "id": "w160"
+  },
+  {
+    "text": "avvisare.",
+    "start": 55.55,
+    "end": 56.36,
+    "id": "w161"
+  },
+  {
+    "text": "Eun",
+    "start": 56.38,
+    "end": 56.57,
+    "id": "w162"
+  },
+  {
+    "text": "telefono",
+    "start": 56.57,
+    "end": 57.01,
+    "id": "w163"
+  },
+  {
+    "text": "lento,",
+    "start": 57.15,
+    "end": 57.56,
+    "id": "w164"
+  },
+  {
+    "text": "lo",
+    "start": 57.65,
+    "end": 57.75,
+    "id": "w165"
+  },
+  {
+    "text": "cambi.",
+    "start": 57.79,
+    "end": 58.36,
+    "id": "w166"
+  },
+  {
+    "text": "Non",
+    "start": 58.37,
+    "end": 58.55,
+    "id": "w167"
+  },
+  {
+    "text": "sei",
+    "start": 58.55,
+    "end": 58.73,
+    "id": "w168"
+  },
+  {
+    "text": "tu",
+    "start": 58.73,
+    "end": 58.79,
+    "id": "w169"
+  },
+  {
+    "text": "che",
+    "start": 58.93,
+    "end": 59.01,
+    "id": "w170"
+  },
+  {
+    "text": "scegli",
+    "start": 59.11,
+    "end": 59.38,
+    "id": "w171"
+  },
+  {
+    "text": "l'iPhone.",
+    "start": 59.42,
+    "end": 60.09,
+    "id": "w172"
+  },
+  {
+    "text": "È",
+    "start": 60.18,
+    "end": 60.21,
+    "id": "w173"
+  },
+  {
+    "text": "l'iPhone",
+    "start": 60.22,
+    "end": 60.58,
+    "id": "w174"
+  },
+  {
+    "text": "che",
+    "start": 60.73,
+    "end": 60.81,
+    "id": "w175"
+  },
+  {
+    "text": "sceglie",
+    "start": 60.95,
+    "end": 61.37,
+    "id": "w176"
+  },
+  {
+    "text": "quanto",
+    "start": 61.45,
+    "end": 61.72,
+    "id": "w177"
+  },
+  {
+    "text": "spendi.",
+    "start": 61.79,
+    "end": 62.43,
+    "id": "w178"
+  },
+  {
+    "text": "È",
+    "start": 62.46,
+    "end": 62.51,
+    "id": "w179"
+  },
+  {
+    "text": "tutto",
+    "start": 62.51,
+    "end": 62.85,
+    "id": "w180"
+  },
+  {
+    "text": "fatto",
+    "start": 62.85,
+    "end": 63.09,
+    "id": "w181"
+  },
+  {
+    "text": "per",
+    "start": 63.23,
+    "end": 63.29,
+    "id": "w182"
+  },
+  {
+    "text": "svuotarti",
+    "start": 63.39,
+    "end": 63.98,
+    "id": "w183"
+  },
+  {
+    "text": "il",
+    "start": 63.98,
+    "end": 64.11,
+    "id": "w184"
+  },
+  {
+    "text": "portafoglio.",
+    "start": 64.11,
+    "end": 64.85,
+    "id": "w185"
+  },
+  {
+    "text": "Se",
+    "start": 65.17,
+    "end": 65.28,
+    "id": "w186"
+  },
+  {
+    "text": "vuoi",
+    "start": 65.28,
+    "end": 65.52,
+    "id": "w187"
+  },
+  {
+    "text": "sapere",
+    "start": 65.52,
+    "end": 65.81,
+    "id": "w188"
+  },
+  {
+    "text": "come",
+    "start": 65.95,
+    "end": 66.12,
+    "id": "w189"
+  },
+  {
+    "text": "creo",
+    "start": 66.12,
+    "end": 66.36,
+    "id": "w190"
+  },
+  {
+    "text": "questi",
+    "start": 66.45,
+    "end": 66.72,
+    "id": "w191"
+  },
+  {
+    "text": "video,",
+    "start": 66.79,
+    "end": 67.16,
+    "id": "w192"
+  },
+  {
+    "text": "scrivi",
+    "start": 67.16,
+    "end": 67.52,
+    "id": "w193"
+  },
+  {
+    "text": "Motion",
+    "start": 67.52,
+    "end": 67.96,
+    "id": "w194"
+  },
+  {
+    "text": "e",
+    "start": 67.96,
+    "end": 68.01,
+    "id": "w195"
+  },
+  {
+    "text": "ti",
+    "start": 68.01,
+    "end": 68.11,
+    "id": "w196"
+  },
+  {
+    "text": "spiego",
+    "start": 68.18,
+    "end": 68.45,
+    "id": "w197"
+  },
+  {
+    "text": "tutto.",
+    "start": 68.45,
+    "end": 68.83,
+    "id": "w198"
+  }
+]
