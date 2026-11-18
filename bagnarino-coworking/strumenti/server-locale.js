@@ -9,9 +9,10 @@
    http://localhost:3000/__posta (solo qui, in locale).
 
    App di gestione: http://localhost:3000/gestione
-     email info@bagnarino.it, password "prova"
-   Vecchia area riservata: /admin, password "prova" (titolare) e
-   "apex-prova" (Apex Media).
+     titolare:   email info@bagnarino.it, password "prova"
+     Apex Media: email studio@infoapex.eu, password "apex-prova"
+       (in più aggiorna i numeri di social, Google e pubblicità)
+   La vecchia area riservata /admin non esiste più: rimanda all'app.
    ============================================================= */
 const http = require('http');
 const fs = require('fs');
@@ -50,6 +51,7 @@ function regola(r) {
   });
   const vercel = JSON.parse(fs.readFileSync(path.join(RADICE, 'vercel.json'), 'utf8'));
   const regole = (vercel.rewrites || []).map(regola);
+  const rimandi = (vercel.redirects || []).map(r => Object.assign(regola(r), { fisso: !!r.permanent }));
 
   /* le email catturate, dalla più recente */
   const posta = [];
@@ -75,6 +77,10 @@ function regola(r) {
       res.end('ok');
       return;
     }
+
+    /* i rimandi di vercel.json (per esempio /admin → /gestione) vengono prima di tutto */
+    const rimando = rimandi.find(r => r.re.test(percorso));
+    if (rimando) { res.statusCode = rimando.fisso ? 308 : 307; res.setHeader('Location', rimando.destinazione); res.end(); return; }
 
     /* file statici con URL "puliti" come su Vercel: vengono prima delle riscritture */
     let f = path.join(RADICE, decodeURIComponent(percorso));

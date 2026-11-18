@@ -3,9 +3,10 @@
    Qui si prepara tutto ciò che l'app mostra, già in parole
    semplici: richieste in attesa, chi arriva oggi, calendario del
    mese, chiusure, elenco prenotazioni, avviso, foto, contatti e
-   i tre numeri di "Come va".
-   La titolare può cambiare solo contenuti (testo dell'avviso,
-   foto, numeri di telefono): mai layout, colori o sezioni.
+   i numeri di adesso per "Come va" (il resto di "Come va" arriva
+   da api/_crescita.js; clienti, incassi e prezzi da api/_conti.js).
+   Dal sito si cambiano solo contenuti (testo dell'avviso, foto,
+   numeri di telefono): mai layout, colori o sezioni.
    ============================================================= */
 const crypto = require('crypto');
 const { q } = require('./_db');
@@ -14,6 +15,7 @@ const P = require('./_prenotazioni');
 const cal = require('./_calendario');
 const T = require('./_email-template');
 const avvisi = require('./_avvisi');
+const { classificaFonte } = require('./_report');
 
 const ORDINE_FASCIA = { mattina: 1, giornata: 2, pomeriggio: 3 };
 const MAX_FOTO = 12;
@@ -39,7 +41,8 @@ function riga(p, cfg, oggi) {
     telefono: p.telefono, telefonoLink: tel ? '+' + tel : '', whatsapp: tel, email: emailVera(p.email),
     pacchetto: p.pacchetto, mensile, cosa: mensile || p.pacchetto === 'carnet' ? p.nomePacchetto : p.nomeFascia,
     fascia: p.fascia, quando: T.quando(p), data: p.data_inizio, dataFine: p.data_fine,
-    prezzo: p.prezzo_centesimi === 0 ? 'Già pagato' : p.prezzoTesto + ' da pagare in sede',
+    prezzo: p.prezzo_centesimi === 0 ? 'Già pagato' : p.pagato ? p.prezzoTesto + ' · pagato' : p.prezzoTesto + ' da pagare in sede',
+    importo: p.prezzo_centesimi, pagato: !!p.pagato, clienteId: p.cliente_id,
     nota: p.note || '', ricevuta: p.creato_il,
     passata: p.data_fine < oggi, oggi: p.data_inizio <= oggi && p.data_fine >= oggi
   };
@@ -61,11 +64,12 @@ async function delGiorno(data, cfg, oggi, stati) {
 
 /* ---------- Oggi ---------- */
 async function oggi(cfg, adesso) {
-  const d = cal.oraRoma(adesso).data;
+  const d = cal.oraRoma(adesso).data, domani = cal.aggiungiGiorni(d, 1);
   return {
     oggi: d, chiusura: cal.chiusura(d, cfg),
     inAttesa: await inAttesa(cfg, d),
-    arrivi: await delGiorno(d, cfg, d, ['confermata', 'presente', 'assente'])
+    arrivi: await delGiorno(d, cfg, d, ['confermata', 'presente', 'assente']),
+    domani, arriviDomani: await delGiorno(domani, cfg, d, ['confermata'])
   };
 }
 
@@ -172,7 +176,18 @@ async function prenotazione(id, cfg, adesso) {
   const r = riga(p, cfg, d);
   /* "È arrivata/o" si può segnare dal giorno della prenotazione in poi */
   r.puoSegnareArrivo = ['confermata', 'presente', 'assente'].indexOf(p.stato) !== -1 && p.data_inizio <= d && !r.mensile;
-  return r;
+  /* il resto della scheda: pagamento, posto, da dove arriva, Bagnarino Card */
+  const x = (await q(
+    `SELECT p.metodo_pagamento, to_char(p.pagato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD') AS pagato_il, p.origine, p.manuale, s.nome AS posto,
+            COALESCE(f.timbri, 0) AS timbri, COALESCE(f.omaggi_disponibili, 0) AS omaggi
+     FROM prenotazioni p LEFT JOIN postazioni s ON s.id = p.postazione_id LEFT JOIN fidelity f ON f.cliente_id = p.cliente_id WHERE p.id = $1`, [p.id]))[0] || {};
+  const origine = typeof x.origine === 'string' ? JSON.parse(x.origine) : x.origine;
+  return Object.assign(r, {
+    metodo: x.metodo_pagamento || '', pagataIl: x.pagato_il || null, posto: x.posto || '',
+    arrivaDa: x.manuale ? 'Aggiunta da te' : classificaFonte(origine), timbri: x.timbri || 0, omaggi: x.omaggi || 0, fattura: p.piva_cf || '',
+    /* si può segnare il pagamento su una prenotazione confermata che costa qualcosa */
+    puoPagare: p.prezzo_centesimi > 0 && ['confermata', 'presente', 'assente'].indexOf(p.stato) !== -1
+  });
 }
 
 /* ---------- Il mio sito ---------- */
@@ -276,7 +291,7 @@ async function leggiFoto(id, t) {
   return r.length ? { tipo: r[0].tipo, dati: Buffer.from(r[0].dati, 'base64') } : null;
 }
 
-/* ---------- Come va: tre numeri e basta ---------- */
+/* ---------- Come va: i numeri di questo momento ---------- */
 const GIORNI_SETTIMANA = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
 async function comeVa(adesso) {
   const d = cal.oraRoma(adesso).data, primo = d.slice(0, 8) + '01', dopo = cal.aggiungiMesi(primo, 1);
@@ -299,5 +314,6 @@ async function comeVa(adesso) {
 
 module.exports = {
   oggi, calendario, giorno, chiudi, mandaScuse, prenotazioni, prenotazione,
-  sito, salvaAvviso, salvaContatti, aggiungiFoto, togliFoto, ordinaFoto, leggiFoto, comeVa, riga, MAX_FOTO
+  sito, salvaAvviso, salvaContatti, aggiungiFoto, togliFoto, ordinaFoto, leggiFoto, comeVa, riga, MAX_FOTO,
+  internazionale, emailVera
 };

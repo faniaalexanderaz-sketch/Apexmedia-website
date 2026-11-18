@@ -30,7 +30,7 @@ function testa(titolo) {
     '<meta name="apple-mobile-web-app-title" content="Bagnarino">\n' +
     '<meta name="apple-mobile-web-app-status-bar-style" content="default">\n' +
     '<link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>\n' +
-    '<link rel="stylesheet" href="/gestione-app.css?v=e158e9e9">\n' +
+    '<link rel="stylesheet" href="/gestione-app.css?v=d33765e0">\n' +
     '</head>\n';
 }
 
@@ -56,7 +56,7 @@ function fascia(titolo) {
 /* ---------- l'app ---------- */
 function app(o) {
   return testa('Bagnarino') +
-    '<body class="g-app" data-nome="' + h(o.nome || '') + '" data-chiave-push="' + h(o.chiavePush || '') + '">\n' +
+    '<body class="g-app" data-nome="' + h(o.nome || '') + '" data-ruolo="' + (o.ruolo === 'apex' ? 'apex' : 'titolare') + '" data-chiave-push="' + h(o.chiavePush || '') + '">\n' +
     '<header class="g-testa">\n' +
     '  <button class="g-indietro" type="button" data-indietro hidden>' + icona('indietro') + '<span>Indietro</span></button>\n' +
     '  <span class="g-testa-marchio" data-marchio>' + MARCHIO + '</span>\n' +
@@ -77,7 +77,7 @@ function app(o) {
     /* una sola domanda prima di chiudere, annullare o togliere qualcosa */
     '<dialog class="g-domanda" data-domanda aria-labelledby="g-domanda-titolo"><h2 id="g-domanda-titolo" data-domanda-titolo></h2><p data-domanda-testo></p>' +
     '<div class="g-pulsanti"><button class="g-btn g-btn-primario" type="button" data-domanda-si></button><button class="g-btn g-btn-grigio" type="button" data-domanda-no>No, torna indietro</button></div></dialog>\n' +
-    '<script src="/gestione-app.js?v=0ff055c8" defer></script>\n' +
+    '<script src="/gestione-app.js?v=51cd11a7" defer></script>\n' +
     '</body>\n</html>\n';
 }
 
@@ -97,7 +97,7 @@ function accedi() {
     '</form>\n' +
     '<p class="g-sotto"><a class="g-link" href="/gestione/password">Password dimenticata?</a></p>\n' +
     '</main>\n' +
-    '<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
+    '<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
 }
 
 /* ---------- password dimenticata / nuova password ---------- */
@@ -128,7 +128,7 @@ function password(tokenLink, valido) {
       '</form>\n';
   }
   return testa('Password · Bagnarino') + '<body class="g-fuori">\n' + fascia('Bagnarino') +
-    '<main class="g-vista g-stretta">\n' + corpo + '</main>\n<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
+    '<main class="g-vista g-stretta">\n' + corpo + '</main>\n<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
 }
 
 /* ---------- arrivo dai pulsanti dell'email ---------- */
@@ -139,7 +139,7 @@ function risposta(t) {
     '<p class="g-testo" data-risposta-testo>Sto registrando la tua risposta.</p>\n' +
     '<a class="g-btn g-btn-primario" href="/gestione" data-risposta-app hidden>Apri l’app</a>\n' +
     '<noscript><p class="g-testo">Apri l’app per rispondere alla richiesta.</p><a class="g-btn g-btn-primario" href="/gestione">Apri l’app</a></noscript>\n' +
-    '</main>\n<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
+    '</main>\n<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
 }
 
 function messaggio(titolo, testo) {
@@ -283,9 +283,9 @@ function installa() {
     '</ol>\n</section>\n' +
 
     '<h2 class="g-sezione">Per entrare</h2>\n' +
-    '<p class="g-testo">Email: quella del coworking. Password: la stessa dell’area riservata. Se non la ricordi, nella pagina di accesso tocca “Password dimenticata?”.</p>\n' +
+    '<p class="g-testo">Email: quella del coworking. Password: quella che usavi per entrare nella vecchia area riservata. Se non la ricordi, nella pagina di accesso tocca “Password dimenticata?”: te ne arriva una nuova da scegliere, per email.</p>\n' +
     '<a class="g-btn g-btn-primario" href="/gestione">Apri l’app</a>\n' +
-    '</main>\n<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
+    '</main>\n<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
 }
 
 module.exports = { app, accedi, password, risposta, messaggio, installa };

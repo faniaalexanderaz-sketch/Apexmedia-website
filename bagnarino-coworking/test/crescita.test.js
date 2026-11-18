@@ -1,8 +1,8 @@
 /* =============================================================
-   BAGNARINO COWORKING — test della scheda "Crescita"
+   BAGNARINO COWORKING — test di "Come va" (i numeri del mese)
    Numeri di marketing inseriti a mano (validazione e salvataggio),
-   numeri automatici mese per mese, frase riassuntiva e permessi:
-   la titolare legge, solo Apex Media modifica.
+   numeri automatici mese per mese, frase riassuntiva e permessi
+   nell'app di gestione: la titolare legge, solo Apex Media modifica.
    ============================================================= */
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -107,46 +107,79 @@ test('crescita: numeri automatici del mese, clienti che tornano, canali e frase 
   assert.equal(ago.marketing, null);
 });
 
-/* ---------- permessi: chiamate vere alla funzione /api/admin ---------- */
-function chiama(handler, metodo, azione, corpo, cookie) {
+/* ---------- permessi: chiamate vere alla funzione dell'app (/api/gestione) ---------- */
+function chiama(handler, metodo, azione, corpo, cookie, query) {
   return new Promise(ok => {
     const res = {
       intestazioni: {}, statusCode: 200,
       setHeader(k, v) { this.intestazioni[k.toLowerCase()] = v; }, getHeader(k) { return this.intestazioni[k.toLowerCase()]; },
-      end(b) { ok({ stato: this.statusCode, dati: b ? JSON.parse(b) : null, cookie: (this.intestazioni['set-cookie'] || '').split(';')[0] }); }
+      end(b) { let dati = null; try { dati = JSON.parse(b); } catch (e) { /* non è JSON */ } ok({ stato: this.statusCode, dati, cookie: String(this.intestazioni['set-cookie'] || '').split(';')[0] }); }
     };
-    handler({ method: metodo, query: { azione }, headers: { host: 'localhost', cookie: cookie || '' }, body: corpo || {} }, res);
+    handler({ method: metodo, query: Object.assign({ azione }, query || {}), headers: { host: 'localhost', cookie: cookie || '', 'x-bgn-app': '1', 'x-forwarded-for': '7.7.7.' + (n++ % 250) }, body: corpo || {} }, res);
   });
 }
 
-test('permessi: la titolare legge Crescita ma non può modificare i numeri di marketing; Apex sì', async () => {
+test('permessi: la titolare vede "Come va" ma non può cambiare i numeri di social e Google; Apex Media sì', async () => {
   await nuovoDb();
+  process.env.NOTIFICATION_EMAIL = 'info@bagnarino.it';
   process.env.ADMIN_PASSWORD = 'marcella-segreta';
   process.env.APEX_PASSWORD = 'apex-segreta';
-  const admin = require('../api/admin');
+  delete process.env.APEX_EMAIL;
+  const app = require('../api/gestione');
 
-  const t = await chiama(admin, 'POST', 'login', { password: 'marcella-segreta' });
-  assert.equal(t.stato, 200); assert.equal(t.dati.ruolo, 'titolare');
-  const a = await chiama(admin, 'POST', 'login', { password: 'apex-segreta' });
-  assert.equal(a.dati.ruolo, 'apex');
+  /* due accessi distinti, nati da soli: la titolare e Apex Media (email dello studio, password di prima) */
+  const t = await chiama(app, 'POST', 'accedi', { email: 'info@bagnarino.it', password: 'marcella-segreta' });
+  assert.equal(t.stato, 200);
+  const a = await chiama(app, 'POST', 'accedi', { email: 'studio@infoapex.eu', password: 'apex-segreta' });
+  assert.equal(a.stato, 200);
   assert.notEqual(t.cookie, a.cookie);
-  assert.equal((await chiama(admin, 'POST', 'login', { password: 'sbagliata' })).stato, 401);
+  assert.equal((await chiama(app, 'POST', 'accedi', { email: 'studio@infoapex.eu', password: 'sbagliata' })).stato, 401);
+  /* le password non si scambiano tra i due accessi */
+  assert.equal((await chiama(app, 'POST', 'accedi', { email: 'info@bagnarino.it', password: 'apex-segreta' })).stato, 401);
+  assert.equal((await chiama(app, 'POST', 'accedi', { email: 'studio@infoapex.eu', password: 'marcella-segreta' })).stato, 401);
+  const utenti = await db.q('SELECT email, ruolo, nome FROM utenti ORDER BY id');
+  assert.deepEqual(utenti.map(u => u.email + ':' + u.ruolo), ['info@bagnarino.it:titolare', 'studio@infoapex.eu:apex']);
+  assert.equal(utenti[1].nome, 'Apex Media');
 
-  assert.equal((await chiama(admin, 'GET', 'chi', null, t.cookie)).dati.ruolo, 'titolare');
-  const lettura = await chiama(admin, 'GET', 'crescita', null, t.cookie);
-  assert.equal(lettura.stato, 200); assert.equal(lettura.dati.ruolo, 'titolare');
+  /* senza sessione non esce niente */
+  assert.equal((await chiama(app, 'GET', 'come-va')).stato, 401);
+  assert.equal((await chiama(app, 'POST', 'numeri-mese', { mese: '2026-10', dati: { instagram_follower: 5 } })).stato, 401);
 
-  const vietato = await chiama(admin, 'POST', 'marketing', { mese: '2026-10', dati: { instagram_follower: 5 } }, t.cookie);
+  const lettura = await chiama(app, 'GET', 'come-va', null, t.cookie);
+  assert.equal(lettura.stato, 200);
+  assert.equal(lettura.dati.ruolo, 'titolare');
+  assert.ok(lettura.dati.kpi && lettura.dati.mesi.length === 12 && lettura.dati.adesso && lettura.dati.numeri, 'Come va: mese, 12 mesi e numeri di adesso');
+  assert.equal((await chiama(app, 'GET', 'come-va', null, a.cookie)).dati.ruolo, 'apex');
+
+  const vietato = await chiama(app, 'POST', 'numeri-mese', { mese: '2026-10', dati: { instagram_follower: 5 } }, t.cookie);
   assert.equal(vietato.stato, 403);
-  const salvato = await chiama(admin, 'POST', 'marketing', { mese: '2026-10', dati: { instagram_follower: 5 } }, a.cookie);
-  assert.equal(salvato.stato, 200); assert.deepEqual(salvato.dati.dati, { instagram_follower: 5 });
-  assert.equal((await chiama(admin, 'POST', 'marketing', { mese: '2026-10', dati: { instagram_follower: -1 } }, a.cookie)).stato, 400);
+  assert.equal(vietato.dati.errore, 'SOLO_APEX');
+  const salvato = await chiama(app, 'POST', 'numeri-mese', { mese: '2026-10', dati: { instagram_follower: 5, google_chiamate: '12' }, note: 'Campagna di ottobre' }, a.cookie);
+  assert.equal(salvato.stato, 200);
+  assert.deepEqual(salvato.dati.dati, { instagram_follower: 5, google_chiamate: 12 });
+  assert.equal((await chiama(app, 'POST', 'numeri-mese', { mese: '2026-10', dati: { instagram_follower: -1 } }, a.cookie)).stato, 400);
+  /* la titolare li legge subito */
+  const dopo = await chiama(app, 'GET', 'come-va', null, t.cookie, { mese: '2026-10' });
+  assert.equal(dopo.dati.marketing.google_chiamate, 12);
+  assert.equal(dopo.dati.note, 'Campagna di ottobre');
 
-  /* senza APEX_PASSWORD l'accesso Apex non esiste e il vecchio cookie non vale più */
+  /* un'altra email per Apex Media si sceglie con APEX_EMAIL; l'accesso già creato resta */
+  process.env.APEX_EMAIL = 'altra@esempio.it';
+  assert.equal((await chiama(app, 'POST', 'accedi', { email: 'altra@esempio.it', password: 'apex-segreta' })).stato, 401);
+  assert.equal((await chiama(app, 'POST', 'accedi', { email: 'studio@infoapex.eu', password: 'apex-segreta' })).stato, 200);
+  delete process.env.APEX_EMAIL;
   delete process.env.APEX_PASSWORD;
-  assert.equal((await chiama(admin, 'POST', 'login', { password: 'apex-segreta' })).stato, 401);
-  assert.equal((await chiama(admin, 'GET', 'chi', null, a.cookie)).stato, 401);
-  /* la sessione della titolare resta valida */
-  assert.equal((await chiama(admin, 'GET', 'chi', null, t.cookie)).stato, 200);
+  delete process.env.ADMIN_PASSWORD;
+});
+
+test('senza APEX_PASSWORD l’accesso di Apex Media non nasce', async () => {
+  await nuovoDb();
+  process.env.NOTIFICATION_EMAIL = 'info@bagnarino.it';
+  process.env.ADMIN_PASSWORD = 'marcella-segreta';
+  delete process.env.APEX_PASSWORD;
+  const app = require('../api/gestione');
+  assert.equal((await chiama(app, 'POST', 'accedi', { email: 'studio@infoapex.eu', password: 'apex-segreta' })).stato, 401);
+  assert.equal((await chiama(app, 'POST', 'accedi', { email: 'info@bagnarino.it', password: 'marcella-segreta' })).stato, 200);
+  assert.deepEqual((await db.q('SELECT ruolo FROM utenti')).map(u => u.ruolo), ['titolare']);
   delete process.env.ADMIN_PASSWORD;
 });

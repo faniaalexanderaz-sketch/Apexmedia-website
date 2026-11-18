@@ -11,7 +11,7 @@ Il coworking è **aperto tutti i giorni, su prenotazione**. Dal sito le persone 
 - Si entra una volta sola con email e password: il telefono resta dentro.
 - Password dimenticata? Nella pagina di accesso tocca **Password dimenticata?**: ti arriva un'email con il pulsante per sceglierne una nuova.
 
-In basso ci sono quattro voci: **Oggi**, **Calendario**, **Prenotazioni**, **Sito**. L'omino in alto a destra apre **Come va** e **Impostazioni**.
+In basso ci sono quattro voci: **Oggi**, **Calendario**, **Prenotazioni**, **Sito**. L'omino in alto a destra apre **Come va**, **Clienti**, **Incassi** e **Impostazioni**.
 
 ## Quando arriva una richiesta
 Ti arrivano una **notifica** sul telefono e un'**email** con due pulsanti.
@@ -53,7 +53,20 @@ Tutto il resto del sito (colori, testi, prezzi) non si può cambiare da qui: se 
 - Chi ha una prenotazione confermata riceve da solo il promemoria la sera prima.
 - Il primo giorno del mese ti arriva il **report del mese**.
 
-## Incassi, clienti e file per il commercialista
-Li segue Apex Media dall'area riservata di prima (`/admin`), che continua a funzionare.
+## Se qualcuno telefona o passa di persona
+**Prenotazioni** → **Aggiungi una prenotazione**: scrivi nome, telefono, giorno. È già confermata. Se scrivi anche l'email, riceve la conferma.
+Per un cliente che conosci già: omino → **Clienti** → tocca il nome → **Aggiungi una sua prenotazione** (i dati sono già scritti).
+
+## Quando una persona paga
+Apri la sua prenotazione → **Ha pagato** → scegli **In contanti**, **Con la carta** o **Con bonifico**.
+In omino → **Incassi** vedi chi ha pagato e chi deve ancora pagare. In fondo c'è **Scarica l'elenco**: è il file per la commercialista.
+
+## Come va
+Omino → **Come va**: quante prenotazioni, quanti euro, quanti clienti nuovi questo mese, e con le frecce i mesi passati.
+Sotto trovi **Da dove arrivano i clienti**, **Instagram e Facebook**, **Google e chiamate**, **Pubblicità**, **Mese per mese**.
+I numeri di Instagram, Facebook, Google e pubblicità li scrive Apex Media a inizio mese: se leggi "Numeri in arrivo" è perché non li ha ancora messi.
+
+## Prezzi e posti
+Omino → **Impostazioni** → **Prezzi** oppure **Quanti posti ci sono**. Prima di salvare l'app ti chiede conferma. Sul sito cambia entro un minuto.
 
 Problemi o dubbi? Scrivi ad Apex Media.

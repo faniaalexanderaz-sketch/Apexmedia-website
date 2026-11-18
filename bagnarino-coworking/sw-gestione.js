@@ -10,7 +10,7 @@
    Scritto in JavaScript "vecchio stile" (niente frecce, niente
    const): deve girare anche sui Chrome di qualche anno fa.
    ============================================================= */
-var VERSIONE = 'bgn-gestione-4';
+var VERSIONE = 'bgn-gestione-5';
 var FERMI = [
   '/gestione-app.css', '/gestione-app.js',
   '/fonts/hanken-grotesk-latin-wght-normal.woff2', '/fonts/fraunces-latin-standard-normal.woff2',

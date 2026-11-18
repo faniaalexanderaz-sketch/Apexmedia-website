@@ -2,7 +2,9 @@
    BAGNARINO — app di gestione della titolare (/gestione)
    Un solo file, senza librerie. Le pagine arrivano dal server
    (api/_gestione-pagine.js) solo dopo l'accesso; qui ci sono le
-   schermate e i gesti.
+   schermate e i gesti. C'è tutto in un posto solo: richieste,
+   calendario, sito, e anche "Come va" (clienti, social, Google,
+   pubblicità), i clienti, gli incassi, i prezzi.
    Regole: una cosa importante per schermata, tre tocchi al
    massimo, "Fatto" grande dopo ogni salvataggio, una domanda
    prima di chiudere o togliere qualcosa, "Annulla" per qualche
@@ -128,6 +130,8 @@
      ============================================================= */
   var vista = $('#vista'), titolo = $('[data-titolo]'), indietro = $('[data-indietro]'), marchio = $('[data-marchio]');
   var NOME = document.body.getAttribute('data-nome') || '';
+  /* 'titolare' oppure 'apex' (Apex Media: in più aggiorna i numeri del mese) */
+  var RUOLO = document.body.getAttribute('data-ruolo') || 'titolare';
   var CHIAVE_PUSH = document.body.getAttribute('data-chiave-push') || '';
 
   /* ---------- date in parole ---------- */
@@ -435,6 +439,12 @@
             : '<div class="g-pulsanti"><button class="g-btn g-btn-chiaro" type="button" data-arrivo="' + p.id + '" data-chi="' + e(p.nome) + '">È arrivata/o</button></div>') + '</li>';
       }).join('') + '</ul>' : '<p class="g-vuoto">' + (d.chiusura === 'giorno' ? 'Oggi sei chiusa.' : 'Oggi non arriva nessuno.') + '</p>';
 
+      if (d.arriviDomani && d.arriviDomani.length) {
+        html += '<h2 class="g-sezione">Chi arriva domani</h2><ul class="g-lista">' + d.arriviDomani.map(function (p) {
+          return '<li><a class="g-voce" href="#prenotazione/' + p.id + '"><span><strong>' + e(p.nome) + '</strong><small>' + e(p.cosa) + '</small></span></a></li>';
+        }).join('') + '</ul>';
+      }
+
       html += '<div class="g-largo-su">';
       if (d.chiusura === 'giorno') html += '<p class="g-stato g-stato-chiuso">Oggi sei chiusa: sul sito non si può prenotare per oggi.</p><div class="g-pulsanti"><button class="g-btn g-btn-chiaro" type="button" data-riapri-oggi="' + d.oggi + '">Riapri oggi</button></div>';
       else html += '<button class="g-btn g-btn-grigio" type="button" data-chiudi-oggi="' + d.oggi + '">Oggi sono chiusa</button>';
@@ -483,6 +493,7 @@
       html += d.prenotazioni.length ? '<ul class="g-lista">' + d.prenotazioni.map(function (p) {
         return '<li><a class="g-voce" href="#prenotazione/' + p.id + '"><span><strong>' + e(p.nome) + '</strong><small>' + e(p.cosa) + '</small>' + etichettaStato(p) + '</span></a></li>';
       }).join('') + '</ul>' : '<p class="g-vuoto">Nessuna prenotazione per questo giorno.</p>';
+      if (!d.passato && d.chiusura !== 'giorno') html += '<div class="g-pulsanti"><a class="g-btn g-btn-chiaro" href="#nuova/' + d.data + '">Aggiungi una prenotazione</a></div>';
       if (!d.passato) {
         html += '<h2 class="g-sezione">Vuoi chiudere?</h2><div class="g-scelte">' + ['giorno', 'mattina', 'pomeriggio'].map(function (v) {
           return '<button class="g-btn g-btn-grigio" type="button" data-chiusura="' + v + '" data-data="' + d.data + '" aria-pressed="' + (d.chiusura === v) + '">' + PAROLE_CHIUSURA[v] + '</button>';
@@ -520,7 +531,8 @@
   /* ---------- Prenotazioni ---------- */
   SCHERMATE.prenotazioni = { titolo: 'Prenotazioni', voce: 'prenotazioni', disegna: function () {
     return leggi('prenotazioni').then(function (d) {
-      var html = '<h2 class="g-sezione">Da confermare</h2>';
+      var html = '<div class="g-pulsanti" style="margin-top:0"><a class="g-btn g-btn-chiaro" href="#nuova">Aggiungi una prenotazione</a></div>';
+      html += '<h2 class="g-sezione">Da confermare</h2>';
       html += d.daConfermare.length ? '<ul class="g-lista">' + d.daConfermare.map(schedaRichiesta).join('') + '</ul>' : '<p class="g-vuoto">Nessuna richiesta in attesa.</p>';
       html += '<h2 class="g-sezione">Confermate</h2>';
       html += d.confermate.length ? '<ul class="g-lista">' + d.confermate.map(function (p) { return vocePrenotazione(p, false); }).join('') + '</ul>' : '<p class="g-vuoto">Nessuna prenotazione confermata nei prossimi giorni.</p>';
@@ -539,14 +551,25 @@
         '<div><dt>Cosa</dt><dd>' + e(p.cosa) + ' · ' + e(p.prezzo) + '</dd></div>' +
         '<div><dt>Telefono</dt><dd>' + e(p.telefono) + '</dd></div>' +
         (p.email ? '<div><dt>Email</dt><dd><a class="g-link" href="mailto:' + e(p.email) + '">' + e(p.email) + '</a></dd></div>' : '') +
-        (p.nota ? '<div><dt>Nota del cliente</dt><dd>' + e(p.nota) + '</dd></div>' : '') + '</dl>';
+        (p.nota ? '<div><dt>Nota del cliente</dt><dd>' + e(p.nota) + '</dd></div>' : '') +
+        (p.posto && p.stato !== 'annullata' ? dato('Posto', p.posto) : '') +
+        (p.arrivaDa ? dato('Arriva da', nomeCanale(p.arrivaDa)) : '') +
+        dato('Bagnarino Card', p.timbri + (p.timbri === 1 ? ' timbro' : ' timbri') + ' su 10' + (p.omaggi ? ' · ' + (p.omaggi === 1 ? 'una giornata in regalo' : p.omaggi + ' giornate in regalo') : '')) +
+        (p.fattura ? dato('Fattura a', p.fattura) : '') + dato('Codice', p.codice) + '</dl>';
       html += '<div class="g-due" style="margin-top:16px">' + contatti(p) + '</div>';
+      html += '<p class="g-nota"><a class="g-link" href="#cliente/' + p.clienteId + '">Tutte le prenotazioni di ' + e(p.soloNome) + '</a></p>';
       if (p.stato === 'in_attesa') html += '<h2 class="g-sezione">La tua risposta</h2>' + pulsantiRisposta(p);
       else if (p.stato !== 'annullata') {
         if (p.puoSegnareArrivo) {
           html += '<div class="g-pulsanti g-largo-su">' + (p.stato === 'presente'
             ? '<button class="g-btn g-btn-chiaro" type="button" data-non-arrivo="' + p.id + '">Ho sbagliato: non è arrivata/o</button>'
             : '<button class="g-btn g-btn-verde" type="button" data-arrivo="' + p.id + '" data-chi="' + e(p.nome) + '">È arrivata/o</button>') + '</div>';
+        }
+        if (p.puoPagare) {
+          html += '<h2 class="g-sezione">Pagamento</h2>' + (p.pagato
+            ? '<p class="g-stato">Ha pagato ' + euro(p.importo) + (NOMI_METODO[p.metodo] ? ' ' + NOMI_METODO[p.metodo] : '') + (p.pagataIl ? ', il ' + e(giornoBreve(p.pagataIl)) : '') + '</p>' +
+              '<div class="g-pulsanti"><button class="g-btn g-btn-chiaro" type="button" data-non-pagato="' + p.id + '">Ho sbagliato: non ha pagato</button></div>'
+            : '<p class="g-testo">Da pagare: ' + euro(p.importo) + '</p><a class="g-btn g-btn-chiaro" href="#pagamento/' + p.id + '">Ha pagato</a>');
         }
         if (!p.passata && p.stato === 'confermata') {
           html += '<div class="g-pulsanti g-largo-su"><button class="g-btn g-btn-rosso" type="button" data-annulla-prenotazione="' + p.id + '" data-chi="' + e(p.nome) + '">Annulla la prenotazione</button></div>';
@@ -739,18 +762,11 @@
   /* ---------- Profilo: Come va e Impostazioni ---------- */
   SCHERMATE.profilo = { titolo: 'Profilo', interna: 'oggi', disegna: function () {
     vista.innerHTML = '<ul class="g-lista">' +
-      '<li><a class="g-voce" href="#come-va"><span><strong>Come va</strong><small>I numeri di questo mese</small></span></a></li>' +
-      '<li><a class="g-voce" href="#impostazioni"><span><strong>Impostazioni</strong><small>Notifiche, password, uscita</small></span></a></li></ul>';
+      voce('come-va', 'Come va', 'Prenotazioni, clienti, social, Google e pubblicità') +
+      voce('clienti', 'Clienti', 'Chi viene e quante volte') +
+      voce('incassi', 'Incassi', 'Chi ha pagato e chi deve ancora pagare') +
+      voce('impostazioni', 'Impostazioni', 'Notifiche, prezzi, password, uscita') + '</ul>';
     return Promise.resolve();
-  } };
-
-  SCHERMATE['come-va'] = { titolo: 'Come va', interna: 'profilo', disegna: function () {
-    return leggi('come-va').then(function (d) {
-      vista.innerHTML = '<div class="g-numeri">' +
-        '<div class="g-numero"><strong>' + d.prenotazioni + '</strong><span>' + (d.prenotazioni === 1 ? 'Prenotazione' : 'Prenotazioni') + ' di ' + e(d.mese) + '</span></div>' +
-        '<div class="g-numero"><strong>' + d.persone + '</strong><span>' + (d.persone === 1 ? 'Persona venuta' : 'Persone diverse venute') + ' questo mese</span></div>' +
-        '<div class="g-numero"><strong class="g-parole">' + e(d.giorniPiuRichiesti || 'Ancora presto per dirlo') + '</strong><span>' + (/ e /.test(d.giorniPiuRichiesti) ? 'I giorni più richiesti' : 'Il giorno più richiesto') + '</span></div></div>';
-    });
   } };
 
   SCHERMATE.impostazioni = { titolo: 'Impostazioni', interna: 'profilo', disegna: function () {
@@ -759,6 +775,8 @@
         (inApp() ? '' : '<h2 class="g-sezione">App sul telefono</h2>' +
           '<div class="g-pulsanti" style="margin-top:0"><button class="g-btn g-btn-primario" type="button" data-installa-subito data-installa-ora' + (installaSubito ? '' : ' hidden') + '>Metti l’app su questo telefono</button>' +
           '<a class="g-btn g-btn-chiaro" href="/gestione/installa">Come mettere l’app sul telefono</a></div>') +
+        '<h2 class="g-sezione">Il coworking</h2><ul class="g-lista">' + voce('imp-prezzi', 'Prezzi', 'Giornata, mezza giornata, carnet, mese') +
+        voce('imp-posti', 'Quanti posti ci sono', 'Le scrivanie che si possono prenotare') + voce('imp-messaggi', 'Messaggi di WhatsApp', 'Le frasi già scritte dei pulsanti del sito') + '</ul>' +
         '<h2 class="g-sezione">Password</h2><a class="g-btn g-btn-chiaro" href="/gestione/password">Cambia la password</a>' +
         '<h2 class="g-sezione">Uscita</h2><button class="g-btn g-btn-rosso" type="button" data-esci>Esci dall’app</button>';
       ascoltaNotifiche();
@@ -766,6 +784,450 @@
         chiedi('Vuoi uscire?', 'Per rientrare dovrai scrivere di nuovo email e password.', 'Sì, esci', 'g-btn-rosso').then(function (si) {
           if (si) chiama('esci').then(function () { location.href = '/gestione/accedi'; });
         });
+      });
+    });
+  } };
+
+  /* =============================================================
+     COME VA, CLIENTI, INCASSI, PREZZI
+     Tutto quello che prima stava nell'area riservata, con le
+     stesse regole dell'app: numeri grandi, parole semplici, righe
+     con una barra al posto dei grafici.
+     ============================================================= */
+  /* numeri scritti all'italiana, sempre con il punto delle migliaia (1.240) e senza
+     dipendere dal telefono: i Chrome vecchi li scrivono in modi diversi */
+  function migliaia(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  function intero(n) { return (n < 0 ? '-' : '') + migliaia(Math.abs(Math.round(n))); }
+  function euro(c) {
+    var a = Math.abs(Math.round(c)), cent = a % 100;
+    return (c < 0 ? '-' : '') + '€' + migliaia(Math.floor(a / 100)) + (cent ? ',' + (cent < 10 ? '0' : '') + cent : '');
+  }
+  function virgola(n) { return String(n).replace('.', ','); }
+  /* "a ottobre", ma "ad agosto" e "ad aprile" */
+  function aMese(nome) { return (/^a/.test(nome) ? 'ad ' : 'a ') + nome; }
+  function voce(dove, titoloVoce, sotto) {
+    return '<li><a class="g-voce" href="#' + dove + '"><span><strong>' + e(titoloVoce) + '</strong>' + (sotto ? '<small>' + e(sotto) + '</small>' : '') + '</span></a></li>';
+  }
+  function dato(nome, valore) { return '<div><dt>' + e(nome) + '</dt><dd>' + e(valore) + '</dd></div>'; }
+  /* confronto con il mese prima, in parole: "20% in più rispetto a ottobre" */
+  function confrontoTesto(k, nomePrima, assoluto) {
+    if (!k || k.valore == null || k.prima == null) return '';
+    var d = k.valore - k.prima;
+    if (!d) return 'Come ' + aMese(nomePrima);
+    if (!assoluto && !k.prima) return '';
+    var quanto = assoluto ? intero(Math.abs(d)) : Math.round(Math.abs(d) / k.prima * 100) + '%';
+    return quanto + (d > 0 ? ' in più' : ' in meno') + ' rispetto ' + aMese(nomePrima);
+  }
+  function piccolo(testo, inSu) { return testo ? '<small' + (inSu ? ' class="g-su"' : '') + '>' + e(testo) + '</small>' : ''; }
+  function conConfronto(k, nomePrima) { return piccolo(confrontoTesto(k, nomePrima), k && k.prima != null && k.valore > k.prima); }
+  /* righe con una barra: il valore più alto riempie tutta la riga */
+  function quote(righe, formato) {
+    var max = 0;
+    righe.forEach(function (r) { if (r.valore > max) max = r.valore; });
+    return '<ul class="g-quote">' + righe.map(function (r) {
+      return '<li><div class="g-quota-testa"><span>' + e(r.nome) + '</span><strong>' + (formato ? formato(r.valore) : intero(r.valore)) + '</strong></div>' +
+        '<div class="g-quota-riga"><i style="width:' + (max && r.valore ? Math.max(3, Math.round(r.valore / max * 100)) : 0) + '%"></i></div></li>';
+    }).join('') + '</ul>';
+  }
+  var NOMI_CANALI = {
+    'Diretto': 'Direttamente dal sito', 'In sede / telefono': 'Di persona o al telefono', 'Altro': 'Da altri siti',
+    'Google': 'Ricerca su Google', 'Google Ads': 'Pubblicità su Google', 'Google Maps': 'Google Maps',
+    'Instagram': 'Instagram', 'Facebook': 'Facebook', 'WhatsApp': 'WhatsApp'
+  };
+  function nomeCanale(c) { return NOMI_CANALI[c] || c; }
+  function inArrivo() {
+    return '<p class="g-vuoto">' + (RUOLO === 'apex' ? 'Nessun numero per questo mese.' : 'In arrivo: questi numeri li aggiorna Apex Media a inizio mese.') + '</p>';
+  }
+  function mesePrimaDi(d) { return d.mesi.length > 1 ? (d.mesi[d.mesi.length - 2].marketing || {}) : {}; }
+  /* un numero di social o Google con il confronto: "1.240 · 35 in più rispetto a ottobre" */
+  function numeroCon(d, campo, assoluto) {
+    var mk = d.marketing || {}, c = confrontoTesto({ valore: mk[campo], prima: mesePrimaDi(d)[campo] }, d.nomeMesePrima, assoluto);
+    return intero(mk[campo]) + (c ? ' · ' + c.charAt(0).toLowerCase() + c.slice(1) : '');
+  }
+  /* un numero mese per mese (solo i mesi che ce l'hanno), dal più recente */
+  function serie(d, campo) {
+    var out = [];
+    d.mesi.forEach(function (x) { if (x.marketing && x.marketing[campo] != null) out.unshift({ nome: meseLungo(x.mese.slice(0, 7)), valore: x.marketing[campo] }); });
+    return out;
+  }
+  function pulsanteNumeri(d) {
+    return RUOLO === 'apex' ? '<div class="g-pulsanti g-largo-su"><a class="g-btn g-btn-primario" href="#numeri-mese/' + d.mese.slice(0, 7) + '">Aggiorna i numeri di ' + e(d.nomeMese) + '</a></div>' : '';
+  }
+
+  /* ---------- Come va: il mese in tre numeri, poi "da vicino" ---------- */
+  SCHERMATE['come-va'] = { titolo: 'Come va', interna: 'profilo', disegna: function (mese) {
+    return leggi('come-va', { mese: mese }).then(function (d) {
+      var k = d.kpi, m7 = d.mese.slice(0, 7), nome = d.nomeMese, prima = d.nomeMesePrima, mk = d.marketing || {};
+      var m = d.mesi[d.mesi.length - 1], corrente = d.mese === d.corrente, g = daIso(d.mese);
+      var mPrima = iso(new Date(g.getFullYear(), g.getMonth() - 1, 1)).slice(0, 7), mDopo = iso(new Date(g.getFullYear(), g.getMonth() + 1, 1)).slice(0, 7);
+      var html = '<div class="g-mese"><button type="button" data-vai="come-va/' + mPrima + '" aria-label="Mese prima">' + ico('prima') + '</button><h2>' + e(meseLungo(m7)) + '</h2>' +
+        '<button type="button" data-vai="come-va/' + mDopo + '" aria-label="Mese dopo"' + (corrente ? ' disabled' : '') + '>' + ico('dopo') + '</button></div>';
+      html += '<p class="g-testo">' + e(d.riassunto) + '</p>';
+      html += '<div class="g-numeri">' +
+        '<div class="g-numero"><strong>' + intero(k.prenotazioni.valore) + '</strong><span>' + (k.prenotazioni.valore === 1 ? 'Prenotazione' : 'Prenotazioni') + ' di ' + e(nome) + '</span>' + conConfronto(k.prenotazioni, prima) + '</div>' +
+        '<div class="g-numero"><strong>' + euro(k.valorePrenotato.valore) + '</strong><span>Prenotati ' + e(aMese(nome)) + '</span>' + piccolo('Già incassati: ' + euro(k.incasso.valore)) + '</div>' +
+        '<div class="g-numero"><strong>' + intero(k.nuoviClienti.valore) + '</strong><span>' + (k.nuoviClienti.valore === 1 ? 'Cliente nuovo' : 'Clienti nuovi') + '</span>' + conConfronto(k.nuoviClienti, prima) + '</div></div>';
+
+      var canali = Object.keys(m.canali).sort(function (a, b) { return m.canali[b] - m.canali[a]; });
+      html += '<h2 class="g-sezione">Da vicino</h2><ul class="g-lista">' +
+        voce('come-va-canali/' + m7, 'Da dove arrivano i clienti', canali.length ? 'Soprattutto: ' + nomeCanale(canali[0]).toLowerCase() : 'Ancora nessuna prenotazione') +
+        voce('come-va-social/' + m7, 'Instagram e Facebook', mk.instagram_follower != null ? intero(mk.instagram_follower) + ' follower su Instagram' : mk.facebook_follower != null ? intero(mk.facebook_follower) + ' follower su Facebook' : 'Numeri in arrivo') +
+        voce('come-va-google/' + m7, 'Google e chiamate', mk.google_chiamate != null ? (mk.google_chiamate === 1 ? 'Una chiamata' : intero(mk.google_chiamate) + ' chiamate') + ' da Google' : 'Numeri in arrivo') +
+        voce('come-va-pubblicita/' + m7, 'Pubblicità', k.spesa.valore != null ? 'Spesi ' + euro(Math.round(k.spesa.valore * 100)) : 'Numeri in arrivo') +
+        voce('come-va-anno/' + m7, 'Mese per mese', 'Gli ultimi 12 mesi') + '</ul>';
+
+      html += '<h2 class="g-sezione">Altri numeri di ' + e(nome) + '</h2><dl class="g-dati">' +
+        dato('Clienti che tornano', m.clienti ? 'Su ' + m.clienti + (m.clienti === 1 ? ' cliente' : ' clienti') + ' del mese, ' +
+          (m.ritorni === 0 ? 'nessuno era già venuto' : m.ritorni === 1 ? 'uno era già venuto' : m.ritorni + ' erano già venuti') : 'Nessun cliente questo mese') +
+        dato('Arrivati in sede', intero(k.arrivati.valore) + (k.nonVenuti.valore ? ' · non venuti: ' + k.nonVenuti.valore : ''));
+      if (corrente) {
+        var a = d.adesso, n = d.numeri;
+        html += dato('Persone diverse venute', intero(a.persone)) +
+          dato(/ e /.test(a.giorniPiuRichiesti) ? 'Giorni più richiesti' : 'Giorno più richiesto', a.giorniPiuRichiesti || 'Ancora presto per dirlo') +
+          dato('Questa settimana', n.settimana + (n.settimana === 1 ? ' prenotazione' : ' prenotazioni') + ' · la settimana scorsa ' + n.settimanaPrima) +
+          dato('Posti occupati oggi', n.occupate + ' su ' + n.postazioni) +
+          dato('Da incassare', n.daIncassareN ? euro(n.daIncassare) + ' · ' + (n.daIncassareN === 1 ? 'una prenotazione' : n.daIncassareN + ' prenotazioni') : 'Niente: hanno pagato tutti');
+      }
+      html += '</dl>';
+      if (d.note) html += '<h2 class="g-sezione">Cosa abbiamo fatto questo mese</h2><p class="g-testo g-righe">' + e(d.note) + '</p>';
+      if (d.aggiornato) html += '<p class="g-nota">Numeri di social, Google e pubblicità aggiornati da Apex Media il ' + e(giornoBreve(d.aggiornato)) + '.</p>';
+      vista.innerHTML = html + pulsanteNumeri(d);
+    });
+  } };
+
+  /* le schermate "da vicino": stessi dati, un argomento alla volta */
+  function daVicino(corpo) {
+    return function (mese) {
+      return leggi('come-va', { mese: mese }).then(function (d) {
+        vista.innerHTML = '<p class="g-data">' + e(meseLungo(d.mese.slice(0, 7))) + '</p>' + corpo(d, d.mesi[d.mesi.length - 1], d.marketing || {}) + pulsanteNumeri(d);
+      });
+    };
+  }
+
+  SCHERMATE['come-va-canali'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
+    var perValore = function (a, b) { return b.valore - a.valore; };
+    var delMese = Object.keys(m.canali).map(function (c) { return { nome: nomeCanale(c), valore: m.canali[c] }; }).sort(perValore);
+    var anno = {};
+    d.mesi.forEach(function (x) { Object.keys(x.canali).forEach(function (c) { anno[c] = (anno[c] || 0) + x.canali[c]; }); });
+    var dellAnno = Object.keys(anno).map(function (c) { return { nome: nomeCanale(c), valore: anno[c] }; }).sort(perValore);
+    var social = mk.instagram_copertura != null || mk.facebook_copertura != null ? (mk.instagram_copertura || 0) + (mk.facebook_copertura || 0) : null;
+    var passi = [['Hanno visto i social', social], ['Sono andati sul sito', mk.visite_sito != null ? mk.visite_sito : null], ['Hanno chiesto un posto', m.prenotazioni], ['Sono arrivati in sede', m.presenti]];
+    return '<h2 class="g-titolo">Da dove arrivano i clienti</h2><p class="g-testo">Le prenotazioni di ' + e(d.nomeMese) + ', divise per come la persona è arrivata.</p>' +
+      (delMese.length ? quote(delMese) : '<p class="g-vuoto">Ancora nessuna prenotazione questo mese.</p>') +
+      '<h2 class="g-sezione">Negli ultimi 12 mesi</h2>' + (dellAnno.length ? quote(dellAnno) : '<p class="g-vuoto">Ancora nessuna prenotazione.</p>') +
+      '<h2 class="g-sezione">Il percorso di ' + e(d.nomeMese) + '</h2><dl class="g-dati">' +
+      passi.map(function (x) { return dato(x[0], x[1] == null ? 'Numero in arrivo' : intero(x[1])); }).join('') + '</dl>';
+  }) };
+
+  SCHERMATE['come-va-social'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
+    var html = '<h2 class="g-titolo">Instagram e Facebook</h2>';
+    var ig = mk.instagram_follower != null || mk.instagram_copertura != null, fb = mk.facebook_follower != null || mk.facebook_copertura != null;
+    if (!ig && !fb) html += inArrivo();
+    html += '<h2 class="g-sezione">Instagram</h2><dl class="g-dati">' +
+      (mk.instagram_follower != null ? dato('Follower', numeroCon(d, 'instagram_follower', true)) : '') +
+      (mk.instagram_copertura != null ? dato('Persone raggiunte', numeroCon(d, 'instagram_copertura')) : '') +
+      dato('Prenotazioni arrivate da Instagram', intero(m.canali.Instagram || 0)) + '</dl>';
+    html += '<h2 class="g-sezione">Facebook</h2><dl class="g-dati">' +
+      (mk.facebook_follower != null ? dato('Follower', numeroCon(d, 'facebook_follower', true)) : '') +
+      (mk.facebook_copertura != null ? dato('Persone raggiunte', numeroCon(d, 'facebook_copertura')) : '') +
+      dato('Prenotazioni arrivate da Facebook', intero(m.canali.Facebook || 0)) + '</dl>';
+    var sIg = serie(d, 'instagram_follower'), sFb = serie(d, 'facebook_follower');
+    if (sIg.length > 1) html += '<h2 class="g-sezione">Follower su Instagram, mese per mese</h2>' + quote(sIg);
+    if (sFb.length > 1) html += '<h2 class="g-sezione">Follower su Facebook, mese per mese</h2>' + quote(sFb);
+    return html;
+  }) };
+
+  SCHERMATE['come-va-google'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
+    var voci = [['google_chiamate', 'Chiamate'], ['google_indicazioni', 'Richieste di indicazioni stradali'], ['google_clic_sito', 'Clic sul sito'],
+      ['google_visualizzazioni', 'Hanno visto la scheda su Google'], ['visite_sito', 'Visite al sito'], ['contatti_whatsapp', 'Chat su WhatsApp']];
+    var presenti = voci.filter(function (v) { return mk[v[0]] != null; });
+    var html = '<h2 class="g-titolo">Google e chiamate</h2>';
+    if (!presenti.length && mk.recensioni_media == null && mk.recensioni_numero == null) html += inArrivo();
+    html += '<dl class="g-dati">' + presenti.map(function (v) { return dato(v[1], numeroCon(d, v[0])); }).join('');
+    if (mk.recensioni_media != null || mk.recensioni_numero != null) {
+      html += dato('Recensioni', (mk.recensioni_media != null ? virgola(mk.recensioni_media) + ' su 5' : '') +
+        (mk.recensioni_media != null && mk.recensioni_numero != null ? ' · ' : '') + (mk.recensioni_numero != null ? intero(mk.recensioni_numero) + ' in tutto' : ''));
+    }
+    html += dato('Prenotazioni arrivate da Google', intero((m.canali.Google || 0) + (m.canali['Google Maps'] || 0) + (m.canali['Google Ads'] || 0))) + '</dl>';
+    var sChiamate = serie(d, 'google_chiamate');
+    if (sChiamate.length > 1) html += '<h2 class="g-sezione">Chiamate, mese per mese</h2>' + quote(sChiamate);
+    return html;
+  }) };
+
+  SCHERMATE['come-va-pubblicita'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
+    var k = d.kpi, html = '<h2 class="g-titolo">Pubblicità</h2>';
+    if (k.spesa.valore == null) return html + inArrivo();
+    var pezzi = [];
+    if (mk.spesa_meta != null) pezzi.push('Instagram e Facebook ' + euro(Math.round(mk.spesa_meta * 100)));
+    if (mk.spesa_google != null) pezzi.push('Google ' + euro(Math.round(mk.spesa_google * 100)));
+    html += '<div class="g-numeri"><div class="g-numero"><strong>' + euro(Math.round(k.spesa.valore * 100)) + '</strong><span>Spesi ' + e(aMese(d.nomeMese)) + '</span>' + piccolo(pezzi.join(' · ')) + '</div>';
+    if (k.ritornoPubblicita.valore != null) {
+      html += '<div class="g-numero"><strong>' + euro(Math.round(k.ritornoPubblicita.valore * 100)) + '</strong><span>Di prenotazioni per ogni euro speso</span>' +
+        piccolo(k.prenotazioniDaPubblicita.valore === 1 ? 'Una prenotazione arrivata dalla pubblicità' : k.prenotazioniDaPubblicita.valore + ' prenotazioni arrivate dalla pubblicità') + '</div>';
+    }
+    if (k.costoPrenotazione.valore != null) html += '<div class="g-numero"><strong>' + euro(k.costoPrenotazione.valore) + '</strong><span>Spesa per ogni prenotazione del mese</span></div>';
+    return html + '</div><p class="g-nota">Contano come arrivate dalla pubblicità le prenotazioni fatte da chi è passato da Instagram, Facebook o da un annuncio su Google.</p>';
+  }) };
+
+  SCHERMATE['come-va-anno'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d) {
+    var mesi = d.mesi.slice().reverse(), nomeDi = function (x) { return meseLungo(x.mese.slice(0, 7)); };
+    var html = '<h2 class="g-titolo">Mese per mese</h2><h2 class="g-sezione">Prenotazioni</h2>' +
+      quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.prenotazioni }; })) +
+      '<h2 class="g-sezione">Valore delle prenotazioni</h2>' + quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.valore }; }), euro);
+    if (mesi.some(function (x) { return x.incassato > 0; })) html += '<h2 class="g-sezione">Incassato</h2>' + quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.incassato }; }), euro);
+    return html;
+  }) };
+
+  /* ---------- i numeri del mese: li scrive Apex Media ---------- */
+  var GRUPPI_NUMERI = [
+    { titolo: 'Instagram', campi: ['instagram_follower', 'instagram_copertura'], aiuto: 'App Instagram → Dashboard professionale → Account raggiunti (ultimi 30 giorni).' },
+    { titolo: 'Facebook', campi: ['facebook_follower', 'facebook_copertura'], aiuto: 'Meta Business Suite → Insight → Copertura.' },
+    { titolo: 'Google', campi: ['google_visualizzazioni', 'google_chiamate', 'google_indicazioni', 'google_clic_sito', 'recensioni_numero', 'recensioni_media'], aiuto: 'Profilo dell’attività su Google → Rendimento, mese scelto. Recensioni: totale e voto medio di oggi.' },
+    { titolo: 'Sito e WhatsApp', campi: ['visite_sito', 'contatti_whatsapp'], aiuto: 'Visite: Google Analytics → Utenti del mese. WhatsApp: chat nuove arrivate dal sito.' },
+    { titolo: 'Pubblicità', campi: ['spesa_meta', 'spesa_google'], aiuto: 'Quanto è stato speso nel mese, IVA inclusa (in euro).' }
+  ];
+  SCHERMATE['numeri-mese'] = { titolo: 'Numeri del mese', interna: 'come-va', disegna: function (mese) {
+    return leggi('come-va', { mese: mese }).then(function (d) {
+      if (RUOLO !== 'apex') { vista.innerHTML = '<p class="g-vuoto">Questi numeri li aggiorna Apex Media.</p>'; return; }
+      var mk = d.marketing || {}, pr = mesePrimaDi(d), nomi = {}, m7 = d.mese.slice(0, 7);
+      d.campi.forEach(function (c) { nomi[c.id] = c; });
+      var haPrima = Object.keys(pr).length > 0;
+      vista.innerHTML = '<h2 class="g-titolo">Numeri di ' + e(meseLungo(m7)) + '</h2><p class="g-testo">Social, Google e pubblicità. Un campo lasciato vuoto resta “in arrivo”.</p>' +
+        '<form class="g-modulo" data-numeri novalidate>' +
+        (haPrima ? '<button class="g-btn g-btn-chiaro" type="button" data-riprendi>Riprendi i numeri di ' + e(d.nomeMesePrima) + '</button>' : '') +
+        GRUPPI_NUMERI.map(function (g) {
+          return '<div class="g-gruppo" role="group" aria-label="' + e(g.titolo) + '"><h3>' + e(g.titolo) + '</h3><p class="g-nota">' + e(g.aiuto) + '</p>' + g.campi.map(function (id) {
+            var c = nomi[id];
+            return '<label class="g-campo"><span>' + e(c.nome) + '</span><input name="' + id + '" inputmode="' + (c.dec ? 'decimal' : 'numeric') + '" autocomplete="off" value="' + e(mk[id] == null ? '' : virgola(mk[id])) + '">' +
+              '<small>' + (pr[id] != null ? e(maiuscola(d.nomeMesePrima)) + ': ' + e(virgola(pr[id])) : 'Nessun numero il mese prima') + '</small></label>';
+          }).join('') + '</div>';
+        }).join('') +
+        '<label class="g-campo"><span>Cosa abbiamo fatto questo mese</span><textarea name="note" maxlength="1000">' + e(d.note || '') + '</textarea></label>' +
+        '<p class="g-errore" data-errore role="alert" hidden></p><button class="g-btn g-btn-primario" type="submit">Salva i numeri</button></form>';
+      var f = $('[data-numeri]', vista), err = $('[data-errore]', f), riprendi = $('[data-riprendi]', f);
+      if (riprendi) riprendi.addEventListener('click', function () {
+        d.campi.forEach(function (c) { if (pr[c.id] != null && !f[c.id].value) f[c.id].value = virgola(pr[c.id]); });
+        mostraFatto('Numeri ripresi: correggi quelli cambiati.');
+      });
+      f.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        err.hidden = true;
+        var dati = {}, b = $('button[type=submit]', f);
+        d.campi.forEach(function (c) { dati[c.id] = f[c.id].value; });
+        b.disabled = true;
+        chiama('numeri-mese', { mese: m7, dati: dati, note: f.note.value }).then(function () {
+          mostraFatto('Numeri di ' + d.nomeMese + ' salvati.');
+          vai('come-va/' + m7);
+        }, function (x) { b.disabled = false; err.textContent = x.message; err.hidden = false; err.scrollIntoView(false); });
+      });
+    });
+  } };
+
+  /* ---------- Clienti ---------- */
+  function voceCliente(c) {
+    var sotto = c.prenotazioni === 0 ? 'Nessuna prenotazione' : (c.prenotazioni === 1 ? 'Una prenotazione' : c.prenotazioni + ' prenotazioni') + (c.ultimo ? ' · ultima volta il ' + giornoBreve(c.ultimo) : '');
+    return '<li><a class="g-voce" href="#cliente/' + c.id + '"><span><strong>' + e(c.nome) + '</strong><small>' + e(sotto) + '</small>' + etichetteCliente(c) + '</span></a></li>';
+  }
+  function etichetteCliente(c) {
+    return (c.abituale ? '<span class="g-etichetta g-etichetta-ok">Viene spesso</span>' : '') + (c.daRisentire ? '<span class="g-etichetta g-etichetta-attesa">Non si vede da un mese</span>' : '');
+  }
+  SCHERMATE.clienti = { titolo: 'Clienti', interna: 'profilo', disegna: function () {
+    return leggi('clienti').then(function (d) {
+      var elenco = function (lista, cerca) {
+        return lista.length ? '<ul class="g-lista">' + lista.map(voceCliente).join('') + '</ul>' : '<p class="g-vuoto">' + (cerca ? 'Nessun cliente con questo nome o numero.' : 'Ancora nessun cliente.') + '</p>';
+      };
+      vista.innerHTML = '<label class="g-campo"><span>Cerca per nome o telefono</span><input type="search" name="cerca" autocomplete="off" enterkeyhint="search" data-cerca></label>' +
+        '<p class="g-nota" data-quanti>' + (d.clienti.length === 1 ? 'Un cliente' : d.clienti.length + ' clienti') + '</p><div class="g-largo-su" style="margin-top:16px" data-elenco>' + elenco(d.clienti, '') + '</div>';
+      var campo = $('[data-cerca]', vista), zona = $('[data-elenco]', vista), quanti = $('[data-quanti]', vista), timer = null, ultima = 0;
+      campo.addEventListener('input', function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          var mia = ++ultima, testo = campo.value.trim();
+          leggi('clienti', { cerca: testo }).then(function (r) {
+            if (mia !== ultima || !document.body.contains(zona)) return;
+            zona.innerHTML = elenco(r.clienti, testo);
+            quanti.textContent = r.clienti.length === 1 ? 'Un cliente' : r.clienti.length + ' clienti';
+          }, function () { /* si riprova al prossimo tasto */ });
+        }, 300);
+      });
+    });
+  } };
+
+  SCHERMATE.cliente = { titolo: 'Cliente', interna: 'clienti', disegna: function (id) {
+    return leggi('cliente', { id: id }).then(function (c) {
+      var card = c.timbri + (c.timbri === 1 ? ' timbro' : ' timbri') + ' su 10' + (c.omaggi ? ' · ' + (c.omaggi === 1 ? 'una giornata in regalo da usare' : c.omaggi + ' giornate in regalo da usare') : '');
+      var html = '<h2 class="g-titolo">' + e(c.nome) + '</h2>' + etichetteCliente(c) + '<div class="g-due" style="margin-top:16px">' + contatti(c) + '</div>' +
+        '<dl class="g-dati"><div><dt>Telefono</dt><dd>' + e(c.telefono) + '</dd></div>' +
+        (c.email ? '<div><dt>Email</dt><dd><a class="g-link" href="mailto:' + e(c.email) + '">' + e(c.email) + '</a></dd></div>' : '') +
+        dato('Prenotazioni', intero(c.prenotazioni)) + dato('Ha pagato in tutto', euro(c.speso)) +
+        dato('Ultima volta', c.ultimo ? giornoLungo(c.ultimo) : 'Non è ancora venuta/o') + dato('Bagnarino Card', card) +
+        (c.carnet ? dato('Carnet', c.carnet === 1 ? 'Un ingresso ancora da usare' : c.carnet + ' ingressi ancora da usare') : '') +
+        (c.fattura ? dato('Fattura a', c.fattura) : '') + '</dl>';
+      html += '<div class="g-pulsanti"><a class="g-btn g-btn-primario" href="#nuova/c' + c.id + '">Aggiungi una sua prenotazione</a></div>';
+      html += '<h2 class="g-sezione">Le sue prenotazioni</h2>' + (c.storia.length ? '<ul class="g-lista">' + c.storia.map(function (p) {
+        /* qui il nome è già in cima: in evidenza va il giorno */
+        return '<li><a class="g-voce" href="#prenotazione/' + p.id + '"><span><strong>' + e(maiuscola(p.quando)) + '</strong><small>' + e(p.cosa + ' · ' + p.prezzo) + '</small>' + etichettaStato(p) + '</span></a></li>';
+      }).join('') + '</ul>' : '<p class="g-vuoto">Ancora nessuna.</p>');
+      html += '<div class="g-pulsanti g-largo-su"><button class="g-btn g-btn-rosso" type="button" data-elimina-cliente="' + c.id + '" data-chi="' + e(c.nome) + '" data-n="' + c.storia.length + '">Elimina questo cliente</button></div>';
+      vista.innerHTML = html;
+    });
+  } };
+
+  /* ---------- Incassi ---------- */
+  var NOMI_METODO = { contanti: 'in contanti', carta: 'con la carta', bonifico: 'con bonifico', online: 'online' };
+  function titoloPeriodo(d) {
+    if (d.periodo === 'giorno') return giornoLungo(d.inizio);
+    if (d.periodo === 'mese') return meseLungo(d.inizio.slice(0, 7));
+    return (d.inizio.slice(0, 7) === d.fine.slice(0, 7) ? String(+d.inizio.slice(8)) : giornoBreve(d.inizio)) + ' – ' + giornoBreve(d.fine);
+  }
+  function voceIncasso(r) {
+    var stato = r.gratis ? 'Niente da pagare' : euro(r.importo) + (r.pagato ? ' · pagato ' + (NOMI_METODO[r.metodo] || '') : r.futura ? ' · paga quando arriva' : ' · da pagare');
+    return '<li><a class="g-voce" href="#prenotazione/' + r.id + '"><span><strong>' + e(r.nome) + '</strong><small>' + e(giornoBreve(r.data) + ' · ' + r.cosa) + '</small><small>' + e(stato) + '</small></span></a></li>';
+  }
+  SCHERMATE.incassi = { titolo: 'Incassi', interna: 'profilo', disegna: function (param) {
+    var pz = String(param || '').split('/');
+    return leggi('incassi', { periodo: pz[0] || 'mese', da: pz[1] || '' }).then(function (d) {
+      var t = d.totali, ancora = d.oggi >= d.inizio && d.oggi <= d.fine ? d.oggi : d.inizio;
+      var da = d.righe.filter(function (r) { return !r.gratis && !r.pagato; }), ok = d.righe.filter(function (r) { return !r.gratis && r.pagato; }), gratis = d.righe.filter(function (r) { return r.gratis; });
+      var gruppo = function (nome, lista) { return lista.length ? '<h2 class="g-sezione">' + nome + '</h2><ul class="g-lista">' + lista.map(voceIncasso).join('') + '</ul>' : ''; };
+      var html = '<div class="g-tre" role="group" aria-label="Periodo">' + [['giorno', 'Giorno'], ['settimana', 'Settimana'], ['mese', 'Mese']].map(function (p) {
+        return '<button class="g-btn g-btn-grigio" type="button" data-vai="incassi/' + p[0] + '/' + ancora + '" aria-pressed="' + (d.periodo === p[0]) + '">' + p[1] + '</button>';
+      }).join('') + '</div>';
+      html += '<div class="g-mese"><button type="button" data-vai="incassi/' + d.periodo + '/' + d.prima + '" aria-label="Prima">' + ico('prima') + '</button><h2>' + e(titoloPeriodo(d)) + '</h2>' +
+        '<button type="button" data-vai="incassi/' + d.periodo + '/' + d.dopo + '" aria-label="Dopo">' + ico('dopo') + '</button></div>';
+      html += '<div class="g-numeri"><div class="g-numero"><strong>' + euro(t.incassato) + '</strong><span>Incassati</span>' + piccolo('Su ' + euro(t.previsto) + ' di prenotazioni') + '</div>' +
+        '<div class="g-numero"><strong>' + euro(t.daIncassare) + '</strong><span>Da incassare</span>' +
+        piccolo(!d.righe.length ? '' : !t.daIncassare ? 'Hanno pagato tutti' : t.daIncassareOra ? euro(t.daIncassareOra) + ' da chiedere adesso' : 'Pagano quando arrivano') + '</div></div>';
+      html += d.righe.length ? gruppo('Da incassare', da) + gruppo('Già pagate', ok) + gruppo('Senza pagamento', gratis) : '<p class="g-vuoto" style="margin-top:16px">Nessuna prenotazione in questo periodo.</p>';
+      html += '<div class="g-pulsanti g-largo-su"><a class="g-btn g-btn-chiaro" href="/api/gestione?azione=elenco&amp;da=' + d.inizio + '&amp;a=' + d.fine + '" download="incassi-bagnarino-' + d.inizio + '.csv">Scarica l’elenco</a></div>' +
+        '<p class="g-nota">È un file che si apre con Excel: va bene per la commercialista.</p>';
+      vista.innerHTML = html;
+    });
+  } };
+
+  /* ---------- come ha pagato ---------- */
+  SCHERMATE.pagamento = { titolo: 'Pagamento', voce: 'prenotazioni', interna: 'prenotazioni', disegna: function (id) {
+    return leggi('prenotazione', { id: id }).then(function (p) {
+      if (!p.puoPagare || p.pagato) { vai('prenotazione/' + p.id); return; }
+      vista.innerHTML = '<h2 class="g-titolo">' + e(p.nome) + '</h2><p class="g-testo g-iniziale">' + e(p.quando) + ' · ' + euro(p.importo) + '</p>' +
+        '<h2 class="g-sezione">Come ha pagato?</h2><div class="g-scelte">' + [['contanti', 'In contanti'], ['carta', 'Con la carta'], ['bonifico', 'Con bonifico']].map(function (m) {
+          return '<button class="g-btn g-btn-chiaro" type="button" data-paga="' + m[0] + '" data-id="' + p.id + '">' + m[1] + '</button>';
+        }).join('') + '</div>';
+    });
+  } };
+
+  /* ---------- una prenotazione aggiunta a mano ---------- */
+  var NOMI_CAMPI = { nome: 'il nome', cognome: 'il cognome', telefono: 'il telefono', email: 'l’email', data: 'il giorno', pacchetto: 'cosa prenota', fascia: 'la fascia' };
+  SCHERMATE.nuova = { titolo: 'Aggiungi', voce: 'prenotazioni', interna: 'prenotazioni', disegna: function (param) {
+    var idCliente = /^c\d+$/.test(param) ? +param.slice(1) : 0, giorno = /^\d{4}-\d{2}-\d{2}$/.test(param) ? param : '';
+    return Promise.all([leggi('coworking'), idCliente ? leggi('cliente', { id: idCliente }) : null]).then(function (v) {
+      var c = v[0], cl = v[1] || {}, oggi = iso(new Date());
+      var prezzoGiornata = (c.listino.filter(function (x) { return x.id === 'giornata'; })[0] || {}).prezzo;
+      vista.innerHTML = '<h2 class="g-titolo">Aggiungi una prenotazione</h2><p class="g-testo">Per chi telefona o passa di persona. È già confermata: non devi rispondere.</p>' +
+        '<form class="g-modulo" data-nuova novalidate>' +
+        '<label class="g-campo"><span>Nome</span><input name="nome" autocomplete="off" autocapitalize="words" value="' + e(cl.nomeProprio || '') + '" required></label>' +
+        '<label class="g-campo"><span>Cognome</span><input name="cognome" autocomplete="off" autocapitalize="words" value="' + e(cl.cognome || '') + '" required></label>' +
+        '<label class="g-campo"><span>Telefono</span><input type="tel" name="telefono" inputmode="tel" autocomplete="off" value="' + e(cl.telefono || '') + '" required></label>' +
+        '<label class="g-campo"><span>Email</span><input type="email" name="email" inputmode="email" autocomplete="off" autocapitalize="none" value="' + e(cl.email || '') + '"><small>Non è obbligatoria. Se la scrivi, riceve la conferma.</small></label>' +
+        '<label class="g-campo"><span>Cosa prenota</span><select name="pacchetto">' + c.listino.map(function (p) { return '<option value="' + e(p.id) + '">' + e(p.nome) + ' · €' + p.prezzo + '</option>'; }).join('') + '</select></label>' +
+        '<label class="g-campo"><span data-etichetta-giorno>Giorno</span><input type="date" name="data" min="' + oggi + '" value="' + (giorno && giorno >= oggi ? giorno : oggi) + '" required></label>' +
+        '<label class="g-campo" data-campo-fascia><span>Quando</span><select name="fascia">' + ['giornata', 'mattina', 'pomeriggio'].map(function (id) {
+          var f = c.fasce.filter(function (x) { return x.id === id; })[0];
+          return f ? '<option value="' + id + '">' + e(f.nome) + ' · €' + (id === 'giornata' ? prezzoGiornata : c.mezza) + '</option>' : '';
+        }).join('') + '</select></label>' +
+        '<label class="g-campo"><span>Nota</span><input name="note" autocomplete="off"><small>Non è obbligatoria.</small></label>' +
+        '<p class="g-errore" data-errore role="alert" hidden></p><button class="g-btn g-btn-primario" type="submit">Salva la prenotazione</button></form>';
+      var f = $('[data-nuova]', vista), err = $('[data-errore]', f), b = $('button[type=submit]', f);
+      var adatta = function () {
+        var p = c.listino.filter(function (x) { return x.id === f.pacchetto.value; })[0] || {};
+        $('[data-campo-fascia]', f).hidden = f.pacchetto.value !== 'giornata';
+        $('[data-etichetta-giorno]', f).textContent = p.tipoData === 'inizio' ? 'Da che giorno' : 'Giorno';
+      };
+      f.pacchetto.addEventListener('change', adatta);
+      adatta();
+      f.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        err.hidden = true;
+        var dati = { nome: f.nome.value.trim(), cognome: f.cognome.value.trim(), telefono: f.telefono.value.trim(), email: f.email.value.trim(), pacchetto: f.pacchetto.value,
+          data: f.data.value, fascia: f.pacchetto.value === 'giornata' ? f.fascia.value : 'giornata', note: f.note.value.trim() };
+        if (dati.nome.length < 2 || dati.cognome.length < 2 || dati.telefono.replace(/\D/g, '').length < 8 || !dati.data) {
+          err.textContent = 'Servono nome, cognome, telefono e giorno.'; err.hidden = false; return;
+        }
+        b.disabled = true; b.textContent = 'Un attimo…';
+        chiama('prenotazione-nuova', dati).then(function (r) {
+          mostraFatto(r.conEmail ? 'Prenotazione salvata. È partita l’email di conferma.' : 'Prenotazione salvata.');
+          /* il modulo non resta nella cronologia: "Indietro" torna all'elenco */
+          location.replace(location.pathname + location.search + '#prenotazione/' + r.id);
+        }, function (x) {
+          b.disabled = false; b.textContent = 'Salva la prenotazione';
+          var campi = x.dati && x.dati.campi;
+          err.textContent = campi && campi.length ? 'Controlla ' + campi.map(function (k) { return NOMI_CAMPI[k] || k; }).join(', ') + '.' : x.message;
+          err.hidden = false;
+        });
+      });
+    });
+  } };
+
+  /* ---------- prezzi, posti, messaggi di WhatsApp ---------- */
+  function salvaCoworking(dati, messaggio, bottone, err) {
+    err.hidden = true;
+    bottone.disabled = true;
+    return chiama('coworking', dati).then(function () { mostraFatto(messaggio); vai('impostazioni'); },
+      function (x) { bottone.disabled = false; err.textContent = x.message; err.hidden = false; });
+  }
+  SCHERMATE['imp-prezzi'] = { titolo: 'Prezzi', interna: 'impostazioni', disegna: function () {
+    return leggi('coworking').then(function (c) {
+      vista.innerHTML = '<h2 class="g-titolo">Prezzi</h2><p class="g-testo">In euro, senza centesimi. I prezzi nuovi si vedono sul sito entro un minuto e valgono per le prossime richieste.</p>' +
+        '<form class="g-modulo" data-prezzi novalidate>' + c.listino.map(function (p) {
+          return '<label class="g-campo"><span>' + e(p.nome) + '</span><input type="number" inputmode="numeric" min="1" max="5000" step="1" name="p-' + e(p.id) + '" value="' + p.prezzo + '" required><small>' + e(maiuscola(p.unita)) + '</small></label>' +
+            (p.id === 'giornata' ? '<label class="g-campo"><span>Mezza giornata</span><input type="number" inputmode="numeric" min="1" max="5000" step="1" name="mezza" value="' + c.mezza + '" required><small>Mattina oppure pomeriggio</small></label>' : '');
+        }).join('') + '<p class="g-errore" data-errore role="alert" hidden></p><button class="g-btn g-btn-primario" type="submit">Salva i prezzi</button></form>';
+      var f = $('[data-prezzi]', vista);
+      f.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var cambiati = c.listino.filter(function (p) { return String(f['p-' + p.id].value) !== String(p.prezzo); }).length + (String(f.mezza.value) !== String(c.mezza) ? 1 : 0);
+        if (!cambiati) { vai('impostazioni'); return; }
+        chiedi('Cambio i prezzi?', 'Sul sito si vedranno i prezzi nuovi. Le prenotazioni già fatte restano al prezzo di prima.', 'Sì, salva').then(function (si) {
+          if (!si) return;
+          salvaCoworking({ listino: c.listino.map(function (p) { return { id: p.id, prezzo: f['p-' + p.id].value }; }), mezza: f.mezza.value },
+            'Prezzi salvati. Sul sito si vedono entro un minuto.', $('button[type=submit]', f), $('[data-errore]', f));
+        });
+      });
+    });
+  } };
+
+  SCHERMATE['imp-posti'] = { titolo: 'Posti', interna: 'impostazioni', disegna: function () {
+    return leggi('coworking').then(function (c) {
+      var n = c.postazioni;
+      vista.innerHTML = '<h2 class="g-titolo">Quanti posti ci sono</h2><p class="g-testo">Sono le scrivanie che si possono prenotare nello stesso momento. Quando sono tutte occupate, sul sito quel momento risulta non disponibile.</p>' +
+        '<div class="g-conta"><button class="g-btn g-btn-chiaro" type="button" data-meno aria-label="Un posto in meno">−</button><strong data-posti aria-live="polite">' + n + '</strong>' +
+        '<button class="g-btn g-btn-chiaro" type="button" data-piu aria-label="Un posto in più">+</button></div>' +
+        '<p class="g-errore" data-errore role="alert" hidden></p><div class="g-pulsanti"><button class="g-btn g-btn-primario" type="button" data-salva-posti>Salva</button></div>';
+      var scrivi = function () { $('[data-posti]', vista).textContent = n; };
+      $('[data-meno]', vista).addEventListener('click', function () { n = Math.max(1, n - 1); scrivi(); });
+      $('[data-piu]', vista).addEventListener('click', function () { n = Math.min(60, n + 1); scrivi(); });
+      $('[data-salva-posti]', vista).addEventListener('click', function () {
+        var b = this;
+        if (n === c.postazioni) { vai('impostazioni'); return; }
+        chiedi(n === 1 ? 'Un posto solo?' : 'I posti diventano ' + n + '?', 'Prima erano ' + c.postazioni + '. Le prenotazioni già fatte restano valide.', 'Sì, salva').then(function (si) {
+          if (si) salvaCoworking({ postazioni: n }, n === 1 ? 'Adesso c’è un posto.' : 'Adesso i posti sono ' + n + '.', b, $('[data-errore]', vista));
+        });
+      });
+    });
+  } };
+
+  SCHERMATE['imp-messaggi'] = { titolo: 'Messaggi', interna: 'impostazioni', disegna: function () {
+    return leggi('coworking').then(function (c) {
+      vista.innerHTML = '<h2 class="g-titolo">Messaggi di WhatsApp</h2><p class="g-testo">Sono le frasi già scritte che una persona ti manda quando tocca un pulsante WhatsApp sul sito. Le parole tra parentesi graffe, come {giorno}, le riempie il sito: lasciale come sono.</p>' +
+        '<form class="g-modulo" data-messaggi novalidate>' + c.messaggi.map(function (m) {
+          return '<label class="g-campo"><span>' + e(m.nome) + '</span><textarea name="m-' + e(m.id) + '" maxlength="600">' + e(m.testo) + '</textarea></label>';
+        }).join('') + '<p class="g-errore" data-errore role="alert" hidden></p><button class="g-btn g-btn-primario" type="submit">Salva i messaggi</button></form>';
+      var f = $('[data-messaggi]', vista);
+      f.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var messaggi = {};
+        c.messaggi.forEach(function (m) { messaggi[m.id] = f['m-' + m.id].value; });
+        salvaCoworking({ messaggi: messaggi }, 'Messaggi salvati.', $('button[type=submit]', f), $('[data-errore]', f));
       });
     });
   } };
@@ -797,6 +1259,27 @@
       chiedi('Annullo la prenotazione di ' + chi + '?', 'Riceve un messaggio di scuse con il link per scegliere un altro momento.', 'Sì, annulla', 'g-btn-rosso').then(function (si) {
         if (!si) return;
         chiama('annulla', { id: idA }).then(function () { mostraFatto(chi + ' riceve il messaggio di scuse.'); vai('prenotazioni'); }, function (x) { mostraErrore(x.message); });
+      });
+      return;
+    }
+    if ((b = ev.target.closest('[data-paga]'))) {
+      var idP = +b.getAttribute('data-id');
+      $$('[data-paga]', vista).forEach(function (x) { x.disabled = true; });
+      chiama('pagato', { id: idP, pagato: true, metodo: b.getAttribute('data-paga') }).then(function () {
+        mostraFatto('Pagamento segnato.');
+        location.replace(location.pathname + location.search + '#prenotazione/' + idP);
+      }, function (x) { ridisegna().then(function () { mostraErrore(x.message); }); });
+      return;
+    }
+    if ((b = ev.target.closest('[data-non-pagato]'))) {
+      chiama('pagato', { id: +b.getAttribute('data-non-pagato'), pagato: false }).then(function () { mostraFatto(); ridisegna(); }, function (x) { mostraErrore(x.message); });
+      return;
+    }
+    if ((b = ev.target.closest('[data-elimina-cliente]'))) {
+      var idC = +b.getAttribute('data-elimina-cliente'), nomeC = b.getAttribute('data-chi'), quante = +b.getAttribute('data-n');
+      chiedi('Elimino ' + nomeC + '?', (quante ? 'Spariscono anche ' + (quante === 1 ? 'la sua prenotazione' : 'le sue ' + quante + ' prenotazioni') + ', i timbri e il carnet. ' : '') + 'Non si può tornare indietro.', 'Sì, elimina', 'g-btn-rosso').then(function (si) {
+        if (!si) return;
+        chiama('cliente-elimina', { id: idC }).then(function () { mostraFatto(nomeC + ' non è più tra i clienti.'); location.replace(location.pathname + location.search + '#clienti'); }, function (x) { mostraErrore(x.message); });
       });
       return;
     }
