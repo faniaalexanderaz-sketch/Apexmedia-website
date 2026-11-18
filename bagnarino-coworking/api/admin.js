@@ -6,6 +6,8 @@
    GET  ?azione=scheda&id= (tutti i dettagli di una prenotazione)
    POST ?azione=login | esci | accetta | presenza | pagato | prenotazione |
             annulla | chiusura | impostazioni | marketing
+   Resta per Apex Media (incassi, clienti, Crescita, prezzi). La
+   titolare usa l'app di gestione, più semplice: /gestione.
    Tutto (tranne login) richiede una sessione: "titolare" (Marcella,
    ADMIN_PASSWORD) o "apex" (Apex Media, APEX_PASSWORD). Solo
    "apex" può salvare i numeri di marketing della scheda Crescita.
@@ -16,14 +18,10 @@ const { impostazioni, modifiche, fondi, pacchetto: trovaPacchetto } = require('.
 const P = require('./_prenotazioni');
 const R = require('./_report');
 const cal = require('./_calendario');
-const T = require('./_email-template');
-const { inviaEmail } = require('./_email');
-const { creaIcs } = require('./_ics');
+const avvisi = require('./_avvisi');
 const A = require('./_admin');
 const G = require('./_crescita');
 const { corpo, ip, json, errore, sitoUrl } = require('./_http');
-
-const STATI_ATTIVI = ['confermata', 'presente', 'assente'];
 
 function lunedi(iso) { const g = cal.giornoSettimana(iso); return cal.aggiungiGiorni(iso, -((g + 6) % 7)); }
 function nomePacchetto(cfg, id) { const p = trovaPacchetto(cfg, id); return p ? p.nome : id; }
@@ -32,32 +30,36 @@ function emailVera(e) { return e && !/\.invalid$/.test(e) ? e : ''; }
 /* ---------- arrivi di un giorno ---------- */
 async function arrivi(data, cfg) {
   const r = await q(
-    `SELECT p.id, p.codice, p.pacchetto, p.stato, p.pagato, p.metodo_pagamento, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note, p.accettata,
+    `SELECT DISTINCT ON (p.id) p.id, p.codice, p.pacchetto, p.fascia, p.stato, p.pagato, p.metodo_pagamento, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note, p.accettata,
             to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
-            c.id AS cliente_id, c.nome, c.cognome, c.telefono, c.email, s.nome AS postazione,
+            c.id AS cliente_id, c.nome, c.cognome, c.telefono, c.email, s.nome AS postazione, s.id AS postazione_n,
             COALESCE(f.timbri, 0) AS timbri
      FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id JOIN clienti c ON c.id = p.cliente_id
      JOIN postazioni s ON s.id = o.postazione_id LEFT JOIN fidelity f ON f.cliente_id = c.id
-     WHERE o.data = $1 AND p.stato <> 'annullata' ORDER BY s.id`, [data]);
+     WHERE o.data = $1 AND p.stato <> 'annullata' ORDER BY p.id`, [data]);
+  r.sort((a, b) => a.postazione_n - b.postazione_n);
   return r.map(x => Object.assign(x, {
-    nomePacchetto: nomePacchetto(cfg, x.pacchetto), email: emailVera(x.email),
+    nomePacchetto: nomePacchetto(cfg, x.pacchetto) + (x.pacchetto === 'giornata' && x.fascia !== 'giornata' ? ' · ' + cal.nomeFascia(x.fascia, cfg).toLowerCase() : ''),
+    email: emailVera(x.email),
     /* le presenze (e i timbri) valgono per le giornate singole e gli ingressi del carnet */
     conPresenza: x.data_inizio === data && (x.pacchetto === 'giornata' || x.pacchetto === 'carnet'),
     primoGiorno: x.data_inizio === data
   }));
 }
 
-/* ---------- nuove richieste dal sito, ancora da accettare ---------- */
+/* ---------- nuove richieste dal sito, in attesa di risposta ---------- */
 async function richieste(cfg) {
   const oggi = cal.oraRoma().data;
   const r = await q(
-    `SELECT p.id, p.codice, p.pacchetto, p.stato, p.pagato, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note, p.accettata, p.origine,
+    `SELECT p.id, p.codice, p.pacchetto, p.fascia, p.stato, p.pagato, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note, p.accettata, p.origine,
             to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
             to_char(p.creato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD"T"HH24:MI') AS creato_il,
             c.nome, c.cognome, c.telefono, c.email, s.nome AS postazione
      FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id LEFT JOIN postazioni s ON s.id = p.postazione_id
-     WHERE NOT p.accettata AND p.stato = 'confermata' AND p.data_fine >= $1 ORDER BY p.creato_il`, [oggi]);
-  return r.map(x => Object.assign(x, { nomePacchetto: nomePacchetto(cfg, x.pacchetto), email: emailVera(x.email),
+     WHERE p.stato = 'in_attesa' AND p.data_fine >= $1 ORDER BY p.creato_il`, [oggi]);
+  return r.map(x => Object.assign(x, {
+    nomePacchetto: nomePacchetto(cfg, x.pacchetto) + (x.pacchetto === 'giornata' && x.fascia !== 'giornata' ? ' · ' + cal.nomeFascia(x.fascia, cfg).toLowerCase() : ''),
+    email: emailVera(x.email),
     fonte: R.classificaFonte(x.origine), origine: undefined }));
 }
 
@@ -65,7 +67,7 @@ async function richieste(cfg) {
 async function scheda(id, cfg) {
   if (!Number.isInteger(id)) throw P.errore('NON_TROVATA', 'Prenotazione non trovata.');
   const x = (await q(
-    `SELECT p.id, p.codice, p.pacchetto, p.stato, p.pagato, p.metodo_pagamento, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note,
+    `SELECT p.id, p.codice, p.pacchetto, p.fascia, p.stato, p.pagato, p.metodo_pagamento, p.prezzo_centesimi, p.omaggio, p.carnet_id, p.note,
             p.accettata, p.manuale, p.origine,
             to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
             to_char(p.creato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD"T"HH24:MI') AS creato_il,
@@ -78,7 +80,8 @@ async function scheda(id, cfg) {
   if (!x) throw P.errore('NON_TROVATA', 'Prenotazione non trovata.');
   const oggi = cal.oraRoma().data;
   return Object.assign(x, {
-    nomePacchetto: nomePacchetto(cfg, x.pacchetto), email: emailVera(x.email), fonte: R.classificaFonte(x.origine), origine: undefined,
+    nomePacchetto: nomePacchetto(cfg, x.pacchetto) + (x.pacchetto === 'giornata' && x.fascia !== 'giornata' ? ' · ' + cal.nomeFascia(x.fascia, cfg).toLowerCase() : ''),
+    email: emailVera(x.email), fonte: R.classificaFonte(x.origine), origine: undefined,
     oggi,
     /* l'arrivo si segna per giornate e ingressi del carnet, dal giorno della prenotazione in poi */
     conPresenza: (x.pacchetto === 'giornata' || x.pacchetto === 'carnet') && x.data_inizio <= oggi
@@ -101,7 +104,7 @@ async function oggi(cfg) {
   const giorniSett = ((cal.giornoSettimana(oggi) + 6) % 7) + 1; /* lun = 1 */
 
   const posti = (await q('SELECT COUNT(*)::int AS n FROM postazioni WHERE attiva'))[0].n;
-  const occupate = (await q('SELECT COUNT(*)::int AS n FROM occupazioni WHERE data = $1', [oggi]))[0].n;
+  const occupate = (await q('SELECT COUNT(DISTINCT postazione_id)::int AS n FROM occupazioni WHERE data = $1', [oggi]))[0].n;
   const daIncassare = (await q(
     `SELECT COALESCE(SUM(prezzo_centesimi), 0)::int AS c, COUNT(*)::int AS n FROM prenotazioni
      WHERE NOT pagato AND prezzo_centesimi > 0 AND stato <> 'annullata' AND data_inizio <= $1`, [oggi]))[0];
@@ -177,7 +180,7 @@ async function clienti(cerca) {
        (SELECT COALESCE(SUM(prezzo_centesimi), 0)::int FROM prenotazioni p WHERE p.cliente_id = c.id AND p.pagato) AS speso,
        (SELECT to_char(MAX(o.data), 'YYYY-MM-DD') FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id
           WHERE p.cliente_id = c.id AND o.data <= $2) AS ultimo,
-       (SELECT COUNT(*)::int FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id
+       (SELECT COUNT(DISTINCT o.data)::int FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id
           WHERE p.cliente_id = c.id AND o.data <= $2 AND o.data > $2::date - 30) AS ingressi30,
        (SELECT COALESCE(SUM(ingressi_totali - ingressi_usati), 0)::int FROM carnet k
           WHERE k.cliente_id = c.id AND (k.scadenza IS NULL OR k.scadenza >= $2)) AS carnet,
@@ -247,18 +250,6 @@ async function salvaImpostazioni(b, cfg) {
     const n = parseInt(b.postazioni, 10);
     if (!(n >= 1 && n <= 60)) errori.push('Il numero di postazioni deve essere tra 1 e 60');
     else nuove.postazioni = n;
-  }
-  if (b.orari) {
-    const ok = s => /^([01]?\d|2[0-3]):[0-5]\d$/.test(String(s || ''));
-    if (!ok(b.orari.apertura) || !ok(b.orari.chiusura) || cal.minuti(b.orari.apertura) >= cal.minuti(b.orari.chiusura)) errori.push('Controlla gli orari di apertura e chiusura');
-    else {
-      const a = b.orari.apertura.replace(/^0/, ''), c = b.orari.chiusura.replace(/^0/, '');
-      nuove.orari = Object.assign({}, nuove.orari || {}, {
-        apertura: a, chiusura: c, testoBreve: 'Lun–Ven ' + a + '–' + c,
-        testoLungo: 'Dal lunedì al venerdì, ' + a + '–' + c + '. Sabato e domenica chiuso.'
-      });
-      if (ok(b.orari.ultimaPrenotazioneOggi)) nuove.orari.ultimaPrenotazioneOggi = b.orari.ultimaPrenotazioneOggi;
-    }
   }
   if (b.whatsappTesti && typeof b.whatsappTesti === 'object') {
     nuove.whatsappTesti = Object.assign({}, nuove.whatsappTesti || {});
@@ -335,7 +326,7 @@ module.exports = async (req, res) => {
         const ch = await q(`SELECT to_char(data, 'YYYY-MM-DD') AS data, motivo FROM chiusure WHERE data >= CURRENT_DATE ORDER BY data`);
         const posti = (await q('SELECT COUNT(*)::int AS n FROM postazioni WHERE attiva'))[0].n;
         json(res, 200, { listino: cfg.listino.map(p => ({ id: p.id, nome: p.nome, prezzo: p.prezzo, unita: p.unita })),
-          postazioni: posti, orari: cfg.orari, whatsappTesti: cfg.whatsappTesti, chiusure: ch });
+          postazioni: posti, whatsappTesti: cfg.whatsappTesti, chiusure: ch });
         return;
       }
     }
@@ -347,9 +338,10 @@ module.exports = async (req, res) => {
         json(res, 200, await G.salvaMarketing(b)); return;
       }
       if (azione === 'accetta') {
-        const r = await q(`UPDATE prenotazioni SET accettata = true WHERE id = $1 AND stato <> 'annullata' RETURNING id, codice`, [parseInt(b.id, 10)]);
-        if (!r.length) throw P.errore('NON_TROVATA', 'Prenotazione non trovata o già annullata.');
-        json(res, 200, { id: r[0].id, accettata: true }); return;
+        /* "Accetta" è la conferma della richiesta: il cliente riceve l'email */
+        const p = await P.rispondi(parseInt(b.id, 10), 'conferma');
+        await avvisi.esito(p, cfg, sitoUrl(req));
+        json(res, 200, { id: p.id, accettata: true }); return;
       }
       if (azione === 'elimina-cliente') { json(res, 200, await P.eliminaCliente(parseInt(b.id, 10))); return; }
       if (azione === 'presenza') { json(res, 200, await P.segnaPresenza(parseInt(b.id, 10), b.stato)); return; }
@@ -362,31 +354,26 @@ module.exports = async (req, res) => {
         json(res, 200, r[0]); return;
       }
       if (azione === 'prenotazione') {
+        /* inserita dalla titolare: già confermata, il cliente riceve la conferma */
         const p = await P.prenota(b, { manuale: true });
-        if (emailVera(p.email)) {
-          const sito = sitoUrl(req), m = T.confermaCliente(p, cfg, sito);
-          await inviaEmail({ to: p.email, subject: m.oggetto, html: m.html, testo: m.testo, rispondiA: cfg.azienda.email,
-            allegati: [{ nome: 'prenotazione-' + p.codice + '.ics', tipo: 'text/calendar', contenuto: creaIcs(p, cfg) }] });
-        }
+        if (emailVera(p.email)) await avvisi.esito(p, cfg, sitoUrl(req));
         json(res, 200, { codice: p.codice, id: p.id, prezzoTesto: p.prezzoTesto }); return;
       }
       if (azione === 'annulla') {
+        /* richiesta in attesa → "non disponibile"; prenotazione confermata → scuse */
         const p = await P.annullaDaAdmin(parseInt(b.id, 10));
-        if (emailVera(p.email) && b.avvisa !== false) {
-          const m = T.annullataCliente(p, cfg, sitoUrl(req));
-          await inviaEmail({ to: p.email, subject: m.oggetto, html: m.html });
-        }
+        if (b.avvisa !== false) await avvisi.esito(p, cfg, sitoUrl(req));
         json(res, 200, { codice: p.codice, stato: 'annullata' }); return;
       }
       if (azione === 'chiusura') {
         if (!cal.isoValida(b.data)) throw P.errore('DATI', 'Data non valida.');
         if (b.chiudi === false) await q('DELETE FROM chiusure WHERE data = $1', [b.data]);
-        else await q('INSERT INTO chiusure (data, motivo) VALUES ($1, $2) ON CONFLICT (data) DO UPDATE SET motivo = EXCLUDED.motivo',
+        else await q("INSERT INTO chiusure (data, motivo, fascia) VALUES ($1, $2, 'giorno') ON CONFLICT (data) DO UPDATE SET motivo = EXCLUDED.motivo, fascia = 'giorno'",
           [b.data, String(b.motivo || 'Chiuso').slice(0, 80)]);
-        const giaPrenotati = (await q('SELECT COUNT(*)::int AS n FROM occupazioni WHERE data = $1', [b.data]))[0].n;
+        const giaPrenotati = (await q('SELECT COUNT(DISTINCT prenotazione_id)::int AS n FROM occupazioni WHERE data = $1', [b.data]))[0].n;
         json(res, 200, { data: b.data, chiuso: b.chiudi !== false, giaPrenotati }); return;
       }
-      if (azione === 'impostazioni') { const c = await salvaImpostazioni(b, cfg); json(res, 200, { ok: true, listino: c.listino, orari: c.orari }); return; }
+      if (azione === 'impostazioni') { const c = await salvaImpostazioni(b, cfg); json(res, 200, { ok: true, listino: c.listino }); return; }
     }
     json(res, 404, { errore: 'AZIONE', messaggio: 'Azione sconosciuta' });
   } catch (err) { errore(res, err); }

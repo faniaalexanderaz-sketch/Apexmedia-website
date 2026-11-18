@@ -1,7 +1,9 @@
 /* =============================================================
    BAGNARINO COWORKING — calendario lato server
    Il server gira in UTC: qui tutto è riportato all'ora italiana
-   (Europe/Rome), con festivi nazionali, chiusure e scadenze.
+   (Europe/Rome). Il coworking è aperto tutti i giorni su
+   prenotazione: un giorno (o una mezza giornata) non è prenotabile
+   solo se la titolare l'ha chiuso dall'app di gestione.
    Le date viaggiano come stringhe 'AAAA-MM-GG'.
    ============================================================= */
 const FUSO = 'Europe/Rome';
@@ -44,17 +46,36 @@ function festivi(y) {
   return f;
 }
 
-/* cfg = impostazioni correnti; chiusure = date chiuse (config + database) */
-function aperto(iso, cfg, chiusure) {
-  return cfg.orari.giorni.indexOf(giornoSettimana(iso)) !== -1 &&
-    festivi(+iso.slice(0, 4)).indexOf(iso) === -1 &&
-    (chiusure || []).indexOf(iso) === -1;
+/* ---------- fasce ----------
+   'mattina', 'pomeriggio' oppure 'giornata' (che le occupa entrambe) */
+const META = { mattina: ['mattina'], pomeriggio: ['pomeriggio'], giornata: ['mattina', 'pomeriggio'] };
+function fasciaValida(f) { return Object.prototype.hasOwnProperty.call(META, f); }
+function meta(fascia) { return META[fascia] || META.giornata; }
+function nomeFascia(fascia, cfg) {
+  const f = ((cfg && cfg.fasce) || []).find(x => x.id === fascia);
+  return f ? f.nome : fascia === 'mattina' ? 'Mattina' : fascia === 'pomeriggio' ? 'Pomeriggio' : 'Giornata intera';
+}
+
+/* come è chiuso un giorno: 'giorno', 'mattina', 'pomeriggio' oppure null.
+   cfg.chiusureTutte = giorni chiusi per intero (config.js + database),
+   cfg.chiusureFasce = { data: 'mattina' | 'pomeriggio' } dal database */
+function chiusura(iso, cfg, chiusure) {
+  if ((chiusure || cfg.chiusureTutte || cfg.chiusure || []).indexOf(iso) !== -1) return 'giorno';
+  return (cfg.chiusureFasce && cfg.chiusureFasce[iso]) || null;
+}
+/* il giorno non è chiuso per intero */
+function aperto(iso, cfg, chiusure) { return chiusura(iso, cfg, chiusure) !== 'giorno'; }
+/* quella fascia di quel giorno non è stata chiusa */
+function fasciaAperta(iso, fascia, cfg) {
+  const c = chiusura(iso, cfg);
+  return c !== 'giorno' && meta(fascia).indexOf(c) === -1;
 }
 
 /* ultimo giorno coperto da un pacchetto mensile */
 function fineMese(inizio) { return aggiungiGiorni(aggiungiMesi(inizio, 1), -1); }
 
-/* i giorni di apertura occupati da un pacchetto che parte da "inizio" */
+/* i giorni occupati da un pacchetto che parte da "inizio" (per i
+   mensili: tutti i giorni del mese non chiusi per intero) */
 function giorniPacchetto(pacchetto, inizio, cfg, chiusure) {
   if (pacchetto.indexOf('mese') !== 0) return [inizio];
   const fine = fineMese(inizio), out = [];
@@ -62,13 +83,19 @@ function giorniPacchetto(pacchetto, inizio, cfg, chiusure) {
   return out;
 }
 
-/* si può ancora prenotare per quel giorno? */
-function prenotabile(iso, cfg, chiusure, adesso) {
+/* fino a che ora (di Roma) si può chiedere quella fascia per oggi */
+function ultimaRichiestaOggi(fascia, cfg) {
+  const f = ((cfg && cfg.fasce) || []).find(x => x.id === fascia);
+  return f && f.ultimaRichiestaOggi != null ? +f.ultimaRichiestaOggi : fascia === 'pomeriggio' ? 16 : 11;
+}
+
+/* si può ancora chiedere quella fascia per quel giorno? */
+function prenotabile(iso, fascia, cfg, adesso) {
   const r = oraRoma(adesso);
-  if (!isoValida(iso) || iso < r.data) return false;
+  if (!isoValida(iso) || !fasciaValida(fascia) || iso < r.data) return false;
   if (iso > aggiungiGiorni(r.data, (cfg.giorniPrenotabili || 28) + 7)) return false;
-  if (iso === r.data && r.minuti >= minuti(cfg.orari.ultimaPrenotazioneOggi)) return false;
-  return aperto(iso, cfg, chiusure);
+  if (iso === r.data && r.minuti >= ultimaRichiestaOggi(fascia, cfg) * 60) return false;
+  return fasciaAperta(iso, fascia, cfg);
 }
 
 /* disdetta gratuita fino alle 20:00 (cfg.disdetta.ora) del giorno prima */
@@ -83,5 +110,6 @@ function annullabile(dataInizio, cfg, adesso) {
 
 module.exports = {
   oraRoma, aggiungiGiorni, aggiungiMesi, giornoSettimana, isoValida, minuti,
-  festivi, aperto, fineMese, giorniPacchetto, prenotabile, scadenzaDisdetta, annullabile
+  festivi, aperto, chiusura, fasciaAperta, fasciaValida, meta, nomeFascia, ultimaRichiestaOggi,
+  fineMese, giorniPacchetto, prenotabile, scadenzaDisdetta, annullabile
 };

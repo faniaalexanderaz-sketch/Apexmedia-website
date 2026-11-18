@@ -34,15 +34,16 @@ function cliente(extra) {
 }
 const ctx = { adesso: ADESSO };
 
-test('disponibilità: weekend e festivi chiusi, giorni feriali con tutti i posti', async () => {
+test('disponibilità: aperto tutti i giorni, sabato, domenica e festivi compresi', async () => {
   await nuovoDb();
   const r = await P.disponibilita('2026-11-02', 14, 'giornata', ADESSO);
   assert.equal(r.postazioni, 8);
   assert.equal(r.giorni['2026-11-03'], 8);      // martedì
-  assert.equal(r.giorni['2026-11-07'], 0);      // sabato
-  assert.equal(r.giorni['2026-11-08'], 0);      // domenica
+  assert.equal(r.giorni['2026-11-07'], 8);      // sabato
+  assert.equal(r.giorni['2026-11-08'], 8);      // domenica
+  assert.deepEqual(r.fasce['2026-11-08'], { mattina: 8, pomeriggio: 8, giornata: 8, nd: [] });
   const dic = await P.disponibilita('2026-12-07', 3, 'giornata', new Date('2026-12-01T08:00:00Z'));
-  assert.equal(dic.giorni['2026-12-08'], 0);    // Immacolata
+  assert.equal(dic.giorni['2026-12-08'], 8);    // Immacolata: aperta finché la titolare non la chiude
   assert.equal(dic.giorni['2026-12-09'], 8);
 });
 
@@ -94,8 +95,9 @@ test('mese fisso: stessa scrivania per tutti i giorni di apertura del mese', asy
   assert.equal(p.data_fine, '2026-12-02');
   const occ = (await pg.query('SELECT DISTINCT postazione_id FROM occupazioni WHERE prenotazione_id = $1', [p.id])).rows;
   assert.equal(occ.length, 1);
-  const giorni = (await pg.query('SELECT COUNT(*)::int AS n FROM occupazioni WHERE prenotazione_id = $1', [p.id])).rows[0].n;
-  assert.equal(giorni, 22); /* giorni feriali dal 3/11 al 2/12 */
+  const giorni = (await pg.query('SELECT COUNT(DISTINCT data)::int AS n, COUNT(*)::int AS righe FROM occupazioni WHERE prenotazione_id = $1', [p.id])).rows[0];
+  assert.equal(giorni.n, 30);     /* tutti i giorni dal 3/11 al 2/12 */
+  assert.equal(giorni.righe, 60); /* mattina e pomeriggio di ognuno */
   const r = await P.disponibilita('2026-11-03', 1, 'mese_fisso', ADESSO);
   assert.equal(r.giorni['2026-11-03'], 7);
 });
@@ -148,6 +150,7 @@ test('annullamento: possibile fino alle 20:00 del giorno prima, poi rifiutato', 
   await nuovoDb();
   const d = cliente({ data: '2026-11-12' });
   const p = await P.prenota(d, ctx);
+  await P.rispondi(p.id, 'conferma');
   /* 11 novembre alle 20:30 (ora italiana = 19:30 UTC): troppo tardi */
   await assert.rejects(P.annulla(p.codice, d.email, new Date('2026-11-11T19:30:00Z')), e => e.codice === 'FUORI_TEMPO');
   /* 11 novembre alle 19:00: si può, e il posto torna libero */
@@ -162,7 +165,9 @@ test('protezioni: dati non validi, giorno chiuso, trappola anti-robot, limite pe
   const pg = await nuovoDb();
   await assert.rejects(P.prenota(cliente({ email: 'non-una-email' }), ctx), e => e.codice === 'DATI' && e.extra.campi.includes('email'));
   await assert.rejects(P.prenota(cliente({ consenso_privacy: false }), ctx), e => e.codice === 'DATI');
-  await assert.rejects(P.prenota(cliente({ data: '2026-11-07' }), ctx), e => e.codice === 'DATA'); /* sabato */
+  await pg.query("INSERT INTO chiusure (data, motivo) VALUES ('2026-11-07', 'Chiuso')");
+  await assert.rejects(P.prenota(cliente({ data: '2026-11-07' }), ctx), e => e.codice === 'DATA'); /* giorno chiuso dalla titolare */
+  await assert.rejects(P.prenota(cliente({ fascia: 'sera' }), ctx), e => e.codice === 'DATI' && e.extra.campi.includes('fascia'));
   const finto = await P.prenota(cliente({ sito_web: 'http://spam' }), ctx);
   assert.equal(finto.finto, true);
   assert.equal((await pg.query('SELECT COUNT(*)::int AS n FROM prenotazioni')).rows[0].n, 0);
@@ -170,15 +175,16 @@ test('protezioni: dati non validi, giorno chiuso, trappola anti-robot, limite pe
   await assert.rejects(P.prenota(cliente({ data: '2026-11-20' }), { adesso: ADESSO, ip: '1.2.3.4' }), e => e.codice === 'TROPPI');
 });
 
-test('richieste dal sito da accettare: online no, a mano sì, arrivo = accettata', async () => {
+test('dal sito nasce una richiesta in attesa; inserita a mano dalla titolare è già confermata', async () => {
   await nuovoDb();
   const online = await P.prenota(cliente({ data: '2026-11-05' }), ctx);
   const banco = await P.prenota(cliente({ data: '2026-11-05' }), { adesso: ADESSO, manuale: true });
-  const stato = async id => (await db.q('SELECT accettata FROM prenotazioni WHERE id = $1', [id]))[0].accettata;
-  assert.equal(await stato(online.id), false);
-  assert.equal(await stato(banco.id), true);
+  const riga = async id => (await db.q('SELECT stato, accettata FROM prenotazioni WHERE id = $1', [id]))[0];
+  assert.equal(online.stato, 'in_attesa');
+  assert.deepEqual(await riga(online.id), { stato: 'in_attesa', accettata: false });
+  assert.deepEqual(await riga(banco.id), { stato: 'confermata', accettata: true });
   await P.segnaPresenza(online.id, 'presente');
-  assert.equal(await stato(online.id), true);
+  assert.deepEqual(await riga(online.id), { stato: 'presente', accettata: true });
 });
 
 test('eliminare un cliente cancella prenotazioni, posti, carnet, card e incassi', async () => {

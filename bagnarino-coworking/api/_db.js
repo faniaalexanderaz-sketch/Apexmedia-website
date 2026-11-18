@@ -88,7 +88,7 @@ const SCHEMA = [
      data_fine DATE NOT NULL,
      postazione_id INTEGER REFERENCES postazioni(id),
      prezzo_centesimi INTEGER NOT NULL DEFAULT 0,
-     stato TEXT NOT NULL DEFAULT 'confermata' CHECK (stato IN ('confermata','annullata','presente','assente')),
+     stato TEXT NOT NULL DEFAULT 'confermata' CHECK (stato IN ('in_attesa','confermata','annullata','presente','assente')),
      pagato BOOLEAN NOT NULL DEFAULT false,
      metodo_pagamento TEXT,
      note TEXT,
@@ -100,13 +100,17 @@ const SCHEMA = [
    )`,
   `CREATE INDEX IF NOT EXISTS prenotazioni_date_idx ON prenotazioni (data_inizio, data_fine)`,
   `CREATE INDEX IF NOT EXISTS prenotazioni_cliente_idx ON prenotazioni (cliente_id)`,
-  /* una riga per postazione per giorno: il vincolo di unicità rende
-     impossibile assegnare due volte lo stesso posto lo stesso giorno */
+  /* una riga per postazione, giorno e mezza giornata ('mattina' o
+     'pomeriggio'; la giornata intera ne occupa due): il vincolo di
+     unicità rende impossibile assegnare due volte lo stesso posto.
+     Il valore predefinito serve solo al codice precedente, in caso
+     di ritorno a una versione vecchia del sito. */
   `CREATE TABLE IF NOT EXISTS occupazioni (
      postazione_id INTEGER NOT NULL REFERENCES postazioni(id),
      data DATE NOT NULL,
      prenotazione_id INTEGER NOT NULL REFERENCES prenotazioni(id) ON DELETE CASCADE,
-     PRIMARY KEY (postazione_id, data)
+     fascia TEXT NOT NULL DEFAULT 'mattina',
+     PRIMARY KEY (postazione_id, data, fascia)
    )`,
   `CREATE INDEX IF NOT EXISTS occupazioni_data_idx ON occupazioni (data)`,
   `CREATE TABLE IF NOT EXISTS fidelity (
@@ -156,21 +160,126 @@ const SCHEMA = [
      dati JSONB NOT NULL DEFAULT '{}'::jsonb,
      note TEXT,
      aggiornato_il TIMESTAMPTZ NOT NULL DEFAULT now()
+   )`,
+  /* --- prenotazione su richiesta: fascia, risposta della titolare, promemoria --- */
+  `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS fascia TEXT NOT NULL DEFAULT 'giornata'`,
+  /* 'cliente' | 'titolare' | 'non_disponibile' */
+  `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS motivo_annullamento TEXT`,
+  `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS risposta_il TIMESTAMPTZ`,
+  `ALTER TABLE prenotazioni ADD COLUMN IF NOT EXISTS sollecito_inviato BOOLEAN NOT NULL DEFAULT false`,
+  `CREATE INDEX IF NOT EXISTS prenotazioni_stato_idx ON prenotazioni (stato, creato_il)`,
+  /* chiusure: 'giorno' (tutto il giorno), 'mattina' o 'pomeriggio' */
+  `ALTER TABLE chiusure ADD COLUMN IF NOT EXISTS fascia TEXT NOT NULL DEFAULT 'giorno'`,
+  /* --- app di gestione: accesso, sessioni di 90 giorni, recupero password --- */
+  `CREATE TABLE IF NOT EXISTS utenti (
+     id SERIAL PRIMARY KEY,
+     email TEXT NOT NULL UNIQUE,
+     nome TEXT NOT NULL DEFAULT '',
+     password_hash TEXT NOT NULL,
+     creato_il TIMESTAMPTZ NOT NULL DEFAULT now(),
+     password_il TIMESTAMPTZ NOT NULL DEFAULT now()
+   )`,
+  /* del gettone di sessione si salva solo l'impronta */
+  `CREATE TABLE IF NOT EXISTS sessioni (
+     token_hash TEXT PRIMARY KEY,
+     utente_id INTEGER NOT NULL REFERENCES utenti(id) ON DELETE CASCADE,
+     scade_il TIMESTAMPTZ NOT NULL,
+     creato_il TIMESTAMPTZ NOT NULL DEFAULT now(),
+     ultimo_uso TIMESTAMPTZ NOT NULL DEFAULT now()
+   )`,
+  `CREATE TABLE IF NOT EXISTS recuperi (
+     token_hash TEXT PRIMARY KEY,
+     utente_id INTEGER NOT NULL REFERENCES utenti(id) ON DELETE CASCADE,
+     scade_il TIMESTAMPTZ NOT NULL,
+     usato BOOLEAN NOT NULL DEFAULT false
+   )`,
+  /* telefoni che ricevono le notifiche (Web Push) */
+  `CREATE TABLE IF NOT EXISTS push_iscrizioni (
+     endpoint TEXT PRIMARY KEY,
+     utente_id INTEGER REFERENCES utenti(id) ON DELETE CASCADE,
+     p256dh TEXT NOT NULL,
+     auth TEXT NOT NULL,
+     creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
+   )`,
+  /* foto caricate dall'app (galleria): già ridotte dal telefono, in
+     due misure, salvate in base64 */
+  `CREATE TABLE IF NOT EXISTS foto (
+     id TEXT PRIMARY KEY,
+     grande TEXT NOT NULL,
+     piccola TEXT NOT NULL,
+     tipo TEXT NOT NULL DEFAULT 'image/jpeg',
+     larghezza INTEGER NOT NULL DEFAULT 0,
+     altezza INTEGER NOT NULL DEFAULT 0,
+     creato_il TIMESTAMPTZ NOT NULL DEFAULT now()
    )`
 ];
+
+/* Cambia quando cambia lo schema: finché il numero salvato nel database
+   è questo, all'avvio basta una sola lettura invece di tutti i comandi. */
+const VERSIONE_SCHEMA = 7;
+
+/* Passaggi per i database creati prima della prenotazione su richiesta.
+   Ognuno controlla da solo se è già stato fatto e avviene in una
+   transazione con lo stesso lucchetto delle prenotazioni: nessuna
+   richiesta può infilarsi a metà. */
+async function migra(a) {
+  /* 1. lo stato 'in_attesa' entra tra quelli ammessi */
+  const vincoloStato = () => a.query(
+    `SELECT c.conname, pg_get_constraintdef(c.oid) AS def FROM pg_constraint c
+     WHERE c.conrelid = 'prenotazioni'::regclass AND c.contype = 'c' AND pg_get_constraintdef(c.oid) LIKE '%confermata%'`);
+  let v = await vincoloStato();
+  if (!v.some(r => r.def.indexOf('in_attesa') !== -1)) {
+    await a.transazione(async (x) => {
+      await x('SELECT pg_advisory_xact_lock(7231983)');
+      const ora = await x(
+        `SELECT c.conname, pg_get_constraintdef(c.oid) AS def FROM pg_constraint c
+         WHERE c.conrelid = 'prenotazioni'::regclass AND c.contype = 'c' AND pg_get_constraintdef(c.oid) LIKE '%confermata%'`);
+      if (ora.some(r => r.def.indexOf('in_attesa') !== -1)) return;
+      for (const r of ora) await x('ALTER TABLE prenotazioni DROP CONSTRAINT "' + r.conname.replace(/"/g, '') + '"');
+      await x(`ALTER TABLE prenotazioni ADD CONSTRAINT prenotazioni_stato_check
+               CHECK (stato IN ('in_attesa','confermata','annullata','presente','assente'))`);
+    });
+  }
+  /* 2. le occupazioni passano da "posto per giorno" a "posto per mezza
+        giornata": ogni riga esistente (giornata intera) diventa due */
+  const haFascia = (esegui) => esegui(
+    `SELECT 1 FROM information_schema.columns
+     WHERE table_schema = current_schema() AND table_name = 'occupazioni' AND column_name = 'fascia'`);
+  if (!(await haFascia(a.query)).length) {
+    await a.transazione(async (x) => {
+      await x('SELECT pg_advisory_xact_lock(7231983)');
+      if ((await haFascia(x)).length) return;
+      const pk = await x(`SELECT conname FROM pg_constraint WHERE conrelid = 'occupazioni'::regclass AND contype = 'p'`);
+      await x(`ALTER TABLE occupazioni ADD COLUMN fascia TEXT NOT NULL DEFAULT 'mattina'`);
+      for (const r of pk) await x('ALTER TABLE occupazioni DROP CONSTRAINT "' + r.conname.replace(/"/g, '') + '"');
+      await x(`INSERT INTO occupazioni (postazione_id, data, prenotazione_id, fascia)
+               SELECT postazione_id, data, prenotazione_id, 'pomeriggio' FROM occupazioni`);
+      await x('ALTER TABLE occupazioni ADD PRIMARY KEY (postazione_id, data, fascia)');
+    });
+  }
+}
 
 let schemaPronto = null;
 function assicuraSchema() {
   if (schemaPronto) return schemaPronto;
   const a = db();
   schemaPronto = (async () => {
+    /* schema già aggiornato: una lettura e via */
+    try {
+      const v = await a.query("SELECT valore FROM impostazioni WHERE chiave = 'schema'");
+      if (v.length && Number(v[0].valore) === VERSIONE_SCHEMA) return;
+    } catch (e) { /* database nuovo: la tabella non c'è ancora */ }
     for (const s of SCHEMA) await a.query(s);
+    await migra(a);
     /* prime postazioni dal file di configurazione */
     const n = await a.query('SELECT COUNT(*)::int AS n FROM postazioni');
     if (n[0].n === 0) {
       const cfg = require('../config.js');
       for (let i = 1; i <= cfg.postazioni; i++) await a.query('INSERT INTO postazioni (nome) VALUES ($1)', ['Postazione ' + i]);
     }
+    await a.query(
+      `INSERT INTO impostazioni (chiave, valore, aggiornato_il) VALUES ('schema', $1, now())
+       ON CONFLICT (chiave) DO UPDATE SET valore = EXCLUDED.valore, aggiornato_il = now()`, [JSON.stringify(VERSIONE_SCHEMA)]);
   })().catch(err => { schemaPronto = null; throw err; });
   return schemaPronto;
 }
@@ -183,4 +292,4 @@ function nuovoCodice() {
   return 'BGN-' + c;
 }
 
-module.exports = { q, transazione, assicuraSchema, impostaAdattatore, disponibile, nuovoCodice };
+module.exports = { q, transazione, assicuraSchema, impostaAdattatore, disponibile, nuovoCodice, SCHEMA, migra };

@@ -1,8 +1,11 @@
 /* =============================================================
    BAGNARINO COWORKING — logica delle prenotazioni
    Tutte le regole stanno qui (le API sono solo "porte"):
-   disponibilità, assegnazione delle postazioni, carnet,
-   Bagnarino Card, annullamento, presenze.
+   disponibilità per fascia, assegnazione delle postazioni, carnet,
+   Bagnarino Card, risposta della titolare, annullamento, presenze.
+   Ogni prenotazione nasce come RICHIESTA ('in_attesa'): il posto
+   viene tenuto da parte subito, ma è del cliente solo quando la
+   titolare conferma. Se risponde "non disponibile" il posto si libera.
    Ogni errore previsto ha un codice: _http.js lo traduce nella
    risposta giusta (400, 403, 404, 409, 429).
    ============================================================= */
@@ -12,7 +15,6 @@ const { impostazioni, pacchetto: trovaPacchetto } = require('./_impostazioni');
 const cal = require('./_calendario');
 
 const EMAIL_OK = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const STATI_ATTIVI = "('confermata','presente')";
 
 function errore(codice, messaggio, extra) {
   const e = new Error(messaggio);
@@ -47,10 +49,14 @@ function valida(d, cfg, manuale) {
     usa_omaggio: d.usa_omaggio === true,
     origine: d.origine && typeof d.origine === 'object' ? d.origine : {}
   };
+  /* la fascia si sceglie solo per la formula "Giornata": carnet e
+     mensili valgono per la giornata intera */
+  out.fascia = out.pacchetto === 'giornata' ? String(d.fascia || 'giornata') : 'giornata';
   const p = trovaPacchetto(cfg, out.pacchetto);
   const campi = [];
   if (!p || (out.pacchetto === 'sala' && !(cfg.sala && cfg.sala.attiva))) campi.push('pacchetto');
   if (!cal.isoValida(out.data)) campi.push('data');
+  if (!cal.fasciaValida(out.fascia)) campi.push('fascia');
   if (out.nome.length < 2) campi.push('nome');
   if (out.cognome.length < 2) campi.push('cognome');
   if (!EMAIL_OK.test(out.email)) campi.push('email');
@@ -72,16 +78,31 @@ function valida(d, cfg, manuale) {
 async function postazioniAttive(esegui) {
   return (esegui || q)('SELECT id, tipo FROM postazioni WHERE attiva ORDER BY id');
 }
+/* posti occupati per giorno e mezza giornata:
+   { 'AAAA-MM-GG': { mattina: Set(id), pomeriggio: Set(id) } } */
 async function occupazioniTra(da, a, esegui) {
   const r = await (esegui || q)(
-    "SELECT postazione_id, to_char(data, 'YYYY-MM-DD') AS d FROM occupazioni WHERE data BETWEEN $1 AND $2", [da, a]);
+    "SELECT postazione_id, to_char(data, 'YYYY-MM-DD') AS d, fascia FROM occupazioni WHERE data BETWEEN $1 AND $2", [da, a]);
   const mappa = {};
-  r.forEach(x => { (mappa[x.d] = mappa[x.d] || new Set()).add(x.postazione_id); });
+  r.forEach(x => {
+    const g = mappa[x.d] = mappa[x.d] || { mattina: new Set(), pomeriggio: new Set() };
+    (g[x.fascia] || g.mattina).add(x.postazione_id);
+  });
   return mappa;
 }
+/* quella scrivania è libera in quel giorno per tutta la fascia? */
+function libera(occ, id, giorno, fascia) {
+  const g = occ[giorno];
+  return !g || cal.meta(fascia).every(m => !g[m].has(id));
+}
 
-/* posti liberi per giorno. Con un pacchetto mensile il numero
-   riguarda l'intero periodo che partirebbe da quel giorno. */
+/* Posti liberi per giorno.
+   - giorni[data]: numero unico (per i mensili riguarda tutto il periodo
+     che partirebbe da quel giorno; per la giornata è la fascia più libera)
+   - fasce[data]: { mattina, pomeriggio, giornata, nd } dove nd elenca le
+     fasce "non disponibili" (chiuse dalla titolare o non più richiedibili
+     per oggi): sul sito non si distinguono da un posto pieno se non per
+     l'etichetta. */
 async function disponibilita(da, giorni, pacchettoId, adesso) {
   const cfg = await impostazioni();
   giorni = Math.max(1, Math.min(62, parseInt(giorni, 10) || 14));
@@ -90,21 +111,27 @@ async function disponibilita(da, giorni, pacchettoId, adesso) {
   const mensile = /^mese/.test(pacchettoId || '');
   const posti = await postazioniAttive();
   const occ = await occupazioniTra(da, mensile ? cal.fineMese(ultimo) : ultimo);
-  const liberiIl = d => posti.filter(p => !(occ[d] && occ[d].has(p.id)));
+  const liberi = (d, fascia) => posti.filter(p => libera(occ, p.id, d, fascia));
 
-  const out = {};
+  const out = {}, fasce = {};
   for (let i = 0; i < giorni; i++) {
     const d = cal.aggiungiGiorni(da, i);
-    if (!cal.prenotabile(d, cfg, cfg.chiusureTutte, adesso)) { out[d] = 0; continue; }
-    if (!mensile) { out[d] = liberiIl(d).length; continue; }
+    const f = { mattina: 0, pomeriggio: 0, giornata: 0, nd: [] };
+    ['mattina', 'pomeriggio', 'giornata'].forEach(id => {
+      if (!cal.prenotabile(d, id, cfg, adesso)) f.nd.push(id);
+      else f[id] = liberi(d, id).length;
+    });
+    fasce[d] = f;
+    if (!mensile) { out[d] = pacchettoId === 'carnet' ? f.giornata : Math.max(f.mattina, f.pomeriggio, f.giornata); continue; }
+    if (f.nd.indexOf('giornata') !== -1) { out[d] = 0; continue; }
     const periodo = cal.giorniPacchetto(pacchettoId, d, cfg, cfg.chiusureTutte);
     if (pacchettoId === 'mese_fisso') {
-      out[d] = posti.filter(p => periodo.every(g => !(occ[g] && occ[g].has(p.id)))).length;
+      out[d] = posti.filter(p => periodo.every(g => libera(occ, p.id, g, 'giornata'))).length;
     } else {
-      out[d] = Math.min.apply(null, periodo.map(g => liberiIl(g).length));
+      out[d] = Math.min.apply(null, periodo.map(g => liberi(g, 'giornata').length));
     }
   }
-  return { giorni: out, postazioni: posti.length };
+  return { giorni: out, fasce, postazioni: posti.length };
 }
 
 /* ---------- anti-spam: massimo 8 tentativi l'ora per IP ---------- */
@@ -129,15 +156,15 @@ async function prenota(dati, contesto) {
 
   const d = valida(dati || {}, cfg, contesto.manuale);
   const okData = contesto.manuale
-    ? cal.isoValida(d.data) && d.data >= cal.oraRoma(contesto.adesso).data && cal.aperto(d.data, cfg, cfg.chiusureTutte)
-    : cal.prenotabile(d.data, cfg, cfg.chiusureTutte, contesto.adesso);
+    ? cal.isoValida(d.data) && d.data >= cal.oraRoma(contesto.adesso).data && cal.fasciaAperta(d.data, d.fascia, cfg)
+    : cal.prenotabile(d.data, d.fascia, cfg, contesto.adesso);
   if (!okData) {
-    throw errore('DATA', 'Questo giorno non è prenotabile: scegline un altro.');
+    throw errore('DATA', 'In quel momento lo spazio non è disponibile: scegli un altro giorno o un’altra fascia.');
   }
   if (contesto.ip !== undefined) await controllaLimite(contesto.ip);
 
   const giorni = cal.giorniPacchetto(d.pacchetto, d.data, cfg, cfg.chiusureTutte);
-  if (!giorni.length) throw errore('DATA', 'Nel periodo scelto il coworking è chiuso.');
+  if (!giorni.length) throw errore('DATA', 'Nel periodo scelto lo spazio non è disponibile: scegli un altro giorno di inizio.');
   const dataFine = /^mese/.test(d.pacchetto) ? cal.fineMese(d.data) : d.data;
 
   const esito = await transazione(async (x) => {
@@ -163,10 +190,12 @@ async function prenota(dati, contesto) {
         ' (codice ' + doppia[0].codice + '). Se prenoti per un’altra persona, usa i suoi dati.', { codice: doppia[0].codice });
     }
 
-    let prezzo = Math.round(d.listino.prezzo * 100);
+    const mezza = d.pacchetto === 'giornata' && d.fascia !== 'giornata';
+    let prezzo = Math.round((mezza ? cfg.prezzoMezzaGiornata : d.listino.prezzo) * 100);
     let carnetId = null, omaggio = false, carnetInfo = null;
 
-    if (d.pacchetto === 'giornata') {
+    /* giornata in regalo e ingressi del carnet valgono per la giornata intera */
+    if (d.pacchetto === 'giornata' && !mezza) {
       const fid = (await x('SELECT omaggi_disponibili FROM fidelity WHERE cliente_id = $1', [cli.id]))[0];
       if (d.usa_omaggio && fid && fid.omaggi_disponibili > 0) {
         omaggio = true; prezzo = 0;
@@ -196,23 +225,23 @@ async function prenota(dati, contesto) {
     /* assegnazione delle postazioni */
     const posti = await postazioniAttive(x);
     const occ = await occupazioniTra(giorni[0], giorni[giorni.length - 1], x);
-    const libera = (id, g) => !(occ[g] && occ[g].has(id));
+    const eLibera = (id, g) => libera(occ, id, g, d.fascia);
     const assegnate = [];
     if (d.pacchetto === 'mese_fisso') {
       const ordinati = posti.slice().sort((a, b) => (b.tipo === 'fissa') - (a.tipo === 'fissa') || a.id - b.id);
-      const p = ordinati.find(p => giorni.every(g => libera(p.id, g)));
+      const p = ordinati.find(p => giorni.every(g => eLibera(p.id, g)));
       if (!p) throw errore('POSTO_ESAURITO', 'Non c’è più una scrivania libera per tutto il mese da questo giorno.');
       giorni.forEach(g => assegnate.push([p.id, g]));
     } else {
       let ultima = null;
       for (const g of giorni) {
         /* stessa scrivania del giorno prima, se possibile; le "fisse" per ultime */
-        const candidati = posti.filter(p => libera(p.id, g))
+        const candidati = posti.filter(p => eLibera(p.id, g))
           .sort((a, b) => (a.id === ultima ? -1 : b.id === ultima ? 1 : 0) || (a.tipo === 'fissa') - (b.tipo === 'fissa') || a.id - b.id);
         if (!candidati.length) {
           throw errore('POSTO_ESAURITO', giorni.length > 1
             ? 'Nel mese scelto c’è almeno un giorno già pieno. Prova a partire da un altro giorno.'
-            : 'Questo giorno si è appena riempito. Scegline un altro.');
+            : 'Questo momento si è appena riempito. Scegline un altro.');
         }
         ultima = candidati[0].id;
         assegnate.push([ultima, g]);
@@ -225,29 +254,37 @@ async function prenota(dati, contesto) {
       if (!c.length) break;
       codice = nuovoCodice();
     }
+    /* dal sito: richiesta in attesa della titolare. Inserita da lei
+       (cliente al banco o al telefono): già confermata. */
+    const statoIniziale = contesto.manuale ? 'confermata' : 'in_attesa';
     const pren = (await x(
       `INSERT INTO prenotazioni (codice, cliente_id, pacchetto, data_inizio, data_fine, postazione_id, prezzo_centesimi,
-         note, origine, carnet_id, omaggio, pagato, manuale, accettata)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NULLIF($8, ''), $9, $10, $11, $12, $13, $13) RETURNING id`,
+         note, origine, carnet_id, omaggio, pagato, manuale, accettata, fascia, stato)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, NULLIF($8, ''), $9, $10, $11, $12, $13, $13, $14, $15) RETURNING id`,
       [codice, cli.id, d.pacchetto, d.data, dataFine, assegnate[0][0], prezzo, d.note,
         JSON.stringify(contesto.manuale ? { utm_source: 'banco' } : d.origine),
-        carnetId, omaggio, prezzo === 0 && d.pacchetto === 'giornata' && !!carnetId, !!contesto.manuale]))[0];
+        carnetId, omaggio, prezzo === 0 && d.pacchetto === 'giornata' && !!carnetId, !!contesto.manuale, d.fascia, statoIniziale]))[0];
+    /* il posto è tenuto da parte da subito, una riga per mezza giornata */
     for (const [pid, g] of assegnate) {
-      await x('INSERT INTO occupazioni (postazione_id, data, prenotazione_id) VALUES ($1, $2, $3)', [pid, g, pren.id]);
+      for (const m of cal.meta(d.fascia)) {
+        await x('INSERT INTO occupazioni (postazione_id, data, prenotazione_id, fascia) VALUES ($1, $2, $3, $4)', [pid, g, pren.id, m]);
+      }
     }
     await x("INSERT INTO eventi (tipo, dati) VALUES ('prenotazione', $1)",
-      [JSON.stringify({ codice, pacchetto: d.pacchetto, valore: prezzo / 100, fonte: d.origine.utm_source || null })]);
+      [JSON.stringify({ codice, pacchetto: d.pacchetto, fascia: d.fascia, valore: prezzo / 100, fonte: d.origine.utm_source || null })]);
 
-    return { id: pren.id, codice, prezzo, omaggio, carnet: carnetInfo, postazione: assegnate[0][0] };
+    return { id: pren.id, codice, prezzo, omaggio, carnet: carnetInfo, postazione: assegnate[0][0], stato: statoIniziale };
   }).catch(err => {
     /* vincolo di unicità violato: qualcuno ha preso il posto nello stesso istante */
-    if (err && err.code === '23505') throw errore('POSTO_ESAURITO', 'Questo giorno si è appena riempito. Scegline un altro.');
+    if (err && err.code === '23505') throw errore('POSTO_ESAURITO', 'Questo momento si è appena riempito. Scegline un altro.');
     throw err;
   });
 
   return Object.assign(esito, {
     pacchetto: d.pacchetto,
     nomePacchetto: d.listino.nome,
+    fascia: d.fascia,
+    nomeFascia: cal.nomeFascia(d.fascia, cfg),
     nome: d.nome, cognome: d.cognome, email: d.email, telefono: d.telefono, piva_cf: d.piva_cf, note: d.note,
     data_inizio: d.data, data_fine: dataFine,
     prezzoTesto: euro(esito.prezzo),
@@ -256,67 +293,124 @@ async function prenota(dati, contesto) {
   });
 }
 
-/* ---------- lettura di una prenotazione (codice + email) ---------- */
+/* ---------- lettura di una prenotazione ---------- */
+const CAMPI = `p.id, p.codice, p.pacchetto, p.fascia, to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio,
+            to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine, p.prezzo_centesimi, p.stato, p.pagato, p.note,
+            p.motivo_annullamento, p.carnet_id, p.omaggio, p.postazione_id,
+            to_char(p.creato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD"T"HH24:MI') AS creato_il,
+            c.id AS cliente_id, c.nome, c.cognome, c.email, c.telefono, c.piva_cf`;
+
+/* aggiunge i testi pronti per email e schermate */
+function completa(p, cfg) {
+  const pk = trovaPacchetto(cfg, p.pacchetto);
+  return Object.assign(p, {
+    nomePacchetto: pk ? pk.nome : p.pacchetto,
+    nomeFascia: cal.nomeFascia(p.fascia, cfg),
+    prezzo: p.prezzo_centesimi,
+    prezzoTesto: euro(p.prezzo_centesimi),
+    scadenzaDisdetta: cal.scadenzaDisdetta(p.data_inizio, cfg)
+  });
+}
+
+/* con codice + email (area del cliente) */
 async function trova(codice, email, esegui) {
   codice = String(codice || '').trim().toUpperCase();
   email = String(email || '').trim().toLowerCase();
   if (!/^BGN-[A-Z0-9]{4}$/.test(codice) || !EMAIL_OK.test(email)) throw errore('NON_TROVATA', 'Prenotazione non trovata: controlla codice ed email.');
   const r = await (esegui || q)(
-    `SELECT p.id, p.codice, p.pacchetto, to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio,
-            to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine, p.prezzo_centesimi, p.stato, p.pagato,
-            p.carnet_id, p.omaggio, p.postazione_id, c.id AS cliente_id, c.nome, c.cognome, c.email, c.telefono
-     FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id
+    `SELECT ${CAMPI} FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id
      WHERE p.codice = $1 AND lower(c.email) = $2`, [codice, email]);
   if (!r.length) throw errore('NON_TROVATA', 'Prenotazione non trovata: controlla codice ed email.');
   return r[0];
 }
 
+/* con il numero interno (titolare) */
+async function leggi(id, esegui) {
+  if (!Number.isInteger(id)) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
+  const r = await (esegui || q)(`SELECT ${CAMPI} FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id WHERE p.id = $1`, [id]);
+  if (!r.length) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
+  return r[0];
+}
+
 async function stato(codice, email, adesso) {
   const cfg = await impostazioni();
-  const p = await trova(codice, email);
-  const pk = trovaPacchetto(cfg, p.pacchetto);
+  const p = completa(await trova(codice, email), cfg);
   return {
-    codice: p.codice, stato: p.stato, pacchetto: p.pacchetto, nomePacchetto: pk ? pk.nome : p.pacchetto,
-    data_inizio: p.data_inizio, data_fine: p.data_fine, prezzo: p.prezzo_centesimi, prezzoTesto: euro(p.prezzo_centesimi),
+    codice: p.codice, stato: p.stato, motivo: p.motivo_annullamento || null,
+    pacchetto: p.pacchetto, nomePacchetto: p.nomePacchetto, fascia: p.fascia, nomeFascia: p.nomeFascia,
+    data_inizio: p.data_inizio, data_fine: p.data_fine, prezzo: p.prezzo_centesimi, prezzoTesto: p.prezzoTesto,
     pagato: p.pagato, omaggio: p.omaggio, nome: p.nome,
-    annullabile: p.stato === 'confermata' && cal.annullabile(p.data_inizio, cfg, adesso),
-    scadenzaDisdetta: cal.scadenzaDisdetta(p.data_inizio, cfg)
+    /* una richiesta in attesa si ritira quando si vuole; una prenotazione
+       confermata fino alla scadenza della disdetta */
+    annullabile: p.stato === 'in_attesa' || (p.stato === 'confermata' && cal.annullabile(p.data_inizio, cfg, adesso)),
+    scadenzaDisdetta: p.scadenzaDisdetta
   };
 }
 
-/* ---------- annullamento ---------- */
+/* ---------- risposta della titolare a una richiesta ----------
+   esito: 'conferma' oppure 'non_disponibile'. Vale una volta sola:
+   se la richiesta ha già una risposta (data dall'app, dall'email o
+   dal cliente che ha rinunciato) torna l'errore GIA_FATTO con lo
+   stato attuale, così chi chiama può dirlo con parole semplici. */
+async function rispondi(id, esito) {
+  if (esito !== 'conferma' && esito !== 'non_disponibile') throw errore('DATI', 'Risposta non valida.');
+  const cfg = await impostazioni();
+  const p = await leggi(id);
+  const giaFatto = (st, motivo) => errore('GIA_FATTO', 'Questa richiesta ha già una risposta.', { stato: st, motivo: motivo || null });
+  if (p.stato !== 'in_attesa') throw giaFatto(p.stato, p.motivo_annullamento);
+  if (esito === 'conferma') {
+    const r = await q(
+      "UPDATE prenotazioni SET stato = 'confermata', accettata = true, risposta_il = now() WHERE id = $1 AND stato = 'in_attesa' RETURNING id", [id]);
+    if (!r.length) { const ora = await leggi(id); throw giaFatto(ora.stato, ora.motivo_annullamento); }
+    await q("INSERT INTO eventi (tipo, dati) VALUES ('conferma', $1)", [JSON.stringify({ codice: p.codice, pacchetto: p.pacchetto })]);
+    p.stato = 'confermata';
+  } else {
+    await annullaPrenotazione(p, 'non_disponibile', ['in_attesa']);
+    p.stato = 'annullata'; p.motivo_annullamento = 'non_disponibile';
+  }
+  return completa(p, cfg);
+}
+
+/* ---------- annullamento da parte del cliente ---------- */
 async function annulla(codice, email, adesso) {
   const cfg = await impostazioni();
   const p = await trova(codice, email);
   if (p.stato === 'annullata') throw errore('GIA_FATTO', 'Questa prenotazione è già annullata.');
-  if (p.stato !== 'confermata') throw errore('GIA_FATTO', 'Questa prenotazione è già stata usata.');
-  if (!cal.annullabile(p.data_inizio, cfg, adesso)) {
+  if (p.stato !== 'confermata' && p.stato !== 'in_attesa') throw errore('GIA_FATTO', 'Questa prenotazione è già stata usata.');
+  if (p.stato === 'confermata' && !cal.annullabile(p.data_inizio, cfg, adesso)) {
     throw errore('FUORI_TEMPO', 'Si può annullare online fino alle ' + ((cfg.disdetta && cfg.disdetta.ora) || '20:00') +
       ' del giorno prima. Ora scrivici su WhatsApp e troviamo una soluzione.');
   }
-  await annullaPrenotazione(p);
-  const pk = trovaPacchetto(cfg, p.pacchetto);
-  return Object.assign({}, p, { stato: 'annullata', nomePacchetto: pk ? pk.nome : p.pacchetto, prezzoTesto: euro(p.prezzo_centesimi) });
+  const eraInAttesa = p.stato === 'in_attesa';
+  await annullaPrenotazione(p, 'cliente');
+  return Object.assign(completa(p, cfg), { stato: 'annullata', motivo_annullamento: 'cliente', eraInAttesa });
 }
 
-/* annullamento dall'area riservata: nessun limite di orario */
+/* ---------- annullamento da parte della titolare ----------
+   Nessun limite di tempo. Una richiesta ancora in attesa diventa
+   "non disponibile"; una prenotazione già confermata è un
+   annullamento vero, con le scuse al cliente. */
 async function annullaDaAdmin(id) {
-  if (!Number.isInteger(id)) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
   const cfg = await impostazioni();
-  const p = (await q(
-    `SELECT p.id, p.codice, p.pacchetto, to_char(p.data_inizio, 'YYYY-MM-DD') AS data_inizio, to_char(p.data_fine, 'YYYY-MM-DD') AS data_fine,
-            p.prezzo_centesimi, p.stato, p.carnet_id, p.omaggio, c.id AS cliente_id, c.nome, c.cognome, c.email, c.telefono
-     FROM prenotazioni p JOIN clienti c ON c.id = p.cliente_id WHERE p.id = $1`, [id]))[0];
-  if (!p) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
+  const p = await leggi(id);
   if (p.stato === 'annullata') throw errore('GIA_FATTO', 'Questa prenotazione è già annullata.');
-  await annullaPrenotazione(p);
-  const pk = trovaPacchetto(cfg, p.pacchetto);
-  return Object.assign({}, p, { stato: 'annullata', nomePacchetto: pk ? pk.nome : p.pacchetto, prezzoTesto: euro(p.prezzo_centesimi) });
+  const motivo = p.stato === 'in_attesa' ? 'non_disponibile' : 'titolare';
+  await annullaPrenotazione(p, motivo);
+  return Object.assign(completa(p, cfg), { stato: 'annullata', motivo_annullamento: motivo });
 }
 
-async function annullaPrenotazione(p) {
+/* statiAmmessi: se indicati, l'annullamento vale solo partendo da uno
+   di quegli stati (controllato dentro la transazione) */
+async function annullaPrenotazione(p, motivo, statiAmmessi) {
   await transazione(async (x) => {
     await x('SELECT pg_advisory_xact_lock(7231983)');
+    const ora = (await x('SELECT stato, motivo_annullamento FROM prenotazioni WHERE id = $1 FOR UPDATE', [p.id]))[0];
+    if (!ora || ora.stato === 'annullata') {
+      throw errore('GIA_FATTO', 'Questa prenotazione è già annullata.', { stato: 'annullata', motivo: ora ? ora.motivo_annullamento : null });
+    }
+    if (statiAmmessi && statiAmmessi.indexOf(ora.stato) === -1) {
+      throw errore('GIA_FATTO', 'Questa richiesta ha già una risposta.', { stato: ora.stato, motivo: null });
+    }
     if (p.pacchetto === 'carnet' && p.carnet_id) {
       const altri = await x("SELECT COUNT(*)::int AS n FROM prenotazioni WHERE carnet_id = $1 AND id <> $2 AND stato <> 'annullata'", [p.carnet_id, p.id]);
       if (altri[0].n > 0) throw errore('CARNET_IN_USO', 'Il carnet è già in uso: per annullarlo scrivici su WhatsApp.');
@@ -327,9 +421,13 @@ async function annullaPrenotazione(p) {
     if (p.omaggio) {
       await x('UPDATE fidelity SET omaggi_disponibili = omaggi_disponibili + 1, omaggi_usati = GREATEST(0, omaggi_usati - 1) WHERE cliente_id = $1', [p.cliente_id]);
     }
-    await x("UPDATE prenotazioni SET stato = 'annullata' WHERE id = $1", [p.id]);
+    await x(
+      `UPDATE prenotazioni SET stato = 'annullata', motivo_annullamento = $2::text,
+         risposta_il = CASE WHEN $2::text = 'cliente' THEN risposta_il ELSE COALESCE(risposta_il, now()) END
+       WHERE id = $1`, [p.id, motivo || null]);
     await x('DELETE FROM occupazioni WHERE prenotazione_id = $1', [p.id]);
-    await x("INSERT INTO eventi (tipo, dati) VALUES ('annullamento', $1)", [JSON.stringify({ codice: p.codice, pacchetto: p.pacchetto })]);
+    await x("INSERT INTO eventi (tipo, dati) VALUES ('annullamento', $1)",
+      [JSON.stringify({ codice: p.codice, pacchetto: p.pacchetto, motivo: motivo || null })]);
   });
 }
 
@@ -372,14 +470,17 @@ async function segnaPresenza(id, nuovoStato) {
   const cfg = await impostazioni();
   const soglia = (cfg.fidelity && cfg.fidelity.timbri) || 10;
   return transazione(async (x) => {
-    const p = (await x('SELECT id, cliente_id, pacchetto, stato, omaggio FROM prenotazioni WHERE id = $1 FOR UPDATE', [id]))[0];
+    const p = (await x('SELECT id, cliente_id, pacchetto, fascia, stato, omaggio FROM prenotazioni WHERE id = $1 FOR UPDATE', [id]))[0];
     if (!p) throw errore('NON_TROVATA', 'Prenotazione non trovata.');
     if (p.stato === 'annullata') throw errore('GIA_FATTO', 'La prenotazione è annullata.');
-    const vale = (p.pacchetto === 'giornata' || p.pacchetto === 'carnet') && !p.omaggio;
+    /* un timbro per ogni giornata intera pagata (singola o da carnet) */
+    const vale = (p.pacchetto === 'giornata' || p.pacchetto === 'carnet') && !p.omaggio && p.fascia === 'giornata';
+    let timbro = false;
     await x('INSERT INTO fidelity (cliente_id) VALUES ($1) ON CONFLICT (cliente_id) DO NOTHING', [p.cliente_id]);
     let premio = false, premioSbloccato = null;
     if (vale && p.stato !== 'presente' && nuovoStato === 'presente') {
       const f = (await x('UPDATE fidelity SET timbri = timbri + 1 WHERE cliente_id = $1 RETURNING timbri', [p.cliente_id]))[0];
+      timbro = true;
       /* premi intermedi della card (stampe, amico, sconto): li consegna il negozio */
       const sb = ((cfg.fidelity && cfg.fidelity.premi) || []).find(z => z.timbri === f.timbri && z.timbri < soglia);
       if (sb) premioSbloccato = sb.titolo;
@@ -398,7 +499,7 @@ async function segnaPresenza(id, nuovoStato) {
     /* segnare arrivo o assenza vale anche come "accettata" */
     await x('UPDATE prenotazioni SET stato = $2, accettata = true WHERE id = $1', [id, nuovoStato]);
     const f = (await x('SELECT timbri, omaggi_disponibili FROM fidelity WHERE cliente_id = $1', [p.cliente_id]))[0];
-    return { id, stato: nuovoStato, timbri: f.timbri, omaggi: f.omaggi_disponibili, premio, premioSbloccato };
+    return { id, stato: nuovoStato, timbri: f.timbri, omaggi: f.omaggi_disponibili, premio, premioSbloccato, timbro };
   });
 }
 
@@ -426,6 +527,6 @@ async function eliminaCliente(id) {
 
 module.exports = {
   eliminaCliente,
-  disponibilita, prenota, stato, annulla, annullaDaAdmin, vantaggi, card, segnaPresenza, trova,
+  disponibilita, prenota, stato, rispondi, annulla, annullaDaAdmin, vantaggi, card, segnaPresenza, trova, leggi, completa,
   valida, errore, euro, stessoTelefono, impronta
 };
