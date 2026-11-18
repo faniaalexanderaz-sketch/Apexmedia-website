@@ -1907,3 +1907,35 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 Fonti: causa antitrust del Dipartimento di Giustizia USA (2024); provvedimento AGCM (ottobre 2018); bilancio Apple, anno fiscale 2025.
 #apple #iphone #soldi #tecnologia #marketing #psicologia #apexmedia
 ```
+
+---
+
+## 63. GTA 6 ha già incassato un miliardo. Prima di uscire (3 trucchi di marketing)
+
+Stile scuro al neon, con clip video generate (auto al tramonto, città, folla). File: `apex-gta6/renders/apex-gta6-9x16.mp4`
+
+**TikTok**
+```text
+GTA 6 ha già incassato un miliardo di dollari. Prima ancora di uscire. I 3 trucchi di marketing di Rockstar: il terzo lo puoi copiare anche tu.
+#gta6 #marketing #rockstar #apexmedia
+```
+
+**Instagram**
+```text
+GTA 6 ha già incassato un miliardo di dollari. Prima ancora di uscire. Almeno secondo le stime sui preordini. E per anni Rockstar non ha fatto quasi nessuna pubblicità.
+
+Questi sono i tre trucchi che ha usato. Il terzo lo puoi copiare anche tu.
+
+1. Il silenzio. Per quasi tre anni, due trailer. E in mezzo, niente. Così ogni loro mossa diventava una notizia: il secondo trailer ha fatto 475 milioni di visualizzazioni in un giorno.
+2. L'attesa. Tredici anni dall'ultimo capitolo. Due rinvii. E ogni rinvio ha fatto il giro del mondo. Più aspetti una cosa, più la vuoi.
+3. Far lavorare gli altri. Ogni fotogramma veniva analizzato da milioni di fan: teorie, video, meme. Pubblicità gratis, fatta dal pubblico. Il capo di Take-Two l'ha detto chiaro: non spendiamo in marketing finché non siamo vicini all'uscita.
+
+La lezione? Non devi parlare di più. Devi farti aspettare.
+
+Manda questo video a chi sta aspettando GTA 6.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+Fonti: stima Sensor Tower sui preordini digitali (novembre 2026); dato sul trailer dichiarato da Rockstar (maggio 2025); dichiarazioni di Strauss Zelnick, CEO di Take-Two.
+#gta6 #gta #rockstar #marketing #videogiochi #business #apexmedia
+```

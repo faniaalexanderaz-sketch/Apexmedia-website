@@ -1,0 +1,93 @@
+<template>
+  <style>
+
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-BoldItalic.otf") format("opentype"), url("assets/fonts/InterDisplay-BoldItalic.otf") format("opentype"); font-weight: 700; font-style: italic; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Heavy.otf") format("opentype"), url("assets/fonts/InterDisplay-ExtraBold.otf") format("opentype"); font-weight: 800; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-HeavyItalic.otf") format("opentype"), url("assets/fonts/InterDisplay-ExtraBoldItalic.otf") format("opentype"); font-weight: 800; font-style: italic; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-BlackItalic.otf") format("opentype"), url("assets/fonts/InterDisplay-BlackItalic.otf") format("opentype"); font-weight: 900; font-style: italic; }
+    #root { position: absolute; inset: 0; background: #07040d; overflow: hidden; font-family: 'SF Pro Display'; color: #fff; -webkit-font-smoothing: antialiased; }
+    .zone { z-index: 5; position: absolute; left: 70px; right: 70px; top: 340px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 8px 0 16px; font: 600 80px/1.06 'SF Pro Display'; }
+    .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
+    .line > span { display: inline-block; padding: 0 0.1em; }
+    .t-sans { font: 600 80px/1.06 'SF Pro Display'; letter-spacing: -0.02em; }
+    .t-it { font: italic 800 98px/1.04 'SF Pro Display'; letter-spacing: -0.02em; text-transform: uppercase; }
+    .t-mut { color: #a59fb8; }
+    .acc { color: #ff2d95; }
+    .grad { background: linear-gradient(180deg, #ff5fa8 8%, #ff8a3c 92%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .grad .ch, .split.grad .ch { background: linear-gradient(180deg, #ff5fa8 8%, #ff8a3c 92%); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0 0.04em; margin: 0 -0.04em; }
+    .split.grad { background: none; }
+    .ch { display: inline-block; white-space: pre; }
+    .sel { position: absolute; border: 3px dashed #2de2e6; pointer-events: none; opacity: 0; }
+    .sel i { position: absolute; width: 16px; height: 16px; background: #07040d; border: 3px solid #2de2e6; }
+    .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
+    .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
+    .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
+    .pill { position: absolute; padding: 14px 28px; border-radius: 999px; background: linear-gradient(92deg, #ff2d95, #ff8a3c); color: #fff; font: italic 800 42px/1 'SF Pro Display'; text-transform: uppercase; letter-spacing: 0; opacity: 0; white-space: nowrap; }
+    .st { position: absolute; inset: 0; background: #07040d; overflow: hidden; }
+    .vid { position: absolute; inset: 0; overflow: hidden; }
+    .vid video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,4,13,0.86) 0%, rgba(7,4,13,0.72) 34%, rgba(7,4,13,0.1) 56%, rgba(7,4,13,0.18) 78%, rgba(7,4,13,0.8) 100%); }
+    .seg { position: absolute; top: 270px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; }
+    .seg i { flex: 1; border-radius: 6px; background: #2a2140; overflow: hidden; }
+    .seg i b { display: block; height: 100%; border-radius: 6px; background: linear-gradient(92deg, #ff2d95, #ff8a3c); transform-origin: left center; }
+    .tag { position: absolute; left: 0; right: 0; text-align: center; font: 500 32px/1.2 'SF Pro Display'; color: #8f88a6; opacity: 0; }
+    .bignum { position: absolute; left: 290px; top: 540px; width: 500px; height: 470px; overflow: hidden; }
+    .bignum > div { font: italic 800 430px/470px 'SF Pro Display'; letter-spacing: -0.05em; text-align: center; color: #fff; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -8px; right: -8px; top: 6%; bottom: 2%; background: rgba(255, 45, 149, 0.5); border-radius: 8px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .glow { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
+
+
+    .f-p { font-size: 84px; padding: 22px 46px; box-shadow: 0 20px 70px rgba(0,0,0,0.5); }
+  </style>
+  <div id="root" data-composition-id="g13" data-width="1080" data-height="1920">
+    <div id="g13-st" class="st" data-layout-allow-overlap>
+      <div class="vid" id="f-v-w" data-layout-allow-overlap><video id="f-v" class="clip" src="assets/video/crowd.mp4" data-start="0" data-duration="5.35" data-media-start="0" muted playsinline></video></div><div class="shade"></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="f-l1" class="t-sans">ogni fotogramma</span></span><span class="line" style="margin-top:-22px"><span id="f-l2" class="t-it grad" style="font-size:132px">analizzato</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:340px"><span class="line"><span id="f-l3" class="t-sans">da milioni</span></span><span class="line" style="margin-top:-22px"><span id="f-l4" class="t-it grad" style="font-size:150px">di fan</span></span></div>
+      <div id="f-p1" class="pill f-p" style="left:110px;top:900px;transform:rotate(-6deg)">teorie</div>
+      <div id="f-p2" class="pill f-p" style="left:560px;top:1060px;transform:rotate(5deg)">video</div>
+      <div id="f-p3" class="pill f-p" style="left:280px;top:1230px;transform:rotate(-3deg)">meme</div>
+    </div>
+  </div>
+  <script>
+
+    /* split every .split element into letter spans once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    /* letters flip up into place one by one (the reference's per-letter entrance) */
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    /* a whole line rises from behind its own baseline mask */
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.22, ease: "power3.in" }, t);
+    /* dashed selection box with handles, then a cursor that clicks it */
+    const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const count = (tl, sel, a, b, t, d, fmt) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || ((v) => String(Math.round(v))); tl.to(o, { v: b, duration: d, ease: "expo.out", onUpdate: () => { el.textContent = f(o.v); } }, t); };
+    const enter = (tl, sel, k) => k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.3, ease: "expo.out" }, 0) : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0) : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "U" ? tl.to(sel, { y: -1920, duration: 0.22, ease: "power3.in" }, t) : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t) : tl.to(sel, { x: -1080, duration: 0.22, ease: "power3.in" }, t);
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+
+    const tl = gsap.timeline({ paused: true });
+    enter(tl, "#g13-st", "L");
+    tl.fromTo("#f-v-w", { scale: 1.18 }, { scale: 1.02, duration: 5.35, ease: "none" }, 0);
+    rise(tl, "#f-l1", 0.05);
+    rise(tl, "#f-l2", 1.12 - 0.08);
+    sink(tl, "#f-l1", 1.82 - 0.18); sink(tl, "#f-l2", 1.82 - 0.18);
+    rise(tl, "#f-l3", 1.82 - 0.02);
+    rise(tl, "#f-l4", 1.82 + 0.3);
+    pop(tl, "#f-p1", 3.18);
+    pop(tl, "#f-p2", 3.85);
+    pop(tl, "#f-p3", 4.53);
+    exit(tl, "#g13-st", "Z", 5.35 - 0.18);
+    window.__timelines["g13"] = tl;
+  </script>
+</template>
