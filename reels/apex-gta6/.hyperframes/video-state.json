@@ -640,15 +640,14 @@
   },
   "checks": {
     "latest": {
-      "revision": "bf754cb9-668b-463f-ad98-50327573c7be",
-      "id": "e7f0eade-51a7-4c2d-8d09-8b4bcd41e312"
+      "revision": null,
+      "id": "df211912-d518-40bd-b025-4aa4b6c5dbdd"
     },
     "revisions": {
       "bf754cb9-668b-463f-ad98-50327573c7be": [
         {
           "id": "e7f0eade-51a7-4c2d-8d09-8b4bcd41e312",
           "scope": "project",
-          "report": "/home/user/Apexmedia-website/reels/apex-gta6/.hyperframes/artifacts/checks/e7f0eade-51a7-4c2d-8d09-8b4bcd41e312.json",
           "metadata": {
             "ok": true,
             "browserSkipped": false,
@@ -678,7 +677,9 @@
           "revision": "bf754cb9-668b-463f-ad98-50327573c7be",
           "inputFingerprint": "f6ed5048ad799888e76bef1aa8ba7d6d2b1a1a01a9d49adc2c08d83f952f335a",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "2cab742e-2899-4fbd-b1da-21a70b9a580e"
         }
       ]
     },
@@ -1935,5 +1936,18 @@
         "attribution": "unversioned"
       }
     ]
-  }
+  },
+  "renders": {
+    "latest": {
+      "id": "2cab742e-2899-4fbd-b1da-21a70b9a580e",
+      "completedAt": 1795038655502,
+      "output": "/home/user/Apexmedia-website/reels/apex-gta6/renders/_full-60.mp4",
+      "status": "completed",
+      "revision": "9a9ad8f1-4c05-4b87-8c4d-50a72f783715"
+    },
+    "retainedRevisions": [
+      "9a9ad8f1-4c05-4b87-8c4d-50a72f783715"
+    ]
+  },
+  "pendingArtifactCleanup": []
 }
