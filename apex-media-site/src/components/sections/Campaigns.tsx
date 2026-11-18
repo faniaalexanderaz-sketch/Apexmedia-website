@@ -1,45 +1,43 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { Container } from "@/components/ui/Container";
-import { PanelBg } from "@/components/ui/PanelBg";
+import { SceneSlot } from "@/components/three/SceneSlot";
+import { createDriver } from "@/components/three/driver";
 import { campaign } from "@/data/campaign";
 import {
   deferSetup,
   gsap,
   useGSAP,
-  MEDIA,
-  EASE,
+  ScrollTrigger,
   enterAt,
   splitLinesIn,
-  countUp,
+  refreshSoon,
 } from "@/lib/gsap";
 
-const W = 640;
-const H = 240;
-const PAD = 6;
+/* Le due scene arrivano solo nel browser e solo quando servono (vedi SceneSlot) */
+const CampaignChart = dynamic(() => import("@/components/three/CampaignChart"), {
+  ssr: false,
+});
+const ChannelStack = dynamic(() => import("@/components/three/ChannelStack"), {
+  ssr: false,
+});
 
-/** Punti del grafico e curva morbida che li attraversa (Catmull-Rom → Bézier). */
-function chart(values: number[]) {
-  const max = Math.max(...values, 1);
-  const pts = values.map((v, i) => ({
-    x: (i / Math.max(1, values.length - 1)) * W,
-    y: H - PAD - (v / max) * (H - PAD * 2),
-  }));
-  let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[Math.max(0, i - 1)];
-    const p1 = pts[i];
-    const p2 = pts[i + 1];
-    const p3 = pts[Math.min(pts.length - 1, i + 2)];
-    const c1x = p1.x + (p2.x - p0.x) / 6;
-    const c1y = p1.y + (p2.y - p0.y) / 6;
-    const c2x = p2.x - (p3.x - p1.x) / 6;
-    const c2y = p2.y - (p3.y - p1.y) / 6;
-    d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
-  }
-  return { d, area: `${d} L ${W} ${H} L 0 ${H} Z`, last: pts[pts.length - 1] };
-}
+const DESKTOP = "(min-width: 1024px) and (prefers-reduced-motion: no-preference)";
+const MOBILE = "(max-width: 1023px) and (prefers-reduced-motion: no-preference)";
+const REDUCE = "(prefers-reduced-motion: reduce)";
+
+/** Durate su mobile: l’animazione parte quando la scena entra in vista e finisce da sola */
+const MOBILE_CHART_S = 2.8;
+const MOBILE_STACK_S = 2.2;
+
+/**
+ * Valori condivisi tra GSAP e le scene 3D. Partono dalla posa finale: se per qualsiasi motivo
+ * l’animazione non parte, si vede il grafico completo, mai una scena vuota.
+ */
+const FINAL = { grow: 1, arrow: 1, camera: 1, stack: 1 };
+const driver = createDriver({ ...FINAL });
 
 const fmt = (v: number, decimals: number) =>
   new Intl.NumberFormat("it-IT", {
@@ -47,11 +45,16 @@ const fmt = (v: number, decimals: number) =>
     maximumFractionDigits: decimals,
   }).format(v);
 
-/** "Ogni euro investito, misurato.": un pannello in stile report che si compone mentre scorri. */
+const countEase = gsap.parseEase("power2.out");
+
+/** "Ogni euro investito, misurato.": grafico 3D che cresce, tre numeri che contano, canali impilati. */
 export function Campaigns() {
   const ref = useRef<HTMLElement>(null);
-  const { d, area, last } = chart(campaign.line);
-  const barMax = Math.max(...campaign.bars.map((b) => b.value), 1);
+
+  // Geometrie e ombre più leggere sotto 1024px: si decide prima che le scene vengano montate
+  useEffect(() => {
+    driver.light = window.matchMedia("(max-width: 1023px)").matches;
+  }, []);
 
   useGSAP(
     (_, contextSafe) =>
@@ -61,252 +64,306 @@ export function Campaigns() {
           const root = ref.current;
           if (!root) return;
           const q = gsap.utils.selector(root);
-          const panel = q("[data-camp-panel]")[0];
+          const v = driver.values;
+          const pin = q("[data-camp-pin]")[0] as HTMLElement;
+          const unitEl = q("[data-camp-unit]")[0] as HTMLElement;
+          const stackEl = q("[data-camp-stack]")[0] as HTMLElement;
+          const numbers = q("[data-kpi]") as HTMLElement[];
+          const title = q("h2")[0] as HTMLElement;
+
+          /** I numeri seguono la crescita delle colonne; poi si avvisano le scene di ridisegnare */
+          const write = () => {
+            const g = countEase(Math.min(1, v.grow));
+            numbers.forEach((el, i) => {
+              const k = campaign.kpis[i];
+              el.textContent = fmt(k.value * g, k.decimals);
+            });
+            driver.notify();
+          };
+
           const mm = gsap.matchMedia();
-          mm.add([MEDIA.desktop, MEDIA.mobile], () => {
-            const title = q("h2")[0];
-            const split = title ? splitLinesIn(title) : null;
-            gsap.from(q("[data-camp-fade]"), {
-              opacity: 0,
-              y: 16,
-              duration: 0.7,
-              stagger: 0.08,
-              scrollTrigger: enterAt(root),
-            });
-            gsap.from(panel, {
-              opacity: 0,
-              y: 40,
-              duration: 0.9,
-              ease: EASE.enter,
-              scrollTrigger: enterAt(panel, "top 88%"),
-            });
+          mm.add(
+            { desktop: DESKTOP, mobile: MOBILE, reduce: REDUCE },
+            (ctx) => {
+              const { desktop, reduce } = ctx.conditions ?? {};
+              const cleanups: (() => void)[] = [];
 
-            // Contatori: salgono una volta sola, quando il pannello entra
-            (q("[data-number]") as HTMLElement[]).forEach((el) =>
-              countUp(el, panel, "top 78%"),
-            );
+              if (reduce) {
+                // Niente movimento: scena ferma nella posa finale, numeri già completi
+                Object.assign(v, FINAL);
+                write();
+                return;
+              }
 
-            // La linea si disegna con lo scroll (stroke-dashoffset), l’area sotto compare alla fine
-            const draw = gsap.timeline({
-              defaults: { ease: EASE.scrub },
-              scrollTrigger: {
-                trigger: q("[data-camp-chart]")[0],
-                start: "top 82%",
-                end: "top 28%",
-                scrub: 0.6,
-              },
-            });
-            draw
-              .fromTo(
-                q("[data-camp-line]"),
-                { strokeDashoffset: 1.05 },
-                { strokeDashoffset: 0, duration: 1 },
-                0,
-              )
-              .fromTo(
-                q("[data-camp-area]"),
-                { opacity: 0 },
-                { opacity: 1, duration: 0.4 },
-                0.6,
-              )
-              .fromTo(
-                q("[data-camp-dot]"),
-                { opacity: 0 },
-                { opacity: 1, duration: 0.1 },
-                0.9,
-              );
+              const split = splitLinesIn(title, title, 0.1, "top 85%");
+              gsap.from(q("[data-camp-fade]"), {
+                opacity: 0,
+                y: 16,
+                duration: 0.7,
+                stagger: 0.08,
+                delay: 0.2,
+                scrollTrigger: enterAt(title, "top 85%"),
+              });
 
-            // Le barre crescono da sinistra, una dopo l’altra
-            gsap.fromTo(
-              q("[data-camp-bar]"),
-              { scaleX: 0 },
-              {
-                scaleX: (i) => campaign.bars[i].value / barMax,
-                duration: 1.1,
-                ease: EASE.title,
-                stagger: 0.1,
-                scrollTrigger: enterAt(q("[data-camp-bars]")[0], "top 82%"),
-              },
-            );
+              // ---- Grafico: 10 unità di timeline
+              // 0 → 7,5   colonne una dopo l’altra (il rimbalzo è nella scena) e numeri che contano
+              // 4 → 8,2   la freccia si disegna salendo (quando la camera si è già allontanata)
+              // 0 → 9     la camera sale e si allontana
+              // 9 → 10    pausa sulla posa finale
+              const chartTl = gsap.timeline({
+                paused: true,
+                defaults: { ease: "none" },
+                onUpdate: write,
+              });
+              chartTl
+                .fromTo(v, { grow: 0 }, { grow: 1, duration: 7.5, immediateRender: false }, 0)
+                .fromTo(
+                  v,
+                  { arrow: 0 },
+                  { arrow: 1, duration: 4.2, ease: "power1.inOut", immediateRender: false },
+                  4,
+                )
+                .fromTo(v, { camera: 0 }, { camera: 1, duration: 9, immediateRender: false }, 0)
+                .to({}, { duration: 1 }, 9);
 
-            return () => {
-              split?.revert();
+              // ---- Canali: i blocchi salgono uno dopo l’altro (gli scaglioni sono nella scena)
+              const stackTl = gsap.timeline({
+                paused: true,
+                defaults: { ease: "none" },
+                onUpdate: () => driver.notify(),
+              });
+              stackTl.fromTo(v, { stack: 0 }, { stack: 1, duration: 1, immediateRender: false });
+
+              if (desktop) {
+                // Si parte dalla scena vuota: è lo scroll a stabilire da dove riprendere
+                Object.assign(v, { grow: 0, arrow: 0, camera: 0, stack: 0 });
+                write();
+                // Sezione fissata per 2,5 schermate: lo scroll fa crescere il grafico
+                ScrollTrigger.create({
+                  animation: chartTl,
+                  trigger: pin,
+                  start: "top top",
+                  end: "+=250%",
+                  pin: true,
+                  scrub: 0.8,
+                  anticipatePin: 1,
+                  invalidateOnRefresh: true,
+                });
+                ScrollTrigger.create({
+                  animation: stackTl,
+                  trigger: stackEl,
+                  start: "top 85%",
+                  end: "top 30%",
+                  scrub: 0.8,
+                });
+                refreshSoon();
+              } else {
+                cleanups.push(
+                  playWhenSeen(chartTl, unitEl, MOBILE_CHART_S, ["grow", "arrow", "camera"], write),
+                  playWhenSeen(stackTl, stackEl, MOBILE_STACK_S, ["stack"], write),
+                );
+              }
+
+              return () => {
+                cleanups.forEach((fn) => fn());
+                split.revert();
+                Object.assign(v, FINAL);
+                write();
+              };
+            },
+          );
+
+          /** Abbastanza in vista: il 60% del blocco, o metà schermo se il blocco è più alto */
+          function seen(r: DOMRect) {
+            const h = window.innerHeight;
+            const visible = Math.min(r.bottom, h) - Math.max(r.top, 0);
+            return visible >= Math.min(r.height * 0.6, h * 0.5);
+          }
+
+          /**
+           * Mobile: niente scrub. L’animazione parte quando la scena entra in vista e finisce da sola.
+           * Due inneschi indipendenti, vince il primo: ScrollTrigger e un IntersectionObserver,
+           * che misura il browser stesso e non dipende da posizioni calcolate prima del caricamento
+           * (il caso del browser interno di Instagram su iPhone).
+           */
+          function playWhenSeen(
+            tl: gsap.core.Timeline,
+            el: HTMLElement,
+            seconds: number,
+            keys: string[],
+            render: () => void,
+          ) {
+            tl.timeScale(tl.duration() / seconds);
+            const r = el.getBoundingClientRect();
+            // Già passata sopra: resta completa
+            if (r.bottom < 0) {
+              tl.progress(1);
+              render();
+              return () => {};
+            }
+            keys.forEach((k) => (v[k] = 0));
+            render();
+            const play = () => {
+              if (tl.progress() === 0 && !tl.isActive()) tl.play(0);
             };
-          });
+            // Già in vista: parte subito
+            if (seen(r)) {
+              play();
+              return () => {};
+            }
+            const st = ScrollTrigger.create({
+              trigger: el,
+              start: () =>
+                el.offsetHeight * 0.6 > window.innerHeight * 0.5
+                  ? "top 50%"
+                  : "top " + Math.round(100 - (el.offsetHeight * 60) / window.innerHeight) + "%",
+              animation: tl,
+              toggleActions: "play none none none",
+            });
+            const io = new IntersectionObserver(
+              (entries) => {
+                if (entries.some((e) => seen(e.boundingClientRect))) {
+                  play();
+                  io.disconnect();
+                }
+              },
+              { threshold: [0, 0.2, 0.4, 0.6, 0.7, 0.8, 0.9, 1] },
+            );
+            io.observe(el);
+            return () => {
+              st.kill();
+              io.disconnect();
+            };
+          }
         },
         150,
       ),
     { scope: ref },
   );
 
+  const status = campaign.isRealData
+    ? campaign.realLabel
+    : campaign.placeholderLabel;
+
   return (
     <section
       ref={ref}
       id="campagne"
-      className="relative isolate py-20 text-paper lg:py-32"
+      className="relative bg-[#efebe4] text-ink"
       data-section="campagne"
+      aria-labelledby="camp-title"
     >
-      <PanelBg />
-      <Container>
-        <div className="grid grid-cols-1 gap-7 lg:grid-cols-12 lg:items-end lg:gap-8">
-          <div className="lg:col-span-8">
-            <p className="label-mono text-paper/60" data-camp-fade>
-              Campagne che crescono
-            </p>
-            <h2 className="h-display mt-6 text-[clamp(2.25rem,0.9rem+5.2vw,5.5rem)] text-paper">
+      <div
+        data-camp-pin
+        className="pb-4 pt-20 lg:flex lg:h-svh lg:flex-col lg:pb-8 lg:pt-[calc(var(--nav-h)+32px)]"
+      >
+        <Container className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end lg:gap-8">
+            <h2
+              id="camp-title"
+              className="h-display text-[clamp(2.6rem,1rem+5vw,6rem)] lg:col-span-8"
+              aria-label="Ogni euro investito, misurato."
+            >
               Ogni euro investito, misurato.
             </h2>
-          </div>
-          <p
-            className="max-w-[36ch] text-[17px] leading-relaxed text-paper/75 md:text-lg lg:col-span-4 lg:pb-2"
-            data-camp-fade
-          >
-            Ogni mese ricevi un report così: quanti contatti sono arrivati, da
-            dove, e quanto è costato ognuno.
-          </p>
-        </div>
-
-        <div
-          data-camp-panel
-          className="mt-12 rounded-lg border border-paper/15 bg-paper/[0.04] lg:mt-20"
-        >
-          {/* Barra del pannello */}
-          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-paper/15 px-5 py-4 lg:px-8">
-            <p className="label-mono text-paper/70">
-              {campaign.name}
-              <span className="mx-2 text-paper/30" aria-hidden="true">
-                /
-              </span>
-              {campaign.period}
-            </p>
             <p
-              className={`label-mono rounded-sm border px-2.5 py-1.5 ${
-                campaign.isRealData
-                  ? "border-giallo/60 text-giallo"
-                  : "border-paper/25 text-paper/70"
-              }`}
-              data-camp-label={campaign.isRealData ? "reale" : "esempio"}
+              className="max-w-[34ch] text-[17px] leading-relaxed text-ink/70 md:text-lg lg:col-span-4 lg:pb-2"
+              data-camp-fade
             >
-              {campaign.isRealData
-                ? campaign.realLabel
-                : campaign.placeholderLabel}
+              Ogni mese ti mostriamo quanti contatti sono arrivati, da dove, e
+              quanto è costato ognuno.
             </p>
           </div>
 
-          {/* Contatori */}
-          <dl className="grid grid-cols-1 sm:grid-cols-3">
-            {campaign.kpis.map((k, i) => (
-              <div
-                key={k.label}
-                className={`px-5 py-7 lg:px-8 lg:py-10 ${
-                  i > 0 ? "border-t border-paper/15 sm:border-l sm:border-t-0" : ""
-                }`}
-              >
-                <dt className="label-mono text-paper/60">{k.label}</dt>
-                <dd className="mt-4 font-display text-[clamp(2.75rem,1.5rem+3.4vw,5rem)] font-bold leading-none tracking-tightest tabular-nums">
-                  {k.prefix}
-                  <span data-number={k.value} data-decimals={k.decimals}>
-                    {fmt(k.value, k.decimals)}
-                  </span>
-                  {k.suffix}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          {/* Numeri e grafico sono un blocco solo: su telefono i numeri stanno sopra la parte vuota del canvas,
+              così si vedono contare mentre le colonne crescono */}
+          <div
+            className="mt-10 grid grid-cols-1 lg:mt-4 lg:min-h-0 lg:flex-1 lg:grid-cols-12 lg:gap-8"
+            data-camp-unit
+          >
+            <dl className="relative z-10 grid gap-y-5 lg:order-2 lg:col-span-3 lg:flex lg:flex-col lg:justify-center lg:gap-y-9">
+              {campaign.kpis.map((k) => (
+                <div
+                  key={k.label}
+                  className="flex flex-row-reverse items-baseline justify-between gap-4 lg:flex-col-reverse lg:items-start lg:justify-start lg:gap-1.5"
+                  data-camp-fade
+                >
+                  <dt className="text-right text-[16px] leading-snug text-ink/65 lg:text-left lg:text-[17px]">
+                    {k.label}
+                  </dt>
+                  <dd className="font-display text-[clamp(2.6rem,1.6rem+3.2vw,5rem)] font-bold leading-[0.95] tracking-tightest tabular-nums">
+                    <span data-kpi>{fmt(k.value, k.decimals)}</span>
+                    {k.suffix}
+                  </dd>
+                </div>
+              ))}
+            </dl>
 
-          {/* Grafico e canali */}
-          <div className="grid grid-cols-1 border-t border-paper/15 lg:grid-cols-12">
-            <figure
-              className="px-5 py-7 lg:col-span-8 lg:px-8 lg:py-10"
+            {/* Grafico 3D: a tutta larghezza su telefono */}
+            <div
+              className="-mx-5 -mt-16 aspect-square sm:-mx-8 sm:-mt-24 sm:aspect-[4/3] lg:order-1 lg:col-span-9 lg:mx-0 lg:mt-0 lg:aspect-auto lg:h-full lg:min-h-[420px]"
               data-camp-chart
             >
-              <figcaption className="label-mono text-paper/60">
-                {campaign.lineLabel}
-              </figcaption>
-              <svg
-                viewBox={`0 0 ${W} ${H}`}
-                className="mt-6 block h-auto w-full overflow-visible"
-                role="img"
-                aria-label={`${campaign.lineLabel}: andamento in crescita nel periodo`}
+              <SceneSlot
+                className="h-full w-full"
+                fallback={{ src: "/campagne/grafico.webp", width: 1600, height: 1000 }}
+                alt="Grafico a colonne: i contatti crescono settimana dopo settimana, da 4 a 19"
               >
-                {[0.25, 0.5, 0.75, 1].map((f) => (
-                  <line
-                    key={f}
-                    x1="0"
-                    x2={W}
-                    y1={H * f - 0.5}
-                    y2={H * f - 0.5}
-                    stroke="currentColor"
-                    strokeOpacity="0.12"
-                    strokeWidth="1"
-                  />
-                ))}
-                <path
-                  d={area}
-                  fill="currentColor"
-                  fillOpacity="0.06"
-                  data-camp-area
-                />
-                <path
-                  d={d}
-                  fill="none"
-                  stroke="var(--giallo)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  pathLength={1}
-                  // Il vuoto più lungo del tratto evita il puntino del terminale tondo quando la linea è ancora nascosta
-                  strokeDasharray="1 1.2"
-                  data-camp-line
-                />
-                <circle
-                  cx={last.x}
-                  cy={last.y}
-                  r="6"
-                  fill="var(--giallo)"
-                  data-camp-dot
-                />
-              </svg>
-              <p className="label-mono mt-4 flex justify-between text-paper/50">
-                <span>{campaign.lineStart}</span>
-                <span>{campaign.lineEnd}</span>
-              </p>
-            </figure>
-
-            <div
-              className="border-t border-paper/15 px-5 py-7 lg:col-span-4 lg:border-l lg:border-t-0 lg:px-8 lg:py-10"
-              data-camp-bars
-            >
-              <p className="label-mono text-paper/60">{campaign.barsLabel}</p>
-              <ul className="mt-6 space-y-6" role="list">
-                {campaign.bars.map((b) => (
-                  <li key={b.label}>
-                    <p className="flex items-baseline justify-between gap-4 text-[16px]">
-                      <span className="text-paper/85">{b.label}</span>
-                      <span className="font-mono text-[13px] tabular-nums text-paper/70">
-                        {b.value}
-                      </span>
-                    </p>
-                    <span className="mt-2.5 block h-[6px] bg-paper/10">
-                      <span
-                        data-camp-bar
-                        className="block h-full origin-left bg-paper"
-                        style={{ transform: `scaleX(${b.value / barMax})` }}
-                      />
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                {(onReady) => (
+                  <CampaignChart driver={driver} weeks={campaign.weeks} onReady={onReady} />
+                )}
+              </SceneSlot>
             </div>
+          </div>
+
+          <p className="sr-only">
+            {campaign.weeksLabel}: {campaign.weeks.join(", ")}.
+          </p>
+        </Container>
+      </div>
+
+      <Container className="pb-16 pt-10 lg:pb-24 lg:pt-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 lg:items-center lg:gap-8">
+          <div className="lg:col-span-4">
+            <h3 className="font-display text-[clamp(1.75rem,1.2rem+1.8vw,2.75rem)] font-bold leading-[1.02] tracking-tightest">
+              {campaign.channelsLabel}
+            </h3>
+            <p className="mt-4 max-w-[32ch] text-[17px] leading-relaxed text-ink/70">
+              Da dove arriva chi ti contatta. Così sappiamo dove spostare il
+              budget.
+            </p>
+            <dl className="sr-only">
+              {campaign.channels.map((c) => (
+                <div key={c.label}>
+                  <dt>{c.label}</dt>
+                  <dd>{c.value} contatti</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div
+            className="-mx-5 mt-8 aspect-square sm:-mx-8 sm:aspect-[4/3] lg:col-span-8 lg:mx-0 lg:mt-0 lg:aspect-auto lg:h-[min(560px,62svh)]"
+            data-camp-stack
+          >
+            <SceneSlot
+              className="h-full w-full"
+              fallback={{ src: "/campagne/canali.webp", width: 1400, height: 1000 }}
+              alt="Blocchi impilati per canale: Google Ads 52, Meta Ads 41, Sito web 18, WhatsApp 9"
+            >
+              {(onReady) => (
+                <ChannelStack
+                  driver={driver}
+                  channels={campaign.channels}
+                  onReady={onReady}
+                />
+              )}
+            </SceneSlot>
           </div>
         </div>
 
-        {!campaign.isRealData ? (
-          <p className="mt-5 max-w-[60ch] text-[14px] leading-relaxed text-paper/55">
-            I numeri nel pannello sono un esempio di come si legge il report,
-            non i risultati di un cliente.
-          </p>
-        ) : null}
+        <p className="mt-10 text-[13px] text-ink/45 lg:mt-14">
+          {status} · {campaign.period}
+        </p>
       </Container>
     </section>
   );

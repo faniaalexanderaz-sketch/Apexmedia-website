@@ -17,6 +17,23 @@ export function MotionProvider() {
     document.fonts?.ready.then(refresh);
     window.addEventListener("load", refresh);
 
+    // Se l’altezza della pagina cambia dopo il calcolo (font, immagini, scene 3D che arrivano dopo,
+    // barre del browser di Instagram), le posizioni di inizio delle animazioni vanno ricalcolate:
+    // altrimenti su iPhone restano più in basso del dovuto e le animazioni non partono mai.
+    let lastHeight = document.documentElement.scrollHeight;
+    let heightTimer: number | undefined;
+    const onRefreshed = () => {
+      lastHeight = document.documentElement.scrollHeight;
+    };
+    ScrollTrigger.addEventListener("refresh", onRefreshed);
+    const ro = new ResizeObserver(() => {
+      const h = document.documentElement.scrollHeight;
+      if (Math.abs(h - lastHeight) < 2) return;
+      window.clearTimeout(heightTimer);
+      heightTimer = window.setTimeout(refresh, 200);
+    });
+    ro.observe(document.body);
+
     const mq = window.matchMedia(
       "(min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference)",
     );
@@ -76,6 +93,9 @@ export function MotionProvider() {
       stop();
       mq.removeEventListener("change", apply);
       window.removeEventListener("load", refresh);
+      ro.disconnect();
+      window.clearTimeout(heightTimer);
+      ScrollTrigger.removeEventListener("refresh", onRefreshed);
     };
   }, []);
 
