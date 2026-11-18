@@ -1,0 +1,119 @@
+<template>
+  <style>
+
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: 'SF Pro Display'; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+    .zone { z-index: 5; position: absolute; left: 80px; right: 80px; top: 372px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 600 82px/1.06 'SF Pro Display'; }
+    .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
+    .line > span { display: inline-block; }
+    .t-sans { font: 600 82px/1.06 'SF Pro Display'; letter-spacing: -0.02em; }
+    .t-it { font: 700 82px/1.06 'SF Pro Display'; letter-spacing: -0.024em; }
+    .t-mut { color: #86868b; }
+    .t-big { font: 700 96px/1.0 'SF Pro Display'; letter-spacing: -0.045em; }
+    .acc { color: #7a0f24; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st.dark { background: #000; color: #f5f5f7; }
+    .mul { mix-blend-mode: multiply; }
+    .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
+    .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
+    .dark .seg i { background: #3a3a3c; }
+    .seg i b { display: block; height: 100%; border-radius: 6px; background: currentColor; transform-origin: left center; }
+    .tag { position: absolute; left: 0; right: 0; text-align: center; font: 500 32px/1.2 'SF Pro Display'; color: #86868b; opacity: 0; }
+    .bignum { position: absolute; left: 290px; top: 560px; width: 500px; height: 470px; overflow: hidden; }
+    .bignum > div { font: 600 430px/470px 'SF Pro Display'; letter-spacing: -0.06em; text-align: center; }
+    .gold .ch { background: linear-gradient(180deg, #f6dc8c 10%, #b8860b 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -8px; right: -8px; top: 6%; bottom: 2%; background: rgba(255, 214, 10, 0.42); border-radius: 8px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .ch { display: inline-block; white-space: pre; }
+    .sel { position: absolute; border: 3px dashed #ff3b30; pointer-events: none; opacity: 0; }
+    .sel i { position: absolute; width: 16px; height: 16px; background: #fff; border: 3px solid #ff3b30; }
+    .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
+    .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
+    .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
+    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 'SF Pro Display'; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
+
+
+    .ico { width: 140px; height: 140px; border-radius: 34px; display: flex; align-items: center; justify-content: center; }
+    .ico-c { background: #fff; box-shadow: 0 0 0 3px #e5e5ea inset; }
+    .ico-m { background: linear-gradient(180deg, #fb5c74, #fa233b); }
+    .ico-t { background: #000; color: #fff; font: 600 64px/1 'SF Pro Display'; letter-spacing: -0.04em; }
+    .x-ln { stroke: #c7c7cc; stroke-width: 5; stroke-linecap: round; fill: none; }
+    .x-rg { stroke: #7a0f24; stroke-width: 4; opacity: 0.55; }
+    .x-bar { stroke: #c9a227; stroke-width: 9; stroke-linecap: round; opacity: 0.92; }
+  </style>
+  <div id="root" data-composition-id="s20" data-width="1080" data-height="1920">
+    <div id="s20-st" class="st" data-layout-allow-overlap>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t0" class=""><span class="t-sans t-mut">prima</span> <span class="t-it">l'iPhone</span></span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t1" class="t-it">poi le cuffie</span></span><span class="line" style="margin-top:-20px"><span id="x-t1b" class="t-sans t-mut" style="font-size:62px">che si collegano da sole</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t2" class="t-it">poi l'orologio</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t3" class="t-it">poi il Mac</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t4" class="" style="font-size:72px"><span class="t-it" id="x-w1">poi iCloud,</span> <span class="t-it" id="x-w2">musica,</span> <span class="t-it" id="x-w3">TV</span></span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t5" class="t-sans t-mut" style="font-size:70px">ogni pezzo funziona meglio</span></span><span class="line" style="margin-top:-20px"><span id="x-t5b" class="t-it" style="font-size:104px">con gli altri</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t6" class="t-sans t-mut">e rende più difficile</span></span><span class="line" style="margin-top:-24px"><span id="x-t6b" class="t-it split acc" style="font-size:128px">uscire</span></span></div>
+      <div id="x-cam" style="position:absolute;inset:0;background:#fff;transform-origin:50% 58%">
+        <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><line id="x-l-air" class="x-ln" x1="390" y1="1010" x2="321" y2="969"/><line id="x-l-wat" class="x-ln" x1="690" y1="1010" x2="768" y2="964"/><line id="x-l-mac" class="x-ln" x1="540" y1="1305" x2="540" y2="1368"/><line id="x-l-icl" class="x-ln" x1="388" y1="1186" x2="285" y2="1245"/><line id="x-l-mus" class="x-ln" x1="692" y1="1186" x2="795" y2="1245"/><line id="x-l-tv" class="x-ln" x1="540" y1="895" x2="540" y2="842"/><line id="x-r-0" class="x-ln x-rg" x1="632" y1="799" x2="746" y2="846"/><line id="x-r-1" class="x-ln x-rg" x1="875" y1="1040" x2="875" y2="1190"/><line id="x-r-2" class="x-ln x-rg" x1="795" y1="1350" x2="692" y2="1426"/><line id="x-r-3" class="x-ln x-rg" x1="388" y1="1426" x2="285" y2="1350"/><line id="x-r-4" class="x-ln x-rg" x1="205" y1="1190" x2="205" y2="1040"/><line id="x-r-5" class="x-ln x-rg" x1="334" y1="846" x2="448" y2="799"/></svg>
+        <img id="x-ph" class="mul x-it" src="assets/img/ip18-burg-a.png" style="position:absolute;left:430px;top:904px;width:220px" alt="" />
+        <img id="x-air" class="mul x-it" src="assets/img/airpods.png" style="position:absolute;left:85px;top:780px;width:240px" alt="" />
+        <img id="x-wat" class="mul x-it" src="assets/img/watch.png" style="position:absolute;left:775px;top:767px;width:200px" alt="" />
+        <img id="x-mac" class="mul x-it" src="assets/img/macbook.png" style="position:absolute;left:320px;top:1375px;width:440px" alt="" />
+        <div id="x-icl" class="ico ico-c x-it" style="position:absolute;left:135px;top:1220px"><svg viewBox="0 0 24 24" width="92" height="92"><path d="M18.6 18H7.2a4.7 4.7 0 0 1-.7-9.35A6.2 6.2 0 0 1 18.4 9.6 4.25 4.25 0 0 1 18.6 18z" fill="#2f9bff"/></svg></div>
+        <div id="x-mus" class="ico ico-m x-it" style="position:absolute;left:805px;top:1220px"><svg viewBox="0 0 24 24" width="88" height="88"><path d="M9.2 18.3a2.6 2.6 0 1 1-1.6-2.4V6.1l10.2-2.2v10.6a2.6 2.6 0 1 1-1.6-2.4V7.1L9.2 8.6z" fill="#fff"/></svg></div>
+        <div id="x-tv" class="ico ico-t x-it" style="position:absolute;left:470px;top:690px">tv</div>
+        <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><rect id="x-cage" x="50" y="640" width="980" height="1110" rx="84" fill="none" stroke="#c9a227" stroke-width="12"/><line id="x-b-0" class="x-bar" x1="190" y1="640" x2="190" y2="1750"/><line id="x-b-1" class="x-bar" x1="330" y1="640" x2="330" y2="1750"/><line id="x-b-2" class="x-bar" x1="470" y1="640" x2="470" y2="1750"/><line id="x-b-3" class="x-bar" x1="610" y1="640" x2="610" y2="1750"/><line id="x-b-4" class="x-bar" x1="750" y1="640" x2="750" y2="1750"/><line id="x-b-5" class="x-bar" x1="890" y1="640" x2="890" y2="1750"/></svg>
+        <div id="x-lock" style="position:absolute;left:470px;top:1680px;width:140px;height:140px;border-radius:50%;background:#c9a227;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="74" height="74"><rect x="5" y="10.5" width="14" height="10" rx="2.6" fill="#fff"/><path d="M8.2 10.5V7.6a3.8 3.8 0 0 1 7.6 0v2.9" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+    /* split every .split element into letter spans once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    /* letters flip up into place one by one (the reference's per-letter entrance) */
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    /* a whole line rises from behind its own baseline mask */
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.22, ease: "power3.in" }, t);
+    /* dashed selection box with handles, then a cursor that clicks it */
+    const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const count = (tl, sel, a, b, t, d, fmt) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || ((v) => String(Math.round(v))); tl.to(o, { v: b, duration: d, ease: "expo.out", onUpdate: () => { el.textContent = f(o.v); } }, t); };
+    const enter = (tl, sel, k) => k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.3, ease: "expo.out" }, 0) : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0) : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "U" ? tl.to(sel, { y: -1920, duration: 0.22, ease: "power3.in" }, t) : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t) : tl.to(sel, { x: -1080, duration: 0.22, ease: "power3.in" }, t);
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+
+    const tl = gsap.timeline({ paused: true });
+    enter(tl, "#s20-st", "L");
+    const pi = (s, t) => tl.fromTo(s, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.2)" }, t);
+    tl.fromTo("#x-cam", { scale: 1.3 }, { scale: 1, duration: 8.2, ease: "power1.out" }, 0);
+    pi("#x-ph", 0.1); rise(tl, "#x-t0", 0.05);
+    sink(tl, "#x-t0", 1.17 - 0.16); rise(tl, "#x-t1", 1.17); pi("#x-air", 1.35);
+    rise(tl, "#x-t1b", 1.95 - 0.05); draw(tl, "#x-l-air", 2.25 - 0.1, 0.5);
+    sink(tl, "#x-t1", 3.41 - 0.16); sink(tl, "#x-t1b", 3.41 - 0.16); rise(tl, "#x-t2", 3.41); pi("#x-wat", 3.57); draw(tl, "#x-l-wat", 3.57 + 0.2, 0.4);
+    sink(tl, "#x-t2", 4.45 - 0.16); rise(tl, "#x-t3", 4.45); pi("#x-mac", 4.77); draw(tl, "#x-l-mac", 4.77 + 0.2, 0.3);
+    sink(tl, "#x-t3", 5.61 - 0.16); rise(tl, "#x-t4", 5.61);
+    tl.fromTo("#x-w2", { opacity: 0.22 }, { opacity: 1, duration: 0.15 }, 6.64); tl.fromTo("#x-w3", { opacity: 0.22 }, { opacity: 1, duration: 0.15 }, 7.58);
+    pi("#x-icl", 5.94); draw(tl, "#x-l-icl", 5.94 + 0.2, 0.4);
+    pi("#x-mus", 6.64 + 0.1); draw(tl, "#x-l-mus", 6.64 + 0.3, 0.4);
+    pi("#x-tv", 7.58 + 0.05); draw(tl, "#x-l-tv", 7.58 + 0.2, 0.3);
+    sink(tl, "#x-t4", 8.29 - 0.16); rise(tl, "#x-t5", 8.29);
+    for (let i = 0; i < 6; i++) draw(tl, "#x-r-" + i, 8.62 + i * 0.16, 0.4);
+    rise(tl, "#x-t5b", 9.82 - 0.08);
+    tl.fromTo(".x-it", { scale: 1 }, { scale: 1.12, duration: 0.16, yoyo: true, repeat: 1, stagger: 0.04, immediateRender: false }, 9.82);
+    sink(tl, "#x-t5", 10.61 - 0.16); sink(tl, "#x-t5b", 10.61 - 0.16); rise(tl, "#x-t6", 10.61);
+    draw(tl, "#x-cage", 10.61, 1.2);
+    tl.to("#x-cam", { scale: 0.92, duration: 2.4, ease: "power2.inOut" }, 10.61);
+    for (let k = 0; k < 6; k++) draw(tl, "#x-b-" + k, 11.87 - 0.25 + k * 0.07, 0.35);
+    flip(tl, "#x-t6b", 12.49 - 0.06, 0.04);
+    pop(tl, "#x-lock", 12.49 + 0.06);
+    exit(tl, "#s20-st", "Z", 13.23 - 0.18);
+    window.__timelines["s20"] = tl;
+  </script>
+</template>
