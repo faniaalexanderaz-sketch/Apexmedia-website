@@ -2,7 +2,10 @@
    BAGNARINO — service worker dell'app di gestione (/gestione)
    Fa tre cose:
    1. rende l'app installabile e veloce: stili, script, caratteri e
-      icone restano sul telefono;
+      icone restano sul telefono. Stili e script hanno la versione
+      nell'indirizzo (?v=…) e vengono tenuti per indirizzo completo:
+      dopo un aggiornamento, alla prima apertura arriva già il file
+      nuovo (mai la versione di prima);
    2. riceve le notifiche e le mostra, anche con l'app chiusa;
    3. al tocco sulla notifica apre la richiesta giusta.
    Le pagine e i dati passano sempre dal server (sono protetti
@@ -10,12 +13,14 @@
    Scritto in JavaScript "vecchio stile" (niente frecce, niente
    const): deve girare anche sui Chrome di qualche anno fa.
    ============================================================= */
-var VERSIONE = 'bgn-gestione-5';
+var VERSIONE = 'bgn-gestione-6';
+/* caratteri e icone: cambiano di rado, si mettono da parte all'installazione */
 var FERMI = [
-  '/gestione-app.css', '/gestione-app.js',
   '/fonts/hanken-grotesk-latin-wght-normal.woff2', '/fonts/fraunces-latin-standard-normal.woff2',
   '/img/app/icona-192.png', '/img/app/icona-180.png', '/img/app/distintivo-96.png'
 ];
+/* stili e script dell'app: si tengono con la loro versione */
+var CON_VERSIONE = ['/app-gestione.css', '/app-gestione.js'];
 var SENZA_RETE = '<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
   '<title>Bagnarino</title></head><body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#FAF6EE;color:#111922;' +
   'font:20px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;text-align:center;padding:24px;box-sizing:border-box">' +
@@ -45,7 +50,27 @@ self.addEventListener('fetch', function (ev) {
     }));
     return;
   }
-  /* file fermi: subito dal telefono, e intanto si aggiornano */
+  /* stili e script: dal telefono solo se è proprio quella versione, altrimenti dalla rete
+     (e la versione di prima viene buttata) */
+  if (CON_VERSIONE.indexOf(url.pathname) !== -1) {
+    var chiave = url.pathname + url.search;
+    ev.respondWith(caches.open(VERSIONE).then(function (c) {
+      return c.match(chiave).then(function (salvato) {
+        if (salvato) return salvato;
+        return fetch(req).then(function (r) {
+          if (r.ok) {
+            c.keys().then(function (chiavi) {
+              chiavi.forEach(function (k) { var u = new URL(k.url); if (u.pathname === url.pathname && u.search !== url.search) c.delete(k); });
+            });
+            c.put(chiave, r.clone());
+          }
+          return r;
+        });
+      });
+    }));
+    return;
+  }
+  /* caratteri e icone: subito dal telefono, e intanto si aggiornano */
   if (FERMI.indexOf(url.pathname) !== -1) {
     ev.respondWith(caches.open(VERSIONE).then(function (c) {
       return c.match(url.pathname).then(function (salvato) {

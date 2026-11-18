@@ -3,8 +3,8 @@
    Stanno qui, e non tra i file pubblici del sito, perché le serve
    la funzione api/gestione.js dopo aver controllato la sessione:
    senza accesso l'app non viene consegnata al browser.
-   Stili e script (senza dati) sono file normali: /gestione-app.css
-   e /gestione-app.js. La versione ?v= la aggiorna strumenti/versiona.py.
+   Stili e script (senza dati) sono file normali: /app-gestione.css
+   e /app-gestione.js. La versione ?v= la aggiorna strumenti/versiona.py.
    Regole dell'app: testo da 18px in su, pulsanti alti almeno 56px,
    una cosa importante per schermata, parole semplici.
    ============================================================= */
@@ -30,7 +30,7 @@ function testa(titolo) {
     '<meta name="apple-mobile-web-app-title" content="Bagnarino">\n' +
     '<meta name="apple-mobile-web-app-status-bar-style" content="default">\n' +
     '<link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>\n' +
-    '<link rel="stylesheet" href="/gestione-app.css?v=d33765e0">\n' +
+    '<link rel="stylesheet" href="/app-gestione.css?v=9a822ce5">\n' +
     '</head>\n';
 }
 
@@ -41,7 +41,8 @@ const ICONE = {
   oggi: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
   calendario: '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>',
   elenco: '<path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/>',
-  sito: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/>'
+  sito: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/>',
+  grafico: '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>'
 };
 function icona(nome) {
   return '<svg class="g-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONE[nome] + '</svg>';
@@ -61,14 +62,14 @@ function app(o) {
     '  <button class="g-indietro" type="button" data-indietro hidden>' + icona('indietro') + '<span>Indietro</span></button>\n' +
     '  <span class="g-testa-marchio" data-marchio>' + MARCHIO + '</span>\n' +
     '  <h1 class="g-testa-titolo" data-titolo>Oggi</h1>\n' +
-    '  <a class="g-profilo" href="#profilo" aria-label="Profilo: impostazioni e come va">' + icona('profilo') + '</a>\n' +
+    '  <a class="g-profilo" href="#profilo" aria-label="Altro: clienti, incassi, sito, impostazioni">' + icona('profilo') + '</a>\n' +
     '</header>\n' +
     '<main class="g-vista" id="vista" tabindex="-1" aria-live="polite"><p class="g-attesa">Un attimo…</p></main>\n' +
     '<nav class="g-barra" aria-label="Sezioni">\n' +
     '  <a href="#oggi" data-voce="oggi">' + icona('oggi') + '<span>Oggi</span></a>\n' +
     '  <a href="#calendario" data-voce="calendario">' + icona('calendario') + '<span>Calendario</span></a>\n' +
     '  <a href="#prenotazioni" data-voce="prenotazioni">' + icona('elenco') + '<span>Prenotazioni</span></a>\n' +
-    '  <a href="#sito" data-voce="sito">' + icona('sito') + '<span>Sito</span></a>\n' +
+    '  <a href="#come-va" data-voce="come-va">' + icona('grafico') + '<span>Come va</span></a>\n' +
     '</nav>\n' +
     /* "Fatto" grande dopo ogni salvataggio */
     '<div class="g-fatto" data-fatto role="status" hidden><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><strong data-fatto-titolo>Fatto</strong><span data-fatto-testo></span></div></div>\n' +
@@ -77,7 +78,7 @@ function app(o) {
     /* una sola domanda prima di chiudere, annullare o togliere qualcosa */
     '<dialog class="g-domanda" data-domanda aria-labelledby="g-domanda-titolo"><h2 id="g-domanda-titolo" data-domanda-titolo></h2><p data-domanda-testo></p>' +
     '<div class="g-pulsanti"><button class="g-btn g-btn-primario" type="button" data-domanda-si></button><button class="g-btn g-btn-grigio" type="button" data-domanda-no>No, torna indietro</button></div></dialog>\n' +
-    '<script src="/gestione-app.js?v=51cd11a7" defer></script>\n' +
+    '<script src="/app-gestione.js?v=61c00e53" defer></script>\n' +
     '</body>\n</html>\n';
 }
 
@@ -97,7 +98,7 @@ function accedi() {
     '</form>\n' +
     '<p class="g-sotto"><a class="g-link" href="/gestione/password">Password dimenticata?</a></p>\n' +
     '</main>\n' +
-    '<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
+    '<script src="/app-gestione.js?v=61c00e53" defer></script>\n</body>\n</html>\n';
 }
 
 /* ---------- password dimenticata / nuova password ---------- */
@@ -128,7 +129,7 @@ function password(tokenLink, valido) {
       '</form>\n';
   }
   return testa('Password · Bagnarino') + '<body class="g-fuori">\n' + fascia('Bagnarino') +
-    '<main class="g-vista g-stretta">\n' + corpo + '</main>\n<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
+    '<main class="g-vista g-stretta">\n' + corpo + '</main>\n<script src="/app-gestione.js?v=61c00e53" defer></script>\n</body>\n</html>\n';
 }
 
 /* ---------- arrivo dai pulsanti dell'email ---------- */
@@ -139,7 +140,7 @@ function risposta(t) {
     '<p class="g-testo" data-risposta-testo>Sto registrando la tua risposta.</p>\n' +
     '<a class="g-btn g-btn-primario" href="/gestione" data-risposta-app hidden>Apri l’app</a>\n' +
     '<noscript><p class="g-testo">Apri l’app per rispondere alla richiesta.</p><a class="g-btn g-btn-primario" href="/gestione">Apri l’app</a></noscript>\n' +
-    '</main>\n<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
+    '</main>\n<script src="/app-gestione.js?v=61c00e53" defer></script>\n</body>\n</html>\n';
 }
 
 function messaggio(titolo, testo) {
@@ -285,7 +286,7 @@ function installa() {
     '<h2 class="g-sezione">Per entrare</h2>\n' +
     '<p class="g-testo">Email: quella del coworking. Password: quella che usavi per entrare nella vecchia area riservata. Se non la ricordi, nella pagina di accesso tocca “Password dimenticata?”: te ne arriva una nuova da scegliere, per email.</p>\n' +
     '<a class="g-btn g-btn-primario" href="/gestione">Apri l’app</a>\n' +
-    '</main>\n<script src="/gestione-app.js?v=51cd11a7" defer></script>\n</body>\n</html>\n';
+    '</main>\n<script src="/app-gestione.js?v=61c00e53" defer></script>\n</body>\n</html>\n';
 }
 
 module.exports = { app, accedi, password, risposta, messaggio, installa };

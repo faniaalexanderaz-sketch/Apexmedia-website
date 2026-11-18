@@ -10,6 +10,7 @@ const { modifiche, fondi, pacchetto: trovaPacchetto } = require('./_impostazioni
 const P = require('./_prenotazioni');
 const G = require('./_gestione');
 const cal = require('./_calendario');
+const { classificaFonte } = require('./_report');
 
 const METODI = ['contanti', 'carta', 'bonifico', 'online'];
 /* come si chiamano, in parole semplici, i messaggi che il sito prepara per WhatsApp */
@@ -142,24 +143,68 @@ async function segnaPagato(id, pagato, metodo) {
   return r[0];
 }
 
-/* ---------- i numeri di adesso, per "Come va" ---------- */
+/* ---------- i numeri di adesso: il cruscotto di "Oggi" e la cima di "Come va" ----------
+   Tutto quello che il vecchio pannello mostrava in apertura: scrivanie
+   occupate, da incassare, incasso del mese con gli ultimi 6 mesi,
+   prenotazioni della settimana con le ultime 8, da dove arrivano
+   (ultimi 90 giorni). In più la previsione: dove si arriva a fine mese
+   con il ritmo di adesso, cosa c'è già in calendario, quanto deve
+   ancora entrare. */
+function giorniDelMese(primo) { return +cal.aggiungiGiorni(cal.aggiungiMesi(primo, 1), -1).slice(8); }
+
 async function numeriAdesso(adesso) {
   const oggi = cal.oraRoma(adesso).data, lun = lunedi(oggi), lunPrima = cal.aggiungiGiorni(lun, -7);
+  const mese = primoDelMese(oggi), mesePrima = cal.aggiungiMesi(mese, -1), meseDopo = cal.aggiungiMesi(mese, 1), domani = cal.aggiungiGiorni(oggi, 1);
   const giorniSett = ((cal.giornoSettimana(oggi) + 6) % 7) + 1;   /* lunedì = 1 */
-  const ricevute = async (da, a) => (await q(
-    `SELECT COUNT(*)::int AS n FROM prenotazioni WHERE stato <> 'annullata'
-     AND (creato_il AT TIME ZONE 'Europe/Rome')::date >= $1 AND (creato_il AT TIME ZONE 'Europe/Rome')::date < $2`, [da, a]))[0].n;
-  const posti = (await q('SELECT COUNT(*)::int AS n FROM postazioni WHERE attiva'))[0].n;
-  const occupate = (await q(
-    `SELECT COUNT(DISTINCT o.postazione_id)::int AS n FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id
-     WHERE o.data = $1 AND p.stato IN ('confermata', 'presente')`, [oggi]))[0].n;
-  const da = (await q(
-    `SELECT COALESCE(SUM(prezzo_centesimi), 0)::int AS c, COUNT(*)::int AS n FROM prenotazioni
-     WHERE NOT pagato AND prezzo_centesimi > 0 AND stato IN ('confermata', 'presente', 'assente') AND data_inizio <= $1`, [oggi]))[0];
+  const CREATO = "(creato_il AT TIME ZONE 'Europe/Rome')::date", PAGATO = "(pagato_il AT TIME ZONE 'Europe/Rome')::date";
+  const ricevute = (da, a) => q(
+    `SELECT COUNT(*)::int AS n, COALESCE(SUM(prezzo_centesimi), 0)::int AS valore FROM prenotazioni WHERE stato <> 'annullata' AND ${CREATO} >= $1 AND ${CREATO} < $2`, [da, a]).then(r => r[0]);
+  const incasso = (da, a) => q(
+    `SELECT COALESCE(SUM(prezzo_centesimi), 0)::int AS c FROM prenotazioni WHERE pagato AND pagato_il IS NOT NULL AND ${PAGATO} >= $1 AND ${PAGATO} < $2`, [da, a]).then(r => r[0].c);
+
+  const v = await Promise.all([
+    ricevute(lun, domani), ricevute(lunPrima, cal.aggiungiGiorni(lunPrima, giorniSett)),
+    q('SELECT COUNT(*)::int AS n FROM postazioni WHERE attiva'),
+    q(`SELECT COUNT(DISTINCT o.postazione_id)::int AS n FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id
+       WHERE o.data = $1 AND p.stato IN ('confermata', 'presente')`, [oggi]),
+    q(`SELECT COALESCE(SUM(prezzo_centesimi), 0)::int AS c, COUNT(*)::int AS n FROM prenotazioni
+       WHERE NOT pagato AND prezzo_centesimi > 0 AND stato IN ('confermata', 'presente', 'assente') AND data_inizio <= $1`, [oggi]),
+    incasso(mese, meseDopo), incasso(mesePrima, mese),
+    q(`SELECT to_char(date_trunc('week', ${CREATO}), 'YYYY-MM-DD') AS s, COUNT(*)::int AS n
+       FROM prenotazioni WHERE stato <> 'annullata' AND ${CREATO} >= $1 GROUP BY 1`, [cal.aggiungiGiorni(lun, -49)]),
+    q(`SELECT to_char(date_trunc('month', ${PAGATO}), 'YYYY-MM-DD') AS m, COALESCE(SUM(prezzo_centesimi), 0)::int AS c
+       FROM prenotazioni WHERE pagato AND pagato_il IS NOT NULL AND ${PAGATO} >= $1 GROUP BY 1`, [cal.aggiungiMesi(mese, -5)]),
+    q(`SELECT origine FROM prenotazioni WHERE stato <> 'annullata' AND creato_il > now() - interval '90 days'`),
+    ricevute(mese, meseDopo), ricevute(mesePrima, mese),
+    /* già in calendario: prenotazioni confermate nei prossimi 30 giorni */
+    q(`SELECT COUNT(*)::int AS n, COALESCE(SUM(prezzo_centesimi), 0)::int AS valore FROM prenotazioni
+       WHERE stato = 'confermata' AND data_inizio > $1 AND data_inizio <= $2`, [oggi, cal.aggiungiGiorni(oggi, 30)]),
+    /* devono ancora entrare: tutto quello che è confermato e non pagato, anche nei prossimi giorni */
+    q(`SELECT COALESCE(SUM(prezzo_centesimi), 0)::int AS c FROM prenotazioni
+       WHERE NOT pagato AND prezzo_centesimi > 0 AND stato IN ('confermata', 'presente')`)
+  ]);
+  const sett = v[7], mesiDb = v[8], settimane = [], mesi = [], fonti = {};
+  for (let i = 7; i >= 0; i--) { const s = cal.aggiungiGiorni(lun, -7 * i); const t = sett.find(x => x.s === s); settimane.push({ inizio: s, n: t ? t.n : 0 }); }
+  for (let i = 5; i >= 0; i--) { const m = cal.aggiungiMesi(mese, -i); const t = mesiDb.find(x => x.m === m); mesi.push({ inizio: m, centesimi: t ? t.c : 0 }); }
+  v[9].forEach(r => { const f = classificaFonte(typeof r.origine === 'string' ? JSON.parse(r.origine) : r.origine); fonti[f] = (fonti[f] || 0) + 1; });
+
+  /* previsione di fine mese: il ritmo dei giorni passati finora, portato a tutto il mese.
+     Nei primi tre giorni, o senza prenotazioni, non si fa: sarebbe un numero a caso. */
+  const giorno = +oggi.slice(8), giorniMese = giorniDelMese(mese), delMese = v[10], prima = v[11];
+  const stima = giorno >= 4 && delMese.n > 0 ? {
+    prenotazioni: Math.round(delMese.n * giorniMese / giorno),
+    valore: Math.round(delMese.valore * giorniMese / giorno / 100) * 100
+  } : null;
   return {
-    settimana: await ricevute(lun, cal.aggiungiGiorni(oggi, 1)),
-    settimanaPrima: await ricevute(lunPrima, cal.aggiungiGiorni(lunPrima, giorniSett)),
-    occupate, postazioni: posti, daIncassare: da.c, daIncassareN: da.n
+    oggi, settimana: v[0].n, settimanaPrima: v[1].n,
+    occupate: v[3][0].n, postazioni: v[2][0].n, daIncassare: v[4][0].c, daIncassareN: v[4][0].n,
+    incassoMese: v[5], incassoMesePrima: v[6], settimane, mesi,
+    fonti: Object.keys(fonti).map(k => ({ fonte: k, n: fonti[k] })).sort((a, b) => b.n - a.n),
+    previsione: {
+      giorno, giorniMese, finora: { prenotazioni: delMese.n, valore: delMese.valore }, stima,
+      mesePrima: { prenotazioni: prima.n, valore: prima.valore },
+      inCalendario: { prenotazioni: v[12][0].n, valore: v[12][0].valore }, daEntrare: v[13][0].c
+    }
   };
 }
 

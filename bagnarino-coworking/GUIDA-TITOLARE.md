@@ -11,7 +11,7 @@ Il coworking è **aperto tutti i giorni, su prenotazione**. Dal sito le persone 
 - Si entra una volta sola con email e password: il telefono resta dentro.
 - Password dimenticata? Nella pagina di accesso tocca **Password dimenticata?**: ti arriva un'email con il pulsante per sceglierne una nuova.
 
-In basso ci sono quattro voci: **Oggi**, **Calendario**, **Prenotazioni**, **Sito**. L'omino in alto a destra apre **Come va**, **Clienti**, **Incassi** e **Impostazioni**.
+In basso ci sono quattro voci: **Oggi**, **Calendario**, **Prenotazioni**, **Come va**. L'omino in alto a destra apre **Clienti**, **Incassi**, **Il mio sito** e **Impostazioni**.
 
 ## Quando arriva una richiesta
 Ti arrivano una **notifica** sul telefono e un'**email** con due pulsanti.
@@ -41,7 +41,7 @@ Anche le feste (Natale, Pasquetta…) sono aperte finché non le chiudi tu: nel 
 Dalla stessa pagina puoi annullare una prenotazione confermata: la persona riceve le scuse e il link per riprenotare.
 
 ## Cambiare qualcosa sul sito
-In **Sito** puoi cambiare tre cose. Si vedono sul sito entro un minuto.
+In omino → **Il mio sito** puoi cambiare tre cose. Si vedono sul sito entro un minuto.
 - **Avviso in prima pagina**: una frase in cima al sito. Con l'interruttore la mostri o la nascondi.
 - **Foto dello spazio**: aggiungi una foto dal telefono, cambia l'ordine con Su e Giù, togline una.
 - **Telefono e WhatsApp**: i numeri dei pulsanti "Chiama" e "WhatsApp".
@@ -59,11 +59,11 @@ Per un cliente che conosci già: omino → **Clienti** → tocca il nome → **A
 
 ## Quando una persona paga
 Apri la sua prenotazione → **Ha pagato** → scegli **In contanti**, **Con la carta** o **Con bonifico**.
-In omino → **Incassi** vedi chi ha pagato e chi deve ancora pagare. In fondo c'è **Scarica l'elenco**: è il file per la commercialista.
+In omino → **Incassi** vedi chi ha pagato e chi deve ancora pagare: accanto a chi deve pagare ci sono i pulsanti **Contanti** e **Carta** per segnarlo subito. In fondo c'è **Scarica l'elenco**: è il file per la commercialista.
 
 ## Come va
-Omino → **Come va**: quante prenotazioni, quanti euro, quanti clienti nuovi questo mese, e con le frecce i mesi passati.
-Sotto trovi **Da dove arrivano i clienti**, **Instagram e Facebook**, **Google e chiamate**, **Pubblicità**, **Mese per mese**.
+In basso, **Come va**: la frase "In breve", la **previsione** di fine mese, i numeri del coworking (prenotazioni, incassato, clienti nuovi, clienti che tornano), il percorso dai social alla scrivania, e con le frecce i mesi passati.
+Più sotto: **Instagram**, **Facebook**, **Google** (chiamate, indicazioni, recensioni), **Sito e WhatsApp**, **Pubblicità**, da dove arrivano le prenotazioni e i grafici dell'ultimo anno. Anche in fondo a **Oggi** trovi "Come va il mese".
 I numeri di Instagram, Facebook, Google e pubblicità li scrive Apex Media a inizio mese: se leggi "Numeri in arrivo" è perché non li ha ancora messi.
 
 ## Prezzi e posti

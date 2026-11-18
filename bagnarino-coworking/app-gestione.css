@@ -153,7 +153,8 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .g-barra .g-ico { width: 28px; height: 28px; margin-bottom: 3px; }
 .g-barra a[aria-current='page'] { color: var(--blu); border-top-color: var(--ocra); font-weight: 800; }
 /* telefoni stretti (320-350px): le quattro voci restano su una riga, alla stessa misura */
-@media (max-width: 359px) { .g-barra { padding-left: 0; padding-right: 0; } .g-barra a { padding-left: 1px; padding-right: 1px; letter-spacing: -.035em; } }
+@media (max-width: 374px) { .g-barra { padding-left: 0; padding-right: 0; } .g-barra a { padding-left: 1px; padding-right: 1px; letter-spacing: -.035em; } }
+@media (max-width: 339px) { .g-barra a { letter-spacing: -.055em; } .g-barra .g-ico { width: 26px; height: 26px; } }
 
 /* ---------- moduli ---------- */
 .g-modulo { display: grid; grid-gap: 18px; gap: 18px; }
@@ -258,7 +259,67 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .g-quota-riga { height: 14px; margin-top: 6px; border-radius: 7px; background: var(--grigio); overflow: hidden; }
 .g-quota-riga i { display: block; height: 100%; border-radius: 7px; background: var(--blu); }
 .g-righe { white-space: pre-line; }
-p.g-iniziale::first-letter { text-transform: uppercase; }
+.g-iniziale::first-letter { text-transform: uppercase; }
+
+/* ---------- cruscotto di Oggi e tessere di Come va: due per riga ---------- */
+.g-cruscotto, .g-tessere { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px; gap: 10px; }
+.g-cruscotto { margin-top: 18px; }
+.g-cr, .g-tessera { display: block; min-width: 0; padding: 14px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); color: var(--testo); text-decoration: none; }
+a.g-cr { border-color: var(--blu); }
+.g-cr span, .g-tessera-nome { display: block; font-weight: 800; line-height: 1.25; }
+.g-cr strong, .g-tessera strong { display: block; margin-top: 6px; font-family: var(--f-titoli); font-weight: 500; font-size: 2.2rem; line-height: 1; letter-spacing: -.02em; word-wrap: break-word; overflow-wrap: break-word; }
+.g-cr strong small { font-family: var(--f-testo); font-weight: 700; font-size: 1.125rem; letter-spacing: 0; }
+.g-cr em { display: block; margin-top: 6px; font-style: normal; line-height: 1.3; color: var(--testo-2); }
+.g-tessera-var { margin-top: 6px; line-height: 1.3; }
+.g-tessera-spiega { margin-top: 6px; line-height: 1.35; color: var(--testo-2); }
+@media (max-width: 359px) { .g-tessere { grid-template-columns: 1fr; } }
+/* quanto è cambiato rispetto a prima */
+.g-var { font-weight: 800; white-space: nowrap; }
+.g-var-su { color: var(--verde); }
+.g-var-giu { color: var(--rosso); }
+
+/* ---------- blocchi: un riquadro con titolo e righe di numeri ---------- */
+.g-blocco { margin-top: 12px; padding: 16px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); }
+.g-sezione + .g-blocco, .g-sotto-sezione + .g-blocco { margin-top: 0; }
+.g-blocco h3 { font-weight: 800; font-size: 1.3rem; line-height: 1.25; }
+.g-blocco .g-nota { margin-top: 2px; }
+.g-blocco .g-quote { margin-top: 12px; }
+.g-blocco .g-pulsanti { margin-top: 12px; }
+.g-sotto-sezione { margin: -6px 0 12px; }
+.g-in-arrivo { margin-top: 6px; color: var(--testo-2); }
+.g-in-breve p, .g-previsione { font-size: 1.25rem; line-height: 1.45; }
+.g-in-breve p { margin-top: 6px; }
+.g-grande { display: block; margin-top: 4px; font-family: var(--f-titoli); font-weight: 500; font-size: 2.6rem; line-height: 1.05; letter-spacing: -.02em; }
+.g-righe-numeri { list-style: none; margin: 10px 0 0; padding: 0; border-top: 2px solid var(--riga); }
+.g-righe-numeri li { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; padding: 10px 0; border-bottom: 2px solid var(--riga); }
+.g-righe-numeri li:last-child { border-bottom: 0; padding-bottom: 0; }
+.g-righe-numeri li > span { flex: 1 1 auto; min-width: 0; margin-right: 12px; }
+.g-righe-numeri strong { font-weight: 800; font-size: 1.25rem; text-align: right; }
+.g-in-parole { margin-top: 8px; font-weight: 700; }
+
+/* ---------- il percorso del cliente ---------- */
+.g-percorso { list-style: none; margin: 0; padding: 0; }
+.g-percorso-passo { display: flex; align-items: baseline; padding: 12px 16px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); }
+.g-percorso-passo strong { flex-shrink: 0; min-width: 86px; margin-right: 12px; font-family: var(--f-titoli); font-weight: 500; font-size: 1.9rem; line-height: 1; }
+.g-percorso-passo span { flex: 1; min-width: 0; font-weight: 700; }
+.g-percorso-freccia { padding: 4px 0 4px 20px; font-weight: 800; color: var(--testo-2); }
+
+/* ---------- grafici ---------- */
+.g-grafico { display: block; width: 100%; height: auto; margin-top: 10px; }
+.g-grafico text { fill: var(--testo); font-family: var(--f-testo); }
+.g-grafico .forte { font-weight: 800; }
+.g-legenda-grafico { margin-top: 8px; }
+.g-legenda-grafico span { display: inline-block; margin: 0 14px 4px 0; white-space: nowrap; }
+.g-pallino { display: inline-block; width: 14px; height: 14px; margin-right: 6px; border-radius: 50%; vertical-align: -1px; }
+.g-quota-verde { margin-top: 10px; }
+.g-quota-verde i { background: var(--verde); }
+
+/* ---------- i tre passi di una prenotazione ---------- */
+.g-tre-passi { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; }
+.g-tre-passi li { margin: 0 8px 8px 0; padding: 3px 10px; border: 2px solid var(--riga); border-radius: 6px; background: var(--bianco); font-weight: 700; }
+.g-tre-passi li.fatto { border-color: var(--verde); background: var(--verde-chiaro); color: var(--verde); }
+.g-tre-passi li.no { border-color: var(--rosso); color: var(--rosso); }
+.g-scheda-libera { border-style: dashed; }
 /* tre scelte in riga (giorno, settimana, mese); in colonna sui telefoni stretti */
 .g-tre { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 8px; gap: 8px; margin-bottom: 16px; }
 .g-tre .g-btn { padding-left: 4px; padding-right: 4px; }

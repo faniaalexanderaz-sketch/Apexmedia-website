@@ -98,11 +98,24 @@ async function calendario(mese, cfg, adesso) {
 async function giorno(data, cfg, adesso) {
   if (!cal.isoValida(data)) throw P.errore('DATI', 'Giorno non valido.');
   const oggiIso = cal.oraRoma(adesso).data;
+  /* scrivania per scrivania: chi c'è la mattina e chi il pomeriggio */
+  const scrivanie = await q('SELECT id, nome FROM postazioni WHERE attiva ORDER BY id');
+  const occ = await q(
+    `SELECT o.postazione_id, o.fascia, p.id, p.stato, c.nome, c.cognome FROM occupazioni o JOIN prenotazioni p ON p.id = o.prenotazione_id
+     JOIN clienti c ON c.id = p.cliente_id WHERE o.data = $1 AND p.stato <> 'annullata'`, [data]);
+  const chi = (id, fascia) => { const x = occ.find(o => o.postazione_id === id && o.fascia === fascia); return x ? { id: x.id, nome: x.nome + ' ' + x.cognome, stato: x.stato } : null; };
   return {
     data, oggi: oggiIso, passato: data < oggiIso, chiusura: cal.chiusura(data, cfg),
     festa: cal.festivi(+data.slice(0, 4)).indexOf(data) !== -1,
-    prenotazioni: await delGiorno(data, cfg, oggiIso, ['in_attesa', 'confermata', 'presente', 'assente'])
+    prenotazioni: await delGiorno(data, cfg, oggiIso, ['in_attesa', 'confermata', 'presente', 'assente']),
+    posti: scrivanie.map(s => ({ nome: s.nome, mattina: chi(s.id, 'mattina'), pomeriggio: chi(s.id, 'pomeriggio') }))
   };
+}
+
+/* i giorni chiusi da oggi in poi, per l'elenco in Impostazioni */
+async function chiusureInProgramma(adesso) {
+  const r = await q("SELECT to_char(data, 'YYYY-MM-DD') AS data, fascia FROM chiusure WHERE data >= $1 ORDER BY data LIMIT 200", [cal.oraRoma(adesso).data]);
+  return { chiusure: r.map(x => ({ data: x.data, valore: x.fascia === 'mattina' || x.fascia === 'pomeriggio' ? x.fascia : 'giorno' })) };
 }
 
 /* ---------- Chiusure ----------
@@ -176,6 +189,7 @@ async function prenotazione(id, cfg, adesso) {
   const r = riga(p, cfg, d);
   /* "È arrivata/o" si può segnare dal giorno della prenotazione in poi */
   r.puoSegnareArrivo = ['confermata', 'presente', 'assente'].indexOf(p.stato) !== -1 && p.data_inizio <= d && !r.mensile;
+  r.quante = (await q("SELECT COUNT(*)::int AS n FROM prenotazioni WHERE cliente_id = $1 AND stato <> 'annullata'", [p.cliente_id]))[0].n;
   /* il resto della scheda: pagamento, posto, da dove arriva, Bagnarino Card */
   const x = (await q(
     `SELECT p.metodo_pagamento, to_char(p.pagato_il AT TIME ZONE 'Europe/Rome', 'YYYY-MM-DD') AS pagato_il, p.origine, p.manuale, s.nome AS posto,
@@ -313,7 +327,7 @@ async function comeVa(adesso) {
 }
 
 module.exports = {
-  oggi, calendario, giorno, chiudi, mandaScuse, prenotazioni, prenotazione,
+  oggi, calendario, giorno, chiusureInProgramma, chiudi, mandaScuse, prenotazioni, prenotazione,
   sito, salvaAvviso, salvaContatti, aggiungiFoto, togliFoto, ordinaFoto, leggiFoto, comeVa, riga, MAX_FOTO,
   internazionale, emailVera
 };

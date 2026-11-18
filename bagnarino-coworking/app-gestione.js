@@ -3,8 +3,10 @@
    Un solo file, senza librerie. Le pagine arrivano dal server
    (api/_gestione-pagine.js) solo dopo l'accesso; qui ci sono le
    schermate e i gesti. C'è tutto in un posto solo: richieste,
-   calendario, sito, e anche "Come va" (clienti, social, Google,
-   pubblicità), i clienti, gli incassi, i prezzi.
+   calendario, "Come va" (previsione, clienti, social, Google,
+   pubblicità, i grafici dell'ultimo anno), clienti, incassi, sito,
+   prezzi. In basso: Oggi, Calendario, Prenotazioni, Come va; il
+   resto dal pulsante in alto a destra.
    Regole: una cosa importante per schermata, tre tocchi al
    massimo, "Fatto" grande dopo ogni salvataggio, una domanda
    prima di chiudere o togliere qualcosa, "Annulla" per qualche
@@ -426,6 +428,7 @@
       var html = '<p class="g-saluto">' + (ora >= 18 ? 'Buonasera ' : 'Buongiorno ') + e(d.nome || NOME) + '</p><p class="g-data">' + e(giornoLungo(d.oggi)) + '</p>';
       /* in "Oggi" il riquadro compare solo quando c'è qualcosa da fare per ricevere le notifiche */
       if (st === 'da-attivare' || st === 'serve-app' || st === 'bloccate' || st === 'aggiorna-chrome') html += riquadroNotifiche(st, true);
+      html += cruscottoHtml(d);
 
       html += '<h2 class="g-sezione">Richieste da confermare</h2>';
       html += d.inAttesa.length ? '<ul class="g-lista">' + d.inAttesa.map(schedaRichiesta).join('') + '</ul>' : '<p class="g-vuoto">Nessuna richiesta in attesa.</p>';
@@ -435,7 +438,9 @@
         var arrivata = p.stato === 'presente';
         return '<li class="g-scheda"><a class="g-nome g-link" href="#prenotazione/' + p.id + '">' + e(p.nome) + '</a><p class="g-quando">' + e(p.cosa) + '</p>' +
           (p.mensile ? '' : arrivata
-            ? '<p class="g-inviata"><span class="g-etichetta g-etichetta-ok">È arrivata/o</span></p>'
+            ? '<p class="g-inviata"><span class="g-etichetta g-etichetta-ok">È arrivata/o</span>' + (p.importo > 0 && p.pagato ? ' <span class="g-etichetta g-etichetta-ok">Pagato</span>' : '') + '</p>' +
+              /* dopo l'arrivo, il passo che resta: il pagamento */
+              (p.importo > 0 && !p.pagato ? '<div class="g-pulsanti"><a class="g-btn g-btn-chiaro" href="#pagamento/' + p.id + '">Ha pagato ' + euro(p.importo) + '</a></div>' : '')
             : '<div class="g-pulsanti"><button class="g-btn g-btn-chiaro" type="button" data-arrivo="' + p.id + '" data-chi="' + e(p.nome) + '">È arrivata/o</button></div>') + '</li>';
       }).join('') + '</ul>' : '<p class="g-vuoto">' + (d.chiusura === 'giorno' ? 'Oggi sei chiusa.' : 'Oggi non arriva nessuno.') + '</p>';
 
@@ -445,10 +450,12 @@
         }).join('') + '</ul>';
       }
 
+      html += '<div class="g-pulsanti g-largo-su"><a class="g-btn g-btn-chiaro" href="#nuova">Aggiungi una prenotazione</a></div>';
       html += '<div class="g-largo-su">';
       if (d.chiusura === 'giorno') html += '<p class="g-stato g-stato-chiuso">Oggi sei chiusa: sul sito non si può prenotare per oggi.</p><div class="g-pulsanti"><button class="g-btn g-btn-chiaro" type="button" data-riapri-oggi="' + d.oggi + '">Riapri oggi</button></div>';
       else html += '<button class="g-btn g-btn-grigio" type="button" data-chiudi-oggi="' + d.oggi + '">Oggi sono chiusa</button>';
       html += '</div>';
+      html += andamentoHtml(d);
       vista.innerHTML = html;
       ascoltaNotifiche();
     });
@@ -494,6 +501,15 @@
         return '<li><a class="g-voce" href="#prenotazione/' + p.id + '"><span><strong>' + e(p.nome) + '</strong><small>' + e(p.cosa) + '</small>' + etichettaStato(p) + '</span></a></li>';
       }).join('') + '</ul>' : '<p class="g-vuoto">Nessuna prenotazione per questo giorno.</p>';
       if (!d.passato && d.chiusura !== 'giorno') html += '<div class="g-pulsanti"><a class="g-btn g-btn-chiaro" href="#nuova/' + d.data + '">Aggiungi una prenotazione</a></div>';
+      if (d.posti && d.posti.length && d.chiusura !== 'giorno') {
+        var chiC = function (x) { return x ? '<a class="g-link" href="#prenotazione/' + x.id + '">' + e(x.nome) + '</a>' : 'libera'; };
+        var occupate = d.posti.filter(function (x) { return x.mattina || x.pomeriggio; }).length;
+        html += '<h2 class="g-sezione">Le scrivanie</h2><p class="g-nota g-sotto-sezione">' + (occupate === 0 ? 'Tutte libere.' : occupate + ' su ' + d.posti.length + ' con qualcuno.') + '</p><ul class="g-lista" data-scrivanie>' + d.posti.map(function (x) {
+          var intera = x.mattina && x.pomeriggio && x.mattina.id === x.pomeriggio.id;
+          return '<li class="g-scheda' + (x.mattina || x.pomeriggio ? '' : ' g-scheda-libera') + '"><p class="g-nome">' + e(x.nome) + '</p><p class="g-quando">' +
+            (intera ? chiC(x.mattina) + ' · tutto il giorno' : !x.mattina && !x.pomeriggio ? 'Libera tutto il giorno' : 'Mattina: ' + chiC(x.mattina) + ' · pomeriggio: ' + chiC(x.pomeriggio)) + '</p></li>';
+        }).join('') + '</ul>';
+      }
       if (!d.passato) {
         html += '<h2 class="g-sezione">Vuoi chiudere?</h2><div class="g-scelte">' + ['giorno', 'mattina', 'pomeriggio'].map(function (v) {
           return '<button class="g-btn g-btn-grigio" type="button" data-chiusura="' + v + '" data-data="' + d.data + '" aria-pressed="' + (d.chiusura === v) + '">' + PAROLE_CHIUSURA[v] + '</button>';
@@ -547,6 +563,12 @@
     return leggi('prenotazione', { id: id }).then(function (p) {
       imposta(p.stato === 'in_attesa' ? 'Richiesta' : 'Prenotazione', true);
       var html = '<h2 class="g-titolo">' + e(p.nome) + '</h2>' + etichettaStato(p);
+      /* i tre passi di ogni prenotazione: confermata, arrivata, pagata */
+      if (p.stato !== 'in_attesa' && p.stato !== 'annullata') {
+        var passoArrivo = p.mensile ? ['fatto', 'Abbonamento'] : p.stato === 'presente' ? ['fatto', '2. È arrivata/o'] : p.stato === 'assente' ? ['no', '2. Non è venuta/o'] : ['', '2. Arrivo da segnare'];
+        var passoPagato = !p.importo ? ['fatto', 'Niente da pagare'] : p.pagato ? ['fatto', '3. Pagato'] : ['', '3. Da pagare'];
+        html += '<ol class="g-tre-passi" aria-label="A che punto è"><li class="fatto">1. Confermata</li><li class="' + passoArrivo[0] + '">' + passoArrivo[1] + '</li><li class="' + passoPagato[0] + '">' + passoPagato[1] + '</li></ol>';
+      }
       html += '<dl class="g-dati"><div><dt>Quando</dt><dd class="g-iniziale">' + e(p.quando) + '</dd></div>' +
         '<div><dt>Cosa</dt><dd>' + e(p.cosa) + ' · ' + e(p.prezzo) + '</dd></div>' +
         '<div><dt>Telefono</dt><dd>' + e(p.telefono) + '</dd></div>' +
@@ -555,7 +577,9 @@
         (p.posto && p.stato !== 'annullata' ? dato('Posto', p.posto) : '') +
         (p.arrivaDa ? dato('Arriva da', nomeCanale(p.arrivaDa)) : '') +
         dato('Bagnarino Card', p.timbri + (p.timbri === 1 ? ' timbro' : ' timbri') + ' su 10' + (p.omaggi ? ' · ' + (p.omaggi === 1 ? 'una giornata in regalo' : p.omaggi + ' giornate in regalo') : '')) +
-        (p.fattura ? dato('Fattura a', p.fattura) : '') + dato('Codice', p.codice) + '</dl>';
+        (p.fattura ? dato('Fattura a', p.fattura) : '') + dato('Codice', p.codice) +
+        (p.ricevuta ? dato(p.arrivaDa === 'Aggiunta da te' ? 'Aggiunta' : 'Richiesta arrivata', 'il ' + giornoBreve(p.ricevuta.slice(0, 10)) + ' alle ' + p.ricevuta.slice(11, 16)) : '') +
+        (p.quante ? dato('È cliente da', p.quante === 1 ? 'questa prenotazione: è la prima' : p.quante + ' prenotazioni in tutto') : '') + '</dl>';
       html += '<div class="g-due" style="margin-top:16px">' + contatti(p) + '</div>';
       html += '<p class="g-nota"><a class="g-link" href="#cliente/' + p.clienteId + '">Tutte le prenotazioni di ' + e(p.soloNome) + '</a></p>';
       if (p.stato === 'in_attesa') html += '<h2 class="g-sezione">La tua risposta</h2>' + pulsantiRisposta(p);
@@ -563,7 +587,10 @@
         if (p.puoSegnareArrivo) {
           html += '<div class="g-pulsanti g-largo-su">' + (p.stato === 'presente'
             ? '<button class="g-btn g-btn-chiaro" type="button" data-non-arrivo="' + p.id + '">Ho sbagliato: non è arrivata/o</button>'
-            : '<button class="g-btn g-btn-verde" type="button" data-arrivo="' + p.id + '" data-chi="' + e(p.nome) + '">È arrivata/o</button>') + '</div>';
+            : p.stato === 'assente'
+            ? '<button class="g-btn g-btn-chiaro" type="button" data-non-arrivo="' + p.id + '">Ho sbagliato: rimetti da segnare</button>'
+            : '<button class="g-btn g-btn-verde" type="button" data-arrivo="' + p.id + '" data-chi="' + e(p.nome) + '">È arrivata/o</button>' +
+              '<button class="g-btn g-btn-grigio" type="button" data-assente="' + p.id + '">Non è venuta/o</button>') + '</div>';
         }
         if (p.puoPagare) {
           html += '<h2 class="g-sezione">Pagamento</h2>' + (p.pagato
@@ -580,7 +607,7 @@
   } };
 
   /* ---------- Il mio sito ---------- */
-  SCHERMATE.sito = { titolo: 'Il mio sito', voce: 'sito', disegna: function () {
+  SCHERMATE.sito = { titolo: 'Il mio sito', interna: 'profilo', disegna: function () {
     return leggi('sito').then(function (d) {
       vista.innerHTML = '<p class="g-testo">Qui cambi quello che si legge sul sito. Le modifiche si vedono entro un minuto.</p><ul class="g-lista">' +
         '<li><a class="g-voce" href="#sito-avviso"><span><strong>Avviso in prima pagina</strong><small>' + (d.avviso.attivo ? 'Si vede sul sito' : 'Adesso è nascosto') + '</small></span></a></li>' +
@@ -760,12 +787,12 @@
   } };
 
   /* ---------- Profilo: Come va e Impostazioni ---------- */
-  SCHERMATE.profilo = { titolo: 'Profilo', interna: 'oggi', disegna: function () {
+  SCHERMATE.profilo = { titolo: 'Altro', interna: 'oggi', disegna: function () {
     vista.innerHTML = '<ul class="g-lista">' +
-      voce('come-va', 'Come va', 'Prenotazioni, clienti, social, Google e pubblicità') +
       voce('clienti', 'Clienti', 'Chi viene e quante volte') +
       voce('incassi', 'Incassi', 'Chi ha pagato e chi deve ancora pagare') +
-      voce('impostazioni', 'Impostazioni', 'Notifiche, prezzi, password, uscita') + '</ul>';
+      voce('sito', 'Il mio sito', 'Avviso, foto, telefono e WhatsApp') +
+      voce('impostazioni', 'Impostazioni', 'Notifiche, prezzi, chiusure, password') + '</ul>';
     return Promise.resolve();
   } };
 
@@ -776,7 +803,7 @@
           '<div class="g-pulsanti" style="margin-top:0"><button class="g-btn g-btn-primario" type="button" data-installa-subito data-installa-ora' + (installaSubito ? '' : ' hidden') + '>Metti l’app su questo telefono</button>' +
           '<a class="g-btn g-btn-chiaro" href="/gestione/installa">Come mettere l’app sul telefono</a></div>') +
         '<h2 class="g-sezione">Il coworking</h2><ul class="g-lista">' + voce('imp-prezzi', 'Prezzi', 'Giornata, mezza giornata, carnet, mese') +
-        voce('imp-posti', 'Quanti posti ci sono', 'Le scrivanie che si possono prenotare') + voce('imp-messaggi', 'Messaggi di WhatsApp', 'Le frasi già scritte dei pulsanti del sito') + '</ul>' +
+        voce('imp-posti', 'Quanti posti ci sono', 'Le scrivanie che si possono prenotare') + voce('imp-chiusure', 'Giorni di chiusura', 'I giorni chiusi in programma') + voce('imp-messaggi', 'Messaggi di WhatsApp', 'Le frasi già scritte dei pulsanti del sito') + '</ul>' +
         '<h2 class="g-sezione">Password</h2><a class="g-btn g-btn-chiaro" href="/gestione/password">Cambia la password</a>' +
         '<h2 class="g-sezione">Uscita</h2><button class="g-btn g-btn-rosso" type="button" data-esci>Esci dall’app</button>';
       ascoltaNotifiche();
@@ -809,17 +836,7 @@
     return '<li><a class="g-voce" href="#' + dove + '"><span><strong>' + e(titoloVoce) + '</strong>' + (sotto ? '<small>' + e(sotto) + '</small>' : '') + '</span></a></li>';
   }
   function dato(nome, valore) { return '<div><dt>' + e(nome) + '</dt><dd>' + e(valore) + '</dd></div>'; }
-  /* confronto con il mese prima, in parole: "20% in più rispetto a ottobre" */
-  function confrontoTesto(k, nomePrima, assoluto) {
-    if (!k || k.valore == null || k.prima == null) return '';
-    var d = k.valore - k.prima;
-    if (!d) return 'Come ' + aMese(nomePrima);
-    if (!assoluto && !k.prima) return '';
-    var quanto = assoluto ? intero(Math.abs(d)) : Math.round(Math.abs(d) / k.prima * 100) + '%';
-    return quanto + (d > 0 ? ' in più' : ' in meno') + ' rispetto ' + aMese(nomePrima);
-  }
   function piccolo(testo, inSu) { return testo ? '<small' + (inSu ? ' class="g-su"' : '') + '>' + e(testo) + '</small>' : ''; }
-  function conConfronto(k, nomePrima) { return piccolo(confrontoTesto(k, nomePrima), k && k.prima != null && k.valore > k.prima); }
   /* righe con una barra: il valore più alto riempie tutta la riga */
   function quote(righe, formato) {
     var max = 0;
@@ -835,15 +852,7 @@
     'Instagram': 'Instagram', 'Facebook': 'Facebook', 'WhatsApp': 'WhatsApp'
   };
   function nomeCanale(c) { return NOMI_CANALI[c] || c; }
-  function inArrivo() {
-    return '<p class="g-vuoto">' + (RUOLO === 'apex' ? 'Nessun numero per questo mese.' : 'In arrivo: questi numeri li aggiorna Apex Media a inizio mese.') + '</p>';
-  }
   function mesePrimaDi(d) { return d.mesi.length > 1 ? (d.mesi[d.mesi.length - 2].marketing || {}) : {}; }
-  /* un numero di social o Google con il confronto: "1.240 · 35 in più rispetto a ottobre" */
-  function numeroCon(d, campo, assoluto) {
-    var mk = d.marketing || {}, c = confrontoTesto({ valore: mk[campo], prima: mesePrimaDi(d)[campo] }, d.nomeMesePrima, assoluto);
-    return intero(mk[campo]) + (c ? ' · ' + c.charAt(0).toLowerCase() + c.slice(1) : '');
-  }
   /* un numero mese per mese (solo i mesi che ce l'hanno), dal più recente */
   function serie(d, campo) {
     var out = [];
@@ -854,139 +863,307 @@
     return RUOLO === 'apex' ? '<div class="g-pulsanti g-largo-su"><a class="g-btn g-btn-primario" href="#numeri-mese/' + d.mese.slice(0, 7) + '">Aggiorna i numeri di ' + e(d.nomeMese) + '</a></div>' : '';
   }
 
-  /* ---------- Come va: il mese in tre numeri, poi "da vicino" ---------- */
-  SCHERMATE['come-va'] = { titolo: 'Come va', interna: 'profilo', disegna: function (mese) {
+  /* ---------- grafici: disegnati qui in SVG, senza librerie ----------
+     Larghi quanto lo schermo del telefono. Sotto ogni grafico c'è sempre
+     una riga di testo con il numero che conta, per chi non legge i grafici. */
+  var GW = 360, GH = 220, G_BASSO = 30, G_ALTO = 26, G_LATO = 6;
+  var MESI_BREVI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
+  var COLORI_CANALI = {
+    'Instagram': '#B4457E', 'Facebook': '#3B5BDB', 'Google': '#C9973B', 'Google Ads': '#8A4B06', 'Google Maps': '#0C8599',
+    'WhatsApp': '#1E7A46', 'Diretto': '#1B2A3A', 'In sede / telefono': '#5B6470', 'Altro': '#9AA3AE'
+  };
+  function etichettaMese(m) { return MESI_BREVI[+m.slice(5, 7) - 1]; }
+  function compatto(n) { return n >= 10000 ? virgola(Math.round(n / 100) / 10) + 'k' : intero(n); }
+  function svgGrafico(contenuto, descrizione) {
+    return '<svg class="g-grafico" viewBox="0 0 ' + GW + ' ' + GH + '" role="img" aria-label="' + e(descrizione) + '">' +
+      '<line x1="0" x2="' + GW + '" y1="' + (GH - G_BASSO) + '" y2="' + (GH - G_BASSO) + '" stroke="#B9C0CA" stroke-width="2"/>' + contenuto + '</svg>';
+  }
+  function passoX(n) { return (GW - 2 * G_LATO) / n; }
+  function centro(i, n) { return G_LATO + passoX(n) * i + passoX(n) / 2; }
+  function assi(etichette) {
+    return etichette.map(function (t, i) {
+      return '<text x="' + centro(i, etichette.length).toFixed(1) + '" y="' + (GH - 9) + '" text-anchor="middle" font-size="13"' + (i === etichette.length - 1 ? ' class="forte"' : '') + '>' + e(t) + '</text>';
+    }).join('');
+  }
+  function massimo(valori) { return Math.max.apply(null, valori.concat([1])); }
+  function descrivi(nome, etichette, valori, formato) {
+    return nome + ': ' + etichette.map(function (t, i) { return t + ' ' + formato(valori[i] || 0); }).join(', ');
+  }
+  /* barre semplici, con il valore sopra ognuna (poche barre: 6 mesi, 8 settimane) */
+  function graficoBarre(nome, valori, etichette, formato, colore) {
+    var max = massimo(valori), alt = GH - G_BASSO - G_ALTO, larg = Math.min(34, passoX(valori.length) * 0.62);
+    return svgGrafico(valori.map(function (v, i) {
+      var hh = Math.round(alt * v / max), x = centro(i, valori.length) - larg / 2, y = GH - G_BASSO - hh, ultimo = i === valori.length - 1;
+      return '<rect x="' + x.toFixed(1) + '" y="' + y + '" width="' + larg.toFixed(1) + '" height="' + Math.max(hh, v ? 3 : 0) + '" rx="5" fill="' + (ultimo ? colore : '#B9C0CA') + '"/>' +
+        '<text class="forte" x="' + (x + larg / 2).toFixed(1) + '" y="' + (y - 7) + '" text-anchor="middle" font-size="13">' + formato(v) + '</text>';
+    }).join('') + assi(etichette), descrivi(nome, etichette, valori, formato));
+  }
+  /* una linea con l'area sotto: un punto per mese; scritti solo l'ultimo valore e il più alto */
+  function graficoLinea(nome, valori, etichette, formato, colore) {
+    var max = massimo(valori), alt = GH - G_BASSO - G_ALTO, n = valori.length;
+    var pt = valori.map(function (v, i) { return [centro(i, n), GH - G_BASSO - alt * v / max]; });
+    var linea = pt.map(function (q, i) { return (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join(' ');
+    var area = linea + ' L' + pt[n - 1][0].toFixed(1) + ' ' + (GH - G_BASSO) + ' L' + pt[0][0].toFixed(1) + ' ' + (GH - G_BASSO) + ' Z';
+    var scrittoMax = false;
+    return svgGrafico('<path d="' + area + '" fill="' + colore + '" fill-opacity=".12"/>' +
+      '<path d="' + linea + '" fill="none" stroke="' + colore + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>' +
+      pt.map(function (q, i) {
+        var ultimo = i === n - 1, eMax = valori[i] === max && valori[i] > 0 && !scrittoMax && !ultimo;
+        if (eMax) scrittoMax = true;
+        return '<circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="' + (ultimo ? 6 : 3.5) + '" fill="' + (ultimo ? colore : '#fff') + '" stroke="' + colore + '" stroke-width="2.5"/>' +
+          ((ultimo || eMax) && valori[i] ? '<text class="forte" x="' + Math.min(q[0], GW - 16).toFixed(1) + '" y="' + (q[1] - 11).toFixed(1) + '" text-anchor="middle" font-size="13">' + formato(valori[i]) + '</text>' : '');
+      }).join('') + assi(etichette), descrivi(nome, etichette, valori, formato));
+  }
+  /* due barre una dentro l'altra: piena = incassato, contorno = prenotato */
+  function graficoIncassi(mesi, etichette) {
+    var inc = mesi.map(function (m) { return m.incassato; }), pre = mesi.map(function (m) { return m.valore; });
+    var max = massimo(inc.concat(pre)), alt = GH - G_BASSO - G_ALTO, n = mesi.length, larg = Math.min(22, passoX(n) * 0.6), incMax = massimo(inc);
+    return svgGrafico(mesi.map(function (m, i) {
+      var x = centro(i, n) - larg / 2, hp = alt * pre[i] / max, hi = alt * inc[i] / max, ultimo = i === n - 1;
+      return (pre[i] ? '<rect x="' + x.toFixed(1) + '" y="' + (GH - G_BASSO - hp).toFixed(1) + '" width="' + larg.toFixed(1) + '" height="' + hp.toFixed(1) + '" rx="4" fill="none" stroke="#5B6470" stroke-width="2" stroke-dasharray="4 3"/>' : '') +
+        (inc[i] ? '<rect x="' + x.toFixed(1) + '" y="' + (GH - G_BASSO - hi).toFixed(1) + '" width="' + larg.toFixed(1) + '" height="' + hi.toFixed(1) + '" rx="4" fill="' + (ultimo ? '#1E7A46' : '#1B2A3A') + '"/>' : '') +
+        ((ultimo || (inc[i] === incMax && inc[i])) && (inc[i] || pre[i]) ? '<text class="forte" x="' + Math.min(x + larg / 2, GW - 20).toFixed(1) + '" y="' + (GH - G_BASSO - Math.max(hp, hi) - 7).toFixed(1) + '" text-anchor="middle" font-size="13">' + euro(inc[i] || pre[i]) + '</text>' : '');
+    }).join('') + assi(etichette), descrivi('Incassato', etichette, inc, euro));
+  }
+  /* barre a pezzi: un colore per voce, il totale sopra */
+  function graficoImpilato(nome, voci, etichette) {
+    var n = etichette.length, tot = [], i;
+    for (i = 0; i < n; i++) tot.push(voci.reduce(function (t, v) { return t + (v.valori[i] || 0); }, 0));
+    var max = massimo(tot), alt = GH - G_BASSO - G_ALTO, larg = Math.min(22, passoX(n) * 0.6), out = '';
+    for (i = 0; i < n; i++) {
+      var x = centro(i, n) - larg / 2, y = GH - G_BASSO;
+      voci.forEach(function (v) {
+        var val = v.valori[i] || 0;
+        if (!val) return;
+        var hh = alt * val / max; y -= hh;
+        out += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + larg.toFixed(1) + '" height="' + Math.max(hh - 1.5, 1.5).toFixed(1) + '" rx="3" fill="' + v.colore + '"/>';
+      });
+      if (tot[i]) out += '<text class="forte" x="' + (x + larg / 2).toFixed(1) + '" y="' + (y - 7).toFixed(1) + '" text-anchor="middle" font-size="13">' + compatto(tot[i]) + '</text>';
+    }
+    return svgGrafico(out + assi(etichette), descrivi(nome, etichette, tot, intero));
+  }
+  /* più linee, con i buchi dove il numero manca; la scala parte vicino al minimo */
+  function graficoLinee(nome, serieLinee, etichette) {
+    var tutti = [], n = etichette.length;
+    serieLinee.forEach(function (s) { s.valori.forEach(function (v) { if (v != null) tutti.push(v); }); });
+    if (!tutti.length) return '';
+    var min = Math.min.apply(null, tutti), max = Math.max.apply(null, tutti);
+    var basso = Math.max(0, Math.floor(min - (max - min) * 0.25 - 1)), alto = max + Math.max(1, (max - min) * 0.1), alt = GH - G_BASSO - G_ALTO;
+    var y = function (v) { return GH - G_BASSO - alt * (v - basso) / (alto - basso); };
+    return svgGrafico(serieLinee.map(function (s) {
+      var d = '', attaccato = false, ultimo = null, punti = '';
+      s.valori.forEach(function (v, i) {
+        if (v == null) { attaccato = false; return; }
+        var x = centro(i, n);
+        d += (attaccato ? 'L' : 'M') + x.toFixed(1) + ' ' + y(v).toFixed(1) + ' '; attaccato = true; ultimo = [x, y(v), v];
+        punti += '<circle cx="' + x.toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="3.5" fill="#fff" stroke="' + s.colore + '" stroke-width="2.5"/>';
+      });
+      return '<path d="' + d + '" fill="none" stroke="' + s.colore + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>' + punti +
+        (ultimo ? '<text class="forte" x="' + Math.min(ultimo[0], GW - 22).toFixed(1) + '" y="' + (ultimo[1] - 11).toFixed(1) + '" text-anchor="middle" font-size="13">' + compatto(ultimo[2]) + '</text>' : '');
+    }).join('') + assi(etichette), nome + ': ' + serieLinee.map(function (s) {
+      var u = s.valori.filter(function (v) { return v != null; }); return s.nome + ' ' + (u.length ? intero(u[u.length - 1]) : 'nessun numero');
+    }).join(', '));
+  }
+  function legenda(voci) {
+    return '<p class="g-legenda-grafico">' + voci.map(function (v) { return '<span><i class="g-pallino" style="background:' + v.colore + '"></i>' + e(v.nome) + '</span>'; }).join('') + '</p>';
+  }
+  /* riquadro di un grafico: titolo, cosa mostra, grafico, la riga in parole */
+  function riquadroGrafico(titoloGrafico, sotto, grafico, parole, legendaHtml) {
+    return '<div class="g-blocco"><h3>' + e(titoloGrafico) + '</h3><p class="g-nota">' + e(sotto) + '</p>' + grafico + (legendaHtml || '') + (parole ? '<p class="g-in-parole">' + e(parole) + '</p>' : '') + '</div>';
+  }
+
+  /* ---------- pezzi di "Come va" e del cruscotto ---------- */
+  /* quanto è cambiato rispetto a prima: "▲ +20%" oppure "▼ −3" */
+  function variazione(v, prima, assoluta) {
+    if (v == null || prima == null) return '';
+    var d = assoluta ? v - prima : (prima ? Math.round((v - prima) / prima * 100) : null);
+    if (d == null) return '';
+    if (!d) return '<span class="g-var">= uguale</span>';
+    return '<span class="g-var ' + (d > 0 ? 'g-var-su' : 'g-var-giu') + '">' + (d > 0 ? '▲ +' : '▼ −') + intero(Math.abs(d)) + (assoluta ? '' : '%') + '</span>';
+  }
+  function tessera(nome, valore, spiega, varHtml) {
+    return '<div class="g-tessera"><p class="g-tessera-nome">' + e(nome) + '</p><strong>' + valore + '</strong>' + (varHtml ? '<p class="g-tessera-var">' + varHtml + '</p>' : '') + '<p class="g-tessera-spiega">' + e(spiega) + '</p></div>';
+  }
+  function rigaNumero(nome, valore, varHtml) { return '<li><span>' + e(nome) + '</span><strong>' + valore + (varHtml ? ' ' + varHtml : '') + '</strong></li>'; }
+  function quantePrenotazioni(n) { return n === 1 ? '1 prenotazione' : intero(n) + ' prenotazioni'; }
+  /* da dove arrivano: una riga per canale, con quante e in percentuale */
+  function canaliHtml(lista) {
+    var tot = 0;
+    lista.forEach(function (f) { tot += f.n; });
+    if (!tot) return '<p class="g-vuoto">Ancora nessuna prenotazione.</p>';
+    return '<ul class="g-quote">' + lista.map(function (f) {
+      var pc = Math.round(f.n / tot * 100), colore = COLORI_CANALI[f.fonte] || '#5B6470';
+      return '<li><div class="g-quota-testa"><span>' + e(nomeCanale(f.fonte)) + '</span><strong>' + f.n + ' · ' + pc + '%</strong></div>' +
+        '<div class="g-quota-riga"><i style="width:' + Math.max(3, pc) + '%;background:' + colore + '"></i></div></li>';
+    }).join('') + '</ul>';
+  }
+  /* il percorso: dai social alla scrivania, con quanti fanno ogni passo */
+  function percorsoHtml(m, mk) {
+    var social = mk.instagram_copertura != null || mk.facebook_copertura != null ? (mk.instagram_copertura || 0) + (mk.facebook_copertura || 0) : null;
+    var passi = [['Hanno visto i social', social], ['Sono andati sul sito', mk.visite_sito != null ? mk.visite_sito : null], ['Hanno chiesto un posto', m.prenotazioni], ['Sono arrivati in sede', m.presenti]];
+    return '<ol class="g-percorso">' + passi.map(function (x, i) {
+      var prima = i ? passi[i - 1][1] : null, quota = i && x[1] != null && prima ? Math.round(x[1] / prima * 1000) / 10 : null;
+      return (i ? '<li class="g-percorso-freccia" aria-hidden="true">' + (quota != null ? '↓ ' + virgola(Math.min(quota, 999)) + '%' : '↓') + '</li>' : '') +
+        '<li class="g-percorso-passo"><strong>' + (x[1] == null ? '—' : intero(x[1])) + '</strong><span>' + e(x[0]) + (x[1] == null ? ' · numero in arrivo' : '') + '</span></li>';
+    }).join('') + '</ol>';
+  }
+  var NOMI_VOCI = {
+    instagram_follower: 'Follower', instagram_copertura: 'Persone raggiunte', facebook_follower: 'Follower', facebook_copertura: 'Persone raggiunte',
+    google_visualizzazioni: 'Hanno visto la scheda', google_chiamate: 'Chiamate', google_indicazioni: 'Indicazioni stradali', google_clic_sito: 'Clic sul sito',
+    visite_sito: 'Visite al sito', contatti_whatsapp: 'Chat su WhatsApp'
+  };
+  /* un blocco di social, Google o pubblicità: i numeri del mese con accanto come sono cambiati */
+  function bloccoNumeri(g, d, m) {
+    var mk = d.marketing || {}, pr = mesePrimaDi(d), k = d.kpi, righe = '';
+    var conDati = g.campi.some(function (id) { return mk[id] != null; });
+    if (g.id === 'pubblicita') {
+      if (k.spesa.valore != null) righe += rigaNumero('Spesa del mese', euro(Math.round(k.spesa.valore * 100)));
+      if (mk.spesa_meta != null) righe += rigaNumero('Su Instagram e Facebook', euro(Math.round(mk.spesa_meta * 100)));
+      if (mk.spesa_google != null) righe += rigaNumero('Su Google', euro(Math.round(mk.spesa_google * 100)));
+      if (k.spesa.valore != null) righe += rigaNumero('Prenotazioni arrivate dalla pubblicità', intero(k.prenotazioniDaPubblicita.valore));
+      if (k.costoPrenotazione.valore != null) righe += rigaNumero('Costo per ogni prenotazione', euro(k.costoPrenotazione.valore));
+      if (k.ritornoPubblicita.valore != null) righe += rigaNumero('Rende, per ogni €1 speso', euro(Math.round(k.ritornoPubblicita.valore * 100)));
+    } else {
+      g.campi.forEach(function (id) {
+        if (mk[id] == null || !NOMI_VOCI[id]) return;
+        righe += rigaNumero(NOMI_VOCI[id], intero(mk[id]), variazione(mk[id], pr[id], /follower/.test(id)));
+      });
+      if (g.id === 'google' && (mk.recensioni_media != null || mk.recensioni_numero != null)) {
+        righe += rigaNumero('Recensioni', (mk.recensioni_media != null ? virgola(mk.recensioni_media) + ' su 5' : '') + (mk.recensioni_media != null && mk.recensioni_numero != null ? ' · ' : '') +
+          (mk.recensioni_numero != null ? intero(mk.recensioni_numero) + ' in tutto' : ''), variazione(mk.recensioni_numero, pr.recensioni_numero, true));
+      }
+      if (g.id === 'instagram') righe += rigaNumero('Prenotazioni arrivate da Instagram', intero(m.canali.Instagram || 0));
+      if (g.id === 'facebook') righe += rigaNumero('Prenotazioni arrivate da Facebook', intero(m.canali.Facebook || 0));
+      if (g.id === 'google') righe += rigaNumero('Prenotazioni arrivate da Google', intero((m.canali.Google || 0) + (m.canali['Google Maps'] || 0) + (m.canali['Google Ads'] || 0)));
+      if (g.id === 'sito') righe += rigaNumero('Prenotazioni arrivate da WhatsApp', intero(m.canali.WhatsApp || 0));
+    }
+    return '<div class="g-blocco" data-blocco="' + g.id + '"><h3>' + e(g.titolo) + '</h3>' +
+      (conDati ? '' : '<p class="g-in-arrivo">' + (RUOLO === 'apex' ? 'Nessun numero per questo mese.' : 'In arrivo: lo aggiorna Apex Media a inizio mese.') + '</p>') +
+      (righe ? '<ul class="g-righe-numeri">' + righe + '</ul>' : '') +
+      (RUOLO === 'apex' ? '<div class="g-pulsanti"><a class="g-btn g-btn-chiaro" href="#numeri-mese/' + d.mese.slice(0, 7) + '">' + (conDati ? 'Modifica' : 'Inserisci') + '</a></div>' : '') + '</div>';
+  }
+  /* la previsione: dove si arriva a fine mese con il ritmo di adesso, e cosa c'è già in calendario */
+  function previsioneHtml(d) {
+    var p = d.numeri.previsione, html = '<h2 class="g-sezione">Previsione</h2><div class="g-blocco" data-previsione>';
+    if (p.stima) {
+      html += '<p class="g-previsione">A fine ' + e(d.nomeMese) + ': <strong>circa ' + quantePrenotazioni(p.stima.prenotazioni) + ' e ' + euro(p.stima.valore) + '</strong>, se si continua con il ritmo di questi ' + p.giorno + ' giorni.</p>';
+    } else {
+      html += '<p class="g-previsione">' + (p.giorno < 4 ? 'Il mese è appena iniziato: la previsione di fine mese arriva dal quarto giorno.' : 'Questo mese non ci sono ancora prenotazioni: la previsione arriva con la prima.') + '</p>';
+    }
+    return html + '<ul class="g-righe-numeri">' +
+      rigaNumero('Finora, ' + d.nomeMese, quantePrenotazioni(p.finora.prenotazioni) + ' · ' + euro(p.finora.valore)) +
+      rigaNumero(maiuscola(d.nomeMesePrima) + ' si è chiuso con', quantePrenotazioni(p.mesePrima.prenotazioni) + ' · ' + euro(p.mesePrima.valore)) +
+      rigaNumero('Già in calendario, prossimi 30 giorni', quantePrenotazioni(p.inCalendario.prenotazioni) + ' · ' + euro(p.inCalendario.valore)) +
+      rigaNumero('Devono ancora entrare', euro(p.daEntrare)) + '</ul>' +
+      '<p class="g-nota">La previsione è un conto fatto sui giorni passati finora: più il mese va avanti, più è precisa.</p></div>';
+  }
+  /* "Come va il mese", in fondo a Oggi: incasso e prenotazioni con i loro grafici, e da dove arrivano */
+  function andamentoHtml(d) {
+    var n = d.numeri, g = daIso(d.oggi), nomeOra = g.toLocaleDateString('it-IT', { month: 'long' });
+    var nomePrima = new Date(g.getFullYear(), g.getMonth() - 1, 1, 12).toLocaleDateString('it-IT', { month: 'long' });
+    var varMese = variazione(n.incassoMese, n.incassoMesePrima), varSett = variazione(n.settimana, n.settimanaPrima);
+    return '<h2 class="g-sezione">Come va il mese</h2>' +
+      '<div class="g-blocco"><p class="g-tessera-nome">Incassato ' + e(aMese(nomeOra)) + '</p><strong class="g-grande">' + euro(n.incassoMese) + '</strong>' +
+      (varMese ? '<p class="g-tessera-var">' + varMese + ' rispetto ' + e(aMese(nomePrima)) + '</p>' : '') + '<p class="g-nota">Gli ultimi 6 mesi</p>' +
+      graficoBarre('Incassato', n.mesi.map(function (x) { return Math.round(x.centesimi / 100); }), n.mesi.map(function (x) { return etichettaMese(x.inizio); }), function (v) { return '€' + intero(v); }, '#1E7A46') + '</div>' +
+      '<div class="g-blocco"><p class="g-tessera-nome">Prenotazioni questa settimana</p><strong class="g-grande">' + intero(n.settimana) + '</strong>' +
+      (varSett ? '<p class="g-tessera-var">' + varSett + ' rispetto alla settimana scorsa</p>' : '') + '<p class="g-nota">Le ultime 8 settimane</p>' +
+      graficoBarre('Prenotazioni', n.settimane.map(function (x) { return x.n; }), n.settimane.map(function (x) { var s = daIso(x.inizio); return s.getDate() + '/' + (s.getMonth() + 1); }), intero, '#1B2A3A') + '</div>' +
+      '<div class="g-blocco"><h3>Da dove arrivano le prenotazioni</h3><p class="g-nota">Ultimi 90 giorni</p>' + canaliHtml(n.fonti) + '</div>' +
+      '<div class="g-pulsanti"><a class="g-btn g-btn-chiaro" href="#come-va">Tutti i numeri in Come va</a></div>';
+  }
+  /* la giornata in quattro riquadri: scrivanie, richieste, arrivi, incassi */
+  function cruscottoHtml(d) {
+    var n = d.numeri, libere = Math.max(0, n.postazioni - n.occupate);
+    var daSegnare = d.arrivi.filter(function (p) { return !p.mensile && p.stato === 'confermata'; }).length;
+    return '<div class="g-cruscotto">' +
+      '<a class="g-cr" href="#giorno/' + d.oggi + '"><span>Scrivanie oggi</span><strong>' + n.occupate + '<small> su ' + n.postazioni + '</small></strong><em>' + (libere ? libere + (libere === 1 ? ' libera' : ' libere') : 'Tutte occupate') + '</em></a>' +
+      '<div class="g-cr"><span>Da confermare</span><strong>' + d.inAttesa.length + '</strong><em>' + (d.inAttesa.length ? 'Aspettano la risposta' : 'Nessuna richiesta') + '</em></div>' +
+      '<div class="g-cr"><span>Arrivi da segnare</span><strong>' + daSegnare + '</strong><em>' + (daSegnare ? 'Tocca “È arrivata/o”' : d.arrivi.length ? 'Tutti segnati' : 'Oggi nessuno') + '</em></div>' +
+      '<a class="g-cr" href="#incassi"><span>Da incassare</span><strong>' + euro(n.daIncassare) + '</strong><em>' + (n.daIncassare ? (n.daIncassareN === 1 ? 'Una prenotazione' : n.daIncassareN + ' prenotazioni') : 'Tutto incassato') + '</em></a></div>';
+  }
+
+  /* ---------- Come va: tutto in una pagina, come un resoconto ---------- */
+  var GRUPPI_NUMERI = [
+    { id: 'instagram', titolo: 'Instagram', campi: ['instagram_follower', 'instagram_copertura'], aiuto: 'App Instagram → Dashboard professionale → Account raggiunti (ultimi 30 giorni).' },
+    { id: 'facebook', titolo: 'Facebook', campi: ['facebook_follower', 'facebook_copertura'], aiuto: 'Meta Business Suite → Insight → Copertura.' },
+    { id: 'google', titolo: 'Google', campi: ['google_visualizzazioni', 'google_chiamate', 'google_indicazioni', 'google_clic_sito', 'recensioni_numero', 'recensioni_media'], aiuto: 'Profilo dell’attività su Google → Rendimento, mese scelto. Recensioni: totale e voto medio di oggi.' },
+    { id: 'sito', titolo: 'Sito e WhatsApp', campi: ['visite_sito', 'contatti_whatsapp'], aiuto: 'Visite: Google Analytics → Utenti del mese. WhatsApp: chat nuove arrivate dal sito.' },
+    { id: 'pubblicita', titolo: 'Pubblicità', campi: ['spesa_meta', 'spesa_google'], aiuto: 'Quanto è stato speso nel mese, IVA inclusa (in euro).' }
+  ];
+  SCHERMATE['come-va'] = { titolo: 'Come va', voce: 'come-va', disegna: function (mese) {
     return leggi('come-va', { mese: mese }).then(function (d) {
       var k = d.kpi, m7 = d.mese.slice(0, 7), nome = d.nomeMese, prima = d.nomeMesePrima, mk = d.marketing || {};
-      var m = d.mesi[d.mesi.length - 1], corrente = d.mese === d.corrente, g = daIso(d.mese);
+      var m = d.mesi[d.mesi.length - 1], corrente = d.mese === d.corrente, g = daIso(d.mese), mesi = d.mesi;
       var mPrima = iso(new Date(g.getFullYear(), g.getMonth() - 1, 1)).slice(0, 7), mDopo = iso(new Date(g.getFullYear(), g.getMonth() + 1, 1)).slice(0, 7);
+      var rispetto = function (varHtml) { return varHtml ? varHtml + ' rispetto ' + e(aMese(prima)) : ''; };
       var html = '<div class="g-mese"><button type="button" data-vai="come-va/' + mPrima + '" aria-label="Mese prima">' + ico('prima') + '</button><h2>' + e(meseLungo(m7)) + '</h2>' +
         '<button type="button" data-vai="come-va/' + mDopo + '" aria-label="Mese dopo"' + (corrente ? ' disabled' : '') + '>' + ico('dopo') + '</button></div>';
-      html += '<p class="g-testo">' + e(d.riassunto) + '</p>';
-      html += '<div class="g-numeri">' +
-        '<div class="g-numero"><strong>' + intero(k.prenotazioni.valore) + '</strong><span>' + (k.prenotazioni.valore === 1 ? 'Prenotazione' : 'Prenotazioni') + ' di ' + e(nome) + '</span>' + conConfronto(k.prenotazioni, prima) + '</div>' +
-        '<div class="g-numero"><strong>' + euro(k.valorePrenotato.valore) + '</strong><span>Prenotati ' + e(aMese(nome)) + '</span>' + piccolo('Già incassati: ' + euro(k.incasso.valore)) + '</div>' +
-        '<div class="g-numero"><strong>' + intero(k.nuoviClienti.valore) + '</strong><span>' + (k.nuoviClienti.valore === 1 ? 'Cliente nuovo' : 'Clienti nuovi') + '</span>' + conConfronto(k.nuoviClienti, prima) + '</div></div>';
+      html += '<div class="g-blocco g-in-breve"><h3>In breve</h3><p>' + e(d.riassunto) + '</p></div>';
+      if (corrente) html += previsioneHtml(d);
 
-      var canali = Object.keys(m.canali).sort(function (a, b) { return m.canali[b] - m.canali[a]; });
-      html += '<h2 class="g-sezione">Da vicino</h2><ul class="g-lista">' +
-        voce('come-va-canali/' + m7, 'Da dove arrivano i clienti', canali.length ? 'Soprattutto: ' + nomeCanale(canali[0]).toLowerCase() : 'Ancora nessuna prenotazione') +
-        voce('come-va-social/' + m7, 'Instagram e Facebook', mk.instagram_follower != null ? intero(mk.instagram_follower) + ' follower su Instagram' : mk.facebook_follower != null ? intero(mk.facebook_follower) + ' follower su Facebook' : 'Numeri in arrivo') +
-        voce('come-va-google/' + m7, 'Google e chiamate', mk.google_chiamate != null ? (mk.google_chiamate === 1 ? 'Una chiamata' : intero(mk.google_chiamate) + ' chiamate') + ' da Google' : 'Numeri in arrivo') +
-        voce('come-va-pubblicita/' + m7, 'Pubblicità', k.spesa.valore != null ? 'Spesi ' + euro(Math.round(k.spesa.valore * 100)) : 'Numeri in arrivo') +
-        voce('come-va-anno/' + m7, 'Mese per mese', 'Gli ultimi 12 mesi') + '</ul>';
+      html += '<h2 class="g-sezione">Il coworking</h2><p class="g-nota g-sotto-sezione">Questi numeri si aggiornano da soli.</p><div class="g-tessere">' +
+        tessera('Prenotazioni', intero(k.prenotazioni.valore), 'Arrivate questo mese, dal sito e in sede.', rispetto(variazione(k.prenotazioni.valore, k.prenotazioni.prima))) +
+        tessera('Incassato', euro(k.incasso.valore), 'Soldi già entrati. Prenotato in tutto: ' + euro(k.valorePrenotato.valore) + '.', rispetto(variazione(k.incasso.valore, k.incasso.prima))) +
+        tessera('Clienti nuovi', intero(k.nuoviClienti.valore), 'Persone arrivate per la prima volta.', rispetto(variazione(k.nuoviClienti.valore, k.nuoviClienti.prima))) +
+        tessera('Clienti che tornano', k.quotaRitorni.valore == null ? '—' : k.quotaRitorni.valore + '%', k.quotaRitorni.valore == null ? 'Nessun cliente questo mese.' :
+          'Su ' + m.clienti + (m.clienti === 1 ? ' cliente' : ' clienti') + ' del mese, ' + (m.ritorni === 0 ? 'nessuno era già venuto.' : m.ritorni === 1 ? 'uno era già venuto.' : m.ritorni + ' erano già venuti.'), '') +
+        tessera('Arrivati in sede', intero(k.arrivati.valore), k.nonVenuti.valore ? 'Segnati “È arrivata/o”. Non venuti: ' + k.nonVenuti.valore + '.' : 'Giornate segnate con “È arrivata/o”.', rispetto(variazione(k.arrivati.valore, k.arrivati.prima))) +
+        (corrente ? tessera('Scrivanie occupate oggi', d.numeri.occupate + ' su ' + d.numeri.postazioni, d.adesso.giorniPiuRichiesti ? (/ e /.test(d.adesso.giorniPiuRichiesti) ? 'I giorni più richiesti: ' : 'Il giorno più richiesto: ') + d.adesso.giorniPiuRichiesti.toLowerCase() + '.' : 'Ancora presto per dire qual è il giorno più richiesto.', '') : '') +
+        '</div>';
 
-      html += '<h2 class="g-sezione">Altri numeri di ' + e(nome) + '</h2><dl class="g-dati">' +
-        dato('Clienti che tornano', m.clienti ? 'Su ' + m.clienti + (m.clienti === 1 ? ' cliente' : ' clienti') + ' del mese, ' +
-          (m.ritorni === 0 ? 'nessuno era già venuto' : m.ritorni === 1 ? 'uno era già venuto' : m.ritorni + ' erano già venuti') : 'Nessun cliente questo mese') +
-        dato('Arrivati in sede', intero(k.arrivati.valore) + (k.nonVenuti.valore ? ' · non venuti: ' + k.nonVenuti.valore : ''));
-      if (corrente) {
-        var a = d.adesso, n = d.numeri;
-        html += dato('Persone diverse venute', intero(a.persone)) +
-          dato(/ e /.test(a.giorniPiuRichiesti) ? 'Giorni più richiesti' : 'Giorno più richiesto', a.giorniPiuRichiesti || 'Ancora presto per dirlo') +
-          dato('Questa settimana', n.settimana + (n.settimana === 1 ? ' prenotazione' : ' prenotazioni') + ' · la settimana scorsa ' + n.settimanaPrima) +
-          dato('Posti occupati oggi', n.occupate + ' su ' + n.postazioni) +
-          dato('Da incassare', n.daIncassareN ? euro(n.daIncassare) + ' · ' + (n.daIncassareN === 1 ? 'una prenotazione' : n.daIncassareN + ' prenotazioni') : 'Niente: hanno pagato tutti');
-      }
-      html += '</dl>';
-      if (d.note) html += '<h2 class="g-sezione">Cosa abbiamo fatto questo mese</h2><p class="g-testo g-righe">' + e(d.note) + '</p>';
+      html += '<h2 class="g-sezione">Il percorso del cliente</h2><p class="g-nota g-sotto-sezione">Dai social alla scrivania: quante persone fanno ogni passo nel mese.</p>' + percorsoHtml(m, mk);
+
+      html += '<h2 class="g-sezione">Social, Google e pubblicità</h2><p class="g-nota g-sotto-sezione">Li aggiorna Apex Media ogni mese.</p>' +
+        GRUPPI_NUMERI.map(function (x) { return bloccoNumeri(x, d, m); }).join('');
+      if (d.note) html += '<div class="g-blocco"><h3>Cosa abbiamo fatto questo mese</h3><p class="g-righe">' + e(d.note) + '</p><p class="g-nota">Apex Media</p></div>';
+
+      html += '<h2 class="g-sezione">Da dove arrivano le prenotazioni</h2><p class="g-nota g-sotto-sezione">Quelle di ' + e(nome) + ', divise per come la persona è arrivata.</p>' +
+        canaliHtml(Object.keys(m.canali).map(function (c) { return { fonte: c, n: m.canali[c] }; }).sort(function (a, b) { return b.n - a.n; }));
+
+      /* l'ultimo anno, in cinque grafici */
+      var etichette = mesi.map(function (x) { return etichettaMese(x.mese); }), totP = 0, totI = 0, totV = 0;
+      mesi.forEach(function (x) { totP += x.prenotazioni; totI += x.incassato; totV += x.valore; });
+      html += '<h2 class="g-sezione">L’ultimo anno</h2>' +
+        riquadroGrafico('Prenotazioni al mese', 'Ultimi 12 mesi', graficoLinea('Prenotazioni', mesi.map(function (x) { return x.prenotazioni; }), etichette, intero, '#1B2A3A'), 'In 12 mesi: ' + quantePrenotazioni(totP) + '.') +
+        riquadroGrafico('Incassi al mese', 'Pieno = incassato, contorno = prenotato', graficoIncassi(mesi, etichette), 'In 12 mesi: ' + euro(totI) + ' incassati su ' + euro(totV) + ' prenotati.');
+      var voci = d.canali.map(function (c) { return { nome: nomeCanale(c), colore: COLORI_CANALI[c] || '#5B6470', valori: mesi.map(function (x) { return x.canali[c] || 0; }) }; });
+      html += riquadroGrafico('Da dove arrivano, mese per mese', 'Prenotazioni divise per canale', voci.length ? graficoImpilato('Prenotazioni per canale', voci, etichette) : '<p class="g-vuoto">Ancora nessuna prenotazione negli ultimi 12 mesi.</p>', '', voci.length ? legenda(voci) : '');
+      var social = [['Instagram', 'instagram_follower', '#B4457E'], ['Facebook', 'facebook_follower', '#3B5BDB']].map(function (s) {
+        return { nome: s[0], colore: s[2], valori: mesi.map(function (x) { return x.marketing && x.marketing[s[1]] != null ? x.marketing[s[1]] : null; }) };
+      }).filter(function (s) { return s.valori.some(function (v) { return v != null; }); });
+      html += riquadroGrafico('Follower sui social', 'A fine mese', social.length ? graficoLinee('Follower', social, etichette) : '<p class="g-vuoto">Nessun numero dei social per ora.</p>', '', social.length ? legenda(social) : '');
+      var google = [['Chiamate', 'google_chiamate', '#1B2A3A'], ['Indicazioni', 'google_indicazioni', '#0C8599'], ['Clic sul sito', 'google_clic_sito', '#C9973B']].map(function (s) {
+        return { nome: s[0], colore: s[2], valori: mesi.map(function (x) { return x.marketing && x.marketing[s[1]] ? x.marketing[s[1]] : 0; }) };
+      });
+      var conGoogle = google.some(function (s) { return s.valori.some(function (v) { return v > 0; }); });
+      html += riquadroGrafico('Azioni sul profilo Google', 'Chiamate, indicazioni e clic sul sito', conGoogle ? graficoImpilato('Azioni su Google', google, etichette) : '<p class="g-vuoto">Nessun numero di Google per ora.</p>', '', conGoogle ? legenda(google) : '');
+
+      html += '<div class="g-pulsanti"><a class="g-btn g-btn-chiaro" href="#come-va-anno/' + m7 + '">I numeri mese per mese, in elenco</a></div>';
       if (d.aggiornato) html += '<p class="g-nota">Numeri di social, Google e pubblicità aggiornati da Apex Media il ' + e(giornoBreve(d.aggiornato)) + '.</p>';
       vista.innerHTML = html + pulsanteNumeri(d);
     });
   } };
 
-  /* le schermate "da vicino": stessi dati, un argomento alla volta */
-  function daVicino(corpo) {
-    return function (mese) {
-      return leggi('come-va', { mese: mese }).then(function (d) {
-        vista.innerHTML = '<p class="g-data">' + e(meseLungo(d.mese.slice(0, 7))) + '</p>' + corpo(d, d.mesi[d.mesi.length - 1], d.marketing || {}) + pulsanteNumeri(d);
+  /* gli stessi numeri dell'ultimo anno, scritti in elenco */
+  SCHERMATE['come-va-anno'] = { titolo: 'Come va', voce: 'come-va', interna: 'come-va', disegna: function (mese) {
+    return leggi('come-va', { mese: mese }).then(function (d) {
+      var mesi = d.mesi.slice().reverse(), nomeDi = function (x) { return meseLungo(x.mese.slice(0, 7)); };
+      var html = '<h2 class="g-titolo">Mese per mese</h2><h2 class="g-sezione">Prenotazioni</h2>' +
+        quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.prenotazioni }; })) +
+        '<h2 class="g-sezione">Valore delle prenotazioni</h2>' + quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.valore }; }), euro) +
+        '<h2 class="g-sezione">Incassato</h2>' + quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.incassato }; }), euro) +
+        '<h2 class="g-sezione">Clienti nuovi</h2>' + quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.nuoviClienti }; }));
+      [['Follower su Instagram', 'instagram_follower'], ['Follower su Facebook', 'facebook_follower'], ['Chiamate da Google', 'google_chiamate'], ['Visite al sito', 'visite_sito']].forEach(function (s) {
+        var righe = serie(d, s[1]);
+        if (righe.length) html += '<h2 class="g-sezione">' + s[0] + '</h2>' + quote(righe);
       });
-    };
-  }
-
-  SCHERMATE['come-va-canali'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
-    var perValore = function (a, b) { return b.valore - a.valore; };
-    var delMese = Object.keys(m.canali).map(function (c) { return { nome: nomeCanale(c), valore: m.canali[c] }; }).sort(perValore);
-    var anno = {};
-    d.mesi.forEach(function (x) { Object.keys(x.canali).forEach(function (c) { anno[c] = (anno[c] || 0) + x.canali[c]; }); });
-    var dellAnno = Object.keys(anno).map(function (c) { return { nome: nomeCanale(c), valore: anno[c] }; }).sort(perValore);
-    var social = mk.instagram_copertura != null || mk.facebook_copertura != null ? (mk.instagram_copertura || 0) + (mk.facebook_copertura || 0) : null;
-    var passi = [['Hanno visto i social', social], ['Sono andati sul sito', mk.visite_sito != null ? mk.visite_sito : null], ['Hanno chiesto un posto', m.prenotazioni], ['Sono arrivati in sede', m.presenti]];
-    return '<h2 class="g-titolo">Da dove arrivano i clienti</h2><p class="g-testo">Le prenotazioni di ' + e(d.nomeMese) + ', divise per come la persona è arrivata.</p>' +
-      (delMese.length ? quote(delMese) : '<p class="g-vuoto">Ancora nessuna prenotazione questo mese.</p>') +
-      '<h2 class="g-sezione">Negli ultimi 12 mesi</h2>' + (dellAnno.length ? quote(dellAnno) : '<p class="g-vuoto">Ancora nessuna prenotazione.</p>') +
-      '<h2 class="g-sezione">Il percorso di ' + e(d.nomeMese) + '</h2><dl class="g-dati">' +
-      passi.map(function (x) { return dato(x[0], x[1] == null ? 'Numero in arrivo' : intero(x[1])); }).join('') + '</dl>';
-  }) };
-
-  SCHERMATE['come-va-social'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
-    var html = '<h2 class="g-titolo">Instagram e Facebook</h2>';
-    var ig = mk.instagram_follower != null || mk.instagram_copertura != null, fb = mk.facebook_follower != null || mk.facebook_copertura != null;
-    if (!ig && !fb) html += inArrivo();
-    html += '<h2 class="g-sezione">Instagram</h2><dl class="g-dati">' +
-      (mk.instagram_follower != null ? dato('Follower', numeroCon(d, 'instagram_follower', true)) : '') +
-      (mk.instagram_copertura != null ? dato('Persone raggiunte', numeroCon(d, 'instagram_copertura')) : '') +
-      dato('Prenotazioni arrivate da Instagram', intero(m.canali.Instagram || 0)) + '</dl>';
-    html += '<h2 class="g-sezione">Facebook</h2><dl class="g-dati">' +
-      (mk.facebook_follower != null ? dato('Follower', numeroCon(d, 'facebook_follower', true)) : '') +
-      (mk.facebook_copertura != null ? dato('Persone raggiunte', numeroCon(d, 'facebook_copertura')) : '') +
-      dato('Prenotazioni arrivate da Facebook', intero(m.canali.Facebook || 0)) + '</dl>';
-    var sIg = serie(d, 'instagram_follower'), sFb = serie(d, 'facebook_follower');
-    if (sIg.length > 1) html += '<h2 class="g-sezione">Follower su Instagram, mese per mese</h2>' + quote(sIg);
-    if (sFb.length > 1) html += '<h2 class="g-sezione">Follower su Facebook, mese per mese</h2>' + quote(sFb);
-    return html;
-  }) };
-
-  SCHERMATE['come-va-google'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
-    var voci = [['google_chiamate', 'Chiamate'], ['google_indicazioni', 'Richieste di indicazioni stradali'], ['google_clic_sito', 'Clic sul sito'],
-      ['google_visualizzazioni', 'Hanno visto la scheda su Google'], ['visite_sito', 'Visite al sito'], ['contatti_whatsapp', 'Chat su WhatsApp']];
-    var presenti = voci.filter(function (v) { return mk[v[0]] != null; });
-    var html = '<h2 class="g-titolo">Google e chiamate</h2>';
-    if (!presenti.length && mk.recensioni_media == null && mk.recensioni_numero == null) html += inArrivo();
-    html += '<dl class="g-dati">' + presenti.map(function (v) { return dato(v[1], numeroCon(d, v[0])); }).join('');
-    if (mk.recensioni_media != null || mk.recensioni_numero != null) {
-      html += dato('Recensioni', (mk.recensioni_media != null ? virgola(mk.recensioni_media) + ' su 5' : '') +
-        (mk.recensioni_media != null && mk.recensioni_numero != null ? ' · ' : '') + (mk.recensioni_numero != null ? intero(mk.recensioni_numero) + ' in tutto' : ''));
-    }
-    html += dato('Prenotazioni arrivate da Google', intero((m.canali.Google || 0) + (m.canali['Google Maps'] || 0) + (m.canali['Google Ads'] || 0))) + '</dl>';
-    var sChiamate = serie(d, 'google_chiamate');
-    if (sChiamate.length > 1) html += '<h2 class="g-sezione">Chiamate, mese per mese</h2>' + quote(sChiamate);
-    return html;
-  }) };
-
-  SCHERMATE['come-va-pubblicita'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d, m, mk) {
-    var k = d.kpi, html = '<h2 class="g-titolo">Pubblicità</h2>';
-    if (k.spesa.valore == null) return html + inArrivo();
-    var pezzi = [];
-    if (mk.spesa_meta != null) pezzi.push('Instagram e Facebook ' + euro(Math.round(mk.spesa_meta * 100)));
-    if (mk.spesa_google != null) pezzi.push('Google ' + euro(Math.round(mk.spesa_google * 100)));
-    html += '<div class="g-numeri"><div class="g-numero"><strong>' + euro(Math.round(k.spesa.valore * 100)) + '</strong><span>Spesi ' + e(aMese(d.nomeMese)) + '</span>' + piccolo(pezzi.join(' · ')) + '</div>';
-    if (k.ritornoPubblicita.valore != null) {
-      html += '<div class="g-numero"><strong>' + euro(Math.round(k.ritornoPubblicita.valore * 100)) + '</strong><span>Di prenotazioni per ogni euro speso</span>' +
-        piccolo(k.prenotazioniDaPubblicita.valore === 1 ? 'Una prenotazione arrivata dalla pubblicità' : k.prenotazioniDaPubblicita.valore + ' prenotazioni arrivate dalla pubblicità') + '</div>';
-    }
-    if (k.costoPrenotazione.valore != null) html += '<div class="g-numero"><strong>' + euro(k.costoPrenotazione.valore) + '</strong><span>Spesa per ogni prenotazione del mese</span></div>';
-    return html + '</div><p class="g-nota">Contano come arrivate dalla pubblicità le prenotazioni fatte da chi è passato da Instagram, Facebook o da un annuncio su Google.</p>';
-  }) };
-
-  SCHERMATE['come-va-anno'] = { titolo: 'Come va', interna: 'come-va', disegna: daVicino(function (d) {
-    var mesi = d.mesi.slice().reverse(), nomeDi = function (x) { return meseLungo(x.mese.slice(0, 7)); };
-    var html = '<h2 class="g-titolo">Mese per mese</h2><h2 class="g-sezione">Prenotazioni</h2>' +
-      quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.prenotazioni }; })) +
-      '<h2 class="g-sezione">Valore delle prenotazioni</h2>' + quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.valore }; }), euro);
-    if (mesi.some(function (x) { return x.incassato > 0; })) html += '<h2 class="g-sezione">Incassato</h2>' + quote(mesi.map(function (x) { return { nome: nomeDi(x), valore: x.incassato }; }), euro);
-    return html;
-  }) };
+      vista.innerHTML = html;
+    });
+  } };
 
   /* ---------- i numeri del mese: li scrive Apex Media ---------- */
-  var GRUPPI_NUMERI = [
-    { titolo: 'Instagram', campi: ['instagram_follower', 'instagram_copertura'], aiuto: 'App Instagram → Dashboard professionale → Account raggiunti (ultimi 30 giorni).' },
-    { titolo: 'Facebook', campi: ['facebook_follower', 'facebook_copertura'], aiuto: 'Meta Business Suite → Insight → Copertura.' },
-    { titolo: 'Google', campi: ['google_visualizzazioni', 'google_chiamate', 'google_indicazioni', 'google_clic_sito', 'recensioni_numero', 'recensioni_media'], aiuto: 'Profilo dell’attività su Google → Rendimento, mese scelto. Recensioni: totale e voto medio di oggi.' },
-    { titolo: 'Sito e WhatsApp', campi: ['visite_sito', 'contatti_whatsapp'], aiuto: 'Visite: Google Analytics → Utenti del mese. WhatsApp: chat nuove arrivate dal sito.' },
-    { titolo: 'Pubblicità', campi: ['spesa_meta', 'spesa_google'], aiuto: 'Quanto è stato speso nel mese, IVA inclusa (in euro).' }
-  ];
-  SCHERMATE['numeri-mese'] = { titolo: 'Numeri del mese', interna: 'come-va', disegna: function (mese) {
+  SCHERMATE['numeri-mese'] = { titolo: 'Numeri del mese', voce: 'come-va', interna: 'come-va', disegna: function (mese) {
     return leggi('come-va', { mese: mese }).then(function (d) {
       if (RUOLO !== 'apex') { vista.innerHTML = '<p class="g-vuoto">Questi numeri li aggiorna Apex Media.</p>'; return; }
       var mk = d.marketing || {}, pr = mesePrimaDi(d), nomi = {}, m7 = d.mese.slice(0, 7);
@@ -1037,7 +1214,8 @@
         return lista.length ? '<ul class="g-lista">' + lista.map(voceCliente).join('') + '</ul>' : '<p class="g-vuoto">' + (cerca ? 'Nessun cliente con questo nome o numero.' : 'Ancora nessun cliente.') + '</p>';
       };
       vista.innerHTML = '<label class="g-campo"><span>Cerca per nome o telefono</span><input type="search" name="cerca" autocomplete="off" enterkeyhint="search" data-cerca></label>' +
-        '<p class="g-nota" data-quanti>' + (d.clienti.length === 1 ? 'Un cliente' : d.clienti.length + ' clienti') + '</p><div class="g-largo-su" style="margin-top:16px" data-elenco>' + elenco(d.clienti, '') + '</div>';
+        '<p class="g-nota" data-quanti>' + (d.clienti.length === 1 ? 'Un cliente' : d.clienti.length + ' clienti') + '</p><div class="g-largo-su" style="margin-top:16px" data-elenco>' + elenco(d.clienti, '') + '</div>' +
+        '<p class="g-nota">“Viene spesso”: almeno quattro giorni nell’ultimo mese. “Non si vede da un mese”: l’ultima volta è stata più di 30 giorni fa.</p>';
       var campo = $('[data-cerca]', vista), zona = $('[data-elenco]', vista), quanti = $('[data-quanti]', vista), timer = null, ultima = 0;
       campo.addEventListener('input', function () {
         clearTimeout(timer);
@@ -1073,32 +1251,44 @@
     });
   } };
 
-  /* ---------- Incassi ---------- */
+  /* ---------- Incassi: quanto è entrato, cosa manca, chi deve ancora pagare ---------- */
   var NOMI_METODO = { contanti: 'in contanti', carta: 'con la carta', bonifico: 'con bonifico', online: 'online' };
+  var NOMI_METODO_BREVI = { contanti: 'Contanti', carta: 'Carta', bonifico: 'Bonifico', online: 'Online' };
   function titoloPeriodo(d) {
     if (d.periodo === 'giorno') return giornoLungo(d.inizio);
     if (d.periodo === 'mese') return meseLungo(d.inizio.slice(0, 7));
     return (d.inizio.slice(0, 7) === d.fine.slice(0, 7) ? String(+d.inizio.slice(8)) : giornoBreve(d.inizio)) + ' – ' + giornoBreve(d.fine);
   }
   function voceIncasso(r) {
-    var stato = r.gratis ? 'Niente da pagare' : euro(r.importo) + (r.pagato ? ' · pagato ' + (NOMI_METODO[r.metodo] || '') : r.futura ? ' · paga quando arriva' : ' · da pagare');
+    var stato = r.gratis ? 'Niente da pagare' : euro(r.importo) + ' · pagato ' + (NOMI_METODO[r.metodo] || '');
     return '<li><a class="g-voce" href="#prenotazione/' + r.id + '"><span><strong>' + e(r.nome) + '</strong><small>' + e(giornoBreve(r.data) + ' · ' + r.cosa) + '</small><small>' + e(stato) + '</small></span></a></li>';
+  }
+  /* chi deve ancora pagare: due pulsanti per incassare subito, senza aprire la prenotazione */
+  function schedaDaIncassare(r) {
+    return '<li class="g-scheda" data-da-incassare="' + r.id + '"><a class="g-nome g-link" href="#prenotazione/' + r.id + '">' + e(r.nome) + '</a><p class="g-quando">' + e(giornoBreve(r.data) + ' · ' + r.cosa) + '</p>' +
+      '<p class="g-cosa">' + euro(r.importo) + (r.futura ? ' · paga quando arriva' : ' · da pagare') + '</p>' +
+      '<div class="g-due"><button class="g-btn g-btn-chiaro" type="button" data-incassa="contanti" data-id="' + r.id + '">Contanti</button>' +
+      '<button class="g-btn g-btn-chiaro" type="button" data-incassa="carta" data-id="' + r.id + '">Carta</button></div></li>';
   }
   SCHERMATE.incassi = { titolo: 'Incassi', interna: 'profilo', disegna: function (param) {
     var pz = String(param || '').split('/');
     return leggi('incassi', { periodo: pz[0] || 'mese', da: pz[1] || '' }).then(function (d) {
       var t = d.totali, ancora = d.oggi >= d.inizio && d.oggi <= d.fine ? d.oggi : d.inizio;
       var da = d.righe.filter(function (r) { return !r.gratis && !r.pagato; }), ok = d.righe.filter(function (r) { return !r.gratis && r.pagato; }), gratis = d.righe.filter(function (r) { return r.gratis; });
-      var gruppo = function (nome, lista) { return lista.length ? '<h2 class="g-sezione">' + nome + '</h2><ul class="g-lista">' + lista.map(voceIncasso).join('') + '</ul>' : ''; };
+      var perc = t.previsto ? Math.round(t.incassato / t.previsto * 100) : 0, metodi = {};
+      ok.forEach(function (r) { var k = r.metodo || 'altro'; metodi[k] = (metodi[k] || 0) + r.importo; });
+      var comePagato = Object.keys(metodi).map(function (k) { return (NOMI_METODO_BREVI[k] || 'Altro') + ' ' + euro(metodi[k]); }).join(' · ');
+      var gruppo = function (nome, lista, riga) { return lista.length ? '<h2 class="g-sezione">' + nome + '</h2><ul class="g-lista">' + lista.map(riga).join('') + '</ul>' : ''; };
       var html = '<div class="g-tre" role="group" aria-label="Periodo">' + [['giorno', 'Giorno'], ['settimana', 'Settimana'], ['mese', 'Mese']].map(function (p) {
         return '<button class="g-btn g-btn-grigio" type="button" data-vai="incassi/' + p[0] + '/' + ancora + '" aria-pressed="' + (d.periodo === p[0]) + '">' + p[1] + '</button>';
       }).join('') + '</div>';
       html += '<div class="g-mese"><button type="button" data-vai="incassi/' + d.periodo + '/' + d.prima + '" aria-label="Prima">' + ico('prima') + '</button><h2>' + e(titoloPeriodo(d)) + '</h2>' +
         '<button type="button" data-vai="incassi/' + d.periodo + '/' + d.dopo + '" aria-label="Dopo">' + ico('dopo') + '</button></div>';
-      html += '<div class="g-numeri"><div class="g-numero"><strong>' + euro(t.incassato) + '</strong><span>Incassati</span>' + piccolo('Su ' + euro(t.previsto) + ' di prenotazioni') + '</div>' +
+      html += '<div class="g-numeri"><div class="g-numero"><strong>' + euro(t.incassato) + '</strong><span>Incassati</span>' + piccolo('Su ' + euro(t.previsto) + ' prenotati' + (t.previsto ? ' · ' + perc + '%' : '')) +
+        '<div class="g-quota-riga g-quota-verde" role="img" aria-label="Incassato il ' + perc + '% del prenotato"><i style="width:' + perc + '%"></i></div>' + piccolo(comePagato) + '</div>' +
         '<div class="g-numero"><strong>' + euro(t.daIncassare) + '</strong><span>Da incassare</span>' +
         piccolo(!d.righe.length ? '' : !t.daIncassare ? 'Hanno pagato tutti' : t.daIncassareOra ? euro(t.daIncassareOra) + ' da chiedere adesso' : 'Pagano quando arrivano') + '</div></div>';
-      html += d.righe.length ? gruppo('Da incassare', da) + gruppo('Già pagate', ok) + gruppo('Senza pagamento', gratis) : '<p class="g-vuoto" style="margin-top:16px">Nessuna prenotazione in questo periodo.</p>';
+      html += d.righe.length ? gruppo('Da incassare', da, schedaDaIncassare) + gruppo('Già pagate', ok, voceIncasso) + gruppo('Senza pagamento', gratis, voceIncasso) : '<p class="g-vuoto" style="margin-top:16px">Nessuna prenotazione in questo periodo.</p>';
       html += '<div class="g-pulsanti g-largo-su"><a class="g-btn g-btn-chiaro" href="/api/gestione?azione=elenco&amp;da=' + d.inizio + '&amp;a=' + d.fine + '" download="incassi-bagnarino-' + d.inizio + '.csv">Scarica l’elenco</a></div>' +
         '<p class="g-nota">È un file che si apre con Excel: va bene per la commercialista.</p>';
       vista.innerHTML = html;
@@ -1216,6 +1406,17 @@
     });
   } };
 
+  SCHERMATE['imp-chiusure'] = { titolo: 'Chiusure', interna: 'impostazioni', disegna: function () {
+    return leggi('chiusure').then(function (d) {
+      vista.innerHTML = '<h2 class="g-titolo">Giorni di chiusura</h2><p class="g-testo">I giorni chiusi da oggi in poi: in quei giorni dal sito non si può prenotare. Per chiuderne uno solo, toccalo nel Calendario.</p>' +
+        (d.chiusure.length ? '<ul class="g-lista">' + d.chiusure.map(function (c) {
+          return '<li class="g-scheda"><p class="g-nome g-iniziale">' + e(giornoLungo(c.data)) + '</p><p class="g-quando">' + PAROLE_CHIUSURA[c.valore] + '</p>' +
+            '<div class="g-pulsanti"><button class="g-btn g-btn-chiaro" type="button" data-riapri-giorno="' + c.data + '">Riapri</button></div></li>';
+        }).join('') + '</ul>' : '<p class="g-vuoto">Nessuna chiusura in programma.</p>') +
+        '<div class="g-pulsanti g-largo-su"><a class="g-btn g-btn-primario" href="#chiudi-giorni">Chiudi più giorni</a></div>';
+    });
+  } };
+
   SCHERMATE['imp-messaggi'] = { titolo: 'Messaggi', interna: 'impostazioni', disegna: function () {
     return leggi('coworking').then(function (c) {
       vista.innerHTML = '<h2 class="g-titolo">Messaggi di WhatsApp</h2><p class="g-testo">Sono le frasi già scritte che una persona ti manda quando tocca un pulsante WhatsApp sul sito. Le parole tra parentesi graffe, come {giorno}, le riempie il sito: lasciale come sono.</p>' +
@@ -1260,6 +1461,22 @@
         if (!si) return;
         chiama('annulla', { id: idA }).then(function () { mostraFatto(chi + ' riceve il messaggio di scuse.'); vai('prenotazioni'); }, function (x) { mostraErrore(x.message); });
       });
+      return;
+    }
+    if ((b = ev.target.closest('[data-incassa]'))) {
+      $$('[data-incassa]', vista).forEach(function (x) { x.disabled = true; });
+      chiama('pagato', { id: +b.getAttribute('data-id'), pagato: true, metodo: b.getAttribute('data-incassa') }).then(function () { mostraFatto('Incasso segnato.'); ridisegna(); },
+        function (x) { ridisegna().then(function () { mostraErrore(x.message); }); });
+      return;
+    }
+    if ((b = ev.target.closest('[data-assente]'))) {
+      chiama('arrivo', { id: +b.getAttribute('data-assente'), assente: true }).then(function () { mostraFatto(); ridisegna(); }, function (x) { mostraErrore(x.message); });
+      return;
+    }
+    if ((b = ev.target.closest('[data-riapri-giorno]'))) {
+      var giornoR = b.getAttribute('data-riapri-giorno');
+      b.disabled = true;
+      chiama('chiudi', { da: giornoR, a: giornoR, valore: 'aperto' }).then(function () { mostraFatto('Giorno riaperto.'); ridisegna(); }, function (x) { b.disabled = false; mostraErrore(x.message); });
       return;
     }
     if ((b = ev.target.closest('[data-paga]'))) {

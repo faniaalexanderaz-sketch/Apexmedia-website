@@ -468,3 +468,81 @@ test('Oggi: chi arriva domani', async () => {
   const o = await G.oggi(cfg);
   assert.deepEqual([o.domani, o.arriviDomani.map(x => x.nome).join()], [domani, 'Dora Dotti']);
 });
+
+test('cruscotto e previsione: numeri di adesso, ultime settimane e mesi, fine mese con il ritmo di adesso', async () => {
+  await nuovoDb();
+  const C = require('../api/_conti');
+  /* mercoledì 18 novembre 2026, mezzogiorno a Roma */
+  const adesso = new Date('2026-11-18T11:00:00Z');
+  const vuoto = await C.numeriAdesso(adesso);
+  assert.deepEqual([vuoto.oggi, vuoto.settimana, vuoto.occupate, vuoto.daIncassare, vuoto.incassoMese, vuoto.settimane.length, vuoto.mesi.length, vuoto.fonti.length], ['2026-11-18', 0, 0, 0, 0, 8, 6, 0]);
+  assert.deepEqual(vuoto.mesi.map(m => m.inizio), ['2026-06-01', '2026-07-01', '2026-08-01', '2026-09-01', '2026-10-01', '2026-11-01']);
+  assert.equal(vuoto.settimane[7].inizio, '2026-11-16');
+  /* senza prenotazioni la previsione non si fa */
+  assert.deepEqual([vuoto.previsione.giorno, vuoto.previsione.giorniMese, vuoto.previsione.stima], [18, 30, null]);
+
+  /* sei prenotazioni create questo mese: una oggi (arrivata e pagata), le altre nei prossimi giorni */
+  const oggi = await P.prenota(cliente({ data: '2026-11-18' }), { manuale: true, adesso });
+  for (const g of ['2026-11-19', '2026-11-20', '2026-11-23', '2026-11-24', '2026-12-21']) await P.prenota(cliente({ data: g, origine: { utm_source: 'instagram' } }), { adesso });
+  await db.q("UPDATE prenotazioni SET creato_il = '2026-11-10T09:00:00Z'");
+  await db.q("UPDATE prenotazioni SET stato = 'confermata' WHERE stato = 'in_attesa' AND data_inizio < '2026-12-01'");
+  await db.q("UPDATE prenotazioni SET pagato = true, pagato_il = '2026-11-18T09:30:00Z', metodo_pagamento = 'carta' WHERE id = $1", [oggi.id]);
+  /* una prenotazione di ottobre, già incassata allora */
+  const ott = await P.prenota(cliente({ data: '2026-11-25' }), { manuale: true, adesso });
+  await db.q("UPDATE prenotazioni SET creato_il = '2026-10-12T09:00:00Z', pagato = true, pagato_il = '2026-10-12T10:00:00Z' WHERE id = $1", [ott.id]);
+
+  const n = await C.numeriAdesso(adesso);
+  assert.deepEqual([n.occupate, n.postazioni, n.incassoMese, n.incassoMesePrima, n.daIncassare, n.daIncassareN], [1, 8, 2500, 2500, 0, 0]);
+  assert.deepEqual(n.mesi.slice(-2).map(m => m.centesimi), [2500, 2500]);
+  assert.deepEqual(n.settimane.map(s => s.n), [0, 0, 1, 0, 0, 0, 6, 0]);
+  assert.deepEqual(n.fonti, [{ fonte: 'Instagram', n: 5 }, { fonte: 'In sede / telefono', n: 2 }]);
+  /* 6 prenotazioni in 18 giorni → circa 10 in un mese di 30; il valore segue la stessa regola */
+  assert.deepEqual(n.previsione.finora, { prenotazioni: 6, valore: 15000 });
+  assert.deepEqual(n.previsione.stima, { prenotazioni: 10, valore: 25000 });
+  assert.deepEqual(n.previsione.mesePrima, { prenotazioni: 1, valore: 2500 });
+  /* già in calendario nei prossimi 30 giorni: le quattro confermate di novembre più quella di ottobre (non la richiesta di dicembre ancora in attesa) */
+  assert.deepEqual(n.previsione.inCalendario, { prenotazioni: 5, valore: 12500 });
+  /* devono ancora entrare: le quattro confermate non pagate */
+  assert.equal(n.previsione.daEntrare, 10000);
+  /* nei primi tre giorni del mese la previsione non si fa: sarebbe un numero a caso */
+  assert.equal((await C.numeriAdesso(new Date('2026-11-03T11:00:00Z'))).previsione.stima, null);
+  /* anche "Oggi" porta questi numeri */
+  const io = await entra();
+  const o = (await chiama('GET', { azione: 'oggi' }, null, io)).json;
+  assert.ok(o.numeri && o.numeri.previsione && o.numeri.settimane.length === 8 && Array.isArray(o.numeri.fonti));
+});
+
+test('il giorno scrivania per scrivania, le chiusure in programma, "non è venuta/o"', async () => {
+  await nuovoDb();
+  const io = await entra();
+  const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const oggi = iso(new Date()), tra5 = iso(new Date(Date.now() + 5 * 864e5)), tra6 = iso(new Date(Date.now() + 6 * 864e5));
+  const a = await P.prenota(cliente({ data: oggi, nome: 'Anna', cognome: 'Abate' }), { manuale: true });
+  await P.prenota(cliente({ data: oggi, fascia: 'mattina', nome: 'Bruno', cognome: 'Bassi' }), { manuale: true });
+  await P.prenota(cliente({ data: oggi, fascia: 'pomeriggio', nome: 'Carla', cognome: 'Conti' }), { manuale: true });
+  const g = (await chiama('GET', { azione: 'giorno', data: oggi }, null, io)).json;
+  assert.equal(g.posti.length, 8);
+  assert.deepEqual([g.posti[0].nome, g.posti[0].mattina.nome, g.posti[0].pomeriggio.nome, g.posti[0].mattina.id === g.posti[0].pomeriggio.id], ['Postazione 1', 'Anna Abate', 'Anna Abate', true]);
+  /* mezza giornata e mezza giornata sulla stessa scrivania: due persone diverse */
+  assert.deepEqual([g.posti[1].mattina.nome, g.posti[1].pomeriggio.nome], ['Bruno Bassi', 'Carla Conti']);
+  assert.deepEqual([g.posti[2].mattina, g.posti[2].pomeriggio], [null, null]);
+
+  /* chiusure in programma, in ordine, con la mezza giornata */
+  assert.deepEqual((await chiama('GET', { azione: 'chiusure' }, null, io)).json.chiusure, []);
+  assert.equal((await chiama('GET', { azione: 'chiusure' })).stato, 401);
+  await chiama('POST', { azione: 'chiudi' }, { da: tra6, a: tra6, valore: 'mattina' }, io);
+  await chiama('POST', { azione: 'chiudi' }, { da: tra5, a: tra5, valore: 'giorno' }, io);
+  assert.deepEqual((await chiama('GET', { azione: 'chiusure' }, null, io)).json.chiusure, [{ data: tra5, valore: 'giorno' }, { data: tra6, valore: 'mattina' }]);
+  await chiama('POST', { azione: 'chiudi' }, { da: tra5, a: tra5, valore: 'aperto' }, io);
+  assert.deepEqual((await chiama('GET', { azione: 'chiusure' }, null, io)).json.chiusure.map(c => c.data), [tra6]);
+
+  /* non è venuta/o, e poi la correzione */
+  let r = await chiama('POST', { azione: 'arrivo' }, { id: a.id, assente: true }, io);
+  assert.deepEqual([r.stato, r.json.stato], [200, 'assente']);
+  let p = (await chiama('GET', { azione: 'prenotazione', id: String(a.id) }, null, io)).json;
+  assert.deepEqual([p.stato, p.quante, p.puoSegnareArrivo], ['assente', 1, true]);
+  r = await chiama('POST', { azione: 'arrivo' }, { id: a.id, arrivato: false }, io);
+  assert.equal(r.json.stato, 'confermata');
+  r = await chiama('POST', { azione: 'arrivo' }, { id: a.id, arrivato: true }, io);
+  assert.deepEqual([r.json.stato, r.json.timbro], ['presente', true]);
+});
