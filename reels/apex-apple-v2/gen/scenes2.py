@@ -5,6 +5,7 @@ sys.path.insert(0, '.')
 from common import scene, CURSOR, SEL
 OUT = '/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/'
 SC = []
+SHIFT_FROM, DELTA = 35.0, 0.81   # the trick-2 passage was re-recorded 0.81 s longer: later scenes move as a block
 BURG = '#7a0f24'; GREEN = '#30d158'; GOLD = '#c9a227'
 
 def ln(i, html, cls='t-sans', style='', mt=None):
@@ -19,8 +20,9 @@ def add(sid, start, end, body, js, css='', fx=(), dark=False):
     f = lambda s: re.sub(r'«([\d.]+)»', lambda m: '%.2f' % (float(m.group(1)) - start), s)
     dur = round(end - start, 3)
     body = f'    <div id="{sid}-st" class="st{" dark" if dark else ""}" data-layout-allow-overlap>\n' + f(body) + '\n    </div>'
-    SC.append(dict(id=sid, start=start, dur=dur, body=body, js=f(js).replace('DUR', '%.2f' % dur), css=css,
-                   fx=[(n, round(t, 3), v) for n, t, v in fx]))
+    sh = DELTA if start >= SHIFT_FROM else 0
+    SC.append(dict(id=sid, start=round(start + sh, 3), dur=dur, body=body, js=f(js).replace('DUR', '%.2f' % dur), css=css,
+                   fx=[(n, round(t + sh, 3), v) for n, t, v in fx]))
 
 def seg(sid, n):
     return f'<div class="seg" id="{sid}-seg">' + ''.join(
@@ -62,9 +64,9 @@ ALERT_CSS = '''
 # ---------------------------------------------------------------- trick 2: la memoria
 title('s8', 19.47, 21.09, 2, 'la memoria', 19.91, BURG)
 
-add('s9', 21.09, 27.64, f'''      {zone(ln('m-a1', 'il modello base', 't-sans t-mut'), ln('m-a2', 'ha poco spazio', 't-it', mt=-24))}
+add('s9', 21.09, 27.20, f'''      {zone(ln('m-a1', 'il modello base', 't-sans t-mut'), ln('m-a2', 'ha poco spazio', 't-it', mt=-24))}
       {zone(ln('m-b1', 'dopo un anno di foto', 't-sans t-mut'), ln('m-b2', 'è pieno', 't-it', 'font-size:118px;color:#ff3b30', mt=-24))}
-      {zone(ln('m-c1', 'la volta dopo prendi', 't-sans t-mut'), ln('m-c2', 'quello più grande', 't-it', mt=-24))}
+      {zone(ln('m-c1', 'e quello', 't-sans t-mut'), ln('m-c2', 'più grande', 't-it', mt=-24))}
       <div id="m-card" style="position:absolute;left:90px;top:720px;width:900px;border-radius:44px;background:#f2f2f7;padding:50px 54px 46px">
         <div style="display:flex;justify-content:space-between;align-items:baseline;font:600 58px/1 Inter;letter-spacing:-0.02em"><span>iPhone</span><span>128 GB</span></div>
         <div style="font:400 34px/1 Inter;color:#86868b;margin-top:16px"><span id="m-used">62</span> GB su 128 GB utilizzati</div>
@@ -97,63 +99,88 @@ add('s9', 21.09, 27.64, f'''      {zone(ln('m-a1', 'il modello base', 't-sans t-
     rise(tl, "#m-b1", «23.90»);
     tl.to("#m-cov", { scaleX: 0, duration: 0.9, ease: "power1.in" }, «23.90» + 0.1);
     count(tl, "#m-used", 102, 128, «23.90» + 0.1, 0.9);
-    rise(tl, "#m-b2", «25.08» - 0.08);
-    tl.fromTo("#m-card", { scale: 1 }, { scale: 1.04, duration: 0.12, yoyo: true, repeat: 1, immediateRender: false }, «25.08»);
-    tl.fromTo("#m-alert", { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.28, ease: "back.out(2)" }, «25.08»);
-    tl.to(["#m-card", "#m-alert"], { y: 1500, duration: 0.3, ease: "power3.in" }, «25.50» - 0.14);
-    sink(tl, "#m-b1", «25.50» - 0.15); sink(tl, "#m-b2", «25.50» - 0.15);
-    rise(tl, "#m-c1", «25.50» + 0.05);
-    tl.fromTo(".m-opt", { y: 300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.42, ease: "expo.out", stagger: 0.08 }, «25.50» + 0.1);
-    rise(tl, "#m-c2", «26.49» - 0.08);
-    tl.fromTo("#m-cur", { opacity: 0, x: 220, y: 300 }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: "power3.out" }, «26.49»);
-    tl.to("#m-cur", { scale: 0.8, duration: 0.07, yoyo: true, repeat: 1 }, «27.02» - 0.1);
-    tl.to("#m-o1", { borderColor: "#d2d2d7", duration: 0.12 }, «27.02» - 0.04);
-    tl.to("#m-o2", { borderColor: "#0071e3", duration: 0.12 }, «27.02» - 0.04);
-    tl.fromTo("#m-o2", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, «27.02» - 0.02);
+    rise(tl, "#m-b2", «25.43» - 0.08);
+    tl.fromTo("#m-card", { scale: 1 }, { scale: 1.04, duration: 0.12, yoyo: true, repeat: 1, immediateRender: false }, «25.43»);
+    tl.fromTo("#m-alert", { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.28, ease: "back.out(2)" }, «25.43»);
+    tl.to(["#m-card", "#m-alert"], { y: 1500, duration: 0.3, ease: "power3.in" }, «25.98» - 0.14);
+    sink(tl, "#m-b1", «25.98» - 0.15); sink(tl, "#m-b2", «25.98» - 0.15);
+    rise(tl, "#m-c1", «25.98» + 0.05);
+    tl.fromTo(".m-opt", { y: 300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.42, ease: "expo.out", stagger: 0.08 }, «25.98» + 0.1);
+    rise(tl, "#m-c2", «26.42» - 0.08);
+    tl.fromTo("#m-cur", { opacity: 0, x: 220, y: 300 }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: "power3.out" }, «26.42» - 0.15);
+    tl.to("#m-cur", { scale: 0.8, duration: 0.07, yoyo: true, repeat: 1 }, «26.78» - 0.1);
+    tl.to("#m-o1", { borderColor: "#d2d2d7", duration: 0.12 }, «26.78» - 0.04);
+    tl.to("#m-o2", { borderColor: "#0071e3", duration: 0.12 }, «26.78» - 0.04);
+    tl.fromTo("#m-o2", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, «26.78» - 0.02);
     exit(tl, "#s9-st", "U", DUR - 0.2);''', ALERT_CSS + '''
     .m-dot { display: inline-block; width: 18px; height: 18px; border-radius: 50%; margin-right: 10px; }
     .m-opt { border: 5px solid #d2d2d7; border-radius: 30px; padding: 46px 52px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; font: 600 62px/1 "Inter Display"; letter-spacing: -0.02em; background: #fff; }
     .m-opt small { font: 400 34px/1 "Inter Display"; color: #86868b; }''',
-    fx=[('whoosh', 21.07, 0.3), ('typing', 21.5, 0.14), ('pop', 23.045, 0.3), ('whoosh-short', 23.75, 0.22), ('ping', 25.08, 0.2),
-        ('whoosh', 25.36, 0.28), ('click-soft', 26.94, 0.4), ('pop', 26.98, 0.25)])
+    fx=[('whoosh', 21.07, 0.3), ('typing', 21.5, 0.14), ('pop', 23.045, 0.3), ('whoosh-short', 23.75, 0.22), ('ping', 25.43, 0.2),
+        ('whoosh', 25.84, 0.28), ('click-soft', 26.70, 0.4), ('pop', 26.74, 0.25)])
 
-add('s10', 27.64, 29.61, f'''      <div id="k-n" style="position:absolute;left:0;right:0;top:640px;display:flex;justify-content:center;align-items:center;font:700 290px/300px Inter;letter-spacing:-0.045em;color:{BURG}"><span>+</span><span style="display:inline-block;height:300px;overflow:hidden"><span id="k-col" style="display:block"><span style="display:block">100</span><span style="display:block">200</span></span></span><span style="margin-left:0.12em">€</span></div>
+add('s10', 27.20, 29.13, f'''      <div id="k-n" style="position:absolute;left:0;right:0;top:640px;display:flex;justify-content:center;align-items:center;font:700 290px/300px Inter;letter-spacing:-0.045em;color:{BURG}"><span>+</span><span style="display:inline-block;height:300px;overflow:hidden"><span id="k-col" style="display:block"><span style="display:block">100</span><span style="display:block">200</span></span></span><span style="margin-left:0.12em">€</span></div>
+      {zone(ln('k-c', 'costa', 't-sans t-mut'))}
       {zone(ln('k-l', 'in più', 't-it', 'font-size:118px'), top=1000)}''', '''    enter(tl, "#k-st", "U");
+    rise(tl, "#k-c", 0.03);
     tl.fromTo("#k-n", { scale: 1.35 }, { scale: 1, duration: 0.35, ease: "expo.out" }, 0.04);
-    tl.fromTo("#k-col", { y: 0 }, { y: -300, duration: 0.3, ease: "expo.out" }, «28.28» - 0.06);
-    punch(tl, "#k-n", «28.28» - 0.04, 1.2);
-    rise(tl, "#k-l", «29.09» - 0.1);
-    tl.to("#k-n", { scale: 1.07, duration: 0.5, ease: "none" }, «29.09»);
+    tl.fromTo("#k-col", { y: 0 }, { y: -300, duration: 0.3, ease: "expo.out" }, «27.82» - 0.06);
+    punch(tl, "#k-n", «27.82» - 0.04, 1.2);
+    rise(tl, "#k-l", «28.67» - 0.1);
+    tl.to("#k-n", { scale: 1.07, duration: 0.5, ease: "none" }, «28.67»);
     exit(tl, "#k-st", "L", DUR - 0.2);'''.replace('k-st', 's10-st'),
-    fx=[('whoosh-short', 27.62, 0.3), ('pop', 27.68, 0.32), ('pop', 28.26, 0.36), ('key-press', 29.0, 0.22)])
+    fx=[('whoosh-short', 27.18, 0.3), ('pop', 27.26, 0.32), ('pop', 27.8, 0.36), ('key-press', 28.6, 0.22)])
 
-add('s11', 29.61, 35.38, f'''      {zone(ln('w-a1', "secondo un'analisi del", 't-sans t-mut'), ln('w-a2', 'Wall Street Journal', 't-it', mt=-24))}
-      {zone(ln('w-b1', 'a loro costa', 't-sans t-mut'), ln('w-b2', 'circa un terzo', 't-it acc', 'font-size:112px', mt=-24))}
-      <div id="w-bL" style="position:absolute;left:230px;top:760px;width:250px;height:640px;border-radius:28px;background:#1d1d1f;transform-origin:50% 100%"></div>
-      <div id="w-bR" style="position:absolute;left:600px;top:1187px;width:250px;height:213px;border-radius:28px;background:{BURG};transform-origin:50% 100%"></div>
-      <div id="w-dash" style="position:absolute;left:230px;top:1183px;width:620px;border-top:5px dashed #c7c7cc;transform-origin:left center"></div>
-      <div id="w-third" style="position:absolute;left:560px;width:330px;top:1030px;text-align:center;font:700 124px/1 Inter;letter-spacing:-0.04em;color:{BURG}">1/3</div>
-      <div id="w-lL" style="position:absolute;left:180px;width:350px;top:1430px;text-align:center;font:600 46px/1 Inter">paghi tu</div>
-      <div id="w-lR" style="position:absolute;left:550px;width:350px;top:1430px;text-align:center;font:600 46px/1 Inter;color:{BURG}">costa a loro</div>
-      <div id="w-sel" class="sel" style="left:226px;top:1412px;width:258px;height:82px">{SEL}</div>
-      <div class="tag" id="w-tag" style="top:1570px">Fonte: The Wall Street Journal</div>''', '''    enter(tl, "#s11-st", "L");
-    rise(tl, "#w-a1", 0.06);
-    rise(tl, "#w-a2", «30.80» - 0.1);
-    tl.fromTo("#w-tag", { opacity: 0 }, { opacity: 1, duration: 0.3 }, «30.80»);
-    sink(tl, "#w-a1", «31.84» - 0.18); sink(tl, "#w-a2", «31.84» - 0.18);
-    tl.fromTo("#w-bL", { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease: "expo.out" }, «31.84»);
-    tl.fromTo("#w-lL", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, «31.84» + 0.2);
-    rise(tl, "#w-b1", «32.58» - 0.06);
-    tl.fromTo("#w-bR", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "expo.out" }, «32.89»);
-    tl.fromTo("#w-lR", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, «32.89» + 0.2);
-    rise(tl, "#w-b2", «33.20»);
-    tl.fromTo("#w-dash", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, «33.56»);
-    pop(tl, "#w-third", «33.71»);
-    select(tl, "#w-sel", null, «34.73» - 0.1);
-    punch(tl, "#w-bL", «34.73», 1.07);
-    exit(tl, "#s11-st", "Z", DUR - 0.18);''',
-    fx=[('whoosh', 29.59, 0.3), ('key-press', 30.72, 0.22), ('whoosh-short', 31.7, 0.24), ('pop', 31.86, 0.26), ('pop', 32.9, 0.28),
-        ('ping', 33.7, 0.2), ('click-soft', 34.72, 0.36)])
+MESI = ''.join(f'<i class="cl-m">{m}</i>' for m in ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'])
+CLB = ''.join(f'<line id="cl-b-{k}" class="cl-bar" x1="{290 + k * 100}" y1="690" x2="{290 + k * 100}" y2="1100"/>' for k in range(6))
+CLY = ''.join(f'<span style="display:block">{y}</span>' for y in (2026, 2027, 2028, 2029, 2030))
+add('s11', 29.13, 36.19, f'''      {zone(ln('cl-a1', 'non lo compri?', 't-it', 'font-size:108px'))}
+      {zone(ln('cl-b1', 'allora paghi', 't-sans t-mut'))}
+      {zone(ln('cl-c1', 'pochi euro al mese', 't-it'))}
+      {zone(ln('cl-d1', 'ogni mese', 't-it', 'font-size:120px'))}
+      {zone(ln('cl-e1', 'per sempre', 't-it acc', 'font-size:128px'))}
+      {zone(ln('cl-f1', 'ed è solo', 't-sans t-mut'), ln('cl-f2', 'la prima gabbia', 't-it split gold', 'font-size:108px', mt=-24))}
+      <div id="cl-opt" style="position:absolute;left:140px;top:820px;width:800px;border:5px solid #d2d2d7;border-radius:30px;padding:46px 52px;display:flex;justify-content:space-between;align-items:center;font:600 62px/1 Inter;letter-spacing:-0.02em;background:#fff"><span>256 GB</span><span style="color:{BURG}">+200 €</span><i id="cl-x" style="position:absolute;left:30px;right:30px;top:50%;height:9px;margin-top:-4px;border-radius:5px;background:#ff3b30;transform-origin:left center"></i></div>
+      <img id="cl-logo" class="mul" src="assets/img/logo-icloud.png" style="position:absolute;left:230px;top:770px;width:620px;display:block" alt="" />
+      <div id="cl-row" style="position:absolute;left:110px;top:1130px;width:860px;border-radius:34px;background:#f2f2f7;padding:34px 44px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font:600 50px/1 Inter;letter-spacing:-0.02em">iCloud+</div><div style="font:400 32px/1 Inter;color:#86868b;margin-top:12px">Si rinnova ogni mese</div></div>
+        <div style="height:60px;overflow:hidden;font:600 52px/60px Inter;color:#86868b"><span id="cl-ys" style="display:block">{CLY}</span></div>
+      </div>
+      <div id="cl-grid" style="position:absolute;left:110px;top:1300px;width:860px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px">{MESI}</div>
+      <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><rect id="cl-cage" x="190" y="690" width="700" height="410" rx="64" fill="none" stroke="{GOLD}" stroke-width="11"/>{CLB}</svg>
+      <div id="cl-lock" style="position:absolute;left:470px;top:1030px;width:140px;height:140px;border-radius:50%;background:{GOLD};display:flex;align-items:center;justify-content:center">{LOCK}</div>''', '''    enter(tl, "#s11-st", "L");
+    rise(tl, "#cl-a1", 0.03);
+    tl.fromTo("#cl-opt", { y: 220, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "expo.out" }, 0.05);
+    tl.fromTo("#cl-x", { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power2.out" }, 0.42);
+    tl.to("#cl-opt", { y: 1300, rotation: 9, duration: 0.3, ease: "power3.in" }, «30.02» - 0.2);
+    sink(tl, "#cl-a1", «30.02» - 0.18);
+    rise(tl, "#cl-b1", «30.02»);
+    tl.fromTo("#cl-logo", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, «30.48»);
+    tl.fromTo("#cl-logo", { scale: 1.14 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «30.92»);
+    sink(tl, "#cl-b1", «31.45» - 0.16);
+    rise(tl, "#cl-c1", «31.45»);
+    tl.fromTo("#cl-row", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "expo.out" }, «31.45» + 0.05);
+    sink(tl, "#cl-c1", «32.67» - 0.16);
+    rise(tl, "#cl-d1", «32.67»);
+    tl.fromTo(".cl-m", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.22, ease: "back.out(2.4)", stagger: 0.035 }, «32.67» - 0.25);
+    tl.to(".cl-m", { backgroundColor: "#7a0f24", color: "#ffffff", duration: 0.08, stagger: 0.05 }, «32.67» + 0.12);
+    sink(tl, "#cl-d1", «33.69» - 0.16);
+    rise(tl, "#cl-e1", «33.69»);
+    for (let k = 1; k <= 4; k++) { tl.to("#cl-ys", { y: -60 * k, duration: 0.14, ease: "power3.inOut" }, «33.69» + (k - 1) * 0.17); tl.fromTo("#cl-grid", { scale: 1.05 }, { scale: 1, duration: 0.15, ease: "power2.out", immediateRender: false }, «33.69» + (k - 1) * 0.17); }
+    sink(tl, "#cl-e1", «34.61» - 0.16);
+    rise(tl, "#cl-f1", «34.61»);
+    tl.to(["#cl-row", "#cl-grid"], { y: 900, opacity: 0, duration: 0.35, ease: "power3.in" }, «34.61» - 0.1);
+    tl.to("#cl-logo", { scale: 0.86, duration: 0.5, ease: "expo.out" }, «34.61»);
+    draw(tl, "#cl-cage", «34.61» + 0.05, 0.7);
+    flip(tl, "#cl-f2", «35.26» - 0.1, 0.03);
+    for (let k = 0; k < 6; k++) draw(tl, "#cl-b-" + k, «35.26» + k * 0.05, 0.28);
+    pop(tl, "#cl-lock", «35.44» + 0.14);
+    exit(tl, "#s11-st", "Z", DUR - 0.18);''', f'''
+    .cl-m {{ display: block; height: 78px; border-radius: 39px; background: #f2f2f7; color: #3c3c43; font: 600 36px/78px "Inter Display"; font-style: normal; text-align: center; }}
+    .cl-bar {{ stroke: {GOLD}; stroke-width: 9; stroke-linecap: round; }}''',
+    fx=[('whoosh', 29.11, 0.3), ('click-soft', 29.55, 0.36), ('whoosh-short', 29.84, 0.24), ('pop', 30.48, 0.32), ('ping', 30.92, 0.18), ('whoosh-short', 31.3, 0.2), ('pop', 31.52, 0.24),
+        ('typing', 32.5, 0.22), ('typing', 33.1, 0.2), ('key-press', 33.69, 0.24), ('key-press', 33.86, 0.24), ('key-press', 34.03, 0.24), ('key-press', 34.2, 0.24),
+        ('whoosh-cinematic', 34.5, 0.22), ('sparkle', 35.2, 0.18), ('click', 35.6, 0.42), ('impact-bass-1', 35.58, 0.22)])
 
 # ---------------------------------------------------------------- trick 3: le bolle verdi (dark)
 title('s12', 35.38, 37.13, 3, 'le bolle verdi', 35.76, GREEN, dark=True)
@@ -362,9 +389,9 @@ add('s20', 69.19, 82.42, f'''      {zone(ln('x-t0', '<span class="t-sans t-mut">
         <img id="x-air" class="mul x-it" src="assets/img/airpods.png" style="position:absolute;left:85px;top:780px;width:240px" alt="" />
         <img id="x-wat" class="mul x-it" src="assets/img/watch.png" style="position:absolute;left:775px;top:767px;width:200px" alt="" />
         <img id="x-mac" class="mul x-it" src="assets/img/macbook.png" style="position:absolute;left:320px;top:1375px;width:440px" alt="" />
-        <div id="x-icl" class="ico ico-c x-it" style="position:absolute;left:135px;top:1220px">{CLOUD}</div>
-        <div id="x-mus" class="ico ico-m x-it" style="position:absolute;left:805px;top:1220px">{NOTE}</div>
-        <div id="x-tv" class="ico ico-t x-it" style="position:absolute;left:470px;top:690px">tv</div>
+        <img id="x-icl" class="x-it" src="assets/img/logo-icloud-icon.png" style="position:absolute;left:135px;top:1220px;width:140px" alt="" />
+        <img id="x-mus" class="x-it" src="assets/img/logo-music.png" style="position:absolute;left:805px;top:1220px;width:140px" alt="" />
+        <img id="x-tv" class="x-it" src="assets/img/logo-tv.png" style="position:absolute;left:470px;top:690px;width:140px" alt="" />
         <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><rect id="x-cage" x="50" y="640" width="980" height="1110" rx="84" fill="none" stroke="{GOLD}" stroke-width="12"/>{BARS}</svg>
         <div id="x-lock" style="position:absolute;left:470px;top:1680px;width:140px;height:140px;border-radius:50%;background:{GOLD};display:flex;align-items:center;justify-content:center">{LOCK}</div>
       </div>''', '''    enter(tl, "#s20-st", "L");
@@ -400,7 +427,7 @@ add('s20', 69.19, 82.42, f'''      {zone(ln('x-t0', '<span class="t-sans t-mut">
 
 add('s21', 82.42, 87.31, f'''      {zone(ln('v-a1', 'solo i servizi', 't-it'))}
       <div id="v-ic" style="position:absolute;left:290px;top:560px;width:500px;display:flex;justify-content:space-between">
-        <div class="ico ico-c v-i">{CLOUD}</div><div class="ico ico-m v-i">{NOTE}</div><div class="ico ico-t v-i">tv</div>
+        <img class="v-i" src="assets/img/logo-icloud-icon.png" style="width:150px;display:block" alt="" /><img class="v-i" src="assets/img/logo-music.png" style="width:150px;display:block" alt="" /><img class="v-i" src="assets/img/logo-tv.png" style="width:150px;display:block" alt="" />
       </div>
       {zone(ln('v-p', 'più di', 't-sans t-mut'), top=770)}
       <div id="v-n" style="position:absolute;left:0;right:0;top:870px;text-align:center;font:700 380px/1 Inter;letter-spacing:-0.05em;color:{BURG}"><span id="v-v">0</span></div>

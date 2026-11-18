@@ -53,7 +53,7 @@
     <div id="s9-st" class="st" data-layout-allow-overlap>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="m-a1" class="t-sans t-mut">il modello base</span></span><span class="line" style="margin-top:-24px"><span id="m-a2" class="t-it">ha poco spazio</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="m-b1" class="t-sans t-mut">dopo un anno di foto</span></span><span class="line" style="margin-top:-24px"><span id="m-b2" class="t-it" style="font-size:118px;color:#ff3b30">è pieno</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="m-c1" class="t-sans t-mut">la volta dopo prendi</span></span><span class="line" style="margin-top:-24px"><span id="m-c2" class="t-it">quello più grande</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="m-c1" class="t-sans t-mut">e quello</span></span><span class="line" style="margin-top:-24px"><span id="m-c2" class="t-it">più grande</span></span></div>
       <div id="m-card" style="position:absolute;left:90px;top:720px;width:900px;border-radius:44px;background:#f2f2f7;padding:50px 54px 46px">
         <div style="display:flex;justify-content:space-between;align-items:baseline;font:600 58px/1 'SF Pro Display';letter-spacing:-0.02em"><span>iPhone</span><span>128 GB</span></div>
         <div style="font:400 34px/1 'SF Pro Display';color:#86868b;margin-top:16px"><span id="m-used">62</span> GB su 128 GB utilizzati</div>
@@ -110,20 +110,20 @@
     rise(tl, "#m-b1", 2.81);
     tl.to("#m-cov", { scaleX: 0, duration: 0.9, ease: "power1.in" }, 2.81 + 0.1);
     count(tl, "#m-used", 102, 128, 2.81 + 0.1, 0.9);
-    rise(tl, "#m-b2", 3.99 - 0.08);
-    tl.fromTo("#m-card", { scale: 1 }, { scale: 1.04, duration: 0.12, yoyo: true, repeat: 1, immediateRender: false }, 3.99);
-    tl.fromTo("#m-alert", { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.28, ease: "back.out(2)" }, 3.99);
-    tl.to(["#m-card", "#m-alert"], { y: 1500, duration: 0.3, ease: "power3.in" }, 4.41 - 0.14);
-    sink(tl, "#m-b1", 4.41 - 0.15); sink(tl, "#m-b2", 4.41 - 0.15);
-    rise(tl, "#m-c1", 4.41 + 0.05);
-    tl.fromTo(".m-opt", { y: 300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.42, ease: "expo.out", stagger: 0.08 }, 4.41 + 0.1);
-    rise(tl, "#m-c2", 5.40 - 0.08);
-    tl.fromTo("#m-cur", { opacity: 0, x: 220, y: 300 }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: "power3.out" }, 5.40);
-    tl.to("#m-cur", { scale: 0.8, duration: 0.07, yoyo: true, repeat: 1 }, 5.93 - 0.1);
-    tl.to("#m-o1", { borderColor: "#d2d2d7", duration: 0.12 }, 5.93 - 0.04);
-    tl.to("#m-o2", { borderColor: "#0071e3", duration: 0.12 }, 5.93 - 0.04);
-    tl.fromTo("#m-o2", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 5.93 - 0.02);
-    exit(tl, "#s9-st", "U", 6.55 - 0.2);
+    rise(tl, "#m-b2", 4.34 - 0.08);
+    tl.fromTo("#m-card", { scale: 1 }, { scale: 1.04, duration: 0.12, yoyo: true, repeat: 1, immediateRender: false }, 4.34);
+    tl.fromTo("#m-alert", { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.28, ease: "back.out(2)" }, 4.34);
+    tl.to(["#m-card", "#m-alert"], { y: 1500, duration: 0.3, ease: "power3.in" }, 4.89 - 0.14);
+    sink(tl, "#m-b1", 4.89 - 0.15); sink(tl, "#m-b2", 4.89 - 0.15);
+    rise(tl, "#m-c1", 4.89 + 0.05);
+    tl.fromTo(".m-opt", { y: 300, opacity: 0 }, { y: 0, opacity: 1, duration: 0.42, ease: "expo.out", stagger: 0.08 }, 4.89 + 0.1);
+    rise(tl, "#m-c2", 5.33 - 0.08);
+    tl.fromTo("#m-cur", { opacity: 0, x: 220, y: 300 }, { opacity: 1, x: 0, y: 0, duration: 0.4, ease: "power3.out" }, 5.33 - 0.15);
+    tl.to("#m-cur", { scale: 0.8, duration: 0.07, yoyo: true, repeat: 1 }, 5.69 - 0.1);
+    tl.to("#m-o1", { borderColor: "#d2d2d7", duration: 0.12 }, 5.69 - 0.04);
+    tl.to("#m-o2", { borderColor: "#0071e3", duration: 0.12 }, 5.69 - 0.04);
+    tl.fromTo("#m-o2", { scale: 1 }, { scale: 1.05, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 5.69 - 0.02);
+    exit(tl, "#s9-st", "U", 6.11 - 0.2);
     window.__timelines["s9"] = tl;
   </script>
 </template>

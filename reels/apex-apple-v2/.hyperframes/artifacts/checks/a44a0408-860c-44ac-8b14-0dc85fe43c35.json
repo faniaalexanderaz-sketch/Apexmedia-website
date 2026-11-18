@@ -1,0 +1,6809 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 8,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "nested_media_start_basis_ambiguous",
+        "severity": "warning",
+        "message": "<video id=\"s1-vid\"> has data-start=\"0.40\" inside a sub-composition. Nested media timing is local to its composition by default; a nonzero value can be confused with a legacy root-global timestamp.",
+        "selector": "#s1-vid",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s1.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Keep data-start=\"0.40\" if it is composition-local. If this is a legacy root-global timestamp, add data-hf-media-start-basis=\"global\"; otherwise convert it to local time by subtracting the host start."
+      },
+      {
+        "code": "overlapping_gsap_tweens",
+        "severity": "warning",
+        "message": "GSAP tweens overlap on \"#s1-mac\" for scale between 0.28s and 0.40s.",
+        "selector": "#s1-mac",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s1.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`."
+      },
+      {
+        "code": "overlapping_gsap_tweens",
+        "severity": "warning",
+        "message": "GSAP tweens overlap on \"#cl-logo\" for scale between 1.79s and 1.80s.",
+        "selector": "#cl-logo",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s11.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`."
+      },
+      {
+        "code": "overlapping_gsap_tweens",
+        "severity": "warning",
+        "message": "GSAP tweens overlap on \"#f-badge\" for scale between 2.62s and 2.77s.",
+        "selector": "#f-badge",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s17.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`."
+      },
+      {
+        "code": "nested_media_start_basis_ambiguous",
+        "severity": "warning",
+        "message": "<video id=\"o-vid\"> has data-start=\"0.04\" inside a sub-composition. Nested media timing is local to its composition by default; a nonzero value can be confused with a legacy root-global timestamp.",
+        "selector": "#o-vid",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s23.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Keep data-start=\"0.04\" if it is composition-local. If this is a legacy root-global timestamp, add data-hf-media-start-basis=\"global\"; otherwise convert it to local time by subtracting the host start."
+      },
+      {
+        "code": "overlapping_gsap_tweens",
+        "severity": "warning",
+        "message": "GSAP tweens overlap on \"#o-B\" for scale between 2.24s and 2.30s.",
+        "selector": "#o-B",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s23.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`."
+      },
+      {
+        "code": "nested_media_start_basis_ambiguous",
+        "severity": "warning",
+        "message": "<video id=\"s4-phi\"> has data-start=\"3.1\" inside a sub-composition. Nested media timing is local to its composition by default; a nonzero value can be confused with a legacy root-global timestamp.",
+        "selector": "#s4-phi",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s4.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Keep data-start=\"3.1\" if it is composition-local. If this is a legacy root-global timestamp, add data-hf-media-start-basis=\"global\"; otherwise convert it to local time by subtracting the host start."
+      },
+      {
+        "code": "gsap_repeated_fromto_without_baseline",
+        "severity": "warning",
+        "message": "4 tl.fromTo() calls target \"#s4-ring\" with no stable baseline. The last-authored fromTo \"from\" values become the element's resting state for any seek before the first tween actually runs, because GSAP applies fromTo from-values at authoring time (immediateRender), not at tween position.",
+        "selector": "#s4-ring",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/s4.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add `immediateRender: false` to every fromTo except the earliest-positioned one (at 0.66s), so pre-first-tween seeks keep its \"from\" values. A hiding `tl.set(..., 0)` baseline trips gsap_timeline_set_initial_hide, and a `gsap.set` authored before the fromTo calls is overwritten by them."
+      }
+    ],
+    "filesScanned": 25
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 8,
+    "warningCount": 26,
+    "infoCount": 29,
+    "findings": [
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-t0 > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 281.34,
+          "top": 241.64,
+          "right": 479.88,
+          "bottom": 339.64,
+          "width": 198.53,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "prima",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 281.34,
+          "y": 241.64,
+          "width": 198.53,
+          "height": 98
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-t0 > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 514.33,
+          "top": 241.64,
+          "right": 798.64,
+          "bottom": 339.64,
+          "width": 284.31,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "l'iPhone",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 514.33,
+          "y": 241.64,
+          "width": 284.31,
+          "height": 98
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-t2",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 315.11,
+          "top": 489.32,
+          "right": 764.88,
+          "bottom": 587.32,
+          "width": 449.77,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "poi l'orologio",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 315.11,
+          "y": 489.32,
+          "width": 449.77,
+          "height": 98
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-t3",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 376.48,
+          "top": 489.32,
+          "right": 703.52,
+          "bottom": 587.32,
+          "width": 327.03,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "poi il Mac",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 376.48,
+          "y": 489.32,
+          "width": 327.03,
+          "height": 98
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-w1",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 133.91,
+          "top": 489.32,
+          "right": 504.66,
+          "bottom": 587.32,
+          "width": 370.75,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "poi iCloud,",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 133.91,
+          "y": 489.32,
+          "width": 370.75,
+          "height": 98
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-w2",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 537.11,
+          "top": 489.32,
+          "right": 812.63,
+          "bottom": 587.32,
+          "width": 275.52,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "musica,",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 537.11,
+          "y": 489.32,
+          "width": 275.52,
+          "height": 98
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-w3",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 845.08,
+          "top": 489.32,
+          "right": 946.09,
+          "bottom": 587.32,
+          "width": 101.02,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "TV",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 845.08,
+          "y": 489.32,
+          "width": 101.02,
+          "height": 98
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 71.977,
+        "selector": "#x-t5b",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 300.64,
+          "top": 606.72,
+          "right": 779.36,
+          "bottom": 730.72,
+          "width": 478.72,
+          "height": 124
+        },
+        "containerSelector": "#x-cam",
+        "text": "con gli altri",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 300.64,
+          "y": 606.72,
+          "width": 478.72,
+          "height": 124
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 71.977,
+        "selector": "#x-t0",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 281.34,
+          "top": 247.64,
+          "right": 798.64,
+          "bottom": 334.55,
+          "width": 517.3,
+          "height": 86.91
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(1) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "top": 124.36
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 281.34,
+          "y": 247.64,
+          "width": 517.3,
+          "height": 86.91
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "selector": "#s3-col > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 449.61,
+          "y": -1353.38,
+          "width": 180.78,
+          "height": 530.14
+        },
+        "time": 5.537,
+        "rect": {
+          "left": 449.61,
+          "top": -1353.38,
+          "right": 630.39,
+          "bottom": -823.24,
+          "width": 180.78,
+          "height": 530.14
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "1",
+        "message": "<div> \"1\" is outside the safe area: TikTok (top edge), Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "selector": "#s3-col > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 422.39,
+          "y": -867.68,
+          "width": 235.22,
+          "height": 530.14
+        },
+        "time": 5.537,
+        "rect": {
+          "left": 422.39,
+          "top": -867.68,
+          "right": 657.61,
+          "bottom": -337.54,
+          "width": 235.22,
+          "height": 530.14
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "2",
+        "message": "<div> \"2\" is outside the safe area: TikTok (top edge), Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "selector": "#s3-col > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 416.52,
+          "y": -381.98,
+          "width": 246.96,
+          "height": 530.13
+        },
+        "time": 5.537,
+        "rect": {
+          "left": 416.52,
+          "top": -381.98,
+          "right": 663.48,
+          "bottom": 148.15,
+          "width": 246.96,
+          "height": 530.13
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "3",
+        "message": "<div> \"3\" is outside the safe area: TikTok (top edge), Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "selector": "#s3-col > div:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 412.94,
+          "y": 103.72,
+          "width": 254.1,
+          "height": 530.13
+        },
+        "time": 5.537,
+        "rect": {
+          "left": 412.94,
+          "top": 103.72,
+          "right": 667.04,
+          "bottom": 633.85,
+          "width": 254.1,
+          "height": 530.13
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "4",
+        "message": "<div> \"4\" is outside the safe area: TikTok (top edge), Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "selector": "#s6-sheet > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s6.html",
+        "bbox": {
+          "x": 190.06,
+          "y": 372.12,
+          "width": 699.88,
+          "height": 98
+        },
+        "time": 16.61,
+        "rect": {
+          "left": 190.06,
+          "top": 372.12,
+          "right": 889.94,
+          "bottom": 470.12,
+          "width": 699.88,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "funziona benissimo",
+        "message": "<span> \"funziona benissimo\" is outside the safe area: YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 16.61,
+        "lastSeen": 16.61,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          16.61
+        ]
+      },
+      {
+        "selector": "#s6-pct",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s6.html",
+        "bbox": {
+          "x": 418.86,
+          "y": 1128,
+          "width": 242.27,
+          "height": 143
+        },
+        "time": 16.61,
+        "rect": {
+          "left": 418.86,
+          "top": 1128,
+          "right": 661.13,
+          "bottom": 1271,
+          "width": 242.27,
+          "height": 143
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "% 96",
+        "message": "<div> \"% 96\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 16.61,
+        "lastSeen": 16.61,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          16.61
+        ]
+      },
+      {
+        "selector": "#k-n > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s10.html",
+        "bbox": {
+          "x": 90.33,
+          "y": 617,
+          "width": 174.58,
+          "height": 346
+        },
+        "time": 27.683,
+        "rect": {
+          "left": 90.33,
+          "top": 617,
+          "right": 264.91,
+          "bottom": 963,
+          "width": 174.58,
+          "height": 346
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "+",
+        "message": "<span> \"+\" is outside the safe area: TikTok (left edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 27.683,
+        "lastSeen": 27.683,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.683
+        ]
+      },
+      {
+        "selector": "#k-col > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s10.html",
+        "bbox": {
+          "x": 264.91,
+          "y": 917,
+          "width": 515.37,
+          "height": 346
+        },
+        "time": 27.683,
+        "rect": {
+          "left": 264.91,
+          "top": 917,
+          "right": 780.28,
+          "bottom": 1263,
+          "width": 515.37,
+          "height": 346
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "200",
+        "message": "<span> \"200\" is outside the safe area: TikTok (right and bottom edges), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 27.683,
+        "lastSeen": 27.683,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.683
+        ]
+      },
+      {
+        "selector": "#k-n > span:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s10.html",
+        "bbox": {
+          "x": 815.08,
+          "y": 617,
+          "width": 174.58,
+          "height": 346
+        },
+        "time": 27.683,
+        "rect": {
+          "left": 815.08,
+          "top": 617,
+          "right": 989.66,
+          "bottom": 963,
+          "width": 174.58,
+          "height": 346
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "€",
+        "message": "<span> \"€\" is outside the safe area: TikTok (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 27.683,
+        "lastSeen": 27.683,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.683
+        ]
+      },
+      {
+        "selector": "#s10-st > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s10.html",
+        "bbox": {
+          "x": 405.42,
+          "y": 1166.86,
+          "width": 269.14,
+          "height": 140
+        },
+        "time": 27.683,
+        "rect": {
+          "left": 405.42,
+          "top": 1166.86,
+          "right": 674.56,
+          "bottom": 1306.86,
+          "width": 269.14,
+          "height": 140
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "in più",
+        "message": "<span> \"in più\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 27.683,
+        "lastSeen": 27.683,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.683
+        ]
+      },
+      {
+        "selector": "#s15-st > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s15.html",
+        "bbox": {
+          "x": 265.02,
+          "y": 241.64,
+          "width": 549.96,
+          "height": 98
+        },
+        "time": 49.83,
+        "rect": {
+          "left": 265.02,
+          "top": 241.64,
+          "right": 814.98,
+          "bottom": 339.64,
+          "width": 549.96,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "in una causa del",
+        "message": "<span> \"in una causa del\" is outside the safe area: Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 49.83,
+        "lastSeen": 49.83,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          49.83
+        ]
+      },
+      {
+        "selector": "#e-q1",
+        "dataAttributes": {
+          "data-done": "1"
+        },
+        "sourceFile": "compositions/s15.html",
+        "bbox": {
+          "x": 128.24,
+          "y": 1011.33,
+          "width": 690.21,
+          "height": 70.32
+        },
+        "time": 49.83,
+        "rect": {
+          "left": 128.24,
+          "top": 1011.33,
+          "right": 818.45,
+          "bottom": 1081.65,
+          "width": 690.21,
+          "height": 70.32
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "A p r i r e i M e s s a g e a d A n d r o i d",
+        "message": "<div> \"A p r i r e i M e s s a g e a d A n d r o i d\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 49.83,
+        "lastSeen": 49.83,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          49.83
+        ]
+      },
+      {
+        "selector": "#e-tag",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s15.html",
+        "bbox": {
+          "x": 314.63,
+          "y": 1570,
+          "width": 450.75,
+          "height": 76.39
+        },
+        "time": 49.83,
+        "rect": {
+          "left": 314.63,
+          "top": 1570,
+          "right": 765.38,
+          "bottom": 1646.39,
+          "width": 450.75,
+          "height": 76.39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Email del 2013, citata nella causaStati Uniti co",
+        "message": "<div> \"Email del 2013, citata nella causaStati Uniti co\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 49.83,
+        "lastSeen": 49.83,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          49.83
+        ]
+      },
+      {
+        "selector": "#s18-st > div:nth-of-type(1) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 225.57,
+          "y": 572.23,
+          "width": 726.87,
+          "height": 98
+        },
+        "time": 60.903,
+        "rect": {
+          "left": 225.57,
+          "top": 572.23,
+          "right": 952.44,
+          "bottom": 670.23,
+          "width": 726.87,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "aggiornamenti spinti",
+        "message": "<span> \"aggiornamenti spinti\" is outside the safe area: YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "selector": "#s18-st > div:nth-of-type(2) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 258.98,
+          "y": 489.32,
+          "width": 660.04,
+          "height": 98
+        },
+        "time": 60.903,
+        "rect": {
+          "left": 258.98,
+          "top": 489.32,
+          "right": 919.02,
+          "bottom": 587.32,
+          "width": 660.04,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "sugli iPhone vecchi",
+        "message": "<span> \"sugli iPhone vecchi\" is outside the safe area: YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "selector": "#s18-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 272.08,
+          "y": 572.23,
+          "width": 633.83,
+          "height": 98
+        },
+        "time": 60.903,
+        "rect": {
+          "left": 272.08,
+          "top": 572.23,
+          "right": 905.91,
+          "bottom": 670.23,
+          "width": 633.83,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "che li rallentavano",
+        "message": "<span> \"che li rallentavano\" is outside the safe area: YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "selector": "#s18-st > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 206.71,
+          "y": 541.7,
+          "width": 764.59,
+          "height": 143
+        },
+        "time": 60.903,
+        "rect": {
+          "left": 206.71,
+          "top": 541.7,
+          "right": 971.3,
+          "bottom": 684.7,
+          "width": 764.59,
+          "height": 143
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "senza avvisare",
+        "message": "<span> \"senza avvisare\" is outside the safe area: TikTok (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "selector": "#s20-st > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 281.34,
+          "y": 241.64,
+          "width": 517.3,
+          "height": 98
+        },
+        "time": 71.977,
+        "rect": {
+          "left": 281.34,
+          "top": 241.64,
+          "right": 798.64,
+          "bottom": 339.64,
+          "width": 517.3,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "prima l'iPhone",
+        "message": "<span> \"prima l'iPhone\" is outside the safe area: Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "selector": "#s20-st > div:nth-of-type(5) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 133.91,
+          "y": 489.32,
+          "width": 812.18,
+          "height": 98
+        },
+        "time": 71.977,
+        "rect": {
+          "left": 133.91,
+          "top": 489.32,
+          "right": 946.09,
+          "bottom": 587.32,
+          "width": 812.18,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "poi iCloud, musica, TV",
+        "message": "<span> \"poi iCloud, musica, TV\" is outside the safe area: YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "selector": "#s20-st > div:nth-of-type(6) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 139.8,
+          "y": 483.15,
+          "width": 800.39,
+          "height": 84
+        },
+        "time": 71.977,
+        "rect": {
+          "left": 139.8,
+          "top": 483.15,
+          "right": 940.19,
+          "bottom": 567.15,
+          "width": 800.39,
+          "height": 84
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "ogni pezzo funziona meglio",
+        "message": "<span> \"ogni pezzo funziona meglio\" is outside the safe area: YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "selector": "#s20-st > div:nth-of-type(2) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 338.42,
+          "y": 241.64,
+          "width": 403.16,
+          "height": 98
+        },
+        "time": 83.05,
+        "rect": {
+          "left": 338.42,
+          "top": 241.64,
+          "right": 741.58,
+          "bottom": 339.64,
+          "width": 403.16,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "poi le cuffie",
+        "message": "<span> \"poi le cuffie\" is outside the safe area: Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 83.05,
+        "lastSeen": 83.05,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          83.05
+        ]
+      },
+      {
+        "selector": "#s20-st > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 315.11,
+          "y": 241.64,
+          "width": 449.77,
+          "height": 98
+        },
+        "time": 83.05,
+        "rect": {
+          "left": 315.11,
+          "top": 241.64,
+          "right": 764.88,
+          "bottom": 339.64,
+          "width": 449.77,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "poi l'orologio",
+        "message": "<span> \"poi l'orologio\" is outside the safe area: Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 83.05,
+        "lastSeen": 83.05,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          83.05
+        ]
+      },
+      {
+        "selector": "#s20-st > div:nth-of-type(4) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 376.48,
+          "y": 241.64,
+          "width": 327.04,
+          "height": 98
+        },
+        "time": 83.05,
+        "rect": {
+          "left": 376.48,
+          "top": 241.64,
+          "right": 703.52,
+          "bottom": 339.64,
+          "width": 327.04,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "poi il Mac",
+        "message": "<span> \"poi il Mac\" is outside the safe area: Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 83.05,
+        "lastSeen": 83.05,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          83.05
+        ]
+      },
+      {
+        "selector": "#s23-st > div:nth-of-type(2) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s23.html",
+        "bbox": {
+          "x": 341.33,
+          "y": 241.64,
+          "width": 397.33,
+          "height": 98
+        },
+        "time": 94.123,
+        "rect": {
+          "left": 341.33,
+          "top": 241.64,
+          "right": 738.66,
+          "bottom": 339.64,
+          "width": 397.33,
+          "height": 98
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "e ogni anno",
+        "message": "<span> \"e ogni anno\" is outside the safe area: Instagram Reels (top edge), YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 94.123,
+        "lastSeen": 94.123,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          94.123
+        ]
+      },
+      {
+        "selector": "#s23-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s23.html",
+        "bbox": {
+          "x": 213.84,
+          "y": 274.83,
+          "width": 652.32,
+          "height": 134
+        },
+        "time": 94.123,
+        "rect": {
+          "left": 213.84,
+          "top": 274.83,
+          "right": 866.16,
+          "bottom": 408.83,
+          "width": 652.32,
+          "height": 134
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "ti fa spendere",
+        "message": "<span> \"ti fa spendere\" is outside the safe area: YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 94.123,
+        "lastSeen": 94.123,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          94.123
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 5.537,
+        "selector": "#s3-col > div:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 449.61,
+          "top": -1353.38,
+          "right": 630.39,
+          "bottom": -823.24,
+          "width": 180.78,
+          "height": 530.14
+        },
+        "containerSelector": "#root",
+        "text": "1",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "top": 1353.38
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 449.61,
+          "y": -1353.38,
+          "width": 180.78,
+          "height": 530.14
+        },
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 5.537,
+        "selector": "#s3-col > div:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 422.39,
+          "top": -867.68,
+          "right": 657.61,
+          "bottom": -337.54,
+          "width": 235.22,
+          "height": 530.14
+        },
+        "containerSelector": "#root",
+        "text": "2",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "top": 867.68
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 422.39,
+          "y": -867.68,
+          "width": 235.22,
+          "height": 530.14
+        },
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 5.537,
+        "selector": "#s3-col > div:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 416.52,
+          "top": -381.98,
+          "right": 663.48,
+          "bottom": 148.15,
+          "width": 246.96,
+          "height": 530.13
+        },
+        "containerSelector": "#root",
+        "text": "3",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "top": 381.98
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 416.52,
+          "y": -381.98,
+          "width": 246.96,
+          "height": 530.13
+        },
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 5.537,
+        "selector": "#s3-l3",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 286.17,
+          "top": 466.85,
+          "right": 793.83,
+          "bottom": 553.75,
+          "width": 507.66,
+          "height": 86.91
+        },
+        "containerSelector": "#s3 > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 360.91,
+          "right": 1000,
+          "bottom": 467.81,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 85.94
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 286.17,
+          "y": 466.85,
+          "width": 507.66,
+          "height": 86.91
+        },
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 5.537,
+        "selector": "#s3-col",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 333.32,
+          "top": -1330.64,
+          "right": 746.68,
+          "bottom": 1097.85,
+          "width": 413.36,
+          "height": 2428.49
+        },
+        "containerSelector": "#s3-num",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 333.32,
+          "top": 612.15,
+          "right": 746.68,
+          "bottom": 1097.85,
+          "width": 413.36,
+          "height": 485.7
+        },
+        "overflow": {
+          "top": 1942.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 333.32,
+          "y": -1330.64,
+          "width": 413.36,
+          "height": 2428.49
+        },
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 5.537,
+        "selector": "#s3-col",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 333.32,
+          "top": -1330.64,
+          "right": 746.68,
+          "bottom": 1097.85,
+          "width": 413.36,
+          "height": 2428.49
+        },
+        "containerSelector": "#s3-num",
+        "text": "1 2 3 4 5",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 333.32,
+          "top": 612.15,
+          "right": 746.68,
+          "bottom": 1097.85,
+          "width": 413.36,
+          "height": 485.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 333.32,
+          "y": -1330.64,
+          "width": 413.36,
+          "height": 2428.49
+        },
+        "firstSeen": 5.537,
+        "lastSeen": 5.537,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.537
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 27.683,
+        "selector": "#k-col",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 264.91,
+          "top": 640,
+          "right": 780.28,
+          "bottom": 1240,
+          "width": 515.38,
+          "height": 600
+        },
+        "containerSelector": "#k-n > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 264.91,
+          "top": 640,
+          "right": 780.28,
+          "bottom": 940,
+          "width": 515.38,
+          "height": 300
+        },
+        "overflow": {
+          "bottom": 300
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s10.html",
+        "bbox": {
+          "x": 264.91,
+          "y": 640,
+          "width": 515.38,
+          "height": 600
+        },
+        "firstSeen": 27.683,
+        "lastSeen": 27.683,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.683
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 27.683,
+        "selector": "#k-l",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 405.42,
+          "top": 1174.86,
+          "right": 674.56,
+          "bottom": 1299.93,
+          "width": 269.14,
+          "height": 125.08
+        },
+        "containerSelector": "#s10-st > div:nth-of-type(3) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 1000,
+          "right": 1000,
+          "bottom": 1145.08,
+          "width": 920,
+          "height": 145.08
+        },
+        "overflow": {
+          "bottom": 154.85
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s10.html",
+        "bbox": {
+          "x": 405.42,
+          "y": 1174.86,
+          "width": 269.14,
+          "height": 125.08
+        },
+        "firstSeen": 27.683,
+        "lastSeen": 27.683,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.683
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 38.757,
+        "selector": "#c-a2",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 196.33,
+          "top": 629.76,
+          "right": 883.66,
+          "bottom": 754.84,
+          "width": 687.33,
+          "height": 125.08
+        },
+        "containerSelector": "#s13-st > div:nth-of-type(1) > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 454.91,
+          "right": 1000,
+          "bottom": 599.98,
+          "width": 920,
+          "height": 145.08
+        },
+        "overflow": {
+          "bottom": 154.86
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s13.html",
+        "bbox": {
+          "x": 196.33,
+          "y": 629.76,
+          "width": 687.33,
+          "height": 125.08
+        },
+        "firstSeen": 38.757,
+        "lastSeen": 38.757,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          38.757
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 49.83,
+        "selector": "#e-a1",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 265.02,
+          "top": 247.64,
+          "right": 814.98,
+          "bottom": 334.55,
+          "width": 549.97,
+          "height": 86.91
+        },
+        "containerSelector": "#s15-st > div:nth-of-type(1) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "top": 124.36
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s15.html",
+        "bbox": {
+          "x": 265.02,
+          "y": 247.64,
+          "width": 549.97,
+          "height": 86.91
+        },
+        "firstSeen": 49.83,
+        "lastSeen": 49.83,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          49.83
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 49.83,
+        "selector": "#e-a2",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 198.58,
+          "top": 330.55,
+          "right": 881.42,
+          "bottom": 417.45,
+          "width": 682.84,
+          "height": 86.91
+        },
+        "containerSelector": "#s15-st > div:nth-of-type(1) > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 454.91,
+          "right": 1000,
+          "bottom": 561.81,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "top": 124.36
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s15.html",
+        "bbox": {
+          "x": 198.58,
+          "y": 330.55,
+          "width": 682.84,
+          "height": 86.91
+        },
+        "firstSeen": 49.83,
+        "lastSeen": 49.83,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          49.83
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 60.903,
+        "selector": "#s18-st",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 49.01,
+          "top": 0,
+          "right": 1129.01,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "containerSelector": "#s18 > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "right": 49.01
+        },
+        "dataAttributes": {
+          "data-layout-allow-overlap": ""
+        },
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 49.01,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 60.903,
+        "selector": "#u-a1",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 363.44,
+          "top": 407.62,
+          "right": 814.55,
+          "bottom": 494.52,
+          "width": 451.11,
+          "height": 86.91
+        },
+        "containerSelector": "#s18-st > div:nth-of-type(1) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 129.01,
+          "top": 372,
+          "right": 1049.01,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 15.61
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 363.44,
+          "y": 407.62,
+          "width": 451.11,
+          "height": 86.91
+        },
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 60.903,
+        "selector": "#u-a2",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 225.57,
+          "top": 578.23,
+          "right": 952.44,
+          "bottom": 665.14,
+          "width": 726.88,
+          "height": 86.91
+        },
+        "containerSelector": "#s18-st > div:nth-of-type(1) > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 129.01,
+          "top": 454.91,
+          "right": 1049.01,
+          "bottom": 561.81,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 103.33
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 225.57,
+          "y": 578.23,
+          "width": 726.88,
+          "height": 86.91
+        },
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 60.903,
+        "selector": "#u-b1",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 258.98,
+          "top": 495.32,
+          "right": 919.02,
+          "bottom": 582.23,
+          "width": 660.05,
+          "height": 86.91
+        },
+        "containerSelector": "#s18-st > div:nth-of-type(2) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 129.01,
+          "top": 372,
+          "right": 1049.01,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 103.32
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 258.98,
+          "y": 495.32,
+          "width": 660.05,
+          "height": 86.91
+        },
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 60.903,
+        "selector": "#u-b2",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 272.08,
+          "top": 578.23,
+          "right": 905.91,
+          "bottom": 665.14,
+          "width": 633.83,
+          "height": 86.91
+        },
+        "containerSelector": "#s18-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 129.01,
+          "top": 454.91,
+          "right": 1049.01,
+          "bottom": 561.81,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 103.33
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 272.08,
+          "y": 578.23,
+          "width": 633.83,
+          "height": 86.91
+        },
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 60.903,
+        "selector": "#u-c1",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 206.71,
+          "top": 549.7,
+          "right": 971.3,
+          "bottom": 676.89,
+          "width": 764.59,
+          "height": 127.19
+        },
+        "containerSelector": "#s18-st > div:nth-of-type(3) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 129.01,
+          "top": 372,
+          "right": 1049.01,
+          "bottom": 519.19,
+          "width": 920,
+          "height": 147.19
+        },
+        "overflow": {
+          "bottom": 157.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 206.71,
+          "y": 549.7,
+          "width": 764.59,
+          "height": 127.19
+        },
+        "firstSeen": 60.903,
+        "lastSeen": 60.903,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          60.903
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t1b",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 232.44,
+          "top": 520.15,
+          "right": 847.56,
+          "bottom": 577.15,
+          "width": 615.12,
+          "height": 57
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "text": "che si collegano da sole",
+        "fixHint": "Text is 615px x 57px inside 920px x 107px and overflows by up to 11px; increase the container height to at least ~118px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 80,
+          "top": 458.91,
+          "right": 1000,
+          "bottom": 565.81,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 11.34
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 232.44,
+          "y": 520.15,
+          "width": 615.12,
+          "height": 57
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 71.977,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          71.977
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-cam",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -93.64,
+          "top": -193.1,
+          "right": 1173.64,
+          "bottom": 2059.83,
+          "width": 1267.27,
+          "height": 2252.93
+        },
+        "containerSelector": "#s20-st",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 93.64,
+          "right": 93.64,
+          "top": 193.1,
+          "bottom": 139.83
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": -93.64,
+          "y": -193.1,
+          "width": 1267.27,
+          "height": 2252.93
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 71.977,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          71.977
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t1b",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 232.44,
+          "top": 511.15,
+          "right": 847.56,
+          "bottom": 576.86,
+          "width": 615.13,
+          "height": 65.72
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 458.91,
+          "right": 1000,
+          "bottom": 565.81,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 11.05
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 232.44,
+          "y": 511.15,
+          "width": 615.13,
+          "height": 65.72
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t2",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 315.11,
+          "top": 495.32,
+          "right": 764.88,
+          "bottom": 582.23,
+          "width": 449.77,
+          "height": 86.91
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(3) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 103.32
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 315.11,
+          "y": 495.32,
+          "width": 449.77,
+          "height": 86.91
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t3",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 376.48,
+          "top": 495.32,
+          "right": 703.52,
+          "bottom": 582.23,
+          "width": 327.03,
+          "height": 86.91
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(4) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 103.32
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 376.48,
+          "y": 495.32,
+          "width": 327.03,
+          "height": 86.91
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t4",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 133.91,
+          "top": 495.32,
+          "right": 946.09,
+          "bottom": 582.23,
+          "width": 812.19,
+          "height": 86.91
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(5) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 103.32
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 133.91,
+          "y": 495.32,
+          "width": 812.19,
+          "height": 86.91
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t5",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 139.8,
+          "top": 488.15,
+          "right": 940.19,
+          "bottom": 562.34,
+          "width": 800.39,
+          "height": 74.19
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(6) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 83.43
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 139.8,
+          "y": 488.15,
+          "width": 800.39,
+          "height": 74.19
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t5b",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 300.64,
+          "top": 613.72,
+          "right": 779.36,
+          "bottom": 723.96,
+          "width": 478.72,
+          "height": 110.23
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(6) > span:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 458.91,
+          "right": 1000,
+          "bottom": 589.14,
+          "width": 920,
+          "height": 130.23
+        },
+        "overflow": {
+          "bottom": 134.82
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 300.64,
+          "y": 613.72,
+          "width": 478.72,
+          "height": 110.23
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 83.05,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          71.977,
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 71.977,
+        "selector": "#x-t6",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 217.73,
+          "top": 495.32,
+          "right": 862.25,
+          "bottom": 582.23,
+          "width": 644.52,
+          "height": 86.91
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(7) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "bottom": 103.32
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 217.73,
+          "y": 495.32,
+          "width": 644.52,
+          "height": 86.91
+        },
+        "firstSeen": 71.977,
+        "lastSeen": 71.977,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          71.977
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 83.05,
+        "selector": "#x-t1",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 338.42,
+          "top": 241.64,
+          "right": 741.58,
+          "bottom": 339.64,
+          "width": 403.16,
+          "height": 98
+        },
+        "containerSelector": "#x-cam",
+        "text": "poi le cuffie",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 338.42,
+          "y": 241.64,
+          "width": 403.16,
+          "height": 98
+        },
+        "firstSeen": 83.05,
+        "lastSeen": 83.05,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          83.05
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 83.05,
+        "selector": "#x-t5",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 139.8,
+          "top": 271.72,
+          "right": 940.19,
+          "bottom": 355.72,
+          "width": 800.39,
+          "height": 84
+        },
+        "containerSelector": "#x-cam",
+        "text": "ogni pezzo funziona meglio",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 139.8,
+          "y": 271.72,
+          "width": 800.39,
+          "height": 84
+        },
+        "firstSeen": 83.05,
+        "lastSeen": 83.05,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          83.05
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 83.05,
+        "selector": "#x-t1",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 338.42,
+          "top": 247.64,
+          "right": 741.58,
+          "bottom": 334.55,
+          "width": 403.16,
+          "height": 86.91
+        },
+        "containerSelector": "#s20-st > div:nth-of-type(2) > span:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 80,
+          "top": 372,
+          "right": 1000,
+          "bottom": 478.91,
+          "width": 920,
+          "height": 106.91
+        },
+        "overflow": {
+          "top": 124.36
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 338.42,
+          "y": 247.64,
+          "width": 403.16,
+          "height": 86.91
+        },
+        "firstSeen": 83.05,
+        "lastSeen": 83.05,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          83.05
+        ]
+      }
+    ],
+    "duration": 99.66,
+    "samples": [
+      5.537,
+      16.61,
+      27.683,
+      38.757,
+      49.83,
+      60.903,
+      71.977,
+      83.05,
+      94.123
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 63,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      5.537,
+      27.683,
+      49.83,
+      71.977,
+      94.123
+    ],
+    "checked": 77,
+    "passed": 77
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 65,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Apple ti fa\" (3 words) is on screen 0.50 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Apple ti fa",
+        "selector": "#s1-stage > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s1.html",
+        "bbox": {
+          "x": 247.05,
+          "y": 372,
+          "width": 585.9000000000001,
+          "height": 143.11
+        },
+        "time": 0,
+        "words": 3,
+        "seconds": 0.504,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 0,
+            "opacity": 1,
+            "heightPx": 143
+          },
+          {
+            "time": 0.166,
+            "opacity": 1,
+            "heightPx": 138
+          },
+          {
+            "time": 0.333,
+            "opacity": 1,
+            "heightPx": 138
+          },
+          {
+            "time": 0.499,
+            "opacity": 1,
+            "heightPx": 41
+          },
+          {
+            "time": 0.666,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 0.832,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 0.998,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"3\" (1 word) is on screen 0.09 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "3",
+        "selector": "#s3-col > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 412.6,
+          "y": 623.54,
+          "width": 241.12,
+          "height": 125.38999999999999
+        },
+        "time": 4.576,
+        "words": 1,
+        "seconds": 0.094,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 4.159,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.326,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.492,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.659,
+            "opacity": 1,
+            "heightPx": 125
+          },
+          {
+            "time": 4.825,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.991,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 5.158,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"4\" (1 word) is on screen 0.36 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "4",
+        "selector": "#s3-col > div:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 417.97,
+          "y": 702.76,
+          "width": 247.81999999999994,
+          "height": 383.70000000000005
+        },
+        "time": 4.607,
+        "words": 1,
+        "seconds": 0.363,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 4.159,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.326,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.492,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.659,
+            "opacity": 1,
+            "heightPx": 384
+          },
+          {
+            "time": 4.825,
+            "opacity": 1,
+            "heightPx": 101
+          },
+          {
+            "time": 4.991,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 5.158,
+            "opacity": 1,
+            "heightPx": 21
+          },
+          {
+            "time": 5.324,
+            "opacity": 1,
+            "heightPx": 21
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"trucchi che usa su di te\" (6 words) is on screen 1.63 s (±0.01 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "trucchi che usa su di te",
+        "selector": "#s3 > div:nth-of-type(1) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s3.html",
+        "bbox": {
+          "x": 183.77,
+          "y": 1169.27,
+          "width": 461.73,
+          "height": 67.6400000000001
+        },
+        "time": 4.939,
+        "words": 6,
+        "seconds": 1.633,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 4.492,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.659,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.825,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.991,
+            "opacity": 1,
+            "heightPx": 68
+          },
+          {
+            "time": 5.158,
+            "opacity": 1,
+            "heightPx": 86
+          },
+          {
+            "time": 5.324,
+            "opacity": 1,
+            "heightPx": 86
+          },
+          {
+            "time": 5.49,
+            "opacity": 1,
+            "heightPx": 86
+          },
+          {
+            "time": 5.99,
+            "opacity": 1,
+            "heightPx": 86
+          },
+          {
+            "time": 6.156,
+            "opacity": 1,
+            "heightPx": 86
+          },
+          {
+            "time": 6.322,
+            "opacity": 1,
+            "heightPx": 86
+          },
+          {
+            "time": 6.489,
+            "opacity": 1,
+            "heightPx": 86
+          },
+          {
+            "time": 6.655,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.821,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.988,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"13\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "13",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(18)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 512.03,
+          "y": 1091.01,
+          "width": 55.90999999999997,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"14\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "14",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(19)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 645.98,
+          "y": 1091.01,
+          "width": 56.60000000000002,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"15\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "15",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(20)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 780.8,
+          "y": 1091.01,
+          "width": 55.52999999999997,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"16\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "16",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(21)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 914.2,
+          "y": 1091.01,
+          "width": 57.27999999999997,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"17\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "17",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(22)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 110.39,
+          "y": 1241.01,
+          "width": 53.489999999999995,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"18\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "18",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(23)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 243.25,
+          "y": 1241.01,
+          "width": 56.329999999999984,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"19\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "19",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(24)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 377.06,
+          "y": 1241.01,
+          "width": 57.28000000000003,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"20\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "20",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(25)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 508.33,
+          "y": 1241.01,
+          "width": 63.31,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"21\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "21",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(26)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 647.02,
+          "y": 1241.01,
+          "width": 54.50999999999999,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"22\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "22",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(27)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 778,
+          "y": 1241.01,
+          "width": 61.129999999999995,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"23\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "23",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(28)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 911.58,
+          "y": 1241.01,
+          "width": 62.52999999999997,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"24\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "24",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(29)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 106.19,
+          "y": 1391.01,
+          "width": 61.889999999999986,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"25\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "25",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(30)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 240.34,
+          "y": 1391.01,
+          "width": 62.16,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"26\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "26",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(31)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 373.75,
+          "y": 1391.01,
+          "width": 63.889999999999986,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"27\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "27",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(32)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 509.94,
+          "y": 1391.01,
+          "width": 60.089999999999975,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"28\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "28",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(33)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 642.8,
+          "y": 1391.01,
+          "width": 62.950000000000045,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"29\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "29",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(34)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 776.61,
+          "y": 1391.01,
+          "width": 63.889999999999986,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"30\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "30",
+        "selector": "#s4-strip > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(35)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 910.48,
+          "y": 1391.01,
+          "width": 64.72000000000003,
+          "height": 64
+        },
+        "time": 9.151,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.652,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"L\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "L",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 129.09,
+          "y": 1619.04,
+          "width": 16.099999999999994,
+          "height": 36
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"M\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "M",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 258.66,
+          "y": 1619.04,
+          "width": 25.50999999999999,
+          "height": 36
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"M\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "M",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 392.94,
+          "y": 1619.04,
+          "width": 25.50999999999999,
+          "height": 36
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"G\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "G",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 529.2,
+          "y": 1619.04,
+          "width": 21.58000000000004,
+          "height": 36
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"V\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "V",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(5)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 664.36,
+          "y": 1619.04,
+          "width": 19.840000000000032,
+          "height": 36
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"S\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "S",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(6)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 799.3,
+          "y": 1619.04,
+          "width": 18.50999999999999,
+          "height": 36
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"D\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "D",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(7)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 932.45,
+          "y": 1619.04,
+          "width": 20.779999999999973,
+          "height": 36
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"1\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "1",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 259.44,
+          "y": 1699.04,
+          "width": 23.94999999999999,
+          "height": 64
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 390.42,
+          "y": 1699.04,
+          "width": 30.560000000000002,
+          "height": 64
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"3\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "3",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 524,
+          "y": 1699.04,
+          "width": 31.970000000000027,
+          "height": 64
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"4\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "4",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(5)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 657.95,
+          "y": 1699.04,
+          "width": 32.65999999999997,
+          "height": 64
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"5\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "5",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(6)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 792.77,
+          "y": 1699.04,
+          "width": 31.590000000000032,
+          "height": 64
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"6\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "6",
+        "selector": "#s4-strip > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(7)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 926.19,
+          "y": 1699.04,
+          "width": 33.33000000000004,
+          "height": 64
+        },
+        "time": 9.317,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 8.818,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.984,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.151,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.317,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.484,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 9.65,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.816,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.983,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and \"Evento Apple\" renders at 24 px for 1.50 s: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "Evento Apple",
+        "selector": "#s4-ev",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 727.96,
+          "y": 1024,
+          "width": 140.02,
+          "height": 29
+        },
+        "time": 9.983,
+        "times": [
+          9.983
+        ],
+        "fontPx": 24,
+        "floorPx": 28,
+        "seconds": 1.497,
+        "elements": [
+          {
+            "selector": "#s4-ev",
+            "text": "Evento Apple",
+            "fontPx": 24,
+            "time": 9.983,
+            "seconds": 1.497
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2026\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2026",
+        "selector": "#s4-ys > span:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s4.html",
+        "bbox": {
+          "x": 491.57,
+          "y": 662.73,
+          "width": 252.33999999999997,
+          "height": 30.91999999999996
+        },
+        "time": 12.312,
+        "words": 1,
+        "seconds": 0.332,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 11.813,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 11.979,
+            "opacity": 1,
+            "heightPx": 8
+          },
+          {
+            "time": 12.146,
+            "opacity": 1,
+            "heightPx": 8
+          },
+          {
+            "time": 12.312,
+            "opacity": 0.97,
+            "heightPx": 31
+          },
+          {
+            "time": 12.478,
+            "opacity": 0.63,
+            "heightPx": 111
+          },
+          {
+            "time": 12.645,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 12.811,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 12.977,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"1\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "1",
+        "selector": "#s8-col > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s8.html",
+        "bbox": {
+          "x": 465.02,
+          "y": 675.08,
+          "width": 149.96000000000004,
+          "height": 272.63
+        },
+        "time": 19.633,
+        "words": 1,
+        "seconds": 0.332,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 19.133,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 19.3,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 19.466,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 19.633,
+            "opacity": 1,
+            "heightPx": 273
+          },
+          {
+            "time": 19.799,
+            "opacity": 1,
+            "heightPx": 41
+          },
+          {
+            "time": 19.965,
+            "opacity": 1,
+            "heightPx": 22
+          },
+          {
+            "time": 20.132,
+            "opacity": 1,
+            "heightPx": 21
+          },
+          {
+            "time": 20.298,
+            "opacity": 1,
+            "heightPx": 22
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Spazio quasi esaurito\" (3 words) is on screen 0.50 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Spazio quasi esaurito",
+        "selector": "#m-alert > div:nth-of-type(1) > b:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s9.html",
+        "bbox": {
+          "x": 329.4,
+          "y": 1196.35,
+          "width": 421.18999999999994,
+          "height": 53.75
+        },
+        "time": 25.622,
+        "words": 3,
+        "seconds": 0.499,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 25.123,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 25.289,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 25.456,
+            "opacity": 0.06,
+            "heightPx": 64
+          },
+          {
+            "time": 25.622,
+            "opacity": 1,
+            "heightPx": 54
+          },
+          {
+            "time": 25.788,
+            "opacity": 1,
+            "heightPx": 55
+          },
+          {
+            "time": 25.955,
+            "opacity": 1,
+            "heightPx": 55
+          },
+          {
+            "time": 26.121,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.288,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.454,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Puoi gestire lo spazio in Impostazioni.\" (6 words) is on screen 0.50 s (±0.08 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Puoi gestire lo spazio in Impostazioni.",
+        "selector": "#m-alert > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s9.html",
+        "bbox": {
+          "x": 291.78,
+          "y": 1262.69,
+          "width": 496.44000000000005,
+          "height": 38.1099999999999
+        },
+        "time": 25.622,
+        "words": 6,
+        "seconds": 0.499,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 25.123,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 25.289,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 25.456,
+            "opacity": 0.06,
+            "heightPx": 46
+          },
+          {
+            "time": 25.622,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 25.788,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 25.955,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 26.121,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.288,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.454,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"quello di adesso\" (3 words) is on screen 1.00 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "quello di adesso",
+        "selector": "#m-o1 > small:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s9.html",
+        "bbox": {
+          "x": 674.14,
+          "y": 773.58,
+          "width": 208.86,
+          "height": 40
+        },
+        "time": 26.288,
+        "words": 3,
+        "seconds": 0.998,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 25.788,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 25.955,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.121,
+            "opacity": 0.28,
+            "heightPx": 40
+          },
+          {
+            "time": 26.288,
+            "opacity": 0.96,
+            "heightPx": 40
+          },
+          {
+            "time": 26.454,
+            "opacity": 1,
+            "heightPx": 40
+          },
+          {
+            "time": 26.62,
+            "opacity": 1,
+            "heightPx": 40
+          },
+          {
+            "time": 26.787,
+            "opacity": 1,
+            "heightPx": 40
+          },
+          {
+            "time": 26.953,
+            "opacity": 1,
+            "heightPx": 40
+          },
+          {
+            "time": 27.119,
+            "opacity": 1,
+            "heightPx": 40
+          },
+          {
+            "time": 27.286,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 27.452,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 27.619,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"non lo compri?\" (3 words) is on screen 0.83 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "non lo compri?",
+        "selector": "#s11-st > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s11.html",
+        "bbox": {
+          "x": 253.82,
+          "y": 394.26,
+          "width": 681.71,
+          "height": 112.20999999999998
+        },
+        "time": 29.282,
+        "words": 3,
+        "seconds": 0.832,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 28.783,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 28.95,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 29.116,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 29.282,
+            "opacity": 1,
+            "heightPx": 112
+          },
+          {
+            "time": 29.449,
+            "opacity": 1,
+            "heightPx": 128
+          },
+          {
+            "time": 29.615,
+            "opacity": 1,
+            "heightPx": 127
+          },
+          {
+            "time": 29.782,
+            "opacity": 1,
+            "heightPx": 127
+          },
+          {
+            "time": 29.948,
+            "opacity": 1,
+            "heightPx": 121
+          },
+          {
+            "time": 30.114,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 30.281,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 30.447,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"pochi euro al mese\" (4 words) is on screen 1.16 s (±0.08 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "pochi euro al mese",
+        "selector": "#s11-st > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s11.html",
+        "bbox": {
+          "x": 210.92,
+          "y": 380.07,
+          "width": 658.14,
+          "height": 98
+        },
+        "time": 31.612,
+        "words": 4,
+        "seconds": 1.164,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 31.113,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 31.279,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 31.445,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 31.612,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 31.778,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 31.944,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 32.111,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 32.277,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 32.444,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 32.61,
+            "opacity": 1,
+            "heightPx": 94
+          },
+          {
+            "time": 32.776,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 32.943,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.109,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2027\" (1 word) is on screen 0.17 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2027",
+        "selector": "#cl-ys > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s11.html",
+        "bbox": {
+          "x": 797.16,
+          "y": 1199.1,
+          "width": 123.28999999999996,
+          "height": 41.90000000000009
+        },
+        "time": 33.775,
+        "words": 1,
+        "seconds": 0.167,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 33.275,
+            "opacity": 1,
+            "heightPx": 2
+          },
+          {
+            "time": 33.442,
+            "opacity": 1,
+            "heightPx": 2
+          },
+          {
+            "time": 33.608,
+            "opacity": 1,
+            "heightPx": 2
+          },
+          {
+            "time": 33.775,
+            "opacity": 1,
+            "heightPx": 42
+          },
+          {
+            "time": 33.941,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 34.107,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 34.274,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2028\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2028",
+        "selector": "#cl-ys > span:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s11.html",
+        "bbox": {
+          "x": 797.16,
+          "y": 1203.68,
+          "width": 126.82000000000005,
+          "height": 37.319999999999936
+        },
+        "time": 33.941,
+        "words": 1,
+        "seconds": 0.332,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 33.442,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.608,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.775,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.941,
+            "opacity": 1,
+            "heightPx": 37
+          },
+          {
+            "time": 34.107,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 34.274,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 34.44,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 34.606,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2029\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2029",
+        "selector": "#cl-ys > span:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s11.html",
+        "bbox": {
+          "x": 797.16,
+          "y": 1209,
+          "width": 127.25999999999999,
+          "height": 32
+        },
+        "time": 34.107,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 33.608,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.775,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.941,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 34.107,
+            "opacity": 1,
+            "heightPx": 32
+          },
+          {
+            "time": 34.274,
+            "opacity": 1,
+            "heightPx": 36
+          },
+          {
+            "time": 34.44,
+            "opacity": 1,
+            "heightPx": 1
+          },
+          {
+            "time": 34.606,
+            "opacity": 1,
+            "heightPx": 1
+          },
+          {
+            "time": 34.773,
+            "opacity": 0.71,
+            "heightPx": 1
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"la prima gabbia\" (3 words) is on screen 1.00 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "la prima gabbia",
+        "selector": "#s11-st > div:nth-of-type(6) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s11.html",
+        "bbox": {
+          "x": 185.48,
+          "y": 454.91,
+          "width": 79.47,
+          "height": 132.81
+        },
+        "time": 35.272,
+        "words": 3,
+        "seconds": 0.998,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 34.773,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 34.939,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 35.106,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 35.272,
+            "opacity": 1,
+            "heightPx": 134
+          },
+          {
+            "time": 35.438,
+            "opacity": 1,
+            "heightPx": 134
+          },
+          {
+            "time": 35.605,
+            "opacity": 1,
+            "heightPx": 134
+          },
+          {
+            "time": 35.771,
+            "opacity": 1,
+            "heightPx": 127
+          },
+          {
+            "time": 35.937,
+            "opacity": 1,
+            "heightPx": 127
+          },
+          {
+            "time": 36.104,
+            "opacity": 0.94,
+            "heightPx": 129
+          },
+          {
+            "time": 36.27,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 36.437,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 36.603,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2",
+        "selector": "#s12-col > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s12.html",
+        "bbox": {
+          "x": 448.95,
+          "y": 933.65,
+          "width": 182.09999999999997,
+          "height": 376.0000000000001
+        },
+        "time": 36.27,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 35.771,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 35.937,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 36.104,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 36.27,
+            "opacity": 1,
+            "heightPx": 376
+          },
+          {
+            "time": 36.437,
+            "opacity": 1,
+            "heightPx": 71
+          },
+          {
+            "time": 36.603,
+            "opacity": 1,
+            "heightPx": 23
+          },
+          {
+            "time": 36.769,
+            "opacity": 1,
+            "heightPx": 21
+          },
+          {
+            "time": 36.936,
+            "opacity": 1,
+            "heightPx": 21
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Messaggio di testo · SMS\" (4 words) is on screen 0.50 s (±0.08 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Messaggio di testo · SMS",
+        "selector": "#c-sms",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s13.html",
+        "bbox": {
+          "x": 535.59,
+          "y": 1258,
+          "width": 410.40999999999997,
+          "height": 45
+        },
+        "time": 40.596,
+        "words": 4,
+        "seconds": 0.499,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 40.097,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 40.263,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 40.43,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 40.596,
+            "opacity": 0.9,
+            "heightPx": 45
+          },
+          {
+            "time": 40.762,
+            "opacity": 1,
+            "heightPx": 45
+          },
+          {
+            "time": 40.929,
+            "opacity": 1,
+            "heightPx": 45
+          },
+          {
+            "time": 41.095,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 41.262,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 41.428,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"chi ha la bolla verde\" (5 words) is on screen 1.00 s (±0.08 s), under its 1.50 s floor: hold it about 0.5 s + 0.3 s a word (2.00 s here) before it leaves or changes; see references/motion.md.",
+        "text": "chi ha la bolla verde",
+        "selector": "#s14-st > div:nth-of-type(1) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s14.html",
+        "bbox": {
+          "x": 196.14,
+          "y": 510.67,
+          "width": 687.7,
+          "height": 51.14000000000004
+        },
+        "time": 41.761,
+        "words": 5,
+        "seconds": 0.999,
+        "floorSeconds": 1.5,
+        "measured": [
+          {
+            "time": 41.262,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 41.428,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 41.594,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 41.761,
+            "opacity": 1,
+            "heightPx": 51
+          },
+          {
+            "time": 41.927,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 42.093,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 42.26,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 42.426,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 42.593,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 42.759,
+            "opacity": 1,
+            "heightPx": 20
+          },
+          {
+            "time": 42.925,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 43.092,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and \"UNITED STATES DISTRICT COURT\" renders at 24 px for 3.00 s: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "UNITED STATES DISTRICT COURT",
+        "selector": "#e-doc > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s15.html",
+        "bbox": {
+          "x": 329.19,
+          "y": 1174.52,
+          "width": 418.95,
+          "height": 30.23
+        },
+        "time": 44.589,
+        "times": [
+          44.589
+        ],
+        "fontPx": 24,
+        "floorPx": 28,
+        "seconds": 2.995,
+        "elements": [
+          {
+            "selector": "#e-doc > div:nth-of-type(1)",
+            "text": "UNITED STATES DISTRICT COURT",
+            "fontPx": 24,
+            "time": 44.589,
+            "seconds": 2.995
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"3\" (1 word) is on screen 0.33 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "3",
+        "selector": "#s16-col > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s16.html",
+        "bbox": {
+          "x": 444.41,
+          "y": 1573.04,
+          "width": 191.18,
+          "height": 346.96000000000004
+        },
+        "time": 53.407,
+        "words": 1,
+        "seconds": 0.333,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 52.908,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 53.074,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 53.241,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 53.407,
+            "opacity": 1,
+            "heightPx": 347
+          },
+          {
+            "time": 53.573,
+            "opacity": 1,
+            "heightPx": 122
+          },
+          {
+            "time": 53.74,
+            "opacity": 1,
+            "heightPx": 27
+          },
+          {
+            "time": 53.906,
+            "opacity": 1,
+            "heightPx": 21
+          },
+          {
+            "time": 54.073,
+            "opacity": 1,
+            "heightPx": 21
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2016\" (1 word) is on screen 0.17 s (±0.08 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2016",
+        "selector": "#f-ys > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s17.html",
+        "bbox": {
+          "x": 516.28,
+          "y": 539.18,
+          "width": 184.08000000000004,
+          "height": 47.64999999999998
+        },
+        "time": 55.404,
+        "words": 1,
+        "seconds": 0.166,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 54.905,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 55.071,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 55.237,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 55.404,
+            "opacity": 1,
+            "heightPx": 48
+          },
+          {
+            "time": 55.57,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 55.736,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 55.903,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and \"Autorità Garante della Concorrenzae del Mercato\" renders at 23 px for 2.83 s: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "Autorità Garante della Concorrenzae del Mercato",
+        "selector": "#f-badge > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s17.html",
+        "bbox": {
+          "x": 338.41,
+          "y": 886.36,
+          "width": 409.08,
+          "height": 82.93
+        },
+        "time": 58.066,
+        "times": [
+          58.066
+        ],
+        "fontPx": 23.22,
+        "floorPx": 28,
+        "seconds": 2.828,
+        "elements": [
+          {
+            "selector": "#f-badge > div:nth-of-type(2)",
+            "text": "Autorità Garante della Concorrenzae del Mercato",
+            "fontPx": 23.22,
+            "time": 58.066,
+            "seconds": 2.828
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Sanzione AGCM, ottobre 2018\" (4 words) is on screen 0.67 s (±0.08 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Sanzione AGCM, ottobre 2018",
+        "selector": "#f-tag",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s17.html",
+        "bbox": {
+          "x": 331.39,
+          "y": 1330,
+          "width": 417.22,
+          "height": 38
+        },
+        "time": 60.229,
+        "words": 4,
+        "seconds": 0.666,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 59.729,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 59.896,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 60.062,
+            "opacity": 0.43,
+            "heightPx": 38
+          },
+          {
+            "time": 60.229,
+            "opacity": 0.96,
+            "heightPx": 38
+          },
+          {
+            "time": 60.395,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 60.561,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 60.728,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 60.894,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 61.06,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 61.227,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"È disponibile una nuova versione di iOS.\" (7 words) is on screen 1.17 s (±0.08 s), under its 1.95 s floor: hold it about 0.5 s + 0.3 s a word (2.60 s here) before it leaves or changes; see references/motion.md.",
+        "text": "È disponibile una nuova versione di iOS.",
+        "selector": "#u-alert > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 271.7,
+          "y": 1122.24,
+          "width": 536.5999999999999,
+          "height": 38.6099999999999
+        },
+        "time": 61.892,
+        "words": 7,
+        "seconds": 1.165,
+        "floorSeconds": 1.95,
+        "measured": [
+          {
+            "time": 61.393,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 61.56,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 61.726,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 61.892,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 62.059,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 62.225,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 62.391,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 62.558,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 62.724,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 62.891,
+            "opacity": 1,
+            "heightPx": 39
+          },
+          {
+            "time": 63.057,
+            "opacity": 0.4,
+            "heightPx": 37
+          },
+          {
+            "time": 63.223,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 63.39,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"che li rallentavano\" (3 words) is on screen 1.00 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "che li rallentavano",
+        "selector": "#s18-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s18.html",
+        "bbox": {
+          "x": 223.08,
+          "y": 464.74,
+          "width": 633.83,
+          "height": 97.06999999999994
+        },
+        "time": 64.222,
+        "words": 3,
+        "seconds": 0.999,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 63.723,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 63.889,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 64.055,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 64.222,
+            "opacity": 1,
+            "heightPx": 97
+          },
+          {
+            "time": 64.388,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 64.554,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 64.721,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 64.887,
+            "opacity": 1,
+            "heightPx": 98
+          },
+          {
+            "time": 65.054,
+            "opacity": 1,
+            "heightPx": 95
+          },
+          {
+            "time": 65.22,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 65.386,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 65.553,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"con gli altri\" (3 words) is on screen 0.83 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "con gli altri",
+        "selector": "#s20-st > div:nth-of-type(6) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s20.html",
+        "bbox": {
+          "x": 300.64,
+          "y": 487.6,
+          "width": 478.72,
+          "height": 101.53999999999996
+        },
+        "time": 79.861,
+        "words": 3,
+        "seconds": 0.832,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 79.362,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 79.528,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 79.695,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 79.861,
+            "opacity": 1,
+            "heightPx": 102
+          },
+          {
+            "time": 80.027,
+            "opacity": 1,
+            "heightPx": 124
+          },
+          {
+            "time": 80.194,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 80.36,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 80.527,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 80.693,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 80.859,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 81.026,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Ricavi dai servizi, anno fiscale 2025\" (6 words) is on screen 1.33 s (±0.08 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Ricavi dai servizi, anno fiscale 2025",
+        "selector": "#v-tag",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s21.html",
+        "bbox": {
+          "x": 297.16,
+          "y": 1570,
+          "width": 485.67,
+          "height": 38
+        },
+        "time": 86.849,
+        "words": 6,
+        "seconds": 1.331,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 86.35,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 86.516,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 86.683,
+            "opacity": 0.11,
+            "heightPx": 38
+          },
+          {
+            "time": 86.849,
+            "opacity": 0.85,
+            "heightPx": 38
+          },
+          {
+            "time": 87.015,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 87.182,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 87.348,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 87.514,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 87.681,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 87.847,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 88.014,
+            "opacity": 1,
+            "heightPx": 38
+          },
+          {
+            "time": 88.18,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 88.346,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 88.513,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"da cui non esci più\" (5 words) is on screen 1.33 s (±0.08 s), under its 1.50 s floor: hold it about 0.5 s + 0.3 s a word (2.00 s here) before it leaves or changes; see references/motion.md.",
+        "text": "da cui non esci più",
+        "selector": "#s22-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s22.html",
+        "bbox": {
+          "x": 156.3,
+          "y": 478.23,
+          "width": 767.4000000000001,
+          "height": 106.54999999999995
+        },
+        "time": 91.175,
+        "words": 5,
+        "seconds": 1.331,
+        "floorSeconds": 1.5,
+        "measured": [
+          {
+            "time": 90.676,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 90.842,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 91.008,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 91.175,
+            "opacity": 1,
+            "heightPx": 107
+          },
+          {
+            "time": 91.341,
+            "opacity": 1,
+            "heightPx": 116
+          },
+          {
+            "time": 91.508,
+            "opacity": 1,
+            "heightPx": 116
+          },
+          {
+            "time": 91.674,
+            "opacity": 1,
+            "heightPx": 116
+          },
+          {
+            "time": 91.84,
+            "opacity": 1,
+            "heightPx": 116
+          },
+          {
+            "time": 92.007,
+            "opacity": 1,
+            "heightPx": 116
+          },
+          {
+            "time": 92.173,
+            "opacity": 1,
+            "heightPx": 116
+          },
+          {
+            "time": 92.339,
+            "opacity": 0.6,
+            "heightPx": 130
+          },
+          {
+            "time": 92.506,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 92.672,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 92.839,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"ti fa spendere\" (3 words) is on screen 1.00 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "ti fa spendere",
+        "selector": "#s23-st > div:nth-of-type(2) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s23.html",
+        "bbox": {
+          "x": 213.84,
+          "y": 472.59,
+          "width": 652.32,
+          "height": 121.04000000000002
+        },
+        "time": 93.005,
+        "words": 3,
+        "seconds": 0.998,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 92.506,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 92.672,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 92.839,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 93.005,
+            "opacity": 1,
+            "heightPx": 121
+          },
+          {
+            "time": 93.171,
+            "opacity": 1,
+            "heightPx": 132
+          },
+          {
+            "time": 93.338,
+            "opacity": 1,
+            "heightPx": 132
+          },
+          {
+            "time": 93.504,
+            "opacity": 1,
+            "heightPx": 132
+          },
+          {
+            "time": 93.67,
+            "opacity": 1,
+            "heightPx": 132
+          },
+          {
+            "time": 93.837,
+            "opacity": 1,
+            "heightPx": 100
+          },
+          {
+            "time": 94.003,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 94.17,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 94.336,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"creo questi video?\" (3 words) is on screen 1.00 s (±0.08 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "creo questi video?",
+        "selector": "#s24-st > div:nth-of-type(1) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s24.html",
+        "bbox": {
+          "x": 216.48,
+          "y": 455.4,
+          "width": 647.04,
+          "height": 98.58000000000004
+        },
+        "time": 96.332,
+        "words": 3,
+        "seconds": 0.999,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 95.833,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 96,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 96.166,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 96.332,
+            "opacity": 1,
+            "heightPx": 99
+          },
+          {
+            "time": 96.499,
+            "opacity": 1,
+            "heightPx": 99
+          },
+          {
+            "time": 96.665,
+            "opacity": 1,
+            "heightPx": 99
+          },
+          {
+            "time": 96.832,
+            "opacity": 1,
+            "heightPx": 99
+          },
+          {
+            "time": 96.998,
+            "opacity": 1,
+            "heightPx": 99
+          },
+          {
+            "time": 97.164,
+            "opacity": 1,
+            "heightPx": 99
+          },
+          {
+            "time": 97.331,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 97.497,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 97.663,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"MOTION\" (1 word) is on screen 1.75 s (±0.08 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "MOTION",
+        "selector": "#z-m",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s24.html",
+        "bbox": {
+          "x": 126.68,
+          "y": 435.33,
+          "width": 462.45,
+          "height": 306.14000000000004
+        },
+        "time": 97.996,
+        "words": 1,
+        "seconds": 1.747,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 97.497,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 97.663,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 97.83,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 97.996,
+            "opacity": 1,
+            "heightPx": 327
+          },
+          {
+            "time": 98.163,
+            "opacity": 1,
+            "heightPx": 294
+          },
+          {
+            "time": 98.329,
+            "opacity": 1,
+            "heightPx": 277
+          },
+          {
+            "time": 98.495,
+            "opacity": 1,
+            "heightPx": 262
+          },
+          {
+            "time": 98.994,
+            "opacity": 1,
+            "heightPx": 263
+          },
+          {
+            "time": 99.161,
+            "opacity": 1,
+            "heightPx": 264
+          },
+          {
+            "time": 99.327,
+            "opacity": 1,
+            "heightPx": 264
+          },
+          {
+            "time": 99.494,
+            "opacity": 1,
+            "heightPx": 265
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"MOTION\" (1 word) is on screen 1.75 s (±0.08 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "MOTION",
+        "selector": "#z-t",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s24.html",
+        "bbox": {
+          "x": 229.8,
+          "y": 886.53,
+          "width": 84.93,
+          "height": 64.28999999999996
+        },
+        "time": 97.996,
+        "words": 1,
+        "seconds": 1.747,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 97.497,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 97.663,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 97.83,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 97.996,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 98.163,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 98.329,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 98.495,
+            "opacity": 1,
+            "heightPx": 65
+          },
+          {
+            "time": 98.994,
+            "opacity": 1,
+            "heightPx": 65
+          },
+          {
+            "time": 99.161,
+            "opacity": 1,
+            "heightPx": 65
+          },
+          {
+            "time": 99.327,
+            "opacity": 1,
+            "heightPx": 65
+          },
+          {
+            "time": 99.494,
+            "opacity": 1,
+            "heightPx": 65
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"e ti spiego tutto\" (4 words) is on screen 1.25 s (±0.08 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "e ti spiego tutto",
+        "selector": "#s24-st > div:nth-of-type(6) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/s24.html",
+        "bbox": {
+          "x": 262.07,
+          "y": 1138.69,
+          "width": 555.8400000000001,
+          "height": 64.08999999999992
+        },
+        "time": 98.495,
+        "words": 4,
+        "seconds": 1.248,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 97.996,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 98.163,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 98.329,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 98.495,
+            "opacity": 1,
+            "heightPx": 64
+          },
+          {
+            "time": 98.662,
+            "opacity": 1,
+            "heightPx": 101
+          },
+          {
+            "time": 98.828,
+            "opacity": 1,
+            "heightPx": 101
+          },
+          {
+            "time": 98.994,
+            "opacity": 1,
+            "heightPx": 101
+          },
+          {
+            "time": 99.161,
+            "opacity": 1,
+            "heightPx": 101
+          },
+          {
+            "time": 99.327,
+            "opacity": 1,
+            "heightPx": 101
+          },
+          {
+            "time": 99.494,
+            "opacity": 1,
+            "heightPx": 101
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.16600000000000392,
+    "samples": 599
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

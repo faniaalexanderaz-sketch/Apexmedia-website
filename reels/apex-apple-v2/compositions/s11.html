@@ -38,19 +38,26 @@
     .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 'SF Pro Display'; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
 
 
+    .cl-m { display: block; height: 78px; border-radius: 39px; background: #f2f2f7; color: #3c3c43; font: 600 36px/78px 'SF Pro Display'; font-style: normal; text-align: center; }
+    .cl-bar { stroke: #c9a227; stroke-width: 9; stroke-linecap: round; }
   </style>
   <div id="root" data-composition-id="s11" data-width="1080" data-height="1920">
     <div id="s11-st" class="st" data-layout-allow-overlap>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="w-a1" class="t-sans t-mut">secondo un'analisi del</span></span><span class="line" style="margin-top:-24px"><span id="w-a2" class="t-it">Wall Street Journal</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="w-b1" class="t-sans t-mut">a loro costa</span></span><span class="line" style="margin-top:-24px"><span id="w-b2" class="t-it acc" style="font-size:112px">circa un terzo</span></span></div>
-      <div id="w-bL" style="position:absolute;left:230px;top:760px;width:250px;height:640px;border-radius:28px;background:#1d1d1f;transform-origin:50% 100%"></div>
-      <div id="w-bR" style="position:absolute;left:600px;top:1187px;width:250px;height:213px;border-radius:28px;background:#7a0f24;transform-origin:50% 100%"></div>
-      <div id="w-dash" style="position:absolute;left:230px;top:1183px;width:620px;border-top:5px dashed #c7c7cc;transform-origin:left center"></div>
-      <div id="w-third" style="position:absolute;left:560px;width:330px;top:1030px;text-align:center;font:700 124px/1 'SF Pro Display';letter-spacing:-0.04em;color:#7a0f24">1/3</div>
-      <div id="w-lL" style="position:absolute;left:180px;width:350px;top:1430px;text-align:center;font:600 46px/1 'SF Pro Display'">paghi tu</div>
-      <div id="w-lR" style="position:absolute;left:550px;width:350px;top:1430px;text-align:center;font:600 46px/1 'SF Pro Display';color:#7a0f24">costa a loro</div>
-      <div id="w-sel" class="sel" style="left:226px;top:1412px;width:258px;height:82px"><i></i><i></i><i></i><i></i></div>
-      <div class="tag" id="w-tag" style="top:1570px">Fonte: The Wall Street Journal</div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="cl-a1" class="t-it" style="font-size:108px">non lo compri?</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="cl-b1" class="t-sans t-mut">allora paghi</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="cl-c1" class="t-it">pochi euro al mese</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="cl-d1" class="t-it" style="font-size:120px">ogni mese</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="cl-e1" class="t-it acc" style="font-size:128px">per sempre</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="cl-f1" class="t-sans t-mut">ed è solo</span></span><span class="line" style="margin-top:-24px"><span id="cl-f2" class="t-it split gold" style="font-size:108px">la prima gabbia</span></span></div>
+      <div id="cl-opt" style="position:absolute;left:140px;top:820px;width:800px;border:5px solid #d2d2d7;border-radius:30px;padding:46px 52px;display:flex;justify-content:space-between;align-items:center;font:600 62px/1 'SF Pro Display';letter-spacing:-0.02em;background:#fff"><span>256 GB</span><span style="color:#7a0f24">+200 €</span><i id="cl-x" style="position:absolute;left:30px;right:30px;top:50%;height:9px;margin-top:-4px;border-radius:5px;background:#ff3b30;transform-origin:left center"></i></div>
+      <img id="cl-logo" class="mul" src="assets/img/logo-icloud.png" style="position:absolute;left:230px;top:770px;width:620px;display:block" alt="" />
+      <div id="cl-row" style="position:absolute;left:110px;top:1130px;width:860px;border-radius:34px;background:#f2f2f7;padding:34px 44px;display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font:600 50px/1 'SF Pro Display';letter-spacing:-0.02em">iCloud+</div><div style="font:400 32px/1 'SF Pro Display';color:#86868b;margin-top:12px">Si rinnova ogni mese</div></div>
+        <div style="height:60px;overflow:hidden;font:600 52px/60px 'SF Pro Display';color:#86868b"><span id="cl-ys" style="display:block"><span style="display:block">2026</span><span style="display:block">2027</span><span style="display:block">2028</span><span style="display:block">2029</span><span style="display:block">2030</span></span></div>
+      </div>
+      <div id="cl-grid" style="position:absolute;left:110px;top:1300px;width:860px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px"><i class="cl-m">gen</i><i class="cl-m">feb</i><i class="cl-m">mar</i><i class="cl-m">apr</i><i class="cl-m">mag</i><i class="cl-m">giu</i><i class="cl-m">lug</i><i class="cl-m">ago</i><i class="cl-m">set</i><i class="cl-m">ott</i><i class="cl-m">nov</i><i class="cl-m">dic</i></div>
+      <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><rect id="cl-cage" x="190" y="690" width="700" height="410" rx="64" fill="none" stroke="#c9a227" stroke-width="11"/><line id="cl-b-0" class="cl-bar" x1="290" y1="690" x2="290" y2="1100"/><line id="cl-b-1" class="cl-bar" x1="390" y1="690" x2="390" y2="1100"/><line id="cl-b-2" class="cl-bar" x1="490" y1="690" x2="490" y2="1100"/><line id="cl-b-3" class="cl-bar" x1="590" y1="690" x2="590" y2="1100"/><line id="cl-b-4" class="cl-bar" x1="690" y1="690" x2="690" y2="1100"/><line id="cl-b-5" class="cl-bar" x1="790" y1="690" x2="790" y2="1100"/></svg>
+      <div id="cl-lock" style="position:absolute;left:470px;top:1030px;width:140px;height:140px;border-radius:50%;background:#c9a227;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="74" height="74"><rect x="5" y="10.5" width="14" height="10" rx="2.6" fill="#fff"/><path d="M8.2 10.5V7.6a3.8 3.8 0 0 1 7.6 0v2.9" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></div>
     </div>
   </div>
   <script>
@@ -75,21 +82,33 @@
 
     const tl = gsap.timeline({ paused: true });
     enter(tl, "#s11-st", "L");
-    rise(tl, "#w-a1", 0.06);
-    rise(tl, "#w-a2", 1.19 - 0.1);
-    tl.fromTo("#w-tag", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.19);
-    sink(tl, "#w-a1", 2.23 - 0.18); sink(tl, "#w-a2", 2.23 - 0.18);
-    tl.fromTo("#w-bL", { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease: "expo.out" }, 2.23);
-    tl.fromTo("#w-lL", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 2.23 + 0.2);
-    rise(tl, "#w-b1", 2.97 - 0.06);
-    tl.fromTo("#w-bR", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "expo.out" }, 3.28);
-    tl.fromTo("#w-lR", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 3.28 + 0.2);
-    rise(tl, "#w-b2", 3.59);
-    tl.fromTo("#w-dash", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 3.95);
-    pop(tl, "#w-third", 4.10);
-    select(tl, "#w-sel", null, 5.12 - 0.1);
-    punch(tl, "#w-bL", 5.12, 1.07);
-    exit(tl, "#s11-st", "Z", 5.77 - 0.18);
+    rise(tl, "#cl-a1", 0.03);
+    tl.fromTo("#cl-opt", { y: 220, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "expo.out" }, 0.05);
+    tl.fromTo("#cl-x", { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power2.out" }, 0.42);
+    tl.to("#cl-opt", { y: 1300, rotation: 9, duration: 0.3, ease: "power3.in" }, 0.89 - 0.2);
+    sink(tl, "#cl-a1", 0.89 - 0.18);
+    rise(tl, "#cl-b1", 0.89);
+    tl.fromTo("#cl-logo", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, 1.35);
+    tl.fromTo("#cl-logo", { scale: 1.14 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 1.79);
+    sink(tl, "#cl-b1", 2.32 - 0.16);
+    rise(tl, "#cl-c1", 2.32);
+    tl.fromTo("#cl-row", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "expo.out" }, 2.32 + 0.05);
+    sink(tl, "#cl-c1", 3.54 - 0.16);
+    rise(tl, "#cl-d1", 3.54);
+    tl.fromTo(".cl-m", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.22, ease: "back.out(2.4)", stagger: 0.035 }, 3.54 - 0.25);
+    tl.to(".cl-m", { backgroundColor: "#7a0f24", color: "#ffffff", duration: 0.08, stagger: 0.05 }, 3.54 + 0.12);
+    sink(tl, "#cl-d1", 4.56 - 0.16);
+    rise(tl, "#cl-e1", 4.56);
+    for (let k = 1; k <= 4; k++) { tl.to("#cl-ys", { y: -60 * k, duration: 0.14, ease: "power3.inOut" }, 4.56 + (k - 1) * 0.17); tl.fromTo("#cl-grid", { scale: 1.05 }, { scale: 1, duration: 0.15, ease: "power2.out", immediateRender: false }, 4.56 + (k - 1) * 0.17); }
+    sink(tl, "#cl-e1", 5.48 - 0.16);
+    rise(tl, "#cl-f1", 5.48);
+    tl.to(["#cl-row", "#cl-grid"], { y: 900, opacity: 0, duration: 0.35, ease: "power3.in" }, 5.48 - 0.1);
+    tl.to("#cl-logo", { scale: 0.86, duration: 0.5, ease: "expo.out" }, 5.48);
+    draw(tl, "#cl-cage", 5.48 + 0.05, 0.7);
+    flip(tl, "#cl-f2", 6.13 - 0.1, 0.03);
+    for (let k = 0; k < 6; k++) draw(tl, "#cl-b-" + k, 6.13 + k * 0.05, 0.28);
+    pop(tl, "#cl-lock", 6.31 + 0.14);
+    exit(tl, "#s11-st", "Z", 7.06 - 0.18);
     window.__timelines["s11"] = tl;
   </script>
 </template>

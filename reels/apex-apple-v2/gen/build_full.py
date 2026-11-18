@@ -18,7 +18,7 @@ for m in re.finditer(r'<(div|audio) id="((?:s[1-7])|(?:fx\d+))"[^>]*>', h):
         hosts.append(tag + '</div>')
     elif int(i[2:]) < 100:
         fxs.append(tag + '</audio>')
-END = 98.85
+END = 99.66
 for s in scenes2.SC:
     hosts.append(f'<div id="{s["id"]}" data-composition-id="{s["id"]}" data-composition-src="compositions/{s["id"]}.html" data-start="{s["start"]}" data-duration="{s["dur"]}" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>')
 DUR = {'whoosh-short': 0.5, 'whoosh': 0.55, 'whoosh-cinematic': 1.0, 'key-press': 0.4, 'click-soft': 0.35, 'click': 0.36, 'pop': 0.6, 'typing': 0.75, 'sparkle': 1.2, 'impact-bass-1': 1.6, 'ping': 1.3, 'riser': 1.4}
