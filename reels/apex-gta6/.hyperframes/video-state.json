@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "5b868bc9-ee30-448b-a87a-787c8f246387",
-  "currentRevision": "bf754cb9-668b-463f-ad98-50327573c7be",
+  "currentRevision": "9a9ad8f1-4c05-4b87-8c4d-50a72f783715",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -171,18 +171,6 @@
     "compositions/g9.html": {
       "hash": "41a1cbd8bfa7e1cc04e9b51c5b3078cb549149a032ddc09afd58dbadda3395a0",
       "content": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/41/41a1cbd8bfa7e1cc04e9b51c5b3078cb549149a032ddc09afd58dbadda3395a0"
-    },
-    "gen/__pycache__/common.cpython-313.pyc": {
-      "hash": "bb8f95467666fda102dad388e80fdba3efec6faa1bd8c19527c3e06599a3a525",
-      "content": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/bb/bb8f95467666fda102dad388e80fdba3efec6faa1bd8c19527c3e06599a3a525"
-    },
-    "gen/__pycache__/scenes.cpython-313.pyc": {
-      "hash": "804e5d4d12a37c19efd380c928e172625af7cd2789125137eab3dc3b5295bc1d",
-      "content": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/80/804e5d4d12a37c19efd380c928e172625af7cd2789125137eab3dc3b5295bc1d"
-    },
-    "gen/__pycache__/times.cpython-313.pyc": {
-      "hash": "b4fc635277fcb3a666761db82b6dabf08b19fff2d0487a9a1865f616b946779a",
-      "content": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/b4/b4fc635277fcb3a666761db82b6dabf08b19fff2d0487a9a1865f616b946779a"
     },
     "gen/build.py": {
       "hash": "5f64016b357c1a765784a40843529a7a1caab5e96e2dd299ee1e3558dc0c82cf",
@@ -623,6 +611,29 @@
         "assets/video/city.mp4": {
           "before": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/0d/0dc9affa9601dcda157f18d6faa8c52cd2d3681a16557dee4fd842c1d44fec18",
           "after": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/83/83ef6adcdc5abfd686c73a285d5ffea935a7bc23b91aa11fa529e9d3e207cd5b"
+        }
+      }
+    },
+    "9a9ad8f1-4c05-4b87-8c4d-50a72f783715": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1795038002454,
+      "endedAt": 1795038002456,
+      "files": {
+        "gen/__pycache__/common.cpython-313.pyc": {
+          "before": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/bb/bb8f95467666fda102dad388e80fdba3efec6faa1bd8c19527c3e06599a3a525",
+          "after": null
+        },
+        "gen/__pycache__/scenes.cpython-313.pyc": {
+          "before": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/80/804e5d4d12a37c19efd380c928e172625af7cd2789125137eab3dc3b5295bc1d",
+          "after": null
+        },
+        "gen/__pycache__/times.cpython-313.pyc": {
+          "before": "/root/.cache/hyperframes/history/5b868bc9-ee30-448b-a87a-787c8f246387/blobs/b4/b4fc635277fcb3a666761db82b6dabf08b19fff2d0487a9a1865f616b946779a",
+          "after": null
         }
       }
     }
