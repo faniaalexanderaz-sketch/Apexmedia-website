@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { SceneSlot } from "@/components/three/SceneSlot";
 import { createDriver } from "@/components/three/driver";
 import { campaign } from "@/data/campaign";
+import { playWhenSeen } from "@/lib/inView";
 import {
   deferSetup,
   gsap,
@@ -158,9 +159,22 @@ export function Campaigns() {
                 });
                 refreshSoon();
               } else {
+                // Mobile: parte quando il blocco è in vista e finisce da solo (doppio innesco, vedi lib/inView)
+                const arm = (keys: string[]) => () => {
+                  keys.forEach((k) => (v[k] = 0));
+                  write();
+                };
                 cleanups.push(
-                  playWhenSeen(chartTl, unitEl, MOBILE_CHART_S, ["grow", "arrow", "camera"], write),
-                  playWhenSeen(stackTl, stackEl, MOBILE_STACK_S, ["stack"], write),
+                  playWhenSeen(chartTl, unitEl, {
+                    seconds: MOBILE_CHART_S,
+                    onArm: arm(["grow", "arrow", "camera"]),
+                    onSkip: write,
+                  }),
+                  playWhenSeen(stackTl, stackEl, {
+                    seconds: MOBILE_STACK_S,
+                    onArm: arm(["stack"]),
+                    onSkip: write,
+                  }),
                 );
               }
 
@@ -173,68 +187,6 @@ export function Campaigns() {
             },
           );
 
-          /** Abbastanza in vista: il 60% del blocco, o metà schermo se il blocco è più alto */
-          function seen(r: DOMRect) {
-            const h = window.innerHeight;
-            const visible = Math.min(r.bottom, h) - Math.max(r.top, 0);
-            return visible >= Math.min(r.height * 0.6, h * 0.5);
-          }
-
-          /**
-           * Mobile: niente scrub. L’animazione parte quando la scena entra in vista e finisce da sola.
-           * Due inneschi indipendenti, vince il primo: ScrollTrigger e un IntersectionObserver,
-           * che misura il browser stesso e non dipende da posizioni calcolate prima del caricamento
-           * (il caso del browser interno di Instagram su iPhone).
-           */
-          function playWhenSeen(
-            tl: gsap.core.Timeline,
-            el: HTMLElement,
-            seconds: number,
-            keys: string[],
-            render: () => void,
-          ) {
-            tl.timeScale(tl.duration() / seconds);
-            const r = el.getBoundingClientRect();
-            // Già passata sopra: resta completa
-            if (r.bottom < 0) {
-              tl.progress(1);
-              render();
-              return () => {};
-            }
-            keys.forEach((k) => (v[k] = 0));
-            render();
-            const play = () => {
-              if (tl.progress() === 0 && !tl.isActive()) tl.play(0);
-            };
-            // Già in vista: parte subito
-            if (seen(r)) {
-              play();
-              return () => {};
-            }
-            const st = ScrollTrigger.create({
-              trigger: el,
-              start: () =>
-                el.offsetHeight * 0.6 > window.innerHeight * 0.5
-                  ? "top 50%"
-                  : "top " + Math.round(100 - (el.offsetHeight * 60) / window.innerHeight) + "%",
-              animation: tl,
-              toggleActions: "play none none none",
-            });
-            const io = new IntersectionObserver(
-              (entries) => {
-                if (entries.some((e) => seen(e.boundingClientRect))) {
-                  play();
-                  io.disconnect();
-                }
-              },
-              { threshold: [0, 0.2, 0.4, 0.6, 0.7, 0.8, 0.9, 1] },
-            );
-            io.observe(el);
-            return () => {
-              st.kill();
-              io.disconnect();
-            };
-          }
         },
         150,
       ),

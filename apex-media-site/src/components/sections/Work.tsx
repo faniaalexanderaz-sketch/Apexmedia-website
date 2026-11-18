@@ -4,7 +4,9 @@ import { useRef } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { BrowserFrame } from "@/components/ui/BrowserFrame";
+import { DeviceMonitor } from "@/components/ui/Devices";
+import { PhoneFrame } from "@/components/ui/PhoneFrame";
+import { deviceEntrance, hoverScroll, playWhenSeen } from "@/lib/inView";
 import { Button } from "@/components/ui/Button";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { portfolio } from "@/data/portfolio";
@@ -15,7 +17,6 @@ import {
   MEDIA,
   enterAt,
   splitLinesIn,
-  revealImage,
 } from "@/lib/gsap";
 
 /** Versione compatta per la home: solo 3 lavori, tutti gli altri e il dettaglio sono in /portfolio. */
@@ -45,25 +46,24 @@ export function Work() {
               delay: 0.15,
               scrollTrigger: enterAt(root),
             });
+            const cleanups: (() => void)[] = [];
             cards.forEach((card) => {
-              const frame = card.querySelector("[data-browser-frame]");
+              const set = card.querySelector<HTMLElement>("[data-work-set]");
               const text = card.querySelector("[data-work-text]");
-              // Maschera dal basso + lo screenshot si muove appena più lento della cornice
-              if (frame)
-                revealImage(
-                  frame,
-                  card.querySelector("[data-browser-viewport] img"),
-                  card,
-                  "top 82%",
-                );
+              if (!set) return;
+              // Monitor e telefono salgono e si raddrizzano, poi gli schermi si accendono
+              const tl = deviceEntrance(set);
               if (text)
-                gsap.from(text, {
-                  opacity: 0,
-                  y: 12,
-                  duration: 0.6,
-                  delay: 0.2,
-                  scrollTrigger: enterAt(card, "top 82%"),
-                });
+                tl.fromTo(
+                  text,
+                  { opacity: 0, y: 12 },
+                  { opacity: 1, y: 0, duration: 0.6 },
+                  0.35,
+                );
+              cleanups.push(playWhenSeen(tl, set, { part: 0.45, screen: 0.4 }));
+              // Con il mouse: il sito scorre dentro lo schermo
+              if (window.matchMedia("(hover: hover) and (pointer: fine)").matches)
+                cleanups.push(hoverScroll(set));
             });
             gsap.from("[data-work-cta] > *", {
               opacity: 0,
@@ -76,6 +76,7 @@ export function Work() {
               ),
             });
             return () => {
+              cleanups.forEach((fn) => fn());
               split?.revert();
             };
           });
@@ -125,12 +126,20 @@ export function Work() {
                 data-track-cliente={item.name}
                 aria-label={`${item.name}: vedi il caso nel portfolio`}
               >
-                <BrowserFrame
-                  url={item.domain}
-                  shot={item.shots.desktop}
-                  alt={`Home page del sito ${item.name} su desktop`}
-                  sizes="(min-width: 768px) 31vw, 92vw"
-                />
+                <div className="relative pb-[7%] pr-[13%]" data-work-set>
+                  <DeviceMonitor
+                    shot={item.shots.desktop}
+                    fullShot={item.shots.full}
+                    alt={`Home page del sito ${item.name} su un monitor`}
+                    sizes="(min-width: 768px) 28vw, 84vw"
+                  />
+                  <PhoneFrame
+                    shot={item.shots.mobile}
+                    alt={`Home page del sito ${item.name} su smartphone`}
+                    sizes="(min-width: 768px) 7vw, 20vw"
+                    className="absolute bottom-0 right-0 w-[23%]"
+                  />
+                </div>
                 <div
                   className="mt-5 flex items-baseline justify-between gap-4"
                   data-work-text

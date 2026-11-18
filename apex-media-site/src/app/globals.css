@@ -681,3 +681,148 @@ details[open] > summary .plus-icon {
     font-size: 30px;
   }
 }
+
+/* ---------- Dispositivi del portfolio (monitor, tablet, telefono) ---------- */
+/* Disegnati in CSS: vetro nero, alluminio, ombre morbide. Nessun logo. Misure in cqw. */
+/* Il telefono non ha position: chi lo usa lo posiziona con le classi (spesso absolute) */
+.dev-monitor,
+.dev-tablet {
+  position: relative;
+}
+.dev-monitor,
+.dev-tablet,
+.dev-phone {
+  container-type: inline-size;
+  margin: 0;
+}
+.dev-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #05060a;
+}
+.dev-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    112deg,
+    rgb(255 255 255 / 0.1) 0%,
+    rgb(255 255 255 / 0.03) 32%,
+    transparent 46%
+  );
+}
+.dev-off {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #05060a;
+  opacity: 0;
+  pointer-events: none;
+}
+.dev-floor {
+  height: 3cqw;
+  margin: -0.6cqw auto 0;
+  width: 78%;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(20 18 14 / 0.26),
+    transparent 70%
+  );
+  filter: blur(0.6cqw);
+}
+
+/* Monitor */
+.dev-monitor-body {
+  border-radius: 2.2cqw;
+  background: linear-gradient(180deg, #e9e9ec, #cfd0d4);
+  padding: 0.55cqw;
+  box-shadow:
+    0 2.4cqw 4cqw -2cqw rgb(20 18 14 / 0.35),
+    inset 0 0 0 1px rgb(255 255 255 / 0.6);
+  transform-origin: 50% 100%;
+}
+.dev-monitor-glass {
+  aspect-ratio: 16 / 9;
+  padding: 1.6cqw 1.6cqw 1.6cqw;
+  border-radius: 1.7cqw 1.7cqw 0 0;
+  background: #0b0c10;
+}
+.dev-monitor-glass .dev-screen {
+  border-radius: 0.3cqw;
+}
+.dev-monitor-chin {
+  height: 6.2cqw;
+  border-radius: 0 0 1.7cqw 1.7cqw;
+  background: linear-gradient(180deg, #dfe0e3 0%, #c9cacf 100%);
+}
+.dev-monitor-neck {
+  width: 17%;
+  height: 9cqw;
+  margin: -0.2cqw auto 0;
+  background: linear-gradient(90deg, #b9bbc0, #e2e3e6 45%, #b4b6bb);
+  clip-path: polygon(14% 0, 86% 0, 100% 100%, 0 100%);
+}
+.dev-monitor-foot {
+  width: 30%;
+  height: 1.3cqw;
+  margin: 0 auto;
+  border-radius: 0.4cqw 0.4cqw 0.9cqw 0.9cqw;
+  background: linear-gradient(180deg, #e7e8eb, #b3b5ba);
+}
+
+/* Tablet */
+.dev-tablet-body {
+  position: relative;
+  aspect-ratio: 4 / 3.05;
+  padding: 3.1cqw;
+  border-radius: 4.4cqw;
+  background: #101115;
+  box-shadow:
+    0 0 0 0.45cqw #c8cacf,
+    0 0 0 0.6cqw #9fa2a8,
+    0 2.6cqw 4.4cqw -2cqw rgb(20 18 14 / 0.4);
+  transform-origin: 50% 100%;
+}
+.dev-tablet-body .dev-screen {
+  border-radius: 1.6cqw;
+}
+.dev-tablet-cam {
+  position: absolute;
+  top: 50%;
+  left: 1.3cqw;
+  width: 0.8cqw;
+  height: 0.8cqw;
+  border-radius: 50%;
+  background: #262830;
+  transform: translateY(-50%);
+}
+
+/* Telefono */
+.dev-phone-body {
+  position: relative;
+  aspect-ratio: 390 / 844;
+  padding: 3.6cqw;
+  border-radius: 15cqw;
+  background: #121317;
+  box-shadow:
+    0 0 0 0.9cqw #8e9198,
+    0 0 0 1.4cqw #5f6269,
+    0 4cqw 8cqw -3cqw rgb(20 18 14 / 0.45);
+  transform-origin: 50% 100%;
+}
+.dev-phone-body .dev-screen {
+  border-radius: 11.5cqw;
+}
+.dev-island {
+  position: absolute;
+  top: 2.6%;
+  left: 50%;
+  z-index: 2;
+  width: 30%;
+  height: 3.6%;
+  border-radius: 999px;
+  background: #05060a;
+  transform: translateX(-50%);
+}

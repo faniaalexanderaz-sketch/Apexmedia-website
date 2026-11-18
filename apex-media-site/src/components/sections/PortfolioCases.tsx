@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { BrowserFrame } from "@/components/ui/BrowserFrame";
+import { DeviceMonitor, DeviceTablet } from "@/components/ui/Devices";
+import { deviceEntrance, playWhenSeen } from "@/lib/inView";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { Button } from "@/components/ui/Button";
 import { ExternalIcon } from "@/components/ui/Icons";
@@ -16,8 +17,6 @@ import {
   MEDIA,
   EASE,
   enterAt,
-  CLIP_HIDDEN_BOTTOM,
-  CLIP_VISIBLE,
 } from "@/lib/gsap";
 
 function Row({
@@ -60,6 +59,7 @@ export function PortfolioCases({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
 
           mm.add([MEDIA.desktop, MEDIA.mobile], () => {
             const splits: SplitText[] = [];
+            const cleanups: (() => void)[] = [];
             gsap.from("[data-work-head] > *", {
               opacity: 0,
               y: 16,
@@ -69,9 +69,6 @@ export function PortfolioCases({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
             });
 
             cases.forEach((c) => {
-              const frame = c.querySelector<HTMLElement>(
-                "[data-browser-frame]",
-              );
               const viewport = c.querySelector<HTMLElement>(
                 "[data-browser-viewport]",
               );
@@ -81,20 +78,17 @@ export function PortfolioCases({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
               const name = c.querySelector<HTMLElement>("[data-case-name]");
               const rows = gsap.utils.toArray<HTMLElement>("[data-row]", c);
               const lines = gsap.utils.toArray<HTMLElement>("[data-line]", c);
-              if (!frame || !viewport || !phone || !name) return;
+              if (!viewport || !phone || !name) return;
 
-              // 1. La cornice si rivela dal basso
-              gsap.fromTo(
-                frame,
-                { clipPath: CLIP_HIDDEN_BOTTOM },
-                {
-                  clipPath: CLIP_VISIBLE,
-                  duration: 0.9,
-                  ease: EASE.reveal,
-                  clearProps: "clipPath",
-                  scrollTrigger: enterAt(frame, "top 80%"),
-                },
-              );
+              // 1. Monitor (o tablet) e telefono salgono, si raddrizzano e gli schermi si accendono
+              const media = c.querySelector<HTMLElement>("[data-case-media]");
+              if (media)
+                cleanups.push(
+                  playWhenSeen(deviceEntrance(media), media, {
+                    part: 0.4,
+                    screen: 0.35,
+                  }),
+                );
 
               // 2. Dentro la cornice scorre la pagina intera del cliente (scrub, anche su touch)
               if (fullImg) {
@@ -195,6 +189,7 @@ export function PortfolioCases({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
               ),
             });
             return () => {
+              cleanups.forEach((fn) => fn());
               splits.forEach((s) => s.revert());
               root
                 .querySelectorAll("[data-full-img]")
@@ -248,15 +243,32 @@ export function PortfolioCases({ as: Heading = "h2" }: { as?: "h1" | "h2" }) {
                     <div
                       className={`relative pb-[26%] lg:pb-[22%] ${flip ? "pr-6 sm:pr-10 lg:pr-0" : "pl-6 sm:pl-10 lg:pl-0"}`}
                     >
-                      <BrowserFrame
-                        url={item.domain}
+                      {/* Si alternano monitor e tablet; il telefono accanto mostra il sito su mobile */}
+                      <a
                         href={item.url}
-                        shot={item.shots.desktop}
-                        fullShot={item.shots.full}
-                        alt={`Home page del sito ${item.name} su desktop`}
-                        sizes="(min-width: 1024px) 55vw, 92vw"
-                        trackClient={item.name}
-                      />
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                        aria-label={`Apri ${item.domain} in una nuova scheda`}
+                        data-track="click_portfolio"
+                        data-track-cliente={item.name}
+                      >
+                        {flip ? (
+                          <DeviceTablet
+                            shot={item.shots.desktop}
+                            fullShot={item.shots.full}
+                            alt={`Home page del sito ${item.name} su un tablet`}
+                            sizes="(min-width: 1024px) 50vw, 88vw"
+                          />
+                        ) : (
+                          <DeviceMonitor
+                            shot={item.shots.desktop}
+                            fullShot={item.shots.full}
+                            alt={`Home page del sito ${item.name} su un monitor`}
+                            sizes="(min-width: 1024px) 55vw, 92vw"
+                          />
+                        )}
+                      </a>
                       <PhoneFrame
                         shot={item.shots.mobile}
                         alt={`Home page del sito ${item.name} su smartphone`}
