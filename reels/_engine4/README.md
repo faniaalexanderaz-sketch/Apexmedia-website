@@ -47,3 +47,13 @@ The call to action is spoken and shown **only at the end** (never mid-video). No
 - Film file: `film5.head.txt` + scenes + `film5.tail.txt` -> `assets/vendor/film.src.js`; copy `apx4.js kit4.js kit5.js` into `assets/vendor/`.
 - Tools: `gencaps.py <proj> [accent words]` (captions from script), `fixend.py <proj>` (whisper dropped the closing sentence), `cutcta.py <proj>` (remove a mid-video CTA from an old voice), `q5.sh p1 p2 …` (final renders in a row).
 - Measured: preview about 1.5-2 min, final about 15-25 min per 40 s video on this 4-vCPU machine.
+
+## Real 3D models (from Nov 2026)
+
+Objects that must look real (wallet, cart, store, food, speaker, money...) are generated as textured PBR models (Higgsfield `tripo_3d`,
+text-to-3D, detailed geometry and textures, about 12.5 credits each), then made light with `optglb.sh` (weld, simplify to ~4%, 2048 px textures).
+Library: `_engine4/models/<name>.opt.glb` (raw downloads in `models/raw/`, not committed).
+Per project: copy into `assets/models/<name>.glb`, run `packmodels.py <proj>` (writes `assets/vendor/models.js`, base64, because
+file:// pages cannot fetch), copy `gltf149.js` into `assets/vendor/`, and list the names in the film spec: `models: ["wallet", ...]`.
+In a scene: `{ p: "glb", a: [name, height, { byWidth, hw, env, rough }], s, spin | upd }`. Measured front directions: speaker and store face +x
+(use `ry: -PI/2` to face the camera).
