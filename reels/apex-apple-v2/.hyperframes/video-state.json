@@ -311,5 +311,18 @@
     "latest": null,
     "revisions": {},
     "unversioned": []
-  }
+  },
+  "renders": {
+    "latest": {
+      "id": "ecfa3e60-56cb-4e17-8fbf-9747c9f38512",
+      "completedAt": 1794994074341,
+      "output": "/home/user/Apexmedia-website/reels/apex-apple-v2/renders/demo-20s.mp4",
+      "status": "completed",
+      "revision": "7aa134c7-436b-4f28-a157-85ea0016733d"
+    },
+    "retainedRevisions": [
+      "7aa134c7-436b-4f28-a157-85ea0016733d"
+    ]
+  },
+  "pendingArtifactCleanup": []
 }
