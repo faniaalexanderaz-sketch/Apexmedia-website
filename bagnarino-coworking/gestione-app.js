@@ -43,6 +43,26 @@
     swPronto = navigator.serviceWorker.register('/sw-gestione.js', { scope: '/gestione' }).catch(function () { return null; });
   }
 
+  /* Chrome su Android: quando il telefono permette di installare l'app con un
+     tocco, l'occasione viene tenuta da parte per il pulsante "Metti l'app sul telefono" */
+  var installaSubito = null;
+  function mostraInstallaSubito() {
+    $$('[data-installa-subito]').forEach(function (el) { el.hidden = !installaSubito; });
+  }
+  window.addEventListener('beforeinstallprompt', function (ev) {
+    ev.preventDefault();
+    installaSubito = ev;
+    mostraInstallaSubito();
+  });
+  window.addEventListener('appinstalled', function () { installaSubito = null; mostraInstallaSubito(); });
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest && ev.target.closest('[data-installa-ora]');
+    if (!b || !installaSubito) return;
+    installaSubito.prompt();
+    installaSubito = null;
+    mostraInstallaSubito();
+  });
+
   /* ---------- pagine fuori dall'app: accesso, password, risposta, installa ---------- */
   function conModulo(sel, invia) {
     var f = $(sel);
@@ -96,14 +116,9 @@
       $$('[data-pannello]').forEach(function (p) { p.hidden = p.getAttribute('data-pannello') !== quale; });
     };
     schede.forEach(function (b) { b.addEventListener('click', function () { scegli(b.getAttribute('data-telefono')); }); });
-    if (/android/i.test(navigator.userAgent)) scegli('android');
-    /* Chrome su Android: se il telefono lo permette, l'installazione parte con un tocco */
-    window.addEventListener('beforeinstallprompt', function (ev) {
-      ev.preventDefault();
-      scegli('android');
-      $('[data-installa-subito]').hidden = false;
-      $('[data-installa-ora]').onclick = function () { ev.prompt(); };
-    });
+    /* si parte da Android; su un iPhone si apre da sola la scheda giusta */
+    if (/iphone|ipad|ipod/i.test(navigator.userAgent) && location.hash !== '#notifiche') scegli('iphone');
+    mostraInstallaSubito();
   }
 
   if (!document.body.classList.contains('g-app')) return;
@@ -309,6 +324,7 @@
      ============================================================= */
   function inApp() { return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true; }
   function iPhone() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }
+  function android() { return /android/i.test(navigator.userAgent); }
   function chiaveBinaria(b64) {
     var pad = '='.repeat((4 - b64.length % 4) % 4), raw = atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
     var out = new Uint8Array(raw.length);
@@ -319,15 +335,24 @@
   function statoNotifiche() {
     if (!CHIAVE_PUSH) return Promise.resolve('non-pronte');
     if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
-      return Promise.resolve(iPhone() && !inApp() ? 'serve-app' : 'non-possibile');
+      /* iPhone: serve l'app sulla schermata Home. Android: serve Chrome aggiornato. */
+      return Promise.resolve(iPhone() ? (inApp() ? 'non-possibile' : 'serve-app') : android() ? 'aggiorna-chrome' : 'non-possibile');
     }
     if (Notification.permission === 'denied') return Promise.resolve('bloccate');
     if (Notification.permission !== 'granted') return Promise.resolve('da-attivare');
     return navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); })
       .then(function (s) { return s ? 'attive' : 'da-attivare'; }, function () { return 'da-attivare'; });
   }
+  /* i Chrome vecchi rispondono con una funzione, quelli nuovi con una promessa */
+  function chiediPermesso() {
+    return new Promise(function (ok) {
+      var r;
+      try { r = Notification.requestPermission(function (permesso) { ok(permesso); }); } catch (x) { ok(Notification.permission); return; }
+      if (r && r.then) r.then(ok, function () { ok(Notification.permission); });
+    });
+  }
   function attivaNotifiche() {
-    return Notification.requestPermission().then(function (permesso) {
+    return chiediPermesso().then(function (permesso) {
       if (permesso !== 'granted') { var x = new Error('permesso'); x.bloccate = permesso === 'denied'; throw x; }
       return navigator.serviceWorker.ready;
     }).then(function (reg) {
@@ -347,7 +372,10 @@
   var TESTI_NOTIFICHE = {
     'attive': ['Le notifiche sono attive', 'Questo telefono ti avvisa a ogni nuova richiesta.'],
     'da-attivare': ['Le notifiche non sono attive', 'Attivale per sapere subito quando arriva una richiesta.'],
-    'bloccate': ['Le notifiche sono bloccate', 'Apri le Impostazioni del telefono, cerca “Notifiche”, poi “Bagnarino”, e scegli “Consenti”. Poi torna qui.'],
+    'bloccate': ['Le notifiche sono spente', android()
+      ? 'Su questo telefono le notifiche del Bagnarino sono spente. Si riaccendono in un minuto.'
+      : 'Apri le Impostazioni del telefono, cerca “Notifiche”, poi “Bagnarino”, e scegli “Consenti”. Poi torna qui.'],
+    'aggiorna-chrome': ['Per le notifiche serve Chrome aggiornato', 'Apri l’app con Chrome e aggiornalo dal Play Store. Intanto le richieste ti arrivano per email, con i due pulsanti per rispondere.'],
     'serve-app': ['Prima metti l’app sul telefono', 'Su iPhone le notifiche funzionano solo dall’app sulla schermata Home. Si fa in due minuti.'],
     'non-possibile': ['Questo telefono non riceve le notifiche', 'Le richieste ti arrivano comunque per email, con i due pulsanti per rispondere.'],
     'non-pronte': ['Le notifiche non sono ancora pronte', 'Le richieste ti arrivano comunque per email, con i due pulsanti per rispondere.']
@@ -357,7 +385,12 @@
     var html = '<div class="g-riquadro' + (st === 'attive' ? ' g-riquadro-ok' : '') + '" data-notifiche><p class="g-nome">' + t[0] + '</p><p class="g-testo">' + t[1] + '</p>';
     if (st === 'da-attivare') html += '<button class="g-btn g-btn-primario" type="button" data-attiva-notifiche>Attiva le notifiche</button>';
     if (st === 'serve-app') html += '<a class="g-btn g-btn-primario" href="/gestione/installa">Come mettere l’app sul telefono</a>';
-    if (st === 'attive' && !breve) html += '<button class="g-btn g-btn-chiaro" type="button" data-attiva-notifiche>Manda una notifica di prova</button>';
+    if (st === 'bloccate' && android()) html += '<a class="g-btn g-btn-primario" href="/gestione/installa#notifiche">Come riaccenderle</a>';
+    if (st === 'aggiorna-chrome') html += '<a class="g-btn g-btn-primario" href="/gestione/installa#notifiche">Come fare</a>';
+    if (st === 'attive' && !breve) {
+      html += '<button class="g-btn g-btn-chiaro" type="button" data-attiva-notifiche>Manda una notifica di prova</button>' +
+        '<p class="g-nota"><a class="g-link" href="/gestione/installa#notifiche">Non arrivano, o arrivano tardi?</a></p>';
+    }
     return html + '</div>';
   }
   function ascoltaNotifiche() {
@@ -370,7 +403,9 @@
         ridisegna();
       }, function (x) {
         if (x.message === 'permesso') { ridisegna(); return; }
-        ridisegna().then(function () { mostraErrore(x.message || 'Non sono riuscita ad attivare le notifiche.'); });
+        /* errore del telefono (per esempio manca il collegamento con i servizi di Google): parole semplici */
+        var testo = x.dati ? x.message : 'Non sono riuscita ad attivare le notifiche su questo telefono. Controlla che sia collegato a internet e che Chrome sia aggiornato, poi riprova. Le richieste ti arrivano comunque per email.';
+        ridisegna().then(function () { mostraErrore(testo); });
       });
     });
   }
@@ -385,7 +420,8 @@
     return Promise.all([leggi('oggi'), statoNotifiche()]).then(function (v) {
       var d = v[0], st = v[1], ora = new Date().getHours();
       var html = '<p class="g-saluto">' + (ora >= 18 ? 'Buonasera ' : 'Buongiorno ') + e(d.nome || NOME) + '</p><p class="g-data">' + e(giornoLungo(d.oggi)) + '</p>';
-      if (st === 'da-attivare' || st === 'serve-app') html += riquadroNotifiche(st, true);
+      /* in "Oggi" il riquadro compare solo quando c'è qualcosa da fare per ricevere le notifiche */
+      if (st === 'da-attivare' || st === 'serve-app' || st === 'bloccate' || st === 'aggiorna-chrome') html += riquadroNotifiche(st, true);
 
       html += '<h2 class="g-sezione">Richieste da confermare</h2>';
       html += d.inAttesa.length ? '<ul class="g-lista">' + d.inAttesa.map(schedaRichiesta).join('') + '</ul>' : '<p class="g-vuoto">Nessuna richiesta in attesa.</p>';
@@ -562,22 +598,78 @@
     });
   } };
 
-  /* ---------- foto: ridotte sul telefono prima di partire ---------- */
-  function riduci(file, lato, qualita) {
-    var carica = window.createImageBitmap
-      ? createImageBitmap(file, { imageOrientation: 'from-image' }).catch(function () { return createImageBitmap(file); })
-      : new Promise(function (ok, no) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = no; i.src = URL.createObjectURL(file); });
-    return carica.then(function (img) {
-      var l = img.width, a = img.height, scala = Math.min(1, lato / Math.max(l, a));
-      var c = document.createElement('canvas');
-      c.width = Math.round(l * scala); c.height = Math.round(a * scala);
-      var ctx = c.getContext('2d');
-      ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, c.width, c.height);
-      ctx.drawImage(img, 0, 0, c.width, c.height);
-      var url = c.toDataURL('image/jpeg', qualita);
-      return { dati: url.slice(url.indexOf(',') + 1), larghezza: c.width, altezza: c.height };
+  /* ---------- foto: ridotte sul telefono prima di partire ----------
+     La fotocamera scrive nel file come va girata la foto. I Chrome recenti la
+     raddrizzano da soli; quelli vecchi no, e la foto finirebbe coricata sul
+     sito: in quel caso si legge l'indicazione e si gira qui. */
+  var RADDRIZZA_DA_SOLO = !!(window.CSS && CSS.supports && CSS.supports('image-orientation', 'from-image'));
+  function leggiOrientamento(v) {
+    try {
+      if (v.byteLength < 12 || v.getUint16(0) !== 0xFFD8) return 1;
+      var p = 2;
+      while (p + 4 <= v.byteLength) {
+        var marca = v.getUint16(p), lunga = v.getUint16(p + 2);
+        if (marca === 0xFFE1 && v.getUint32(p + 4) === 0x45786966) {   /* "Exif" */
+          var t = p + 10, piccolo = v.getUint16(t) === 0x4949;
+          var elenco = t + v.getUint32(t + 4, piccolo), n = v.getUint16(elenco, piccolo);
+          for (var i = 0; i < n; i++) {
+            var voce = elenco + 2 + i * 12;
+            if (v.getUint16(voce, piccolo) === 0x0112) { var o = v.getUint16(voce + 8, piccolo); return o >= 1 && o <= 8 ? o : 1; }
+          }
+          return 1;
+        }
+        if ((marca & 0xFF00) !== 0xFF00 || marca === 0xFFDA) break;
+        p += 2 + lunga;
+      }
+    } catch (x) { /* file troncato o strano: si lascia com'è */ }
+    return 1;
+  }
+  function orientamento(file) {
+    return new Promise(function (ok) {
+      if (!window.FileReader || !file.slice) { ok(1); return; }
+      var r = new FileReader();
+      r.onerror = function () { ok(1); };
+      r.onload = function () { ok(leggiOrientamento(new DataView(r.result))); };
+      r.readAsArrayBuffer(file.slice(0, 131072));
     });
   }
+  function caricaImmagine(file) {
+    return new Promise(function (ok, no) {
+      var indirizzo = URL.createObjectURL(file), img = new Image();
+      img.onload = function () { ok(img); };
+      img.onerror = function () { URL.revokeObjectURL(indirizzo); no(new Error('foto')); };
+      img.src = indirizzo;
+    });
+  }
+  /* img: immagine o tela; orient: 1-8 come nel file; lato: misura massima */
+  function disegna(img, orient, lato, qualita) {
+    var l = img.naturalWidth || img.width, a = img.naturalHeight || img.height;
+    var scala = Math.min(1, lato / Math.max(l, a)), w = Math.round(l * scala), h = Math.round(a * scala);
+    var girata = orient >= 5, c = document.createElement('canvas');
+    c.width = girata ? h : w; c.height = girata ? w : h;
+    var x = c.getContext('2d');
+    x.fillStyle = '#FFFFFF'; x.fillRect(0, 0, c.width, c.height);
+    if (orient === 2) x.transform(-1, 0, 0, 1, w, 0);
+    else if (orient === 3) x.transform(-1, 0, 0, -1, w, h);
+    else if (orient === 4) x.transform(1, 0, 0, -1, 0, h);
+    else if (orient === 5) x.transform(0, 1, 1, 0, 0, 0);
+    else if (orient === 6) x.transform(0, 1, -1, 0, h, 0);
+    else if (orient === 7) x.transform(0, -1, -1, 0, h, w);
+    else if (orient === 8) x.transform(0, -1, 1, 0, 0, w);
+    x.drawImage(img, 0, 0, w, h);
+    var url = c.toDataURL('image/jpeg', qualita);
+    return { tela: c, dati: url.slice(url.indexOf(',') + 1), larghezza: c.width, altezza: c.height };
+  }
+  function riduciFoto(file) {
+    return Promise.all([caricaImmagine(file), RADDRIZZA_DA_SOLO ? 1 : orientamento(file)]).then(function (v) {
+      var fatte = [disegna(v[0], v[1], 1440, 0.82), disegna(v[0], v[1], 720, 0.78)];
+      try { URL.revokeObjectURL(v[0].src); } catch (x) { /* niente */ }   /* la foto intera non serve più: memoria libera */
+      return fatte;
+    });
+  }
+  /* solo per le prove automatiche */
+  if (window.__BGN_PROVA) window.__BGN_PROVA({ leggiOrientamento: leggiOrientamento, disegna: disegna, riduciFoto: riduciFoto });
+
   SCHERMATE['sito-foto'] = { titolo: 'Foto', voce: 'sito', interna: 'sito', disegna: function () {
     return leggi('sito').then(function (d) {
       var n = d.foto.length, piena = n >= d.massimoFoto;
@@ -601,7 +693,7 @@
         err.hidden = true;
         $('[data-carica-testo]', vista).textContent = 'Sto caricando la foto…';
         input.disabled = true;
-        Promise.all([riduci(file, 1440, 0.82), riduci(file, 720, 0.78)]).then(function (v) {
+        riduciFoto(file).then(function (v) {
           return chiama('foto-aggiungi', { grande: v[0].dati, piccola: v[1].dati, larghezza: v[0].larghezza, altezza: v[0].altezza });
         }, function () { throw new Error('Non sono riuscita a leggere la foto. Riprova con un’altra.'); })
           .then(function () { mostraFatto('La foto si vede sul sito entro un minuto.'); ridisegna(); }, function (x) { ridisegna().then(function () { mostraErrore(x.message); }); });
@@ -664,7 +756,9 @@
   SCHERMATE.impostazioni = { titolo: 'Impostazioni', interna: 'profilo', disegna: function () {
     return statoNotifiche().then(function (st) {
       vista.innerHTML = '<h2 class="g-sezione">Notifiche</h2>' + riquadroNotifiche(st) +
-        (inApp() ? '' : '<h2 class="g-sezione">App sul telefono</h2><a class="g-btn g-btn-chiaro" href="/gestione/installa">Come mettere l’app sul telefono</a>') +
+        (inApp() ? '' : '<h2 class="g-sezione">App sul telefono</h2>' +
+          '<div class="g-pulsanti" style="margin-top:0"><button class="g-btn g-btn-primario" type="button" data-installa-subito data-installa-ora' + (installaSubito ? '' : ' hidden') + '>Metti l’app su questo telefono</button>' +
+          '<a class="g-btn g-btn-chiaro" href="/gestione/installa">Come mettere l’app sul telefono</a></div>') +
         '<h2 class="g-sezione">Password</h2><a class="g-btn g-btn-chiaro" href="/gestione/password">Cambia la password</a>' +
         '<h2 class="g-sezione">Uscita</h2><button class="g-btn g-btn-rosso" type="button" data-esci>Esci dall’app</button>';
       ascoltaNotifiche();

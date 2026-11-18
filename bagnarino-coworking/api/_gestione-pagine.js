@@ -30,7 +30,7 @@ function testa(titolo) {
     '<meta name="apple-mobile-web-app-title" content="Bagnarino">\n' +
     '<meta name="apple-mobile-web-app-status-bar-style" content="default">\n' +
     '<link rel="preload" href="/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>\n' +
-    '<link rel="stylesheet" href="/gestione-app.css?v=26ec7383">\n' +
+    '<link rel="stylesheet" href="/gestione-app.css?v=e158e9e9">\n' +
     '</head>\n';
 }
 
@@ -77,7 +77,7 @@ function app(o) {
     /* una sola domanda prima di chiudere, annullare o togliere qualcosa */
     '<dialog class="g-domanda" data-domanda aria-labelledby="g-domanda-titolo"><h2 id="g-domanda-titolo" data-domanda-titolo></h2><p data-domanda-testo></p>' +
     '<div class="g-pulsanti"><button class="g-btn g-btn-primario" type="button" data-domanda-si></button><button class="g-btn g-btn-grigio" type="button" data-domanda-no>No, torna indietro</button></div></dialog>\n' +
-    '<script src="/gestione-app.js?v=e1bc2088" defer></script>\n' +
+    '<script src="/gestione-app.js?v=0ff055c8" defer></script>\n' +
     '</body>\n</html>\n';
 }
 
@@ -97,7 +97,7 @@ function accedi() {
     '</form>\n' +
     '<p class="g-sotto"><a class="g-link" href="/gestione/password">Password dimenticata?</a></p>\n' +
     '</main>\n' +
-    '<script src="/gestione-app.js?v=e1bc2088" defer></script>\n</body>\n</html>\n';
+    '<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
 }
 
 /* ---------- password dimenticata / nuova password ---------- */
@@ -128,7 +128,7 @@ function password(tokenLink, valido) {
       '</form>\n';
   }
   return testa('Password · Bagnarino') + '<body class="g-fuori">\n' + fascia('Bagnarino') +
-    '<main class="g-vista g-stretta">\n' + corpo + '</main>\n<script src="/gestione-app.js?v=e1bc2088" defer></script>\n</body>\n</html>\n';
+    '<main class="g-vista g-stretta">\n' + corpo + '</main>\n<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
 }
 
 /* ---------- arrivo dai pulsanti dell'email ---------- */
@@ -139,7 +139,7 @@ function risposta(t) {
     '<p class="g-testo" data-risposta-testo>Sto registrando la tua risposta.</p>\n' +
     '<a class="g-btn g-btn-primario" href="/gestione" data-risposta-app hidden>Apri l’app</a>\n' +
     '<noscript><p class="g-testo">Apri l’app per rispondere alla richiesta.</p><a class="g-btn g-btn-primario" href="/gestione">Apri l’app</a></noscript>\n' +
-    '</main>\n<script src="/gestione-app.js?v=e1bc2088" defer></script>\n</body>\n</html>\n';
+    '</main>\n<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
 }
 
 function messaggio(titolo, testo) {
@@ -200,39 +200,79 @@ const DISEGNI = {
     '<g fill="#1B2A3A"><circle cx="286" cy="28" r="4"/><circle cx="286" cy="40" r="4"/><circle cx="286" cy="52" r="4"/></g>' + cerchio(286, 40, 26) +
     '<line x1="3" y1="76" x2="317" y2="76" stroke="#1B2A3A" stroke-width="2"/>' +
     '<rect x="20" y="96" width="180" height="14" rx="7" fill="#E3E5E8"/><rect x="20" y="124" width="250" height="14" rx="7" fill="#E3E5E8"/><rect x="20" y="152" width="210" height="14" rx="7" fill="#E3E5E8"/>'),
-  /* Android 2: la voce del menu */
+  /* Android 2: la voce del menu (sui Chrome non recenti si chiama così) */
   installa: telefono(
-    '<title>Nel menu, la voce Installa app</title>' +
+    '<title>Nel menu, la voce Aggiungi a schermata Home</title>' +
     '<text x="24" y="42" font-size="17" fill="#1B2A3A">Nuova scheda</text><line x1="20" y1="58" x2="300" y2="58" stroke="#C9CED6" stroke-width="2"/>' +
     '<text x="24" y="88" font-size="17" fill="#1B2A3A">Condividi…</text><line x1="20" y1="104" x2="300" y2="104" stroke="#C9CED6" stroke-width="2"/>' +
     '<rect x="12" y="114" width="296" height="48" rx="10" fill="#FBF0DA" stroke="#B4620A" stroke-width="4"/>' +
-    '<text x="24" y="145" font-size="17" font-weight="700" fill="#1B2A3A">Installa app</text>' +
-    '<g fill="none" stroke="#1B2A3A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M282 126v16"/><path d="m274 136 8 8 8-8"/><path d="M272 152h20"/></g>' +
+    '<text x="24" y="144" font-size="16" font-weight="700" fill="#1B2A3A">Aggiungi a schermata Home</text>' +
+    '<g fill="none" stroke="#1B2A3A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="270" y="126" width="24" height="24" rx="5"/><path d="M282 132v12M276 138h12"/></g>' +
     '<text x="24" y="186" font-size="17" fill="#1B2A3A">Impostazioni</text>'),
   /* Android 3: la conferma */
   conferma: telefono(
     '<title>La finestra di conferma, con il pulsante Installa</title>' +
-    '<text x="28" y="50" font-size="20" font-weight="700" fill="#1B2A3A">Installa app</text>' +
-    '<rect x="28" y="72" width="52" height="52" rx="12" fill="#F7F5F0" stroke="#1B2A3A" stroke-width="2"/>' +
-    '<g transform="translate(39 81) scale(0.08)"><path fill="#1B2A3A" d="M40 0H267A103 103 0 0 1 343.5 172H0V40A40 40 0 0 1 40 0Z"/><path fill="#C9973B" d="M0 192H317C331 195 340 202 345 210H0Z"/><path fill="#1B2A3A" d="M0 230H362A112 112 0 0 1 267 401H40A40 40 0 0 1 0 361Z"/></g>' +
-    '<text x="96" y="96" font-size="18" font-weight="700" fill="#1B2A3A">Bagnarino</text><text x="96" y="118" font-size="14" fill="#1B2A3A">bagnarinocoworking.it</text>' +
+    '<text x="28" y="48" font-size="18" font-weight="700" fill="#1B2A3A">Installa app</text>' +
+    '<rect x="28" y="70" width="52" height="52" rx="12" fill="#F7F5F0" stroke="#1B2A3A" stroke-width="2"/>' +
+    '<g transform="translate(39 79) scale(0.08)"><path fill="#1B2A3A" d="M40 0H267A103 103 0 0 1 343.5 172H0V40A40 40 0 0 1 40 0Z"/><path fill="#C9973B" d="M0 192H317C331 195 340 202 345 210H0Z"/><path fill="#1B2A3A" d="M0 230H362A112 112 0 0 1 267 401H40A40 40 0 0 1 0 361Z"/></g>' +
+    '<rect x="96" y="76" width="196" height="40" rx="6" fill="#FFFFFF" stroke="#5B6470" stroke-width="2"/><text x="108" y="102" font-size="18" fill="#1B2A3A">Bagnarino</text>' +
     '<text x="150" y="172" font-size="17" fill="#1B2A3A" text-anchor="middle">Annulla</text>' +
     '<rect x="196" y="146" width="104" height="40" rx="20" fill="#FBF0DA" stroke="#B4620A" stroke-width="4"/>' +
-    '<text x="248" y="172" font-size="17" font-weight="700" fill="#1B2A3A" text-anchor="middle">Installa</text>')
+    '<text x="248" y="172" font-size="17" font-weight="700" fill="#1B2A3A" text-anchor="middle">Installa</text>'),
+  /* Android 0: aggiornare Chrome dal Play Store */
+  aggiorna: telefono(
+    '<title>Nel Play Store, accanto a Chrome, il pulsante Aggiorna</title>' +
+    '<rect x="20" y="20" width="280" height="40" rx="20" fill="#EEF0F3"/><text x="44" y="46" font-size="17" fill="#1B2A3A">Chrome</text>' +
+    '<g fill="none" stroke="#1B2A3A" stroke-width="3" stroke-linecap="round"><circle cx="268" cy="38" r="8"/><path d="m274 44 8 8"/></g>' +
+    '<circle cx="52" cy="112" r="26" fill="#FFFFFF" stroke="#1B2A3A" stroke-width="3"/><circle cx="52" cy="112" r="10" fill="#1B2A3A"/>' +
+    '<text x="92" y="106" font-size="19" font-weight="700" fill="#1B2A3A">Chrome</text><text x="92" y="130" font-size="15" fill="#1B2A3A">Google LLC</text>' +
+    '<rect x="188" y="90" width="116" height="44" rx="22" fill="#FBF0DA" stroke="#B4620A" stroke-width="4"/>' +
+    '<text x="246" y="118" font-size="17" font-weight="700" fill="#1B2A3A" text-anchor="middle">Aggiorna</text>' +
+    '<line x1="20" y1="160" x2="300" y2="160" stroke="#C9CED6" stroke-width="2"/><rect x="20" y="174" width="170" height="12" rx="6" fill="#E3E5E8"/>')
 };
 function passo(n, titolo, testo, disegno) {
   return '<li class="g-passo"><h3>' + n + '. ' + titolo + '</h3><p>' + testo + '</p>' + (disegno ? DISEGNI[disegno] : '') + '</li>\n';
+}
+/* un consiglio senza numero (per "Se le notifiche non arrivano") */
+function consiglio(titolo, testo) {
+  return '<li class="g-passo"><h3>' + titolo + '</h3><p>' + testo + '</p></li>\n';
 }
 function installa() {
   return testa('Installa l’app · Bagnarino') + '<body class="g-fuori g-installa">\n' + fascia('Bagnarino') +
     '<main class="g-vista g-stretta">\n' +
     '<h2 class="g-titolo">Metti l’app sul telefono</h2>\n' +
-    '<p class="g-testo">Si fa una volta sola e richiede due minuti. Dopo, l’app si apre a tutto schermo dalla sua icona, come le altre app.</p>\n' +
+    '<p class="g-testo">Si fa una volta sola e richiede pochi minuti. Dopo, l’app si apre a tutto schermo dalla sua icona, come le altre app.</p>\n' +
     '<div class="g-scelta" role="tablist" aria-label="Che telefono è?">\n' +
-    '  <button class="g-btn g-btn-primario" type="button" role="tab" aria-selected="true" aria-controls="p-iphone" data-telefono="iphone">iPhone</button>\n' +
-    '  <button class="g-btn g-btn-grigio" type="button" role="tab" aria-selected="false" aria-controls="p-android" data-telefono="android">Android</button>\n' +
+    '  <button class="g-btn g-btn-primario" type="button" role="tab" aria-selected="true" aria-controls="p-android" data-telefono="android">Android</button>\n' +
+    '  <button class="g-btn g-btn-grigio" type="button" role="tab" aria-selected="false" aria-controls="p-iphone" data-telefono="iphone">iPhone</button>\n' +
     '</div>\n' +
-    '<section id="p-iphone" role="tabpanel" data-pannello="iphone">\n' +
+
+    /* ---------- Android: anche telefoni non recenti ---------- */
+    '<section id="p-android" role="tabpanel" data-pannello="android">\n' +
+    '<h2 class="g-sezione">Su Android</h2>\n' +
+    '<p class="g-testo">Va bene anche un telefono di qualche anno fa: l’importante è usare <strong>Chrome</strong> e che sia aggiornato.</p>\n' +
+    '<div class="g-riquadro" data-installa-subito hidden><p class="g-testo">Questo telefono può installarla subito, con un tocco.</p><button class="g-btn g-btn-primario" type="button" data-installa-ora>Installa l’app adesso</button></div>\n' +
+    '<ol class="g-passi">\n' +
+    passo(1, 'Aggiorna Chrome', 'Apri il <strong>Play Store</strong>, cerca “Chrome” e, se compare il pulsante <strong>Aggiorna</strong>, toccalo e aspetta che finisca. Se c’è scritto “Apri”, è già aggiornato.', 'aggiorna') +
+    passo(2, 'Apri questa pagina con Chrome', 'Chrome è l’app con il cerchio rosso, giallo e verde. In alto scrivi <strong>bagnarinocoworking.it/gestione</strong>. Sui Samsung non usare l’app “Internet”: usa Chrome.') +
+    passo(3, 'Tocca i tre puntini', 'In alto a destra.', 'puntini') +
+    passo(4, 'Tocca “Aggiungi a schermata Home”', 'Su alcuni telefoni la stessa voce si chiama <strong>“Installa app”</strong>: è la stessa cosa.', 'installa') +
+    passo(5, 'Tocca “Installa”', 'Su alcuni telefoni il pulsante si chiama “Aggiungi”. Se il telefono fa scegliere tra “Installa” e “Crea scorciatoia”, scegli <strong>“Installa”</strong>.', 'conferma') +
+    passo(6, 'Apri l’app dalla nuova icona', 'L’icona Bagnarino compare sulla schermata Home. Se non la vedi, cercala nell’elenco di tutte le app. Entra con email e password: si fa solo la prima volta.', 'icona') +
+    passo(7, 'Attiva le notifiche', 'Dentro l’app tocca l’omino in alto a destra, poi <strong>Impostazioni</strong>, poi <strong>Attiva le notifiche</strong>. Se il telefono chiede il permesso, tocca “Consenti”. Arriva subito una notifica di prova.') +
+    '</ol>\n' +
+    '<h2 class="g-sezione" id="notifiche">Se le notifiche non arrivano</h2>\n' +
+    '<p class="g-testo">Prova queste cose, una alla volta. Dopo ognuna, nell’app tocca <strong>Manda una notifica di prova</strong>.</p>\n' +
+    '<ul class="g-passi">\n' +
+    consiglio('Chrome non è aggiornato', 'Play Store → cerca “Chrome” → <strong>Aggiorna</strong>. Poi riapri l’app e tocca di nuovo “Attiva le notifiche”.') +
+    consiglio('Le notifiche sono spente', 'Apri le <strong>Impostazioni</strong> del telefono → <strong>App</strong> (o “Applicazioni”) → <strong>Chrome</strong> → <strong>Notifiche</strong> e accendile. Se tra le app trovi anche “Bagnarino”, accendile anche lì. Poi, in Chrome: tre puntini → Impostazioni → Impostazioni sito → Notifiche → <strong>bagnarinocoworking.it</strong> → Consenti.') +
+    consiglio('Arrivano in ritardo', 'È il risparmio della batteria. Apri le <strong>Impostazioni</strong> del telefono → <strong>App</strong> → <strong>Chrome</strong> → <strong>Batteria</strong> e scegli “Senza restrizioni” (su alcuni telefoni “Non ottimizzare”). Se il telefono ha il “Risparmio energetico” acceso, spegnilo.') +
+    consiglio('Il telefono è in silenzioso', 'Controlla il volume delle notifiche e che “Non disturbare” sia spento.') +
+    consiglio('In ogni caso', 'Ogni richiesta arriva anche per <strong>email</strong>, con i due pulsanti Conferma e Non disponibile: si può rispondere da lì.') +
+    '</ul>\n</section>\n' +
+
+    /* ---------- iPhone ---------- */
+    '<section id="p-iphone" role="tabpanel" data-pannello="iphone" hidden>\n' +
     '<h2 class="g-sezione">Su iPhone</h2>\n<ol class="g-passi">\n' +
     passo(1, 'Apri questa pagina con Safari', 'Safari è l’app con la bussola blu. Se sei in un’altra app (per esempio la posta o WhatsApp), copia l’indirizzo <strong>bagnarinocoworking.it/gestione</strong> e incollalo in Safari.') +
     passo(2, 'Tocca Condividi', 'È il quadrato con la freccia verso l’alto, nella barra in basso.', 'condividi') +
@@ -241,21 +281,11 @@ function installa() {
     passo(5, 'Apri l’app dalla nuova icona', 'Chiudi Safari e tocca l’icona Bagnarino sulla schermata Home. Entra con email e password: si fa solo la prima volta.', 'icona') +
     passo(6, 'Attiva le notifiche', 'Dentro l’app tocca l’omino in alto a destra, poi <strong>Impostazioni</strong>, poi <strong>Attiva le notifiche</strong> e scegli “Consenti”. Su iPhone le notifiche funzionano solo dall’app sulla schermata Home (serve iOS 16.4 o più recente).') +
     '</ol>\n</section>\n' +
-    '<section id="p-android" role="tabpanel" data-pannello="android" hidden>\n' +
-    '<h2 class="g-sezione">Su Android</h2>\n' +
-    '<div class="g-riquadro" data-installa-subito hidden><p class="g-testo">Questo telefono può installarla subito.</p><button class="g-btn g-btn-primario" type="button" data-installa-ora>Installa l’app adesso</button></div>\n' +
-    '<ol class="g-passi">\n' +
-    passo(1, 'Apri questa pagina con Chrome', 'Chrome è l’app con il cerchio rosso, giallo e verde. L’indirizzo è <strong>bagnarinocoworking.it/gestione</strong>.') +
-    passo(2, 'Tocca i tre puntini', 'In alto a destra.', 'puntini') +
-    passo(3, 'Tocca “Installa app”', 'Su alcuni telefoni si chiama “Aggiungi a schermata Home”.', 'installa') +
-    passo(4, 'Tocca “Installa”', 'L’icona Bagnarino compare tra le app.', 'conferma') +
-    passo(5, 'Apri l’app dalla nuova icona', 'Entra con email e password: si fa solo la prima volta.', 'icona') +
-    passo(6, 'Attiva le notifiche', 'Dentro l’app tocca l’omino in alto a destra, poi <strong>Impostazioni</strong>, poi <strong>Attiva le notifiche</strong> e scegli “Consenti”.') +
-    '</ol>\n</section>\n' +
+
     '<h2 class="g-sezione">Per entrare</h2>\n' +
     '<p class="g-testo">Email: quella del coworking. Password: la stessa dell’area riservata. Se non la ricordi, nella pagina di accesso tocca “Password dimenticata?”.</p>\n' +
     '<a class="g-btn g-btn-primario" href="/gestione">Apri l’app</a>\n' +
-    '</main>\n<script src="/gestione-app.js?v=e1bc2088" defer></script>\n</body>\n</html>\n';
+    '</main>\n<script src="/gestione-app.js?v=0ff055c8" defer></script>\n</body>\n</html>\n';
 }
 
 module.exports = { app, accedi, password, risposta, messaggio, installa };

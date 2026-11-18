@@ -1,6 +1,7 @@
 /* =============================================================
    Prova completa, come la farebbe una persona: il cliente dal sito
-   (telefono, 390px) e Marcella dall'app. Il server è quello locale
+   (telefono, 390px) e Marcella dall'app, anche su un Android piccolo
+   e non recente (360 e 320px). Il server è quello locale
    (database in memoria, email catturate su /__posta, nessuna email
    vera). Le notifiche partono verso un finto "telefono" in ascolto
    qui, che le decifra come farebbe un telefono vero.
@@ -33,7 +34,7 @@ function isoTra(giorni) { const d = new Date(Date.now() + giorni * 864e5); retur
 function dataLunga(iso) { const p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2], 12).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }); }
 
 /* controlli di leggibilità su una schermata dell'app: niente testo sotto 18px, pulsanti alti almeno 56px, nessuno scroll orizzontale */
-async function leggibile(page, nome) {
+async function leggibile(page, nome, larghezza) {
   const r = await page.evaluate(() => {
     const visibile = el => { const s = getComputedStyle(el), b = el.getBoundingClientRect(); return s.display !== 'none' && s.visibility !== 'hidden' && b.width > 0 && b.height > 0; };
     const piccoli = [], bassi = [];
@@ -53,7 +54,7 @@ async function leggibile(page, nome) {
   });
   verifica(nome + ': testo da 18px in su', r.piccoli.length === 0, r.piccoli.join(' | '));
   verifica(nome + ': pulsanti alti almeno 56px', r.bassi.length === 0, r.bassi.join(' | '));
-  verifica(nome + ': nessuno scroll orizzontale a 390px', r.scroll === 0, 'scroll ' + r.scroll);
+  verifica(nome + ': nessuno scroll orizzontale a ' + (larghezza || 390) + 'px', r.scroll === 0, 'scroll ' + r.scroll);
 }
 
 (async () => {
@@ -619,21 +620,175 @@ async function leggibile(page, nome) {
   await ih.screenshot({ path: path.join(OUT, 'app-iphone-installata.png'), fullPage: true });
   await casa.close();
 
-  /* la pagina delle istruzioni */
-  const guida = await browser.newContext(iphone);
-  const gi = await guida.newPage();
-  await gi.goto(BASE + '/gestione/installa');
-  verifica('/gestione/installa si apre senza accesso', gi.url().endsWith('/gestione/installa') && /Metti l’app sul telefono/.test(await gi.locator('main').innerText()));
+  /* ====================================================================== */
+  titolo('TEST 7 bis — il telefono della titolare: un Android non recente (360 e 320px)');
+  const android = { viewport: { width: 360, height: 640 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, reducedMotion: 'reduce',
+    userAgent: 'Mozilla/5.0 (Linux; Android 8.1.0; SM-J530F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36' };
+  const entra = async (pagina) => {
+    await pagina.goto(BASE + '/gestione/accedi');
+    await pagina.fill('input[name=email]', 'info@bagnarino.it'); await pagina.fill('input[name=password]', 'il coworking di corso lamarmora');
+    await pagina.click('button[type=submit]');
+    await pagina.waitForURL('**/gestione'); await pagina.waitForSelector('.g-saluto');
+  };
+  const apri = async (pagina, dove) => { await pagina.evaluate(h => { location.hash = h; }, dove); await pagina.waitForTimeout(700); };
+
+  /* la pagina delle istruzioni: su Android si apre la scheda Android */
+  const guida = await browser.newContext(android);
+  const ga = await guida.newPage();
+  ga.on('pageerror', e => errori.push('installa (Android): ' + e.message));
+  await ga.goto(BASE + '/gestione/installa', { waitUntil: 'networkidle' });
+  verifica('/gestione/installa si apre senza accesso', ga.url().endsWith('/gestione/installa') && /Metti l’app sul telefono/.test(await ga.locator('main').innerText()));
+  verifica('si apre sulla scheda Android (quella di iPhone è nascosta)', (await ga.locator('[data-telefono][aria-selected=true]').innerText()).trim() === 'Android' && await ga.locator('[data-pannello="iphone"]').isHidden() && await ga.locator('[data-pannello="android"]').isVisible());
+  const passiA = await ga.locator('[data-pannello="android"] ol .g-passo h3').allInnerTexts();
+  verifica('Android, passo passo con i disegni: aggiorna Chrome → apri con Chrome → tre puntini → Aggiungi a schermata Home → Installa → icona → notifiche',
+    passiA.length === 7 && /Aggiorna Chrome/.test(passiA[0]) && /con Chrome/.test(passiA[1]) && /tre puntini/.test(passiA[2]) && /Aggiungi a schermata Home/.test(passiA[3]) && /Installa/.test(passiA[4]) && /icona/.test(passiA[5]) && /notifiche/.test(passiA[6]) &&
+    await ga.locator('[data-pannello="android"] svg.g-disegno').count() === 5, passiA.join(' | '));
+  const testoA = (await ga.locator('[data-pannello="android"]').innerText()).replace(/\s+/g, ' ');
+  verifica('dice anche gli altri nomi che si trovano sui telefoni ("Installa app", "Aggiungi", "Crea scorciatoia") e di non usare l’app "Internet" dei Samsung',
+    /“Installa app”/.test(testoA) && /si chiama “Aggiungi”/.test(testoA) && /Crea scorciatoia/.test(testoA) && /non usare l’app “Internet”/.test(testoA) && /Play Store/.test(testoA));
+  const consigli = await ga.locator('#notifiche ~ ul .g-passo h3').allInnerTexts();
+  verifica('"Se le notifiche non arrivano": Chrome da aggiornare, notifiche spente, batteria, silenzioso, e l’email che arriva comunque',
+    consigli.length === 5 && /Chrome non è aggiornato/.test(consigli[0]) && /spente/.test(consigli[1]) && /ritardo/.test(consigli[2]) && /silenzioso/.test(consigli[3]) && /Senza restrizioni/.test(testoA) && /arriva anche per email/.test(testoA), consigli.join(' | '));
+  await ga.screenshot({ path: path.join(OUT, 'installa-android.png'), fullPage: true });
+  await leggibile(ga, 'Installa (Android, 360px)', 360);
+  /* installazione con un tocco: compare solo quando Chrome la offre */
+  verifica('il riquadro "Installa l’app adesso" resta nascosto finché Chrome non offre l’installazione', await ga.locator('[data-installa-subito]').isHidden());
+  await ga.evaluate(() => { const ev = new Event('beforeinstallprompt', { cancelable: true }); ev.prompt = () => { window.__chiesto = (window.__chiesto || 0) + 1; }; window.dispatchEvent(ev); });
+  verifica('quando Chrome la offre: compare il pulsante grande "Installa l’app adesso"', await ga.locator('[data-installa-subito]').isVisible() && (await ga.locator('[data-installa-ora]').innerText()).trim() === 'Installa l’app adesso');
+  await leggibile(ga, 'Installa con un tocco (Android, 360px)', 360);
+  await ga.locator('[data-installa-ora]').click();
+  verifica('un tocco sul pulsante apre la finestra di installazione di Chrome, una volta sola', await ga.evaluate(() => window.__chiesto) === 1 && await ga.locator('[data-installa-subito]').isHidden());
+  /* dal link dell'app si arriva dritti all'aiuto */
+  await ga.goto('about:blank');
+  await ga.goto(BASE + '/gestione/installa#notifiche', { waitUntil: 'networkidle' });
+  await ga.waitForTimeout(300);
+  const ancora = await ga.evaluate(() => Math.round(document.getElementById('notifiche').getBoundingClientRect().top));
+  verifica('il link dell’app porta dritti a "Se le notifiche non arrivano", sotto la testata e non coperto', ancora >= 60 && ancora <= 200, 'a ' + ancora + 'px');
+  await ga.screenshot({ path: path.join(OUT, 'installa-android-notifiche.png') });
+  await ga.setViewportSize({ width: 320, height: 568 });
+  await ga.goto(BASE + '/gestione/installa', { waitUntil: 'networkidle' });
+  await leggibile(ga, 'Installa (Android, 320px)', 320);
+  await guida.close();
+
+  /* su un iPhone si apre da sola la scheda iPhone */
+  const guidaI = await browser.newContext(iphone);
+  const gi = await guidaI.newPage();
+  await gi.goto(BASE + '/gestione/installa', { waitUntil: 'networkidle' });
   const passiI = await gi.locator('[data-pannello="iphone"] .g-passo h3').allInnerTexts();
-  verifica('iPhone: Safari → Condividi → Aggiungi alla schermata Home, passo passo con i disegni', /Safari/.test(passiI[0]) && /Condividi/.test(passiI[1]) && /Aggiungi alla schermata Home/.test(passiI[2]) && await gi.locator('[data-pannello="iphone"] svg.g-disegno').count() >= 4, passiI.join(' | '));
+  verifica('su un iPhone si apre la scheda iPhone: Safari → Condividi → Aggiungi alla schermata Home, con i disegni', (await gi.locator('[data-telefono][aria-selected=true]').innerText()).trim() === 'iPhone' && await gi.locator('[data-pannello="android"]').isHidden() &&
+    /Safari/.test(passiI[0]) && /Condividi/.test(passiI[1]) && /Aggiungi alla schermata Home/.test(passiI[2]) && await gi.locator('[data-pannello="iphone"] svg.g-disegno').count() === 4, passiI.join(' | '));
   await gi.screenshot({ path: path.join(OUT, 'installa-iphone.png'), fullPage: true });
   await leggibile(gi, 'Installa (iPhone)');
   await gi.locator('[data-telefono="android"]').click();
-  const passiA = await gi.locator('[data-pannello="android"] .g-passo h3').allInnerTexts();
-  verifica('Android: Chrome → Installa app, passo passo con i disegni', /Chrome/.test(passiA[0]) && /tre puntini/.test(passiA[1]) && /Installa app/.test(passiA[2]) && await gi.locator('[data-pannello="android"] svg.g-disegno').count() >= 4 && await gi.locator('[data-pannello="iphone"]').isHidden(), passiA.join(' | '));
-  await gi.screenshot({ path: path.join(OUT, 'installa-android.png'), fullPage: true });
-  await leggibile(gi, 'Installa (Android)');
-  await guida.close();
+  verifica('le due schede si scambiano con un tocco', await gi.locator('[data-pannello="iphone"]').isHidden() && await gi.locator('[data-pannello="android"]').isVisible());
+  await guidaI.close();
+
+  /* l'app su Android, notifiche spente sul telefono (in questa finestra il permesso è negato) */
+  const spente = await browser.newContext(android);
+  await spente.addInitScript(() => { window.__BGN_PROVA = f => { window.__bgn = f; }; });
+  const as = await spente.newPage();
+  as.on('pageerror', e => errori.push('app (Android): ' + e.message));
+  await entra(as);
+  await as.waitForSelector('[data-notifiche]');
+  const oggiSpente = (await as.locator('[data-notifiche]').innerText()).replace(/\s+/g, ' ');
+  verifica('Android con le notifiche spente: lo dice con parole semplici e porta all’aiuto con un pulsante', await as.evaluate(() => Notification.permission) === 'denied' && /Le notifiche sono spente/.test(oggiSpente) && /Si riaccendono in un minuto/.test(oggiSpente) &&
+    (await as.locator('[data-notifiche] a.g-btn').innerText()).trim() === 'Come riaccenderle' && await as.locator('[data-notifiche] a[href="/gestione/installa#notifiche"]').count() === 1, oggiSpente);
+  await as.screenshot({ path: path.join(OUT, 'app-android-notifiche-spente.png'), fullPage: true });
+  /* tutte le schermate, sullo schermo piccolo */
+  const schermate = [['oggi', 'Oggi'], ['calendario', 'Calendario'], ['chiudi-giorni', 'Chiudi più giorni'], ['prenotazioni', 'Prenotazioni'], ['sito', 'Sito'], ['sito-avviso', 'Avviso'], ['sito-foto', 'Foto'], ['sito-contatti', 'Telefono'], ['profilo', 'Profilo'], ['come-va', 'Come va'], ['impostazioni', 'Impostazioni']];
+  const barra = pagina => pagina.evaluate(() => { const v = [...document.querySelectorAll('.g-barra a')]; const alto = v.map(a => Math.round(a.getBoundingClientRect().top));
+    return { voci: v.length, unaRiga: alto.every(t => t === alto[0]), tagliate: v.filter(a => a.scrollWidth > a.clientWidth + 1).map(a => a.textContent.trim()), dentro: v.every(a => a.getBoundingClientRect().right <= window.innerWidth + 0.5) }; });
+  for (const larghezza of [360, 320]) {
+    await as.setViewportSize({ width: larghezza, height: larghezza === 360 ? 640 : 568 });
+    for (const [dove, nome] of schermate) {
+      await apri(as, dove);
+      await leggibile(as, 'Android ' + larghezza + 'px · ' + nome, larghezza);
+    }
+    const b = await barra(as);
+    verifica('Android ' + larghezza + 'px: le quattro voci in basso stanno su una riga, intere', b.voci === 4 && b.unaRiga && b.tagliate.length === 0 && b.dentro, JSON.stringify(b));
+    await apri(as, 'oggi');
+    await as.screenshot({ path: path.join(OUT, 'app-android-' + larghezza + '-oggi.png'), fullPage: true });
+    await apri(as, 'calendario');
+    await as.screenshot({ path: path.join(OUT, 'app-android-' + larghezza + '-calendario.png'), fullPage: true });
+  }
+  await as.setViewportSize({ width: 360, height: 640 });
+  /* installazione con un tocco anche da dentro l'app */
+  await apri(as, 'impostazioni');
+  verifica('Impostazioni: "Metti l’app su questo telefono" resta nascosto finché Chrome non offre l’installazione', await as.locator('#vista [data-installa-ora]').isHidden() && await as.locator('#vista a[href="/gestione/installa"]').isVisible());
+  await as.evaluate(() => { const ev = new Event('beforeinstallprompt', { cancelable: true }); ev.prompt = () => { window.__chiesto = (window.__chiesto || 0) + 1; }; window.dispatchEvent(ev); });
+  verifica('Impostazioni: quando Chrome la offre compare "Metti l’app su questo telefono"', await as.locator('#vista [data-installa-ora]').isVisible() && (await as.locator('#vista [data-installa-ora]').innerText()).trim() === 'Metti l’app su questo telefono');
+  await leggibile(as, 'Android 360px · Impostazioni con l’installazione', 360);
+  await as.screenshot({ path: path.join(OUT, 'app-android-impostazioni.png'), fullPage: true });
+  await as.locator('#vista [data-installa-ora]').click();
+  verifica('Impostazioni: un tocco apre la finestra di installazione di Chrome', await as.evaluate(() => window.__chiesto) === 1);
+
+  /* foto scattate in verticale: il file dice "girami", e sui Chrome vecchi lo fa l'app */
+  const foto = await as.evaluate(async () => {
+    /* una foto "coricata" 40x20 (metà sinistra rossa, metà destra blu) con l'indicazione 6: va girata di un quarto di giro */
+    const c = document.createElement('canvas'); c.width = 40; c.height = 20; const x = c.getContext('2d');
+    x.fillStyle = '#D00000'; x.fillRect(0, 0, 20, 20); x.fillStyle = '#0000D0'; x.fillRect(20, 0, 20, 20);
+    const base = Uint8Array.from(atob(c.toDataURL('image/jpeg', 0.95).split(',')[1]), ch => ch.charCodeAt(0));
+    const exif = [0xFF, 0xE1, 0x00, 0x22, 0x45, 0x78, 0x69, 0x66, 0x00, 0x00, 0x4D, 0x4D, 0x00, 0x2A, 0x00, 0x00, 0x00, 0x08, 0x00, 0x01, 0x01, 0x12, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00];
+    const file = new Uint8Array(2 + exif.length + base.length - 2);
+    file.set([0xFF, 0xD8]); file.set(exif, 2); file.set(base.subarray(2), 2 + exif.length);
+    const letto = window.__bgn.leggiOrientamento(new DataView(file.buffer));
+    const senza = window.__bgn.leggiOrientamento(new DataView(base.buffer));
+    const rotto = window.__bgn.leggiOrientamento(new DataView(file.buffer.slice(0, 20)));
+    /* come su un Chrome vecchio: la foto arriva coricata e la gira l'app */
+    const g = window.__bgn.disegna(c, letto, 1440, 0.9), t = g.tela.getContext('2d');
+    const su = t.getImageData(10, 5, 1, 1).data, giu = t.getImageData(10, 35, 1, 1).data;
+    /* come su questo Chrome: la gira il browser, e l'app non la gira una seconda volta */
+    const fatte = await window.__bgn.riduciFoto(new File([file], 'foto.jpg', { type: 'image/jpeg' }));
+    return { letto, senza, rotto, girata: [g.larghezza, g.altezza], su: [su[0], su[2]], giu: [giu[0], giu[2]], intera: [fatte[0].larghezza, fatte[0].altezza], piccola: [fatte[1].larghezza, fatte[1].altezza] };
+  });
+  verifica('foto: l’indicazione "va girata" viene letta dal file (e un file senza indicazione, o tronco, resta com’è)', foto.letto === 6 && foto.senza === 1 && foto.rotto === 1, JSON.stringify(foto));
+  verifica('foto in verticale su un Chrome vecchio: l’app la raddrizza (da 40×20 coricata a 20×40 in piedi, il lato giusto in alto)', foto.girata.join('x') === '20x40' && foto.su[0] > 150 && foto.su[1] < 90 && foto.giu[1] > 150 && foto.giu[0] < 90, JSON.stringify(foto));
+  verifica('foto in verticale su un Chrome recente: resta in piedi, senza essere girata due volte', foto.intera.join('x') === '20x40' && foto.piccola.join('x') === '20x40', JSON.stringify(foto));
+  await spente.close();
+
+  /* notifiche attive su Android. Il permesso viene chiesto alla maniera dei Chrome vecchi:
+     la risposta arriva a una funzione, non a una promessa. */
+  const accese = await browser.newContext(android);
+  await accese.addInitScript(isc => {
+    Object.defineProperty(Notification, 'permission', { get: () => 'granted' });
+    Notification.requestPermission = function (risposta) { setTimeout(() => risposta('granted'), 20); };
+    PushManager.prototype.getSubscription = () => Promise.resolve({ endpoint: isc.endpoint, toJSON: () => isc });
+  }, iscrizione);
+  const aa = await accese.newPage();
+  aa.on('pageerror', e => errori.push('app (Android, notifiche attive): ' + e.message));
+  await entra(aa);
+  await apri(aa, 'impostazioni');
+  await aa.waitForSelector('[data-notifiche]');
+  const attive = (await aa.locator('[data-notifiche]').innerText()).replace(/\s+/g, ' ');
+  verifica('Android con le notifiche attive: lo dice, con "Manda una notifica di prova" e il link "Non arrivano, o arrivano tardi?"', /Le notifiche sono attive/.test(attive) && (await aa.locator('[data-attiva-notifiche]').innerText()).trim() === 'Manda una notifica di prova' &&
+    (await aa.locator('[data-notifiche] a[href="/gestione/installa#notifiche"]').innerText()).trim() === 'Non arrivano, o arrivano tardi?', attive);
+  await leggibile(aa, 'Android 360px · Impostazioni con le notifiche attive', 360);
+  await aa.screenshot({ path: path.join(OUT, 'app-android-notifiche-attive.png'), fullPage: true });
+  notifiche.length = 0;
+  await aa.locator('[data-attiva-notifiche]').click();
+  await aa.locator('[data-fatto]:not([hidden])').waitFor({ timeout: 10000 });
+  const dettoFatto = (await aa.locator('[data-fatto]').innerText()).replace(/\s+/g, ' ');
+  for (let i = 0; i < 20 && !notifiche.length; i++) await attendi(250);
+  verifica('"Manda una notifica di prova" (permesso chiesto alla maniera dei Chrome vecchi): la notifica arriva al telefono', /Te ne ho mandata una di prova/.test(dettoFatto) && notifiche.length === 1 && !!notifiche[0].titolo && !notifiche[0].errore, dettoFatto + ' ' + JSON.stringify(notifiche));
+  await aa.locator('[data-notifiche] a[href="/gestione/installa#notifiche"]').click();
+  await aa.waitForURL('**/gestione/installa#notifiche');
+  await aa.waitForTimeout(300);
+  verifica('il link porta all’aiuto, sulla scheda Android', await aa.locator('[data-pannello="android"]').isVisible() && await aa.evaluate(() => { const t = document.getElementById('notifiche').getBoundingClientRect().top; return t >= 60 && t <= 200; }));
+  await accese.close();
+
+  /* Chrome troppo vecchio per le notifiche (o un altro browser): lo dice, e resta l'email */
+  const vecchio = await browser.newContext(android);
+  await vecchio.addInitScript(() => { delete window.PushManager; try { delete Object.getPrototypeOf(window).PushManager; } catch (e) {} });
+  const av = await vecchio.newPage();
+  av.on('pageerror', e => errori.push('app (Android vecchio): ' + e.message));
+  await entra(av);
+  await av.waitForSelector('[data-notifiche]');
+  const daAggiornare = (await av.locator('[data-notifiche]').innerText()).replace(/\s+/g, ' ');
+  verifica('Android con Chrome troppo vecchio: "serve Chrome aggiornato", il pulsante per l’aiuto, e intanto le richieste arrivano per email', /Per le notifiche serve Chrome aggiornato/.test(daAggiornare) && /Play Store/.test(daAggiornare) && /arrivano per email/.test(daAggiornare) &&
+    await av.locator('[data-notifiche] a.g-btn[href="/gestione/installa#notifiche"]').count() === 1, daAggiornare);
+  await av.screenshot({ path: path.join(OUT, 'app-android-chrome-vecchio.png'), fullPage: true });
+  await leggibile(av, 'Android 360px · Oggi con Chrome da aggiornare', 360);
+  await vecchio.close();
 
   verifica('nessun errore JavaScript durante tutta la prova', errori.length === 0, errori.join(' | '));
   await browser.close(); finto.close();

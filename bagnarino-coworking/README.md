@@ -85,7 +85,7 @@ Solo il sito statico, in modalità dimostrativa: `npx serve bagnarino-coworking`
 | `api/` | Funzioni serverless (vedi sotto). I file che iniziano con `_` sono moduli interni |
 | `test/` | Test `node:test` su Postgres in memoria |
 | `strumenti/server-locale.js` | Server di prova locale |
-| `strumenti/prova-completa.js` | Prova completa dal sito e dall'app, a 390px |
+| `strumenti/prova-completa.js` | Prova completa dal sito e dall'app, a 390px e su un Android piccolo (360 e 320px) |
 | `GUIDA-TITOLARE.md` | Guida di una pagina per Marcella |
 
 ### API
@@ -162,10 +162,11 @@ Lancia `python3 strumenti/versiona.py`: aggiunge `?v=<impronta>` a CSS e JS nell
 Pensata per una persona poco pratica di tecnologia: testo da 18px in su, pulsanti alti almeno 56px,
 una cosa importante per schermata, parole semplici.
 
-- **Installabile** (PWA): `gestione.webmanifest` (nome "Bagnarino", `display: standalone`), icone in `img/app/`, service worker `sw-gestione.js`. Istruzioni illustrate per iPhone e Android: **`/gestione/installa`**.
+- **Installabile** (PWA): `gestione.webmanifest` (nome "Bagnarino", `display: standalone`), icone in `img/app/`, service worker `sw-gestione.js`. Istruzioni illustrate su **`/gestione/installa`**: Android per primo (è il telefono della titolare), iPhone come seconda scheda. Su Android, quando Chrome lo permette, compare anche il pulsante "Installa l'app adesso" (`beforeinstallprompt`).
 - **Accesso**: email + password una volta, sessione di 90 giorni (cookie HttpOnly, nel database solo l'impronta). Recupero password via email. Il primo accesso nasce da solo: email di `NOTIFICATION_EMAIL`, password di `ADMIN_PASSWORD`.
 - **Protetta lato server**: le pagine le serve `api/gestione.js` solo con una sessione valida, le azioni rispondono 401 senza sessione e accettano solo POST con l'intestazione `X-Bgn-App`.
-- **Notifiche push** (Web Push, chiavi VAPID). Su iPhone funzionano solo con l'app sulla schermata Home (iOS 16.4+): in Impostazioni c'è il pulsante "Attiva le notifiche", che in Safari spiega cosa fare.
+- **Notifiche push** (Web Push, chiavi VAPID). In Impostazioni c'è il pulsante "Attiva le notifiche". Su Android funzionano con Chrome (servono i servizi Google sul telefono); se sono spente o Chrome è troppo vecchio l'app lo dice e rimanda a `/gestione/installa#notifiche` ("Se le notifiche non arrivano": Chrome da aggiornare, notifiche spente, risparmio batteria). Su iPhone funzionano solo con l'app sulla schermata Home (iOS 16.4+). L'email con i due pulsanti arriva sempre, anche senza notifiche.
+- **Telefoni Android non recenti**: `gestione-app.css`, `gestione-app.js` e `sw-gestione.js` sono scritti per girare anche su Chrome di qualche anno fa. Regole da rispettare quando si modificano: JavaScript ES5 (niente frecce, `const`, `let`), niente `gap` nei contenitori flex (margini sui figli), `grid-gap` accanto a `gap`, niente `inset`, `min()` o `place-items`, un valore semplice prima di ogni `env()`. Le foto scattate in verticale vengono raddrizzate a mano dove il browser non lo fa da solo.
 - **Schermate**: *Oggi* (richieste da confermare, chi arriva, "Oggi sono chiusa"), *Calendario* (mese, chiusure per giorno o mezza giornata, "Chiudi più giorni"), *Prenotazioni* (da confermare, confermate, passate; Chiama e WhatsApp), *Sito* (avviso in home, foto, telefono e WhatsApp), *Come va* (tre numeri), *Impostazioni*.
 - La titolare può cambiare solo contenuti: mai layout, colori, prezzi o sezioni. Le foto vengono ridotte sul telefono (1440 e 720 px) prima del caricamento.
 
@@ -237,7 +238,7 @@ nella scheda Google Business `?utm_source=gmb`.
 ## Collaudo fatto
 
 - `npm test`: 39 test (disponibilità per fascia, doppia prenotazione anche simultanea, chiusure, richiesta → conferma / non disponibile, email e reply-to, link firmati, promemoria dopo 2 ore, notifica push cifrata e firmata VAPID, passaggio dal database precedente, accesso e sessione dell'app, recupero password, protezione lato server, avviso, foto, contatti).
-- `strumenti/prova-completa.js` (Playwright, 390px): 163 controlli dal sito e dall'app, compresi testo ≥ 18px e pulsanti ≥ 56px su ogni schermata dell'app.
+- `strumenti/prova-completa.js` (Playwright): 265 controlli dal sito e dall'app a 390px, più tutte le schermate dell'app su un Android piccolo (360 e 320px); compresi testo ≥ 18px e pulsanti ≥ 56px su ogni schermata.
 - Dati strutturati LocalBusiness + CoworkingSpace + FAQPage generati da `config.js`, senza orari di apertura (verificarli con il Rich Results Test di Google, che esegue JavaScript).
 
 ## Checklist di lancio
