@@ -11,6 +11,7 @@ import {
 import * as THREE from "three";
 import gsap from "gsap";
 import { heroPhone, type HeroNotification } from "@/data/hero";
+import { ScrollTrigger } from "@/lib/gsap";
 
 /* Il telefono dell’hero: arriva una richiesta, il telefono vibra, un anello si allarga dietro
    e il contatore sale di uno. Lo schermo è un canvas 2D usato come texture, ridisegnato solo
@@ -50,6 +51,8 @@ type State = {
   ring: number;
   tx: number;
   ty: number;
+  /** Avanzamento dello scroll lungo l’hero, 0 → 1: fa girare il telefono su sé stesso */
+  spin: number;
 };
 
 function rounded(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
@@ -187,6 +190,7 @@ class Screen {
       ring: 1,
       tx: 0,
       ty: 0,
+      spin: 0,
     };
     this.next = VISIBLE % n;
     const c = document.createElement("canvas");
@@ -230,6 +234,12 @@ class Screen {
     });
     gsap.fromTo(st, { buzz: 0 }, { buzz: 1, duration: 0.55, ease: "none", onUpdate: this.onChange });
     gsap.fromTo(st, { ring: 0 }, { ring: 1, duration: 1.3, ease: "power2.out", onUpdate: this.onChange });
+  }
+
+  /** Lo scroll fa girare il telefono: 0 = di fronte, 1 = un giro completo */
+  spinTo(progress: number) {
+    this.st.spin = progress;
+    this.onChange();
   }
 
   /** Inclinazione verso il cursore, da -1 a 1 su entrambi gli assi */
@@ -279,6 +289,27 @@ function Phone({ animate, onReady }: { animate: boolean; onReady: () => void }) 
     );
     io.observe(gl.domElement);
     document.addEventListener("visibilitychange", sync);
+
+    // Mai fermo: finché è in vista il telefono dondola piano (un frame a ogni tick, solo in vista)
+    const tick = () => {
+      if (inView && !document.hidden) invalidate();
+    };
+    gsap.ticker.add(tick);
+
+    // Scorrendo, il telefono fa un giro completo su sé stesso: da 0 quando la pagina è in cima
+    // a 1 quando il telefono è uscito dallo schermo
+    const box = (gl.domElement.closest("[data-hero-phone]") ?? gl.domElement) as HTMLElement;
+    const spin = ScrollTrigger.create({
+      trigger: box,
+      start: () =>
+        Math.max(0, box.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.85),
+      end: () =>
+        box.getBoundingClientRect().top + window.scrollY + box.offsetHeight - window.innerHeight * 0.12,
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => screen.spinTo(self.progress),
+    });
+
     // Solo con il mouse: il telefono si inclina appena verso il cursore
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const onMove = (e: MouseEvent) =>
@@ -286,11 +317,13 @@ function Phone({ animate, onReady }: { animate: boolean; onReady: () => void }) 
     if (fine) window.addEventListener("mousemove", onMove, { passive: true });
     return () => {
       loop.kill();
+      spin.kill();
+      gsap.ticker.remove(tick);
       io.disconnect();
       document.removeEventListener("visibilitychange", sync);
       window.removeEventListener("mousemove", onMove);
     };
-  }, [animate, screen, gl]);
+  }, [animate, screen, gl, invalidate]);
 
   useFrame(() => {
     const st = screen.st;
@@ -298,8 +331,17 @@ function Phone({ animate, onReady }: { animate: boolean; onReady: () => void }) 
     if (g) {
       // Vibrazione: poche oscillazioni rapide che si spengono
       const b = st.buzz < 1 ? Math.sin(st.buzz * Math.PI * 12) * 0.045 * (1 - st.buzz) : 0;
-      g.rotation.set(-0.1 + st.ty * 0.06, -0.38 + st.tx * 0.12, 0.05 + b);
-      g.position.x = b * 0.5;
+      // Un giro completo, ma non a velocità costante: indugia di fronte (schermo visibile) e passa veloce sul retro
+      const turn = st.spin * Math.PI * 2 - Math.sin(st.spin * Math.PI * 2) * 0.8;
+      // Dondolio lento da fermo + giro completo con lo scroll, con il telefono che si piega un po’ mentre gira
+      const t = animate ? performance.now() / 1000 : 0;
+      g.rotation.set(
+        -0.1 + st.ty * 0.06 + Math.sin(turn) * 0.14 + Math.sin(t * 0.9) * 0.025,
+        -0.38 + st.tx * 0.12 + turn + Math.sin(t * 0.7) * 0.11,
+        0.05 + b + Math.sin(turn * 2) * 0.05,
+      );
+      g.position.x = b * 0.5 + Math.sin(turn) * 0.12;
+      g.position.y = Math.sin(t * 1.1) * 0.035;
     }
     if (ring.current && ringMat.current) {
       const s = 1 + st.ring * 1.25;
@@ -324,6 +366,22 @@ function Phone({ animate, onReady }: { animate: boolean; onReady: () => void }) 
       <RoundedBox args={[1, 2.06, 0.11]} radius={0.13} smoothness={light ? 3 : 6}>
         <meshStandardMaterial color={BODY} roughness={0.45} metalness={0.2} />
       </RoundedBox>
+      {/* Retro: il modulo della fotocamera, si vede quando il telefono gira */}
+      <group position={[0.2, 0.66, -0.062]}>
+        <RoundedBox args={[0.42, 0.44, 0.03]} radius={0.09} smoothness={light ? 2 : 4}>
+          <meshStandardMaterial color="#1b1c21" roughness={0.5} metalness={0.3} />
+        </RoundedBox>
+        {[
+          [-0.09, 0.09],
+          [0.09, 0.09],
+          [-0.09, -0.09],
+        ].map(([x, y]) => (
+          <mesh key={`${x}${y}`} position={[x, y, -0.02]} rotation-x={Math.PI / 2}>
+            <cylinderGeometry args={[0.066, 0.066, 0.025, light ? 20 : 32]} />
+            <meshStandardMaterial color="#08090c" roughness={0.25} metalness={0.6} />
+          </mesh>
+        ))}
+      </group>
       {/* Schermo */}
       <mesh position={[0, 0, 0.0565]}>
         <planeGeometry args={[0.94, screenH]} />
