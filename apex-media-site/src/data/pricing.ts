@@ -2,6 +2,8 @@ export type Plan = {
   id: string;
   name: string;
   price: number;
+  /** Contenuti al mese: è il numero di tasselli della pila 3D */
+  contents: number;
   highlight?: boolean;
   badge?: string;
   /** Sfondo della colonna: carta, bianco con striscia, inchiostro */
@@ -17,6 +19,7 @@ export const plans: Plan[] = [
     id: "starter",
     name: "Starter",
     price: 300,
+    contents: 8,
     tone: "paper",
     features: [
       "3 piattaforme gestite",
@@ -33,6 +36,7 @@ export const plans: Plan[] = [
     id: "growth",
     name: "Growth",
     price: 500,
+    contents: 14,
     tone: "surface",
     highlight: true,
     badge: "Il più scelto",
@@ -51,6 +55,7 @@ export const plans: Plan[] = [
     id: "domination",
     name: "Domination",
     price: 700,
+    contents: 18,
     tone: "ink",
     features: [
       "3 piattaforme gestite",

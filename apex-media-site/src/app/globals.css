@@ -285,13 +285,6 @@ details[open] > summary .plus-icon {
     transform: translateY(0);
     opacity: 1;
   }
-  /* Pacchetti: la colonna sotto il mouse sale di 4px */
-  [data-plan] {
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  [data-plan]:hover {
-    transform: translateY(-4px);
-  }
 }
 
 /* Barra CTA mobile */
@@ -322,12 +315,6 @@ details[open] > summary .plus-icon {
   to {
     opacity: 1;
   }
-}
-
-/* Pacchetto Domination (sfondo inchiostro): bottone giallo pieno, testo inchiostro */
-[data-tone="ink"] [data-plan-cta] {
-  background: var(--giallo);
-  color: var(--ink);
 }
 
 /* ---------- Redesign home ---------- */

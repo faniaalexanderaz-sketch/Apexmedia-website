@@ -1,28 +1,46 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
-import { TricolorStripe } from "@/components/ui/TricolorStripe";
+import { SceneSlot } from "@/components/three/SceneSlot";
+import { createDriver } from "@/components/three/driver";
+import { stackProgress } from "@/components/three/PlanStacks";
 import { plans, customPlanNote, formatPrice, brandPlan } from "@/data/pricing";
-import { TricolorStripe as Stripe } from "@/components/ui/TricolorStripe";
+import { playWhenSeen } from "@/lib/inView";
 import {
   deferSetup,
   gsap,
   useGSAP,
-  MEDIA,
-  EASE,
+  ScrollTrigger,
   enterAt,
-  splitWordsIn,
   splitLinesIn,
-  CLIP_HIDDEN_BOTTOM,
-  CLIP_VISIBLE,
-  SplitText,
 } from "@/lib/gsap";
 
+const PlanStacks = dynamic(() => import("@/components/three/PlanStacks"), {
+  ssr: false,
+});
+
+const DESKTOP = "(min-width: 1024px) and (prefers-reduced-motion: no-preference)";
+const MOBILE = "(max-width: 1023px) and (prefers-reduced-motion: no-preference)";
+const REDUCE = "(prefers-reduced-motion: reduce)";
+const MOBILE_S = 2.4;
+
+/** Valore condiviso con la scena 3D. Parte completo: se l’animazione non parte, le pile sono già piene. */
+const driver = createDriver({ plans: 1 });
+
+/** La voce "N contenuti al mese" ha già il suo posto grande: nell’elenco non si ripete */
+const isContents = (f: string) => /contenuti al mese/i.test(f);
+
+/** Pacchetti: tre pile 3D di contenuti del mese, con prezzo e contenuti che contano mentre crescono. */
 export function Pricing({ numero = "04" }: { numero?: string }) {
   const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    driver.light = window.matchMedia("(max-width: 1023px)").matches;
+  }, []);
 
   useGSAP(
     (_, contextSafe) =>
@@ -31,239 +49,185 @@ export function Pricing({ numero = "04" }: { numero?: string }) {
         () => {
           const root = ref.current;
           if (!root) return;
-          const cards = gsap.utils.toArray<HTMLElement>("[data-plan]", root);
-          const growth = cards.find((c) => c.dataset.plan === "growth");
-          const others = cards.filter((c) => c !== growth);
-          const prices = gsap.utils.toArray<HTMLElement>("[data-price]", root);
-          const grid = root.querySelector("[data-plans]") ?? root;
+          const q = gsap.utils.selector(root);
+          const v = driver.values;
+          const stage = q("[data-plans-stage]")[0] as HTMLElement;
+          const scene = q("[data-plans-scene]")[0] as HTMLElement;
+          const prices = q("[data-price]") as HTMLElement[];
+          const counts = q("[data-contents]") as HTMLElement[];
 
-          const countPrices = () =>
-            prices.forEach((el) => {
-              const target = Number(el.dataset.price);
-              const obj = { v: 0 };
-              gsap.to(obj, {
-                v: target,
-                duration: 0.8,
-                ease: "power2.out",
-                onUpdate: () => {
-                  el.textContent = formatPrice(Math.round(obj.v));
-                },
-                scrollTrigger: enterAt(grid, "top 75%"),
-              });
+          /** Prezzi e contenuti seguono i tasselli già atterrati della loro pila */
+          const write = () => {
+            plans.forEach((p, s) => {
+              const f = Math.min(1, stackProgress(v.plans, s) / 0.98);
+              if (prices[s]) prices[s].textContent = formatPrice(Math.round((p.price * f) / 10) * 10);
+              if (counts[s]) counts[s].textContent = String(Math.round(p.contents * f));
             });
+            driver.notify();
+          };
 
           const mm = gsap.matchMedia();
-          mm.add([MEDIA.desktop, MEDIA.mobile], () => {
-            const splits: SplitText[] = [];
-            const title = root.querySelector<HTMLElement>(
-              "[data-pricing-title]",
-            );
-            if (title) splits.push(splitLinesIn(title));
-            gsap.from("[data-pricing-head] p", {
+          mm.add({ desktop: DESKTOP, mobile: MOBILE, reduce: REDUCE }, (ctx) => {
+            const { desktop, reduce } = ctx.conditions ?? {};
+            if (reduce) {
+              v.plans = 1;
+              write();
+              return;
+            }
+            const cleanups: (() => void)[] = [];
+            const title = q("h2")[0];
+            const split = title ? splitLinesIn(title) : null;
+            gsap.from(q("[data-pricing-head] p"), {
               opacity: 0,
               y: 16,
               duration: 0.7,
+              delay: 0.2,
               scrollTrigger: enterAt(root),
             });
 
-            // Colonne: si rivelano dal basso in sequenza (Growth per ultima, più in alto), poi dentro ogni colonna
-            // nome, prezzo, voci e bottone entrano uno dopo l’altro
             const tl = gsap.timeline({
-              scrollTrigger: enterAt(grid, "top 78%"),
+              paused: true,
+              defaults: { ease: "none" },
+              onUpdate: write,
             });
-            const order = [...others, ...(growth ? [growth] : [])];
-            order.forEach((card, i) => {
-              const at = i * 0.12;
-              tl.fromTo(
-                card,
-                { clipPath: CLIP_HIDDEN_BOTTOM, y: card === growth ? 52 : 40 },
-                {
-                  clipPath: CLIP_VISIBLE,
-                  y: 0,
-                  duration: 0.9,
-                  ease: EASE.reveal,
-                  clearProps: "clipPath",
-                },
-                at,
-              );
-              const stripe = card.querySelector("[data-plan-stripe]");
-              if (stripe)
-                tl.from(
-                  stripe,
-                  {
-                    scaleX: 0,
-                    transformOrigin: "left center",
-                    duration: 0.7,
-                    ease: EASE.enter,
-                  },
-                  at + 0.3,
-                );
-              tl.from(
-                card.querySelectorAll("[data-plan-fade]"),
-                {
-                  opacity: 0,
-                  y: 12,
-                  duration: 0.5,
-                  ease: EASE.enter,
-                  stagger: 0.05,
-                },
-                at + 0.25,
-              );
-              tl.from(
-                card.querySelectorAll("[data-plan-line]"),
-                {
-                  scaleX: 0,
-                  transformOrigin: "left center",
-                  duration: 0.6,
-                  ease: EASE.enter,
-                  stagger: 0.05,
-                },
-                at + 0.3,
-              );
-              const badge = card.querySelector("[data-plan-badge]");
-              if (badge)
-                tl.from(
-                  badge,
-                  {
-                    scale: 0,
-                    rotation: -6,
-                    transformOrigin: "center",
-                    duration: 0.5,
-                    ease: "back.out(2)",
-                  },
-                  at + 0.5,
-                );
-            });
-            countPrices();
+            tl.fromTo(v, { plans: 0 }, { plans: 1, duration: 1, immediateRender: false });
 
-            // Brand da zero: riquadro largo che si rivela, titolo a parole, voci in due colonne
-            const brand = root.querySelector<HTMLElement>("[data-brand-plan]");
-            if (brand) {
-              gsap.fromTo(
-                brand,
-                { clipPath: "inset(0% 100% 0% 0%)" },
-                {
-                  clipPath: "inset(0% 0% 0% 0%)",
-                  duration: 0.9,
-                  ease: EASE.reveal,
-                  clearProps: "clipPath",
-                  scrollTrigger: enterAt(brand, "top 82%"),
-                },
+            if (desktop) {
+              // I tasselli cadono mentre la sezione sale nello schermo
+              v.plans = 0;
+              write();
+              ScrollTrigger.create({
+                animation: tl,
+                trigger: scene,
+                start: "top 90%",
+                end: "bottom 72%",
+                scrub: 0.8,
+              });
+            } else {
+              cleanups.push(
+                playWhenSeen(tl, stage, {
+                  seconds: MOBILE_S,
+                  part: 0.55,
+                  onArm: () => {
+                    v.plans = 0;
+                    write();
+                  },
+                  onSkip: write,
+                }),
               );
-              const bt = brand.querySelector<HTMLElement>("h3");
-              if (bt) splits.push(splitWordsIn(bt, brand, 0.04, "top 80%"));
+            }
+
+            // Brand da zero: titolo a righe, voci una dopo l’altra
+            const brand = q("[data-brand-plan]")[0];
+            const bt = brand?.querySelector("h3");
+            const bsplit = bt ? splitLinesIn(bt, brand) : null;
+            if (brand)
               gsap.from(brand.querySelectorAll("[data-brand-fade]"), {
                 opacity: 0,
-                y: 12,
+                y: 14,
                 duration: 0.6,
-                stagger: 0.06,
-                delay: 0.3,
+                stagger: 0.05,
+                delay: 0.2,
                 scrollTrigger: enterAt(brand, "top 82%"),
               });
-            }
-            return () => splits.forEach((sp) => sp.revert());
+
+            return () => {
+              cleanups.forEach((fn) => fn());
+              split?.revert();
+              bsplit?.revert();
+              v.plans = 1;
+              write();
+            };
           });
         },
-        300,
+        200,
       ),
     { scope: ref },
   );
 
   return (
-    <section
-      ref={ref}
-      id="pacchetti"
-      className="py-20 lg:py-28"
-      data-section="pacchetti"
-    >
+    <section ref={ref} id="pacchetti" className="py-20 lg:py-28" data-section="pacchetti">
       <Container>
-        <div
-          className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end"
-          data-pricing-head
-        >
-          <div className="lg:col-span-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end" data-pricing-head>
+          <div className="lg:col-span-7">
             <SectionLabel numero={numero} testo="Pacchetti" />
-            <h2 className="h-display mt-6 text-[clamp(2rem,1rem+3.6vw,4.25rem)]">
+            <h2 className="h-display mt-6 text-[clamp(2.25rem,1rem+4.4vw,5.25rem)]">
               Gestione social: pacchetti e prezzi chiari.
             </h2>
           </div>
           <p className="text-body text-ink/75 md:text-lg lg:col-span-4 lg:col-start-9 lg:pb-2">
-            Gestione social, contenuti, campagne e sito: scegli da dove partire,
-            lo adattiamo alla tua attività.
+            Ogni tassello è un contenuto che ricevi ogni mese. Scegli quanto
+            vuoi crescere, lo adattiamo alla tua attività.
           </p>
         </div>
 
-        <div
-          className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3 md:items-end md:gap-0 lg:mt-20"
-          data-plans
-        >
-          {plans.map((p) => (
-            <article
-              key={p.id}
-              data-plan={p.id}
-              data-tone={p.tone}
-              className={`relative flex flex-col border ${
-                p.tone === "ink"
-                  ? "border-ink bg-ink text-paper"
-                  : p.tone === "paper"
-                    ? "border-ink/15 bg-paper"
-                    : "border-ink/15 bg-surface"
-              } ${p.highlight ? "md:z-10 md:-mx-px md:pb-4" : ""}`}
+        <div className="mt-10 lg:mt-16" data-plans-stage>
+          {/* Le tre pile: su tablet e desktop stanno sopra le tre colonne di testo */}
+          <div
+            className="-mx-5 h-[250px] sm:-mx-8 sm:h-[300px] md:mx-0 md:h-[340px] lg:h-[400px]"
+            data-plans-scene
+          >
+            <SceneSlot
+              className="h-full w-full"
+              fallback={{ src: "/pacchetti/pile.webp", width: 1613, height: 480 }}
+              alt="Tre pile di tasselli: 8 contenuti al mese per Starter, 14 per Growth, 18 per Domination"
             >
-              {p.highlight ? (
-                <TricolorStripe />
-              ) : (
-                <div className="h-[3px] w-full" aria-hidden="true" />
+              {(onReady) => (
+                <PlanStacks
+                  driver={driver}
+                  plans={plans.map((p) => ({ id: p.id, contents: p.contents, highlight: p.highlight }))}
+                  onReady={onReady}
+                />
               )}
-              <div className="flex flex-1 flex-col p-6 md:p-7 lg:p-8">
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-[26px] font-bold leading-none tracking-tightest">
+            </SceneSlot>
+          </div>
+
+          {/* Su telefono le colonne sono una sotto l’altra: il nome va sotto la sua pila */}
+          <ul className="-mx-5 grid grid-cols-3 text-center sm:-mx-8 md:hidden" aria-hidden="true">
+            {plans.map((p) => (
+              <li key={p.id}>
+                <p className="font-display text-[17px] font-bold leading-tight tracking-tight">{p.name}</p>
+                <p className="text-[14px] text-ink/60">{p.contents} contenuti</p>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-12 grid grid-cols-1 gap-y-14 md:mt-4 md:grid-cols-3 md:gap-x-8" data-plans>
+            {plans.map((p) => (
+              <article key={p.id} data-plan={p.id} className="flex flex-col md:items-center md:text-center">
+                <div className="flex items-baseline gap-3">
+                  <h3 className="font-display text-[28px] font-bold leading-none tracking-tightest">
                     {p.name}
                   </h3>
                   {p.badge ? (
-                    <span
-                      className={`label-mono px-2 py-1.5 ${p.tone === "ink" ? "bg-giallo text-ink" : "bg-ink text-paper"}`}
-                    >
-                      {p.badge}
-                    </span>
+                    <span className="hl text-[14px] font-semibold leading-none">{p.badge}</span>
                   ) : null}
                 </div>
-                <p className="mt-6 flex items-baseline gap-1.5" data-plan-fade>
+                <p className="mt-5 flex items-baseline gap-2">
                   <span
-                    className="font-display text-[clamp(2.75rem,2rem+2vw,3.75rem)] font-bold leading-none tracking-tightest tabular-nums"
-                    data-price={p.price}
+                    className="font-display text-[clamp(3.25rem,2rem+3vw,5rem)] font-bold leading-none tracking-tightest tabular-nums"
+                    data-price
                   >
                     {formatPrice(p.price)}
                   </span>
-                  <span className="font-mono text-[12px] text-ink/60">
-                    /mese
-                  </span>
+                  <span className="text-[16px] text-ink/60">al mese</span>
                 </p>
-                <ul
-                  className={`mt-8 divide-y border-y ${p.tone === "ink" ? "divide-paper/15 border-paper/15" : "divide-ink/10 border-ink/10"}`}
-                >
-                  {p.features.map((f) => (
-                    <li
-                      key={f}
-                      className="relative py-3 text-[15px] leading-snug"
-                      data-plan-fade
-                    >
-                      {f}
-                      <span
-                        data-plan-line
-                        aria-hidden="true"
-                        className={`absolute inset-x-0 bottom-0 h-px ${p.tone === "ink" ? "bg-paper/15" : "bg-ink/10"}`}
-                      />
-                    </li>
+                <p className="mt-3 text-[17px] text-ink/80">
+                  <strong className="font-display text-[22px] font-bold tabular-nums tracking-tight text-ink" data-contents>
+                    {p.contents}
+                  </strong>{" "}
+                  contenuti al mese
+                </p>
+                <ul className="mt-7 w-full space-y-2.5 text-[16px] leading-snug text-ink/75">
+                  {p.features.filter((f) => !isContents(f)).map((f) => (
+                    <li key={f}>{f}</li>
                   ))}
                 </ul>
-                <div className="mt-8 pt-2" data-plan-fade>
+                <div className="mt-8 w-full">
                   <Button
                     href="#contatti"
-                    variant={
-                      p.highlight || p.tone === "ink" ? "primary" : "secondary"
-                    }
-                    className="w-full"
+                    variant={p.highlight ? "primary" : "secondary"}
+                    className="w-full md:w-auto md:min-w-[220px]"
                     data-preselect={p.formValue}
                     data-track="click_pacchetto"
                     data-track-pacchetto={p.name}
@@ -271,30 +235,27 @@ export function Pricing({ numero = "04" }: { numero?: string }) {
                     {p.cta}
                   </Button>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
 
+        {/* Brand da zero: un blocco tipografico a tutta larghezza, nessuna card */}
         <article
           data-brand-plan
-          className="relative mt-8 grid grid-cols-1 gap-8 border border-ink/15 bg-surface p-6 md:grid-cols-12 md:p-8 lg:mt-10 lg:p-10"
+          className="mt-24 grid grid-cols-1 gap-10 border-t border-ink/15 pt-12 lg:mt-32 lg:grid-cols-12 lg:gap-8 lg:pt-16"
         >
-          <Stripe className="absolute inset-x-0 top-0" />
-          <div className="md:col-span-5">
-            <p className="label-mono text-blu-deep" data-brand-fade>
-              {brandPlan.kicker} — {brandPlan.name}
+          <div className="lg:col-span-6">
+            <p className="text-[16px] font-semibold text-ink/60" data-brand-fade>
+              {brandPlan.kicker} · {brandPlan.name}
             </p>
-            <h3 className="h-display mt-4 text-[clamp(1.6rem,1rem+2vw,2.6rem)]">
+            <h3 className="h-display mt-4 text-[clamp(1.9rem,1rem+2.6vw,3.25rem)]">
               {brandPlan.title}
             </h3>
-            <p
-              className="text-body mt-4 text-[16px] text-ink/75"
-              data-brand-fade
-            >
+            <p className="text-body mt-5 text-[17px] text-ink/75" data-brand-fade>
               {brandPlan.text}
             </p>
-            <div className="mt-6" data-brand-fade>
+            <div className="mt-8" data-brand-fade>
               <Button
                 href="#contatti"
                 data-preselect={brandPlan.formValue}
@@ -306,30 +267,22 @@ export function Pricing({ numero = "04" }: { numero?: string }) {
             </div>
           </div>
           <ul
-            className="grid grid-cols-1 gap-x-8 sm:grid-cols-2 md:col-span-7 md:col-start-6"
+            className="grid grid-cols-1 gap-x-10 self-end sm:grid-cols-2 lg:col-span-5 lg:col-start-8"
             aria-label="Cosa comprende"
           >
             {brandPlan.features.map((f) => (
               <li
                 key={f}
-                className="relative py-3 pl-5 text-[15px] leading-snug"
+                className="border-b border-ink/10 py-3.5 text-[16px] leading-snug"
                 data-brand-fade
               >
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 top-[16px] size-[7px] bg-viola"
-                />
                 {f}
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 bottom-0 h-px bg-ink/10"
-                />
               </li>
             ))}
           </ul>
         </article>
 
-        <p className="mt-10 text-[17px] text-ink/75">
+        <p className="mt-12 text-[17px] text-ink/75">
           {customPlanNote}{" "}
           <a
             href="#contatti"
