@@ -32,7 +32,7 @@
         <img id="s1-mac" src="assets/img/ip18-burg-macro.png" style="position:absolute;left:0;top:610px;width:1080px;display:block" alt="" />
       </div>
       <div id="s1-B" data-layout-allow-overlap style="position:absolute;left:0;top:335px;transform-origin:50% 19%;width:1080px;height:1920px;mix-blend-mode:multiply;opacity:0">
-        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.56" data-duration="1.94" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.40" data-duration="1.98" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
       </div>
       <div class="zone" data-layout-allow-overlap>
         <span class="line"><span id="s1-l1" class="t-it" style="font-size:118px">Apple ti fa</span></span>
@@ -61,26 +61,25 @@
     const tl = gsap.timeline({ paused: true });
 
     /* shot A: the camera lands on the lenses */
-    tl.fromTo("#s1-mac", { scale: 1.55, rotation: -3, transformOrigin: "30% 0%" }, { scale: 1.08, rotation: 0, duration: 0.5, ease: "expo.out" }, 0);
-    tl.fromTo("#s1-l1", { scale: 1.16, transformOrigin: "50% 80%" }, { scale: 1, duration: 0.4, ease: "expo.out" }, 0);
+    tl.fromTo("#s1-mac", { scale: 1.55, rotation: -3, transformOrigin: "30% 0%" }, { scale: 1.08, rotation: 0, duration: 0.4, ease: "expo.out" }, 0);
+    tl.fromTo("#s1-l1", { scale: 1.16, transformOrigin: "50% 80%" }, { scale: 1, duration: 0.34, ease: "expo.out" }, 0);
     /* zoom through the lens into shot B */
-    tl.to("#s1-mac", { scale: 3.4, duration: 0.2, ease: "power3.in" }, 0.44);
-    tl.to("#s1-A", { opacity: 0, duration: 0.1, ease: "none" }, 0.56);
-    sink(tl, "#s1-l1", 0.46);
-    tl.fromTo("#s1-B", { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 0.95, duration: 0.55, ease: "expo.out" }, 0.58);
-    rise(tl, "#s1-l2", 0.64);
+    tl.to("#s1-mac", { scale: 3.4, duration: 0.18, ease: "power3.in" }, 0.28);
+    tl.to("#s1-A", { opacity: 0, duration: 0.08, ease: "none" }, 0.40);
+    sink(tl, "#s1-l1", 0.28);
+    tl.fromTo("#s1-B", { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 0.95, duration: 0.5, ease: "expo.out" }, 0.42);
+    rise(tl, "#s1-l2", 0.44);
     tl.set("#s1-l3", { yPercent: 115 }, 0);
-    rise(tl, "#s1-l3", 1.24);
-    tl.to("#s1-B", { scale: 0.99, duration: 0.11, ease: "none" }, 1.13);
+    rise(tl, "#s1-l3", 0.98);
     /* cut-in: jump to a tight shot of the back */
-    tl.set("#s1-B", { scale: 1.42 }, 1.24);
-    tl.to("#s1-B", { scale: 1.5, duration: 0.72, ease: "none" }, 1.25);
+    tl.set("#s1-B", { scale: 1.42 }, 0.98);
+    tl.to("#s1-B", { scale: 1.5, duration: 0.68, ease: "none" }, 0.99);
     tl.set("#s1-euro", { opacity: 1 }, 0);
     tl.set(L("#s1-euro"), { opacity: 0 }, 0);
-    flip(tl, "#s1-euro", 1.96, 0.05);
-    tl.to("#s1-B", { scale: 1.62, duration: 0.3, ease: "back.out(2.6)" }, 1.98);
-    select(tl, "#s1-sel", "#s1-cur", 2.12);
-    tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.29);
+    flip(tl, "#s1-euro", 1.64, 0.05);
+    tl.to("#s1-B", { scale: 1.62, duration: 0.3, ease: "back.out(2.6)" }, 1.68);
+    select(tl, "#s1-sel", "#s1-cur", 1.8);
+    tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.16);
     window.__timelines["s1"] = tl;
   </script>
 </template>

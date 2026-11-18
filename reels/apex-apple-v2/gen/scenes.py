@@ -3,13 +3,13 @@ from common import scene, CURSOR, SEL
 OUT='/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/'
 S={}
 # ---------- s1 intro (0 - 2.53): macro shot -> zoom-through -> the phone turning for real ----------
-S['s1']=(2.53,'''
+S['s1']=(2.40,'''
     <div id="s1-stage" style="position:absolute;inset:0">
       <div id="s1-A" data-layout-allow-overlap style="position:absolute;inset:0;overflow:hidden">
         <img id="s1-mac" src="assets/img/ip18-burg-macro.png" style="position:absolute;left:0;top:610px;width:1080px;display:block" alt="" />
       </div>
       <div id="s1-B" data-layout-allow-overlap style="position:absolute;left:0;top:335px;transform-origin:50% 19%;width:1080px;height:1920px;mix-blend-mode:multiply;opacity:0">
-        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.56" data-duration="1.94" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.40" data-duration="1.98" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
       </div>
       <div class="zone" data-layout-allow-overlap>
         <span class="line"><span id="s1-l1" class="t-it" style="font-size:118px">Apple ti fa</span></span>
@@ -20,29 +20,28 @@ S['s1']=(2.53,'''
       <div id="s1-cur" class="cur" style="left:792px;top:556px">''' + CURSOR + '''</div>
     </div>''','''
     /* shot A: the camera lands on the lenses */
-    tl.fromTo("#s1-mac", { scale: 1.55, rotation: -3, transformOrigin: "30% 0%" }, { scale: 1.08, rotation: 0, duration: 0.5, ease: "expo.out" }, 0);
-    tl.fromTo("#s1-l1", { scale: 1.16, transformOrigin: "50% 80%" }, { scale: 1, duration: 0.4, ease: "expo.out" }, 0);
+    tl.fromTo("#s1-mac", { scale: 1.55, rotation: -3, transformOrigin: "30% 0%" }, { scale: 1.08, rotation: 0, duration: 0.4, ease: "expo.out" }, 0);
+    tl.fromTo("#s1-l1", { scale: 1.16, transformOrigin: "50% 80%" }, { scale: 1, duration: 0.34, ease: "expo.out" }, 0);
     /* zoom through the lens into shot B */
-    tl.to("#s1-mac", { scale: 3.4, duration: 0.2, ease: "power3.in" }, 0.44);
-    tl.to("#s1-A", { opacity: 0, duration: 0.1, ease: "none" }, 0.56);
-    sink(tl, "#s1-l1", 0.46);
-    tl.fromTo("#s1-B", { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 0.95, duration: 0.55, ease: "expo.out" }, 0.58);
-    rise(tl, "#s1-l2", 0.64);
+    tl.to("#s1-mac", { scale: 3.4, duration: 0.18, ease: "power3.in" }, 0.28);
+    tl.to("#s1-A", { opacity: 0, duration: 0.08, ease: "none" }, 0.40);
+    sink(tl, "#s1-l1", 0.28);
+    tl.fromTo("#s1-B", { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 0.95, duration: 0.5, ease: "expo.out" }, 0.42);
+    rise(tl, "#s1-l2", 0.44);
     tl.set("#s1-l3", { yPercent: 115 }, 0);
-    rise(tl, "#s1-l3", 1.24);
-    tl.to("#s1-B", { scale: 0.99, duration: 0.11, ease: "none" }, 1.13);
+    rise(tl, "#s1-l3", 0.98);
     /* cut-in: jump to a tight shot of the back */
-    tl.set("#s1-B", { scale: 1.42 }, 1.24);
-    tl.to("#s1-B", { scale: 1.5, duration: 0.72, ease: "none" }, 1.25);
+    tl.set("#s1-B", { scale: 1.42 }, 0.98);
+    tl.to("#s1-B", { scale: 1.5, duration: 0.68, ease: "none" }, 0.99);
     tl.set("#s1-euro", { opacity: 1 }, 0);
     tl.set(L("#s1-euro"), { opacity: 0 }, 0);
-    flip(tl, "#s1-euro", 1.96, 0.05);
-    tl.to("#s1-B", { scale: 1.62, duration: 0.3, ease: "back.out(2.6)" }, 1.98);
-    select(tl, "#s1-sel", "#s1-cur", 2.12);
-    tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.29);''')
+    flip(tl, "#s1-euro", 1.64, 0.05);
+    tl.to("#s1-B", { scale: 1.62, duration: 0.3, ease: "back.out(2.6)" }, 1.68);
+    select(tl, "#s1-sel", "#s1-cur", 1.8);
+    tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.16);''')
 # ---------- s2 "e tu la ringrazi pure" (2.53 - 3.99): dark scene, a sent message with a heart ----------
 HEART = '<svg viewBox="0 0 24 24" width="62" height="62"><path d="M12 21s-7.5-4.7-10-9.3C.3 8.4 1.9 4.5 5.6 4c2.2-.3 4.2.8 5.4 2.6h2C14.2 4.8 16.2 3.7 18.4 4c3.7.5 5.3 4.4 3.6 7.7C19.5 16.3 12 21 12 21z" fill="#ff375f"/></svg>'
-S['s2']=(1.46,'''
+S['s2']=(1.466,'''
     <div id="s2-w" style="position:absolute;inset:0;overflow:hidden;background:#000">
       <div id="s2-st" style="position:absolute;inset:0">
         <div class="zone" data-layout-allow-overlap>
