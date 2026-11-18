@@ -1,19 +1,19 @@
 <template>
   <style>
 
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
-    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "Inter Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: 'SF Pro Display'; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
     .zone { z-index: 5; position: absolute; left: 80px; right: 80px; top: 372px; text-align: center; }
-    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 600 82px/1.06 "Inter Display"; }
+    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 600 82px/1.06 'SF Pro Display'; }
     .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
     .line > span { display: inline-block; }
-    .t-sans { font: 600 82px/1.06 "Inter Display"; letter-spacing: -0.028em; }
-    .t-it { font: 700 82px/1.06 "Inter Display"; letter-spacing: -0.032em; }
+    .t-sans { font: 600 82px/1.06 'SF Pro Display'; letter-spacing: -0.02em; }
+    .t-it { font: 700 82px/1.06 'SF Pro Display'; letter-spacing: -0.024em; }
     .t-mut { color: #86868b; }
-    .t-big { font: 700 96px/1.0 "Inter Display"; letter-spacing: -0.045em; }
+    .t-big { font: 700 96px/1.0 'SF Pro Display'; letter-spacing: -0.045em; }
     .acc { color: #7a0f24; }
     .ch { display: inline-block; white-space: pre; }
     .sel { position: absolute; border: 3px dashed #ff3b30; pointer-events: none; opacity: 0; }
@@ -21,10 +21,10 @@
     .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
     .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
     .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
-    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 "Inter Display"; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
+    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 'SF Pro Display'; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
 
 
-    .bub { position: relative; padding: 44px 66px 50px; border-radius: 80px; background: #0a84ff; color: #fff; font: 500 104px/1 "Inter Display"; letter-spacing: -0.02em; white-space: nowrap; }
+    .bub { position: relative; padding: 44px 66px 50px; border-radius: 80px; background: #0a84ff; color: #fff; font: 500 104px/1 'SF Pro Display'; letter-spacing: -0.02em; white-space: nowrap; }
     .bub span { position: relative; z-index: 2; }
     .bub::before { content: ""; position: absolute; z-index: 0; bottom: 0; right: -26px; width: 70px; height: 70px; background: #0a84ff; border-bottom-left-radius: 52px; }
     .bub::after { content: ""; position: absolute; z-index: 1; bottom: 0; right: -36px; width: 36px; height: 72px; background: #000; border-bottom-left-radius: 36px; }
@@ -41,7 +41,7 @@
           <div class="bub"><span>Grazie Apple</span></div>
           <div id="s2-tap" style="position:absolute;left:-56px;top:-62px;width:124px;height:108px;border-radius:54px;background:#3a3a3c;display:flex;align-items:center;justify-content:center"><div id="s2-hr" style="width:62px;height:62px"><svg viewBox="0 0 24 24" width="62" height="62"><path d="M12 21s-7.5-4.7-10-9.3C.3 8.4 1.9 4.5 5.6 4c2.2-.3 4.2.8 5.4 2.6h2C14.2 4.8 16.2 3.7 18.4 4c3.7.5 5.3 4.4 3.6 7.7C19.5 16.3 12 21 12 21z" fill="#ff375f"/></svg></div></div>
         </div>
-        <div id="s2-del" style="position:absolute;right:134px;top:1196px;font:500 40px/1 'Inter Display';color:#8e8e93">Consegnato</div>
+        <div id="s2-del" style="position:absolute;right:134px;top:1196px;font:500 40px/1 'SF Pro Display';color:#8e8e93">Consegnato</div>
       </div>
     </div>
   </div>

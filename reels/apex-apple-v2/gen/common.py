@@ -1,16 +1,16 @@
 # shared style + motion helpers injected into every scene of apex-apple-v2
 CSS = r'''
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "Inter Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
     .zone { z-index: 5; position: absolute; left: 80px; right: 80px; top: 372px; text-align: center; }
     .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 600 82px/1.06 "Inter Display"; }
     .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
     .line > span { display: inline-block; }
-    .t-sans { font: 600 82px/1.06 "Inter Display"; letter-spacing: -0.028em; }
-    .t-it { font: 700 82px/1.06 "Inter Display"; letter-spacing: -0.032em; }
+    .t-sans { font: 600 82px/1.06 "Inter Display"; letter-spacing: -0.02em; }
+    .t-it { font: 700 82px/1.06 "Inter Display"; letter-spacing: -0.024em; }
     .t-mut { color: #86868b; }
     .t-big { font: 700 96px/1.0 "Inter Display"; letter-spacing: -0.045em; }
     .acc { color: #7a0f24; }
@@ -39,7 +39,7 @@ JS = r'''
 '''
 import re
 def scene(sid, dur, body, script, css=''):
-    return re.sub(r'"?\bInter\b"?(?! Display)', "'Inter Display'", _scene(sid, dur, body, script, css))
+    return re.sub(r'"?\bInter( Display)?\b"?', "'SF Pro Display'", _scene(sid, dur, body, script, css))
 def _scene(sid, dur, body, script, css=''):
     return f'''<template>
   <style>

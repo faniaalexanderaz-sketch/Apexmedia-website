@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=1080, height=1920" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
     <style>
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
-    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
-      :root { --color-ground: #ffffff; --color-ink: #111113; --color-accent: #7a0f24; --sans: "Inter Display"; }
+      @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+      @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+      @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+      @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+      :root { --color-ground: #ffffff; --color-ink: #111113; --color-accent: #7a0f24; --sans: "SF Pro Display"; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--color-ground); }
       #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--color-ground); font-family: var(--sans); color: var(--color-ink); }
@@ -29,11 +29,13 @@
       <div id="s6" data-composition-id="s6" data-composition-src="compositions/s6.html" data-start="15.39" data-duration="1.87" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
       <div id="s7" data-composition-id="s7" data-composition-src="compositions/s7.html" data-start="17.26" data-duration="2.40" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
       <audio id="vo" src="assets/audio/vo-demo.mp3" data-start="0" data-duration="19.6" data-volume="1" data-track-index="10"></audio>
-      <audio id="bed" src="assets/audio/bed.mp3" data-start="0" data-duration="19.6" data-volume="0.12" data-fade-out="1" data-track-index="11"></audio>
-      <audio id="fx0" src="assets/sfx/whoosh-short.mp3" data-start="0.62" data-duration="0.5" data-volume="0.22" data-track-index="12"></audio>
+      <audio id="bed" src="assets/audio/bed.mp3" data-start="0" data-duration="19.6" data-volume="0.075" data-fade-out="1" data-track-index="11"></audio>
+      <audio id="fx0" src="assets/sfx/whoosh-short.mp3" data-start="0.44" data-duration="0.5" data-volume="0.22" data-track-index="12"></audio>
       <audio id="fx1" src="assets/sfx/key-press.mp3" data-start="1.95" data-duration="0.4" data-volume="0.25" data-track-index="13"></audio>
       <audio id="fx2" src="assets/sfx/click-soft.mp3" data-start="2.39" data-duration="0.35" data-volume="0.4" data-track-index="14"></audio>
       <audio id="fx3" src="assets/sfx/whoosh.mp3" data-start="2.27" data-duration="0.55" data-volume="0.38" data-track-index="12"></audio>
+      <audio id="fx28" src="assets/sfx/impact-bass-1.mp3" data-start="0.02" data-duration="1.6" data-volume="0.2" data-track-index="15"></audio>
+      <audio id="fx29" src="assets/sfx/pop.mp3" data-start="0.6" data-duration="0.6" data-volume="0.22" data-track-index="14"></audio>
       <audio id="fx26" src="assets/sfx/pop.mp3" data-start="3.03" data-duration="0.6" data-volume="0.34" data-track-index="14"></audio>
       <audio id="fx27" src="assets/sfx/click-soft.mp3" data-start="3.46" data-duration="0.35" data-volume="0.35" data-track-index="12"></audio>
       <audio id="fx4" src="assets/sfx/whoosh-short.mp3" data-start="3.80" data-duration="0.5" data-volume="0.3" data-track-index="13"></audio>
