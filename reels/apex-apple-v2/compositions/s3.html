@@ -1,14 +1,19 @@
 <template>
   <style>
 
-    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "Inter"; color: #1d1d1f; }
+    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "Inter Display"; src: url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "Inter Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
     .zone { z-index: 5; position: absolute; left: 80px; right: 80px; top: 372px; text-align: center; }
-    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 500 82px/1.06 "Inter"; }
+    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 600 82px/1.06 "Inter Display"; }
     .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
     .line > span { display: inline-block; }
-    .t-sans { font: 500 82px/1.06 "Inter"; letter-spacing: -0.035em; }
-    .t-it { font: italic 400 92px/1.0 "Playfair Display"; letter-spacing: -0.01em; }
-    .t-big { font: 600 96px/1.0 "Inter"; letter-spacing: -0.045em; }
+    .t-sans { font: 600 82px/1.06 "Inter Display"; letter-spacing: -0.028em; }
+    .t-it { font: 700 82px/1.06 "Inter Display"; letter-spacing: -0.032em; }
+    .t-mut { color: #86868b; }
+    .t-big { font: 700 96px/1.0 "Inter Display"; letter-spacing: -0.045em; }
     .acc { color: #7a0f24; }
     .ch { display: inline-block; white-space: pre; }
     .sel { position: absolute; border: 3px dashed #ff3b30; pointer-events: none; opacity: 0; }
@@ -16,7 +21,7 @@
     .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
     .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
     .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
-    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 "Inter"; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
+    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 "Inter Display"; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
 
 
   </style>
@@ -24,13 +29,13 @@
 
     <div class="zone" data-layout-allow-overlap>
       <span class="line"><span id="s3-l1" class="t-sans split">Questi sono i</span></span>
-      <span class="line" style="margin-top:-118px"><span id="s3-l3"><span class="t-it">l'ultimo</span> <span class="t-sans">è il più</span></span></span>
+      <span class="line" style="margin-top:-118px"><span id="s3-l3"><span class="t-it">l'ultimo</span> <span class="t-sans t-mut">è il più</span></span></span>
     </div>
     <div id="s3-num" data-layout-allow-overlap style="position:absolute;left:340px;top:620px;width:400px;height:470px;overflow:hidden">
-      <div id="s3-col" style="position:absolute;left:0;top:0;width:400px;text-align:center;font:600 430px/470px Inter;letter-spacing:-0.06em;color:#1d1d1f"><div>1</div><div>2</div><div>3</div><div>4</div><div id="s3-five">5</div></div>
+      <div id="s3-col" style="position:absolute;left:0;top:0;width:400px;text-align:center;font:600 430px/470px 'Inter Display';letter-spacing:-0.06em;color:#1d1d1f"><div>1</div><div>2</div><div>3</div><div>4</div><div id="s3-five">5</div></div>
     </div>
     <div class="zone" data-layout-allow-overlap style="top:1130px">
-      <span class="line"><span id="s3-l2"><span class="t-sans">trucchi che usa</span> <span class="t-it" id="s3-sdt">su di te</span></span></span>
+      <span class="line"><span id="s3-l2"><span class="t-sans t-mut" style="font-size:72px">trucchi che usa</span> <span class="t-it" id="s3-sdt" style="font-size:72px">su di te</span></span></span>
     </div>
     <div id="s3-sel" class="sel" style="left:350px;top:640px;width:380px;height:430px"><i></i><i></i><i></i><i></i></div>
     <div id="s3-cur" class="cur" style="left:700px;top:1000px"><svg viewBox="0 0 24 24" width="54" height="54"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#1d1d1f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>

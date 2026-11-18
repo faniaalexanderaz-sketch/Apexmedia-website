@@ -11,11 +11,11 @@ S['s1']=(2.53,'''
       </div>
       <div class="zone" data-layout-allow-overlap>
         <span class="line"><span id="s1-l1" class="t-sans split">Apple ti fa</span></span>
-        <span class="line" style="margin-top:-118px"><span id="s1-l2"><span class="t-it" style="font-size:104px">spendere</span></span></span>
-        <span class="line" style="margin-top:-20px"><span id="s1-l3"><span class="t-sans" id="s1-mig">migliaia di</span><span class="t-sans split acc" id="s1-euro">euro</span></span></span>
+        <span class="line" style="margin-top:-118px"><span id="s1-l2"><span class="t-it" style="font-size:112px">spendere</span></span></span>
+        <span class="line" style="margin-top:-20px"><span id="s1-l3"><span class="t-sans t-mut" id="s1-mig">migliaia di</span><span class="t-sans split acc" id="s1-euro">euro</span></span></span>
       </div>
-      <div id="s1-sel" class="sel" style="left:668px;top:500px;width:200px;height:112px">''' + SEL + '''</div>
-      <div id="s1-cur" class="cur" style="left:830px;top:580px">''' + CURSOR + '''</div>
+      <div id="s1-sel" class="sel" style="left:628px;top:486px;width:194px;height:96px">''' + SEL + '''</div>
+      <div id="s1-cur" class="cur" style="left:792px;top:556px">''' + CURSOR + '''</div>
     </div>''','''
     tl.set(L("#s1-l1"), { opacity: 1 }, 0);
     tl.fromTo("#s1-ph", { rotationY: -18, rotationX: 6, y: 40, scale: 0.94 }, { rotationY: 14, rotationX: -2, y: -10, scale: 1.0, duration: 2.5, ease: "power2.out" }, 0);
@@ -30,25 +30,46 @@ S['s1']=(2.53,'''
     flip(tl, "#s1-euro", 1.96, 0.05);
     select(tl, "#s1-sel", "#s1-cur", 2.12);
     tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.29);''')
-# ---------- s2 presenter (2.53 - 3.99), no text on the footage ----------
+# ---------- s2 "e tu la ringrazi pure" (2.53 - 3.99): dark scene, a sent message with a heart ----------
+HEART = '<svg viewBox="0 0 24 24" width="62" height="62"><path d="M12 21s-7.5-4.7-10-9.3C.3 8.4 1.9 4.5 5.6 4c2.2-.3 4.2.8 5.4 2.6h2C14.2 4.8 16.2 3.7 18.4 4c3.7.5 5.3 4.4 3.6 7.7C19.5 16.3 12 21 12 21z" fill="#ff375f"/></svg>'
 S['s2']=(1.46,'''
-    <div id="s2-w" style="position:absolute;inset:0;overflow:hidden">
-      <video id="s2-vid" class="clip" src="assets/video/presenter-chair.mp4" data-start="0" data-duration="1.46" data-media-start="1.2" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
+    <div id="s2-w" style="position:absolute;inset:0;overflow:hidden;background:#000">
+      <div id="s2-st" style="position:absolute;inset:0">
+        <div class="zone" data-layout-allow-overlap>
+          <span class="line"><span id="s2-l1" class="t-sans" style="color:#86868b">e tu la</span></span>
+          <span class="line" style="margin-top:-18px"><span id="s2-l2" class="t-it" style="font-size:112px;color:#f5f5f7">ringrazi pure</span></span>
+        </div>
+        <div id="s2-bub" style="position:absolute;right:130px;top:960px">
+          <div class="bub"><span>Grazie Apple</span></div>
+          <div id="s2-tap" style="position:absolute;left:-56px;top:-62px;width:124px;height:108px;border-radius:54px;background:#3a3a3c;display:flex;align-items:center;justify-content:center"><div id="s2-hr" style="width:62px;height:62px">''' + HEART + '''</div></div>
+        </div>
+        <div id="s2-del" style="position:absolute;right:134px;top:1196px;font:500 40px/1 Inter;color:#8e8e93">Consegnato</div>
+      </div>
     </div>''','''
     tl.fromTo("#s2-w", { x: 1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0);
-    tl.fromTo("#s2-w", { scale: 1.12 }, { scale: 1.0, duration: 1.26, ease: "power2.out" }, 0);
-    tl.to("#s2-w", { scale: 1.25, opacity: 0, duration: 0.18, ease: "power3.in" }, 1.28);''')
+    tl.fromTo("#s2-st", { scale: 1.0 }, { scale: 1.07, duration: 1.46, ease: "none" }, 0);
+    rise(tl, "#s2-l1", 0.06);
+    rise(tl, "#s2-l2", 0.36);
+    tl.fromTo("#s2-bub", { opacity: 0, scale: 0.3, y: 160, transformOrigin: "100% 100%" }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.9)" }, 0.5);
+    tl.fromTo("#s2-del", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.84);
+    tl.fromTo("#s2-tap", { scale: 0, transformOrigin: "70% 100%" }, { scale: 1, duration: 0.34, ease: "back.out(3)" }, 0.93);
+    tl.fromTo("#s2-hr", { scale: 0.6 }, { scale: 1.18, duration: 0.14, ease: "power2.out", yoyo: true, repeat: 1 }, 1.02);
+    tl.to("#s2-w", { scale: 1.25, opacity: 0, duration: 0.18, ease: "power3.in" }, 1.28);''','''
+    .bub { position: relative; padding: 44px 66px 50px; border-radius: 80px; background: #0a84ff; color: #fff; font: 500 104px/1 "Inter Display"; letter-spacing: -0.02em; white-space: nowrap; }
+    .bub span { position: relative; z-index: 2; }
+    .bub::before { content: ""; position: absolute; z-index: 0; bottom: 0; right: -26px; width: 70px; height: 70px; background: #0a84ff; border-bottom-left-radius: 52px; }
+    .bub::after { content: ""; position: absolute; z-index: 1; bottom: 0; right: -36px; width: 36px; height: 72px; background: #000; border-bottom-left-radius: 36px; }''')
 # ---------- s3 five tricks (3.99 - 9.12) ----------
 S['s3']=(5.13,'''
     <div class="zone" data-layout-allow-overlap>
       <span class="line"><span id="s3-l1" class="t-sans split">Questi sono i</span></span>
-      <span class="line" style="margin-top:-118px"><span id="s3-l3"><span class="t-it">l'ultimo</span> <span class="t-sans">è il più</span></span></span>
+      <span class="line" style="margin-top:-118px"><span id="s3-l3"><span class="t-it">l'ultimo</span> <span class="t-sans t-mut">è il più</span></span></span>
     </div>
     <div id="s3-num" data-layout-allow-overlap style="position:absolute;left:340px;top:620px;width:400px;height:470px;overflow:hidden">
       <div id="s3-col" style="position:absolute;left:0;top:0;width:400px;text-align:center;font:600 430px/470px Inter;letter-spacing:-0.06em;color:#1d1d1f"><div>1</div><div>2</div><div>3</div><div>4</div><div id="s3-five">5</div></div>
     </div>
     <div class="zone" data-layout-allow-overlap style="top:1130px">
-      <span class="line"><span id="s3-l2"><span class="t-sans">trucchi che usa</span> <span class="t-it" id="s3-sdt">su di te</span></span></span>
+      <span class="line"><span id="s3-l2"><span class="t-sans t-mut" style="font-size:72px">trucchi che usa</span> <span class="t-it" id="s3-sdt" style="font-size:72px">su di te</span></span></span>
     </div>
     <div id="s3-sel" class="sel" style="left:350px;top:640px;width:380px;height:430px">''' + SEL + '''</div>
     <div id="s3-cur" class="cur" style="left:700px;top:1000px">''' + CURSOR + '''</div>
@@ -87,7 +108,7 @@ S['s4']=(4.33,'''
       <span class="line"><span id="s4-l1"><span class="t-sans" style="color:#ff3b30">01</span> <span class="t-it">settembre.</span></span></span>
       <span class="line" style="margin-top:-118px"><span id="s4-l2"><span class="t-sans">nuovo</span> <span class="t-sans split acc" id="s4-iph">iPhone</span></span></span>
     </div>
-    <div id="s4-ph" style="position:absolute;left:250px;top:700px;width:600px;perspective:1600px"><img id="s4-phi" src="assets/img/ip18-burg-b.png" style="width:100%;display:block" alt="" /></div>''','''
+    <div id="s4-ph" data-layout-allow-overlap style="position:absolute;left:0;top:250px;width:1080px;height:1920px;mix-blend-mode:multiply;z-index:2"><video id="s4-phi" class="clip" src="assets/video/ip18-spin-reveal.mp4" data-start="3.1" data-duration="1.23" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video></div>''','''
     tl.set("#s4-l2", { yPercent: 115 }, 0);
     tl.set("#s4-ph", { opacity: 0 }, 0);
     /* the camera scrolls down through the calendar app and lands on September */
@@ -103,9 +124,9 @@ S['s4']=(4.33,'''
     tl.set(L("#s4-iph"), { opacity: 0 }, 0);
     flip(tl, "#s4-iph", 3.62, 0.04);
     tl.to("#s4-cam", { y: 900, opacity: 0, duration: 0.45, ease: "power3.in" }, 3.12);
-    tl.fromTo("#s4-ph", { opacity: 1, y: 900, rotation: 10 }, { opacity: 1, y: 0, rotation: -4, duration: 0.7, ease: "expo.out", immediateRender: false }, 3.22);
-    tl.fromTo("#s4-phi", { rotationY: 28 }, { rotationY: -10, duration: 1.1, ease: "power2.out" }, 3.22);
-    tl.to(["#s4-ph", "#s4-l2"], { y: -1500, duration: 0.26, ease: "power3.in" }, 4.06);''','''
+    tl.fromTo("#s4-ph", { opacity: 1, y: 1100, scale: 0.9 }, { opacity: 1, y: 0, scale: 1.08, duration: 0.7, ease: "expo.out", immediateRender: false }, 3.22);
+    tl.to("#s4-ph", { y: -1900, duration: 0.26, ease: "power3.in" }, 4.06);
+    tl.to("#s4-l2", { y: -1500, duration: 0.26, ease: "power3.in" }, 4.06);''','''
     .mo { padding: 40px 0 70px; }
     .mh { font: 700 92px/96px "Inter"; letter-spacing: -0.035em; color: #ff3b30; }
     .wd { margin-top: 30px; display: grid; grid-template-columns: repeat(7,1fr); font: 600 30px/1 "Inter"; color: #8e8e93; text-align: center; padding-bottom: 16px; border-bottom: 2px solid #e5e5ea; }
@@ -138,7 +159,7 @@ S['s5']=(1.94,'''
 S['s6']=(1.87,'''
     <video id="s6-vid" class="clip" src="assets/video/presenter-white.mp4" data-start="0" data-duration="1.87" data-media-start="0.4" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
     <div id="s6-sheet" style="position:absolute;inset:0;background:#fff">
-      <div class="zone" data-layout-allow-overlap><span class="line"><span id="s6-l1"><span class="t-sans">funziona</span> <span class="t-it">benissimo</span></span></span></div>
+      <div class="zone" data-layout-allow-overlap><span class="line"><span id="s6-l1"><span class="t-sans t-mut">funziona</span> <span class="t-it">benissimo</span></span></span></div>
       <div id="s6-bat" style="position:absolute;left:250px;top:820px;width:520px;height:250px">
         <div style="position:absolute;left:0;top:0;width:470px;height:250px;border:14px solid #1d1d1f;border-radius:64px;padding:16px"><div id="s6-fill" style="width:100%;height:100%;border-radius:40px;background:#34c759;transform-origin:left center"></div></div>
         <div style="position:absolute;left:482px;top:80px;width:30px;height:90px;border-radius:0 18px 18px 0;background:#1d1d1f"></div>
@@ -154,7 +175,7 @@ S['s7']=(2.40,'''
     <div class="zone" data-layout-allow-overlap>
       <span class="line"><span id="s7-l1" class="t-sans">ma adesso si vede</span></span>
       <span class="line" style="margin-top:-24px"><span id="s7-l1b" class="t-sans">che è quello</span></span>
-      <span class="line" style="margin-top:-24px"><span id="s7-l2" class="t-it" style="font-size:104px;color:#8e8e93">dell'anno scorso</span></span>
+      <span class="line" style="margin-top:-24px"><span id="s7-l2" class="t-it" style="font-size:88px;color:#86868b">dell'anno scorso</span></span>
     </div>
     <div id="s7-ph" style="position:absolute;left:290px;top:800px;width:540px;perspective:1600px"><div id="s7-in" style="position:relative"><img src="assets/img/ip17-orange-v2.png" style="width:100%;display:block" alt="" /><img id="s7-g" src="assets/img/ip17-orange-grey.png" style="position:absolute;inset:0;width:100%;display:block" alt="" /></div></div>
     <div id="s7-sel" class="sel" style="left:315px;top:810px;width:450px;height:830px">''' + SEL + '''</div>
