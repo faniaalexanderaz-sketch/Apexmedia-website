@@ -1652,8 +1652,8 @@
   },
   "checks": {
     "latest": {
-      "revision": "b510140a-132e-46e3-90e8-b69c5c111550",
-      "id": "a44a0408-860c-44ac-8b14-0dc85fe43c35"
+      "revision": null,
+      "id": "8c53e289-0c2a-4820-8ed1-bfee8da8d72e"
     },
     "revisions": {
       "7aa134c7-436b-4f28-a157-85ea0016733d": [
@@ -2002,7 +2002,6 @@
         {
           "id": "79b949d4-67ff-4c8c-876e-26ab4547ff46",
           "scope": "project",
-          "report": "/home/user/Apexmedia-website/reels/apex-apple-v2/.hyperframes/artifacts/checks/79b949d4-67ff-4c8c-876e-26ab4547ff46.json",
           "metadata": {
             "ok": false,
             "browserSkipped": false,
@@ -2032,14 +2031,15 @@
           "revision": "b9fda396-427f-483a-98eb-08a3118d3c5e",
           "inputFingerprint": "c3e8c9b53d6f2a76bb501924a0b71a67b23d98d399ef57d697f85f1d52da26cb",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "3a617cfb-567b-4481-8a0c-19536ea42743"
         }
       ],
       "05230760-12d4-40c6-b69e-cacae925e791": [
         {
           "id": "6726da4a-44b7-4946-ab33-019d10784d27",
           "scope": "project",
-          "report": "/home/user/Apexmedia-website/reels/apex-apple-v2/.hyperframes/artifacts/checks/6726da4a-44b7-4946-ab33-019d10784d27.json",
           "metadata": {
             "ok": true,
             "browserSkipped": false,
@@ -2069,14 +2069,15 @@
           "revision": "05230760-12d4-40c6-b69e-cacae925e791",
           "inputFingerprint": "d306962c163c692ce2b5ba27665346418fb3c0e5040765003ecae26e2e6e398b",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "3a617cfb-567b-4481-8a0c-19536ea42743"
         }
       ],
       "d906f9d3-edd3-4120-a303-851de6fa2b2c": [
         {
           "id": "6f491730-cfc9-4c7e-8ea2-5f8a590fae86",
           "scope": "project",
-          "report": "/home/user/Apexmedia-website/reels/apex-apple-v2/.hyperframes/artifacts/checks/6f491730-cfc9-4c7e-8ea2-5f8a590fae86.json",
           "metadata": {
             "ok": false,
             "browserSkipped": false,
@@ -2106,14 +2107,15 @@
           "revision": "d906f9d3-edd3-4120-a303-851de6fa2b2c",
           "inputFingerprint": "4e78e9175170c7c2051de4b7f5590164d63f27c810c25b62de0bfaf6d3fd4b8a",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "3a617cfb-567b-4481-8a0c-19536ea42743"
         }
       ],
       "b510140a-132e-46e3-90e8-b69c5c111550": [
         {
           "id": "a44a0408-860c-44ac-8b14-0dc85fe43c35",
           "scope": "project",
-          "report": "/home/user/Apexmedia-website/reels/apex-apple-v2/.hyperframes/artifacts/checks/a44a0408-860c-44ac-8b14-0dc85fe43c35.json",
           "metadata": {
             "ok": false,
             "browserSkipped": false,
@@ -2143,7 +2145,9 @@
           "revision": "b510140a-132e-46e3-90e8-b69c5c111550",
           "inputFingerprint": "167255542f7da1ef9d4ca19fad0c29cbd6f0068438a1c1acb4bb404cb73e19ff",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "3a617cfb-567b-4481-8a0c-19536ea42743"
         }
       ]
     },
@@ -3883,15 +3887,15 @@
   },
   "renders": {
     "latest": {
-      "id": "185b4c2c-9cd3-4ea0-adc2-c4351705b9f0",
-      "completedAt": 1795033724772,
+      "id": "3a617cfb-567b-4481-8a0c-19536ea42743",
+      "completedAt": 1795035935541,
       "output": "/home/user/Apexmedia-website/reels/apex-apple-v2/renders/_full-60.mp4",
       "status": "completed",
-      "revision": null
+      "revision": "48930741-22da-4be2-89c6-9de1e5b7e4dc"
     },
     "retainedRevisions": [
-      "ab1074b7-156b-4fe2-8a9a-f9c69857620e",
-      "b9fda396-427f-483a-98eb-08a3118d3c5e"
+      "48930741-22da-4be2-89c6-9de1e5b7e4dc",
+      "ab1074b7-156b-4fe2-8a9a-f9c69857620e"
     ]
   },
   "pendingArtifactCleanup": []
