@@ -12,6 +12,10 @@ type Props = {
   fallback: Fallback;
   alt: string;
   className?: string;
+  /** true: l’immagine statica compare solo senza WebGL (per l’hero, dove non deve pesare sul primo caricamento) */
+  quietFallback?: boolean;
+  /** Millisecondi di attesa prima di montare la scena (l’hero aspetta che il titolo abbia finito di entrare) */
+  mountDelay?: number;
 };
 
 function hasWebGL() {
@@ -27,7 +31,14 @@ function hasWebGL() {
  * Spazio di una scena 3D. Sotto c’è sempre l’immagine statica, così la sezione non è mai vuota:
  * il canvas la copre solo quando ha davvero disegnato il primo frame.
  */
-export function SceneSlot({ children, fallback, alt, className = "" }: Props) {
+export function SceneSlot({
+  children,
+  fallback,
+  alt,
+  className = "",
+  quietFallback = false,
+  mountDelay = 0,
+}: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
   const [webgl, setWebgl] = useState(true);
@@ -38,19 +49,24 @@ export function SceneSlot({ children, fallback, alt, className = "" }: Props) {
     if (!el) return;
     // Si carica circa una schermata e mezza prima di arrivarci; una volta montata resta montata.
     // Senza WebGL resta l’immagine statica.
+    let timer: number | undefined;
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
           io.disconnect();
-          if (hasWebGL()) setNear(true);
-          else setWebgl(false);
+          if (!hasWebGL()) setWebgl(false);
+          else if (mountDelay > 0) timer = window.setTimeout(() => setNear(true), mountDelay);
+          else setNear(true);
         }
       },
       { rootMargin: "150% 0px 150% 0px" },
     );
     io.observe(el);
-    return () => io.disconnect();
-  }, []);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, [mountDelay]);
 
   // Se il contesto WebGL si perde (succede sui telefoni con poca memoria) torna l’immagine
   useEffect(() => {
@@ -63,6 +79,7 @@ export function SceneSlot({ children, fallback, alt, className = "" }: Props) {
 
   return (
     <div ref={ref} className={`relative ${className}`} data-scene-slot>
+      {quietFallback && webgl ? null : (
       <Image
         src={fallback.src}
         width={fallback.width}
@@ -74,6 +91,7 @@ export function SceneSlot({ children, fallback, alt, className = "" }: Props) {
         }`}
         data-scene-fallback
       />
+      )}
       {near && webgl ? (
         <div
           className={`absolute inset-0 transition-opacity duration-500 ${

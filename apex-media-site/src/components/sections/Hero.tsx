@@ -6,6 +6,14 @@ import { GridLines } from "@/components/ui/GridLines";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { site } from "@/data/site";
+import { heroPhone } from "@/data/hero";
+import dynamic from "next/dynamic";
+import { SceneSlot } from "@/components/three/SceneSlot";
+
+/* Il telefono 3D arriva dopo il titolo: non pesa sul primo caricamento */
+const HeroPhone = dynamic(() => import("@/components/three/HeroPhone"), {
+  ssr: false,
+});
 import { gsap, useGSAP, SplitText, MEDIA, EASE } from "@/lib/gsap";
 
 const PRE_HIDDEN =
@@ -76,6 +84,7 @@ function setup(root: HTMLElement) {
       0.95,
     );
     tl.from("[data-hero-foot]", { opacity: 0, duration: 0.7 }, 1.3);
+    tl.from("[data-hero-note]", { opacity: 0, duration: 0.7 }, 1.4);
 
     // Uscita: il blocco del titolo scorre un po’ più lento, così l’hero “resta” un attimo
     gsap.to("[data-hero-body]", {
@@ -133,47 +142,77 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="my-auto py-10 lg:py-12" data-hero-body>
-          <h1
-            className="h-display text-[clamp(2.6rem,0.6rem+10vw,10.5rem)] leading-[0.94] text-ink"
-            data-hero-title
-          >
-            Il marketing che fa{" "}
-            <span className="hl">squillare il telefono.</span>
-          </h1>
+        <div
+          className="my-auto grid grid-cols-1 items-center gap-6 py-8 lg:grid-cols-12 lg:gap-8 lg:py-10"
+          data-hero-body
+        >
+          <div className="lg:col-span-7">
+            <h1
+              className="h-display text-[clamp(2.6rem,0.4rem+7.4vw,8rem)] leading-[0.94] text-ink"
+              data-hero-title
+            >
+              Il marketing che fa{" "}
+              <span className="hl">squillare il telefono.</span>
+            </h1>
 
-          <div className="mt-9 grid grid-cols-1 gap-8 lg:mt-12 lg:grid-cols-12 lg:items-end lg:gap-8">
-            <p
-              className="text-body max-w-[34rem] text-[17px] text-ink/80 md:text-xl lg:col-span-6"
-              data-hero-sub
-            >
-              Social, video, pubblicità e siti web per attività locali. Un solo
-              team, dal primo contenuto al cliente che ti chiama.
-            </p>
-            <div
-              className="flex flex-wrap items-center gap-x-8 gap-y-4 lg:col-span-6 lg:justify-end"
-              data-hero-cta
-            >
-              <Magnetic>
-                <Button
-                  href="#contatti"
-                  className="min-h-14 px-8 text-[17px]"
-                  data-track="click_cta"
-                  data-track-posizione="hero"
-                >
-                  Prenota la call gratuita
-                </Button>
-              </Magnetic>
-              <Button
-                href="#showcase"
-                variant="link"
-                data-track="click_portfolio"
-                data-track-cliente="hero"
+            <div className="mt-8 grid grid-cols-1 gap-8 lg:mt-10">
+              <p
+                className="text-body max-w-[34rem] text-[17px] text-ink/80 md:text-xl"
+                data-hero-sub
               >
-                Guarda i lavori
-              </Button>
+                Social, video, pubblicità e siti web per attività locali. Un
+                solo team, dal primo contenuto al cliente che ti chiama.
+              </p>
+              <div
+                className="flex flex-wrap items-center gap-x-8 gap-y-4"
+                data-hero-cta
+              >
+                <Magnetic>
+                  <Button
+                    href="#contatti"
+                    className="min-h-14 px-8 text-[17px]"
+                    data-track="click_cta"
+                    data-track-posizione="hero"
+                  >
+                    Prenota la call gratuita
+                  </Button>
+                </Magnetic>
+                <Button
+                  href="#showcase"
+                  variant="link"
+                  data-track="click_portfolio"
+                  data-track-cliente="hero"
+                >
+                  Guarda i lavori
+                </Button>
+              </div>
             </div>
           </div>
+
+          {/* Il telefono che riceve richieste: una simulazione, e lo dice */}
+          <figure className="relative lg:col-span-5" data-hero-phone>
+            <div className="-mx-5 h-[400px] sm:-mx-8 sm:h-[460px] lg:mx-0 lg:h-[min(70svh,640px)]">
+              <SceneSlot
+                className="h-full w-full"
+                quietFallback
+                mountDelay={1800}
+                fallback={{
+                  src: "/hero/telefono.webp",
+                  width: 900,
+                  height: 1100,
+                }}
+                alt="Un telefono riceve richieste di preventivo, prenotazioni e chiamate"
+              >
+                {(onReady) => <HeroPhone onReady={onReady} />}
+              </SceneSlot>
+            </div>
+            <figcaption
+              className="mx-auto mt-1 max-w-[34ch] text-center text-[13px] leading-snug text-ink/50"
+              data-hero-note
+            >
+              {heroPhone.note}
+            </figcaption>
+          </figure>
         </div>
 
         <div
