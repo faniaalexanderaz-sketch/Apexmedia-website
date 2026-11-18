@@ -18,8 +18,26 @@ import { ScrollTrigger } from "@/lib/gsap";
    quando qualcosa cambia. Tutto il movimento è guidato da GSAP; il canvas 3D disegna solo su richiesta. */
 
 const SW = 540;
-const SH = 1156;
-const BODY = "#121317";
+const SH = 1142;
+/* Telefono bordeaux, sul modello della foto di riferimento: retro opaco, fascia fotocamere più chiara */
+const BACK = "#4a1a23";
+const GLASS = "#3f161d";
+const PLATEAU = "#6a2a33";
+const FRAME = "#5a222b";
+const RING = "#3a1319";
+/** Tasti sul telaio: x, y, altezza */
+const BUTTONS: [number, number, number][] = [
+  [0.512, 0.3, 0.26],
+  [-0.512, 0.6, 0.09],
+  [-0.512, 0.4, 0.15],
+  [-0.512, 0.2, 0.15],
+];
+/** Obiettivi: due in colonna e uno a lato, a triangolo */
+const LENSES: [number, number][] = [
+  [0.285, 0.118],
+  [0.285, -0.118],
+  [0.07, 0],
+];
 const PAPER = "#f6f5f1";
 const INK = "#0b0d14";
 const MUTED = "#6b6862";
@@ -70,10 +88,8 @@ function fit(ctx: CanvasRenderingContext2D, text: string, max: number) {
 /** Disegna lo schermo del telefono nello stato attuale */
 function drawScreen(ctx: CanvasRenderingContext2D, st: State, fonts: { display: string; sans: string }) {
   ctx.clearRect(0, 0, SW, SH);
-  ctx.fillStyle = BODY;
-  ctx.fillRect(0, 0, SW, SH);
   ctx.save();
-  rounded(ctx, 0, 0, SW, SH, 64);
+  rounded(ctx, 0, 0, SW, SH, 72);
   ctx.clip();
   ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, SW, SH);
@@ -84,7 +100,8 @@ function drawScreen(ctx: CanvasRenderingContext2D, st: State, fonts: { display: 
   ctx.textBaseline = "middle";
   ctx.fillText("10:30", 44, 46);
   ctx.fillStyle = "#05060a";
-  rounded(ctx, SW / 2 - 78, 22, 156, 46, 23);
+  // Isola piccola, come sui modelli più recenti
+  rounded(ctx, SW / 2 - 56, 26, 112, 34, 17);
   ctx.fill();
   ctx.fillStyle = INK;
   [0, 1, 2, 3].forEach((i) => ctx.fillRect(SW - 128 + i * 11, 54 - i * 5, 7, 8 + i * 5));
@@ -351,43 +368,142 @@ function Phone({ animate, onReady }: { animate: boolean; onReady: () => void }) 
     }
   });
 
-  const screenH = 0.94 * (SH / SW);
+  const screenH = 0.952 * (SH / SW);
+  const seg = light ? 8 : 16;
+  const round = light ? 28 : 48;
   return (
-    <group ref={group}>
-      {/* Anello che si allarga dietro al telefono quando arriva una richiesta */}
-      <mesh ref={ring} position={[0, 0.05, -0.25]}>
+    <group>
+      {/* Anello che si allarga dietro al telefono quando arriva una richiesta: resta di fronte, non gira */}
+      <mesh ref={ring} position={[0, 0.05, -0.6]}>
         <torusGeometry args={[0.95, 0.012, 12, 96]} />
         <meshStandardMaterial ref={ringMat} color={YELLOW} roughness={0.6} transparent opacity={0} />
       </mesh>
-      {/* Telaio metallico e corpo */}
-      <RoundedBox args={[1.035, 2.095, 0.09]} radius={0.14} smoothness={light ? 3 : 6}>
-        <meshStandardMaterial color="#8e9198" roughness={0.35} metalness={0.7} />
-      </RoundedBox>
-      <RoundedBox args={[1, 2.06, 0.11]} radius={0.13} smoothness={light ? 3 : 6}>
-        <meshStandardMaterial color={BODY} roughness={0.45} metalness={0.2} />
-      </RoundedBox>
-      {/* Retro: il modulo della fotocamera, si vede quando il telefono gira */}
-      <group position={[0.2, 0.66, -0.062]}>
-        <RoundedBox args={[0.42, 0.44, 0.03]} radius={0.09} smoothness={light ? 2 : 4}>
-          <meshStandardMaterial color="#1b1c21" roughness={0.5} metalness={0.3} />
-        </RoundedBox>
-        {[
-          [-0.09, 0.09],
-          [0.09, 0.09],
-          [-0.09, -0.09],
-        ].map(([x, y]) => (
-          <mesh key={`${x}${y}`} position={[x, y, -0.02]} rotation-x={Math.PI / 2}>
-            <cylinderGeometry args={[0.066, 0.066, 0.025, light ? 20 : 32]} />
-            <meshStandardMaterial color="#08090c" roughness={0.25} metalness={0.6} />
-          </mesh>
+
+      <group ref={group}>
+        {/* Corpo: retro bordeaux opaco, fianchi piatti in metallo satinato con spigoli appena smussati */}
+        <Plate w={1.02} h={2.08} r={0.17} depth={0.1} bevel={0.012} segments={seg}>
+          <meshStandardMaterial attach="material-0" color={BACK} roughness={0.62} metalness={0.25} />
+          <meshStandardMaterial attach="material-1" color={FRAME} roughness={0.36} metalness={0.8} />
+        </Plate>
+        {/* Tasti sul telaio: accensione a destra, azione e volume a sinistra */}
+        {BUTTONS.map(([x, y, h]) => (
+          <RoundedBox key={`${x}${y}`} args={[0.012, h, 0.032]} radius={0.005} smoothness={2} position={[x, y, 0]}>
+            <meshStandardMaterial color={FRAME} roughness={0.35} metalness={0.8} />
+          </RoundedBox>
         ))}
+
+        {/* ---- Retro ---- */}
+        {/* Pannello in vetro satinato sotto le fotocamere, appena più scuro */}
+        <Plate w={0.9} h={1.33} r={0.1} depth={0.004} segments={seg} position={[0, -0.31, -0.052]}>
+          <meshStandardMaterial color={GLASS} roughness={0.75} metalness={0.15} />
+        </Plate>
+        {/* Fascia delle fotocamere: rialzata, larga quasi quanto il telefono */}
+        <group position={[0, 0.72, -0.05]}>
+          <Plate w={0.93} h={0.52} r={0.14} depth={0.03} bevel={0.008} segments={seg} position={[0, 0, -0.015]}>
+            <meshStandardMaterial color={PLATEAU} roughness={0.5} metalness={0.35} />
+          </Plate>
+          {/* Tre obiettivi a triangolo (visti da dietro stanno a sinistra, quindi qui x è positivo) */}
+          {LENSES.map(([x, y]) => (
+            <group key={`${x}${y}`} position={[x, y, -0.036]} rotation-x={Math.PI / 2}>
+              <mesh>
+                <cylinderGeometry args={[0.108, 0.108, 0.03, round]} />
+                <meshStandardMaterial color={RING} roughness={0.3} metalness={0.85} />
+              </mesh>
+              <mesh position={[0, -0.012, 0]}>
+                <cylinderGeometry args={[0.088, 0.088, 0.012, round]} />
+                <meshStandardMaterial color="#07080b" roughness={0.12} metalness={0.5} />
+              </mesh>
+              <mesh position={[0, -0.0185, 0]}>
+                <cylinderGeometry args={[0.04, 0.04, 0.002, round]} />
+                <meshStandardMaterial color="#1a2233" roughness={0.1} metalness={0.7} />
+              </mesh>
+            </group>
+          ))}
+          {/* Flash, microfono e sensore, sul lato opposto */}
+          <mesh position={[-0.3, 0.14, -0.031]} rotation-x={Math.PI / 2}>
+            <cylinderGeometry args={[0.042, 0.042, 0.004, round]} />
+            <meshStandardMaterial color="#f1ede4" roughness={0.4} emissive="#f1ede4" emissiveIntensity={0.15} />
+          </mesh>
+          <mesh position={[-0.3, 0.02, -0.031]} rotation-x={Math.PI / 2}>
+            <cylinderGeometry args={[0.008, 0.008, 0.003, 12]} />
+            <meshStandardMaterial color="#1a0a0d" roughness={0.6} />
+          </mesh>
+          <mesh position={[-0.3, -0.12, -0.031]} rotation-x={Math.PI / 2}>
+            <cylinderGeometry args={[0.046, 0.046, 0.004, round]} />
+            <meshStandardMaterial color="#0a0a0d" roughness={0.2} metalness={0.4} />
+          </mesh>
+        </group>
+
+        {/* ---- Fronte ---- */}
+        {/* Vetro nero a filo del telaio, poi lo schermo con cornici sottili e uguali */}
+        <Plate w={0.99} h={2.05} r={0.155} depth={0.004} segments={seg} position={[0, 0, 0.052]}>
+          <meshStandardMaterial color="#050506" roughness={0.18} metalness={0.3} />
+        </Plate>
+        <mesh position={[0, 0, 0.0552]}>
+          <planeGeometry args={[0.952, screenH]} />
+          <meshBasicMaterial map={screen.texture} toneMapped={false} transparent />
+        </mesh>
       </group>
-      {/* Schermo */}
-      <mesh position={[0, 0, 0.0565]}>
-        <planeGeometry args={[0.94, screenH]} />
-        <meshBasicMaterial map={screen.texture} toneMapped={false} />
-      </mesh>
     </group>
+  );
+}
+
+/**
+ * Lastra con angoli arrotondati: un rettangolo arrotondato estruso, con smusso facoltativo sugli spigoli.
+ * w, h e depth sono le misure esterne. Con due materiali: 0 = facce davanti e dietro, 1 = fianchi.
+ */
+function Plate({
+  w,
+  h,
+  r,
+  depth,
+  bevel = 0,
+  segments = 12,
+  children,
+  ...props
+}: {
+  w: number;
+  h: number;
+  r: number;
+  depth: number;
+  bevel?: number;
+  segments?: number;
+  children?: React.ReactNode;
+  position?: [number, number, number];
+}) {
+  const geometry = useMemo(() => {
+    const iw = w - bevel * 2;
+    const ih = h - bevel * 2;
+    const ir = Math.max(0.001, r - bevel);
+    const x = -iw / 2;
+    const y = -ih / 2;
+    const s = new THREE.Shape();
+    s.moveTo(x + ir, y);
+    s.lineTo(x + iw - ir, y);
+    s.absarc(x + iw - ir, y + ir, ir, -Math.PI / 2, 0, false);
+    s.lineTo(x + iw, y + ih - ir);
+    s.absarc(x + iw - ir, y + ih - ir, ir, 0, Math.PI / 2, false);
+    s.lineTo(x + ir, y + ih);
+    s.absarc(x + ir, y + ih - ir, ir, Math.PI / 2, Math.PI, false);
+    s.lineTo(x, y + ir);
+    s.absarc(x + ir, y + ir, ir, Math.PI, Math.PI * 1.5, false);
+    const d = Math.max(0.0005, depth - bevel * 2);
+    const g = new THREE.ExtrudeGeometry(s, {
+      depth: d,
+      bevelEnabled: bevel > 0,
+      bevelSize: bevel,
+      bevelThickness: bevel,
+      bevelSegments: 4,
+      curveSegments: segments,
+    });
+    g.translate(0, 0, -d / 2);
+    return g;
+  }, [w, h, r, depth, bevel, segments]);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  return (
+    <mesh geometry={geometry} {...props}>
+      {children}
+    </mesh>
   );
 }
 
@@ -401,7 +517,8 @@ export default function HeroPhone({ onReady }: { onReady: () => void }) {
     <Canvas
       frameloop="demand"
       dpr={light ? [1, 1.5] : [1, 2]}
-      camera={{ fov: 28, position: [0, 0.05, 5.4] }}
+      // near e far stretti: più precisione in profondità, niente sfarfallio tra vetro e schermo
+      camera={{ fov: 28, near: 2, far: 12, position: [0, 0.05, 5.4] }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ touchAction: "pan-y" }}
     >
