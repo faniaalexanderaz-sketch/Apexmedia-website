@@ -1,6 +1,6 @@
 /* =============================================================
    BAGNARINO COWORKING — numeri del mese e provenienza clienti
-   Usato dalla dashboard e dal report automatico del giorno 1
+   Usato dall'app di gestione e dal report automatico del giorno 1
    (alla titolare e ad Apex Media).
    Destinatari: NOTIFICATION_EMAIL + REPORT_EMAIL (anche più
    indirizzi separati da virgola, es. quello di Apex Media).
@@ -72,7 +72,7 @@ async function inviaReportMensile(cfg, sito, adesso) {
     ]) + '<div style="height:18px"></div>' +
     T.paragrafo('<b>Da dove arrivano le prenotazioni</b>', true) +
     (n.canali.length ? T.righe(n.canali.map(c => [c.fonte, String(c.n)])) : T.paragrafo('Nessuna prenotazione nel mese.')) +
-    '<div style="height:18px"></div>' + T.bottone(sito + '/admin', 'Apri l’area riservata');
+    '<div style="height:18px"></div>' + T.bottone(sito + '/gestione#come-va', 'Guarda come va nell’app');
   const html = T.layout({ titolo: 'Report ' + nomeMese, anteprima: n.prenotazioni + ' prenotazioni, ' + euro(n.incasso) + ' incassati', corpo, sito, cfg });
   const destinatari = [emailTitolare()].concat(String(process.env.REPORT_EMAIL || '').split(','))
     .map(s => (s || '').trim()).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);

@@ -11,6 +11,11 @@
    - Primo avvio: se non esiste nessun accesso, nasce quello della
      titolare con l'email di NOTIFICATION_EMAIL e la password
      dell'area riservata di prima (ADMIN_PASSWORD).
+   - Due ruoli: "titolare" (Marcella) e "apex" (Apex Media). Fanno
+     le stesse cose; solo "apex" aggiorna i numeri di social, Google
+     e pubblicità di "Come va". L'accesso di Apex Media nasce da
+     solo quando esiste APEX_PASSWORD: email di APEX_EMAIL (se manca,
+     quella dello studio), password quella dell'area riservata di prima.
    Le pagine e le API di /gestione controllano la sessione sul
    server: senza sessione non esce nessun dato.
    ============================================================= */
@@ -51,18 +56,26 @@ async function passwordGiusta(password, salvata) {
 }
 
 function emailAccesso() { return emailTitolare() || String(BASE.azienda.email || '').toLowerCase(); }
+/* l'indirizzo con cui entra Apex Media: quello pubblico dello studio, salvo diversa scelta */
+const EMAIL_APEX = 'studio@infoapex.eu';
+function emailApex() { return String(process.env.APEX_EMAIL || EMAIL_APEX).trim().toLowerCase(); }
 
-/* primo avvio: l'accesso della titolare */
+/* primo avvio: l'accesso della titolare e, se c'è la sua password, quello di Apex Media */
 async function assicuraUtente() {
-  const n = await q('SELECT COUNT(*)::int AS n FROM utenti');
-  if (n[0].n > 0) return;
+  const n = await q("SELECT COUNT(*) FILTER (WHERE ruolo <> 'apex')::int AS titolari, COUNT(*) FILTER (WHERE ruolo = 'apex')::int AS apex FROM utenti");
   const email = emailAccesso();
-  if (!email) return;
-  /* senza ADMIN_PASSWORD nasce con una password che nessuno conosce:
-     si entra la prima volta da "Password dimenticata" */
-  const iniziale = process.env.ADMIN_PASSWORD || crypto.randomBytes(24).toString('hex');
-  await q('INSERT INTO utenti (email, nome, password_hash) VALUES ($1, $2, $3) ON CONFLICT (email) DO NOTHING',
-    [email, process.env.GESTIONE_NOME || 'Marcella', await creaImpronta(iniziale)]);
+  if (n[0].titolari === 0 && email) {
+    /* senza ADMIN_PASSWORD nasce con una password che nessuno conosce:
+       si entra la prima volta da "Password dimenticata" */
+    const iniziale = process.env.ADMIN_PASSWORD || crypto.randomBytes(24).toString('hex');
+    await q("INSERT INTO utenti (email, nome, password_hash, ruolo) VALUES ($1, $2, $3, 'titolare') ON CONFLICT (email) DO NOTHING",
+      [email, process.env.GESTIONE_NOME || 'Marcella', await creaImpronta(iniziale)]);
+  }
+  const apex = emailApex();
+  if (n[0].apex === 0 && process.env.APEX_PASSWORD && apex && apex !== email) {
+    await q("INSERT INTO utenti (email, nome, password_hash, ruolo) VALUES ($1, 'Apex Media', $2, 'apex') ON CONFLICT (email) DO NOTHING",
+      [apex, await creaImpronta(process.env.APEX_PASSWORD)]);
+  }
 }
 
 /* ---------- cookie ---------- */
@@ -91,7 +104,7 @@ async function sessione(req, res) {
   let r;
   try {
     r = await q(
-      `SELECT u.id, u.email, u.nome, s.scade_il < now() + ($2::text || ' days')::interval AS da_rinnovare
+      `SELECT u.id, u.email, u.nome, u.ruolo, s.scade_il < now() + ($2::text || ' days')::interval AS da_rinnovare
        FROM sessioni s JOIN utenti u ON u.id = s.utente_id WHERE s.token_hash = $1 AND s.scade_il > now()`, [impronta(t), String(GIORNI_SESSIONE - 1)]);
   } catch (e) { if (e && e.codice === 'DB_ASSENTE') return null; throw e; }
   if (!r.length) return null;
@@ -99,7 +112,7 @@ async function sessione(req, res) {
     await q("UPDATE sessioni SET scade_il = now() + ($2::text || ' days')::interval, ultimo_uso = now() WHERE token_hash = $1", [impronta(t), String(GIORNI_SESSIONE)]);
     scriviCookie(req, res, t, GIORNI_SESSIONE * 24 * 60 * 60);
   }
-  return { id: r[0].id, email: r[0].email, nome: r[0].nome };
+  return { id: r[0].id, email: r[0].email, nome: r[0].nome, ruolo: r[0].ruolo === 'apex' ? 'apex' : 'titolare' };
 }
 
 async function chiudiSessione(req, res) {
@@ -153,5 +166,5 @@ async function nuovaPassword(req, res, token, password) {
 
 module.exports = {
   sessione, accedi, chiudiSessione, chiediRecupero, recuperoValido, nuovaPassword, assicuraUtente,
-  normalizza, creaImpronta, passwordGiusta, COOKIE, GIORNI_SESSIONE, PASSWORD_MINIMA
+  normalizza, creaImpronta, passwordGiusta, emailApex, COOKIE, GIORNI_SESSIONE, PASSWORD_MINIMA
 };

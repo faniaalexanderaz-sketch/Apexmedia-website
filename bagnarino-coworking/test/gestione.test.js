@@ -2,7 +2,9 @@
    BAGNARINO COWORKING — test dell'app di gestione (/gestione)
    Accesso, sessione di 90 giorni, recupero password, protezione
    lato server di pagine e azioni, chiusure, scuse, avviso, foto,
-   contatti, "Come va". Database in memoria, email catturate.
+   contatti, "Come va", e quello che prima stava nell'area
+   riservata: clienti, incassi, prezzi, posti, prenotazioni a mano.
+   Database in memoria, email catturate.
    ============================================================= */
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -261,13 +263,13 @@ test('Il mio sito: solo contenuti (avviso, telefono, foto), mai prezzi o disegno
   await assert.rejects(G.togliFoto('base-1'), e => /almeno una foto/.test(e.message));
   cfg = await impostazioni();
   assert.deepEqual(cfg.galleria.map(x => x.id), ['base-1']);
-  /* prezzi, postazioni e listino non sono stati toccati, e dall'app non esiste un'azione per farlo */
+  /* prezzi, postazioni e listino non sono stati toccati: si cambiano solo dalla schermata "Prezzi", con la conferma */
   assert.deepEqual([cfg.listino[0].prezzo, cfg.postazioni, cfg.prezzoMezzaGiornata], [25, 8, 12]);
   const io = await entra();
   assert.equal((await chiama('POST', { azione: 'impostazioni' }, { listino: [{ id: 'giornata', prezzo: 1 }] }, io)).stato, 404);
 });
 
-test('Come va: tre numeri', async () => {
+test('Come va: i numeri di questo momento', async () => {
   await nuovoDb();
   const oggi = new Date();
   const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -306,4 +308,163 @@ test('pulsanti dell’email: un tocco, senza accesso, una volta sola', async () 
   r = await chiama('POST', { azione: 'risposta' }, { t: 'inventato.firma' }, APP);
   assert.deepEqual([r.json.ok, r.json.titolo], [false, 'Questo pulsante non vale più']);
   E.impostaTrasporto(null);
+});
+
+test('prenotazione aggiunta a mano dall’app: già confermata, email solo se c’è l’indirizzo', async () => {
+  await nuovoDb();
+  const inviate = posta();
+  const io = await entra();
+  const domani = (() => { const d = new Date(Date.now() + 864e5); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); })();
+  /* senza sessione, o da un altro sito, non passa */
+  assert.equal((await chiama('POST', { azione: 'prenotazione-nuova' }, { pacchetto: 'giornata', data: domani, nome: 'Rita', cognome: 'Neri', telefono: '3471112233' }, APP)).stato, 401);
+  assert.equal((await chiama('POST', { azione: 'prenotazione-nuova' }, { pacchetto: 'giornata', data: domani, nome: 'Rita', cognome: 'Neri', telefono: '3471112233' }, { cookie: io.cookie })).stato, 403);
+  /* mancano i dati: dice quali */
+  let r = await chiama('POST', { azione: 'prenotazione-nuova' }, { pacchetto: 'giornata', data: domani, nome: 'R', cognome: 'Neri', telefono: '12' }, io);
+  assert.equal(r.stato, 400);
+  assert.deepEqual(r.json.campi.sort(), ['nome', 'telefono']);
+  /* al telefono, senza email: confermata subito, nessuna email al cliente */
+  r = await chiama('POST', { azione: 'prenotazione-nuova' }, { pacchetto: 'giornata', data: domani, fascia: 'mattina', nome: 'Rita', cognome: 'Neri', telefono: '347 111 2233', note: 'Vicino alla finestra' }, io);
+  assert.deepEqual([r.stato, r.json.conEmail], [200, false]);
+  assert.match(r.json.codice, /^BGN-/);
+  assert.equal(inviate.length, 0);
+  let p = (await chiama('GET', { azione: 'prenotazione', id: String(r.json.id) }, null, io)).json;
+  assert.deepEqual([p.stato, p.fascia, p.importo, p.pagato, p.arrivaDa, p.puoPagare, p.email, p.nota], ['confermata', 'mattina', 1200, false, 'Aggiunta da te', true, '', 'Vicino alla finestra']);
+  assert.match(p.posto, /^Postazione \d+$/);
+  assert.equal(p.prezzo, '€12 da pagare in sede');
+  /* con l'email: parte la conferma al cliente, con reply-to della titolare */
+  r = await chiama('POST', { azione: 'prenotazione-nuova' }, { pacchetto: 'giornata', data: domani, fascia: 'giornata', nome: 'Ugo', cognome: 'Verdi', telefono: '3472223344', email: 'ugo@esempio.it' }, io);
+  assert.deepEqual([r.stato, r.json.conEmail], [200, true]);
+  assert.equal(inviate.filter(m => m.to === 'ugo@esempio.it' && /^Prenotazione confermata/.test(m.subject)).length, 1);
+  assert.equal(inviate.filter(m => m.to !== 'ugo@esempio.it').length, 0);
+  /* le prenotazioni a mano contano come "Di persona o al telefono" in Come va */
+  const cv = (await chiama('GET', { azione: 'come-va' }, null, io)).json;
+  assert.equal(cv.mesi[cv.mesi.length - 1].canali['In sede / telefono'], 2);
+  E.impostaTrasporto(null);
+});
+
+test('incassi: da incassare, pagato con il metodo, elenco da scaricare', async () => {
+  await nuovoDb();
+  const io = await entra();
+  const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const oggi = iso(new Date());
+  const a = await P.prenota(cliente({ data: oggi, nome: 'Anna', cognome: 'Abate' }), { manuale: true });
+  const b = await P.prenota(cliente({ data: oggi, fascia: 'mattina', nome: 'Bruno', cognome: 'Bassi', piva_cf: '12345678901' }), { manuale: true });
+  await P.prenota(cliente({ data: iso(new Date(Date.now() + 864e5)), nome: 'Carla', cognome: 'Conti' }), {});   /* richiesta in attesa: non è ancora un incasso */
+  let r = (await chiama('GET', { azione: 'incassi', periodo: 'giorno', da: oggi }, null, io)).json;
+  assert.deepEqual([r.periodo, r.inizio, r.fine, r.righe.length], ['giorno', oggi, oggi, 2]);
+  assert.deepEqual(r.totali, { previsto: 3700, incassato: 0, daIncassare: 3700, daIncassareOra: 3700 });
+  assert.deepEqual(r.righe.map(x => [x.nome, x.importo, x.pagato, x.cosa]), [['Anna Abate', 2500, false, 'Giornata'], ['Bruno Bassi', 1200, false, 'Giornata · mattina']]);
+  /* pagato in contanti */
+  let pg = await chiama('POST', { azione: 'pagato' }, { id: a.id, pagato: true, metodo: 'contanti' }, io);
+  assert.deepEqual([pg.stato, pg.json.pagato, pg.json.metodo], [200, true, 'contanti']);
+  r = (await chiama('GET', { azione: 'incassi', periodo: 'mese', da: oggi }, null, io)).json;
+  assert.deepEqual([r.totali.incassato, r.totali.daIncassare], [2500, r.totali.previsto - 2500]);
+  let scheda = (await chiama('GET', { azione: 'prenotazione', id: String(a.id) }, null, io)).json;
+  assert.deepEqual([scheda.pagato, scheda.metodo, scheda.pagataIl, scheda.prezzo], [true, 'contanti', oggi, '€25 · pagato']);
+  /* "Come va": da incassare resta solo Bruno */
+  const cv = (await chiama('GET', { azione: 'come-va' }, null, io)).json;
+  assert.deepEqual([cv.numeri.daIncassare, cv.numeri.daIncassareN, cv.kpi.incasso.valore], [1200, 1, 2500]);
+  /* ho sbagliato: non ha pagato */
+  pg = await chiama('POST', { azione: 'pagato' }, { id: a.id, pagato: false }, io);
+  assert.deepEqual([pg.json.pagato, pg.json.metodo], [false, null]);
+  assert.equal((await chiama('POST', { azione: 'pagato' }, { id: 99999, pagato: true, metodo: 'carta' }, io)).stato, 404);
+  /* l'elenco per la commercialista: solo con la sessione */
+  assert.equal((await chiama('GET', { azione: 'elenco', da: oggi, a: oggi })).stato, 401);
+  await chiama('POST', { azione: 'pagato' }, { id: b.id, pagato: true, metodo: 'carta' }, io);
+  const csv = await chiama('GET', { azione: 'elenco', da: oggi, a: oggi }, null, io);
+  assert.equal(csv.stato, 200);
+  assert.match(csv.intestazioni['content-type'], /text\/csv/);
+  assert.match(csv.intestazioni['content-disposition'], /incassi-bagnarino-/);
+  const righe = csv.testo.trim().split('\r\n');
+  assert.equal(righe.length, 3);
+  assert.match(righe[0], /Data;Codice;Cliente;Telefono;Email;P\. IVA \/ C\.F\.;Formula;Importo \(EUR\);Pagato;Metodo/);
+  assert.match(righe[2], /Bruno Bassi;.*;12345678901;Giornata · mattina;12,00;sì;carta;/);
+});
+
+test('clienti: elenco, ricerca, scheda con la storia, eliminazione', async () => {
+  await nuovoDb();
+  const io = await entra();
+  const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const oggi = iso(new Date());
+  const anna = cliente({ data: oggi, nome: 'Anna', cognome: 'Abate' });
+  const p1 = await P.prenota(anna, { manuale: true });
+  await P.prenota(Object.assign({}, anna, { data: iso(new Date(Date.now() + 3 * 864e5)) }), { manuale: true });
+  await P.prenota(cliente({ data: oggi, fascia: 'pomeriggio', nome: 'Bruno', cognome: 'Bassi' }), { manuale: true });
+  await P.segnaPresenza(p1.id, 'presente');
+  assert.equal((await chiama('GET', { azione: 'clienti' })).stato, 401);
+  let r = (await chiama('GET', { azione: 'clienti' }, null, io)).json;
+  assert.deepEqual(r.clienti.map(c => [c.nome, c.prenotazioni, c.timbri]), [['Anna Abate', 2, 1], ['Bruno Bassi', 1, 0]]);
+  assert.equal(r.clienti[0].ultimo, oggi);
+  r = (await chiama('GET', { azione: 'clienti', cerca: 'bass' }, null, io)).json;
+  assert.deepEqual(r.clienti.map(c => c.nome), ['Bruno Bassi']);
+  assert.equal((await chiama('GET', { azione: 'clienti', cerca: "x' OR 1=1 --" }, null, io)).json.clienti.length, 0);
+  const idAnna = (await chiama('GET', { azione: 'clienti', cerca: 'anna' }, null, io)).json.clienti[0].id;
+  const scheda = (await chiama('GET', { azione: 'cliente', id: String(idAnna) }, null, io)).json;
+  assert.deepEqual([scheda.nome, scheda.nomeProprio, scheda.cognome, scheda.prenotazioni, scheda.storia.length, scheda.whatsapp.slice(0, 2)], ['Anna Abate', 'Anna', 'Abate', 2, 2, '39']);
+  assert.equal(scheda.storia[1].stato, 'presente');
+  assert.equal((await chiama('GET', { azione: 'cliente', id: '99999' }, null, io)).stato, 404);
+  /* dalla prenotazione si arriva alla scheda del cliente */
+  assert.equal((await chiama('GET', { azione: 'prenotazione', id: String(p1.id) }, null, io)).json.clienteId, idAnna);
+  /* eliminazione: spariscono anche prenotazioni e posti occupati */
+  const via = await chiama('POST', { azione: 'cliente-elimina' }, { id: idAnna }, io);
+  assert.deepEqual([via.stato, via.json.prenotazioni], [200, 2]);
+  assert.equal((await chiama('POST', { azione: 'cliente-elimina' }, { id: idAnna }, io)).stato, 404);
+  assert.deepEqual((await chiama('GET', { azione: 'clienti' }, null, io)).json.clienti.map(c => c.nome), ['Bruno Bassi']);
+  assert.equal((await db.q('SELECT COUNT(*)::int AS n FROM occupazioni'))[0].n, 1);
+});
+
+test('prezzi, posti e messaggi di WhatsApp: si cambiano dall’app e arrivano sul sito', async () => {
+  await nuovoDb();
+  const io = await entra();
+  let c = (await chiama('GET', { azione: 'coworking' }, null, io)).json;
+  assert.deepEqual([c.listino.map(p => p.id).join(), c.listino[0].prezzo, c.mezza, c.postazioni], ['giornata,carnet,mese_flessibile,mese_fisso', 25, 12, 8]);
+  assert.deepEqual(c.fasce.map(f => f.id), ['mattina', 'pomeriggio', 'giornata']);
+  assert.equal((await chiama('GET', { azione: 'coworking' })).stato, 401);
+  /* prezzi sbagliati: non si salva niente */
+  let r = await chiama('POST', { azione: 'coworking' }, { listino: [{ id: 'giornata', prezzo: 'abc' }], mezza: '0' }, io);
+  assert.equal(r.stato, 400);
+  assert.match(r.json.messaggio, /Giornata/);
+  assert.match(r.json.messaggio, /mezza giornata/);
+  assert.equal((await impostazioni()).listino[0].prezzo, 25);
+  /* prezzi nuovi: valgono per il sito e per le prossime richieste */
+  r = await chiama('POST', { azione: 'coworking' }, { listino: [{ id: 'giornata', prezzo: '30' }, { id: 'inventato', prezzo: '1' }], mezza: '15' }, io);
+  assert.deepEqual([r.stato, r.json.listino[0].prezzo, r.json.mezza], [200, 30, 15]);
+  let cfg = await impostazioni();
+  assert.deepEqual([cfg.listino[0].prezzo, cfg.prezzoMezzaGiornata, cfg.listino[0].nota, cfg.listino[1].prezzo], [30, 15, 'Mezza giornata a €15', 200]);
+  const traTreGiorni = (() => { const d = new Date(Date.now() + 3 * 864e5); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); })();
+  const p = await P.prenota(cliente({ data: traTreGiorni, fascia: 'mattina' }), {});
+  assert.equal((await db.q('SELECT prezzo_centesimi FROM prenotazioni WHERE id = $1', [p.id]))[0].prezzo_centesimi, 1500);
+  /* posti */
+  assert.equal((await chiama('POST', { azione: 'coworking' }, { postazioni: 0 }, io)).stato, 400);
+  r = await chiama('POST', { azione: 'coworking' }, { postazioni: 5 }, io);
+  assert.equal(r.json.postazioni, 5);
+  assert.equal((await db.q('SELECT COUNT(*)::int AS n FROM postazioni WHERE attiva'))[0].n, 5);
+  r = await chiama('POST', { azione: 'coworking' }, { postazioni: 10 }, io);
+  assert.equal((await db.q('SELECT COUNT(*)::int AS n FROM postazioni WHERE attiva'))[0].n, 10);
+  /* i prezzi salvati prima restano */
+  assert.equal((await impostazioni()).listino[0].prezzo, 30);
+  /* messaggi: le parole tra graffe devono restare, e un messaggio non può restare vuoto */
+  r = await chiama('POST', { azione: 'coworking' }, { messaggi: { giorno: 'Vorrei venire.' } }, io);
+  assert.equal(r.stato, 400);
+  assert.match(r.json.messaggio, /\{giorno\}/);
+  assert.equal((await chiama('POST', { azione: 'coworking' }, { messaggi: { generico: '   ' } }, io)).stato, 400);
+  r = await chiama('POST', { azione: 'coworking' }, { messaggi: { giorno: 'Buongiorno, vorrei un posto per {giorno}.', generico: 'Buongiorno, vorrei informazioni.' } }, io);
+  assert.equal(r.stato, 200);
+  cfg = await impostazioni();
+  assert.deepEqual([cfg.whatsappTesti.giorno, cfg.whatsappTesti.generico], ['Buongiorno, vorrei un posto per {giorno}.', 'Buongiorno, vorrei informazioni.']);
+  assert.match(cfg.whatsappTesti.domanda, /\{codice\}/);
+  /* l'avviso e le foto del sito non vengono toccati da questi salvataggi */
+  assert.equal(cfg.galleria.length, 2);
+});
+
+test('Oggi: chi arriva domani', async () => {
+  await nuovoDb();
+  const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const domani = iso(new Date(Date.now() + 864e5));
+  const cfg = await impostazioni();
+  assert.deepEqual((await G.oggi(cfg)).arriviDomani, []);
+  await P.prenota(cliente({ data: domani, nome: 'Dora', cognome: 'Dotti' }), { manuale: true });
+  await P.prenota(cliente({ data: domani, nome: 'Elio', cognome: 'Elmi' }), {});   /* in attesa: non è ancora un arrivo */
+  const o = await G.oggi(cfg);
+  assert.deepEqual([o.domani, o.arriviDomani.map(x => x.nome).join()], [domani, 'Dora Dotti']);
 });

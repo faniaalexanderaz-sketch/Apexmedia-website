@@ -62,8 +62,7 @@ npm test            # test del motore di prenotazione
 
 `npm run locale` usa un Postgres in memoria (PGlite): niente da configurare, si azzera a
 ogni riavvio. Le email non partono: vengono catturate e si leggono su http://localhost:3000/__posta.
-App di gestione: http://localhost:3000/gestione (email `info@bagnarino.it`, password `prova`).
-Vecchia area riservata: http://localhost:3000/admin, password `prova`.
+App di gestione: http://localhost:3000/gestione. Titolare: email `info@bagnarino.it`, password `prova`. Apex Media: email `studio@infoapex.eu`, password `apex-prova`.
 
 Prova completa da telefono simulato (serve Playwright): con il server acceso su `PORT=3311`,
 `xvfb-run -a node strumenti/prova-completa.js`.
@@ -78,8 +77,7 @@ Solo il sito statico, in modalità dimostrativa: `npx serve bagnarino-coworking`
 | `prenota.html` + `prenota.js` | Richiesta in 3 passi: formula → giorno e fascia → dati. Schermata finale "Richiesta ricevuta" |
 | `prenotazione.html` + `gestisci.js` | "La mia prenotazione": stato (in attesa, confermata…) e annullamento con codice + email |
 | `card.html` + `tessera.js` | "La mia Bagnarino Card": timbri, omaggi, carnet |
-| `gestione-app.js` + `gestione-app.css` + `sw-gestione.js` + `gestione.webmanifest` | **App di gestione della titolare** (`/gestione`), installabile. Le pagine le serve `api/gestione.js` dopo aver controllato la sessione |
-| `admin.html` + `admin.js` + `admin.css` | Vecchia area riservata (`/admin`): resta per Apex Media (incassi, clienti, CSV, Crescita, prezzi) |
+| `gestione-app.js` + `gestione-app.css` + `sw-gestione.js` + `gestione.webmanifest` | **App di gestione** (`/gestione`), installabile: richieste, calendario, sito, "Come va" (clienti, social, Google, pubblicità), clienti, incassi, prezzi. Le pagine le serve `api/gestione.js` dopo aver controllato la sessione. La vecchia area `/admin` non esiste più: rimanda qui |
 | `main.js` | Script comune: config, posti liberi, avviso, foto, WhatsApp, eventi di misurazione, dati strutturati |
 | `cookie.js` | Banner cookie (solo se ci sono codici GA4/Meta), Consent Mode v2 |
 | `api/` | Funzioni serverless (vedi sotto). I file che iniziano con `_` sono moduli interni |
@@ -95,11 +93,10 @@ Solo il sito statico, in modalità dimostrativa: `npx serve bagnarino-coworking`
 | `GET /api/disponibilita?da=&giorni=&pacchetto=` | Posti liberi per giorno e per fascia; `nd` elenca le fasce non disponibili (chiuse o non più richiedibili per oggi) |
 | `POST /api/prenota` | Valida, tiene da parte la postazione in una transazione, salva la richiesta **in attesa**, manda email al cliente, email e notifica alla titolare, Meta CAPI |
 | `GET /api/prenotazione`, `POST /api/annulla`, `/api/vantaggi`, `/api/card` | Area cliente (un'unica funzione `api/cliente.js`) |
-| `GET /api/impostazioni` | Le modifiche fatte dall'app e dall'area riservata, applicate al sito (in cache 30 s) |
+| `GET /api/impostazioni` | Le modifiche fatte dall'app, applicate al sito (in cache 30 s) |
 | `/gestione`, `/gestione/accedi`, `/gestione/password`, `/gestione/installa`, `/gestione/risposta` | Pagine dell'app, servite da `api/gestione.js` |
-| `/api/gestione?azione=…` | Azioni dell'app (accesso, risposta alle richieste, chiusure, sito, notifiche). Senza sessione rispondono 401 |
+| `/api/gestione?azione=…` | Azioni dell'app: accesso, risposta alle richieste, chiusure, sito, notifiche, e quello che prima stava in `/api/admin` (`come-va`, `clienti`, `cliente`, `incassi`, `elenco` = CSV, `pagato`, `prenotazione-nuova`, `coworking` = prezzi/posti/messaggi, `numeri-mese` solo per Apex Media). Senza sessione rispondono 401 |
 | `GET /api/foto?id=&t=p\|g` | Le foto caricate dall'app |
-| `/api/admin?azione=…` | Vecchia area riservata (incassi, clienti, CSV, impostazioni, Crescita) |
 | `/api/cron?compito=promemoria\|riepilogo\|report\|attese` | Lanciati da Vercel Cron |
 | `POST /api/pagamento` | Stripe Checkout, **spento** finché manca `STRIPE_SECRET_KEY` |
 | `/sitemap.xml`, `/robots.txt` | Generati da `api/seo.js` con il dominio di `SITO_URL` |
@@ -111,7 +108,7 @@ Le funzioni sono 10: il piano gratuito di Vercel ne ammette 12 per progetto.
 `postazioni`, `clienti`, `prenotazioni`, `carnet`, `fidelity`, `chiusure`, `eventi`, più:
 `occupazioni` (una riga per scrivania, giorno e mezza giornata, con chiave unica: due persone sullo
 stesso posto nello stesso momento sono impossibili anche con richieste simultanee), `tentativi`
-(anti-spam, solo impronte cifrate degli IP), `impostazioni` (modifiche dall'app e dall'area riservata),
+(anti-spam, solo impronte cifrate degli IP), `impostazioni` (modifiche fatte dall'app),
 `utenti`, `sessioni`, `recuperi` (accesso all'app), `push_iscrizioni` (telefoni che ricevono le
 notifiche), `foto` (galleria caricata dall'app).
 
@@ -163,23 +160,23 @@ Pensata per una persona poco pratica di tecnologia: testo da 18px in su, pulsant
 una cosa importante per schermata, parole semplici.
 
 - **Installabile** (PWA): `gestione.webmanifest` (nome "Bagnarino", `display: standalone`), icone in `img/app/`, service worker `sw-gestione.js`. Istruzioni illustrate su **`/gestione/installa`**: Android per primo (è il telefono della titolare), iPhone come seconda scheda. Su Android, quando Chrome lo permette, compare anche il pulsante "Installa l'app adesso" (`beforeinstallprompt`).
-- **Accesso**: email + password una volta, sessione di 90 giorni (cookie HttpOnly, nel database solo l'impronta). Recupero password via email. Il primo accesso nasce da solo: email di `NOTIFICATION_EMAIL`, password di `ADMIN_PASSWORD`.
+- **Accesso**: email + password una volta, sessione di 90 giorni (cookie HttpOnly, nel database solo l'impronta). Recupero password via email. Gli accessi nascono da soli: la **titolare** con l'email di `NOTIFICATION_EMAIL` e la password di `ADMIN_PASSWORD`; **Apex Media** (ruolo `apex`) con l'email di `APEX_EMAIL` (se manca, `studio@infoapex.eu`) e la password di `APEX_PASSWORD`. Fanno le stesse cose; solo Apex Media aggiorna i numeri di social, Google e pubblicità.
 - **Protetta lato server**: le pagine le serve `api/gestione.js` solo con una sessione valida, le azioni rispondono 401 senza sessione e accettano solo POST con l'intestazione `X-Bgn-App`.
 - **Notifiche push** (Web Push, chiavi VAPID). In Impostazioni c'è il pulsante "Attiva le notifiche". Su Android funzionano con Chrome (servono i servizi Google sul telefono); se sono spente o Chrome è troppo vecchio l'app lo dice e rimanda a `/gestione/installa#notifiche` ("Se le notifiche non arrivano": Chrome da aggiornare, notifiche spente, risparmio batteria). Su iPhone funzionano solo con l'app sulla schermata Home (iOS 16.4+). L'email con i due pulsanti arriva sempre, anche senza notifiche.
 - **Telefoni Android non recenti**: `gestione-app.css`, `gestione-app.js` e `sw-gestione.js` sono scritti per girare anche su Chrome di qualche anno fa. Regole da rispettare quando si modificano: JavaScript ES5 (niente frecce, `const`, `let`), niente `gap` nei contenitori flex (margini sui figli), `grid-gap` accanto a `gap`, niente `inset`, `min()` o `place-items`, un valore semplice prima di ogni `env()`. Le foto scattate in verticale vengono raddrizzate a mano dove il browser non lo fa da solo.
-- **Schermate**: *Oggi* (richieste da confermare, chi arriva, "Oggi sono chiusa"), *Calendario* (mese, chiusure per giorno o mezza giornata, "Chiudi più giorni"), *Prenotazioni* (da confermare, confermate, passate; Chiama e WhatsApp), *Sito* (avviso in home, foto, telefono e WhatsApp), *Come va* (tre numeri), *Impostazioni*.
-- La titolare può cambiare solo contenuti: mai layout, colori, prezzi o sezioni. Le foto vengono ridotte sul telefono (1440 e 720 px) prima del caricamento.
+- **Schermate**: *Oggi* (richieste da confermare, chi arriva oggi e domani, "Oggi sono chiusa"), *Calendario* (mese, chiusure per giorno o mezza giornata, "Chiudi più giorni"), *Prenotazioni* (da confermare, confermate, passate; "Aggiungi una prenotazione" per chi telefona; Chiama e WhatsApp; "Ha pagato"), *Sito* (avviso in home, foto, telefono e WhatsApp). Dall'omino in alto: *Come va*, *Clienti*, *Incassi*, *Impostazioni* (notifiche, prezzi, quanti posti, messaggi di WhatsApp, password).
+- Del sito si cambiano solo i contenuti (avviso, foto, telefono) e i prezzi: mai layout, colori o sezioni. Prezzi e numero di posti chiedono una conferma. Le foto vengono ridotte sul telefono (1440 e 720 px) prima del caricamento.
 
-## Crescita (area riservata)
+## Come va (statistiche nell'app)
 
-Scheda **Crescita** in `/admin` (icona ↗ in basso): come sta andando il coworking mese per mese, ultimi 12 mesi.
+Schermata **Come va** dell'app (omino in alto a destra): come sta andando il coworking, un mese alla volta e negli ultimi 12 mesi. Prima era la scheda "Crescita" di `/admin`.
 
 - **Numeri automatici** dal database: prenotazioni, incassato e prenotato, nuovi clienti, clienti che tornano, arrivati / non venuti, prenotazioni per canale (stessa classificazione di "Da dove arrivano le prenotazioni").
 - **Numeri a mano** (tabella `marketing_mesi`, uno per mese): follower e persone raggiunte su Instagram/Facebook, visualizzazioni, chiamate, indicazioni e clic dal profilo Google, recensioni (numero e media), visite al sito, contatti WhatsApp, spesa Meta e Google, nota "Cosa abbiamo fatto questo mese". **Nessuna chiave API**: li inserisce Apex Media.
-- In cima una frase in italiano semplice generata dai numeri; carte con confronto sul mese prima (freccia + parole); imbuto *persone raggiunte → visite al sito → prenotazioni → arrivati*; grafici SVG animati (prenotazioni, incassi, canali, follower, azioni Google).
+- In cima una frase in italiano semplice generata dai numeri e tre numeri grandi (prenotazioni, euro prenotati, clienti nuovi) con il confronto in parole sul mese prima. Sotto, "Da vicino": *Da dove arrivano i clienti* (canali e percorso social → sito → richiesta → arrivo), *Instagram e Facebook*, *Google e chiamate*, *Pubblicità*, *Mese per mese*. Niente grafici: righe con una barra, leggibili anche su un telefono vecchio.
 - **Costo per prenotazione** = spesa pubblicitaria del mese ÷ tutte le prenotazioni del mese. **Ritorno della pubblicità** = valore delle prenotazioni arrivate da Instagram, Facebook e Google Ads ÷ spesa.
-- **Due accessi**: `ADMIN_PASSWORD` (Marcella, ruolo *titolare*: vede tutto, Crescita in sola lettura) e `APEX_PASSWORD` (Apex Media, ruolo *apex*: in più il pulsante "Aggiorna i dati del mese"). Il cookie contiene un'impronta diversa per ruolo; senza `APEX_PASSWORD` l'accesso Apex non esiste. Le Impostazioni sono nell'ingranaggio in alto.
-- Come aggiornarla: entra con la password Apex → Crescita → scegli il mese con le frecce → "Aggiorna i dati del mese" (si possono lasciare campi vuoti; numeri all'italiana, es. 1.234 o 4,6).
+- **Due accessi alla stessa app**: la titolare vede tutto in sola lettura; Apex Media in più ha il pulsante "Aggiorna i numeri di <mese>" (azione `numeri-mese`, 403 per la titolare).
+- Come aggiornare i numeri: entra in `/gestione` con l'accesso di Apex Media → omino → Come va → scegli il mese con le frecce → "Aggiorna i numeri di <mese>" (si possono lasciare campi vuoti; numeri all'italiana, es. 1.234 o 4,6; "Riprendi i numeri di <mese prima>" per partire da quelli).
 
 ## Variabili d'ambiente su Vercel
 
@@ -187,10 +184,10 @@ Scheda **Crescita** in `/admin` (icona ↗ in basso): come sta andando il cowork
 |---|---|---|
 | `DATABASE_URL` | sì, per le prenotazioni vere | Neon Postgres (Vercel → Storage → Neon la imposta da sola) |
 | `NOTIFICATION_EMAIL` | sì | **L'unico punto in cui è scritto l'indirizzo della titolare** (`info@bagnarino.it`): riceve richieste, promemoria, annullamenti, riepilogo serale e report; è il reply-to delle email al cliente e l'email di accesso all'app |
-| `ADMIN_PASSWORD` | sì | Password iniziale dell'app di gestione e password della vecchia area riservata |
+| `ADMIN_PASSWORD` | sì | Password iniziale della titolare nell'app di gestione (poi la cambia lei da "Password dimenticata") |
 | `LINK_SECRET` | sì, per i pulsanti nelle email | Firma i link *Conferma* / *Non disponibile* (in mancanza si usa `CRON_SECRET`) |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | per le notifiche push | Chiavi Web Push. Si generano con `npx web-push generate-vapid-keys` |
-| `APEX_PASSWORD` | per la scheda Crescita | Password di Apex Media nella vecchia area riservata |
+| `APEX_PASSWORD` | per i numeri di "Come va" | Password iniziale di Apex Media nell'app di gestione. `APEX_EMAIL` (facoltativa) è l'email con cui entra: se manca, `studio@infoapex.eu` |
 | `CRON_SECRET` | sì, per i promemoria | Protegge `/api/cron` (Vercel la invia da solo) |
 | `RESEND_API_KEY`, `EMAIL_FROM` | per le email | Chiave Resend e mittente su dominio verificato (oggi `bagnarinocoworking.it`). `EMAIL_FROM_NOME` facoltativa |
 | `SENDGRID_API_KEY` | alternativa a Resend | Funziona ancora |
@@ -207,7 +204,7 @@ Codici **GA4** e **Meta Pixel** lato browser: in `config.js` (`ga4`, `metaPixel`
 
 - **Chiudere un giorno o una mezza giornata**: app di gestione → Calendario (o "Oggi sono chiusa"). I festivi **non** si chiudono da soli: nel calendario dell'app sono segnati, li chiude la titolare.
 - **Avviso in home, foto dello spazio, telefono e WhatsApp**: app di gestione → Sito. Sul sito entro un minuto.
-- **Cambiare prezzi, numero di postazioni, messaggi WhatsApp**: vecchia area riservata (`/admin`) → Impostazioni. `config.js` resta il valore di partenza. Il prezzo della mezza giornata è `prezzoMezzaGiornata` in `config.js`.
+- **Cambiare prezzi, numero di posti, messaggi WhatsApp**: app di gestione → omino → Impostazioni → "Il coworking". `config.js` resta il valore di partenza.
 - **Accendere sala riunioni, caffè, climatizzazione, recensioni**: `config.js` (`sala.attiva`, `servizi`, `recensioniAttive`).
 
 ## Compiti automatici (Vercel Cron, in UTC)
@@ -237,8 +234,8 @@ nella scheda Google Business `?utm_source=gmb`.
 
 ## Collaudo fatto
 
-- `npm test`: 39 test (disponibilità per fascia, doppia prenotazione anche simultanea, chiusure, richiesta → conferma / non disponibile, email e reply-to, link firmati, promemoria dopo 2 ore, notifica push cifrata e firmata VAPID, passaggio dal database precedente, accesso e sessione dell'app, recupero password, protezione lato server, avviso, foto, contatti).
-- `strumenti/prova-completa.js` (Playwright): 265 controlli dal sito e dall'app a 390px, più tutte le schermate dell'app su un Android piccolo (360 e 320px); compresi testo ≥ 18px e pulsanti ≥ 56px su ogni schermata.
+- `npm test`: 45 test (disponibilità per fascia, doppia prenotazione anche simultanea, chiusure, richiesta → conferma / non disponibile, email e reply-to, link firmati, promemoria dopo 2 ore, notifica push cifrata e firmata VAPID, passaggio dal database precedente, accesso e ruoli dell'app, clienti, incassi, prezzi, prenotazioni a mano, numeri di "Come va").
+- `strumenti/prova-completa.js` (Playwright): 411 controlli dal sito e dall'app a 390px, più tutte le schermate dell'app su un Android piccolo (360 e 320px); compresi testo ≥ 18px e pulsanti ≥ 56px su ogni schermata.
 - Dati strutturati LocalBusiness + CoworkingSpace + FAQPage generati da `config.js`, senza orari di apertura (verificarli con il Rich Results Test di Google, che esegue JavaScript).
 
 ## Checklist di lancio
@@ -271,7 +268,7 @@ nella scheda Google Business `?utm_source=gmb`.
 11. **Punti di riferimento vicini al negozio** (parcheggi, piazze): da chiedere a Marcella; per ora il sito dice solo "in pieno centro".
 12. **Videochiamate**: sono ammesse alle postazioni? (il testo del wi-fi le cita)
 13. **Etichetta della card in evidenza**: oggi "La più conveniente". "La più scelta" solo con dati veri.
-14. **Nome "Marcella"** nella schermata di conferma e nell'area riservata: va bene?
+14. **Nome "Marcella"** nella schermata di conferma e nell'app di gestione: va bene?
 15. **Gli abbonati mensili raccolgono timbri?** Oggi no (solo giornate e carnet).
 16. **Foto vere** degli spazi (shooting Apex Media, lista in "Foto da scattare").
 17. **Dominio** del sito.

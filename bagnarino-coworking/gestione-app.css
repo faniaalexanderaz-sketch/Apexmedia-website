@@ -47,7 +47,7 @@ body {
 }
 h1, h2, h3, p { margin: 0; }
 a { color: var(--blu); }
-button, input, textarea { font: inherit; color: inherit; }
+button, input, textarea, select { font: inherit; color: inherit; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 4px solid var(--ocra); outline-offset: 2px; }
 
@@ -164,6 +164,15 @@ button, input, textarea { font: inherit; color: inherit; }
   font-size: 1.25rem; line-height: 1.4; -webkit-appearance: none; appearance: none;
 }
 .g-campo textarea { min-height: 132px; resize: vertical; }
+.g-campo select {
+  width: 100%; min-height: 60px; padding: 12px 14px; border: 2px solid var(--blu); border-radius: var(--raggio); background: var(--bianco);
+  font-size: 1.25rem; line-height: 1.4;
+}
+.g-campo small { font-size: 1.125rem; line-height: 1.35; color: var(--testo-2); }
+.g-gruppo { padding-top: 6px; }
+.g-gruppo h3 { font-weight: 800; font-size: 1.3rem; line-height: 1.25; }
+.g-gruppo .g-nota { margin: 4px 0 0; }
+.g-gruppo .g-campo { margin-top: 14px; }
 .g-campo input[type='date'] { display: block; text-align: left; }
 .g-campo input[type='date']::-webkit-date-and-time-value { text-align: left; }
 .g-spunta { display: flex; align-items: center; min-height: 48px; cursor: pointer; }
@@ -188,6 +197,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .g-mese h2::first-letter { text-transform: uppercase; }
 .g-mese button { display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; flex-shrink: 0; border: 2px solid var(--blu); border-radius: var(--raggio); background: var(--bianco); cursor: pointer; }
 .g-mese button .g-ico { width: 28px; height: 28px; }
+.g-mese button[disabled] { opacity: .35; cursor: default; }
 .g-settimana, .g-griglia { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-gap: 4px; gap: 4px; }
 .g-settimana span { padding-bottom: 4px; text-align: center; font-weight: 800; font-size: 1.125rem; }
 .g-giorno {
@@ -235,6 +245,29 @@ button, input, textarea { font: inherit; color: inherit; }
 .g-numero strong { display: block; font-family: var(--f-titoli); font-weight: 500; font-size: 3.4rem; line-height: 1; letter-spacing: -.02em; }
 .g-numero strong.g-parole { font-size: 2rem; line-height: 1.15; }
 .g-numero span { display: block; margin-top: 8px; font-weight: 700; font-size: 1.25rem; line-height: 1.3; }
+.g-numero small { display: block; margin-top: 6px; font-weight: 600; font-size: 1.125rem; line-height: 1.35; color: var(--testo-2); }
+.g-numero small.g-su { color: var(--verde); }
+.g-numero strong { word-wrap: break-word; overflow-wrap: break-word; }
+
+/* ---------- Come va, incassi: righe con una barra (niente grafici) ---------- */
+.g-quote { list-style: none; margin: 0; padding: 0; display: grid; grid-gap: 14px; gap: 14px; }
+.g-quota-testa { display: flex; align-items: baseline; justify-content: space-between; }
+.g-quota-testa span { flex: 1; min-width: 0; margin-right: 12px; font-weight: 700; }
+.g-quota-testa span::first-letter { text-transform: uppercase; }
+.g-quota-testa strong { flex-shrink: 0; font-weight: 800; font-size: 1.25rem; }
+.g-quota-riga { height: 14px; margin-top: 6px; border-radius: 7px; background: var(--grigio); overflow: hidden; }
+.g-quota-riga i { display: block; height: 100%; border-radius: 7px; background: var(--blu); }
+.g-righe { white-space: pre-line; }
+p.g-iniziale::first-letter { text-transform: uppercase; }
+/* tre scelte in riga (giorno, settimana, mese); in colonna sui telefoni stretti */
+.g-tre { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 8px; gap: 8px; margin-bottom: 16px; }
+.g-tre .g-btn { padding-left: 4px; padding-right: 4px; }
+.g-tre .g-btn[aria-pressed='true'] { background: var(--blu); border-color: var(--blu); color: var(--bianco); }
+@media (max-width: 379px) { .g-tre { grid-template-columns: 1fr; } }
+/* quanti posti: meno, il numero, più */
+.g-conta { display: flex; align-items: center; margin: 8px 0 16px; }
+.g-conta .g-btn { width: 76px; flex-shrink: 0; font-size: 2rem; line-height: 1; }
+.g-conta strong { flex: 1; text-align: center; font-family: var(--f-titoli); font-weight: 500; font-size: 3.4rem; line-height: 1; }
 
 /* ---------- "Fatto" grande dopo ogni salvataggio ---------- */
 .g-fatto { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(250, 246, 238, .96); }

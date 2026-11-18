@@ -179,6 +179,9 @@ const SCHEMA = [
      creato_il TIMESTAMPTZ NOT NULL DEFAULT now(),
      password_il TIMESTAMPTZ NOT NULL DEFAULT now()
    )`,
+  /* chi usa l'app: 'titolare' (Marcella) oppure 'apex' (Apex Media, che
+     in più aggiorna i numeri di social, Google e pubblicità) */
+  `ALTER TABLE utenti ADD COLUMN IF NOT EXISTS ruolo TEXT NOT NULL DEFAULT 'titolare'`,
   /* del gettone di sessione si salva solo l'impronta */
   `CREATE TABLE IF NOT EXISTS sessioni (
      token_hash TEXT PRIMARY KEY,
@@ -216,7 +219,7 @@ const SCHEMA = [
 
 /* Cambia quando cambia lo schema: finché il numero salvato nel database
    è questo, all'avvio basta una sola lettura invece di tutti i comandi. */
-const VERSIONE_SCHEMA = 7;
+const VERSIONE_SCHEMA = 8;
 
 /* Passaggi per i database creati prima della prenotazione su richiesta.
    Ognuno controlla da solo se è già stato fatto e avviene in una

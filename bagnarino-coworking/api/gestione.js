@@ -14,6 +14,11 @@
    AZIONI (?azione=…, in JSON)
      senza sessione: accedi, recupero, nuova-password, risposta (link firmato)
      con sessione:   tutte le altre
+   Qui dentro c'è anche tutto quello che prima stava nell'area
+   riservata /admin: statistiche ("Come va"), clienti, incassi,
+   prenotazioni aggiunte a mano, prezzi e posti. Due ruoli:
+   "titolare" e "apex" (Apex Media); solo "apex" salva i numeri di
+   social, Google e pubblicità del mese.
    Le azioni che cambiano qualcosa accettano solo POST con
    l'intestazione X-Bgn-App: un altro sito non può farle partire.
    ============================================================= */
@@ -22,6 +27,9 @@ const { q, disponibile } = require('./_db');
 const { impostazioni } = require('./_impostazioni');
 const A = require('./_accesso');
 const G = require('./_gestione');
+const C = require('./_conti');
+const Cre = require('./_crescita');
+const cal = require('./_calendario');
 const P = require('./_prenotazioni');
 const T = require('./_email-template');
 const avvisi = require('./_avvisi');
@@ -101,7 +109,7 @@ async function servePagina(req, res, nome) {
     vai(res, '/gestione/accedi' + richiesta);
     return;
   }
-  html(res, 200, pagine.app({ nome: utente.nome, chiavePush: push.configurato() ? push.chiavePubblica() : '' }));
+  html(res, 200, pagine.app({ nome: utente.nome, ruolo: utente.ruolo, chiavePush: push.configurato() ? push.chiavePubblica() : '' }));
 }
 
 module.exports = async (req, res) => {
@@ -140,15 +148,53 @@ module.exports = async (req, res) => {
 
     const cfg = await impostazioni(), sito = sitoUrl(req);
     if (!scrive) {
-      if (azione === 'oggi') { json(res, 200, Object.assign(await G.oggi(cfg), { nome: utente.nome })); return; }
+      if (azione === 'oggi') { json(res, 200, Object.assign(await G.oggi(cfg), { nome: utente.nome, ruolo: utente.ruolo })); return; }
       if (azione === 'calendario') { json(res, 200, await G.calendario(req.query.mese, cfg)); return; }
       if (azione === 'giorno') { json(res, 200, await G.giorno(req.query.data, cfg)); return; }
       if (azione === 'prenotazioni') { json(res, 200, await G.prenotazioni(cfg)); return; }
       if (azione === 'prenotazione') { json(res, 200, await G.prenotazione(parseInt(req.query.id, 10), cfg)); return; }
       if (azione === 'sito') { json(res, 200, G.sito(cfg)); return; }
-      if (azione === 'come-va') { json(res, 200, await G.comeVa()); return; }
+      /* Come va: il mese scelto (prenotazioni, incassi, clienti, canali, social, Google,
+         pubblicità, ultimi 12 mesi) più i numeri di questo momento */
+      if (azione === 'come-va') {
+        json(res, 200, Object.assign(await Cre.crescita(req.query.mese), { adesso: await G.comeVa(), numeri: await C.numeriAdesso(), ruolo: utente.ruolo }));
+        return;
+      }
+      if (azione === 'clienti') { json(res, 200, await C.clienti(req.query.cerca)); return; }
+      if (azione === 'cliente') { json(res, 200, await C.cliente(parseInt(req.query.id, 10), cfg)); return; }
+      if (azione === 'incassi') { json(res, 200, await C.incassi(req.query.periodo, req.query.da, cfg)); return; }
+      if (azione === 'coworking') { json(res, 200, await C.coworking(cfg)); return; }
+      /* l'elenco degli incassi da scaricare (si apre con Excel) */
+      if (azione === 'elenco') {
+        const da = cal.isoValida(req.query.da) ? req.query.da : C.primoDelMese(cal.oraRoma().data);
+        const a = cal.isoValida(req.query.a) && req.query.a >= da ? req.query.a : cal.aggiungiGiorni(cal.aggiungiMesi(da, 1), -1);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader('Content-Disposition', 'attachment; filename="incassi-bagnarino-' + da + '_' + a + '.csv"');
+        res.setHeader('Cache-Control', 'no-store');
+        res.end(C.csv(await C.righeIncassi(da, a, cfg)));
+        return;
+      }
       json(res, 404, { errore: 'AZIONE', messaggio: 'Azione sconosciuta' }); return;
     }
+
+    /* i numeri di social, Google e pubblicità li aggiorna solo Apex Media */
+    if (azione === 'numeri-mese') {
+      if (utente.ruolo !== 'apex') { json(res, 403, { errore: 'SOLO_APEX', messaggio: 'Questi numeri li aggiorna Apex Media.' }); return; }
+      json(res, 200, await Cre.salvaMarketing(b)); return;
+    }
+    /* pagamento in sede: contanti, carta o bonifico */
+    if (azione === 'pagato') { json(res, 200, await C.segnaPagato(parseInt(b.id, 10), b.pagato, b.metodo)); return; }
+    /* prenotazione aggiunta a mano (chi telefona o passa di persona): è già confermata */
+    if (azione === 'prenotazione-nuova') {
+      const p = await P.prenota(b, { manuale: true });
+      const conEmail = !!G.emailVera(p.email);
+      if (conEmail) await avvisi.esito(p, cfg, sito);
+      json(res, 200, { id: p.id, codice: p.codice, conEmail }); return;
+    }
+    if (azione === 'cliente-elimina') { json(res, 200, await P.eliminaCliente(parseInt(b.id, 10))); return; }
+    /* prezzi, numero di posti, messaggi WhatsApp del sito */
+    if (azione === 'coworking') { json(res, 200, await C.salvaCoworking(b, cfg)); return; }
 
     /* richieste: Conferma / Non disponibile */
     if (azione === 'rispondi') {

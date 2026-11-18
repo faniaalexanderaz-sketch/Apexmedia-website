@@ -1,5 +1,6 @@
 /* =============================================================
-   BAGNARINO COWORKING — scheda "Crescita" dell'area riservata
+   BAGNARINO COWORKING — "Come va" dell'app di gestione
+   (prima era la scheda "Crescita" dell'area riservata)
    Due fonti di numeri, mese per mese (ultimi 12 mesi):
    1. AUTOMATICI, dal database: prenotazioni, incassi, nuovi
       clienti, clienti che tornano, arrivati / non venuti, canali
@@ -189,6 +190,8 @@ function kpi(m, p) {
 }
 
 function percento(a, b) { return b ? Math.round((a - b) / b * 100) : null; }
+/* numeri interi con il punto delle migliaia, sempre (1.240): come nell'app */
+function intero(n) { return (n < 0 ? '-' : '') + String(Math.abs(Math.round(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
 function euroTesto(centesimi, dec) {
   return '€' + (centesimi / 100).toLocaleString('it-IT', { minimumFractionDigits: dec ? 2 : 0, maximumFractionDigits: dec ? 2 : 0 });
 }
@@ -206,9 +209,9 @@ function riassunto(m, p, k) {
   }
   if (k.followerInstagram.valore != null && k.followerInstagram.prima != null) {
     const d = k.followerInstagram.valore - k.followerInstagram.prima;
-    parti.push('Instagram ' + (d >= 0 ? '+' : '') + d.toLocaleString('it-IT') + ' follower.');
-  } else if (k.followerInstagram.valore != null) parti.push('Instagram: ' + k.followerInstagram.valore.toLocaleString('it-IT') + ' follower.');
-  if (k.azioniGoogle.valore) parti.push('Dal profilo Google: ' + k.azioniGoogle.valore.toLocaleString('it-IT') + ' tra chiamate, richieste di indicazioni e clic sul sito.');
+    parti.push('Instagram ' + (d >= 0 ? '+' : '') + intero(d) + ' follower.');
+  } else if (k.followerInstagram.valore != null) parti.push('Instagram: ' + intero(k.followerInstagram.valore) + ' follower.');
+  if (k.azioniGoogle.valore) parti.push('Dal profilo Google: ' + intero(k.azioniGoogle.valore) + ' tra chiamate, richieste di indicazioni e clic sul sito.');
   if (k.ritornoPubblicita.valore != null) {
     parti.push(k.ritornoPubblicita.valore > 0
       ? 'Ogni €1 speso in pubblicità ha portato ' + euroTesto(Math.round(k.ritornoPubblicita.valore * 100), true) + ' di prenotazioni.'
