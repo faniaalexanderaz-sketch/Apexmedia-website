@@ -86,9 +86,10 @@ function setup(root: HTMLElement) {
     tl.from("[data-hero-foot]", { opacity: 0, duration: 0.7 }, 1.3);
     tl.from("[data-hero-note]", { opacity: 0, duration: 0.7 }, 1.4);
 
-    // Uscita: il blocco del titolo scorre un po’ più lento, così l’hero “resta” un attimo
-    gsap.to("[data-hero-body]", {
-      yPercent: 14,
+    // Uscita: solo il titolo scorre un po’ più lento, così l’hero “resta” un attimo.
+    // (Non tutto il blocco: con il telefono dentro finirebbe sopra la riga in fondo.)
+    gsap.to("[data-hero-title]", {
+      yPercent: 4,
       ease: EASE.scrub,
       scrollTrigger: {
         trigger: root,
@@ -195,7 +196,7 @@ export function Hero() {
               <SceneSlot
                 className="h-full w-full"
                 quietFallback
-                mountDelay={1800}
+                mountDelay={350}
                 fallback={{
                   src: "/hero/telefono.webp",
                   width: 900,
