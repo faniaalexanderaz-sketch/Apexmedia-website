@@ -21,7 +21,8 @@ def sostituisci(m):
         return m.group(0)
     return '%s="%s?v=%s"' % (attr, percorso, impronta(percorso))
 
-for pagina in glob.glob(os.path.join(CARTELLA, '*.html')):
+PAGINE = glob.glob(os.path.join(CARTELLA, '*.html')) + [os.path.join(CARTELLA, 'api', '_gestione-pagine.js')]
+for pagina in PAGINE:
     testo = open(pagina, encoding='utf-8').read()
     nuovo = re.sub(r'(href|src)="(/[\w\-/]+\.(?:css|js))(?:\?v=[0-9a-f]+)?"', sostituisci, testo)
     if nuovo != testo:

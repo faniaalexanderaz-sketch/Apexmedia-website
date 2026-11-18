@@ -527,6 +527,6 @@ async function eliminaCliente(id) {
 
 module.exports = {
   eliminaCliente,
-  disponibilita, prenota, stato, rispondi, annulla, annullaDaAdmin, vantaggi, card, segnaPresenza, trova, leggi, completa,
+  disponibilita, prenota, stato, rispondi, annulla, annullaDaAdmin, vantaggi, card, segnaPresenza, trova, leggi, completa, CAMPI,
   valida, errore, euro, stessoTelefono, impronta
 };
