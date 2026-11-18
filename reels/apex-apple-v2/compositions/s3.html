@@ -1,39 +1,70 @@
 <template>
   <style>
-    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; }
-    #s3-five { position: absolute; left: 0; right: 0; top: 420px; text-align: center; font: 900 760px/0.8 "Inter"; letter-spacing: -0.08em; color: #111113; }
-    #s3-l1 { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font: 700 64px/1 "Inter"; letter-spacing: -0.02em; }
-    #s3-l2 { position: absolute; left: 0; right: 0; top: 1060px; text-align: center; font: 900 120px/1 "Inter"; letter-spacing: -0.05em; }
-    #s3-l2 .it { font: italic 400 116px/1 "Playfair Display"; letter-spacing: 0; }
-    #s3-l3 { position: absolute; left: 0; right: 0; top: 960px; text-align: center; font: 900 118px/1.02 "Inter"; letter-spacing: -0.05em; }
-    #s3-l3 .it { font: italic 400 118px/1 "Playfair Display"; letter-spacing: 0; }
-    #s3-ghosts { position: absolute; left: 0; right: 0; top: 520px; display: flex; justify-content: center; gap: 30px; font: 900 220px/1 "Inter"; letter-spacing: -0.06em; color: #e9e9ec; }
-    .w { display: inline-block; opacity: 0; }
+
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "Inter"; color: #1d1d1f; }
+    .zone { z-index: 5; position: absolute; left: 80px; right: 80px; top: 372px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 500 82px/1.06 "Inter"; }
+    .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
+    .line > span { display: inline-block; }
+    .t-sans { font: 500 82px/1.06 "Inter"; letter-spacing: -0.035em; }
+    .t-it { font: italic 400 92px/1.0 "Playfair Display"; letter-spacing: -0.01em; }
+    .t-big { font: 600 96px/1.0 "Inter"; letter-spacing: -0.045em; }
+    .acc { color: #7a0f24; }
+    .ch { display: inline-block; white-space: pre; }
+    .sel { position: absolute; border: 3px dashed #ff3b30; pointer-events: none; opacity: 0; }
+    .sel i { position: absolute; width: 16px; height: 16px; background: #fff; border: 3px solid #ff3b30; }
+    .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
+    .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
+    .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
+    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 "Inter"; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
+
+
   </style>
   <div id="root" data-composition-id="s3" data-width="1080" data-height="1920">
-    <div id="s3-ghosts"><span id="s3-g1">1</span><span id="s3-g2">2</span><span id="s3-g3">3</span><span id="s3-g4">4</span><span id="s3-g5" style="color:#7a0f24">5</span></div>
-    <div id="s3-five">5</div>
-    <div id="s3-l1"><span class="w" id="s3w0">Questi sono</span></div>
-    <div id="s3-l2"><span class="w" id="s3w1">trucchi</span><br><span class="w it" id="s3w2" style="font-size:96px">su di te</span></div>
-    <div id="s3-l3"><span class="w it" id="s3w3">l'ultimo</span><br><span class="w" id="s3w4">il più</span> <span class="w" id="s3w5" style="color:#7a0f24">geniale</span></div>
+
+    <div class="zone" data-layout-allow-overlap>
+      <span class="line"><span id="s3-l1" class="t-sans split">Questi sono i</span></span>
+      <span class="line" style="margin-top:-118px"><span id="s3-l3"><span class="t-it">l'ultimo</span> <span class="t-sans">è il più</span></span></span>
+    </div>
+    <div id="s3-num" data-layout-allow-overlap style="position:absolute;left:340px;top:620px;width:400px;height:470px;overflow:hidden">
+      <div id="s3-col" style="position:absolute;left:0;top:0;width:400px;text-align:center;font:600 430px/470px Inter;letter-spacing:-0.06em;color:#1d1d1f"><div>1</div><div>2</div><div>3</div><div>4</div><div id="s3-five">5</div></div>
+    </div>
+    <div class="zone" data-layout-allow-overlap style="top:1130px">
+      <span class="line"><span id="s3-l2"><span class="t-sans">trucchi che usa</span> <span class="t-it" id="s3-sdt">su di te</span></span></span>
+    </div>
+    <div id="s3-sel" class="sel" style="left:350px;top:640px;width:380px;height:430px"><i></i><i></i><i></i><i></i></div>
+    <div id="s3-cur" class="cur" style="left:700px;top:1000px"><svg viewBox="0 0 24 24" width="54" height="54"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#1d1d1f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+    <div id="s3-pill" class="pill" style="left:610px;top:560px">geniale</div>
   </div>
   <script>
+
+    /* split every .split element into letter spans once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    /* letters flip up into place one by one (the reference's per-letter entrance) */
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.42, ease: "back.out(2.2)", stagger: st || 0.03 }, t);
+    /* a whole line rises from behind its own baseline mask */
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.3, ease: "power3.in" }, t);
+    /* dashed selection box with handles, then a cursor that clicks it */
+    const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#s3w0", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14 }, 0.0);
-    /* the giant 5 slams in on "cinque" */
-    tl.fromTo("#s3-five", { opacity: 0, scale: 2.6, filter: "blur(30px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.72);
-    tl.fromTo("#s3w1", { opacity: 0, filter: "blur(10px)", y: 30 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.18, ease: "power4.out" }, 1.05);
-    tl.fromTo("#s3w2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16 }, 1.88);
-    /* "E l'ultimo": the 5 shrinks into a row of ghost numbers 1-5, the 5th stays burgundy */
-    tl.to(["#s3-l1", "#s3-l2"], { opacity: 0, filter: "blur(10px)", duration: 0.15 }, 2.5);
-    tl.to("#s3-five", { opacity: 0, scale: 0.3, y: -100, duration: 0.3, ease: "power3.in" }, 2.5);
-    for (let k = 1; k <= 5; k++) tl.fromTo("#s3-g" + k, { opacity: 0, y: 90, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 2.6 + (k - 1) * 0.06);
-    tl.to(["#s3-g1", "#s3-g2", "#s3-g3", "#s3-g4"], { opacity: 0.35, duration: 0.2 }, 3.1);
-    tl.to("#s3-g5", { scale: 1.45, duration: 0.45, ease: "back.out(2)" }, 3.6);
-    [[3, 2.65], [4, 3.3], [5, 3.65]].forEach(([i, t]) => tl.fromTo("#s3w" + i, { opacity: 0, filter: "blur(10px)", y: 24 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.16, ease: "power4.out" }, t));
-    /* exit: the 5 dives into the camera, its burgundy fills the frame */
-    tl.to(["#s3-g1", "#s3-g2", "#s3-g3", "#s3-g4", "#s3-l3"], { opacity: 0, filter: "blur(12px)", duration: 0.18 }, 4.62);
-    tl.to("#s3-g5", { scale: 30, x: -60, duration: 0.5, ease: "power3.in" }, 4.62);
+
+    tl.set("#s3-l3", { yPercent: 115 }, 0);
+    flip(tl, "#s3-l1", 0.0, 0.025);
+    tl.fromTo("#s3-col", { y: 0 }, { y: -470 * 4, duration: 0.62, ease: "expo.out" }, 0.66);
+    rise(tl, "#s3-l2", 1.02);
+    tl.fromTo("#s3-sdt", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.86);
+    sink(tl, "#s3-l1", 2.5);
+    sink(tl, "#s3-l2", 2.5);
+    rise(tl, "#s3-l3", 2.6);
+    tl.to("#s3-five", { color: "#7a0f24", duration: 0.25 }, 3.15);
+    select(tl, "#s3-sel", "#s3-cur", 3.2);
+    pop(tl, "#s3-pill", 3.63);
+    tl.to(["#s3-sel", "#s3-cur", "#s3-pill", "#s3-l3"], { opacity: 0, duration: 0.15 }, 4.6);
+    tl.to("#s3-num", { scale: 14, duration: 0.5, ease: "power3.in" }, 4.63);
     window.__timelines["s3"] = tl;
   </script>
 </template>

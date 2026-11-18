@@ -1,64 +1,76 @@
 <template>
   <style>
-    #root { position: absolute; inset: 0; background: #7a0f24; overflow: hidden; }
-    #s4-screen { position: absolute; inset: 0; background: #fff; }
-    #s4-kicker { position: absolute; left: 96px; top: 372px; font: 700 40px/1 "Inter"; color: #7a0f24; letter-spacing: 0.08em; }
-    #s4-title { position: absolute; left: 96px; top: 420px; font: italic 400 150px/1 "Playfair Display"; color: #111113; }
-    #s4-cal { position: absolute; left: 96px; right: 96px; top: 640px; }
-    #s4-head { display: flex; align-items: baseline; gap: 20px; color: #ff3b30; font: 700 78px/1 "Inter"; letter-spacing: -0.03em; }
-    #s4-yearbox { height: 82px; overflow: hidden; position: relative; width: 240px; }
-    #s4-years { position: absolute; left: 0; top: 0; }
-    #s4-years div { height: 82px; font: 700 78px/82px "Inter"; color: #ff3b30; letter-spacing: -0.03em; }
-    #s4-wd { margin-top: 34px; display: grid; grid-template-columns: repeat(7, 1fr); font: 600 30px/1 "Inter"; color: #8e8e93; text-align: center; padding-bottom: 18px; border-bottom: 2px solid #e5e5ea; }
-    .s4-wk { display: grid; grid-template-columns: repeat(7, 1fr); height: 150px; border-bottom: 2px solid #f0f0f2; font: 400 52px/1 "Inter"; color: #111113; text-align: center; padding-top: 18px; }
-    .s4-wk .we { color: #8e8e93; }
-    .s4-day { position: relative; }
-    #s4-today { position: absolute; left: 50%; top: -16px; width: 84px; height: 84px; margin-left: -42px; border-radius: 50%; background: #ff3b30; }
-    #s4-nine { position: relative; color: #fff; font-weight: 600; }
-    #s4-ev { position: absolute; left: -40px; top: 80px; width: 220px; text-align: left; }
-    #s4-ev span { display: inline-block; padding: 8px 14px; border-left: 6px solid #ff3b30; border-radius: 8px; background: rgba(255,59,48,0.14); color: #c81e15; font: 600 26px/1 "Inter"; white-space: nowrap; }
-    #s4-phone { position: absolute; left: 330px; top: 760px; width: 700px; }
-    #s4-phone img { width: 100%; display: block; }
-    #s4-cap { position: absolute; left: 96px; top: 420px; font: 900 130px/1 "Inter"; letter-spacing: -0.05em; color: #111113; }
-    .w { display: inline-block; opacity: 0; }
+
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "Inter"; color: #1d1d1f; }
+    .zone { z-index: 5; position: absolute; left: 80px; right: 80px; top: 372px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 500 82px/1.06 "Inter"; }
+    .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
+    .line > span { display: inline-block; }
+    .t-sans { font: 500 82px/1.06 "Inter"; letter-spacing: -0.035em; }
+    .t-it { font: italic 400 92px/1.0 "Playfair Display"; letter-spacing: -0.01em; }
+    .t-big { font: 600 96px/1.0 "Inter"; letter-spacing: -0.045em; }
+    .acc { color: #7a0f24; }
+    .ch { display: inline-block; white-space: pre; }
+    .sel { position: absolute; border: 3px dashed #ff3b30; pointer-events: none; opacity: 0; }
+    .sel i { position: absolute; width: 16px; height: 16px; background: #fff; border: 3px solid #ff3b30; }
+    .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
+    .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
+    .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
+    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 "Inter"; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
+
+
+    .mo { padding: 40px 0 70px; }
+    .mh { font: 700 92px/96px "Inter"; letter-spacing: -0.035em; color: #ff3b30; }
+    .wd { margin-top: 30px; display: grid; grid-template-columns: repeat(7,1fr); font: 600 30px/1 "Inter"; color: #8e8e93; text-align: center; padding-bottom: 16px; border-bottom: 2px solid #e5e5ea; }
+    .gr { display: grid; grid-template-columns: repeat(7,1fr); font: 400 54px/1 "Inter"; text-align: center; }
+    .gr > div { height: 150px; padding-top: 34px; border-bottom: 2px solid #f2f2f4; }
   </style>
   <div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
-    <div id="s4-screen">
-      <div id="s4-kicker">TRUCCO 01</div>
-      <div id="s4-title"><span class="w" id="s4w0">settembre.</span></div>
-      <div id="s4-cal">
-        <div id="s4-head">Settembre <div id="s4-yearbox"><div id="s4-years"><div>2023</div><div>2024</div><div>2025</div><div>2026</div></div></div></div>
-        <div id="s4-wd"><div>L</div><div>M</div><div>M</div><div>G</div><div>V</div><div>S</div><div>D</div></div>
-        <div class="s4-wk"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div class="we">6</div><div class="we">7</div></div>
-        <div class="s4-wk"><div>8</div><div class="s4-day"><div id="s4-today"></div><span id="s4-nine">9</span><div id="s4-ev"><span>Evento Apple</span></div></div><div>10</div><div>11</div><div>12</div><div class="we">13</div><div class="we">14</div></div>
-        <div class="s4-wk"><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div class="we">20</div><div class="we">21</div></div>
-        <div class="s4-wk"><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div class="we">27</div><div class="we">28</div></div>
-      </div>
-      <div id="s4-phone"><img src="assets/img/ip18-burg-b.png" alt="" /></div>
-      <div id="s4-cap"><span class="w" id="s4w1">nuovo</span><br><span class="w" id="s4w2" style="color:#7a0f24">iPhone</span></div>
+
+    <div id="s4-cam" data-layout-allow-overlap data-layout-allow-overflow style="position:absolute;inset:0;transform-origin:50% 52%">
+      <div id="s4-strip" style="position:absolute;left:70px;right:70px;top:0"><div class="mo"><div class="mh">Luglio <span>2023</span></div><div class="wd"><div>L</div><div>M</div><div>M</div><div>G</div><div>V</div><div>S</div><div>D</div></div><div class="gr"><div></div><div></div><div></div><div></div><div></div><div class="dd" style="color:#8e8e93">1</div><div class="dd" style="color:#8e8e93">2</div><div class="dd">3</div><div class="dd">4</div><div class="dd">5</div><div class="dd">6</div><div class="dd">7</div><div class="dd" style="color:#8e8e93">8</div><div class="dd" style="color:#8e8e93">9</div><div class="dd">10</div><div class="dd">11</div><div class="dd">12</div><div class="dd">13</div><div class="dd">14</div><div class="dd" style="color:#8e8e93">15</div><div class="dd" style="color:#8e8e93">16</div><div class="dd">17</div><div class="dd">18</div><div class="dd">19</div><div class="dd">20</div><div class="dd">21</div><div class="dd" style="color:#8e8e93">22</div><div class="dd" style="color:#8e8e93">23</div><div class="dd">24</div><div class="dd">25</div><div class="dd">26</div><div class="dd">27</div><div class="dd">28</div><div class="dd" style="color:#8e8e93">29</div><div class="dd" style="color:#8e8e93">30</div><div class="dd">31</div></div></div><div class="mo"><div class="mh">Agosto <span>2023</span></div><div class="wd"><div>L</div><div>M</div><div>M</div><div>G</div><div>V</div><div>S</div><div>D</div></div><div class="gr"><div></div><div class="dd">1</div><div class="dd">2</div><div class="dd">3</div><div class="dd">4</div><div class="dd" style="color:#8e8e93">5</div><div class="dd" style="color:#8e8e93">6</div><div class="dd">7</div><div class="dd">8</div><div class="dd">9</div><div class="dd">10</div><div class="dd">11</div><div class="dd" style="color:#8e8e93">12</div><div class="dd" style="color:#8e8e93">13</div><div class="dd">14</div><div class="dd">15</div><div class="dd">16</div><div class="dd">17</div><div class="dd">18</div><div class="dd" style="color:#8e8e93">19</div><div class="dd" style="color:#8e8e93">20</div><div class="dd">21</div><div class="dd">22</div><div class="dd">23</div><div class="dd">24</div><div class="dd">25</div><div class="dd" style="color:#8e8e93">26</div><div class="dd" style="color:#8e8e93">27</div><div class="dd">28</div><div class="dd">29</div><div class="dd">30</div><div class="dd">31</div></div></div><div class="mo"><div class="mh">Settembre <span id="s4-yb" style="display:inline-block;height:96px;overflow:hidden;vertical-align:bottom"><span id="s4-ys" style="display:block"><span style="display:block">2023</span><span style="display:block">2024</span><span style="display:block">2025</span><span style="display:block">2026</span></span></span></div><div class="wd"><div>L</div><div>M</div><div>M</div><div>G</div><div>V</div><div>S</div><div>D</div></div><div class="gr"><div></div><div></div><div></div><div></div><div class="dd">1</div><div class="dd" style="color:#8e8e93">2</div><div class="dd" style="color:#8e8e93">3</div><div class="dd">4</div><div class="dd">5</div><div class="dd">6</div><div class="dd">7</div><div class="dd">8</div><div class="dd" style="position:relative"><svg id="s4-ring" viewBox="0 0 100 100" style="position:absolute;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px"><circle cx="50" cy="50" r="44" fill="#ff3b30"/></svg><span style="position:relative;color:#fff;font-weight:600">9</span><div id="s4-ev" style="position:absolute;left:-30px;top:78px;white-space:nowrap;font:600 24px/1 Inter;color:#c81e15;padding:7px 12px;border-left:5px solid #ff3b30;border-radius:6px;background:rgba(255,59,48,0.12)">Evento Apple</div></div><div class="dd" style="color:#8e8e93">10</div><div class="dd">11</div><div class="dd">12</div><div class="dd">13</div><div class="dd">14</div><div class="dd">15</div><div class="dd" style="color:#8e8e93">16</div><div class="dd" style="color:#8e8e93">17</div><div class="dd">18</div><div class="dd">19</div><div class="dd">20</div><div class="dd">21</div><div class="dd">22</div><div class="dd" style="color:#8e8e93">23</div><div class="dd" style="color:#8e8e93">24</div><div class="dd">25</div><div class="dd">26</div><div class="dd">27</div><div class="dd">28</div><div class="dd">29</div><div class="dd" style="color:#8e8e93">30</div></div></div></div>
     </div>
+    <div id="s4-mask" data-layout-allow-overlap style="position:absolute;left:0;right:0;top:0;height:640px;background:linear-gradient(#fff 82%,rgba(255,255,255,0))"></div>
+    <div class="zone" data-layout-allow-overlap>
+      <span class="line"><span id="s4-l1"><span class="t-sans" style="color:#ff3b30">01</span> <span class="t-it">settembre.</span></span></span>
+      <span class="line" style="margin-top:-118px"><span id="s4-l2"><span class="t-sans">nuovo</span> <span class="t-sans split acc" id="s4-iph">iPhone</span></span></span>
+    </div>
+    <div id="s4-ph" style="position:absolute;left:250px;top:700px;width:600px;perspective:1600px"><img id="s4-phi" src="assets/img/ip18-burg-b.png" style="width:100%;display:block" alt="" /></div>
   </div>
   <script>
+
+    /* split every .split element into letter spans once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    /* letters flip up into place one by one (the reference's per-letter entrance) */
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.42, ease: "back.out(2.2)", stagger: st || 0.03 }, t);
+    /* a whole line rises from behind its own baseline mask */
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 115 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -115, duration: 0.3, ease: "power3.in" }, t);
+    /* dashed selection box with handles, then a cursor that clicks it */
+    const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+
     const tl = gsap.timeline({ paused: true });
-    /* the burgundy flood (from the 5) opens as a circle onto the white calendar */
-    tl.fromTo("#s4-screen", { clipPath: "circle(0% at 50% 45%)" }, { clipPath: "circle(80% at 50% 45%)", duration: 0.45, ease: "power3.out" }, 0);
-    tl.fromTo("#s4-kicker", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 0.05);
-    tl.fromTo("#s4-cal", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, 0.1);
-    tl.fromTo("#s4w0", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.6);
-    tl.fromTo("#s4-today", { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)" }, 0.62);
-    tl.fromTo("#s4-ev", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25 }, 0.8);
-    /* every year, same month: the year rolls on each stressed word, the 9th pulses each time */
-    [1.94, 2.71, 3.2].forEach((t, k) => { tl.to("#s4-years", { y: -82 * (k + 1), duration: 0.24, ease: "power3.inOut" }, t); tl.fromTo("#s4-today", { scale: 0.6 }, { scale: 1, duration: 0.3, ease: "back.out(2.5)" }, t + 0.05); });
-    tl.fromTo("#s4-cal", { scale: 1 }, { scale: 0.97, duration: 1.2, ease: "power1.inOut" }, 1.94);
-    /* "nuovo iPhone": the burgundy 18 Pro flies in over the calendar */
-    tl.to("#s4-title", { opacity: 0, filter: "blur(10px)", duration: 0.12 }, 3.1);
-    tl.to("#s4-kicker", { opacity: 0, duration: 0.12 }, 3.1);
-    tl.to("#s4-cal", { opacity: 0.18, filter: "blur(6px)", duration: 0.3 }, 3.2);
-    tl.set("#s4-phone", { opacity: 0 }, 0);
-    tl.fromTo("#s4-phone", { opacity: 1, x: 600, y: 120, rotation: 22, scale: 0.8 }, { opacity: 1, x: 0, y: 0, rotation: -5, scale: 1, duration: 0.6, ease: "expo.out", immediateRender: false }, 3.2);
-    tl.fromTo("#s4w1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14 }, 3.2);
-    tl.fromTo("#s4w2", { opacity: 0, filter: "blur(8px)", scale: 1.25 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.32, ease: "back.out(1.7)" }, 3.68);
-    tl.to("#s4-screen", { y: -1920, filter: "blur(10px)", duration: 0.26, ease: "power3.in" }, 4.07);
+
+    tl.set("#s4-l2", { yPercent: 115 }, 0);
+    tl.set("#s4-ph", { opacity: 0 }, 0);
+    /* the camera scrolls down through the calendar app and lands on September */
+    tl.fromTo("#s4-strip", { y: 560 }, { y: -1640, duration: 0.85, ease: "power3.inOut" }, 0.0);
+    rise(tl, "#s4-l1", 0.55);
+    tl.fromTo("#s4-ring", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.42, ease: "back.out(2.4)" }, 0.66);
+    tl.fromTo("#s4-ev", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 0.82);
+    tl.fromTo("#s4-cam", { scale: 1 }, { scale: 1.16, duration: 1.9, ease: "power2.inOut" }, 1.0);
+    [1.94, 2.71, 3.2].forEach((t, k) => { tl.to("#s4-ys", { y: -96 * (k + 1), duration: 0.26, ease: "power3.inOut" }, t); tl.fromTo("#s4-ring", { scale: 0.7 }, { scale: 1, duration: 0.32, ease: "back.out(2.6)" }, t + 0.04); });
+    /* "nuovo iPhone": the calendar drops away and the 18 Pro rises in, turning */
+    sink(tl, "#s4-l1", 3.08);
+    rise(tl, "#s4-l2", 3.14);
+    tl.set(L("#s4-iph"), { opacity: 0 }, 0);
+    flip(tl, "#s4-iph", 3.62, 0.04);
+    tl.to("#s4-cam", { y: 900, opacity: 0, duration: 0.45, ease: "power3.in" }, 3.12);
+    tl.fromTo("#s4-ph", { opacity: 1, y: 900, rotation: 10 }, { opacity: 1, y: 0, rotation: -4, duration: 0.7, ease: "expo.out", immediateRender: false }, 3.22);
+    tl.fromTo("#s4-phi", { rotationY: 28 }, { rotationY: -10, duration: 1.1, ease: "power2.out" }, 3.22);
+    tl.to(["#s4-ph", "#s4-l2"], { y: -1500, duration: 0.26, ease: "power3.in" }, 4.06);
     window.__timelines["s4"] = tl;
   </script>
 </template>
