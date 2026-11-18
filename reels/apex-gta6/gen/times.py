@@ -1,8 +1,10 @@
-# named voice moments in seconds, measured on assets/audio/vo.mp3 (phrase starts = ends of the silences, words from the aligned transcript)
-T = dict(gta=0, incassato=0.95, miliardo=1.77, dollari=2.57, prima=3.36, uscire=4.15, almeno=4.73, stime=5.59, eper=6.92, quasi=8.52, pubblicita=9.36,
-         questi=10.28, tre=11.00, trucchi=11.20, eil=12.63, terzo=12.79, copiare=13.50, uno=14.70, silenzio=15.32, per=16.40, due=17.57, trailer=17.78,
-         emezzo=18.65, niente=19.48, cosi=20.17, mossa=21.00, notizia=22.08, ilsecondo=22.84, q475=24.79, milioni=25.60, visual=26.38, ingiorno=27.56,
-         due2=28.65, attesa=29.28, tredici=30.23, ultimo=30.84, duerinvii=32.29, eogni=33.32, giro=34.55, piuaspetti=35.79, piuvuoi=37.07, tre3=37.92,
-         lavorare=38.43, ognifoto=39.93, analizzato=41.05, milionifan=41.75, teorie=43.11, video=43.78, meme=44.46, pubgratis=45.28, gratis=45.80,
-         fatta=46.44, eilloro=47.57, chiaro=48.65, nonspendiamo=49.31, inmarketing=49.85, finche=50.49, vicini=51.29, lezione=52.65, nondevi=53.93,
-         dipiu=54.60, devifarti=55.35, aspettare=55.75, sevuoi=56.32, creo=57.64, scrivi=58.54, motion=58.98, etispiego=59.47, tutto=60.17, END=60.96)
+# named voice moments in seconds, measured on assets/audio/vo.mp3 (phrase starts = ends of the silences, words from the aligned transcript).
+# The title is written "Giì ti a sei" in the text sent to the voice so that it says "GTA 6" the Italian way.
+T = dict(
+         gta=0, incassato=0.66, miliardo=1.39, dollari=2.05, prima=2.98, uscire=3.77, almeno=4.35, stime=5.21, eper=6.54, quasi=8.14, pubblicita=8.98,
+         questi=9.9, tre=10.62, trucchi=10.82, eil=12.25, terzo=12.41, copiare=13.12, uno=14.32, silenzio=14.94, per=16.02, due=17.19, trailer=17.4,
+         emezzo=18.27, niente=19.1, cosi=19.79, mossa=20.62, notizia=21.7, ilsecondo=22.46, q475=24.41, milioni=25.22, visual=26.0, ingiorno=27.18, due2=28.27,
+         attesa=28.9, tredici=29.85, ultimo=30.46, duerinvii=31.91, eogni=32.94, giro=34.17, piuaspetti=35.41, piuvuoi=36.69, tre3=37.54, lavorare=38.05, ognifoto=39.55,
+         analizzato=40.67, milionifan=41.37, teorie=42.73, video=43.4, meme=44.08, pubgratis=44.9, gratis=45.42, fatta=46.06, eilloro=47.19, chiaro=48.27, nonspendiamo=48.93,
+         inmarketing=49.47, finche=50.11, vicini=50.91, lezione=52.27, nondevi=53.55, dipiu=54.22, devifarti=54.97, aspettare=55.37, sevuoi=55.94, creo=57.26, scrivi=58.16,
+         motion=58.6, etispiego=59.09, tutto=59.79, END=60.58)
