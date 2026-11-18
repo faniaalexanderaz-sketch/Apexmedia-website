@@ -5,3 +5,4 @@
 _engine4/models/raw/
 **/assets/models/
 **/assets/vendor/models.js
+**/renders/work-*/
