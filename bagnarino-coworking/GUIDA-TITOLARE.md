@@ -7,6 +7,7 @@ Il coworking è **aperto tutti i giorni, su prenotazione**. Dal sito le persone 
 ## L'app sul telefono
 - L'app si chiama **Bagnarino** e sta sulla schermata Home, come le altre app.
 - Per metterla sul telefono: **bagnarinocoworking.it/gestione/installa** (le istruzioni sono lì, con i disegni).
+- Sul tuo telefono (Android) si usa **Chrome**, aggiornato dal Play Store. Non l'app "Internet".
 - Si entra una volta sola con email e password: il telefono resta dentro.
 - Password dimenticata? Nella pagina di accesso tocca **Password dimenticata?**: ti arriva un'email con il pulsante per sceglierne una nuova.
 
@@ -20,6 +21,8 @@ Ti arrivano una **notifica** sul telefono e un'**email** con due pulsanti.
 Puoi rispondere in tre modi, è uguale: dalla notifica, dall'email, oppure dall'app in **Oggi**.
 Dopo aver toccato un pulsante nell'app hai qualche secondo per toccare **Annulla** se hai sbagliato.
 Se una richiesta resta senza risposta per più di due ore, ti arriva un promemoria.
+
+**Le notifiche non arrivano, o arrivano tardi?** Nell'app: omino in alto a destra → **Impostazioni** → **Manda una notifica di prova**. Se non arriva, tocca **Non arrivano, o arrivano tardi?**: ci sono le cose da controllare, una alla volta. Intanto non perdi niente: ogni richiesta arriva anche per email, con gli stessi due pulsanti.
 
 ## Quando arriva una persona
 In **Oggi**, sotto "Chi arriva oggi", tocca **È arrivata/o**. Se è una giornata intera, il timbro sulla sua Bagnarino Card si aggiunge da solo.

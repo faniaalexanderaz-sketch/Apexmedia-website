@@ -5,6 +5,10 @@
    - testo mai sotto i 18px, sempre scuro su fondo chiaro
    - pulsanti alti almeno 56px, larghi quanto lo schermo
    - niente sfumature, niente ombre decorative, niente icone senza parola
+   Deve funzionare anche su telefoni Android non recenti, con Chrome
+   di qualche anno fa: per questo niente "gap" nei contenitori flex,
+   niente "inset", "min()" o "place-items", e un valore semplice prima
+   di ogni env().
    ============================================================= */
 @font-face { font-family: 'Fraunces'; src: url('/fonts/fraunces-latin-standard-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Hanken Grotesk'; src: url('/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
@@ -49,30 +53,32 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ---------- testata ---------- */
 .g-testa {
-  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center;
+  min-height: 64px; padding: 0 12px 0 16px;
   min-height: calc(var(--testata) + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 12px 0 16px;
   background: var(--blu); color: var(--carta);
 }
-.g-testa-marchio { display: grid; place-items: center; flex-shrink: 0; }
+.g-testa-marchio { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .g-marchio { width: 30px; height: auto; display: block; }
-.g-testa-titolo { flex: 1; min-width: 0; font-family: var(--f-titoli); font-weight: 500; font-size: 1.5rem; line-height: 1.15; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.g-testa-titolo { flex: 1; min-width: 0; margin: 0 12px; font-family: var(--f-titoli); font-weight: 500; font-size: 1.5rem; line-height: 1.15; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .g-indietro {
-  display: inline-flex; align-items: center; gap: 4px; min-height: 48px; margin-left: -8px; padding: 6px 12px 6px 6px;
+  display: inline-flex; align-items: center; flex-shrink: 0; min-height: 48px; margin-left: -8px; padding: 6px 12px 6px 6px;
   border: 2px solid var(--carta); border-radius: var(--raggio); background: transparent; color: var(--carta); font-weight: 700; font-size: 1.125rem; cursor: pointer;
 }
-.g-indietro .g-ico { width: 24px; height: 24px; }
-.g-profilo { display: grid; place-items: center; flex-shrink: 0; width: 52px; height: 52px; border: 2px solid var(--carta); border-radius: 50%; color: var(--carta); }
+.g-indietro .g-ico { width: 24px; height: 24px; margin-right: 4px; }
+.g-profilo { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 52px; height: 52px; border: 2px solid var(--carta); border-radius: 50%; color: var(--carta); }
 .g-profilo .g-ico { width: 28px; height: 28px; }
 .g-ico { display: block; flex-shrink: 0; }
 
 /* ---------- corpo ---------- */
-.g-vista { max-width: 640px; margin: 0 auto; padding: 22px 16px calc(var(--barra) + env(safe-area-inset-bottom) + 40px); outline: none; }
+.g-vista { max-width: 640px; margin: 0 auto; padding: 22px 16px 116px; padding: 22px 16px calc(var(--barra) + env(safe-area-inset-bottom) + 40px); outline: none; }
 .g-fuori .g-vista { padding-bottom: 56px; }
 .g-stretta { max-width: 520px; }
 .g-attesa { padding: 40px 0; text-align: center; font-size: 1.25rem; }
 .g-titolo { font-family: var(--f-titoli); font-weight: 500; font-size: 1.9rem; line-height: 1.15; letter-spacing: -.01em; margin: 0 0 12px; }
 .g-sezione { font-family: var(--f-testo); font-weight: 800; font-size: 1.3rem; line-height: 1.25; margin: 34px 0 12px; }
 .g-sezione:first-child { margin-top: 0; }
+.g-sezione[id] { scroll-margin-top: 84px; }   /* arrivando da un link, il titolo non finisce sotto la testata */
 .g-testo { margin: 0 0 18px; }
 .g-nota { margin: 10px 0 0; color: var(--testo-2); }
 .g-vuoto { padding: 16px; border: 2px dashed var(--riga); border-radius: var(--raggio); color: var(--testo-2); background: var(--bianco); }
@@ -84,28 +90,28 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ---------- pulsanti: alti almeno 60px ---------- */
 .g-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 60px; padding: 12px 18px;
+  display: flex; align-items: center; justify-content: center; width: 100%; min-height: 60px; padding: 12px 18px;
   border: 2px solid var(--blu); border-radius: var(--raggio); background: var(--bianco); color: var(--testo);
   font-family: var(--f-testo); font-weight: 800; font-size: 1.25rem; line-height: 1.2; text-align: center; text-decoration: none; cursor: pointer;
 }
 .g-btn:active { transform: translateY(1px); }
 .g-btn[disabled] { opacity: .55; cursor: default; }
-.g-btn .g-ico { width: 24px; height: 24px; }
+.g-btn .g-ico { width: 24px; height: 24px; margin-right: 10px; }
 .g-btn-primario { background: var(--blu); border-color: var(--blu); color: var(--bianco); }
 .g-btn-verde { background: var(--verde); border-color: var(--verde); color: var(--bianco); }
 .g-btn-grigio { background: var(--grigio); border-color: var(--grigio-bordo); color: var(--testo); }
 .g-btn-chiaro { background: var(--bianco); border-color: var(--blu); color: var(--testo); }
 .g-btn-rosso { background: var(--bianco); border-color: var(--rosso); color: var(--rosso); }
-.g-pulsanti { display: grid; gap: 12px; margin-top: 16px; }
-.g-due { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.g-pulsanti { display: grid; grid-gap: 12px; gap: 12px; margin-top: 16px; }
+.g-due { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px; gap: 10px; }
 @media (max-width: 359px) { .g-due { grid-template-columns: 1fr; } }
 .g-largo-su { margin-top: 28px; }
 
 /* ---------- schede: una richiesta, una prenotazione, una voce ---------- */
-.g-lista { display: grid; gap: 12px; list-style: none; margin: 0; padding: 0; }
+.g-lista { display: grid; grid-gap: 12px; gap: 12px; list-style: none; margin: 0; padding: 0; }
 .g-scheda { padding: 16px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); }
 .g-scheda-attesa { border-color: var(--attenzione); }
-.g-nome { font-weight: 800; font-size: 1.35rem; line-height: 1.25; overflow-wrap: anywhere; }
+.g-nome { font-weight: 800; font-size: 1.35rem; line-height: 1.25; word-wrap: break-word; overflow-wrap: break-word; overflow-wrap: anywhere; }
 .g-quando { margin-top: 2px; font-size: 1.125rem; font-weight: 600; }
 .g-quando::first-letter { text-transform: uppercase; }
 .g-cosa { margin-top: 2px; color: var(--testo-2); }
@@ -118,11 +124,11 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* voce che porta a un'altra schermata: tutta toccabile, con la freccia */
 .g-voce {
-  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 72px; padding: 14px 16px;
+  display: flex; align-items: center; width: 100%; min-height: 72px; padding: 14px 16px;
   border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); color: var(--testo); text-align: left; text-decoration: none; cursor: pointer;
 }
-.g-voce > span { flex: 1; min-width: 0; }
-.g-voce strong { display: block; font-weight: 800; font-size: 1.25rem; line-height: 1.25; overflow-wrap: anywhere; }
+.g-voce > span { flex: 1; min-width: 0; margin-right: 12px; }
+.g-voce strong { display: block; font-weight: 800; font-size: 1.25rem; line-height: 1.25; word-wrap: break-word; overflow-wrap: break-word; overflow-wrap: anywhere; }
 .g-voce small { display: block; margin-top: 2px; font-size: 1.125rem; line-height: 1.35; color: var(--testo-2); }
 .g-voce small::first-letter { text-transform: uppercase; }
 .g-voce::after { content: ''; flex-shrink: 0; width: 12px; height: 12px; border-right: 3px solid var(--blu); border-top: 3px solid var(--blu); transform: rotate(45deg); margin-right: 4px; }
@@ -131,25 +137,27 @@ button, input, textarea { font: inherit; color: inherit; }
 .g-dati { margin: 16px 0 0; border-top: 2px solid var(--riga); }
 .g-dati > div { padding: 12px 0; border-bottom: 2px solid var(--riga); }
 .g-dati dt { font-weight: 800; font-size: 1.125rem; }
-.g-dati dd { margin: 0; font-size: 1.25rem; overflow-wrap: anywhere; }
+.g-dati dd { margin: 0; font-size: 1.25rem; word-wrap: break-word; overflow-wrap: break-word; overflow-wrap: anywhere; }
 .g-dati dd.g-iniziale::first-letter { text-transform: uppercase; }
 
 /* ---------- barra in basso: quattro voci, icona e parola ---------- */
 .g-barra {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; justify-content: space-between;
-  padding: 0 4px env(safe-area-inset-bottom); background: var(--bianco); border-top: 2px solid var(--blu);
+  padding: 0 4px; padding: 0 4px env(safe-area-inset-bottom); background: var(--bianco); border-top: 2px solid var(--blu);
 }
 .g-barra a {
-  flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
   min-height: var(--barra); padding: 8px 6px 6px; border-top: 5px solid transparent; margin-top: -2px;
   color: var(--testo-2); text-decoration: none; font-weight: 700; font-size: 1.125rem; line-height: 1.1; letter-spacing: -.015em;
 }
-.g-barra .g-ico { width: 28px; height: 28px; }
+.g-barra .g-ico { width: 28px; height: 28px; margin-bottom: 3px; }
 .g-barra a[aria-current='page'] { color: var(--blu); border-top-color: var(--ocra); font-weight: 800; }
+/* telefoni stretti (320-350px): le quattro voci restano su una riga, alla stessa misura */
+@media (max-width: 359px) { .g-barra { padding-left: 0; padding-right: 0; } .g-barra a { padding-left: 1px; padding-right: 1px; letter-spacing: -.035em; } }
 
 /* ---------- moduli ---------- */
-.g-modulo { display: grid; gap: 18px; }
-.g-campo { display: grid; gap: 6px; }
+.g-modulo { display: grid; grid-gap: 18px; gap: 18px; }
+.g-campo { display: grid; grid-gap: 6px; gap: 6px; }
 .g-campo > span { font-weight: 800; }
 .g-campo input, .g-campo textarea {
   width: 100%; min-height: 60px; padding: 12px 14px; border: 2px solid var(--blu); border-radius: var(--raggio); background: var(--bianco);
@@ -158,36 +166,36 @@ button, input, textarea { font: inherit; color: inherit; }
 .g-campo textarea { min-height: 132px; resize: vertical; }
 .g-campo input[type='date'] { display: block; text-align: left; }
 .g-campo input[type='date']::-webkit-date-and-time-value { text-align: left; }
-.g-spunta { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
-.g-spunta input { width: 28px; height: 28px; margin: 0; flex-shrink: 0; accent-color: var(--blu); }
+.g-spunta { display: flex; align-items: center; min-height: 48px; cursor: pointer; }
+.g-spunta input { width: 28px; height: 28px; margin: 0 12px 0 0; flex-shrink: 0; accent-color: var(--blu); }
 .g-errore { padding: 12px 14px; border: 2px solid var(--rosso); border-radius: var(--raggio); background: var(--bianco); color: var(--rosso); font-weight: 700; }
 .g-conta { color: var(--testo-2); }
 
 /* interruttore grande: Mostra sul sito sì / no */
-.g-interruttore { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 72px; padding: 12px 16px; border: 2px solid var(--blu); border-radius: 12px; background: var(--bianco); text-align: left; cursor: pointer; }
+.g-interruttore { display: flex; align-items: center; width: 100%; min-height: 72px; padding: 12px 16px; border: 2px solid var(--blu); border-radius: 12px; background: var(--bianco); text-align: left; cursor: pointer; }
 .g-interruttore > span:first-child { flex: 1; }
 .g-interruttore strong { display: block; font-weight: 800; font-size: 1.25rem; line-height: 1.25; }
 .g-interruttore small { display: block; font-size: 1.125rem; color: var(--testo-2); }
-.g-leva { position: relative; flex-shrink: 0; width: 76px; height: 42px; border: 2px solid var(--grigio-bordo); border-radius: 21px; background: var(--grigio); }
+.g-leva { position: relative; flex-shrink: 0; margin-left: 14px; width: 76px; height: 42px; border: 2px solid var(--grigio-bordo); border-radius: 21px; background: var(--grigio); }
 .g-leva::after { content: ''; position: absolute; top: 3px; left: 3px; width: 32px; height: 32px; border-radius: 50%; background: var(--grigio-bordo); transition: transform .15s; }
 .g-interruttore[aria-checked='true'] .g-leva { background: var(--verde); border-color: var(--verde); }
 .g-interruttore[aria-checked='true'] .g-leva::after { transform: translateX(34px); background: var(--bianco); }
 @media (prefers-reduced-motion: reduce) { .g-leva::after { transition: none; } }
 
 /* ---------- calendario del mese ---------- */
-.g-mese { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
-.g-mese h2 { flex: 1; text-align: center; font-family: var(--f-titoli); font-weight: 500; font-size: 1.6rem; line-height: 1.1; }
+.g-mese { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.g-mese h2 { flex: 1; margin: 0 8px; text-align: center; font-family: var(--f-titoli); font-weight: 500; font-size: 1.6rem; line-height: 1.1; }
 .g-mese h2::first-letter { text-transform: uppercase; }
-.g-mese button { display: grid; place-items: center; width: 60px; height: 60px; flex-shrink: 0; border: 2px solid var(--blu); border-radius: var(--raggio); background: var(--bianco); cursor: pointer; }
+.g-mese button { display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; flex-shrink: 0; border: 2px solid var(--blu); border-radius: var(--raggio); background: var(--bianco); cursor: pointer; }
 .g-mese button .g-ico { width: 28px; height: 28px; }
-.g-settimana, .g-griglia { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.g-settimana, .g-griglia { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-gap: 4px; gap: 4px; }
 .g-settimana span { padding-bottom: 4px; text-align: center; font-weight: 800; font-size: 1.125rem; }
 .g-giorno {
-  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; min-height: 60px; padding: 6px 0 4px;
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 60px; padding: 6px 0 4px;
   border: 2px solid var(--riga); border-radius: 8px; background: var(--bianco); color: var(--testo); cursor: pointer; overflow: hidden;
 }
 .g-giorno b { position: relative; z-index: 1; font-weight: 800; font-size: 1.25rem; line-height: 1.1; }
-.g-giorno i { position: relative; z-index: 1; display: block; width: 22px; height: 8px; border-radius: 4px; background: transparent; }
+.g-giorno i { position: relative; z-index: 1; display: block; margin-top: 3px; width: 22px; height: 8px; border-radius: 4px; background: transparent; }
 .g-giorno.con-prenotazioni { background: var(--verde-chiaro); border-color: var(--verde); }
 .g-giorno.con-prenotazioni i { background: var(--verde); }
 .g-giorno.con-attesa { background: var(--ocra-chiaro); border-color: var(--attenzione); }
@@ -201,36 +209,36 @@ button, input, textarea { font: inherit; color: inherit; }
 .g-giorno.chiuso-mattina b { color: var(--bianco); }
 .g-giorno.oggi { outline: 4px solid var(--blu); outline-offset: -1px; }
 .g-giorno.chiuso.oggi { outline-color: var(--ocra); }
-.g-legenda { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 8px; }
-.g-legenda li { display: flex; align-items: center; gap: 12px; }
-.g-legenda span { flex-shrink: 0; width: 34px; height: 26px; border: 2px solid var(--riga); border-radius: 6px; background: var(--bianco); }
+.g-legenda { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-gap: 8px; gap: 8px; }
+.g-legenda li { display: flex; align-items: center; }
+.g-legenda span { flex-shrink: 0; margin-right: 12px; width: 34px; height: 26px; border: 2px solid var(--riga); border-radius: 6px; background: var(--bianco); }
 .g-legenda .l-pren { background: var(--verde-chiaro); border-color: var(--verde); }
 .g-legenda .l-attesa { background: var(--ocra-chiaro); border-color: var(--attenzione); }
 .g-legenda .l-chiuso { background: var(--chiuso); border-color: var(--chiuso); }
 .g-stato { padding: 14px 16px; border: 2px solid var(--blu); border-radius: 12px; background: var(--bianco); font-weight: 800; font-size: 1.25rem; }
 .g-stato-chiuso { background: var(--chiuso); border-color: var(--chiuso); color: var(--bianco); }
-.g-scelte { display: grid; gap: 10px; }
+.g-scelte { display: grid; grid-gap: 10px; gap: 10px; }
 .g-scelte .g-btn[aria-pressed='true'] { background: var(--chiuso); border-color: var(--chiuso); color: var(--bianco); }
 
 /* ---------- foto ---------- */
-.g-foto { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; align-items: start; padding: 12px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); }
+.g-foto { display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-gap: 12px; gap: 12px; align-items: start; padding: 12px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); }
 .g-foto img { display: block; width: 112px; height: 84px; object-fit: cover; border-radius: 6px; background: var(--grigio); }
-.g-foto-azioni { display: grid; gap: 8px; }
+.g-foto-azioni { display: grid; grid-gap: 8px; gap: 8px; }
 .g-foto-azioni .g-btn { min-height: 56px; font-size: 1.125rem; padding: 8px 10px; }
 .g-foto-azioni .g-due { margin-top: 0; }
 .g-carica { position: relative; }
-.g-carica input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 0; }
+.g-carica input { position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 0; }
 
 /* ---------- come va: tre numeri e basta ---------- */
-.g-numeri { display: grid; gap: 14px; }
+.g-numeri { display: grid; grid-gap: 14px; gap: 14px; }
 .g-numero { padding: 20px 16px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); }
 .g-numero strong { display: block; font-family: var(--f-titoli); font-weight: 500; font-size: 3.4rem; line-height: 1; letter-spacing: -.02em; }
 .g-numero strong.g-parole { font-size: 2rem; line-height: 1.15; }
 .g-numero span { display: block; margin-top: 8px; font-weight: 700; font-size: 1.25rem; line-height: 1.3; }
 
 /* ---------- "Fatto" grande dopo ogni salvataggio ---------- */
-.g-fatto { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; background: rgba(250, 246, 238, .96); }
-.g-fatto > div { display: grid; justify-items: center; gap: 10px; text-align: center; }
+.g-fatto { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(250, 246, 238, .96); }
+.g-fatto > div { display: grid; justify-items: center; grid-gap: 10px; gap: 10px; text-align: center; }
 .g-fatto svg { width: 96px; height: 96px; padding: 20px; border-radius: 50%; background: var(--verde); color: var(--bianco); }
 .g-fatto strong { font-family: var(--f-titoli); font-weight: 500; font-size: 3rem; line-height: 1.1; }
 .g-fatto span { font-size: 1.25rem; font-weight: 600; max-width: 22ch; }
@@ -238,14 +246,14 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ---------- "Annulla" per qualche secondo dopo le azioni importanti ---------- */
 .g-ripensa {
-  position: fixed; left: 12px; right: 12px; bottom: calc(var(--barra) + env(safe-area-inset-bottom) + 12px); z-index: 50; max-width: 616px; margin: 0 auto;
-  display: grid; gap: 12px; padding: 16px; border-radius: 12px; background: var(--notte); color: var(--bianco); border: 2px solid var(--notte);
+  position: fixed; left: 12px; right: 12px; bottom: 88px; bottom: calc(var(--barra) + env(safe-area-inset-bottom) + 12px); z-index: 50; max-width: 616px; margin: 0 auto;
+  display: grid; grid-gap: 12px; gap: 12px; padding: 16px; border-radius: 12px; background: var(--notte); color: var(--bianco); border: 2px solid var(--notte);
 }
 .g-ripensa p { font-weight: 700; font-size: 1.25rem; line-height: 1.3; }
 .g-fuori .g-ripensa { bottom: 16px; }
 
 /* ---------- una sola domanda prima di chiudere, annullare, togliere ---------- */
-.g-domanda { width: min(100% - 24px, 520px); padding: 22px 18px 18px; border: 3px solid var(--blu); border-radius: 14px; background: var(--bianco); color: var(--testo); }
+.g-domanda { width: calc(100% - 24px); max-width: 520px; padding: 22px 18px 18px; border: 3px solid var(--blu); border-radius: 14px; background: var(--bianco); color: var(--testo); }
 .g-domanda::backdrop { background: rgba(17, 25, 34, .72); }
 .g-domanda h2 { font-family: var(--f-titoli); font-weight: 500; font-size: 1.8rem; line-height: 1.15; margin-bottom: 10px; }
 .g-domanda p { font-size: 1.25rem; }
@@ -259,8 +267,8 @@ button, input, textarea { font: inherit; color: inherit; }
 .g-sezione + .g-riquadro { margin-top: 0; }
 
 /* ---------- /gestione/installa ---------- */
-.g-scelta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 4px 0 8px; }
-.g-passi { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.g-scelta { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px; gap: 10px; margin: 4px 0 8px; }
+.g-passi { list-style: none; margin: 0; padding: 0; display: grid; grid-gap: 14px; gap: 14px; }
 .g-passo { padding: 16px; border: 2px solid var(--riga); border-radius: 12px; background: var(--bianco); }
 .g-passo h3 { font-weight: 800; font-size: 1.3rem; line-height: 1.25; margin-bottom: 6px; }
 .g-passo p { margin: 0; }
