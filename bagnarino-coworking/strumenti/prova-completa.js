@@ -128,7 +128,14 @@ async function leggibile(page, nome, larghezza) {
   titolo('SCHERMATA OGGI (3.4)');
   const saluto = await app.locator('.g-saluto').innerText();
   verifica('saluto e data in alto', /^(Buongiorno|Buonasera) Marcella$/.test(saluto) && (await app.locator('.g-data').innerText()).toLowerCase() === dataLunga(isoTra(0)), saluto);
-  verifica('barra in basso: Oggi, Calendario, Prenotazioni, Sito (icona e parola)', JSON.stringify(await app.locator('.g-barra a span').allInnerTexts()) === JSON.stringify(['Oggi', 'Calendario', 'Prenotazioni', 'Sito']) && await app.locator('.g-barra a svg').count() === 4);
+  verifica('barra in basso: Oggi, Calendario, Prenotazioni, Come va (icona e parola)', JSON.stringify(await app.locator('.g-barra a span').allInnerTexts()) === JSON.stringify(['Oggi', 'Calendario', 'Prenotazioni', 'Come va']) && await app.locator('.g-barra a svg').count() === 4);
+  const cruscottoVuoto = (await app.locator('.g-cruscotto').innerText()).replace(/\s+/g, ' ');
+  verifica('Oggi si apre con la giornata in quattro riquadri: scrivanie, da confermare, arrivi da segnare, da incassare', await app.locator('.g-cr').count() === 4 &&
+    /Scrivanie oggi 0 su \d+ \d+ libere Da confermare 0 Nessuna richiesta Arrivi da segnare 0 Oggi nessuno Da incassare €0 Tutto incassato/.test(cruscottoVuoto), cruscottoVuoto);
+  const andamento = (await app.locator('#vista').innerText()).replace(/\s+/g, ' ');
+  verifica('in fondo a Oggi "Come va il mese": incassato con gli ultimi 6 mesi, prenotazioni con le ultime 8 settimane, da dove arrivano, e il pulsante per tutti i numeri',
+    /Come va il mese Incassato ad? \w+ €0 Gli ultimi 6 mesi/.test(andamento) && /Prenotazioni questa settimana 0 Le ultime 8 settimane/.test(andamento) && /Da dove arrivano le prenotazioni Ultimi 90 giorni/.test(andamento) &&
+    await app.locator('#vista svg.g-grafico').count() === 2 && await app.locator('#vista a[href="#come-va"]').count() === 1, andamento.slice(-400));
   await leggibile(app, 'Oggi (vuota)');
 
   /* il finto telefono si iscrive alle notifiche, come farebbe "Attiva le notifiche" su un telefono vero */
@@ -246,6 +253,8 @@ async function leggibile(page, nome, larghezza) {
   verifica('il giorno con la prenotazione confermata è segnato', /con-prenotazioni/.test(await coloreGiorno(g1)));
   await vai('giorno/' + gChiuso);
   await app.waitForSelector('[data-chiusura="giorno"]');
+  const scrivanieGiorno = (await app.locator('[data-scrivanie]').innerText()).replace(/\s+/g, ' ');
+  verifica('nel giorno si vedono le scrivanie una per una, con chi c’è o "Libera tutto il giorno"', await app.locator('[data-scrivanie] li').count() >= 4 && /^Postazione 1 Libera tutto il giorno Postazione 2 Libera tutto il giorno/.test(scrivanieGiorno), scrivanieGiorno.slice(0, 200));
   verifica('toccando un giorno: "Chiuso tutto il giorno", "Chiuso la mattina", "Chiuso il pomeriggio"', JSON.stringify(await app.locator('[data-chiusura]').allInnerTexts()) === JSON.stringify(['Chiuso tutto il giorno', 'Chiuso la mattina', 'Chiuso il pomeriggio']));
   await leggibile(app, 'Giorno');
   await app.locator('[data-chiusura="giorno"]').click();
@@ -310,6 +319,8 @@ async function leggibile(page, nome, larghezza) {
   verifica('prenotazione aggiunta a mano: è già confermata e al cliente parte l’email di conferma', /email di conferma/.test(dettoNuova) && /Anna Verdi/.test(schedaNuova) && /Confermata/.test(schedaNuova) &&
     p.length === 1 && p[0].a === 'anna.verdi@esempio.it' && /^Prenotazione confermata/.test(p[0].oggetto), dettoNuova + ' | ' + p.map(m => m.a + ' ' + m.oggetto).join(' | '));
   verifica('nella scheda: il posto, da dove arriva ("Aggiunta da te"), la Bagnarino Card, il pagamento', /Posto Postazione \d/.test(schedaNuova) && /Arriva da Aggiunta da te/.test(schedaNuova) && /Bagnarino Card 0 timbri su 10/.test(schedaNuova) && /Da pagare: €25/.test(schedaNuova), schedaNuova);
+  verifica('in cima alla scheda i tre passi: 1. Confermata, 2. Arrivo da segnare, 3. Da pagare', /^1\. Confermata 2\. Arrivo da segnare 3\. Da pagare$/.test((await app.locator('.g-tre-passi').innerText()).replace(/\s+/g, ' ').trim()) &&
+    /Aggiunta il \d+ \w+ alle \d\d:\d\d/.test(schedaNuova) && /È cliente da questa prenotazione: è la prima/.test(schedaNuova), schedaNuova);
   await attendi(2800);
   await leggibile(app, 'Prenotazione aggiunta a mano');
   await vai('oggi');
@@ -320,6 +331,10 @@ async function leggibile(page, nome, larghezza) {
   await app.locator('[data-fatto]:not([hidden])').waitFor({ timeout: 8000 });
   verifica('"È arrivata/o": Fatto, con il timbro sulla Bagnarino Card', /Timbro aggiunto/.test(await app.locator('[data-fatto-testo]').innerText()), await app.locator('[data-fatto-testo]').innerText());
   await attendi(2800);
+  await app.locator('#vista a[href^="#pagamento/"]').waitFor();
+  const dopoArrivo = (await app.locator('.g-cruscotto').innerText()).replace(/\s+/g, ' ');
+  verifica('dopo l’arrivo, il passo che resta è il pagamento ("Ha pagato €25"), e il cruscotto segue: una scrivania occupata, €25 da incassare', (await app.locator('#vista a[href^="#pagamento/"]').innerText()).trim() === 'Ha pagato €25' &&
+    /Scrivanie oggi 1 su \d+/.test(dopoArrivo) && /Arrivi da segnare 0 Tutti segnati/.test(dopoArrivo) && /Da incassare €25 Una prenotazione/.test(dopoArrivo), dopoArrivo);
   /* si rimette com'era, per provare la chiusura con una prenotazione confermata */
   const idAnna = (await api('oggi')).dati.arrivi[0].id;
   await api('arrivo', { id: idAnna, arrivato: false });
@@ -474,14 +489,17 @@ async function leggibile(page, nome, larghezza) {
   verifica('un numero scritto male non viene salvato', male.stato === 400);
   await attendi(2000);
 
-  titolo('PROFILO (3.10): Come va, Clienti, Incassi, Impostazioni');
+  titolo('ALTRO (3.10): Clienti, Incassi, Il mio sito, Impostazioni');
   await app.locator('.g-profilo').click();
   await app.waitForFunction(() => location.hash === '#profilo');
   await app.locator('.g-voce', { hasText: 'Incassi' }).waitFor();
-  verifica('dall’icona del profilo in alto: "Come va", "Clienti", "Incassi", "Impostazioni"', JSON.stringify(await app.locator('.g-voce strong').allInnerTexts()) === JSON.stringify(['Come va', 'Clienti', 'Incassi', 'Impostazioni']));
-  await leggibile(app, 'Profilo');
+  verifica('dal pulsante in alto a destra: "Clienti", "Incassi", "Il mio sito", "Impostazioni"', JSON.stringify(await app.locator('.g-voce strong').allInnerTexts()) === JSON.stringify(['Clienti', 'Incassi', 'Il mio sito', 'Impostazioni']));
+  await leggibile(app, 'Altro');
+  await app.locator('[data-indietro]').click();
+  await app.waitForFunction(() => location.hash !== '#profilo');
+  verifica('"Indietro" torna alla schermata di prima', !/#profilo$/.test(app.url()));
 
-  titolo('COME VA (3.9): il mese, i social, Google e le chiamate, la pubblicità, da dove arrivano i clienti');
+  titolo('COME VA (3.9): previsione, social, Google e chiamate, pubblicità, da dove arrivano i clienti, i grafici dell’ultimo anno');
   /* a questo punto le prenotazioni di prima sono state tutte annullate: ne serve una vera, aggiunta a mano per oggi pomeriggio */
   const pagante = await api('prenotazione-nuova', { pacchetto: 'giornata', data: isoTra(0), fascia: 'pomeriggio', nome: 'Paola', cognome: 'Paganti', telefono: '3475556677' });
   /* Apex Media entra nella stessa app con il suo accesso e scrive i numeri del mese */
@@ -493,9 +511,11 @@ async function leggibile(page, nome, larghezza) {
   await ax.click('button[type=submit]');
   await ax.waitForURL('**/gestione'); await ax.waitForSelector('.g-saluto');
   verifica('Apex Media entra nella stessa app, con la sua email e la sua password', /Apex Media/.test(await ax.locator('.g-saluto').innerText()));
-  await ax.evaluate(() => { location.hash = 'come-va'; });
-  await ax.locator('a[href^="#numeri-mese/"]').waitFor();
-  await ax.locator('a[href^="#numeri-mese/"]').click();
+  await ax.locator('.g-barra a[data-voce="come-va"]').click();
+  await ax.locator('[data-blocco="instagram"] a.g-btn').waitFor();
+  verifica('Apex Media: su ogni blocco di social, Google e pubblicità c’è "Inserisci", e in fondo "Aggiorna i numeri"', await ax.locator('[data-blocco] a[href^="#numeri-mese/"]').count() === 5 &&
+    (await ax.locator('[data-blocco="instagram"] a.g-btn').innerText()).trim() === 'Inserisci' && await ax.locator('#vista a.g-btn-primario[href^="#numeri-mese/"]').count() === 1);
+  await ax.locator('[data-blocco="instagram"] a.g-btn').click();
   await ax.waitForSelector('[data-numeri]');
   await leggibile(ax, 'Numeri del mese (Apex Media)');
   const numeri = { instagram_follower: '-5', instagram_copertura: '5.300', facebook_follower: '310', facebook_copertura: '900', google_visualizzazioni: '2300', google_chiamate: '12', google_indicazioni: '30',
@@ -510,53 +530,56 @@ async function leggibile(page, nome, larghezza) {
   await ax.click('[data-numeri] button[type=submit]');
   await ax.locator('[data-fatto]:not([hidden])').waitFor({ timeout: 8000 });
   await ax.waitForFunction(() => /^#come-va\/\d{4}-\d{2}$/.test(location.hash));
-  await ax.locator('.g-voce small', { hasText: '1.240 follower su Instagram' }).waitFor();
-  verifica('Apex Media salva i numeri del mese e li rivede subito in "Come va"', true);
+  await ax.locator('[data-blocco="instagram"]', { hasText: '1.240' }).waitFor();
+  verifica('Apex Media salva i numeri del mese e li rivede subito in "Come va" (il pulsante del blocco diventa "Modifica")', (await ax.locator('[data-blocco="instagram"] a.g-btn').innerText()).trim() === 'Modifica');
   await apexCtx.close();
 
   /* la titolare li legge, senza poterli cambiare */
-  await app.locator('.g-voce', { hasText: 'Come va' }).click();
-  await app.waitForSelector('.g-numero');
+  await app.locator('.g-barra a[data-voce="come-va"]').click();
+  await app.waitForSelector('.g-tessera');
   const cv = (await app.locator('#vista').innerText()).replace(/\s+/g, ' ');
-  verifica('Come va: tre numeri grandi (prenotazioni, euro prenotati, clienti nuovi), niente grafici', await app.locator('.g-numero').count() === 3 && await app.locator('#vista canvas, #vista svg:not(.g-ico)').count() === 0 &&
-    /Prenotazion[ei] di /.test(cv) && /Prenotati ad? /.test(cv) && /Client[ei] nuov[oi]/.test(cv), cv.slice(0, 300));
-  verifica('Come va: "Da vicino" porta a canali, social, Google e chiamate, pubblicità, mese per mese', JSON.stringify(await app.locator('.g-voce strong').allInnerTexts()) === JSON.stringify(['Da dove arrivano i clienti', 'Instagram e Facebook', 'Google e chiamate', 'Pubblicità', 'Mese per mese']) &&
-    /1\.240 follower su Instagram/.test(cv) && /12 chiamate da Google/.test(cv) && /Spesi €120,50/.test(cv), cv);
-  verifica('Come va: gli altri numeri (clienti che tornano, posti occupati oggi, da incassare) e la nota di Apex Media', /Clienti che tornano/.test(cv) && /Posti occupati oggi 1 su \d+/.test(cv) && /Da incassare €12 · una prenotazione/.test(cv) && /Questa settimana \d+ prenotazion/.test(cv) &&
-    /Cosa abbiamo fatto questo mese Campagna di questo mese su Instagram\./.test(cv) && /aggiornati da Apex Media il \d+ /.test(cv), cv);
-  verifica('la titolare non ha il pulsante per cambiare i numeri di social e Google', await app.locator('a[href^="#numeri-mese/"]').count() === 0 && (await api('numeri-mese', { mese: isoTra(0).slice(0, 7), dati: { instagram_follower: 1 } })).stato === 403);
+  verifica('"Come va" è nella barra in basso e si apre sul mese in corso, con la frase "In breve"', /#come-va$/.test(app.url()) && (await app.locator('.g-barra a[aria-current="page"]').innerText()).trim() === 'Come va' && /In breve \w+: 1 prenotazione/.test(cv), cv.slice(0, 200));
+  verifica('previsione: dove si arriva a fine mese con il ritmo di adesso (dal quarto giorno), cosa c’è già in calendario, quanto deve ancora entrare',
+    (new Date().getDate() >= 4 ? /Previsione A fine \w+: circa \d+ prenotazion[ei] e €[\d.]+, se si continua con il ritmo di questi \d+ giorni\./ : /la previsione di fine mese arriva dal quarto giorno/).test(cv) &&
+    /Finora, \w+ 1 prenotazione · €12/.test(cv) && /si è chiuso con \d+ prenotazion[ei] · €/.test(cv) && /Già in calendario, prossimi 30 giorni \d+ prenotazion[ei] · €/.test(cv) && /Devono ancora entrare €12/.test(cv), cv.slice(0, 700));
+  verifica('il coworking in sei tessere: prenotazioni, incassato, clienti nuovi, clienti che tornano, arrivati in sede, scrivanie occupate oggi',
+    JSON.stringify(await app.locator('.g-tessera-nome').allInnerTexts()) === JSON.stringify(['Prenotazioni', 'Incassato', 'Clienti nuovi', 'Clienti che tornano', 'Arrivati in sede', 'Scrivanie occupate oggi']) &&
+    /Incassato €0 Soldi già entrati\. Prenotato in tutto: €12\./.test(cv) && /Scrivanie occupate oggi 1 su \d+/.test(cv), cv.slice(500, 1200));
+  verifica('il percorso del cliente, con quanti fanno ogni passo: 6.200 hanno visto i social, il 5,2% va sul sito, poi richieste e arrivi',
+    /6\.200 Hanno visto i social ↓ 5,2% 320 Sono andati sul sito ↓ 0,3% 1 Hanno chiesto un posto ↓ 0% 0 Sono arrivati in sede/.test(cv), cv.slice(1000, 1700));
+  const blocchi = {};
+  for (const id of ['instagram', 'facebook', 'google', 'sito', 'pubblicita']) blocchi[id] = (await app.locator('[data-blocco="' + id + '"]').innerText()).replace(/\s+/g, ' ');
+  verifica('Instagram e Facebook: follower, persone raggiunte e prenotazioni arrivate da lì', /^Instagram Follower 1\.240 Persone raggiunte 5\.300 Prenotazioni arrivate da Instagram 0$/.test(blocchi.instagram) &&
+    /^Facebook Follower 310 Persone raggiunte 900 Prenotazioni arrivate da Facebook 0$/.test(blocchi.facebook), blocchi.instagram + ' | ' + blocchi.facebook);
+  verifica('Google e chiamate: visualizzazioni, chiamate, indicazioni, clic, recensioni; sito e WhatsApp', /^Google Hanno visto la scheda 2\.300 Chiamate 12 Indicazioni stradali 30 Clic sul sito 45 Recensioni 4,8 su 5 · 37 in tutto Prenotazioni arrivate da Google 0$/.test(blocchi.google) &&
+    /^Sito e WhatsApp Visite al sito 320 Chat su WhatsApp 9 Prenotazioni arrivate da WhatsApp 0$/.test(blocchi.sito), blocchi.google + ' | ' + blocchi.sito);
+  verifica('Pubblicità: spesa del mese divisa per canale, prenotazioni arrivate, costo per prenotazione, quanto rende ogni euro',
+    /^Pubblicità Spesa del mese €120,50 Su Instagram e Facebook €80 Su Google €40,50 Prenotazioni arrivate dalla pubblicità 0 Costo per ogni prenotazione €120,50 Rende, per ogni €1 speso €0$/.test(blocchi.pubblicita), blocchi.pubblicita);
+  verifica('da dove arrivano le prenotazioni del mese, con le percentuali; la nota di Apex Media e la data di aggiornamento', /Da dove arrivano le prenotazioni Quelle di \w+, divise per come la persona è arrivata\. Di persona o al telefono 1 · 100%/.test(cv) &&
+    /Cosa abbiamo fatto questo mese Campagna di questo mese su Instagram\. Apex Media/.test(cv) && /aggiornati da Apex Media il \d+ /.test(cv), cv.slice(-900));
+  const grafici = await app.locator('#vista svg.g-grafico').evaluateAll(l => l.map(x => x.getAttribute('aria-label').split(':')[0]));
+  verifica('l’ultimo anno in cinque grafici (prenotazioni, incassi, canali, follower, azioni su Google), ognuno con il suo numero scritto in parole', JSON.stringify(grafici) === JSON.stringify(['Prenotazioni', 'Incassato', 'Prenotazioni per canale', 'Follower', 'Azioni su Google']) &&
+    /In 12 mesi: 1 prenotazione\./.test(cv) && /In 12 mesi: €0 incassati su €12 prenotati\./.test(cv) && await app.locator('.g-legenda-grafico').count() === 3, JSON.stringify(grafici));
+  verifica('la titolare non ha i pulsanti per cambiare i numeri di social e Google', await app.locator('a[href^="#numeri-mese/"]').count() === 0 && (await api('numeri-mese', { mese: isoTra(0).slice(0, 7), dati: { instagram_follower: 1 } })).stato === 403);
   verifica('nel mese in corso la freccia "Mese dopo" è spenta', await app.locator('.g-mese button[aria-label="Mese dopo"]').isDisabled());
   await app.screenshot({ path: path.join(OUT, 'app-come-va.png'), fullPage: true });
   await leggibile(app, 'Come va');
-  const daVicino = [
-    ['Da dove arrivano i clienti', 'canali', [/Di persona o al telefono \d/, /Negli ultimi 12 mesi/, /Hanno visto i social 6\.200/, /Sono andati sul sito 320/, /Hanno chiesto un posto \d/]],
-    ['Instagram e Facebook', 'social', [/Instagram Follower 1\.240/, /Persone raggiunte 5\.300/, /Facebook Follower 310/, /Prenotazioni arrivate da Instagram \d/]],
-    ['Google e chiamate', 'google', [/Chiamate 12/, /Richieste di indicazioni stradali 30/, /Clic sul sito 45/, /Recensioni 4,8 su 5 · 37 in tutto/, /Chat su WhatsApp 9/]],
-    ['Pubblicità', 'pubblicita', [/€120,50 Spesi ad? /, /Instagram e Facebook €80 · Google €40,50/]],
-    ['Mese per mese', 'anno', [/Prenotazioni/, /Valore delle prenotazioni/]]
-  ];
-  for (const [nomeVoce, file, attese] of daVicino) {
-    await app.locator('.g-voce', { hasText: nomeVoce }).click();
-    await app.waitForSelector('.g-titolo');
-    const t = (await app.locator('#vista').innerText()).replace(/\s+/g, ' ');
-    verifica('Come va → ' + nomeVoce + ': numeri in parole semplici, righe con una barra al posto dei grafici', attese.every(r => r.test(t)) && await app.locator('#vista canvas, #vista svg').count() === 0, t.slice(0, 400));
-    await leggibile(app, 'Come va · ' + nomeVoce);
-    await app.screenshot({ path: path.join(OUT, 'app-come-va-' + file + '.png'), fullPage: true });
-    await app.locator('[data-indietro]').click();
-    await app.waitForFunction(() => location.hash === '#come-va');
-    await app.waitForSelector('.g-numero');
-  }
+  await app.locator('a[href^="#come-va-anno/"]').click();
+  await app.waitForFunction(() => /^#come-va-anno\//.test(location.hash));
+  await app.locator('.g-titolo', { hasText: 'Mese per mese' }).waitFor();
+  const elencoAnno = (await app.locator('#vista').innerText()).replace(/\s+/g, ' ');
+  verifica('"I numeri mese per mese, in elenco": prenotazioni, valore, incassato, clienti nuovi, follower, chiamate, visite', ['Prenotazioni', 'Valore delle prenotazioni', 'Incassato', 'Clienti nuovi', 'Follower su Instagram', 'Follower su Facebook', 'Chiamate da Google', 'Visite al sito'].every(t => elencoAnno.indexOf(t) !== -1) &&
+    await app.locator('#vista .g-quote').count() === 8 && await app.locator('#vista svg, #vista canvas').count() === 0, elencoAnno.slice(0, 300));
+  await leggibile(app, 'Come va · mese per mese');
   await app.locator('[data-indietro]').click();
-  await app.waitForFunction(() => location.hash === '#profilo');
-  await app.waitForSelector('.g-voce');
-  verifica('"Indietro" torna alla schermata di prima', /#profilo$/.test(app.url()));
+  await app.waitForFunction(() => location.hash === '#come-va');
+  await app.waitForSelector('.g-tessera');
   /* il mese prima: gli stessi numeri, e "in arrivo" dove Apex Media non li ha ancora scritti */
-  await vai('come-va');
-  await app.waitForSelector('.g-numero');
   await app.locator('.g-mese button[aria-label="Mese prima"]').click();
-  await app.locator('.g-voce small', { hasText: 'Numeri in arrivo' }).first().waitFor();
-  verifica('con le frecce si guardano i mesi passati; dove i numeri non ci sono ancora: "Numeri in arrivo"', await app.locator('.g-voce small', { hasText: 'Numeri in arrivo' }).count() === 3 &&
-    !(await app.locator('.g-mese button[aria-label="Mese dopo"]').isDisabled()) && /Posti occupati oggi/.test(await app.locator('#vista').innerText()) === false);
+  await app.locator('.g-in-arrivo').first().waitFor();
+  const cvPrima = (await app.locator('#vista').innerText()).replace(/\s+/g, ' ');
+  verifica('con le frecce si guardano i mesi passati: i blocchi senza numeri dicono "In arrivo", e la previsione c’è solo nel mese in corso', await app.locator('.g-in-arrivo').count() === 5 && await app.locator('.g-tessera').count() === 5 &&
+    !(await app.locator('.g-mese button[aria-label="Mese dopo"]').isDisabled()) && !/Previsione/.test(cvPrima) && /In arrivo: lo aggiorna Apex Media a inizio mese\./.test(cvPrima), cvPrima.slice(0, 300));
 
   titolo('CLIENTI');
   const daTogliere = await api('prenotazione-nuova', { pacchetto: 'giornata', data: isoTra(15), fascia: 'giornata', nome: 'Piero', cognome: 'Provvisorio', telefono: '3470001122' });
@@ -606,14 +629,15 @@ async function leggibile(page, nome, larghezza) {
   await vai('incassi');
   await app.waitForSelector('.g-tre');
   let inc = (await app.locator('#vista').innerText()).replace(/\s+/g, ' ');
-  verifica('Incassi: si apre sul mese, con "Incassati", "Da incassare" e l’elenco di chi deve ancora pagare', pagante.stato === 200 && (await app.locator('.g-tre [aria-pressed=true]').innerText()).trim() === 'Mese' && /Incassati/.test(inc) && /Da incassare/.test(inc) && /Paola Paganti/.test(inc) && /€12 · da pagare/.test(inc), inc.slice(0, 300));
+  verifica('Incassi: si apre sul mese, con "Incassati", "Da incassare" e l’elenco di chi deve ancora pagare', pagante.stato === 200 && (await app.locator('.g-tre [aria-pressed=true]').innerText()).trim() === 'Mese' && /Incassati/.test(inc) && /Da incassare/.test(inc) && /Paola Paganti/.test(inc) && /€12 · da pagare/.test(inc) &&
+    JSON.stringify(await app.locator('[data-da-incassare] [data-incassa]').allInnerTexts()) === JSON.stringify(['Contanti', 'Carta']), inc.slice(0, 300));
   await leggibile(app, 'Incassi');
   await app.screenshot({ path: path.join(OUT, 'app-incassi.png'), fullPage: true });
   await app.locator('.g-tre button', { hasText: 'Giorno' }).click();
   await app.waitForFunction(() => /^#incassi\/giorno\//.test(location.hash));
   await app.locator('.g-tre [aria-pressed=true]', { hasText: 'Giorno' }).waitFor();
   verifica('"Giorno", "Settimana", "Mese": tre pulsanti, e le frecce per andare avanti e indietro', await app.locator('.g-tre button').count() === 3 && await app.locator('.g-mese button').count() === 2 && /Paola Paganti/.test(await app.locator('#vista').innerText()));
-  await app.locator('.g-voce', { hasText: 'Paola Paganti' }).click();
+  await app.locator('[data-da-incassare] a.g-nome', { hasText: 'Paola Paganti' }).click();
   await app.waitForSelector('a[href^="#pagamento/"]');
   await app.locator('a[href^="#pagamento/"]').click();
   await app.waitForSelector('[data-paga]');
@@ -639,10 +663,33 @@ async function leggibile(page, nome, larghezza) {
   verifica('"Ho sbagliato: non ha pagato" rimette la prenotazione tra quelle da incassare', /Da pagare: €12/.test(await app.locator('#vista').innerText()) && (await api('incassi&periodo=giorno&da=' + isoTra(0))).dati.totali.incassato === 0);
   await attendi(1800);
 
-  titolo('PREZZI, POSTI, MESSAGGI DI WHATSAPP (Impostazioni)');
+  /* incasso rapido: dall'elenco, senza aprire la prenotazione */
+  await vai('incassi/giorno/' + isoTra(0));
+  await app.locator('[data-da-incassare] [data-incassa="contanti"]').waitFor();
+  await app.locator('[data-da-incassare] [data-incassa="contanti"]').click();
+  await app.locator('[data-fatto]:not([hidden])').waitFor({ timeout: 8000 });
+  await app.locator('.g-sezione', { hasText: 'Già pagate' }).waitFor();
+  inc = (await app.locator('#vista').innerText()).replace(/\s+/g, ' ');
+  verifica('incasso rapido dall’elenco: un tocco su "Contanti" e la prenotazione passa tra le pagate; in alto quanto è entrato, in percentuale e come', /€12 Incassati Su €12 prenotati · 100% Contanti €12/.test(inc) && /€12 · pagato in contanti/.test(inc) &&
+    await app.locator('[data-da-incassare]').count() === 0, inc.slice(0, 300));
+  await attendi(2800);
+  /* i tre passi e "Non è venuta/o" */
+  await vai('prenotazione/' + pagante.dati.id);
+  await app.waitForSelector('[data-assente]');
+  const passiPrima = (await app.locator('.g-tre-passi').innerText()).replace(/\s+/g, ' ').trim();
+  await app.locator('[data-assente]').click();
+  await app.locator('.g-tre-passi li.no').waitFor();
+  const passiNo = (await app.locator('.g-tre-passi').innerText()).replace(/\s+/g, ' ').trim();
+  await app.locator('[data-non-arrivo]').click();
+  await app.waitForSelector('[data-assente]');
+  verifica('"Non è venuta/o": si segna dalla scheda, il secondo passo lo dice, e si può correggere', passiPrima === '1. Confermata 2. Arrivo da segnare 3. Pagato' && passiNo === '1. Confermata 2. Non è venuta/o 3. Pagato' &&
+    (await api('prenotazione&id=' + pagante.dati.id)).dati.stato === 'confermata', passiPrima + ' | ' + passiNo);
+  await attendi(1800);
+
+  titolo('PREZZI, POSTI, GIORNI DI CHIUSURA, MESSAGGI DI WHATSAPP (Impostazioni)');
   await vai('impostazioni');
   await app.waitForSelector('[data-notifiche]');
-  verifica('Impostazioni → "Il coworking": Prezzi, Quanti posti ci sono, Messaggi di WhatsApp', JSON.stringify(await app.locator('#vista .g-voce strong').allInnerTexts()) === JSON.stringify(['Prezzi', 'Quanti posti ci sono', 'Messaggi di WhatsApp']));
+  verifica('Impostazioni → "Il coworking": Prezzi, Quanti posti ci sono, Giorni di chiusura, Messaggi di WhatsApp', JSON.stringify(await app.locator('#vista .g-voce strong').allInnerTexts()) === JSON.stringify(['Prezzi', 'Quanti posti ci sono', 'Giorni di chiusura', 'Messaggi di WhatsApp']));
   await app.locator('#vista .g-voce', { hasText: 'Prezzi' }).click();
   await app.waitForSelector('[data-prezzi]');
   await leggibile(app, 'Prezzi');
@@ -677,6 +724,16 @@ async function leggibile(page, nome, larghezza) {
   const postiDopo = (await (await fetch(BASE + '/api/disponibilita?giorni=1')).json()).postazioni;
   verifica('quanti posti: meno e più, una conferma, e il sito offre un posto in meno', new RegExp('I posti diventano ' + (postiPrima - 1) + '\\?').test(domandaPosti) && postiDopo === postiPrima - 1, domandaPosti + ' → ' + postiDopo);
   await api('coworking', { postazioni: postiPrima });
+  await attendi(2800);
+  await vai('imp-chiusure');
+  await app.waitForSelector('[data-riapri-giorno]');
+  const chiusi = await app.locator('[data-riapri-giorno]').count();
+  await leggibile(app, 'Giorni di chiusura');
+  await app.screenshot({ path: path.join(OUT, 'app-chiusure.png'), fullPage: true });
+  await app.locator('[data-riapri-giorno]').first().click();
+  await app.locator('[data-fatto]:not([hidden])').waitFor({ timeout: 8000 });
+  await app.waitForFunction(n => document.querySelectorAll('[data-riapri-giorno]').length === n - 1, chiusi);
+  verifica('Giorni di chiusura: l’elenco dei giorni chiusi in programma, ognuno con "Riapri", e "Chiudi più giorni"', chiusi >= 3 && await app.locator('#vista a[href="#chiudi-giorni"]').count() === 1, 'chiusi: ' + chiusi);
   await attendi(2800);
   await vai('imp-messaggi');
   await app.waitForSelector('[data-messaggi]');
@@ -787,6 +844,16 @@ async function leggibile(page, nome, larghezza) {
   verifica('iPhone: apple-touch-icon 180×180, schermo intero, nome "Bagnarino"', testa.apple.includes('/img/app/icona-180.png') && png(Buffer.from(await apple.arrayBuffer())).join('x') === '180x180' && testa.capace === 'yes' && testa.titolo === 'Bagnarino', JSON.stringify(testa));
   const sw = await app.evaluate(async () => { const r = await navigator.serviceWorker.ready; return { scope: r.scope, attivo: r.active && r.active.state, controlla: !!navigator.serviceWorker.controller }; });
   verifica('service worker attivo sull’area /gestione', /\/gestione$/.test(sw.scope) && sw.attivo === 'activated', JSON.stringify(sw));
+  /* dopo un aggiornamento l'app deve mostrare subito la versione nuova: stili e script sono tenuti con la loro versione */
+  const tenuti = await app.evaluate(async () => {
+    const nomi = async () => { const c = await caches.open('bgn-gestione-6'); return (await c.keys()).map(r => new URL(r.url)).filter(u => /app-gestione/.test(u.pathname)).map(u => u.pathname + u.search).sort(); };
+    const prima = await nomi();
+    const nuovo = await (await fetch('/app-gestione.js?v=00000000')).text();   /* come se fosse uscita una versione nuova */
+    await new Promise(ok => setTimeout(ok, 400));
+    return { prima, dopo: await nomi(), arrivato: nuovo.length > 1000 };
+  });
+  verifica('stili e script dell’app tenuti con la loro versione: quando esce una versione nuova arriva subito dalla rete e prende il posto di quella di prima', tenuti.prima.length === 2 && tenuti.prima.every(x => /\?v=[0-9a-f]{8}$/.test(x)) &&
+    tenuti.arrivato && tenuti.dopo.length === 2 && tenuti.dopo.indexOf('/app-gestione.js?v=00000000') !== -1, JSON.stringify(tenuti));
   const install = await cdp.send('Page.getInstallabilityErrors');
   const mf = await cdp.send('Page.getAppManifest');
   verifica('Android (Chrome): l’app risulta installabile, nessun errore', install.installabilityErrors.length === 0 && mf.errors.length === 0, JSON.stringify(install.installabilityErrors) + JSON.stringify(mf.errors));
@@ -919,9 +986,8 @@ async function leggibile(page, nome, larghezza) {
     (await as.locator('[data-notifiche] a.g-btn').innerText()).trim() === 'Come riaccenderle' && await as.locator('[data-notifiche] a[href="/gestione/installa#notifiche"]').count() === 1, oggiSpente);
   await as.screenshot({ path: path.join(OUT, 'app-android-notifiche-spente.png'), fullPage: true });
   /* tutte le schermate, sullo schermo piccolo */
-  const schermate = [['oggi', 'Oggi'], ['calendario', 'Calendario'], ['chiudi-giorni', 'Chiudi più giorni'], ['prenotazioni', 'Prenotazioni'], ['sito', 'Sito'], ['sito-avviso', 'Avviso'], ['sito-foto', 'Foto'], ['sito-contatti', 'Telefono'], ['profilo', 'Profilo'], ['come-va', 'Come va'], ['come-va-canali', 'Da dove arrivano i clienti'], ['come-va-social', 'Instagram e Facebook'],
-    ['come-va-google', 'Google e chiamate'], ['come-va-pubblicita', 'Pubblicità'], ['come-va-anno', 'Mese per mese'], ['clienti', 'Clienti'], ['incassi', 'Incassi'], ['nuova', 'Aggiungi una prenotazione'],
-    ['imp-prezzi', 'Prezzi'], ['imp-posti', 'Quanti posti ci sono'], ['imp-messaggi', 'Messaggi di WhatsApp'], ['impostazioni', 'Impostazioni']];
+  const schermate = [['oggi', 'Oggi'], ['calendario', 'Calendario'], ['chiudi-giorni', 'Chiudi più giorni'], ['prenotazioni', 'Prenotazioni'], ['sito', 'Sito'], ['sito-avviso', 'Avviso'], ['sito-foto', 'Foto'], ['sito-contatti', 'Telefono'], ['profilo', 'Altro'], ['come-va', 'Come va'], ['come-va-anno', 'Mese per mese'], ['clienti', 'Clienti'], ['incassi', 'Incassi'], ['nuova', 'Aggiungi una prenotazione'],
+    ['giorno/' + isoTra(0), 'Giorno con le scrivanie'], ['imp-prezzi', 'Prezzi'], ['imp-posti', 'Quanti posti ci sono'], ['imp-chiusure', 'Giorni di chiusura'], ['imp-messaggi', 'Messaggi di WhatsApp'], ['impostazioni', 'Impostazioni']];
   const barra = pagina => pagina.evaluate(() => { const v = [...document.querySelectorAll('.g-barra a')]; const alto = v.map(a => Math.round(a.getBoundingClientRect().top));
     return { voci: v.length, unaRiga: alto.every(t => t === alto[0]), tagliate: v.filter(a => a.scrollWidth > a.clientWidth + 1).map(a => a.textContent.trim()), dentro: v.every(a => a.getBoundingClientRect().right <= window.innerWidth + 0.5) }; });
   for (const larghezza of [360, 320]) {

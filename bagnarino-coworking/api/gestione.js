@@ -148,7 +148,8 @@ module.exports = async (req, res) => {
 
     const cfg = await impostazioni(), sito = sitoUrl(req);
     if (!scrive) {
-      if (azione === 'oggi') { json(res, 200, Object.assign(await G.oggi(cfg), { nome: utente.nome, ruolo: utente.ruolo })); return; }
+      if (azione === 'oggi') { json(res, 200, Object.assign(await G.oggi(cfg), { nome: utente.nome, ruolo: utente.ruolo, numeri: await C.numeriAdesso() })); return; }
+      if (azione === 'chiusure') { json(res, 200, await G.chiusureInProgramma()); return; }
       if (azione === 'calendario') { json(res, 200, await G.calendario(req.query.mese, cfg)); return; }
       if (azione === 'giorno') { json(res, 200, await G.giorno(req.query.data, cfg)); return; }
       if (azione === 'prenotazioni') { json(res, 200, await G.prenotazioni(cfg)); return; }
@@ -210,7 +211,8 @@ module.exports = async (req, res) => {
     }
     /* "È arrivata/o": vale il timbro della Bagnarino Card */
     if (azione === 'arrivo') {
-      const r = await P.segnaPresenza(parseInt(b.id, 10), b.arrivato === false ? 'confermata' : 'presente');
+      /* arrivato: true → è venuta/o; assente: true → non è venuta/o; arrivato: false → si rimette com'era */
+      const r = await P.segnaPresenza(parseInt(b.id, 10), b.assente === true ? 'assente' : b.arrivato === false ? 'confermata' : 'presente');
       json(res, 200, { id: r.id, stato: r.stato, timbro: r.timbro, timbri: r.timbri, premio: r.premio, premioSbloccato: r.premioSbloccato }); return;
     }
     if (azione === 'chiudi') { json(res, 200, await G.chiudi(b.da, b.a, b.valore, cfg)); return; }
