@@ -7,3 +7,4 @@ reels/*/renders/_*.mp4
 reels/*/assets/fonts/SF-Pro-*.otf
 reels/*/.hyperframes/video-state.json
 reels/*/.hyperframes/render-outputs.json
+reels/*/.hyperframes/artifacts/

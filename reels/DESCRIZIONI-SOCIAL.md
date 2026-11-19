@@ -1937,3 +1937,29 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 Fonti: stime Sensor Tower sui preordini (novembre 2026); dato sul trailer dichiarato da Rockstar (maggio 2025); classifiche Netflix (agosto 2026).
 #gta6 #gta #rockstar #marketing #videogiochi #business #apexmedia
 ```
+
+---
+
+## 64. Essenza d'Oriente: a dicembre sta arrivando qualcosa (teaser di Natale)
+
+Video per la cliente Essenza d'Oriente (non Apex): niente MOTION alla fine. Tre clip reali del centro più grafica con i colori e i font del loro sito. Non nomina mai offerte o prezzi. File: `eo-natale-teaser/renders/eo-natale-teaser-9x16.mp4`
+
+**TikTok**
+```text
+A Natale pensi a tutti. E a te? A dicembre sta arrivando qualcosa. Seguici, te lo sveliamo presto.
+#essenzadoriente #alessandria #massaggi #natale
+```
+
+**Instagram**
+```text
+A Natale pensi a tutti. E a te?
+
+Un'ora di silenzio. Solo per te.
+
+A dicembre, da Essenza d'Oriente, sta arrivando qualcosa. Non possiamo ancora dirti cosa.
+
+Seguici e attiva le notifiche: te lo sveliamo presto.
+
+📍 Via San Lorenzo 46, Alessandria
+#essenzadoriente #alessandria #massaggi #benessere #natale #regalidinatale #centroolistico
+```
