@@ -1,0 +1,320 @@
+[
+  {
+    "text": "a",
+    "start": 0.01,
+    "end": 0.09,
+    "id": "w0"
+  },
+  {
+    "text": "Natale",
+    "start": 0.09,
+    "end": 0.54,
+    "id": "w1"
+  },
+  {
+    "text": "pensi",
+    "start": 0.69,
+    "end": 1.15,
+    "id": "w2"
+  },
+  {
+    "text": "a",
+    "start": 1.15,
+    "end": 1.24,
+    "id": "w3"
+  },
+  {
+    "text": "tutti",
+    "start": 1.24,
+    "end": 1.58,
+    "id": "w4"
+  },
+  {
+    "text": "e",
+    "start": 1.58,
+    "end": 1.73,
+    "id": "w5"
+  },
+  {
+    "text": "a",
+    "start": 1.73,
+    "end": 1.88,
+    "id": "w6"
+  },
+  {
+    "text": "te",
+    "start": 1.88,
+    "end": 2,
+    "id": "w7"
+  },
+  {
+    "text": "corri",
+    "start": 2,
+    "end": 2.58,
+    "id": "w8"
+  },
+  {
+    "text": "per",
+    "start": 2.58,
+    "end": 2.93,
+    "id": "w9"
+  },
+  {
+    "text": "i",
+    "start": 2.93,
+    "end": 3.04,
+    "id": "w10"
+  },
+  {
+    "text": "regali",
+    "start": 3.04,
+    "end": 3.53,
+    "id": "w11"
+  },
+  {
+    "text": "le",
+    "start": 3.85,
+    "end": 4.1,
+    "id": "w12"
+  },
+  {
+    "text": "scene",
+    "start": 4.1,
+    "end": 4.43,
+    "id": "w13"
+  },
+  {
+    "text": "i",
+    "start": 4.43,
+    "end": 4.78,
+    "id": "w14"
+  },
+  {
+    "text": "parenti",
+    "start": 4.78,
+    "end": 5.51,
+    "id": "w15"
+  },
+  {
+    "text": "e",
+    "start": 5.51,
+    "end": 5.82,
+    "id": "w16"
+  },
+  {
+    "text": "arrivi",
+    "start": 5.82,
+    "end": 6.16,
+    "id": "w17"
+  },
+  {
+    "text": "al",
+    "start": 6.16,
+    "end": 6.25,
+    "id": "w18"
+  },
+  {
+    "text": "25",
+    "start": 6.25,
+    "end": 6.79,
+    "id": "w19"
+  },
+  {
+    "text": "più",
+    "start": 6.89,
+    "end": 7.22,
+    "id": "w20"
+  },
+  {
+    "text": "stanco",
+    "start": 7.22,
+    "end": 7.72,
+    "id": "w21"
+  },
+  {
+    "text": "di",
+    "start": 7.72,
+    "end": 7.8,
+    "id": "w22"
+  },
+  {
+    "text": "prima",
+    "start": 7.8,
+    "end": 8.2,
+    "id": "w23"
+  },
+  {
+    "text": "quest'anno",
+    "start": 8.2,
+    "end": 9.06,
+    "id": "w24"
+  },
+  {
+    "text": "fermati",
+    "start": 9.06,
+    "end": 9.99,
+    "id": "w25"
+  },
+  {
+    "text": "un'ora",
+    "start": 10.01,
+    "end": 10.54,
+    "id": "w26"
+  },
+  {
+    "text": "di",
+    "start": 10.69,
+    "end": 10.78,
+    "id": "w27"
+  },
+  {
+    "text": "silenzio",
+    "start": 10.78,
+    "end": 11.59,
+    "id": "w28"
+  },
+  {
+    "text": "solo",
+    "start": 11.88,
+    "end": 12,
+    "id": "w29"
+  },
+  {
+    "text": "per",
+    "start": 12.1,
+    "end": 12.22,
+    "id": "w30"
+  },
+  {
+    "text": "te",
+    "start": 12.55,
+    "end": 12.6,
+    "id": "w31"
+  },
+  {
+    "text": "a",
+    "start": 12.61,
+    "end": 12.67,
+    "id": "w32"
+  },
+  {
+    "text": "dicembre",
+    "start": 12.67,
+    "end": 13.25,
+    "id": "w33"
+  },
+  {
+    "text": "da",
+    "start": 13.25,
+    "end": 13.39,
+    "id": "w34"
+  },
+  {
+    "text": "essenza",
+    "start": 13.39,
+    "end": 13.9,
+    "id": "w35"
+  },
+  {
+    "text": "d'Oriente",
+    "start": 13.9,
+    "end": 14.45,
+    "id": "w36"
+  },
+  {
+    "text": "sta",
+    "start": 14.45,
+    "end": 14.78,
+    "id": "w37"
+  },
+  {
+    "text": "arrivando",
+    "start": 14.78,
+    "end": 15.49,
+    "id": "w38"
+  },
+  {
+    "text": "qualcosa",
+    "start": 15.82,
+    "end": 16,
+    "id": "w39"
+  },
+  {
+    "text": "non",
+    "start": 16.01,
+    "end": 16.21,
+    "id": "w40"
+  },
+  {
+    "text": "possiamo",
+    "start": 16.25,
+    "end": 16.84,
+    "id": "w41"
+  },
+  {
+    "text": "ancora",
+    "start": 16.84,
+    "end": 17.28,
+    "id": "w42"
+  },
+  {
+    "text": "dirti",
+    "start": 17.44,
+    "end": 17.61,
+    "id": "w43"
+  },
+  {
+    "text": "cosa",
+    "start": 17.88,
+    "end": 18,
+    "id": "w44"
+  },
+  {
+    "text": "seguici",
+    "start": 18.1,
+    "end": 18.55,
+    "id": "w45"
+  },
+  {
+    "text": "te",
+    "start": 18.55,
+    "end": 18.71,
+    "id": "w46"
+  },
+  {
+    "text": "lo",
+    "start": 18.71,
+    "end": 18.82,
+    "id": "w47"
+  },
+  {
+    "text": "sveliamo",
+    "start": 18.87,
+    "end": 19.47,
+    "id": "w48"
+  },
+  {
+    "text": "presto",
+    "start": 19.47,
+    "end": 19.98,
+    "id": "w49"
+  },
+  {
+    "text": "perché",
+    "start": 20.02,
+    "end": 20.36,
+    "id": "w50"
+  },
+  {
+    "text": "lo",
+    "start": 20.36,
+    "end": 20.47,
+    "id": "w51"
+  },
+  {
+    "text": "sappiamo",
+    "start": 20.74,
+    "end": 21,
+    "id": "w52"
+  }
+]

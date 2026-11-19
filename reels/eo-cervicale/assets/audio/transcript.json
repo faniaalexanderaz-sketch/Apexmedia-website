@@ -1,0 +1,542 @@
+[
+  {
+    "text": "La",
+    "start": 0,
+    "end": 0.19,
+    "id": "w0"
+  },
+  {
+    "text": "tua",
+    "start": 0.19,
+    "end": 0.47,
+    "id": "w1"
+  },
+  {
+    "text": "testa",
+    "start": 0.47,
+    "end": 0.94,
+    "id": "w2"
+  },
+  {
+    "text": "pesa",
+    "start": 0.94,
+    "end": 1.27,
+    "id": "w3"
+  },
+  {
+    "text": "5",
+    "start": 1.31,
+    "end": 1.58,
+    "id": "w4"
+  },
+  {
+    "text": "cili,",
+    "start": 1.58,
+    "end": 2.2,
+    "id": "w5"
+  },
+  {
+    "text": "ma",
+    "start": 2.2,
+    "end": 2.29,
+    "id": "w6"
+  },
+  {
+    "text": "quando",
+    "start": 2.38,
+    "end": 2.67,
+    "id": "w7"
+  },
+  {
+    "text": "guardi",
+    "start": 2.67,
+    "end": 3.01,
+    "id": "w8"
+  },
+  {
+    "text": "il",
+    "start": 3.01,
+    "end": 3.13,
+    "id": "w9"
+  },
+  {
+    "text": "telefono,",
+    "start": 3.13,
+    "end": 3.73,
+    "id": "w10"
+  },
+  {
+    "text": "per",
+    "start": 3.73,
+    "end": 3.87,
+    "id": "w11"
+  },
+  {
+    "text": "il",
+    "start": 3.87,
+    "end": 3.95,
+    "id": "w12"
+  },
+  {
+    "text": "collo",
+    "start": 3.96,
+    "end": 4.19,
+    "id": "w13"
+  },
+  {
+    "text": "può",
+    "start": 4.19,
+    "end": 4.36,
+    "id": "w14"
+  },
+  {
+    "text": "pesarne",
+    "start": 4.36,
+    "end": 4.82,
+    "id": "w15"
+  },
+  {
+    "text": "fino",
+    "start": 4.82,
+    "end": 5.1,
+    "id": "w16"
+  },
+  {
+    "text": "a",
+    "start": 5.1,
+    "end": 5.18,
+    "id": "w17"
+  },
+  {
+    "text": "27,",
+    "start": 5.18,
+    "end": 5.76,
+    "id": "w18"
+  },
+  {
+    "text": "come",
+    "start": 5.84,
+    "end": 6.14,
+    "id": "w19"
+  },
+  {
+    "text": "un",
+    "start": 6.14,
+    "end": 6.3,
+    "id": "w20"
+  },
+  {
+    "text": "bambino",
+    "start": 6.3,
+    "end": 6.86,
+    "id": "w21"
+  },
+  {
+    "text": "di",
+    "start": 6.86,
+    "end": 6.99,
+    "id": "w22"
+  },
+  {
+    "text": "8",
+    "start": 6.99,
+    "end": 7.31,
+    "id": "w23"
+  },
+  {
+    "text": "anni",
+    "start": 7.31,
+    "end": 7.58,
+    "id": "w24"
+  },
+  {
+    "text": "seduto",
+    "start": 7.58,
+    "end": 7.99,
+    "id": "w25"
+  },
+  {
+    "text": "sulle",
+    "start": 8.08,
+    "end": 8.46,
+    "id": "w26"
+  },
+  {
+    "text": "spalle,",
+    "start": 8.46,
+    "end": 9.17,
+    "id": "w27"
+  },
+  {
+    "text": "per",
+    "start": 9.17,
+    "end": 9.35,
+    "id": "w28"
+  },
+  {
+    "text": "ore,",
+    "start": 9.43,
+    "end": 9.84,
+    "id": "w29"
+  },
+  {
+    "text": "ogni",
+    "start": 9.84,
+    "end": 10.18,
+    "id": "w30"
+  },
+  {
+    "text": "giorno.",
+    "start": 10.18,
+    "end": 10.98,
+    "id": "w31"
+  },
+  {
+    "text": "Ecco",
+    "start": 10.98,
+    "end": 11.24,
+    "id": "w32"
+  },
+  {
+    "text": "perché",
+    "start": 11.24,
+    "end": 11.64,
+    "id": "w33"
+  },
+  {
+    "text": "la",
+    "start": 11.71,
+    "end": 11.78,
+    "id": "w34"
+  },
+  {
+    "text": "sera",
+    "start": 11.78,
+    "end": 12.05,
+    "id": "w35"
+  },
+  {
+    "text": "hai",
+    "start": 12.05,
+    "end": 12.25,
+    "id": "w36"
+  },
+  {
+    "text": "il",
+    "start": 12.25,
+    "end": 12.38,
+    "id": "w37"
+  },
+  {
+    "text": "collo",
+    "start": 12.38,
+    "end": 12.71,
+    "id": "w38"
+  },
+  {
+    "text": "duro",
+    "start": 12.71,
+    "end": 12.9,
+    "id": "w39"
+  },
+  {
+    "text": "e",
+    "start": 12.9,
+    "end": 13.04,
+    "id": "w40"
+  },
+  {
+    "text": "le",
+    "start": 13.04,
+    "end": 13.18,
+    "id": "w41"
+  },
+  {
+    "text": "spalle",
+    "start": 13.18,
+    "end": 13.56,
+    "id": "w42"
+  },
+  {
+    "text": "alte,",
+    "start": 13.56,
+    "end": 14.1,
+    "id": "w43"
+  },
+  {
+    "text": "tre",
+    "start": 14.1,
+    "end": 14.31,
+    "id": "w44"
+  },
+  {
+    "text": "cose",
+    "start": 14.31,
+    "end": 14.53,
+    "id": "w45"
+  },
+  {
+    "text": "da",
+    "start": 14.67,
+    "end": 14.77,
+    "id": "w46"
+  },
+  {
+    "text": "fare",
+    "start": 14.77,
+    "end": 15.07,
+    "id": "w47"
+  },
+  {
+    "text": "subito.",
+    "start": 15.07,
+    "end": 15.7,
+    "id": "w48"
+  },
+  {
+    "text": "Uno,",
+    "start": 15.7,
+    "end": 16.08,
+    "id": "w49"
+  },
+  {
+    "text": "alza",
+    "start": 16.08,
+    "end": 16.36,
+    "id": "w50"
+  },
+  {
+    "text": "il",
+    "start": 16.44,
+    "end": 16.53,
+    "id": "w51"
+  },
+  {
+    "text": "telefono",
+    "start": 16.53,
+    "end": 17.13,
+    "id": "w52"
+  },
+  {
+    "text": "all'altezza",
+    "start": 17.17,
+    "end": 17.98,
+    "id": "w53"
+  },
+  {
+    "text": "degli",
+    "start": 17.98,
+    "end": 18.37,
+    "id": "w54"
+  },
+  {
+    "text": "occhi,",
+    "start": 18.37,
+    "end": 18.89,
+    "id": "w55"
+  },
+  {
+    "text": "due,",
+    "start": 18.89,
+    "end": 19.26,
+    "id": "w56"
+  },
+  {
+    "text": "ogni",
+    "start": 19.38,
+    "end": 19.58,
+    "id": "w57"
+  },
+  {
+    "text": "mezz'ora",
+    "start": 19.64,
+    "end": 20.19,
+    "id": "w58"
+  },
+  {
+    "text": "muovi",
+    "start": 20.19,
+    "end": 20.55,
+    "id": "w59"
+  },
+  {
+    "text": "il",
+    "start": 20.7,
+    "end": 20.71,
+    "id": "w60"
+  },
+  {
+    "text": "collo,",
+    "start": 20.71,
+    "end": 21.37,
+    "id": "w61"
+  },
+  {
+    "text": "tre,",
+    "start": 21.4,
+    "end": 21.98,
+    "id": "w62"
+  },
+  {
+    "text": "sciogli",
+    "start": 21.98,
+    "end": 22.4,
+    "id": "w63"
+  },
+  {
+    "text": "la",
+    "start": 22.4,
+    "end": 22.5,
+    "id": "w64"
+  },
+  {
+    "text": "tensione,",
+    "start": 22.57,
+    "end": 23.13,
+    "id": "w65"
+  },
+  {
+    "text": "prima",
+    "start": 23.13,
+    "end": 23.41,
+    "id": "w66"
+  },
+  {
+    "text": "che",
+    "start": 23.45,
+    "end": 23.61,
+    "id": "w67"
+  },
+  {
+    "text": "diventi",
+    "start": 23.61,
+    "end": 23.9,
+    "id": "w68"
+  },
+  {
+    "text": "un",
+    "start": 23.9,
+    "end": 24.18,
+    "id": "w69"
+  },
+  {
+    "text": "abitudine.",
+    "start": 24.18,
+    "end": 24.87,
+    "id": "w70"
+  },
+  {
+    "text": "Da",
+    "start": 24.94,
+    "end": 25.06,
+    "id": "w71"
+  },
+  {
+    "text": "Essenza",
+    "start": 25.11,
+    "end": 25.6,
+    "id": "w72"
+  },
+  {
+    "text": "d'Oriente,",
+    "start": 25.67,
+    "end": 26.43,
+    "id": "w73"
+  },
+  {
+    "text": "ad",
+    "start": 26.43,
+    "end": 26.58,
+    "id": "w74"
+  },
+  {
+    "text": "Alessandria,",
+    "start": 26.58,
+    "end": 27.51,
+    "id": "w75"
+  },
+  {
+    "text": "lavoriamo",
+    "start": 27.55,
+    "end": 28.14,
+    "id": "w76"
+  },
+  {
+    "text": "proprio",
+    "start": 28.27,
+    "end": 28.75,
+    "id": "w77"
+  },
+  {
+    "text": "lì,",
+    "start": 28.75,
+    "end": 29.04,
+    "id": "w78"
+  },
+  {
+    "text": "collo,",
+    "start": 29.04,
+    "end": 29.56,
+    "id": "w79"
+  },
+  {
+    "text": "spalle",
+    "start": 29.56,
+    "end": 30.01,
+    "id": "w80"
+  },
+  {
+    "text": "e",
+    "start": 30.01,
+    "end": 30.08,
+    "id": "w81"
+  },
+  {
+    "text": "schiena.",
+    "start": 30.08,
+    "end": 30.86,
+    "id": "w82"
+  },
+  {
+    "text": "Scrivici",
+    "start": 30.86,
+    "end": 31.38,
+    "id": "w83"
+  },
+  {
+    "text": "su",
+    "start": 31.45,
+    "end": 31.52,
+    "id": "w84"
+  },
+  {
+    "text": "WhatsApp",
+    "start": 31.6,
+    "end": 32.12,
+    "id": "w85"
+  },
+  {
+    "text": "e",
+    "start": 32.12,
+    "end": 32.13,
+    "id": "w86"
+  },
+  {
+    "text": "non",
+    "start": 32.23,
+    "end": 32.4,
+    "id": "w87"
+  },
+  {
+    "text": "dimenticare",
+    "start": 32.4,
+    "end": 33.15,
+    "id": "w88"
+  },
+  {
+    "text": "che…",
+    "start": 33.24,
+    "end": 33.59,
+    "id": "w89"
+  }
+]

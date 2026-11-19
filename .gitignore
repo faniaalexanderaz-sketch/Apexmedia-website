@@ -8,3 +8,5 @@ reels/*/assets/fonts/SF-Pro-*.otf
 reels/*/.hyperframes/video-state.json
 reels/*/.hyperframes/render-outputs.json
 reels/*/.hyperframes/artifacts/
+reels/*/renders/_*.log
+reels/*/assets/audio/tr.log

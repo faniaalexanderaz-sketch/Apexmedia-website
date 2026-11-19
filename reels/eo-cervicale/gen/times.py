@@ -1,0 +1,4 @@
+# named voice moments in seconds, measured on assets/audio/vo.mp3 (phrase starts = ends of the silences; words inside a phrase are estimated).
+# The reel loops: "E non dimenticare che..." at the end leads back into "La tua testa pesa cinque chili."
+# The first sentence is a separate take (the first one said "chili" wrong); everything after it is shifted by +0.20 s.
+T = dict(start=0.0, pesa=1.08, cinque=1.32, ma=2.4, guardi=2.95, perilcollo=3.89, ventisette=5.5, come=6.47, bambino=6.7, otto=7.35, seduto=7.95, perore=9.28, ognigiorno=10.18, ecco=11.25, collo=12.7, spalle=13.5, trecose=14.34, uno=16.04, alza=16.66, altezza=17.55, due=18.87, mezzora=19.54, muovi=20.51, tre=21.66, sciogli=22.18, prima=23.56, da=25.24, alessandria=26.85, lavoriamo=27.64, ccollo=29.11, cspalle=29.85, cschiena=30.4, scrivici=31.09, enon=32.55, END=34.0)

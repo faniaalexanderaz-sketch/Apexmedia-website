@@ -1940,9 +1940,9 @@ Fonti: stime Sensor Tower sui preordini (novembre 2026); dato sul trailer dichia
 
 ---
 
-## 64. Essenza d'Oriente: a dicembre sta arrivando qualcosa (teaser di Natale)
+## 64. Essenza d'Oriente: a dicembre sta arrivando qualcosa (teaser di Natale, loop)
 
-Video per la cliente Essenza d'Oriente (non Apex): niente MOTION alla fine. Tre clip reali del centro più grafica con i colori e i font del loro sito. Non nomina mai offerte o prezzi. File: `eo-natale-teaser/renders/eo-natale-teaser-9x16.mp4`
+Video per la cliente Essenza d'Oriente (non Apex): niente MOTION alla fine. Clip reali del centro, tre clip generate a tema natalizio, neve e lucine. Non nomina mai offerte o prezzi. Finisce con "Perché lo sappiamo..." che riporta alla prima frase (loop). File: `eo-natale-teaser/renders/eo-natale-teaser-9x16.mp4`
 
 **TikTok**
 ```text
@@ -1954,7 +1954,9 @@ A Natale pensi a tutti. E a te? A dicembre sta arrivando qualcosa. Seguici, te l
 ```text
 A Natale pensi a tutti. E a te?
 
-Un'ora di silenzio. Solo per te.
+Corri per i regali, le cene, i parenti. E arrivi al 25 più stanco di prima.
+
+Quest'anno, fermati. Un'ora di silenzio. Solo per te.
 
 A dicembre, da Essenza d'Oriente, sta arrivando qualcosa. Non possiamo ancora dirti cosa.
 
@@ -1962,4 +1964,72 @@ Seguici e attiva le notifiche: te lo sveliamo presto.
 
 📍 Via San Lorenzo 46, Alessandria
 #essenzadoriente #alessandria #massaggi #benessere #natale #regalidinatale #centroolistico
+```
+
+---
+
+## 65. Essenza d'Oriente: la tua testa pesa 5 chili (collo e telefono, loop)
+
+Video per la cliente Essenza d'Oriente: niente MOTION alla fine. Spiega perché il collo si irrigidisce guardando il telefono, dà tre consigli e chiude con il richiamo al centro e il numero WhatsApp. Finisce con "E non dimenticare che..." che riporta alla prima frase (loop). File: `eo-cervicale/renders/eo-cervicale-9x16.mp4`
+
+**TikTok**
+```text
+La tua testa pesa 5 chili. Ma quando guardi il telefono, per il collo può pesarne fino a 27. Tre cose da fare subito.
+#cervicale #collo #postura #alessandria #essenzadoriente
+```
+
+**Instagram**
+```text
+La tua testa pesa 5 chili. Ma quando guardi il telefono, per il collo può pesarne fino a 27. Come un bambino di 8 anni seduto sulle spalle. Per ore. Ogni giorno.
+
+Ecco perché la sera hai il collo duro e le spalle alte.
+
+Tre cose da fare subito:
+1. Alza il telefono all'altezza degli occhi.
+2. Ogni mezz'ora, muovi il collo.
+3. Sciogli la tensione, prima che diventi un'abitudine.
+
+Da Essenza d'Oriente, ad Alessandria, lavoriamo proprio lì: collo, spalle e schiena.
+
+📍 Via San Lorenzo 46, Alessandria
+📲 WhatsApp 331 715 3533 · tutti i giorni 9:30 – 22:30
+
+Manda questo video a chi sta sempre con la testa sul telefono.
+
+I chili sono una stima da modello (Hansraj, Surgical Technology International, 2014). Trattamenti olistici per il benessere, non prestazioni sanitarie.
+#cervicale #collo #postura #massaggi #benessere #alessandria #essenzadoriente
+```
+
+---
+
+## 66. Essenza d'Oriente: 5 segnali che il tuo corpo ti sta chiedendo una pausa (loop)
+
+Video per la cliente Essenza d'Oriente: niente MOTION alla fine. Elenco di cinque segnali quotidiani, poi il richiamo al centro con orari e numero WhatsApp. Finisce con "Perché forse non te ne sei accorto, ma..." che riporta alla prima frase (loop). File: `eo-segnali/renders/eo-segnali-9x16.mp4`
+
+**TikTok**
+```text
+Il tuo corpo ti sta chiedendo una pausa. E tu non lo ascolti. 5 segnali: ne hai almeno 3?
+#stress #benessere #massaggi #alessandria #essenzadoriente
+```
+
+**Instagram**
+```text
+Il tuo corpo ti sta chiedendo una pausa. E tu non lo ascolti.
+
+Cinque segnali:
+1. Le spalle vicino alle orecchie.
+2. La mascella stretta. Anche adesso.
+3. Ti svegli già stanco.
+4. Il mal di testa a fine giornata.
+5. Non ricordi l'ultima ora senza telefono.
+
+Ne hai almeno tre? Allora ti serve un'ora tutta tua.
+
+Scrivi nei commenti quanti ne hai.
+
+📍 Essenza d'Oriente, Via San Lorenzo 46, Alessandria
+📲 WhatsApp 331 715 3533 · tutti i giorni fino alle 22:30
+
+Trattamenti olistici per il benessere, non prestazioni sanitarie.
+#stress #benessere #massaggi #relax #alessandria #essenzadoriente #centroolistico
 ```

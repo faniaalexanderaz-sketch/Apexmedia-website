@@ -1,0 +1,80 @@
+<template>
+  <style>
+
+    @font-face { font-family: "Fraunces"; src: url("assets/fonts/fraunces-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+    @font-face { font-family: "Fraunces"; src: url("assets/fonts/fraunces-latin-wght-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+    @font-face { font-family: "Jost"; src: url("assets/fonts/jost-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+    @font-face { font-family: "EO Han"; src: local("WenQuanYi Zen Hei"), local("Noto Sans CJK SC"); font-weight: 400; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #F4F2EC; overflow: hidden; font-family: "Jost"; color: #142019; -webkit-font-smoothing: antialiased; }
+    .zone { z-index: 5; position: absolute; left: 70px; right: 70px; top: 330px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 10px 0 22px; font: 500 76px/1.06 "Jost"; }
+    .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
+    .line > span { display: inline-block; padding: 0 0.08em; }
+    .t-sans { font: 500 74px/1.08 "Jost"; letter-spacing: -0.01em; }
+    .t-d { font: 500 132px/1.02 "Fraunces"; letter-spacing: -0.025em; }
+    .t-di { font: italic 500 132px/1.02 "Fraunces"; letter-spacing: -0.025em; }
+    .mut { color: #71796F; }
+    .cream { color: #F4F2EC; }
+    .gold { color: #B99A45; }
+    .ch { display: inline-block; white-space: pre; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -10px; right: -10px; top: 46%; bottom: 4%; background: #D6E6C0; border-radius: 10px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .pill { position: absolute; padding: 16px 30px; border-radius: 999px; background: #142019; color: #F4F2EC; font: 600 34px/1 "Jost"; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; white-space: nowrap; }
+    .label { position: absolute; left: 0; right: 0; text-align: center; font: 600 26px/1 "Jost"; letter-spacing: 0.22em; text-transform: uppercase; }
+    .st { position: absolute; inset: 0; background: #F4F2EC; overflow: hidden; }
+    .st.ink { background: #142019; color: #F4F2EC; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
+    .vid { position: absolute; inset: 0; overflow: hidden; }
+    .vid video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,32,25,0.82) 0%, rgba(20,32,25,0.6) 30%, rgba(20,32,25,0.06) 54%, rgba(20,32,25,0.12) 76%, rgba(20,32,25,0.7) 100%); }
+    .shade.full { background: rgba(20,32,25,0.72); }
+    .shade.low { background: linear-gradient(180deg, rgba(20,32,25,0.78) 0%, rgba(20,32,25,0.5) 28%, rgba(20,32,25,0.05) 50%, rgba(20,32,25,0.55) 72%, rgba(20,32,25,0.9) 100%); }
+    .num { position: absolute; left: 70px; top: 300px; width: 150px; height: 150px; border-radius: 50%; background: #B99A45; color: #142019; font: 500 96px/150px "Fraunces"; text-align: center; opacity: 0; }
+    .chip { position: absolute; padding: 20px 38px; border-radius: 999px; background: #F4F2EC; color: #142019; font: 600 46px/1 "Jost"; white-space: nowrap; opacity: 0; box-shadow: 0 20px 50px -18px rgba(20,32,25,0.55); }
+    .wa { position: absolute; left: 0; right: 0; margin: 0 auto; width: fit-content; display: flex; align-items: center; gap: 22px; padding: 24px 46px 24px 30px; border-radius: 999px; background: #25D366; color: #0B2A17; font: 600 54px/1 "Jost"; white-space: nowrap; opacity: 0; box-shadow: 0 26px 60px -20px rgba(0,0,0,0.6); }
+    .wa small { display: block; font: 600 26px/1 "Jost"; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; opacity: 0.78; }
+    .card { position: absolute; border-radius: 44px; background: #fff; box-shadow: 0 34px 90px -24px rgba(20,32,25,0.4); }
+    .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
+    .sel { position: absolute; border: 3px dashed #B99A45; pointer-events: none; opacity: 0; }
+    .sel i { position: absolute; width: 16px; height: 16px; background: #F4F2EC; border: 3px solid #B99A45; }
+    .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
+    .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
+
+    #root { background: #142019 !important; }
+
+  </style>
+  <div id="root" data-composition-id="n12" data-width="1080" data-height="1920">
+    <div id="n12-st" class="st" data-layout-allow-overlap>
+      <div class="vid" id="z-v-w" data-layout-allow-overlap><video id="z-v" class="clip" src="assets/video/clip1.mp4" data-start="0" data-duration="1.19" data-media-start="0.81" muted playsinline></video></div><div class="shade "></div>
+      <div class="zone" data-layout-allow-overlap style="top:360px"><span class="line"><span id="z-l1" class="t-sans cream" style="font-size:96px">perché</span></span><span class="line" style="margin-top:-28px"><span id="z-l2" class="t-di cream" style="font-size:168px">lo sappiamo…</span></span></div>
+    </div>
+  </div>
+  <script>
+
+    /* split every .split element into letter spans once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    /* letters flip up into place one by one (the reference's per-letter entrance) */
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    /* a whole line rises from behind its own baseline mask */
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.22, ease: "power3.in" }, t);
+    /* dashed selection box with handles, then a cursor that clicks it */
+    const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const count = (tl, sel, a, b, t, d, fmt) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || ((v) => String(Math.round(v))); tl.to(o, { v: b, duration: d, ease: "expo.out", onUpdate: () => { el.textContent = f(o.v); } }, t); };
+    const enter = (tl, sel, k) => k === "N" ? tl : k === "D" ? tl.fromTo(sel, { y: -1920 }, { y: 0, duration: 0.3, ease: "expo.out" }, 0) : k === "R" ? tl.fromTo(sel, { x: -1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0) : k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.3, ease: "expo.out" }, 0) : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0) : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "N" ? tl : k === "D" ? tl.to(sel, { y: 1920, duration: 0.22, ease: "power3.in" }, t) : k === "R" ? tl.to(sel, { x: 1080, duration: 0.22, ease: "power3.in" }, t) : k === "U" ? tl.to(sel, { y: -1920, duration: 0.22, ease: "power3.in" }, t) : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t) : tl.to(sel, { x: -1080, duration: 0.22, ease: "power3.in" }, t);
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+
+    const tl = gsap.timeline({ paused: true });
+    enter(tl, "#n12-st", "U");
+    tl.fromTo("#z-v-w", { scale: 1.2233 }, { scale: 1.16, duration: 1.19, ease: "none" }, 0);
+    rise(tl, "#z-l1", 0.03);
+    rise(tl, "#z-l2", 0.28);
+    window.__timelines["n12"] = tl;
+  </script>
+</template>

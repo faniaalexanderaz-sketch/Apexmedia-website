@@ -1,0 +1,100 @@
+<template>
+  <style>
+
+    @font-face { font-family: "Fraunces"; src: url("assets/fonts/fraunces-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+    @font-face { font-family: "Fraunces"; src: url("assets/fonts/fraunces-latin-wght-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+    @font-face { font-family: "Jost"; src: url("assets/fonts/jost-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+    @font-face { font-family: "EO Han"; src: local("WenQuanYi Zen Hei"), local("Noto Sans CJK SC"); font-weight: 400; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #F4F2EC; overflow: hidden; font-family: "Jost"; color: #142019; -webkit-font-smoothing: antialiased; }
+    .zone { z-index: 5; position: absolute; left: 70px; right: 70px; top: 330px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 10px 0 22px; font: 500 76px/1.06 "Jost"; }
+    .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
+    .line > span { display: inline-block; padding: 0 0.08em; }
+    .t-sans { font: 500 74px/1.08 "Jost"; letter-spacing: -0.01em; }
+    .t-d { font: 500 132px/1.02 "Fraunces"; letter-spacing: -0.025em; }
+    .t-di { font: italic 500 132px/1.02 "Fraunces"; letter-spacing: -0.025em; }
+    .mut { color: #71796F; }
+    .cream { color: #F4F2EC; }
+    .gold { color: #B99A45; }
+    .ch { display: inline-block; white-space: pre; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -10px; right: -10px; top: 46%; bottom: 4%; background: #D6E6C0; border-radius: 10px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .pill { position: absolute; padding: 16px 30px; border-radius: 999px; background: #142019; color: #F4F2EC; font: 600 34px/1 "Jost"; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; white-space: nowrap; }
+    .label { position: absolute; left: 0; right: 0; text-align: center; font: 600 26px/1 "Jost"; letter-spacing: 0.22em; text-transform: uppercase; }
+    .st { position: absolute; inset: 0; background: #F4F2EC; overflow: hidden; }
+    .st.ink { background: #142019; color: #F4F2EC; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
+    .vid { position: absolute; inset: 0; overflow: hidden; }
+    .vid video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,32,25,0.82) 0%, rgba(20,32,25,0.6) 30%, rgba(20,32,25,0.06) 54%, rgba(20,32,25,0.12) 76%, rgba(20,32,25,0.7) 100%); }
+    .shade.full { background: rgba(20,32,25,0.72); }
+    .shade.low { background: linear-gradient(180deg, rgba(20,32,25,0.78) 0%, rgba(20,32,25,0.5) 28%, rgba(20,32,25,0.05) 50%, rgba(20,32,25,0.55) 72%, rgba(20,32,25,0.9) 100%); }
+    .num { position: absolute; left: 70px; top: 300px; width: 150px; height: 150px; border-radius: 50%; background: #B99A45; color: #142019; font: 500 96px/150px "Fraunces"; text-align: center; opacity: 0; }
+    .chip { position: absolute; padding: 20px 38px; border-radius: 999px; background: #F4F2EC; color: #142019; font: 600 46px/1 "Jost"; white-space: nowrap; opacity: 0; box-shadow: 0 20px 50px -18px rgba(20,32,25,0.55); }
+    .wa { position: absolute; left: 0; right: 0; margin: 0 auto; width: fit-content; display: flex; align-items: center; gap: 22px; padding: 24px 46px 24px 30px; border-radius: 999px; background: #25D366; color: #0B2A17; font: 600 54px/1 "Jost"; white-space: nowrap; opacity: 0; box-shadow: 0 26px 60px -20px rgba(0,0,0,0.6); }
+    .wa small { display: block; font: 600 26px/1 "Jost"; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; opacity: 0.78; }
+    .card { position: absolute; border-radius: 44px; background: #fff; box-shadow: 0 34px 90px -24px rgba(20,32,25,0.4); }
+    .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
+    .sel { position: absolute; border: 3px dashed #B99A45; pointer-events: none; opacity: 0; }
+    .sel i { position: absolute; width: 16px; height: 16px; background: #F4F2EC; border: 3px solid #B99A45; }
+    .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
+    .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
+
+
+  </style>
+  <div id="root" data-composition-id="c2" data-width="1080" data-height="1920">
+    <div id="c2-st" class="st" data-layout-allow-overlap>
+<div id="c2-cam" class="cam" data-layout-allow-overlap>
+      <div class="zone" data-layout-allow-overlap style="top:330px"><span class="line"><span id="b-l1" class="t-sans mut" style="font-size:60px">ma quando guardi il telefono</span></span><span class="line" style="margin-top:-24px"><span id="b-l2" class="t-d" style="font-size:250px"><span id="b-kg">5</span><span style="font:italic 500 130px/1 Fraunces"> kg</span></span></span></div>
+      <div style="position:absolute;left:190px;top:712px;width:700px;height:26px;border-radius:13px;background:#D6E6C0" data-layout-allow-overlap><div id="b-bar" style="width:700px;height:26px;border-radius:13px;background:#2C5138;transform-origin:left center"></div></div>
+      <div class="label mut" style="top:756px;font-size:24px;letter-spacing:0.12em">stima da modello · Hansraj, 2014</div>
+      <svg id="b-n" viewBox="0 0 1080 760" width="1080" height="760" style="position:absolute;left:0;top:800px;overflow:hidden" data-layout-allow-overlap>
+        <path d="M430 15 A385 385 0 0 1 763.4 207.5" fill="none" stroke="#B99A45" stroke-width="10" stroke-linecap="round" stroke-dasharray="6 20"/>
+        <rect x="280" y="380" width="300" height="460" rx="120" fill="#142019"/>
+        <g id="b-n-h"><rect x="395" y="230" width="70" height="200" rx="32" fill="#142019"/><circle cx="440" cy="165" r="125" fill="#142019"/><path d="M552 128 L604 176 L552 200 Z" fill="#142019"/><circle cx="505" cy="148" r="13" fill="#F4F2EC"/></g>
+        <g id="b-n-ph"><rect x="-42" y="-78" width="84" height="156" rx="18" fill="#B99A45"/><rect x="-30" y="-62" width="60" height="112" rx="8" fill="#F4F2EC"/></g>
+      </svg>
+      <div id="b-deg" class="chip" style="left:800px;top:1040px;background:#142019;color:#F4F2EC"><span id="b-dn">0</span>°</div>
+    </div>
+    </div>
+  </div>
+  <script>
+
+    /* split every .split element into letter spans once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    /* letters flip up into place one by one (the reference's per-letter entrance) */
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    /* a whole line rises from behind its own baseline mask */
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.22, ease: "power3.in" }, t);
+    /* dashed selection box with handles, then a cursor that clicks it */
+    const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const count = (tl, sel, a, b, t, d, fmt) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || ((v) => String(Math.round(v))); tl.to(o, { v: b, duration: d, ease: "expo.out", onUpdate: () => { el.textContent = f(o.v); } }, t); };
+    const enter = (tl, sel, k) => k === "N" ? tl : k === "D" ? tl.fromTo(sel, { y: -1920 }, { y: 0, duration: 0.3, ease: "expo.out" }, 0) : k === "R" ? tl.fromTo(sel, { x: -1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0) : k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.3, ease: "expo.out" }, 0) : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0) : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "N" ? tl : k === "D" ? tl.to(sel, { y: 1920, duration: 0.22, ease: "power3.in" }, t) : k === "R" ? tl.to(sel, { x: 1080, duration: 0.22, ease: "power3.in" }, t) : k === "U" ? tl.to(sel, { y: -1920, duration: 0.22, ease: "power3.in" }, t) : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t) : tl.to(sel, { x: -1080, duration: 0.22, ease: "power3.in" }, t);
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#c2-cam", { scale: 1 }, { scale: 1.05, duration: 4.07, ease: "none" }, 0);
+    const KG = [[0, 5], [15, 12], [30, 18], [45, 22], [60, 27]];
+    const kgOf = (a) => { for (let k = 1; k < KG.length; k++) { if (a <= KG[k][0]) { const p = KG[k - 1], q = KG[k]; return p[1] + (q[1] - p[1]) * (a - p[0]) / (q[0] - p[0]); } } return 27; };
+    const mix = gsap.utils.interpolate("#2C5138", "#C0392B");
+    const setNeck = (id, num, bar, a) => { gsap.set(id + "-h", { svgOrigin: "430 400", rotation: a }); const w = kgOf(a), c = mix((w - 5) / 22); const el = document.querySelector(num); el.textContent = Math.round(w); el.parentNode.style.color = c; gsap.set(bar, { scaleX: w / 27, backgroundColor: c }); };
+    enter(tl, "#c2-st", "U");
+    rise(tl, "#b-l1", 0.04); rise(tl, "#b-l2", 0.1);
+    gsap.set("#b-n-ph", { x: 820, y: 620, rotation: -28 });
+    tl.fromTo("#b-n-ph", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.6)" }, 0.55 - 0.1);
+    pop(tl, "#b-deg", 0.55 + 0.2);
+    { const o = { a: 0 }; const dn = document.querySelector("#b-dn"); const u = () => { setNeck("#b-n", "#b-kg", "#b-bar", o.a); dn.textContent = Math.round(o.a); };
+      tl.to(o, { a: 60, duration: 3.10 - 0.55 - 0.1, ease: "power1.inOut", onUpdate: u }, 0.55 + 0.15); u(); }
+    tl.fromTo("#b-l2", { scale: 1.28 }, { scale: 1, duration: 0.4, ease: "elastic.out(1.2, 0.4)", immediateRender: false }, 3.10 + 0.05);
+    tl.fromTo("#c2-cam", { x: -18 }, { x: 0, duration: 0.3, ease: "elastic.out(1.4, 0.3)", immediateRender: false }, 3.10 + 0.05);
+    exit(tl, "#c2-st", "L", 4.07 - 0.18);
+    window.__timelines["c2"] = tl;
+  </script>
+</template>
