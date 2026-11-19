@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -40,7 +41,7 @@
 
   </style>
   <div id="root" data-composition-id="s17" data-width="1080" data-height="1920">
-    <div id="s17-st" class="st" data-layout-allow-overlap>
+    <div id="s17-st" class="st" data-layout-allow-overlap><div id="s17-cam" class="cam" data-layout-allow-overlap>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="f-a1" class="t-sans"><span>nel</span> <span style="display:inline-block;height:87px;overflow:hidden;vertical-align:bottom"><span id="f-ys" style="display:block;line-height:87px"><span style="display:block">2015</span><span style="display:block">2016</span><span style="display:block">2017</span><span style="display:block">2018</span></span></span></span></span><span class="line" style="margin-top:-24px"><span id="f-a2" class="t-it">l'Antitrust italiano</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="f-b1" class="t-it">ha multato Apple</span></span></div>
       <div id="f-badge" style="position:absolute;left:270px;top:700px;width:540px;border:8px solid #1d1d1f;border-radius:40px;padding:44px 30px 40px;text-align:center">
@@ -51,7 +52,7 @@
       <div id="f-sel" class="sel" style="left:70px;top:1100px;width:940px;height:190px"><i></i><i></i><i></i><i></i></div>
       <div id="f-pill" class="pill" style="left:810px;top:1050px">multa</div>
       <div class="tag" id="f-tag" style="top:1330px">Sanzione AGCM, ottobre 2018</div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -74,6 +75,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s17-cam", { scale: 1 }, { scale: 1.045, duration: 5.48, ease: "none" }, 0);
     enter(tl, "#s17-st", "U");
     rise(tl, "#f-a1", 0.05);
     tl.fromTo("#f-ys", { y: 0 }, { y: -87 * 3, duration: 0.5, ease: "expo.out" }, 0.18 - 0.08);

@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -50,7 +51,7 @@
     .m-opt small { font: 400 34px/1 'SF Pro Display'; color: #86868b; }
   </style>
   <div id="root" data-composition-id="s9" data-width="1080" data-height="1920">
-    <div id="s9-st" class="st" data-layout-allow-overlap>
+    <div id="s9-st" class="st" data-layout-allow-overlap><div id="s9-cam" class="cam" data-layout-allow-overlap>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="m-a1" class="t-sans t-mut">il modello base</span></span><span class="line" style="margin-top:-24px"><span id="m-a2" class="t-it">ha poco spazio</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="m-b1" class="t-sans t-mut">dopo un anno di foto</span></span><span class="line" style="margin-top:-24px"><span id="m-b2" class="t-it" style="font-size:118px;color:#ff3b30">è pieno</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="m-c1" class="t-sans t-mut">e quello</span></span><span class="line" style="margin-top:-24px"><span id="m-c2" class="t-it">più grande</span></span></div>
@@ -74,7 +75,7 @@
         <div class="m-opt" id="m-o3"><span>512 GB</span></div>
       </div>
       <div id="m-cur" class="cur" style="left:790px;top:965px"><svg viewBox="0 0 24 24" width="54" height="54"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#1d1d1f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -97,6 +98,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s9-cam", { scale: 1 }, { scale: 1.045, duration: 6.11, ease: "none" }, 0);
     enter(tl, "#s9-st", "L");
     rise(tl, "#m-a1", 0.06);
     rise(tl, "#m-a2", 0.98 - 0.1);

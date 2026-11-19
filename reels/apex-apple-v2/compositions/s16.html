@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -40,11 +41,11 @@
 
   </style>
   <div id="root" data-composition-id="s16" data-width="1080" data-height="1920">
-    <div id="s16-st" class="st" data-layout-allow-overlap>
+    <div id="s16-st" class="st" data-layout-allow-overlap><div id="s16-cam" class="cam" data-layout-allow-overlap>
       <div class="seg" id="s16-seg"><i><b></b></i><i><b></b></i><i><b></b></i><i><b id="s16-sg"></b></i><i></i></div>
       <div class="bignum" id="s16-num"><div id="s16-col" style="color:#1d1d1f"><div>3</div><div>4</div></div></div>
       <div class="zone" data-layout-allow-overlap style="top:1080px"><span class="line"><span id="s16-w" class="t-it split" style="font-size:98px;color:#7a0f24">i rallentamenti</span></span></div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -67,6 +68,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s16-cam", { scale: 1 }, { scale: 1.045, duration: 1.91, ease: "none" }, 0);
     enter(tl, "#s16-st", "U");
     tl.fromTo("#s16-col", { y: 0 }, { y: -470, duration: 0.45, ease: "expo.out" }, 0.1);
     tl.fromTo("#s16-num", { scale: 0.8 }, { scale: 1, duration: 0.5, ease: "back.out(2.2)" }, 0.1);

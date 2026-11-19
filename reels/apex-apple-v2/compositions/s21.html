@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -44,7 +45,7 @@
     .ico-t { background: #000; color: #fff; font: 600 64px/1 'SF Pro Display'; letter-spacing: -0.04em; }
   </style>
   <div id="root" data-composition-id="s21" data-width="1080" data-height="1920">
-    <div id="s21-st" class="st" data-layout-allow-overlap>
+    <div id="s21-st" class="st" data-layout-allow-overlap><div id="s21-cam" class="cam" data-layout-allow-overlap>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="v-a1" class="t-it">solo i servizi</span></span></div>
       <div id="v-ic" style="position:absolute;left:290px;top:560px;width:500px;display:flex;justify-content:space-between">
         <img class="v-i" src="assets/img/logo-icloud-icon.png" style="width:150px;display:block" alt="" /><img class="v-i" src="assets/img/logo-music.png" style="width:150px;display:block" alt="" /><img class="v-i" src="assets/img/logo-tv.png" style="width:150px;display:block" alt="" />
@@ -53,7 +54,7 @@
       <div id="v-n" style="position:absolute;left:0;right:0;top:870px;text-align:center;font:700 380px/1 'SF Pro Display';letter-spacing:-0.05em;color:#7a0f24"><span id="v-v">0</span></div>
       <div class="zone" data-layout-allow-overlap style="top:1270px"><span class="line"><span id="v-m" class="t-it">miliardi di dollari</span></span><span class="line" style="margin-top:-20px"><span id="v-y" class="t-sans t-mut">l'anno</span></span></div>
       <div class="tag" id="v-tag" style="top:1570px">Ricavi dai servizi, anno fiscale 2025</div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -76,6 +77,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s21-cam", { scale: 1 }, { scale: 1.045, duration: 4.89, ease: "none" }, 0);
     enter(tl, "#s21-st", "U");
     rise(tl, "#v-a1", 0.05);
     tl.fromTo(".v-i", { opacity: 0, scale: 0.4, y: 60 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(2.2)", stagger: 0.1 }, 0.18);

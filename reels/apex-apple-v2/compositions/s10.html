@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -40,11 +41,11 @@
 
   </style>
   <div id="root" data-composition-id="s10" data-width="1080" data-height="1920">
-    <div id="s10-st" class="st" data-layout-allow-overlap>
+    <div id="s10-st" class="st" data-layout-allow-overlap><div id="s10-cam" class="cam" data-layout-allow-overlap>
       <div id="k-n" style="position:absolute;left:0;right:0;top:640px;display:flex;justify-content:center;align-items:center;font:700 290px/300px 'SF Pro Display';letter-spacing:-0.045em;color:#7a0f24"><span>+</span><span style="display:inline-block;height:300px;overflow:hidden"><span id="k-col" style="display:block"><span style="display:block">100</span><span style="display:block">200</span></span></span><span style="margin-left:0.12em">€</span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="k-c" class="t-sans t-mut">costa</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:1000px"><span class="line"><span id="k-l" class="t-it" style="font-size:118px">in più</span></span></div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -67,6 +68,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s10-cam", { scale: 1 }, { scale: 1.045, duration: 1.93, ease: "none" }, 0);
     enter(tl, "#s10-st", "U");
     rise(tl, "#k-c", 0.03);
     tl.fromTo("#k-n", { scale: 1.35 }, { scale: 1, duration: 0.35, ease: "expo.out" }, 0.04);

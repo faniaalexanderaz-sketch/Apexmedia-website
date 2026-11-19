@@ -1,0 +1,96 @@
+<template>
+  <style>
+
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: 'SF Pro Display'; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+    .zone { z-index: 5; position: absolute; left: 80px; right: 80px; top: 372px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 6px 0 14px; font: 600 82px/1.06 'SF Pro Display'; }
+    .line > span > span:not(.ch) + span:not(.ch) { margin-left: 0.22em; }
+    .line > span { display: inline-block; }
+    .t-sans { font: 600 82px/1.06 'SF Pro Display'; letter-spacing: -0.02em; }
+    .t-it { font: 700 82px/1.06 'SF Pro Display'; letter-spacing: -0.024em; }
+    .t-mut { color: #86868b; }
+    .t-big { font: 700 96px/1.0 'SF Pro Display'; letter-spacing: -0.045em; }
+    .acc { color: #7a0f24; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
+    .mul { mix-blend-mode: multiply; }
+    .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
+    .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
+    .dark .seg i { background: #3a3a3c; }
+    .seg i b { display: block; height: 100%; border-radius: 6px; background: currentColor; transform-origin: left center; }
+    .tag { position: absolute; left: 0; right: 0; text-align: center; font: 500 32px/1.2 'SF Pro Display'; color: #86868b; opacity: 0; }
+    .bignum { position: absolute; left: 290px; top: 560px; width: 500px; height: 470px; overflow: hidden; }
+    .bignum > div { font: 600 430px/470px 'SF Pro Display'; letter-spacing: -0.06em; text-align: center; }
+    .gold .ch { background: linear-gradient(180deg, #f6dc8c 10%, #b8860b 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -8px; right: -8px; top: 6%; bottom: 2%; background: rgba(255, 214, 10, 0.42); border-radius: 8px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .ch { display: inline-block; white-space: pre; }
+    .sel { position: absolute; border: 3px dashed #ff3b30; pointer-events: none; opacity: 0; }
+    .sel i { position: absolute; width: 16px; height: 16px; background: #fff; border: 3px solid #ff3b30; }
+    .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
+    .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
+    .cur { position: absolute; width: 54px; height: 54px; opacity: 0; }
+    .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 'SF Pro Display'; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
+
+
+  </style>
+  <div id="root" data-composition-id="s15c" data-width="1080" data-height="1920">
+    <div id="s15c-st" class="st" data-layout-allow-overlap><div id="s15c-cam" class="cam" data-layout-allow-overlap>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="p3-l1" class="t-it acc" style="font-size:112px">venduto a parte</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="p3-l2" class="t-sans t-mut">per usarlo ti serve</span></span><span class="line" style="margin-top:-22px"><span id="p3-l3" class="t-it" style="font-size:108px">un altro pezzo</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="p3-l4" class="t-it acc" style="font-size:100px">venduto a parte</span></span><span class="line" style="margin-top:-20px"><span id="p3-l5" class="t-sans">anche quello</span></span></div>
+      <img id="p3-mag" class="mul" src="assets/img/magsafe.png" style="position:absolute;left:40px;top:760px;width:520px;display:block" alt="" />
+      <div id="p3-t1" class="pill" style="left:150px;top:1260px;font-size:70px;padding:18px 40px">+39 $</div>
+      <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path id="p3-ln" d="M520 1030 C 600 1030, 620 1000, 700 1000" fill="none" stroke="#c7c7cc" stroke-width="6" stroke-linecap="round" stroke-dasharray="4 16"/></svg>
+      <div id="p3-ad" style="position:absolute;left:690px;top:860px;width:260px;height:290px;border-radius:44px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,0.18), inset 0 0 0 3px #e5e5ea"><i style="position:absolute;left:66px;top:-44px;width:26px;height:54px;border-radius:7px;background:#aeaeb2"></i><i style="position:absolute;right:66px;top:-44px;width:26px;height:54px;border-radius:7px;background:#aeaeb2"></i><i style="position:absolute;left:90px;bottom:26px;width:80px;height:26px;border-radius:13px;background:#d1d1d6"></i></div>
+      <div id="p3-t2" class="pill" style="left:700px;top:1260px;font-size:70px;padding:18px 40px">+19 $</div>
+      <div class="tag" id="p3-tag" style="top:1420px">Prezzi di lancio negli Stati Uniti, ottobre 2020</div>
+    </div></div>
+  </div>
+  <script>
+
+    /* split every .split element into letter spans once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    /* letters flip up into place one by one (the reference's per-letter entrance) */
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    /* a whole line rises from behind its own baseline mask */
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.22, ease: "power3.in" }, t);
+    /* dashed selection box with handles, then a cursor that clicks it */
+    const select = (tl, box, cur, t) => { tl.fromTo(box, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power3.out" }, t); if (cur) { tl.fromTo(cur, { opacity: 0, x: 160, y: 140 }, { opacity: 1, x: 0, y: 0, duration: 0.38, ease: "power3.out" }, t - 0.12); tl.to(cur, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.28); } };
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const count = (tl, sel, a, b, t, d, fmt) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || ((v) => String(Math.round(v))); tl.to(o, { v: b, duration: d, ease: "expo.out", onUpdate: () => { el.textContent = f(o.v); } }, t); };
+    const enter = (tl, sel, k) => k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.3, ease: "expo.out" }, 0) : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0) : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.26, ease: "power3.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "U" ? tl.to(sel, { y: -1920, duration: 0.22, ease: "power3.in" }, t) : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t) : tl.to(sel, { x: -1080, duration: 0.22, ease: "power3.in" }, t);
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s15c-cam", { scale: 1 }, { scale: 1.045, duration: 4.97, ease: "none" }, 0);
+    enter(tl, "#s15c-st", "Z");
+    rise(tl, "#p3-l1", 0.04);
+    tl.fromTo("#p3-mag", { opacity: 0, x: -400 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out" }, 0.05);
+    pop(tl, "#p3-t1", 0.3);
+    tl.fromTo("#p3-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.5);
+    sink(tl, "#p3-l1", 1.17 - 0.16);
+    rise(tl, "#p3-l2", 1.17);
+    rise(tl, "#p3-l3", 2.34 - 0.1);
+    tl.fromTo("#p3-ln", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.34 - 0.1);
+    tl.fromTo("#p3-ad", { opacity: 0, scale: 0.3, y: 200 }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(2)" }, 2.34);
+    sink(tl, "#p3-l2", 3.42 - 0.16); sink(tl, "#p3-l3", 3.42 - 0.16);
+    rise(tl, "#p3-l4", 3.42);
+    pop(tl, "#p3-t2", 3.42 + 0.15);
+    rise(tl, "#p3-l5", 4.10 - 0.08);
+    tl.fromTo(["#p3-t1", "#p3-t2"], { scale: 1 }, { scale: 1.18, duration: 0.14, yoyo: true, repeat: 1, stagger: 0.1, immediateRender: false }, 4.10);
+    exit(tl, "#s15c-st", "L", 4.97 - 0.2);
+    window.__timelines["s15c"] = tl;
+  </script>
+</template>

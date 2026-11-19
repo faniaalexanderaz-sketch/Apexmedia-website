@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -47,7 +48,7 @@
     .al-b span + span { border-left: 2px solid #e5e5ea; font-weight: 600; }
   </style>
   <div id="root" data-composition-id="s18" data-width="1080" data-height="1920">
-    <div id="s18-st" class="st" data-layout-allow-overlap>
+    <div id="s18-st" class="st" data-layout-allow-overlap><div id="s18-cam" class="cam" data-layout-allow-overlap>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="u-a1" class="t-sans t-mut">tra le accuse:</span></span><span class="line" style="margin-top:-24px"><span id="u-a2" class="t-it">aggiornamenti spinti</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="u-b1" class="t-sans t-mut">sugli iPhone vecchi</span></span><span class="line" style="margin-top:-24px"><span id="u-b2" class="t-it">che li rallentavano</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="u-c1" class="t-it" style="font-size:120px">senza avvisare</span></span></div>
@@ -60,7 +61,7 @@
         <div style="height:44px;border-radius:22px;background:#e5e5ea;overflow:hidden"><div id="u-fill" style="height:100%;border-radius:22px;background:#34c759;transform-origin:left center"></div></div>
       </div>
       <div id="u-bell" style="position:absolute;left:230px;top:820px;width:160px;height:160px;border-radius:50%;background:#1d1d1f;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="84" height="84"><path d="M12 3.2a5 5 0 0 0-5 5v3.4l-1.9 3.2v1h13.8v-1L17 11.6V8.2a5 5 0 0 0-5-5zm-2 14.6a2 2 0 0 0 4 0z" fill="#fff"/><path d="M4 3.5l16.5 17" stroke="#ff453a" stroke-width="2.4" stroke-linecap="round"/></svg></div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -83,6 +84,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s18-cam", { scale: 1 }, { scale: 1.045, duration: 5.56, ease: "none" }, 0);
     enter(tl, "#s18-st", "L");
     rise(tl, "#u-a1", 0.06);
     tl.fromTo("#u-ph", { y: 260, opacity: 0, rotation: 6 }, { y: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "expo.out" }, 0.12);

@@ -6,6 +6,7 @@ from common import scene, CURSOR, SEL
 OUT = '/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/'
 SC = []
 SHIFT_FROM, DELTA = 35.0, 0.81   # the trick-2 passage was re-recorded 0.81 s longer: later scenes move as a block
+SHIFT2_FROM, DELTA2 = 52.5, 5.608   # trick 3 was rewritten (5.61 s longer): everything after it moves again
 BURG = '#7a0f24'; GREEN = '#30d158'; GOLD = '#c9a227'
 
 def ln(i, html, cls='t-sans', style='', mt=None):
@@ -16,11 +17,13 @@ def ln(i, html, cls='t-sans', style='', mt=None):
 def zone(*lines, top=372):
     return f'<div class="zone" data-layout-allow-overlap style="top:{top}px">' + ''.join(lines) + '</div>'
 
-def add(sid, start, end, body, js, css='', fx=(), dark=False):
+def add(sid, start, end, body, js, css='', fx=(), dark=False, fixed=False):
     f = lambda s: re.sub(r'«([\d.]+)»', lambda m: '%.2f' % (float(m.group(1)) - start), s)
     dur = round(end - start, 3)
-    body = f'    <div id="{sid}-st" class="st{" dark" if dark else ""}" data-layout-allow-overlap>\n' + f(body) + '\n    </div>'
-    sh = DELTA if start >= SHIFT_FROM else 0
+    body = (f'    <div id="{sid}-st" class="st{" dark" if dark else ""}" data-layout-allow-overlap><div id="{sid}-cam" class="cam" data-layout-allow-overlap>\n'
+            + f(body) + '\n    </div></div>')
+    js = f'    tl.fromTo("#{sid}-cam", {{ scale: 1 }}, {{ scale: 1.045, duration: DUR, ease: "none" }}, 0);\n' + js
+    sh = 0 if (fixed or start < SHIFT_FROM) else (DELTA if start < SHIFT2_FROM else DELTA + DELTA2)
     SC.append(dict(id=sid, start=round(start + sh, 3), dur=dur, body=body, js=f(js).replace('DUR', '%.2f' % dur), css=css,
                    fx=[(n, round(t + sh, 3), v) for n, t, v in fx]))
 
@@ -28,7 +31,7 @@ def seg(sid, n):
     return f'<div class="seg" id="{sid}-seg">' + ''.join(
         '<i>' + (f'<b id="{sid}-sg"></b>' if k == n else ('<b></b>' if k < n else '')) + '</i>' for k in range(1, 6)) + '</div>'
 
-def title(sid, start, end, n, word, wabs, color, dark=False, wsize=112):
+def title(sid, start, end, n, word, wabs, color, dark=False, wsize=112, fixed=False):
     numc = '#f5f5f7' if dark else '#1d1d1f'
     body = f'''      {seg(sid, n)}
       <div class="bignum" id="{sid}-num"><div id="{sid}-col" style="color:{numc}"><div>{n - 1}</div><div>{n}</div></div></div>
@@ -40,7 +43,7 @@ def title(sid, start, end, n, word, wabs, color, dark=False, wsize=112):
     tl.fromTo("#{sid}-sg", {{ scaleX: 0 }}, {{ scaleX: 1, duration: 0.4, ease: "power2.out" }}, 0.2);
     flip(tl, "#{sid}-w", «{wabs}» - 0.04, 0.03);
     exit(tl, "#{sid}-st", "Z", DUR - 0.18);'''
-    add(sid, start, end, body, js, dark=dark,
+    add(sid, start, end, body, js, dark=dark, fixed=fixed,
         fx=[('whoosh-short', start - 0.02, 0.3), ('pop', start + 0.12, 0.3), ('key-press', wabs - 0.04, 0.25)])
 
 CLOUD = '<svg viewBox="0 0 24 24" width="92" height="92"><path d="M18.6 18H7.2a4.7 4.7 0 0 1-.7-9.35A6.2 6.2 0 0 1 18.4 9.6 4.25 4.25 0 0 1 18.6 18z" fill="#2f9bff"/></svg>'
@@ -134,7 +137,7 @@ add('s10', 27.20, 29.13, f'''      <div id="k-n" style="position:absolute;left:0
 MESI = ''.join(f'<i class="cl-m">{m}</i>' for m in ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'])
 CLB = ''.join(f'<line id="cl-b-{k}" class="cl-bar" x1="{290 + k * 100}" y1="690" x2="{290 + k * 100}" y2="1100"/>' for k in range(6))
 CLY = ''.join(f'<span style="display:block">{y}</span>' for y in (2026, 2027, 2028, 2029, 2030))
-add('s11', 29.13, 36.19, f'''      {zone(ln('cl-a1', 'non lo compri?', 't-it', 'font-size:108px'))}
+add('s11', 29.13, 36.17, f'''      {zone(ln('cl-a1', 'non lo compri?', 't-it', 'font-size:108px'))}
       {zone(ln('cl-b1', 'allora paghi', 't-sans t-mut'))}
       {zone(ln('cl-c1', 'pochi euro al mese', 't-it'))}
       {zone(ln('cl-d1', 'ogni mese', 't-it', 'font-size:120px'))}
@@ -182,94 +185,134 @@ add('s11', 29.13, 36.19, f'''      {zone(ln('cl-a1', 'non lo compri?', 't-it', '
         ('typing', 32.5, 0.22), ('typing', 33.1, 0.2), ('key-press', 33.69, 0.24), ('key-press', 33.86, 0.24), ('key-press', 34.03, 0.24), ('key-press', 34.2, 0.24),
         ('whoosh-cinematic', 34.5, 0.22), ('sparkle', 35.2, 0.18), ('click', 35.6, 0.42), ('impact-bass-1', 35.58, 0.22)])
 
-# ---------------------------------------------------------------- trick 3: le bolle verdi (dark)
-title('s12', 35.38, 37.13, 3, 'le bolle verdi', 35.76, GREEN, dark=True)
+# ---------------------------------------------------------------- trick 3: il pezzo mancante (times already final: fixed=True)
+title('s12', 36.17, 38.14, 3, 'il pezzo mancante', 36.69, BURG, wsize=96, fixed=True)
 
-BUB = '''
-    .c-bub { position: relative; padding: 40px 58px 46px; border-radius: 76px; background: #0a84ff; color: #fff; font: 500 86px/1 "Inter Display"; letter-spacing: -0.02em; white-space: nowrap; }
-    .c-bub span { position: relative; z-index: 2; }
-    .c-bub::before { content: ""; position: absolute; z-index: 0; bottom: 0; right: -26px; width: 70px; height: 70px; background: inherit; border-bottom-left-radius: 52px; }
-    .c-bub::after { content: ""; position: absolute; z-index: 1; bottom: 0; right: -36px; width: 36px; height: 72px; background: #000; border-bottom-left-radius: 36px; }
-    .c-in { background: #26252a; }
-    .c-in::before { right: auto; left: -26px; border-bottom-left-radius: 0; border-bottom-right-radius: 52px; }
-    .c-in::after { right: auto; left: -36px; border-bottom-left-radius: 0; border-bottom-right-radius: 36px; }'''
-add('s13', 37.13, 40.15, f'''      {zone(ln('c-a1', 'scrivi da un Android', 't-sans', 'color:#86868b'), ln('c-a2', 'diventa verde', 't-it', f'font-size:118px;color:{GREEN}', mt=-24))}
-      <div id="c-in" style="position:absolute;left:120px;top:790px"><div class="c-bub c-in"><span>Stasera ci siete?</span></div></div>
-      <div id="c-out" style="position:absolute;right:130px;top:1030px"><div class="c-bub" id="c-b"><span>Ci sono anch'io</span></div></div>
-      <div id="c-sms" style="position:absolute;right:134px;top:1262px;font:500 38px/1 Inter;color:#8e8e93">Messaggio di testo · SMS</div>''', '''    enter(tl, "#s13-st", "L");
-    rise(tl, "#c-a1", 0.06);
-    tl.fromTo("#c-in", { opacity: 0, scale: 0.3, y: 140, transformOrigin: "0% 100%" }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.9)" }, 0.25);
-    tl.fromTo("#c-out", { opacity: 0, scale: 0.3, y: 160, transformOrigin: "100% 100%" }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.9)" }, «38.23» - 0.05);
-    rise(tl, "#c-a2", «39.09» - 0.08);
-    tl.to("#c-b", { backgroundColor: "#30d158", duration: 0.22 }, «39.54» - 0.12);
-    tl.fromTo("#c-out", { scale: 1.12 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «39.54» - 0.1);
-    tl.fromTo("#c-sms", { opacity: 0 }, { opacity: 1, duration: 0.2 }, «39.54» + 0.08);
-    exit(tl, "#s13-st", "L", DUR - 0.2);''', BUB, dark=True,
-    fx=[('whoosh', 37.11, 0.3), ('pop', 37.4, 0.26), ('pop', 38.2, 0.32), ('sparkle', 39.4, 0.14), ('click-soft', 39.44, 0.36)])
+def cal(i, month, day, style):
+    return (f'<div id="{i}" style="position:absolute;width:400px;border-radius:40px;background:#fff;text-align:center;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,0.2);{style}">'
+            f'<div style="background:#ff3b30;color:#fff;font:700 36px/1 Inter;padding:22px 0;letter-spacing:0.08em">{month}</div>'
+            f'<div style="font:700 210px/1.1 Inter;letter-spacing:-0.04em">{day}</div><div style="font:600 32px/1 Inter;color:#86868b;padding:0 0 30px">stesso evento</div></div>')
+X = '<svg viewBox="0 0 100 100" width="{w}" height="{w}"><path d="M22 22 L78 78 M78 22 L22 78" stroke="#ff3b30" stroke-width="14" stroke-linecap="round"/></svg>'
 
-def gb(i, left, top, w, cls='', bg='#0a84ff'):
-    return f'<div class="g-b {cls}" id="g-{i}" style="left:{left}px;top:{top}px;width:{w}px;background:{bg}"><i style="width:{w - 190}px"></i></div>'
-add('s14', 40.15, 43.50, f'''      {zone(ln('g-a1', 'tra i ragazzi', 't-sans', 'color:#86868b'), ln('g-a2', f'<span>chi ha la bolla</span> <span style="color:{GREEN}">verde</span>', 't-sans', mt=-24))}
-      {zone(ln('g-b1', 'resta fuori', 't-it', 'font-size:126px'), ln('g-b2', 'dai gruppi', 't-sans', 'color:#86868b', mt=-24))}
-      {gb(1, 110, 740, 520)}{gb(2, 460, 900, 510)}{gb('green', 150, 1060, 470, '', GREEN)}{gb(4, 430, 1220, 540, 'g-lo')}{gb(5, 110, 1380, 480, 'g-lo')}''', '''    enter(tl, "#s14-st", "U");
-    rise(tl, "#g-a1", 0.06);
-    tl.fromTo(".g-b", { opacity: 0, scale: 0.5, y: 80 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(2)", stagger: 0.09 }, 0.15);
-    rise(tl, "#g-a2", «40.96» - 0.08);
-    tl.fromTo("#g-green", { scale: 1.16 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «41.61»);
-    sink(tl, "#g-a1", «41.91» - 0.18); sink(tl, "#g-a2", «41.91» - 0.18);
-    rise(tl, "#g-b1", «41.91» - 0.03);
-    tl.to("#g-green", { y: 1000, x: -90, rotation: -24, opacity: 0, duration: 0.7, ease: "power2.in" }, «41.91» + 0.05);
-    tl.to(".g-lo", { y: -160, duration: 0.45, ease: "expo.out" }, «41.91» + 0.5);
-    rise(tl, "#g-b2", «42.75» - 0.1);
-    exit(tl, "#s14-st", "Z", DUR - 0.18);''', '''
-    .g-b { position: absolute; height: 124px; border-radius: 62px; }
-    .g-b i { position: absolute; left: 52px; top: 52px; height: 20px; border-radius: 10px; background: rgba(255,255,255,0.6); }''', dark=True,
-    fx=[('whoosh-short', 40.13, 0.3), ('typing', 40.3, 0.14), ('pop', 41.6, 0.28), ('whoosh', 41.95, 0.3), ('impact-bass-1', 42.6, 0.16)])
-
-add('s15', 43.50, 52.56, f'''      {zone(ln('e-a1', 'in una causa del', 't-sans', 'color:#86868b'), ln('e-a2', 'governo americano', 't-it', mt=-24))}
-      {zone(ln('e-b1', 'è finita', 't-sans', 'color:#86868b'), ln('e-b2', "un'email interna", 't-it', mt=-24))}
-      <div id="e-doc" style="position:absolute;left:170px;top:720px;width:740px;height:900px;border-radius:14px;background:#fbfbf8;color:#1d1d1f;padding:70px 64px;text-align:center;transform-origin:50% 60%">
-        <div style="font:600 24px/1.4 Inter;letter-spacing:0.08em">UNITED STATES DISTRICT COURT</div>
-        <div style="font:700 40px/1.25 Inter;margin-top:60px">UNITED STATES OF AMERICA et al.<br><span style="font-weight:400;font-size:30px">v.</span><br>APPLE INC.</div>
-        <div style="font:600 30px/1 Inter;letter-spacing:0.12em;margin-top:56px">COMPLAINT</div>
-        <i class="e-sk" style="width:100%"></i><i class="e-sk" style="width:94%"></i><i class="e-sk" style="width:98%"></i><i class="e-sk" style="width:70%"></i><i class="e-sk" style="width:96%"></i><i class="e-sk" style="width:88%"></i>
+add('s13', 38.14, 41.45, f'''      {zone(ln('j-l0', '2016', 't-it', 'font-size:170px'))}
+      {zone(ln('j-l1', 'Apple toglie', 't-sans t-mut'), ln('j-l2', "l'ingresso delle cuffie", 't-it', 'font-size:76px', mt=-20))}
+      <div id="j-ph" style="position:absolute;left:120px;top:800px;width:840px;height:420px;border:12px solid #1d1d1f;border-top:none;border-radius:0 0 150px 150px;background:linear-gradient(180deg,#fff,#f2f2f7)">
+        <div style="position:absolute;left:50%;bottom:54px;width:150px;height:36px;margin-left:-75px;border-radius:18px;background:#1d1d1f"></div>
+        <div class="j-dots" style="right:150px"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="j-dots" style="left:290px"><i></i><i></i><i></i></div>
+        <div id="j-jack" style="position:absolute;left:120px;bottom:38px;width:68px;height:68px;border-radius:50%;background:#1d1d1f;box-shadow:inset 0 0 0 10px #48484a"></div>
+        <div id="j-x" style="position:absolute;left:84px;bottom:2px;width:140px;height:140px">{X.format(w=140)}</div>
       </div>
-      <div id="e-mail" style="position:absolute;left:80px;top:700px;width:920px;height:800px;border-radius:44px;background:#1c1c1e;padding:46px 56px;box-shadow:0 40px 120px rgba(0,0,0,0.6)">
-        <div class="e-row"><span>Da:</span><i style="width:300px"></i></div>
-        <div class="e-row"><span>A:</span><i style="width:220px"></i></div>
-        <div class="e-row"><span>Oggetto:</span><b>iMessage su Android</b></div>
-        <div style="margin-top:44px;font:600 58px/1.24 Inter;letter-spacing:-0.02em;color:#f5f5f7">
-          <div id="e-q1" class="split">Aprire iMessage ad Android</div>
-          <div><span id="e-q2a" class="split">avrebbe tolto </span><span class="hl"><i id="e-hl"></i><span id="e-q2b" class="split">un ostacolo</span></span></div>
-          <div id="e-q3" class="split">alle famiglie che comprano</div>
-          <div id="e-q4" class="split">l'iPhone ai figli.</div>
-        </div>
+      <div id="j-sel" class="sel" style="left:200px;top:1060px;width:160px;height:160px">{SEL}</div>
+      <div id="j-pill" class="pill" style="left:150px;top:960px;background:#1d1d1f">ingresso cuffie</div>''', '''    enter(tl, "#s13-st", "L");
+    rise(tl, "#j-l0", 0.04);
+    tl.fromTo("#j-ph", { y: -500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out" }, 0.1);
+    sink(tl, "#j-l0", «39.35» - 0.16);
+    rise(tl, "#j-l1", «39.35»);
+    rise(tl, "#j-l2", «40.01» - 0.1);
+    select(tl, "#j-sel", null, «40.01»);
+    pop(tl, "#j-pill", «40.01» + 0.1);
+    tl.fromTo("#j-x", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, «40.89»);
+    tl.to("#j-jack", { scale: 0, duration: 0.25, ease: "power3.in" }, «40.89» + 0.12);
+    tl.fromTo("#j-ph", { x: 0 }, { x: 12, duration: 0.05, yoyo: true, repeat: 5, immediateRender: false }, «40.89» + 0.16);
+    exit(tl, "#s13-st", "U", DUR - 0.2);''', '''
+    .j-dots { position: absolute; bottom: 60px; display: flex; gap: 18px; }
+    .j-dots i { display: block; width: 22px; height: 22px; border-radius: 50%; background: #1d1d1f; }''', fixed=True,
+    fx=[('whoosh', 38.12, 0.3), ('impact-bass-1', 38.2, 0.18), ('whoosh-short', 39.2, 0.2), ('click-soft', 40.01, 0.36), ('pop', 40.11, 0.26), ('impact-bass-1', 41.0, 0.26), ('click', 40.9, 0.4)])
+
+add('s14', 41.45, 44.64, f'''      {zone(ln('y-l1', 'lo stesso giorno', 't-it', 'font-size:104px'), ln('y-l2', 'presenta le sue cuffie senza fili', 't-sans t-mut', 'font-size:58px', mt=-16))}
+      {cal('y-cal', 'SETTEMBRE 2016', '7', 'left:70px;top:800px')}
+      <img id="y-air" class="mul" src="assets/img/airpods.png" style="position:absolute;left:500px;top:740px;width:540px;display:block" alt="" />
+      <div id="y-pill" class="pill" style="left:650px;top:1250px;font-size:62px;padding:18px 36px">AirPods</div>
+      <div id="y-tag" class="pill" style="left:560px;top:720px;background:#1d1d1f;transform:rotate(-5deg)">vendute a parte</div>''', '''    enter(tl, "#s14-st", "U");
+    rise(tl, "#y-l1", 0.04);
+    tl.fromTo("#y-cal", { opacity: 0, scale: 0.5, rotation: -8 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.4, ease: "back.out(2)" }, 0.1);
+    rise(tl, "#y-l2", «42.31» - 0.1);
+    tl.fromTo("#y-air", { opacity: 0, scale: 0.3, x: 300 }, { opacity: 1, scale: 1, x: 0, duration: 0.45, ease: "back.out(1.8)" }, «42.31»);
+    pop(tl, "#y-pill", «43.13»);
+    tl.fromTo("#y-air", { scale: 1.12 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «43.13»);
+    pop(tl, "#y-tag", «43.49» + 0.1);
+    exit(tl, "#s14-st", "L", DUR - 0.2);''', fixed=True,
+    fx=[('whoosh-short', 41.43, 0.3), ('pop', 41.55, 0.28), ('whoosh', 42.25, 0.26), ('pop', 42.4, 0.3), ('sparkle', 43.1, 0.16), ('pop', 43.6, 0.28)])
+
+add('s15', 44.64, 47.73, f'''      {zone(ln('b-l0', '2020', 't-it', 'font-size:170px'))}
+      {zone(ln('b-l1', 'toglie il caricatore', 't-it', 'font-size:86px'), ln('b-l2', 'dalla scatola', 't-sans t-mut', mt=-20))}
+      <div id="b-box" style="position:absolute;left:130px;top:790px;width:820px;height:560px;border-radius:44px;background:#f5f5f7;border:8px solid #1d1d1f">
+        <div style="position:absolute;left:60px;top:70px;width:230px;height:420px;border-radius:38px;background:#1d1d1f"><i style="position:absolute;left:24px;top:24px;width:74px;height:74px;border-radius:22px;background:#3a3a3c"></i></div>
+        <div style="position:absolute;left:340px;top:190px;width:180px;height:180px;border-radius:50%;border:16px solid #d1d1d6"></div>
+        <div id="b-slot" style="position:absolute;left:570px;top:170px;width:190px;height:220px;border-radius:30px;border:5px dashed #c7c7cc"></div>
+        <div id="b-brick" style="position:absolute;left:580px;top:180px;width:170px;height:200px;border-radius:28px;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,0.18), inset 0 0 0 3px #e5e5ea"><i style="position:absolute;left:42px;top:-30px;width:18px;height:36px;border-radius:5px;background:#aeaeb2"></i><i style="position:absolute;right:42px;top:-30px;width:18px;height:36px;border-radius:5px;background:#aeaeb2"></i></div>
       </div>
-      <div class="tag" id="e-tag" style="top:1570px">Email del 2013, citata nella causa<br>Stati Uniti contro Apple (2024)</div>''', '''    enter(tl, "#s15-st", "L");
-    rise(tl, "#e-a1", 0.06);
-    rise(tl, "#e-a2", «44.26» - 0.08);
-    tl.fromTo("#e-doc", { y: 1300, rotation: 9 }, { y: 0, rotation: -4, duration: 0.6, ease: "expo.out" }, 0.15);
-    tl.to("#e-doc", { rotation: -2, scale: 1.04, duration: 1.4, ease: "none" }, 0.75);
-    sink(tl, "#e-a1", «45.20» - 0.18); sink(tl, "#e-a2", «45.20» - 0.18);
-    rise(tl, "#e-b1", «45.20»);
-    rise(tl, "#e-b2", «45.58» - 0.05);
-    tl.fromTo("#e-mail", { x: 1100, rotation: 6 }, { x: 0, rotation: 0, duration: 0.5, ease: "expo.out" }, «45.58»);
-    tl.to("#e-doc", { opacity: 0, duration: 0.3 }, «46.92» - 0.3);
-    typeIn(tl, "#e-q1", «46.92», 0.04);
-    typeIn(tl, "#e-q2a", «48.76», 0.035);
-    typeIn(tl, "#e-q2b", «49.42», 0.035);
-    tl.fromTo("#e-hl", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.out" }, «49.53» + 0.36);
-    typeIn(tl, "#e-q3", «49.96», 0.04);
-    typeIn(tl, "#e-q4", «51.39», 0.035);
-    tl.fromTo("#e-tag", { opacity: 0 }, { opacity: 1, duration: 0.3 }, «46.92» + 0.5);
-    tl.to("#e-mail", { scale: 1.05, duration: 5.4, ease: "none" }, «46.92»);
-    exit(tl, "#s15-st", "U", DUR - 0.2);''', '''
-    .e-sk { display: block; height: 14px; border-radius: 7px; background: #d9d9d4; margin: 28px auto 0; }
-    .e-row { display: flex; align-items: center; gap: 20px; font: 400 36px/1 "Inter Display"; color: #8e8e93; padding: 18px 0; border-bottom: 2px solid #2c2c2e; }
-    .e-row i { height: 30px; border-radius: 6px; background: #48484a; }
-    .e-row b { font-weight: 500; color: #f5f5f7; }''', dark=True,
-    fx=[('whoosh', 43.48, 0.3), ('whoosh-short', 43.66, 0.2), ('whoosh', 45.5, 0.3), ('pop', 45.9, 0.2), ('typing', 46.92, 0.2), ('typing', 47.6, 0.2),
-        ('typing', 48.76, 0.2), ('typing', 49.5, 0.18), ('sparkle', 49.85, 0.12), ('typing', 50.0, 0.2), ('typing', 51.39, 0.2)])
+      <div id="b-sel" class="sel" style="left:690px;top:940px;width:210px;height:250px">{SEL}</div>
+      <div id="b-x" style="position:absolute;left:720px;top:980px;width:150px;height:150px">{X.format(w=150)}</div>
+      <div id="b-pill" class="pill" style="left:650px;top:860px;background:#1d1d1f">caricatore</div>''', '''    enter(tl, "#s15-st", "L");
+    rise(tl, "#b-l0", 0.04);
+    tl.fromTo("#b-box", { y: 500, opacity: 0, rotation: 4 }, { y: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "expo.out" }, 0.1);
+    sink(tl, "#b-l0", «45.80» - 0.16);
+    rise(tl, "#b-l1", «45.80»);
+    select(tl, "#b-sel", null, «46.21»);
+    pop(tl, "#b-pill", «46.21» + 0.08);
+    rise(tl, "#b-l2", «47.16» - 0.3);
+    tl.to(["#b-sel", "#b-pill"], { opacity: 0, duration: 0.12 }, «47.16» - 0.1);
+    tl.to("#b-brick", { x: 520, y: -260, rotation: 40, opacity: 0, duration: 0.42, ease: "power3.in" }, «47.16» - 0.08);
+    tl.fromTo("#b-x", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, «47.16» + 0.2);
+    exit(tl, "#s15-st", "U", DUR - 0.2);''', fixed=True,
+    fx=[('whoosh', 44.62, 0.3), ('impact-bass-1', 44.7, 0.18), ('whoosh-short', 45.66, 0.2), ('click-soft', 46.21, 0.36), ('pop', 46.3, 0.26), ('whoosh', 47.06, 0.3), ('click', 47.38, 0.4)])
+
+add('s15b', 47.73, 50.70, f'''      {zone(ln('z3-l1', 'lo stesso giorno', 't-it', 'font-size:104px'), ln('z3-l2', 'lancia un caricatore magnetico', 't-sans t-mut', 'font-size:60px', mt=-16))}
+      {cal('z3-cal', 'OTTOBRE 2020', '13', 'left:70px;top:800px')}
+      <img id="z3-mag" class="mul" src="assets/img/magsafe.png" style="position:absolute;left:480px;top:740px;width:580px;display:block" alt="" />
+      <div id="z3-pill" class="pill" style="left:650px;top:1290px;font-size:62px;padding:18px 36px">MagSafe</div>''', '''    enter(tl, "#s15b-st", "U");
+    rise(tl, "#z3-l1", 0.04);
+    tl.fromTo("#z3-cal", { opacity: 0, scale: 0.5, rotation: 8 }, { opacity: 1, scale: 1, rotation: 3, duration: 0.4, ease: "back.out(2)" }, 0.1);
+    rise(tl, "#z3-l2", «48.75» - 0.1);
+    tl.fromTo("#z3-mag", { opacity: 0, scale: 0.3, x: 300, rotation: 30 }, { opacity: 1, scale: 1, x: 0, rotation: 0, duration: 0.5, ease: "back.out(1.6)" }, «48.75»);
+    pop(tl, "#z3-pill", «50.00» - 0.1);
+    tl.fromTo("#z3-mag", { scale: 1.12 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, «50.00» - 0.1);
+    exit(tl, "#s15b-st", "L", DUR - 0.2);''', fixed=True,
+    fx=[('whoosh-short', 47.71, 0.3), ('pop', 47.83, 0.28), ('whoosh', 48.7, 0.26), ('pop', 48.86, 0.3), ('sparkle', 49.9, 0.16)])
+
+add('s15c', 50.70, 55.67, f'''      {zone(ln('p3-l1', 'venduto a parte', 't-it acc', 'font-size:112px'))}
+      {zone(ln('p3-l2', 'per usarlo ti serve', 't-sans t-mut'), ln('p3-l3', 'un altro pezzo', 't-it', 'font-size:108px', mt=-22))}
+      {zone(ln('p3-l4', 'venduto a parte', 't-it acc', 'font-size:100px'), ln('p3-l5', 'anche quello', 't-sans', mt=-20))}
+      <img id="p3-mag" class="mul" src="assets/img/magsafe.png" style="position:absolute;left:40px;top:760px;width:520px;display:block" alt="" />
+      <div id="p3-t1" class="pill" style="left:150px;top:1260px;font-size:70px;padding:18px 40px">+39 $</div>
+      <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path id="p3-ln" d="M520 1030 C 600 1030, 620 1000, 700 1000" fill="none" stroke="#c7c7cc" stroke-width="6" stroke-linecap="round" stroke-dasharray="4 16"/></svg>
+      <div id="p3-ad" style="position:absolute;left:690px;top:860px;width:260px;height:290px;border-radius:44px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,0.18), inset 0 0 0 3px #e5e5ea"><i style="position:absolute;left:66px;top:-44px;width:26px;height:54px;border-radius:7px;background:#aeaeb2"></i><i style="position:absolute;right:66px;top:-44px;width:26px;height:54px;border-radius:7px;background:#aeaeb2"></i><i style="position:absolute;left:90px;bottom:26px;width:80px;height:26px;border-radius:13px;background:#d1d1d6"></i></div>
+      <div id="p3-t2" class="pill" style="left:700px;top:1260px;font-size:70px;padding:18px 40px">+19 $</div>
+      <div class="tag" id="p3-tag" style="top:1420px">Prezzi di lancio negli Stati Uniti, ottobre 2020</div>''', '''    enter(tl, "#s15c-st", "Z");
+    rise(tl, "#p3-l1", 0.04);
+    tl.fromTo("#p3-mag", { opacity: 0, x: -400 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out" }, 0.05);
+    pop(tl, "#p3-t1", 0.3);
+    tl.fromTo("#p3-tag", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.5);
+    sink(tl, "#p3-l1", «51.87» - 0.16);
+    rise(tl, "#p3-l2", «51.87»);
+    rise(tl, "#p3-l3", «53.04» - 0.1);
+    tl.fromTo("#p3-ln", { opacity: 0 }, { opacity: 1, duration: 0.2 }, «53.04» - 0.1);
+    tl.fromTo("#p3-ad", { opacity: 0, scale: 0.3, y: 200 }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(2)" }, «53.04»);
+    sink(tl, "#p3-l2", «54.12» - 0.16); sink(tl, "#p3-l3", «54.12» - 0.16);
+    rise(tl, "#p3-l4", «54.12»);
+    pop(tl, "#p3-t2", «54.12» + 0.15);
+    rise(tl, "#p3-l5", «54.80» - 0.08);
+    tl.fromTo(["#p3-t1", "#p3-t2"], { scale: 1 }, { scale: 1.18, duration: 0.14, yoyo: true, repeat: 1, stagger: 0.1, immediateRender: false }, «54.80»);
+    exit(tl, "#s15c-st", "L", DUR - 0.2);''', fixed=True,
+    fx=[('whoosh-cinematic', 50.64, 0.22), ('pop', 51.0, 0.3), ('whoosh-short', 51.72, 0.2), ('pop', 53.06, 0.3), ('whoosh-short', 53.98, 0.2), ('pop', 54.27, 0.32), ('ping', 54.8, 0.18)])
+
+add('s15d', 55.67, 58.97, f'''      {zone(ln('k3-l1', 'prima crea', 't-sans t-mut'), ln('k3-l2', 'il problema', 't-it split', 'font-size:150px;color:#ff3b30', mt=-22))}
+      {zone(ln('k3-l3', 'poi ti vende', 't-sans t-mut'), ln('k3-l4', 'la soluzione', 't-it split acc', 'font-size:150px', mt=-22))}
+      <div id="k3-a" style="position:absolute;left:340px;top:820px;width:400px;height:400px;border-radius:50%;background:#ff3b30;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" width="220" height="220"><path d="M22 22 L78 78 M78 22 L22 78" stroke="#fff" stroke-width="14" stroke-linecap="round"/></svg></div>
+      <div id="k3-b" style="position:absolute;left:340px;top:820px;width:400px;height:400px;border-radius:50%;background:{BURG};display:flex;align-items:center;justify-content:center;font:700 250px/1 Inter;color:#fff">€</div>''', '''    enter(tl, "#s15d-st", "U");
+    rise(tl, "#k3-l1", 0.04);
+    flip(tl, "#k3-l2", «56.27» - 0.08, 0.035);
+    tl.fromTo("#k3-a", { opacity: 0, scale: 0.2, rotation: -40 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.4, ease: "back.out(2.4)" }, «56.27» - 0.05);
+    sink(tl, "#k3-l1", «57.34» - 0.16); sink(tl, "#k3-l2", «57.34» - 0.16);
+    rise(tl, "#k3-l3", «57.34»);
+    tl.to("#k3-a", { scale: 0, rotation: 90, duration: 0.22, ease: "power3.in" }, «57.34» - 0.05);
+    tl.fromTo("#k3-b", { opacity: 0, scale: 0.2, rotation: -90 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.42, ease: "back.out(2.4)" }, «57.34» + 0.15);
+    flip(tl, "#k3-l4", «58.05» - 0.1, 0.035);
+    tl.fromTo("#k3-b", { scale: 1 }, { scale: 1.14, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, «58.05»);
+    exit(tl, "#s15d-st", "Z", DUR - 0.18);''', fixed=True,
+    fx=[('whoosh-short', 55.65, 0.3), ('impact-bass-1', 56.22, 0.26), ('whoosh', 57.2, 0.28), ('pop', 57.5, 0.32), ('sparkle', 58.0, 0.18)])
 
 # ---------------------------------------------------------------- trick 4: i rallentamenti
 title('s16', 52.56, 54.47, 4, 'i rallentamenti', 53.17, BURG, wsize=98)

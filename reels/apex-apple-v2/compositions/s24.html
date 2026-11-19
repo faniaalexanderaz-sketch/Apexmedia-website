@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -40,7 +41,7 @@
 
   </style>
   <div id="root" data-composition-id="s24" data-width="1080" data-height="1920">
-    <div id="s24-st" class="st" data-layout-allow-overlap>
+    <div id="s24-st" class="st" data-layout-allow-overlap><div id="s24-cam" class="cam" data-layout-allow-overlap>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="z-a1" class="t-sans t-mut">vuoi sapere come</span></span><span class="line" style="margin-top:-24px"><span id="z-a2" class="t-it">creo questi video?</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="z-b1" class="t-sans t-mut">scrivi</span></span></div>
       <div id="z-m" class="split acc" style="position:absolute;left:0;right:0;top:500px;text-align:center;font:700 214px/1 'SF Pro Display';letter-spacing:-0.04em">MOTION</div>
@@ -51,7 +52,7 @@
       </div>
       <div id="z-cur" class="cur" style="left:880px;top:940px"><svg viewBox="0 0 24 24" width="54" height="54"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#1d1d1f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
       <div class="zone" data-layout-allow-overlap style="top:1090px"><span class="line"><span id="z-c1" class="t-it">e ti spiego tutto</span></span></div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -74,6 +75,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s24-cam", { scale: 1 }, { scale: 1.045, duration: 4.33, ease: "none" }, 0);
     enter(tl, "#s24-st", "L");
     tl.fromTo("#s24-st", { scale: 1 }, { scale: 1.035, duration: 4.0, ease: "none", immediateRender: false }, 0.3);
     rise(tl, "#z-a1", 0.05);

@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -38,21 +39,23 @@
     .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 'SF Pro Display'; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
 
 
-    .c-bub { position: relative; padding: 40px 58px 46px; border-radius: 76px; background: #0a84ff; color: #fff; font: 500 86px/1 'SF Pro Display'; letter-spacing: -0.02em; white-space: nowrap; }
-    .c-bub span { position: relative; z-index: 2; }
-    .c-bub::before { content: ""; position: absolute; z-index: 0; bottom: 0; right: -26px; width: 70px; height: 70px; background: inherit; border-bottom-left-radius: 52px; }
-    .c-bub::after { content: ""; position: absolute; z-index: 1; bottom: 0; right: -36px; width: 36px; height: 72px; background: #000; border-bottom-left-radius: 36px; }
-    .c-in { background: #26252a; }
-    .c-in::before { right: auto; left: -26px; border-bottom-left-radius: 0; border-bottom-right-radius: 52px; }
-    .c-in::after { right: auto; left: -36px; border-bottom-left-radius: 0; border-bottom-right-radius: 36px; }
+    .j-dots { position: absolute; bottom: 60px; display: flex; gap: 18px; }
+    .j-dots i { display: block; width: 22px; height: 22px; border-radius: 50%; background: #1d1d1f; }
   </style>
   <div id="root" data-composition-id="s13" data-width="1080" data-height="1920">
-    <div id="s13-st" class="st dark" data-layout-allow-overlap>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="c-a1" class="t-sans" style="color:#86868b">scrivi da un Android</span></span><span class="line" style="margin-top:-24px"><span id="c-a2" class="t-it" style="font-size:118px;color:#30d158">diventa verde</span></span></div>
-      <div id="c-in" style="position:absolute;left:120px;top:790px"><div class="c-bub c-in"><span>Stasera ci siete?</span></div></div>
-      <div id="c-out" style="position:absolute;right:130px;top:1030px"><div class="c-bub" id="c-b"><span>Ci sono anch'io</span></div></div>
-      <div id="c-sms" style="position:absolute;right:134px;top:1262px;font:500 38px/1 'SF Pro Display';color:#8e8e93">Messaggio di testo · SMS</div>
-    </div>
+    <div id="s13-st" class="st" data-layout-allow-overlap><div id="s13-cam" class="cam" data-layout-allow-overlap>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="j-l0" class="t-it" style="font-size:170px">2016</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="j-l1" class="t-sans t-mut">Apple toglie</span></span><span class="line" style="margin-top:-20px"><span id="j-l2" class="t-it" style="font-size:76px">l'ingresso delle cuffie</span></span></div>
+      <div id="j-ph" style="position:absolute;left:120px;top:800px;width:840px;height:420px;border:12px solid #1d1d1f;border-top:none;border-radius:0 0 150px 150px;background:linear-gradient(180deg,#fff,#f2f2f7)">
+        <div style="position:absolute;left:50%;bottom:54px;width:150px;height:36px;margin-left:-75px;border-radius:18px;background:#1d1d1f"></div>
+        <div class="j-dots" style="right:150px"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="j-dots" style="left:290px"><i></i><i></i><i></i></div>
+        <div id="j-jack" style="position:absolute;left:120px;bottom:38px;width:68px;height:68px;border-radius:50%;background:#1d1d1f;box-shadow:inset 0 0 0 10px #48484a"></div>
+        <div id="j-x" style="position:absolute;left:84px;bottom:2px;width:140px;height:140px"><svg viewBox="0 0 100 100" width="140" height="140"><path d="M22 22 L78 78 M78 22 L22 78" stroke="#ff3b30" stroke-width="14" stroke-linecap="round"/></svg></div>
+      </div>
+      <div id="j-sel" class="sel" style="left:200px;top:1060px;width:160px;height:160px"><i></i><i></i><i></i><i></i></div>
+      <div id="j-pill" class="pill" style="left:150px;top:960px;background:#1d1d1f">ingresso cuffie</div>
+    </div></div>
   </div>
   <script>
 
@@ -75,15 +78,19 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s13-cam", { scale: 1 }, { scale: 1.045, duration: 3.31, ease: "none" }, 0);
     enter(tl, "#s13-st", "L");
-    rise(tl, "#c-a1", 0.06);
-    tl.fromTo("#c-in", { opacity: 0, scale: 0.3, y: 140, transformOrigin: "0% 100%" }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.9)" }, 0.25);
-    tl.fromTo("#c-out", { opacity: 0, scale: 0.3, y: 160, transformOrigin: "100% 100%" }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.9)" }, 1.10 - 0.05);
-    rise(tl, "#c-a2", 1.96 - 0.08);
-    tl.to("#c-b", { backgroundColor: "#30d158", duration: 0.22 }, 2.41 - 0.12);
-    tl.fromTo("#c-out", { scale: 1.12 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 2.41 - 0.1);
-    tl.fromTo("#c-sms", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.41 + 0.08);
-    exit(tl, "#s13-st", "L", 3.02 - 0.2);
+    rise(tl, "#j-l0", 0.04);
+    tl.fromTo("#j-ph", { y: -500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out" }, 0.1);
+    sink(tl, "#j-l0", 1.21 - 0.16);
+    rise(tl, "#j-l1", 1.21);
+    rise(tl, "#j-l2", 1.87 - 0.1);
+    select(tl, "#j-sel", null, 1.87);
+    pop(tl, "#j-pill", 1.87 + 0.1);
+    tl.fromTo("#j-x", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, 2.75);
+    tl.to("#j-jack", { scale: 0, duration: 0.25, ease: "power3.in" }, 2.75 + 0.12);
+    tl.fromTo("#j-ph", { x: 0 }, { x: 12, duration: 0.05, yoyo: true, repeat: 5, immediateRender: false }, 2.75 + 0.16);
+    exit(tl, "#s13-st", "U", 3.31 - 0.2);
     window.__timelines["s13"] = tl;
   </script>
 </template>

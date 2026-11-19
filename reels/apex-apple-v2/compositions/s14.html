@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -38,15 +39,15 @@
     .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 'SF Pro Display'; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
 
 
-    .g-b { position: absolute; height: 124px; border-radius: 62px; }
-    .g-b i { position: absolute; left: 52px; top: 52px; height: 20px; border-radius: 10px; background: rgba(255,255,255,0.6); }
   </style>
   <div id="root" data-composition-id="s14" data-width="1080" data-height="1920">
-    <div id="s14-st" class="st dark" data-layout-allow-overlap>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="g-a1" class="t-sans" style="color:#86868b">tra i ragazzi</span></span><span class="line" style="margin-top:-24px"><span id="g-a2" class="t-sans"><span>chi ha la bolla</span> <span style="color:#30d158">verde</span></span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="g-b1" class="t-it" style="font-size:126px">resta fuori</span></span><span class="line" style="margin-top:-24px"><span id="g-b2" class="t-sans" style="color:#86868b">dai gruppi</span></span></div>
-      <div class="g-b " id="g-1" style="left:110px;top:740px;width:520px;background:#0a84ff"><i style="width:330px"></i></div><div class="g-b " id="g-2" style="left:460px;top:900px;width:510px;background:#0a84ff"><i style="width:320px"></i></div><div class="g-b " id="g-green" style="left:150px;top:1060px;width:470px;background:#30d158"><i style="width:280px"></i></div><div class="g-b g-lo" id="g-4" style="left:430px;top:1220px;width:540px;background:#0a84ff"><i style="width:350px"></i></div><div class="g-b g-lo" id="g-5" style="left:110px;top:1380px;width:480px;background:#0a84ff"><i style="width:290px"></i></div>
-    </div>
+    <div id="s14-st" class="st" data-layout-allow-overlap><div id="s14-cam" class="cam" data-layout-allow-overlap>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="y-l1" class="t-it" style="font-size:104px">lo stesso giorno</span></span><span class="line" style="margin-top:-16px"><span id="y-l2" class="t-sans t-mut" style="font-size:58px">presenta le sue cuffie senza fili</span></span></div>
+      <div id="y-cal" style="position:absolute;width:400px;border-radius:40px;background:#fff;text-align:center;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,0.2);left:70px;top:800px"><div style="background:#ff3b30;color:#fff;font:700 36px/1 'SF Pro Display';padding:22px 0;letter-spacing:0.08em">SETTEMBRE 2016</div><div style="font:700 210px/1.1 'SF Pro Display';letter-spacing:-0.04em">7</div><div style="font:600 32px/1 'SF Pro Display';color:#86868b;padding:0 0 30px">stesso evento</div></div>
+      <img id="y-air" class="mul" src="assets/img/airpods.png" style="position:absolute;left:500px;top:740px;width:540px;display:block" alt="" />
+      <div id="y-pill" class="pill" style="left:650px;top:1250px;font-size:62px;padding:18px 36px">AirPods</div>
+      <div id="y-tag" class="pill" style="left:560px;top:720px;background:#1d1d1f;transform:rotate(-5deg)">vendute a parte</div>
+    </div></div>
   </div>
   <script>
 
@@ -69,17 +70,16 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s14-cam", { scale: 1 }, { scale: 1.045, duration: 3.19, ease: "none" }, 0);
     enter(tl, "#s14-st", "U");
-    rise(tl, "#g-a1", 0.06);
-    tl.fromTo(".g-b", { opacity: 0, scale: 0.5, y: 80 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(2)", stagger: 0.09 }, 0.15);
-    rise(tl, "#g-a2", 0.81 - 0.08);
-    tl.fromTo("#g-green", { scale: 1.16 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 1.46);
-    sink(tl, "#g-a1", 1.76 - 0.18); sink(tl, "#g-a2", 1.76 - 0.18);
-    rise(tl, "#g-b1", 1.76 - 0.03);
-    tl.to("#g-green", { y: 1000, x: -90, rotation: -24, opacity: 0, duration: 0.7, ease: "power2.in" }, 1.76 + 0.05);
-    tl.to(".g-lo", { y: -160, duration: 0.45, ease: "expo.out" }, 1.76 + 0.5);
-    rise(tl, "#g-b2", 2.60 - 0.1);
-    exit(tl, "#s14-st", "Z", 3.35 - 0.18);
+    rise(tl, "#y-l1", 0.04);
+    tl.fromTo("#y-cal", { opacity: 0, scale: 0.5, rotation: -8 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.4, ease: "back.out(2)" }, 0.1);
+    rise(tl, "#y-l2", 0.86 - 0.1);
+    tl.fromTo("#y-air", { opacity: 0, scale: 0.3, x: 300 }, { opacity: 1, scale: 1, x: 0, duration: 0.45, ease: "back.out(1.8)" }, 0.86);
+    pop(tl, "#y-pill", 1.68);
+    tl.fromTo("#y-air", { scale: 1.12 }, { scale: 1, duration: 0.34, ease: "back.out(3)", immediateRender: false }, 1.68);
+    pop(tl, "#y-tag", 2.04 + 0.1);
+    exit(tl, "#s14-st", "L", 3.19 - 0.2);
     window.__timelines["s14"] = tl;
   </script>
 </template>

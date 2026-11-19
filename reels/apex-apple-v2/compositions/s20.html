@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -47,7 +48,7 @@
     .x-bar { stroke: #c9a227; stroke-width: 9; stroke-linecap: round; opacity: 0.92; }
   </style>
   <div id="root" data-composition-id="s20" data-width="1080" data-height="1920">
-    <div id="s20-st" class="st" data-layout-allow-overlap>
+    <div id="s20-st" class="st" data-layout-allow-overlap><div id="s20-cam" class="cam" data-layout-allow-overlap>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t0" class=""><span class="t-sans t-mut">prima</span> <span class="t-it">l'iPhone</span></span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t1" class="t-it">poi le cuffie</span></span><span class="line" style="margin-top:-20px"><span id="x-t1b" class="t-sans t-mut" style="font-size:62px">che si collegano da sole</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="x-t2" class="t-it">poi l'orologio</span></span></div>
@@ -67,7 +68,7 @@
         <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><rect id="x-cage" x="50" y="640" width="980" height="1110" rx="84" fill="none" stroke="#c9a227" stroke-width="12"/><line id="x-b-0" class="x-bar" x1="190" y1="640" x2="190" y2="1750"/><line id="x-b-1" class="x-bar" x1="330" y1="640" x2="330" y2="1750"/><line id="x-b-2" class="x-bar" x1="470" y1="640" x2="470" y2="1750"/><line id="x-b-3" class="x-bar" x1="610" y1="640" x2="610" y2="1750"/><line id="x-b-4" class="x-bar" x1="750" y1="640" x2="750" y2="1750"/><line id="x-b-5" class="x-bar" x1="890" y1="640" x2="890" y2="1750"/></svg>
         <div id="x-lock" style="position:absolute;left:470px;top:1680px;width:140px;height:140px;border-radius:50%;background:#c9a227;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="74" height="74"><rect x="5" y="10.5" width="14" height="10" rx="2.6" fill="#fff"/><path d="M8.2 10.5V7.6a3.8 3.8 0 0 1 7.6 0v2.9" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></div>
       </div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -90,6 +91,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s20-cam", { scale: 1 }, { scale: 1.045, duration: 13.23, ease: "none" }, 0);
     enter(tl, "#s20-st", "L");
     const pi = (s, t) => tl.fromTo(s, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.2)" }, t);
     tl.fromTo("#x-cam", { scale: 1.3 }, { scale: 1, duration: 8.2, ease: "power1.out" }, 0);

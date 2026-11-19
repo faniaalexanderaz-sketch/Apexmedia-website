@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -40,13 +41,13 @@
 
   </style>
   <div id="root" data-composition-id="s23" data-width="1080" data-height="1920">
-    <div id="s23-st" class="st" data-layout-allow-overlap>
+    <div id="s23-st" class="st" data-layout-allow-overlap><div id="s23-cam" class="cam" data-layout-allow-overlap>
       <div id="o-B" data-layout-allow-overlap style="position:absolute;left:0;top:335px;width:1080px;height:1920px;mix-blend-mode:multiply;transform-origin:50% 19%">
         <video id="o-vid" class="clip" src="assets/video/ip18-spin-loop.mp4" data-start="0.04" data-duration="2.9" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
       </div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="o-a1" class="t-sans t-mut">e ogni anno</span></span><span class="line" style="margin-top:-24px"><span id="o-a2" class="t-it" style="font-size:112px">ti fa spendere</span></span></div>
       <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="o-b1" class=""><span class="t-sans t-mut" style="font-size:104px">migliaia di</span><span class="t-sans split acc" id="o-euro" style="font-size:104px;font-weight:700">euro</span></span></span></div>
-    </div>
+    </div></div>
   </div>
   <script>
 
@@ -69,6 +70,7 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s23-cam", { scale: 1 }, { scale: 1.045, duration: 2.96, ease: "none" }, 0);
     enter(tl, "#s23-st", "Z");
     tl.fromTo("#o-B", { scale: 0.9 }, { scale: 1.0, duration: 2.3, ease: "none" }, 0);
     rise(tl, "#o-a1", 0.05);

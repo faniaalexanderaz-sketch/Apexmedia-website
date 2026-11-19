@@ -1894,7 +1894,7 @@ Apple ti fa spendere migliaia di euro. E tu la ringrazi pure. Questi sono i cinq
 
 1. Settembre. Ogni anno, stesso mese, nuovo iPhone. E ogni anno un colore nuovo: il tuo funziona benissimo, ma adesso si vede che è quello dell'anno scorso.
 2. La memoria. Il modello base ha poco spazio. Dopo un anno di foto è pieno, e quello più grande costa 100, 200 euro in più. Non lo compri? Allora paghi iCloud: pochi euro al mese, ogni mese, per sempre. Ed è solo la prima gabbia.
-3. Le bolle verdi. Scrivi da un Android e il tuo messaggio diventa verde. Tra i ragazzi, chi ha la bolla verde resta fuori dai gruppi. In una causa del governo americano è finita un'email interna: aprire iMessage ad Android avrebbe tolto un ostacolo alle famiglie che comprano l'iPhone ai figli.
+3. Il pezzo mancante. 2016: Apple toglie l'ingresso delle cuffie e lo stesso giorno presenta le AirPods. 2020: toglie il caricatore dalla scatola e lo stesso giorno lancia il caricatore magnetico MagSafe. Venduto a parte. E per usarlo ti serve un altro pezzo, venduto a parte anche quello. Prima crea il problema, poi ti vende la soluzione.
 4. I rallentamenti. Nel 2018 l'Antitrust italiano ha multato Apple per 10 milioni di euro. Tra le accuse: aggiornamenti spinti sugli iPhone vecchi, che li rallentavano, senza avvisare.
 5. La gabbia dorata. Prima l'iPhone. Poi le cuffie, l'orologio, il Mac, iCloud, la musica, la TV. Ogni pezzo funziona meglio con gli altri, e ogni pezzo rende più difficile uscire. Solo i servizi portano ad Apple più di 100 miliardi di dollari l'anno.
 
@@ -1904,7 +1904,7 @@ Manda questo video a chi cambia iPhone ogni anno.
 
 Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
 
-Fonti: causa antitrust del Dipartimento di Giustizia USA (2024); provvedimento AGCM (ottobre 2018); bilancio Apple, anno fiscale 2025.
+Fonti: eventi Apple del 7 settembre 2016 e del 13 ottobre 2020; provvedimento AGCM (ottobre 2018); bilancio Apple, anno fiscale 2025.
 #apple #iphone #soldi #tecnologia #marketing #psicologia #apexmedia
 ```
 

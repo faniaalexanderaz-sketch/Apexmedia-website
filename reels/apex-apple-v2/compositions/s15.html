@@ -17,6 +17,7 @@
     .acc { color: #7a0f24; }
     .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
     .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
     .mul { mix-blend-mode: multiply; }
     .seg { position: absolute; top: 300px; left: 240px; width: 600px; height: 12px; display: flex; gap: 14px; color: #7a0f24; }
     .seg i { flex: 1; border-radius: 6px; background: #e5e5ea; overflow: hidden; }
@@ -38,34 +39,21 @@
     .pill { position: absolute; padding: 14px 26px; border-radius: 999px; background: #7a0f24; color: #fff; font: 600 44px/1 'SF Pro Display'; letter-spacing: -0.02em; opacity: 0; white-space: nowrap; }
 
 
-    .e-sk { display: block; height: 14px; border-radius: 7px; background: #d9d9d4; margin: 28px auto 0; }
-    .e-row { display: flex; align-items: center; gap: 20px; font: 400 36px/1 'SF Pro Display'; color: #8e8e93; padding: 18px 0; border-bottom: 2px solid #2c2c2e; }
-    .e-row i { height: 30px; border-radius: 6px; background: #48484a; }
-    .e-row b { font-weight: 500; color: #f5f5f7; }
   </style>
   <div id="root" data-composition-id="s15" data-width="1080" data-height="1920">
-    <div id="s15-st" class="st dark" data-layout-allow-overlap>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="e-a1" class="t-sans" style="color:#86868b">in una causa del</span></span><span class="line" style="margin-top:-24px"><span id="e-a2" class="t-it">governo americano</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="e-b1" class="t-sans" style="color:#86868b">è finita</span></span><span class="line" style="margin-top:-24px"><span id="e-b2" class="t-it">un'email interna</span></span></div>
-      <div id="e-doc" style="position:absolute;left:170px;top:720px;width:740px;height:900px;border-radius:14px;background:#fbfbf8;color:#1d1d1f;padding:70px 64px;text-align:center;transform-origin:50% 60%">
-        <div style="font:600 24px/1.4 'SF Pro Display';letter-spacing:0.08em">UNITED STATES DISTRICT COURT</div>
-        <div style="font:700 40px/1.25 'SF Pro Display';margin-top:60px">UNITED STATES OF AMERICA et al.<br><span style="font-weight:400;font-size:30px">v.</span><br>APPLE INC.</div>
-        <div style="font:600 30px/1 'SF Pro Display';letter-spacing:0.12em;margin-top:56px">COMPLAINT</div>
-        <i class="e-sk" style="width:100%"></i><i class="e-sk" style="width:94%"></i><i class="e-sk" style="width:98%"></i><i class="e-sk" style="width:70%"></i><i class="e-sk" style="width:96%"></i><i class="e-sk" style="width:88%"></i>
+    <div id="s15-st" class="st" data-layout-allow-overlap><div id="s15-cam" class="cam" data-layout-allow-overlap>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="b-l0" class="t-it" style="font-size:170px">2020</span></span></div>
+      <div class="zone" data-layout-allow-overlap style="top:372px"><span class="line"><span id="b-l1" class="t-it" style="font-size:86px">toglie il caricatore</span></span><span class="line" style="margin-top:-20px"><span id="b-l2" class="t-sans t-mut">dalla scatola</span></span></div>
+      <div id="b-box" style="position:absolute;left:130px;top:790px;width:820px;height:560px;border-radius:44px;background:#f5f5f7;border:8px solid #1d1d1f">
+        <div style="position:absolute;left:60px;top:70px;width:230px;height:420px;border-radius:38px;background:#1d1d1f"><i style="position:absolute;left:24px;top:24px;width:74px;height:74px;border-radius:22px;background:#3a3a3c"></i></div>
+        <div style="position:absolute;left:340px;top:190px;width:180px;height:180px;border-radius:50%;border:16px solid #d1d1d6"></div>
+        <div id="b-slot" style="position:absolute;left:570px;top:170px;width:190px;height:220px;border-radius:30px;border:5px dashed #c7c7cc"></div>
+        <div id="b-brick" style="position:absolute;left:580px;top:180px;width:170px;height:200px;border-radius:28px;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,0.18), inset 0 0 0 3px #e5e5ea"><i style="position:absolute;left:42px;top:-30px;width:18px;height:36px;border-radius:5px;background:#aeaeb2"></i><i style="position:absolute;right:42px;top:-30px;width:18px;height:36px;border-radius:5px;background:#aeaeb2"></i></div>
       </div>
-      <div id="e-mail" style="position:absolute;left:80px;top:700px;width:920px;height:800px;border-radius:44px;background:#1c1c1e;padding:46px 56px;box-shadow:0 40px 120px rgba(0,0,0,0.6)">
-        <div class="e-row"><span>Da:</span><i style="width:300px"></i></div>
-        <div class="e-row"><span>A:</span><i style="width:220px"></i></div>
-        <div class="e-row"><span>Oggetto:</span><b>iMessage su Android</b></div>
-        <div style="margin-top:44px;font:600 58px/1.24 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7">
-          <div id="e-q1" class="split">Aprire iMessage ad Android</div>
-          <div><span id="e-q2a" class="split">avrebbe tolto </span><span class="hl"><i id="e-hl"></i><span id="e-q2b" class="split">un ostacolo</span></span></div>
-          <div id="e-q3" class="split">alle famiglie che comprano</div>
-          <div id="e-q4" class="split">l'iPhone ai figli.</div>
-        </div>
-      </div>
-      <div class="tag" id="e-tag" style="top:1570px">Email del 2013, citata nella causa<br>Stati Uniti contro Apple (2024)</div>
-    </div>
+      <div id="b-sel" class="sel" style="left:690px;top:940px;width:210px;height:250px"><i></i><i></i><i></i><i></i></div>
+      <div id="b-x" style="position:absolute;left:720px;top:980px;width:150px;height:150px"><svg viewBox="0 0 100 100" width="150" height="150"><path d="M22 22 L78 78 M78 22 L22 78" stroke="#ff3b30" stroke-width="14" stroke-linecap="round"/></svg></div>
+      <div id="b-pill" class="pill" style="left:650px;top:860px;background:#1d1d1f">caricatore</div>
+    </div></div>
   </div>
   <script>
 
@@ -88,25 +76,19 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s15-cam", { scale: 1 }, { scale: 1.045, duration: 3.09, ease: "none" }, 0);
     enter(tl, "#s15-st", "L");
-    rise(tl, "#e-a1", 0.06);
-    rise(tl, "#e-a2", 0.76 - 0.08);
-    tl.fromTo("#e-doc", { y: 1300, rotation: 9 }, { y: 0, rotation: -4, duration: 0.6, ease: "expo.out" }, 0.15);
-    tl.to("#e-doc", { rotation: -2, scale: 1.04, duration: 1.4, ease: "none" }, 0.75);
-    sink(tl, "#e-a1", 1.70 - 0.18); sink(tl, "#e-a2", 1.70 - 0.18);
-    rise(tl, "#e-b1", 1.70);
-    rise(tl, "#e-b2", 2.08 - 0.05);
-    tl.fromTo("#e-mail", { x: 1100, rotation: 6 }, { x: 0, rotation: 0, duration: 0.5, ease: "expo.out" }, 2.08);
-    tl.to("#e-doc", { opacity: 0, duration: 0.3 }, 3.42 - 0.3);
-    typeIn(tl, "#e-q1", 3.42, 0.04);
-    typeIn(tl, "#e-q2a", 5.26, 0.035);
-    typeIn(tl, "#e-q2b", 5.92, 0.035);
-    tl.fromTo("#e-hl", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.out" }, 6.03 + 0.36);
-    typeIn(tl, "#e-q3", 6.46, 0.04);
-    typeIn(tl, "#e-q4", 7.89, 0.035);
-    tl.fromTo("#e-tag", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.42 + 0.5);
-    tl.to("#e-mail", { scale: 1.05, duration: 5.4, ease: "none" }, 3.42);
-    exit(tl, "#s15-st", "U", 9.06 - 0.2);
+    rise(tl, "#b-l0", 0.04);
+    tl.fromTo("#b-box", { y: 500, opacity: 0, rotation: 4 }, { y: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "expo.out" }, 0.1);
+    sink(tl, "#b-l0", 1.16 - 0.16);
+    rise(tl, "#b-l1", 1.16);
+    select(tl, "#b-sel", null, 1.57);
+    pop(tl, "#b-pill", 1.57 + 0.08);
+    rise(tl, "#b-l2", 2.52 - 0.3);
+    tl.to(["#b-sel", "#b-pill"], { opacity: 0, duration: 0.12 }, 2.52 - 0.1);
+    tl.to("#b-brick", { x: 520, y: -260, rotation: 40, opacity: 0, duration: 0.42, ease: "power3.in" }, 2.52 - 0.08);
+    tl.fromTo("#b-x", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.in" }, 2.52 + 0.2);
+    exit(tl, "#s15-st", "U", 3.09 - 0.2);
     window.__timelines["s15"] = tl;
   </script>
 </template>

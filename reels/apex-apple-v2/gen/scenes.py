@@ -2,14 +2,24 @@ import sys; sys.path.insert(0,'.')
 from common import scene, CURSOR, SEL
 OUT='/home/user/Apexmedia-website/reels/apex-apple-v2/compositions/'
 S={}
-# ---------- s1 intro (0 - 2.53): macro shot -> zoom-through -> the phone turning for real ----------
+# ---------- s1 intro (0 - 2.40): lens macro -> five products flash by -> the whole family around the phone ----------
+FL = [('airpods.png', 700, 190, 760), ('watch.png', 560, 260, 720), ('ipad-back.png', 600, 240, 700), ('macbook-back.png', 880, 100, 800), ('imac-blue.png', 800, 140, 720)]
+FLASH = ''.join(f'<img id="s1-f{k}" class="mul" src="assets/img/{f}" style="position:absolute;left:{l}px;top:{t}px;width:{w}px;display:block;opacity:0" alt="" />' for k, (f, w, l, t) in enumerate(FL))
 S['s1']=(2.40,'''
-    <div id="s1-stage" style="position:absolute;inset:0">
+    <div id="s1-stage" data-layout-allow-overlap style="position:absolute;inset:0;background:#fff">
       <div id="s1-A" data-layout-allow-overlap style="position:absolute;inset:0;overflow:hidden">
         <img id="s1-mac" src="assets/img/ip18-burg-macro.png" style="position:absolute;left:0;top:610px;width:1080px;display:block" alt="" />
       </div>
-      <div id="s1-B" data-layout-allow-overlap style="position:absolute;left:0;top:335px;transform-origin:50% 19%;width:1080px;height:1920px;mix-blend-mode:multiply;opacity:0">
-        <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.40" data-duration="1.98" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
+      ''' + FLASH + '''
+      <div id="s1-C" data-layout-allow-overlap style="position:absolute;inset:0;transform-origin:50% 60%">
+        <div id="s1-B" data-layout-allow-overlap style="position:absolute;left:0;top:335px;transform-origin:50% 19%;width:1080px;height:1920px;mix-blend-mode:multiply;opacity:0">
+          <video id="s1-vid" class="clip" src="assets/video/ip18-spin-intro.mp4" data-start="0.90" data-duration="1.48" data-media-start="0.5" muted playsinline style="position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover"></video>
+        </div>
+        <img id="s1-p0" class="mul s1-p" src="assets/img/airpods.png" style="position:absolute;left:30px;top:740px;width:270px;display:block" alt="" />
+        <img id="s1-p1" class="mul s1-p" src="assets/img/watch.png" style="position:absolute;left:800px;top:720px;width:240px;display:block" alt="" />
+        <img id="s1-p2" class="mul s1-p" src="assets/img/macbook-back.png" style="position:absolute;left:0px;top:1270px;width:330px;display:block" alt="" />
+        <img id="s1-p3" class="mul s1-p" src="assets/img/imac-blue.png" style="position:absolute;left:740px;top:1210px;width:340px;display:block" alt="" />
+        <img id="s1-p4" class="mul s1-p" src="assets/img/ipad-back.png" style="position:absolute;left:40px;top:1010px;width:190px;display:block" alt="" />
       </div>
       <div class="zone" data-layout-allow-overlap>
         <span class="line"><span id="s1-l1" class="t-it" style="font-size:118px">Apple ti fa</span></span>
@@ -20,23 +30,27 @@ S['s1']=(2.40,'''
       <div id="s1-cur" class="cur" style="left:792px;top:556px">''' + CURSOR + '''</div>
     </div>''','''
     /* shot A: the camera lands on the lenses */
-    tl.fromTo("#s1-mac", { scale: 1.55, rotation: -3, transformOrigin: "30% 0%" }, { scale: 1.08, rotation: 0, duration: 0.4, ease: "expo.out" }, 0);
-    tl.fromTo("#s1-l1", { scale: 1.16, transformOrigin: "50% 80%" }, { scale: 1, duration: 0.34, ease: "expo.out" }, 0);
-    /* zoom through the lens into shot B */
-    tl.to("#s1-mac", { scale: 3.4, duration: 0.18, ease: "power3.in" }, 0.28);
-    tl.to("#s1-A", { opacity: 0, duration: 0.08, ease: "none" }, 0.40);
-    sink(tl, "#s1-l1", 0.28);
-    tl.fromTo("#s1-B", { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 0.95, duration: 0.5, ease: "expo.out" }, 0.42);
-    rise(tl, "#s1-l2", 0.44);
-    tl.set("#s1-l3", { yPercent: 115 }, 0);
+    tl.fromTo("#s1-mac", { scale: 1.55, rotation: -3, transformOrigin: "30% 0%" }, { scale: 1.08, rotation: 0, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#s1-l1", { scale: 1.16, transformOrigin: "50% 80%" }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    tl.to("#s1-mac", { scale: 3.4, duration: 0.12, ease: "power3.in" }, 0.2);
+    tl.to("#s1-A", { opacity: 0, duration: 0.05, ease: "none" }, 0.29);
+    sink(tl, "#s1-l1", 0.26);
+    rise(tl, "#s1-l2", 0.42);
+    /* five products flash by, one every 0.13 s */
+    for (let k = 0; k < 5; k++) {
+      tl.fromTo("#s1-f" + k, { opacity: 0, scale: 1.35, rotation: k % 2 ? 7 : -7 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.11, ease: "expo.out" }, 0.30 + k * 0.13);
+      tl.to("#s1-f" + k, { opacity: 0, scale: 0.8, duration: 0.03, ease: "none" }, 0.30 + (k + 1) * 0.13 - 0.02);
+    }
+    /* the whole family lands around the phone */
+    tl.fromTo("#s1-B", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 0.74, duration: 0.4, ease: "expo.out" }, 0.94);
+    tl.fromTo(".s1-p", { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(2.4)", stagger: 0.055 }, 0.98);
+    tl.fromTo("#s1-C", { scale: 1 }, { scale: 1.07, duration: 0.7, ease: "none" }, 0.98);
+    tl.set("#s1-l3", { yPercent: 135 }, 0);
     rise(tl, "#s1-l3", 0.98);
-    /* cut-in: jump to a tight shot of the back */
-    tl.set("#s1-B", { scale: 1.42 }, 0.98);
-    tl.to("#s1-B", { scale: 1.5, duration: 0.68, ease: "none" }, 0.99);
     tl.set("#s1-euro", { opacity: 1 }, 0);
     tl.set(L("#s1-euro"), { opacity: 0 }, 0);
     flip(tl, "#s1-euro", 1.64, 0.05);
-    tl.to("#s1-B", { scale: 1.62, duration: 0.3, ease: "back.out(2.6)" }, 1.68);
+    tl.to("#s1-C", { scale: 1.16, duration: 0.3, ease: "back.out(2.6)" }, 1.68);
     select(tl, "#s1-sel", "#s1-cur", 1.8);
     tl.to("#s1-stage", { x: -1080, duration: 0.24, ease: "power3.in" }, 2.16);''')
 # ---------- s2 "e tu la ringrazi pure" (2.53 - 3.99): dark scene, a sent message with a heart ----------
