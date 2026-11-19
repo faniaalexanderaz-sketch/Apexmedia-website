@@ -41,11 +41,12 @@
     .sel i:nth-child(1) { left: -10px; top: -10px; } .sel i:nth-child(2) { right: -10px; top: -10px; }
     .sel i:nth-child(3) { left: -10px; bottom: -10px; } .sel i:nth-child(4) { right: -10px; bottom: -10px; }
 
+    #root { background: #142019 !important; }
 
   </style>
   <div id="root" data-composition-id="c1" data-width="1080" data-height="1920">
     <div id="c1-st" class="st" data-layout-allow-overlap>
-      <div class="vid" id="a-v-w" data-layout-allow-overlap><video id="a-v" class="clip" src="assets/video/phone.mp4" data-start="0" data-duration="2.20" data-media-start="1.6" muted playsinline></video></div><div class="shade "></div>
+      <div class="vid" id="a-v-w" data-layout-allow-overlap><video id="a-v" class="clip" src="assets/video/phone.mp4" data-start="0" data-duration="2.40" data-media-start="1.6" muted playsinline></video></div><div class="shade "></div>
       <div class="zone" data-layout-allow-overlap style="top:360px"><span class="line"><span id="a-l1" class="t-sans cream" style="font-size:88px">la tua testa pesa</span></span></div>
       <div id="a-big" style="position:absolute;left:0;right:0;top:470px;text-align:center;font:500 380px/1 Fraunces;letter-spacing:-0.04em;color:#F4F2EC;opacity:0;text-shadow:0 14px 60px rgba(0,0,0,0.55)">5 <span style="font:italic 500 200px/1 Fraunces">kg</span></div>
     </div>
@@ -71,11 +72,11 @@
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a-v-w", { scale: 1.16 }, { scale: 1.06, duration: 2.20, ease: "none" }, 0);
+    tl.fromTo("#a-v-w", { scale: 1.16 }, { scale: 1.06, duration: 2.40, ease: "none" }, 0);
     tl.fromTo("#a-l1", { scale: 1.25, transformOrigin: "50% 80%" }, { scale: 1, duration: 0.4, ease: "expo.out" }, 0);
-    tl.fromTo("#a-big", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.34, ease: "expo.out" }, 1.45 - 0.1);
-    tl.fromTo("#c1-st", { x: -22 }, { x: 0, duration: 0.3, ease: "elastic.out(1.2, 0.35)", immediateRender: false }, 1.45 - 0.1);
-    exit(tl, "#c1-st", "U", 2.20 - 0.18);
+    tl.fromTo("#a-big", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.34, ease: "expo.out" }, 1.32 - 0.1);
+    tl.fromTo("#c1-st", { x: -22 }, { x: 0, duration: 0.3, ease: "elastic.out(1.2, 0.35)", immediateRender: false }, 1.32 - 0.1);
+    exit(tl, "#c1-st", "U", 2.40 - 0.18);
     window.__timelines["c1"] = tl;
   </script>
 </template>
