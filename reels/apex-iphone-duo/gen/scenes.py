@@ -19,7 +19,6 @@ add('a1', 'start', 'sichiama', f'''      <div class="vid" id="h-w" data-layout-a
       </div>
       {zone(ln('a-l1', 'e ad Apple va benissimo', 't', 'font-size:74px;color:#f5f5f7'), ln('a-l2', 'se <span style="color:' + RED + '">non</span> lo compri.', 'tb wsplit', 'font-size:128px;color:#f5f5f7', mt=-14), top=1290)}
       <div class="flash" id="a-fl"></div>''', f'''    tl.fromTo("#h-w", {{ scale: {HZ0} }}, {{ scale: {HZ1}, duration: DUR, ease: "none" }}, 0);
-    tl.fromTo("#a-lab", {{ opacity: 0.0, y: 20 }}, {{ opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }}, 0);
     count(tl, "#a-n", 1000, 2369, 0.05, 0.85, eur, "power3.out");
     tl.fromTo("#a-pr", {{ scale: 0.8, transformOrigin: "50% 60%" }}, {{ scale: 1, duration: 0.9, ease: "power3.out" }}, 0);
     tl.fromTo("#a-pr", {{ scale: 1.14 }}, {{ scale: 1, duration: 0.45, ease: "elastic.out(1.1, 0.4)", immediateRender: false }}, 0.92);

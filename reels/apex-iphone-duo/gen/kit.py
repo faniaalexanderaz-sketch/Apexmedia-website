@@ -52,7 +52,9 @@ class Reel:
         DUR = {'whoosh-short': 0.5, 'whoosh': 0.55, 'whoosh-cinematic': 1.0, 'key-press': 0.4, 'click-soft': 0.35, 'click': 0.36, 'pop': 0.6, 'typing': 0.75, 'sparkle': 1.2,
                'impact-bass-1': 1.6, 'ping': 1.3, 'riser': 1.4, 'hinge': 0.6, 'boom': 1.6, 'anchor': 1.6, 'clink': 1.6, 'register': 0.9, 'swipe': 1.5, 'counter': 1.2,
                'cash': 0.9, 'ding': 0.9, 'swoosh': 0.55, 'thud': 0.5, 'tick': 0.2}
-        new = sorted((max(0.0, t), n, v) for s in self.SC for n, t, v in s['fx'])
+        # heavy hits sit under the voice: they are scaled down here so that no effect is louder than the narration
+        GAIN = {'boom': 0.55, 'impact-bass-1': 0.7, 'thud': 0.8, 'anchor': 0.7, 'register': 0.85, 'whoosh-cinematic': 0.8}
+        new = sorted((max(0.0, t), n, round(v * GAIN.get(n, 1.0), 3)) for s in self.SC for n, t, v in s['fx'])
         busy = {k: 0.0 for k in range(12, 30)}; fxs = []
         for k, (t, n, v) in enumerate(new):
             d = min(DUR[n], END - t)
