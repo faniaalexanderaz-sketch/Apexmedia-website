@@ -2033,3 +2033,39 @@ Scrivi nei commenti quanti ne hai.
 Trattamenti olistici per il benessere, non prestazioni sanitarie.
 #stress #benessere #massaggi #relax #alessandria #essenzadoriente #centroolistico
 ```
+
+---
+
+## 67. Questo iPhone costa 2.369 euro. E ad Apple va benissimo se non lo compri (iPhone Duo e l'effetto àncora)
+
+Video Apex, stile sito Apple: font SF Pro, iPhone Duo in 3D che si apre, pagina dello Store ricostruita, due clip generate (il Duo che si apre, interno di uno store). Chiude con MOTION e poi "Ah, e ricordati..." che riporta alla prima frase (loop). File: `apex-iphone-duo/renders/apex-iphone-duo-9x16.mp4`
+
+**TikTok**
+```text
+Questo iPhone costa 2.369 euro. E ad Apple va benissimo se non lo compri. Ecco il trucco dietro iPhone Duo.
+#iphoneduo #apple #iphone18 #marketing #apexmedia
+```
+
+**Instagram**
+```text
+Questo iPhone costa 2.369 euro. E ad Apple va benissimo se non lo compri.
+
+Si chiama iPhone Duo: il primo iPhone che si piega. Chiuso è un telefono, aperto è quasi un tablet. Titanio, due schermi, e si arriva a quasi 4.000 euro.
+
+Ma secondo me non l'hanno fatto solo per venderlo.
+
+Guarda l'Apple Store: iPhone 18 Pro Max, color borgogna, 1.639 euro. 150 in più dell'anno scorso. Da solo, è un'enormità. Poi gli metti accanto il Duo, e di colpo 1.639 euro ti sembrano pochi. 730 in meno. Quasi un affare.
+
+Si chiama effetto àncora: il primo prezzo che vedi diventa il tuo metro, e tutto quello che viene dopo ti sembra poco.
+
+Lo fanno anche i ristoranti: la bottiglia da 300 euro in cima alla carta non serve a venderla. Serve a vendere quella da 60.
+
+La lezione? Se vuoi vendere una cosa cara, mettile vicino una cosa carissima.
+
+Manda questo video a chi sta per cambiare iPhone.
+
+Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto.
+
+Prezzi dal sito Apple Italia (novembre 2026). L'effetto àncora è descritto da Tversky e Kahneman (1974). Che il Duo serva anche da àncora è una mia lettura, non una dichiarazione di Apple.
+#iphoneduo #apple #iphone18promax #marketing #psicologia #prezzi #apexmedia
+```
