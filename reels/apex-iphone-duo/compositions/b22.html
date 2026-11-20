@@ -1,0 +1,110 @@
+<template>
+  <style>
+
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st.grey { background: #f5f5f7; }
+    .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
+    .zone { z-index: 5; position: absolute; left: 70px; right: 70px; top: 360px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 8px 0 16px; font: 600 84px/1.06 "SF Pro Display"; letter-spacing: -0.022em; }
+    .line > span { display: inline-block; }
+    .t { font: 600 84px/1.06 "SF Pro Display"; letter-spacing: -0.022em; }
+    .tb { font: 700 120px/1.02 "SF Pro Display"; letter-spacing: -0.035em; }
+    .mut { color: #86868b; }
+    .dark .mut { color: #a1a1a6; }
+    .acc { color: #7a0f24; }
+    .blue { color: #0071e3; }
+    .eyebrow { position: absolute; left: 0; right: 0; text-align: center; font: 600 34px/1 "SF Pro Display"; letter-spacing: -0.01em; color: #b64400; opacity: 0; }
+    .grad { background: linear-gradient(100deg, #6e7fb8 0%, #1d2a57 38%, #7b8fd0 62%, #1a2244 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .ch { display: inline-block; white-space: pre; }
+    .w { display: inline-block; white-space: pre; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -10px; right: -10px; top: 8%; bottom: 4%; background: rgba(255, 214, 10, 0.5); border-radius: 10px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .vid { position: absolute; inset: 0; overflow: hidden; }
+    .vid video, .vid img { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.42) 30%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.25) 100%); }
+    .card { position: absolute; border-radius: 40px; background: #fff; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.04); }
+    .chip { position: absolute; padding: 18px 34px; border-radius: 999px; background: #1d1d1f; color: #fff; font: 600 44px/1 "SF Pro Display"; letter-spacing: -0.015em; white-space: nowrap; opacity: 0; }
+    .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 40; }
+    .cur { position: absolute; width: 60px; height: 60px; opacity: 0; z-index: 30; }
+    /* --- the foldable, built from four flat textures on two hinged halves --- */
+    .duo { position: absolute; width: 1400px; height: 1037px; perspective: 3400px; transform-origin: 50% 50%; }
+    .duo-g { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .duo-h { position: absolute; top: 0; width: 700px; height: 1037px; transform-style: preserve-3d; }
+    .duo-r { left: 700px; }
+    .duo-l { left: 0; transform-origin: 100% 50%; }
+    .duo .f { position: absolute; inset: 0; background-size: 100% 100%; backface-visibility: hidden; }
+    .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
+    .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
+
+    #root { background: #000 !important; }
+
+  </style>
+  <div id="root" data-composition-id="b22" data-width="1080" data-height="1920">
+    <div id="b22-st" class="st dark" data-layout-allow-overlap>
+      <div class="vid" id="w-i" data-layout-allow-overlap style="transform-origin:52% 44%"><img src="assets/img/window.jpg" alt="" /></div>
+      <div class="shade"></div>
+      <div id="w-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>il Duo</div>
+      <div id="w-b" style="position:absolute;left:0;right:0;top:390px;text-align:center;font:700 122px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.6)" data-layout-allow-overlap><span style="color:#ff453a">non</span> deve vendere.</div>
+    </div>
+  </div>
+  <script>
+
+    /* split .split into letters and .wsplit into words once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    document.querySelectorAll(".wsplit:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const parts = el.textContent.split(" "); el.textContent = ""; parts.forEach((p, k) => { const s = document.createElement("span"); s.className = "w"; s.textContent = p + (k < parts.length - 1 ? " " : ""); el.appendChild(s); }); });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    const W = (sel) => document.querySelectorAll(sel + " .w");
+    const eur = (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.42, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.2, ease: "power3.in" }, t);
+    /* words arrive one after another out of a soft blur, with no travel (the premium title entrance) */
+    const wordsIn = (tl, sel, t, st) => tl.fromTo(W(sel), { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out", stagger: st || 0.07 }, t);
+    const blurIn = (tl, sel, t, d) => tl.fromTo(sel, { opacity: 0, filter: "blur(18px)", scale: 1.06 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: d || 0.3, ease: "power2.out" }, t);
+    const blurOut = (tl, sel, t, d) => tl.to(sel, { opacity: 0, filter: "blur(16px)", duration: d || 0.16, ease: "power2.in" }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const shake = (tl, sel, t, k) => tl.fromTo(sel, { x: -(k || 18) }, { x: 0, duration: 0.32, ease: "elastic.out(1.3, 0.3)", immediateRender: false }, t);
+    const count = (tl, sel, a, b, t, d, fmt, ease) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || eur; const u = () => { el.textContent = f(o.v); }; tl.to(o, { v: b, duration: d, ease: ease || "expo.out", onUpdate: u }, t); };
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const flash = (tl, sel, t, k) => tl.fromTo(sel, { opacity: k || 0.9 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
+    /* scene transitions: U/D/L/R push, Z zoom, B blur-zoom through, N hard cut */
+    const enter = (tl, sel, k) => k === "N" ? tl
+      : k === "B" ? tl.fromTo(sel, { scale: 0.8, opacity: 0, filter: "blur(26px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.34, ease: "expo.out" }, 0)
+      : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0)
+      : k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.32, ease: "expo.out" }, 0)
+      : k === "D" ? tl.fromTo(sel, { y: -1920 }, { y: 0, duration: 0.32, ease: "expo.out" }, 0)
+      : k === "R" ? tl.fromTo(sel, { x: -1080 }, { x: 0, duration: 0.28, ease: "expo.out" }, 0)
+      : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.28, ease: "expo.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "N" ? tl
+      : k === "B" ? tl.to(sel, { scale: 1.35, opacity: 0, filter: "blur(26px)", duration: 0.2, ease: "power3.in" }, t)
+      : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t)
+      : k === "U" ? tl.to(sel, { y: -1920, duration: 0.2, ease: "power3.in" }, t)
+      : k === "D" ? tl.to(sel, { y: 1920, duration: 0.2, ease: "power3.in" }, t)
+      : k === "R" ? tl.to(sel, { x: 1080, duration: 0.2, ease: "power3.in" }, t)
+      : tl.to(sel, { x: -1080, duration: 0.2, ease: "power3.in" }, t);
+    /* the foldable: one angle drives the hinge (0 = open flat, 180 = closed), the shading of the moving half and the re-centring of the whole phone */
+    const duoSet = (id, a) => { const r = a * Math.PI / 180; const c = Math.cos(r);
+      gsap.set(id + "-l", { rotationY: a });
+      gsap.set(id + "-g", { x: -175 * (1 - c) });
+      const li = document.querySelector(id + "-li"), lo = document.querySelector(id + "-lo");
+      if (li) li.style.filter = "brightness(" + (0.55 + 0.45 * Math.max(0, c)).toFixed(3) + ")";
+      if (lo) lo.style.filter = "brightness(" + (0.6 + 0.4 * Math.max(0, -c)).toFixed(3) + ")";
+      const sh = document.querySelector(id + "-sh"); if (sh) sh.style.transform = "scaleX(" + (0.5 + 0.5 * (1 + c) / 2).toFixed(3) + ")"; };
+    const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
+
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#w-i", { scale: 1.3 }, { scale: 1.0, duration: 0.45, ease: "expo.out" }, 0);
+    tl.to("#w-i", { scale: 1.14, duration: 1.78 - 0.45, ease: "none" }, 0.45);
+    tl.fromTo("#w-b", { opacity: 0, filter: "blur(12px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 0.79 - 0.12);
+    window.__timelines["b22"] = tl;
+  </script>
+</template>

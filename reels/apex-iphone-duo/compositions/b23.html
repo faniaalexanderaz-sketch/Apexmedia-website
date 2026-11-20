@@ -46,14 +46,11 @@
     #root { background: #000 !important; }
 
   </style>
-  <div id="root" data-composition-id="a5" data-width="1080" data-height="1920">
-    <div id="a5-st" class="st dark" data-layout-allow-overlap>
-<div id="a5-cam" class="cam" data-layout-allow-overlap>
-      <div id="e-dw" style="position:absolute;inset:0;opacity:0.42" data-layout-allow-overlap><div class="duo" id="e" data-motion-blur="off" data-layout-allow-overlap style="left:-160px;top:900px;transform:scale(0.9)"><div class="duo-g" id="e-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="e-l"><div class="f in" id="e-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="e-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div></div>
-      <div style="position:absolute;inset:0;background:radial-gradient(closest-side at 50% 42%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%)"></div>
-      <div id="e-a" class="wsplit" style="position:absolute;left:0;right:0;top:420px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#a1a1a6">Ma secondo me</div>
-      <div class="zone" data-layout-allow-overlap style="top:520px"><span class="line"><span id="e-b" class="t" style="font-size:104px;color:#f5f5f7">non l’hanno fatto</span></span><span class="line" style="margin-top:-10px"><span id="e-c" class="tb" style="font-size:120px;color:#f5f5f7"><span style="position:relative;display:inline-block">solo<svg viewBox="0 0 300 30" width="300" height="30" style="position:absolute;left:-10px;bottom:-14px;overflow:visible"><path id="e-u" d="M4 16 Q150 0 296 14" fill="none" stroke="#ff453a" stroke-width="12" stroke-linecap="round"/></svg></span> per venderlo.</span></span></div>
-    </div>
+  <div id="root" data-composition-id="b23" data-width="1080" data-height="1920">
+    <div id="b23-st" class="st dark" data-layout-allow-overlap>
+      <div class="vid" id="x2-i" data-layout-allow-overlap style="transform-origin:52% 44%"><img src="assets/img/window.jpg" alt="" /></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%)"></div>
+      <div id="x2-b" style="position:absolute;left:0;right:0;top:1220px;text-align:center;font:700 110px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.6)" data-layout-allow-overlap>deve solo stare lì.</div>
     </div>
   </div>
   <script>
@@ -104,16 +101,8 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a5-cam", { scale: 1 }, { scale: 1.045, duration: 2.43, ease: "none" }, 0);
-    enter(tl, "#a5-st", "Z");
-    gsap.set("#e-g", { rotationX: 8 }); duoSet("#e", 180);
-    tl.fromTo("#e-g", { rotationY: -60 }, { rotationY: 60, duration: 2.43, ease: "none" }, 0);
-    wordsIn(tl, "#e-a", 0.05, 0.09);
-    rise(tl, "#e-b", 0.73 - 0.1);
-    rise(tl, "#e-c", 1.48 - 0.14);
-    draw(tl, "#e-u", 1.48 + 0.02, 0.28);
-    shake(tl, "#a5-cam", 1.48 - 0.1, 12);
-    exit(tl, "#a5-st", "B", 2.43 - 0.2);
-    window.__timelines["a5"] = tl;
+    tl.fromTo("#x2-i", { scale: 2.1 }, { scale: 1.75, duration: 1.38, ease: "power1.out" }, 0);
+    tl.fromTo("#x2-b", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.22, ease: "power2.out" }, 0.1);
+    window.__timelines["b23"] = tl;
   </script>
 </template>

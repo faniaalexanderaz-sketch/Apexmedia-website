@@ -1,11 +1,13 @@
-# named voice moments in seconds, measured on assets/audio/vo.mp3 (phrase starts = ends of the silences; words inside a phrase are estimated).
+# named voice moments in seconds, measured on assets/audio/vo.mp3 (word starts from the transcript, phrase starts snapped to the ends of the silences).
 # "Apple" is written "Eppol" in the text sent to the voice so that it is said the English way.
-# The reel loops: "Ah, e ricordati..." at the end leads back into "Questo iPhone costa 2.369 euro."
-T = dict(start=0.0, costa=1.05, duemila=1.45, euro=2.62, ea=3.02, benissimo=3.75, senon=4.25, sichiama=5.22, duo=5.76, primo=6.78, sipiega=7.85,
-         chiuso=8.64, telefono=9.19, aperto=10.02, tablet=10.68, titanio=11.90, dueschermi=12.66, siarriva=13.58, quattromila=14.55,
-         ma=15.72, nonlhanno=16.45, solo=17.20, guarda=18.15, store=19.10, diciotto=20.02, borgogna=21.52, mille=22.62, centocinq=24.57,
-         dasolo=26.59, enormita=27.16, poi=28.19, ilduo=29.40, dicolpo=29.82, mille2=30.56, pochi=32.65, settecento=33.27, quasi=34.85,
-         sichiama2=35.81, effetto=36.35, ancora=36.78, ilprimo=37.64, diventa=38.85, etutto=40.08, tutto=40.26, tisembra=41.52, poco=41.95,
-         lofanno=42.47, bottiglia=43.89, trecento=44.70, incima=45.45, nonserve=46.35, serve=47.53, sessanta=48.60, scommetto=49.40, nonsara=50.85,
-         sara=51.80, conveniente=52.80, accanto=53.40, lezione=54.36, sevuoi=55.18, cara=56.25, mettile=56.67, carissima=57.80,
-         cta=58.68, scrivi=60.70, motion=61.05, etispiego=62.18, ah=63.28, ericordati=63.71, END=64.40)
+# Version 2: continuous delivery (3.3 words a second, no pause longer than 0.12 s). The reel loops: "E tutto questo, solo perché..." leads back into "Apple ha appena fatto uscire..."
+T = dict(start=0.0, uniphone=1.46, sipiega=2.13, costa=2.97, prezzo=3.44, euro=4.84, scommetto=5.27, non=5.87, lhafatto=6.38, vendertelo=6.57,
+         resta=7.22, perche=8.24, trucco=8.83, subendo=9.49, anchetu=9.88, puoi=10.42, vendere=11.16, dipiu=11.62,
+         domanda=12.16, mille=13.29, telefono=14.64, tanti=15.28, tantissimi=15.88, promax=16.74, centocinq=17.95, annoscorso=19.19,
+         adesso=20.53, glimetto=21.28, ilduo=22.36, quei=22.60, dicolpo=23.74, affare=24.64, settecento=25.82, inmeno=26.72,
+         stesso=27.33, cambiato=28.47, accanto=29.71, sichiama=30.35, effetto=30.90, ancora=31.33, ilprimo=31.76, diventa=33.00, metro=33.76,
+         perquesto=34.31, nondeve=35.10, devesolo=36.09, normale=37.57, resto=38.48, euna=39.48, ovunque=40.49, ristorante=40.98,
+         bottiglia=41.71, trecento=42.33, serve=43.26, sessanta=44.28, abbonamenti=44.91, premium=46.16, medio=47.57,
+         quindi=47.94, nonabbassare=49.48, mettigli=50.73, cara=52.09, nonserve=52.46, serveche=53.66, vedano=54.07,
+         cta=54.67, scrivi=56.63, motion=56.99, etispiego=58.10, etutto=58.96, soloperche=59.90, END=60.80)
+T['normale0'] = round(T['normale'] - 0.1, 2)   # the cut just before "normale"

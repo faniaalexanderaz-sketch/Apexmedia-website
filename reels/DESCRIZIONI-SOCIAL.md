@@ -2036,31 +2036,29 @@ Trattamenti olistici per il benessere, non prestazioni sanitarie.
 
 ---
 
-## 67. Questo iPhone costa 2.369 euro. E ad Apple va benissimo se non lo compri (iPhone Duo e l'effetto àncora)
+## 67. Apple ha appena fatto uscire un iPhone che si piega in due (iPhone Duo e l'effetto àncora)
 
-Video Apex, stile sito Apple: font SF Pro, iPhone Duo in 3D che si apre, pagina dello Store ricostruita, due clip generate (il Duo che si apre, interno di uno store). Chiude con MOTION e poi "Ah, e ricordati..." che riporta alla prima frase (loop). File: `apex-iphone-duo/renders/apex-iphone-duo-9x16.mp4`
+Video Apex, versione 2: voce continua senza pause, 33 scene brevi con stacchi netti, foto realistiche generate (mano con il Duo, i due telefoni sul tavolo dello store con i cartellini, vetrina di notte), Duo in 3D che si apre, poche scritte (solo numeri e parole chiave). Chiude con MOTION e poi "E tutto questo, solo perché..." che riporta alla prima frase (loop). File: `apex-iphone-duo/renders/apex-iphone-duo-9x16.mp4` (la versione 1 è `apex-iphone-duo-v1-9x16.mp4`).
 
 **TikTok**
 ```text
-Questo iPhone costa 2.369 euro. E ad Apple va benissimo se non lo compri. Ecco il trucco dietro iPhone Duo.
+Apple ha appena fatto uscire un iPhone che si piega in due. Costa 2.369 euro. E scommetto che non l'ha fatto per vendertelo.
 #iphoneduo #apple #iphone18 #marketing #apexmedia
 ```
 
 **Instagram**
 ```text
-Questo iPhone costa 2.369 euro. E ad Apple va benissimo se non lo compri.
+Apple ha appena fatto uscire un iPhone che si piega in due. Costa 2.369 euro. E scommetto che non l'ha fatto per vendertelo.
 
-Si chiama iPhone Duo: il primo iPhone che si piega. Chiuso è un telefono, aperto è quasi un tablet. Titanio, due schermi, e si arriva a quasi 4.000 euro.
+Ti faccio una domanda: 1.639 euro per un telefono sono tanti? Tantissimi. È il nuovo Pro Max, e costa 150 euro più dell'anno scorso.
 
-Ma secondo me non l'hanno fatto solo per venderlo.
+Adesso mettigli vicino il Duo. E quei 1.639, di colpo, sembrano quasi un affare. 730 euro in meno. Il telefono è lo stesso: è cambiato solo quello che ha accanto.
 
-Guarda l'Apple Store: iPhone 18 Pro Max, color borgogna, 1.639 euro. 150 in più dell'anno scorso. Da solo, è un'enormità. Poi gli metti accanto il Duo, e di colpo 1.639 euro ti sembrano pochi. 730 in meno. Quasi un affare.
+Si chiama effetto àncora: il primo prezzo che vedi diventa il tuo metro. Per questo il Duo non deve vendere. Deve solo stare lì, a far sembrare normale tutto il resto.
 
-Si chiama effetto àncora: il primo prezzo che vedi diventa il tuo metro, e tutto quello che viene dopo ti sembra poco.
+Lo vedi ovunque: al ristorante la bottiglia da 300 euro serve a vendere quella da 60. Negli abbonamenti il piano Premium serve a vendere quello medio.
 
-Lo fanno anche i ristoranti: la bottiglia da 300 euro in cima alla carta non serve a venderla. Serve a vendere quella da 60.
-
-La lezione? Se vuoi vendere una cosa cara, mettile vicino una cosa carissima.
+Quindi, se vendi qualcosa: non abbassare il prezzo. Mettigli accanto un'opzione più cara. Non serve che la comprino. Serve che la vedano.
 
 Manda questo video a chi sta per cambiare iPhone.
 

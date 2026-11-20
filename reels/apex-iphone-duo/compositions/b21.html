@@ -45,24 +45,25 @@
 
     #root { background: #fff !important; }
 
-    .opt { position: absolute; left: 0; width: 940px; height: 150px; border-radius: 28px; border: 2px solid #d2d2d7; display: flex; align-items: center; justify-content: space-between; padding: 0 44px; background: #fff; }
-    .opt b { font: 600 52px/1 "SF Pro Display"; letter-spacing: -0.02em; }
-    .opt span { font: 400 40px/1 "SF Pro Display"; color: #1d1d1f; }
+    .bar { position: absolute; bottom: 50px; width: 220px; border-radius: 26px 26px 0 0; transform-origin: 50% 100%; }
+    .bl { position: absolute; width: 220px; text-align: center; font: 700 62px/1 "SF Pro Display"; letter-spacing: -0.035em; opacity: 0; white-space: nowrap; }
+    .bl small { display: block; font: 600 30px/1 "SF Pro Display"; color: #86868b; margin-top: 8px; letter-spacing: 0; }
+    .rul { position: absolute; left: 150px; top: 170px; width: 60px; height: 644px; border-right: 6px solid #1d1d1f; }
+    .rul i { position: absolute; right: 0; height: 6px; margin-top: -3px; background: #1d1d1f; border-radius: 3px; transform-origin: right center; }
   </style>
-  <div id="root" data-composition-id="a4" data-width="1080" data-height="1920">
-    <div id="a4-st" class="st" data-layout-allow-overlap>
-<div id="a4-cam" class="cam" data-layout-allow-overlap>
-      <div id="c-zoom" style="position:absolute;inset:0" data-layout-allow-overlap>
-      <div style="position:absolute;left:0;right:0;top:232px;height:86px;border-bottom:2px solid #e8e8ed"><div style="position:absolute;left:70px;top:14px;font:600 42px/1.2 'SF Pro Display';letter-spacing:-0.01em">&#xF8FF; Store</div><div style="position:absolute;right:70px;top:14px"><svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="#1d1d1f" stroke-width="1.6" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></div></div>
-      <div style="position:absolute;left:70px;top:360px;font:700 80px/1.05 'SF Pro Display';letter-spacing:-0.03em">Acquista iPhone Duo</div>
-      <div style="position:absolute;left:70px;right:70px;top:476px;font:600 42px/1.25 'SF Pro Display';letter-spacing:-0.015em">Spazio di archiviazione. <span style="color:#86868b">Di quanto spazio hai bisogno?</span></div>
-      <div id="c-list" style="position:absolute;left:70px;top:640px;width:940px;height:670px">
-        <div class="opt" style="top:0px"><b>256 GB</b><span>Da 2.369 €</span></div><div class="opt" style="top:172px"><b>512 GB</b><span>Da 2.619 €</span></div><div class="opt" style="top:344px"><b>1 TB</b><span>Da 3.119 €</span></div><div class="opt" style="top:516px"><b>2 TB</b><span>Da 3.869 €</span></div>
-        <i id="c-sel" style="position:absolute;left:-3px;top:-3px;width:946px;height:156px;border-radius:31px;border:5px solid #0071e3;pointer-events:none"></i>
-      </div>
-      <div id="c-tot" style="position:absolute;left:70px;right:70px;top:1340px;display:flex;align-items:baseline;justify-content:space-between"><span style="font:600 44px/1 'SF Pro Display';color:#86868b">Totale</span><span style="font:700 120px/1 'SF Pro Display';letter-spacing:-0.04em"><span id="c-n">2.369</span> €</span></div>
-      <div class="chip" id="c-chip" style="right:70px;top:1476px;background:#d70015;font-size:50px">quasi 4.000 €</div>
-      <div id="c-cur" class="cur" style="left:820px;top:760px"><svg viewBox="0 0 24 24" width="60" height="60"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#1d1d1f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+  <div id="root" data-composition-id="b21" data-width="1080" data-height="1920">
+    <div id="b21-st" class="st" data-layout-allow-overlap>
+<div id="b21-cam" class="cam" data-layout-allow-overlap>
+      <div id="m-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>il primo prezzo che vedi</div>
+      <div id="m-b" style="position:absolute;left:0;right:0;top:380px;text-align:center;font:700 106px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>diventa il tuo metro.</div>
+      <div style="position:absolute;left:0;top:640px;width:1080px;height:860px" data-layout-allow-overlap>
+        <div style="position:absolute;left:110px;right:110px;top:810px;height:4px;background:#d2d2d7;border-radius:2px"></div>
+        <div class="rul" id="m-rul"><i style="top:0px;width:44px"></i><i style="top:64px;width:24px"></i><i style="top:128px;width:24px"></i><i style="top:192px;width:24px"></i><i style="top:256px;width:24px"></i><i style="top:320px;width:44px"></i><i style="top:384px;width:24px"></i><i style="top:448px;width:24px"></i><i style="top:512px;width:24px"></i><i style="top:576px;width:24px"></i><i style="top:640px;width:44px"></i></div>
+        <div class="bar" id="m-b1" style="left:250px;height:640px;background:linear-gradient(180deg,#31407a,#1d2a57)"></div>
+        <div class="bl" id="m-l1" style="left:250px;top:50px">2.369 €<small>il primo</small></div>
+        <div class="bar" id="m-b2" style="left:610px;height:443px;background:linear-gradient(180deg,#a11a35,#7a0f24)"></div>
+        <div class="bl" id="m-l2" style="left:610px;top:247px">1.639 €<small>sembra poco</small></div>
+        <div id="m-dash" style="position:absolute;left:250px;top:168px;width:650px;height:0;border-top:5px dashed #86868b;transform-origin:left center"></div>
       </div>
     </div>
     </div>
@@ -115,21 +116,15 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a4-cam", { scale: 1 }, { scale: 1.045, duration: 2.14, ease: "none" }, 0);
-    enter(tl, "#a4-st", "U");
-    tl.fromTo(".opt", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out", stagger: 0.045 }, 0.06);
-    tl.fromTo("#c-cur", { opacity: 0, x: 200, y: 260 }, { opacity: 1, x: 0, y: 0, duration: 0.3, ease: "power3.out" }, 0.1);
-    [[1, 2619, 0.42], [2, 3119, 0.64], [3, 3869, 0.86]].forEach(([k, v, t], n) => {
-      tl.to("#c-cur", { y: k * 172, duration: 0.16, ease: "power3.inOut" }, t - 0.14);
-      tl.to("#c-cur", { scale: 0.8, duration: 0.05, yoyo: true, repeat: 1 }, t);
-      tl.to("#c-sel", { y: k * 172, duration: 0.14, ease: "back.out(2)" }, t);
-      count(tl, "#c-n", [2369, 2619, 3119][n], v, t, 0.18);
-    });
-    tl.fromTo("#c-tot", { scale: 1, transformOrigin: "100% 60%" }, { scale: 1.12, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 1.04);
-    tl.fromTo("#c-zoom", { scale: 1 }, { scale: 1.07, transformOrigin: "50% 78%", duration: 0.9, ease: "power2.inOut" }, 1.0);
-    pop(tl, "#c-chip", 0.97 + 0.3);
-    tl.to("#c-cur", { opacity: 0, duration: 0.15 }, 1.1);
-    exit(tl, "#a4-st", "Z", 2.14 - 0.18);
-    window.__timelines["a4"] = tl;
+    tl.fromTo("#b21-cam", { scale: 1 }, { scale: 1.045, duration: 2.55, ease: "none" }, 0);
+    tl.fromTo("#b21-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#m-b1", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "expo.out" }, 0.05);
+    tl.fromTo("#m-l1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.25, ease: "back.out(2)" }, 0.42);
+    tl.fromTo("#m-b", { opacity: 0, filter: "blur(12px)", scale: 1.12 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 1.24 - 0.08);
+    tl.fromTo("#m-rul i", { scaleX: 0 }, { scaleX: 1, duration: 0.14, ease: "power2.out", stagger: { each: 0.03, from: "end" } }, 1.24);
+    tl.fromTo("#m-dash", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 2.00 - 0.1);
+    tl.fromTo("#m-b2", { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "expo.out" }, 2.00);
+    tl.fromTo("#m-l2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.22, ease: "back.out(2)" }, 2.00 + 0.26);
+    window.__timelines["b21"] = tl;
   </script>
 </template>

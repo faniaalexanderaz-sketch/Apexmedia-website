@@ -43,27 +43,15 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #fff !important; }
+    #root { background: #000 !important; }
 
-    .mul { mix-blend-mode: multiply; }
   </style>
-  <div id="root" data-composition-id="a12" data-width="1080" data-height="1920">
-    <div id="a12-st" class="st" data-layout-allow-overlap>
-<div id="a12-cam" class="cam" data-layout-allow-overlap>
-      <div class="eyebrow" id="b2-eb" style="top:300px">La mia scommessa</div>
-      <div id="b2-t" class="wsplit" style="position:absolute;left:0;right:0;top:350px;text-align:center;font:700 120px/1.08 'SF Pro Display';letter-spacing:-0.04em">Il più venduto?</div>
-      <div id="b2-glow" style="position:absolute;left:520px;top:640px;width:520px;height:760px;border-radius:50%;background:radial-gradient(closest-side, rgba(0,113,227,0.28), rgba(0,113,227,0));opacity:0"></div>
-      <div id="b2-l" style="position:absolute;left:60px;top:700px;width:460px;text-align:center" data-layout-allow-overlap>
-        <img src="assets/img/duo-vee.png" style="width:420px;height:535px" alt="" />
-        <div style="font:600 44px/1.2 'SF Pro Display';letter-spacing:-0.02em;margin-top:18px">iPhone Duo</div><div style="font:600 40px/1.2 'SF Pro Display';color:#86868b">2.369 €</div>
-      </div>
-      <svg viewBox="0 0 300 300" width="300" height="300" style="position:absolute;left:140px;top:810px;overflow:visible" data-layout-allow-overlap><path class="b2-x" d="M20 20 L280 280" stroke="#d70015" stroke-width="26" stroke-linecap="round" fill="none"/><path class="b2-x" d="M280 20 L20 280" stroke="#d70015" stroke-width="26" stroke-linecap="round" fill="none"/></svg>
-      <div id="b2-r" style="position:absolute;left:560px;top:680px;width:460px;text-align:center" data-layout-allow-overlap>
-        <img class="mul" src="assets/img/ip18-burg-a.png" style="height:560px;filter:brightness(1.06) contrast(1.03)" alt="" />
-        <div style="font:600 44px/1.2 'SF Pro Display';letter-spacing:-0.02em;margin-top:-6px">iPhone 18 Pro Max</div><div style="font:600 40px/1.2 'SF Pro Display';color:#86868b">1.639 €</div>
-      </div>
-      <div class="chip" id="b2-n1" style="left:620px;top:640px;background:#0071e3;font-size:52px;padding:20px 38px">il più venduto</div>
-      <div id="b2-s" class="wsplit" style="position:absolute;left:60px;right:60px;top:1420px;text-align:center;font:600 50px/1.15 'SF Pro Display';letter-spacing:-0.02em;color:#1d1d1f">quello che sembra conveniente accanto al Duo</div>
+  <div id="root" data-composition-id="b06" data-width="1080" data-height="1920">
+    <div id="b06-st" class="st dark" data-layout-allow-overlap>
+<div id="b06-cam" class="cam" data-layout-allow-overlap>
+      <div class="vid" id="v-i" data-layout-allow-overlap style="transform-origin:50% 55%;opacity:0.5"><img src="assets/img/hero-last.jpg" alt="" /></div>
+      <div id="v-a" style="position:absolute;left:0;right:0;top:560px;text-align:center;font:600 84px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#d2d2d7;" data-layout-allow-overlap>l’ha fatto per</div>
+      <div id="v-b" style="position:absolute;left:0;right:0;top:660px;text-align:center" data-layout-allow-overlap><span style="position:relative;display:inline-block;font:700 164px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff">vendertelo.<svg viewBox="0 0 800 30" width="100%" height="30" preserveAspectRatio="none" style="position:absolute;left:0;top:52%;overflow:visible"><path id="v-x" d="M0 15 H800" stroke="#ff453a" stroke-width="16" stroke-linecap="round" fill="none"/></svg></span></div>
     </div>
     </div>
   </div>
@@ -115,21 +103,10 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a12-cam", { scale: 1 }, { scale: 1.045, duration: 4.96, ease: "none" }, 0);
-    enter(tl, "#a12-st", "U");
-    tl.fromTo("#b2-eb", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.06);
-    wordsIn(tl, "#b2-t", 0.00 * 0 + 0.4, 0.09);
-    tl.fromTo("#b2-l", { opacity: 0, y: 200 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 0.14);
-    tl.fromTo("#b2-r", { opacity: 0, y: 200 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 0.24);
-    draw(tl, ".b2-x", 1.45 + 0.02, 0.22);
-    tl.to("#b2-l", { filter: "grayscale(1)", opacity: 0.4, scale: 0.86, transformOrigin: "50% 40%", duration: 0.4, ease: "power2.out" }, 1.45 + 0.2);
-    shake(tl, "#a12-cam", 1.45 + 0.04, 14);
-    tl.to("#b2-r", { scale: 1.1, x: -50, transformOrigin: "50% 40%", duration: 0.5, ease: "back.out(1.6)" }, 2.40 - 0.05);
-    tl.to(".b2-x", { opacity: 0.55, duration: 0.3 }, 2.40 - 0.05);
-    tl.fromTo("#b2-glow", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1.2, duration: 0.5, ease: "power2.out" }, 2.40 - 0.05);
-    tl.fromTo("#b2-n1", { opacity: 0, scale: 0.4, rotation: -8 }, { opacity: 1, scale: 1, rotation: -4, duration: 0.36, ease: "back.out(2.6)" }, 2.40 + 0.25);
-    wordsIn(tl, "#b2-s", 3.40 - 0.3, 0.075);
-    exit(tl, "#a12-st", "B", 4.96 - 0.2);
-    window.__timelines["a12"] = tl;
+    tl.fromTo("#b06-cam", { scale: 1 }, { scale: 1.045, duration: 0.84, ease: "none" }, 0);
+    tl.fromTo("#b06-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#v-i", { scale: 1.3 }, { scale: 1.45, duration: 0.84, ease: "none" }, 0);
+    draw(tl, "#v-x", 0.19 + 0.12, 0.22);
+    window.__timelines["b06"] = tl;
   </script>
 </template>

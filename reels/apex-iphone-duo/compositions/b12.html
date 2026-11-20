@@ -43,31 +43,13 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
-    #root { background: #14100d !important; }
-    .st.dark { background: radial-gradient(closest-side at 50% 45%, #3a2a20 0%, #14100d 100%); }
-    .wr { position: absolute; left: 60px; right: 60px; height: 122px; display: flex; align-items: center; justify-content: space-between; opacity: 0; }
-    .wr b { display: block; font: 600 50px/1.1 "SF Pro Display"; letter-spacing: -0.02em; }
-    .wr small { display: block; font: 500 30px/1.2 "SF Pro Display"; color: #8a6f4d; margin-top: 6px; }
-    .wr span { font: 700 60px/1 "SF Pro Display"; letter-spacing: -0.03em; display: inline-block; transform-origin: 100% 50%; }
   </style>
-  <div id="root" data-composition-id="a11" data-width="1080" data-height="1920">
-    <div id="a11-st" class="st dark" data-layout-allow-overlap>
-<div id="a11-cam" class="cam" data-layout-allow-overlap>
-      <div id="w-t" class="wsplit" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:700 84px/1.08 'SF Pro Display';letter-spacing:-0.035em;color:#f3e9d6">Lo fanno anche i ristoranti.</div>
-      <div id="w-pv" style="position:absolute;left:90px;top:520px;width:900px;height:880px;perspective:2200px" data-layout-allow-overlap>
-        <div id="w-card" style="position:absolute;inset:0;border-radius:38px;background:#f7f1e6;color:#2a211a;box-shadow:0 60px 120px -30px rgba(0,0,0,0.7);transform-origin:50% 30%">
-          <div style="position:absolute;left:0;right:0;top:46px;text-align:center;font:600 32px/1 'SF Pro Display';letter-spacing:0.28em;color:#8a6f4d">CARTA DEI VINI</div>
-          <div style="position:absolute;left:60px;right:60px;top:112px;height:2px;background:#d9c9ac"></div>
-          <i id="w-hl" style="position:absolute;left:24px;top:136px;width:852px;height:150px;border-radius:26px;border:5px solid #c9a227;background:rgba(201,162,39,0.12);opacity:0"></i>
-          <div class="wr" id="w-r1" style="top:150px"><div><b>Barolo Riserva 2010</b><small>la bottiglia in cima alla carta</small></div><span id="w-p1">300 €</span></div><div class="wr" id="w-r2" style="top:308px"><div><b>Barbaresco 2019</b><small>rosso, 75 cl</small></div><span id="w-p2">60 €</span></div><div class="wr" id="w-r3" style="top:466px"><div><b>Nebbiolo 2021</b><small>rosso, 75 cl</small></div><span id="w-p3">38 €</span></div><div class="wr" id="w-r4" style="top:624px"><div><b>Dolcetto 2022</b><small>rosso, 75 cl</small></div><span id="w-p4">24 €</span></div>
-          <svg viewBox="0 0 852 20" width="852" height="20" style="position:absolute;left:24px;top:196px;overflow:visible"><path id="w-x" d="M30 10 H822" stroke="#8a6f4d" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
-          <div class="chip" id="w-no" style="left:520px;top:176px;background:#2a211a;font-size:32px;padding:12px 22px">non si vende</div>
-          <div class="chip" id="w-ok" style="left:486px;top:330px;width:80px;height:80px;padding:0;background:#1d8a3c;font-size:46px;line-height:80px;text-align:center">✓</div>
-        </div>
-      </div>
-      <div id="w-cur" class="cur" style="left:820px;top:1000px"><svg viewBox="0 0 24 24" width="60" height="60"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#1d1d1f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+  <div id="root" data-composition-id="b12" data-width="1080" data-height="1920">
+    <div id="b12-st" class="st" data-layout-allow-overlap>
+<div id="b12-cam" class="cam" data-layout-allow-overlap>
+      <div style="position:absolute;left:0;right:0;top:700px;text-align:center" data-layout-allow-overlap><span id="s-b" style="position:relative;display:inline-block;font:700 196px/1.05 'SF Pro Display';letter-spacing:-0.05em;color:#d70015">Tantissimi.</span></div>
     </div>
     </div>
   </div>
@@ -119,29 +101,10 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a11-cam", { scale: 1 }, { scale: 1.045, duration: 6.93, ease: "none" }, 0);
-    enter(tl, "#a11-st", "B");
-    wordsIn(tl, "#w-t", 0.06, 0.08);
-    tl.fromTo("#w-card", { y: 1200, rotationX: 40 }, { y: 0, rotationX: 0, duration: 0.6, ease: "expo.out" }, 0.1);
-    tl.fromTo(".wr", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out", stagger: 0.06 }, 0.4);
-    /* the 300 € bottle on top */
-    tl.fromTo("#w-hl", { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power3.out" }, 1.42 - 0.05);
-    tl.to("#w-card", { scale: 1.1, rotationX: 6, y: 30, duration: 0.6, ease: "power2.out" }, 1.42 - 0.05);
-    tl.fromTo("#w-p1", { scale: 1 }, { scale: 1.55, color: "#b8860b", duration: 0.2, ease: "back.out(3)" }, 2.23 - 0.02);
-    tl.to("#w-p1", { scale: 1.15, duration: 0.3 }, 2.23 + 0.4);
-    draw(tl, "#w-x", 3.88 + 0.1, 0.35);
-    pop(tl, "#w-no", 3.88 + 0.4);
-    tl.to("#w-r1", { opacity: 0.45, duration: 0.3 }, 3.88 + 0.4);
-    /* it sells the 60 € one */
-    tl.to("#w-hl", { y: 158, borderColor: "#1d8a3c", backgroundColor: "rgba(29,138,60,0.12)", duration: 0.3, ease: "back.out(1.6)" }, 5.06 - 0.05);
-    tl.to("#w-no", { opacity: 0, duration: 0.2 }, 5.06 - 0.05);
-    tl.to("#w-card", { rotationX: 0, y: -20, scale: 1.14, duration: 0.5, ease: "power2.out" }, 5.06 - 0.05);
-    tl.fromTo("#w-cur", { opacity: 0, x: 200, y: 300 }, { opacity: 1, x: 0, y: 0, duration: 0.35, ease: "power3.out" }, 6.13 - 0.5);
-    tl.to("#w-cur", { scale: 0.8, duration: 0.06, yoyo: true, repeat: 1 }, 6.13 - 0.02);
-    tl.fromTo("#w-p2", { scale: 1 }, { scale: 1.5, color: "#1d8a3c", duration: 0.2, ease: "back.out(3)" }, 6.13);
-    pop(tl, "#w-ok", 6.13 + 0.22);
-    shake(tl, "#a11-cam", 6.13 + 0.02, 10);
-    exit(tl, "#a11-st", "U", 6.93 - 0.18);
-    window.__timelines["a11"] = tl;
+    tl.fromTo("#b12-cam", { scale: 1 }, { scale: 1.045, duration: 0.86, ease: "none" }, 0);
+    tl.fromTo("#s-b", { scale: 1.8, filter: "blur(14px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 0);
+    shake(tl, "#b12-cam", 0.08, 24);
+    tl.to("#s-b", { scale: 1.06, duration: 0.86 - 0.2, ease: "none" }, 0.2);
+    window.__timelines["b12"] = tl;
   </script>
 </template>

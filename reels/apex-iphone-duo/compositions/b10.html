@@ -43,36 +43,15 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #fff !important; }
+    #root { background: #000 !important; }
 
-    .mul { mix-blend-mode: multiply; }
-    .sw { display: block; width: 60px; height: 60px; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(0,0,0,0.12); }
-    #p-ring { display: block; width: 82px; height: 82px; border-radius: 50%; border: 5px solid #0071e3; margin-left: -97px; opacity: 0; }
-    .yr { position: absolute; top: 0; width: 450px; height: 210px; border-radius: 34px; background: #f5f5f7; padding: 36px 40px; opacity: 0; }
-    .yr small { display: block; font: 600 32px/1 "SF Pro Display"; color: #86868b; }
-    .yr b { display: block; font: 700 96px/1 "SF Pro Display"; letter-spacing: -0.04em; margin-top: 22px; }
   </style>
-  <div id="root" data-composition-id="a7" data-width="1080" data-height="1920">
-    <div id="a7-st" class="st" data-layout-allow-overlap>
-<div id="a7-cam" class="cam" data-layout-allow-overlap>
-      <div id="p-t" class="wsplit" style="position:absolute;left:0;right:0;top:296px;text-align:center;font:700 104px/1.05 'SF Pro Display';letter-spacing:-0.035em">iPhone 18 Pro Max</div>
-      <div id="p-sw" style="position:absolute;left:0;right:0;top:442px;display:flex;justify-content:center;align-items:center;gap:26px"><i class="sw" style="background:#2b2b2d"></i><i class="sw" style="background:#e3e4e5"></i><i class="sw" style="background:#c8dbe6"></i><i class="sw" style="background:#7a0f24"></i><i id="p-ring"></i><span id="p-col" style="font:600 44px/1 'SF Pro Display';color:#7a0f24;margin-left:14px;opacity:0">Borgogna</span></div>
-      <img id="p-img" class="mul" src="assets/img/ip18-burg-pair.png" style="position:absolute;left:260px;top:560px;width:560px;height:1001px;transform-origin:0 0;filter:brightness(1.06) contrast(1.03)" alt="" />
-      <div id="p-pb" style="position:absolute;left:400px;top:640px;width:640px;opacity:0">
-        <div style="font:500 46px/1 'SF Pro Display';color:#86868b">Da</div>
-        <div style="font:700 170px/1.05 'SF Pro Display';letter-spacing:-0.045em"><span id="p-n">0</span> €</div>
-        <div style="font:500 40px/1.2 'SF Pro Display';color:#86868b">256 GB · Borgogna</div>
-      </div>
-      <div id="p-cmp" style="position:absolute;left:70px;top:1090px;width:940px;height:420px">
-        <div class="yr" id="p-y1" style="left:0"><small>2025 · iPhone 17 Pro Max</small><b style="color:#86868b">1.489 €</b></div>
-        <div class="yr" id="p-y2" style="left:490px"><small>2026 · iPhone 18 Pro Max</small><b>1.639 €</b></div>
-        <div class="chip" id="p-up" style="left:0;right:0;margin:0 auto;width:fit-content;top:250px;background:#d70015;font-size:96px;padding:26px 52px">+150 €</div>
-      </div>
-      <div id="p-big" style="position:absolute;left:0;right:0;top:500px;text-align:center;opacity:0">
-        <div id="p-ds" style="font:600 64px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b">da solo</div>
-        <div id="p-bn" style="font:700 270px/1.05 'SF Pro Display';letter-spacing:-0.05em">1.639 €</div>
-        <div id="p-en" style="font:700 124px/1.1 'SF Pro Display';letter-spacing:-0.035em;color:#7a0f24;opacity:0">è un’enormità.</div>
-      </div>
+  <div id="root" data-composition-id="b10" data-width="1080" data-height="1920">
+    <div id="b10-st" class="st dark" data-layout-allow-overlap>
+<div id="b10-cam" class="cam" data-layout-allow-overlap>
+      <div id="q-m" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:700 700px/1 'SF Pro Display';color:#ffd60a;opacity:0.95" data-layout-allow-overlap>?</div>
+      <div id="q-a" style="position:absolute;left:0;right:0;top:1080px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>ti faccio una</div>
+      <div id="q-b" style="position:absolute;left:0;right:0;top:1170px;text-align:center;font:700 200px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>domanda.</div>
     </div>
     </div>
   </div>
@@ -124,32 +103,10 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a7-cam", { scale: 1 }, { scale: 1.045, duration: 8.17, ease: "none" }, 0);
-    tl.fromTo("#a7-st", { scale: 1.25, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.35, ease: "expo.out" }, 0);
-    wordsIn(tl, "#p-t", 0.04, 0.09);
-    tl.fromTo("#p-img", { opacity: 0, y: 200, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "expo.out" }, 0.08);
-    tl.fromTo(".sw", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.24, ease: "back.out(3)", stagger: 0.06 }, 0.5);
-    tl.fromTo("#p-ring", { opacity: 0, x: -3 * 86 }, { opacity: 1, x: -3 * 86, duration: 0.12 }, 0.8);
-    tl.to("#p-ring", { x: 0, duration: 0.3, ease: "back.out(1.6)" }, 1.50 - 0.1);
-    tl.fromTo("#p-col", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out" }, 1.50 + 0.1);
-    tl.fromTo("#p-img", { rotation: 0 }, { rotation: -3, duration: 0.18, yoyo: true, repeat: 1, ease: "sine.inOut", immediateRender: false }, 1.50 + 0.05);
-    /* price */
-    tl.to("#p-img", { x: -230, y: 0, scale: 0.52, duration: 0.5, ease: "expo.out" }, 2.60 - 0.2);
-    tl.fromTo("#p-pb", { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 2.60 - 0.12);
-    count(tl, "#p-n", 900, 1639, 2.60 - 0.1, 0.9, eur, "power3.out");
-    punch(tl, "#p-pb", 2.60 + 0.82, 1.08);
-    /* +150 */
-    tl.fromTo("#p-y1", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 4.55 - 0.1);
-    tl.fromTo("#p-y2", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 4.55 + 0.1);
-    tl.fromTo("#p-up", { opacity: 0, scale: 0.4, rotation: -10 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.4, ease: "back.out(2.6)" }, 4.55 + 0.3);
-    shake(tl, "#a7-cam", 4.55 + 0.32, 12);
-    /* alone, it is huge */
-    blurOut(tl, "#p-t, #p-sw, #p-img, #p-pb, #p-cmp", 6.57 - 0.2, 0.18);
-    tl.fromTo("#p-big", { opacity: 0, scale: 0.7, filter: "blur(16px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.4, ease: "expo.out" }, 6.57 - 0.08);
-    tl.to("#p-bn", { scale: 1.16, duration: 1.4, ease: "power1.out" }, 6.57 + 0.3);
-    tl.fromTo("#p-en", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 7.14 + 0.1);
-    shake(tl, "#a7-cam", 7.14 + 0.12, 20);
-    exit(tl, "#a7-st", "L", 8.17 - 0.2);
-    window.__timelines["a7"] = tl;
+    tl.fromTo("#b10-cam", { scale: 1 }, { scale: 1.045, duration: 1.13, ease: "none" }, 0);
+    tl.fromTo("#b10-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#q-m", { scale: 0.2, rotation: -30, opacity: 0 }, { scale: 1, rotation: 8, opacity: 0.9, duration: 0.4, ease: "back.out(2)" }, 0.02);
+    tl.to("#q-m", { rotation: -4, duration: 1.13 - 0.4, ease: "sine.inOut" }, 0.42);
+    window.__timelines["b10"] = tl;
   </script>
 </template>

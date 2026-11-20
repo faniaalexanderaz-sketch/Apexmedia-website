@@ -43,13 +43,17 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #f5f5f7 !important; }
+    #root { background: #fff !important; }
 
+    .mul { mix-blend-mode: multiply; }
   </style>
-  <div id="root" data-composition-id="t1" data-width="1080" data-height="1920">
-    <div id="t1-st" class="st grey" data-layout-allow-overlap>
-<div id="t1-cam" class="cam" data-layout-allow-overlap>
-      <div class="duo" id="d" data-motion-blur="off" data-layout-allow-overlap style="left:-160px;top:520px;transform:scale(0.72)"><div class="duo-sh" id="d-sh"></div><div class="duo-g" id="d-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="d-l"><div class="f in" id="d-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="d-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div>
+  <div id="root" data-composition-id="b18" data-width="1080" data-height="1920">
+    <div id="b18-st" class="st" data-layout-allow-overlap>
+<div id="b18-cam" class="cam" data-layout-allow-overlap>
+      <div id="e-t" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:700 160px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>lo stesso.</div>
+      <img id="e-a" class="mul" src="assets/img/ip18-burg-a.png" style="position:absolute;left:30px;top:600px;height:860px;filter:brightness(1.06) contrast(1.03)" alt="" />
+      <img id="e-b" class="mul" src="assets/img/ip18-burg-a.png" style="position:absolute;left:568px;top:600px;height:860px;filter:brightness(1.06) contrast(1.03)" alt="" />
+      <div id="e-eq" style="position:absolute;left:0;right:0;top:880px;text-align:center;font:700 220px/1 'SF Pro Display';color:#1d1d1f" data-layout-allow-overlap>=</div>
     </div>
     </div>
   </div>
@@ -68,6 +72,7 @@
     const wordsIn = (tl, sel, t, st) => tl.fromTo(W(sel), { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out", stagger: st || 0.07 }, t);
     const blurIn = (tl, sel, t, d) => tl.fromTo(sel, { opacity: 0, filter: "blur(18px)", scale: 1.06 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: d || 0.3, ease: "power2.out" }, t);
     const blurOut = (tl, sel, t, d) => tl.to(sel, { opacity: 0, filter: "blur(16px)", duration: d || 0.16, ease: "power2.in" }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
     const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
     const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
     const shake = (tl, sel, t, k) => tl.fromTo(sel, { x: -(k || 18) }, { x: 0, duration: 0.32, ease: "elastic.out(1.3, 0.3)", immediateRender: false }, t);
@@ -100,11 +105,11 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#t1-cam", { scale: 1 }, { scale: 1.045, duration: 3.02, ease: "none" }, 0);
-    gsap.set("#d-g", { rotationY: -22, rotationX: 8 });
-    duoSet("#d", 180);
-    fold(tl, "#d", 180, 0, 0.3, 1.6, "power2.inOut");
-    tl.to("#d-g", { rotationY: 200, duration: 1.0, ease: "power2.inOut" }, 2.0);
-    window.__timelines["t1"] = tl;
+    tl.fromTo("#b18-cam", { scale: 1 }, { scale: 1.045, duration: 1.14, ease: "none" }, 0);
+    tl.fromTo("#b18-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#e-a", { x: -400 }, { x: 0, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#e-b", { x: 400 }, { x: 0, duration: 0.3, ease: "expo.out" }, 0.1);
+    pop(tl, "#e-eq", 0.3);
+    window.__timelines["b18"] = tl;
   </script>
 </template>

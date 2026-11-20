@@ -43,34 +43,28 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #fff !important; }
+    #root { background: #f5f5f7 !important; }
 
-    .bar { position: absolute; bottom: 50px; width: 220px; border-radius: 26px 26px 0 0; transform-origin: 50% 100%; }
-    .bl { position: absolute; width: 220px; margin-left: 0; text-align: center; font: 700 62px/1 "SF Pro Display"; letter-spacing: -0.035em; opacity: 0; white-space: nowrap; }
-    .bl small { display: block; font: 600 30px/1 "SF Pro Display"; color: #86868b; margin-top: 8px; letter-spacing: 0; }
-    .rul { position: absolute; left: 150px; top: 170px; width: 60px; height: 644px; border-right: 6px solid #1d1d1f; }
-    .rul i { position: absolute; right: 0; height: 6px; margin-top: -3px; background: #1d1d1f; border-radius: 3px; transform-origin: right center; }
+    .mul { mix-blend-mode: multiply; }
+    .pc { position: absolute; top: 400px; width: 480px; height: 900px; border-radius: 48px; background: #fff; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.04); text-align: center; }
+    .pi { height: 630px; overflow: hidden; border-radius: 48px 48px 0 0; }
+    .pn { font: 600 42px/1.2 "SF Pro Display"; letter-spacing: -0.015em; color: #86868b; margin-top: 22px; }
+    .pp { font: 700 108px/1.1 "SF Pro Display"; letter-spacing: -0.04em; display: inline-block; }
+    #c-st { position: absolute; left: 50px; top: 230px; padding: 14px 34px; border: 10px solid #1d8a3c; border-radius: 24px; color: #1d8a3c; font: 700 92px/1 "SF Pro Display"; letter-spacing: -0.02em; text-transform: uppercase; background: rgba(255,255,255,0.92); opacity: 0; }
   </style>
-  <div id="root" data-composition-id="a10" data-width="1080" data-height="1920">
-    <div id="a10-st" class="st" data-layout-allow-overlap>
-<div id="a10-cam" class="cam" data-layout-allow-overlap>
-      <div id="m-ta" style="position:absolute;left:0;right:0;top:296px;text-align:center">
-        <div id="m-t1" class="wsplit" style="font:600 62px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b">Il primo prezzo che vedi</div>
-        <div id="m-t2" style="font:700 110px/1.1 'SF Pro Display';letter-spacing:-0.04em;opacity:0">diventa il tuo metro.</div>
+  <div id="root" data-composition-id="b16" data-width="1080" data-height="1920">
+    <div id="b16-st" class="st grey" data-layout-allow-overlap>
+<div id="b16-cam" class="cam" data-layout-allow-overlap>
+      <div class="pc" id="c-l" style="left:40px">
+        <div class="pi"><img class="mul" src="assets/img/ip18-burg-a.png" style="height:640px;margin-top:-10px;filter:brightness(1.06) contrast(1.03)" alt="" /></div>
+        <div class="pn">iPhone 18 Pro Max</div>
+        <div class="pp" id="c-lp">1.639 €</div>
+        <div id="c-st">affare?</div>
       </div>
-      <div id="m-tb" style="position:absolute;left:0;right:0;top:296px;text-align:center">
-        <div id="m-t3" class="wsplit" style="font:600 62px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b">e tutto quello che viene dopo</div>
-        <div id="m-t4" style="font:700 110px/1.1 'SF Pro Display';letter-spacing:-0.04em;opacity:0">ti sembra <span style="color:#1d8a3c">poco.</span></div>
-      </div>
-      <div id="m-g" style="position:absolute;left:0;top:640px;width:1080px;height:860px">
-        <div style="position:absolute;left:110px;right:110px;top:810px;height:4px;background:#d2d2d7;border-radius:2px"></div>
-        <div class="rul" id="m-rul"><i style="top:0px;width:44px"></i><i style="top:64px;width:24px"></i><i style="top:128px;width:24px"></i><i style="top:192px;width:24px"></i><i style="top:256px;width:24px"></i><i style="top:320px;width:44px"></i><i style="top:384px;width:24px"></i><i style="top:448px;width:24px"></i><i style="top:512px;width:24px"></i><i style="top:576px;width:24px"></i><i style="top:640px;width:44px"></i></div>
-        <div class="bar" id="m-b1" style="left:250px;height:640px;background:linear-gradient(180deg,#31407a,#1d2a57)"></div>
-        <div class="bl" id="m-l1" style="left:250px;top:50px">2.369 €<small>il primo</small></div>
-        <div class="bar" id="m-b2" style="left:610px;height:443px;background:linear-gradient(180deg,#a11a35,#7a0f24)"></div>
-        <div class="bl" id="m-l2" style="left:610px;top:247px">1.639 €<small>dopo</small></div>
-        <div id="m-dash" style="position:absolute;left:250px;top:168px;width:650px;height:0;border-top:5px dashed #86868b;transform-origin:left center"></div>
-        <svg viewBox="0 0 80 200" width="80" height="200" style="position:absolute;left:880px;top:170px;overflow:visible"><path id="m-gap" d="M10 4 H34 V195 H10" fill="none" stroke="#1d8a3c" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="pc" id="c-r" style="left:560px">
+        <div class="pi"><img src="assets/img/duo-vee.png" style="height:570px;margin-top:30px" alt="" /></div>
+        <div class="pn">iPhone Duo</div>
+        <div class="pp" id="c-rp"><span id="c-rn">1.639</span> €</div>
       </div>
     </div>
     </div>
@@ -123,23 +117,21 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a10-cam", { scale: 1 }, { scale: 1.045, duration: 4.83, ease: "none" }, 0);
-    enter(tl, "#a10-st", "U");
-    wordsIn(tl, "#m-t1", 0.06, 0.075);
-    tl.fromTo("#m-b1", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "expo.out" }, 0.16);
-    tl.fromTo("#m-l1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 0.6);
-    blurIn(tl, "#m-t2", 1.21 - 0.06, 0.26);
-    tl.fromTo("#m-rul i", { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out", stagger: { each: 0.035, from: "end" } }, 1.21 + 0.02);
-    tl.fromTo("#m-b1", { scaleX: 1 }, { scaleX: 1.08, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 1.21 + 0.45);
-    blurOut(tl, "#m-ta", 2.44 - 0.16, 0.14);
-    wordsIn(tl, "#m-t3", 2.44 + 0.02, 0.07);
-    tl.fromTo("#m-b2", { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease: "expo.out" }, 2.62 + 0.3);
-    tl.fromTo("#m-l2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 2.62 + 0.7);
-    blurIn(tl, "#m-t4", 3.88 - 0.06, 0.26);
-    tl.fromTo("#m-dash", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 3.88);
-    draw(tl, "#m-gap", 4.31 - 0.1, 0.3);
-    tl.to("#m-b2", { filter: "brightness(1.25)", duration: 0.14, yoyo: true, repeat: 1 }, 4.31 + 0.05);
-    exit(tl, "#a10-st", "B", 4.83 - 0.2);
-    window.__timelines["a10"] = tl;
+    tl.fromTo("#b16-cam", { scale: 1 }, { scale: 1.045, duration: 4.54, ease: "none" }, 0);
+    tl.fromTo("#b16-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    gsap.set("#c-l", { x: 260 });
+    tl.to("#c-l", { x: 0, duration: 0.4, ease: "expo.out" }, 1.08 - 0.62);
+    tl.fromTo("#c-r", { x: 900, rotation: 10 }, { x: 0, rotation: 0, duration: 0.42, ease: "back.out(1.3)" }, 1.08 - 0.55);
+    shake(tl, "#b16-cam", 1.08 - 0.2, 22);
+    count(tl, "#c-rn", 1639, 2369, 1.08 - 0.18, 0.5, eur, "power2.out");
+    punch(tl, "#c-rp", 1.08 + 0.32, 1.2);
+    tl.fromTo("#c-lp", { scale: 1 }, { scale: 1.22, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 1.32 + 0.2);
+    tl.to("#c-r", { scale: 1.07, transformOrigin: "50% 60%", duration: 0.4, ease: "back.out(2)" }, 2.46 - 0.05);
+    tl.to("#c-l", { scale: 0.93, transformOrigin: "50% 60%", duration: 0.4, ease: "back.out(2)" }, 2.46 - 0.05);
+    tl.to("#c-lp", { color: "#1d8a3c", duration: 0.2 }, 2.46 + 0.1);
+    tl.to("#c-l", { boxShadow: "0 40px 100px -30px rgba(29,138,60,0.5), 0 0 0 6px #1d8a3c", duration: 0.25 }, 2.46 + 0.1);
+    tl.fromTo("#c-st", { opacity: 0, scale: 2.8, rotation: -30 }, { opacity: 1, scale: 1, rotation: -12, duration: 0.26, ease: "power4.in" }, 3.36 + 0.1);
+    shake(tl, "#b16-cam", 3.36 + 0.36, 16);
+    window.__timelines["b16"] = tl;
   </script>
 </template>

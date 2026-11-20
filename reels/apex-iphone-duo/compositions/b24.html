@@ -43,22 +43,25 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #fff !important; }
+    #root { background: #f5f5f7 !important; }
 
+    .mul { mix-blend-mode: multiply; }
+    .pc { position: absolute; border-radius: 48px; background: #fff; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.28), 0 0 0 5px #1d8a3c; text-align: center; }
+    .pi { overflow: hidden; border-radius: 48px 48px 0 0; }
+    .pn { font: 600 42px/1.2 "SF Pro Display"; letter-spacing: -0.015em; color: #86868b; margin-top: 22px; }
+    .pp { font: 700 108px/1.1 "SF Pro Display"; letter-spacing: -0.04em; display: inline-block; }
   </style>
-  <div id="root" data-composition-id="a14" data-width="1080" data-height="1920">
-    <div id="a14-st" class="st" data-layout-allow-overlap>
-<div id="a14-cam" class="cam" data-layout-allow-overlap>
-      <div class="zone" data-layout-allow-overlap style="top:360px"><span class="line"><span id="y-a1" class="t mut">vuoi sapere come</span></span><span class="line" style="margin-top:-18px"><span id="y-a2" class="tb" style="font-size:104px">creo questi video?</span></span></div>
-      <div class="zone" data-layout-allow-overlap style="top:360px"><span class="line"><span id="y-b1" class="t mut">scrivi</span></span></div>
-      <div id="y-m" class="split acc" style="position:absolute;left:0;right:0;top:486px;text-align:center;font:700 220px/1 'SF Pro Display';letter-spacing:-0.045em">MOTION</div>
-      <div id="y-bar" style="position:absolute;left:90px;top:850px;width:900px;height:140px;border-radius:70px;border:4px solid #d2d2d7;display:flex;align-items:center;padding:0 44px 0 24px;gap:26px">
-        <div style="width:92px;height:92px;border-radius:50%;background:linear-gradient(#d1d1d6,#aeaeb2)"></div>
-        <div id="y-t" class="split" style="flex:1;font:500 52px/1 'SF Pro Display';letter-spacing:0.01em">MOTION</div>
-        <div id="y-pub" style="font:600 46px/1 'SF Pro Display';color:#0a84ff">Pubblica</div>
+  <div id="root" data-composition-id="b24" data-width="1080" data-height="1920">
+    <div id="b24-st" class="st grey" data-layout-allow-overlap>
+<div id="b24-cam" class="cam" data-layout-allow-overlap>
+      <div id="z-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 70px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>e tutto il resto sembra</div>
+      <div id="z-b" style="position:absolute;left:0;right:0;top:384px;text-align:center;font:700 190px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d8a3c;" data-layout-allow-overlap>normale.</div>
+      <div class="pc" id="z-c" style="left:290px;top:700px;width:500px;height:800px">
+        <div class="pi" style="height:540px"><img class="mul" src="assets/img/ip18-burg-a.png" style="height:560px;margin-top:-10px;filter:brightness(1.06) contrast(1.03)" alt="" /></div>
+        <div class="pn">iPhone 18 Pro Max</div>
+        <div class="pp" style="color:#1d8a3c">1.639 €</div>
       </div>
-      <div id="y-cur" class="cur" style="left:880px;top:940px"><svg viewBox="0 0 24 24" width="60" height="60"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#1d1d1f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
-      <div class="zone" data-layout-allow-overlap style="top:1080px"><span class="line"><span id="y-c1" class="tb" style="font-size:100px">e ti spiego tutto</span></span></div>
+      <div class="chip" id="z-ok" style="left:650px;top:660px;background:#1d8a3c;font-size:56px;padding:20px 38px">normale ✓</div>
     </div>
     </div>
   </div>
@@ -110,20 +113,10 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a14-cam", { scale: 1 }, { scale: 1.045, duration: 4.60, ease: "none" }, 0);
-    enter(tl, "#a14-st", "L");
-    rise(tl, "#y-a1", 0.05);
-    rise(tl, "#y-a2", 0.62);
-    sink(tl, "#y-a1", 2.02 - 0.22); sink(tl, "#y-a2", 2.02 - 0.22);
-    rise(tl, "#y-b1", 2.02 - 0.06);
-    tl.fromTo("#y-bar", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, 2.02 - 0.02);
-    flip(tl, "#y-m", 2.37 - 0.1, 0.05);
-    typeIn(tl, "#y-t", 2.37, 0.07);
-    rise(tl, "#y-c1", 3.50 - 0.04);
-    tl.fromTo("#y-cur", { opacity: 0, x: 160, y: 200 }, { opacity: 1, x: 0, y: 0, duration: 0.36, ease: "power3.out" }, 3.50 + 0.1);
-    tl.to("#y-cur", { scale: 0.8, duration: 0.07, yoyo: true, repeat: 1 }, 3.50 + 0.56);
-    tl.fromTo("#y-pub", { scale: 1 }, { scale: 1.2, duration: 0.1, yoyo: true, repeat: 1 }, 3.50 + 0.58);
-    exit(tl, "#a14-st", "B", 4.60 - 0.2);
-    window.__timelines["a14"] = tl;
+    tl.fromTo("#b24-cam", { scale: 1 }, { scale: 1.045, duration: 2.01, ease: "none" }, 0);
+    tl.fromTo("#b24-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#z-c", { y: 500 }, { y: 0, duration: 0.4, ease: "back.out(1.4)" }, 0);
+    tl.fromTo("#z-ok", { opacity: 0, scale: 0.4, rotation: 10 }, { opacity: 1, scale: 1, rotation: 5, duration: 0.3, ease: "back.out(2.6)" }, 0.10 - 0.00 + 0.3);
+    window.__timelines["b24"] = tl;
   </script>
 </template>

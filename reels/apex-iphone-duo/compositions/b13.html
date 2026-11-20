@@ -43,21 +43,15 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #fff !important; }
+    #root { background: #000 !important; }
 
   </style>
-  <div id="root" data-composition-id="a2" data-width="1080" data-height="1920">
-    <div id="a2-st" class="st" data-layout-allow-overlap>
-<div id="a2-cam" class="cam" data-layout-allow-overlap>
-      <div class="eyebrow" id="b-eb" style="top:300px">Novità</div>
-      <div style="position:absolute;left:0;right:0;top:340px;text-align:center"><span id="b-t" class="grad" style="font:700 184px/1.12 'SF Pro Display';letter-spacing:-0.045em;display:inline-block">iPhone Duo</span></div>
-      <div id="b-s" class="wsplit" style="position:absolute;left:0;right:0;top:560px;text-align:center;font:600 54px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b">Il primo iPhone che si piega.</div>
-      <div id="b-k1" style="position:absolute;left:0;right:0;top:320px;text-align:center;opacity:0"><div style="font:700 170px/1.05 'SF Pro Display';letter-spacing:-0.045em">Chiuso.</div><div id="b-k1s" style="font:600 60px/1.2 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;opacity:0">è un telefono</div></div>
-      <div id="b-k2" style="position:absolute;left:0;right:0;top:320px;text-align:center;opacity:0"><div style="font:700 170px/1.05 'SF Pro Display';letter-spacing:-0.045em">Aperto.</div><div id="b-k2s" style="font:600 60px/1.2 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;opacity:0">è quasi un tablet</div></div>
-      <div class="duo" id="d" data-motion-blur="off" data-layout-allow-overlap style="left:-160px;top:800px"><div class="duo-sh" id="d-sh"></div><div class="duo-g" id="d-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="d-l"><div class="f in" id="d-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="d-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div>
-      <div class="chip" id="b-c1" style="left:810px;top:1010px">5,4″</div>
-      <div class="chip" id="b-c2" style="left:0;right:0;margin:0 auto;width:fit-content;top:1420px;background:#0071e3">7,6″</div>
-    </div>
+  <div id="root" data-composition-id="b13" data-width="1080" data-height="1920">
+    <div id="b13-st" class="st dark" data-layout-allow-overlap>
+      <div class="vid" id="x-i" data-layout-allow-overlap style="transform-origin:74% 78%"><img src="assets/img/table-pro.jpg" alt="" /></div>
+      <div class="shade"></div>
+      <div id="x-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 70px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>il nuovo</div>
+      <div id="x-b" style="position:absolute;left:0;right:0;top:384px;text-align:center;font:700 112px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.5)" data-layout-allow-overlap>iPhone 18 Pro Max</div>
     </div>
   </div>
   <script>
@@ -108,33 +102,9 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a2-cam", { scale: 1 }, { scale: 1.045, duration: 6.68, ease: "none" }, 0);
-    enter(tl, "#a2-st", "B");
-    gsap.set("#d", { scale: 0.62 }); gsap.set("#d-g", { rotationY: -16, rotationX: 6 }); duoSet("#d", 180);
-    tl.fromTo("#b-eb", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.1);
-    fold(tl, "#d", 180, 0, 0.12, 0.85, "power3.out");
-    tl.fromTo("#d", { y: 260 }, { y: 0, duration: 0.7, ease: "expo.out" }, 0.05);
-    tl.fromTo("#b-t", { opacity: 0, filter: "blur(22px)", scale: 1.22 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.5, ease: "expo.out" }, 0.54 - 0.22);
-    wordsIn(tl, "#b-s", 1.56 - 0.05, 0.08);
-    fold(tl, "#d", 0, 180, 2.63 - 0.08, 0.5, "power3.inOut");
-    tl.to("#d-g", { rotationY: -30, duration: 0.5, ease: "power2.inOut" }, 2.63 - 0.08);
-    /* closed */
-    blurOut(tl, "#b-eb, #b-t, #b-s", 3.42 - 0.2);
-    tl.to("#d", { scale: 0.98, y: -40, duration: 0.5, ease: "expo.out" }, 3.42 - 0.16);
-    tl.to("#d-g", { rotationY: -20, rotationX: 4, duration: 0.5, ease: "expo.out" }, 3.42 - 0.16);
-    blurIn(tl, "#b-k1", 3.42 - 0.06, 0.26);
-    tl.fromTo("#b-k1s", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 3.97 - 0.05);
-    pop(tl, "#b-c1", 3.97 + 0.14);
-    /* open */
-    blurOut(tl, "#b-k1, #b-c1", 4.80 - 0.2);
-    fold(tl, "#d", 180, 0, 4.80 - 0.12, 0.62, "power3.inOut");
-    tl.to("#d", { scale: 0.66, y: 0, duration: 0.62, ease: "power3.inOut" }, 4.80 - 0.12);
-    tl.to("#d-g", { rotationY: -8, rotationX: 5, duration: 0.62, ease: "power3.inOut" }, 4.80 - 0.12);
-    blurIn(tl, "#b-k2", 4.80 - 0.02, 0.26);
-    tl.fromTo("#b-k2s", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 5.46 - 0.02);
-    pop(tl, "#b-c2", 5.46 + 0.32);
-    tl.to("#d-g", { rotationY: 6, duration: 1.3, ease: "sine.inOut" }, 5.46 - 0.1);
-    exit(tl, "#a2-st", "B", 6.68 - 0.2);
-    window.__timelines["a2"] = tl;
+    tl.fromTo("#x-i", { scale: 1.25 }, { scale: 1.0, duration: 0.4, ease: "expo.out" }, 0);
+    tl.to("#x-i", { scale: 1.9, duration: 1.21 - 0.4, ease: "power2.in" }, 0.4);
+    tl.fromTo("#x-b", { opacity: 0, filter: "blur(14px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 0.1);
+    window.__timelines["b13"] = tl;
   </script>
 </template>

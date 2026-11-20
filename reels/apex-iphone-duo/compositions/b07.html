@@ -43,23 +43,17 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
-    .rp { position: absolute; left: 390px; top: 1300px; display: block; width: 300px; height: 90px; border-radius: 50%; border: 6px solid #2997ff; opacity: 0; }
   </style>
-  <div id="root" data-composition-id="a9" data-width="1080" data-height="1920">
-    <div id="a9-st" class="st dark" data-layout-allow-overlap>
-<div id="a9-cam" class="cam" data-layout-allow-overlap>
-      <div id="k-a" style="position:absolute;left:0;right:0;top:330px;text-align:center;font:600 60px/1 'SF Pro Display';color:#a1a1a6">si chiama</div>
-      <div id="k-b" style="position:absolute;left:0;right:0;top:410px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7">Effetto</div>
-      <div id="k-c" style="position:absolute;left:0;right:0;top:560px;text-align:center"><span class="split" id="k-cw" style="font:700 216px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#2997ff;display:inline-block">àncora.</span></div>
-      <div style="position:absolute;left:0;top:830px;width:1080px;height:1090px;overflow:hidden" data-layout-allow-overlap><svg id="k-an" viewBox="0 0 200 1200" width="330" height="1980" style="position:absolute;left:375px;top:-1390px;overflow:visible" fill="none" stroke="#f5f5f7" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M100 0 V962" stroke-dasharray="4 26" stroke="#6e6e73"/>
-        <circle cx="100" cy="986" r="22"/><path d="M100 1008 V1180"/><path d="M62 1050 H138"/>
-        <path d="M26 1100 C26 1158 68 1184 100 1184 C132 1184 174 1158 174 1100"/><path d="M26 1100 L10 1128 M26 1100 L52 1116 M174 1100 L190 1128 M174 1100 L148 1116"/>
-      </svg></div>
-      <i class="rp" id="k-r1"></i><i class="rp" id="k-r2"></i>
-      <div id="k-src" style="position:absolute;left:0;right:0;top:1450px;text-align:center;font:500 34px/1 'SF Pro Display';color:#86868b;opacity:0">Tversky e Kahneman, 1974</div>
+  <div id="root" data-composition-id="b07" data-width="1080" data-height="1920">
+    <div id="b07-st" class="st" data-layout-allow-overlap>
+<div id="b07-cam" class="cam" data-layout-allow-overlap>
+      <div id="r-a" style="position:absolute;left:0;right:0;top:520px;text-align:center;font:600 84px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>resta</div>
+      <div id="r-b" style="position:absolute;left:0;right:0;top:610px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>fino alla fine</div>
+      <div style="position:absolute;left:120px;top:900px;width:840px;height:18px;border-radius:9px;background:#e5e5ea" data-layout-allow-overlap><div id="r-f" style="width:840px;height:18px;border-radius:9px;background:#0071e3;transform-origin:left center"></div><i id="r-k" style="position:absolute;left:-23px;top:-14px;width:46px;height:46px;border-radius:50%;background:#0071e3;box-shadow:0 6px 20px rgba(0,113,227,0.5)"></i></div>
+      <div style="position:absolute;left:120px;top:950px;font:600 40px/1 'SF Pro Display';color:#86868b">0:07</div><div style="position:absolute;right:120px;top:950px;font:600 40px/1 'SF Pro Display';color:#86868b">1:00</div>
+      <div class="chip" id="r-c" style="left:0;right:0;margin:0 auto;width:fit-content;top:1080px;background:#1d1d1f;font-size:56px;padding:22px 44px">c’è un trucco</div>
     </div>
     </div>
   </div>
@@ -111,17 +105,12 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#a9-cam", { scale: 1 }, { scale: 1.045, duration: 1.83, ease: "none" }, 0);
-    enter(tl, "#a9-st", "B");
-    tl.fromTo("#k-a", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.04);
-    blurIn(tl, "#k-b", 0.54 - 0.2, 0.24);
-    flip(tl, "#k-cw", 0.97 - 0.14, 0.03);
-    tl.fromTo("#k-an", { y: -1500 }, { y: 0, duration: 0.5, ease: "power3.in" }, 0.97 - 0.42);
-    tl.to("#k-an", { y: -46, duration: 0.14, ease: "power2.out", yoyo: true, repeat: 1 }, 0.97 + 0.08);
-    shake(tl, "#a9-cam", 0.97 + 0.08, 22);
-    ["#k-r1", "#k-r2"].forEach((r, k) => tl.fromTo(r, { opacity: 0.8, scale: 0.2 }, { opacity: 0, scale: 3.2, duration: 0.7, ease: "power2.out" }, 0.97 + 0.1 + k * 0.16));
-    tl.fromTo("#k-src", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.97 + 0.3);
-    exit(tl, "#a9-st", "U", 1.83 - 0.18);
-    window.__timelines["a9"] = tl;
+    tl.fromTo("#b07-cam", { scale: 1 }, { scale: 1.045, duration: 1.61, ease: "none" }, 0);
+    tl.fromTo("#b07-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#r-f", { scaleX: 0.11 }, { scaleX: 1, duration: 1.61 - 0.25, ease: "power2.in" }, 0.05);
+    tl.fromTo("#r-k", { x: 92 }, { x: 840, duration: 1.61 - 0.25, ease: "power2.in" }, 0.05);
+    tl.fromTo("#r-b", { scale: 1.2, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out" }, 0.22);
+    pop(tl, "#r-c", 1.02 + 0.1);
+    window.__timelines["b07"] = tl;
   </script>
 </template>
