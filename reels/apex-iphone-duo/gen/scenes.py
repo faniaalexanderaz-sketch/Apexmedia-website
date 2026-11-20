@@ -58,7 +58,7 @@ add('b03', 'costa', 'scommetto', f'''      {still('t-i', 'table-duo.jpg', '80% 8
     tl.fromTo("#t-p", { scale: 0.8, transformOrigin: "50% 60%" }, { scale: 1, duration: 0.9, ease: "power2.out" }, «prezzo» - 0.1);
     tl.fromTo("#t-p", { scale: 1.16 }, { scale: 1, duration: 0.45, ease: "elastic.out(1.1, 0.4)", immediateRender: false }, «prezzo» + 0.87);
     shake(tl, "#b03-st", «prezzo» + 0.87, 14);''', cam=False,
-    fx=[('whoosh-short', 'costa', -0.05, 0.22), ('counter', 'prezzo', -0.1, 0.3), ('whoosh-cinematic', 'prezzo', -0.3, 0.16), ('ding', 'prezzo', 0.87, 0.3), ('impact-bass-1', 'prezzo', 0.87, 0.26), ('register', 'euro', 0.0, 0.2)], ground='dark')
+    fx=[('whoosh-short', 'costa', -0.05, 0.22), ('counter', 'prezzo', -0.1, 0.3), ('whoosh-cinematic', 'prezzo', -0.3, 0.16), ('ding', 'prezzo', 0.87, 0.2), ('impact-bass-1', 'prezzo', 0.87, 0.14)], ground='dark')
 
 # ---------------------------------------------------------------- 4-6. "E scommetto che / NON / l'ha fatto per vendertelo."
 add('b04', 'scommetto', 'non', f'''      {small('w-a', 'e', 600, 80)}
@@ -69,7 +69,7 @@ add('b04', 'scommetto', 'non', f'''      {small('w-a', 'e', 600, 80)}
 add('b05', 'non', 'lhafatto', f'''      {big('n-b', 'NON', 560, 460, RED, 'letter-spacing:-0.05em')}''', '''    tl.fromTo("#n-b", { scale: 2.2 }, { scale: 1, duration: 0.2, ease: "expo.out" }, 0);
     shake(tl, "#b05-cam", 0.06, 26);
     tl.to("#n-b", { scale: 1.08, duration: DUR - 0.2, ease: "none" }, 0.2);''',
-    fx=[('boom', 'non', 0.0, 0.4), ('impact-bass-1', 'non', 0.0, 0.26)], ground='dark')
+    fx=[('thud', 'non', 0.0, 0.42), ('impact-bass-1', 'non', 0.0, 0.14)], ground='dark')
 
 add('b06', 'lhafatto', 'resta', f'''      <div class="vid" id="v-i" data-layout-allow-overlap style="transform-origin:50% 55%;opacity:0.5"><img src="assets/img/hero-last.jpg" alt="" /></div>
       {small('v-a', 'l’ha fatto per', 560, 84, '#d2d2d7')}
@@ -97,7 +97,7 @@ add('b08', 'trucco', 'puoi', f'''      {small('u-a', 'questo trucco', 470, 76)}
     shake(tl, "#b08-cam", «anchetu» + 0.02, 18);
     tl.fromTo("#u-box", { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 0.18 }, «anchetu» + 0.2);
     tl.fromTo("#u-cur", { opacity: 0, x: 140, y: 160 }, { opacity: 1, x: 0, y: 0, duration: 0.24, ease: "power3.out" }, «anchetu» + 0.14);''',
-    fx=[('whoosh-short', 'trucco', -0.04, 0.2), ('key-press', 'subendo', -0.12, 0.14), ('impact-bass-1', 'anchetu', -0.06, 0.26), ('click', 'anchetu', 0.3, 0.36)], ground='dark')
+    fx=[('whoosh-short', 'trucco', -0.04, 0.2), ('key-press', 'subendo', -0.12, 0.14), ('thud', 'anchetu', -0.06, 0.34), ('click', 'anchetu', 0.3, 0.36)], ground='dark')
 
 # ---------------------------------------------------------------- 9. "E puoi usarlo per vendere di più."
 bars = ''.join(f'<i class="vb" style="height:{h}px"></i>' for h in (130, 210, 300, 420, 560))
@@ -318,7 +318,7 @@ add('b25', 'euna', 'ristorante', f'''      {still('o-1', 'wine.jpg')}{still('o-2
     gsap.set(["#o-2", "#o-3", "#o-4", "#o-w"], { autoAlpha: 0 });
     tl.set("#o-w", { autoAlpha: 1 }, «ovunque» - 0.05);
     tl.fromTo("#o-t", { scale: 1.6, filter: "blur(14px)" }, { scale: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out" }, «ovunque» - 0.05);''', cam=False,
-    fx=[('click', 'euna', 0.0, 0.4), ('click', 'euna', 0.24, 0.4), ('click', 'euna', 0.48, 0.4), ('click', 'euna', 0.72, 0.4), ('whoosh', 'ovunque', -0.15, 0.26), ('thud', 'ovunque', -0.05, 0.32)], ground='dark')
+    fx=[('click', 'euna', 0.0, 0.4), ('click', 'euna', 0.24, 0.4), ('click', 'euna', 0.48, 0.4), ('click', 'euna', 0.72, 0.4), ('whoosh-short', 'ovunque', -0.15, 0.16), ('thud', 'ovunque', -0.05, 0.3)], ground='dark')
 
 # ---------------------------------------------------------------- 26. "Al ristorante..."
 add('b26', 'ristorante', 'bottiglia', f'''      {still('r2-i', 'wine.jpg', '50% 60%')}
@@ -399,7 +399,7 @@ add('b29', 'quindi', 'mettigli', f'''      {small('l-a', 'se vendi qualcosa', 42
     .tagp {{ position: absolute; display: flex; align-items: center; gap: 30px; padding: 34px 60px 34px 40px; border-radius: 36px; background: #f5f5f7; color: {INK}; opacity: 0; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.8); white-space: nowrap; }}
     .tagp i {{ display: block; width: 44px; height: 44px; border-radius: 50%; background: #000; flex: none; }}
     .tagp b {{ font: 700 92px/1 "SF Pro Display"; letter-spacing: -0.04em; }}''',
-    fx=[('swipe', 'quindi', -0.2, 0.24), ('key-press', 'quindi', 0.02, 0.14), ('pop', 'quindi', 0.3, 0.28), ('swoosh', 'quindi', 0.9, 0.26), ('boom', 'nonabbassare', -0.02, 0.4), ('thud', 'nonabbassare', 0.0, 0.36)], ground='dark')
+    fx=[('swipe', 'quindi', -0.2, 0.24), ('key-press', 'quindi', 0.02, 0.14), ('pop', 'quindi', 0.3, 0.28), ('swoosh', 'quindi', 0.9, 0.26), ('thud', 'nonabbassare', 0.0, 0.4)], ground='dark')
 
 # ---------------------------------------------------------------- 30. "Mettigli accanto un'opzione più cara."
 add('b30', 'mettigli', 'nonserve', f'''      {small('j-a', 'mettigli accanto', 420, 80)}
@@ -427,7 +427,7 @@ add('b31', 'nonserve', 'cta', f'''      {small('i-a', 'non serve che la', 470, 7
     tl.fromTo("#i-eye", { opacity: 0, scaleY: 0, transformOrigin: "50% 50%" }, { opacity: 1, scaleY: 1, duration: 0.2, ease: "back.out(2)" }, «vedano» + 0.05);
     tl.to("#i-eye", { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, «vedano» + 0.38);
     shake(tl, "#b31-cam", «vedano» - 0.1, 16);''',
-    fx=[('key-press', 'nonserve', 0.02, 0.14), ('swoosh', 'nonserve', 0.62, 0.28), ('thud', 'nonserve', 0.8, 0.24), ('key-press', 'serveche', -0.06, 0.14), ('impact-bass-1', 'vedano', -0.14, 0.28), ('pop', 'vedano', 0.05, 0.26), ('click-soft', 'vedano', 0.38, 0.3)], ground='dark')
+    fx=[('key-press', 'nonserve', 0.02, 0.14), ('swoosh', 'nonserve', 0.62, 0.28), ('thud', 'nonserve', 0.8, 0.24), ('key-press', 'serveche', -0.06, 0.14), ('thud', 'vedano', -0.14, 0.34), ('pop', 'vedano', 0.05, 0.18), ('click-soft', 'vedano', 0.38, 0.3)], ground='dark')
 
 # ================================================================ CALL TO ACTION + LOOP
 # ---------------------------------------------------------------- 32. "Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto."
