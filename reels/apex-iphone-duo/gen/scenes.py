@@ -12,7 +12,8 @@ R = Reel(T)
 add = R.add
 RED = '#ff453a'; YEL = '#ffd60a'
 SF = "'SF Pro Display'"
-HS0 = 1.5      # zoom of the hand shot on the very first frame; the closing scene ends on the same value
+HT0 = 2.4      # media time of the unfolding clip on the very first frame; the closing scene plays the seconds just before it
+HZ0, HRATE = 1.4, 0.10   # zoom of that clip on the first frame, and how fast it eases out
 
 def still(i, src, origin='50% 50%'):
     return f'<div class="vid" id="{i}" data-layout-allow-overlap style="transform-origin:{origin}"><img src="assets/img/{src}" alt="" /></div>'
@@ -21,21 +22,20 @@ def big(i, html, top, size, color='#f5f5f7', extra=''):
 def small(i, html, top, size=66, color='#a1a1a6', extra=''):
     return f'<div id="{i}" style="position:absolute;left:0;right:0;top:{top}px;text-align:center;font:600 {size}px/1.1 {SF};letter-spacing:-0.02em;color:{color};{extra}" data-layout-allow-overlap>{html}</div>'
 CUT = '    tl.fromTo("#SID-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);\n'   # a hard cut that lands with a small push
-def cut(sid): return CUT.replace('SID', sid)
+def cut(sid): return ''   # version 3: every cut gets its transition from the builder
 
 # ================================================================ HOOK
 # ---------------------------------------------------------------- 1. "Apple ha appena fatto uscire..."
-add('b01', 'start', 'uniphone', f'''      {still('h-i', 'hand-duo.jpg', '50% 55%')}
-      <div class="shade"></div>
+add('b01', 'start', 'uniphone', f'''      <div class="vid" id="h-w" data-layout-allow-overlap style="transform-origin:50% 52%"><video id="h-v" class="clip" src="assets/video/hero.mp4" data-start="0" data-duration="{T['uniphone']:.2f}" data-media-start="{HT0}" muted playsinline></video></div>
       <div id="h-pill" style="position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:262px;padding:20px 44px;border-radius:999px;background:#ff3b30;color:#fff;font:700 60px/1 {SF};letter-spacing:0.03em" data-layout-allow-overlap>APPENA USCITO</div>
       {big('h-t', '&#xF8FF; iPhone Duo', 384, 138, '#fff', 'text-shadow:0 8px 40px rgba(0,0,0,0.5)')}
-      <div class="flash" id="h-fl"></div>''', f'''    tl.fromTo("#h-i", {{ scale: {HS0} }}, {{ scale: 1.1, duration: 0.42, ease: "expo.out" }}, 0);
-    tl.to("#h-i", {{ scale: 1.0, duration: DUR - 0.42, ease: "none" }}, 0.42);
+      <div class="flash" id="h-fl"></div>''', f'''    tl.fromTo("#h-w", {{ scale: {HZ0} }}, {{ scale: {HZ0 - HRATE * T['uniphone']:.3f}, duration: DUR, ease: "none" }}, 0);
     tl.fromTo("#h-pill", {{ scale: 1.32, rotation: -7 }}, {{ scale: 1, rotation: -3, duration: 0.3, ease: "back.out(2.2)" }}, 0);
-    flash(tl, "#h-fl", 0.3, 0.3);
-    tl.fromTo("#h-t", {{ opacity: 0, filter: "blur(18px)", scale: 1.25 }}, {{ opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, ease: "expo.out" }}, 0.42);
-    shake(tl, "#b01-st", 0.3, 16);''', cam=False,
-    fx=[('boom', 'start', 0.0, 0.5), ('whoosh', 'start', 0.0, 0.3), ('pop', 'start', 0.05, 0.3), ('thud', 'start', 0.3, 0.34), ('ding', 'start', 0.44, 0.24)], ground='dark')
+    flash(tl, "#h-fl", 0.3, 0.25);
+    tl.fromTo("#h-t", {{ opacity: 0, filter: "blur(18px)", scale: 1.25 }}, {{ opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, ease: "expo.out" }}, 0.4);
+    shake(tl, "#b01-st", 0.3, 16);
+''', cam=False,
+    fx=[('boom', 'start', 0.0, 0.5), ('whoosh', 'start', 0.0, 0.3), ('pop', 'start', 0.05, 0.3), ('hinge', 'start', 0.5, 0.3), ('thud', 'start', 0.3, 0.34), ('ding', 'start', 0.44, 0.24)], ground='dark')
 
 # ---------------------------------------------------------------- 2. "...un iPhone che si piega in due."
 add('b02', 'uniphone', 'costa', f'''      {big('p-c', 'si piega <span class="grad">in due.</span>', 300, 150, INK)}
@@ -48,34 +48,30 @@ add('b02', 'uniphone', 'costa', f'''      {big('p-c', 'si piega <span class="gra
     fx=[('swipe', 'uniphone', -0.2, 0.26), ('hinge', 'uniphone', 0.3, 0.34), ('whoosh-short', 'sipiega', -0.08, 0.22), ('hinge', 'sipiega', 0.2, 0.36), ('hinge', 'sipiega', 0.7, 0.34), ('pop', 'sipiega', -0.2, 0.18)])
 
 # ---------------------------------------------------------------- 3. "Costa 2.369 euro."
-add('b03', 'costa', 'scommetto', f'''      {still('t-i', 'table-duo.jpg', '80% 84%')}
-      <div class="shade"></div>
+add('b03', 'costa', 'scommetto', f'''      {vid('t-i', 'c-table.mp4', T['scommetto'] - T['costa'], 0.0)}
       {small('t-a', 'costa', 300, 76, '#f5f5f7')}
-      <div id="t-p" style="position:absolute;left:0;right:0;top:372px;text-align:center;font:700 244px/1.05 {SF};letter-spacing:-0.05em;color:#fff;text-shadow:0 10px 50px rgba(0,0,0,0.55)" data-layout-allow-overlap><span id="t-n">1.000</span><span style="font-weight:600;font-size:150px"> €</span></div>''', '''    tl.fromTo("#t-i", { scale: 1.2 }, { scale: 1.0, duration: 0.4, ease: "expo.out" }, 0);
-    tl.to("#t-i", { scale: 2.6, x: -330, y: -380, duration: 0.9, ease: "power3.inOut" }, «prezzo» - 0.3);
-    tl.to("#t-i", { scale: 2.8, duration: 1.0, ease: "none" }, «prezzo» + 0.6);
+      <div id="t-p" style="position:absolute;left:0;right:0;top:372px;text-align:center;font:700 244px/1.05 {SF};letter-spacing:-0.05em;color:#fff;text-shadow:0 10px 50px rgba(0,0,0,0.55)" data-layout-allow-overlap><span id="t-n">1.000</span><span style="font-weight:600;font-size:150px"> €</span></div>''', '''    tl.fromTo("#t-i-w", { scale: 1.08 }, { scale: 1.0, duration: DUR, ease: "none" }, 0);
     count(tl, "#t-n", 1000, 2369, «prezzo» - 0.1, 0.95, eur, "power2.out");
     tl.fromTo("#t-p", { scale: 0.8, transformOrigin: "50% 60%" }, { scale: 1, duration: 0.9, ease: "power2.out" }, «prezzo» - 0.1);
     tl.fromTo("#t-p", { scale: 1.16 }, { scale: 1, duration: 0.45, ease: "elastic.out(1.1, 0.4)", immediateRender: false }, «prezzo» + 0.87);
     shake(tl, "#b03-st", «prezzo» + 0.87, 14);''', cam=False,
     fx=[('whoosh-short', 'costa', -0.05, 0.22), ('counter', 'prezzo', -0.1, 0.3), ('whoosh-cinematic', 'prezzo', -0.3, 0.16), ('ding', 'prezzo', 0.87, 0.2), ('impact-bass-1', 'prezzo', 0.87, 0.14)], ground='dark')
 
-# ---------------------------------------------------------------- 4-6. "E scommetto che / NON / l'ha fatto per vendertelo."
-add('b04', 'scommetto', 'non', f'''      {small('w-a', 'e', 600, 80)}
-      {big('w-b', 'scommetto', 690, 190)}
-      {small('w-c', 'che…', 910, 80)}''', cut('b04') + '''    tl.fromTo("#w-b", { scale: 1.25, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 0);''',
-    fx=[('thud', 'scommetto', 0.0, 0.3), ('key-press', 'scommetto', 0.02, 0.14)], ground='dark')
-
-add('b05', 'non', 'lhafatto', f'''      {big('n-b', 'NON', 560, 460, RED, 'letter-spacing:-0.05em')}''', '''    tl.fromTo("#n-b", { scale: 2.2 }, { scale: 1, duration: 0.2, ease: "expo.out" }, 0);
-    shake(tl, "#b05-cam", 0.06, 26);
-    tl.to("#n-b", { scale: 1.08, duration: DUR - 0.2, ease: "none" }, 0.2);''',
-    fx=[('thud', 'non', 0.0, 0.42), ('impact-bass-1', 'non', 0.0, 0.14)], ground='dark')
-
-add('b06', 'lhafatto', 'resta', f'''      <div class="vid" id="v-i" data-layout-allow-overlap style="transform-origin:50% 55%;opacity:0.5"><img src="assets/img/hero-last.jpg" alt="" /></div>
-      {small('v-a', 'l’ha fatto per', 560, 84, '#d2d2d7')}
-      <div id="v-b" style="position:absolute;left:0;right:0;top:660px;text-align:center" data-layout-allow-overlap><span style="position:relative;display:inline-block;font:700 164px/1.05 {SF};letter-spacing:-0.045em;color:#fff">vendertelo.<svg viewBox="0 0 800 30" width="100%" height="30" preserveAspectRatio="none" style="position:absolute;left:0;top:52%;overflow:visible"><path id="v-x" d="M0 15 H800" stroke="{RED}" stroke-width="16" stroke-linecap="round" fill="none"/></svg></span></div>''', cut('b06') + '''    tl.fromTo("#v-i", { scale: 1.3 }, { scale: 1.45, duration: DUR, ease: "none" }, 0);
-    draw(tl, "#v-x", «vendertelo» + 0.12, 0.22);''',
-    fx=[('whoosh-short', 'lhafatto', -0.06, 0.2), ('key-press', 'lhafatto', 0.0, 0.14), ('swoosh', 'vendertelo', 0.12, 0.3), ('thud', 'vendertelo', 0.3, 0.26)], ground='dark')
+# ---------------------------------------------------------------- 4. "E scommetto che NON l'ha fatto per vendertelo."
+add('b04', 'scommetto', 'resta', f'''      <div id="w-a" class="wsplit" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 76px/1.1 {SF};letter-spacing:-0.02em;color:#86868b">e scommetto che</div>
+      <div id="w-n" style="position:absolute;left:0;right:0;top:372px;text-align:center;font:700 340px/1 {SF};letter-spacing:-0.05em;color:#d70015;opacity:0" data-layout-allow-overlap>NON</div>
+      <div id="w-c" style="position:absolute;left:0;right:0;top:706px;text-align:center;opacity:0" data-layout-allow-overlap><span style="position:relative;display:inline-block;font:700 92px/1.05 {SF};letter-spacing:-0.04em;color:{INK}">l’ha fatto per vendertelo.<svg viewBox="0 0 800 30" width="52%" height="30" preserveAspectRatio="none" style="position:absolute;right:0;top:54%;overflow:visible"><path id="w-x" d="M0 15 H800" stroke="#d70015" stroke-width="16" stroke-linecap="round" fill="none"/></svg></span></div>
+      {duo('d2', -160, 800, None)}''', '''    gsap.set("#d2", { scale: 0.52 }); gsap.set("#d2-g", { rotationX: 8 }); duoSet("#d2", 0);
+    tl.fromTo("#d2-g", { rotationY: -34 }, { rotationY: 34, duration: DUR, ease: "none" }, 0);
+    tl.fromTo("#d2", { y: 500 }, { y: 0, duration: 0.4, ease: "back.out(1.5)" }, 0);
+    wordsIn(tl, "#w-a", 0.02, 0.07);
+    tl.fromTo("#w-n", { opacity: 0, scale: 3.2 }, { opacity: 1, scale: 1, duration: 0.18, ease: "expo.out" }, «non» - 0.05);
+    shake(tl, "#b04-cam", «non» + 0.02, 28);
+    fold(tl, "#d2", 0, 180, «non» - 0.04, 0.3, "power3.in");
+    tl.to("#d2", { scale: 0.6, duration: 0.3, ease: "back.out(2)" }, «non» + 0.26);
+    tl.fromTo("#w-c", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, «lhafatto» - 0.06);
+    draw(tl, "#w-x", «vendertelo» + 0.14, 0.22);''', mq='non in vendita',
+    fx=[('key-press', 'scommetto', 0.02, 0.14), ('key-press', 'scommetto', 0.16, 0.12), ('thud', 'non', -0.05, 0.42), ('hinge', 'non', 0.2, 0.4), ('whoosh-short', 'non', -0.1, 0.22), ('key-press', 'lhafatto', -0.06, 0.14), ('swoosh', 'vendertelo', 0.14, 0.3)])
 
 # ---------------------------------------------------------------- 7. the promise: "Resta fino alla fine, perché questo trucco..."
 add('b07', 'resta', 'trucco', f'''      {small('r-a', 'resta', 520, 84, '#86868b')}
@@ -86,7 +82,7 @@ add('b07', 'resta', 'trucco', f'''      {small('r-a', 'resta', 520, 84, '#86868b
     tl.fromTo("#r-k", { x: 92 }, { x: 840, duration: DUR - 0.25, ease: "power2.in" }, 0.05);
     tl.fromTo("#r-b", { scale: 1.2, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out" }, 0.22);
     pop(tl, "#r-c", «perche» + 0.1);''',
-    fx=[('swipe', 'resta', -0.2, 0.24), ('key-press', 'resta', 0.02, 0.14), ('riser', 'resta', 0.1, 0.1), ('pop', 'perche', 0.1, 0.26), ('ping', 'perche', 0.5, 0.16)])
+    fx=[('swipe', 'resta', -0.2, 0.24), ('key-press', 'resta', 0.02, 0.14), ('riser', 'resta', 0.1, 0.1), ('pop', 'perche', 0.1, 0.26), ('ping', 'perche', 0.5, 0.16)], mq='fino alla fine')
 
 # ---------------------------------------------------------------- 8. "...lo stai subendo anche tu."
 add('b08', 'trucco', 'puoi', f'''      {small('u-a', 'questo trucco', 470, 76)}
@@ -97,7 +93,7 @@ add('b08', 'trucco', 'puoi', f'''      {small('u-a', 'questo trucco', 470, 76)}
     shake(tl, "#b08-cam", «anchetu» + 0.02, 18);
     tl.fromTo("#u-box", { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 0.18 }, «anchetu» + 0.2);
     tl.fromTo("#u-cur", { opacity: 0, x: 140, y: 160 }, { opacity: 1, x: 0, y: 0, duration: 0.24, ease: "power3.out" }, «anchetu» + 0.14);''',
-    fx=[('whoosh-short', 'trucco', -0.04, 0.2), ('key-press', 'subendo', -0.12, 0.14), ('thud', 'anchetu', -0.06, 0.34), ('click', 'anchetu', 0.3, 0.36)], ground='dark')
+    fx=[('whoosh-short', 'trucco', -0.04, 0.2), ('key-press', 'subendo', -0.12, 0.14), ('thud', 'anchetu', -0.06, 0.34), ('click', 'anchetu', 0.3, 0.36)], ground='dark', mq='anche tu')
 
 # ---------------------------------------------------------------- 9. "E puoi usarlo per vendere di più."
 bars = ''.join(f'<i class="vb" style="height:{h}px"></i>' for h in (130, 210, 300, 420, 560))
@@ -119,12 +115,10 @@ add('b10', 'domanda', 'mille', f'''      <div id="q-m" style="position:absolute;
     fx=[('whoosh', 'domanda', -0.1, 0.26), ('pop', 'domanda', 0.04, 0.3), ('ping', 'domanda', 0.3, 0.16)], ground='dark')
 
 # ---------------------------------------------------------------- 11. "1.639 euro per un telefono, sono tanti?"
-add('b11', 'mille', 'tantissimi', f'''      {still('m-i', 'hand-pro.jpg', '50% 56%')}
-      <div class="shade"></div>
+add('b11', 'mille', 'tantissimi', f'''      {vid('m-i', 'c-hand.mp4', T['tantissimi'] - T['mille'], 0.1)}
       <div id="m-p" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:700 230px/1.05 {SF};letter-spacing:-0.05em;color:#fff;text-shadow:0 10px 50px rgba(0,0,0,0.5)" data-layout-allow-overlap><span id="m-n">900</span><span style="font-weight:600;font-size:140px"> €</span></div>
-      <div class="chip" id="m-q" style="left:0;right:0;margin:0 auto;width:fit-content;top:1310px;background:#fff;color:{INK};font-size:92px;padding:30px 60px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.5)">sono tanti?</div>''', '''    tl.fromTo("#m-i", { scale: 1.7 }, { scale: 1.06, duration: 0.4, ease: "expo.out" }, 0);
-    tl.to("#m-i", { scale: 1.0, duration: «telefono» - 0.4, ease: "none" }, 0.4);
-    tl.fromTo("#m-i", { scale: 1.34 }, { scale: 1.22, duration: DUR - «telefono», ease: "power1.out", immediateRender: false }, «telefono»);
+      <div class="chip" id="m-q" style="left:0;right:0;margin:0 auto;width:fit-content;top:1310px;background:#fff;color:{INK};font-size:92px;padding:30px 60px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.5)">sono tanti?</div>''', '''    tl.fromTo("#m-i-w", { scale: 1.3 }, { scale: 1.02, duration: 0.4, ease: "expo.out" }, 0);
+    tl.fromTo("#m-i-w", { scale: 1.28 }, { scale: 1.14, duration: DUR - «telefono», ease: "power1.out", immediateRender: false }, «telefono»);
     count(tl, "#m-n", 900, 1639, 0.0, 0.8, eur, "power2.out");
     punch(tl, "#m-p", 0.8, 1.14);
     tl.fromTo("#m-q", { opacity: 0, scale: 0.4, rotation: -8 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.3, ease: "back.out(2.6)" }, «tanti» - 0.1);''', cam=False,
@@ -134,7 +128,7 @@ add('b11', 'mille', 'tantissimi', f'''      {still('m-i', 'hand-pro.jpg', '50% 5
 add('b12', 'tantissimi', 'promax', f'''      <div style="position:absolute;left:0;right:0;top:700px;text-align:center" data-layout-allow-overlap><span id="s-b" style="position:relative;display:inline-block;font:700 196px/1.05 {SF};letter-spacing:-0.05em;color:#d70015">Tantissimi.</span></div>''', '''    tl.fromTo("#s-b", { scale: 1.8, filter: "blur(14px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 0);
     shake(tl, "#b12-cam", 0.08, 24);
     tl.to("#s-b", { scale: 1.06, duration: DUR - 0.2, ease: "none" }, 0.2);''',
-    fx=[('boom', 'tantissimi', 0.0, 0.36), ('thud', 'tantissimi', 0.02, 0.34)])
+    fx=[('boom', 'tantissimi', 0.0, 0.36), ('thud', 'tantissimi', 0.02, 0.34)], mq='1.639 €')
 
 # ---------------------------------------------------------------- 13. "È il nuovo Pro Max..."
 add('b13', 'promax', 'centocinq', f'''      {still('x-i', 'table-pro.jpg', '74% 78%')}
@@ -164,7 +158,7 @@ add('b14', 'centocinq', 'adesso', f'''      <div class="yr" id="y-1" style="left
 # ---------------------------------------------------------------- 15. "Adesso guarda."
 add('b15', 'adesso', 'glimetto', f'''      {small('o-a', 'adesso', 700, 84)}
       {big('o-b', 'guarda.', 790, 250)}''', cut('b15') + '''    tl.fromTo("#o-b", { scale: 1.4, filter: "blur(12px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, «adesso» * 0 + 0.3);''',
-    fx=[('whoosh', 'adesso', -0.12, 0.26), ('thud', 'adesso', 0.3, 0.3)], ground='dark')
+    fx=[('whoosh', 'adesso', -0.12, 0.26), ('thud', 'adesso', 0.3, 0.3)], ground='dark', mq='guarda')
 
 # ---------------------------------------------------------------- 16. "Gli metto vicino il Duo. E quei 1.600, di colpo, sembrano quasi un affare."
 add('b16', 'glimetto', 'settecento', f'''      <div class="pc" id="c-l" style="left:40px">
@@ -191,20 +185,20 @@ add('b16', 'glimetto', 'settecento', f'''      <div class="pc" id="c-l" style="l
     tl.fromTo("#c-st", { opacity: 0, scale: 2.8, rotation: -30 }, { opacity: 1, scale: 1, rotation: -12, duration: 0.26, ease: "power4.in" }, «affare» + 0.1);
     shake(tl, "#b16-cam", «affare» + 0.36, 16);''', f'''
     .mul {{ mix-blend-mode: multiply; }}
-    .pc {{ position: absolute; top: 400px; width: 480px; height: 900px; border-radius: 48px; background: #fff; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.04); text-align: center; }}
+    .pc {{ position: absolute; top: 470px; width: 480px; height: 900px; border-radius: 48px; background: #fff; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.04); text-align: center; }}
     .pi {{ height: 630px; overflow: hidden; border-radius: 48px 48px 0 0; }}
     .pn {{ font: 600 42px/1.2 "SF Pro Display"; letter-spacing: -0.015em; color: #86868b; margin-top: 22px; }}
     .pp {{ font: 700 108px/1.1 "SF Pro Display"; letter-spacing: -0.04em; display: inline-block; }}
     #c-st {{ position: absolute; left: 50px; top: 230px; padding: 14px 34px; border: 10px solid {GREEN}; border-radius: 24px; color: {GREEN}; font: 700 92px/1 "SF Pro Display"; letter-spacing: -0.02em; text-transform: uppercase; background: rgba(255,255,255,0.92); opacity: 0; }}''',
     fx=[('swipe', 'glimetto', -0.2, 0.24), ('whoosh', 'ilduo', -0.55, 0.3), ('thud', 'ilduo', -0.2, 0.4), ('impact-bass-1', 'ilduo', -0.2, 0.26), ('counter', 'ilduo', -0.18, 0.28), ('ding', 'ilduo', 0.32, 0.28), ('pop', 'quei', 0.2, 0.24),
-        ('whoosh-short', 'dicolpo', -0.08, 0.22), ('sparkle', 'dicolpo', 0.1, 0.18), ('thud', 'affare', 0.34, 0.4), ('register', 'affare', 0.38, 0.36)], ground='grey')
+        ('whoosh-short', 'dicolpo', -0.08, 0.22), ('sparkle', 'dicolpo', 0.1, 0.18), ('thud', 'affare', 0.34, 0.4), ('register', 'affare', 0.38, 0.36)], ground='grey', mq='accanto')
 
 # ---------------------------------------------------------------- 17. "730 euro in meno."
 add('b17', 'settecento', 'stesso', f'''      <div id="d-p" style="position:absolute;left:0;right:0;top:620px;text-align:center;font:700 330px/1.05 {SF};letter-spacing:-0.05em;color:#30d158" data-layout-allow-overlap>−<span id="d-n">0</span><span style="font-weight:600;font-size:200px"> €</span></div>
       {small('d-s', 'in meno', 990, 90, '#f5f5f7')}''', cut('b17') + '''    count(tl, "#d-n", 0, 730, 0.0, 0.6, eur, "power2.out");
     punch(tl, "#d-p", 0.6, 1.16);
     tl.fromTo("#d-s", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, «inmeno» - 0.1);''',
-    fx=[('whoosh', 'settecento', -0.1, 0.26), ('counter', 'settecento', 0.0, 0.3), ('ding', 'settecento', 0.6, 0.3), ('key-press', 'inmeno', -0.1, 0.14)], ground='dark')
+    fx=[('whoosh', 'settecento', -0.1, 0.26), ('counter', 'settecento', 0.0, 0.3), ('ding', 'settecento', 0.6, 0.3), ('key-press', 'inmeno', -0.1, 0.14)], ground='dark', mq='−730 €')
 
 # ---------------------------------------------------------------- 18. "Il telefono è lo stesso."
 add('b18', 'stesso', 'cambiato', f'''      {big('e-t', 'lo stesso.', 300, 160, INK)}
@@ -279,20 +273,18 @@ add('b21', 'ilprimo', 'perquesto', f'''      {small('m-a', 'il primo prezzo che 
     fx=[('whoosh-short', 'ilprimo', -0.05, 0.22), ('swoosh', 'ilprimo', 0.05, 0.22), ('pop', 'ilprimo', 0.42, 0.22), ('thud', 'diventa', -0.08, 0.28), ('typing', 'diventa', 0.0, 0.2), ('swoosh', 'metro', 0.0, 0.22), ('ping', 'metro', 0.26, 0.16)])
 
 # ---------------------------------------------------------------- 22. "Per questo il Duo non deve vendere."
-add('b22', 'perquesto', 'devesolo', f'''      {still('w-i', 'window.jpg', '52% 44%')}
-      <div class="shade"></div>
+add('b22', 'perquesto', 'devesolo', f'''      {vid('w-i', 'c-window.mp4', T['devesolo'] - T['perquesto'], 0.2)}
       {small('w-a', 'il Duo', 300, 80, '#f5f5f7')}
-      {big('w-b', '<span style="color:' + RED + '">non</span> deve vendere.', 390, 122, '#fff', 'text-shadow:0 8px 40px rgba(0,0,0,0.6)')}''', '''    tl.fromTo("#w-i", { scale: 1.3 }, { scale: 1.0, duration: 0.45, ease: "expo.out" }, 0);
-    tl.to("#w-i", { scale: 1.14, duration: DUR - 0.45, ease: "none" }, 0.45);
+      {big('w-b', '<span style="color:' + RED + '">non</span> deve vendere.', 390, 122, '#fff', 'text-shadow:0 8px 40px rgba(0,0,0,0.6)')}''', '''    tl.fromTo("#w-i-w", { scale: 1.25 }, { scale: 1.0, duration: 0.45, ease: "expo.out" }, 0);
     tl.fromTo("#w-b", { opacity: 0, filter: "blur(12px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, «nondeve» - 0.12);''', cam=False,
     fx=[('whoosh-cinematic', 'perquesto', -0.2, 0.2), ('key-press', 'perquesto', 0.05, 0.14), ('thud', 'nondeve', -0.12, 0.3)], ground='dark')
 
 # ---------------------------------------------------------------- 23. "Deve solo stare lì..."
-add('b23', 'devesolo', 'normale0', f'''      {still('x2-i', 'window.jpg', '52% 44%')}
+add('b23', 'devesolo', 'normale0', f'''      <div class="vid" id="x2-i" data-layout-allow-overlap style="transform-origin:52% 44%"><video id="x2-v" class="clip" src="assets/video/c-window.mp4" data-start="0" data-duration="{T['normale0'] - T['devesolo']:.2f}" data-media-start="{0.2 + T['devesolo'] - T['perquesto']:.2f}" muted playsinline></video></div>
       <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%)"></div>
-      {big('x2-b', 'deve solo stare lì.', 1220, 110, '#fff', 'text-shadow:0 8px 40px rgba(0,0,0,0.6)')}''', '''    tl.fromTo("#x2-i", { scale: 2.1 }, { scale: 1.75, duration: DUR, ease: "power1.out" }, 0);
+      {big('x2-b', 'deve solo stare lì.', 1220, 110, '#fff', 'text-shadow:0 8px 40px rgba(0,0,0,0.6)')}''', '''    tl.fromTo("#x2-i", { scale: 1.9 }, { scale: 1.6, duration: DUR, ease: "power1.out" }, 0);
     tl.fromTo("#x2-b", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.22, ease: "power2.out" }, 0.1);''', cam=False,
-    fx=[('thud', 'devesolo', 0.0, 0.28), ('sparkle', 'devesolo', 0.2, 0.16)], ground='dark')
+    fx=[('thud', 'devesolo', 0.0, 0.28), ('sparkle', 'devesolo', 0.2, 0.16)], ground='dark', tin='N')
 
 # ---------------------------------------------------------------- 24. "...a far sembrare normale tutto il resto."
 add('b24', 'normale0', 'euna', f'''      {small('z-a', 'e tutto il resto sembra', 300, 70, '#86868b')}
@@ -427,7 +419,7 @@ add('b31', 'nonserve', 'cta', f'''      {small('i-a', 'non serve che la', 470, 7
     tl.fromTo("#i-eye", { opacity: 0, scaleY: 0, transformOrigin: "50% 50%" }, { opacity: 1, scaleY: 1, duration: 0.2, ease: "back.out(2)" }, «vedano» + 0.05);
     tl.to("#i-eye", { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, «vedano» + 0.38);
     shake(tl, "#b31-cam", «vedano» - 0.1, 16);''',
-    fx=[('key-press', 'nonserve', 0.02, 0.14), ('swoosh', 'nonserve', 0.62, 0.28), ('thud', 'nonserve', 0.8, 0.24), ('key-press', 'serveche', -0.06, 0.14), ('thud', 'vedano', -0.14, 0.34), ('pop', 'vedano', 0.05, 0.18), ('click-soft', 'vedano', 0.38, 0.3)], ground='dark')
+    fx=[('key-press', 'nonserve', 0.02, 0.14), ('swoosh', 'nonserve', 0.62, 0.28), ('thud', 'nonserve', 0.8, 0.24), ('key-press', 'serveche', -0.06, 0.14), ('thud', 'vedano', -0.14, 0.34), ('pop', 'vedano', 0.05, 0.18), ('click-soft', 'vedano', 0.38, 0.3)], ground='dark', mq='vedano')
 
 # ================================================================ CALL TO ACTION + LOOP
 # ---------------------------------------------------------------- 32. "Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tutto."
@@ -455,11 +447,11 @@ add('b32', 'cta', 'etutto', f'''      {zone(ln('y-a1', 'vuoi sapere come', 't mu
         ('key-press', 'etispiego', -0.04, 0.16), ('click', 'etispiego', 0.46, 0.42), ('pop', 'etispiego', 0.5, 0.26)])
 
 # ---------------------------------------------------------------- 33. loop: "E tutto questo, solo perché..." -> "Apple ha appena fatto uscire..."
-add('b33', 'etutto', 'END', f'''      {still('e2-i', 'hand-duo.jpg', '50% 55%')}
-      <div class="shade"></div>
+D33 = T['END'] - T['etutto']
+add('b33', 'etutto', 'END', f'''      <div class="vid" id="e2-w" data-layout-allow-overlap style="transform-origin:50% 52%"><video id="e2-v" class="clip" src="assets/video/hero.mp4" data-start="0" data-duration="{D33:.2f}" data-media-start="{HT0 - D33:.3f}" muted playsinline></video></div>
       {small('e2-a', 'e tutto questo', 300, 80, '#f5f5f7')}
-      {big('e2-b', 'solo perché…', 384, 150, '#fff', 'text-shadow:0 8px 40px rgba(0,0,0,0.5)')}''', f'''    tl.fromTo("#e2-i", {{ scale: 1.0 }}, {{ scale: {HS0}, duration: DUR, ease: "power2.in" }}, 0);
+      {big('e2-b', 'solo perché…', 384, 150, '#fff', 'text-shadow:0 8px 40px rgba(0,0,0,0.5)')}''', f'''    tl.fromTo("#e2-w", {{ scale: {HZ0 + HRATE * D33:.3f} }}, {{ scale: {HZ0}, duration: DUR, ease: "none" }}, 0);
     tl.fromTo("#e2-a", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.15 }}, 0.04);
     tl.fromTo("#e2-b", {{ opacity: 0, filter: "blur(12px)", scale: 1.15 }}, {{ opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }}, «soloperche» - 0.14);
     tl.to("#e2-a, #e2-b", {{ opacity: 0, duration: 0.12 }}, DUR - 0.12);''', cam=False,
-    fx=[('swipe', 'etutto', -0.2, 0.24), ('key-press', 'etutto', 0.04, 0.14), ('thud', 'soloperche', -0.14, 0.28), ('riser', 'soloperche', -0.4, 0.12)], ground='dark')
+    fx=[('key-press', 'etutto', 0.04, 0.14), ('thud', 'soloperche', -0.14, 0.28), ('riser', 'soloperche', -0.4, 0.12)], ground='dark')

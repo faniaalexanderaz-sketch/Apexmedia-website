@@ -6,7 +6,16 @@
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
@@ -52,6 +61,7 @@
   <div id="root" data-composition-id="b14" data-width="1080" data-height="1920">
     <div id="b14-st" class="st" data-layout-allow-overlap>
 <div id="b14-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="b14-bg" data-layout-allow-overlap><i></i><i></i></div>
       <div class="yr" id="y-1" style="left:70px"><small>2025 · iPhone 17 Pro Max</small><b style="color:#86868b">1.489 €</b></div>
       <div class="yr" id="y-2" style="left:560px"><small>2026 · iPhone 18 Pro Max</small><b>1.639 €</b></div>
       <svg viewBox="0 0 120 60" width="120" height="60" style="position:absolute;left:480px;top:560px;overflow:visible" data-layout-allow-overlap><path id="y-ar" d="M10 30 H104 M80 8 L106 30 L80 52" fill="none" stroke="#1d1d1f" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -108,14 +118,16 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#b14-cam", { scale: 1 }, { scale: 1.045, duration: 2.58, ease: "none" }, 0);
-    tl.fromTo("#b14-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    enter(tl, "#b14-st", "D");
+    tl.fromTo("#b14-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 2.58, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b14-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 2.58, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#y-1", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.26, ease: "expo.out" }, 0.02);
     draw(tl, "#y-ar", 0.26, 0.2);
     tl.fromTo("#y-2", { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.26, ease: "expo.out" }, 0.34);
     tl.fromTo("#y-up", { opacity: 0, scale: 0.3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -4, duration: 0.36, ease: "back.out(2.4)" }, 0.62);
     shake(tl, "#b14-cam", 0.66, 16);
     tl.fromTo("#y-s", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.24 - 0.1);
+    exit(tl, "#b14-st", "Z", 2.41);
     window.__timelines["b14"] = tl;
   </script>
 </template>

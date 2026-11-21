@@ -6,7 +6,16 @@
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
@@ -50,6 +59,7 @@
   <div id="root" data-composition-id="b20" data-width="1080" data-height="1920">
     <div id="b20-st" class="st dark" data-layout-allow-overlap>
 <div id="b20-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="b20-bg" data-layout-allow-overlap><i></i><i></i></div>
       <div id="k-a" style="position:absolute;left:0;right:0;top:330px;text-align:center;font:600 62px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#a1a1a6;" data-layout-allow-overlap>si chiama</div>
       <div id="k-b" style="position:absolute;left:0;right:0;top:410px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>Effetto</div>
       <div id="k-c" style="position:absolute;left:0;right:0;top:560px;text-align:center"><span class="split" id="k-cw" style="font:700 216px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#2997ff;display:inline-block">àncora.</span></div>
@@ -111,8 +121,9 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#b20-cam", { scale: 1 }, { scale: 1.045, duration: 1.41, ease: "none" }, 0);
-    tl.fromTo("#b20-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    enter(tl, "#b20-st", "D");
+    tl.fromTo("#b20-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 1.41, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b20-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.41, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#k-b", { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.55 - 0.2);
     flip(tl, "#k-cw", 0.98 - 0.14, 0.03);
     tl.fromTo("#k-an", { y: -1500 }, { y: 0, duration: 0.42, ease: "power3.in" }, 0.98 - 0.36);
@@ -120,6 +131,7 @@
     shake(tl, "#b20-cam", 0.98 + 0.06, 22);
     ["#k-r1", "#k-r2"].forEach((r, k) => tl.fromTo(r, { opacity: 0.8, scale: 0.2 }, { opacity: 0, scale: 3.2, duration: 0.6, ease: "power2.out" }, 0.98 + 0.08 + k * 0.14));
     tl.fromTo("#k-src", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.98 + 0.1);
+    exit(tl, "#b20-st", "Z", 1.24);
     window.__timelines["b20"] = tl;
   </script>
 </template>

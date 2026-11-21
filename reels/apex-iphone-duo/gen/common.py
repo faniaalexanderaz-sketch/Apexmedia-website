@@ -5,7 +5,16 @@ CSS = r'''
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }

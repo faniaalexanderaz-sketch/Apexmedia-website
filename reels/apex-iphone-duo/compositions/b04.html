@@ -6,7 +6,16 @@
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
@@ -43,15 +52,17 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
   </style>
   <div id="root" data-composition-id="b04" data-width="1080" data-height="1920">
-    <div id="b04-st" class="st dark" data-layout-allow-overlap>
+    <div id="b04-st" class="st" data-layout-allow-overlap>
 <div id="b04-cam" class="cam" data-layout-allow-overlap>
-      <div id="w-a" style="position:absolute;left:0;right:0;top:600px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#a1a1a6;" data-layout-allow-overlap>e</div>
-      <div id="w-b" style="position:absolute;left:0;right:0;top:690px;text-align:center;font:700 190px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>scommetto</div>
-      <div id="w-c" style="position:absolute;left:0;right:0;top:910px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#a1a1a6;" data-layout-allow-overlap>che…</div>
+      <div class="bgfx" id="b04-bg" data-layout-allow-overlap><i></i><i></i></div><div class="mq" id="b04-mq" data-layout-allow-overlap>non in vendita · non in vendita · non in vendita · non in vendita · non in vendita · </div>
+      <div id="w-a" class="wsplit" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 76px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b">e scommetto che</div>
+      <div id="w-n" style="position:absolute;left:0;right:0;top:372px;text-align:center;font:700 340px/1 'SF Pro Display';letter-spacing:-0.05em;color:#d70015;opacity:0" data-layout-allow-overlap>NON</div>
+      <div id="w-c" style="position:absolute;left:0;right:0;top:706px;text-align:center;opacity:0" data-layout-allow-overlap><span style="position:relative;display:inline-block;font:700 92px/1.05 'SF Pro Display';letter-spacing:-0.04em;color:#1d1d1f">l’ha fatto per vendertelo.<svg viewBox="0 0 800 30" width="52%" height="30" preserveAspectRatio="none" style="position:absolute;right:0;top:54%;overflow:visible"><path id="w-x" d="M0 15 H800" stroke="#d70015" stroke-width="16" stroke-linecap="round" fill="none"/></svg></span></div>
+      <div class="duo" id="d2" data-motion-blur="off" data-layout-allow-overlap style="left:-160px;top:800px"><div class="duo-sh" id="d2-sh"></div><div class="duo-g" id="d2-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="d2-l"><div class="f in" id="d2-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="d2-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div>
     </div>
     </div>
   </div>
@@ -103,9 +114,21 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#b04-cam", { scale: 1 }, { scale: 1.045, duration: 0.60, ease: "none" }, 0);
-    tl.fromTo("#b04-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
-    tl.fromTo("#w-b", { scale: 1.25, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 0);
+    enter(tl, "#b04-st", "B");
+    tl.fromTo("#b04-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 1.95, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b04-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.95, ease: "none", stagger: 0 }, 0);
+    tl.fromTo("#b04-mq", { x: 0 }, { x: -1400, duration: 1.95, ease: "none" }, 0);
+    gsap.set("#d2", { scale: 0.52 }); gsap.set("#d2-g", { rotationX: 8 }); duoSet("#d2", 0);
+    tl.fromTo("#d2-g", { rotationY: -34 }, { rotationY: 34, duration: 1.95, ease: "none" }, 0);
+    tl.fromTo("#d2", { y: 500 }, { y: 0, duration: 0.4, ease: "back.out(1.5)" }, 0);
+    wordsIn(tl, "#w-a", 0.02, 0.07);
+    tl.fromTo("#w-n", { opacity: 0, scale: 3.2 }, { opacity: 1, scale: 1, duration: 0.18, ease: "expo.out" }, 0.60 - 0.05);
+    shake(tl, "#b04-cam", 0.60 + 0.02, 28);
+    fold(tl, "#d2", 0, 180, 0.60 - 0.04, 0.3, "power3.in");
+    tl.to("#d2", { scale: 0.6, duration: 0.3, ease: "back.out(2)" }, 0.60 + 0.26);
+    tl.fromTo("#w-c", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 1.11 - 0.06);
+    draw(tl, "#w-x", 1.30 + 0.14, 0.22);
+    exit(tl, "#b04-st", "R", 1.78);
     window.__timelines["b04"] = tl;
   </script>
 </template>

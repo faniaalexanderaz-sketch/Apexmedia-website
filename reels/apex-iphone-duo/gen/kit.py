@@ -29,22 +29,55 @@ def duo(i, left, top, scale=1.0, shadow=True):
 class Reel:
     def __init__(self, T):
         self.T = T; self.SC = []
-    def add(self, sid, k0, k1, body, js, css='', fx=(), ground='white', cam=True):
+    RIGS = [(-3.0, 3.0, 1.6, -1.0, 1.0, 1.07), (3.0, -2.2, -1.2, 1.6, 1.07, 1.0), (-2.2, 2.6, -1.6, 0.6, 1.0, 1.08), (2.6, -3.0, 1.0, -1.6, 1.06, 1.0)]
+    def add(self, sid, k0, k1, body, js, css='', fx=(), ground='white', cam=True, mq=None, tin=None, tout=None):
+        """cam=True wraps the scene in a 3D camera rig (slow tilt and push) with a moving light behind it; mq adds a giant outlined word drifting across;
+        tin / tout force the transition into / out of the scene (otherwise build() picks one for every cut)"""
         T = self.T; start, end = T[k0], T[k1]
-        dur = round(end - start, 3)
+        dur = round(end - start, 3); n = len(self.SC)
         f = lambda s: re.sub(r'«(\w+)»', lambda m: '%.2f' % (T[m.group(1)] - start), s)
         inner = f(body)
         if cam:
-            inner = f'<div id="{sid}-cam" class="cam" data-layout-allow-overlap>\n' + inner + '\n    </div>'
-            js = f'    tl.fromTo("#{sid}-cam", {{ scale: 1 }}, {{ scale: 1.045, duration: DUR, ease: "none" }}, 0);\n' + js
+            ry0, ry1, rx0, rx1, s0, s1 = self.RIGS[n % 4]
+            extra = '<div class="bgfx" id="%s-bg" data-layout-allow-overlap><i></i><i></i></div>' % sid
+            pre = (f'    tl.fromTo("#{sid}-cam", {{ scale: {s0}, rotationY: {ry0}, rotationX: {rx0} }}, {{ scale: {s1}, rotationY: {ry1}, rotationX: {rx1}, duration: DUR, ease: "sine.inOut" }}, 0);\n'
+                   f'    tl.fromTo("#{sid}-bg i", {{ x: {(-1) ** n * 260}, y: {(-1) ** n * -180} }}, {{ x: {(-1) ** n * -260}, y: {(-1) ** n * 220}, duration: DUR, ease: "none", stagger: 0 }}, 0);\n')
+            if mq:
+                extra += '<div class="mq" id="%s-mq" data-layout-allow-overlap>%s</div>' % (sid, (mq + ' · ') * 5)
+                pre += f'    tl.fromTo("#{sid}-mq", {{ x: {0 if n % 2 else -1400} }}, {{ x: {-1400 if n % 2 else 0}, duration: DUR, ease: "none" }}, 0);\n'
+            inner = f'<div id="{sid}-cam" class="cam" data-layout-allow-overlap>\n      ' + extra + '\n' + inner + '\n    </div>'
+            js = pre + js
         cls = {'white': '', 'grey': ' grey', 'dark': ' dark'}[ground]
         col = {'white': '#fff', 'grey': '#f5f5f7', 'dark': '#000'}[ground]
         b = f'    <div id="{sid}-st" class="st{cls}" data-layout-allow-overlap>\n' + inner + '\n    </div>'
         css = f'    #root {{ background: {col} !important; }}\n' + css
-        self.SC.append(dict(id=sid, start=start, dur=dur, body=b, js=f(js).replace('DUR', '%.2f' % dur), css=css,
-                            fx=[(n, round(T[k] + o, 3), v) for n, k, o, v in fx]))
+        self.SC.append(dict(id=sid, start=start, dur=dur, body=b, js=f(js), css=css, tin=tin, tout=tout,
+                            fx=[(n_, round(T[k] + o, 3), v) for n_, k, o, v in fx]))
+    CYCLE = ['L', 'U', 'B', 'R', 'D', 'Z']
+    def transitions(self):
+        """one transition per cut: pushes in four directions, a blur-zoom and a zoom, hard cuts around very short scenes; the loop point is a hard cut"""
+        S = self.SC; c = 0
+        for k in range(len(S) - 1):
+            a, b = S[k], S[k + 1]
+            t = a['tout'] or b['tin']
+            if t is None:
+                if min(a['dur'], b['dur']) < 0.7: t = 'N'
+                else: t = self.CYCLE[c % len(self.CYCLE)]; c += 1
+            a['x'] = t; b['e'] = t
+        S[0]['e'] = 'N'; S[-1]['x'] = 'N'
+        # every moving transition carries a quiet whoosh, unless a swipe or whoosh is already placed on that cut
+        airy = ('whoosh', 'whoosh-short', 'whoosh-cinematic', 'swipe', 'swoosh')
+        placed = [t for s_ in S for n_, t, v in s_['fx'] if n_ in airy]
+        for k in range(len(S) - 1):
+            t = S[k + 1]['start']
+            if S[k]['x'] != 'N' and all(abs(t - 0.12 - q) > 0.3 for q in placed):
+                S[k]['fx'].append((['whoosh-short', 'swipe'][k % 2], round(t - 0.14, 3), 0.15))
+        for s in S:
+            d = s['dur']
+            s['js'] = (f'    enter(tl, "#{s["id"]}-st", "{s["e"]}");\n' + s['js'] + f'\n    exit(tl, "#{s["id"]}-st", "{s["x"]}", {d - 0.17:.2f});').replace('DUR', '%.2f' % d)
     def build(self, P, bed=0.07):
         T = self.T; END = T['END']
+        self.transitions()
         for s in self.SC:
             open(P + 'compositions/' + s['id'] + '.html', 'w').write(scene(s['id'], s['dur'], s['body'], s['js'], s['css']))
         hosts = [f'<div id="{s["id"]}" data-composition-id="{s["id"]}" data-composition-src="compositions/{s["id"]}.html" data-start="{s["start"]}" data-duration="{s["dur"]}" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>' for s in self.SC]

@@ -6,7 +6,16 @@
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
@@ -48,8 +57,7 @@
   </style>
   <div id="root" data-composition-id="b33" data-width="1080" data-height="1920">
     <div id="b33-st" class="st dark" data-layout-allow-overlap>
-      <div class="vid" id="e2-i" data-layout-allow-overlap style="transform-origin:50% 55%"><img src="assets/img/hand-duo.jpg" alt="" /></div>
-      <div class="shade"></div>
+      <div class="vid" id="e2-w" data-layout-allow-overlap style="transform-origin:50% 52%"><video id="e2-v" class="clip" src="assets/video/hero.mp4" data-start="0" data-duration="1.84" data-media-start="0.560" muted playsinline></video></div>
       <div id="e2-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>e tutto questo</div>
       <div id="e2-b" style="position:absolute;left:0;right:0;top:384px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.5)" data-layout-allow-overlap>solo perché…</div>
     </div>
@@ -102,10 +110,12 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#e2-i", { scale: 1.0 }, { scale: 1.5, duration: 1.84, ease: "power2.in" }, 0);
+    enter(tl, "#b33-st", "D");
+    tl.fromTo("#e2-w", { scale: 1.584 }, { scale: 1.4, duration: 1.84, ease: "none" }, 0);
     tl.fromTo("#e2-a", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.04);
     tl.fromTo("#e2-b", { opacity: 0, filter: "blur(12px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 0.94 - 0.14);
     tl.to("#e2-a, #e2-b", { opacity: 0, duration: 0.12 }, 1.84 - 0.12);
+    exit(tl, "#b33-st", "N", 1.67);
     window.__timelines["b33"] = tl;
   </script>
 </template>

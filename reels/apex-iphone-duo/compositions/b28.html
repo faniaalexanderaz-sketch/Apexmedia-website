@@ -6,7 +6,16 @@
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
@@ -54,6 +63,7 @@
   <div id="root" data-composition-id="b28" data-width="1080" data-height="1920">
     <div id="b28-st" class="st grey" data-layout-allow-overlap>
 <div id="b28-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="b28-bg" data-layout-allow-overlap><i></i><i></i></div>
       <div id="a-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 70px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>negli</div>
       <div id="a-b" style="position:absolute;left:0;right:0;top:380px;text-align:center;font:700 140px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>abbonamenti</div>
       <div class="pl" id="a-1" style="left:40px"><b>Base</b><span>9<small> €</small></span><small>al mese</small></div><div class="pl" id="a-2" style="left:374px"><b>Medio</b><span>19<small> €</small></span><small>al mese</small></div><div class="pl" id="a-3" style="left:708px"><b>Premium</b><span>49<small> €</small></span><small>al mese</small></div>
@@ -111,14 +121,16 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#b28-cam", { scale: 1 }, { scale: 1.045, duration: 3.03, ease: "none" }, 0);
-    tl.fromTo("#b28-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    enter(tl, "#b28-st", "Z");
+    tl.fromTo("#b28-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 3.03, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b28-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 3.03, ease: "none", stagger: 0 }, 0);
     tl.fromTo(".pl", { opacity: 0, y: 200 }, { opacity: 1, y: 0, duration: 0.34, ease: "back.out(1.5)", stagger: 0.08 }, 0.05);
     tl.to("#a-3", { y: -50, boxShadow: "0 40px 100px -30px rgba(201,162,39,0.6), 0 0 0 6px #c9a227", duration: 0.3, ease: "back.out(2)" }, 1.25 - 0.08);
     draw(tl, "#a-ar", 1.25 + 0.45, 0.4);
     tl.to("#a-3", { y: 0, opacity: 0.45, duration: 0.3 }, 2.66 - 0.25);
     tl.to("#a-2", { y: -40, scale: 1.1, boxShadow: "0 40px 100px -30px rgba(0,113,227,0.5), 0 0 0 6px #0071e3", duration: 0.32, ease: "back.out(2.4)" }, 2.66 - 0.2);
     pop(tl, "#a-top", 2.66 - 0.02);
+    exit(tl, "#b28-st", "L", 2.86);
     window.__timelines["b28"] = tl;
   </script>
 </template>

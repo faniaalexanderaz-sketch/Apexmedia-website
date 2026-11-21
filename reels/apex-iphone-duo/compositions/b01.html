@@ -6,7 +6,16 @@
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
@@ -48,8 +57,7 @@
   </style>
   <div id="root" data-composition-id="b01" data-width="1080" data-height="1920">
     <div id="b01-st" class="st dark" data-layout-allow-overlap>
-      <div class="vid" id="h-i" data-layout-allow-overlap style="transform-origin:50% 55%"><img src="assets/img/hand-duo.jpg" alt="" /></div>
-      <div class="shade"></div>
+      <div class="vid" id="h-w" data-layout-allow-overlap style="transform-origin:50% 52%"><video id="h-v" class="clip" src="assets/video/hero.mp4" data-start="0" data-duration="1.46" data-media-start="2.4" muted playsinline></video></div>
       <div id="h-pill" style="position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:262px;padding:20px 44px;border-radius:999px;background:#ff3b30;color:#fff;font:700 60px/1 'SF Pro Display';letter-spacing:0.03em" data-layout-allow-overlap>APPENA USCITO</div>
       <div id="h-t" style="position:absolute;left:0;right:0;top:384px;text-align:center;font:700 138px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.5)" data-layout-allow-overlap>&#xF8FF; iPhone Duo</div>
       <div class="flash" id="h-fl"></div>
@@ -103,12 +111,14 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#h-i", { scale: 1.5 }, { scale: 1.1, duration: 0.42, ease: "expo.out" }, 0);
-    tl.to("#h-i", { scale: 1.0, duration: 1.46 - 0.42, ease: "none" }, 0.42);
+    enter(tl, "#b01-st", "N");
+    tl.fromTo("#h-w", { scale: 1.4 }, { scale: 1.254, duration: 1.46, ease: "none" }, 0);
     tl.fromTo("#h-pill", { scale: 1.32, rotation: -7 }, { scale: 1, rotation: -3, duration: 0.3, ease: "back.out(2.2)" }, 0);
-    flash(tl, "#h-fl", 0.3, 0.3);
-    tl.fromTo("#h-t", { opacity: 0, filter: "blur(18px)", scale: 1.25 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, ease: "expo.out" }, 0.42);
+    flash(tl, "#h-fl", 0.3, 0.25);
+    tl.fromTo("#h-t", { opacity: 0, filter: "blur(18px)", scale: 1.25 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, ease: "expo.out" }, 0.4);
     shake(tl, "#b01-st", 0.3, 16);
+
+    exit(tl, "#b01-st", "L", 1.29);
     window.__timelines["b01"] = tl;
   </script>
 </template>

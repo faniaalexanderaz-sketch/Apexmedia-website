@@ -6,7 +6,16 @@
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
     @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
     #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
     .st.grey { background: #f5f5f7; }
     .st.dark { background: #000; color: #f5f5f7; }
     .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
@@ -49,6 +58,7 @@
   <div id="root" data-composition-id="b10" data-width="1080" data-height="1920">
     <div id="b10-st" class="st dark" data-layout-allow-overlap>
 <div id="b10-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="b10-bg" data-layout-allow-overlap><i></i><i></i></div>
       <div id="q-m" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:700 700px/1 'SF Pro Display';color:#ffd60a;opacity:0.95" data-layout-allow-overlap>?</div>
       <div id="q-a" style="position:absolute;left:0;right:0;top:1080px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>ti faccio una</div>
       <div id="q-b" style="position:absolute;left:0;right:0;top:1170px;text-align:center;font:700 200px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>domanda.</div>
@@ -103,10 +113,12 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#b10-cam", { scale: 1 }, { scale: 1.045, duration: 1.13, ease: "none" }, 0);
-    tl.fromTo("#b10-st", { scale: 1.1 }, { scale: 1, duration: 0.3, ease: "expo.out" }, 0);
+    enter(tl, "#b10-st", "L");
+    tl.fromTo("#b10-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 1.13, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b10-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.13, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#q-m", { scale: 0.2, rotation: -30, opacity: 0 }, { scale: 1, rotation: 8, opacity: 0.9, duration: 0.4, ease: "back.out(2)" }, 0.02);
     tl.to("#q-m", { rotation: -4, duration: 1.13 - 0.4, ease: "sine.inOut" }, 0.42);
+    exit(tl, "#b10-st", "U", 0.96);
     window.__timelines["b10"] = tl;
   </script>
 </template>
