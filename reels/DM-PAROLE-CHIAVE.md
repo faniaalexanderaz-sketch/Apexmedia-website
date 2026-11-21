@@ -112,3 +112,66 @@ IDEE PER TIPO DI ATTIVITÀ
 • Parrucchiere / estetista: appuntamenti, trattamento preferito.
 • Ristorante / pizzeria: cene, piatto più ordinato.
 ```
+
+---
+
+## MOTION (video "Questo video non l'ha montato nessuno")
+
+**Messaggio breve**
+```text
+Ecco il metodo che uso per i miei video 👇
+Le 5 regole del video, più come le metto in pratica con l'AI.
+Se vuoi, rispondimi con di cosa ti occupi e ti dico come lo applicherei ai tuoi contenuti.
+```
+
+**Contenuto: il metodo**
+```text
+1) IL TESTO PRIMA DI TUTTO
+   Aggancio con un oggetto e un numero nei primi 2 secondi, promessa entro 10 secondi
+   ("resta fino alla fine perché..."), poi la storia, una domanda a cui si risponde
+   con una parola, la lezione, la parola da commentare, e l'ultima frase che riporta alla prima.
+
+2) LA VOCE
+   Voce generata con l'AI, poi tagliata: niente pause, circa 3 parole al secondo.
+
+3) LE IMMAGINI
+   Una nuova ogni 1-2 secondi. Grafiche scritte in codice (interfacce, numeri, grafici),
+   qualche clip generata con l'AI quando serve una scena vera.
+
+4) LE SCRITTE
+   Solo numeri e parole chiave. La frase intera la dice già la voce.
+
+5) I SUONI
+   Un piccolo suono su ogni stacco e su ogni numero che entra. Sempre più bassi della voce.
+
+6) IL LOOP
+   L'ultimo fotogramma è uguale al primo, l'ultima frase entra nella prima.
+```
+
+---
+
+## NATALE (video Babbo Natale e Coca-Cola)
+
+**Messaggio breve**
+```text
+Ecco le 3 idee da ripetere ogni Natale nella tua attività 👇
+Il trucco della Coca-Cola: non inventare, ripetere. Ogni anno, uguale, finché diventa tuo.
+```
+
+**Contenuto: le 3 idee**
+```text
+1) IL TUO "RITO" DI DICEMBRE
+   Una cosa che fai solo a dicembre, sempre uguale: un prodotto, un piatto, un servizio,
+   un pacchetto regalo con lo stesso colore e lo stesso nome ogni anno.
+   Dopo 2-3 anni i clienti iniziano ad aspettarlo.
+
+2) LA STESSA FOTO, OGNI ANNO
+   Stessa inquadratura, stesso posto, stessa persona (tu, il tuo staff, la vetrina).
+   Pubblicala ogni dicembre: diventa una tradizione che la gente riconosce.
+
+3) IL MESSAGGIO DI NATALE AI CLIENTI
+   Ogni anno lo stesso giorno, con lo stesso formato: un grazie e un piccolo regalo
+   (uno sconto o un omaggio solo per loro). Breve, personale, riconoscibile.
+
+LA REGOLA: non cambiare idea ogni anno. La forza sta nella ripetizione.
+```

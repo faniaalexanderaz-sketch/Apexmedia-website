@@ -2159,3 +2159,65 @@ Scrivi WRAPPED e ti mando il modello per fare il Wrapped della tua attività.
 Fonti: dati di Spotify sul Wrapped 2025 (uscito il 3 dicembre 2025: oltre 200 milioni di utenti e 500 milioni di condivisioni nelle prime 24 ore). Il bar dei 140 caffè è un esempio. Nessun logo o grafica ufficiale di Spotify.
 #spotifywrapped #spotify #marketing #fidelizzazione #business #apexmedia
 ```
+
+---
+
+## 71. Questo video non l'ha montato nessuno: le 5 regole (parola MOTION) · STILE CAMERA 3D
+
+Nuovo stile: tutto in un unico spazio 3D, la camera vola tra le grafiche senza stacchi (pila dei nostri reel, timeline, codice, un numero gigante per ogni regola, anello di fotogrammi a 360°). 50 s, loop: "E ricordati che..." riporta a "questo video non l'ha montato nessuno". File: `apex-3d-motion/renders/apex-3d-motion-9x16.mp4`.
+
+**TikTok**
+```text
+Questo video non l'ha montato nessuno. Niente After Effects, niente montatore. Le 5 regole per farti guardare fino all'ultimo secondo. I videomaker sono finiti? SÌ o NO.
+#ai #videomaking #marketing #apexmedia
+```
+
+**Instagram**
+```text
+Questo video non l'ha montato nessuno. Niente After Effects. Niente montatore. Solo un'intelligenza artificiale e qualche riga di codice.
+
+Le 5 regole che fanno guardare un video fino all'ultimo secondo:
+1. La voce non si ferma mai. Niente pause, più di tre parole al secondo.
+2. Un'immagine nuova ogni uno o due secondi.
+3. Sullo schermo solo numeri e parole chiave. Mai la frase intera: quella la senti già.
+4. Ogni stacco ha il suo suono. Un clic, un colpo, un fruscio.
+5. Il finale torna all'inizio. L'ultima frase entra nella prima, e lo riguardi senza accorgertene.
+
+E adesso dimmi la verità: i videomaker sono finiti? Scrivi SÌ o NO.
+Secondo me no: chi sa raccontare vale più di prima. Cambia solo lo strumento.
+
+Se vuoi il metodo completo, scrivi MOTION nei commenti e te lo mando.
+#intelligenzaartificiale #ai #videomaking #reel #contentcreator #marketing #apexmedia
+```
+
+---
+
+## 72. Babbo Natale è rosso per colpa della Coca-Cola? No (parola NATALE) · STILE CAMERA 3D
+
+Spazio 3D in colori natalizi: cartolina d'epoca, pacco regalo 3D, fila di cartoline, 1915, 1931, spirale di 34 anni (1931-1964), lezione, telefono con NATALE. 54 s, loop: "Eppure, ancora oggi, tutti pensano che..." riporta alla prima frase. File: `apex-3d-natale/renders/apex-3d-natale-9x16.mp4`. Da pubblicare a dicembre.
+
+**TikTok**
+```text
+Babbo Natale è rosso per colpa della Coca-Cola. Lo pensano in tantissimi. E non è vero. La storia vera è un trucco di marketing ancora più furbo. Tu lo sapevi? SÌ o NO.
+#natale #babbonatale #cocacola #marketing #apexmedia
+```
+
+**Instagram**
+```text
+Babbo Natale è rosso per colpa della Coca-Cola. Lo pensano in tantissimi. E non è vero.
+
+Il rosso c'era già: nelle cartoline e nelle riviste di inizio Novecento Babbo Natale era già vestito di rosso. E nel 1915 vendeva già acqua minerale, per un altro marchio: White Rock.
+
+Poi, nel 1931, arriva la Coca-Cola. Chiama un illustratore, Haddon Sundblom, e gli fa dipingere Babbo Natale per la pubblicità di Natale. E poi lo rifà. L'anno dopo. E quello dopo ancora. Fino al 1964. Più di trent'anni: stesso viso, stessi colori, stesso momento dell'anno.
+
+Alla fine, nella testa della gente, Babbo Natale è diventato suo.
+
+Tu lo sapevi? Scrivi SÌ o NO.
+
+La lezione: non devi inventare qualcosa. Devi esserci sempre, allo stesso modo, finché diventa tuo.
+
+Scrivi NATALE nei commenti e ti mando tre idee da ripetere ogni Natale nella tua attività.
+
+Fonti: FAQ ufficiale Coca-Cola ("Coca-Cola did not create Santa Claus"); Snopes sulle illustrazioni di Babbo Natale in rosso prima del 1931; White Rock e le pubblicità con Babbo Natale dal 1915; Haddon Sundblom per Coca-Cola dal 1931 al 1964. Le due immagini d'epoca del video sono illustrazioni generiche, senza marchi.
+#natale #babbonatale #cocacola #storia #marketing #branding #apexmedia
+```
