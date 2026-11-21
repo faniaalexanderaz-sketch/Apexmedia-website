@@ -1,0 +1,150 @@
+<template>
+  <style>
+
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
+    .st.grey { background: #f5f5f7; }
+    .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
+    .zone { z-index: 5; position: absolute; left: 70px; right: 70px; top: 360px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 8px 0 16px; font: 600 84px/1.06 "SF Pro Display"; letter-spacing: -0.022em; }
+    .line > span { display: inline-block; }
+    .t { font: 600 84px/1.06 "SF Pro Display"; letter-spacing: -0.022em; }
+    .tb { font: 700 120px/1.02 "SF Pro Display"; letter-spacing: -0.035em; }
+    .mut { color: #86868b; }
+    .dark .mut { color: #a1a1a6; }
+    .acc { color: #7a0f24; }
+    .blue { color: #0071e3; }
+    .eyebrow { position: absolute; left: 0; right: 0; text-align: center; font: 600 34px/1 "SF Pro Display"; letter-spacing: -0.01em; color: #b64400; opacity: 0; }
+    .grad { background: linear-gradient(100deg, #6e7fb8 0%, #1d2a57 38%, #7b8fd0 62%, #1a2244 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .ch { display: inline-block; white-space: pre; }
+    .w { display: inline-block; white-space: pre; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -10px; right: -10px; top: 8%; bottom: 4%; background: rgba(255, 214, 10, 0.5); border-radius: 10px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .vid { position: absolute; inset: 0; overflow: hidden; }
+    .vid video, .vid img { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.42) 30%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.25) 100%); }
+    .card { position: absolute; border-radius: 40px; background: #fff; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.04); }
+    .chip { position: absolute; padding: 18px 34px; border-radius: 999px; background: #1d1d1f; color: #fff; font: 600 44px/1 "SF Pro Display"; letter-spacing: -0.015em; white-space: nowrap; opacity: 0; }
+    .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 40; }
+    .cur { position: absolute; width: 60px; height: 60px; opacity: 0; z-index: 30; }
+    /* --- the foldable, built from four flat textures on two hinged halves --- */
+    .duo { position: absolute; width: 1400px; height: 1037px; perspective: 3400px; transform-origin: 50% 50%; }
+    .duo-g { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .duo-h { position: absolute; top: 0; width: 700px; height: 1037px; transform-style: preserve-3d; }
+    .duo-r { left: 700px; }
+    .duo-l { left: 0; transform-origin: 100% 50%; }
+    .duo .f { position: absolute; inset: 0; background-size: 100% 100%; backface-visibility: hidden; }
+    .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
+    .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
+
+
+    .st.sp { background: #121212; color: #fff; }
+    .sp .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(30,215,96,0.30), rgba(30,215,96,0)); }
+    .sp .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(123,97,255,0.22), rgba(123,97,255,0)); }
+    .sp .mq { -webkit-text-stroke: 4px rgba(30,215,96,0.14); }
+    .gr { color: #1ed760; }
+    .eb { position: absolute; left: 0; right: 0; text-align: center; font: 700 38px/1 "SF Pro Display"; letter-spacing: 0.22em; color: #1ed760; }
+    .rc { position: absolute; border-radius: 48px; overflow: hidden; box-shadow: 0 40px 120px -30px rgba(0,0,0,0.9); }
+    .gchip { position: absolute; padding: 18px 36px; border-radius: 999px; font: 700 46px/1 "SF Pro Display"; white-space: nowrap; color: #000; background: #1ed760; opacity: 0; }
+    .eq { display: flex; align-items: flex-end; gap: 14px; height: 160px; }
+    .eq i { display: block; width: 34px; height: 160px; border-radius: 17px; background: #1ed760; transform-origin: 50% 100%; }
+    .phone { position: absolute; width: 560px; height: 1100px; border-radius: 80px; background: #000; box-shadow: 0 0 0 14px #2a2a2a, 0 50px 140px -30px rgba(0,0,0,0.9); overflow: hidden; }
+
+    #root { background: #121212 !important; }
+
+    .av { position: absolute; display: block; width: 58px; height: 58px; border-radius: 50%; }
+  </style>
+  <div id="root" data-composition-id="s09" data-width="1080" data-height="1920">
+    <div id="s09-st" class="st dark sp" data-layout-allow-overlap>
+<div id="s09-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="s09-bg" data-layout-allow-overlap><i></i><i></i></div>
+      <div id="i-n" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:800 150px/1 'SF Pro Display';letter-spacing:-0.05em;color:#1ed760" data-layout-allow-overlap><span id="i-v">0</span></div>
+      <div id="i-a" style="position:absolute;left:0;right:0;top:470px;text-align:center;font:600 64px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#ffffff;" data-layout-allow-overlap>persone in 24 ore</div>
+      <div style="position:absolute;left:110px;top:620px;width:880px;height:900px" data-layout-allow-overlap><i class="av" style="left:0px;top:0px;background:#1ed760"></i><i class="av" style="left:74px;top:0px;background:#ff6ec7"></i><i class="av" style="left:148px;top:0px;background:#7b61ff"></i><i class="av" style="left:222px;top:0px;background:#ffd60a"></i><i class="av" style="left:296px;top:0px;background:#ff8a3d"></i><i class="av" style="left:370px;top:0px;background:#4fc3f7"></i><i class="av" style="left:444px;top:0px;background:#1ed760"></i><i class="av" style="left:518px;top:0px;background:#ff6ec7"></i><i class="av" style="left:592px;top:0px;background:#7b61ff"></i><i class="av" style="left:666px;top:0px;background:#ffd60a"></i><i class="av" style="left:740px;top:0px;background:#ff8a3d"></i><i class="av" style="left:814px;top:0px;background:#4fc3f7"></i><i class="av" style="left:0px;top:74px;background:#1ed760"></i><i class="av" style="left:74px;top:74px;background:#ff6ec7"></i><i class="av" style="left:148px;top:74px;background:#7b61ff"></i><i class="av" style="left:222px;top:74px;background:#ffd60a"></i><i class="av" style="left:296px;top:74px;background:#ff8a3d"></i><i class="av" style="left:370px;top:74px;background:#4fc3f7"></i><i class="av" style="left:444px;top:74px;background:#1ed760"></i><i class="av" style="left:518px;top:74px;background:#ff6ec7"></i><i class="av" style="left:592px;top:74px;background:#7b61ff"></i><i class="av" style="left:666px;top:74px;background:#ffd60a"></i><i class="av" style="left:740px;top:74px;background:#ff8a3d"></i><i class="av" style="left:814px;top:74px;background:#4fc3f7"></i><i class="av" style="left:0px;top:148px;background:#1ed760"></i><i class="av" style="left:74px;top:148px;background:#ff6ec7"></i><i class="av" style="left:148px;top:148px;background:#7b61ff"></i><i class="av" style="left:222px;top:148px;background:#ffd60a"></i><i class="av" style="left:296px;top:148px;background:#ff8a3d"></i><i class="av" style="left:370px;top:148px;background:#4fc3f7"></i><i class="av" style="left:444px;top:148px;background:#1ed760"></i><i class="av" style="left:518px;top:148px;background:#ff6ec7"></i><i class="av" style="left:592px;top:148px;background:#7b61ff"></i><i class="av" style="left:666px;top:148px;background:#ffd60a"></i><i class="av" style="left:740px;top:148px;background:#ff8a3d"></i><i class="av" style="left:814px;top:148px;background:#4fc3f7"></i><i class="av" style="left:0px;top:222px;background:#1ed760"></i><i class="av" style="left:74px;top:222px;background:#ff6ec7"></i><i class="av" style="left:148px;top:222px;background:#7b61ff"></i><i class="av" style="left:222px;top:222px;background:#ffd60a"></i><i class="av" style="left:296px;top:222px;background:#ff8a3d"></i><i class="av" style="left:370px;top:222px;background:#4fc3f7"></i><i class="av" style="left:444px;top:222px;background:#1ed760"></i><i class="av" style="left:518px;top:222px;background:#ff6ec7"></i><i class="av" style="left:592px;top:222px;background:#7b61ff"></i><i class="av" style="left:666px;top:222px;background:#ffd60a"></i><i class="av" style="left:740px;top:222px;background:#ff8a3d"></i><i class="av" style="left:814px;top:222px;background:#4fc3f7"></i><i class="av" style="left:0px;top:296px;background:#1ed760"></i><i class="av" style="left:74px;top:296px;background:#ff6ec7"></i><i class="av" style="left:148px;top:296px;background:#7b61ff"></i><i class="av" style="left:222px;top:296px;background:#ffd60a"></i><i class="av" style="left:296px;top:296px;background:#ff8a3d"></i><i class="av" style="left:370px;top:296px;background:#4fc3f7"></i><i class="av" style="left:444px;top:296px;background:#1ed760"></i><i class="av" style="left:518px;top:296px;background:#ff6ec7"></i><i class="av" style="left:592px;top:296px;background:#7b61ff"></i><i class="av" style="left:666px;top:296px;background:#ffd60a"></i><i class="av" style="left:740px;top:296px;background:#ff8a3d"></i><i class="av" style="left:814px;top:296px;background:#4fc3f7"></i><i class="av" style="left:0px;top:370px;background:#1ed760"></i><i class="av" style="left:74px;top:370px;background:#ff6ec7"></i><i class="av" style="left:148px;top:370px;background:#7b61ff"></i><i class="av" style="left:222px;top:370px;background:#ffd60a"></i><i class="av" style="left:296px;top:370px;background:#ff8a3d"></i><i class="av" style="left:370px;top:370px;background:#4fc3f7"></i><i class="av" style="left:444px;top:370px;background:#1ed760"></i><i class="av" style="left:518px;top:370px;background:#ff6ec7"></i><i class="av" style="left:592px;top:370px;background:#7b61ff"></i><i class="av" style="left:666px;top:370px;background:#ffd60a"></i><i class="av" style="left:740px;top:370px;background:#ff8a3d"></i><i class="av" style="left:814px;top:370px;background:#4fc3f7"></i><i class="av" style="left:0px;top:444px;background:#1ed760"></i><i class="av" style="left:74px;top:444px;background:#ff6ec7"></i><i class="av" style="left:148px;top:444px;background:#7b61ff"></i><i class="av" style="left:222px;top:444px;background:#ffd60a"></i><i class="av" style="left:296px;top:444px;background:#ff8a3d"></i><i class="av" style="left:370px;top:444px;background:#4fc3f7"></i><i class="av" style="left:444px;top:444px;background:#1ed760"></i><i class="av" style="left:518px;top:444px;background:#ff6ec7"></i><i class="av" style="left:592px;top:444px;background:#7b61ff"></i><i class="av" style="left:666px;top:444px;background:#ffd60a"></i><i class="av" style="left:740px;top:444px;background:#ff8a3d"></i><i class="av" style="left:814px;top:444px;background:#4fc3f7"></i><i class="av" style="left:0px;top:518px;background:#1ed760"></i><i class="av" style="left:74px;top:518px;background:#ff6ec7"></i><i class="av" style="left:148px;top:518px;background:#7b61ff"></i><i class="av" style="left:222px;top:518px;background:#ffd60a"></i><i class="av" style="left:296px;top:518px;background:#ff8a3d"></i><i class="av" style="left:370px;top:518px;background:#4fc3f7"></i><i class="av" style="left:444px;top:518px;background:#1ed760"></i><i class="av" style="left:518px;top:518px;background:#ff6ec7"></i><i class="av" style="left:592px;top:518px;background:#7b61ff"></i><i class="av" style="left:666px;top:518px;background:#ffd60a"></i><i class="av" style="left:740px;top:518px;background:#ff8a3d"></i><i class="av" style="left:814px;top:518px;background:#4fc3f7"></i><i class="av" style="left:0px;top:592px;background:#1ed760"></i><i class="av" style="left:74px;top:592px;background:#ff6ec7"></i><i class="av" style="left:148px;top:592px;background:#7b61ff"></i><i class="av" style="left:222px;top:592px;background:#ffd60a"></i><i class="av" style="left:296px;top:592px;background:#ff8a3d"></i><i class="av" style="left:370px;top:592px;background:#4fc3f7"></i><i class="av" style="left:444px;top:592px;background:#1ed760"></i><i class="av" style="left:518px;top:592px;background:#ff6ec7"></i><i class="av" style="left:592px;top:592px;background:#7b61ff"></i><i class="av" style="left:666px;top:592px;background:#ffd60a"></i><i class="av" style="left:740px;top:592px;background:#ff8a3d"></i><i class="av" style="left:814px;top:592px;background:#4fc3f7"></i><i class="av" style="left:0px;top:666px;background:#1ed760"></i><i class="av" style="left:74px;top:666px;background:#ff6ec7"></i><i class="av" style="left:148px;top:666px;background:#7b61ff"></i><i class="av" style="left:222px;top:666px;background:#ffd60a"></i><i class="av" style="left:296px;top:666px;background:#ff8a3d"></i><i class="av" style="left:370px;top:666px;background:#4fc3f7"></i><i class="av" style="left:444px;top:666px;background:#1ed760"></i><i class="av" style="left:518px;top:666px;background:#ff6ec7"></i><i class="av" style="left:592px;top:666px;background:#7b61ff"></i><i class="av" style="left:666px;top:666px;background:#ffd60a"></i><i class="av" style="left:740px;top:666px;background:#ff8a3d"></i><i class="av" style="left:814px;top:666px;background:#4fc3f7"></i><i class="av" style="left:0px;top:740px;background:#1ed760"></i><i class="av" style="left:74px;top:740px;background:#ff6ec7"></i><i class="av" style="left:148px;top:740px;background:#7b61ff"></i><i class="av" style="left:222px;top:740px;background:#ffd60a"></i><i class="av" style="left:296px;top:740px;background:#ff8a3d"></i><i class="av" style="left:370px;top:740px;background:#4fc3f7"></i><i class="av" style="left:444px;top:740px;background:#1ed760"></i><i class="av" style="left:518px;top:740px;background:#ff6ec7"></i><i class="av" style="left:592px;top:740px;background:#7b61ff"></i><i class="av" style="left:666px;top:740px;background:#ffd60a"></i><i class="av" style="left:740px;top:740px;background:#ff8a3d"></i><i class="av" style="left:814px;top:740px;background:#4fc3f7"></i><i class="av" style="left:0px;top:814px;background:#1ed760"></i><i class="av" style="left:74px;top:814px;background:#ff6ec7"></i><i class="av" style="left:148px;top:814px;background:#7b61ff"></i><i class="av" style="left:222px;top:814px;background:#ffd60a"></i><i class="av" style="left:296px;top:814px;background:#ff8a3d"></i><i class="av" style="left:370px;top:814px;background:#4fc3f7"></i><i class="av" style="left:444px;top:814px;background:#1ed760"></i><i class="av" style="left:518px;top:814px;background:#ff6ec7"></i><i class="av" style="left:592px;top:814px;background:#7b61ff"></i><i class="av" style="left:666px;top:814px;background:#ffd60a"></i><i class="av" style="left:740px;top:814px;background:#ff8a3d"></i><i class="av" style="left:814px;top:814px;background:#4fc3f7"></i></div>
+    </div>
+    </div>
+  </div>
+  <script>
+
+    /* split .split into letters and .wsplit into words once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    document.querySelectorAll(".wsplit:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const parts = el.textContent.split(" "); el.textContent = ""; parts.forEach((p, k) => { const s = document.createElement("span"); s.className = "w"; s.textContent = p + (k < parts.length - 1 ? " " : ""); el.appendChild(s); }); });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    const W = (sel) => document.querySelectorAll(sel + " .w");
+    const eur = (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.42, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.2, ease: "power3.in" }, t);
+    /* words arrive one after another out of a soft blur, with no travel (the premium title entrance) */
+    const wordsIn = (tl, sel, t, st) => tl.fromTo(W(sel), { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out", stagger: st || 0.07 }, t);
+    const blurIn = (tl, sel, t, d) => tl.fromTo(sel, { opacity: 0, filter: "blur(18px)", scale: 1.06 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: d || 0.3, ease: "power2.out" }, t);
+    const blurOut = (tl, sel, t, d) => tl.to(sel, { opacity: 0, filter: "blur(16px)", duration: d || 0.16, ease: "power2.in" }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const shake = (tl, sel, t, k) => tl.fromTo(sel, { x: -(k || 18) }, { x: 0, duration: 0.32, ease: "elastic.out(1.3, 0.3)", immediateRender: false }, t);
+    const count = (tl, sel, a, b, t, d, fmt, ease) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || eur; const u = () => { el.textContent = f(o.v); }; tl.to(o, { v: b, duration: d, ease: ease || "expo.out", onUpdate: u }, t); };
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const flash = (tl, sel, t, k) => tl.fromTo(sel, { opacity: k || 0.9 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
+    /* scene transitions: U/D/L/R push, Z zoom, B blur-zoom through, N hard cut */
+    const enter = (tl, sel, k) => k === "N" ? tl
+      : k === "W" ? tl.fromTo(sel, { x: 1080, skewX: -14, filter: "blur(30px)" }, { x: 0, skewX: 0, filter: "blur(0px)", duration: 0.26, ease: "expo.out" }, 0)
+      : k === "I" ? tl.fromTo(sel, { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(120% at 50% 50%)", duration: 0.38, ease: "power3.out" }, 0)
+      : k === "S" ? tl.fromTo(sel, { rotation: -14, scale: 1.5, opacity: 0, filter: "blur(20px)" }, { rotation: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.36, ease: "expo.out" }, 0)
+      : k === "K" ? tl.fromTo(sel, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.32, ease: "expo.out" }, 0)
+      : k === "B" ? tl.fromTo(sel, { scale: 0.8, opacity: 0, filter: "blur(26px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.34, ease: "expo.out" }, 0)
+      : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0)
+      : k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.32, ease: "expo.out" }, 0)
+      : k === "D" ? tl.fromTo(sel, { y: -1920 }, { y: 0, duration: 0.32, ease: "expo.out" }, 0)
+      : k === "R" ? tl.fromTo(sel, { x: -1080 }, { x: 0, duration: 0.28, ease: "expo.out" }, 0)
+      : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.28, ease: "expo.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "N" ? tl
+      : k === "W" ? tl.to(sel, { x: -1080, skewX: 14, filter: "blur(30px)", duration: 0.2, ease: "power3.in" }, t)
+      : k === "I" ? tl.to(sel, { scale: 0.86, opacity: 0.4, duration: 0.2, ease: "power3.in" }, t)
+      : k === "S" ? tl.to(sel, { rotation: 12, scale: 0.6, opacity: 0, filter: "blur(16px)", duration: 0.2, ease: "power3.in" }, t)
+      : k === "K" ? tl.to(sel, { y: -260, opacity: 0, duration: 0.2, ease: "power3.in" }, t)
+      : k === "B" ? tl.to(sel, { scale: 1.35, opacity: 0, filter: "blur(26px)", duration: 0.2, ease: "power3.in" }, t)
+      : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t)
+      : k === "U" ? tl.to(sel, { y: -1920, duration: 0.2, ease: "power3.in" }, t)
+      : k === "D" ? tl.to(sel, { y: 1920, duration: 0.2, ease: "power3.in" }, t)
+      : k === "R" ? tl.to(sel, { x: 1080, duration: 0.2, ease: "power3.in" }, t)
+      : tl.to(sel, { x: -1080, duration: 0.2, ease: "power3.in" }, t);
+    /* glitch: quick colour split and jitter on a title */
+    const glitch = (tl, sel, t) => { tl.fromTo(sel, { x: -14, textShadow: "6px 0 #ff2d55, -6px 0 #00e5ff" }, { x: 0, textShadow: "0px 0 rgba(0,0,0,0), 0px 0 rgba(0,0,0,0)", duration: 0.28, ease: "steps(6)", immediateRender: false }, t); };
+    /* stamp: drops in big and rotated, lands with a bounce */
+    const stamp = (tl, sel, t, r) => tl.fromTo(sel, { opacity: 0, scale: 2.6, rotation: (r || -10) - 18 }, { opacity: 1, scale: 1, rotation: r || -10, duration: 0.26, ease: "power4.in" }, t);
+    /* the foldable: one angle drives the hinge (0 = open flat, 180 = closed), the shading of the moving half and the re-centring of the whole phone */
+    const duoSet = (id, a) => { const r = a * Math.PI / 180; const c = Math.cos(r);
+      gsap.set(id + "-l", { rotationY: a });
+      gsap.set(id + "-g", { x: -175 * (1 - c) });
+      const li = document.querySelector(id + "-li"), lo = document.querySelector(id + "-lo");
+      if (li) li.style.filter = "brightness(" + (0.55 + 0.45 * Math.max(0, c)).toFixed(3) + ")";
+      if (lo) lo.style.filter = "brightness(" + (0.6 + 0.4 * Math.max(0, -c)).toFixed(3) + ")";
+      const sh = document.querySelector(id + "-sh"); if (sh) sh.style.transform = "scaleX(" + (0.5 + 0.5 * (1 + c) / 2).toFixed(3) + ")"; };
+    const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
+
+    const tl = gsap.timeline({ paused: true });
+    enter(tl, "#s09-st", "D");
+    tl.fromTo("#s09-cam", { scale: 1.0, rotationY: -3.0, rotationX: 1.6 }, { scale: 1.07, rotationY: 3.0, rotationX: -1.0, duration: 1.94, ease: "sine.inOut" }, 0);
+    tl.fromTo("#s09-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 1.94, ease: "none", stagger: 0 }, 0);
+    count(tl, "#i-v", 0, 200000000, 0.0, 1.3, function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }, "power3.out");
+    tl.fromTo(".av", { scale: 0 }, { scale: 1, duration: 0.2, ease: "back.out(2.4)", stagger: { each: 0.008, from: "center" } }, 0.0);
+    exit(tl, "#s09-st", "Z", 1.77);
+    window.__timelines["s09"] = tl;
+  </script>
+</template>
