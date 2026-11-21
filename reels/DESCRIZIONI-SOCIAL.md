@@ -2164,6 +2164,8 @@ Fonti: dati di Spotify sul Wrapped 2025 (uscito il 3 dicembre 2025: oltre 200 mi
 
 ## 71. Questo video non l'ha montato nessuno: le 5 regole (parola MOTION) · STILE CAMERA 3D
 
+> SCARTATO: il video non va pubblicato (svela come sono fatti i video).
+
 Nuovo stile: tutto in un unico spazio 3D, la camera vola tra le grafiche senza stacchi (pila dei nostri reel, timeline, codice, un numero gigante per ogni regola, anello di fotogrammi a 360°). 50 s, loop: "E ricordati che..." riporta a "questo video non l'ha montato nessuno". File: `apex-3d-motion/renders/apex-3d-motion-9x16.mp4`.
 
 **TikTok**
@@ -2193,6 +2195,8 @@ Se vuoi il metodo completo, scrivi MOTION nei commenti e te lo mando.
 ---
 
 ## 72. Babbo Natale è rosso per colpa della Coca-Cola? No (parola NATALE) · STILE CAMERA 3D
+
+> SCARTATO: il video non va pubblicato (troppo corto, non spiega abbastanza).
 
 Spazio 3D in colori natalizi: cartolina d'epoca, pacco regalo 3D, fila di cartoline, 1915, 1931, spirale di 34 anni (1931-1964), lezione, telefono con NATALE. 54 s, loop: "Eppure, ancora oggi, tutti pensano che..." riporta alla prima frase. File: `apex-3d-natale/renders/apex-3d-natale-9x16.mp4`. Da pubblicare a dicembre.
 
