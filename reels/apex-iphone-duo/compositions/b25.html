@@ -52,13 +52,19 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #f5f5f7 !important; }
 
+    .nb { position: absolute; left: 70px; width: 940px; height: 170px; border-radius: 46px; background: rgba(255,255,255,0.92); box-shadow: 0 30px 80px -30px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.04); padding: 32px 46px; opacity: 0; }
+    .nb small { display: block; font: 600 28px/1 "SF Pro Display"; letter-spacing: 0.08em; text-transform: uppercase; color: #86868b; }
+    .nb b { display: block; font: 600 58px/1.1 "SF Pro Display"; letter-spacing: -0.02em; margin-top: 12px; }
   </style>
   <div id="root" data-composition-id="b25" data-width="1080" data-height="1920">
-    <div id="b25-st" class="st dark" data-layout-allow-overlap>
-      <div class="vid" id="o-1" data-layout-allow-overlap style="transform-origin:50% 50%"><img src="assets/img/wine.jpg" alt="" /></div><div class="vid" id="o-2" data-layout-allow-overlap style="transform-origin:50% 50%"><img src="assets/img/table-pro.jpg" alt="" /></div><div class="vid" id="o-3" data-layout-allow-overlap style="transform-origin:50% 50%"><img src="assets/img/window.jpg" alt="" /></div><div class="vid" id="o-4" data-layout-allow-overlap style="transform-origin:50% 50%"><img src="assets/img/table-duo.jpg" alt="" /></div>
-      <div id="o-w" style="position:absolute;inset:0;background:#000" data-layout-allow-overlap><div id="o-t" style="position:absolute;left:0;right:0;top:770px;text-align:center;font:700 230px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>ovunque.</div></div>
+    <div id="b25-st" class="st grey" data-layout-allow-overlap>
+<div id="b25-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="b25-bg" data-layout-allow-overlap><i></i><i></i></div>
+      <div class="nb" id="o-1" style="top:330px"><small>prezzo àncora · adesso</small><b>Al ristorante</b></div><div class="nb" id="o-2" style="top:530px"><small>prezzo àncora · adesso</small><b>Negli abbonamenti</b></div><div class="nb" id="o-3" style="top:730px"><small>prezzo àncora · adesso</small><b>In negozio</b></div>
+      <div id="o-t" style="position:absolute;left:0;right:0;top:1010px;text-align:center;font:700 240px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>ovunque.</div>
+    </div>
     </div>
   </div>
   <script>
@@ -110,10 +116,11 @@
 
     const tl = gsap.timeline({ paused: true });
     enter(tl, "#b25-st", "B");
-    ["#o-1", "#o-2", "#o-3", "#o-4"].forEach((s, k) => { tl.set(s, { autoAlpha: 1 }, k * 0.24); tl.fromTo(s, { scale: 1.25 }, { scale: 1.05, duration: 0.24, ease: "power2.out" }, k * 0.24); if (k) tl.set(["#o-1", "#o-2", "#o-3", "#o-4"][k - 1], { autoAlpha: 0 }, k * 0.24); });
-    gsap.set(["#o-2", "#o-3", "#o-4", "#o-w"], { autoAlpha: 0 });
-    tl.set("#o-w", { autoAlpha: 1 }, 1.01 - 0.05);
-    tl.fromTo("#o-t", { scale: 1.6, filter: "blur(14px)" }, { scale: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out" }, 1.01 - 0.05);
+    tl.fromTo("#b25-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 1.50, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b25-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.50, ease: "none", stagger: 0 }, 0);
+    tl.fromTo(".nb", { opacity: 0, y: -260, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "back.out(1.6)", stagger: 0.16 }, 0.02);
+    tl.fromTo("#o-t", { opacity: 0, scale: 1.6, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out" }, 1.01 - 0.05);
+    shake(tl, "#b25-cam", 1.01 + 0.02, 16);
     exit(tl, "#b25-st", "R", 1.33);
     window.__timelines["b25"] = tl;
   </script>

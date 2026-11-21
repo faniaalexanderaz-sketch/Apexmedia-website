@@ -72,7 +72,7 @@
         <div id="c-st">affare?</div>
       </div>
       <div class="pc" id="c-r" style="left:560px">
-        <div class="pi"><img src="assets/img/duo-vee.png" style="height:570px;margin-top:30px" alt="" /></div>
+        <div class="pi" style="position:relative"><div class="duo" id="c-d" data-motion-blur="off" data-layout-allow-overlap style="left:-460px;top:-203px"><div class="duo-g" id="c-d-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="c-d-l"><div class="f in" id="c-d-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="c-d-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div></div>
         <div class="pn">iPhone Duo</div>
         <div class="pp" id="c-rp"><span id="c-rn">1.639</span> €</div>
       </div>
@@ -132,6 +132,9 @@
     tl.fromTo("#b16-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 4.54, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#b16-mq", { x: 0 }, { x: -1400, duration: 4.54, ease: "none" }, 0);
     gsap.set("#c-l", { x: 260 });
+    gsap.set("#c-d", { scale: 0.34 }); gsap.set("#c-d-g", { rotationY: -26, rotationX: 6 }); duoSet("#c-d", 74);
+    tl.to("#c-d-g", { rotationY: 22, duration: 4.54, ease: "none" }, 0);
+    fold(tl, "#c-d", 74, 36, 2.46 - 0.05, 0.5, "back.out(2)");
     tl.to("#c-l", { x: 0, duration: 0.4, ease: "expo.out" }, 1.08 - 0.62);
     tl.fromTo("#c-r", { x: 900, rotation: 10 }, { x: 0, rotation: 0, duration: 0.42, ease: "back.out(1.3)" }, 1.08 - 0.55);
     shake(tl, "#b16-cam", 1.08 - 0.2, 22);

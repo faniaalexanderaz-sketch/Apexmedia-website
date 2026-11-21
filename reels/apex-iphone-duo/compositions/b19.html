@@ -65,7 +65,7 @@
       <img id="f-p" class="mul" src="assets/img/ip18-burg-a.png" style="position:absolute;left:40px;top:650px;height:820px;filter:brightness(1.06) contrast(1.03)" alt="" />
       <div id="f-slot" style="position:absolute;left:560px;top:690px;width:470px;height:740px;border:7px dashed #0071e3;border-radius:44px" data-layout-allow-overlap>
         <div id="f-q" style="position:absolute;left:0;right:0;top:230px;text-align:center;font:700 260px/1 'SF Pro Display';color:#c7c7cc">?</div>
-        <img id="f-d" src="assets/img/duo-vee.png" style="position:absolute;left:10px;top:90px;width:450px;height:573px;opacity:0" alt="" />
+        <div class="duo" id="f-d" data-motion-blur="off" data-layout-allow-overlap style="left:-465px;top:-148px"><div class="duo-g" id="f-d-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="f-d-l"><div class="f in" id="f-d-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="f-d-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div>
       </div>
     </div>
     </div>
@@ -123,7 +123,10 @@
     tl.fromTo("#b19-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 1.88, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#f-b", { opacity: 0, filter: "blur(12px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 1.24 - 0.9);
     tl.to("#f-q", { opacity: 0, scale: 0.4, duration: 0.14 }, 1.24 - 0.5);
-    tl.fromTo("#f-d", { opacity: 0, scale: 0.4, rotation: 10 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.36, ease: "back.out(2.2)" }, 1.24 - 0.46);
+    gsap.set("#f-d-g", { rotationY: -24, rotationX: 6 }); duoSet("#f-d", 70);
+    tl.fromTo("#f-d", { opacity: 0, scale: 0.15, rotation: 10 }, { opacity: 1, scale: 0.32, rotation: 0, duration: 0.36, ease: "back.out(2.2)" }, 1.24 - 0.46);
+    tl.to("#f-d-g", { rotationY: 20, duration: 1.88, ease: "none" }, 0);
+    fold(tl, "#f-d", 70, 30, 1.24 - 0.1, 0.4, "back.out(2)");
     tl.to("#f-slot", { borderColor: "#c9a227", boxShadow: "0 0 80px 10px rgba(201,162,39,0.45)", duration: 0.3 }, 1.24 - 0.4);
     tl.fromTo("#f-slot", { scale: 1 }, { scale: 1.06, duration: 0.16, yoyo: true, repeat: 1, immediateRender: false }, 1.24 - 0.1);
     exit(tl, "#b19-st", "D", 1.71);

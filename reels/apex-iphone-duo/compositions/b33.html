@@ -52,14 +52,16 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
   </style>
   <div id="root" data-composition-id="b33" data-width="1080" data-height="1920">
-    <div id="b33-st" class="st dark" data-layout-allow-overlap>
-      <div class="vid" id="e2-w" data-layout-allow-overlap style="transform-origin:50% 52%"><video id="e2-v" class="clip" src="assets/video/hero.mp4" data-start="0" data-duration="1.84" data-media-start="0.560" muted playsinline></video></div>
-      <div id="e2-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>e tutto questo</div>
-      <div id="e2-b" style="position:absolute;left:0;right:0;top:384px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.5)" data-layout-allow-overlap>solo perché…</div>
+    <div id="b33-st" class="st" data-layout-allow-overlap>
+      <div id="e2-a" style="position:absolute;left:0;right:0;top:290px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>e tutto questo</div>
+      <div id="e2-b" style="position:absolute;left:0;right:0;top:376px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>solo perché…</div>
+      <div id="e2-eb" style="position:absolute;left:0;right:0;top:268px;text-align:center;font:600 46px/1 'SF Pro Display';color:#b64400" data-layout-allow-overlap>Novità · appena uscito</div>
+      <div id="e2-t" style="position:absolute;left:0;right:0;top:334px;text-align:center;font:700 152px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;transform-origin:50% 50%" data-layout-allow-overlap>&#xF8FF; <span class="grad">iPhone Duo</span></div>
+      <div class="duo" id="e2-d" data-motion-blur="off" data-layout-allow-overlap style="left:-160px;top:520px"><div class="duo-sh" id="e2-d-sh"></div><div class="duo-g" id="e2-d-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="e2-d-l"><div class="f in" id="e2-d-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="e2-d-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div>
     </div>
   </div>
   <script>
@@ -110,11 +112,18 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    enter(tl, "#b33-st", "D");
-    tl.fromTo("#e2-w", { scale: 1.584 }, { scale: 1.4, duration: 1.84, ease: "none" }, 0);
+    enter(tl, "#b33-st", "R");
+    gsap.set("#e2-d", { scale: 0.62 }); gsap.set("#e2-d-g", { rotationY: 16, rotationX: 3 }); duoSet("#e2-d", 0);
+    gsap.set("#e2-eb, #e2-t", { opacity: 0 }); gsap.set("#e2-t", { scale: 1.4 });
+    tl.to("#e2-d", { scale: 0.8, y: 70, duration: 1.84, ease: "power2.inOut" }, 0);
+    tl.to("#e2-d-g", { rotationY: -30, rotationX: 8, duration: 1.84, ease: "power2.inOut" }, 0);
+    fold(tl, "#e2-d", 0, 40, 0.1, 0.5, "power2.inOut");
+    fold(tl, "#e2-d", 40, 105, 1.84 - 0.9, 0.9, "power2.inOut");
     tl.fromTo("#e2-a", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.04);
     tl.fromTo("#e2-b", { opacity: 0, filter: "blur(12px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 0.94 - 0.14);
-    tl.to("#e2-a, #e2-b", { opacity: 0, duration: 0.12 }, 1.84 - 0.12);
+    tl.to("#e2-a, #e2-b", { opacity: 0, duration: 0.14 }, 1.84 - 0.4);
+    tl.to("#e2-eb", { opacity: 1, duration: 0.2 }, 1.84 - 0.26);
+    tl.to("#e2-t", { opacity: 1, scale: 1.1, duration: 0.26, ease: "power2.in" }, 1.84 - 0.26);
     exit(tl, "#b33-st", "N", 1.67);
     window.__timelines["b33"] = tl;
   </script>

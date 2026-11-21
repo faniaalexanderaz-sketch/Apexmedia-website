@@ -52,19 +52,19 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
-    .tagp { position: absolute; display: flex; align-items: center; gap: 30px; padding: 34px 60px 34px 40px; border-radius: 36px; background: #f5f5f7; color: #1d1d1f; opacity: 0; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.8); white-space: nowrap; }
-    .tagp i { display: block; width: 44px; height: 44px; border-radius: 50%; background: #000; flex: none; }
+    .tagp { position: absolute; display: flex; align-items: center; gap: 30px; padding: 34px 60px 34px 40px; border-radius: 36px; background: #fff; color: #1d1d1f; opacity: 0; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.3), 0 0 0 2px #d2d2d7; white-space: nowrap; }
+    .tagp i { display: block; width: 44px; height: 44px; border-radius: 50%; background: #d2d2d7; flex: none; }
     .tagp b { font: 700 92px/1 "SF Pro Display"; letter-spacing: -0.04em; }
     .tagp.big { background: linear-gradient(135deg, #f6dc8c, #c9a227); padding: 46px 70px 46px 46px; }
     .tagp.big b { font-size: 122px; }
   </style>
   <div id="root" data-composition-id="b30" data-width="1080" data-height="1920">
-    <div id="b30-st" class="st dark" data-layout-allow-overlap>
+    <div id="b30-st" class="st" data-layout-allow-overlap>
 <div id="b30-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="b30-bg" data-layout-allow-overlap><i></i><i></i></div>
-      <div id="j-a" style="position:absolute;left:0;right:0;top:420px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#a1a1a6;" data-layout-allow-overlap>mettigli accanto</div>
+      <div id="j-a" style="position:absolute;left:0;right:0;top:420px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>mettigli accanto</div>
       <div class="tagp" id="j-1" style="left:160px;top:640px"><i></i><b>il tuo prezzo</b></div>
       <div class="tagp big" id="j-2" style="left:90px;top:900px"><i></i><b>uno più caro</b></div>
     </div>
@@ -118,15 +118,15 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    enter(tl, "#b30-st", "U");
-    tl.fromTo("#b30-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 1.73, ease: "sine.inOut" }, 0);
+    enter(tl, "#b30-st", "L");
+    tl.fromTo("#b30-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 1.73, ease: "sine.inOut" }, 0);
     tl.fromTo("#b30-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.73, ease: "none", stagger: 0 }, 0);
     gsap.set("#j-1", { opacity: 1, rotation: -3 });
     tl.fromTo("#j-2", { opacity: 0, x: 1000, rotation: 14 }, { opacity: 1, x: 0, rotation: 4, duration: 0.4, ease: "back.out(1.4)" }, 1.36 - 0.75);
     shake(tl, "#b30-cam", 1.36 - 0.4, 20);
     tl.to("#j-1", { scale: 0.8, duration: 0.35, ease: "power2.out" }, 1.36 - 0.35);
     tl.fromTo("#j-2", { scale: 1 }, { scale: 1.08, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 1.36 + 0.02);
-    exit(tl, "#b30-st", "B", 1.56);
+    exit(tl, "#b30-st", "U", 1.56);
     window.__timelines["b30"] = tl;
   </script>
 </template>

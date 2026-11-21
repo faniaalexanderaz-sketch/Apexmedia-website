@@ -124,8 +124,8 @@
 
     const tl = gsap.timeline({ paused: true });
     enter(tl, "#b24-st", "U");
-    tl.fromTo("#b24-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 2.01, ease: "sine.inOut" }, 0);
-    tl.fromTo("#b24-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 2.01, ease: "none", stagger: 0 }, 0);
+    tl.fromTo("#b24-cam", { scale: 1.0, rotationY: -3.0, rotationX: 1.6 }, { scale: 1.07, rotationY: 3.0, rotationX: -1.0, duration: 2.01, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b24-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 2.01, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#z-c", { y: 500 }, { y: 0, duration: 0.4, ease: "back.out(1.4)" }, 0);
     tl.fromTo("#z-ok", { opacity: 0, scale: 0.4, rotation: 10 }, { opacity: 1, scale: 1, rotation: 5, duration: 0.3, ease: "back.out(2.6)" }, 0.10 - 0.00 + 0.3);
     exit(tl, "#b24-st", "B", 1.84);

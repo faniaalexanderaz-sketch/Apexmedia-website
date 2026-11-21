@@ -52,15 +52,21 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
+    .mul { mix-blend-mode: multiply; }
+    .sw { display: block; width: 60px; height: 60px; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(0,0,0,0.12); }
+    #x-ring { display: block; width: 82px; height: 82px; border-radius: 50%; border: 5px solid #0071e3; margin-left: -102px; opacity: 0; flex: none; }
   </style>
   <div id="root" data-composition-id="b13" data-width="1080" data-height="1920">
-    <div id="b13-st" class="st dark" data-layout-allow-overlap>
-      <div class="vid" id="x-i" data-layout-allow-overlap style="transform-origin:74% 78%"><img src="assets/img/table-pro.jpg" alt="" /></div>
-      <div class="shade"></div>
-      <div id="x-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 70px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>il nuovo</div>
-      <div id="x-b" style="position:absolute;left:0;right:0;top:384px;text-align:center;font:700 112px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.5)" data-layout-allow-overlap>iPhone 18 Pro Max</div>
+    <div id="b13-st" class="st" data-layout-allow-overlap>
+<div id="b13-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="b13-bg" data-layout-allow-overlap><i></i><i></i></div>
+      <div class="eyebrow" id="x-e" style="top:284px;opacity:1">Novità</div>
+      <div id="x-b" style="position:absolute;left:0;right:0;top:334px;text-align:center;font:700 108px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>iPhone 18 Pro Max</div>
+      <img id="x-i" class="mul" src="assets/img/ip18-burg-pair.png" style="position:absolute;left:240px;top:452px;width:600px;height:1072px;transform-origin:50% 30%;filter:brightness(1.06) contrast(1.03)" alt="" />
+      <div id="x-sw" style="position:absolute;left:0;right:0;top:1580px;display:flex;justify-content:center;align-items:center;gap:26px" data-layout-allow-overlap><i class="sw" style="background:#2b2b2d"></i><i class="sw" style="background:#e3e4e5"></i><i class="sw" style="background:#c8dbe6"></i><i class="sw" style="background:#7a0f24"></i><i id="x-ring"></i><span style="font:600 44px/1 'SF Pro Display';color:#7a0f24;margin-left:14px">Borgogna</span></div>
+    </div>
     </div>
   </div>
   <script>
@@ -112,9 +118,13 @@
 
     const tl = gsap.timeline({ paused: true });
     enter(tl, "#b13-st", "R");
-    tl.fromTo("#x-i", { scale: 1.25 }, { scale: 1.0, duration: 0.4, ease: "expo.out" }, 0);
-    tl.to("#x-i", { scale: 1.9, duration: 1.21 - 0.4, ease: "power2.in" }, 0.4);
-    tl.fromTo("#x-b", { opacity: 0, filter: "blur(14px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 0.1);
+    tl.fromTo("#b13-cam", { scale: 1.0, rotationY: -2.2, rotationX: -1.6 }, { scale: 1.08, rotationY: 2.6, rotationX: 0.6, duration: 1.21, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b13-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 1.21, ease: "none", stagger: 0 }, 0);
+    tl.fromTo("#x-b", { opacity: 0, filter: "blur(14px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 0.04);
+    tl.fromTo("#x-i", { y: 260, scale: 0.86, rotation: 4 }, { y: 0, scale: 1, rotation: 0, duration: 0.5, ease: "expo.out" }, 0.02);
+    tl.to("#x-i", { scale: 1.05, duration: 1.21 - 0.5, ease: "none" }, 0.5);
+    tl.fromTo(".sw", { scale: 0 }, { scale: 1, duration: 0.2, ease: "back.out(3)", stagger: 0.05 }, 0.2);
+    tl.fromTo("#x-ring", { opacity: 0, x: -3 * 86 }, { opacity: 1, x: 0, duration: 0.3, ease: "back.out(1.6)" }, 0.5);
     exit(tl, "#b13-st", "D", 1.04);
     window.__timelines["b13"] = tl;
   </script>

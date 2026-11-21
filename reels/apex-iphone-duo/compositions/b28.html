@@ -121,8 +121,8 @@
     const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
 
     const tl = gsap.timeline({ paused: true });
-    enter(tl, "#b28-st", "Z");
-    tl.fromTo("#b28-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 3.03, ease: "sine.inOut" }, 0);
+    enter(tl, "#b28-st", "D");
+    tl.fromTo("#b28-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 3.03, ease: "sine.inOut" }, 0);
     tl.fromTo("#b28-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 3.03, ease: "none", stagger: 0 }, 0);
     tl.fromTo(".pl", { opacity: 0, y: 200 }, { opacity: 1, y: 0, duration: 0.34, ease: "back.out(1.5)", stagger: 0.08 }, 0.05);
     tl.to("#a-3", { y: -50, boxShadow: "0 40px 100px -30px rgba(201,162,39,0.6), 0 0 0 6px #c9a227", duration: 0.3, ease: "back.out(2)" }, 1.25 - 0.08);
@@ -130,7 +130,7 @@
     tl.to("#a-3", { y: 0, opacity: 0.45, duration: 0.3 }, 2.66 - 0.25);
     tl.to("#a-2", { y: -40, scale: 1.1, boxShadow: "0 40px 100px -30px rgba(0,113,227,0.5), 0 0 0 6px #0071e3", duration: 0.32, ease: "back.out(2.4)" }, 2.66 - 0.2);
     pop(tl, "#a-top", 2.66 - 0.02);
-    exit(tl, "#b28-st", "L", 2.86);
+    exit(tl, "#b28-st", "Z", 2.86);
     window.__timelines["b28"] = tl;
   </script>
 </template>

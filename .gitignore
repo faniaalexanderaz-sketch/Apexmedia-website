@@ -10,3 +10,4 @@ reels/*/.hyperframes/render-outputs.json
 reels/*/.hyperframes/artifacts/
 reels/*/renders/_*.log
 reels/*/assets/audio/tr.log
+reels/*/.hyperframes/cache/

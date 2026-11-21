@@ -54,16 +54,20 @@
 
     #root { background: #fff !important; }
 
-    .vb { display: block; flex: 1; border-radius: 18px 18px 0 0; background: linear-gradient(180deg, #34c759, #1d8a3c); transform-origin: 50% 100%; }
   </style>
   <div id="root" data-composition-id="b09" data-width="1080" data-height="1920">
     <div id="b09-st" class="st" data-layout-allow-overlap>
 <div id="b09-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="b09-bg" data-layout-allow-overlap><i></i><i></i></div>
-      <div id="g-a" style="position:absolute;left:0;right:0;top:330px;text-align:center;font:600 70px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>e puoi usarlo per</div>
-      <div id="g-b" style="position:absolute;left:0;right:0;top:420px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d8a3c;" data-layout-allow-overlap>vendere di più.</div>
-      <div style="position:absolute;left:150px;right:150px;top:760px;height:620px;display:flex;align-items:flex-end;gap:28px;border-bottom:5px solid #d2d2d7" data-layout-allow-overlap><i class="vb" style="height:130px"></i><i class="vb" style="height:210px"></i><i class="vb" style="height:300px"></i><i class="vb" style="height:420px"></i><i class="vb" style="height:560px"></i></div>
-      <svg viewBox="0 0 780 620" width="780" height="620" style="position:absolute;left:150px;top:700px;overflow:visible" data-layout-allow-overlap><path id="g-l" d="M40 520 L210 430 L370 340 L530 210 L720 40" fill="none" stroke="#1d1d1f" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path id="g-h" d="M660 40 H724 V104" fill="none" stroke="#1d1d1f" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div id="g-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 70px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>e puoi usarlo per</div>
+      <div id="g-b" style="position:absolute;left:0;right:0;top:386px;text-align:center;font:700 150px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d8a3c;" data-layout-allow-overlap>vendere di più.</div>
+      <div id="g-w" style="position:absolute;left:90px;top:690px;width:900px;height:700px;border-radius:64px;background:#1c1c1e;overflow:hidden;box-shadow:0 50px 120px -30px rgba(0,0,0,0.5)" data-layout-allow-overlap>
+        <div style="position:absolute;left:56px;top:52px;font:700 56px/1 'SF Pro Display';color:#fff">Vendite</div>
+        <div style="position:absolute;left:56px;top:122px;font:500 38px/1 'SF Pro Display';color:#8e8e93">questo mese</div>
+        <div id="g-up" style="position:absolute;right:56px;top:56px;padding:12px 26px;border-radius:14px;background:#30d158;color:#fff;font:700 44px/1 'SF Pro Display';opacity:0">in salita</div>
+        <svg viewBox="0 0 900 460" width="900" height="460" style="position:absolute;left:0;top:240px"><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#30d158" stop-opacity="0.45"/><stop offset="1" stop-color="#30d158" stop-opacity="0"/></linearGradient><clipPath id="gc"><rect id="g-clip" x="0" y="0" width="900" height="460"/></clipPath></defs>
+          <g clip-path="url(#gc)"><path d="M0 380 L90 360 L170 372 L260 320 L340 332 L430 262 L520 276 L610 190 L700 204 L790 110 L900 60 V460 H0 Z" fill="url(#gg)"/><path d="M0 380 L90 360 L170 372 L260 320 L340 332 L430 262 L520 276 L610 190 L700 204 L790 110 L900 60" fill="none" stroke="#30d158" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+      </div>
     </div>
     </div>
   </div>
@@ -118,9 +122,10 @@
     enter(tl, "#b09-st", "Z");
     tl.fromTo("#b09-cam", { scale: 1.0, rotationY: -2.2, rotationX: -1.6 }, { scale: 1.08, rotationY: 2.6, rotationX: 0.6, duration: 1.74, ease: "sine.inOut" }, 0);
     tl.fromTo("#b09-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 1.74, ease: "none", stagger: 0 }, 0);
-    tl.fromTo(".vb", { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "back.out(1.6)", stagger: 0.07 }, 0.1);
+    tl.fromTo("#g-w", { y: 900, rotation: 6 }, { y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.4)" }, 0.02);
+    tl.fromTo("#g-clip", { attr: { width: 0 } }, { attr: { width: 900 }, duration: 0.95, ease: "power2.inOut" }, 0.25);
     tl.fromTo("#g-b", { opacity: 0, scale: 1.3, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out" }, 0.74 - 0.1);
-    draw(tl, "#g-l", 0.74 - 0.05, 0.5); draw(tl, "#g-h", 1.20 - 0.05, 0.2);
+    tl.fromTo("#g-up", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.6)" }, 1.20 - 0.02);
     exit(tl, "#b09-st", "L", 1.57);
     window.__timelines["b09"] = tl;
   </script>

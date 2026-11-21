@@ -54,12 +54,20 @@
 
     #root { background: #fff !important; }
 
+    .imh { position: absolute; left: 0; right: 0; top: 232px; height: 172px; border-bottom: 2px solid #e8e8ed; text-align: center; }
+    .bub { position: absolute; max-width: 800px; padding: 32px 46px; border-radius: 58px; font: 500 64px/1.2 "SF Pro Display"; letter-spacing: -0.012em; opacity: 0; }
+    .bub.in { left: 56px; background: #e9e9eb; color: #000; border-bottom-left-radius: 16px; transform-origin: 0% 100%; }
+    .bub.me { right: 56px; background: #0a84ff; color: #fff; border-bottom-right-radius: 16px; transform-origin: 100% 100%; }
+    .dots i { display: inline-block; width: 30px; height: 30px; border-radius: 50%; background: #8e8e93; margin: 0 7px; }
   </style>
   <div id="root" data-composition-id="b12" data-width="1080" data-height="1920">
     <div id="b12-st" class="st" data-layout-allow-overlap>
 <div id="b12-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="b12-bg" data-layout-allow-overlap><i></i><i></i></div><div class="mq" id="b12-mq" data-layout-allow-overlap>1.639 € · 1.639 € · 1.639 € · 1.639 € · 1.639 € · </div>
-      <div style="position:absolute;left:0;right:0;top:700px;text-align:center" data-layout-allow-overlap><span id="s-b" style="position:relative;display:inline-block;font:700 196px/1.05 'SF Pro Display';letter-spacing:-0.05em;color:#d70015">Tantissimi.</span></div>
+      <div class="imh" data-layout-allow-overlap><div style="position:absolute;left:44px;top:34px;font:500 76px/1 'SF Pro Display';color:#0a84ff">‹</div><div style="display:inline-block;margin-top:14px;width:84px;height:84px;border-radius:50%;background:linear-gradient(#c7c7cc,#8e8e93);color:#fff;font:600 40px/84px 'SF Pro Display'">A</div><div style="font:500 30px/1.2 'SF Pro Display';color:#1d1d1f;margin-top:6px">Apex Media ›</div></div><div style="position:absolute;left:56px;top:1470px;width:84px;height:84px;border-radius:50%;background:#e9e9eb;color:#8e8e93;font:400 70px/78px 'SF Pro Display';text-align:center" data-layout-allow-overlap>+</div><div style="position:absolute;left:164px;top:1470px;width:860px;height:84px;border-radius:42px;border:2px solid #d1d1d6;font:400 40px/80px 'SF Pro Display';color:#c7c7cc;padding-left:34px;box-sizing:border-box" data-layout-allow-overlap>iMessage</div>
+      <div class="bub in" style="top:470px;opacity:1;font-size:60px">Sono tanti?</div>
+      <div class="bub me" id="s-b" style="top:690px;font:700 150px/1.1 'SF Pro Display';letter-spacing:-0.04em;padding:40px 60px;border-radius:80px;border-bottom-right-radius:20px">Tantissimi.</div>
+      <div id="s-c" style="position:absolute;right:70px;top:960px;font:500 34px/1 'SF Pro Display';color:#8e8e93;opacity:0">Consegnato</div>
     </div>
     </div>
   </div>
@@ -115,9 +123,9 @@
     tl.fromTo("#b12-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 0.86, ease: "sine.inOut" }, 0);
     tl.fromTo("#b12-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 0.86, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#b12-mq", { x: 0 }, { x: -1400, duration: 0.86, ease: "none" }, 0);
-    tl.fromTo("#s-b", { scale: 1.8, filter: "blur(14px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 0);
-    shake(tl, "#b12-cam", 0.08, 24);
-    tl.to("#s-b", { scale: 1.06, duration: 0.86 - 0.2, ease: "none" }, 0.2);
+    tl.fromTo("#s-b", { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.26, ease: "back.out(2.2)" }, 0.0);
+    shake(tl, "#b12-cam", 0.1, 22);
+    tl.fromTo("#s-c", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0.36);
     exit(tl, "#b12-st", "R", 0.69);
     window.__timelines["b12"] = tl;
   </script>

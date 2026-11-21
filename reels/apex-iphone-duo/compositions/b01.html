@@ -52,15 +52,14 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
   </style>
   <div id="root" data-composition-id="b01" data-width="1080" data-height="1920">
-    <div id="b01-st" class="st dark" data-layout-allow-overlap>
-      <div class="vid" id="h-w" data-layout-allow-overlap style="transform-origin:50% 52%"><video id="h-v" class="clip" src="assets/video/hero.mp4" data-start="0" data-duration="1.46" data-media-start="2.4" muted playsinline></video></div>
-      <div id="h-pill" style="position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:262px;padding:20px 44px;border-radius:999px;background:#ff3b30;color:#fff;font:700 60px/1 'SF Pro Display';letter-spacing:0.03em" data-layout-allow-overlap>APPENA USCITO</div>
-      <div id="h-t" style="position:absolute;left:0;right:0;top:384px;text-align:center;font:700 138px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.5)" data-layout-allow-overlap>&#xF8FF; iPhone Duo</div>
-      <div class="flash" id="h-fl"></div>
+    <div id="b01-st" class="st" data-layout-allow-overlap>
+      <div id="h-eb" style="position:absolute;left:0;right:0;top:268px;text-align:center;font:600 46px/1 'SF Pro Display';color:#b64400" data-layout-allow-overlap>Novità · appena uscito</div>
+      <div id="h-t" style="position:absolute;left:0;right:0;top:334px;text-align:center;font:700 152px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;transform-origin:50% 50%" data-layout-allow-overlap>&#xF8FF; <span class="grad">iPhone Duo</span></div>
+      <div class="duo" id="h-d" data-motion-blur="off" data-layout-allow-overlap style="left:-160px;top:520px"><div class="duo-sh" id="h-d-sh"></div><div class="duo-g" id="h-d-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="h-d-l"><div class="f in" id="h-d-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="h-d-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div>
     </div>
   </div>
   <script>
@@ -112,12 +111,15 @@
 
     const tl = gsap.timeline({ paused: true });
     enter(tl, "#b01-st", "N");
-    tl.fromTo("#h-w", { scale: 1.4 }, { scale: 1.254, duration: 1.46, ease: "none" }, 0);
-    tl.fromTo("#h-pill", { scale: 1.32, rotation: -7 }, { scale: 1, rotation: -3, duration: 0.3, ease: "back.out(2.2)" }, 0);
-    flash(tl, "#h-fl", 0.3, 0.25);
-    tl.fromTo("#h-t", { opacity: 0, filter: "blur(18px)", scale: 1.25 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, ease: "expo.out" }, 0.4);
-    shake(tl, "#b01-st", 0.3, 16);
-
+    gsap.set("#h-d", { scale: 0.8, y: 70 }); gsap.set("#h-d-g", { rotationY: -30, rotationX: 8 }); duoSet("#h-d", 105);
+    gsap.set("#h-t", { scale: 1.1 });
+    fold(tl, "#h-d", 105, 0, 0.04, 0.6, "power3.out");
+    tl.to("#h-d", { scale: 0.7, y: 0, duration: 0.6, ease: "power3.out" }, 0.04);
+    tl.to("#h-d", { scale: 0.76, duration: 1.46 - 0.64, ease: "none" }, 0.64);
+    tl.to("#h-d-g", { rotationY: 14, rotationX: 3, duration: 1.46, ease: "power2.out" }, 0);
+    tl.to("#h-t", { scale: 1, duration: 0.34, ease: "expo.out" }, 0);
+    tl.fromTo("#h-eb", { y: -14 }, { y: 0, duration: 0.3, ease: "back.out(3)" }, 0);
+    shake(tl, "#b01-st", 0.3, 10);
     exit(tl, "#b01-st", "L", 1.29);
     window.__timelines["b01"] = tl;
   </script>

@@ -52,17 +52,19 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
   </style>
   <div id="root" data-composition-id="b08" data-width="1080" data-height="1920">
-    <div id="b08-st" class="st dark" data-layout-allow-overlap>
+    <div id="b08-st" class="st" data-layout-allow-overlap>
 <div id="b08-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="b08-bg" data-layout-allow-overlap><i></i><i></i></div><div class="mq" id="b08-mq" data-layout-allow-overlap>anche tu · anche tu · anche tu · anche tu · anche tu · </div>
-      <div id="u-a" style="position:absolute;left:0;right:0;top:470px;text-align:center;font:600 76px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#a1a1a6;" data-layout-allow-overlap>questo trucco</div>
-      <div id="u-b" style="position:absolute;left:0;right:0;top:560px;text-align:center;font:700 118px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>lo stai subendo</div>
-      <div id="u-c" style="position:absolute;left:0;right:0;top:720px;text-align:center" data-layout-allow-overlap><span style="position:relative;display:inline-block;font:700 224px/1.05 'SF Pro Display';letter-spacing:-0.05em;color:#ffd60a">anche tu.<i id="u-box" style="position:absolute;left:-24px;right:-24px;top:10px;bottom:0;border:6px dashed #ffd60a;border-radius:20px;opacity:0"></i></span></div>
-      <div id="u-cur" class="cur" style="left:880px;top:960px"><svg viewBox="0 0 24 24" width="60" height="60"><path d="M4 2 L4 19 L8.5 15 L11.5 22 L14.5 20.7 L11.6 14 L17.5 14 Z" fill="#f5f5f7" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+      <div id="u-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 76px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>questo trucco</div>
+      <div id="u-b" style="position:absolute;left:0;right:0;top:386px;text-align:center;font:700 118px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>lo stai subendo</div>
+      <svg id="u-face" viewBox="0 0 200 200" width="330" height="330" style="position:absolute;left:375px;top:560px;overflow:visible" fill="none" stroke="#0071e3" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" data-layout-allow-overlap><path d="M10 60 V32 Q10 10 32 10 H60"/><path d="M140 10 H168 Q190 10 190 32 V60"/><path d="M190 140 V168 Q190 190 168 190 H140"/><path d="M60 190 H32 Q10 190 10 168 V140"/><path d="M66 72 V92"/><path d="M134 72 V92"/><path d="M102 72 V108 Q102 118 90 118"/><path d="M66 138 Q100 164 134 138"/></svg>
+      <i id="u-scan" style="position:absolute;left:345px;top:560px;width:390px;height:12px;border-radius:6px;background:linear-gradient(90deg, rgba(0,113,227,0), #0071e3, rgba(0,113,227,0));opacity:0" data-layout-allow-overlap></i>
+      <div id="u-c" style="position:absolute;left:0;right:0;top:990px;text-align:center;font:700 236px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap>anche tu.</div>
+      <div id="u-d" style="position:absolute;left:0;right:0;top:1270px;text-align:center;font:600 44px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#1d8a3c;" data-layout-allow-overlap>Face ID · riconosciuto</div>
     </div>
     </div>
   </div>
@@ -118,11 +120,14 @@
     tl.fromTo("#b08-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 1.59, ease: "sine.inOut" }, 0);
     tl.fromTo("#b08-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.59, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#b08-mq", { x: 0 }, { x: -1400, duration: 1.59, ease: "none" }, 0);
+    tl.fromTo("#u-face", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.2)" }, 0.04);
+    tl.fromTo("#u-scan", { opacity: 0, y: 0 }, { opacity: 1, y: 330, duration: 0.42, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0.3);
+    tl.to("#u-scan", { opacity: 0, duration: 0.1 }, 1.14);
     tl.fromTo("#u-b", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 0.66 - 0.12);
     tl.fromTo("#u-c", { opacity: 0, scale: 1.6, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out" }, 1.05 - 0.06);
-    shake(tl, "#b08-cam", 1.05 + 0.02, 18);
-    tl.fromTo("#u-box", { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 0.18 }, 1.05 + 0.2);
-    tl.fromTo("#u-cur", { opacity: 0, x: 140, y: 160 }, { opacity: 1, x: 0, y: 0, duration: 0.24, ease: "power3.out" }, 1.05 + 0.14);
+    tl.to("#u-face", { stroke: "#1d8a3c", scale: 1.12, duration: 0.16, ease: "back.out(3)" }, 1.05 - 0.02);
+    tl.fromTo("#u-d", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 1.05 + 0.1);
+    shake(tl, "#b08-cam", 1.05 + 0.02, 16);
     exit(tl, "#b08-st", "Z", 1.42);
     window.__timelines["b08"] = tl;
   </script>

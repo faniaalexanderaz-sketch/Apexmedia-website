@@ -52,14 +52,23 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
   </style>
   <div id="root" data-composition-id="b22" data-width="1080" data-height="1920">
-    <div id="b22-st" class="st dark" data-layout-allow-overlap>
-      <div class="vid" id="w-i-w" data-layout-allow-overlap><video id="w-i" class="clip" src="assets/video/c-window.mp4" data-start="0" data-duration="1.78" data-media-start="0.2" muted playsinline></video></div><div class="shade"></div>
-      <div id="w-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>il Duo</div>
-      <div id="w-b" style="position:absolute;left:0;right:0;top:390px;text-align:center;font:700 122px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;text-shadow:0 8px 40px rgba(0,0,0,0.6)" data-layout-allow-overlap><span style="color:#ff453a">non</span> deve vendere.</div>
+    <div id="b22-st" class="st" data-layout-allow-overlap>
+<div id="b22-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="b22-bg" data-layout-allow-overlap><i></i><i></i></div><div class="mq" id="b22-mq" data-layout-allow-overlap>in vetrina · in vetrina · in vetrina · in vetrina · in vetrina · </div>
+      <div id="w-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 76px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#86868b;" data-layout-allow-overlap>per questo il Duo</div>
+      <div id="w-b" style="position:absolute;left:0;right:0;top:386px;text-align:center;font:700 110px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;" data-layout-allow-overlap><span style="color:#d70015">non</span> deve vendere.</div>
+      <div id="w-c" style="position:absolute;left:0;right:0;top:340px;text-align:center;font:700 128px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1d1d1f;opacity:0" data-layout-allow-overlap>deve solo stare lì.</div>
+      <div id="w-spot" style="position:absolute;left:140px;top:520px;width:800px;height:900px;background:linear-gradient(180deg, rgba(255,204,0,0), rgba(255,204,0,0.2));clip-path:polygon(44% 0, 56% 0, 100% 100%, 0 100%);filter:blur(8px);opacity:0" data-layout-allow-overlap></div>
+      <div id="w-ped" style="position:absolute;left:240px;top:1300px;width:600px;height:360px;-webkit-mask-image:linear-gradient(to bottom, #000 45%, transparent 100%);mask-image:linear-gradient(to bottom, #000 45%, transparent 100%)" data-layout-allow-overlap>
+        <i style="position:absolute;left:0;top:60px;width:600px;height:300px;background:linear-gradient(90deg,#d6d6db,#f8f8fa 42%,#dfdfe4)"></i>
+        <i style="position:absolute;left:0;top:0;width:600px;height:120px;border-radius:50%;background:#f4f4f6;box-shadow:inset 0 0 0 2px #d2d2d7"></i>
+      </div>
+      <div class="duo" id="d3" data-motion-blur="off" data-layout-allow-overlap style="left:-160px;top:560px"><div class="duo-g" id="d3-g"><div class="duo-h duo-r"><div class="f in" style="background-image:url(assets/img/duo-inner-r.png)"></div><div class="f out" style="background-image:url(assets/img/duo-back.png)"></div></div><div class="duo-h duo-l" id="d3-l"><div class="f in" id="d3-li" style="background-image:url(assets/img/duo-inner-l.png)"></div><div class="f out" id="d3-lo" style="background-image:url(assets/img/duo-outer.png)"></div></div></div></div>
+    </div>
     </div>
   </div>
   <script>
@@ -111,9 +120,19 @@
 
     const tl = gsap.timeline({ paused: true });
     enter(tl, "#b22-st", "L");
-    tl.fromTo("#w-i-w", { scale: 1.25 }, { scale: 1.0, duration: 0.45, ease: "expo.out" }, 0);
+    tl.fromTo("#b22-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 3.16, ease: "sine.inOut" }, 0);
+    tl.fromTo("#b22-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 3.16, ease: "none", stagger: 0 }, 0);
+    tl.fromTo("#b22-mq", { x: 0 }, { x: -1400, duration: 3.16, ease: "none" }, 0);
+    gsap.set("#d3", { scale: 0.5 }); gsap.set("#d3-g", { rotationX: 6 }); duoSet("#d3", 78);
+    tl.fromTo("#d3-g", { rotationY: -50 }, { rotationY: 50, duration: 3.16, ease: "none" }, 0);
+    tl.fromTo("#d3", { y: -900 }, { y: 0, duration: 0.5, ease: "bounce.out" }, 0.05);
+    tl.fromTo("#w-ped", { y: 500 }, { y: 0, duration: 0.4, ease: "expo.out" }, 0);
     tl.fromTo("#w-b", { opacity: 0, filter: "blur(12px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 0.79 - 0.12);
-    exit(tl, "#b22-st", "N", 1.61);
+    blurOut(tl, "#w-a, #w-b", 1.78 - 0.16, 0.14);
+    tl.fromTo("#w-c", { opacity: 0, filter: "blur(12px)", scale: 1.15 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.24, ease: "expo.out" }, 1.78 - 0.02);
+    tl.fromTo("#w-spot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.78);
+    fold(tl, "#d3", 78, 30, 1.78, 0.5, "back.out(2)");
+    exit(tl, "#b22-st", "U", 2.99);
     window.__timelines["b22"] = tl;
   </script>
 </template>

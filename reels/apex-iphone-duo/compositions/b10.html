@@ -52,16 +52,21 @@
     .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
-    #root { background: #000 !important; }
+    #root { background: #fff !important; }
 
+    .imh { position: absolute; left: 0; right: 0; top: 232px; height: 172px; border-bottom: 2px solid #e8e8ed; text-align: center; }
+    .bub { position: absolute; max-width: 800px; padding: 32px 46px; border-radius: 58px; font: 500 64px/1.2 "SF Pro Display"; letter-spacing: -0.012em; opacity: 0; }
+    .bub.in { left: 56px; background: #e9e9eb; color: #000; border-bottom-left-radius: 16px; transform-origin: 0% 100%; }
+    .bub.me { right: 56px; background: #0a84ff; color: #fff; border-bottom-right-radius: 16px; transform-origin: 100% 100%; }
+    .dots i { display: inline-block; width: 30px; height: 30px; border-radius: 50%; background: #8e8e93; margin: 0 7px; }
   </style>
   <div id="root" data-composition-id="b10" data-width="1080" data-height="1920">
-    <div id="b10-st" class="st dark" data-layout-allow-overlap>
+    <div id="b10-st" class="st" data-layout-allow-overlap>
 <div id="b10-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="b10-bg" data-layout-allow-overlap><i></i><i></i></div>
-      <div id="q-m" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:700 700px/1 'SF Pro Display';color:#ffd60a;opacity:0.95" data-layout-allow-overlap>?</div>
-      <div id="q-a" style="position:absolute;left:0;right:0;top:1080px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#f5f5f7;" data-layout-allow-overlap>ti faccio una</div>
-      <div id="q-b" style="position:absolute;left:0;right:0;top:1170px;text-align:center;font:700 200px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>domanda.</div>
+      <div class="imh" data-layout-allow-overlap><div style="position:absolute;left:44px;top:34px;font:500 76px/1 'SF Pro Display';color:#0a84ff">‹</div><div style="display:inline-block;margin-top:14px;width:84px;height:84px;border-radius:50%;background:linear-gradient(#c7c7cc,#8e8e93);color:#fff;font:600 40px/84px 'SF Pro Display'">A</div><div style="font:500 30px/1.2 'SF Pro Display';color:#1d1d1f;margin-top:6px">Apex Media ›</div></div><div style="position:absolute;left:56px;top:1470px;width:84px;height:84px;border-radius:50%;background:#e9e9eb;color:#8e8e93;font:400 70px/78px 'SF Pro Display';text-align:center" data-layout-allow-overlap>+</div><div style="position:absolute;left:164px;top:1470px;width:860px;height:84px;border-radius:42px;border:2px solid #d1d1d6;font:400 40px/80px 'SF Pro Display';color:#c7c7cc;padding-left:34px;box-sizing:border-box" data-layout-allow-overlap>iMessage</div>
+      <div class="bub in" id="q-1" style="top:520px;font-size:112px;font-weight:600;max-width:900px;padding:44px 56px;border-radius:72px;border-bottom-left-radius:18px">Ti faccio una domanda.</div>
+      <div class="bub in dots" id="q-2" style="top:900px;padding:42px 46px"><i></i><i></i><i></i></div>
     </div>
     </div>
   </div>
@@ -116,8 +121,9 @@
     enter(tl, "#b10-st", "L");
     tl.fromTo("#b10-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 1.13, ease: "sine.inOut" }, 0);
     tl.fromTo("#b10-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.13, ease: "none", stagger: 0 }, 0);
-    tl.fromTo("#q-m", { scale: 0.2, rotation: -30, opacity: 0 }, { scale: 1, rotation: 8, opacity: 0.9, duration: 0.4, ease: "back.out(2)" }, 0.02);
-    tl.to("#q-m", { rotation: -4, duration: 1.13 - 0.4, ease: "sine.inOut" }, 0.42);
+    tl.fromTo("#q-1", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.03);
+    tl.fromTo("#q-2", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.26, ease: "back.out(2)" }, 0.5);
+    tl.fromTo("#q-2 i", { y: 0, opacity: 0.4 }, { y: -14, opacity: 1, duration: 0.16, yoyo: true, repeat: 3, stagger: 0.09, ease: "sine.inOut" }, 0.56);
     exit(tl, "#b10-st", "U", 0.96);
     window.__timelines["b10"] = tl;
   </script>

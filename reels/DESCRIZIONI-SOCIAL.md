@@ -2038,7 +2038,7 @@ Trattamenti olistici per il benessere, non prestazioni sanitarie.
 
 ## 67. Apple ha appena fatto uscire un iPhone che si piega in due (iPhone Duo e l'effetto àncora)
 
-Video Apex, versione 3: voce continua senza pause, 31 scene brevi, tre clip generate in movimento (camera che attraversa lo store fino al cartellino, mano con il Pro Max, vetrina di notte con i passanti), Duo in 3D che si apre, camera 3D e sfondi animati in ogni scena grafica, una transizione diversa a ogni stacco, poche scritte (solo numeri e parole chiave). Chiude con MOTION e poi "E tutto questo, solo perché..." che riporta alla prima frase (loop). File: `apex-iphone-duo/renders/apex-iphone-duo-9x16.mp4` (versioni precedenti: `apex-iphone-duo-v1-9x16.mp4`, `apex-iphone-duo-v2-9x16.mp4`).
+Video Apex, versione 4: tutto su sfondo bianco in stile Apple, con il font originale. Ogni informazione passa da una schermata in stile Apple rifatta da me: pagina Store con prezzo e memorie (256 GB 2.369 €, 512 GB 2.619 €, 1 TB 3.119 €, 2 TB 3.869 €), Face ID, widget con il grafico, Messaggi, pagina prodotto con la scelta del colore, Calcolatrice (2.369 − 1.639 = 730), Dizionario, notifiche, Note con la carta dei vini, tastiera iOS che scrive MOTION. Il Duo è in 3D e si apre e si chiude in più scene, il Pro Max ruota in una clip generata su fondo bianco. Voce continua, 29 scene, camera 3D e una transizione a ogni stacco. Chiude con MOTION e poi "E tutto questo, solo perché..." con il Duo che torna nella posa del primo fotogramma (loop). File: `apex-iphone-duo/renders/apex-iphone-duo-9x16.mp4` (versioni precedenti: `apex-iphone-duo-v1-9x16.mp4`, `apex-iphone-duo-v2-9x16.mp4`).
 
 **TikTok**
 ```text
