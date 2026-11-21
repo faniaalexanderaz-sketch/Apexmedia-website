@@ -2067,3 +2067,95 @@ Se vuoi sapere come creo questi video, scrivi MOTION nei commenti e ti spiego tu
 Prezzi dal sito Apple Italia (novembre 2026). L'effetto àncora è descritto da Tversky e Kahneman (1974). Che il Duo serva anche da àncora è una mia lettura, non una dichiarazione di Apple.
 #iphoneduo #apple #iphone18promax #marketing #psicologia #prezzi #apexmedia
 ```
+
+---
+
+## 68. GTA 6 ha incassato più di qualsiasi film in un giorno (parola LANCIO)
+
+Stile neon anni '80, griglia, clip dell'auto al tramonto, della città e della folla. 56 s, loop: l'ultima frase "Perché è così che..." riporta alla prima. File: `apex-gta6-lancio/renders/apex-gta6-lancio-9x16.mp4`. Da pubblicare subito (GTA 6 è uscito il 19 novembre).
+
+**TikTok**
+```text
+In 24 ore un videogioco ha incassato più di qualsiasi film nella storia del cinema. E scommetto che il merito non è del gioco. Scrivi LANCIO e ti mando il piano di lancio in 3 settimane.
+#gta6 #marketing #lancio #apexmedia
+```
+
+**Instagram**
+```text
+In 24 ore un videogioco ha incassato più di qualsiasi film nella storia del cinema. In tutta la sua vita.
+
+GTA 6: circa 3,8 miliardi di dollari il primo giorno. Il film che ha incassato di più al mondo è arrivato a circa 2,9 miliardi, in anni. GTA 5, nel 2013, il primo giorno aveva fatto 800 milioni: quasi cinque volte meno.
+
+Cosa è cambiato? L'attesa. Tredici anni tra un capitolo e l'altro, e 32,5 milioni di persone che l'hanno pagato prima ancora di poterci giocare.
+
+La lezione: la gente non compra quello che vede subito. Compra quello che ha aspettato. Annuncia prima di vendere. Dai una data. Fai vedere un pezzo. Poi stai zitto, e lascia parlare loro.
+
+Tu ci hai già giocato, o aspetti che cali di prezzo? Scrivi GIÀ o ASPETTO.
+
+Scrivi LANCIO nei commenti e ti mando il piano di lancio in tre settimane, pronto da copiare.
+
+Fonti: stima di Take-Two del 20 novembre 2026 (3,79 miliardi il primo giorno, potrebbe includere i preordini; 32,5 milioni di preordini); GTA 5: oltre 800 milioni il primo giorno (Take-Two, 2013); record del cinema circa 2,92 miliardi (Avengers: Endgame / Avatar). Che il merito sia l'attesa è una mia lettura. Immagini generiche, nessun materiale ufficiale del gioco.
+#gta6 #gta #rockstar #marketing #lancio #business #apexmedia
+```
+
+---
+
+## 69. Black Friday: il numero che 3 negozi su 4 non ti fanno vedere (parola SCONTO)
+
+Tutto nero e rosso: cartellino, pagina prodotto, calendario, inchiesta, storico prezzi. 62 s, loop: "E prima di pagare, guarda bene. Perché..." riporta al cartellino. File: `apex-black-friday/renders/apex-black-friday-9x16.mp4`. Da pubblicare entro il 25 novembre (il Black Friday è il 27).
+
+**TikTok**
+```text
+Su questo cartellino c'è un numero che 3 negozi online su 4 non ti fanno vedere bene. Scrivi SCONTO e ti mando i 3 strumenti gratis per vedere il prezzo vero.
+#blackfriday #sconti #risparmio #apexmedia
+```
+
+**Instagram**
+```text
+Su questo cartellino c'è un numero che 3 negozi online su 4 non ti fanno vedere bene.
+
+In Italia il prezzo barrato non può essere uno qualsiasi: per legge deve essere il prezzo più basso degli ultimi 30 giorni. Ed è scritto piccolo. Quando c'è.
+
+Altroconsumo ha controllato 208 negozi online: solo uno su quattro lo mostrava come si deve. In Inghilterra hanno seguito le offerte del Black Friday per un anno intero: più di 8 su 10 si trovavano allo stesso prezzo, o meno, nei sei mesi prima o dopo.
+
+Eppure più di metà degli italiani crede che gli sconti siano veri. Tu? Scrivi VERO o FINTO.
+
+Il modo per scoprirlo c'è, ed è gratis: ci sono siti che ti mostrano la storia del prezzo, giorno per giorno.
+
+Scrivi SCONTO nei commenti e ti mando i tre strumenti gratis, e come usarli in dieci secondi.
+
+Manda questo video a chi ha già il carrello pieno.
+
+Fonti: Codice del Consumo art. 17-bis (D.lgs. 26/2023); inchiesta Altroconsumo su 208 siti (febbraio 2026); Which?, Black Friday 2024 seguito per un anno (84% delle offerte); BCG, novembre 2026 (55% degli italiani crede che gli sconti siano veri). Cuffie e prezzi del video sono un esempio.
+#blackfriday #sconti #offerte #risparmio #consumatori #marketing #apexmedia
+```
+
+---
+
+## 70. Spotify Wrapped: 200 milioni di persone fanno pubblicità gratis (parola WRAPPED)
+
+Verde e nero, schede colorate tipo riepilogo, clip della ragazza con le cuffie. 49 s, loop: "Ed è per questo che..." riporta a "tra pochi giorni 200 milioni di persone...". File: `apex-spotify-wrapped/renders/apex-spotify-wrapped-9x16.mp4`. Da pubblicare il giorno in cui esce il Wrapped 2026 (l'anno scorso il 3 dicembre). Se esce prima di quando pubblichi, cambia "tra pochi giorni" nella descrizione.
+
+**TikTok**
+```text
+Tra pochi giorni 200 milioni di persone faranno pubblicità gratis a un'azienda. E tu sarai una di quelle. Scrivi il tuo artista n.1 e WRAPPED per il modello da usare nella tua attività.
+#spotifywrapped #marketing #apexmedia
+```
+
+**Instagram**
+```text
+Tra pochi giorni 200 milioni di persone faranno pubblicità gratis a un'azienda. In un giorno solo. E tu sarai una di quelle.
+
+Si chiama Spotify Wrapped. L'anno scorso, nelle prime 24 ore, l'hanno aperto più di 200 milioni di persone, con più di 500 milioni di condivisioni. Storie, screenshot, gruppi WhatsApp. Gratis.
+
+Ma la gente non sta condividendo Spotify. Sta condividendo se stessa: "guarda che gusti ho". Spotify ti dà solo lo specchio, il logo ci finisce dentro da solo. E nessuno la chiama pubblicità.
+
+Chi sarà il tuo artista numero uno quest'anno? Scrivilo nei commenti, vediamo chi vince.
+
+Ora pensa a un bar che a dicembre scrive a ogni cliente: "Quest'anno hai preso 140 caffè da noi. Sei tra i nostri clienti più fedeli." Quanti lo metterebbero in storia?
+
+Scrivi WRAPPED e ti mando il modello per fare il Wrapped della tua attività.
+
+Fonti: dati di Spotify sul Wrapped 2025 (uscito il 3 dicembre 2025: oltre 200 milioni di utenti e 500 milioni di condivisioni nelle prime 24 ore). Il bar dei 140 caffè è un esempio. Nessun logo o grafica ufficiale di Spotify.
+#spotifywrapped #spotify #marketing #fidelizzazione #business #apexmedia
+```
