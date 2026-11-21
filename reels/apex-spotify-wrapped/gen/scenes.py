@@ -50,7 +50,7 @@ add('s01', 'start', 'persone', f'''      {clip('a-v', 'listen.mp4', T['persone']
 add('s02', 'persone', 'azienda', f'''      <div class="rc" id="b-ad" style="left:110px;top:420px;width:860px;height:760px;background:linear-gradient(150deg,{G},#0f7a35)" data-layout-allow-overlap>
         <div style="position:absolute;left:60px;top:60px;font:700 40px/1 {SF};letter-spacing:0.2em;color:#000">PUBBLICITÀ</div>
         <div style="position:absolute;left:60px;top:150px;font:800 150px/1 {SF};letter-spacing:-0.05em;color:#000">costo</div>
-        <div id="b-p" style="position:absolute;left:60px;top:330px;font:800 300px/1 {SF};letter-spacing:-0.06em;color:#000"><span id="b-v">500.000</span> €</div>
+        <div id="b-p" style="position:absolute;left:60px;top:360px;font:800 170px/1 {SF};letter-spacing:-0.05em;color:#000;white-space:nowrap"><span id="b-v">500.000</span> €</div>
       </div>
       <div id="b-st" style="position:absolute;left:250px;top:1220px;padding:18px 60px;border:14px solid {G};border-radius:30px;color:{G};font:900 140px/1 {SF};opacity:0" data-layout-allow-overlap>GRATIS</div>''', '''    tl.fromTo("#b-ad", { rotationY: -80, opacity: 0, transformPerspective: 1600 }, { rotationY: 0, opacity: 1, duration: 0.42, ease: "expo.out" }, 0.0);
     count(tl, "#b-v", 500000, 0, «pubblicita» - 0.1, 0.6, MIL, "power3.in");
