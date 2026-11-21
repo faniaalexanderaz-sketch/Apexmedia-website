@@ -1,0 +1,159 @@
+<template>
+  <style>
+
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Regular.otf") format("opentype"), url("assets/fonts/InterDisplay-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Medium.otf") format("opentype"), url("assets/fonts/InterDisplay-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Semibold.otf") format("opentype"), url("assets/fonts/InterDisplay-SemiBold.otf") format("opentype"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SF-Pro-Display-Bold.otf") format("opentype"), url("assets/fonts/InterDisplay-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; }
+    #root { position: absolute; inset: 0; background: #fff; overflow: hidden; font-family: "SF Pro Display"; color: #1d1d1f; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+    .st { position: absolute; inset: 0; background: #fff; overflow: hidden; perspective: 1700px; }
+    /* moving light behind every graphic scene, and an optional giant outlined word drifting across */
+    .bgfx { position: absolute; inset: -200px; pointer-events: none; }
+    .bgfx i { position: absolute; display: block; width: 1300px; height: 1300px; border-radius: 50%; }
+    .bgfx i:nth-child(1) { left: -300px; top: 100px; background: radial-gradient(closest-side, rgba(0,113,227,0.14), rgba(0,113,227,0)); }
+    .bgfx i:nth-child(2) { left: 500px; top: 1100px; background: radial-gradient(closest-side, rgba(122,15,36,0.13), rgba(122,15,36,0)); }
+    .dark .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(41,151,255,0.30), rgba(41,151,255,0)); }
+    .dark .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(191,36,72,0.30), rgba(191,36,72,0)); }
+    .mq { position: absolute; left: 0; top: 1180px; white-space: nowrap; font: 700 460px/1 "SF Pro Display"; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 4px rgba(0,0,0,0.07); pointer-events: none; }
+    .dark .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.11); }
+    .st.grey { background: #f5f5f7; }
+    .st.dark { background: #000; color: #f5f5f7; }
+    .cam { position: absolute; inset: 0; background: inherit; transform-origin: 50% 46%; }
+    .zone { z-index: 5; position: absolute; left: 70px; right: 70px; top: 360px; text-align: center; }
+    .line { display: block; overflow: hidden; padding: 8px 0 16px; font: 600 84px/1.06 "SF Pro Display"; letter-spacing: -0.022em; }
+    .line > span { display: inline-block; }
+    .t { font: 600 84px/1.06 "SF Pro Display"; letter-spacing: -0.022em; }
+    .tb { font: 700 120px/1.02 "SF Pro Display"; letter-spacing: -0.035em; }
+    .mut { color: #86868b; }
+    .dark .mut { color: #a1a1a6; }
+    .acc { color: #7a0f24; }
+    .blue { color: #0071e3; }
+    .eyebrow { position: absolute; left: 0; right: 0; text-align: center; font: 600 34px/1 "SF Pro Display"; letter-spacing: -0.01em; color: #b64400; opacity: 0; }
+    .grad { background: linear-gradient(100deg, #6e7fb8 0%, #1d2a57 38%, #7b8fd0 62%, #1a2244 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .ch { display: inline-block; white-space: pre; }
+    .w { display: inline-block; white-space: pre; }
+    .hl { position: relative; display: inline-block; }
+    .hl > i { position: absolute; left: -10px; right: -10px; top: 8%; bottom: 4%; background: rgba(255, 214, 10, 0.5); border-radius: 10px; transform-origin: left center; }
+    .hl > span { position: relative; }
+    .vid { position: absolute; inset: 0; overflow: hidden; }
+    .vid video, .vid img { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+    .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.42) 30%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.25) 100%); }
+    .card { position: absolute; border-radius: 40px; background: #fff; box-shadow: 0 40px 100px -30px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.04); }
+    .chip { position: absolute; padding: 18px 34px; border-radius: 999px; background: #1d1d1f; color: #fff; font: 600 44px/1 "SF Pro Display"; letter-spacing: -0.015em; white-space: nowrap; opacity: 0; }
+    .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 40; }
+    .cur { position: absolute; width: 60px; height: 60px; opacity: 0; z-index: 30; }
+    /* --- the foldable, built from four flat textures on two hinged halves --- */
+    .duo { position: absolute; width: 1400px; height: 1037px; perspective: 3400px; transform-origin: 50% 50%; }
+    .duo-g { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .duo-h { position: absolute; top: 0; width: 700px; height: 1037px; transform-style: preserve-3d; }
+    .duo-r { left: 700px; }
+    .duo-l { left: 0; transform-origin: 100% 50%; }
+    .duo .f { position: absolute; inset: 0; background-size: 100% 100%; backface-visibility: hidden; }
+    .duo .f.out { transform: rotateY(180deg) translateZ(10px); }
+    .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
+
+
+    .st.neon { background: #0b0614; color: #fff; }
+    .neon .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,61,139,0.34), rgba(255,61,139,0)); }
+    .neon .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(0,229,255,0.24), rgba(0,229,255,0)); }
+    .neon .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.09); }
+    .ng { background: linear-gradient(100deg, #ff3d8b 0%, #ff9f43 55%, #ffd166 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .ngc { background: linear-gradient(100deg, #00e5ff 0%, #8b5cff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .glow { filter: drop-shadow(0 0 28px rgba(255,61,139,0.55)); }
+    .grid { position: absolute; left: -540px; width: 2160px; top: 1180px; height: 1000px; background-image: linear-gradient(rgba(255,61,139,0.6) 3px, transparent 3px), linear-gradient(90deg, rgba(255,61,139,0.6) 3px, transparent 3px); background-size: 120px 120px; transform: perspective(520px) rotateX(64deg); transform-origin: 50% 0%; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); }
+    .sun { position: absolute; left: 240px; top: 640px; width: 600px; height: 600px; border-radius: 50%; background: linear-gradient(180deg, #ffd166 0%, #ff9f43 35%, #ff3d8b 70%, #8b5cff 100%); -webkit-mask-image: repeating-linear-gradient(180deg, #000 0px, #000 46px, transparent 46px, transparent 60px); mask-image: repeating-linear-gradient(180deg, #000 0px, #000 46px, transparent 46px, transparent 60px); opacity: 0.85; }
+    .dc { position: absolute; border-radius: 44px; background: rgba(28,22,44,0.92); box-shadow: 0 0 0 2px rgba(255,255,255,0.08), 0 40px 120px -30px rgba(0,0,0,0.8); }
+    .nchip { position: absolute; padding: 16px 32px; border-radius: 999px; font: 700 44px/1 "SF Pro Display"; letter-spacing: -0.01em; white-space: nowrap; color: #0b0614; background: linear-gradient(100deg, #ff3d8b, #ff9f43); opacity: 0; }
+    .eb { position: absolute; left: 0; right: 0; text-align: center; font: 700 38px/1 "SF Pro Display"; letter-spacing: 0.22em; color: #00e5ff; }
+
+    #root { background: #0b0614 !important; }
+
+  </style>
+  <div id="root" data-composition-id="g12" data-width="1080" data-height="1920">
+    <div id="g12-st" class="st dark neon" data-layout-allow-overlap>
+<div id="g12-cam" class="cam" data-layout-allow-overlap>
+      <div class="bgfx" id="g12-bg" data-layout-allow-overlap><i></i><i></i></div>
+      <div class="dc" id="m-card" style="left:70px;top:420px;width:940px;height:760px" data-layout-allow-overlap>
+        <div style="position:absolute;left:60px;top:70px;font:600 44px/1 'SF Pro Display';color:#a1a1a6">Il film più ricco</div>
+        <div style="position:absolute;left:60px;top:140px;width:820px;height:90px;border-radius:20px;background:rgba(255,255,255,0.08)"><i id="m-b1" style="position:absolute;left:0;top:0;bottom:0;width:820px;border-radius:20px;background:linear-gradient(90deg,#5b5f7a,#9aa0c2);transform-origin:0 50%"></i></div>
+        <div style="position:absolute;left:60px;top:250px;font:700 44px/1 'SF Pro Display'">2,92 mld $ · <span style="color:#a1a1a6">in anni</span></div>
+        <div style="position:absolute;left:60px;top:380px;font:600 44px/1 'SF Pro Display'" class="ng">GTA 6</div>
+        <div style="position:absolute;left:60px;top:450px;width:820px;height:90px;border-radius:20px;background:rgba(255,255,255,0.08)"><i id="m-b2" style="position:absolute;left:0;top:0;bottom:0;width:820px;border-radius:20px;background:linear-gradient(90deg,#ff3d8b,#ff9f43);transform-origin:0 50%;box-shadow:0 0 40px rgba(255,61,139,0.6)"></i></div>
+        <div style="position:absolute;left:60px;top:560px;font:700 44px/1 'SF Pro Display'">3,79 mld $ · <span style="color:#ff3d8b">in 1 giorno</span></div>
+      </div>
+      <div class="nchip" id="m-c" style="left:360px;top:1240px">superato</div>
+    </div>
+    </div>
+  </div>
+  <script>
+
+    /* split .split into letters and .wsplit into words once, before the timeline is built */
+    document.querySelectorAll(".split:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const txt = el.textContent; el.textContent = ""; for (const c of txt) { const s = document.createElement("span"); s.className = "ch"; s.textContent = c; el.appendChild(s); } });
+    document.querySelectorAll(".wsplit:not([data-done])").forEach((el) => { el.setAttribute("data-done", "1"); const parts = el.textContent.split(" "); el.textContent = ""; parts.forEach((p, k) => { const s = document.createElement("span"); s.className = "w"; s.textContent = p + (k < parts.length - 1 ? " " : ""); el.appendChild(s); }); });
+    const L = (sel) => document.querySelectorAll(sel + " .ch");
+    const W = (sel) => document.querySelectorAll(sel + " .w");
+    const eur = (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const flip = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0, y: 46, rotation: -24, scale: 0.55, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: st || 0.022 }, t);
+    const rise = (tl, sel, t) => tl.fromTo(sel, { yPercent: 135 }, { yPercent: 0, duration: 0.42, ease: "expo.out" }, t);
+    const sink = (tl, sel, t) => tl.to(sel, { yPercent: -150, duration: 0.2, ease: "power3.in" }, t);
+    /* words arrive one after another out of a soft blur, with no travel (the premium title entrance) */
+    const wordsIn = (tl, sel, t, st) => tl.fromTo(W(sel), { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out", stagger: st || 0.07 }, t);
+    const blurIn = (tl, sel, t, d) => tl.fromTo(sel, { opacity: 0, filter: "blur(18px)", scale: 1.06 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: d || 0.3, ease: "power2.out" }, t);
+    const blurOut = (tl, sel, t, d) => tl.to(sel, { opacity: 0, filter: "blur(16px)", duration: d || 0.16, ease: "power2.in" }, t);
+    const typeIn = (tl, sel, t, st) => tl.fromTo(L(sel), { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: st || 0.035 }, t);
+    const pop = (tl, sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, t);
+    const punch = (tl, sel, t, k) => tl.fromTo(sel, { scale: k || 1.1 }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, t);
+    const shake = (tl, sel, t, k) => tl.fromTo(sel, { x: -(k || 18) }, { x: 0, duration: 0.32, ease: "elastic.out(1.3, 0.3)", immediateRender: false }, t);
+    const count = (tl, sel, a, b, t, d, fmt, ease) => { const o = { v: a }; const el = document.querySelector(sel); const f = fmt || eur; const u = () => { el.textContent = f(o.v); }; tl.to(o, { v: b, duration: d, ease: ease || "expo.out", onUpdate: u }, t); };
+    const draw = (tl, sel, t, d) => { document.querySelectorAll(sel).forEach((el) => { const n = el.getTotalLength ? el.getTotalLength() : 1000; el.style.strokeDasharray = n + " " + (n + 60); tl.fromTo(el, { strokeDashoffset: n + 30 }, { strokeDashoffset: 0, duration: d || 0.5, ease: "power2.inOut" }, t); }); };
+    const flash = (tl, sel, t, k) => tl.fromTo(sel, { opacity: k || 0.9 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
+    /* scene transitions: U/D/L/R push, Z zoom, B blur-zoom through, N hard cut */
+    const enter = (tl, sel, k) => k === "N" ? tl
+      : k === "W" ? tl.fromTo(sel, { x: 1080, skewX: -14, filter: "blur(30px)" }, { x: 0, skewX: 0, filter: "blur(0px)", duration: 0.26, ease: "expo.out" }, 0)
+      : k === "I" ? tl.fromTo(sel, { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(120% at 50% 50%)", duration: 0.38, ease: "power3.out" }, 0)
+      : k === "S" ? tl.fromTo(sel, { rotation: -14, scale: 1.5, opacity: 0, filter: "blur(20px)" }, { rotation: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.36, ease: "expo.out" }, 0)
+      : k === "K" ? tl.fromTo(sel, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.32, ease: "expo.out" }, 0)
+      : k === "B" ? tl.fromTo(sel, { scale: 0.8, opacity: 0, filter: "blur(26px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.34, ease: "expo.out" }, 0)
+      : k === "Z" ? tl.fromTo(sel, { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "expo.out" }, 0)
+      : k === "U" ? tl.fromTo(sel, { y: 1920 }, { y: 0, duration: 0.32, ease: "expo.out" }, 0)
+      : k === "D" ? tl.fromTo(sel, { y: -1920 }, { y: 0, duration: 0.32, ease: "expo.out" }, 0)
+      : k === "R" ? tl.fromTo(sel, { x: -1080 }, { x: 0, duration: 0.28, ease: "expo.out" }, 0)
+      : tl.fromTo(sel, { x: 1080 }, { x: 0, duration: 0.28, ease: "expo.out" }, 0);
+    const exit = (tl, sel, k, t) => k === "N" ? tl
+      : k === "W" ? tl.to(sel, { x: -1080, skewX: 14, filter: "blur(30px)", duration: 0.2, ease: "power3.in" }, t)
+      : k === "I" ? tl.to(sel, { scale: 0.86, opacity: 0.4, duration: 0.2, ease: "power3.in" }, t)
+      : k === "S" ? tl.to(sel, { rotation: 12, scale: 0.6, opacity: 0, filter: "blur(16px)", duration: 0.2, ease: "power3.in" }, t)
+      : k === "K" ? tl.to(sel, { y: -260, opacity: 0, duration: 0.2, ease: "power3.in" }, t)
+      : k === "B" ? tl.to(sel, { scale: 1.35, opacity: 0, filter: "blur(26px)", duration: 0.2, ease: "power3.in" }, t)
+      : k === "Z" ? tl.to(sel, { scale: 1.3, opacity: 0, duration: 0.18, ease: "power3.in" }, t)
+      : k === "U" ? tl.to(sel, { y: -1920, duration: 0.2, ease: "power3.in" }, t)
+      : k === "D" ? tl.to(sel, { y: 1920, duration: 0.2, ease: "power3.in" }, t)
+      : k === "R" ? tl.to(sel, { x: 1080, duration: 0.2, ease: "power3.in" }, t)
+      : tl.to(sel, { x: -1080, duration: 0.2, ease: "power3.in" }, t);
+    /* glitch: quick colour split and jitter on a title */
+    const glitch = (tl, sel, t) => { tl.fromTo(sel, { x: -14, textShadow: "6px 0 #ff2d55, -6px 0 #00e5ff" }, { x: 0, textShadow: "0px 0 rgba(0,0,0,0), 0px 0 rgba(0,0,0,0)", duration: 0.28, ease: "steps(6)", immediateRender: false }, t); };
+    /* stamp: drops in big and rotated, lands with a bounce */
+    const stamp = (tl, sel, t, r) => tl.fromTo(sel, { opacity: 0, scale: 2.6, rotation: (r || -10) - 18 }, { opacity: 1, scale: 1, rotation: r || -10, duration: 0.26, ease: "power4.in" }, t);
+    /* the foldable: one angle drives the hinge (0 = open flat, 180 = closed), the shading of the moving half and the re-centring of the whole phone */
+    const duoSet = (id, a) => { const r = a * Math.PI / 180; const c = Math.cos(r);
+      gsap.set(id + "-l", { rotationY: a });
+      gsap.set(id + "-g", { x: -175 * (1 - c) });
+      const li = document.querySelector(id + "-li"), lo = document.querySelector(id + "-lo");
+      if (li) li.style.filter = "brightness(" + (0.55 + 0.45 * Math.max(0, c)).toFixed(3) + ")";
+      if (lo) lo.style.filter = "brightness(" + (0.6 + 0.4 * Math.max(0, -c)).toFixed(3) + ")";
+      const sh = document.querySelector(id + "-sh"); if (sh) sh.style.transform = "scaleX(" + (0.5 + 0.5 * (1 + c) / 2).toFixed(3) + ")"; };
+    const fold = (tl, id, a0, a1, t, d, ease) => { const o = { a: a0 }; tl.to(o, { a: a1, duration: d, ease: ease || "power3.inOut", onUpdate: () => duoSet(id, o.a) }, t); };
+
+    const tl = gsap.timeline({ paused: true });
+    enter(tl, "#g12-st", "W");
+    tl.fromTo("#g12-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 2.19, ease: "sine.inOut" }, 0);
+    tl.fromTo("#g12-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 2.19, ease: "none", stagger: 0 }, 0);
+    tl.fromTo("#m-card", { y: 900 }, { y: 0, duration: 0.36, ease: "expo.out" }, 0);
+    tl.fromTo("#m-b1", { scaleX: 0 }, { scaleX: 0.77, duration: 1.4, ease: "power1.inOut" }, 0.15);
+    tl.fromTo("#m-b2", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "expo.out" }, 0.73 - 0.1);
+    pop(tl, "#m-c", 0.73 + 0.25);
+    shake(tl, "#g12-cam", 0.73 + 0.2, 18);
+    exit(tl, "#g12-st", "U", 2.02);
+    window.__timelines["g12"] = tl;
+  </script>
+</template>

@@ -1,0 +1,11 @@
+{
+  "name": "apex-spotify-wrapped",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.9.54 preview",
+    "check": "npx --yes hyperframes@0.9.54 check",
+    "render": "npx --yes hyperframes@0.9.54 render",
+    "publish": "npx --yes hyperframes@0.9.54 publish"
+  }
+}
