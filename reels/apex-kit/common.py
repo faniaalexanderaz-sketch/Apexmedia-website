@@ -101,9 +101,12 @@ JS = r'''
        so at any time exactly one segment drives the camera (seek-safe). */
     const camSet = (w, c) => { w.style.transform = "translateZ(" + (-c.d) + "px) rotateZ(" + c.rz + "deg) rotateX(" + c.rx + "deg) rotateY(" + c.ry + "deg) translate3d(" + (-c.x) + "px," + (-c.y) + "px," + (-c.z) + "px)"; };
     const camPath = (tl, sel, K) => { const w = document.querySelector(sel); const D = { x: 0, y: 0, z: 0, d: 0, rx: 0, ry: 0, rz: 0 };
-      const full = K.map((k) => Object.assign({}, D, k[1])); camSet(w, full[0]);
-      for (let i = 0; i < K.length - 1; i++) { const o = Object.assign({}, full[i]); const to = Object.assign({}, full[i + 1]);
-        tl.fromTo(o, Object.assign({}, full[i]), Object.assign(to, { duration: K[i + 1][0] - K[i][0], ease: K[i + 1][2] || "power2.inOut", onUpdate: () => camSet(w, o), immediateRender: false }), K[i][0]); } };
+      const full = K.map((k) => Object.assign({}, D, k[1])); const eases = K.map((k) => gsap.parseEase(k[2] || "power2.inOut"));
+      const at = (t) => { if (t <= K[0][0]) return full[0]; const n = K.length - 1; if (t >= K[n][0]) return full[n];
+        let i = 0; while (i < n - 1 && t >= K[i + 1][0]) i++; const p = eases[i + 1]((t - K[i][0]) / (K[i + 1][0] - K[i][0])); const c = {};
+        for (const k in D) c[k] = full[i][k] + (full[i + 1][k] - full[i][k]) * p; return c; };
+      const clock = { t: 0 }; camSet(w, at(0));
+      tl.fromTo(clock, { t: K[0][0] }, { t: K[K.length - 1][0], duration: K[K.length - 1][0] - K[0][0], ease: "none", immediateRender: true, onUpdate: () => camSet(w, at(clock.t)) }, K[0][0]); };
     /* glitch: quick colour split and jitter on a title */
     const glitch = (tl, sel, t) => { tl.fromTo(sel, { x: -14, textShadow: "6px 0 #ff2d55, -6px 0 #00e5ff" }, { x: 0, textShadow: "0px 0 rgba(0,0,0,0), 0px 0 rgba(0,0,0,0)", duration: 0.28, ease: "steps(6)", immediateRender: false }, t); };
     /* stamp: drops in big and rotated, lands with a bounce */

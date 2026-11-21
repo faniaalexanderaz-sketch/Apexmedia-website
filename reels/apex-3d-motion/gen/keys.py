@@ -1,0 +1,13 @@
+KEYS = [('video', 'video'), ('nessuno', 'nessuno'), ('niente', 'niente'), ('effects', 'effects'), ('niente2', 'niente'), ('montatore', 'montatore'),
+        ('solo', 'solo'), ('intelligenza', 'intelligenza'), ('artificiale', 'artificiale'), ('riga', 'riga'), ('codice', 'codice'),
+        ('resta', 'resta'), ('fine', 'fine'), ('perche', 'perch'), ('svelo', 'svelo'), ('cinque', 'cinque'), ('regole', 'regole'), ('guardare', 'guardare'),
+        ('ultimo', 'ultimo'), ('secondo', 'secondo'),
+        ('uno', '1'), ('voce', 'voce'), ('ferma', 'ferma'), ('niente3', 'niente'), ('pause', 'pause'), ('tre', 'tre'), ('parole', 'parole'),
+        ('respiri', 'respiri'), ('scorrono', 'scorrono'), ('via', 'via'),
+        ('due', '2'), ('immagine', 'immagine'), ('nuova', 'nuova'), ('ogni', 'ogni'), ('secondi', 'secondi'), ('cervello', 'cervello'), ('annoiarsi', 'annoiarsi'),
+        ('tre3', '3'), ('schermo', 'schermo'), ('numeri', 'numeri'), ('chiave', 'chiave'), ('mai2', 'mai'), ('frase', 'frase'), ('intera', 'intera'), ('senti', 'senti'),
+        ('quattro', '4'), ('stacco', 'stacco'), ('suono', 'suono'), ('click', 'click'), ('colpo', 'colpo'), ('fruscio', 'fruscio'), ('noti', 'noti'), ('dentro', 'dentro'),
+        ('cinque5', '5'), ('finale', 'finale'), ('inizio', 'inizio'), ('ultima', 'ultima'), ('prima', 'prima'), ('riguardi', 'riguardi'), ('accorgertene', 'accorgertene'),
+        ('adesso', 'adesso'), ('verita', 'verit'), ('maker', 'maker'), ('finiti', 'finiti'), ('scrivi', 'scrivi'), ('si', 'sì'), ('no', 'no'),
+        ('secondo2', 'secondo'), ('no2', 'no'), ('raccontare', 'raccontare'), ('prima2', 'prima'), ('cambia', 'cambia'), ('strumento', 'strumento'),
+        ('se', 'se'), ('metodo', 'metodo'), ('cta', 'scrivi'), ('motion', 'motion'), ('mando', 'mando'), ('ricordati', 'ricordati')]

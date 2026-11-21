@@ -1,0 +1,11 @@
+KEYS = [('natale', 'natale'), ('rosso', 'rosso'), ('colpa', 'colpa'), ('coca', 'coca'), ('pensano', 'pensano'), ('tantissimi', 'tantissimi'),
+        ('nonvero', 'vero'), ('resta', 'resta'), ('storia', 'storia'), ('trucco', 'trucco'), ('marketing', 'marketing'), ('furbo', 'furbo'),
+        ('puoi', 'puoi'), ('anche', 'anche'), ('ilrosso', 'rosso'), ('gia', 'già'), ('cartoline', 'cartoline'), ('riviste', 'riviste'),
+        ('novecento', '900'), ('vestito', 'vestito'), ('rosso2', 'rosso'), ('y1915', '1915'), ('vendeva', 'vendeva'), ('acqua', 'acqua'),
+        ('marchio', 'marchio'), ('white', 'white'), ('poi', 'poi'), ('y1931', '1931'), ('arriva', 'arriva'), ('coca2', 'coca'),
+        ('illustratore', 'illustratore'), ('haddon', 'haddon'), ('dipingere', 'dipingere'), ('pubblicita', 'pubblicit'),
+        ('epoi', 'poi'), ('rifa', 'rif'), ('anno', 'anno'), ('quello', 'quello'), ('ancora', 'ancora'), ('y1964', '1964'), ('trent', 'trent'),
+        ('stesso', 'stesso'), ('colori', 'colori'), ('momento', 'momento'), ('allafine', 'alla'), ('testa', 'testa'), ('suo', 'suo'),
+        ('tu', 'tu'), ('sapevi', 'sapevi'), ('si', 'sì'), ('no', 'no'), ('lezione', 'lezione'), ('inventare', 'inventare'),
+        ('devi', 'devi'), ('sempre', 'sempre'), ('modo', 'modo'), ('diventa', 'diventa'), ('cta', 'scrivi'), ('nataleK', 'natale'),
+        ('mando', 'mando'), ('idee', 'idee'), ('attivita', 'attivit'), ('eppure', 'eppure'), ('oggi', 'oggi'), ('pensano2', 'pensano')]
