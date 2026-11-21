@@ -96,6 +96,14 @@ JS = r'''
       : k === "D" ? tl.to(sel, { y: 1920, duration: 0.2, ease: "power3.in" }, t)
       : k === "R" ? tl.to(sel, { x: 1080, duration: 0.2, ease: "power3.in" }, t)
       : tl.to(sel, { x: -1080, duration: 0.2, ease: "power3.in" }, t);
+    /* 3D world camera. The camera orbits a target point (x, y, z) at distance d with angles rx, ry, rz.
+       camPath(tl, "#world", K) takes contiguous keyframes K = [[t, {x,y,z,d,rx,ry,rz}, ease], ...] and tweens between them,
+       so at any time exactly one segment drives the camera (seek-safe). */
+    const camSet = (w, c) => { w.style.transform = "translateZ(" + (-c.d) + "px) rotateZ(" + c.rz + "deg) rotateX(" + c.rx + "deg) rotateY(" + c.ry + "deg) translate3d(" + (-c.x) + "px," + (-c.y) + "px," + (-c.z) + "px)"; };
+    const camPath = (tl, sel, K) => { const w = document.querySelector(sel); const D = { x: 0, y: 0, z: 0, d: 0, rx: 0, ry: 0, rz: 0 };
+      const full = K.map((k) => Object.assign({}, D, k[1])); camSet(w, full[0]);
+      for (let i = 0; i < K.length - 1; i++) { const o = Object.assign({}, full[i]); const to = Object.assign({}, full[i + 1]);
+        tl.fromTo(o, Object.assign({}, full[i]), Object.assign(to, { duration: K[i + 1][0] - K[i][0], ease: K[i + 1][2] || "power2.inOut", onUpdate: () => camSet(w, o), immediateRender: false }), K[i][0]); } };
     /* glitch: quick colour split and jitter on a title */
     const glitch = (tl, sel, t) => { tl.fromTo(sel, { x: -14, textShadow: "6px 0 #ff2d55, -6px 0 #00e5ff" }, { x: 0, textShadow: "0px 0 rgba(0,0,0,0), 0px 0 rgba(0,0,0,0)", duration: 0.28, ease: "steps(6)", immediateRender: false }, t); };
     /* stamp: drops in big and rotated, lands with a bounce */

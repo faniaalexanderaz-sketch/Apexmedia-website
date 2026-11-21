@@ -69,3 +69,22 @@ def progress(p, top=760, color='#0a84ff', dark=True):
 def progress_js(p, t, d, a=0.06, b=0.97):
     return (f'    tl.fromTo("#{p}-fill", {{ scaleX: {a} }}, {{ scaleX: {b}, duration: {d}, ease: "power2.inOut" }}, {t});\n'
             f'    tl.fromTo("#{p}-dot", {{ x: {860 * a} }}, {{ x: {860 * b}, duration: {d}, ease: "power2.inOut" }}, {t});\n')
+
+# ---------------------------------------------------------------- 3D world: a perspective view, a world container, panels placed in space
+WORLDCSS = '''
+    .view { position: absolute; inset: 0; perspective: 1400px; perspective-origin: 50% 50%; overflow: hidden; }
+    .world { position: absolute; left: 540px; top: 960px; width: 0; height: 0; transform-style: preserve-3d; }
+    .pn { position: absolute; left: 0; top: 0; transform-style: flat; backface-visibility: hidden; }
+    .pt { position: absolute; left: 0; top: 0; border-radius: 50%; }'''
+def panel(i, x, y, z, w, h, inner, ry=0, rx=0, cls='', style=''):
+    """a flat panel of w x h centred on the world point (x, y, z), turned by ry / rx degrees"""
+    return (f'<div class="pn {cls}" id="{i}" style="width:{w}px;height:{h}px;transform:translate3d({x - w / 2}px,{y - h / 2}px,{z}px) rotateY({ry}deg) rotateX({rx}deg);{style}">{inner}</div>')
+def particles(n, spread=(6000, 3000, 6000), centre=(0, 0, 0), seed=7, color='rgba(255,255,255,0.55)'):
+    """deterministic dots scattered in the world, for depth and parallax"""
+    import random
+    r = random.Random(seed); out = []
+    for k in range(n):
+        x = centre[0] + r.uniform(-1, 1) * spread[0] / 2; y = centre[1] + r.uniform(-1, 1) * spread[1] / 2; z = centre[2] + r.uniform(-1, 1) * spread[2] / 2
+        s = r.choice([6, 8, 10, 14])
+        out.append(f'<i class="pt" style="width:{s}px;height:{s}px;background:{color};transform:translate3d({x:.0f}px,{y:.0f}px,{z:.0f}px)"></i>')
+    return ''.join(out)
