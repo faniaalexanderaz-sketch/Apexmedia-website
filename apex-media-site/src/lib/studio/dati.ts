@@ -6,7 +6,7 @@ import { CANALI, type Campagna, type Dati, type Ricorrenza, type StatoLavoro } f
 
 /* =============================================================
    Dati dello Studio: lettura completa e tutte le modifiche.
-   Le tabelle studio_* si creano da sole al primo accesso, così non
+   Tutte le tabelle (Studio e pannello) si creano da sole al primo accesso, così non
    serve lanciare nessun comando dopo il deploy.
    ============================================================= */
 
@@ -19,7 +19,7 @@ async function assicuraTabelle(): Promise<void> {
   const d = await db();
   for (const pezzo of SCHEMA_SQL.split("--> statement-breakpoint")) {
     const s = pezzo.trim();
-    if (!s.includes('"studio_')) continue;
+    if (!s) continue;
     await d.execute(sql.raw(s.replace(/^CREATE TABLE "/, 'CREATE TABLE IF NOT EXISTS "').replace(/^CREATE (UNIQUE )?INDEX "/, 'CREATE $1INDEX IF NOT EXISTS "')));
   }
 }
