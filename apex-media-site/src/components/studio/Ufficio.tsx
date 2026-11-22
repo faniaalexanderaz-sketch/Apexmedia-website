@@ -142,7 +142,7 @@ function PannelloAgente({ id, chiudi }: { id: string; chiudi: () => void }) {
       <div className="st-pannello-corpo">
         {lavoro ? (
           <section className="st-blocco" data-tono={stato}>
-            <h3>{stato === "attesa" ? `Ti aspetta da ${tempoFa(lavoro.aggiornatoIl).replace(" fa", "")}` : stato === "lavora" ? "Sta facendo adesso" : "In coda"}</h3>
+            <h3>{stato === "attesa" ? (tempoFa(lavoro.aggiornatoIl) === "adesso" ? "Ha appena consegnato" : tempoFa(lavoro.aggiornatoIl) === "ieri" ? "Ti aspetta da ieri" : `Ti aspetta da ${tempoFa(lavoro.aggiornatoIl).replace(" fa", "")}`) : stato === "lavora" ? "Sta facendo adesso" : "In coda"}</h3>
             <b>{lavoro.titolo}</b>{lavoro.clienteId ? <small>{nomeCliente(dati.clienti, lavoro.clienteId)}</small> : null}
             {stato === "attesa" && lavoro.risultato ? <p className="st-estratto">{lavoro.risultato.slice(0, 260)}{lavoro.risultato.length > 260 ? "…" : ""}</p> : null}
             {stato === "lavora" ? <p className="st-lavora"><span className="st-attesa-punto" />Sta scrivendo. Di solito consegna in meno di un minuto.</p> : null}
