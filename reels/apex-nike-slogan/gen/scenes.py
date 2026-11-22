@@ -195,7 +195,7 @@ add('n16', 'inn', 'qual', f'''      <div class="chip" id="q-c" style="left:400px
       {small('q-a', 'di vendite', 560, 70, GREY)}''', '''    pop(tl, "#q-c", «dieci» - 0.1);
     tl.fromTo("#q-b1", { scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: "expo.out" }, «y877» - 0.3);
     tl.fromTo("#q-l1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.22 }, «y877» - 0.2);
-    tl.fromTo("#q-b2", { scaleY: 0.1 }, { scaleY: 1, duration: 0.9, ease: "expo.out" }, «nove» - 0.3);
+    tl.fromTo("#q-b2", { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: "expo.out" }, «nove» - 0.3);
     tl.fromTo("#q-l2", { opacity: 0 }, { opacity: 1, duration: 0.15 }, «nove» - 0.3);
     count(tl, "#q-v", 0.9, 9.2, «nove» - 0.3, 0.9, function (v) { return v.toFixed(1).replace(".", ","); }, "expo.out");
     tl.fromTo("#q-a", { opacity: 0 }, { opacity: 1, duration: 0.2 }, «vendite» - 0.2);''', ground='dark', mq='× 10',
@@ -250,6 +250,6 @@ add('n21', 'mando', 'epensa', f'''      {small('v-a', 'ti arriva in DM', 330, 66
     fx=[('notif', 'mando', 0.0, 0.26), ('pop', 'tre2', -0.6, 0.24)])
 
 # 22. loop: "E pensa che..." -> "Lo slogan più famoso della Nike..." (back to the first frame)
-add('n22', 'epensa', 'END', f'''      {HOOK.replace('@', 'z')}''', '''    tl.fromTo("#z-t", { scale: 1.5, opacity: 0, y: 30 }, { scale: 1.06, opacity: 1, y: 0, duration: DUR, ease: "power2.in" }, 0);
+add('n22', 'epensa', 'END', f'''      {HOOK.replace('@', 'z')}''', '''    tl.fromTo("#z-t", { scale: 1.5, opacity: 0, y: 30 }, { scale: 1.06, opacity: 1, y: 0, duration: DUR - 0.12, ease: "power2.in" }, 0);
     tl.fromTo("#z-y", { opacity: 0 }, { opacity: 1, duration: 0.3 }, DUR - 0.4);''', ground='dark', cam=False,
     fx=[('riser', 'epensa', 0.0, 0.12)])
