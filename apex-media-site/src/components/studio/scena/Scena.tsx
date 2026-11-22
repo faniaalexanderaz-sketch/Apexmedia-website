@@ -1,62 +1,67 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { CameraControls, CameraControlsImpl, Html } from "@react-three/drei";
+import { CameraControls, CameraControlsImpl, Environment, Html, Lightformer, SoftShadows } from "@react-three/drei";
+import { Bloom, EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
-import { AGENTE, AGENTI, POSTI_RELAX, ZONE, type ZonaId } from "@/lib/studio/agenti";
+import { AGENTE, AGENTI, FONDO, LARGO, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
-import { Cassa, Cervello, FONDO, LARGO, Lavagna, Percorso, Pianta, Pavimento, Quadro, Relax, Scrivania, ScrittaPavimento, Tabellone, Tappeto, TavoloClienti, postoCliente, type Conteggi, type DatiCassa } from "./Arredi";
-import { C, useFont } from "./base";
-import { Personaggio, Sedia } from "./Personaggio";
+import type { Tono } from "@/lib/studio/promemoria";
+import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, SchermoAds, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
+import { useFont } from "./base";
+import { Personaggio, Sedia, type Umore } from "./Personaggio";
 
 /* =============================================================
-   L'ufficio: una lastra chiara vista dall'alto, con i reparti, la
-   regia al centro, l'area relax, la sala clienti e la cassa.
-   Tutto quello che si vede dipende dai dati: chi lavora sta alla
-   scrivania, chi è libero va sul divano, i clienti siedono al tavolo,
-   le monete crescono con gli incassi del mese.
+   L'ufficio di Apex Media in 3D. Tutto segue i dati: chi lavora sta
+   alla scrivania, chi ha qualcosa da dirti cammina fino alla tua
+   scrivania e te lo dice in un fumetto, chi è libero va in area
+   relax e ogni tanto cambia posto, ogni cliente ha il suo reparto.
    ============================================================= */
 
-export type AgenteScena = { id: string; stato: StatoAgente; titolo: string | null; relax: number | null };
-export type ClienteScena = { id: number; nome: string; colore: string; quota: number; scaduto: number };
+export type Fumetto = { id: string; frase: string; bottone: string; tono: Tono };
+export type AgenteScena = { id: string; stato: StatoAgente; titolo: string | null; meta: Punto; umore: Umore; tazza: boolean; fumetto: Fumetto | null };
+export type ClienteScena = { id: number; nome: string; colore: string; quota: number; scaduto: number; conti: ContiCliente };
 export type Selezione = { tipo: "agente"; id: string } | { tipo: "cervello" } | { tipo: "cliente"; id: number } | null;
 
 export type PropsScena = {
-  /** false quando si guarda un'altra scheda: la scena smette di disegnare */
   attivo: boolean;
+  nome: string;
   agenti: AgenteScena[];
   clienti: ClienteScena[];
   altriClienti: number;
   cassa: DatiCassa;
+  ads: DatiAds;
   conteggi: Conteggi;
   regole: number;
+  inAttesa: number;
   zona: ZonaId | "tutto";
   selezione: Selezione;
-  /** spazio coperto dall'interfaccia, in pixel: la scena si sposta per restare al centro della parte libera */
   coperto: { destra: number; basso: number; alto: number };
   onSeleziona: (s: Selezione) => void;
+  onFumetto: (idPromemoria: string) => void;
   onCassa: () => void;
   onNuovoCliente: () => void;
+  onTuaScrivania: () => void;
 };
 
-const CERVELLO: [number, number] = [-5.2, -7.5];
-const CLIENTI: [number, number] = [1.2, 7.4];
-const CASSA_X = 12.2;
+const CERVELLO: [number, number] = [-5.2, -12.4];
+const CASSA_X = 16.5;
+const TUA: [number, number] = [0, 4.2];
 const DIRETTORE = AGENTE.direttore.posto;
+const Z_CLIENTI = 12.6;
+const PASSO_CLIENTI = 7.3;
+
+export function postoReparto(i: number, n: number): [number, number] {
+  return [(i - (n - 1) / 2) * PASSO_CLIENTI, Z_CLIENTI];
+}
 
 const AZIONE: Record<StatoAgente, string | null> = { attesa: "Guarda", lavora: null, coda: "Apri", libero: null };
 const SOTTO: Record<StatoAgente, string> = { attesa: "ti aspetta", lavora: "sta lavorando", coda: "in coda", libero: "libero" };
 
-function dove(a: AgenteScena): { x: number; z: number; rot: number; y: number; posa: "seduto" | "in_piedi" } {
-  if (a.relax !== null && POSTI_RELAX[a.relax]) return POSTI_RELAX[a.relax];
-  const [x, z] = AGENTE[a.id].posto;
-  return { x, z, rot: 0, y: 0, posa: "seduto" };
-}
-
 /* ---------- Telecamera ---------- */
 
-function Regia({ zona, selezione, agenti, coperto }: Pick<PropsScena, "zona" | "selezione" | "agenti" | "coperto">) {
+function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "zona" | "selezione" | "agenti" | "clienti" | "coperto">) {
   const ctrl = useRef<CameraControlsImpl>(null);
   const size = useThree((s) => s.size);
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
@@ -64,45 +69,40 @@ function Regia({ zona, selezione, agenti, coperto }: Pick<PropsScena, "zona" | "
   const prima = useRef(true);
   const vista = useRef("");
 
-  // da lontano le pillole mostrano solo il nome, da vicino anche cosa stanno facendo
+  // da lontano le etichette mostrano solo il nome, da vicino anche cosa stanno facendo
   useFrame(() => {
     const c = ctrl.current;
     if (!c) return;
-    const v = c.distance < 30 ? "vicino" : "insieme";
+    const v = c.distance < 34 ? "vicino" : "insieme";
     if (v !== vista.current) { vista.current = v; const box = gl.domElement.closest<HTMLElement>(".st-scena"); if (box) box.dataset.vista = v; }
   });
 
-  // dove guardare: la persona scelta, la zona scelta, oppure tutto l'ufficio
   const mira = useMemo(() => {
-    if (selezione?.tipo === "agente") { const a = agenti.find((x) => x.id === selezione.id); if (a) { const p = dove(a); return { x: p.x, z: p.z - 0.4, ampiezza: 8.5, fondo: 6 }; } }
-    if (selezione?.tipo === "cervello") return { x: CERVELLO[0], z: CERVELLO[1] + 0.6, ampiezza: 8.5, fondo: 6 };
-    if (selezione?.tipo === "cliente") return { x: CLIENTI[0], z: CLIENTI[1], ampiezza: 10, fondo: 7 };
+    if (selezione?.tipo === "agente") { const a = agenti.find((x) => x.id === selezione.id); if (a) return { x: a.meta.x, z: a.meta.z - 0.4, ampiezza: 9, fondo: 6.5, y: 0.9 }; }
+    if (selezione?.tipo === "cervello") return { x: CERVELLO[0], z: CERVELLO[1] + 0.8, ampiezza: 9, fondo: 6.5, y: 1.4 };
+    if (selezione?.tipo === "cliente") { const i = clienti.findIndex((c) => c.id === selezione.id); if (i >= 0) { const [x, z] = postoReparto(i, clienti.length); return { x, z, ampiezza: 9.5, fondo: 7, y: 0.9 }; } }
     const z = ZONE.find((q) => q.id === zona);
-    // le zone contro il muro si inquadrano più in alto, così tabellone e schermo della cassa restano visibili
-    if (z) return { x: z.centro[0], z: z.centro[1], ampiezza: z.ampiezza, fondo: z.ampiezza * 0.62, y: z.centro[1] < -5 ? 1.9 : undefined };
+    if (z) return { x: z.centro[0], z: z.centro[1], ampiezza: z.ampiezza, fondo: Math.min(14, z.ampiezza * 0.62), y: z.centro[1] < -9 ? 2 : 0.9 };
     return null;
-  }, [selezione, zona, agenti]);
+  }, [selezione, zona, agenti, clienti]);
 
   useEffect(() => {
     const c = ctrl.current;
     if (!c || size.width < 10) return;
     const stretto = size.width < 760;
     const liberoW = Math.max(200, size.width - coperto.destra), liberoH = Math.max(200, size.height - coperto.basso - coperto.alto);
-    const vfov = THREE.MathUtils.degToRad(camera.fov);
-    const tanV = Math.tan(vfov / 2), tanH = tanV * (size.width / size.height);
-    const elev = THREE.MathUtils.degToRad(mira ? 50 : 53);
-    // su schermi stretti la vista d'insieme non può mostrare tutto: parte dal centro e si scorre
-    const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 7.5) : mira.ampiezza) : stretto ? 19 : LARGO + 2.5;
-    const fondo = mira ? mira.fondo : stretto ? 16 : FONDO + 2;
+    const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size.height);
+    const elev = THREE.MathUtils.degToRad(mira ? 48 : 54);
+    const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 8) : mira.ampiezza) : stretto ? 22 : LARGO + 2;
+    const fondo = mira ? mira.fondo : stretto ? 18 : FONDO + 2;
     const distW = (ampiezza / 2 / tanH) * (size.width / liberoW);
-    const distD = ((fondo * Math.sin(elev) + 3.2 * Math.cos(elev)) / 2 / tanV) * (size.height / liberoH);
+    const distD = ((fondo * Math.sin(elev) + 4.5 * Math.cos(elev)) / 2 / tanV) * (size.height / liberoH);
     const dist = Math.max(distW, distD, 9);
-    // sposta il bersaglio per centrare la scena nella parte non coperta dall'interfaccia
     const perPx = (2 * dist * tanH) / size.width;
     const tx = (mira?.x ?? 0) + (coperto.destra / 2) * perPx;
-    const tz = (mira?.z ?? (stretto ? -1.5 : 0.2)) + (((coperto.basso - coperto.alto) / 2) * perPx) / Math.sin(elev);
-    const ty = mira ? ("y" in mira && mira.y !== undefined ? mira.y : 0.9) : 0.4;
-    c.minDistance = 8;
+    const tz = (mira?.z ?? (stretto ? 0 : 0.4)) + (((coperto.basso - coperto.alto) / 2) * perPx) / Math.sin(elev);
+    const ty = mira ? mira.y : 0.6;
+    c.minDistance = 7;
     c.maxDistance = Math.max(dist * 1.15, (LARGO / 2 / tanH) * 1.3);
     void c.setLookAt(tx, ty + dist * Math.sin(elev), tz + dist * Math.cos(elev), tx, ty, tz, !prima.current);
     prima.current = false;
@@ -112,23 +112,32 @@ function Regia({ zona, selezione, agenti, coperto }: Pick<PropsScena, "zona" | "
     const c = ctrl.current;
     if (!c) return;
     const A = CameraControlsImpl.ACTION;
-    // trascinare sposta, la rotella avvicina; ruotare resta possibile con il tasto destro o tre dita
     c.mouseButtons.left = A.TRUCK; c.mouseButtons.right = A.ROTATE; c.mouseButtons.middle = A.DOLLY; c.mouseButtons.wheel = A.DOLLY;
     c.touches.one = A.TOUCH_TRUCK; c.touches.two = A.TOUCH_DOLLY_TRUCK; c.touches.three = A.TOUCH_ROTATE;
-    c.setBoundary(new THREE.Box3(new THREE.Vector3(-LARGO / 2, 0, -FONDO / 2 - 1), new THREE.Vector3(LARGO / 2 + 4, 2, FONDO / 2 + 6)));
+    c.setBoundary(new THREE.Box3(new THREE.Vector3(-LARGO / 2, 0, -FONDO / 2 - 1), new THREE.Vector3(LARGO / 2, 3, FONDO / 2 + 6)));
   }, []);
 
-  return <CameraControls ref={ctrl} makeDefault smoothTime={0.42} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={1.6} minPolarAngle={0.3} maxPolarAngle={1.12} minAzimuthAngle={-0.7} maxAzimuthAngle={0.7} dollyToCursor />;
+  return <CameraControls ref={ctrl} makeDefault smoothTime={0.45} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={1.6} minPolarAngle={0.3} maxPolarAngle={1.12} minAzimuthAngle={-0.7} maxAzimuthAngle={0.7} dollyToCursor />;
 }
 
-/* ---------- Etichette ---------- */
+/* ---------- Etichette e fumetti ---------- */
 
-function Pillola({ stato, nome, sotto, azione, scelto, onClick, punto }: { stato: StatoAgente | "cliente" | "cosa"; nome: string; sotto?: string | null; azione?: string | null; scelto?: boolean; onClick: () => void; punto?: string }) {
+function Pillola({ stato, nome, sotto, azione, scelto, onClick, punto }: { stato: StatoAgente | "cliente" | "cosa" | "tu"; nome: string; sotto?: string | null; azione?: string | null; scelto?: boolean; onClick: () => void; punto?: string }) {
   return (
     <button type="button" className="st-pillola" data-stato={stato} data-scelto={scelto || undefined} onClick={(e) => { e.stopPropagation(); onClick(); }}>
       <i style={punto ? { background: punto } : undefined} />
       <span><b>{nome}</b>{sotto ? <small>{sotto}</small> : null}</span>
       {azione ? <em>{azione} <span aria-hidden="true">▸</span></em> : null}
+    </button>
+  );
+}
+
+function Nuvola({ nome, f, lato, onClick }: { nome: string; f: Fumetto; lato: "sinistra" | "destra"; onClick: () => void }) {
+  return (
+    <button type="button" className="st-fumetto" data-tono={f.tono} data-lato={lato} onClick={(e) => { e.stopPropagation(); onClick(); }}>
+      <small><i aria-hidden="true">!</i>{nome}</small>
+      <b>{f.frase}</b>
+      <em>{f.bottone} <span aria-hidden="true">▸</span></em>
     </button>
   );
 }
@@ -139,121 +148,156 @@ function Etichetta({ y, children }: { y: number; children: React.ReactNode }) {
 
 /* ---------- Scena ---------- */
 
-function Ufficio3D(p: PropsScena) {
+function Ufficio3D(p: PropsScena & { qualita: boolean }) {
   const font = useFont();
   const perId = useMemo(() => Object.fromEntries(p.agenti.map((a) => [a.id, a])), [p.agenti]);
-  const stato = (id: string): StatoAgente => perId[id]?.stato ?? "libero";
-  // lo schermo si spegne se l'agente è al divano
-  const posto = (id: string) => ({ x: AGENTE[id].posto[0], tipo: AGENTE[id].schermo, stato: perId[id]?.relax != null ? ("libero" as const) : stato(id), accento: AGENTE[id].felpa });
-  const fila = (ids: string[]) => <Scrivania z={AGENTE[ids[0]].posto[1]} posti={ids.map(posto)} />;
-  const posti = p.clienti.map((_, i) => postoCliente(CLIENTI[0], CLIENTI[1], i, p.clienti.length));
+  // lo schermo si spegne se l'agente non è alla scrivania
+  const posto = (id: string): PostoScrivania => {
+    const a = perId[id];
+    const via = a && Math.hypot(a.meta.x - AGENTE[id].posto[0], a.meta.z - AGENTE[id].posto[1]) > 0.1;
+    return { x: AGENTE[id].posto[0], tipo: AGENTE[id].schermo, stato: via ? "libero" : a?.stato ?? "libero", accento: AGENTE[id].felpa };
+  };
+  const fila = (ids: string[], led: string, larga?: boolean) => <Scrivania z={AGENTE[ids[0]].posto[1]} posti={ids.map(posto)} led={led} larga={larga} />;
+  const n = p.clienti.length;
 
   return (
     <>
-      <color attach="background" args={[C.sfondo]} />
-      <hemisphereLight args={["#ffffff", "#efe6d6", 1.95]} />
-      <directionalLight position={[-10, 24, 13]} intensity={1.75} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0004} shadow-normalBias={0.04}>
-        <orthographicCamera attach="shadow-camera" args={[-25, 25, 20, -20, 1, 70]} />
+      <color attach="background" args={["#e9ebf1"]} />
+      <hemisphereLight args={["#ffffff", "#d9cbb3", 0.55]} />
+      <directionalLight position={[-14, 30, 16]} intensity={2.4} color="#fff6ea" castShadow shadow-mapSize={p.qualita ? [4096, 4096] : [2048, 2048]} shadow-bias={-0.0003} shadow-normalBias={0.04}>
+        <orthographicCamera attach="shadow-camera" args={[-27, 27, 22, -22, 1, 90]} />
       </directionalLight>
+      <Environment resolution={128} frames={1} environmentIntensity={0.42}>
+        <Lightformer form="rect" intensity={2.2} position={[0, 12, 6]} scale={[30, 14, 1]} rotation={[Math.PI / 2, 0, 0]} color="#ffffff" />
+        <Lightformer form="rect" intensity={0.9} position={[-20, 6, 10]} scale={[12, 8, 1]} rotation={[0, Math.PI / 2, 0]} color="#ffeedd" />
+        <Lightformer form="rect" intensity={0.7} position={[20, 6, -6]} scale={[12, 8, 1]} rotation={[0, -Math.PI / 2, 0]} color="#dfe6ff" />
+        <Lightformer form="rect" intensity={0.6} position={[0, 4, -20]} scale={[30, 6, 1]} color="#c9b8ff" />
+      </Environment>
 
       <Pavimento />
+      <Muro font={font} n={p.conteggi} />
 
-      {/* tappeti delle zone e scritte a terra */}
-      <Tappeto x={-11.9} z={-5.9} w={7.4} d={5.2} c="#efeafd" />
-      <Tappeto x={0} z={1.5} w={11.6} d={4.6} c="#fdeee0" />
-      <Tappeto x={11.5} z={-2.9} w={7.2} d={4.2} c="#e4f5ec" />
-      <Tappeto x={11.5} z={4.1} w={7.2} d={4.2} c="#fff5d2" />
-      <mesh position={[DIRETTORE[0], 0.014, DIRETTORE[1] - 0.45]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[2.75, 3.0, 64]} /><meshLambertMaterial color="#edd9a6" /></mesh>
-      {ZONE.filter((z) => !["regia", "cassa", "clienti"].includes(z.id)).map((z) => <ScrittaPavimento key={z.id} x={z.centro[0] - (z.id === "contenuti" ? 5.6 : z.id === "relax" ? 4.0 : 3.4)} z={z.centro[1] + (z.id === "contenuti" ? 2.75 : z.id === "relax" ? 3.65 : z.id === "strategia" ? 2.45 : 2.25)} nome={z.nome} sotto={z.sotto} font={font} />)}
-      <ScrittaPavimento x={CLIENTI[0] + 3.7} z={CLIENTI[1] + 2.3} nome="Sala clienti" sotto="un posto per ogni cliente" font={font} />
-
-      {/* muro di fondo */}
-      <Tabellone n={p.conteggi} font={font} />
-      <Lavagna x={-12} />
-      <Quadro x={-8.2} c={C.viola} />
-      <Quadro x={-6.4} c={C.giallo} largo={1.5} />
-      <Quadro x={6.6} c={C.blu} largo={1.5} />
+      {/* tappeti dei reparti e nomi a terra */}
+      <Tappeto x={-16} z={-11.2} w={8.6} d={4.6} c="#ece7fb" />
+      <Tappeto x={1.8} z={-11.4} w={10.2} d={4.6} c="#f1eadc" />
+      <Tappeto x={-15.5} z={-3.6} w={9.6} d={4.4} c="#fdeee0" />
+      <Tappeto x={15} z={-3.6} w={7.6} d={4.4} c="#e2f3ea" />
+      <Tappeto x={15} z={4.7} w={7.6} d={4.4} c="#fff4d0" />
+      <ScrittaPavimento x={-20.2} z={-9.0} nome="Strategia" sotto="piano, analisi, trend" font={font} />
+      <ScrittaPavimento x={-20.2} z={-1.3} nome="Contenuti" sotto="reel, caroselli, caption" font={font} />
+      <ScrittaPavimento x={-4.4} z={-1.3} nome="Studio video" sotto="montaggio, riprese, sottotitoli" font={font} />
+      <ScrittaPavimento x={11.6} z={-1.3} nome="Ads & Funnel" sotto="campagne, landing, conversioni" font={font} />
+      <ScrittaPavimento x={11.6} z={7.0} nome="Community" sotto="DM, commenti, uscita" font={font} />
+      <ScrittaPavimento x={-22.2} z={8.0} nome="Area relax" sotto="chi è libero si ferma qui" font={font} />
+      <ScrittaPavimento x={-2.4} z={-9.0} nome="Regia" sotto="direzione, controllo, memoria" font={font} />
+      <ScrittaPavimento x={12.6} z={-9.0} nome="Cassa" sotto="incassi, fatture, solleciti" font={font} />
 
       {/* scrivanie */}
-      {fila(["direttore"])}
-      {fila(["revisore"])}
-      {fila(["sofia", "marco"])}
-      {fila(["giulia", "luca", "chiara", "matteo"])}
-      {fila(["davide", "elena"])}
-      {fila(["simone", "alice"])}
+      {fila(["sofia", "marco"], "#7b5cff")}
+      {fila(["direttore"], "#7b5cff", true)}
+      {fila(["revisore"], "#7b5cff")}
+      {fila(["sara"], "#35e08f")}
+      {fila(["giulia", "luca", "chiara"], "#ff8a3d")}
+      {fila(["matteo"], "#ff4d6d", true)}
+      {fila(["davide", "elena"], "#35e08f")}
+      {fila(["simone", "alice"], "#ffc93d")}
 
-      {/* agenti */}
+      <StudioVideo x={3.6} z={-5.4} />
+      <SchermoAds x={20.4} z={-4.2} dati={p.ads} font={font} />
+
+      {/* agenti: sedie fisse, persone che si muovono */}
+      {AGENTI.map((a) => <Sedia key={`s${a.id}`} x={a.posto[0]} z={a.posto[1]} />)}
       {AGENTI.map((a, i) => {
-        const s = perId[a.id] ?? { id: a.id, stato: "libero" as const, titolo: null, relax: null };
-        const vicini = AGENTI.filter((b) => b.posto[1] === a.posto[1]).map((b) => b.id);
-        const sfalsa = s.relax === null && vicini.indexOf(a.id) % 2 === 1 ? 0.55 : 0;
-        const d = dove(s);
+        const s = perId[a.id];
+        if (!s) return null;
         const scelto = p.selezione?.tipo === "agente" && p.selezione.id === a.id;
         const apri = () => p.onSeleziona({ tipo: "agente", id: a.id });
+        const allaScrivania = Math.hypot(s.meta.x - a.posto[0], s.meta.z - a.posto[1]) < 0.1;
+        const sfalsa = allaScrivania && AGENTI.filter((b) => b.posto[1] === a.posto[1]).findIndex((b) => b.id === a.id) % 2 === 1 ? 0.5 : 0;
         return (
-          <group key={a.id}>
-            <Sedia x={a.posto[0]} z={a.posto[1]} />
-            <Personaggio x={d.x} z={d.z} rot={d.rot} y={d.y} posa={d.posa} umore={s.stato} felpa={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} fase={i} tazza={s.relax !== null} selezionato={scelto} onClick={apri}>
-              <Etichetta y={(d.posa === "in_piedi" ? 2.3 : 2.15) + sfalsa}>
-                <Pillola stato={s.stato} nome={a.nome} sotto={s.titolo ?? (s.relax !== null ? "in pausa" : SOTTO[s.stato])} azione={AZIONE[s.stato]} scelto={scelto} onClick={apri} />
+          <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} selezionato={scelto} onClick={apri}>
+            {s.fumetto ? (
+              <Etichetta y={Math.abs(s.meta.x) < 3 ? 2.3 : Math.abs(s.meta.x) < 6 ? 3.5 : 2.6}><Nuvola nome={a.nome} f={s.fumetto} lato={s.meta.x < 0 ? "sinistra" : "destra"} onClick={() => p.onFumetto(s.fumetto!.id)} /></Etichetta>
+            ) : (
+              <Etichetta y={(s.meta.posa === "in_piedi" ? 2.3 : 2.15) + sfalsa}>
+                <Pillola stato={s.stato} nome={a.nome} sotto={s.titolo ?? (allaScrivania ? SOTTO[s.stato] : "in pausa")} azione={AZIONE[s.stato]} scelto={scelto} onClick={apri} />
               </Etichetta>
-            </Personaggio>
-          </group>
+            )}
+          </Personaggio>
         );
       })}
 
-      {/* percorsi dal Direttore a chi ha un lavoro aperto */}
-      {p.agenti.filter((a) => a.id !== "direttore" && a.stato !== "libero").map((a, i) => <Percorso key={a.id} da={[DIRETTORE[0], DIRETTORE[1] + 0.9]} a={AGENTE[a.id].posto} stato={a.stato} fase={i} />)}
+      {p.agenti.filter((a) => a.id !== "direttore" && a.stato === "lavora").map((a, i) => <Percorso key={a.id} da={[DIRETTORE[0], DIRETTORE[1] + 0.9]} a={AGENTE[a.id].posto} fase={i} />)}
 
       <Cervello x={CERVELLO[0]} z={CERVELLO[1]} attivo={p.selezione?.tipo === "cervello"} onClick={() => p.onSeleziona({ tipo: "cervello" })}>
-        <Etichetta y={3.5}><Pillola stato="cosa" nome="Cervello condiviso" sotto={p.regole === 0 ? "nessuna regola ancora" : p.regole === 1 ? "1 regola" : `${p.regole} regole`} scelto={p.selezione?.tipo === "cervello"} onClick={() => p.onSeleziona({ tipo: "cervello" })} punto={C.viola} /></Etichetta>
+        <Etichetta y={3.5}><Pillola stato="cosa" nome="Cervello condiviso" sotto={p.regole === 0 ? "nessuna regola" : p.regole === 1 ? "1 regola" : `${p.regole} regole`} scelto={p.selezione?.tipo === "cervello"} onClick={() => p.onSeleziona({ tipo: "cervello" })} punto="#7b5cff" /></Etichetta>
       </Cervello>
 
       <Relax />
 
-      {/* sala clienti: ogni cliente è una persona seduta al tavolo */}
-      <TavoloClienti x={CLIENTI[0]} z={CLIENTI[1]} vuota={p.clienti.length === 0} onClick={p.onNuovoCliente} />
-      {p.clienti.length === 0 ? (
-        <group position={[CLIENTI[0], 0, CLIENTI[1]]}><Etichetta y={1.9}><Pillola stato="cosa" nome="Sala clienti" sotto="aggiungi il primo cliente" azione="Aggiungi" onClick={p.onNuovoCliente} punto={C.verde} /></Etichetta></group>
+      <TuaScrivania x={TUA[0]} z={TUA[1]} nome={p.nome} accesa={p.inAttesa > 0} font={font} onClick={p.onTuaScrivania} />
+      <group position={[TUA[0] + 2.6, 0, TUA[1] - 0.2]}>
+        <Etichetta y={1.5}><Pillola stato="tu" nome="La tua scrivania" sotto={p.inAttesa ? `${p.inAttesa} ${p.inAttesa === 1 ? "promemoria" : "promemoria"}` : "niente in sospeso"} azione={p.inAttesa ? "Vedi" : null} onClick={p.onTuaScrivania} punto={p.inAttesa ? "#ffc93d" : "#2fd08a"} /></Etichetta>
+      </group>
+
+      <Cassa x={CASSA_X} dati={p.cassa} font={font} onClick={p.onCassa}>
+        <Etichetta y={2.3}><Pillola stato="cosa" nome="Cassa" sotto={`${euro(p.cassa.incassato)} a ${p.cassa.mese}`} azione="Conti" onClick={p.onCassa} punto="#35e08f" /></Etichetta>
+      </Cassa>
+
+      {/* reparti dei clienti, uno accanto all'altro, separati da pareti di vetro */}
+      {n === 0 ? (
+        <group position={[0, 0, Z_CLIENTI]}>
+          <Tappeto x={0} z={0.4} w={10} d={5.8} c="#efe9dc" />
+          <Etichetta y={1.2}><Pillola stato="cosa" nome="Reparti clienti" sotto="aggiungi il primo cliente" azione="Aggiungi" onClick={p.onNuovoCliente} punto="#2fd08a" /></Etichetta>
+        </group>
       ) : null}
       {p.clienti.map((c, i) => {
-        const q = posti[i];
+        const [x, z] = postoReparto(i, n);
         const scelto = p.selezione?.tipo === "cliente" && p.selezione.id === c.id;
         const apri = () => p.onSeleziona({ tipo: "cliente", id: c.id });
         return (
           <group key={c.id}>
-            <Sedia x={q.x} z={q.z} rot={q.rot} c="#e9e4d8" />
-            <Personaggio x={q.x} z={q.z} rot={q.rot} umore="ospite" felpa={c.colore} pelle={["#f2cfae", "#e3b089", "#f4d3b3", "#d9a77f"][i % 4]} capelli={(["corti", "caschetto", "ciuffo", "chignon", "ricci"] as const)[i % 5]} coloreCapelli={["#3a2a20", "#7a5a3c", "#1f1a17", "#b98a4a"][i % 4]} fase={i + 20} selezionato={scelto} onClick={apri}>
-              <Etichetta y={2.15 + (i % 2 ? 0.55 : 0)}><Pillola stato="cliente" nome={c.nome} sotto={c.scaduto > 0 ? `${euro(c.scaduto)} scaduti` : `${euro(c.quota)} al mese`} scelto={scelto} onClick={apri} punto={c.scaduto > 0 ? C.rosso : c.colore} /></Etichetta>
+            <RepartoCliente x={x} z={z} nome={c.nome} colore={c.colore} conti={c.conti} quota={`${euro(c.quota)} al mese`} font={font} onClick={apri} />
+            {i < n - 1 ? <Vetro x={x + PASSO_CLIENTI / 2} z={z + 0.4} lungo={5.2} /> : null}
+            <Sedia x={x} z={z - 0.85} rot={Math.PI} c="#e9e4d8" />
+            <Personaggio meta={{ x, z: z - 0.85, rot: Math.PI, posa: "seduto", y: 0 }} instrada={instrada} umore="ospite" divisa={c.colore} accento="#ffffff" pelle={["#f2cfae", "#e3b089", "#f4d3b3", "#d9a77f"][i % 4]} capelli={(["corti", "caschetto", "ciuffo", "chignon", "ricci"] as const)[i % 5]} coloreCapelli={["#3a2a20", "#7a5a3c", "#1f1a17", "#b98a4a"][i % 4]} fase={i + 20} selezionato={scelto} ospite onClick={apri}>
+              <Etichetta y={2.15}><Pillola stato="cliente" nome={c.nome} sotto={c.scaduto > 0 ? `${euro(c.scaduto)} scaduti` : c.conti.scaduti ? `${c.conti.scaduti} lavori in ritardo` : `${c.conti.daFare + c.conti.inCorso + c.conti.daGuardare} lavori aperti`} azione="Apri" scelto={scelto} onClick={apri} punto={c.scaduto > 0 || c.conti.scaduti ? "#e5484d" : c.colore} /></Etichetta>
             </Personaggio>
           </group>
         );
       })}
-      {p.altriClienti > 0 ? <group position={[CLIENTI[0] + 3.3, 0, CLIENTI[1] - 1.2]}><Etichetta y={1.2}><Pillola stato="cosa" nome={`+ ${p.altriClienti} clienti`} onClick={p.onCassa} punto={C.verde} /></Etichetta></group> : null}
+      {p.altriClienti > 0 ? <group position={[21, 0, Z_CLIENTI - 3]}><Etichetta y={1.2}><Pillola stato="cosa" nome={`+ ${p.altriClienti} clienti`} azione="Conti" onClick={p.onCassa} punto="#2fd08a" /></Etichetta></group> : null}
 
-      <Cassa x={CASSA_X} dati={p.cassa} font={font} onClick={p.onCassa}>
-        <Etichetta y={2.5}><Pillola stato="cosa" nome="Cassa" sotto={`${euro(p.cassa.incassato)} a ${p.cassa.mese}`} azione="Conti" onClick={p.onCassa} punto={C.verde} /></Etichetta>
-      </Cassa>
+      {/* piante grandi negli angoli e lungo i reparti */}
+      <Ficus x={-21.6} z={-15.4} s={1.2} />
+      <Monstera x={-8.2} z={-14.8} s={1.05} />
+      <Sansevieria x={7.6} z={-14.9} s={1.1} />
+      <Ficus x={21.6} z={-6.8} s={1.0} vaso="#2b2e3a" />
+      <Monstera x={-21.8} z={-6.8} s={1.0} />
+      <Sansevieria x={-7.4} z={-5.6} s={0.95} />
+      <Monstera x={21.7} z={7.6} s={1.05} />
+      <Sansevieria x={7.4} z={2.6} s={0.9} vaso="#f2eee7" />
+      <Ficus x={-21.7} z={15.8} s={1.1} />
+      <Ficus x={21.7} z={15.8} s={1.1} vaso="#2b2e3a" />
 
-      {/* piante */}
-      <Pianta x={-16.2} z={-10.2} s={1.15} />
-      <Pianta x={-7.3} z={-2.4} />
-      <Pianta x={7.2} z={-9.9} s={1.1} />
-      <Pianta x={7.4} z={1.0} />
-      <Pianta x={16.2} z={9.9} s={1.2} />
-      <Pianta x={-16.1} z={10.0} s={1.25} vaso="#f0e2c6" />
-      <Pianta x={-2.4} z={10.2} s={0.95} />
-      <Pianta x={16.2} z={0.6} s={0.9} />
-
-      <Regia zona={p.zona} selezione={p.selezione} agenti={p.agenti} coperto={p.coperto} />
+      <Regia zona={p.zona} selezione={p.selezione} agenti={p.agenti} clienti={p.clienti} coperto={p.coperto} />
+      {p.qualita ? (
+        <EffectComposer multisampling={4}>
+          <N8AO halfRes quality="performance" aoRadius={1.4} distanceFalloff={1} intensity={2.4} color="#2b2440" />
+          <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.9} radius={0.7} />
+        </EffectComposer>
+      ) : null}
     </>
   );
 }
 
 export default function Scena(p: PropsScena) {
+  // effetti pesanti (occlusione, bagliore, ombre morbide) solo su schermi grandi con mouse
+  const [qualita] = useState(() => typeof window !== "undefined" && window.matchMedia("(min-width: 900px) and (hover: hover)").matches);
   return (
-    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={[1, 1.75]} camera={{ fov: 27, near: 1, far: 220, position: [0, 34, 28] }} gl={{ antialias: true, powerPreference: "high-performance" }} onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
-      <Ufficio3D {...p} />
+    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={qualita ? [1, 1.75] : [1, 1.5]} camera={{ fov: 27, near: 1, far: 260, position: [0, 40, 34] }} gl={{ antialias: !qualita, powerPreference: "high-performance" }} onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
+      {qualita ? <SoftShadows size={22} samples={12} focus={0.5} /> : null}
+      <Ufficio3D {...p} qualita={qualita} />
     </Canvas>
   );
 }

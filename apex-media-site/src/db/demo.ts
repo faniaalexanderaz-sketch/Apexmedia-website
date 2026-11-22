@@ -117,11 +117,17 @@ async function seminaStudioDemo(db: PgDatabase<PgQueryResultHKT, typeof schema>)
   ]);
 
   const min = (n: number) => new Date(Date.now() - n * 60_000);
+  const traGiorni = (n: number) => giorno(new Date(Date.now() + n * 86400_000));
   await db.insert(schema.studioLavori).values([
     { agente: "giulia", clienteId: bagnarino, titolo: "Reel: perché lavorare in coworking", brief: "Reel per Bagnarino: perché lavorare in coworking invece che da casa. 30 secondi, gira il titolare.", stato: "da_guardare", creatoIl: min(95), aggiornatoIl: min(42), risultato: "GANCI\n1. «Lavori da casa e a mezzogiorno sei ancora in pigiama?»\n2. «Tre cose che a casa non hai e qui sì.»\n3. «Ho smesso di lavorare dal divano. Ecco cosa è cambiato.»\n\nSCRIPT (gancio 1)\nLavori da casa e a mezzogiorno sei ancora in pigiama?\nSuccede a tutti. A casa c'è il frigo, il divano, la lavatrice che suona.\nQui a Bagnarino entri, ti siedi, lavori.\nWifi veloce, caffè incluso, e alle sei chiudi il portatile e hai finito davvero.\nLa prima giornata è in prova: prenotala dal link in bio.\n\nTESTO A SCHERMO\n0-2s  A mezzogiorno ancora in pigiama?\n2-10s Casa = distrazioni\n10-22s Bagnarino: entri, ti siedi, lavori\n22-30s Prima giornata in prova → link in bio\n\nDati di esempio." },
     { agente: "davide", clienteId: essenza, titolo: "Campagna Google: massaggi di coppia", brief: "Campagna Google per Essenza d'Oriente sui massaggi di coppia, 10 € al giorno.", stato: "da_guardare", creatoIl: min(300), aggiornatoIl: min(180), risultato: "STRUTTURA\nCampagna: Ricerca, Alessandria + 15 km\nGruppo 1: massaggio di coppia (corrispondenza a frase)\nGruppo 2: regalo massaggio\n\nANNUNCIO A\nTitolo 1: Massaggio di Coppia Alessandria\nTitolo 2: Prenota Online in 1 Minuto\nDescrizione: Un'ora insieme nella stessa sala. Scegli giorno e ora dal sito.\n\nBUDGET\n10 € al giorno. Fermare se il costo per contatto supera 6 € dopo 7 giorni.\n\nDati di esempio." },
-    { agente: "chiara", clienteId: fioreria, titolo: "Caption: composizioni di Natale", brief: "Caption per il reel della Fioreria sulle composizioni di Natale.", stato: "in_coda", creatoIl: min(25), aggiornatoIl: min(25) },
-    { agente: "sofia", clienteId: fioreria, titolo: "Piano editoriale di dicembre", brief: "Piano della settimana per la Fioreria: obiettivo ordini online per Natale.", stato: "in_coda", creatoIl: min(20), aggiornatoIl: min(20) },
+    { agente: "chiara", clienteId: fioreria, titolo: "Caption: composizioni di Natale", brief: "Caption per il reel della Fioreria sulle composizioni di Natale.", stato: "in_coda", creatoIl: min(25), aggiornatoIl: min(25), scadenza: traGiorni(1) },
+    { agente: "sofia", clienteId: fioreria, titolo: "Piano editoriale di dicembre", brief: "Piano della settimana per la Fioreria: obiettivo ordini online per Natale.", stato: "in_coda", creatoIl: min(20), aggiornatoIl: min(20), scadenza: traGiorni(4) },
+    { agente: "matteo", clienteId: essenza, titolo: "Montaggio: video del massaggio di coppia", brief: "Scaletta di montaggio del video girato in sala: tagli, sottotitoli e copertina.", stato: "in_coda", creatoIl: min(400), aggiornatoIl: min(400), scadenza: traGiorni(-1) },
+    { agente: "giulia", clienteId: essenza, titolo: "2 reel sui trattamenti di dicembre", brief: "Due reel per Essenza d'Oriente sui trattamenti regalo di dicembre.", stato: "in_coda", creatoIl: min(380), aggiornatoIl: min(380), scadenza: traGiorni(6) },
+    { agente: "luca", clienteId: bagnarino, titolo: "Carosello: 3 modi di usare il coworking", brief: "Carosello per Bagnarino: freelance, studenti, chi lavora da remoto.", stato: "in_coda", creatoIl: min(300), aggiornatoIl: min(300), scadenza: traGiorni(5) },
+    { agente: "alice", clienteId: bagnarino, titolo: "Calendario uscite della settimana", brief: "Giorno e ora dei contenuti pronti di Bagnarino.", stato: "in_coda", creatoIl: min(200), aggiornatoIl: min(200), scadenza: traGiorni(2) },
+    { agente: "elena", clienteId: fioreria, titolo: "Pagina Natale: struttura e testi", brief: "Pagina di atterraggio per le composizioni di Natale con ordine online.", stato: "in_coda", creatoIl: min(150), aggiornatoIl: min(150), scadenza: traGiorni(8) },
     { agente: "luca", clienteId: essenza, titolo: "Carosello: 5 segnali che ti serve un massaggio", brief: "Carosello per Essenza d'Oriente: 5 segnali che ti serve un massaggio decontratturante.", stato: "fatto", creatoIl: min(3000), aggiornatoIl: min(2800), risultato: "Slide 1: «5 segnali che il tuo collo ti sta chiedendo aiuto»\n… Dati di esempio." },
     { agente: "simone", clienteId: bagnarino, titolo: "DM a chi commenta INFO", brief: "Chi commenta «INFO» sotto il reel di Bagnarino: cosa gli scriviamo in privato?", stato: "fatto", creatoIl: min(6000), aggiornatoIl: min(5800), risultato: "Primo messaggio: «Ciao! Ti mando subito i prezzi delle scrivanie. Ti serve per qualche giorno o tutto il mese?»\n… Dati di esempio." },
   ]);
@@ -131,6 +137,7 @@ async function seminaStudioDemo(db: PgDatabase<PgQueryResultHKT, typeof schema>)
     { testo: "Ogni contenuto chiude con una sola richiesta: prenota, scrivi o ordina." },
     { testo: "Parliamo ad attività locali di Alessandria: esempi concreti, niente inglesismi." },
     { testo: "Negli annunci Google metti sempre la città nel primo titolo.", agente: "davide" },
+    { testo: "Nei solleciti dai sempre del lei e proponi di sentirsi a voce se c'è un problema.", agente: "sara" },
   ]);
   await db.insert(schema.settings).values({ sito: "studio", chiave: "obiettivo_mese", valore: "2000" });
 }

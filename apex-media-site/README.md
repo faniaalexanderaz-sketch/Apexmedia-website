@@ -121,9 +121,12 @@ Variabili d'ambiente richieste: `POSTGRES_*` (generate da Vercel), `ADMIN_PASSWO
 
 Area riservata di Apex Media: l'ufficio 3D degli agenti, i conti e i lavori. Si apre da `/studio` con una password (cookie httpOnly 30 giorni, 5 tentativi al minuto).
 
-- **Ufficio**: scena 3D (react-three-fiber) con i reparti Regia, Strategia, Contenuti, Ads & Funnel, Community, più area relax, sala clienti e cassa. Tutto dipende dai dati: chi ha un lavoro aperto sta alla scrivania, chi aspetta te alza la mano, chi è libero va sul divano, ogni cliente attivo siede al tavolo, le monete della cassa crescono con gli incassi del mese. Toccando un agente si apre il pannello per scrivergli, vedere cosa fa e gli ultimi lavori. Il cervello condiviso contiene le regole che ogni agente legge prima di lavorare.
-- **Conti**: entrate ricorrenti, incassato del mese con obiettivo, da incassare e scaduto, grafico a 12 mesi, ultimi incassi; per ogni cliente servizi, fatture e resa della campagna (spesa, contatti, costo per contatto, ritorno). "Crea le fatture del mese" genera una fattura per ogni servizio mensile attivo.
-- **Lavori**: bacheca dei lavori degli agenti (da guardare, al lavoro, in coda, fatti).
+- **Ufficio**: scena 3D (react-three-fiber) di 46×34 m con muro e insegna LED di Apex Media, Regia, Strategia, Cassa, Contenuti, Studio video, Ads & Funnel, Community, area relax, la tua scrivania e un reparto per ogni cliente. Tutto segue i dati: chi ha un lavoro sta alla scrivania; chi ha qualcosa da dirti cammina lungo i corridoi fino alla tua scrivania e te lo dice in un fumetto; chi è libero va in area relax e ogni 30 secondi cambia posto. Il team porta la divisa Apex con il logo sulla schiena. Su schermi grandi con mouse ci sono anche ombre morbide, occlusione ambientale e bagliore dei LED; sul telefono no, per restare fluido.
+- **Promemoria** (campanella in alto e barra "Da fare per te"): lavori consegnati, lavori in scadenza o in ritardo, fatture scadute o in scadenza (te li ricorda Sara, che scrive anche il sollecito), fatture del mese da creare, numeri della campagna mancanti, clienti senza lavori nel mese. "Più tardi" li nasconde fino a domani su quel dispositivo.
+- **Reparto cliente**: tocchi un cliente in ufficio e vedi quanto ti paga (gli importi si cambiano con un tocco), cosa c'è da fare diviso per mestiere (piano, post, reel, video, caption, campagne, sito, pubblicazione), fatture da incassare e resa della campagna. "Prepara il mese" crea i lavori standard dai servizi del cliente, con chi li fa e la scadenza; rifarlo non crea doppioni. Le regole sono in `src/lib/studio/piano.ts`.
+- **Conti**: entrate ricorrenti, incassato del mese con obiettivo, da incassare e scaduto, grafico a 12 mesi, ultimi incassi; per ogni cliente servizi (prezzo modificabile con un tocco), fatture e resa della campagna. "Crea le fatture del mese" genera una fattura per ogni servizio mensile attivo.
+- **Lavori**: bacheca dei lavori degli agenti (da guardare, al lavoro, in coda, fatti), con scadenza.
+- **Dati di esempio**: in modalità demo la striscia gialla ha "Cancella i dati di esempio" (bisogna scrivere SVUOTA).
 
 Variabili d'ambiente:
 
@@ -137,7 +140,9 @@ Database: stesse tabelle Postgres del pannello più le `studio_*` (`clienti`, `s
 
 Dove si cambia cosa:
 
-- agenti, reparti, istruzioni e posti a sedere: `src/lib/studio/agenti.ts`
+- agenti, reparti, istruzioni, pianta dell'ufficio e percorsi: `src/lib/studio/agenti.ts`
+- promemoria: `src/lib/studio/promemoria.ts`
+- lavori creati da "Prepara il mese": `src/lib/studio/piano.ts`
 - conti e formule: `src/lib/studio/calcoli.ts`
 - chiamata a Claude: `src/lib/studio/claude.ts`
 - scena 3D: `src/components/studio/scena/` (`Scena.tsx` composizione e telecamera, `Arredi.tsx` mobili e zone, `Personaggio.tsx` persone)

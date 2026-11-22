@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { daIncassare, dataBreve, euro, giorniTra, incassatoNelMese, incassatoNellAnno, iniziali, meseDi, nomeCliente, nomeMese, ricorrente, riepilogoCampagne, scaduta, servizioAttivoNelMese, somma, ultimiMesi } from "@/lib/studio/calcoli";
 import type { Cliente, Fattura } from "@/lib/studio/tipi";
+import { ImportoModificabile } from "./Moduli";
 import { useStudio } from "./StudioApp";
 
 /* =============================================================
@@ -39,7 +40,7 @@ function Scintilla({ valori }: { valori: number[] }) {
 }
 
 function SchedaCliente({ c }: { c: Cliente }) {
-  const { dati, apri } = useStudio();
+  const { dati, apri, azione, avvisa } = useStudio();
   const mese = dati.oggi.slice(0, 7);
   const servizi = dati.servizi.filter((s) => s.clienteId === c.id);
   const attivi = servizi.filter((s) => servizioAttivoNelMese(s, mese));
@@ -65,10 +66,10 @@ function SchedaCliente({ c }: { c: Cliente }) {
 
       <section>
         <h4>Servizi</h4>
-        {servizi.length === 0 ? <p className="st-vuoto-riga">Nessun servizio: aggiungi quanto ti paga e per cosa.</p> : (
+        {servizi.length === 0 ? <p className="st-vuoto-riga">Nessun servizio: aggiungi quanto ti paga e per cosa. Poi tocchi l&apos;importo per cambiarlo.</p> : (
           <ul className="st-servizi">
-            {attivi.map((s) => <li key={s.id}><button type="button" onClick={() => apri({ tipo: "servizio", servizio: s })}><span>{s.nome}</span><small>dal {dataBreve(s.dal)} {s.dal.slice(0, 4)}</small><b>{euro(s.importo)}<i>/mese</i></b></button></li>)}
-            {altri.map((s) => <li key={s.id} data-spento><button type="button" onClick={() => apri({ tipo: "servizio", servizio: s })}><span>{s.nome}</span><small>{s.ricorrenza === "una_tantum" ? `una volta, ${dataBreve(s.dal)} ${s.dal.slice(0, 4)}` : s.al && meseDi(s.al) < mese ? `chiuso il ${dataBreve(s.al)}` : `parte il ${dataBreve(s.dal)}`}</small><b>{euro(s.importo)}</b></button></li>)}
+            {attivi.map((s) => <li key={s.id}><button type="button" className="st-servizio-nome" onClick={() => apri({ tipo: "servizio", servizio: s })}><span>{s.nome}</span><small>dal {dataBreve(s.dal)} {s.dal.slice(0, 4)}</small></button><ImportoModificabile valore={s.importo} suffisso="/mese" etichetta={`Prezzo di ${s.nome}`} salva={async (v) => { const r = await azione("servizio.prezzo", { id: s.id, importo: v }); if (r.ok) avvisa(`${s.nome}: prezzo aggiornato.`); return r.ok; }} /></li>)}
+            {altri.map((s) => <li key={s.id} data-spento><button type="button" className="st-servizio-nome" onClick={() => apri({ tipo: "servizio", servizio: s })}><span>{s.nome}</span><small>{s.ricorrenza === "una_tantum" ? `una volta, ${dataBreve(s.dal)} ${s.dal.slice(0, 4)}` : s.al && meseDi(s.al) < mese ? `chiuso il ${dataBreve(s.al)}` : `parte il ${dataBreve(s.dal)}`}</small></button><ImportoModificabile valore={s.importo} etichetta={`Prezzo di ${s.nome}`} salva={async (v) => { const r = await azione("servizio.prezzo", { id: s.id, importo: v }); return r.ok; }} /></li>)}
           </ul>
         )}
         <button type="button" className="st-btn st-btn-mini" onClick={() => apri({ tipo: "servizio", clienteId: c.id })}>+ Servizio</button>

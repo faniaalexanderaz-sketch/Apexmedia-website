@@ -1,14 +1,16 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ApexMark } from "@/components/ui/Logo";
 import { AGENTE } from "@/lib/studio/agenti";
-import { euro, nomeCliente, scaduta } from "@/lib/studio/calcoli";
+import { euro, nomeCliente } from "@/lib/studio/calcoli";
 import type { Campagna, Cliente, Dati, Fattura, Risposta, Servizio } from "@/lib/studio/tipi";
 import { Conti } from "./Conti";
 import { Lavori } from "./Lavori";
 import { Moduli } from "./Moduli";
 import { Ufficio } from "./Ufficio";
+import { Notifiche } from "./Notifiche";
+import { briefSollecito, promemoria as calcolaPromemoria, type Promemoria } from "@/lib/studio/promemoria";
 
 /* =============================================================
    Guscio dello Studio: stato dei dati, schede, moduli e avvisi.
@@ -23,7 +25,8 @@ export type Modale =
   | { tipo: "campagna"; clienteId?: number; campagna?: Campagna }
   | { tipo: "lavoro"; agente?: string; clienteId?: number }
   | { tipo: "risultato"; lavoroId: number }
-  | { tipo: "obiettivo" };
+  | { tipo: "obiettivo" }
+  | { tipo: "svuota" };
 
 type Avviso = { testo: string; tono: "ok" | "errore" | "soldi" };
 
@@ -33,12 +36,26 @@ type Contesto = {
   vai: (s: Scheda) => void;
   azione: (tipo: string, campi?: Record<string, unknown>) => Promise<Risposta>;
   /** crea un lavoro e, se gli agenti sono collegati, lo fa partire */
-  nuovoLavoro: (campi: { agente?: string; clienteId?: number | null; brief: string; titolo?: string }) => Promise<boolean>;
+  nuovoLavoro: (campi: { agente?: string; clienteId?: number | null; brief: string; titolo?: string; scadenza?: string | null }) => Promise<boolean>;
   faiLavorare: (id: number) => Promise<void>;
   incassa: (f: Fattura) => Promise<void>;
   apri: (m: Modale | null) => void;
   avvisa: (testo: string, tono?: Avviso["tono"]) => void;
+  /** le cose che il team deve ricordarti, già senza quelle rimandate */
+  promemoria: Promemoria[];
+  esegui: (p: Promemoria) => Promise<void>;
+  rimanda: (p: Promemoria) => void;
 };
+
+const CHIAVE_RIMANDATI = "apex-studio-rimandati", EVENTO_RIMANDATI = "apex-studio-rimandati";
+function leggiRimandatiGrezzi(): string {
+  try { return localStorage.getItem(CHIAVE_RIMANDATI) ?? "{}"; } catch { return "{}"; }
+}
+function ascoltaRimandati(avvisa: () => void): () => void {
+  window.addEventListener(EVENTO_RIMANDATI, avvisa);
+  window.addEventListener("storage", avvisa);
+  return () => { window.removeEventListener(EVENTO_RIMANDATI, avvisa); window.removeEventListener("storage", avvisa); };
+}
 
 const Ctx = createContext<Contesto | null>(null);
 export function useStudio(): Contesto {
@@ -125,8 +142,34 @@ export function StudioApp({ iniziali }: { iniziali: Dati }) {
     return () => { clearInterval(t); document.removeEventListener("visibilitychange", aggiorna); };
   }, [chiama]);
 
-  const toccaATe = useMemo(() => dati.lavori.filter((l) => l.stato === "da_guardare").length + dati.fatture.filter((f) => scaduta(f, dati.oggi)).length, [dati]);
-  const valore = useMemo<Contesto>(() => ({ dati, scheda, vai, azione, nuovoLavoro, faiLavorare, incassa, apri: setModale, avvisa }), [dati, scheda, vai, azione, nuovoLavoro, faiLavorare, incassa, avvisa]);
+  // promemoria: "Più tardi" li nasconde fino a domani, solo su questo dispositivo
+  const rimandatiGrezzi = useSyncExternalStore(ascoltaRimandati, leggiRimandatiGrezzi, () => "{}");
+  const rimandati = useMemo(() => { try { return JSON.parse(rimandatiGrezzi) as Record<string, string>; } catch { return {}; } }, [rimandatiGrezzi]);
+  const rimanda = useCallback((p: Promemoria) => {
+    const r: Record<string, string> = {};
+    for (const [k, v] of Object.entries(rimandati)) if (v >= dati.oggi) r[k] = v;
+    r[p.id] = dati.oggi;
+    try { localStorage.setItem(CHIAVE_RIMANDATI, JSON.stringify(r)); } catch { /* memoria del browser non disponibile */ }
+    window.dispatchEvent(new Event(EVENTO_RIMANDATI));
+  }, [rimandati, dati.oggi]);
+  // nascosto finché la data salvata è oggi: domani torna
+  const lista = useMemo(() => calcolaPromemoria(dati).filter((p) => !(rimandati[p.id] && rimandati[p.id] >= dati.oggi)), [dati, rimandati]);
+
+  const esegui = useCallback(async (p: Promemoria) => {
+    const a = p.azione;
+    if (a.tipo === "risultato") setModale({ tipo: "risultato", lavoroId: a.lavoroId });
+    else if (a.tipo === "campagna") setModale({ tipo: "campagna", clienteId: a.clienteId });
+    else if (a.tipo === "incassa") { const f = dati.fatture.find((x) => x.id === a.fatturaId); if (f) await incassa(f); }
+    else if (a.tipo === "fatture") { const r = await azione("fatture.genera", { mese: dati.oggi.slice(0, 7) }); if (r.ok) avvisa("Fatture del mese create: le trovi in Conti, da incassare."); }
+    else if (a.tipo === "sollecito") { const b = briefSollecito(dati, a.fatturaId); if (b) await nuovoLavoro({ agente: "sara", ...b }); }
+    else if (a.tipo === "prepara") {
+      const r = await azione("mese.prepara", { clienteId: a.clienteId });
+      if (r.ok) avvisa(r.nuovoId ? `Mese preparato: ${r.nuovoId} lavori affidati al team.` : "Il mese era già preparato.");
+    }
+  }, [dati, azione, avvisa, incassa, nuovoLavoro]);
+
+  const valore = useMemo<Contesto>(() => ({ dati, scheda, vai, azione, nuovoLavoro, faiLavorare, incassa, apri: setModale, avvisa, promemoria: lista, esegui, rimanda }), [dati, scheda, vai, azione, nuovoLavoro, faiLavorare, incassa, avvisa, lista, esegui, rimanda]);
+  const [campanella, setCampanella] = useState(false);
 
   return (
     <Ctx.Provider value={valore}>
@@ -136,17 +179,22 @@ export function StudioApp({ iniziali }: { iniziali: Dati }) {
           <nav className="st-schede" aria-label="Sezioni">
             {SCHEDE.map((s) => (
               <button key={s.id} type="button" aria-current={scheda === s.id ? "page" : undefined} onClick={() => vai(s.id)}>
-                {s.nome}{s.id === "ufficio" && toccaATe > 0 ? <span className="st-conta" aria-label={`${toccaATe} cose ti aspettano`}>{toccaATe}</span> : null}
+                {s.nome}{s.id === "lavori" && dati.lavori.some((l) => l.stato === "da_guardare") ? <span className="st-conta">{dati.lavori.filter((l) => l.stato === "da_guardare").length}</span> : null}
               </button>
             ))}
           </nav>
           <div className="st-barra-azioni">
+            <button type="button" className="st-campanella" aria-expanded={campanella} aria-label={`Promemoria: ${lista.length}`} onClick={() => setCampanella((v) => !v)}>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v3.6l-1.6 2.7A1 1 0 0 0 5.3 17h13.4a1 1 0 0 0 .9-1.7L18 12.6V9a6 6 0 0 0-6-6Zm-2.5 15.5a2.5 2.5 0 0 0 5 0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              {lista.length ? <span className="st-conta">{lista.length > 9 ? "9+" : lista.length}</span> : null}
+            </button>
             <button type="button" className="st-btn st-btn-pieno" onClick={() => setModale({ tipo: "lavoro" })}><span aria-hidden="true">+</span> Nuovo lavoro</button>
             <form method="post" action="/api/studio/logout"><button className="st-btn st-btn-testo" title="Esci dallo studio">Esci</button></form>
           </div>
         </header>
 
-        {dati.demo ? <p className="st-demo" role="note"><b>Modalità demo.</b> Nessun database collegato: clienti e importi sono di esempio e le modifiche spariscono al riavvio.</p> : null}
+        {dati.demo ? <p className="st-demo" role="note"><b>Modalità demo.</b> Nessun database collegato: clienti e importi sono di esempio e le modifiche spariscono al riavvio. <button type="button" className="st-link" onClick={() => setModale({ tipo: "svuota" })}>Cancella i dati di esempio</button></p> : null}
+        {campanella ? <Notifiche chiudi={() => setCampanella(false)} /> : null}
 
         <main className="st-corpo">
           {/* l'ufficio resta montato anche nelle altre schede: la scena non si ricarica e la telecamera resta dov'era */}

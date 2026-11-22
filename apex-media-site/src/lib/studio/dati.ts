@@ -1,6 +1,7 @@
 import { and, asc, desc, eq, gte, inArray, lt, sql } from "drizzle-orm";
 import { db, modalitaDemo, schema } from "@/db";
 import { AGENTE, scegliAgente } from "./agenti";
+import { pianoDelMese } from "./piano";
 import { aggiungiGiorni, fineMese, mesePrima, servizioAttivoNelMese } from "./calcoli";
 import { CANALI, type Campagna, type Dati, type Ricorrenza, type StatoLavoro } from "./tipi";
 
@@ -20,8 +21,16 @@ async function assicuraTabelle(): Promise<void> {
   for (const pezzo of SCHEMA_SQL.split("--> statement-breakpoint")) {
     const s = pezzo.trim();
     if (!s) continue;
+    // le colonne aggiunte dopo vanno create prima degli indici che le usano
+    if (s.startsWith('CREATE UNIQUE INDEX "studio_lavori_chiave_uq"')) await aggiungiColonne(d);
     await d.execute(sql.raw(s.replace(/^CREATE TABLE "/, 'CREATE TABLE IF NOT EXISTS "').replace(/^CREATE (UNIQUE )?INDEX "/, 'CREATE $1INDEX IF NOT EXISTS "')));
   }
+  await aggiungiColonne(d);
+}
+/** Colonne nate dopo la prima versione: su un database già creato vanno aggiunte a mano. */
+async function aggiungiColonne(d: Awaited<ReturnType<typeof db>>): Promise<void> {
+  await d.execute(sql.raw('ALTER TABLE "studio_lavori" ADD COLUMN IF NOT EXISTS "scadenza" text'));
+  await d.execute(sql.raw('ALTER TABLE "studio_lavori" ADD COLUMN IF NOT EXISTS "chiave" text'));
 }
 function tabelle(): Promise<void> {
   if (!pronto) pronto = assicuraTabelle().catch((e) => { pronto = null; throw e; });
@@ -97,7 +106,7 @@ export async function caricaDati(): Promise<Dati> {
     servizi: servizi.map((s) => ({ id: s.id, clienteId: s.clienteId, nome: s.nome, importo: num(s.importo), ricorrenza: s.ricorrenza as Ricorrenza, dal: s.dal, al: s.al })),
     fatture: fatture.map((f) => ({ id: f.id, clienteId: f.clienteId, servizioId: f.servizioId, mese: f.mese, descrizione: f.descrizione, importo: num(f.importo), emessaIl: f.emessaIl, scadenza: f.scadenza, pagataIl: f.pagataIl })),
     campagne: [...manuali, ...auto],
-    lavori: lavori.map((l) => ({ id: l.id, agente: l.agente, clienteId: l.clienteId, titolo: l.titolo, brief: l.brief, stato: l.stato as StatoLavoro, risultato: l.risultato, revisione: l.revisione, creatoIl: l.creatoIl.toISOString(), aggiornatoIl: l.aggiornatoIl.toISOString() })),
+    lavori: lavori.map((l) => ({ id: l.id, agente: l.agente, clienteId: l.clienteId, titolo: l.titolo, brief: l.brief, stato: l.stato as StatoLavoro, risultato: l.risultato, revisione: l.revisione, scadenza: l.scadenza, creatoIl: l.creatoIl.toISOString(), aggiornatoIl: l.aggiornatoIl.toISOString() })),
     regole: regole.map((r) => ({ id: r.id, testo: r.testo, agente: r.agente, creatoIl: r.creatoIl.toISOString() })),
   };
 }
@@ -189,6 +198,17 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
       }
       return r.id;
     }
+    case "servizio.prezzo": {
+      await d.update(S.studioServizi).set({ importo: String(importo(c.importo, "Importo")) }).where(eq(S.studioServizi.id, id(c.id)));
+      return;
+    }
+    case "studio.svuota": {
+      // cancella clienti, servizi, fatture, campagne, lavori e regole: lo studio riparte vuoto
+      if (c.conferma !== "SVUOTA") throw new Errore("Per cancellare tutto scrivi SVUOTA.");
+      for (const t of [S.studioFatture, S.studioServizi, S.studioCampagne, S.studioLavori, S.studioRegole, S.studioClienti]) await d.delete(t);
+      await d.delete(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "obiettivo_mese")));
+      return;
+    }
     case "servizio.chiudi": {
       await d.update(S.studioServizi).set({ al: c.al ? data(c.al, "Fine") : oggi }).where(eq(S.studioServizi.id, id(c.id)));
       return;
@@ -250,8 +270,26 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
       const brief = testo(c.brief, "cosa serve", 6000);
       const titolo = testo(c.titolo, "titolo", 120, false) || brief.split(/[\n.!?]/)[0].slice(0, 90);
       const agente = typeof c.agente === "string" && AGENTE[c.agente] && c.agente !== "auto" ? c.agente : scegliAgente(`${titolo} ${brief}`);
-      const [r] = await d.insert(S.studioLavori).values({ agente, clienteId: c.clienteId ? await clienteEsiste(id(c.clienteId)) : null, titolo, brief, stato: "in_coda" }).returning({ id: S.studioLavori.id });
+      const [r] = await d.insert(S.studioLavori).values({ agente, clienteId: c.clienteId ? await clienteEsiste(id(c.clienteId)) : null, titolo, brief, stato: "in_coda", scadenza: c.scadenza ? data(c.scadenza, "Scadenza") : null }).returning({ id: S.studioLavori.id });
       return r.id;
+    }
+    case "lavoro.modifica": {
+      const v: Partial<typeof S.studioLavori.$inferInsert> = { aggiornatoIl: new Date() };
+      if ("scadenza" in c) v.scadenza = c.scadenza ? data(c.scadenza, "Scadenza") : null;
+      if (typeof c.agente === "string" && AGENTE[c.agente]) v.agente = c.agente;
+      if (typeof c.titolo === "string" && c.titolo.trim()) v.titolo = testo(c.titolo, "titolo", 120);
+      await d.update(S.studioLavori).set(v).where(eq(S.studioLavori.id, id(c.id)));
+      return;
+    }
+    case "mese.prepara": {
+      // i lavori standard del mese per un cliente, dai suoi servizi attivi; rifarlo non crea doppioni
+      const n = await clienteEsiste(id(c.clienteId, "cliente"));
+      const m = c.mese ? mese(c.mese) : oggi.slice(0, 7);
+      const [cl] = await d.select().from(S.studioClienti).where(eq(S.studioClienti.id, n)).limit(1);
+      const servizi = (await d.select().from(S.studioServizi).where(eq(S.studioServizi.clienteId, n))).map((x) => ({ ...x, importo: num(x.importo), ricorrenza: x.ricorrenza as Ricorrenza }));
+      const piano = pianoDelMese({ ...cl, sito: cl.sito }, servizi, m, oggi);
+      const creati = await d.insert(S.studioLavori).values(piano.map((p) => ({ agente: p.agente, clienteId: n, titolo: p.titolo, brief: p.brief, stato: "in_coda", scadenza: p.scadenza, chiave: p.chiave }))).onConflictDoNothing().returning({ id: S.studioLavori.id });
+      return creati.length;
     }
     case "lavoro.stato": {
       const stato = String(c.stato) as StatoLavoro;
