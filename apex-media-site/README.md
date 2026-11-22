@@ -116,3 +116,31 @@ Pannello dei risultati di Essenza d'Oriente, su **Vercel Postgres** (Drizzle ORM
 4. Senza nessuna variabile: **modalità demo**, Postgres in memoria con 12 mesi di dati di esempio (`src/db/demo.ts`), banner "Modalità demo" nel pannello. Dopo `npm run db:sql` lo schema SQL della demo si rigenera da `src/db/schema.ts`.
 
 Variabili d'ambiente richieste: `POSTGRES_*` (generate da Vercel), `ADMIN_PASSWORD`, `CLIENT_PASSWORD`. Opzionale `TRACK_ALLOWED_ORIGINS`. Deploy: ogni push su `main` pubblica; a mano `vercel --prod`.
+
+## Studio (`/studio`)
+
+Area riservata di Apex Media: l'ufficio 3D degli agenti, i conti e i lavori. Si apre da `/studio` con una password (cookie httpOnly 30 giorni, 5 tentativi al minuto).
+
+- **Ufficio**: scena 3D (react-three-fiber) con i reparti Regia, Strategia, Contenuti, Ads & Funnel, Community, più area relax, sala clienti e cassa. Tutto dipende dai dati: chi ha un lavoro aperto sta alla scrivania, chi aspetta te alza la mano, chi è libero va sul divano, ogni cliente attivo siede al tavolo, le monete della cassa crescono con gli incassi del mese. Toccando un agente si apre il pannello per scrivergli, vedere cosa fa e gli ultimi lavori. Il cervello condiviso contiene le regole che ogni agente legge prima di lavorare.
+- **Conti**: entrate ricorrenti, incassato del mese con obiettivo, da incassare e scaduto, grafico a 12 mesi, ultimi incassi; per ogni cliente servizi, fatture e resa della campagna (spesa, contatti, costo per contatto, ritorno). "Crea le fatture del mese" genera una fattura per ogni servizio mensile attivo.
+- **Lavori**: bacheca dei lavori degli agenti (da guardare, al lavoro, in coda, fatti).
+
+Variabili d'ambiente:
+
+| Variabile | A cosa serve |
+|---|---|
+| `STUDIO_PASSWORD` | password dello Studio. Se manca vale `ADMIN_PASSWORD`. `CLIENT_PASSWORD` non apre mai lo Studio |
+| `ANTHROPIC_API_KEY` | facoltativa: con la chiave gli agenti scrivono davvero (una chiamata a Claude per lavoro). Senza, i lavori restano in coda e lo Studio funziona da bacheca |
+| `STUDIO_MODEL` | facoltativa: modello usato dagli agenti (predefinito `claude-opus-5-5`) |
+
+Database: stesse tabelle Postgres del pannello più le `studio_*` (`clienti`, `servizi`, `fatture`, `campagne`, `lavori`, `regole`), definite in `src/db/schema.ts`. **Si creano da sole al primo accesso** (`src/lib/studio/dati.ts`), non serve `db:push`. Senza database parte la modalità demo con tre clienti e importi di esempio.
+
+Dove si cambia cosa:
+
+- agenti, reparti, istruzioni e posti a sedere: `src/lib/studio/agenti.ts`
+- conti e formule: `src/lib/studio/calcoli.ts`
+- chiamata a Claude: `src/lib/studio/claude.ts`
+- scena 3D: `src/components/studio/scena/` (`Scena.tsx` composizione e telecamera, `Arredi.tsx` mobili e zone, `Personaggio.tsx` persone)
+- stile: `src/app/(studio)/studio.css`
+
+Se un cliente ha il dominio del sito compilato e quel sito manda i click a `/api/track`, i numeri della campagna (contatti, spesa, prenotazioni) arrivano da soli dal tracciamento; quelli inseriti a mano hanno la precedenza.
