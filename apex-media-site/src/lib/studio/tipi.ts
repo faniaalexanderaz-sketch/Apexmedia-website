@@ -14,6 +14,8 @@ export type Campagna = { id: number; clienteId: number; mese: string; canale: st
 export type Lavoro = {
   id: number; agente: string; clienteId: number | null; titolo: string; brief: string;
   stato: StatoLavoro; risultato: string | null; revisione: string | null; creatoIl: string; aggiornatoIl: string;
+  /** YYYY-MM-DD; se c'è, l'agente te la ricorda quando si avvicina */
+  scadenza: string | null;
 };
 export type Regola = { id: number; testo: string; agente: string | null; creatoIl: string };
 

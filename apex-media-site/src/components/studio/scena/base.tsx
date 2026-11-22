@@ -41,16 +41,36 @@ export const GEO = {
   disco: new THREE.CircleGeometry(0.5, 48),
   busto: new THREE.CapsuleGeometry(0.21, 0.26, 6, 16),
   braccio: new THREE.CapsuleGeometry(0.065, 0.34, 4, 12),
-  gamba: new THREE.CapsuleGeometry(0.085, 0.26, 4, 12),
+  gamba: new THREE.CapsuleGeometry(0.085, 0.2, 4, 12),
+  /** vaso svasato: più largo in alto */
+  vaso: new THREE.CylinderGeometry(0.5, 0.36, 1, 28),
+  /** foglia: disco schiacciato, si scala per allungarla */
+  foglia: new THREE.SphereGeometry(0.5, 14, 8),
+  toro: new THREE.TorusGeometry(0.5, 0.07, 10, 40),
+  arco: new THREE.TorusGeometry(0.3, 0.035, 8, 24, Math.PI),
 };
 
 const materiali = new Map<string, THREE.Material>();
-/** Materiale opaco condiviso per colore. */
-export function mat(colore: string): THREE.Material {
-  let m = materiali.get(colore);
-  if (!m) { m = new THREE.MeshLambertMaterial({ color: colore }); materiali.set(colore, m); }
+/** Materiale condiviso per colore: opaco e morbido (plastica, tessuto, legno verniciato). */
+export function mat(colore: string, ruvido = 0.72, metallo = 0): THREE.Material {
+  const k = `${colore}:${ruvido}:${metallo}`;
+  let m = materiali.get(k);
+  if (!m) { m = new THREE.MeshStandardMaterial({ color: colore, roughness: ruvido, metalness: metallo }); materiali.set(k, m); }
   return m;
 }
+/** Metallo spazzolato (gambe, supporti, lampade). */
+export function matMetallo(colore = "#c9ccd4"): THREE.Material { return mat(colore, 0.32, 0.85); }
+/** Superficie lucida (schermi spenti, vetro scuro, ceramica). */
+export function matLucido(colore: string): THREE.Material { return mat(colore, 0.18, 0.1); }
+/** Luce LED: colore oltre 1, così il bagliore (bloom) la fa brillare. Senza bagliore resta un colore pieno. */
+export function matLed(colore: string, forza = 2.4): THREE.Material {
+  const k = `led:${colore}:${forza}`;
+  let m = materiali.get(k);
+  if (!m) { const c = new THREE.Color(colore).multiplyScalar(forza); m = new THREE.MeshBasicMaterial({ color: c, toneMapped: false }); materiali.set(k, m); }
+  return m;
+}
+/** Vetro delle pareti: trasparente, non fa ombra. */
+export const MAT_VETRO = new THREE.MeshStandardMaterial({ color: "#dfe9f5", roughness: 0.08, metalness: 0.1, transparent: true, opacity: 0.22, depthWrite: false });
 /** Materiale che non risente delle luci (schermi, scritte, anelli). */
 export function matLuce(colore: string, opacita = 1): THREE.Material {
   const k = `luce:${colore}:${opacita}`;

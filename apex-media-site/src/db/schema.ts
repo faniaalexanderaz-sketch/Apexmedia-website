@@ -164,8 +164,10 @@ export const studioLavori = pgTable(
     stato: text("stato").notNull().default("in_coda"), // in_coda | in_lavorazione | da_guardare | fatto
     risultato: text("risultato"),
     revisione: text("revisione"), // ultima correzione chiesta
+    scadenza: text("scadenza"), // YYYY-MM-DD, facoltativa
+    chiave: text("chiave"), // per i lavori creati da "Prepara il mese": evita i doppioni
   },
-  (t) => [index("studio_lavori_stato_idx").on(t.stato)],
+  (t) => [index("studio_lavori_stato_idx").on(t.stato), uniqueIndex("studio_lavori_chiave_uq").on(t.chiave)],
 );
 
 export const studioRegole = pgTable("studio_regole", {

@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { AGENTE, AGENTI, ZONE, scegliAgente } from "@/lib/studio/agenti";
-import { aggiungiGiorni, euro, nomeCliente, tempoFa } from "@/lib/studio/calcoli";
+import { aggiungiGiorni, dataBreve, euro, nomeCliente, tempoFa } from "@/lib/studio/calcoli";
 import { CANALI, COLORI_CLIENTE, SERVIZI_SUGGERITI } from "@/lib/studio/tipi";
 import { portfolio } from "@/data/portfolio";
 import { useStudio, type Modale } from "./StudioApp";
@@ -235,12 +235,16 @@ function ModuloLavoro({ m, chiudi }: { m: Extract<Modale, { tipo: "lavoro" }>; c
   const [brief, setBrief] = useState("");
   const [agente, setAgente] = useState(m.agente ?? "auto");
   const [clienteId, setClienteId] = useState<number | "">(m.clienteId ?? "");
+  const [scadenza, setScadenza] = useState("");
   const scelto = agente === "auto" ? (brief.trim().length > 8 ? AGENTE[scegliAgente(brief)] : null) : AGENTE[agente];
   return (
     <Finestra titolo="Nuovo lavoro" sotto={dati.ai ? "Scrivi cosa serve: l'agente parte subito e te lo riporta da guardare." : "Scrivi cosa serve: il lavoro va in coda all'agente giusto."} chiudi={chiudi} larga>
-      <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => { if (await nuovoLavoro({ agente, clienteId: clienteId || null, brief })) chiudi(); }); }}>
+      <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => { if (await nuovoLavoro({ agente, clienteId: clienteId || null, brief, scadenza: scadenza || null })) chiudi(); }); }}>
         <label className="st-campo">Cosa serve<textarea data-primo value={brief} onChange={(e) => setBrief(e.target.value)} required rows={5} maxLength={6000} placeholder={scelto?.esempio ?? "Es. Reel per Bagnarino: perché lavorare in coworking invece che da casa."} /></label>
-        <SceltaCliente valore={clienteId} cambia={setClienteId} facoltativo />
+        <div className="st-riga">
+          <SceltaCliente valore={clienteId} cambia={setClienteId} facoltativo />
+          <label className="st-campo">Per quando<small> facoltativo: te lo ricorda</small><input type="date" value={scadenza} min={dati.oggi} onChange={(e) => setScadenza(e.target.value)} /></label>
+        </div>
         <fieldset className="st-campo st-squadra"><legend>Chi lo fa</legend>
           <button type="button" className="st-chip" aria-pressed={agente === "auto"} onClick={() => setAgente("auto")}>Decide il Direttore</button>
           {ZONE.filter((z) => AGENTI.some((a) => a.reparto === z.id)).map((z) => (
@@ -280,6 +284,11 @@ function ModuloRisultato({ m, chiudi }: { m: Extract<Modale, { tipo: "risultato"
     <Finestra titolo={l.titolo} sotto={`${a?.nome ?? l.agente} · ${STATI[l.stato]}${l.clienteId ? ` · ${nomeCliente(dati.clienti, l.clienteId)}` : ""} · ${tempoFa(l.aggiornatoIl)}`} chiudi={chiudi} larga>
       <div className="st-modulo">
         <details className="st-brief" open={!l.risultato}><summary>La richiesta</summary><p>{l.brief}</p>{l.revisione ? <p><b>Correzione chiesta:</b> {l.revisione}</p> : null}</details>
+        {l.stato !== "fatto" ? (
+          <label className="st-campo st-campo-linea">Scadenza
+            <input type="date" defaultValue={l.scadenza ?? ""} onChange={(e) => { void azione("lavoro.modifica", { id: l.id, scadenza: e.target.value || null }).then((r) => { if (r.ok) avvisa(e.target.value ? `Scadenza: ${dataBreve(e.target.value)}. ${a?.nome} te la ricorderà.` : "Scadenza tolta."); }); }} />
+          </label>
+        ) : null}
 
         {l.stato === "in_lavorazione" ? <p className="st-lavora"><span className="st-attesa-punto" />{a?.nome} ci sta lavorando. Di solito consegna in meno di un minuto.</p> : null}
         {l.risultato ? <pre className="st-risultato">{l.risultato}</pre> : null}
@@ -343,6 +352,48 @@ function ModuloObiettivo({ chiudi }: { chiudi: () => void }) {
   );
 }
 
+/* ---------- Cancella i dati di esempio ---------- */
+
+function ModuloSvuota({ chiudi }: { chiudi: () => void }) {
+  const { dati, azione, avvisa } = useStudio();
+  const { occupato, invia } = useInvio();
+  const [conferma, setConferma] = useState("");
+  return (
+    <Finestra titolo="Cancella i dati di esempio" sotto="Lo studio riparte vuoto: clienti, servizi, fatture, campagne, lavori e regole." chiudi={chiudi}>
+      <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => { const r = await azione("studio.svuota", { conferma }); if (r.ok) { avvisa("Studio vuoto: aggiungi il tuo primo cliente da Conti."); chiudi(); } }); }}>
+        {dati.demo ? <p className="st-nota st-nota-avviso">Sei in modalità demo: senza database anche i dati che inserisci dopo spariscono al prossimo riavvio del server. Per tenerli collega il database su Vercel.</p> : null}
+        <label className="st-campo">Scrivi SVUOTA per confermare<input data-primo value={conferma} onChange={(e) => setConferma(e.target.value.toUpperCase())} autoCapitalize="characters" autoComplete="off" /></label>
+        <Piede occupato={occupato || conferma !== "SVUOTA"} salva="Cancella tutto" chiudi={chiudi} />
+      </form>
+    </Finestra>
+  );
+}
+
+/* ---------- Importo che si cambia con un tocco ---------- */
+
+/** Mostra un importo; toccandolo diventa un campo: Invio o uscire dal campo salva, Esc annulla. */
+export function ImportoModificabile({ valore, salva, suffisso, etichetta }: { valore: number; salva: (n: string) => Promise<boolean>; suffisso?: string; etichetta: string }) {
+  const [modifica, setModifica] = useState(false);
+  const [testo, setTesto] = useState("");
+  const fatto = useRef(false);
+  const chiudi = async (tieni: boolean) => {
+    if (fatto.current) return;
+    fatto.current = true;
+    if (tieni && testo.trim() && Number(testo.replace(",", ".")) !== valore) await salva(testo);
+    setModifica(false);
+  };
+  if (!modifica) {
+    return <button type="button" className="st-importo" title={`Cambia ${etichetta}`} aria-label={`${etichetta}: ${euro(valore)}. Tocca per cambiarlo`} onClick={(e) => { e.stopPropagation(); fatto.current = false; setTesto(String(valore).replace(".", ",")); setModifica(true); }}>{euro(valore)}{suffisso ? <i>{suffisso}</i> : null}<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M11 2.5 13.5 5 6 12.5H3.5V10L11 2.5Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /></svg></button>;
+  }
+  return (
+    <span className="st-importo-campo st-euro" onClick={(e) => e.stopPropagation()}>
+      <input autoFocus inputMode="decimal" aria-label={etichetta} value={testo} onChange={(e) => setTesto(e.target.value)} onFocus={(e) => e.target.select()}
+        onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void chiudi(true); } if (e.key === "Escape") { e.preventDefault(); void chiudi(false); } }}
+        onBlur={() => void chiudi(true)} />
+    </span>
+  );
+}
+
 export function Moduli({ modale, chiudi }: { modale: Modale; chiudi: () => void }) {
   switch (modale.tipo) {
     case "cliente": return <ModuloCliente m={modale} chiudi={chiudi} />;
@@ -352,5 +403,6 @@ export function Moduli({ modale, chiudi }: { modale: Modale; chiudi: () => void 
     case "lavoro": return <ModuloLavoro m={modale} chiudi={chiudi} />;
     case "risultato": return <ModuloRisultato m={modale} chiudi={chiudi} />;
     case "obiettivo": return <ModuloObiettivo chiudi={chiudi} />;
+    case "svuota": return <ModuloSvuota chiudi={chiudi} />;
   }
 }

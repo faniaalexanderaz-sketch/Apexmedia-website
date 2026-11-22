@@ -3,20 +3,26 @@
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { site } from "@/data/site";
-import { AGENTE, AGENTI, POSTI_RELAX, ZONE, type ZonaId } from "@/lib/studio/agenti";
-import { daIncassare, elenco, euro, giorniTra, incassatoNelMese, iniziali, nomeCliente, nomeMese, ricorrente, riepilogoCampagne, saluto, scaduta, somma, statoAgente, tempoFa, type StatoAgente } from "@/lib/studio/calcoli";
+import { AGENTE, AGENTI, POSTI_RELAX, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
+import { dataBreve, daIncassare, euro, giorniTra, incassatoNelMese, iniziali, nomeCliente, nomeMese, ricorrente, riepilogoCampagne, saluto, scaduta, servizioAttivoNelMese, somma, statoAgente, tempoFa, type StatoAgente } from "@/lib/studio/calcoli";
+import { visite } from "@/lib/studio/promemoria";
+import type { Lavoro } from "@/lib/studio/tipi";
 import { Avatar } from "./Lavori";
+import { ImportoModificabile } from "./Moduli";
+import { RigaPromemoria } from "./Notifiche";
 import { useStudio } from "./StudioApp";
 import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
 
 /* =============================================================
    Ufficio: la scena 3D con sopra il saluto, i filtri per zona, la
-   barra "Tocca a te" e il pannello di chi è stato scelto.
+   barra dei promemoria e il pannello di chi è stato scelto.
+   Qui si decide dove sta ognuno: alla scrivania se lavora, davanti
+   alla tua scrivania se deve dirti qualcosa, in area relax se è libero.
    ============================================================= */
 
 const Scena = dynamic(() => import("./scena/Scena"), { ssr: false, loading: () => <div className="st-scena-attesa" role="status"><span className="st-attesa-punto" />Accendo le luci dell&apos;ufficio…</div> });
 
-const MAX_AL_TAVOLO = 6;
+const MAX_REPARTI = 6;
 const STATO_TESTO: Record<StatoAgente, string> = { attesa: "ti aspetta", lavora: "sta lavorando", coda: "ha un lavoro in coda", libero: "libero" };
 
 function useLargo(): number {
@@ -25,91 +31,111 @@ function useLargo(): number {
   return w;
 }
 
+/** Ogni 30 secondi chi è libero cambia posto in area relax: va al caffè, gioca a ping pong, si siede. */
+function useGiro(): number {
+  const [g, setG] = useState(0);
+  useEffect(() => { const t = setInterval(() => setG((x) => x + 1), 30_000); return () => clearInterval(t); }, []);
+  return g;
+}
+
 export function Ufficio({ attivo }: { attivo: boolean }) {
-  const { dati, apri, vai, incassa, faiLavorare } = useStudio();
+  const { dati, apri, vai, promemoria, esegui } = useStudio();
   const [zona, setZona] = useState<ZonaId | "tutto">("tutto");
   const [selezione, setSelezione] = useState<Selezione>(null);
+  const [elenco, setElenco] = useState(false);
   const largo = useLargo();
+  const giro = useGiro();
   const stretto = largo < 760;
   const mese = dati.oggi.slice(0, 7);
 
   const modello = useMemo(() => {
     const stati = AGENTI.map((a) => ({ a, ...statoAgente(dati.lavori, a.id) }));
-    // chi è libero va in area relax finché ci sono posti; il Direttore resta sempre alla sua scrivania
-    let posto = 0;
-    const agenti: AgenteScena[] = stati.map(({ a, stato, lavoro }) => ({ id: a.id, stato, titolo: lavoro?.titolo ?? null, relax: stato === "libero" && a.id !== "direttore" && posto < POSTI_RELAX.length ? posto++ : null }));
+    // chi ha qualcosa da dirti viene alla tua scrivania (uno per agente, i più urgenti)
+    const vis = visite(promemoria, POSTI_VISITA.length);
+    // ognuno ha il suo posto preferito davanti alla scrivania: chi resta non si sposta quando un altro se ne va
+    const occupati = new Set<number>();
+    const daVisita = new Map(vis.map((p) => {
+      let k = AGENTI.findIndex((a) => a.id === p.agente) % POSTI_VISITA.length;
+      while (occupati.has(k)) k = (k + 1) % POSTI_VISITA.length;
+      occupati.add(k);
+      return [p.agente, { p, posto: POSTI_VISITA[k] }];
+    }));
+    const liberi = stati.filter((x) => x.stato === "libero" && x.a.id !== "direttore" && !daVisita.has(x.a.id)).map((x) => x.a.id);
+    const agenti: AgenteScena[] = stati.map(({ a, stato, lavoro }) => {
+      const v = daVisita.get(a.id);
+      let meta: Punto = postoScrivania(a.id), umore: AgenteScena["umore"] = stato, tazza = false;
+      if (v) { meta = v.posto; umore = "visita"; }
+      else if (stato === "libero") {
+        const k = liberi.indexOf(a.id);
+        if (k >= 0 && k < POSTI_RELAX.length) { meta = POSTI_RELAX[(k + giro) % POSTI_RELAX.length]; tazza = meta.x < -20.5; }
+      }
+      return { id: a.id, stato, titolo: lavoro?.titolo ?? null, meta, umore, tazza, fumetto: v ? { id: v.p.id, frase: v.p.frase, bottone: v.p.bottone, tono: v.p.tono } : null };
+    });
     const attivi = dati.clienti.filter((c) => c.attivo);
-    const clienti: ClienteScena[] = attivi.slice(0, MAX_AL_TAVOLO).map((c) => ({ id: c.id, nome: c.nome, colore: c.colore, quota: ricorrente(dati, mese, c.id), scaduto: somma(daIncassare(dati.fatture, c.id).filter((f) => scaduta(f, dati.oggi))) }));
+    const clienti: ClienteScena[] = attivi.slice(0, MAX_REPARTI).map((c) => {
+      const suoi = dati.lavori.filter((l) => l.clienteId === c.id);
+      return {
+        id: c.id, nome: c.nome, colore: c.colore, quota: ricorrente(dati, mese, c.id),
+        scaduto: somma(daIncassare(dati.fatture, c.id).filter((f) => scaduta(f, dati.oggi))),
+        conti: {
+          daFare: suoi.filter((l) => l.stato === "in_coda").length, inCorso: suoi.filter((l) => l.stato === "in_lavorazione").length,
+          daGuardare: suoi.filter((l) => l.stato === "da_guardare").length, fatti: suoi.filter((l) => l.stato === "fatto" && l.aggiornatoIl.slice(0, 7) === mese).length,
+          scaduti: suoi.filter((l) => l.stato !== "fatto" && l.stato !== "da_guardare" && l.scadenza && l.scadenza < dati.oggi).length,
+        },
+      };
+    });
+    const delMese = dati.campagne.filter((k) => k.mese === mese);
+    const ads = {
+      mese: nomeMese(mese, true), spesa: delMese.reduce((t, k) => t + k.spesa, 0), contatti: delMese.reduce((t, k) => t + k.contatti, 0),
+      righe: attivi.map((c) => ({ nome: c.nome, colore: c.colore, contatti: delMese.filter((k) => k.clienteId === c.id).reduce((t, k) => t + k.contatti, 0) })).filter((r) => r.contatti > 0).sort((a, b) => b.contatti - a.contatti),
+    };
     const conta = (s: StatoAgente) => stati.filter((x) => x.stato === s).length;
     return {
-      stati, agenti, clienti, altriClienti: Math.max(0, attivi.length - MAX_AL_TAVOLO),
+      agenti, clienti, ads, altriClienti: Math.max(0, attivi.length - MAX_REPARTI),
       conteggi: { attesa: dati.lavori.filter((l) => l.stato === "da_guardare").length, lavora: dati.lavori.filter((l) => l.stato === "in_lavorazione").length, coda: dati.lavori.filter((l) => l.stato === "in_coda").length, liberi: conta("libero") },
       cassa: { incassato: incassatoNelMese(dati.fatture, mese), obiettivo: dati.obiettivoMese, ricorrente: ricorrente(dati, mese), mese: nomeMese(mese, true) },
-      inAttesa: stati.filter((x) => x.stato === "attesa").map((x) => x.a.nome),
-      alLavoro: conta("lavora"), liberi: conta("libero"),
+      visitatori: vis.map((p) => AGENTE[p.agente]?.nome ?? ""), alLavoro: conta("lavora"),
     };
-  }, [dati, mese]);
-
-  const daGuardare = dati.lavori.filter((l) => l.stato === "da_guardare").sort((a, b) => a.aggiornatoIl.localeCompare(b.aggiornatoIl));
-  const scadute = dati.fatture.filter((f) => scaduta(f, dati.oggi));
-  const inCoda = dati.lavori.filter((l) => l.stato === "in_coda");
+  }, [dati, mese, promemoria, giro]);
 
   const scegli = (s: Selezione) => { setSelezione(s); if (s) setZona("tutto"); };
   const pannelloAperto = selezione !== null;
   const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 400 : 0, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.52) : stretto ? 216 : 150, alto: stretto ? 70 : 84 }), [pannelloAperto, stretto]);
+  const daScadere = promemoria.filter((p) => p.tono === "allarme").length;
 
   return (
     <div className="st-ufficio" data-pannello={pannelloAperto || undefined}>
       <div className="st-scena">
-        <Scena attivo={attivo} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} conteggi={modello.conteggi} regole={dati.regole.length} zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli} onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} />
+        <Scena attivo={attivo} nome={site.founders[0].split(" ")[0]} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} ads={modello.ads} conteggi={modello.conteggi} regole={dati.regole.length} inAttesa={promemoria.length}
+          zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli}
+          onFumetto={(id) => { const p = promemoria.find((x) => x.id === id); if (p) void esegui(p); }}
+          onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); }} />
       </div>
 
       <div className="st-saluto">
         <h1>{saluto(dati.ora)}, {site.founders[0].split(" ")[0]}</h1>
         <p>
-          {modello.inAttesa.length ? <><b className="st-t-attesa">{elenco(modello.inAttesa)}</b> {modello.inAttesa.length === 1 ? "ti aspetta" : "ti aspettano"}. </> : null}
-          {scadute.length ? <><b className="st-t-allarme">{scadute.length === 1 ? "1 fattura scaduta" : `${scadute.length} fatture scadute`}</b>. </> : null}
-          {modello.alLavoro ? <><b className="st-t-lavora">{modello.alLavoro === 1 ? "1 sta lavorando" : `${modello.alLavoro} stanno lavorando`}</b>, </> : null}
-          {modello.liberi === AGENTI.length ? "Sono tutti liberi." : `${modello.liberi} ${modello.liberi === 1 ? "è libero" : "sono liberi"}.`}
+          {modello.visitatori.length ? <><b className="st-t-attesa">{modello.visitatori.length === 1 ? modello.visitatori[0] : `${modello.visitatori.slice(0, -1).join(", ")} e ${modello.visitatori.at(-1)}`}</b> {modello.visitatori.length === 1 ? "è venuto" : "sono venuti"} alla tua scrivania. </> : null}
+          {daScadere ? <><b className="st-t-allarme">{daScadere === 1 ? "1 cosa urgente" : `${daScadere} cose urgenti`}</b>. </> : null}
+          {modello.alLavoro ? <><b className="st-t-lavora">{modello.alLavoro === 1 ? "1 sta lavorando" : `${modello.alLavoro} stanno lavorando`}</b>. </> : null}
+          {!modello.visitatori.length && !modello.alLavoro ? "Tutto tranquillo." : null}
         </p>
       </div>
 
       <div className="st-zone" role="group" aria-label="Inquadra una zona">
         <button type="button" aria-pressed={zona === "tutto" && !selezione} onClick={() => { setZona("tutto"); setSelezione(null); }}>Tutto</button>
         {ZONE.map((z) => <button key={z.id} type="button" aria-pressed={zona === z.id && !selezione} onClick={() => { setSelezione(null); setZona(z.id); }}>{z.nome}</button>)}
+        {modello.clienti.map((c) => <button key={`c${c.id}`} type="button" className="st-zona-cliente" aria-pressed={selezione?.tipo === "cliente" && selezione.id === c.id} onClick={() => scegli({ tipo: "cliente", id: c.id })}><i style={{ background: c.colore }} />{c.nome}</button>)}
       </div>
 
-      <section className="st-dock" aria-label="Tocca a te">
-        <div className="st-dock-titolo"><b>Tocca a te</b><small>{daGuardare.length + scadute.length === 0 ? "niente in sospeso" : `${daGuardare.length + scadute.length} ${daGuardare.length + scadute.length === 1 ? "cosa" : "cose"}`}</small></div>
-        <div className="st-dock-scorri">
-          {daGuardare.map((l) => (
-            <article key={`l${l.id}`} className="st-dock-carta" data-tono="attesa">
-              <Avatar agente={l.agente} grande />
-              <div><small>{AGENTE[l.agente]?.nome} · da guardare</small><b>{l.titolo}</b><p>{(l.risultato ?? "").replace(/\s+/g, " ").slice(0, 110)}</p>
-                <span><button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => { scegli({ tipo: "agente", id: l.agente }); apri({ tipo: "risultato", lavoroId: l.id }); }}>Guarda <i aria-hidden="true">▸</i></button><button type="button" className="st-btn st-btn-testo st-btn-mini" onClick={() => scegli({ tipo: "agente", id: l.agente })}>Vai da {AGENTE[l.agente]?.nome}</button></span>
-              </div>
-            </article>
-          ))}
-          {scadute.map((f) => (
-            <article key={`f${f.id}`} className="st-dock-carta" data-tono="allarme">
-              <span className="st-sigla" style={{ background: dati.clienti.find((c) => c.id === f.clienteId)?.colore }}>{iniziali(nomeCliente(dati.clienti, f.clienteId))}</span>
-              <div><small>Fattura scaduta da {giorniTra(f.scadenza, dati.oggi)} giorni</small><b>{nomeCliente(dati.clienti, f.clienteId)} · {euro(f.importo)}</b><p>{f.descrizione}</p>
-                <span><button type="button" className="st-btn st-btn-soldi st-btn-mini" onClick={() => incassa(f)}>Segna incassata</button><button type="button" className="st-btn st-btn-testo st-btn-mini" onClick={() => vai("conti")}>Apri i conti</button></span>
-              </div>
-            </article>
-          ))}
-          {inCoda.slice(0, 4).map((l) => (
-            <article key={`c${l.id}`} className="st-dock-carta" data-tono="coda">
-              <Avatar agente={l.agente} grande />
-              <div><small>In coda · {AGENTE[l.agente]?.nome}</small><b>{l.titolo}</b><p>{l.brief.replace(/\s+/g, " ").slice(0, 110)}</p>
-                <span>{dati.ai ? <button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => void faiLavorare(l.id)}>Fai partire</button> : <button type="button" className="st-btn st-btn-mini" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}>Apri</button>}</span>
-              </div>
-            </article>
-          ))}
-          {daGuardare.length + scadute.length + inCoda.length === 0 ? (
-            <article className="st-dock-carta st-dock-vuoto"><div><b>Nessuno ti sta aspettando.</b><p>Dai un lavoro al team: scegli un agente in ufficio o scrivi la richiesta e lascia decidere al Direttore.</p><span><button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => apri({ tipo: "lavoro" })}>+ Nuovo lavoro</button>{dati.clienti.length === 0 ? <button type="button" className="st-btn st-btn-mini" onClick={() => apri({ tipo: "cliente" })}>+ Primo cliente</button> : null}</span></div></article>
+      <section className="st-dock" aria-label="Promemoria" data-aperto={elenco || undefined}>
+        <div className="st-dock-titolo"><b>Da fare per te</b><small>{promemoria.length === 0 ? "niente in sospeso" : `${promemoria.length} ${promemoria.length === 1 ? "cosa" : "cose"}`}</small></div>
+        <ul className="st-dock-scorri">
+          {promemoria.slice(0, 12).map((p) => <RigaPromemoria key={p.id} p={p} compatta />)}
+          {promemoria.length === 0 ? (
+            <li className="st-promemoria st-dock-vuoto"><div><b>Nessuno ti sta aspettando.</b><p>Dai un lavoro al team, oppure apri il reparto di un cliente e prepara il mese.</p><span><button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => apri({ tipo: "lavoro" })}>+ Nuovo lavoro</button>{dati.clienti.length === 0 ? <button type="button" className="st-btn st-btn-mini" onClick={() => apri({ tipo: "cliente" })}>+ Primo cliente</button> : null}</span></div></li>
           ) : null}
-        </div>
+        </ul>
       </section>
 
       {selezione?.tipo === "agente" ? <PannelloAgente id={selezione.id} chiudi={() => setSelezione(null)} /> : null}
@@ -220,10 +246,42 @@ function PannelloCervello({ chiudi }: { chiudi: () => void }) {
   );
 }
 
-/* ---------- Pannello di un cliente ---------- */
+/* ---------- Reparto di un cliente ---------- */
+
+/** I mestieri del reparto: chi fa cosa per il cliente, nell'ordine in cui servono. */
+const MESTIERI: { nome: string; agenti: string[]; nuovo: string; brief: (c: string) => string }[] = [
+  { nome: "Piano e strategia", agenti: ["sofia", "marco", "direttore"], nuovo: "sofia", brief: (c) => `Piano editoriale del mese per ${c}.` },
+  { nome: "Post e caroselli", agenti: ["luca"], nuovo: "luca", brief: (c) => `Carosello per ${c}: ` },
+  { nome: "Reel", agenti: ["giulia"], nuovo: "giulia", brief: (c) => `Reel per ${c}: ` },
+  { nome: "Video e montaggio", agenti: ["matteo"], nuovo: "matteo", brief: (c) => `Montaggio video per ${c}: ` },
+  { nome: "Caption e storie", agenti: ["chiara", "revisore"], nuovo: "chiara", brief: (c) => `Caption per ${c}: ` },
+  { nome: "Campagne", agenti: ["davide"], nuovo: "davide", brief: (c) => `Campagna per ${c}: ` },
+  { nome: "Sito e landing", agenti: ["elena"], nuovo: "elena", brief: (c) => `Pagina per ${c}: ` },
+  { nome: "Pubblicazione e DM", agenti: ["alice", "simone"], nuovo: "alice", brief: (c) => `Calendario uscite per ${c}.` },
+  { nome: "Solleciti", agenti: ["sara"], nuovo: "sara", brief: (c) => `Sollecito di pagamento per ${c}.` },
+];
+
+const STATO_BREVE: Record<Lavoro["stato"], string> = { in_coda: "in coda", in_lavorazione: "al lavoro", da_guardare: "da guardare", fatto: "fatto" };
+
+function RigaLavoro({ l }: { l: Lavoro }) {
+  const { dati, apri } = useStudio();
+  const g = l.scadenza ? giorniTra(dati.oggi, l.scadenza) : null;
+  const ritardo = g !== null && g < 0 && l.stato !== "fatto" && l.stato !== "da_guardare";
+  return (
+    <li>
+      <button type="button" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}>
+        <i data-stato={ritardo ? "scaduta" : l.stato} />
+        <span>{l.titolo}</span>
+        <small data-ritardo={ritardo || undefined}>{AGENTE[l.agente]?.nome} · {l.scadenza && l.stato !== "fatto" ? (ritardo ? `in ritardo dal ${dataBreve(l.scadenza)}` : g === 0 ? "oggi" : `entro il ${dataBreve(l.scadenza)}`) : STATO_BREVE[l.stato]}</small>
+      </button>
+    </li>
+  );
+}
 
 function PannelloCliente({ id, chiudi }: { id: number; chiudi: () => void }) {
-  const { dati, apri, vai, incassa } = useStudio();
+  const { dati, apri, vai, incassa, azione, avvisa } = useStudio();
+  const [fatti, setFatti] = useState(false);
+  const [preparo, setPreparo] = useState(false);
   const c = dati.clienti.find((x) => x.id === id);
   if (!c) return null;
   const mese = dati.oggi.slice(0, 7);
@@ -231,39 +289,66 @@ function PannelloCliente({ id, chiudi }: { id: number; chiudi: () => void }) {
   const righe = dati.campagne.filter((k) => k.clienteId === id);
   const ultimoMese = righe.map((r) => r.mese).sort().at(-1);
   const riep = riepilogoCampagne(righe.filter((k) => k.mese === ultimoMese));
-  const servizi = dati.servizi.filter((s) => s.clienteId === id && s.ricorrenza === "mensile" && !s.al);
-  const lavori = dati.lavori.filter((l) => l.clienteId === id && l.stato !== "fatto");
+  const servizi = dati.servizi.filter((s) => s.clienteId === id && servizioAttivoNelMese(s, mese));
+  const lavori = dati.lavori.filter((l) => l.clienteId === id);
+  const aperti = lavori.filter((l) => l.stato !== "fatto");
+  const chiusi = lavori.filter((l) => l.stato === "fatto");
+  const prepara = async () => { setPreparo(true); const r = await azione("mese.prepara", { clienteId: id }); setPreparo(false); if (r.ok) avvisa(r.nuovoId ? `Mese di ${c.nome} preparato: ${r.nuovoId} lavori affidati al team.` : "Il mese era già preparato: nessun lavoro nuovo."); };
+
   return (
-    <aside className="st-pannello" aria-label={c.nome}>
+    <aside className="st-pannello st-pannello-cliente" aria-label={`Reparto ${c.nome}`}>
       <header className="st-pannello-testa">
         <span className="st-sigla st-sigla-grande" style={{ background: c.colore }}>{iniziali(c.nome)}</span>
-        <div><h2>{c.nome}</h2><p>{c.settore || "Cliente"}</p></div>
+        <div><h2>{c.nome}</h2><p>{c.settore || "Cliente"} · reparto</p></div>
         <button type="button" className="st-x" onClick={chiudi} aria-label="Chiudi">×</button>
       </header>
       <div className="st-pannello-corpo">
         <section className="st-blocco">
-          <h3>Quanto paga</h3>
+          <h3>Quanto ti paga</h3>
           <p className="st-cifra">{euro(ricorrente(dati, mese, id))}<i>/mese</i></p>
-          {servizi.length ? <ul className="st-ultimi">{servizi.map((s) => <li key={s.id}><button type="button" onClick={() => apri({ tipo: "servizio", servizio: s })}><i data-stato="fatto" /><span>{s.nome}</span><small>{euro(s.importo)}</small></button></li>)}</ul> : <p className="st-vuoto-riga">Nessun servizio mensile.</p>}
-          <div className="st-blocco-azioni"><button type="button" className="st-btn" onClick={() => apri({ tipo: "servizio", clienteId: id })}>+ Servizio</button><button type="button" className="st-btn" onClick={() => apri({ tipo: "fattura", clienteId: id })}>+ Fattura</button></div>
+          {servizi.length ? (
+            <ul className="st-servizi-pannello">
+              {servizi.map((s) => <li key={s.id}><button type="button" onClick={() => apri({ tipo: "servizio", servizio: s })}>{s.nome}</button><ImportoModificabile valore={s.importo} suffisso={s.ricorrenza === "mensile" ? "/mese" : undefined} etichetta={`Prezzo di ${s.nome}`} salva={async (v) => { const r = await azione("servizio.prezzo", { id: s.id, importo: v }); if (r.ok) avvisa(`${s.nome}: prezzo aggiornato.`); return r.ok; }} /></li>)}
+            </ul>
+          ) : <p className="st-vuoto-riga">Nessun servizio attivo: aggiungi cosa fai per {c.nome} e quanto ti paga.</p>}
+          <small className="st-nota">Tocca un importo per cambiarlo.</small>
+          <div className="st-blocco-azioni"><button type="button" className="st-btn" onClick={() => apri({ tipo: "servizio", clienteId: id })}>+ Servizio</button><button type="button" className="st-btn st-btn-testo" onClick={() => apri({ tipo: "cliente", cliente: c })}>Modifica cliente</button></div>
         </section>
+
+        <section className="st-blocco" data-tono={aperti.some((l) => l.scadenza && l.scadenza < dati.oggi && l.stato !== "da_guardare") ? "allarme" : undefined}>
+          <h3>Da fare · {aperti.length}</h3>
+          {aperti.length === 0 ? <p className="st-vuoto-riga">Niente in corso. Prepara il mese: il team prende post, reel, video e campagna dai servizi del cliente.</p> : null}
+          <button type="button" className="st-btn st-btn-pieno" disabled={preparo} onClick={prepara}>{preparo ? "Preparo…" : `Prepara ${nomeMese(mese, true)}`}</button>
+          <div className="st-mestieri">
+            {MESTIERI.map((m) => {
+              const suoi = aperti.filter((l) => m.agenti.includes(l.agente));
+              if (!suoi.length && !["Post e caroselli", "Reel", "Video e montaggio", "Campagne"].includes(m.nome)) return null;
+              return (
+                <div key={m.nome} className="st-mestiere">
+                  <header><Avatar agente={m.nuovo} /><b>{m.nome}</b><small>{m.agenti.map((a) => AGENTE[a]?.nome).join(", ")}</small>
+                    <button type="button" className="st-btn st-btn-mini" aria-label={`Nuovo lavoro: ${m.nome}`} onClick={() => apri({ tipo: "lavoro", agente: m.nuovo, clienteId: id })}>+</button></header>
+                  {suoi.length ? <ul className="st-ultimi">{suoi.map((l) => <RigaLavoro key={l.id} l={l} />)}</ul> : <p className="st-vuoto-riga">Niente in corso.</p>}
+                </div>
+              );
+            })}
+          </div>
+          {chiusi.length ? <button type="button" className="st-btn st-btn-testo st-btn-mini" onClick={() => setFatti((v) => !v)}>{fatti ? "Nascondi i fatti" : `Vedi i fatti (${chiusi.length})`}</button> : null}
+          {fatti ? <ul className="st-ultimi">{chiusi.slice(0, 15).map((l) => <RigaLavoro key={l.id} l={l} />)}</ul> : null}
+        </section>
+
         {aperte.length ? (
           <section className="st-blocco" data-tono={aperte.some((f) => scaduta(f, dati.oggi)) ? "allarme" : undefined}>
             <h3>Da incassare · {euro(somma(aperte))}</h3>
             <ul className="st-ultimi">{aperte.map((f) => <li key={f.id}><div><i data-stato={scaduta(f, dati.oggi) ? "scaduta" : "in_coda"} /><span>{f.descrizione}</span><small>{euro(f.importo)}</small><button type="button" className="st-btn st-btn-soldi st-btn-mini" onClick={() => incassa(f)}>Incassata</button></div></li>)}</ul>
           </section>
         ) : null}
+
         <section className="st-blocco">
           <h3>Campagna{ultimoMese ? ` · ${nomeMese(ultimoMese, true)}` : ""}</h3>
           {ultimoMese ? (
             <dl className="st-numeri"><div><dt>Spesa</dt><dd>{euro(riep.spesa)}</dd></div><div><dt>Contatti</dt><dd>{riep.contatti}</dd></div><div><dt>Costo per contatto</dt><dd>{riep.costoContatto === null ? "—" : euro(riep.costoContatto, true)}</dd></div><div><dt>Ritorno</dt><dd>{riep.ritorno === null ? "—" : `${riep.ritorno.toFixed(1).replace(".", ",")}×`}</dd></div></dl>
           ) : <p className="st-vuoto-riga">Nessun numero ancora.</p>}
-          <div className="st-blocco-azioni"><button type="button" className="st-btn" onClick={() => apri({ tipo: "campagna", clienteId: id })}>+ Numeri del mese</button></div>
-        </section>
-        <section className="st-blocco">
-          <h3>Lavori aperti</h3>
-          {lavori.length ? <ul className="st-ultimi">{lavori.map((l) => <li key={l.id}><button type="button" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}><i data-stato={l.stato} /><span>{l.titolo}</span><small>{AGENTE[l.agente]?.nome}</small></button></li>)}</ul> : <p className="st-vuoto-riga">Nessun lavoro aperto per questo cliente.</p>}
-          <div className="st-blocco-azioni"><button type="button" className="st-btn st-btn-pieno" onClick={() => apri({ tipo: "lavoro", clienteId: id })}>+ Lavoro per {c.nome.split(" ")[0]}</button><button type="button" className="st-btn st-btn-testo" onClick={() => vai("conti")}>Apri nei conti</button></div>
+          <div className="st-blocco-azioni"><button type="button" className="st-btn" onClick={() => apri({ tipo: "campagna", clienteId: id })}>+ Numeri del mese</button><button type="button" className="st-btn st-btn-testo" onClick={() => vai("conti")}>Apri nei conti</button></div>
         </section>
       </div>
     </aside>

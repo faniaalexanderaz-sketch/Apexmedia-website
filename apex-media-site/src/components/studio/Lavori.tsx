@@ -1,7 +1,7 @@
 "use client";
 
 import { AGENTE } from "@/lib/studio/agenti";
-import { nomeCliente, tempoFa } from "@/lib/studio/calcoli";
+import { dataBreve, nomeCliente, tempoFa } from "@/lib/studio/calcoli";
 import type { Lavoro, StatoLavoro } from "@/lib/studio/tipi";
 import { useStudio } from "./StudioApp";
 
@@ -27,7 +27,7 @@ function Carta({ l }: { l: Lavoro }) {
       <button type="button" className="st-lavoro-corpo" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}>
         <span className="st-lavoro-chi"><Avatar agente={l.agente} />{a?.nome ?? l.agente}{l.clienteId ? <em>{nomeCliente(dati.clienti, l.clienteId)}</em> : null}</span>
         <b>{l.titolo}</b>
-        <small>{l.stato === "in_lavorazione" ? "sta scrivendo…" : tempoFa(l.aggiornatoIl)}</small>
+        <small data-ritardo={(l.scadenza && l.stato !== "fatto" && l.stato !== "da_guardare" && l.scadenza < dati.oggi) || undefined}>{l.stato === "in_lavorazione" ? "sta scrivendo…" : l.scadenza && l.stato !== "fatto" ? (l.scadenza < dati.oggi && l.stato !== "da_guardare" ? `in ritardo dal ${dataBreve(l.scadenza)}` : l.scadenza === dati.oggi ? "scade oggi" : `entro il ${dataBreve(l.scadenza)}`) : tempoFa(l.aggiornatoIl)}</small>
       </button>
       {l.stato === "in_coda" && dati.ai ? <button type="button" className="st-btn st-btn-mini" onClick={() => void faiLavorare(l.id)}>Fai partire</button> : null}
     </li>
