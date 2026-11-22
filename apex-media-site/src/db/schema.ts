@@ -1,4 +1,4 @@
-import { boolean, index, numeric, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, index, integer, numeric, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 /* =============================================================
    Schema Vercel Postgres (Drizzle). Si applica con `npm run db:push`.
@@ -87,3 +87,90 @@ export type BookingRiga = typeof bookings.$inferSelect;
 export type NotaRiga = typeof monthlyNotes.$inferSelect;
 export type AdspendRiga = typeof monthlyAdspend.$inferSelect;
 export type SettingRiga = typeof settings.$inferSelect;
+
+/* =============================================================
+   Studio Apex (/studio): clienti, servizi, fatture, campagne,
+   lavori degli agenti e regole del cervello condiviso.
+   Le tabelle si creano da sole al primo accesso (src/db/studio-ddl.ts).
+   ============================================================= */
+
+export const studioClienti = pgTable("studio_clienti", {
+  id: serial("id").primaryKey(),
+  creatoIl: timestamp("creato_il", { withTimezone: true }).notNull().defaultNow(),
+  nome: text("nome").notNull(),
+  settore: text("settore").notNull().default(""),
+  colore: text("colore").notNull().default("#5b2eff"),
+  sito: text("sito"), // dominio tracciato da /api/track, facoltativo
+  attivo: boolean("attivo").notNull().default(true),
+  note: text("note").notNull().default(""),
+});
+
+export const studioServizi = pgTable(
+  "studio_servizi",
+  {
+    id: serial("id").primaryKey(),
+    creatoIl: timestamp("creato_il", { withTimezone: true }).notNull().defaultNow(),
+    clienteId: integer("cliente_id").notNull(),
+    nome: text("nome").notNull(),
+    importo: numeric("importo", { precision: 10, scale: 2 }).notNull(),
+    ricorrenza: text("ricorrenza").notNull().default("mensile"), // mensile | una_tantum
+    dal: text("dal").notNull(), // YYYY-MM-DD
+    al: text("al"), // YYYY-MM-DD, null = ancora attivo
+  },
+  (t) => [index("studio_servizi_cliente_idx").on(t.clienteId)],
+);
+
+export const studioFatture = pgTable(
+  "studio_fatture",
+  {
+    id: serial("id").primaryKey(),
+    creatoIl: timestamp("creato_il", { withTimezone: true }).notNull().defaultNow(),
+    clienteId: integer("cliente_id").notNull(),
+    servizioId: integer("servizio_id"),
+    mese: text("mese"), // YYYY-MM di competenza, per le fatture generate dai servizi
+    descrizione: text("descrizione").notNull(),
+    importo: numeric("importo", { precision: 10, scale: 2 }).notNull(),
+    emessaIl: text("emessa_il").notNull(), // YYYY-MM-DD
+    scadenza: text("scadenza").notNull(), // YYYY-MM-DD
+    pagataIl: text("pagata_il"), // YYYY-MM-DD, null = da incassare
+  },
+  (t) => [index("studio_fatture_cliente_idx").on(t.clienteId), uniqueIndex("studio_fatture_servizio_mese_uq").on(t.servizioId, t.mese)],
+);
+
+export const studioCampagne = pgTable(
+  "studio_campagne",
+  {
+    id: serial("id").primaryKey(),
+    clienteId: integer("cliente_id").notNull(),
+    mese: text("mese").notNull(), // YYYY-MM
+    canale: text("canale").notNull(), // Google Ads | Meta Ads | TikTok Ads | Altro
+    spesa: numeric("spesa", { precision: 10, scale: 2 }).notNull(),
+    contatti: integer("contatti").notNull().default(0),
+    ricavo: numeric("ricavo", { precision: 10, scale: 2 }), // fatturato generato per il cliente, se noto
+  },
+  (t) => [uniqueIndex("studio_campagne_uq").on(t.clienteId, t.mese, t.canale)],
+);
+
+export const studioLavori = pgTable(
+  "studio_lavori",
+  {
+    id: serial("id").primaryKey(),
+    creatoIl: timestamp("creato_il", { withTimezone: true }).notNull().defaultNow(),
+    aggiornatoIl: timestamp("aggiornato_il", { withTimezone: true }).notNull().defaultNow(),
+    agente: text("agente").notNull(),
+    clienteId: integer("cliente_id"),
+    titolo: text("titolo").notNull(),
+    brief: text("brief").notNull().default(""),
+    stato: text("stato").notNull().default("in_coda"), // in_coda | in_lavorazione | da_guardare | fatto
+    risultato: text("risultato"),
+    revisione: text("revisione"), // ultima correzione chiesta
+  },
+  (t) => [index("studio_lavori_stato_idx").on(t.stato)],
+);
+
+export const studioRegole = pgTable("studio_regole", {
+  id: serial("id").primaryKey(),
+  creatoIl: timestamp("creato_il", { withTimezone: true }).notNull().defaultNow(),
+  testo: text("testo").notNull(),
+  agente: text("agente"), // null = vale per tutti
+});
