@@ -1,4 +1,4 @@
-# Messaggi in DM per le parole chiave (LANCIO, SCONTO, WRAPPED)
+# Messaggi in DM per le parole chiave
 
 Chi commenta la parola riceve il **messaggio breve** in DM (a mano o in automatico con ManyChat o simili).
 Il **contenuto** sotto è quello da mandare subito dopo, o da trasformare in un PDF o in una pagina.
@@ -174,4 +174,103 @@ Il trucco della Coca-Cola: non inventare, ripetere. Ogni anno, uguale, finché d
    (uno sconto o un omaggio solo per loro). Breve, personale, riconoscibile.
 
 LA REGOLA: non cambiare idea ogni anno. La forza sta nella ripetizione.
+```
+
+---
+
+## NEGOZIO (video Apple Store)
+
+**Messaggio breve**
+```text
+Eccoli! 5 trucchi da Apple Store da usare nel tuo negozio 👇
+Il principio è uno: prima toccano, poi comprano.
+```
+
+**Contenuto: i 5 trucchi**
+```text
+1) NIENTE VETRINE CHIUSE
+   I prodotti che vendi di più devono stare fuori, accesi, pronti da provare.
+   Toccare un oggetto aumenta la sensazione di possederlo (Peck e Shu, 2009).
+
+2) INVITA AL GESTO
+   Lascia qualcosa "da sistemare": un capo da provare, un campione da aprire,
+   un assaggio. Il cliente che fa un gesto con le mani è già dentro l'acquisto.
+
+3) POCHI PRODOTTI, TANTO SPAZIO
+   Tavoli larghi, pochi pezzi per tavolo, all'altezza delle mani.
+   Uno scaffale pieno si guarda, un tavolo ordinato si tocca.
+
+4) IL PERSONALE AFFIANCA, NON SPINGE
+   Apple insegna ai dipendenti un metodo in 5 passi (A-P-P-L-E): avvicinati con
+   un saluto, fai domande, presenta la soluzione, ascolta i dubbi, chiudi con
+   un saluto e un invito a tornare. Copialo così com'è.
+
+5) FAI PROVARE PRIMA DI PAGARE
+   Camerino, prova in negozio, assaggio, demo di 2 minuti. Più tempo il prodotto
+   passa nelle mani del cliente, più è difficile lasciarlo lì.
+```
+
+---
+
+## PERCORSO (video IKEA)
+
+**Messaggio breve**
+```text
+Ecco come disegnare il percorso del tuo negozio 👇
+Il principio di IKEA: non lasciare che il cliente scelga la strada. Disegnala tu.
+```
+
+**Contenuto: il percorso in 6 passi**
+```text
+1) I PRIMI METRI SONO "MORTI"
+   Appena entrato il cliente rallenta e si orienta: non mettere lì i prodotti
+   più importanti. Mettili qualche passo più avanti.
+
+2) LE COSE CHE CERCANO TUTTI, IN FONDO
+   Il prodotto per cui entrano (come il latte al supermercato) va in fondo:
+   per arrivarci attraversano tutto il negozio.
+
+3) UNA SOLA DIREZIONE
+   Segna il giro con tavoli, tappeti, frecce o luci. Il cliente deve capire
+   senza pensarci da che parte andare.
+
+4) LUNGO LA STRADA, LE PICCOLE COSE
+   Prodotti piccoli e a poco prezzo lungo il percorso e vicino alla cassa:
+   sono quelli che si prendono senza pensarci.
+
+5) FAGLI FARE UNA PICCOLA PARTE
+   Scegliere il colore, comporre la confezione, personalizzare.
+   Diamo più valore a quello che costruiamo noi (effetto IKEA).
+
+6) L'USCITA SI VEDE SEMPRE
+   Chi ha fretta deve poter uscire. Un cliente che si sente in trappola
+   non torna: il percorso guida, non chiude.
+```
+
+---
+
+## SLOGAN (video Nike)
+
+**Messaggio breve**
+```text
+Ecco come scrivere il tuo slogan in 3 parole 👇
+Il trucco di Just Do It: non parlare del prodotto, parla di chi lo usa.
+```
+
+**Contenuto: il metodo in 4 passi**
+```text
+1) CHI DIVENTA IL TUO CLIENTE?
+   Scrivi cosa cambia nella sua vita dopo averti scelto. Non cosa vendi:
+   cosa diventa lui. (Nike non dice "scarpe comode", dice "fallo e basta".)
+
+2) PARLAGLI DIRETTAMENTE
+   Usa il "tu" o un verbo all'imperativo: fallo, prova, scegli, vivi.
+
+3) TAGLIA FINO A 3 PAROLE
+   Scrivine dieci versioni, poi togli parole finché non si regge più.
+   Leggilo ad alta voce: deve suonare come una frase che si dice.
+
+4) IL TEST FINALE
+   Funziona anche senza il tuo nome accanto? Un cliente lo ripeterebbe
+   a un amico? Se sì, è quello giusto.
 ```

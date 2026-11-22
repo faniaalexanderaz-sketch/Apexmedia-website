@@ -2225,3 +2225,101 @@ Scrivi NATALE nei commenti e ti mando tre idee da ripetere ogni Natale nella tua
 Fonti: FAQ ufficiale Coca-Cola ("Coca-Cola did not create Santa Claus"); Snopes sulle illustrazioni di Babbo Natale in rosso prima del 1931; White Rock e le pubblicità con Babbo Natale dal 1915; Haddon Sundblom per Coca-Cola dal 1931 al 1964. Le due immagini d'epoca del video sono illustrazioni generiche, senza marchi.
 #natale #babbonatale #cocacola #storia #marketing #branding #apexmedia
 ```
+
+---
+
+## 73. Apple Store: perché tutti i portatili sono aperti a 70 gradi (parola NEGOZIO)
+
+Bianco stile Apple: portatili 3D, schema di profilo con l'angolo, app livella sull'iPhone, la mano che sistema lo schermo, lo studio del 2009. 53 s, loop: "Quindi, la prossima volta..." riporta a "Entra in un Apple Store e guarda i portatili". File: `apex-apple-store/renders/apex-apple-store-9x16.mp4`.
+
+**TikTok**
+```text
+Entra in un Apple Store: tutti i portatili sono aperti allo stesso angolo. Non è un caso. L'avevi mai notato? SÌ o NO. Scrivi NEGOZIO per i 5 trucchi da usare nel tuo.
+#apple #marketing #negozio #apexmedia
+```
+
+**Instagram**
+```text
+Entra in un Apple Store e guarda i portatili. Sono tutti aperti allo stesso angolo. E non è un caso.
+
+Nel 2012 è uscito fuori che ogni mattina i dipendenti mettono ogni schermo a 70 gradi, con un'app che fa da livella. Non è la posizione comoda: è un po' troppo chiusa. E tu cosa fai? Allunghi la mano e lo sistemi.
+
+Nel momento in cui lo tocchi, è già un po' tuo. Lo dice uno studio del 2009 (Peck e Shu): toccare un oggetto aumenta la sensazione di possederlo, e con quella anche quanto saresti disposto a pagarlo.
+
+Per questo da Apple niente è dietro un vetro. Tutto acceso, tutto da toccare.
+
+Tu l'avevi mai notato? Scrivi SÌ o NO.
+
+Se hai un negozio: non tenere i prodotti lontani dalle mani dei clienti. Prima toccano, poi comprano.
+
+Scrivi NEGOZIO e ti mando 5 trucchi da Apple Store da usare nel tuo.
+
+Fonti: Carmine Gallo e articoli del 2012 (Gizmodo, Business Insider) sui portatili a 70° negli Apple Store; resoconti successivi parlano di un angolo cambiato negli anni dopo. Joann Peck e Suzanne Shu, "The Effect of Mere Touch on Perceived Ownership", Journal of Consumer Research, 2009. Nessun logo o immagine ufficiale Apple.
+#apple #applestore #marketing #retail #negozio #psicologia #business #apexmedia
+```
+
+---
+
+## 74. IKEA: entri per una lampadina, esci con 200 euro (parola PERCORSO)
+
+Blu e giallo: lista della spesa, borsa che si riempie, frecce sul pavimento, mappa del percorso unico, anello del 60%, effetto IKEA col timbro. 53 s, loop: "Ma la prossima volta che..." riporta a "Entri da IKEA per comprare una lampadina". File: `apex-ikea/renders/apex-ikea-9x16.mp4`.
+
+**TikTok**
+```text
+Entri da IKEA per una lampadina, esci con 200 euro di roba. Non è colpa tua, è colpa del pavimento. Tu cosa hai comprato senza volerlo? Scrivi PERCORSO per disegnarlo nel tuo negozio.
+#ikea #marketing #negozio #apexmedia
+```
+
+**Instagram**
+```text
+Entri da IKEA per comprare una lampadina. Ed esci con 200 euro di roba. Non è colpa tua. È colpa del pavimento.
+
+Le frecce per terra ti portano in un percorso unico che passa da tutte le stanze. Le uscite ci sono, ma non le vedi.
+
+Alan Penn, professore di architettura a Londra (University College London), ha studiato i negozi IKEA: secondo lui circa il 60% di quello che compri lì non era nella tua lista. Candele, cuscini, padelle, messi lungo la strada quando sei già stanco.
+
+E poi c'è il secondo trucco: a casa i mobili li monti tu. Tre ricercatori (Norton, Mochon e Ariely) hanno dimostrato che diamo più valore alle cose che costruiamo con le nostre mani. L'hanno chiamato "effetto IKEA". Fatica uguale amore.
+
+Tu cosa hai comprato senza volerlo, l'ultima volta? Scrivilo nei commenti.
+
+Se hai un negozio: non lasciare che il cliente scelga il percorso. Disegnalo tu. E fagli fare una piccola parte del lavoro.
+
+Scrivi PERCORSO e ti mando come disegnarlo nel tuo negozio.
+
+Fonti: Alan Penn (UCL), dichiarazioni riportate dalla stampa sul percorso dei negozi IKEA e sul 60% di acquisti non pianificati (IKEA dice di non progettare i negozi per confondere). Norton, Mochon e Ariely, "The IKEA effect: When labor leads to love", Journal of Consumer Psychology, 2012. I 200 euro sono un esempio. Nessun logo IKEA.
+#ikea #marketing #retail #negozio #psicologia #venditore #business #apexmedia
+```
+
+---
+
+## 75. Nike: lo slogan più famoso viene dalle ultime parole di un condannato (parola SLOGAN)
+
+Nero, bianco e rosso: "JUST DO IT" a tutto schermo, data a macchina da scrivere, il fascicolo, "Let's" cancellato e sostituito da "Just", il Golden Gate, le barre delle vendite. 53 s, loop: "E pensa che..." riporta a "Lo slogan più famoso della Nike...". File: `apex-nike-slogan/renders/apex-nike-slogan-9x16.mp4`.
+
+**TikTok**
+```text
+Lo slogan più famoso della Nike viene dalle ultime parole di un condannato a morte. Qual è lo slogan che ti ricordi di più? Scrivi SLOGAN e ti mando come scrivere il tuo in 3 parole.
+#nike #justdoit #marketing #apexmedia
+```
+
+**Instagram**
+```text
+Lo slogan più famoso della Nike viene dalle ultime parole di un condannato a morte. Tre parole: Just Do It.
+
+17 gennaio 1977, Utah. Gary Gilmore sta per essere giustiziato. Le sue ultime parole: "Let's do it". Facciamolo.
+
+Undici anni dopo, il pubblicitario Dan Wieden deve inventare uno slogan per la Nike. Si ricorda quella frase e la cambia appena: Just Do It. Fallo e basta.
+
+Il primo spot? Un uomo di 80 anni che corre sul Golden Gate Bridge. Non un campione. Uno qualsiasi.
+
+Il trucco è questo: lo slogan non parla delle scarpe. Parla di te. Tra il 1988 e il 1998 le vendite della Nike passano da 877 milioni a 9,2 miliardi di dollari.
+
+Qual è lo slogan che ti ricordi di più? Scrivilo nei commenti.
+
+La lezione: il tuo slogan non deve descrivere cosa vendi. Deve dire al cliente cosa può diventare.
+
+Scrivi SLOGAN e ti mando come scrivere il tuo in tre parole.
+
+Fonti: Dan Wieden ha raccontato l'origine dello slogan in varie interviste (in alcune versioni la frase di Gilmore è "Let's do this"); lo spot del 1988 con Walt Stack, 80 anni; dati di vendita 1988–1998 riportati da Wikipedia (Nike, Inc.). Nessun logo Nike.
+#nike #justdoit #slogan #marketing #storytelling #branding #business #apexmedia
+```
