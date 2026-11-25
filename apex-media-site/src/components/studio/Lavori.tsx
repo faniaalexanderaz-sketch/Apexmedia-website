@@ -105,7 +105,7 @@ export function Lavori() {
           <button type="button" className="st-btn st-btn-pieno" onClick={() => apri({ tipo: "lavoro" })}>+ Nuovo lavoro</button>
         </div>
       </header>
-      {!dati.ai ? <p className="st-carta st-collega"><b>Per farli lavorare da soli</b> aggiungi la variabile <code>ANTHROPIC_API_KEY</code> nel progetto Vercel e rifai il deploy. Senza chiave lo studio funziona lo stesso come bacheca: apri un lavoro, copia il brief con le istruzioni dell&apos;agente e incolla il risultato.</p> : null}
+      {!dati.ai ? <p className="st-carta st-collega"><b>Per farli lavorare da soli</b> aggiungi la variabile <code>ANTHROPIC_API_KEY</code> (Claude) o <code>GEMINI_API_KEY</code> (Google, gratuita) nel progetto Vercel e rifai il deploy. Senza chiave lo studio funziona lo stesso come bacheca: apri un lavoro, copia il brief con le istruzioni dell&apos;agente e incolla il risultato.</p> : null}
       <div className="st-colonne">
         {COLONNE.map((c) => {
           const righe = dati.lavori.filter((l) => l.stato === c.stato);

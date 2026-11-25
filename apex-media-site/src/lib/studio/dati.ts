@@ -99,7 +99,7 @@ export async function caricaDati(): Promise<Dati> {
 
   return {
     demo: modalitaDemo(),
-    ai: Boolean(process.env.ANTHROPIC_API_KEY),
+    ai: Boolean(process.env.ANTHROPIC_API_KEY || process.env.GEMINI_API_KEY),
     oggi, ora,
     obiettivoMese: num(obiettivo[0]?.valore),
     clienti: clienti.map((c) => ({ id: c.id, nome: c.nome, settore: c.settore, colore: c.colore, sito: c.sito, attivo: c.attivo, note: c.note })),

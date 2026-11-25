@@ -3,6 +3,7 @@ import { and, eq, isNull, or } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { AGENTE } from "./agenti";
 import { Errore } from "./dati";
+import { geminiCollegato, scriviConGemini } from "./gemini";
 import { regoleFisseTesto } from "./regole";
 
 /* =============================================================
@@ -15,10 +16,11 @@ import { regoleFisseTesto } from "./regole";
 const S = schema;
 const MODELLO = process.env.STUDIO_MODEL || "claude-opus-5-5";
 
-export function aiCollegata(): boolean { return Boolean(process.env.ANTHROPIC_API_KEY); }
+/** Claude se c'è la sua chiave, altrimenti Gemini (gratuito) se c'è quella di Google. */
+export function aiCollegata(): boolean { return Boolean(process.env.ANTHROPIC_API_KEY) || geminiCollegato(); }
 
 export async function faiLavorare(lavoroId: number): Promise<void> {
-  if (!aiCollegata()) throw new Errore("Gli agenti non sono ancora collegati: manca ANTHROPIC_API_KEY nelle variabili di Vercel.");
+  if (!aiCollegata()) throw new Errore("Gli agenti non sono ancora collegati: manca ANTHROPIC_API_KEY (o GEMINI_API_KEY) nelle variabili di Vercel.");
   const d = await db();
   const [lavoro] = await d.select().from(S.studioLavori).where(eq(S.studioLavori.id, lavoroId)).limit(1);
   if (!lavoro) throw new Errore("Lavoro non trovato.");
@@ -50,6 +52,12 @@ export async function faiLavorare(lavoroId: number): Promise<void> {
   ].filter(Boolean).join("\n\n");
 
   try {
+    if (!process.env.ANTHROPIC_API_KEY) {
+      const g = await scriviConGemini(system, richiesta, agente.nome);
+      const fine = g.tronco ? "\n\n[Risposta interrotta: chiedi di continuare o restringi la richiesta.]" : "";
+      await d.update(S.studioLavori).set({ stato: "da_guardare", risultato: g.testo + fine, aggiornatoIl: new Date() }).where(and(eq(S.studioLavori.id, lavoroId), eq(S.studioLavori.stato, "in_lavorazione")));
+      return;
+    }
     const client = new Anthropic();
     const risposta = await client.beta.messages
       .stream({

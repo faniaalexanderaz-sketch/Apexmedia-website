@@ -22,7 +22,7 @@ export type Regola = { id: number; testo: string; agente: string | null; creatoI
 export type Dati = {
   /** true = nessun database collegato: dati di esempio che spariscono al riavvio */
   demo: boolean;
-  /** true = ANTHROPIC_API_KEY presente: gli agenti scrivono davvero */
+  /** true = ANTHROPIC_API_KEY o GEMINI_API_KEY presente: gli agenti scrivono davvero */
   ai: boolean;
   oggi: string; // YYYY-MM-DD, fuso Europe/Rome
   ora: number; // 0-23, per il saluto
