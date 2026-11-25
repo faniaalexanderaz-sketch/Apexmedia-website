@@ -51,9 +51,9 @@ Come lavorare con il titolare:
   spesso il telefono. Spiega i passaggi su Vercel uno per uno.
 - Aggiungi e migliora, non riscrivere da zero. Se una modifica tocca il sito
   pubblico o i pannelli `/admin` e `/jenny`, chiedi prima.
-- Per ogni modifica: branch, `tsc`, `eslint`, `next build`, prova nel
-  browser con Playwright (1440×900 e 390×844, `STUDIO_PASSWORD` di prova in
-  locale), pull request, merge su `main` quando l'anteprima Vercel è verde,
-  controllo che la versione nuova sia online.
+- Per ogni modifica: `tsc`, `eslint`, `next build`, prova nel browser con
+  Playwright (1440×900 e 390×844, `STUDIO_PASSWORD` di prova in locale),
+  poi push diretto su `main` (il titolare non vuole PR: va pubblicato
+  subito) e controllo che la versione nuova sia online.
 - Il controllo Netlify `dulcet-raindrop` fallisce da prima dello Studio: non
   blocca il merge.
