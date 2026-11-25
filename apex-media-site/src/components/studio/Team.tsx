@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AGENTE, AGENTI } from "@/lib/studio/agenti";
 import { dataBreve, nomeCliente, statoAgente, tempoFa, type StatoAgente } from "@/lib/studio/calcoli";
-import type { Lavoro } from "@/lib/studio/tipi";
+import { richiestaCompleta } from "@/lib/studio/regole";
+import type { Dati, Lavoro } from "@/lib/studio/tipi";
 import { Avatar } from "./Lavori";
 import { useStudio } from "./StudioApp";
 
@@ -89,6 +90,21 @@ export function StrisciaTeam({ scelto, onScegli }: { scelto: string | null; onSc
 
 /* ---------- Chat con un agente ---------- */
 
+/** Senza chiave API: apre Claude (il tuo abbonamento) con la richiesta completa già scritta, e la copia negli appunti. */
+export function apriInClaude(l: Lavoro, dati: Dati): string {
+  const a = AGENTE[l.agente];
+  const c = l.clienteId ? dati.clienti.find((x) => x.id === l.clienteId) : null;
+  const testo = richiestaCompleta({
+    nome: a?.nome ?? l.agente, ruolo: a?.ruolo ?? "", istruzioni: a?.istruzioni ?? "",
+    regole: dati.regole.filter((r) => r.agente === null || r.agente === l.agente).map((r) => r.testo),
+    cliente: c ? { nome: c.nome, settore: c.settore, note: c.note } : null,
+    titolo: l.titolo, brief: l.brief, revisione: l.revisione, precedente: l.risultato,
+  });
+  void navigator.clipboard?.writeText(testo).catch(() => null);
+  window.open(`https://claude.ai/new?q=${encodeURIComponent(testo)}`, "_blank", "noopener");
+  return testo;
+}
+
 function Messaggio({ l, nome, onModifica }: { l: Lavoro; nome: string; onModifica: (l: Lavoro) => void }) {
   const { dati, apri, azione, avvisa, faiLavorare } = useStudio();
   const [tutto, setTutto] = useState(false);
@@ -111,8 +127,8 @@ function Messaggio({ l, nome, onModifica }: { l: Lavoro; nome: string; onModific
             <>
               <p>{ritardo ? `Sono in ritardo su «${l.titolo}»: era per il ${dataBreve(l.scadenza as string)}.` : `Ricevuto: «${l.titolo}». È in coda${l.scadenza ? `, lo consegno entro il ${dataBreve(l.scadenza)}` : ""}.`}</p>
               {dati.ai ? <span className="st-msg-azioni"><button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => void faiLavorare(l.id)}>Fai partire</button></span>
-                : <small>Per farmelo fare da solo collega la chiave Claude. Intanto puoi aprirlo, farlo fare a mano e incollare il risultato.</small>}
-              {!dati.ai ? <span className="st-msg-azioni"><button type="button" className="st-btn st-btn-mini" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}>Apri</button></span> : null}
+                : <small>Senza chiave: tocca «Fai in Claude», si apre Claude con tutto già scritto (è anche copiato). Poi torna qui e incolla la risposta.</small>}
+              {!dati.ai ? <span className="st-msg-azioni"><button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => { apriInClaude(l, dati); avvisa("Richiesta copiata e aperta in Claude. Quando risponde, copia e incolla qui."); }}>Fai in Claude</button><button type="button" className="st-btn st-btn-mini" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}>Incolla risposta</button></span> : null}
             </>
           ) : l.stato === "in_lavorazione" ? (
             <p className="st-msg-scrive" aria-label={`${nome} sta scrivendo`}><i /><i /><i /></p>

@@ -7,6 +7,7 @@ import { aggiungiGiorni, dataBreve, euro, nomeCliente, tempoFa } from "@/lib/stu
 import { CANALI, COLORI_CLIENTE, SERVIZI_SUGGERITI } from "@/lib/studio/tipi";
 import { portfolio } from "@/data/portfolio";
 import { useStudio, type Modale } from "./StudioApp";
+import { apriInClaude } from "./Team";
 
 /* Tutte le finestre dello Studio: cliente, servizio, fattura, campagna, lavoro, risultato, obiettivo. */
 
@@ -296,8 +297,8 @@ function ModuloRisultato({ m, chiudi }: { m: Extract<Modale, { tipo: "risultato"
 
         {l.stato === "in_coda" && !dati.ai ? (
           <div className="st-amano">
-            <p className="st-nota">Gli agenti non sono ancora collegati a Claude, quindi il lavoro resta in coda. Puoi copiare la richiesta, farla fare in Claude e incollare qui il risultato.</p>
-            <button type="button" className="st-btn" onClick={() => copia(`${a?.istruzioni ?? ""}\n\n${regoleFisseTesto()}\n\n${l.brief}`, "Brief")}>Copia brief con le istruzioni di {a?.nome}</button>
+            <p className="st-nota">Senza chiave API il lavoro lo fai fare a Claude con il tuo abbonamento: tocca «Fai in Claude», copia la risposta e incollala qui sotto.</p>
+            <span className="st-blocco-azioni"><button type="button" className="st-btn st-btn-pieno" onClick={() => { apriInClaude(l, dati); avvisa("Richiesta copiata e aperta in Claude."); }}>Fai in Claude</button><button type="button" className="st-btn" onClick={() => copia(`${a?.istruzioni ?? ""}\n\n${regoleFisseTesto()}\n\n${l.brief}`, "Brief")}>Copia solo il testo</button></span>
             <label className="st-campo">Risultato<textarea value={aMano} onChange={(e) => setAMano(e.target.value)} rows={5} placeholder="Incolla qui il lavoro finito" /></label>
           </div>
         ) : null}

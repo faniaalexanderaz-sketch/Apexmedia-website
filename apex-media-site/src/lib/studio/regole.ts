@@ -25,3 +25,18 @@ export function regoleFisseTesto(): string {
   return "Regole fisse di Apex Media, valgono sempre:\n" + REGOLE_FISSE.map((r, i) => `${i + 1}. ${r.titolo}: ${r.testo}`).join("\n")
     + "\n\nPrima di consegnare fai un ultimo controllo completo del lavoro contro queste regole e correggi quello che non torna. Consegna solo la versione finale.";
 }
+
+/** Tutto quello che serve a un agente per fare un lavoro: chi è, regole, cliente, richiesta. Usato anche per aprirlo in Claude a mano. */
+export function richiestaCompleta(p: { nome: string; ruolo: string; istruzioni: string; regole: string[]; cliente?: { nome: string; settore?: string; note?: string } | null; titolo: string; brief: string; revisione?: string | null; precedente?: string | null }): string {
+  return [
+    `Ti chiami ${p.nome}, ${p.ruolo.toLowerCase()} di Apex Media.`,
+    p.istruzioni,
+    regoleFisseTesto(),
+    p.regole.length ? "Regole aggiunte dal titolare, da rispettare sempre:\n" + p.regole.map((r) => `- ${r}`).join("\n") : "",
+    "Scrivi in italiano. Consegna il lavoro finito, pronto da usare, senza premesse e senza chiedere conferme: se manca un'informazione fai l'ipotesi più ragionevole e dichiarala in una riga in fondo.",
+    p.cliente ? `Cliente: ${p.cliente.nome}${p.cliente.settore ? ` (${p.cliente.settore})` : ""}.${p.cliente.note ? `\nNote sul cliente: ${p.cliente.note}` : ""}` : "",
+    `Richiesta: ${p.titolo}`,
+    p.brief && p.brief !== p.titolo ? p.brief : "",
+    p.revisione && p.precedente ? `Versione precedente:\n${p.precedente}\n\nCorrezione richiesta: ${p.revisione}\nRiscrivi il lavoro applicando la correzione.` : "",
+  ].filter(Boolean).join("\n\n");
+}
