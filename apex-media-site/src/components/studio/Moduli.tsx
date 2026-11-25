@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { AGENTE, AGENTI, ZONE, scegliAgente } from "@/lib/studio/agenti";
+import { regoleFisseTesto } from "@/lib/studio/regole";
 import { aggiungiGiorni, dataBreve, euro, nomeCliente, tempoFa } from "@/lib/studio/calcoli";
 import { CANALI, COLORI_CLIENTE, SERVIZI_SUGGERITI } from "@/lib/studio/tipi";
 import { portfolio } from "@/data/portfolio";
@@ -296,7 +297,7 @@ function ModuloRisultato({ m, chiudi }: { m: Extract<Modale, { tipo: "risultato"
         {l.stato === "in_coda" && !dati.ai ? (
           <div className="st-amano">
             <p className="st-nota">Gli agenti non sono ancora collegati a Claude, quindi il lavoro resta in coda. Puoi copiare la richiesta, farla fare in Claude e incollare qui il risultato.</p>
-            <button type="button" className="st-btn" onClick={() => copia(`${a?.istruzioni ?? ""}\n\n${l.brief}`, "Brief")}>Copia brief con le istruzioni di {a?.nome}</button>
+            <button type="button" className="st-btn" onClick={() => copia(`${a?.istruzioni ?? ""}\n\n${regoleFisseTesto()}\n\n${l.brief}`, "Brief")}>Copia brief con le istruzioni di {a?.nome}</button>
             <label className="st-campo">Risultato<textarea value={aMano} onChange={(e) => setAMano(e.target.value)} rows={5} placeholder="Incolla qui il lavoro finito" /></label>
           </div>
         ) : null}

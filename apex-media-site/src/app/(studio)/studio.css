@@ -206,6 +206,7 @@
 
 /* avatar e sigle */
 .st-avatar { position: relative; width: 22px; height: 22px; border-radius: 50%; flex: none; overflow: hidden; display: inline-block; }
+.st-avatar svg { display: block; width: 100%; height: 100%; }
 .st-avatar i { position: absolute; left: 50%; top: 24%; width: 56%; height: 56%; border-radius: 50%; transform: translateX(-50%); }
 .st-avatar b { position: absolute; left: 50%; top: 13%; width: 64%; height: 36%; border-radius: 50% 50% 38% 38%; transform: translateX(-50%); }
 .st-avatar-grande { width: 42px; height: 42px; }
@@ -267,6 +268,9 @@
 .st-regole li { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; padding: 10px 6px 10px 12px; background: #f6f5ff; border-radius: 12px; }
 .st-regole p { font-size: 13.5px; }
 .st-regole small { grid-column: 1; font-size: 11.5px; color: var(--viola-scuro); font-weight: 600; }
+.st-regole-fisse li { grid-template-columns: 1fr; background: #fbfaf6; border: 1px solid var(--linea); }
+.st-regole-fisse p { font-size: 13px; line-height: 1.45; color: var(--muto); }
+.st-regole-fisse b { color: var(--ink); }
 .st-regole .st-x { grid-row: 1 / span 2; grid-column: 2; width: 28px; height: 28px; }
 .st-cifra { font-family: var(--titoli); font-size: 30px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
 .st-cifra i { font-style: normal; font-size: 14px; color: var(--muto); font-weight: 500; letter-spacing: 0; }
@@ -360,7 +364,8 @@
 .st .st-team li > button[aria-current] { background: rgba(91, 46, 255, 0.11); box-shadow: inset 0 0 0 1.5px rgba(91, 46, 255, 0.35); }
 .st-team[data-chiuso] li > button { justify-content: center; padding: 6px 0; }
 .st-team-testo { flex: 1; min-width: 0; display: grid; line-height: 1.25; }
-.st-team-testo b { font-size: 14px; }
+.st-team-testo b { font-size: 14.5px; font-weight: 750; color: var(--ink); letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-team-testo .st-team-nome { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tenue); }
 .st-team-testo small { font-size: 12px; color: var(--muto); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .st-team-avatar { position: relative; flex: none; display: inline-grid; }
 .st-team-avatar > i { position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; background: #25b872; }
@@ -375,7 +380,7 @@
 .st-striscia::-webkit-scrollbar { display: none; }
 .st .st-striscia button { flex: none; display: grid; justify-items: center; gap: 2px; width: 52px; padding: 4px 0; border-radius: 12px; }
 .st .st-striscia button[aria-current] { background: rgba(91, 46, 255, 0.12); }
-.st-striscia small { font-size: 10.5px; font-weight: 600; color: var(--ink); }
+.st-striscia small { font-size: 10px; font-weight: 700; color: var(--ink); line-height: 1.1; text-align: center; white-space: normal; }
 
 .st-chat { width: 420px; }
 .st-chat .st-pannello-testa .st-btn-testo { margin-left: auto; }
@@ -620,9 +625,9 @@
   .st-saluto p { font-size: 12px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .st-saluto { background: rgba(244, 245, 248, 0.82); backdrop-filter: blur(6px); }
   .st-striscia { margin-top: 5px; gap: 4px; }
-  .st .st-striscia button { width: 44px; padding: 2px 0; }
+  .st .st-striscia button { width: 50px; padding: 2px 0; }
   .st .st-striscia .st-avatar { width: 32px; height: 32px; }
-  .st-striscia small { font-size: 9.5px; }
+  .st-striscia small { font-size: 9px; }
   .st-zone { left: 8px; right: 8px; top: auto; bottom: 136px; max-width: none; }
   .st-dock-scorri .st-promemoria { padding: 8px 10px; gap: 8px; }
   .st-dock-scorri .st-promemoria p { display: none; }

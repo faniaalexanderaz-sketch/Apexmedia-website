@@ -230,10 +230,10 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
         return (
           <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} selezionato={scelto} scala={1.12} onClick={apri}>
             {s.fumetto ? (
-              <Etichetta y={Math.abs(s.meta.x) < 3 ? 2.2 : Math.abs(s.meta.x) < 6 ? 3.3 : 2.5}><Nuvola nome={a.nome} f={s.fumetto} lato={s.meta.x < 0 ? "sinistra" : "destra"} onClick={() => p.onFumetto(s.fumetto!.id)} /></Etichetta>
+              <Etichetta y={Math.abs(s.meta.x) < 3 ? 2.2 : Math.abs(s.meta.x) < 6 ? 3.3 : 2.5}><Nuvola nome={a.breve} f={s.fumetto} lato={s.meta.x < 0 ? "sinistra" : "destra"} onClick={() => p.onFumetto(s.fumetto!.id)} /></Etichetta>
             ) : (
               <Etichetta y={(s.meta.posa === "in_piedi" ? 2.15 : 2.0) + sfalsa}>
-                <Pillola stato={s.stato} nome={a.nome} sotto={s.titolo ?? (allaScrivania ? SOTTO[s.stato] : "in pausa")} azione={AZIONE[s.stato]} scelto={scelto} onClick={apri} />
+                <Pillola stato={s.stato} nome={a.breve} sotto={s.titolo ?? (allaScrivania ? SOTTO[s.stato] : "in pausa")} azione={AZIONE[s.stato]} scelto={scelto} onClick={apri} />
               </Etichetta>
             )}
           </Personaggio>
@@ -283,7 +283,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
 
       {/* piante grandi negli angoli e lungo i reparti */}
       <Palma x={-7.6} z={-15.4} s={1.15} />
-      <Palma x={7.7} z={-15.4} s={1.15} />
+      <Palma x={6.4} z={-15.4} s={1.15} />
       <Sansevieria x={-7.3} z={-5.4} s={0.95} vaso="#c39b55" />
       <Monstera x={-21.8} z={-6.0} s={1.0} vaso="#2b2724" />
       <Monstera x={21.7} z={8.0} s={1.05} vaso="#2b2724" />

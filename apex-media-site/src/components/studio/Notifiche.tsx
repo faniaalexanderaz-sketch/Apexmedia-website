@@ -15,7 +15,7 @@ export function RigaPromemoria({ p, compatta }: { p: Promemoria; compatta?: bool
     <li className="st-promemoria" data-tono={p.tono}>
       <Avatar agente={p.agente} grande={!compatta} />
       <div>
-        <small>{AGENTE[p.agente]?.nome ?? "Il team"}</small>
+        <small>{AGENTE[p.agente] ? (AGENTE[p.agente].nome !== AGENTE[p.agente].breve ? `${AGENTE[p.agente].breve} · ${AGENTE[p.agente].nome}` : AGENTE[p.agente].nome) : "Il team"}</small>
         <b>{p.frase}</b>
         <p>{p.dettaglio}</p>
         <span>

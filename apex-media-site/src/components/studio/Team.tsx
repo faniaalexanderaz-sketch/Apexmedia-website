@@ -51,8 +51,9 @@ export function ElencoTeam({ scelto, inVisita, onScegli, chiuso, onChiudi, testa
                       <span className="st-team-avatar"><Avatar agente={id} grande /><i data-stato={s.stato} /></span>
                       {chiuso ? null : (
                         <span className="st-team-testo">
-                          <b>{a.nome}</b>
-                          <small>{visita ? "è alla tua scrivania" : s.lavoro && s.stato !== "libero" ? s.lavoro.titolo : a.ruolo}</small>
+                          {a.nome !== a.breve ? <small className="st-team-nome">{a.nome}</small> : null}
+                          <b>{a.ruolo}</b>
+                          <small>{visita ? "è alla tua scrivania" : s.lavoro && s.stato !== "libero" ? s.lavoro.titolo : STATO[s.stato]}</small>
                         </span>
                       )}
                       {n ? <em className="st-conta" aria-label={`${n} da guardare`}>{n}</em> : visita && !chiuso ? <em className="st-team-visita" aria-hidden="true">!</em> : null}
@@ -78,7 +79,7 @@ export function StrisciaTeam({ scelto, onScegli }: { scelto: string | null; onSc
         return (
           <button key={a.id} type="button" aria-current={scelto === a.id || undefined} onClick={() => onScegli(a.id)}>
             <span className="st-team-avatar"><Avatar agente={a.id} grande /><i data-stato={s.stato} /></span>
-            <small>{a.nome}</small>
+            <small>{a.breve}</small>
           </button>
         );
       })}
@@ -180,7 +181,7 @@ export function ChatAgente({ id, chiudi }: { id: string; chiudi: () => void }) {
     <aside className="st-pannello st-chat" aria-label={`Chat con ${a.nome}`}>
       <header className="st-pannello-testa">
         <span className="st-team-avatar"><Avatar agente={id} grande /><i data-stato={stato} /></span>
-        <div><h2>{a.nome}</h2><p>{a.ruolo} · <span data-stato={stato}>{STATO[stato]}</span></p></div>
+        <div><h2>{a.ruolo}</h2><p>{a.nome !== a.breve ? `${a.nome} · ` : ""}<span data-stato={stato}>{STATO[stato]}</span></p></div>
         <button type="button" className="st-btn st-btn-testo st-btn-mini" aria-expanded={info} onClick={() => setInfo((v) => !v)}>Cosa fa</button>
         <button type="button" className="st-x" onClick={chiudi} aria-label="Chiudi la chat">×</button>
       </header>
