@@ -121,7 +121,8 @@ Variabili d'ambiente richieste: `POSTGRES_*` (generate da Vercel), `ADMIN_PASSWO
 
 Area riservata di Apex Media: l'ufficio 3D degli agenti, i conti e i lavori. Si apre da `/studio` con una password (cookie httpOnly 30 giorni, 5 tentativi al minuto).
 
-- **Ufficio**: scena 3D (react-three-fiber) di 46×34 m con muro e insegna LED di Apex Media, Regia, Strategia, Cassa, Contenuti, Studio video, Ads & Funnel, Community, area relax, la tua scrivania e un reparto per ogni cliente. Tutto segue i dati: chi ha un lavoro sta alla scrivania; chi ha qualcosa da dirti cammina lungo i corridoi fino alla tua scrivania e te lo dice in un fumetto; chi è libero va in area relax e ogni 30 secondi cambia posto. Il team porta la divisa Apex con il logo sulla schiena. Su schermi grandi con mouse ci sono anche ombre morbide, occlusione ambientale e bagliore dei LED; sul telefono no, per restare fluido.
+- **Ufficio**: scena 3D (react-three-fiber) di 46×34 m in marmo e ottone, con muro e insegna LED di Apex Media: Regia, sala Strategia & Funnel a vetri (Sofia, Marco, Elena, Davide attorno a un tavolo ovale in marmo, schermo con i numeri delle campagne), Cassa, Contenuti, Studio video, Tavolo social (Chiara, Simone, Alice: Instagram, TikTok, Facebook), area relax, giardino con l'ulivo, la tua scrivania e un reparto per ogni cliente. All'apertura la vista è ravvicinata sul centro dell'ufficio; "Tutto" mostra la pianta intera.
+- **Team e chat**: a sinistra l'elenco del team diviso per stanza, con lo stato di ognuno (sul telefono è una striscia di volti in alto). Tocchi un nome e si apre la chat: ogni messaggio diventa un lavoro, la risposta arriva nella stessa conversazione, e da lì approvi o chiedi una modifica (che può diventare una regola del cervello condiviso). Tutto segue i dati: chi ha un lavoro sta alla scrivania; chi ha qualcosa da dirti cammina lungo i corridoi fino alla tua scrivania e te lo dice in un fumetto; chi è libero va in area relax e ogni 30 secondi cambia posto. Il team porta la divisa Apex con il logo sulla schiena. Su schermi grandi con mouse ci sono anche ombre morbide, occlusione ambientale e bagliore dei LED; sul telefono no, per restare fluido.
 - **Promemoria** (campanella in alto e barra "Da fare per te"): lavori consegnati, lavori in scadenza o in ritardo, fatture scadute o in scadenza (te li ricorda Sara, che scrive anche il sollecito), fatture del mese da creare, numeri della campagna mancanti, clienti senza lavori nel mese. "Più tardi" li nasconde fino a domani su quel dispositivo.
 - **Reparto cliente**: tocchi un cliente in ufficio e vedi quanto ti paga (gli importi si cambiano con un tocco), cosa c'è da fare diviso per mestiere (piano, post, reel, video, caption, campagne, sito, pubblicazione), fatture da incassare e resa della campagna. "Prepara il mese" crea i lavori standard dai servizi del cliente, con chi li fa e la scadenza; rifarlo non crea doppioni. Le regole sono in `src/lib/studio/piano.ts`.
 - **Conti**: entrate ricorrenti, incassato del mese con obiettivo, da incassare e scaduto, grafico a 12 mesi, ultimi incassi; per ogni cliente servizi (prezzo modificabile con un tocco), fatture e resa della campagna. "Crea le fatture del mese" genera una fattura per ogni servizio mensile attivo.
@@ -136,7 +137,7 @@ Variabili d'ambiente:
 | `ANTHROPIC_API_KEY` | facoltativa: con la chiave gli agenti scrivono davvero (una chiamata a Claude per lavoro). Senza, i lavori restano in coda e lo Studio funziona da bacheca |
 | `STUDIO_MODEL` | facoltativa: modello usato dagli agenti (predefinito `claude-opus-5-5`) |
 
-Database: stesse tabelle Postgres del pannello più le `studio_*` (`clienti`, `servizi`, `fatture`, `campagne`, `lavori`, `regole`), definite in `src/db/schema.ts`. **Si creano da sole al primo accesso** (`src/lib/studio/dati.ts`), non serve `db:push`. Senza database parte la modalità demo con tre clienti e importi di esempio.
+Database: si collega da Vercel → Storage → Neon (Postgres). Il codice legge `POSTGRES_URL` o, se manca, `DATABASE_URL`. Stesse tabelle Postgres del pannello più le `studio_*` (`clienti`, `servizi`, `fatture`, `campagne`, `lavori`, `regole`), definite in `src/db/schema.ts`. **Si creano da sole al primo accesso** (`src/lib/studio/dati.ts`), non serve `db:push`. Senza database parte la modalità demo con tre clienti e importi di esempio.
 
 Dove si cambia cosa:
 
@@ -145,7 +146,8 @@ Dove si cambia cosa:
 - lavori creati da "Prepara il mese": `src/lib/studio/piano.ts`
 - conti e formule: `src/lib/studio/calcoli.ts`
 - chiamata a Claude: `src/lib/studio/claude.ts`
-- scena 3D: `src/components/studio/scena/` (`Scena.tsx` composizione e telecamera, `Arredi.tsx` mobili e zone, `Personaggio.tsx` persone)
+- scena 3D: `src/components/studio/scena/` (`Scena.tsx` composizione e telecamera, `Arredi.tsx` mobili e zone, `Stanze.tsx` sala Strategia, tavolo social, giardino, palme e ulivi, `Personaggio.tsx` persone)
+- team a sinistra e chat: `src/components/studio/Team.tsx`
 - stile: `src/app/(studio)/studio.css`
 
 Se un cliente ha il dominio del sito compilato e quel sito manda i click a `/api/track`, i numeri della campagna (contatti, spesa, prenotazioni) arrivano da soli dal tracciamento; quelli inseriti a mano hanno la precedenza.

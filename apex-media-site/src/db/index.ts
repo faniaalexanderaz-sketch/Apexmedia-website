@@ -2,7 +2,7 @@ import * as schema from "./schema";
 
 /* =============================================================
    Connessione al database.
-   - Produzione / Vercel: POSTGRES_URL (generata da Vercel Postgres)
+   - Produzione / Vercel: POSTGRES_URL o DATABASE_URL (generate collegando Neon/Postgres)
      tramite @vercel/postgres + drizzle-orm/vercel-postgres.
    - Sviluppo senza database: DB_LOCAL_DIR=cartella usa PGlite su disco.
    - Nessuna delle due: MODALITÀ DEMO, PGlite in memoria con lo schema
@@ -30,11 +30,17 @@ async function pglite(dir?: string): Promise<Db> {
   return db;
 }
 
+/** Indirizzo del database: Vercel lo chiama POSTGRES_URL (Vercel Postgres) o DATABASE_URL (Neon dal Marketplace). */
+export function indirizzoDb(): string | undefined {
+  return process.env.POSTGRES_URL || process.env.DATABASE_URL || undefined;
+}
+
 async function crea(): Promise<Db> {
-  if (process.env.POSTGRES_URL) {
-    const { sql } = await import("@vercel/postgres");
+  const url = indirizzoDb();
+  if (url) {
+    const { createPool } = await import("@vercel/postgres");
     const { drizzle } = await import("drizzle-orm/vercel-postgres");
-    return drizzle(sql, { schema }) as unknown as Db;
+    return drizzle(createPool({ connectionString: url }), { schema }) as unknown as Db;
   }
   if (process.env.DB_LOCAL_DIR) return pglite(process.env.DB_LOCAL_DIR);
   demo = true;
@@ -48,7 +54,7 @@ export function db(): Promise<Db> {
 
 /** True quando il pannello gira sui dati di esempio (nessun POSTGRES_URL). */
 export function modalitaDemo(): boolean {
-  return !process.env.POSTGRES_URL && !process.env.DB_LOCAL_DIR;
+  return !indirizzoDb() && !process.env.DB_LOCAL_DIR;
 }
 export function demoAttiva(): boolean { return demo; }
 

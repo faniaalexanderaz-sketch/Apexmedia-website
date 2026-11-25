@@ -6,10 +6,10 @@ import { Line, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { FONDO, LARGO } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
-import { C, GEO, MAT_INVISIBILE, MAT_VETRO, mat, matLed, matLucido, matLuce, matMetallo, rett, schermo, tela, type Font } from "./base";
+import { C, GEO, MAT_INVISIBILE, MAT_VETRO, mat, matLed, matLucido, matLuce, matMetallo, matOttone, rett, schermo, tela, type Font } from "./base";
 
 /* =============================================================
-   Tutto ciò che non è una persona: pavimento in parquet, muro con
+   Tutto ciò che non è una persona: pavimento in marmo, muro con
    l'insegna LED di Apex Media, scrivanie, studio video, area relax,
    la tua scrivania, i reparti dei clienti, la cassa, le piante.
    Le misure seguono la pianta in src/lib/studio/agenti.ts.
@@ -46,46 +46,52 @@ export function Led({ da, a, y, c, spessore = 0.06, forza = 2.4 }: { da: [number
 
 /* ---------- Pavimento, muri, luci di perimetro ---------- */
 
-function useParquet() {
+/** Marmo bianco tipo Calacatta: venature grigie e qualche filo d'oro, lastre grandi con fughe sottili. */
+function useMarmo() {
   return useMemo(() => {
-    const t = tela(1024, 1024, (x, w, h) => {
-      let seme = 11;
+    const t = tela(2048, 2048, (x, w, h) => {
+      let seme = 23;
       const rnd = () => { seme = (seme * 9301 + 49297) % 233280; return seme / 233280; };
-      const righe = 16, alt = h / righe;
-      for (let r = 0; r < righe; r++) {
-        let px = -rnd() * 300;
-        while (px < w) {
-          const lung = 260 + rnd() * 260;
-          const l = 72 + rnd() * 9, sat = 38 + rnd() * 12;
-          x.fillStyle = `hsl(34 ${sat}% ${l}%)`;
-          x.fillRect(px, r * alt, lung, alt);
-          // venature
-          x.strokeStyle = `hsla(30, 30%, ${l - 10}%, 0.22)`;
-          x.lineWidth = 1;
-          for (let v = 0; v < 4; v++) { const y0 = r * alt + 6 + rnd() * (alt - 12); x.beginPath(); x.moveTo(px + 4, y0); x.bezierCurveTo(px + lung * 0.3, y0 + (rnd() - 0.5) * 6, px + lung * 0.7, y0 + (rnd() - 0.5) * 6, px + lung - 4, y0); x.stroke(); }
-          x.fillStyle = "rgba(120, 90, 60, 0.28)";
-          x.fillRect(px, r * alt, 2, alt);
-          px += lung;
+      const g = x.createLinearGradient(0, 0, w, h);
+      g.addColorStop(0, "#f6f3ee"); g.addColorStop(0.5, "#efebe4"); g.addColorStop(1, "#f4f1eb");
+      x.fillStyle = g; x.fillRect(0, 0, w, h);
+      // nuvole leggere
+      for (let i = 0; i < 40; i++) { const cx = rnd() * w, cy = rnd() * h, r = 80 + rnd() * 260; const gr = x.createRadialGradient(cx, cy, 0, cx, cy, r); gr.addColorStop(0, "rgba(200,196,190,0.14)"); gr.addColorStop(1, "rgba(200,196,190,0)"); x.fillStyle = gr; x.fillRect(cx - r, cy - r, r * 2, r * 2); }
+      const vena = (colore: string, spessore: number, alfa: number) => {
+        let px = rnd() * w, py = rnd() * h;
+        const ang = rnd() * Math.PI * 2;
+        x.strokeStyle = colore; x.globalAlpha = alfa; x.lineCap = "round";
+        for (let k = 0; k < 6; k++) {
+          const lung = 120 + rnd() * 260, a = ang + (rnd() - 0.5) * 1.1;
+          const nx = px + Math.cos(a) * lung, ny = py + Math.sin(a) * lung;
+          x.lineWidth = spessore * (0.4 + rnd());
+          x.beginPath(); x.moveTo(px, py); x.bezierCurveTo(px + (rnd() - 0.5) * 120, py + (rnd() - 0.5) * 120, nx + (rnd() - 0.5) * 120, ny + (rnd() - 0.5) * 120, nx, ny); x.stroke();
+          px = nx; py = ny;
         }
-        x.fillStyle = "rgba(120, 90, 60, 0.22)";
-        x.fillRect(0, r * alt, w, 2);
-      }
+        x.globalAlpha = 1;
+      };
+      for (let i = 0; i < 26; i++) vena("#8d8b91", 6, 0.12);
+      for (let i = 0; i < 40; i++) vena("#6f6d74", 1.6, 0.22);
+      for (let i = 0; i < 7; i++) vena("#b8924f", 1.4, 0.35);
+      // fughe tra le lastre
+      x.fillStyle = "rgba(120,110,100,0.18)";
+      for (let k = 0; k <= 4; k++) { x.fillRect(k * (w / 4) - 1, 0, 2, h); x.fillRect(0, k * (h / 4) - 1, w, 2); }
     });
     t.wrapS = t.wrapT = THREE.RepeatWrapping;
-    t.repeat.set(LARGO / 5, FONDO / 5);
+    t.repeat.set(LARGO / 10, FONDO / 10);
     return t;
   }, []);
 }
 
 export function Pavimento() {
-  const parquet = useParquet();
+  const marmo = useMarmo();
   const ombra = useMemo(() => tela(256, 256, (x, w, h) => {
     const g = x.createRadialGradient(w / 2, h / 2, w * 0.2, w / 2, h / 2, w / 2);
     g.addColorStop(0, "rgba(40,44,70,0.32)"); g.addColorStop(0.75, "rgba(40,44,70,0.07)"); g.addColorStop(1, "rgba(40,44,70,0)");
     x.fillStyle = g; x.fillRect(0, 0, w, h);
   }), []);
-  useEffect(() => () => { ombra.dispose(); parquet.dispose(); }, [ombra, parquet]);
-  const bordo = mat("#e9dcc4", 0.6);
+  useEffect(() => () => { ombra.dispose(); marmo.dispose(); }, [ombra, marmo]);
+  const bordo = mat("#2b2724", 0.4);
   return (
     <group>
       <mesh geometry={GEO.piano} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.8, 1.5]} scale={[LARGO * 1.45, FONDO * 1.7, 1]}>
@@ -94,18 +100,23 @@ export function Pavimento() {
       <RoundedBox args={[LARGO, 0.7, FONDO]} radius={0.3} smoothness={4} position={[0, -0.351, 0]} material={mat("#efe6d6", 0.8)} receiveShadow />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
         <planeGeometry args={[LARGO - 0.4, FONDO - 0.4]} />
-        <meshStandardMaterial map={parquet} roughness={0.55} metalness={0} />
+        <meshStandardMaterial map={marmo} roughness={0.14} metalness={0.05} envMapIntensity={1.3} />
       </mesh>
       {/* bordi bassi ai lati con la luce LED blu sul filo */}
       {[-1, 1].map((l) => (
         <group key={l}>
           <RoundedBox args={[0.36, 0.55, FONDO]} radius={0.12} smoothness={3} position={[l * (LARGO / 2 - 0.18), 0.27, 0]} material={bordo} castShadow receiveShadow />
-          <Led da={[l * (LARGO / 2 - 0.37), -FONDO / 2 + 0.6]} a={[l * (LARGO / 2 - 0.37), FONDO / 2 - 0.4]} y={0.5} c="#6f8bff" spessore={0.05} />
+          <Box p={[l * (LARGO / 2 - 0.37), 0.53, 0.2]} s={[0.04, 0.04, FONDO - 0.8]} m={matOttone()} ombra={false} />
+          <Led da={[l * (LARGO / 2 - 0.37), -FONDO / 2 + 0.6]} a={[l * (LARGO / 2 - 0.37), FONDO / 2 - 0.4]} y={0.47} c="#ffcf7a" spessore={0.035} forza={2} />
         </group>
       ))}
       {/* muro di fondo con zoccolo e striscia viola in cima */}
-      <RoundedBox args={[LARGO, 5.2, 0.4]} radius={0.15} smoothness={3} position={[0, 2.6, MURO_Z + 0.2]} material={mat("#fbf8f2", 0.9)} castShadow receiveShadow />
-      <Box p={[0, 0.16, FRONTE_MURO + 0.03]} s={[LARGO - 0.7, 0.32, 0.08]} m={mat("#d9c7a6", 0.6)} ombra={false} />
+      <RoundedBox args={[LARGO, 5.2, 0.4]} radius={0.15} smoothness={3} position={[0, 2.6, MURO_Z + 0.2]} material={mat("#efe8dc", 0.85)} castShadow receiveShadow />
+      <Box p={[0, 0.16, FRONTE_MURO + 0.03]} s={[LARGO - 0.7, 0.32, 0.08]} m={mat("#2b2724", 0.35)} ombra={false} />
+      <Box p={[0, 0.33, FRONTE_MURO + 0.08]} s={[LARGO - 0.7, 0.03, 0.03]} m={matOttone()} ombra={false} />
+      <Box p={[0, 4.75, FRONTE_MURO + 0.05]} s={[LARGO - 0.7, 0.04, 0.05]} m={matOttone()} ombra={false} />
+      {/* applique in ottone lungo il muro */}
+      {[-6.0, 6.0, 12.6, 19.8].map((x) => <Applique key={x} x={x} />)}
       <Led da={[-LARGO / 2 + 0.4, FRONTE_MURO + 0.05]} a={[LARGO / 2 - 0.4, FRONTE_MURO + 0.05]} y={5.12} c="#7b5cff" spessore={0.07} forza={2.8} />
     </group>
   );
@@ -180,7 +191,7 @@ export function Scrivania({ z, posti, led, larga }: { z: number; posti: PostoScr
   const centro = (Math.min(...xs) + Math.max(...xs)) / 2;
   const largo = Math.max(...xs) - Math.min(...xs) + (larga ? 3.2 : 2.4);
   const zc = z - 0.9;
-  const rovere = mat("#e7cfa1", 0.5), metallo = matMetallo("#d2d4da");
+  const rovere = mat("#7a5236", 0.42), metallo = matOttone();
   return (
     <group>
       <RoundedBox args={[largo, 0.07, 1.05]} radius={0.03} smoothness={3} position={[centro, 0.75, zc]} material={rovere} castShadow receiveShadow />
@@ -191,7 +202,7 @@ export function Scrivania({ z, posti, led, larga }: { z: number; posti: PostoScr
           <Box p={[0, 0.03, 0]} s={[0.06, 0.04, 0.9]} m={metallo} />
         </group>
       ))}
-      <Box p={[centro, 0.47, zc - 0.48]} s={[largo - 0.3, 0.42, 0.03]} m={mat("#f4f2ee", 0.8)} />
+      <Box p={[centro, 0.47, zc - 0.48]} s={[largo - 0.3, 0.42, 0.03]} m={mat("#5e3f2a", 0.5)} />
       <Led da={[centro - largo / 2 + 0.2, zc + 0.5]} a={[centro + largo / 2 - 0.2, zc + 0.5]} y={0.69} c={led} spessore={0.035} forza={2.2} />
       {posti.map((p, i) => (
         <group key={i}>
@@ -335,6 +346,7 @@ export function ScrittaPavimento({ x, z, nome, sotto, font }: { x: number; z: nu
 export type Conteggi = { attesa: number; lavora: number; coda: number; liberi: number };
 
 export function Tabellone({ x, n, font }: { x: number; n: Conteggi; font: Font }) {
+  const larghezza = 4.6;
   const t = useMemo(() => tela(1280, 300, (c, w, h) => {
     rett(c, 0, 0, w, h, 34, "#14161f");
     const voci: [string, number, string][] = [["da guardare", n.attesa, "#ffd84d"], ["al lavoro", n.lavora, "#5b8cff"], ["in coda", n.coda, "#b9bfd0"], ["liberi", n.liberi, "#2fd08a"]];
@@ -352,8 +364,8 @@ export function Tabellone({ x, n, font }: { x: number; n: Conteggi; font: Font }
   useEffect(() => () => t.dispose(), [t]);
   return (
     <group position={[x, 2.6, FRONTE_MURO + 0.06]}>
-      <RoundedBox args={[5.4, 1.32, 0.1]} radius={0.05} smoothness={3} material={matLucido("#14161f")} castShadow />
-      <mesh geometry={GEO.piano} position={[0, 0, 0.055]} scale={[5.25, 1.23, 1]}><meshBasicMaterial map={t} toneMapped={false} /></mesh>
+      <RoundedBox args={[larghezza, larghezza * 0.244, 0.1]} radius={0.05} smoothness={3} material={matLucido("#14161f")} castShadow />
+      <mesh geometry={GEO.piano} position={[0, 0, 0.055]} scale={[larghezza - 0.15, larghezza * 0.244 - 0.09, 1]}><meshBasicMaterial map={t} toneMapped={false} /></mesh>
     </group>
   );
 }
@@ -387,12 +399,19 @@ export function Muro({ font, n }: { font: Font; n: Conteggi }) {
     <group>
       <Doghe x0={-6.8} x1={6.8} />
       <InsegnaApex font={font} />
-      <Lavagna x={-16} />
-      <Tabellone x={-10.2} n={n} font={font} />
-      <Quadro x={8.4} c={C.blu} largo={1.4} />
-      <Quadro x={10.2} c={C.giallo} />
-      <MensolaPothos x={-20.6} y={3.4} />
+      <Tabellone x={9.9} n={n} font={font} />
       <MensolaPothos x={21} y={3.6} />
+    </group>
+  );
+}
+
+/** Applique: braccio in ottone e luce calda verso l'alto. */
+function Applique({ x }: { x: number }) {
+  return (
+    <group position={[x, 3.3, FRONTE_MURO + 0.05]}>
+      <Box p={[0, 0, 0.02]} s={[0.12, 0.3, 0.04]} m={matOttone()} ombra={false} />
+      <Cil p={[0, 0.12, 0.16]} s={[0.22, 0.2, 0.22]} m={matOttone()} ombra={false} />
+      <Cil p={[0, 0.23, 0.16]} s={[0.17, 0.02, 0.17]} m={matLed("#ffd9a0", 2.2)} ombra={false} />
     </group>
   );
 }
