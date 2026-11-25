@@ -97,10 +97,10 @@ export function Pavimento() {
       <mesh geometry={GEO.piano} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.8, 1.5]} scale={[LARGO * 1.45, FONDO * 1.7, 1]}>
         <meshBasicMaterial map={ombra} transparent depthWrite={false} toneMapped={false} />
       </mesh>
-      <RoundedBox args={[LARGO, 0.7, FONDO]} radius={0.3} smoothness={4} position={[0, -0.351, 0]} material={mat("#efe6d6", 0.8)} receiveShadow />
+      <RoundedBox args={[LARGO, 0.7, FONDO]} radius={0.3} smoothness={4} position={[0, -0.37, 0]} material={mat("#efe6d6", 0.8)} receiveShadow />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
         <planeGeometry args={[LARGO - 0.4, FONDO - 0.4]} />
-        <meshStandardMaterial map={marmo} roughness={0.14} metalness={0.05} envMapIntensity={1.3} />
+        <meshStandardMaterial map={marmo} roughness={0.14} metalness={0.05} envMapIntensity={1.3} polygonOffset polygonOffsetFactor={2} polygonOffsetUnits={2} />
       </mesh>
       {/* bordi bassi ai lati con la luce LED blu sul filo */}
       {[-1, 1].map((l) => (
@@ -334,7 +334,7 @@ export function ScrittaPavimento({ x, z, nome, sotto, font }: { x: number; z: nu
   }), [nome, sotto, font]);
   useEffect(() => () => t.dispose(), [t]);
   return (
-    <mesh geometry={GEO.piano} rotation={[-Math.PI / 2, 0, 0]} position={[x + 3.2, 0.03, z]} scale={[6.4, 0.8, 1]}>
+    <mesh geometry={GEO.piano} rotation={[-Math.PI / 2, 0, 0]} position={[x + 3.2, 0.04, z]} scale={[6.4, 0.8, 1]}>
       <meshBasicMaterial map={t} transparent depthWrite={false} toneMapped={false} />
     </mesh>
   );

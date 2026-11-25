@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { CameraControls, CameraControlsImpl, Environment, Html, Lightformer, SoftShadows } from "@react-three/drei";
+import { CameraControls, CameraControlsImpl, Environment, Html, Lightformer, PerformanceMonitor, SoftShadows } from "@react-three/drei";
 import { Bloom, EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
-import { AGENTE, AGENTI, FONDO, LARGO, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
+import { AGENTE, AGENTI, FONDO, LARGO, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
 import type { Tono } from "@/lib/studio/promemoria";
 import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
@@ -153,7 +153,7 @@ function Etichetta({ y, children }: { y: number; children: React.ReactNode }) {
 
 /* ---------- Scena ---------- */
 
-function Ufficio3D(p: PropsScena & { qualita: boolean }) {
+function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
   const font = useFont();
   const perId = useMemo(() => Object.fromEntries(p.agenti.map((a) => [a.id, a])), [p.agenti]);
   // lo schermo si spegne se l'agente non è alla scrivania
@@ -170,7 +170,7 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
     <>
       <color attach="background" args={["#e9ebf1"]} />
       <hemisphereLight args={["#ffffff", "#d9cbb3", 0.55]} />
-      <directionalLight position={[-14, 30, 16]} intensity={2.4} color="#fff6ea" castShadow shadow-mapSize={p.qualita ? [4096, 4096] : [1536, 1536]} shadow-bias={-0.0003} shadow-normalBias={0.04}>
+      <directionalLight position={[-14, 30, 16]} intensity={2.4} color="#fff6ea" castShadow shadow-mapSize={[p.ombre, p.ombre]} shadow-bias={-0.0003} shadow-normalBias={0.04}>
         <orthographicCamera attach="shadow-camera" args={[-27, 27, 22, -22, 1, 90]} />
       </directionalLight>
       <Environment resolution={128} frames={1} environmentIntensity={0.42}>
@@ -179,6 +179,17 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
         <Lightformer form="rect" intensity={0.7} position={[20, 6, -6]} scale={[12, 8, 1]} rotation={[0, -Math.PI / 2, 0]} color="#dfe6ff" />
         <Lightformer form="rect" intensity={0.6} position={[0, 4, -20]} scale={[30, 6, 1]} color="#c9b8ff" />
       </Environment>
+      {/* luci calde dei reparti: insegna, cervello, lampada relax, sala strategia, tavolo social, giardino */}
+      {p.livello > 0 ? (
+        <>
+          <pointLight position={[0, 3, -15.3]} color="#8b6dff" intensity={9} distance={9} decay={2} />
+          <pointLight position={[CERVELLO[0], 2.2, CERVELLO[1]]} color="#7b5cff" intensity={4} distance={5} />
+          <pointLight position={[-15, 1.9, 3.1]} color="#ffd9a0" intensity={3} distance={5} />
+          <pointLight position={[TAVOLO_SALA[0], 3.2, TAVOLO_SALA[1]]} color="#ffe2b8" intensity={6} distance={9} />
+          <pointLight position={[TAVOLO_SOCIAL[0], 3.0, TAVOLO_SOCIAL[1]]} color="#ffd6f0" intensity={4} distance={7} />
+          <pointLight position={[16, 2.6, 4.7]} color="#fff0d0" intensity={4} distance={7} />
+        </>
+      ) : null}
 
       <Statico chiave={`${font.pronto}|${p.clienti.map((c) => c.id).join(",")}|${p.altriClienti > 0}`}>
       <Pavimento />
@@ -286,9 +297,13 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
       </Statico>
 
       <Regia zona={p.zona} selezione={p.selezione} agenti={p.agenti} clienti={p.clienti} coperto={p.coperto} />
-      {p.qualita ? (
+      {p.livello > 1 ? (
         <EffectComposer multisampling={4}>
           <N8AO halfRes quality="performance" aoRadius={1.4} distanceFalloff={1} intensity={2.4} color="#2b2440" />
+          <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.9} radius={0.7} />
+        </EffectComposer>
+      ) : p.livello > 0 ? (
+        <EffectComposer multisampling={4}>
           <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.9} radius={0.7} />
         </EffectComposer>
       ) : null}
@@ -296,10 +311,36 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
   );
 }
 
+/* Qualità: 2 = massima (computer), 1 = alta (telefono), 0 = leggera.
+   Si parte dal massimo che il dispositivo regge; se i fotogrammi calano
+   davvero, la scena scende di un gradino da sola invece di scattare. */
+type Livello = 0 | 1 | 2;
+
+function livelloIniziale(): Livello {
+  if (typeof window === "undefined") return 1;
+  const q = new URLSearchParams(window.location.search);
+  if (q.get("alta") === "1") return 2;
+  if (q.get("leggera") === "1") return 0;
+  return window.matchMedia("(pointer: coarse)").matches ? 1 : 2;
+}
+
+/** Alcuni telefoni danno un buffer di profondità a 16 bit: lì il pavimento "sfarfalla". Lo misuriamo prima. */
+function profonditaCorta(): boolean {
+  try {
+    const c = document.createElement("canvas");
+    const g = (c.getContext("webgl2") ?? c.getContext("webgl")) as WebGLRenderingContext | null;
+    if (!g) return false;
+    const bit = g.getParameter(g.DEPTH_BITS) as number;
+    g.getExtension("WEBGL_lose_context")?.loseContext();
+    return bit > 0 && bit < 24;
+  } catch { return false; }
+}
+
 export default function Scena(p: PropsScena) {
-  // Scena leggera su tutti i dispositivi: gli effetti pesanti (occlusione, bagliore, ombre morbide)
-  // facevano chiudere la pagina su alcuni Mac. Restano disponibili solo aprendo /studio?alta=1.
-  const [qualita] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("alta") === "1");
+  const [inizio] = useState(livelloIniziale);
+  const [livello, setLivello] = useState<Livello>(inizio);
+  const [profondita] = useState(() => typeof window !== "undefined" && profonditaCorta());
+  const ombre = inizio === 2 ? 4096 : inizio === 1 ? 2048 : 1536;
   const [persa, setPersa] = useState(false);
   if (persa) {
     return (
@@ -311,11 +352,12 @@ export default function Scena(p: PropsScena) {
     );
   }
   return (
-    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={qualita ? [1, 1.75] : [1, 1.25]} camera={{ fov: 27, near: 1, far: 260, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "default" }}
+    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 27, near: 2, far: 200, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita }}
       onCreated={({ gl, scene }) => { if (process.env.NODE_ENV !== "production") Object.assign(window, { __studio: { gl, scene } }); gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
       onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
-      {qualita ? <SoftShadows size={22} samples={12} focus={0.5} /> : null}
-      <Ufficio3D {...p} qualita={qualita} />
+      <PerformanceMonitor flipflops={2} onDecline={() => setLivello((l) => (l > 0 ? ((l - 1) as Livello) : l))} onFallback={() => setLivello(0)} />
+      {livello > 1 ? <SoftShadows size={22} samples={12} focus={0.5} /> : null}
+      <Ufficio3D {...p} livello={livello} ombre={ombre} />
     </Canvas>
   );
 }
