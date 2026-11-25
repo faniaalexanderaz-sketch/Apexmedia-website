@@ -10,6 +10,7 @@ import type { Lavoro } from "@/lib/studio/tipi";
 import { Avatar } from "./Lavori";
 import { ImportoModificabile } from "./Moduli";
 import { RigaPromemoria } from "./Notifiche";
+import { Confine3D, webglDisponibile } from "@/components/three/Confine3D";
 import { ChatAgente, ElencoTeam, StrisciaTeam } from "./Team";
 import { useStudio } from "./StudioApp";
 import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
@@ -45,6 +46,9 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   const [selezione, setSelezione] = useState<Selezione>(null);
   const [elenco, setElenco] = useState(false);
   const largo = useLargo();
+  // il 3D parte solo se il browser lo permette davvero; altrimenti resta tutto il resto dello Studio
+  const [treD, setTreD] = useState<boolean | null>(null);
+  useEffect(() => { const t = setTimeout(() => setTreD(webglDisponibile()), 0); return () => clearTimeout(t); }, []);
   const giro = useGiro();
   const stretto = largo < 760;
   // elenco del team: aperto su schermi larghi, ridotto a icone su tablet, striscia di volti su telefono
@@ -112,10 +116,14 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   return (
     <div className="st-ufficio" data-pannello={pannelloAperto || undefined} data-team={team} style={{ "--team": `${larghezzaTeam}px` } as React.CSSProperties}>
       <div className="st-scena">
+        {treD === false ? <Senza3D /> : treD ? (
+          <Confine3D alternativa={<Senza3D />}>
         <Scena attivo={attivo} nome={site.founders[0].split(" ")[0]} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} ads={modello.ads} conteggi={modello.conteggi} regole={dati.regole.length} inAttesa={promemoria.length}
           zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli}
           onFumetto={(id) => { const p = promemoria.find((x) => x.id === id); if (p) void esegui(p); }}
           onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); }} />
+      </Confine3D>
+        ) : null}
       </div>
 
       {team === "striscia" ? (
@@ -149,6 +157,17 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
       {selezione?.tipo === "agente" ? <ChatAgente key={selezione.id} id={selezione.id} chiudi={() => setSelezione(null)} /> : null}
       {selezione?.tipo === "cervello" ? <PannelloCervello chiudi={() => setSelezione(null)} /> : null}
       {selezione?.tipo === "cliente" ? <PannelloCliente id={selezione.id} chiudi={() => setSelezione(null)} /> : null}
+    </div>
+  );
+}
+
+/** Al posto dell'ufficio quando il browser non può mostrare il 3D. */
+function Senza3D() {
+  return (
+    <div className="st-niente3d" role="status">
+      <p><b>La grafica 3D non è disponibile in questo browser adesso.</b></p>
+      <p>Team, chat, promemoria, Conti e Lavori funzionano lo stesso. Di solito il 3D torna chiudendo del tutto il browser (Cmd+Q) o riavviando il computer.</p>
+      <button type="button" className="st-btn st-btn-pieno" onClick={() => window.location.reload()}>Riprova</button>
     </div>
   );
 }

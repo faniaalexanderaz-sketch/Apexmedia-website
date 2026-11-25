@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
+import { Confine3D } from "./Confine3D";
 
 type Fallback = { src: string; width: number; height: number };
 
@@ -99,7 +100,8 @@ export function SceneSlot({
           }`}
           aria-hidden="true"
         >
-          {children(() => setReady(true))}
+          {/* se la scena va in errore resta l'immagine statica, la pagina non cade */}
+          <Confine3D alternativa={null} onErrore={() => { setReady(false); setWebgl(false); }}>{children(() => setReady(true))}</Confine3D>
         </div>
       ) : null}
     </div>
