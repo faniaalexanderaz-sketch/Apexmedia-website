@@ -434,7 +434,7 @@ export function Cervello({ x, z, attivo, onClick, children }: { x: number; z: nu
       <Cil p={[0, 0.6, 0]} s={[1.0, 1.2, 1.0]} m={mat(C.bianco, 0.35)} />
       <Cil p={[0, 1.22, 0]} s={[1.12, 0.06, 1.12]} m={matMetallo()} />
       <mesh geometry={GEO.toro} material={matLed("#7b5cff", 2.6)} position={[0, 1.255, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[1.1, 1.1, 0.25]} />
-      <group ref={palla} position={[0, 2.2, 0]}>
+      <group ref={palla} position={[0, 2.2, 0]} userData={{ dinamico: true }}>
         <lineSegments geometry={archi}><lineBasicMaterial color={attivo ? "#9b85ff" : "#8f9dff"} transparent opacity={0.85} toneMapped={false} /></lineSegments>
         <mesh geometry={GEO.sfera} material={matLuce("#8f7bff", 0.14)} scale={1.25} />
         {nodi.map((v, i) => <mesh key={i} geometry={GEO.sfera} material={matLed(i % 5 === 0 ? "#8b6dff" : "#5b8cff", 1.8)} position={v} scale={0.085} />)}
@@ -603,7 +603,7 @@ function Pallina() {
     const t = (s.clock.elapsedTime * 0.7) % 2, k = t < 1 ? t : 2 - t;
     p.current.position.set(-1.25 + k * 2.5, 0.85 + Math.abs(Math.sin(k * Math.PI * 2)) * 0.35, Math.sin(s.clock.elapsedTime) * 0.3);
   });
-  return <mesh ref={p} geometry={GEO.sfera} material={mat("#ffffff", 0.3)} scale={0.07} />;
+  return <mesh ref={p} geometry={GEO.sfera} material={mat("#ffffff", 0.3)} scale={0.07} userData={{ dinamico: true }} />;
 }
 
 /* ---------- La tua scrivania ---------- */
@@ -639,7 +639,7 @@ export function TuaScrivania({ x, z, nome, accesa, font, onClick }: { x: number;
       <Cil p={[1.25, 0.86, 0.2]} s={[0.12, 0.14, 0.12]} m={mat(C.viola, 0.4)} />
       {/* luce che lampeggia quando qualcuno ti aspetta */}
       <Cil p={[1.5, 0.84, -0.3]} s={[0.14, 0.06, 0.14]} m={mat("#1e2029", 0.4)} />
-      <mesh ref={faro} geometry={GEO.sfera} material={accesa ? matLed("#ffc93d", 3) : mat("#8a8d98", 0.4)} position={[1.5, 0.93, -0.3]} scale={0.09} />
+      <mesh ref={faro} userData={{ dinamico: true }} geometry={GEO.sfera} material={accesa ? matLed("#ffc93d", 3) : mat("#8a8d98", 0.4)} position={[1.5, 0.93, -0.3]} scale={0.09} />
       {/* sedia direzionale */}
       <group position={[0, 0, -1.05]} rotation={[0, Math.PI, 0]}>
         <RoundedBox args={[0.7, 0.14, 0.66]} radius={0.05} smoothness={2} position={[0, 0.52, 0]} material={mat("#1f2029", 0.7)} castShadow />
@@ -741,7 +741,7 @@ function Pila({ x, z, monete, ritardo }: { x: number; z: number; monete: number;
   const h = monete * 0.07, oro = mat("#f2b632", 0.28, 0.75);
   return (
     <group position={[x, 0, z]}>
-      <group ref={g} visible={false}>
+      <group ref={g} visible={false} userData={{ dinamico: true }}>
         <mesh geometry={GEO.cil} material={oro} position={[0, h / 2, 0]} scale={[0.42, h, 0.42]} castShadow />
         {Array.from({ length: monete }, (_, i) => <mesh key={i} geometry={GEO.cil} material={mat("#d99a17", 0.3, 0.7)} position={[0, i * 0.07 + 0.066, 0]} scale={[0.435, 0.012, 0.435]} />)}
       </group>
@@ -805,7 +805,7 @@ export function Percorso({ da, a, fase }: { da: [number, number]; a: [number, nu
     punto.current.position.y = 0.12;
   });
   return (
-    <group>
+    <group userData={{ dinamico: true }}>
       <Line points={punti} color="#5b8cff" lineWidth={2.6} transparent opacity={0.75} toneMapped={false} />
       <mesh ref={punto} geometry={GEO.sfera} material={matLed("#5b8cff", 2.2)} scale={0.26} />
     </group>

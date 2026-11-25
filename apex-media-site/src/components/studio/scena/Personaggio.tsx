@@ -76,10 +76,10 @@ function Chioma({ tipo, c }: { tipo: Capelli; c: string }) {
   return (
     <>
       <mesh geometry={GEO.sfera} material={m} position={[0, 0.045, 0.05]} scale={0.61} castShadow />
-      {tipo === "caschetto" ? <mesh geometry={GEO.sfera} material={m} position={[0, -0.09, 0.1]} scale={[0.62, 0.5, 0.5]} castShadow /> : null}
-      {tipo === "chignon" ? <mesh geometry={GEO.sfera} material={m} position={[0, 0.31, 0.12]} scale={0.26} castShadow /> : null}
-      {tipo === "ciuffo" ? <mesh geometry={GEO.sfera} material={m} position={[0.06, 0.27, -0.15]} scale={[0.3, 0.2, 0.26]} castShadow /> : null}
-      {tipo === "ricci" ? [[-0.2, 0.2, 0.05], [0.2, 0.2, 0.05], [0, 0.3, 0.02], [-0.13, 0.1, 0.25], [0.13, 0.1, 0.25], [0, 0.27, -0.14]].map((p, i) => <mesh key={i} geometry={GEO.sfera} material={m} position={p as [number, number, number]} scale={0.25} castShadow />) : null}
+      {tipo === "caschetto" ? <mesh geometry={GEO.sfera} material={m} position={[0, -0.09, 0.1]} scale={[0.62, 0.5, 0.5]} /> : null}
+      {tipo === "chignon" ? <mesh geometry={GEO.sfera} material={m} position={[0, 0.31, 0.12]} scale={0.26} /> : null}
+      {tipo === "ciuffo" ? <mesh geometry={GEO.sfera} material={m} position={[0.06, 0.27, -0.15]} scale={[0.3, 0.2, 0.26]} /> : null}
+      {tipo === "ricci" ? [[-0.2, 0.2, 0.05], [0.2, 0.2, 0.05], [0, 0.3, 0.02], [-0.13, 0.1, 0.25], [0.13, 0.1, 0.25], [0, 0.27, -0.14]].map((p, i) => <mesh key={i} geometry={GEO.sfera} material={m} position={p as [number, number, number]} scale={0.25} />) : null}
     </>
   );
 }
@@ -109,8 +109,8 @@ function Gamba({ lato, rif, ginocchio }: { lato: number; rif: React.RefObject<TH
     <group ref={rif} position={[lato * 0.1, ALTEZZA_ANCA, 0]}>
       <mesh geometry={GEO.gamba} material={mat(PANTALONI, 0.9)} position={[0, -0.13, 0]} castShadow />
       <group ref={ginocchio} position={[0, -0.27, 0]}>
-        <mesh geometry={GEO.gamba} material={mat(PANTALONI, 0.9)} position={[0, -0.12, 0]} scale={0.95} castShadow />
-        <mesh geometry={GEO.box} material={mat(SCARPE, 0.5)} position={[0, -0.27, -0.045]} scale={[0.15, 0.09, 0.26]} castShadow />
+        <mesh geometry={GEO.gamba} material={mat(PANTALONI, 0.9)} position={[0, -0.12, 0]} scale={0.95} />
+        <mesh geometry={GEO.box} material={mat(SCARPE, 0.5)} position={[0, -0.27, -0.045]} scale={[0.15, 0.09, 0.26]} />
         <mesh geometry={GEO.box} material={mat(SUOLA, 0.6)} position={[0, -0.31, -0.045]} scale={[0.155, 0.025, 0.265]} />
       </group>
     </group>
@@ -219,7 +219,7 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
 
   const tessuto = mat(divisa, 0.88);
   return (
-    <group ref={radice} position={[meta.x, meta.y, meta.z]} rotation={[0, meta.rot, 0]}>
+    <group ref={radice} position={[meta.x, meta.y, meta.z]} rotation={[0, meta.rot, 0]} userData={{ dinamico: true }}>
       <mesh ref={anello} geometry={GEO.anello} material={matLuce(selezionato ? C.viola : C.oro, 0.9)} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.03, 0]} visible={false} />
       <mesh geometry={GEO.cil} material={MAT_INVISIBILE} position={[0, 0.95, -0.05]} scale={[1.1, 1.9, 1.1]} {...tocca} />
 
@@ -229,11 +229,11 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
       <group ref={corpo}>
         {/* felpa della divisa, cappuccio, coulisse, badge col colore personale */}
         <mesh geometry={GEO.busto} material={tessuto} position={[0, 0.88, 0]} castShadow />
-        <mesh geometry={GEO.sfera} material={tessuto} position={[0, 1.07, 0.15]} scale={[0.34, 0.2, 0.24]} castShadow />
+        <mesh geometry={GEO.sfera} material={tessuto} position={[0, 1.07, 0.15]} scale={[0.34, 0.2, 0.24]} />
         <mesh geometry={GEO.box} material={mat("#f3f1ff", 0.6)} position={[-0.05, 0.98, -0.205]} scale={[0.012, 0.13, 0.012]} />
         <mesh geometry={GEO.box} material={mat("#f3f1ff", 0.6)} position={[0.05, 0.98, -0.205]} scale={[0.012, 0.13, 0.012]} />
         <mesh geometry={GEO.cil} material={mat(accento, 0.5)} position={[0.11, 0.95, -0.2]} rotation={[Math.PI / 2, 0, 0]} scale={[0.065, 0.012, 0.065]} />
-        <mesh geometry={GEO.box} material={mat("#1c1f2c", 0.8)} position={[0, 0.6, 0]} scale={[0.4, 0.07, 0.3]} castShadow />
+        <mesh geometry={GEO.box} material={mat("#1c1f2c", 0.8)} position={[0, 0.6, 0]} scale={[0.4, 0.07, 0.3]} />
         {logo ? (
           <mesh position={[0, 0.9, 0.222]} scale={[0.27, 0.34, 1]}>
             <planeGeometry args={[1, 1]} />
@@ -251,12 +251,12 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
 
         <group ref={bS} position={[-0.25, 1.02, 0]} rotation={[0.1, 0, 0]}>
           <mesh geometry={GEO.braccio} material={tessuto} position={[0, -0.2, 0]} castShadow />
-          <mesh geometry={GEO.sfera} material={mat(pelle, 0.6)} position={[0, -0.44, 0]} scale={0.15} castShadow />
+          <mesh geometry={GEO.sfera} material={mat(pelle, 0.6)} position={[0, -0.44, 0]} scale={0.15} />
           <mesh ref={tablet} geometry={GEO.box} material={matLucido("#1b1d28")} position={[0.12, -0.46, -0.06]} rotation={[-0.3, 0, 0.1]} scale={[0.3, 0.02, 0.22]} visible={false} castShadow />
         </group>
         <group ref={bD} position={[0.25, 1.02, 0]} rotation={[0.1, 0, 0]}>
           <mesh geometry={GEO.braccio} material={tessuto} position={[0, -0.2, 0]} castShadow />
-          <mesh geometry={GEO.sfera} material={mat(pelle, 0.6)} position={[0, -0.44, 0]} scale={0.15} castShadow />
+          <mesh geometry={GEO.sfera} material={mat(pelle, 0.6)} position={[0, -0.44, 0]} scale={0.15} />
           {tazza ? <mesh geometry={GEO.cil} material={mat(C.bianco, 0.3)} position={[0, -0.5, -0.07]} rotation={[-1.3, 0, 0]} scale={[0.13, 0.15, 0.13]} castShadow /> : null}
         </group>
 
