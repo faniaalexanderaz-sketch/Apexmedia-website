@@ -49,7 +49,7 @@ export function Led({ da, a, y, c, spessore = 0.06, forza = 2.4 }: { da: [number
 /** Marmo bianco tipo Calacatta: venature grigie e qualche filo d'oro, lastre grandi con fughe sottili. */
 function useMarmo() {
   return useMemo(() => {
-    const t = tela(2048, 2048, (x, w, h) => {
+    const t = tela(1536, 1536, (x, w, h) => {
       let seme = 23;
       const rnd = () => { seme = (seme * 9301 + 49297) % 233280; return seme / 233280; };
       const g = x.createLinearGradient(0, 0, w, h);
@@ -160,7 +160,6 @@ export function InsegnaApex({ font }: { font: Font }) {
     <group position={[0, 0, FRONTE_MURO + 0.14]}>
       <mesh geometry={marchio} material={matLed("#8b6dff", 2.6)} position={[0, 3.35, 0]} scale={0.1} />
       <mesh geometry={GEO.piano} material={alone} position={[0, 1.45, 0.02]} scale={[7.2, 1.125, 1]} />
-      <pointLight position={[0, 3, 1.2]} color="#8b6dff" intensity={9} distance={9} decay={2} />
     </group>
   );
 }
@@ -440,7 +439,6 @@ export function Cervello({ x, z, attivo, onClick, children }: { x: number; z: nu
         <mesh geometry={GEO.sfera} material={matLuce("#8f7bff", 0.14)} scale={1.25} />
         {nodi.map((v, i) => <mesh key={i} geometry={GEO.sfera} material={matLed(i % 5 === 0 ? "#8b6dff" : "#5b8cff", 1.8)} position={v} scale={0.085} />)}
       </group>
-      <pointLight position={[0, 2.2, 0]} color="#7b5cff" intensity={4} distance={5} />
       <mesh geometry={GEO.cil} material={MAT_INVISIBILE} position={[0, 1.5, 0]} scale={[2.2, 3.2, 2.2]} {...cliccabile(onClick)} />
       {children}
     </group>
@@ -592,7 +590,6 @@ export function Relax() {
         <Cil p={[0, 1.2, 0]} s={[0.04, 2.4, 0.04]} m={matMetallo("#2a2d38")} />
         <mesh geometry={GEO.sfera} material={mat("#f4f1ea", 0.4)} position={[-0.6, 2.3, 0.5]} scale={[0.6, 0.35, 0.6]} castShadow />
         <Sfera p={[-0.6, 2.15, 0.5]} s={0.12} m={matLed("#ffe6b0", 2.2)} ombra={false} />
-        <pointLight position={[-0.6, 1.9, 0.5]} color="#ffd9a0" intensity={3} distance={5} />
       </group>
     </group>
   );
