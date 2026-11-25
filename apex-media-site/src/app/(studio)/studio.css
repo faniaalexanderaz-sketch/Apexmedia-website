@@ -9,6 +9,8 @@
    Lo zoom e il giro a 360 gradi li fa la scena 3D con le dita. */
 html:has(.st), body:has(.st) { overflow-x: clip; overscroll-behavior: none; max-width: 100%; }
 html:has(.st-strato:not([data-nascosto]) .st-ufficio), body:has(.st-strato:not([data-nascosto]) .st-ufficio) { overflow: hidden; height: 100dvh; }
+/* nell'ufficio la pagina è inchiodata allo schermo: su iPhone non può più scivolare di lato */
+body:has(.st-strato:not([data-nascosto]) .st-ufficio) .st { position: fixed; inset: 0; width: 100%; height: 100dvh; }
 .st { overflow-x: clip; max-width: 100vw; touch-action: pan-y; }
 .st-ufficio { touch-action: none; }
 .st-ufficio .st-dock-scorri, .st-ufficio .st-zone, .st-ufficio .st-striscia { touch-action: pan-x; }
