@@ -122,7 +122,6 @@ export function SalaStrategia({ posti, ads, font }: { posti: PostoTavolo[]; ads:
       <Palma x={x0 + 0.9} z={z0 + 0.9} s={1.1} />
       <Monstera x={x1 - 0.9} z={z0 + 0.9} s={1.0} vaso="#2b2724" />
       <Sansevieria x={x1 - 0.8} z={z1 - 0.8} s={0.9} vaso="#c39b55" />
-      <pointLight position={[tx, 3.2, tz]} color="#ffe2b8" intensity={6} distance={9} />
     </group>
   );
 }
@@ -193,7 +192,6 @@ export function TavoloSocial({ posti }: { posti: PostoTavolo[] }) {
       <SetTelefono x={tx + 3.6} z={tz - 1.6} rot={-0.8} />
       <SetTelefono x={tx - 3.4} z={tz - 2.0} rot={0.7} />
       <Palma x={tx + 5.6} z={tz - 2.6} s={1.0} />
-      <pointLight position={[tx, 3.0, tz]} color="#ffd6f0" intensity={4} distance={7} />
     </group>
   );
 }
@@ -232,7 +230,6 @@ export function Giardino({ x, z }: { x: number; z: number }) {
       ))}
       <Panchina x={-2.6} z={2.5} />
       <Panchina x={2.6} z={2.5} />
-      <pointLight position={[0, 2.6, 0.4]} color="#fff0d0" intensity={4} distance={7} />
     </group>
   );
 }

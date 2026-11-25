@@ -169,7 +169,7 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
     <>
       <color attach="background" args={["#e9ebf1"]} />
       <hemisphereLight args={["#ffffff", "#d9cbb3", 0.55]} />
-      <directionalLight position={[-14, 30, 16]} intensity={2.4} color="#fff6ea" castShadow shadow-mapSize={p.qualita ? [4096, 4096] : [2048, 2048]} shadow-bias={-0.0003} shadow-normalBias={0.04}>
+      <directionalLight position={[-14, 30, 16]} intensity={2.4} color="#fff6ea" castShadow shadow-mapSize={p.qualita ? [4096, 4096] : [1536, 1536]} shadow-bias={-0.0003} shadow-normalBias={0.04}>
         <orthographicCamera attach="shadow-camera" args={[-27, 27, 22, -22, 1, 90]} />
       </directionalLight>
       <Environment resolution={128} frames={1} environmentIntensity={0.42}>
@@ -293,10 +293,23 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
 }
 
 export default function Scena(p: PropsScena) {
-  // effetti pesanti (occlusione, bagliore, ombre morbide) solo su schermi grandi con mouse
-  const [qualita] = useState(() => typeof window !== "undefined" && window.matchMedia("(min-width: 900px) and (hover: hover)").matches);
+  // Scena leggera su tutti i dispositivi: gli effetti pesanti (occlusione, bagliore, ombre morbide)
+  // facevano chiudere la pagina su alcuni Mac. Restano disponibili solo aprendo /studio?alta=1.
+  const [qualita] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("alta") === "1");
+  const [persa, setPersa] = useState(false);
+  if (persa) {
+    return (
+      <div className="st-niente3d" role="alert">
+        <p>La grafica 3D si è fermata su questo computer.</p>
+        <p>Conti, Lavori, chat e promemoria funzionano lo stesso.</p>
+        <button type="button" className="st-btn st-btn-pieno" onClick={() => window.location.reload()}>Riprova il 3D</button>
+      </div>
+    );
+  }
   return (
-    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={qualita ? [1, 1.75] : [1, 1.5]} camera={{ fov: 27, near: 1, far: 260, position: [0, 40, 34] }} gl={{ antialias: !qualita, powerPreference: "high-performance" }} onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
+    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={qualita ? [1, 1.75] : [1, 1.25]} camera={{ fov: 27, near: 1, far: 260, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "default" }}
+      onCreated={({ gl }) => { gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
+      onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
       {qualita ? <SoftShadows size={22} samples={12} focus={0.5} /> : null}
       <Ufficio3D {...p} qualita={qualita} />
     </Canvas>
