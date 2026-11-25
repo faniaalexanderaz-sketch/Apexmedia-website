@@ -203,9 +203,9 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
       return;
     }
     case "studio.svuota": {
-      // cancella clienti, servizi, fatture, campagne, lavori e regole: lo studio riparte vuoto
+      // cancella clienti, servizi, fatture, campagne e lavori: lo studio riparte vuoto. Le regole del cervello restano
       if (c.conferma !== "SVUOTA") throw new Errore("Per cancellare tutto scrivi SVUOTA.");
-      for (const t of [S.studioFatture, S.studioServizi, S.studioCampagne, S.studioLavori, S.studioRegole, S.studioClienti]) await d.delete(t);
+      for (const t of [S.studioFatture, S.studioServizi, S.studioCampagne, S.studioLavori, S.studioClienti]) await d.delete(t);
       await d.delete(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "obiettivo_mese")));
       return;
     }

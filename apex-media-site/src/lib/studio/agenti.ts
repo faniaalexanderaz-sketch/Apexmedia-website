@@ -55,6 +55,11 @@ export type Agente = {
   coloreCapelli: string;
   pelle: string;
   schermo: Schermo;
+  /** il mestiere in una o due parole, per etichette e striscia del telefono */
+  breve: string;
+  /** per il ritratto: donna o uomo, barba */
+  donna?: boolean;
+  barba?: boolean;
   /** accessorio: cuffie per chi monta, cuffia con microfono per chi risponde */
   extra?: "cuffie" | "microfono" | "occhiali";
   /** cosa fa, in una riga, per chi guarda il pannello */
@@ -73,7 +78,7 @@ const ARANCIO = "#ff7a2f", BLU = "#2f6bff", VIOLA = "#5b2eff", VERDE = "#17b26a"
 
 export const AGENTI: Agente[] = [
   {
-    id: "direttore", nome: "Direttore", ruolo: "Coordina il team", reparto: "regia", posto: [0, -11.2],
+    id: "direttore", nome: "Direttore", ruolo: "Direttore operativo", breve: "Direttore", reparto: "regia", posto: [0, -11.2],
     felpa: INK, capelli: "corti", coloreCapelli: "#2a211c", pelle: "#f0c9a4", schermo: "regia",
     inBreve: "Riceve la richiesta, sceglie chi la fa e tiene tutti allineati alle regole del cervello condiviso.",
     skill: [
@@ -85,7 +90,7 @@ export const AGENTI: Agente[] = [
     parole: ["piano di lavoro", "organizza", "coordina", "lancio", "da dove partiamo"],
   },
   {
-    id: "revisore", nome: "Revisore", ruolo: "Controllo qualità", reparto: "regia", posto: [4.2, -11.5],
+    id: "revisore", nome: "Revisore", ruolo: "Revisore qualità", breve: "Revisore", donna: true, reparto: "regia", posto: [4.2, -11.5],
     felpa: "#6b7280", capelli: "caschetto", coloreCapelli: "#3b2a20", pelle: "#e8b894", schermo: "spunte",
     inBreve: "Rilegge tutto prima che esca: tono umano, niente frasi da intelligenza artificiale, promessa chiara, una sola richiesta.",
     skill: [
@@ -97,7 +102,7 @@ export const AGENTI: Agente[] = [
     parole: ["rivedi", "correggi", "controlla", "revisione", "suona", "umanizza"],
   },
   {
-    id: "sofia", nome: "Sofia", ruolo: "Stratega", reparto: "strategia", posto: [-17.2, -13.9], rot: Math.PI, uscita: [[-17.2, -14.9], [-20.2, -14.9], [-20.2, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
+    id: "sofia", nome: "Sofia", ruolo: "Stratega social", breve: "Stratega", donna: true, reparto: "strategia", posto: [-17.2, -13.9], rot: Math.PI, uscita: [[-17.2, -14.9], [-20.2, -14.9], [-20.2, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
     felpa: VIOLA, capelli: "chignon", coloreCapelli: "#5a3a22", pelle: "#f2cfae", schermo: "piano",
     inBreve: "Decide cosa pubblicare e quando: piano della settimana, formati, obiettivo di ogni contenuto.",
     skill: [
@@ -109,7 +114,7 @@ export const AGENTI: Agente[] = [
     parole: ["piano", "calendario editoriale", "settimana", "strategia", "profilo", "bio"],
   },
   {
-    id: "marco", nome: "Marco", ruolo: "Analista", reparto: "strategia", posto: [-13.8, -13.9], rot: Math.PI, uscita: [[-13.8, -14.9], [-20.2, -14.9], [-20.2, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
+    id: "marco", nome: "Marco", ruolo: "Analista dati", breve: "Analista", reparto: "strategia", posto: [-13.8, -13.9], rot: Math.PI, uscita: [[-13.8, -14.9], [-20.2, -14.9], [-20.2, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
     felpa: BLU, capelli: "corti", coloreCapelli: "#1f1a17", pelle: "#d9a77f", schermo: "grafico", extra: "occhiali",
     inBreve: "Legge i numeri: cosa ha funzionato, cosa smettere di fare, cosa sta andando forte nel settore.",
     skill: [
@@ -121,7 +126,7 @@ export const AGENTI: Agente[] = [
     parole: ["analisi", "numeri", "risultati", "insight", "report", "ha funzionato", "trend", "virali"],
   },
   {
-    id: "giulia", nome: "Giulia", ruolo: "Reel", reparto: "contenuti", posto: [-17.5, -3.8],
+    id: "giulia", nome: "Giulia", ruolo: "Autrice reel", breve: "Reel", donna: true, reparto: "contenuti", posto: [-17.5, -3.8],
     felpa: ARANCIO, capelli: "caschetto", coloreCapelli: "#c98a3c", pelle: "#f4d3b3", schermo: "reel",
     inBreve: "Scrive i reel: gancio, script parlato, testo a schermo e scaletta a tempo.",
     skill: [
@@ -132,7 +137,7 @@ export const AGENTI: Agente[] = [
     parole: ["reel", "script", "gancio", "hook", "video breve", "tiktok"],
   },
   {
-    id: "luca", nome: "Luca", ruolo: "Caroselli", reparto: "contenuti", posto: [-14.5, -3.8],
+    id: "luca", nome: "Luca", ruolo: "Designer caroselli", breve: "Caroselli", reparto: "contenuti", posto: [-14.5, -3.8],
     felpa: BLU, capelli: "ricci", coloreCapelli: "#2a1d15", pelle: "#c98f68", schermo: "griglia",
     inBreve: "Costruisce i caroselli: copertina che fa scorrere e testo di ogni slide.",
     skill: [
@@ -143,7 +148,7 @@ export const AGENTI: Agente[] = [
     parole: ["carosello", "slide", "post a scorrimento"],
   },
   {
-    id: "chiara", nome: "Chiara", ruolo: "Caption e storie", reparto: "social", posto: [13.6, -1.6], rot: -0.76,
+    id: "chiara", nome: "Chiara", ruolo: "Copywriter caption e storie", breve: "Copywriter", donna: true, reparto: "social", posto: [13.6, -1.6], rot: -0.76,
     felpa: ARANCIO, capelli: "chignon", coloreCapelli: "#3a2418", pelle: "#eec2a0", schermo: "testo",
     inBreve: "Scrive caption e sequenze di storie: la riga che ferma il pollice, il corpo, la richiesta, tre hashtag.",
     skill: [
@@ -155,7 +160,7 @@ export const AGENTI: Agente[] = [
     parole: ["caption", "didascalia", "descrizione", "storie", "story", "hashtag"],
   },
   {
-    id: "matteo", nome: "Matteo", ruolo: "Video e montaggio", reparto: "video", posto: [-2.6, -3.8],
+    id: "matteo", nome: "Matteo", ruolo: "Video editor", breve: "Video editor", barba: true, reparto: "video", posto: [-2.6, -3.8],
     felpa: BLU, capelli: "ciuffo", coloreCapelli: "#4a2f1d", pelle: "#f1cba8", schermo: "timeline", extra: "cuffie",
     inBreve: "Prepara il montaggio: tagli, sottotitoli, grafiche, e ricava più contenuti da un video lungo.",
     skill: [
@@ -168,7 +173,7 @@ export const AGENTI: Agente[] = [
     parole: ["montaggio", "monta", "sottotitoli", "taglia", "girato", "video lungo", "youtube", "riutilizza"],
   },
   {
-    id: "davide", nome: "Davide", ruolo: "Campagne", reparto: "strategia", posto: [-13.8, -10.5], uscita: [[-13.8, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
+    id: "davide", nome: "Davide", ruolo: "Ads specialist Google e Meta", breve: "Ads", barba: true, reparto: "strategia", posto: [-13.8, -10.5], uscita: [[-13.8, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
     felpa: VERDE, capelli: "corti", coloreCapelli: "#17130f", pelle: "#e3b089", schermo: "ads",
     inBreve: "Imposta le campagne Google e Meta: struttura, pubblico, annunci, budget, cosa guardare ogni settimana.",
     skill: [
@@ -181,7 +186,7 @@ export const AGENTI: Agente[] = [
     parole: ["campagna", "ads", "google ads", "meta ads", "annuncio", "inserzione", "budget", "sponsorizzata"],
   },
   {
-    id: "elena", nome: "Elena", ruolo: "Landing e conversioni", reparto: "strategia", posto: [-17.2, -10.5], uscita: [[-17.2, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
+    id: "elena", nome: "Elena", ruolo: "Funnel e landing page", breve: "Funnel", donna: true, reparto: "strategia", posto: [-17.2, -10.5], uscita: [[-17.2, -9.2], [-10.3, -9.2], [-10.3, -6.6]],
     felpa: VIOLA, capelli: "caschetto", coloreCapelli: "#8a4b2a", pelle: "#f3d2b5", schermo: "pagina", extra: "occhiali",
     inBreve: "Scrive e struttura le pagine che convertono: titolo, prova, offerta, modulo, test da fare.",
     skill: [
@@ -194,7 +199,7 @@ export const AGENTI: Agente[] = [
     parole: ["landing", "pagina", "sito", "funnel", "conversione", "modulo", "test a/b", "cro"],
   },
   {
-    id: "simone", nome: "Simone", ruolo: "DM e commenti", reparto: "social", posto: [17.4, -1.6], rot: 0.76,
+    id: "simone", nome: "Simone", ruolo: "Community manager DM", breve: "Community", barba: true, reparto: "social", posto: [17.4, -1.6], rot: 0.76,
     felpa: GIALLO, capelli: "ricci", coloreCapelli: "#3d2a1c", pelle: "#dca882", schermo: "chat", extra: "microfono",
     inBreve: "Scrive i messaggi privati e le risposte ai commenti che portano a un appuntamento.",
     skill: [
@@ -207,7 +212,7 @@ export const AGENTI: Agente[] = [
     parole: ["dm", "messaggio", "commento", "rispondi", "risposta", "direct", "whatsapp"],
   },
   {
-    id: "alice", nome: "Alice", ruolo: "Pubblicazione", reparto: "social", posto: [15.5, -5.9], rot: Math.PI, uscita: [[12.6, -5.9], [12.6, 0.5]],
+    id: "alice", nome: "Alice", ruolo: "Social media manager", breve: "Social manager", donna: true, reparto: "social", posto: [15.5, -5.9], rot: Math.PI, uscita: [[12.6, -5.9], [12.6, 0.5]],
     felpa: ARANCIO, capelli: "ciuffo", coloreCapelli: "#231a14", pelle: "#f0c6a2", schermo: "calendario",
     inBreve: "Mette in fila le uscite: giorno, ora, canale e la lista di controllo prima di pubblicare.",
     skill: [
@@ -219,7 +224,7 @@ export const AGENTI: Agente[] = [
     parole: ["pubblica", "pubblicazione", "programma", "orario", "uscita", "calendario uscite"],
   },
   {
-    id: "sara", nome: "Sara", ruolo: "Amministrazione", reparto: "cassa", posto: [15.0, -11.5],
+    id: "sara", nome: "Sara", ruolo: "Amministrazione e incassi", breve: "Cassa", donna: true, reparto: "cassa", posto: [15.0, -11.5],
     felpa: "#0f9d5c", capelli: "chignon", coloreCapelli: "#6b3f22", pelle: "#f2d0b0", schermo: "grafico",
     inBreve: "Tiene d'occhio fatture e incassi: ti ricorda chi deve pagare e scrive i solleciti gentili.",
     skill: [

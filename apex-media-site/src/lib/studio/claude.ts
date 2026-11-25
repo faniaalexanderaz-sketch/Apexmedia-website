@@ -3,6 +3,7 @@ import { and, eq, isNull, or } from "drizzle-orm";
 import { db, schema } from "@/db";
 import { AGENTE } from "./agenti";
 import { Errore } from "./dati";
+import { regoleFisseTesto } from "./regole";
 
 /* =============================================================
    Fa lavorare un agente su un lavoro: una chiamata a Claude con le
@@ -35,8 +36,9 @@ export async function faiLavorare(lavoroId: number): Promise<void> {
   // Parte stabile in testa (istruzioni dell'agente), parte variabile in coda: regole, cliente, richiesta.
   const system = [
     agente.istruzioni,
+    regoleFisseTesto(),
     "Scrivi in italiano. Consegna il lavoro finito, pronto da usare, senza premesse e senza chiedere conferme: se manca un'informazione fai l'ipotesi più ragionevole e dichiarala in una riga in fondo.",
-    regole.length ? "Regole di Apex Media da rispettare sempre:\n" + regole.map((r) => `- ${r.testo}`).join("\n") : "",
+    regole.length ? "Regole aggiunte dal titolare, da rispettare sempre:\n" + regole.map((r) => `- ${r.testo}`).join("\n") : "",
   ].filter(Boolean).join("\n\n");
 
   const c = cliente[0];
@@ -53,7 +55,7 @@ export async function faiLavorare(lavoroId: number): Promise<void> {
       .stream({
         model: MODELLO,
         max_tokens: 16000,
-        output_config: { effort: "medium" },
+        output_config: { effort: "high" },
         // se il modello declina per i filtri di sicurezza, l'API riprova da sola su un modello di riserva
         betas: ["server-side-fallback-2026-07-01"],
         fallbacks: "default",

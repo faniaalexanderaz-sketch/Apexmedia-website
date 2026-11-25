@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { site } from "@/data/site";
+import { REGOLE_FISSE } from "@/lib/studio/regole";
 import { AGENTE, AGENTI, POSTI_RELAX, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import { dataBreve, daIncassare, euro, giorniTra, incassatoNelMese, iniziali, nomeMese, ricorrente, riepilogoCampagne, saluto, scaduta, servizioAttivoNelMese, somma, statoAgente, type StatoAgente } from "@/lib/studio/calcoli";
 import { visite } from "@/lib/studio/promemoria";
@@ -194,7 +195,7 @@ function PannelloCervello({ chiudi }: { chiudi: () => void }) {
     <aside className="st-pannello" aria-label="Cervello condiviso">
       <header className="st-pannello-testa">
         <span className="st-avatar st-avatar-grande st-avatar-cervello" aria-hidden="true" />
-        <div><h2>Cervello condiviso</h2><p>{dati.regole.length === 0 ? "Nessuna regola ancora" : dati.regole.length === 1 ? "1 regola" : `${dati.regole.length} regole`} · le leggono prima di ogni lavoro</p></div>
+        <div><h2>Cervello condiviso</h2><p>{REGOLE_FISSE.length + dati.regole.length} regole · le leggono prima di ogni lavoro</p></div>
         <button type="button" className="st-x" onClick={chiudi} aria-label="Chiudi">×</button>
       </header>
       <div className="st-pannello-corpo">
@@ -208,10 +209,15 @@ function PannelloCervello({ chiudi }: { chiudi: () => void }) {
           <small className="st-nota">Quando chiedi una modifica a un lavoro puoi salvarla qui con una spunta: la correzione vale anche le volte dopo.</small>
         </form>
         <section className="st-blocco">
-          <h3>Regole</h3>
-          {dati.regole.length === 0 ? <p className="st-vuoto-riga">Scrivi la prima: tono, parole da evitare, come chiudere un contenuto.</p> : (
+          <h3>Le tue regole</h3>
+          {dati.regole.length === 0 ? <p className="st-vuoto-riga">Aggiungi le tue: tono, parole da evitare, come chiudere un contenuto.</p> : (
             <ul className="st-regole">{dati.regole.map((r) => <li key={r.id}><p>{r.testo}</p><small>{r.agente ? `solo ${AGENTE[r.agente]?.nome ?? r.agente}` : "tutti"}</small><button type="button" className="st-x" aria-label="Elimina regola" onClick={() => azione("regola.elimina", { id: r.id })}>×</button></li>)}</ul>
           )}
+        </section>
+        <section className="st-blocco">
+          <h3>Regole fisse · valgono sempre per tutti</h3>
+          <ul className="st-regole st-regole-fisse">{REGOLE_FISSE.map((r) => <li key={r.titolo}><p><b>{r.titolo}.</b> {r.testo}</p></li>)}</ul>
+          <small className="st-nota">Sono scritte nello Studio e non si cancellano, neanche svuotando i dati di esempio.</small>
         </section>
       </div>
     </aside>

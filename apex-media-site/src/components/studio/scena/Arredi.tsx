@@ -6,7 +6,7 @@ import { Line, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { FONDO, LARGO } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
-import { C, GEO, MAT_INVISIBILE, MAT_VETRO, mat, matLed, matLucido, matLuce, matMetallo, matOttone, rett, schermo, tela, type Font } from "./base";
+import { C, GEO, MAT_INVISIBILE, MAT_VETRO, TelaViva, disegnaSchermoVivo, mat, matLed, matLucido, matLuce, matMetallo, matOttone, rett, schermo, nuovoSchermoVivo, tela, type Font } from "./base";
 
 /* =============================================================
    Tutto ciò che non è una persona: pavimento in marmo, muro con
@@ -166,15 +166,29 @@ export function InsegnaApex({ font }: { font: Font }) {
 
 /* ---------- Scrivanie e monitor ---------- */
 
-function Monitor({ x, z, tipo, stato, accento, largo = 1.12, rot = 0 }: { x: number; z: number; tipo: string; stato: StatoAgente; accento: string; largo?: number; rot?: number }) {
-  const map = schermo(tipo, stato, accento);
+/** Schermo vivo: per chi lavora (o ti aspetta) cambia due volte al secondo. */
+function useSchermo(tipo: string, stato: StatoAgente, accento: string, fase: number): THREE.CanvasTexture {
+  const vivo = stato === "lavora" || stato === "attesa";
+  const viva = useMemo(() => (vivo ? nuovoSchermoVivo() : null), [vivo]);
+  useEffect(() => () => viva?.dispose(), [viva]);
+  useFrame(({ clock }) => {
+    viva?.aggiorna(Math.floor(clock.elapsedTime * 2 + fase * 3.7), (x) => disegnaSchermoVivo(x, tipo, accento, Math.floor(clock.elapsedTime * 2 + fase * 3.7), stato === "attesa"));
+  });
+  return viva?.t ?? schermo(tipo, stato, accento);
+}
+
+function Monitor({ x, z, tipo, stato, accento, largo = 1.45, rot = 0 }: { x: number; z: number; tipo: string; stato: StatoAgente; accento: string; largo?: number; rot?: number }) {
+  const map = useSchermo(tipo, stato, accento, x + z);
+  const alto = largo * 0.6;
   return (
-    <group position={[x, 0.78, z]} rotation={[0, rot, 0]}>
-      <Cil p={[0, 0.012, 0]} s={[0.36, 0.024, 0.24]} m={matMetallo("#b8bbc4")} />
-      <Box p={[0, 0.17, 0.02]} s={[0.06, 0.32, 0.04]} m={matMetallo("#b8bbc4")} />
-      <group position={[0, 0.52, 0]} rotation={[-0.14, 0, 0]}>
-        <RoundedBox args={[largo, largo * 0.6, 0.05]} radius={0.02} smoothness={2} material={matLucido("#15171f")} castShadow />
-        <mesh geometry={GEO.piano} position={[0, 0.005, 0.027]} scale={[largo - 0.06, largo * 0.6 - 0.06, 1]}>
+    <group position={[x, 0.78, z]} rotation={[0, rot, 0]} userData={{ dinamico: true }}>
+      <Cil p={[0, 0.012, 0]} s={[0.4, 0.024, 0.27]} m={matMetallo("#b8bbc4")} />
+      <Box p={[0, 0.2, 0.02]} s={[0.07, 0.38, 0.045]} m={matMetallo("#b8bbc4")} />
+      <group position={[0, 0.42 + alto / 2, 0]} rotation={[-0.12, 0, 0]}>
+        {/* luce LED dietro lo schermo, col colore di chi ci lavora */}
+        <mesh geometry={GEO.box} material={matLed(accento, stato === "libero" ? 0.6 : 1.6)} position={[0, 0, -0.045]} scale={[largo + 0.08, alto + 0.08, 0.01]} />
+        <RoundedBox args={[largo, alto, 0.05]} radius={0.02} smoothness={2} material={matLucido("#15171f")} castShadow />
+        <mesh geometry={GEO.piano} position={[0, 0.005, 0.027]} scale={[largo - 0.06, alto - 0.06, 1]}>
           <meshBasicMaterial map={map} toneMapped={false} />
         </mesh>
       </group>
@@ -207,8 +221,8 @@ export function Scrivania({ z, posti, led, larga }: { z: number; posti: PostoScr
         <group key={i}>
           {larga ? (
             <>
-              <Monitor x={p.x - 0.62} z={zc - 0.16} tipo={p.tipo} stato={p.stato} accento={p.accento} largo={1.0} rot={0.18} />
-              <Monitor x={p.x + 0.62} z={zc - 0.16} tipo={p.tipo === "timeline" ? "reel" : p.tipo} stato={p.stato} accento={p.accento} largo={1.0} rot={-0.18} />
+              <Monitor x={p.x - 0.74} z={zc - 0.16} tipo={p.tipo} stato={p.stato} accento={p.accento} largo={1.3} rot={0.18} />
+              <Monitor x={p.x + 0.74} z={zc - 0.16} tipo={p.tipo === "timeline" ? "reel" : p.tipo} stato={p.stato} accento={p.accento} largo={1.3} rot={-0.18} />
             </>
           ) : <Monitor x={p.x} z={zc - 0.16} tipo={p.tipo} stato={p.stato} accento={p.accento} />}
           <RoundedBox args={[0.52, 0.025, 0.17]} radius={0.01} smoothness={2} position={[p.x - 0.06, 0.795, zc + 0.26]} material={mat("#f7f7f9", 0.5)} />
@@ -344,6 +358,121 @@ export function ScrittaPavimento({ x, z, nome, sotto, font }: { x: number; z: nu
 
 export type Conteggi = { attesa: number; lavora: number; coda: number; liberi: number };
 
+/* ---------- Schermo gigante sul muro ---------- */
+
+type Slide = (c: CanvasRenderingContext2D, w: number, h: number, t: number, font: Font, n: Conteggi) => void;
+
+function marchio(c: CanvasRenderingContext2D, x: number, y: number, s: number, colore: string) {
+  c.fillStyle = colore;
+  c.beginPath(); c.moveTo(x, y); c.lineTo(x - 30 * s, y + 56 * s); c.lineTo(x - 14 * s, y + 56 * s); c.lineTo(x + 8 * s, y + 14 * s); c.closePath(); c.fill();
+  c.beginPath(); c.moveTo(x + 11 * s, y + 20 * s); c.lineTo(x + 30 * s, y + 56 * s); c.lineTo(x + 15 * s, y + 56 * s); c.lineTo(x + 3 * s, y + 34 * s); c.closePath(); c.fill();
+}
+
+function titolo(c: CanvasRenderingContext2D, testo: string, x: number, y: number, px: number, font: Font, colore = "#ffffff") {
+  c.fillStyle = colore; c.font = `700 ${px}px ${font.titoli}`; c.letterSpacing = "-1px"; c.fillText(testo, x, y); c.letterSpacing = "0px";
+}
+function riga(c: CanvasRenderingContext2D, testo: string, x: number, y: number, px: number, font: Font, colore = "#b9c0d8") {
+  c.fillStyle = colore; c.font = `500 ${px}px ${font.testo}`; c.fillText(testo, x, y);
+}
+function sfondo(c: CanvasRenderingContext2D, w: number, h: number, a: string, b: string) {
+  const g = c.createLinearGradient(0, 0, w, h); g.addColorStop(0, a); g.addColorStop(1, b); c.fillStyle = g; c.fillRect(0, 0, w, h);
+}
+const entra = (t: number) => Math.min(1, t / 0.8);
+
+const SLIDE: Slide[] = [
+  // 1. il marchio
+  (c, w, h, t, f) => {
+    sfondo(c, w, h, "#1a0f4d", "#5b2eff");
+    for (let i = 0; i < 14; i++) { c.globalAlpha = 0.08; c.fillStyle = "#ffffff"; c.beginPath(); c.arc((i * 173 + t * 40) % (w + 200) - 100, 120 + ((i * 97) % 480), 40 + (i % 4) * 30, 0, 7); c.fill(); }
+    c.globalAlpha = entra(t);
+    marchio(c, w / 2, 120, 3, "#ffffff");
+    c.textAlign = "center"; titolo(c, "APEX MEDIA", w / 2, 400, 110, f); riga(c, "Più clienti per le attività locali", w / 2, 470, 44, f, "#e2dcff"); c.textAlign = "left";
+    c.globalAlpha = 1;
+  },
+  // 2. reel
+  (c, w, h, t, f) => {
+    sfondo(c, w, h, "#0f1220", "#26135f");
+    const e = entra(t);
+    c.globalAlpha = e; titolo(c, "Reel che portano", 90, 190, 76, f); titolo(c, "prenotazioni.", 90, 280, 76, f, "#a58bff");
+    riga(c, "Gancio, script, montaggio e sottotitoli: tutto in casa.", 90, 350, 32, f);
+    rett(c, 90, 400, 300, 74, 37, "#5b2eff"); c.fillStyle = "#fff"; c.font = `700 30px ${f.testo}`; c.fillText("Scrivici su WhatsApp", 120, 447); c.globalAlpha = 1;
+    // telefono con il reel che scorre
+    const px = 880, py = 60 + (1 - e) * 60;
+    rett(c, px, py, 270, 520, 40, "#05060b"); rett(c, px + 12, py + 12, 246, 496, 30, "#ff7a2f");
+    const g = c.createLinearGradient(0, py, 0, py + 500); g.addColorStop(0, "#ff7a2f"); g.addColorStop(1, "#5b2eff"); c.fillStyle = g; c.beginPath(); c.roundRect(px + 12, py + 12, 246, 496, 30); c.fill();
+    c.fillStyle = "#fff"; c.font = `700 40px ${f.titoli}`; c.fillText(`${Math.floor(1200 + t * 3100).toLocaleString("it-IT")}`, px + 34, py + 420); riga(c, "visualizzazioni", px + 34, py + 460, 24, f, "#ffffffcc");
+    rett(c, px + 34, py + 480, 200 * Math.min(1, t / 5), 8, 4, "#ffffff");
+  },
+  // 3. il team dal vivo
+  (c, w, h, t, f, n) => {
+    sfondo(c, w, h, "#12141d", "#1b2034");
+    titolo(c, "Il team, adesso", 70, 110, 60, f); riga(c, "dati dal vivo dello studio", 70, 156, 28, f, "#8d95b0");
+    const voci: [string, number, string][] = [["da guardare", n.attesa, "#ffd84d"], ["al lavoro", n.lavora, "#5b8cff"], ["in coda", n.coda, "#b9bfd0"], ["liberi", n.liberi, "#2fd08a"]];
+    const cella = (w - 140) / 4;
+    voci.forEach(([nome, valore, colore], i) => {
+      const px = 70 + i * cella, y = 210 + (1 - entra(t - i * 0.15)) * 40;
+      rett(c, px, y, cella - 24, 300, 30, "#1f2335");
+      c.fillStyle = colore; c.beginPath(); c.arc(px + 44, y + 54, 13, 0, 7); c.fill();
+      c.fillStyle = "#f3f4f8"; c.font = `700 130px ${f.titoli}`; c.fillText(String(valore), px + 34, y + 200);
+      riga(c, nome, px + 36, y + 258, 34, f, "#9da3b6");
+    });
+  },
+  // 4. campagne
+  (c, w, h, t, f) => {
+    sfondo(c, w, h, "#071a14", "#0f3b2c");
+    titolo(c, "Campagne Google e Meta.", 70, 130, 64, f); titolo(c, "Ogni euro misurato.", 70, 205, 64, f, "#3ee08f");
+    const v = [30, 42, 38, 55, 61, 58, 74, 82, 96, 110];
+    v.forEach((val, i) => { const k = Math.max(0, Math.min(1, (t - i * 0.12) / 0.6)); rett(c, 90 + i * 104, 600 - val * 3 * k, 70, val * 3 * k, 10, i === v.length - 1 ? "#3ee08f" : "#1f5c46"); });
+    rett(c, 760, 250, 400, 130, 24, "#0b2a20"); riga(c, "costo per contatto", 790, 300, 28, f, "#7fc7a8"); titolo(c, `${(9.8 - Math.min(t, 6) * 0.6).toFixed(2).replace(".", ",")} €`, 790, 360, 56, f);
+  },
+  // 5. siti e landing
+  (c, w, h, t, f) => {
+    sfondo(c, w, h, "#f6f3ee", "#e8e2ff");
+    titolo(c, "Siti e landing", 70, 150, 76, f, "#16131f"); titolo(c, "che convertono.", 70, 240, 76, f, "#5b2eff");
+    riga(c, "Una sola azione chiara: chiama, prenota, ordina.", 70, 300, 32, f, "#4b4660");
+    const y = 340 + (1 - entra(t)) * 50;
+    rett(c, 700, y - 260, 460, 470, 22, "#ffffff"); rett(c, 730, y - 220, 260, 26, 8, "#16131f"); rett(c, 730, y - 176, 380, 14, 7, "#c9c4d6"); rett(c, 730, y - 150, 320, 14, 7, "#c9c4d6");
+    rett(c, 730, y - 100, 220 + Math.sin(t * 4) * 6, 56, 28, "#5b2eff"); c.fillStyle = "#fff"; c.font = `700 24px ${f.testo}`; c.fillText("Prenota ora", 770, y - 64);
+    for (let i = 0; i < 3; i++) rett(c, 730 + i * 140, y, 120, 120, 14, "#efecf7");
+  },
+];
+const DURATA = 7;
+
+/** Schermo LED gigante: pubblicità di Apex Media a rotazione, con una slide sui numeri del team. */
+export function SchermoGigante({ x, n, font }: { x: number; n: Conteggi; font: Font }) {
+  const largo = 6.2, alto = largo * 9 / 16;
+  const viva = useMemo(() => new TelaViva(1280, 720), []);
+  useEffect(() => () => viva.dispose(), [viva]);
+  const dati = useRef({ n, font });
+  useEffect(() => { dati.current = { n, font }; }, [n, font]);
+  useFrame(({ clock }) => {
+    const tempo = clock.elapsedTime;
+    viva.aggiorna(Math.floor(tempo * 8), (x) => {
+      const i = Math.floor(tempo / DURATA) % SLIDE.length, t = tempo % DURATA;
+      const w = 1280, h = 720, { font: f, n: conti } = dati.current;
+      x.textBaseline = "alphabetic"; x.textAlign = "left";
+      SLIDE[i](x, w, h, t, f, conti);
+      // dissolvenza tra una slide e l'altra
+      const buio = t < 0.35 ? 1 - t / 0.35 : t > DURATA - 0.35 ? (t - (DURATA - 0.35)) / 0.35 : 0;
+      if (buio > 0) { x.globalAlpha = buio; x.fillStyle = "#000"; x.fillRect(0, 0, w, h); x.globalAlpha = 1; }
+      // striscia in basso che scorre
+      rett(x, 0, h - 54, w, 54, 0, "rgba(10,10,20,0.78)");
+      x.fillStyle = "#ffffff"; x.font = `600 24px ${f.testo}`;
+      const scritta = "APEX MEDIA  ·  infoapex.eu  ·  Social, reel, campagne e siti per le attività di Alessandria  ·  ";
+      const lw = x.measureText(scritta).width, off = (tempo * 90) % lw;
+      for (let k = -1; k < 3; k++) x.fillText(scritta, k * lw - off, h - 19);
+      SLIDE.forEach((_, k) => rett(x, w - 40 - (SLIDE.length - k) * 22, 24, 14, 14, 7, k === i ? "#ffffff" : "rgba(255,255,255,0.35)"));
+    });
+  });
+  return (
+    <group position={[x, 2.95, FRONTE_MURO + 0.08]} userData={{ dinamico: true }}>
+      <mesh geometry={GEO.box} material={matLed("#8b6dff", 2.4)} position={[0, 0, -0.03]} scale={[largo + 0.2, alto + 0.2, 0.02]} />
+      <RoundedBox args={[largo + 0.1, alto + 0.1, 0.1]} radius={0.04} smoothness={2} material={matLucido("#0b0c12")} castShadow />
+      <mesh geometry={GEO.piano} position={[0, 0, 0.056]} scale={[largo, alto, 1]}><meshBasicMaterial map={viva.t} toneMapped={false} /></mesh>
+    </group>
+  );
+}
+
 export function Tabellone({ x, n, font }: { x: number; n: Conteggi; font: Font }) {
   const larghezza = 4.6;
   const t = useMemo(() => tela(1280, 300, (c, w, h) => {
@@ -398,7 +527,7 @@ export function Muro({ font, n }: { font: Font; n: Conteggi }) {
     <group>
       <Doghe x0={-6.8} x1={6.8} />
       <InsegnaApex font={font} />
-      <Tabellone x={9.9} n={n} font={font} />
+      <SchermoGigante x={10.3} n={n} font={font} />
       <MensolaPothos x={21} y={3.6} />
     </group>
   );
