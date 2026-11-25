@@ -110,7 +110,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   const inVisita = useMemo(() => new Set(modello.agenti.filter((a) => a.fumetto).map((a) => a.id)), [modello.agenti]);
   const sceltoAgente = selezione?.tipo === "agente" ? selezione.id : null;
   const pannelloAperto = selezione !== null;
-  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 420 : 0, sinistra: larghezzaTeam, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.6) : stretto ? 216 : 150, alto: stretto ? 150 : 70 }), [pannelloAperto, stretto, larghezzaTeam]);
+  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 420 : 0, sinistra: larghezzaTeam, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.6) : stretto ? 175 : 150, alto: stretto ? 120 : 70 }), [pannelloAperto, stretto, larghezzaTeam]);
   const daScadere = promemoria.filter((p) => p.tono === "allarme").length;
 
   return (
