@@ -5,6 +5,14 @@
    che aspetta te. Numeri in Space Grotesk, testo in Plus Jakarta Sans.
    ============================================================= */
 
+/* Lo Studio sta fermo sul telefono: niente pagina che scivola di lato o si ingrandisce tutta.
+   Lo zoom e il giro a 360 gradi li fa la scena 3D con le dita. */
+html:has(.st), body:has(.st) { overflow-x: clip; overscroll-behavior: none; max-width: 100%; }
+html:has(.st-strato:not([data-nascosto]) .st-ufficio), body:has(.st-strato:not([data-nascosto]) .st-ufficio) { overflow: hidden; height: 100dvh; }
+.st { overflow-x: clip; max-width: 100vw; touch-action: pan-y; }
+.st-ufficio { touch-action: none; }
+.st-ufficio .st-dock-scorri, .st-ufficio .st-zone, .st-ufficio .st-striscia { touch-action: pan-x; }
+.st-ufficio .st-team-scorri, .st-ufficio .st-pannello-corpo, .st-ufficio .st-chat, .st-ufficio .st-notifiche { touch-action: pan-y; }
 .st {
   --bg: #eff0f4;
   --sup: #ffffff;

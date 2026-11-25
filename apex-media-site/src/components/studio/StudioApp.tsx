@@ -134,6 +134,25 @@ export function StudioApp({ iniziali }: { iniziali: Dati }) {
   }, []);
   const vai = useCallback((s: Scheda) => { setScheda(s); window.history.replaceState(null, "", s === "ufficio" ? window.location.pathname : `#${s}`); }, []);
 
+  // su iPhone Safari ignora il blocco dello zoom: fermiamo noi il pizzico sulla pagina.
+  // Dentro la scena 3D le dita restano libere (zoom e giro le gestisce la telecamera).
+  useEffect(() => {
+    const ferma = (e: Event) => e.preventDefault();
+    const dita = (e: TouchEvent) => { if (e.touches.length > 1 && !(e.target as Element | null)?.closest?.("canvas")) e.preventDefault(); };
+    let ultimo = 0;
+    const doppio = (e: TouchEvent) => { const ora = Date.now(); if (ora - ultimo < 320 && !(e.target as Element | null)?.closest?.("input, textarea, select")) e.preventDefault(); ultimo = ora; };
+    document.addEventListener("gesturestart", ferma);
+    document.addEventListener("gesturechange", ferma);
+    document.addEventListener("touchmove", dita, { passive: false });
+    document.addEventListener("touchend", doppio, { passive: false });
+    return () => {
+      document.removeEventListener("gesturestart", ferma);
+      document.removeEventListener("gesturechange", ferma);
+      document.removeEventListener("touchmove", dita);
+      document.removeEventListener("touchend", doppio);
+    };
+  }, []);
+
   // aggiornamento silenzioso: ogni 45 secondi e quando si torna sulla scheda del browser
   useEffect(() => {
     const aggiorna = () => { if (document.visibilityState === "visible") void chiama("/api/studio/azione", { tipo: "aggiorna" }); };
