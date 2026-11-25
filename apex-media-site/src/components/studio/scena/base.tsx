@@ -58,6 +58,10 @@ export function mat(colore: string, ruvido = 0.72, metallo = 0): THREE.Material 
   if (!m) { m = new THREE.MeshStandardMaterial({ color: colore, roughness: ruvido, metalness: metallo }); materiali.set(k, m); }
   return m;
 }
+/** Ottone satinato: gambe dei tavoli, cornici, applique. */
+export function matOttone(): THREE.Material { return mat("#c39b55", 0.3, 0.92); }
+/** Marmo bianco lucido per i piani. */
+export function matMarmo(): THREE.Material { return mat("#f1ede6", 0.16, 0.05); }
 /** Metallo spazzolato (gambe, supporti, lampade). */
 export function matMetallo(colore = "#c9ccd4"): THREE.Material { return mat(colore, 0.32, 0.85); }
 /** Superficie lucida (schermi spenti, vetro scuro, ceramica). */

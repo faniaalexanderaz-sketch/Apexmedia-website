@@ -8,7 +8,8 @@ import * as THREE from "three";
 import { AGENTE, AGENTI, FONDO, LARGO, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
 import type { Tono } from "@/lib/studio/promemoria";
-import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, SchermoAds, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
+import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
+import { Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
 import { useFont } from "./base";
 import { Personaggio, Sedia, type Umore } from "./Personaggio";
 
@@ -35,9 +36,10 @@ export type PropsScena = {
   conteggi: Conteggi;
   regole: number;
   inAttesa: number;
-  zona: ZonaId | "tutto";
+  /** "vicino" = vista d'ingresso ravvicinata, "tutto" = panoramica */
+  zona: ZonaId | "tutto" | "vicino";
   selezione: Selezione;
-  coperto: { destra: number; basso: number; alto: number };
+  coperto: { destra: number; basso: number; alto: number; sinistra: number };
   onSeleziona: (s: Selezione) => void;
   onFumetto: (idPromemoria: string) => void;
   onCassa: () => void;
@@ -83,30 +85,32 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     if (selezione?.tipo === "cliente") { const i = clienti.findIndex((c) => c.id === selezione.id); if (i >= 0) { const [x, z] = postoReparto(i, clienti.length); return { x, z, ampiezza: 9.5, fondo: 7, y: 0.9 }; } }
     const z = ZONE.find((q) => q.id === zona);
     if (z) return { x: z.centro[0], z: z.centro[1], ampiezza: z.ampiezza, fondo: Math.min(14, z.ampiezza * 0.62), y: z.centro[1] < -9 ? 2 : 0.9 };
+    // vista d'ingresso: il cuore dell'ufficio da vicino, non tutta la pianta
+    if (zona === "vicino") return size.width < 760 ? { x: 0, z: 3.2, ampiezza: 12, fondo: 9, y: 0.8 } : { x: 0, z: 0.4, ampiezza: 28, fondo: 19, y: 0.8 };
     return null;
-  }, [selezione, zona, agenti, clienti]);
+  }, [selezione, zona, agenti, clienti, size.width]);
 
   useEffect(() => {
     const c = ctrl.current;
     if (!c || size.width < 10) return;
     const stretto = size.width < 760;
-    const liberoW = Math.max(200, size.width - coperto.destra), liberoH = Math.max(200, size.height - coperto.basso - coperto.alto);
+    const liberoW = Math.max(200, size.width - coperto.destra - coperto.sinistra), liberoH = Math.max(200, size.height - coperto.basso - coperto.alto);
     const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size.height);
     const elev = THREE.MathUtils.degToRad(mira ? 48 : 54);
-    const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 8) : mira.ampiezza) : stretto ? 22 : LARGO + 2;
+    const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 12) : mira.ampiezza) : stretto ? 22 : LARGO + 2;
     const fondo = mira ? mira.fondo : stretto ? 18 : FONDO + 2;
     const distW = (ampiezza / 2 / tanH) * (size.width / liberoW);
     const distD = ((fondo * Math.sin(elev) + 4.5 * Math.cos(elev)) / 2 / tanV) * (size.height / liberoH);
     const dist = Math.max(distW, distD, 9);
     const perPx = (2 * dist * tanH) / size.width;
-    const tx = (mira?.x ?? 0) + (coperto.destra / 2) * perPx;
+    const tx = (mira?.x ?? 0) + ((coperto.destra - coperto.sinistra) / 2) * perPx;
     const tz = (mira?.z ?? (stretto ? 0 : 0.4)) + (((coperto.basso - coperto.alto) / 2) * perPx) / Math.sin(elev);
     const ty = mira ? mira.y : 0.6;
     c.minDistance = 7;
     c.maxDistance = Math.max(dist * 1.15, (LARGO / 2 / tanH) * 1.3);
     void c.setLookAt(tx, ty + dist * Math.sin(elev), tz + dist * Math.cos(elev), tx, ty, tz, !prima.current);
     prima.current = false;
-  }, [mira, size.width, size.height, coperto.destra, coperto.basso, coperto.alto, camera]);
+  }, [mira, size.width, size.height, coperto.destra, coperto.sinistra, coperto.basso, coperto.alto, camera]);
 
   useEffect(() => {
     const c = ctrl.current;
@@ -157,6 +161,7 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
     const via = a && Math.hypot(a.meta.x - AGENTE[id].posto[0], a.meta.z - AGENTE[id].posto[1]) > 0.1;
     return { x: AGENTE[id].posto[0], tipo: AGENTE[id].schermo, stato: via ? "libero" : a?.stato ?? "libero", accento: AGENTE[id].felpa };
   };
+  const tavolo = (ids: string[]): PostoTavolo[] => ids.map((id) => ({ ...posto(id), id, z: AGENTE[id].posto[1], rot: AGENTE[id].rot ?? 0 }));
   const fila = (ids: string[], led: string, larga?: boolean) => <Scrivania z={AGENTE[ids[0]].posto[1]} posti={ids.map(posto)} led={led} larga={larga} />;
   const n = p.clienti.length;
 
@@ -178,35 +183,30 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
       <Muro font={font} n={p.conteggi} />
 
       {/* tappeti dei reparti e nomi a terra */}
-      <Tappeto x={-16} z={-11.2} w={8.6} d={4.6} c="#ece7fb" />
-      <Tappeto x={1.8} z={-11.4} w={10.2} d={4.6} c="#f1eadc" />
-      <Tappeto x={-15.5} z={-3.6} w={9.6} d={4.4} c="#fdeee0" />
-      <Tappeto x={15} z={-3.6} w={7.6} d={4.4} c="#e2f3ea" />
-      <Tappeto x={15} z={4.7} w={7.6} d={4.4} c="#fff4d0" />
-      <ScrittaPavimento x={-20.2} z={-9.0} nome="Strategia" sotto="piano, analisi, trend" font={font} />
-      <ScrittaPavimento x={-20.2} z={-1.3} nome="Contenuti" sotto="reel, caroselli, caption" font={font} />
+      <Tappeto x={1.8} z={-11.4} w={10.2} d={4.6} c="#e9e1d3" />
+      <Tappeto x={-16} z={-3.6} w={8.4} d={4.4} c="#efe6da" />
+      <ScrittaPavimento x={-20.2} z={-1.3} nome="Contenuti" sotto="reel e caroselli" font={font} />
       <ScrittaPavimento x={-4.4} z={-1.3} nome="Studio video" sotto="montaggio, riprese, sottotitoli" font={font} />
-      <ScrittaPavimento x={11.6} z={-1.3} nome="Ads & Funnel" sotto="campagne, landing, conversioni" font={font} />
-      <ScrittaPavimento x={11.6} z={7.0} nome="Community" sotto="DM, commenti, uscita" font={font} />
+      <ScrittaPavimento x={10.0} z={1.2} nome="Tavolo social" sotto="Instagram, TikTok, Facebook" font={font} />
       <ScrittaPavimento x={-22.2} z={8.0} nome="Area relax" sotto="chi è libero si ferma qui" font={font} />
-      <ScrittaPavimento x={-2.4} z={-9.0} nome="Regia" sotto="direzione, controllo, memoria" font={font} />
-      <ScrittaPavimento x={12.6} z={-9.0} nome="Cassa" sotto="incassi, fatture, solleciti" font={font} />
+      <ScrittaPavimento x={10.4} z={8.0} nome="Giardino" sotto="ulivo e panchine" font={font} />
+      <ScrittaPavimento x={-2.4} z={-8.6} nome="Regia" sotto="direzione, controllo, memoria" font={font} />
+      <ScrittaPavimento x={12.6} z={-8.6} nome="Cassa" sotto="incassi, fatture, solleciti" font={font} />
 
-      {/* scrivanie */}
-      {fila(["sofia", "marco"], "#7b5cff")}
+      {/* scrivanie e tavoli */}
       {fila(["direttore"], "#7b5cff", true)}
       {fila(["revisore"], "#7b5cff")}
       {fila(["sara"], "#35e08f")}
-      {fila(["giulia", "luca", "chiara"], "#ff8a3d")}
+      {fila(["giulia", "luca"], "#ff8a3d")}
       {fila(["matteo"], "#ff4d6d", true)}
-      {fila(["davide", "elena"], "#35e08f")}
-      {fila(["simone", "alice"], "#ffc93d")}
+      <SalaStrategia posti={tavolo(["sofia", "marco", "elena", "davide"])} ads={p.ads} font={font} />
+      <TavoloSocial posti={tavolo(["chiara", "simone", "alice"])} />
+      <Giardino x={16} z={4.3} />
 
       <StudioVideo x={3.6} z={-5.4} />
-      <SchermoAds x={20.4} z={-4.2} dati={p.ads} font={font} />
 
       {/* agenti: sedie fisse, persone che si muovono */}
-      {AGENTI.map((a) => <Sedia key={`s${a.id}`} x={a.posto[0]} z={a.posto[1]} />)}
+      {AGENTI.map((a) => <Sedia key={`s${a.id}`} x={a.posto[0]} z={a.posto[1]} rot={a.rot ?? 0} c={a.reparto === "strategia" ? "#1f2a26" : undefined} />)}
       {AGENTI.map((a, i) => {
         const s = perId[a.id];
         if (!s) return null;
@@ -215,11 +215,11 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
         const allaScrivania = Math.hypot(s.meta.x - a.posto[0], s.meta.z - a.posto[1]) < 0.1;
         const sfalsa = allaScrivania && AGENTI.filter((b) => b.posto[1] === a.posto[1]).findIndex((b) => b.id === a.id) % 2 === 1 ? 0.5 : 0;
         return (
-          <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} selezionato={scelto} onClick={apri}>
+          <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} selezionato={scelto} scala={1.12} onClick={apri}>
             {s.fumetto ? (
-              <Etichetta y={Math.abs(s.meta.x) < 3 ? 2.3 : Math.abs(s.meta.x) < 6 ? 3.5 : 2.6}><Nuvola nome={a.nome} f={s.fumetto} lato={s.meta.x < 0 ? "sinistra" : "destra"} onClick={() => p.onFumetto(s.fumetto!.id)} /></Etichetta>
+              <Etichetta y={Math.abs(s.meta.x) < 3 ? 2.2 : Math.abs(s.meta.x) < 6 ? 3.3 : 2.5}><Nuvola nome={a.nome} f={s.fumetto} lato={s.meta.x < 0 ? "sinistra" : "destra"} onClick={() => p.onFumetto(s.fumetto!.id)} /></Etichetta>
             ) : (
-              <Etichetta y={(s.meta.posa === "in_piedi" ? 2.3 : 2.15) + sfalsa}>
+              <Etichetta y={(s.meta.posa === "in_piedi" ? 2.15 : 2.0) + sfalsa}>
                 <Pillola stato={s.stato} nome={a.nome} sotto={s.titolo ?? (allaScrivania ? SOTTO[s.stato] : "in pausa")} azione={AZIONE[s.stato]} scelto={scelto} onClick={apri} />
               </Etichetta>
             )}
@@ -269,16 +269,17 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
       {p.altriClienti > 0 ? <group position={[21, 0, Z_CLIENTI - 3]}><Etichetta y={1.2}><Pillola stato="cosa" nome={`+ ${p.altriClienti} clienti`} azione="Conti" onClick={p.onCassa} punto="#2fd08a" /></Etichetta></group> : null}
 
       {/* piante grandi negli angoli e lungo i reparti */}
-      <Ficus x={-21.6} z={-15.4} s={1.2} />
-      <Monstera x={-8.2} z={-14.8} s={1.05} />
-      <Sansevieria x={7.6} z={-14.9} s={1.1} />
-      <Ficus x={21.6} z={-6.8} s={1.0} vaso="#2b2e3a" />
-      <Monstera x={-21.8} z={-6.8} s={1.0} />
-      <Sansevieria x={-7.4} z={-5.6} s={0.95} />
-      <Monstera x={21.7} z={7.6} s={1.05} />
-      <Sansevieria x={7.4} z={2.6} s={0.9} vaso="#f2eee7" />
-      <Ficus x={-21.7} z={15.8} s={1.1} />
-      <Ficus x={21.7} z={15.8} s={1.1} vaso="#2b2e3a" />
+      <Palma x={-7.6} z={-15.4} s={1.15} />
+      <Palma x={7.7} z={-15.4} s={1.15} />
+      <Sansevieria x={-7.3} z={-5.4} s={0.95} vaso="#c39b55" />
+      <Monstera x={-21.8} z={-6.0} s={1.0} vaso="#2b2724" />
+      <Monstera x={21.7} z={8.0} s={1.05} vaso="#2b2724" />
+      <Sansevieria x={7.4} z={2.6} s={0.9} vaso="#c39b55" />
+      <Palma x={-5.6} z={2.4} s={0.95} />
+      <Palma x={5.6} z={2.4} s={0.95} />
+      <Ulivo x={-21.4} z={15.6} s={0.9} />
+      <Ulivo x={21.4} z={15.6} s={0.9} />
+      <Ficus x={-12.2} z={-7.2} s={0.9} vaso="#2b2724" />
 
       <Regia zona={p.zona} selezione={p.selezione} agenti={p.agenti} clienti={p.clienti} coperto={p.coperto} />
       {p.qualita ? (

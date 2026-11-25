@@ -31,6 +31,8 @@ type Props = {
   selezionato?: boolean;
   /** true per i clienti: niente logo Apex sulla schiena */
   ospite?: boolean;
+  /** grandezza della persona rispetto agli arredi */
+  scala?: number;
   onClick?: () => void;
   /** etichetta o fumetto, segue la testa */
   children?: React.ReactNode;
@@ -40,18 +42,33 @@ const PANTALONI = "#262a3a", SCARPE = "#f6f6f8", SUOLA = "#d8d9de";
 const VELOCITA = 2.7;
 const ALTEZZA_ANCA = 0.6;
 
-/** Logo Apex bianco su trasparente, per la schiena delle divise. */
+/** Logo Apex e scritta APEX bianchi su trasparente, per la schiena delle divise. */
 let logoSchiena: THREE.CanvasTexture | null = null;
 function texLogo(): THREE.CanvasTexture {
   if (logoSchiena) return logoSchiena;
-  logoSchiena = tela(128, 128, (x) => {
+  logoSchiena = tela(160, 200, (x) => {
     x.fillStyle = "#ffffff";
-    x.translate(14, 18); x.scale(3.6, 3.6);
+    x.save(); x.translate(30, 14); x.scale(3.6, 3.6);
     x.beginPath(); x.moveTo(14, 0); x.lineTo(0, 26); x.lineTo(7.2, 26); x.lineTo(17.6, 6.6); x.closePath(); x.fill();
     x.beginPath(); x.moveTo(18.9, 9.2); x.lineTo(28, 26); x.lineTo(20.9, 26); x.lineTo(15.2, 15.6); x.closePath(); x.fill();
     x.beginPath(); x.moveTo(13.4, 14.2); x.lineTo(17.3, 21.4); x.lineTo(9.5, 21.4); x.closePath(); x.fill();
+    x.restore();
+    x.font = "800 38px Arial, Helvetica, sans-serif"; x.textAlign = "center"; x.textBaseline = "alphabetic";
+    x.fillText("APEX", 80, 160);
+    x.font = "700 20px Arial, Helvetica, sans-serif";
+    x.fillText("MEDIA", 80, 188);
   });
   return logoSchiena;
+}
+let logoPetto: THREE.CanvasTexture | null = null;
+function texPetto(): THREE.CanvasTexture {
+  if (logoPetto) return logoPetto;
+  logoPetto = tela(64, 64, (x) => {
+    x.fillStyle = "#ffffff"; x.translate(6, 8); x.scale(1.85, 1.85);
+    x.beginPath(); x.moveTo(14, 0); x.lineTo(0, 26); x.lineTo(7.2, 26); x.lineTo(17.6, 6.6); x.closePath(); x.fill();
+    x.beginPath(); x.moveTo(18.9, 9.2); x.lineTo(28, 26); x.lineTo(20.9, 26); x.lineTo(15.2, 15.6); x.closePath(); x.fill();
+  });
+  return logoPetto;
 }
 
 function Chioma({ tipo, c }: { tipo: Capelli; c: string }) {
@@ -102,7 +119,7 @@ function Gamba({ lato, rif, ginocchio }: { lato: number; rif: React.RefObject<TH
 
 const angolo = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 
-export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, capelli, coloreCapelli, extra, fase = 0, tazza, selezionato, ospite, onClick, children }: Props) {
+export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, capelli, coloreCapelli, extra, fase = 0, tazza, selezionato, ospite, scala = 1, onClick, children }: Props) {
   const radice = useRef<THREE.Group>(null);
   const corpo = useRef<THREE.Group>(null);
   const testa = useRef<THREE.Group>(null);
@@ -125,6 +142,7 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
   }, [chiave]);
 
   const logo = useMemo(() => (ospite ? null : texLogo()), [ospite]);
+  const petto = useMemo(() => (ospite ? null : texPetto()), [ospite]);
 
   useFrame((stato, dtGrezzo) => {
     const r = radice.current, s = st.current;
@@ -151,7 +169,7 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
 
     r.position.set(s.x, s.y + (cammina ? Math.abs(Math.sin(s.passo)) * 0.035 : 0), s.z);
     r.rotation.y = s.rot;
-    r.scale.setScalar(sopra ? 1.05 : 1);
+    r.scale.setScalar((sopra ? 1.05 : 1) * scala);
 
     if (anello.current) {
       const vis = Boolean(selezionato) || umore === "attesa" || umore === "visita";
@@ -217,11 +235,19 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
         <mesh geometry={GEO.cil} material={mat(accento, 0.5)} position={[0.11, 0.95, -0.2]} rotation={[Math.PI / 2, 0, 0]} scale={[0.065, 0.012, 0.065]} />
         <mesh geometry={GEO.box} material={mat("#1c1f2c", 0.8)} position={[0, 0.6, 0]} scale={[0.4, 0.07, 0.3]} castShadow />
         {logo ? (
-          <mesh position={[0, 0.9, 0.214]} scale={0.2}>
+          <mesh position={[0, 0.9, 0.222]} scale={[0.27, 0.34, 1]}>
             <planeGeometry args={[1, 1]} />
             <meshStandardMaterial map={logo} transparent roughness={0.7} depthWrite={false} polygonOffset polygonOffsetFactor={-2} />
           </mesh>
         ) : null}
+        {petto ? (
+          <mesh position={[-0.1, 0.97, -0.213]} rotation={[0, Math.PI, 0]} scale={0.085}>
+            <planeGeometry args={[1, 1]} />
+            <meshStandardMaterial map={petto} transparent roughness={0.7} depthWrite={false} polygonOffset polygonOffsetFactor={-2} />
+          </mesh>
+        ) : null}
+        {/* colletto bianco della divisa */}
+        <mesh geometry={GEO.toro} material={mat("#f4f2ff", 0.7)} position={[0, 1.16, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.36, 0.36, 0.7]} />
 
         <group ref={bS} position={[-0.25, 1.02, 0]} rotation={[0.1, 0, 0]}>
           <mesh geometry={GEO.braccio} material={tessuto} position={[0, -0.2, 0]} castShadow />

@@ -4,12 +4,13 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { site } from "@/data/site";
 import { AGENTE, AGENTI, POSTI_RELAX, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
-import { dataBreve, daIncassare, euro, giorniTra, incassatoNelMese, iniziali, nomeCliente, nomeMese, ricorrente, riepilogoCampagne, saluto, scaduta, servizioAttivoNelMese, somma, statoAgente, tempoFa, type StatoAgente } from "@/lib/studio/calcoli";
+import { dataBreve, daIncassare, euro, giorniTra, incassatoNelMese, iniziali, nomeMese, ricorrente, riepilogoCampagne, saluto, scaduta, servizioAttivoNelMese, somma, statoAgente, type StatoAgente } from "@/lib/studio/calcoli";
 import { visite } from "@/lib/studio/promemoria";
 import type { Lavoro } from "@/lib/studio/tipi";
 import { Avatar } from "./Lavori";
 import { ImportoModificabile } from "./Moduli";
 import { RigaPromemoria } from "./Notifiche";
+import { ChatAgente, ElencoTeam, StrisciaTeam } from "./Team";
 import { useStudio } from "./StudioApp";
 import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
 
@@ -23,7 +24,6 @@ import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
 const Scena = dynamic(() => import("./scena/Scena"), { ssr: false, loading: () => <div className="st-scena-attesa" role="status"><span className="st-attesa-punto" />Accendo le luci dell&apos;ufficio…</div> });
 
 const MAX_REPARTI = 6;
-const STATO_TESTO: Record<StatoAgente, string> = { attesa: "ti aspetta", lavora: "sta lavorando", coda: "ha un lavoro in coda", libero: "libero" };
 
 function useLargo(): number {
   const [w, setW] = useState(1280);
@@ -40,12 +40,16 @@ function useGiro(): number {
 
 export function Ufficio({ attivo }: { attivo: boolean }) {
   const { dati, apri, vai, promemoria, esegui } = useStudio();
-  const [zona, setZona] = useState<ZonaId | "tutto">("tutto");
+  const [zona, setZona] = useState<ZonaId | "tutto" | "vicino">("vicino");
+  const [teamChiuso, setTeamChiuso] = useState<boolean | null>(null);
   const [selezione, setSelezione] = useState<Selezione>(null);
   const [elenco, setElenco] = useState(false);
   const largo = useLargo();
   const giro = useGiro();
   const stretto = largo < 760;
+  // elenco del team: aperto su schermi larghi, ridotto a icone su tablet, striscia di volti su telefono
+  const team = stretto ? "striscia" : (teamChiuso ?? largo < 1100) ? "chiuso" : "aperto";
+  const larghezzaTeam = team === "aperto" ? 292 : team === "chiuso" ? 78 : 0;
   const mese = dati.oggi.slice(0, 7);
 
   const modello = useMemo(() => {
@@ -98,13 +102,15 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
     };
   }, [dati, mese, promemoria, giro]);
 
-  const scegli = (s: Selezione) => { setSelezione(s); if (s) setZona("tutto"); };
+  const scegli = (s: Selezione) => { setSelezione(s); if (s) setZona("vicino"); };
+  const inVisita = useMemo(() => new Set(modello.agenti.filter((a) => a.fumetto).map((a) => a.id)), [modello.agenti]);
+  const sceltoAgente = selezione?.tipo === "agente" ? selezione.id : null;
   const pannelloAperto = selezione !== null;
-  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 400 : 0, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.52) : stretto ? 216 : 150, alto: stretto ? 70 : 84 }), [pannelloAperto, stretto]);
+  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 420 : 0, sinistra: larghezzaTeam, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.6) : stretto ? 216 : 150, alto: stretto ? 150 : 70 }), [pannelloAperto, stretto, larghezzaTeam]);
   const daScadere = promemoria.filter((p) => p.tono === "allarme").length;
 
   return (
-    <div className="st-ufficio" data-pannello={pannelloAperto || undefined}>
+    <div className="st-ufficio" data-pannello={pannelloAperto || undefined} data-team={team} style={{ "--team": `${larghezzaTeam}px` } as React.CSSProperties}>
       <div className="st-scena">
         <Scena attivo={attivo} nome={site.founders[0].split(" ")[0]} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} ads={modello.ads} conteggi={modello.conteggi} regole={dati.regole.length} inAttesa={promemoria.length}
           zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli}
@@ -112,17 +118,19 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
           onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); }} />
       </div>
 
-      <div className="st-saluto">
-        <h1>{saluto(dati.ora)}, {site.founders[0].split(" ")[0]}</h1>
-        <p>
-          {modello.visitatori.length ? <><b className="st-t-attesa">{modello.visitatori.length === 1 ? modello.visitatori[0] : `${modello.visitatori.slice(0, -1).join(", ")} e ${modello.visitatori.at(-1)}`}</b> {modello.visitatori.length === 1 ? "è venuto" : "sono venuti"} alla tua scrivania. </> : null}
-          {daScadere ? <><b className="st-t-allarme">{daScadere === 1 ? "1 cosa urgente" : `${daScadere} cose urgenti`}</b>. </> : null}
-          {modello.alLavoro ? <><b className="st-t-lavora">{modello.alLavoro === 1 ? "1 sta lavorando" : `${modello.alLavoro} stanno lavorando`}</b>. </> : null}
-          {!modello.visitatori.length && !modello.alLavoro ? "Tutto tranquillo." : null}
-        </p>
-      </div>
+      {team === "striscia" ? (
+        <div className="st-saluto">
+          <h1>{saluto(dati.ora)}, {site.founders[0].split(" ")[0]}</h1>
+          <Riassunto visitatori={modello.visitatori} urgenti={daScadere} alLavoro={modello.alLavoro} />
+          <StrisciaTeam scelto={sceltoAgente} onScegli={(id) => scegli({ tipo: "agente", id })} />
+        </div>
+      ) : (
+        <ElencoTeam scelto={sceltoAgente} inVisita={inVisita} onScegli={(id) => scegli({ tipo: "agente", id })} chiuso={team === "chiuso"} onChiudi={() => setTeamChiuso(team === "aperto")}
+          testa={<div className="st-team-saluto"><h1>{saluto(dati.ora)}, {site.founders[0].split(" ")[0]}</h1><Riassunto visitatori={modello.visitatori} urgenti={daScadere} alLavoro={modello.alLavoro} /></div>} />
+      )}
 
       <div className="st-zone" role="group" aria-label="Inquadra una zona">
+        <button type="button" aria-pressed={zona === "vicino" && !selezione} onClick={() => { setZona("vicino"); setSelezione(null); }}>Studio</button>
         <button type="button" aria-pressed={zona === "tutto" && !selezione} onClick={() => { setZona("tutto"); setSelezione(null); }}>Tutto</button>
         {ZONE.map((z) => <button key={z.id} type="button" aria-pressed={zona === z.id && !selezione} onClick={() => { setSelezione(null); setZona(z.id); }}>{z.nome}</button>)}
         {modello.clienti.map((c) => <button key={`c${c.id}`} type="button" className="st-zona-cliente" aria-pressed={selezione?.tipo === "cliente" && selezione.id === c.id} onClick={() => scegli({ tipo: "cliente", id: c.id })}><i style={{ background: c.colore }} />{c.nome}</button>)}
@@ -138,77 +146,22 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
         </ul>
       </section>
 
-      {selezione?.tipo === "agente" ? <PannelloAgente id={selezione.id} chiudi={() => setSelezione(null)} /> : null}
+      {selezione?.tipo === "agente" ? <ChatAgente key={selezione.id} id={selezione.id} chiudi={() => setSelezione(null)} /> : null}
       {selezione?.tipo === "cervello" ? <PannelloCervello chiudi={() => setSelezione(null)} /> : null}
       {selezione?.tipo === "cliente" ? <PannelloCliente id={selezione.id} chiudi={() => setSelezione(null)} /> : null}
     </div>
   );
 }
 
-/* ---------- Pannello di un agente ---------- */
-
-function PannelloAgente({ id, chiudi }: { id: string; chiudi: () => void }) {
-  const { dati, apri, nuovoLavoro, azione, avvisa, faiLavorare } = useStudio();
-  const a = AGENTE[id];
-  const { stato, lavoro } = statoAgente(dati.lavori, id);
-  const [testo, setTesto] = useState("");
-  const [clienteId, setClienteId] = useState<number | "">("");
-  const [mando, setMando] = useState(false);
-  const ultimi = dati.lavori.filter((l) => l.agente === id).slice(0, 6);
-  const regole = dati.regole.filter((r) => r.agente === null || r.agente === id);
-  if (!a) return null;
-
+/** Una riga sotto il saluto: chi è venuto da te, cosa è urgente, chi lavora. */
+function Riassunto({ visitatori, urgenti, alLavoro }: { visitatori: string[]; urgenti: number; alLavoro: number }) {
   return (
-    <aside className="st-pannello" aria-label={a.nome}>
-      <header className="st-pannello-testa">
-        <Avatar agente={id} grande />
-        <div><h2>{a.nome}</h2><p>{a.ruolo} · <span data-stato={stato}>{STATO_TESTO[stato]}</span>{lavoro ? ` · ${tempoFa(lavoro.aggiornatoIl)}` : ""}</p></div>
-        <button type="button" className="st-x" onClick={chiudi} aria-label="Chiudi">×</button>
-      </header>
-      <div className="st-pannello-corpo">
-        {lavoro ? (
-          <section className="st-blocco" data-tono={stato}>
-            <h3>{stato === "attesa" ? (tempoFa(lavoro.aggiornatoIl) === "adesso" ? "Ha appena consegnato" : tempoFa(lavoro.aggiornatoIl) === "ieri" ? "Ti aspetta da ieri" : `Ti aspetta da ${tempoFa(lavoro.aggiornatoIl).replace(" fa", "")}`) : stato === "lavora" ? "Sta facendo adesso" : "In coda"}</h3>
-            <b>{lavoro.titolo}</b>{lavoro.clienteId ? <small>{nomeCliente(dati.clienti, lavoro.clienteId)}</small> : null}
-            {stato === "attesa" && lavoro.risultato ? <p className="st-estratto">{lavoro.risultato.slice(0, 260)}{lavoro.risultato.length > 260 ? "…" : ""}</p> : null}
-            {stato === "lavora" ? <p className="st-lavora"><span className="st-attesa-punto" />Sta scrivendo. Di solito consegna in meno di un minuto.</p> : null}
-            <div className="st-blocco-azioni">
-              {stato === "attesa" ? <><button type="button" className="st-btn st-btn-pieno" onClick={() => apri({ tipo: "risultato", lavoroId: lavoro.id })}>Guarda qui <i aria-hidden="true">▸</i></button><button type="button" className="st-btn" onClick={async () => { const r = await azione("lavoro.stato", { id: lavoro.id, stato: "fatto" }); if (r.ok) avvisa("Approvato."); }}>Approva</button></> : null}
-              {stato === "coda" ? <>{dati.ai ? <button type="button" className="st-btn st-btn-pieno" onClick={() => void faiLavorare(lavoro.id)}>Fai partire</button> : null}<button type="button" className="st-btn" onClick={() => apri({ tipo: "risultato", lavoroId: lavoro.id })}>Apri</button></> : null}
-            </div>
-          </section>
-        ) : null}
-
-        <form className="st-blocco" onSubmit={async (e) => { e.preventDefault(); if (!testo.trim() || mando) return; setMando(true); const ok = await nuovoLavoro({ agente: id, clienteId: clienteId || null, brief: testo }); setMando(false); if (ok) setTesto(""); }}>
-          <h3>Scrivi a {a.nome}</h3>
-          <textarea value={testo} onChange={(e) => setTesto(e.target.value)} rows={3} maxLength={6000} placeholder={a.esempio} aria-label={`Cosa serve da ${a.nome}`} />
-          <div className="st-scrivi-riga">
-            <select value={clienteId} onChange={(e) => setClienteId(e.target.value ? Number(e.target.value) : "")} aria-label="Cliente">
-              <option value="">Nessun cliente</option>
-              {dati.clienti.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
-            </select>
-            <button className="st-btn st-btn-pieno" disabled={mando || !testo.trim()}>{mando ? "Mando…" : "Manda"}</button>
-          </div>
-          <small className="st-nota">{dati.ai ? `${a.nome} parte subito e te lo riporta da guardare.` : "Senza chiave Claude il lavoro resta in coda: lo trovi qui e nella scheda Lavori."}</small>
-        </form>
-
-        <details className="st-blocco st-cosa-fa">
-          <summary>Cosa fa {a.nome}</summary>
-          <p>{a.inBreve}</p>
-          <ul>{a.skill.map((s) => <li key={s.nome}><code>{s.nome}</code>{s.cosa}</li>)}</ul>
-          <h4>Istruzioni con cui lavora</h4>
-          <p className="st-istruzioni">{a.istruzioni}</p>
-          {regole.length ? <><h4>Regole che legge dal cervello condiviso</h4><ul className="st-regole-mini">{regole.map((r) => <li key={r.id}>{r.testo}</li>)}</ul></> : null}
-        </details>
-
-        <section className="st-blocco">
-          <h3>Le ultime cose</h3>
-          {ultimi.length === 0 ? <p className="st-vuoto-riga">Ancora niente.</p> : (
-            <ul className="st-ultimi">{ultimi.map((l) => <li key={l.id}><button type="button" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}><i data-stato={l.stato} /><span>{l.titolo}</span><small>{tempoFa(l.aggiornatoIl)}</small></button></li>)}</ul>
-          )}
-        </section>
-      </div>
-    </aside>
+    <p>
+      {visitatori.length ? <><b className="st-t-attesa">{visitatori.length === 1 ? visitatori[0] : `${visitatori.slice(0, -1).join(", ")} e ${visitatori.at(-1)}`}</b> {visitatori.length === 1 ? "è venuto" : "sono venuti"} alla tua scrivania. </> : null}
+      {urgenti ? <><b className="st-t-allarme">{urgenti === 1 ? "1 cosa urgente" : `${urgenti} cose urgenti`}</b>. </> : null}
+      {alLavoro ? <><b className="st-t-lavora">{alLavoro === 1 ? "1 sta lavorando" : `${alLavoro} stanno lavorando`}</b>. </> : null}
+      {!visitatori.length && !alLavoro ? "Tutto tranquillo." : null}
+    </p>
   );
 }
 
