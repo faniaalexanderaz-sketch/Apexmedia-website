@@ -11,6 +11,7 @@ import type { Tono } from "@/lib/studio/promemoria";
 import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
 import { Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
 import { useFont } from "./base";
+import { Statico } from "./Statico";
 import { Personaggio, Sedia, type Umore } from "./Personaggio";
 
 /* =============================================================
@@ -179,6 +180,7 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
         <Lightformer form="rect" intensity={0.6} position={[0, 4, -20]} scale={[30, 6, 1]} color="#c9b8ff" />
       </Environment>
 
+      <Statico chiave={`${font.pronto}|${p.clienti.map((c) => c.id).join(",")}|${p.altriClienti > 0}`}>
       <Pavimento />
       <Muro font={font} n={p.conteggi} />
 
@@ -281,6 +283,8 @@ function Ufficio3D(p: PropsScena & { qualita: boolean }) {
       <Ulivo x={21.4} z={15.6} s={0.9} />
       <Ficus x={-12.2} z={-7.2} s={0.9} vaso="#2b2724" />
 
+      </Statico>
+
       <Regia zona={p.zona} selezione={p.selezione} agenti={p.agenti} clienti={p.clienti} coperto={p.coperto} />
       {p.qualita ? (
         <EffectComposer multisampling={4}>
@@ -308,7 +312,7 @@ export default function Scena(p: PropsScena) {
   }
   return (
     <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={qualita ? [1, 1.75] : [1, 1.25]} camera={{ fov: 27, near: 1, far: 260, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "default" }}
-      onCreated={({ gl }) => { gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
+      onCreated={({ gl, scene }) => { if (process.env.NODE_ENV !== "production") Object.assign(window, { __studio: { gl, scene } }); gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
       onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
       {qualita ? <SoftShadows size={22} samples={12} focus={0.5} /> : null}
       <Ufficio3D {...p} qualita={qualita} />

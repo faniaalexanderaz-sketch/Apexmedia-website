@@ -33,8 +33,8 @@ export const C = {
 
 export const GEO = {
   box: new THREE.BoxGeometry(1, 1, 1),
-  cil: new THREE.CylinderGeometry(0.5, 0.5, 1, 28),
-  sfera: new THREE.SphereGeometry(0.5, 28, 20),
+  cil: new THREE.CylinderGeometry(0.5, 0.5, 1, 22),
+  sfera: new THREE.SphereGeometry(0.5, 18, 12),
   cono: new THREE.ConeGeometry(0.5, 1, 14),
   piano: new THREE.PlaneGeometry(1, 1),
   anello: new THREE.RingGeometry(0.42, 0.5, 48),
