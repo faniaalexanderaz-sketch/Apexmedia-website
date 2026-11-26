@@ -8,7 +8,7 @@ import * as THREE from "three";
 import { AGENTE, AGENTI, FONDO, LARGO, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
 import type { Tono } from "@/lib/studio/promemoria";
-import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
+import { Cassa, Cervello, Pendenti, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
 import { AngoloFumatori, Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
@@ -99,7 +99,7 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const z = ZONE.find((q) => q.id === zona);
     if (z) return { x: z.centro[0], z: z.centro[1], ampiezza: z.ampiezza, fondo: Math.min(14, z.ampiezza * 0.62), y: z.centro[1] < -9 ? 2 : 0.9 };
     // vista d'ingresso: il cuore dell'ufficio da vicino, non tutta la pianta
-    if (zona === "vicino") return size.width < 760 ? { x: 0, z: 2.4, ampiezza: 7, fondo: 5, y: 1.0, basso: true } : { x: 0, z: -0.6, ampiezza: 15, fondo: 9, y: 1.0, basso: true };
+    if (zona === "vicino") return size.width < 760 ? { x: 0, z: 1.6, ampiezza: 6, fondo: 4, y: 1.25, basso: true } : { x: 0, z: -1.2, ampiezza: 12, fondo: 7, y: 1.25, basso: true };
     return null;
   }, [selezione, zona, agenti, clienti, size.width]);
 
@@ -109,7 +109,7 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const stretto = size.width < 760;
     const liberoW = Math.max(200, size.width - coperto.destra - coperto.sinistra), liberoH = Math.max(200, size.height - coperto.basso - coperto.alto);
     const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size.height);
-    const elev = THREE.MathUtils.degToRad(mira && "basso" in mira ? 26 : mira ? 40 : 54);
+    const elev = THREE.MathUtils.degToRad(mira && "basso" in mira ? 17 : mira ? 34 : 54);
     const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 12) : mira.ampiezza) : stretto ? 22 : LARGO + 2;
     const fondo = mira ? mira.fondo : stretto ? 18 : FONDO + 2;
     const distW = (ampiezza / 2 / tanH) * (size.width / liberoW);
@@ -243,6 +243,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       <AngoloFumatori />
 
       <StudioVideo x={3.6} z={-5.4} />
+      <Pendenti punti={[[0, -12.1], [4.2, -12.4], [-16, -4.7], [-2.6, -4.7], [15, -12.4], [15.5, -3.6], [-15.5, -12.2], [-13.8, -11.4], [0, 3.6], [-17.6, 4.6], [-9.4, 4.8]]} />
 
       {/* agenti: sedie fisse, persone che si muovono */}
       {AGENTI.map((a) => <Sedia key={`s${a.id}`} x={a.posto[0]} z={a.posto[1]} rot={a.rot ?? 0} c={a.reparto === "strategia" ? "#1f2a26" : undefined} />)}
@@ -378,7 +379,7 @@ export default function Scena(p: PropsScena) {
     );
   }
   return (
-    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 42, near: 0.6, far: 140, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita }}
+    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 50, near: 0.6, far: 140, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita }}
       onCreated={({ gl, scene }) => { if (process.env.NODE_ENV !== "production") Object.assign(window, { __studio: { gl, scene } }); gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
       onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
       <PerformanceMonitor flipflops={2} onDecline={() => setLivello((l) => (l > 0 ? ((l - 1) as Livello) : l))} onFallback={() => setLivello(0)} />

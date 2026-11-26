@@ -717,3 +717,51 @@ body:has(.st-strato:not([data-nascosto]) .st-ufficio) .st { position: fixed; ins
 @media (prefers-reduced-motion: reduce) {
   .st *, .st *::before, .st *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ---------- Interfaccia leggera: lo studio prima di tutto ---------- */
+.st .st-pillola { font-size: 11px; padding: 4px 9px 4px 7px; gap: 6px; }
+.st .st-pillola small { font-size: 9.5px; }
+.st .st-pillola em { font-size: 10px; padding: 3px 7px; }
+.st .st-zone button { min-height: 28px; padding: 0 10px; font-size: 11.5px; }
+.st-dock { padding: 7px; border-radius: 18px; }
+.st-dock-scorri .st-promemoria { width: 290px; padding: 8px 10px; gap: 8px; }
+.st-dock-scorri .st-promemoria p { display: none; }
+.st-dock-scorri .st-promemoria b { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-dock-scorri .st-promemoria > div > span { margin-top: 4px; }
+.st-dock[data-dock="grande"] .st-dock-scorri .st-promemoria p { display: -webkit-box; }
+.st-dock[data-dock="grande"] .st-dock-scorri .st-promemoria b { white-space: normal; }
+@media (max-width: 760px) {
+  /* saluto: una riga e volti piccoli */
+  .st-saluto { left: 6px; right: 6px; top: 6px; padding: 5px 8px 4px; border-radius: 14px; background: rgba(20, 22, 32, 0.42); backdrop-filter: blur(8px); color: #fff; }
+  .st-saluto h1 { font-size: 13px; letter-spacing: -0.01em; }
+  .st-saluto p { font-size: 10.5px; -webkit-line-clamp: 1; color: rgba(255, 255, 255, 0.82); }
+  .st-saluto p b { color: #ffe08a; }
+  .st-striscia { margin-top: 3px; gap: 2px; }
+  .st .st-striscia button { width: 40px; padding: 1px 0; }
+  .st .st-striscia .st-avatar, .st .st-striscia .st-avatar-grande { width: 24px; height: 24px; }
+  .st-striscia small { font-size: 8px; color: #fff; }
+  .st-striscia .st-team-avatar i { width: 7px; height: 7px; }
+  .st .st-pillola { font-size: 10px; padding: 3px 7px 3px 6px; }
+  .st .st-pillola > i { width: 6px; height: 6px; }
+  .st-fumetto { max-width: 150px; padding: 5px 8px 6px; }
+  .st-fumetto b { font-size: 10.5px; }
+  .st-fumetto small { font-size: 8.5px; }
+  .st-fumetto em { font-size: 9.5px; }
+  .st .st-zone button { min-height: 26px; padding: 0 9px; font-size: 11px; }
+  .st-zone { bottom: 96px; padding: 2px; }
+  .st-ufficio:has(.st-dock-pillola) .st-zone { left: 104px; bottom: 8px; }
+  .st-dock { padding: 6px; gap: 4px; border-radius: 14px; }
+  .st-dock-titolo b { font-size: 12.5px; }
+  .st-dock-scorri .st-promemoria { width: min(78vw, 280px); padding: 6px 8px; }
+  .st-dock-scorri .st-promemoria small { font-size: 9px; }
+  .st-dock-scorri .st-promemoria b { font-size: 11.5px; }
+  .st .st-dock-tasti button { width: 26px; height: 26px; }
+  .st-dock-pillola { padding: 7px 11px; font-size: 12px; }
+  .st-dock-pillola em { min-width: 18px; height: 18px; font-size: 10.5px; }
+}
+@media (pointer: coarse) {
+  .st-joy { width: 82px; height: 82px; bottom: 140px; background: radial-gradient(circle, rgba(20, 22, 32, 0.16), rgba(20, 22, 32, 0.3)); border-color: rgba(255, 255, 255, 0.4); }
+  .st-joy-pomello { width: 34px; height: 34px; background: rgba(255, 255, 255, 0.85); }
+  .st-joy small { font-size: 9px; bottom: -15px; }
+  .st-ufficio:has(.st-dock-pillola) .st-joy { bottom: 52px; }
+}

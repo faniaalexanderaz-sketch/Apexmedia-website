@@ -29,7 +29,11 @@ import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
 type Dock = "normale" | "chiuso" | "grande";
 const CHIAVE_DOCK = "studio-dock";
 const ascoltaDock = new Set<() => void>();
-function leggiDock(): Dock { try { const v = localStorage.getItem(CHIAVE_DOCK); return v === "chiuso" || v === "grande" ? v : "normale"; } catch { return "normale"; } }
+function leggiDock(): Dock {
+  try { const v = localStorage.getItem(CHIAVE_DOCK); if (v === "chiuso" || v === "grande" || v === "normale") return v; } catch { /* niente memoria */ }
+  // sul telefono si parte con lo studio libero: le cose da fare stanno nella pillola
+  return typeof window !== "undefined" && window.innerWidth < 760 ? "chiuso" : "normale";
+}
 function scriviDock(v: Dock) { try { localStorage.setItem(CHIAVE_DOCK, v); } catch { /* niente memoria: vale solo adesso */ } ascoltaDock.forEach((f) => f()); }
 const iscriviDock = (f: () => void) => { ascoltaDock.add(f); return () => { ascoltaDock.delete(f); }; };
 
@@ -133,7 +137,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   const inVisita = useMemo(() => new Set(modello.agenti.filter((a) => a.fumetto).map((a) => a.id)), [modello.agenti]);
   const sceltoAgente = selezione?.tipo === "agente" ? selezione.id : null;
   const pannelloAperto = selezione !== null;
-  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 420 : 0, sinistra: larghezzaTeam, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.6) : dock === "chiuso" ? (stretto ? 60 : 20) : stretto ? 175 : 150, alto: stretto ? 120 : 70 }), [pannelloAperto, stretto, larghezzaTeam, dock]);
+  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 420 : 0, sinistra: larghezzaTeam, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.6) : dock === "chiuso" ? (stretto ? 50 : 20) : stretto ? 120 : 110, alto: stretto ? 70 : 60 }), [pannelloAperto, stretto, larghezzaTeam, dock]);
   const daScadere = promemoria.filter((p) => p.tono === "allarme").length;
 
   return (

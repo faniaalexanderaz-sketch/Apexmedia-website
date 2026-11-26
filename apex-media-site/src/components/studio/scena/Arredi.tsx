@@ -965,3 +965,20 @@ export function Percorso({ da, a, fase }: { da: [number, number]; a: [number, nu
     </group>
   );
 }
+
+/** Lampade a sospensione in ottone sopra scrivanie e tavoli: cavo che sale nel buio, luce calda. */
+export function Pendenti({ punti }: { punti: [number, number][] }) {
+  const ottone = matOttone(), cavo = mat("#15151a", 0.6), luce = matLed("#ffd9a0", 3.2), alone = matLuce("#ffcf8a", 0.16);
+  return (
+    <group>
+      {punti.map(([x, z], i) => (
+        <group key={i} position={[x, 0, z]}>
+          <Cil p={[0, 5.2, 0]} s={[0.012, 4.4, 0.012]} m={cavo} ombra={false} />
+          <mesh geometry={GEO.cono} material={ottone} position={[0, 3.0, 0]} rotation={[Math.PI, 0, 0]} scale={[0.42, 0.3, 0.42]} />
+          <Sfera p={[0, 2.86, 0]} s={0.09} m={luce} ombra={false} />
+          <mesh geometry={GEO.cil} material={alone} position={[0, 2.84, 0]} scale={[0.55, 0.01, 0.55]} />
+        </group>
+      ))}
+    </group>
+  );
+}
