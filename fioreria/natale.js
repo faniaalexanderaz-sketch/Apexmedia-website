@@ -103,57 +103,90 @@
     if (ridotto) deco.classList.add('ferma');
   })();
 
-  /* ---------- 2b) ghirlanda con luci sotto la barra di navigazione ----------
-     Disegnata in pixel veri (niente deformazioni), ridisegnata al resize.
+  /* ---------- 2b) ghirlande con luci ----------
+     Disegnate in pixel veri (niente deformazioni), ridisegnate al resize.
      Le luci brillano con opacity (nessun ricalcolo di pagina); con
      "riduci movimento" restano accese e ferme. */
-  (function () {
-    var nav = document.querySelector('header.nav');
-    if (!nav) return;
-    var box = crea('div', 'ghirlanda');
-    box.setAttribute('aria-hidden', 'true');
-    nav.appendChild(box);
-    var NS = 'http://www.w3.org/2000/svg';
-    var COLORI = ['#C2A45C', '#9E2B2E', '#E9D18A', '#3F6449', '#B8343A'];
+  var NS = 'http://www.w3.org/2000/svg';
+  var COLORI = ['#E9D18A', '#B8343A', '#F6E7B0', '#4E8A5C', '#C2A45C'];
 
-    function disegna() {
-      var w = Math.max(320, Math.round(box.clientWidth || window.innerWidth));
-      var tel = w < 720;
-      var campata = tel ? 130 : 190;           // larghezza di ogni festone
-      var n = Math.max(2, Math.round(w / campata));
-      var passo = w / n, cala = tel ? 13 : 18, h = cala + 22;
-      var svg = '<svg xmlns="' + NS + '" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">';
-      var rami = '', luci = '', fiocchi = '';
-      for (var i = 0; i < n; i++) {
-        var x0 = i * passo, x1 = x0 + passo, xm = x0 + passo / 2;
-        var d = 'M' + x0.toFixed(1) + ' 3 Q' + xm.toFixed(1) + ' ' + (cala * 2 + 3) + ' ' + x1.toFixed(1) + ' 3';
-        rami += '<path d="' + d + '" class="gh-ramo"/><path d="' + d + '" class="gh-aghi"/><path d="' + d + '" class="gh-aghi2"/>';
-        // luci lungo la curva (bezier quadratica)
-        var k = tel ? 4 : 5;
-        for (var j = 1; j < k; j++) {
-          var t = j / k, y = (1 - t) * (1 - t) * 3 + 2 * (1 - t) * t * (cala * 2 + 3) + t * t * 3;
-          var x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * xm + t * t * x1;
-          var c = COLORI[(i * k + j) % COLORI.length];
-          luci += '<circle class="gh-luce gh-l' + ((i + j) % 3) + '" cx="' + x.toFixed(1) + '" cy="' + (y + 4).toFixed(1) + '" r="' + (tel ? 2.6 : 3.2) + '" fill="' + c + '"/>';
-        }
-        // bacche rosse a metà festone
+  /* stella di Natale (poinsettia) con agrifoglio, centrata in (x, y) */
+  function stellaDiNatale(x, y, s) {
+    var g = '<g transform="translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') scale(' + s + ')">';
+    g += '<path d="M0 0 C-10 -2 -20 4 -24 10 C-14 12 -6 8 0 0Z" fill="#2E4B3A"/><path d="M0 0 C10 -2 20 4 24 10 C14 12 6 8 0 0Z" fill="#3F6449"/>';
+    for (var i = 0; i < 6; i++) g += '<path transform="rotate(' + (i * 60) + ')" d="M0 0 C-4 -6 -3 -13 0 -17 C3 -13 4 -6 0 0Z" fill="#B8343A"/>';
+    for (var j = 0; j < 6; j++) g += '<path transform="rotate(' + (j * 60 + 30) + ')" d="M0 0 C-3 -4 -2 -9 0 -11 C2 -9 3 -4 0 0Z" fill="#7A1F23"/>';
+    g += '<circle r="2.6" fill="#E9D18A"/><circle cx="2.4" cy="1.6" r="1.3" fill="#C2A45C"/><circle cx="-2.2" cy="1.8" r="1.2" fill="#C2A45C"/><circle cx="0.4" cy="-2.6" r="1.2" fill="#9CB55A"/></g>';
+    return g;
+  }
+
+  function svgGhirlanda(w, conFiori) {
+    var tel = w < 720;
+    var campata = tel ? 130 : 190;           // larghezza di ogni festone
+    var n = Math.max(2, Math.round(w / campata));
+    var passo = w / n, cala = tel ? 13 : 18, h = cala + (conFiori ? 30 : 22);
+    var rami = '', luci = '', fiocchi = '';
+    for (var i = 0; i < n; i++) {
+      var x0 = i * passo, x1 = x0 + passo, xm = x0 + passo / 2;
+      var d = 'M' + x0.toFixed(1) + ' 3 Q' + xm.toFixed(1) + ' ' + (cala * 2 + 3) + ' ' + x1.toFixed(1) + ' 3';
+      rami += '<path d="' + d + '" class="gh-ramo"/><path d="' + d + '" class="gh-aghi"/><path d="' + d + '" class="gh-aghi2"/>';
+      // luci lungo la curva (bezier quadratica)
+      var k = tel ? 4 : 5;
+      for (var j = 1; j < k; j++) {
+        var t = j / k, y = (1 - t) * (1 - t) * 3 + 2 * (1 - t) * t * (cala * 2 + 3) + t * t * 3;
+        var x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * xm + t * t * x1;
+        var c = COLORI[(i * k + j) % COLORI.length];
+        luci += '<circle class="gh-luce gh-l' + ((i + j) % 3) + '" cx="' + x.toFixed(1) + '" cy="' + (y + 4).toFixed(1) + '" r="' + (tel ? 2.6 : 3.2) + '" fill="' + c + '"/>';
+      }
+      if (conFiori) {
+        // stella di Natale a metà festone
+        fiocchi += stellaDiNatale(xm, cala + 6, tel ? 0.62 : 0.78);
+      } else {
         var yb = cala + 3;
         fiocchi += '<circle cx="' + (xm - 4) + '" cy="' + (yb + 3) + '" r="2.6" fill="#9E2B2E"/><circle cx="' + (xm + 1) + '" cy="' + (yb + 5) + '" r="2.4" fill="#B8343A"/><circle cx="' + (xm + 5) + '" cy="' + (yb + 2) + '" r="2.2" fill="#7A1F23"/>';
-        // fiocco dorato all'attacco
-        if (i > 0) fiocchi += '<g transform="translate(' + x0.toFixed(1) + ' 5)" class="gh-fiocco"><path d="M0 0 C-7 -6 -11 2 -3 3 Z M0 0 C7 -6 11 2 3 3 Z" fill="#C2A45C"/><path d="M-1 2 L-4 11 M1 2 L4 11" stroke="#9E2B2E" stroke-width="2" stroke-linecap="round"/><circle r="2.2" fill="#E9D18A"/></g>';
       }
-      box.innerHTML = svg + rami + fiocchi + luci + '</svg>';
-      box.style.height = h + 'px';
+      // fiocco rosso e oro all'attacco
+      if (i > 0) fiocchi += '<g transform="translate(' + x0.toFixed(1) + ' 5)"><path d="M0 0 C-7 -6 -11 2 -3 3 Z M0 0 C7 -6 11 2 3 3 Z" fill="' + (conFiori ? '#B8343A' : '#C2A45C') + '"/><path d="M-1 2 L-4 11 M1 2 L4 11" stroke="' + (conFiori ? '#C2A45C' : '#9E2B2E') + '" stroke-width="2" stroke-linecap="round"/><circle r="2.2" fill="#E9D18A"/></g>';
+    }
+    return { h: h, html: '<svg xmlns="' + NS + '" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' + rami + luci + fiocchi + '</svg>' };
+  }
+
+  function appendiGhirlanda(contenitore, cls, conFiori) {
+    var box = crea('div', cls);
+    box.setAttribute('aria-hidden', 'true');
+    contenitore.appendChild(box);
+    function disegna() {
+      var w = Math.max(320, Math.round(box.clientWidth || contenitore.clientWidth || window.innerWidth));
+      var g = svgGhirlanda(w, conFiori);
+      box.innerHTML = g.html;
+      box.style.height = g.h + 'px';
     }
     disegna();
-    var timer;
-    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(disegna, 200); });
-    // si ritira quando si scorre la pagina, per non coprire foto e testi
-    var giu = false;
-    window.addEventListener('scroll', function () {
-      var ora = window.scrollY > 140;
-      if (ora !== giu) { giu = ora; box.classList.toggle('ritirata', ora); }
-    }, { passive: true });
+    var timer, ultimaW = window.innerWidth;
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === ultimaW) return; // su telefono la barra degli indirizzi non conta
+      ultimaW = window.innerWidth;
+      clearTimeout(timer); timer = setTimeout(disegna, 200);
+    });
+    return box;
+  }
+
+  (function () {
+    var nav = document.querySelector('header.nav');
+    if (nav) {
+      var box = appendiGhirlanda(nav, 'ghirlanda', false);
+      // si ritira quando si scorre la pagina, per non coprire foto e testi
+      var giu = false;
+      window.addEventListener('scroll', function () {
+        var ora = window.scrollY > 140;
+        if (ora !== giu) { giu = ora; box.classList.toggle('ritirata', ora); }
+      }, { passive: true });
+    }
+    // festoni con stelle di Natale in cima alle sezioni con i prodotti
+    document.querySelectorAll('.natale-sez, .piu-scelte, .percorso-sez, .correlati, .consegna, .faq').forEach(function (sez) {
+      sez.classList.add('con-ghirlanda');
+      appendiGhirlanda(sez, 'ghirlanda-sez', true);
+    });
   })();
 
   /* ---------- 2c) palline e stella in 3D nella hero ---------- */
