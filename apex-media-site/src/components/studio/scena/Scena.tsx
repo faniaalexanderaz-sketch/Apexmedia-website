@@ -118,12 +118,15 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     if (!c) return;
     const A = CameraControlsImpl.ACTION;
     c.mouseButtons.left = A.TRUCK; c.mouseButtons.right = A.ROTATE; c.mouseButtons.middle = A.DOLLY; c.mouseButtons.wheel = A.DOLLY;
-    // telefono: un dito gira intorno (360 gradi), due dita avvicinano/allontanano e spostano
-    c.touches.one = A.TOUCH_ROTATE; c.touches.two = A.TOUCH_DOLLY_TRUCK; c.touches.three = A.TOUCH_TRUCK;
+    // come una mappa: un dito trascina l'ufficio (su, giù, destra, sinistra sul pavimento),
+    // due dita pizzicano per avvicinarsi e, ruotando, girano la vista
+    c.touches.one = A.TOUCH_TRUCK; c.touches.two = A.TOUCH_DOLLY_ROTATE; c.touches.three = A.TOUCH_ROTATE;
+    c.verticalDragToForward = true;
+    if (process.env.NODE_ENV !== "production") Object.assign(window, { __camera: c });
     c.setBoundary(new THREE.Box3(new THREE.Vector3(-LARGO / 2, 0, -FONDO / 2 - 1), new THREE.Vector3(LARGO / 2, 3, FONDO / 2 + 6)));
   }, []);
 
-  return <CameraControls ref={ctrl} makeDefault smoothTime={0.45} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={1.6} minPolarAngle={0.3} maxPolarAngle={1.18} dollyToCursor />;
+  return <CameraControls ref={ctrl} makeDefault smoothTime={0.45} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={2.2} minPolarAngle={0.3} maxPolarAngle={1.18} dollyToCursor />;
 }
 
 /* ---------- Etichette e fumetti ---------- */
