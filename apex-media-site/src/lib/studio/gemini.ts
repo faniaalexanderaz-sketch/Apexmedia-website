@@ -24,14 +24,17 @@ async function modelli(chiave: string): Promise<string[]> {
   if (r.status === 400 || r.status === 401 || r.status === 403) throw new Errore("La chiave GEMINI_API_KEY non è valida.");
   if (!r.ok) throw new Errore(`Gemini non risponde (${r.status}). Riprova.`);
   const j = (await r.json()) as { models?: Modello[] };
-  const nomi = (j.models ?? [])
-    .filter((m) => m.supportedGenerationMethods?.includes("generateContent"))
-    .map((m) => m.name.replace(/^models\//, ""))
-    .filter((n) => /^gemini-[\d.]+-flash(-lite)?(-latest)?$/.test(n) || n === "gemini-flash-latest" || n === "gemini-flash-lite-latest");
-  // versione più alta prima, a pari versione flash prima di lite
-  const versione = (n: string) => Number(n.match(/gemini-([\d.]+)/)?.[1] ?? 99);
-  nomi.sort((a, b) => versione(b) - versione(a) || Number(a.includes("lite")) - Number(b.includes("lite")));
-  const scelti = nomi.length ? nomi : ["gemini-flash-latest", "gemini-flash-lite-latest"];
+  const nomi = new Set((j.models ?? []).filter((m) => m.supportedGenerationMethods?.includes("generateContent")).map((m) => m.name.replace(/^models\//, "")));
+  // il "flash" stabile con il numero più alto, e il suo "lite"
+  const versione = (n: string) => Number(n.match(/^gemini-([\d.]+)-/)?.[1] ?? 0);
+  const piuAlto = (re: RegExp) => [...nomi].filter((n) => re.test(n)).sort((x, y) => versione(y) - versione(x))[0];
+  const scelti = [
+    nomi.has("gemini-flash-latest") ? "gemini-flash-latest" : null,
+    piuAlto(/^gemini-[\d.]+-flash$/),
+    nomi.has("gemini-flash-lite-latest") ? "gemini-flash-lite-latest" : null,
+    piuAlto(/^gemini-[\d.]+-flash-lite$/),
+  ].filter((x, i, t): x is string => Boolean(x) && t.indexOf(x) === i);
+  if (!scelti.length) scelti.push("gemini-flash-latest", "gemini-flash-lite-latest");
   elenco = { quando: Date.now(), modelli: scelti };
   return scelti;
 }
@@ -43,7 +46,9 @@ export async function scriviConGemini(system: string, richiesta: string, nome: s
   if (!chiave) throw new Errore("Manca GEMINI_API_KEY.");
   let ultimo = "";
   for (const m of (await modelli(chiave)).slice(0, 4)) {
+    // se un modello è intasato non aspettiamo all'infinito: si passa al successivo
     const r = await fetch(`${BASE}/models/${m}:generateContent`, {
+      signal: AbortSignal.timeout(m.includes("lite") ? 120_000 : 35_000),
       method: "POST",
       headers: { "content-type": "application/json", "x-goog-api-key": chiave },
       body: JSON.stringify({
@@ -51,7 +56,8 @@ export async function scriviConGemini(system: string, richiesta: string, nome: s
         contents: [{ role: "user", parts: [{ text: richiesta }] }],
         generationConfig: { maxOutputTokens: 8192, temperature: 0.7 },
       }),
-    });
+    }).catch((e: unknown) => { ultimo = `${m}: ${e instanceof Error ? e.name : "rete"}`; return null; });
+    if (!r) continue;
     if (r.status === 429 || r.status === 404 || r.status === 503) { ultimo = `${m}: ${r.status}`; continue; }
     if (r.status === 400 || r.status === 401 || r.status === 403) {
       const j = (await r.json().catch(() => ({}))) as Risposta;
