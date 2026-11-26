@@ -49,6 +49,10 @@
   --gold:      #C2A45C;   /* oro satinato — solo elementi premium */
   --cipria:    #F5E7E4;   /* rosa cipria — una sezione */
   --champagne: #F4EDDC;
+  /* Natale — tocchi dentro la palette: rosso bacca, oro, verde bosco */
+  --natale-rosso:  #9E2B2E;
+  --natale-rosso-scuro: #7A1F23;
+  --natale-panna:  #FBF4EA;
 
   --line: rgba(46,75,58,.12);
 
@@ -3181,3 +3185,261 @@ img.no-foto { opacity: 0; }
   overflow: visible; pointer-events: none;
 }
 .svolazzo path { fill: none; stroke: var(--gold, #C2A45C); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+
+/* =============================================================
+   NATALE 2026 — attivo con html.natale (natale.js). Rosso bacca,
+   oro e verde bosco dentro la palette; solo transform/opacity.
+   ============================================================= */
+/* barra in alto: filetto rosso e oro */
+html.natale .promo-bar {
+  background:
+    linear-gradient(100deg, rgba(255,255,255,.07), rgba(255,255,255,0) 30%),
+    linear-gradient(120deg, #1E3327, var(--bosco) 50%, #2C4A38 100%);
+  border-bottom: 2px solid var(--natale-rosso);
+  box-shadow: inset 0 -3px 0 rgba(194,164,92,.55), 0 6px 18px rgba(15,26,20,.22);
+}
+.promo-bar .nat-cd {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--natale-rosso);
+  color: #FFF6E6;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.promo-bar .nat-cd:empty { display: none; }
+.promo-bar .nat-br { display: none; }
+.promo-bar .nat-corto { display: none; }
+@media (max-width: 720px) {
+  .promo-bar .nat-br { display: inline; }
+  .promo-bar .nat-lungo { display: none; }
+  .promo-bar .nat-corto { display: inline; }
+  .promo-bar .nat-extra { font-weight: 500; opacity: .92; }
+  html.natale .promo-bar-ic { display: none; }
+}
+
+/* hero: fiocchi e stelle */
+.natale-deco {
+  position: absolute; inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-split .hero-copy { position: relative; z-index: 1; }
+.nd-fiocco {
+  position: absolute; top: -12px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFFFFF 0 40%, rgba(241,227,188,.9) 60%, rgba(194,164,92,0) 75%);
+  box-shadow: 0 0 0 1px rgba(194,164,92,.25), 0 0 8px rgba(194,164,92,.45);
+  opacity: 0;
+  transform: scale(var(--s, 1));
+  animation: nd-cade var(--t, 14s) linear infinite;
+  animation-delay: var(--r, 0s);
+  will-change: transform, opacity;
+}
+@keyframes nd-cade {
+  0%   { transform: translate3d(0, 0, 0) scale(var(--s, 1)); opacity: 0; }
+  10%  { opacity: .85; }
+  50%  { transform: translate3d(18px, 50vh, 0) scale(var(--s, 1)); }
+  90%  { opacity: .7; }
+  100% { transform: translate3d(-8px, 100vh, 0) scale(var(--s, 1)); opacity: 0; }
+}
+.nd-stella {
+  position: absolute;
+  width: 14px; height: 14px;
+  background: linear-gradient(160deg, #F1E3BC, var(--gold) 55%, #93762F);
+  clip-path: polygon(50% 0, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0 50%, 39% 38%);
+  opacity: .75;
+  animation: nd-brilla 4.2s ease-in-out infinite;
+  animation-delay: var(--r, 0s);
+}
+@keyframes nd-brilla {
+  0%, 100% { transform: scale(.7) rotate(0deg); opacity: .45; }
+  50%      { transform: scale(1.1) rotate(20deg); opacity: .95; }
+}
+@media (max-width: 720px) {
+  .nd-fiocco:nth-of-type(n+8) { display: none; }
+  .nd-stella { width: 11px; height: 11px; }
+}
+.natale-deco.ferma .nd-fiocco { display: none; }
+.natale-deco.ferma .nd-stella { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .nd-fiocco { display: none; }
+  .nd-stella { animation: none; }
+}
+
+/* elenco promesse (card, collezione, home) */
+.natale-promesse {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 8px;
+}
+.natale-promesse li {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 14px; color: var(--ink); line-height: 1.35;
+}
+.natale-promesse svg { flex: none; color: var(--natale-rosso); }
+.natale-promesse strong { color: var(--bosco); }
+
+/* sezione home «Regali di Natale» */
+.natale-sez {
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 70% at 0% 0%, rgba(158,43,46,.07), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(194,164,92,.12), transparent 60%),
+    var(--natale-panna);
+  border-top: 1px solid rgba(194,164,92,.35);
+  border-bottom: 1px solid rgba(194,164,92,.35);
+}
+.natale-sez .eyebrow { color: var(--natale-rosso); }
+.natale-rametto {
+  display: block;
+  margin: 0 0 6px;
+}
+.natale-promesse-home {
+  max-width: var(--maxw);
+  margin: -8px auto 34px;
+  padding: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.natale-promesse-home li {
+  justify-content: center; text-align: center;
+  padding: 11px 14px;
+  background: #FFFFFF;
+  border: 1px solid rgba(194,164,92,.35);
+  border-radius: 14px;
+  font-size: 13.5px;
+}
+.natale-promesse-home li::before {
+  content: '';
+  flex: none;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--natale-rosso);
+  box-shadow: 0 0 0 3px rgba(158,43,46,.14);
+}
+@media (max-width: 900px) {
+  .natale-promesse-home { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .natale-promesse-home li { font-size: 12.5px; padding: 9px 10px; justify-content: flex-start; text-align: left; }
+}
+
+/* collezione Natale: fascia promesse */
+.natale-fascia {
+  max-width: var(--maxw);
+  margin: 0 auto 28px;
+  padding: 16px 22px;
+  background: var(--natale-panna);
+  border: 1px solid rgba(194,164,92,.4);
+  border-left: 4px solid var(--natale-rosso);
+  border-radius: 16px;
+  display: grid; gap: 10px;
+}
+.natale-fascia .natale-promesse { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.natale-fascia-cd { margin: 0; font-size: 13.5px; color: var(--muted); }
+.natale-fascia-cd strong { color: var(--natale-rosso); }
+@media (max-width: 760px) {
+  .natale-fascia { padding: 14px 16px; }
+  .natale-fascia .natale-promesse { grid-template-columns: 1fr; }
+}
+
+/* filtro, link e voce di menu «Natale» */
+.filtro[href$="cat=natale"] {
+  border-color: rgba(158,43,46,.45);
+  color: var(--natale-rosso);
+}
+.filtro[href$="cat=natale"].attivo {
+  background: var(--natale-rosso);
+  border-color: var(--natale-rosso);
+  color: #FFF6E6;
+}
+.nav-links .nav-natale { color: var(--natale-rosso); font-weight: 700; }
+.menu-voce.menu-natale { color: var(--natale-rosso); font-weight: 700; }
+.cat-natale .cat-foto { box-shadow: 0 0 0 2px var(--natale-panna), 0 0 0 4px var(--natale-rosso); }
+.cat-natale .cat-nome { color: var(--natale-rosso); font-weight: 700; }
+
+/* scheda prodotto e checkout: promemoria regalo */
+.pm-natale, .co-natale {
+  display: flex; align-items: flex-start; gap: 9px;
+  margin: 0 0 10px;
+  padding: 10px 14px;
+  background: var(--natale-panna);
+  border: 1px solid rgba(194,164,92,.4);
+  border-radius: 12px;
+  font-size: 13.5px; line-height: 1.45; color: var(--ink);
+}
+.pm-natale svg, .co-natale svg { flex: none; margin-top: 2px; color: var(--natale-rosso); }
+.pm-natale strong, .co-natale strong { color: var(--natale-rosso); }
+.co-natale { margin: 0 0 18px; }
+
+/* carrello: spedizione gratuita */
+.cart-spedizione .sped-gratis { color: var(--bosco); }
+.cart-spedizione .sped-mancano {
+  display: block;
+  margin-top: 3px;
+  color: var(--natale-rosso);
+  font-weight: 600;
+}
+
+/* banner di Natale: una volta per visita, non blocca la pagina */
+.natale-card {
+  position: fixed;
+  left: 18px; bottom: 18px;
+  z-index: 185;
+  width: min(340px, calc(100vw - 36px));
+  padding: 20px 20px 16px;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(194,164,92,.18), transparent 60%),
+    #FFFFFF;
+  border: 1px solid rgba(194,164,92,.5);
+  border-top: 4px solid var(--natale-rosso);
+  border-radius: 18px;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity .35s ease, transform .45s var(--ease-out);
+}
+.natale-card.aperta { opacity: 1; transform: none; }
+.natale-card-chiudi {
+  position: absolute; top: 8px; right: 8px;
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  background: none; border: none; border-radius: 50%;
+  font-size: 20px; line-height: 1; color: var(--muted);
+  cursor: pointer;
+}
+.natale-card-chiudi:hover { background: rgba(46,75,58,.08); }
+.natale-card-eyebrow {
+  margin: 0 0 4px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--natale-rosso);
+}
+.natale-card-titolo {
+  margin: 0 0 12px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22px; line-height: 1.15; color: var(--ink);
+}
+.natale-card-titolo em { color: var(--bosco); }
+.natale-card .natale-promesse li { font-size: 13px; }
+.natale-card-cta { width: 100%; margin-top: 14px; justify-content: center; }
+.natale-card-nota { margin: 9px 0 0; text-align: center; font-size: 12px; color: var(--muted); }
+@media (max-width: 560px) {
+  .natale-card {
+    left: 10px; right: 10px; bottom: 10px;
+    width: auto;
+    padding: 16px 16px 12px;
+  }
+  .natale-card-titolo { font-size: 19px; margin-bottom: 9px; }
+  .natale-card .natale-promesse { gap: 5px; }
+  .natale-card .natale-promesse li { font-size: 12.5px; }
+  .natale-card-cta { margin-top: 11px; }
+  body.natale-card-aperta .whatsapp-float,
+  body.natale-card-aperta .assistente-float { opacity: 0; pointer-events: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .natale-card { transition: opacity .2s ease; transform: none; }
+}

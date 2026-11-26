@@ -27,8 +27,15 @@
   var qty = 1;
   var TAGLIA_UNICA = { id: 'U', nome: 'Unica', fattore: 1, nota: 'Formato unico da collezione' };
   if (prod.tagliaUnica) taglia = TAGLIA_UNICA;
+  /* ?taglia=<id> preseleziona una taglia (usato dal feed Google Shopping:
+     il prezzo dell'annuncio deve essere quello mostrato all'arrivo) */
+  var mT = location.search.match(/[?&]taglia=([A-Za-z0-9-]+)/);
+  if (mT && !prod.tagliaUnica) {
+    listaTaglie.forEach(function (t) { if (t.id.toLowerCase() === mT[1].toLowerCase()) taglia = t; });
+  }
 
   function prezzoTaglia(t) {
+    if (t === TAGLIA_UNICA) return prod.prezzo;
     return t.prezzo != null ? t.prezzo : afcPrezzoTaglia(prod.prezzo, t);
   }
   function prezzoTagliaScontato(t) {
@@ -73,7 +80,15 @@
     canonica.setAttribute('href', urlAssoluta);
     document.head.appendChild(canonica);
 
-    var prezzoBase = afcPrezzoScontato(prod.tagliaUnica ? prod.prezzo : afcPrezzoTaglia(prod.prezzo, AFC_TAGLIE[0]), prod);
+    /* prezzi reali di tutte le taglie (stessa fonte del carrello e del feed) */
+    var prezziTaglie = prod.tagliaUnica ? [afcPrezzoScontato(prod.prezzo, prod)]
+      : listaTaglie.map(function (t) { return prezzoTagliaScontato(t); });
+    var offerta = mT || prezziTaglie.length === 1
+      ? { '@type': 'Offer', url: urlAssoluta, priceCurrency: 'EUR', price: prezzoTagliaScontato(taglia),
+          availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition' }
+      : { '@type': 'AggregateOffer', url: urlAssoluta, priceCurrency: 'EUR',
+          lowPrice: Math.min.apply(null, prezziTaglie), highPrice: Math.max.apply(null, prezziTaglie),
+          offerCount: prezziTaglie.length, availability: 'https://schema.org/InStock' };
     var jsonLd = document.createElement('script');
     jsonLd.type = 'application/ld+json';
     jsonLd.textContent = JSON.stringify({
@@ -83,13 +98,7 @@
       description: descBreve,
       image: fotoAssoluta,
       brand: { '@type': 'Brand', name: 'Antica Fioreria del Centro' },
-      offers: {
-        '@type': 'Offer',
-        url: urlAssoluta,
-        priceCurrency: 'EUR',
-        price: prezzoBase,
-        availability: 'https://schema.org/InStock'
-      }
+      offers: offerta
     });
     document.head.appendChild(jsonLd);
   })();
@@ -175,31 +184,40 @@
   var nota = document.getElementById('tagliaNota');
 
   function prezzoCorrente() { return prezzoTagliaScontato(taglia); }
+  /* prezzo della M (per il confronto onesto della XL con due M) */
+  function prezzoMedio() {
+    for (var i = 0; i < listaTaglie.length; i++) if (listaTaglie[i].id === 'M') return prezzoTaglia(listaTaglie[i]);
+    return prod.prezzo;
+  }
 
   function dipingiPrezzo() {
     var pieno = document.getElementById('pPrezzoPieno');
     var sconto = document.getElementById('pSconto');
     document.getElementById('pPrezzo').textContent = euro(prezzoCorrente() * qty);
+    /* prezzo barrato SOLO per uno sconto vero (campo "sconto"). La XL non
+       è una riduzione di prezzo: si confronta con due M, senza barrare nulla. */
+    var dueM = prezzoMedio() * 2;
+    var risparmioXL = taglia.doppio ? dueM - prezzoTaglia(taglia) : 0;
     if (prod.sconto) {
       pieno.textContent = euro(prezzoTaglia(taglia) * qty);
       pieno.hidden = false;
-      sconto.innerHTML = ICONA_SCONTO + '<span>Saldi estivi −' + prod.sconto + '%</span>';
+      sconto.innerHTML = ICONA_SCONTO + '<span>Offerta −' + prod.sconto + '%</span>';
       sconto.hidden = false;
-    } else if (taglia.doppio) {
-      pieno.textContent = euro(afcValoreXL(prod.prezzo) * qty);
-      pieno.hidden = false;
-      sconto.innerHTML = ICONA_SCONTO + '<span>risparmi il 30%</span>';
+    } else if (risparmioXL >= 5) {
+      pieno.hidden = true;
+      sconto.innerHTML = ICONA_SCONTO + '<span>risparmi ' + euro(risparmioXL) + ' rispetto a due M</span>';
       sconto.hidden = false;
     } else {
       pieno.hidden = true;
       sconto.hidden = true;
     }
-    nota.textContent = taglia.nota + (taglia.doppio ? ' — vale ' + euro(afcValoreXL(prod.prezzo)) + ', lo paghi ' + euro(prezzoCorrente()) + '.' : '');
+    nota.textContent = taglia.nota + (risparmioXL >= 5 ? ' — due M costerebbero ' + euro(dueM) + ', la XL costa ' + euro(prezzoTaglia(taglia)) + '.' : '');
     document.getElementById('qN').textContent = String(qty);
 
     var costoSpedizioneAttuale = afcSpedizioneCosto(prod, prod.tagliaUnica ? null : taglia);
     document.getElementById('pmConsegnaTesto').textContent =
-      'Spedizione assicurata in 48/72 ore (€ ' + costoSpedizioneAttuale + ') · ritiro gratuito in bottega ad Alessandria';
+      'Spedizione assicurata in 48/72 ore (€ ' + costoSpedizioneAttuale + (prod.spedizioneFissa ? '' : ', gratis sopra € 99') +
+      ') · ritiro gratuito in bottega ad Alessandria';
   }
 
   if (prod.tagliaUnica) {
@@ -213,7 +231,7 @@
       btn.setAttribute('role', 'radio');
       btn.setAttribute('aria-checked', String(t.id === taglia.id));
       btn.innerHTML = '<strong>' + t.nome + '</strong><span>' + euro(prezzoTagliaScontato(t)) + '</span>' +
-        (t.doppio ? '<em class="taglia-badge">−30%</em>' : (prod.sconto ? '<em class="taglia-badge">−' + prod.sconto + '%</em>' : ''));
+        (prod.sconto ? '<em class="taglia-badge">−' + prod.sconto + '%</em>' : (t.doppio ? '<em class="taglia-badge">×2 fiori</em>' : ''));
       btn.addEventListener('click', function () {
         taglia = t;
         boxTaglie.querySelectorAll('.taglia-btn').forEach(function (x) {

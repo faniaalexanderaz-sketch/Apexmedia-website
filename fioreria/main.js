@@ -142,12 +142,22 @@
     return cart.reduce(function (max, r) { return Math.max(max, r.spedizione || 12); }, 0);
   }
 
+  /* spedizione gratuita sopra SOGLIA_SPEDIZIONE_GRATIS € di merce (dopo
+     l'eventuale coupon). Vale solo per le tariffe normali 12/15€: le
+     tariffe fisse dei pezzi speciali (es. bonsai) restano. Stessa regola
+     in checkout.js: tenere i due valori uguali. */
+  var SOGLIA_SPEDIZIONE_GRATIS = 99;
+
   function totali() {
     var sub = cart.reduce(function (s, r) { return s + r.prezzo * r.qty; }, 0);
     var c = couponAttivo();
     var sconto = c ? Math.round(sub * c.pct) / 100 : 0;
+    var merce = Math.round((sub - sconto) * 100) / 100;
     var spedizione = spedizioneCorrente();
-    return { sub: sub, coupon: c, sconto: sconto, spedizione: spedizione, tot: Math.round((sub - sconto) * 100) / 100 + spedizione };
+    var gratisPossibile = spedizione > 0 && spedizione <= 15;
+    if (gratisPossibile && merce >= SOGLIA_SPEDIZIONE_GRATIS) spedizione = 0;
+    var mancano = gratisPossibile && spedizione > 0 ? Math.ceil(SOGLIA_SPEDIZIONE_GRATIS - merce) : 0;
+    return { sub: sub, coupon: c, sconto: sconto, spedizione: spedizione, mancano: mancano, tot: merce + spedizione };
   }
 
   function render() {
@@ -162,7 +172,10 @@
 
     var elSped = document.getElementById('cartSpedizione');
     if (elSped) {
-      elSped.textContent = items ? 'Spedizione assicurata: ' + euro(t.spedizione) : '';
+      if (!items) elSped.textContent = '';
+      else if (t.spedizione === 0) elSped.innerHTML = '<strong class="sped-gratis">Spedizione assicurata gratuita</strong>';
+      else elSped.innerHTML = 'Spedizione assicurata: ' + euro(t.spedizione) +
+        (t.mancano > 0 ? '<span class="sped-mancano">Aggiungi ' + euro(t.mancano) + ' e la spedizione è gratis</span>' : '');
     }
 
     /* riga sconto nel totale */
@@ -441,7 +454,7 @@
   (function () {
     var bar = document.getElementById('promoBar');
     if (!bar) return;
-    if (localStorage.getItem('afc-promo-chiusa') === '1') { bar.remove(); return; }
+    if (localStorage.getItem('afc-promo-natale-chiusa') === '1') { bar.remove(); return; }
     document.body.classList.add('promo-attiva');
     function misura() {
       document.documentElement.style.setProperty('--promo-h', bar.offsetHeight + 'px');
@@ -452,7 +465,7 @@
     if (chiudi) chiudi.addEventListener('click', function () {
       bar.remove();
       document.body.classList.remove('promo-attiva');
-      localStorage.setItem('afc-promo-chiusa', '1');
+      localStorage.setItem('afc-promo-natale-chiusa', '1');
     });
   })();
 
@@ -469,6 +482,8 @@
     var mostrato = false;
     function apri() {
       if (mostrato) return;
+      /* mai sopra il banner di Natale: riprova quando è chiuso */
+      if (document.body.classList.contains('natale-card-aperta')) { timer = setTimeout(apri, 8000); return; }
       mostrato = true;
       pop.hidden = false; scrimPop.hidden = false;
       document.body.style.overflow = 'hidden';

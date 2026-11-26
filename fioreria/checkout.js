@@ -61,7 +61,10 @@
     var sconto = c ? Math.round(sub * c.pct) / 100 : 0;
     // col contrassegno la spedizione assicurata (12/15€) non si aggiunge:
     // il sovrapprezzo di €15 la sostituisce, non si paga due volte
+    // spedizione gratuita sopra 99€ di merce (dopo il coupon), solo per le
+    // tariffe normali 12/15€ — stessa regola di main.js
     var spedizione = contrassegno ? 0 : spedizioneCorrente();
+    if (spedizione > 0 && spedizione <= 15 && (sub - sconto) >= 99) spedizione = 0;
     var extraContrassegno = contrassegno ? COSTO_CONTRASSEGNO : 0;
     return {
       sub: sub, coupon: c, sconto: sconto, spedizione: spedizione, contrassegno: extraContrassegno,
@@ -88,7 +91,7 @@
     var elSped = document.getElementById('riepSpedizione');
     if (elSped) {
       elSped.hidden = !!contrassegno;
-      if (!contrassegno) elSped.textContent = 'Spedizione assicurata: ' + euro(t.spedizione);
+      if (!contrassegno) elSped.textContent = 'Spedizione assicurata: ' + (t.spedizione === 0 ? 'gratuita' : euro(t.spedizione));
     }
     var elContrassegno = document.getElementById('riepContrassegno');
     if (elContrassegno) {

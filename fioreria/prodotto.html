@@ -22,8 +22,8 @@
 <body class="pagina-shop">
 
   <div class="promo-bar" id="promoBar" role="note">
-    <svg class="promo-bar-ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.6v2.7M12 18.7v2.7M4.6 4.6l1.9 1.9M17.5 17.5l1.9 1.9M2.6 12h2.7M18.7 12h2.7M4.6 19.4l1.9-1.9M17.5 6.5l1.9-1.9"/></svg>
-    <span class="promo-bar-testo"><strong>Saldi Estivi</strong> — fino al <strong>−20%</strong> su una selezione di composizioni · Primo ordine? Aggiungi <strong>−10%</strong> con <code>BENVENUTO10</code></span>
+    <svg class="promo-bar-ic" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.3 6.2 6.6.3-5.2 4.1 1.8 6.4L12 15.8l-5.5 3.7 1.8-6.4-5.2-4.1 6.6-.3z"/></svg>
+    <span class="promo-bar-testo"><strong>Natale</strong> — ordina entro il <strong>22<span class="nat-lungo"> dicembre</span><span class="nat-corto">/12</span></strong><span class="nat-lungo"> per riceverlo a Natale</span> <span class="nat-cd" id="natCountdown"></span><br class="nat-br" /><span class="nat-extra"><span class="nat-lungo"> · </span>Regalo e biglietto in omaggio · spedizione gratis da <strong>€&nbsp;99</strong></span></span>
     <button class="promo-bar-chiudi" id="promoBarChiudi" aria-label="Chiudi il messaggio">×</button>
   </div>
 
@@ -32,6 +32,7 @@
       <img class="brand-logo" src="foto/logo-orizzontale.jpg" alt="Antica Fioreria del Centro" />
     </a>
     <nav class="nav-links" aria-label="Sezioni">
+      <a class="nav-natale" href="collezione.html?cat=natale">Natale</a>
       <a href="collezione.html">Collezione</a>
       <a href="index.html#atelier">L'atelier</a>
       <a href="index.html#consegna">Consegna</a>
@@ -162,6 +163,7 @@
   <script src="animazioni.js"></script>
   <script src="main.js"></script>
   <script src="prodotti.js"></script>
+  <script src="natale.js"></script>
   <script src="prodotto.js"></script>
   <script src="assistente-fiorista.js"></script>
   <a class="whatsapp-float" href="https://wa.me/393273370547?text=Ciao%21%20Vorrei%20informazioni%20su%20una%20composizione." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">

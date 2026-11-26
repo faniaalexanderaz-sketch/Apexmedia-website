@@ -10,8 +10,11 @@
    che resta la copertina su card/collezione) da scorrere nella
    pagina del singolo prodotto, es. galleria: [p.foto, 'foto/x-2.jpg'].
    Se assente, la pagina prodotto mostra solo "foto".
-   Campo opzionale "sconto": percentuale dei Saldi Estivi (20 o 15).
-   Se assente il prodotto resta a prezzo pieno (es. borsa-lavanda).
+   Campo opzionale "sconto": percentuale di uno sconto VERO, applicato al
+   prezzo pagato al checkout. Per legge (art. 17-bis Codice del Consumo)
+   il prezzo barrato deve essere il più basso degli ultimi 30 giorni:
+   usalo solo su prodotti rimasti a prezzo pieno per almeno 30 giorni.
+   I Saldi Estivi sono stati tolti il 26/11/2026.
    ============================================================= */
 var AFC_TAGLIE = [
   { id: 'S',  nome: 'S',  fattore: 0.75, nota: 'Un pensiero: composizione raccolta' },
@@ -26,7 +29,7 @@ function afcPrezzoTaglia(prezzoM, taglia) {
 /* valore pieno della XL (2 × M): serve per mostrare quanto risparmi */
 function afcValoreXL(prezzoM) { return prezzoM * 2; }
 
-/* Saldi Estivi: sconto percentuale opzionale per prodotto (campo "sconto").
+/* Sconto percentuale opzionale per prodotto (campo "sconto").
    Applicato sul prezzo già calcolato per la taglia scelta. */
 function afcPrezzoScontato(prezzo, prod) {
   return (prod && prod.sconto) ? Math.round(prezzo * (1 - prod.sconto / 100)) : prezzo;
@@ -56,7 +59,6 @@ var AFC_PRODOTTI = [
     nome: 'Brezza di Provenza',
     fragile: true,
     prezzo: 75,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 56,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 75,  nota: 'Il formato classico della bottega' },
@@ -75,7 +77,6 @@ var AFC_PRODOTTI = [
     slug: 'cesta-primavera',
     nome: 'Cesta di Primavera',
     prezzo: 60,
-    sconto: 20,
     taglie: [
       { id: 'L', nome: 'L', prezzo: 60, nota: 'Formato generoso, unica taglia disponibile' }
     ],
@@ -90,7 +91,6 @@ var AFC_PRODOTTI = [
     slug: 'cesta-maggio',
     nome: 'Cesta di Maggio',
     prezzo: 53,
-    sconto: 20,
     taglie: [
       { id: 'M', nome: 'M', prezzo: 53, nota: 'Formato classico, unica taglia disponibile' }
     ],
@@ -105,7 +105,6 @@ var AFC_PRODOTTI = [
     slug: 'orto',
     nome: 'L\'Orto in Casa',
     prezzo: 78,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 59,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
@@ -125,7 +124,6 @@ var AFC_PRODOTTI = [
     slug: 'sole-campagna',
     nome: 'Sole di Campagna',
     prezzo: 69,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 48,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 69,  nota: 'Il formato classico della bottega' },
@@ -145,7 +143,6 @@ var AFC_PRODOTTI = [
     slug: 'cuore-rose',
     nome: 'Cuore di Rose',
     prezzo: 85,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 69,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 85,  nota: 'Il formato classico della bottega' },
@@ -154,7 +151,7 @@ var AFC_PRODOTTI = [
     ],
     tagliaFoto: 'S',
     foto: 'foto/p-cuore-rose.jpg',
-    cat: ['anniversario', 'mamma', 'regali', 'inverno'],
+    cat: ['natale', 'anniversario', 'mamma', 'regali', 'inverno'],
     badge: 'Più venduto',
     rating: ['4,9', 18],
     avail: 'Spedizione in 48/72h',
@@ -165,7 +162,6 @@ var AFC_PRODOTTI = [
     slug: 'sole-agrumi',
     nome: 'Sole e Agrumi',
     prezzo: 80,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 58,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
@@ -186,7 +182,6 @@ var AFC_PRODOTTI = [
     slug: 'gatto-giardiniere',
     nome: 'Gatto Giardiniere',
     prezzo: 99,
-    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-vaso-gatto.jpg',
     galleria: ['foto/p-vaso-gatto.jpg', 'foto/p-vaso-gatto-2.jpg'],
@@ -201,7 +196,6 @@ var AFC_PRODOTTI = [
     slug: 'pannello-verde',
     nome: 'Giardino Verticale',
     prezzo: 100,
-    sconto: 15,
     taglie: [
       { id: '1', nome: '1 pezzo', prezzo: 100, nota: 'Un pannello singolo, da appoggiare o appendere' },
       { id: '2', nome: '2 pezzi', prezzo: 165, nota: 'Coppia di pannelli: parete verde più ampia, a prezzo ridotto' }
@@ -219,7 +213,6 @@ var AFC_PRODOTTI = [
     nome: 'Tiffany',
     fragile: true,
     prezzo: 75,
-    sconto: 15,
     taglie: [
       { id: 'M', nome: 'M', prezzo: 75, nota: 'Formato classico, unica taglia disponibile' }
     ],
@@ -235,7 +228,6 @@ var AFC_PRODOTTI = [
     slug: 'cappello-fiorito',
     nome: 'Cappello Fiorito',
     prezzo: 38,
-    sconto: 15,
     taglie: [
       { id: 'S', nome: 'S', prezzo: 38, nota: 'Un pensiero: versione più raccolta' },
       { id: 'M', nome: 'M', prezzo: 49, nota: 'Il formato classico della bottega' }
@@ -253,7 +245,6 @@ var AFC_PRODOTTI = [
     slug: 'girasoli-cannella',
     nome: 'Girasoli e Cannella',
     prezzo: 80,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 58,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
@@ -274,7 +265,6 @@ var AFC_PRODOTTI = [
     nome: 'Autunno in Tavola',
     fragile: true,
     prezzo: 79,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 60,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
@@ -293,7 +283,6 @@ var AFC_PRODOTTI = [
     slug: 'bosco-di-rose',
     nome: 'Bosco di Rose di Sapone',
     prezzo: 80,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 60,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 80,  nota: 'Il formato classico della bottega' },
@@ -301,7 +290,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 131, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-bosco-di-rose.jpg',
-    cat: ['anniversario', 'regali', 'mamma'],
+    cat: ['natale', 'anniversario', 'regali', 'mamma'],
     rating: ['4,9', 9],
     avail: 'Spedizione in 48/72h',
     desc: 'Rose rosse e bordeaux con ortensie color malva, su una fetta di legno naturale.',
@@ -312,10 +301,9 @@ var AFC_PRODOTTI = [
     nome: 'Trittico di Rose',
     fragile: true,
     prezzo: 100,
-    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-trittico-di-rose.jpg',
-    cat: ['regali', 'anniversario', 'decorazioni'],
+    cat: ['natale', 'regali', 'anniversario', 'decorazioni'],
     badge: 'Novità',
     rating: ['4,9', 5],
     avail: 'Spedizione in 48/72h',
@@ -326,7 +314,6 @@ var AFC_PRODOTTI = [
     slug: 'agrumi-oro',
     nome: 'Agrumi d\'Oro',
     prezzo: 83,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 68,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 83,  nota: 'Il formato classico della bottega' },
@@ -335,7 +322,7 @@ var AFC_PRODOTTI = [
     ],
     foto: 'foto/p-agrumi-oro.jpg',
     galleria: ['foto/p-agrumi-oro.jpg', 'foto/p-agrumi-oro-2.jpg', 'foto/p-agrumi-oro-3.jpg'],
-    cat: ['stagione', 'autunno', 'regali'],
+    cat: ['natale', 'stagione', 'autunno', 'regali'],
     rating: ['4,8', 7],
     avail: 'Spedizione in 48/72h',
     desc: 'Limone, melagrana, rosa rossa e tulipani gialli con cannella, su piatto bianco smerlato.',
@@ -345,7 +332,6 @@ var AFC_PRODOTTI = [
     slug: 'casetta-welcome',
     nome: 'Casetta "Welcome"',
     prezzo: 97,
-    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-casetta-welcome.jpg',
     cat: ['decorazioni', 'regali'],
@@ -360,7 +346,6 @@ var AFC_PRODOTTI = [
     nome: 'Mezzanotte in Fiore',
     fragile: true,
     prezzo: 82,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 65,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 82,  nota: 'Il formato classico della bottega' },
@@ -369,7 +354,7 @@ var AFC_PRODOTTI = [
     ],
     foto: 'foto/p-mezzanotte-in-fiore.jpg',
     galleria: ['foto/p-mezzanotte-in-fiore.jpg', 'foto/p-mezzanotte-in-fiore-2.jpg', 'foto/p-mezzanotte-in-fiore-3.jpg'],
-    cat: ['premium', 'novita', 'regali'],
+    cat: ['natale', 'premium', 'novita', 'regali'],
     badge: 'Novità',
     rating: ['4,9', 4],
     avail: 'Spedizione in 48/72h',
@@ -381,7 +366,6 @@ var AFC_PRODOTTI = [
     nome: 'Cristallo d\'Autunno',
     fragile: true,
     prezzo: 78,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 62,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 78,  nota: 'Il formato classico della bottega' },
@@ -390,7 +374,7 @@ var AFC_PRODOTTI = [
     ],
     foto: 'foto/p-cristallo-autunno.jpg',
     galleria: ['foto/p-cristallo-autunno.jpg', 'foto/p-cristallo-autunno-2.jpg', 'foto/p-cristallo-autunno-3.jpg'],
-    cat: ['autunno', 'anniversario', 'regali'],
+    cat: ['natale', 'autunno', 'anniversario', 'regali'],
     rating: ['4,8', 6],
     avail: 'Spedizione in 48/72h',
     desc: 'Rose rosse e bianche, foglie ambrate e coda di coniglio, in una coppa di vetro.',
@@ -401,14 +385,13 @@ var AFC_PRODOTTI = [
     nome: 'Nautilus d\'Ambra',
     fragile: true,
     prezzo: 99,
-    sconto: 20,
     taglie: [
       { id: 'S', nome: 'S', prezzo: 76, nota: 'Protea, composizione raccolta' },
       { id: 'M', nome: 'M', prezzo: 99, nota: 'Rose e mughetto, più abbondante' }
     ],
     foto: 'foto/p-nautilus-ambra.jpg',
     galleria: ['foto/p-nautilus-ambra.jpg', 'foto/p-nautilus-ambra-2.jpg', 'foto/p-nautilus-ambra-3.jpg'],
-    cat: ['regali', 'anniversario'],
+    cat: ['natale', 'regali', 'anniversario'],
     rating: ['4,7', 3],
     avail: 'Spedizione in 48/72h',
     desc: 'Vaso in vetro ambrato a spirale: taglia S con protea, taglia M con rose e mughetto.',
@@ -418,7 +401,6 @@ var AFC_PRODOTTI = [
     slug: 'malva-lavanda',
     nome: 'Malva e Lavanda',
     prezzo: 65,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 54,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 65,  nota: 'Il formato classico della bottega' },
@@ -437,11 +419,10 @@ var AFC_PRODOTTI = [
     slug: 'bonsai-premium',
     nome: 'Pino Bonsai Premium',
     prezzo: 2176,
-    sconto: 15,
     tagliaUnica: true,
     spedizioneFissa: 50,
     foto: 'foto/p-bonsai-premium.jpg',
-    cat: ['decorazioni', 'premium'],
+    cat: ['natale', 'decorazioni', 'premium'],
     rating: ['5,0', 2],
     avail: 'Spedizione in 48/72h',
     desc: 'Grande bonsai di pino, alto 1,70 m e largo 1,50 m, con rose bianche tra i rami. Pezzo unico di altissima qualità.',
@@ -452,13 +433,12 @@ var AFC_PRODOTTI = [
     nome: 'Pettirosso in Fiore',
     fragile: true,
     prezzo: 156,
-    sconto: 20,
     taglie: [
       { id: 'L', nome: 'L', prezzo: 156, nota: 'Formato generoso, unica taglia disponibile' }
     ],
     foto: 'foto/p-pettirosso-in-fiore.jpg',
     galleria: ['foto/p-pettirosso-in-fiore.jpg', 'foto/p-pettirosso-in-fiore-2.jpg', 'foto/p-pettirosso-in-fiore-3.jpg'],
-    cat: ['primavera', 'regali'],
+    cat: ['natale', 'primavera', 'regali'],
     rating: ['4,8', 4],
     avail: 'Spedizione in 48/72h',
     desc: 'Calle bianche, amarillide arancio, rosa e orchidee, in vaso con pettirosso dipinto.',
@@ -468,7 +448,6 @@ var AFC_PRODOTTI = [
     slug: 'zaffiro-lavanda',
     nome: 'Zaffiro e Lavanda',
     prezzo: 79,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 63,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 79,  nota: 'Il formato classico della bottega' },
@@ -477,7 +456,7 @@ var AFC_PRODOTTI = [
     ],
     foto: 'foto/p-zaffiro-lavanda.jpg',
     galleria: ['foto/p-zaffiro-lavanda.jpg', 'foto/p-zaffiro-lavanda-2.jpg', 'foto/p-zaffiro-lavanda-3.jpg'],
-    cat: ['premium', 'regali', 'anniversario'],
+    cat: ['natale', 'premium', 'regali', 'anniversario'],
     badge: 'Novità',
     rating: ['4,9', 3],
     avail: 'Spedizione in 48/72h',
@@ -489,7 +468,6 @@ var AFC_PRODOTTI = [
     nome: 'Le Dame Fiorite',
     fragile: true,
     prezzo: 91,
-    sconto: 15,
     foto: 'foto/p-dame-fiorite.jpg',
     cat: ['regali', 'decorazioni'],
     badge: 'Novità',
@@ -503,14 +481,13 @@ var AFC_PRODOTTI = [
     nome: 'Pinguino e Panda Platino',
     fragile: true,
     prezzo: 26,
-    sconto: 15,
     taglie: [
       { id: 'pinguino', nome: 'Pinguino', prezzo: 26, nota: 'Solo la statuina del pinguino' },
       { id: 'panda',    nome: 'Panda',    prezzo: 26, nota: 'Solo la statuina del panda' },
       { id: 'coppia',   nome: 'Coppia',   prezzo: 52, nota: 'Pinguino e panda insieme' }
     ],
     foto: 'foto/p-pinguino-panda.jpg',
-    cat: ['decorazioni', 'regali'],
+    cat: ['natale', 'decorazioni', 'regali'],
     rating: ['4,7', 3],
     avail: 'Spedizione in 48/72h',
     desc: 'Statuine in ceramica argentata: un pinguino e un panda, acquistabili separati o in coppia.',
@@ -570,7 +547,7 @@ var AFC_PRODOTTI = [
       { id: 'M', nome: 'M', prezzo: 44, nota: 'Formato classico, unica taglia disponibile' }
     ],
     foto: 'foto/p-scrigno-rose-sapone.png',
-    cat: ['novita', 'decorazioni', 'regali', 'anniversario'],
+    cat: ['natale', 'novita', 'decorazioni', 'regali', 'anniversario'],
     badge: 'Novità',
     rating: ['5,0', 3],
     avail: 'Spedizione in 48/72h',
@@ -600,12 +577,11 @@ var AFC_PRODOTTI = [
   {
     slug: 'fiamma-tropicale',
     nome: 'Fiamma Tropicale',
-    sconto: 15,
     taglie: [
       { id: 'XL', nome: 'XL', prezzo: 159, nota: 'Pianta adulta, pezzo unico: unica taglia disponibile' }
     ],
     foto: 'foto/p-fiamma-tropicale.jpg',
-    cat: ['decorazioni', 'regali', 'novita'],
+    cat: ['natale', 'decorazioni', 'regali', 'novita'],
     badge: 'Novità',
     rating: ['4,8', 3],
     avail: 'Spedizione in 48/72h',
@@ -617,7 +593,6 @@ var AFC_PRODOTTI = [
     nome: 'Nuvola di Petali',
     fragile: true,
     prezzo: 72,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 54,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 72,  nota: 'Il formato classico della bottega' },
@@ -636,10 +611,9 @@ var AFC_PRODOTTI = [
     slug: 'sonno-angelo',
     nome: 'Il Sonno dell\'Angelo',
     prezzo: 58,
-    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-angelo-rosa.jpg',
-    cat: ['decorazioni', 'regali', 'anniversario'],
+    cat: ['natale', 'decorazioni', 'regali', 'anniversario'],
     badge: 'Novità',
     rating: ['4,9', 3],
     avail: 'Spedizione in 48/72h',
@@ -650,7 +624,6 @@ var AFC_PRODOTTI = [
     slug: 'coroncina-autunno',
     nome: 'Coroncina d\'Autunno',
     prezzo: 48,
-    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-coroncine-autunno.jpg',
     cat: ['decorazioni', 'autunno', 'regali'],
@@ -664,7 +637,6 @@ var AFC_PRODOTTI = [
     slug: 'brocca-maggio',
     nome: 'Brocca di Maggio',
     prezzo: 62,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 48,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 62,  nota: 'Il formato classico della bottega' },
@@ -696,7 +668,6 @@ var AFC_PRODOTTI = [
     slug: 'brezza-conchiglie',
     nome: 'Brezza di Conchiglie',
     prezzo: 54,
-    sconto: 15,
     tagliaUnica: true,
     foto: 'foto/p-brezza-conchiglie.jpg',
     cat: ['decorazioni', 'regali', 'estate'],
@@ -711,7 +682,6 @@ var AFC_PRODOTTI = [
     nome: 'La Regina del Capo',
     fragile: true,
     prezzo: 92,
-    sconto: 20,
     taglie: [
       { id: 'S',  nome: 'S',  prezzo: 72,  nota: 'Un pensiero: composizione raccolta' },
       { id: 'M',  nome: 'M',  prezzo: 92,  nota: 'Il formato classico della bottega' },
@@ -719,7 +689,7 @@ var AFC_PRODOTTI = [
       { id: 'XL', nome: 'XL', prezzo: 129, doppio: true, nota: 'Il doppio dei fiori della M' }
     ],
     foto: 'foto/p-regina-capo.jpg',
-    cat: ['premium', 'regali', 'anniversario'],
+    cat: ['natale', 'premium', 'regali', 'anniversario'],
     badge: 'Novità',
     rating: ['4,9', 2],
     avail: 'Spedizione in 48/72h',
@@ -730,6 +700,7 @@ var AFC_PRODOTTI = [
 
 var AFC_CATEGORIE = [
   ['tutti', 'Tutti'],
+  ['natale', 'Regali di Natale'],
   ['novita', 'Novità'],
   ['stagione', 'Fiori di stagione'],
   ['regali', 'Regali floreali'],

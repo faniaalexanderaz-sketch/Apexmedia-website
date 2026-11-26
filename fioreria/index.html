@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Antica Fioreria del Centro — composizioni floreali artificiali di pregio</title>
-  <meta name="description" content="Composizioni floreali artificiali realizzate a mano con materiali di pregio. Consegna in tutta Italia in 48/72 ore." />
+  <title>Regali di Natale fatti a mano — Antica Fioreria del Centro, dal 1953</title>
+  <meta name="description" content="Regali di Natale che non appassiscono: composizioni floreali artificiali fatte a mano ad Alessandria dal 1953. Confezione regalo e biglietto in omaggio, consegna entro Natale per ordini entro il 22 dicembre." />
   <link rel="canonical" href="https://anticafioreriadelcentro.it/" />
 
   <meta property="og:type" content="website" />
@@ -51,8 +51,8 @@
 
   <!-- ================= BARRA SCONTO PRIMO ORDINE ================= -->
   <div class="promo-bar" id="promoBar" role="note">
-    <svg class="promo-bar-ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.6v2.7M12 18.7v2.7M4.6 4.6l1.9 1.9M17.5 17.5l1.9 1.9M2.6 12h2.7M18.7 12h2.7M4.6 19.4l1.9-1.9M17.5 6.5l1.9-1.9"/></svg>
-    <span class="promo-bar-testo"><strong>Saldi Estivi</strong> — fino al <strong>−20%</strong> su una selezione di composizioni · Primo ordine? Aggiungi <strong>−10%</strong> con <code>BENVENUTO10</code></span>
+    <svg class="promo-bar-ic" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.3 6.2 6.6.3-5.2 4.1 1.8 6.4L12 15.8l-5.5 3.7 1.8-6.4-5.2-4.1 6.6-.3z"/></svg>
+    <span class="promo-bar-testo"><strong>Natale</strong> — ordina entro il <strong>22<span class="nat-lungo"> dicembre</span><span class="nat-corto">/12</span></strong><span class="nat-lungo"> per riceverlo a Natale</span> <span class="nat-cd" id="natCountdown"></span><br class="nat-br" /><span class="nat-extra"><span class="nat-lungo"> · </span>Regalo e biglietto in omaggio · spedizione gratis da <strong>€&nbsp;99</strong></span></span>
     <button class="promo-bar-chiudi" id="promoBarChiudi" aria-label="Chiudi il messaggio">×</button>
   </div>
 
@@ -156,6 +156,10 @@
     <!-- ============ CATEGORIE — slider orizzontale ============ -->
     <nav class="categorie" aria-label="Categorie">
       <div class="cat-track" data-scorrimento-auto>
+        <a class="cat-item cat-natale" href="collezione.html?cat=natale">
+          <span class="cat-foto"><img src="foto/p-agrumi-oro.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
+          <span class="cat-nome">Natale</span>
+        </a>
         <a class="cat-item" href="collezione.html?cat=novita">
           <span class="cat-foto"><img src="foto/p-girasoli-cannella.jpg" alt="" loading="eager" width="300" height="300" onerror="this.classList.add('no-foto')" /></span>
           <span class="cat-nome">Novità</span>
@@ -201,9 +205,9 @@
         </picture>
       </div>
       <div class="hero-copy">
-        <p class="hero-eyebrow reveal"><span>Composizioni floreali artificiali</span></p>
-        <h1 class="display hero-titolo reveal">La bellezza dei fiori... <em>senza tempo</em>.</h1>
-        <p class="hero-sub reveal">Bottega di Alessandria dal 1953. Le nostre creazioni uniscono la sapienza artigianale di sempre a materiali che durano una vita.</p>
+        <p class="hero-eyebrow reveal"><span>Regali di Natale · fiori che non appassiscono</span></p>
+        <h1 class="display hero-titolo reveal">Il Natale fatto a mano, <em>dal 1953</em>.</h1>
+        <p class="hero-sub reveal">Composizioni floreali che restano belle per anni, create a mano nella nostra bottega di Alessandria. Arrivano in confezione regalo natalizia, con il tuo biglietto scritto a mano.</p>
         <p class="hero-badge-riga reveal">
           <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true">
             <defs>
@@ -216,9 +220,9 @@
             <circle cx="12" cy="9.3" r="6.6" fill="none" stroke="#8A6C2E" stroke-opacity=".35" stroke-width=".6" />
             <path d="m9.15 9.55 1.95 2.05 3.75-4.1" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span>Da € 23 con i Saldi Estivi · Spedizione assicurata da € 12 in 48/72h · Reso gratuito 14 giorni</span>
+          <span>Ordina entro il 22 dicembre: consegna entro Natale · Spedizione gratis sopra € 99 · Reso gratuito 14 giorni</span>
         </p>
-        <a class="btn btn-primary btn-hero reveal" href="collezione.html">Esplora le composizioni<svg class="btn-freccia" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15.5"/><path d="m13.5 6 6 6-6 6"/></svg></a>
+        <a class="btn btn-primary btn-hero reveal" href="collezione.html?cat=natale">Scopri i regali di Natale<svg class="btn-freccia" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15.5"/><path d="m13.5 6 6 6-6 6"/></svg></a>
         <ul class="hero-fiducia">
           <li class="reveal">
             <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -252,6 +256,25 @@
             <span>Acquista con metodi di pagamento protetti.</span>
           </li>
         </ul>
+      </div>
+    </section>
+
+    <!-- ================= REGALI DI NATALE ================= -->
+    <section class="shop-sez natale-sez" id="natale" aria-label="Regali di Natale">
+      <div class="section-head">
+        <svg class="natale-rametto" width="92" height="40" viewBox="0 0 92 40" aria-hidden="true"><path d="M8 30C26 22 50 18 84 10" fill="none" stroke="#2E4B3A" stroke-width="1.6" stroke-linecap="round"/><g fill="#3F6449"><path d="M20 25c-2-5 0-9 4-11-1 5-1 8-4 11Z"/><path d="M20 25c5 1 9-1 11-5-5 0-8 1-11 5Z"/><path d="M38 21c-2-5 0-9 4-11-1 5-1 8-4 11Z"/><path d="M38 21c5 1 9-1 11-5-5 0-8 1-11 5Z"/><path d="M56 17c-2-5 0-9 4-11-1 5-1 8-4 11Z"/><path d="M56 17c5 1 9-1 11-5-5 0-8 1-11 5Z"/></g><g fill="#9E2B2E"><circle cx="29" cy="28" r="3"/><circle cx="34" cy="30" r="2.6"/><circle cx="47" cy="24" r="2.8"/></g><path d="M74 12l1.4 3.5 3.7.2-2.9 2.3 1 3.6-3.2-2.1-3.1 2.1 1-3.6-2.9-2.3 3.7-.2z" fill="#C2A45C"/></svg>
+        <p class="eyebrow reveal">Natale in bottega</p>
+        <h2 class="display reveal">Regali di Natale che <em>non appassiscono</em></h2>
+      </div>
+      <ul class="natale-promesse natale-promesse-home reveal">
+        <li><span><strong>Confezione regalo natalizia</strong> in omaggio</span></li>
+        <li><span><strong>Biglietto scritto a mano</strong> in omaggio</span></li>
+        <li><span><strong>Consegna entro Natale</strong> per ordini entro il 22 dicembre</span></li>
+        <li><span><strong>Spedizione gratis</strong> sopra € 99</span></li>
+      </ul>
+      <div class="prod-griglia" data-slugs="agrumi-oro,cuore-rose,mezzanotte-in-fiore,pettirosso-in-fiore,regina-capo,trittico-di-rose,sonno-angelo,scrigno-rose-sapone"></div>
+      <div class="piu-scelte-cta reveal">
+        <a class="btn btn-primary" href="collezione.html?cat=natale">Tutti i regali di Natale<svg class="btn-freccia" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15.5"/><path d="m13.5 6 6 6-6 6"/></svg></a>
       </div>
     </section>
 
@@ -812,6 +835,7 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 16.3V7.6c0-.6.4-1 1-1h9.3c.6 0 1 .4 1 1v8.7"/><path d="M14.1 9.8h3.1l2.7 3.1c.2.2.3.5.3.8v2.6h-1.9"/><path d="M8.7 16.3h5.4M2.8 16.3h1.4"/><circle cx="6.5" cy="16.6" r="1.9"/><circle cx="16.4" cy="16.6" r="1.9"/></svg>
         Spedizione 48/72h in tutta Italia
       </a>
+      <a class="menu-voce menu-natale" href="collezione.html?cat=natale">Regali di Natale</a>
       <p class="menu-gruppo">La collezione</p>
       <a class="menu-voce" href="collezione.html?cat=novita">Novità</a>
       <a class="menu-voce" href="collezione.html?cat=decorazioni">Decorazioni</a>
@@ -877,6 +901,7 @@
   <script src="animazioni.js"></script>
   <script src="main.js"></script>
   <script src="prodotti.js"></script>
+  <script src="natale.js"></script>
   <script src="catalogo.js"></script>
   <script src="assistente-fiorista.js"></script>
   <a class="whatsapp-float" href="https://wa.me/393273370547?text=Ciao%21%20Vorrei%20informazioni%20su%20una%20composizione." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">

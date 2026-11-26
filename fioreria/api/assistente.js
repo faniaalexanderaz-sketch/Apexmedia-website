@@ -60,7 +60,7 @@ function catalogoPerPrompt() {
     var taglie = (p.taglie || []).map(function (t) { return t.id + ' ' + t.prezzo + '€'; }).join(', ');
     var cat = (p.cat || []).join(', ');
     return '- ' + p.nome + ' (' + p.slug + '): ' + (taglie || p.prezzo + '€') +
-      (p.sconto ? ' [in saldo -' + p.sconto + '%]' : '') +
+      (p.sconto ? ' [in offerta -' + p.sconto + '%]' : '') +
       ' — categorie: ' + cat + ' — ' + p.desc + ' — ' + (p.avail || 'spedizione 48/72h');
   }).join('\n');
 }
@@ -73,7 +73,8 @@ function costruisciSystemPrompt() {
     'INFORMAZIONI FISSE (usa solo queste, non inventare altro):',
     '- Ritiro gratuito in bottega: via Emilio Faà di Bruno 6, Alessandria.',
     '- Spedizione in tutta Italia con corriere espresso: 48/72 ore lavorative. Isole minori/zone remote: un giorno in più.',
-    '- Costo spedizione assicurata: 12€ per formati S/M, 15€ per formati L/XL.',
+    '- Costo spedizione assicurata: 12€ per formati S/M, 15€ per formati L/XL. Gratis sopra 99€ di prodotti (pagamento online; esclusi contrassegno e bonsai).',
+    '- Natale: confezione regalo natalizia e biglietto scritto a mano in omaggio su ogni ordine; per riceverlo entro Natale bisogna ordinare entro il 22 dicembre. Collezione: collezione.html?cat=natale.',
     '- Le taglie: S (raccolta), M (formato classico), L (abbondante), XL (il doppio dei fiori della M, con sconto sul doppio prezzo).',
     '- Si può aggiungere un biglietto scritto a mano o un vaso in vetro prima del pagamento.',
     '- Pagamento sul sito con carta, Apple Pay o Google Pay.',
