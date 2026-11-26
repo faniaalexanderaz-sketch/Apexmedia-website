@@ -56,14 +56,14 @@ body {{ font-family:'Inter',sans-serif; color:var(--ink); font-size:9.4pt; line-
 .mossa li {{ display:flex; gap:2.5mm; align-items:flex-start; padding:1mm 0; }}
 .come {{ border:1px solid var(--line); border-radius:3mm; padding:5mm; font-size:9pt; color:var(--soft); margin-bottom:8mm; }}
 .come b {{ color:var(--ink); }}
-section {{ margin-bottom:5mm; }}
+section {{ margin-bottom:4mm; }}
 section header {{ display:flex; align-items:flex-end; gap:4mm; border-bottom:2px solid var(--ink); padding-bottom:2.5mm; margin-bottom:1mm; break-after:avoid; }}
 .sez {{ font-family:'Inter Display','Inter'; font-size:22pt; font-weight:700; color:var(--acc); line-height:1; }}
 section h2 {{ font-size:14pt; letter-spacing:-.01em; line-height:1.15; }}
 .sub {{ color:var(--soft); font-size:8.8pt; }}
 .cnt {{ margin-left:auto; font-size:7.8pt; color:var(--soft); white-space:nowrap; }}
 section ul {{ list-style:none; }}
-section li {{ display:flex; gap:3.5mm; padding:2mm 0; border-bottom:1px solid var(--line); break-inside:avoid; }}
+section li {{ display:flex; gap:3.5mm; padding:1.6mm 0; border-bottom:1px solid var(--line); break-inside:avoid; }}
 .box {{ flex:0 0 auto; width:4mm; height:4mm; border:1.3px solid var(--ink); border-radius:1mm; margin-top:.6mm; }}
 .box.sm {{ width:3.3mm; height:3.3mm; margin-top:.8mm; }}
 .num {{ font-size:7pt; color:var(--acc); font-weight:600; margin-right:2mm; letter-spacing:.05em; }}
