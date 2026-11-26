@@ -14,7 +14,7 @@ for i, (tit, sub, voci) in enumerate(SEZIONI, 1):
     for v, d in voci:
         n += 1
         if d == "SPIEGAZIONE":
-            d = "Lavoro pagato al seggio durante elezioni e referendum: 119,60 euro esentasse per un fine settimana. Domanda in Comune entro il 30 novembre. Tutto spiegato nel riquadro qui sotto."
+            d = "Lavoro pagato al seggio durante elezioni e referendum: 119,60 euro esentasse. Domanda in Comune entro il 30 novembre."
             righe.append(f'<li><span class="box"></span><div><span class="num">{n:03d}</span><b>{e(v)}</b><p>{e(d)}</p></div></li>')
             righe.append('<li class="riq"><div><h3>' + e(SCRUTATORE[0]) + '</h3>' + ''.join(f'<p>{x}</p>' for x in SCRUTATORE[1]) + '</div></li>')
             continue
@@ -78,16 +78,16 @@ section li p {{ color:var(--soft); margin-top:.6mm; }}
 <div class="cover">
  <div class="top">Checklist · Edizione novembre 2026</div>
  <h1>18 anni.<br><span>Le mosse</span><br>che contano.</h1>
- <p class="lead">Bonus da chiedere, soldi da guadagnare, sconti da attivare e mosse per far crescere i risparmi: solo cose concrete che da maggiorenne puoi fare da subito.</p>
- <div class="stats"><div><b>{totale}</b>voci da spuntare</div><div><b>{len(SEZIONI)}</b>sezioni</div><div><b>4</b>settimane per partire</div></div>
+ <p class="lead">Le cose semplici e importanti da fare a 18 anni: documenti, conto, risparmio, investimenti, bonus, patente, viaggi e voto.</p>
+ <div class="stats"><div><b>{totale}</b>voci da spuntare</div><div><b>{len(SEZIONI)}</b>sezioni</div><div><b>4</b>passi per partire</div></div>
  <ul class="toc">{indice}</ul>
  <p class="nota">Informazioni aggiornate a novembre 2026. Bonus, importi e scadenze cambiano con le leggi di bilancio: prima di fare domanda controlla sempre il sito ufficiale.</p>
 </div>
 <div class="intro">
  <h2>Le prime mosse</h2>
- <p class="sub">Se non sai da dove partire, segui questo ordine nel primo mese.</p>
+ <p class="sub">Se vuoi partire subito, inizia da qui.</p>
  <div class="mosse">{mosse}</div>
- <div class="come"><b>Come usarla.</b> Ogni voce è un'azione che ti fa guadagnare, risparmiare o ti apre un'opportunità. Spuntala quando l'hai fatta. Parti dal primo mese qui sopra, poi scegli le sezioni che ti servono. Qui sotto trovi tutte le {totale} voci divise per argomento.</div>
+ <div class="come"><b>Come usarla.</b> Spunta ogni voce quando l'hai fatta. Qui sotto trovi tutte le {totale} voci divise per argomento.</div>
 </div>
 {"".join(parti)}
 <div class="fine"><b>Nota.</b> Questa checklist è una guida pratica, non una consulenza legale, fiscale o finanziaria. Per investimenti e fondo pensione leggi sempre i documenti ufficiali del prodotto. Per bonus e agevolazioni fanno fede i siti ufficiali: cultura.gov.it, youth.europa.eu, inps.it, agenziaentrate.gov.it, politichegiovanili.gov.it, covip.it, consob.it.</div>
