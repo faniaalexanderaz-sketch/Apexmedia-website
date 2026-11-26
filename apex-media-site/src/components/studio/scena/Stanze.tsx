@@ -1,5 +1,6 @@
 "use client";
 
+import { Pianta3D } from "./Piante3D";
 import { useEffect, useMemo } from "react";
 import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
@@ -237,7 +238,12 @@ export function Giardino({ x, z }: { x: number; z: number }) {
 /* ---------- Piante grandi ---------- */
 
 /** Palma kentia: più fusti sottili e fronde lunghe che ricadono. */
+/** Palma vera (modello 3D); quella disegnata resta come riserva mentre carica. */
 export function Palma({ x, z, s = 1 }: { x: number; z: number; s?: number }) {
+  return <Pianta3D tipo="alta" x={x} z={z} altezza={2.5 * s} rot={x * 1.7} riserva={<group position={[-x, 0, -z]}><PalmaDisegnata x={x} z={z} s={s} /></group>} />;
+}
+
+function PalmaDisegnata({ x, z, s = 1 }: { x: number; z: number; s?: number }) {
   const fronde = useMemo(() => {
     const out: { fusto: number; a: number; inclina: number; l: number }[] = [];
     [0, 1, 2].forEach((f) => { for (let i = 0; i < 6; i++) out.push({ fusto: f, a: (i / 6) * Math.PI * 2 + f * 0.6, inclina: 0.7 + (i % 3) * 0.18, l: 0.95 + (i % 2) * 0.25 }); });

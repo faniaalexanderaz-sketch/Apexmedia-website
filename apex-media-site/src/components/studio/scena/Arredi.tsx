@@ -1,8 +1,9 @@
 "use client";
 
+import { Pianta3D } from "./Piante3D";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
-import { Line, RoundedBox } from "@react-three/drei";
+import { Line, MeshReflectorMaterial, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { FONDO, LARGO } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
@@ -53,10 +54,10 @@ function useMarmo() {
       let seme = 23;
       const rnd = () => { seme = (seme * 9301 + 49297) % 233280; return seme / 233280; };
       const g = x.createLinearGradient(0, 0, w, h);
-      g.addColorStop(0, "#f6f3ee"); g.addColorStop(0.5, "#efebe4"); g.addColorStop(1, "#f4f1eb");
+      g.addColorStop(0, "#141418"); g.addColorStop(0.5, "#0e0e12"); g.addColorStop(1, "#16161b");
       x.fillStyle = g; x.fillRect(0, 0, w, h);
       // nuvole leggere
-      for (let i = 0; i < 40; i++) { const cx = rnd() * w, cy = rnd() * h, r = 80 + rnd() * 260; const gr = x.createRadialGradient(cx, cy, 0, cx, cy, r); gr.addColorStop(0, "rgba(200,196,190,0.14)"); gr.addColorStop(1, "rgba(200,196,190,0)"); x.fillStyle = gr; x.fillRect(cx - r, cy - r, r * 2, r * 2); }
+      for (let i = 0; i < 40; i++) { const cx = rnd() * w, cy = rnd() * h, r = 80 + rnd() * 260; const gr = x.createRadialGradient(cx, cy, 0, cx, cy, r); gr.addColorStop(0, "rgba(70,70,82,0.22)"); gr.addColorStop(1, "rgba(70,70,82,0)"); x.fillStyle = gr; x.fillRect(cx - r, cy - r, r * 2, r * 2); }
       const vena = (colore: string, spessore: number, alfa: number) => {
         let px = rnd() * w, py = rnd() * h;
         const ang = rnd() * Math.PI * 2;
@@ -70,11 +71,11 @@ function useMarmo() {
         }
         x.globalAlpha = 1;
       };
-      for (let i = 0; i < 26; i++) vena("#8d8b91", 6, 0.12);
-      for (let i = 0; i < 40; i++) vena("#6f6d74", 1.6, 0.22);
-      for (let i = 0; i < 7; i++) vena("#b8924f", 1.4, 0.35);
+      for (let i = 0; i < 22; i++) vena("#c9c9d2", 5, 0.07);
+      for (let i = 0; i < 46; i++) vena("#e8e6ee", 1.3, 0.28);
+      for (let i = 0; i < 9; i++) vena("#d8ad5e", 1.5, 0.55);
       // fughe tra le lastre
-      x.fillStyle = "rgba(120,110,100,0.18)";
+      x.fillStyle = "rgba(200,170,110,0.22)";
       for (let k = 0; k <= 4; k++) { x.fillRect(k * (w / 4) - 1, 0, 2, h); x.fillRect(0, k * (h / 4) - 1, w, 2); }
     });
     t.wrapS = t.wrapT = THREE.RepeatWrapping;
@@ -83,7 +84,7 @@ function useMarmo() {
   }, []);
 }
 
-export function Pavimento() {
+export function Pavimento({ riflessi = false }: { riflessi?: boolean }) {
   const marmo = useMarmo();
   const ombra = useMemo(() => tela(256, 256, (x, w, h) => {
     const g = x.createRadialGradient(w / 2, h / 2, w * 0.2, w / 2, h / 2, w / 2);
@@ -97,10 +98,15 @@ export function Pavimento() {
       <mesh geometry={GEO.piano} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.8, 1.5]} scale={[LARGO * 1.45, FONDO * 1.7, 1]}>
         <meshBasicMaterial map={ombra} transparent depthWrite={false} toneMapped={false} />
       </mesh>
-      <RoundedBox args={[LARGO, 0.7, FONDO]} radius={0.3} smoothness={4} position={[0, -0.37, 0]} material={mat("#efe6d6", 0.8)} receiveShadow />
+      <RoundedBox args={[LARGO, 0.7, FONDO]} radius={0.3} smoothness={4} position={[0, -0.47, 0]} material={mat("#1a1a20", 0.6)} receiveShadow />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
         <planeGeometry args={[LARGO - 0.4, FONDO - 0.4]} />
-        <meshStandardMaterial map={marmo} roughness={0.14} metalness={0.05} envMapIntensity={1.3} polygonOffset polygonOffsetFactor={2} polygonOffsetUnits={2} />
+        {riflessi ? (
+          // marmo nero lucido che riflette davvero persone, LED e schermi
+          <MeshReflectorMaterial map={marmo} resolution={1024} blur={[260, 80]} mixBlur={0.9} mixStrength={0.9} mixContrast={1} mirror={0.35} depthScale={0.4} minDepthThreshold={0.6} maxDepthThreshold={1.2} roughness={0.32} metalness={0} envMapIntensity={0.35} polygonOffset polygonOffsetFactor={1} polygonOffsetUnits={1} />
+        ) : (
+          <meshStandardMaterial map={marmo} roughness={0.22} metalness={0} envMapIntensity={0.4} polygonOffset polygonOffsetFactor={1} polygonOffsetUnits={1} />
+        )}
       </mesh>
       {/* bordi bassi ai lati con la luce LED blu sul filo */}
       {[-1, 1].map((l) => (
@@ -262,7 +268,12 @@ export function Succulenta({ x, y, z }: { x: number; y: number; z: number }) {
 const VERDI = ["#2f7d4f", "#3a9160", "#4fa872", "#2a6e45"];
 
 /** Monstera: foglie larghe su steli inclinati, vaso in terracotta. */
-export function Monstera({ x, z, s = 1, vaso = "#c8794e" }: { x: number; z: number; s?: number; vaso?: string }) {
+/** Monstera: modello 3D vero, con quella disegnata come riserva mentre carica. */
+export function Monstera({ x, z, s = 1, vaso }: { x: number; z: number; s?: number; vaso?: string }) {
+  return <Pianta3D tipo="media" x={x} z={z} altezza={1.7 * s} rot={z * 1.3} riserva={<group position={[-x, 0, -z]}><MonsteraDisegnata x={x} z={z} s={s} vaso={vaso} /></group>} />;
+}
+
+function MonsteraDisegnata({ x, z, s = 1, vaso = "#c8794e" }: { x: number; z: number; s?: number; vaso?: string }) {
   const foglie = useMemo(() => Array.from({ length: 11 }, (_, i) => {
     const a = (i / 11) * Math.PI * 2 + (i % 2) * 0.3, inclina = 0.55 + (i % 3) * 0.18, h = 0.75 + (i % 4) * 0.16;
     return { a, inclina, h, c: VERDI[i % VERDI.length] };
@@ -284,7 +295,12 @@ export function Monstera({ x, z, s = 1, vaso = "#c8794e" }: { x: number; z: numb
 }
 
 /** Sansevieria: foglie dritte e appuntite, bordo chiaro. */
-export function Sansevieria({ x, z, s = 1, vaso = "#2b2e3a" }: { x: number; z: number; s?: number; vaso?: string }) {
+/** Sansevieria: modello 3D vero, con quella disegnata come riserva mentre carica. */
+export function Sansevieria({ x, z, s = 1, vaso }: { x: number; z: number; s?: number; vaso?: string }) {
+  return <Pianta3D tipo="anthurium" x={x} z={z} altezza={1.25 * s} rot={z * 1.3} riserva={<group position={[-x, 0, -z]}><SansevieriaDisegnata x={x} z={z} s={s} vaso={vaso} /></group>} />;
+}
+
+function SansevieriaDisegnata({ x, z, s = 1, vaso = "#2b2e3a" }: { x: number; z: number; s?: number; vaso?: string }) {
   return (
     <group position={[x, 0, z]} scale={s}>
       <Cil p={[0, 0.26, 0]} s={[0.48, 0.52, 0.48]} m={mat(vaso, 0.5)} />
@@ -302,7 +318,12 @@ export function Sansevieria({ x, z, s = 1, vaso = "#2b2e3a" }: { x: number; z: n
 }
 
 /** Ficus ad alberello: tronco, chioma a nuvole. */
-export function Ficus({ x, z, s = 1, vaso = "#f2eee7" }: { x: number; z: number; s?: number; vaso?: string }) {
+/** Ficus: modello 3D vero, con quella disegnata come riserva mentre carica. */
+export function Ficus({ x, z, s = 1, vaso }: { x: number; z: number; s?: number; vaso?: string }) {
+  return <Pianta3D tipo="pachira" x={x} z={z} altezza={2.0 * s} rot={z * 1.3} riserva={<group position={[-x, 0, -z]}><FicusDisegnata x={x} z={z} s={s} vaso={vaso} /></group>} />;
+}
+
+function FicusDisegnata({ x, z, s = 1, vaso = "#f2eee7" }: { x: number; z: number; s?: number; vaso?: string }) {
   return (
     <group position={[x, 0, z]} scale={s}>
       <mesh geometry={GEO.vaso} material={mat(vaso, 0.5)} position={[0, 0.3, 0]} scale={[0.6, 0.6, 0.6]} castShadow receiveShadow />
@@ -337,11 +358,11 @@ export function Tappeto({ x, z, w, d, c, tondo }: { x: number; z: number; w: num
 export function ScrittaPavimento({ x, z, nome, sotto, font }: { x: number; z: number; nome: string; sotto: string; font: Font }) {
   const t = useMemo(() => tela(768, 96, (c) => {
     c.textBaseline = "top";
-    c.fillStyle = "#8a7a62";
+    c.fillStyle = "#e8d7b0";
     c.font = `700 34px ${font.titoli}`;
     c.letterSpacing = "5px";
     c.fillText(nome.toUpperCase(), 4, 6);
-    c.fillStyle = "#a89a83";
+    c.fillStyle = "#9d927c";
     c.font = `500 24px ${font.testo}`;
     c.letterSpacing = "0px";
     c.fillText(sotto, 4, 56);

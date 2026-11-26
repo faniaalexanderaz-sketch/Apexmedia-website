@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { CameraControls, CameraControlsImpl, Environment, Html, Lightformer, PerformanceMonitor, SoftShadows } from "@react-three/drei";
 import { Bloom, EffectComposer, N8AO } from "@react-three/postprocessing";
@@ -12,6 +12,9 @@ import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCli
 import { Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
+import { precaricaPiante } from "./Piante3D";
+
+precaricaPiante();
 import { Personaggio, Sedia, type Umore } from "./Personaggio";
 
 /* =============================================================
@@ -87,7 +90,7 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const z = ZONE.find((q) => q.id === zona);
     if (z) return { x: z.centro[0], z: z.centro[1], ampiezza: z.ampiezza, fondo: Math.min(14, z.ampiezza * 0.62), y: z.centro[1] < -9 ? 2 : 0.9 };
     // vista d'ingresso: il cuore dell'ufficio da vicino, non tutta la pianta
-    if (zona === "vicino") return size.width < 760 ? { x: 0, z: 3.2, ampiezza: 12, fondo: 9, y: 0.8 } : { x: 0, z: 0.4, ampiezza: 28, fondo: 19, y: 0.8 };
+    if (zona === "vicino") return size.width < 760 ? { x: 0, z: 2.4, ampiezza: 7, fondo: 5, y: 1.0, basso: true } : { x: 0, z: -0.6, ampiezza: 15, fondo: 9, y: 1.0, basso: true };
     return null;
   }, [selezione, zona, agenti, clienti, size.width]);
 
@@ -97,17 +100,17 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const stretto = size.width < 760;
     const liberoW = Math.max(200, size.width - coperto.destra - coperto.sinistra), liberoH = Math.max(200, size.height - coperto.basso - coperto.alto);
     const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size.height);
-    const elev = THREE.MathUtils.degToRad(mira ? 48 : 54);
+    const elev = THREE.MathUtils.degToRad(mira && "basso" in mira ? 26 : mira ? 40 : 54);
     const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 12) : mira.ampiezza) : stretto ? 22 : LARGO + 2;
     const fondo = mira ? mira.fondo : stretto ? 18 : FONDO + 2;
     const distW = (ampiezza / 2 / tanH) * (size.width / liberoW);
     const distD = ((fondo * Math.sin(elev) + 4.5 * Math.cos(elev)) / 2 / tanV) * (size.height / liberoH);
-    const dist = Math.max(distW, distD, 9);
+    const dist = Math.max(distW, distD, 4);
     const perPx = (2 * dist * tanH) / size.width;
     const tx = (mira?.x ?? 0) + ((coperto.destra - coperto.sinistra) / 2) * perPx;
     const tz = (mira?.z ?? (stretto ? 0 : 0.4)) + (((coperto.basso - coperto.alto) / 2) * perPx) / Math.sin(elev);
     const ty = mira ? mira.y : 0.6;
-    c.minDistance = 7;
+    c.minDistance = 2.2;
     c.maxDistance = Math.max(dist * 1.15, (LARGO / 2 / tanH) * 1.3);
     void c.setLookAt(tx, ty + dist * Math.sin(elev), tz + dist * Math.cos(elev), tx, ty, tz, !prima.current);
     prima.current = false;
@@ -126,7 +129,7 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     c.setBoundary(new THREE.Box3(new THREE.Vector3(-LARGO / 2, 0, -FONDO / 2 - 1), new THREE.Vector3(LARGO / 2, 3, FONDO / 2 + 6)));
   }, []);
 
-  return <CameraControls ref={ctrl} makeDefault smoothTime={0.45} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={2.2} minPolarAngle={0.3} maxPolarAngle={1.18} dollyToCursor />;
+  return <CameraControls ref={ctrl} makeDefault smoothTime={0.45} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={2.2} minPolarAngle={0.25} maxPolarAngle={1.42} dollyToCursor />;
 }
 
 /* ---------- Etichette e fumetti ---------- */
@@ -177,12 +180,20 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       <directionalLight position={[-14, 30, 16]} intensity={2.4} color="#fff6ea" castShadow shadow-mapSize={[p.ombre, p.ombre]} shadow-bias={-0.0003} shadow-normalBias={0.04}>
         <orthographicCamera attach="shadow-camera" args={[-27, 27, 22, -22, 1, 90]} />
       </directionalLight>
-      <Environment resolution={128} frames={1} environmentIntensity={0.42}>
+      {/* luce vera: foto HDR di un salotto (Poly Haven, CC0) più i pannelli luminosi dell'ufficio */}
+      <Suspense fallback={<Environment resolution={128} frames={1} environmentIntensity={0.42}>
         <Lightformer form="rect" intensity={2.2} position={[0, 12, 6]} scale={[30, 14, 1]} rotation={[Math.PI / 2, 0, 0]} color="#ffffff" />
         <Lightformer form="rect" intensity={0.9} position={[-20, 6, 10]} scale={[12, 8, 1]} rotation={[0, Math.PI / 2, 0]} color="#ffeedd" />
         <Lightformer form="rect" intensity={0.7} position={[20, 6, -6]} scale={[12, 8, 1]} rotation={[0, -Math.PI / 2, 0]} color="#dfe6ff" />
         <Lightformer form="rect" intensity={0.6} position={[0, 4, -20]} scale={[30, 6, 1]} color="#c9b8ff" />
-      </Environment>
+      </Environment>}>
+        <Environment files="/studio/3d/salotto.hdr" resolution={256} frames={1} environmentIntensity={0.45}>
+        <Lightformer form="rect" intensity={2.2} position={[0, 12, 6]} scale={[30, 14, 1]} rotation={[Math.PI / 2, 0, 0]} color="#ffffff" />
+        <Lightformer form="rect" intensity={0.9} position={[-20, 6, 10]} scale={[12, 8, 1]} rotation={[0, Math.PI / 2, 0]} color="#ffeedd" />
+        <Lightformer form="rect" intensity={0.7} position={[20, 6, -6]} scale={[12, 8, 1]} rotation={[0, -Math.PI / 2, 0]} color="#dfe6ff" />
+        <Lightformer form="rect" intensity={0.6} position={[0, 4, -20]} scale={[30, 6, 1]} color="#c9b8ff" />
+        </Environment>
+      </Suspense>
       {/* luci calde dei reparti: insegna, cervello, lampada relax, sala strategia, tavolo social, giardino */}
       {p.livello > 0 ? (
         <>
@@ -196,7 +207,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       ) : null}
 
       <Statico chiave={`${font.pronto}|${p.clienti.map((c) => c.id).join(",")}|${p.altriClienti > 0}`}>
-      <Pavimento />
+      <Pavimento riflessi={p.livello > 1} />
       <Muro font={font} n={p.conteggi} />
 
       {/* tappeti dei reparti e nomi a terra */}
@@ -356,7 +367,7 @@ export default function Scena(p: PropsScena) {
     );
   }
   return (
-    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 27, near: 2, far: 200, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita }}
+    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 42, near: 0.6, far: 140, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita }}
       onCreated={({ gl, scene }) => { if (process.env.NODE_ENV !== "production") Object.assign(window, { __studio: { gl, scene } }); gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
       onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
       <PerformanceMonitor flipflops={2} onDecline={() => setLivello((l) => (l > 0 ? ((l - 1) as Livello) : l))} onFallback={() => setLivello(0)} />
