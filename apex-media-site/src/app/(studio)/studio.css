@@ -212,6 +212,24 @@ body:has(.st-strato:not([data-nascosto]) .st-ufficio) .st { position: fixed; ins
 .st-dock-carta p { font-size: 12.5px; color: var(--muto); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
 .st-dock-carta span:last-child { display: flex; gap: 4px; margin-top: 7px; flex-wrap: wrap; }
 .st-dock-vuoto { width: min(100%, 560px); }
+.st-dock[hidden] { display: none; }
+.st-dock-titolo { position: relative; }
+.st-dock-tasti { display: flex; gap: 4px; margin-top: 8px; }
+.st .st-dock-tasti button { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 999px; background: #f1f1f5; color: var(--ink); }
+.st .st-dock-tasti button:hover { background: #e6e6ee; }
+/* grande: tutte le cose da fare, una sotto l'altra */
+.st-dock[data-dock="grande"] { flex-direction: column; max-height: min(70dvh, 640px); }
+.st-dock[data-dock="grande"] .st-dock-titolo { width: auto; display: flex; align-items: center; gap: 10px; padding: 2px 6px; }
+.st-dock[data-dock="grande"] .st-dock-tasti { margin: 0 0 0 auto; }
+.st-dock[data-dock="grande"] .st-dock-scorri { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); overflow-y: auto; overflow-x: hidden; scroll-snap-type: none; }
+.st-dock[data-dock="grande"] .st-dock-scorri .st-promemoria { width: auto; }
+.st-dock[data-dock="grande"] .st-dock-scorri .st-promemoria p { display: -webkit-box; }
+/* chiuso: una pillola in basso, lo studio resta tutto libero */
+.st-dock-pillola { position: absolute; left: 16px; bottom: 14px; z-index: 50; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(14px); box-shadow: var(--ombra); font-size: 14px; color: var(--ink); }
+.st-dock-pillola b { font-family: var(--titoli); }
+.st-dock-pillola em { font-style: normal; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--rosso); color: #fff; font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+.st-dock-pillola small { color: var(--muto); }
+.st-ufficio[data-team="aperto"] .st-dock-pillola, .st-ufficio[data-team="chiuso"] .st-dock-pillola { left: calc(var(--team) + 6px); }
 .st-dock-vuoto b { white-space: normal; }
 
 /* avatar e sigle */
@@ -645,7 +663,11 @@ body:has(.st-strato:not([data-nascosto]) .st-ufficio) .st { position: fixed; ins
   .st-dock-scorri .st-promemoria > div > span { margin-top: 4px; }
   .st-ufficio[data-pannello] .st-zone, .st-ufficio[data-pannello] .st-dock, .st-ufficio[data-pannello] .st-saluto { display: none; }
   .st-dock { left: 8px; right: 8px; bottom: 8px; padding: 8px; border-radius: 18px; flex-direction: column; gap: 6px; }
-  .st-dock-titolo { width: auto; display: flex; gap: 8px; align-items: baseline; padding: 0 6px; }
+  .st-dock-titolo { width: auto; display: flex; gap: 8px; align-items: center; padding: 0 2px 0 6px; }
+  .st-dock-tasti { margin: 0 0 0 auto; }
+  .st-dock[data-dock="grande"] .st-dock-scorri { grid-template-columns: 1fr; }
+  .st-dock-pillola { left: 8px; bottom: 8px; }
+  .st-ufficio:has(.st-dock-pillola) .st-zone { left: 132px; right: 8px; bottom: 8px; }
   .st-dock-carta { width: min(84vw, 320px); padding: 9px 11px; height: 118px; }
   .st-dock-scorri .st-promemoria { width: min(84vw, 320px); }
   .st-notifiche { left: 8px; right: 8px; width: auto; top: 104px; max-height: calc(100dvh - 120px); }

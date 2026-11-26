@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { site } from "@/data/site";
 import { REGOLE_FISSE } from "@/lib/studio/regole";
 import { AGENTE, AGENTI, POSTI_RELAX, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
@@ -22,6 +22,15 @@ import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
    Qui si decide dove sta ognuno: alla scrivania se lavora, davanti
    alla tua scrivania se deve dirti qualcosa, in area relax se è libero.
    ============================================================= */
+
+/* Il riquadro "Da fare per te" si può ridurre a una pillola, ingrandire o tenere normale.
+   La scelta resta ricordata su questo dispositivo. */
+type Dock = "normale" | "chiuso" | "grande";
+const CHIAVE_DOCK = "studio-dock";
+const ascoltaDock = new Set<() => void>();
+function leggiDock(): Dock { try { const v = localStorage.getItem(CHIAVE_DOCK); return v === "chiuso" || v === "grande" ? v : "normale"; } catch { return "normale"; } }
+function scriviDock(v: Dock) { try { localStorage.setItem(CHIAVE_DOCK, v); } catch { /* niente memoria: vale solo adesso */ } ascoltaDock.forEach((f) => f()); }
+const iscriviDock = (f: () => void) => { ascoltaDock.add(f); return () => { ascoltaDock.delete(f); }; };
 
 const Scena = dynamic(() => import("./scena/Scena"), { ssr: false, loading: () => <div className="st-scena-attesa" role="status"><span className="st-attesa-punto" />Accendo le luci dell&apos;ufficio…</div> });
 
@@ -46,6 +55,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   const [teamChiuso, setTeamChiuso] = useState<boolean | null>(null);
   const [selezione, setSelezione] = useState<Selezione>(null);
   const [elenco, setElenco] = useState(false);
+  const dock = useSyncExternalStore(iscriviDock, leggiDock, () => "normale" as Dock);
   const largo = useLargo();
   // il 3D parte solo se il browser lo permette davvero; altrimenti resta tutto il resto dello Studio
   const [treD, setTreD] = useState<boolean | null>(null);
@@ -111,7 +121,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   const inVisita = useMemo(() => new Set(modello.agenti.filter((a) => a.fumetto).map((a) => a.id)), [modello.agenti]);
   const sceltoAgente = selezione?.tipo === "agente" ? selezione.id : null;
   const pannelloAperto = selezione !== null;
-  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 420 : 0, sinistra: larghezzaTeam, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.6) : stretto ? 175 : 150, alto: stretto ? 120 : 70 }), [pannelloAperto, stretto, larghezzaTeam]);
+  const coperto = useMemo(() => ({ destra: pannelloAperto && !stretto ? 420 : 0, sinistra: larghezzaTeam, basso: pannelloAperto && stretto ? Math.round(typeof window === "undefined" ? 380 : window.innerHeight * 0.6) : dock === "chiuso" ? (stretto ? 60 : 20) : stretto ? 175 : 150, alto: stretto ? 120 : 70 }), [pannelloAperto, stretto, larghezzaTeam, dock]);
   const daScadere = promemoria.filter((p) => p.tono === "allarme").length;
 
   return (
@@ -122,7 +132,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
         <Scena attivo={attivo} nome={site.founders[0].split(" ")[0]} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} ads={modello.ads} conteggi={modello.conteggi} regole={dati.regole.length} inAttesa={promemoria.length}
           zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli}
           onFumetto={(id) => { const p = promemoria.find((x) => x.id === id); if (p) void esegui(p); }}
-          onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); }} />
+          onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); if (dock === "chiuso") scriviDock("normale"); }} />
       </Confine3D>
         ) : null}
       </div>
@@ -145,8 +155,23 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
         {modello.clienti.map((c) => <button key={`c${c.id}`} type="button" className="st-zona-cliente" aria-pressed={selezione?.tipo === "cliente" && selezione.id === c.id} onClick={() => scegli({ tipo: "cliente", id: c.id })}><i style={{ background: c.colore }} />{c.nome}</button>)}
       </div>
 
-      <section className="st-dock" aria-label="Promemoria" data-aperto={elenco || undefined}>
-        <div className="st-dock-titolo"><b>Da fare per te</b><small>{promemoria.length === 0 ? "niente in sospeso" : `${promemoria.length} ${promemoria.length === 1 ? "cosa" : "cose"}`}</small></div>
+      {dock === "chiuso" ? (
+        <button type="button" className="st-dock-pillola" onClick={() => scriviDock("normale")} aria-label="Apri Da fare per te">
+          <b>Da fare</b>{promemoria.length ? <em>{promemoria.length}</em> : <small>niente</small>}
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+      ) : null}
+      <section className="st-dock" aria-label="Promemoria" data-aperto={elenco || undefined} data-dock={dock} hidden={dock === "chiuso"}>
+        <div className="st-dock-titolo"><b>Da fare per te</b><small>{promemoria.length === 0 ? "niente in sospeso" : `${promemoria.length} ${promemoria.length === 1 ? "cosa" : "cose"}`}</small>
+          <span className="st-dock-tasti">
+            <button type="button" onClick={() => scriviDock(dock === "grande" ? "normale" : "grande")} aria-label={dock === "grande" ? "Rimpicciolisci" : "Ingrandisci"} title={dock === "grande" ? "Rimpicciolisci" : "Ingrandisci"}>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">{dock === "grande" ? <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /> : <path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />}</svg>
+            </button>
+            <button type="button" onClick={() => { scriviDock("chiuso"); setElenco(false); }} aria-label="Chiudi e guarda lo studio" title="Chiudi">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
+            </button>
+          </span>
+        </div>
         <ul className="st-dock-scorri">
           {promemoria.slice(0, 12).map((p) => <RigaPromemoria key={p.id} p={p} compatta />)}
           {promemoria.length === 0 ? (
