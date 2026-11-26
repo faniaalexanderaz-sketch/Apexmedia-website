@@ -5,10 +5,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Line, MeshReflectorMaterial, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
-import { FONDO, LARGO } from "@/lib/studio/agenti";
+import { FONDO, LARGO, TERRAZZA } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
 import type { SchermoTv } from "@/lib/studio/tipi";
-import { C, GEO, MAT_INVISIBILE, MAT_VETRO, TelaViva, disegnaSchermoVivo, mat, matLed, matLucido, matLuce, matMetallo, matOttone, rett, schermo, nuovoSchermoVivo, tela, type Font } from "./base";
+import { C, GEO, MAT_INVISIBILE, MAT_VETRO, TelaViva, mat, matLed, matLucido, matLuce, matMetallo, matOttone, rett, tela, type Font } from "./base";
+import { Computer, Mouse, Portatile, Quaderno, Tastiera, TelefonoBanco, Tazza } from "./Scrivanie";
 
 /* =============================================================
    Tutto ciò che non è una persona: pavimento in marmo, muro con
@@ -110,11 +111,12 @@ export function Pavimento({ riflessi = false }: { riflessi?: boolean }) {
         )}
       </mesh>
       {/* bordi bassi ai lati con la luce LED blu sul filo */}
-      {[-1, 1].map((l) => (
-        <group key={l}>
-          <RoundedBox args={[0.36, 0.55, FONDO]} radius={0.12} smoothness={3} position={[l * (LARGO / 2 - 0.18), 0.27, 0]} material={bordo} castShadow receiveShadow />
-          <Box p={[l * (LARGO / 2 - 0.37), 0.53, 0.2]} s={[0.04, 0.04, FONDO - 0.8]} m={matOttone()} ombra={false} />
-          <Led da={[l * (LARGO / 2 - 0.37), -FONDO / 2 + 0.6]} a={[l * (LARGO / 2 - 0.37), FONDO / 2 - 0.4]} y={0.47} c="#ffcf7a" spessore={0.035} forza={2} />
+      {/* a destra il bordo si apre sulla terrazza della spa */}
+      {([[-1, -FONDO / 2, FONDO / 2], [1, -FONDO / 2, TERRAZZA.porta[0]], [1, TERRAZZA.porta[1], FONDO / 2]] as [number, number, number][]).map(([l, za, zb], i) => (
+        <group key={i}>
+          <RoundedBox args={[0.36, 0.55, zb - za]} radius={0.12} smoothness={3} position={[l * (LARGO / 2 - 0.18), 0.27, (za + zb) / 2]} material={bordo} castShadow receiveShadow />
+          <Box p={[l * (LARGO / 2 - 0.37), 0.53, (za + zb) / 2 + 0.1]} s={[0.04, 0.04, zb - za - 0.6]} m={matOttone()} ombra={false} />
+          <Led da={[l * (LARGO / 2 - 0.37), za + 0.5]} a={[l * (LARGO / 2 - 0.37), zb - 0.4]} y={0.47} c="#ffcf7a" spessore={0.035} forza={2} />
         </group>
       ))}
       {/* muro di fondo con zoccolo e striscia viola in cima */}
@@ -173,73 +175,53 @@ export function InsegnaApex({ font }: { font: Font }) {
 
 /* ---------- Scrivanie e monitor ---------- */
 
-/** Schermo vivo: per chi lavora (o ti aspetta) cambia due volte al secondo. */
-function useSchermo(tipo: string, stato: StatoAgente, accento: string, fase: number): THREE.CanvasTexture {
-  const vivo = stato === "lavora" || stato === "attesa";
-  const viva = useMemo(() => (vivo ? nuovoSchermoVivo() : null), [vivo]);
-  useEffect(() => () => viva?.dispose(), [viva]);
-  useFrame(({ clock }) => {
-    viva?.aggiorna(Math.floor(clock.elapsedTime * 2 + fase * 3.7), (x) => disegnaSchermoVivo(x, tipo, accento, Math.floor(clock.elapsedTime * 2 + fase * 3.7), stato === "attesa"));
-  });
-  return viva?.t ?? schermo(tipo, stato, accento);
-}
-
-function Monitor({ x, z, tipo, stato, accento, largo = 1.45, rot = 0 }: { x: number; z: number; tipo: string; stato: StatoAgente; accento: string; largo?: number; rot?: number }) {
-  const map = useSchermo(tipo, stato, accento, x + z);
-  const alto = largo * 0.6;
-  return (
-    <group position={[x, 0.78, z]} rotation={[0, rot, 0]} userData={{ dinamico: true }}>
-      <Cil p={[0, 0.012, 0]} s={[0.4, 0.024, 0.27]} m={matMetallo("#b8bbc4")} />
-      <Box p={[0, 0.2, 0.02]} s={[0.07, 0.38, 0.045]} m={matMetallo("#b8bbc4")} />
-      <group position={[0, 0.42 + alto / 2, 0]} rotation={[-0.12, 0, 0]}>
-        {/* luce LED dietro lo schermo, col colore di chi ci lavora */}
-        <mesh geometry={GEO.box} material={matLed(accento, stato === "libero" ? 0.6 : 1.6)} position={[0, 0, -0.045]} scale={[largo + 0.08, alto + 0.08, 0.01]} />
-        <RoundedBox args={[largo, alto, 0.05]} radius={0.02} smoothness={2} material={matLucido("#15171f")} castShadow />
-        <mesh geometry={GEO.piano} position={[0, 0.005, 0.027]} scale={[largo - 0.06, alto - 0.06, 1]}>
-          <meshBasicMaterial map={map} toneMapped={false} />
-        </mesh>
-      </group>
-    </group>
-  );
-}
-
 export type PostoScrivania = { x: number; tipo: string; stato: StatoAgente; accento: string };
 
-/** Scrivania lunga: piano in rovere, gambe in metallo, pannello frontale, LED col colore del reparto. `z` è la fila delle sedie. */
+/** Scrivania moderna: piano in rovere chiaro sottile, telaio in acciaio nero, pannello in feltro, LED col colore del reparto.
+   Per ogni posto: computer tutto-in-uno, tastiera, mouse e qualche oggetto personale. `z` è la fila delle sedie. */
 export function Scrivania({ z, posti, led, larga }: { z: number; posti: PostoScrivania[]; led: string; larga?: boolean }) {
   const xs = posti.map((p) => p.x);
   const centro = (Math.min(...xs) + Math.max(...xs)) / 2;
-  const largo = Math.max(...xs) - Math.min(...xs) + (larga ? 3.2 : 2.4);
-  const zc = z - 0.9;
-  const rovere = mat("#7a5236", 0.42), metallo = matOttone();
+  const largo = Math.max(...xs) - Math.min(...xs) + (larga ? 3.0 : 2.2);
+  const prof = 0.86, zc = z - 0.88;
+  const rovere = mat("#cba77c", 0.5), acciaio = mat("#1c1d22", 0.38, 0.6), feltro = mat("#3a3d45", 0.95);
   return (
     <group>
-      <RoundedBox args={[largo, 0.07, 1.05]} radius={0.03} smoothness={3} position={[centro, 0.75, zc]} material={rovere} castShadow receiveShadow />
+      <RoundedBox args={[largo, 0.034, prof]} radius={0.012} smoothness={3} position={[centro, 0.768, zc]} material={rovere} castShadow receiveShadow />
+      <mesh geometry={GEO.box} material={mat("#b48f62", 0.55)} position={[centro, 0.751, zc]} scale={[largo - 0.02, 0.004, prof - 0.02]} />
+      {/* telaio a slitta in acciaio nero */}
       {[-1, 1].map((l) => (
-        <group key={l} position={[centro + l * (largo / 2 - 0.12), 0, zc]}>
-          <Box p={[0, 0.36, -0.42]} s={[0.05, 0.72, 0.05]} m={metallo} />
-          <Box p={[0, 0.36, 0.42]} s={[0.05, 0.72, 0.05]} m={metallo} />
-          <Box p={[0, 0.03, 0]} s={[0.06, 0.04, 0.9]} m={metallo} />
+        <group key={l} position={[centro + l * (largo / 2 - 0.1), 0, zc]}>
+          {[-1, 1].map((d) => <Box key={d} p={[0, 0.375, d * (prof / 2 - 0.06)]} s={[0.04, 0.75, 0.04]} m={acciaio} />)}
+          <Box p={[0, 0.015, 0]} s={[0.05, 0.03, prof - 0.06]} m={acciaio} />
+          <Box p={[0, 0.735, 0]} s={[0.05, 0.03, prof - 0.06]} m={acciaio} ombra={false} />
         </group>
       ))}
-      <Box p={[centro, 0.47, zc - 0.48]} s={[largo - 0.3, 0.42, 0.03]} m={mat("#5e3f2a", 0.5)} />
-      <Led da={[centro - largo / 2 + 0.2, zc + 0.5]} a={[centro + largo / 2 - 0.2, zc + 0.5]} y={0.69} c={led} spessore={0.035} forza={2.2} />
-      {posti.map((p, i) => (
-        <group key={i}>
-          {larga ? (
-            <>
-              <Monitor x={p.x - 0.74} z={zc - 0.16} tipo={p.tipo} stato={p.stato} accento={p.accento} largo={1.3} rot={0.18} />
-              <Monitor x={p.x + 0.74} z={zc - 0.16} tipo={p.tipo === "timeline" ? "reel" : p.tipo} stato={p.stato} accento={p.accento} largo={1.3} rot={-0.18} />
-            </>
-          ) : <Monitor x={p.x} z={zc - 0.16} tipo={p.tipo} stato={p.stato} accento={p.accento} />}
-          <RoundedBox args={[0.52, 0.025, 0.17]} radius={0.01} smoothness={2} position={[p.x - 0.06, 0.795, zc + 0.26]} material={mat("#f7f7f9", 0.5)} />
-          <Box p={[p.x + 0.38, 0.795, zc + 0.27]} s={[0.07, 0.025, 0.11]} m={mat("#f7f7f9", 0.5)} ombra={false} />
-          {i % 3 === 0 ? <Cil p={[p.x + 0.78, 0.84, zc + 0.12]} s={[0.1, 0.12, 0.1]} m={mat(p.accento, 0.4)} /> : null}
-          {i % 2 === 0 ? <Oggetto3D file="stationery_supplies" x={p.x - 0.95} y={0.785} z={zc - 0.3} scala={1.1} rot={0.3} /> : null}
-          {i % 3 === 1 ? <Succulenta x={p.x - 0.82} y={0.785} z={zc - 0.05} /> : null}
-          {i % 3 === 2 ? <Lampada x={p.x + 0.82} y={0.785} z={zc - 0.12} /> : null}
-        </group>
-      ))}
+      <Box p={[centro, 0.71, zc - 0.05]} s={[largo - 0.2, 0.05, 0.04]} m={acciaio} ombra={false} />
+      {/* pannello in feltro sul retro e canalina dei cavi */}
+      <Box p={[centro, 0.5, zc - prof / 2 + 0.05]} s={[largo - 0.3, 0.4, 0.02]} m={feltro} />
+      <Box p={[centro, 0.68, zc - 0.25]} s={[largo - 0.5, 0.05, 0.14]} m={acciaio} ombra={false} />
+      <Led da={[centro - largo / 2 + 0.15, zc + prof / 2 - 0.03]} a={[centro + largo / 2 - 0.15, zc + prof / 2 - 0.03]} y={0.745} c={led} spessore={0.012} forza={1.8} />
+      {posti.map((p, i) => {
+        const f = p.x * 1.7 + z;
+        return (
+          <group key={i}>
+            {larga ? (
+              <>
+                <Computer x={p.x + 0.15} z={zc - 0.2} largo={1.22} tipo={p.tipo} stato={p.stato} accento={p.accento} fase={f} />
+                <Portatile x={p.x - 0.88} z={zc + 0.02} rot={0.42} tipo={p.tipo === "timeline" ? "reel" : "calendario"} stato={p.stato} accento={p.accento} fase={f + 3} grafite={p.tipo === "timeline"} />
+              </>
+            ) : <Computer x={p.x} z={zc - 0.2} tipo={p.tipo} stato={p.stato} accento={p.accento} fase={f} />}
+            <Tastiera p={[p.x + (larga ? 0.12 : -0.02), 0.785, zc + 0.17]} />
+            <Mouse p={[p.x + (larga ? 0.5 : 0.33), 0.785, zc + 0.18]} />
+            {i % 2 === 0 ? <Tazza p={[p.x + 0.6, 0.785, zc + 0.08]} c={p.accento} /> : <Quaderno p={[p.x - 0.55, 0.785, zc + 0.12]} rot={0.25} c={i % 3 ? "#26324d" : "#6b2f3a"} />}
+            {i % 3 !== 1 ? <TelefonoBanco p={[p.x - (larga ? 0.35 : 0.5), 0.785, zc + 0.24]} rot={-0.3} /> : null}
+            {i % 2 === 0 && !larga ? <Oggetto3D file="stationery_supplies" x={p.x - 0.78} y={0.785} z={zc - 0.25} scala={1.0} rot={0.3} /> : null}
+            {i % 3 === 1 ? <Succulenta x={p.x + 0.72} y={0.785} z={zc - 0.22} /> : null}
+            {i % 3 === 2 || larga ? <Lampada x={p.x + (larga ? 1.1 : 0.78)} y={0.785} z={zc - 0.22} /> : null}
+          </group>
+        );
+      })}
     </group>
   );
 }

@@ -6,7 +6,8 @@ import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { ANGOLO_FUMO, SALA, TAVOLO_SALA, TAVOLO_SOCIAL } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
-import { GEO, MAT_VETRO, mat, matLed, matLucido, matMarmo, matMetallo, matOttone, rett, schermo, tela, type Font } from "./base";
+import { GEO, MAT_VETRO, mat, matLed, matLucido, matMarmo, matMetallo, matOttone, rett, tela, type Font } from "./base";
+import { Portatile } from "./Scrivanie";
 import { Monstera, Sansevieria, type DatiAds } from "./Arredi";
 
 /* =============================================================
@@ -22,25 +23,11 @@ const Sfera = ({ p, s, m, ombra = true }: { p: V3; s: V3 | number; m: THREE.Mate
 
 export type PostoTavolo = { id: string; x: number; z: number; rot: number; tipo: string; stato: StatoAgente; accento: string };
 
-/** Portatile aperto sul tavolo, con lo schermo rivolto verso chi è seduto. */
-function Portatile({ x, z, rot, tipo, stato, accento }: { x: number; z: number; rot: number; tipo: string; stato: StatoAgente; accento: string }) {
-  const map = schermo(tipo, stato, accento);
-  return (
-    <group position={[x, 0.79, z]} rotation={[0, rot, 0]}>
-      <Box p={[0, 0, 0.12]} s={[0.66, 0.02, 0.44]} m={mat("#c7cad2", 0.3, 0.8)} />
-      <group position={[0, 0.01, -0.1]} rotation={[-0.32, 0, 0]}>
-        <Box p={[0, 0.22, 0]} s={[0.66, 0.44, 0.015]} m={mat("#c7cad2", 0.3, 0.8)} />
-        <mesh geometry={GEO.piano} position={[0, 0.22, 0.009]} scale={[0.6, 0.38, 1]}><meshBasicMaterial map={map} toneMapped={false} /></mesh>
-      </group>
-    </group>
-  );
-}
-
 /** Un portatile davanti a ogni posto: tra la sedia e il centro del tavolo. */
 function portatili(posti: PostoTavolo[], distanza: number) {
   return posti.map((p) => {
     const dx = -Math.sin(p.rot), dz = -Math.cos(p.rot);
-    return <Portatile key={p.id} x={p.x + dx * distanza} z={p.z + dz * distanza} rot={p.rot} tipo={p.tipo} stato={p.stato} accento={p.accento} />;
+    return <Portatile key={p.id} x={p.x + dx * distanza} y={0.79} z={p.z + dz * distanza} rot={p.rot} tipo={p.tipo} stato={p.stato} accento={p.accento} fase={p.x + p.z} scala={1.25} />;
   });
 }
 
@@ -193,44 +180,6 @@ export function TavoloSocial({ posti }: { posti: PostoTavolo[] }) {
       <SetTelefono x={tx + 3.6} z={tz - 1.6} rot={-0.8} />
       <SetTelefono x={tx - 3.4} z={tz - 2.0} rot={0.7} />
       <Palma x={tx + 5.6} z={tz - 2.6} s={1.0} />
-    </group>
-  );
-}
-
-/* ---------- Giardino interno ---------- */
-
-function Panchina({ x, z }: { x: number; z: number }) {
-  return (
-    <group position={[x, 0, z]}>
-      <RoundedBox args={[1.8, 0.1, 0.55]} radius={0.03} smoothness={2} position={[0, 0.42, 0]} material={mat("#8a5a3a", 0.5)} castShadow receiveShadow />
-      <RoundedBox args={[1.8, 0.5, 0.08]} radius={0.03} smoothness={2} position={[0, 0.72, -0.3]} rotation={[-0.12, 0, 0]} material={mat("#8a5a3a", 0.5)} castShadow />
-      {[-0.75, 0.75].map((l) => <Box key={l} p={[l, 0.2, 0]} s={[0.06, 0.4, 0.5]} m={matOttone()} />)}
-    </group>
-  );
-}
-
-export function Giardino({ x, z }: { x: number; z: number }) {
-  const fiori = useMemo(() => Array.from({ length: 26 }, (_, i) => {
-    const a = (i / 26) * Math.PI * 2 + (i % 3) * 0.2, r = 1.6 + (i % 4) * 0.22;
-    return { x: Math.cos(a) * r * 1.5, z: Math.sin(a) * r * 0.75, c: ["#f4f1ff", "#ffd84d", "#e88fb5", "#ffffff", "#b9a8ff"][i % 5] };
-  }), []);
-  return (
-    <group position={[x, 0, z]}>
-      {/* aiuola ovale con bordo in pietra */}
-      <mesh geometry={GEO.cil} material={mat("#cfc6b8", 0.8)} position={[0, 0.12, 0]} scale={[8.6, 0.24, 4.2]} castShadow receiveShadow />
-      <mesh geometry={GEO.cil} material={mat("#4f8a46", 0.95)} position={[0, 0.25, 0]} scale={[8.2, 0.04, 3.8]} receiveShadow />
-      {fiori.map((f, i) => <Sfera key={i} p={[f.x, 0.33, f.z]} s={0.11} m={mat(f.c, 0.7)} ombra={false} />)}
-      {[-2.8, -1.2, 1.2, 2.8].map((px, i) => <Sfera key={i} p={[px, 0.38, -1.2 + (i % 2) * 0.4]} s={[0.55, 0.35, 0.45]} m={mat(i % 2 ? "#3a7d47" : "#4f9a5a", 0.85)} />)}
-      <Ulivo x={0} z={-0.1} s={1.15} />
-      {/* lanterne */}
-      {[-3.6, 3.6].map((px) => (
-        <group key={px} position={[px, 0.26, 0.6]}>
-          <Box p={[0, 0.25, 0]} s={[0.22, 0.5, 0.22]} m={mat("#1e2029", 0.4)} />
-          <Box p={[0, 0.25, 0]} s={[0.17, 0.4, 0.17]} m={matLed("#ffd9a0", 1.8)} ombra={false} />
-        </group>
-      ))}
-      <Panchina x={-2.6} z={2.5} />
-      <Panchina x={2.6} z={2.5} />
     </group>
   );
 }

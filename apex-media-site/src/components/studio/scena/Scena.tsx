@@ -5,12 +5,13 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { CameraControls, CameraControlsImpl, Environment, Html, Lightformer, PerformanceMonitor, SoftShadows } from "@react-three/drei";
 import { Bloom, EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
-import { AGENTE, AGENTI, FONDO, LARGO, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
+import { AGENTE, AGENTI, FONDO, LARGO, TAGLIO, TERRAZZA, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import type { SchermoTv } from "@/lib/studio/tipi";
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
 import type { Tono } from "@/lib/studio/promemoria";
 import { AngoloGiochi, Cassa, Cervello, Pendenti, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
-import { AngoloFumatori, Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
+import { AngoloFumatori, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
+import { GiardinoNuovo, Spa } from "./Esterni";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
 import { comandi } from "./comandi";
@@ -119,17 +120,17 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const liberoW = Math.max(200, size.width - coperto.destra - coperto.sinistra), liberoH = Math.max(200, size2.height - coperto.basso - coperto.alto);
     const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size2.height);
     const elev = THREE.MathUtils.degToRad(mira && "basso" in mira ? 17 : mira ? 34 : 54);
-    const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 12) : mira.ampiezza) : stretto ? 22 : LARGO + 2;
+    const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 12) : mira.ampiezza) : stretto ? 22 : LARGO + 11;
     const fondo = mira ? mira.fondo : stretto ? 18 : FONDO + 2;
     const distW = (ampiezza / 2 / tanH) * (size.width / liberoW);
     const distD = ((fondo * Math.sin(elev) + 4.5 * Math.cos(elev)) / 2 / tanV) * (size2.height / liberoH);
     const dist = Math.max(distW, distD, 4);
     const perPx = (2 * dist * tanH) / size.width;
-    const tx = (mira?.x ?? 0) + ((coperto.destra - coperto.sinistra) / 2) * perPx;
+    const tx = (mira?.x ?? (stretto ? 0 : 4.6)) + ((coperto.destra - coperto.sinistra) / 2) * perPx;
     const tz = (mira?.z ?? (stretto ? 0 : 0.4)) + (((coperto.basso - coperto.alto) / 2) * perPx) / Math.sin(elev);
     const ty = mira ? mira.y : 0.6;
     c.minDistance = 2.2;
-    c.maxDistance = Math.max(dist * 1.15, (LARGO / 2 / tanH) * 1.3);
+    c.maxDistance = Math.max(dist * 1.15, ((LARGO + 11) / 2 / tanH) * 1.3);
     void c.setLookAt(tx, ty + dist * Math.sin(elev), tz + dist * Math.cos(elev), tx, ty, tz, !prima.current);
     prima.current = false;
   // eslint-disable-next-line react-hooks/exhaustive-deps -- la telecamera si muove solo quando scegli una zona o una persona
@@ -145,7 +146,7 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     c.touches.one = A.TOUCH_TRUCK; c.touches.two = A.TOUCH_DOLLY_ROTATE; c.touches.three = A.TOUCH_ROTATE;
     c.verticalDragToForward = true;
     if (process.env.NODE_ENV !== "production") Object.assign(window, { __camera: c });
-    c.setBoundary(new THREE.Box3(new THREE.Vector3(-LARGO / 2, 0, -FONDO / 2 - 1), new THREE.Vector3(LARGO / 2, 3, FONDO / 2 + 6)));
+    c.setBoundary(new THREE.Box3(new THREE.Vector3(-LARGO / 2, 0, -FONDO / 2 - 1), new THREE.Vector3(TERRAZZA.x1 + 0.5, 3, FONDO / 2 + 6)));
   }, []);
 
   return <CameraControls ref={ctrl} makeDefault smoothTime={0.45} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={2.2} minPolarAngle={0.25} maxPolarAngle={1.42} dollyToCursor />;
@@ -236,7 +237,8 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       <ScrittaPavimento x={-4.4} z={-1.3} nome="Studio video" sotto="montaggio, riprese, sottotitoli" font={font} />
       <ScrittaPavimento x={10.0} z={1.2} nome="Tavolo social" sotto="Instagram, TikTok, Facebook" font={font} />
       <ScrittaPavimento x={-22.2} z={8.0} nome="Area relax" sotto="chi è libero si ferma qui" font={font} />
-      <ScrittaPavimento x={10.4} z={8.0} nome="Giardino" sotto="ulivo e panchine" font={font} />
+      <ScrittaPavimento x={9.2} z={8.1} nome="Giardino" sotto="prato, fiori e panchine" font={font} />
+      <ScrittaPavimento x={23.6} z={8.1} nome="Spa" sotto="jacuzzi e lettini" font={font} />
       <ScrittaPavimento x={18.6} z={0.9} nome="Fumatori" sotto="pausa sigaretta" font={font} />
       <ScrittaPavimento x={-2.4} z={-8.6} nome="Regia" sotto="direzione, controllo, memoria" font={font} />
       <ScrittaPavimento x={12.6} z={-8.6} nome="Cassa" sotto="incassi, fatture, solleciti" font={font} />
@@ -249,7 +251,8 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       {fila(["matteo"], "#ff4d6d", true)}
       <SalaStrategia posti={tavolo(["sofia", "marco", "elena", "davide"])} ads={p.ads} font={font} />
       <TavoloSocial posti={tavolo(["chiara", "simone", "alice"])} />
-      <Giardino x={16} z={4.3} />
+      <GiardinoNuovo alta={p.livello > 1} />
+      <Spa alta={p.livello > 1} />
       <AngoloFumatori />
 
       <StudioVideo x={3.6} z={-5.4} />
@@ -265,7 +268,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
         const allaScrivania = Math.hypot(s.meta.x - a.posto[0], s.meta.z - a.posto[1]) < 0.1;
         const sfalsa = allaScrivania && AGENTI.filter((b) => b.posto[1] === a.posto[1]).findIndex((b) => b.id === a.id) % 2 === 1 ? 0.5 : 0;
         return (
-          <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} fumo={s.fumo} selezionato={scelto} scala={1.12} onClick={apri}>
+          <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} taglio={TAGLIO[a.id]} donna={a.donna} barba={a.barba} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} fumo={s.fumo} selezionato={scelto} onClick={apri}>
             {s.fumetto ? (
               <Etichetta y={Math.abs(s.meta.x) < 3 ? 2.2 : Math.abs(s.meta.x) < 6 ? 3.3 : 2.5}><Nuvola nome={a.breve} f={s.fumetto} lato={s.meta.x < 0 ? "sinistra" : "destra"} onClick={() => p.onFumetto(s.fumetto!.id)} /></Etichetta>
             ) : (
@@ -288,7 +291,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
 
       <TuaScrivania x={TUA[0]} z={TUA[1]} nome={p.nome} accesa={p.inAttesa > 0} font={font} onClick={p.onTuaScrivania} />
       <group position={[TUA[0] + 2.6, 0, TUA[1] - 0.2]}>
-        <Etichetta y={1.5}><Pillola stato="tu" nome="La tua scrivania" sotto={p.inAttesa ? `${p.inAttesa} ${p.inAttesa === 1 ? "promemoria" : "promemoria"}` : "niente in sospeso"} azione={p.inAttesa ? "Vedi" : null} onClick={p.onTuaScrivania} punto={p.inAttesa ? "#ffc93d" : "#2fd08a"} /></Etichetta>
+        <Etichetta y={1.5}><Pillola stato="tu" nome="Il tuo computer" sotto={p.inAttesa ? `riunione · ${p.inAttesa} promemoria` : "riunione con il team"} azione="Entra" onClick={p.onTuaScrivania} punto={p.inAttesa ? "#ffc93d" : "#2fd08a"} /></Etichetta>
       </group>
 
       <Cassa x={CASSA_X} dati={p.cassa} font={font} onClick={p.onCassa}>
@@ -311,7 +314,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
             <RepartoCliente x={x} z={z} nome={c.nome} colore={c.colore} conti={c.conti} quota={`${euro(c.quota)} al mese`} font={font} onClick={apri} />
             {i < n - 1 ? <Vetro x={x + PASSO_CLIENTI / 2} z={z + 0.4} lungo={5.2} /> : null}
             <Sedia x={x} z={z - 0.85} rot={Math.PI} c="#e9e4d8" />
-            <Personaggio meta={{ x, z: z - 0.85, rot: Math.PI, posa: "seduto", y: 0 }} instrada={instrada} umore="ospite" divisa={c.colore} accento="#ffffff" pelle={["#f2cfae", "#e3b089", "#f4d3b3", "#d9a77f"][i % 4]} capelli={(["corti", "caschetto", "ciuffo", "chignon", "ricci"] as const)[i % 5]} coloreCapelli={["#3a2a20", "#7a5a3c", "#1f1a17", "#b98a4a"][i % 4]} fase={i + 20} selezionato={scelto} ospite onClick={apri}>
+            <Personaggio meta={{ x, z: z - 0.85, rot: Math.PI, posa: "seduto", y: 0 }} instrada={instrada} umore="ospite" divisa={c.colore} accento="#ffffff" pelle={["#f2cfae", "#e3b089", "#f4d3b3", "#d9a77f"][i % 4]} capelli={(["corti", "caschetto", "ciuffo", "chignon", "ricci"] as const)[i % 5]} taglio={(["corti", "lunghi", "ciuffo", "coda", "ricci", "caschetto"] as const)[i % 6]} donna={i % 6 === 1 || i % 6 === 3 || i % 6 === 5} barba={i % 6 === 2} coloreCapelli={["#3a2a20", "#7a5a3c", "#1f1a17", "#b98a4a"][i % 4]} fase={i + 20} selezionato={scelto} ospite onClick={apri}>
               <Etichetta y={2.15}><Pillola stato="cliente" nome={c.nome} sotto={c.scaduto > 0 ? `${euro(c.scaduto)} scaduti` : c.conti.scaduti ? `${c.conti.scaduti} lavori in ritardo` : `${c.conti.daFare + c.conti.inCorso + c.conti.daGuardare} lavori aperti`} azione="Apri" scelto={scelto} onClick={apri} punto={c.scaduto > 0 || c.conti.scaduti ? "#e5484d" : c.colore} /></Etichetta>
             </Personaggio>
           </group>
@@ -376,6 +379,7 @@ function profonditaCorta(): boolean {
 
 export default function Scena(p: PropsScena) {
   const [inizio] = useState(livelloIniziale);
+  const [fisso] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("alta") === "1");
   const [livello, setLivello] = useState<Livello>(inizio);
   const [profondita] = useState(() => typeof window !== "undefined" && profonditaCorta());
   const ombre = inizio === 2 ? 4096 : inizio === 1 ? 2048 : 1536;
@@ -390,10 +394,11 @@ export default function Scena(p: PropsScena) {
     );
   }
   return (
-    <Canvas flat shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 50, near: 0.6, far: 140, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita }}
+    <Canvas shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 50, near: 0.6, far: 140, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.08 }}
       onCreated={({ gl, scene }) => { if (process.env.NODE_ENV !== "production") Object.assign(window, { __studio: { gl, scene } }); gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
       onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
-      <PerformanceMonitor flipflops={2} onDecline={() => setLivello((l) => (l > 0 ? ((l - 1) as Livello) : l))} onFallback={() => setLivello(0)} />
+      {/* con ?alta=1 la qualità resta al massimo anche se i fotogrammi calano */}
+      {!fisso ? <PerformanceMonitor flipflops={2} onDecline={() => setLivello((l) => (l > 0 ? ((l - 1) as Livello) : l))} onFallback={() => setLivello(0)} /> : null}
       {livello > 1 ? <SoftShadows size={22} samples={12} focus={0.5} /> : null}
       <Ufficio3D {...p} livello={livello} ombre={ombre} />
     </Canvas>

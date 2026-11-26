@@ -27,7 +27,8 @@ export type Modale =
   | { tipo: "risultato"; lavoroId: number }
   | { tipo: "obiettivo" }
   | { tipo: "tv" }
-  | { tipo: "svuota" };
+  | { tipo: "svuota" }
+  | { tipo: "computer" };
 
 type Avviso = { testo: string; tono: "ok" | "errore" | "soldi" };
 

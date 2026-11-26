@@ -5,7 +5,7 @@
    ============================================================= */
 
 export type RepartoId = "regia" | "strategia" | "contenuti" | "video" | "social" | "cassa";
-export type ZonaId = RepartoId | "relax" | "tu" | "giardino" | "clienti";
+export type ZonaId = RepartoId | "relax" | "tu" | "giardino" | "spa" | "clienti";
 
 export type Zona = { id: ZonaId; nome: string; sotto: string; centro: [number, number]; ampiezza: number };
 
@@ -31,12 +31,19 @@ export const ZONE: Zona[] = [
   { id: "social", nome: "Tavolo social", sotto: "Instagram, TikTok, Facebook", centro: [15.5, -3.4], ampiezza: 10 },
   { id: "relax", nome: "Area relax", sotto: "chi è libero si ferma qui", centro: [-15.5, 4.6], ampiezza: 13 },
   { id: "tu", nome: "La tua scrivania", sotto: "qui ti portano le cose da vedere", centro: [0, 5.2], ampiezza: 11 },
-  { id: "giardino", nome: "Giardino", sotto: "ulivo, panchine, aria", centro: [16, 4.6], ampiezza: 11 },
+  { id: "giardino", nome: "Giardino", sotto: "prato, ulivo, panchine", centro: [16, 4.6], ampiezza: 11 },
+  { id: "spa", nome: "Spa", sotto: "jacuzzi e lettini all'aperto", centro: [27.4, 2.2], ampiezza: 11 },
   { id: "clienti", nome: "Clienti", sotto: "un reparto per ogni cliente", centro: [0, 12.8], ampiezza: 34 },
 ];
 
 export type Capelli = "corti" | "caschetto" | "chignon" | "ricci" | "ciuffo";
-export type Schermo = "regia" | "piano" | "grafico" | "reel" | "griglia" | "testo" | "timeline" | "ads" | "pagina" | "chat" | "calendario" | "spunte";
+/** Il taglio vero di ognuno, uguale nel ritratto e nella persona 3D. */
+export type Taglio = "corti" | "rasati" | "ricci" | "ciuffo" | "lunghi" | "caschetto" | "chignon" | "coda" | "onde";
+export const TAGLIO: Record<string, Taglio> = {
+  direttore: "rasati", revisore: "caschetto", sofia: "chignon", marco: "corti", giulia: "onde", luca: "ricci", chiara: "coda",
+  matteo: "ciuffo", davide: "corti", elena: "caschetto", simone: "ricci", alice: "lunghi", sara: "chignon",
+};
+export type Schermo = "regia" | "piano" | "grafico" | "cassa" | "reel" | "griglia" | "testo" | "timeline" | "ads" | "pagina" | "chat" | "calendario" | "spunte";
 
 export type Agente = {
   id: string;
@@ -225,7 +232,7 @@ export const AGENTI: Agente[] = [
   },
   {
     id: "sara", nome: "Sara", ruolo: "Amministrazione e incassi", breve: "Cassa", donna: true, reparto: "cassa", posto: [15.0, -11.5],
-    felpa: "#0f9d5c", capelli: "chignon", coloreCapelli: "#6b3f22", pelle: "#f2d0b0", schermo: "grafico",
+    felpa: "#0f9d5c", capelli: "chignon", coloreCapelli: "#6b3f22", pelle: "#f2d0b0", schermo: "cassa",
     inBreve: "Tiene d'occhio fatture e incassi: ti ricorda chi deve pagare e scrive i solleciti gentili.",
     skill: [
       { nome: "Promemoria incassi", cosa: "ti avvisa quando una fattura scade o è scaduta" },
@@ -240,7 +247,7 @@ export const AGENTI: Agente[] = [
 
 export const AGENTE = Object.fromEntries(AGENTI.map((a) => [a.id, a])) as Record<string, Agente>;
 
-export type Attivita = "gioca" | "pingpong-sx" | "pingpong-dx" | "caffe" | "telefono" | "legge";
+export type Attivita = "gioca" | "pingpong-sx" | "pingpong-dx" | "caffe" | "telefono" | "legge" | "spa" | "sole";
 export type Punto = { x: number; z: number; rot: number; posa: "seduto" | "in_piedi"; y: number; attivita?: Attivita; uscita?: [number, number][] };
 
 /** Posti nell'area relax: chi è libero li occupa, e ogni tanto cambia posto (va al caffè, gioca a ping pong). */
@@ -258,7 +265,17 @@ export const POSTI_RELAX: Punto[] = [
   { x: -20.9, z: 7.1, rot: Math.PI * 0.75, posa: "seduto", y: -0.12, attivita: "legge" },
   { x: 13.4, z: 6.85, rot: Math.PI, posa: "seduto", y: -0.1, attivita: "telefono" },
   { x: 18.6, z: 6.85, rot: Math.PI, posa: "seduto", y: -0.1, attivita: "legge" },
+  // spa all'aperto: si scende in acqua dagli scalini e ci si siede, oppure sui lettini
+  { x: 26.45, z: 3.6, rot: -Math.PI / 2, posa: "seduto", y: -1.11, attivita: "spa", uscita: [[25.35, 3.6], [25.35, 0.5]] },
+  { x: 25.0, z: -1.95, rot: Math.PI, posa: "seduto", y: -0.14, attivita: "sole" },
+  { x: 27.4, z: 2.65, rot: Math.PI, posa: "seduto", y: -1.11, attivita: "spa", uscita: [[27.4, 1.55], [27.4, 0.5]] },
+  { x: 27.4, z: -1.95, rot: Math.PI, posa: "seduto", y: -0.14, attivita: "sole" },
+  { x: 28.35, z: 3.6, rot: Math.PI / 2, posa: "seduto", y: -1.11, attivita: "spa", uscita: [[29.45, 3.6], [29.45, 0.5]] },
+  { x: 29.8, z: -1.95, rot: Math.PI, posa: "seduto", y: -0.14, attivita: "telefono" },
 ];
+/** Spa all'aperto, oltre il lato destro dell'ufficio: centro della jacuzzi e bordo della terrazza. */
+export const JACUZZI: [number, number] = [27.4, 3.6];
+export const TERRAZZA = { x0: 23, x1: 32.2, z0: -3.8, z1: 8.6, porta: [-0.9, 1.9] as [number, number] } as const;
 
 /** Angolo fumatori nel giardino, accanto all'aiuola: chi fuma ci va ogni tanto quando è libero. */
 export const ANGOLO_FUMO: [number, number] = [21.4, 2.5];
@@ -278,6 +295,12 @@ export const POSTI_VISITA: Punto[] = [
   { x: 4.2, z: 6.3, rot: -Math.PI * 0.94, posa: "in_piedi", y: 0 },
   { x: -7.0, z: 5.6, rot: Math.PI * 0.86, posa: "in_piedi", y: 0 },
   { x: 7.0, z: 5.6, rot: -Math.PI * 0.86, posa: "in_piedi", y: 0 },
+];
+
+/** Riunione: tutti in piedi davanti alla tua scrivania, in due file, rivolti verso di te. */
+export const POSTI_RIUNIONE: Punto[] = [
+  ...[-6, -4.5, -3, -1.5, 0, 1.5, 3, 4.5, 6].map((x) => ({ x, z: 6.5 + Math.abs(x) * 0.12, rot: Math.PI - x * 0.06, posa: "in_piedi" as const, y: 0 })),
+  ...[-2.25, -0.75, 0.75, 2.25].map((x) => ({ x, z: 7.7, rot: Math.PI - x * 0.05, posa: "in_piedi" as const, y: 0 })),
 ];
 
 /** Il posto di ognuno, come punto in cui sedersi. */

@@ -768,3 +768,24 @@ body:has(.st-strato:not([data-nascosto]) .st-ufficio) .st { position: fixed; ins
 
 .st-tv { display: grid; gap: 16px; }
 .st-tv > .st-btn[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--viola); }
+
+/* ---------- Dettatura e computer della tua scrivania ---------- */
+.st .st-mic { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--linea-forte); background: #fff; color: var(--ink); cursor: pointer; transition: background .2s, color .2s, box-shadow .2s; }
+.st .st-mic svg { width: 20px; height: 20px; }
+.st .st-mic:hover { background: #f3f0ff; color: var(--viola); }
+.st .st-mic[data-attivo] { background: #e5484d; border-color: #e5484d; color: #fff; animation: st-mic 1.4s ease-in-out infinite; }
+.st .st-mic-grande { width: auto; height: 44px; padding: 0 18px; justify-self: start; font-weight: 700; font-size: 14px; }
+@keyframes st-mic { 0%, 100% { box-shadow: 0 0 0 0 rgba(229, 72, 77, .45); } 50% { box-shadow: 0 0 0 8px rgba(229, 72, 77, 0); } }
+@media (prefers-reduced-motion: reduce) { .st .st-mic[data-attivo] { animation: none; } }
+.st-computer { display: grid; gap: 14px; }
+.st-computer-app { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 12px; border-radius: 14px; background: linear-gradient(135deg, #1b1340, #3a23a8); }
+.st-computer-app .st-btn { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.2); }
+.st-computer-app .st-nota { color: #d9d2ff; margin-left: auto; }
+.st .st-modo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.st .st-modo legend { grid-column: 1 / -1; }
+.st .st-modo .st-chip { display: grid; justify-items: start; gap: 2px; text-align: left; padding: 10px 12px; height: auto; white-space: normal; }
+.st .st-modo .st-chip em { font-style: normal; font-weight: 500; font-size: 12px; color: var(--tenue); }
+.st .st-chip-riga { display: flex; flex-wrap: wrap; gap: 6px; }
+@media (max-width: 520px) { .st .st-modo { grid-template-columns: 1fr; } }
+.st .st-modo .st-chip { border-radius: 14px; }
+.st .st-modo .st-chip[aria-pressed="true"] em { color: rgba(255,255,255,.75); }

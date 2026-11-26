@@ -8,6 +8,8 @@ import { CANALI, COLORI_CLIENTE, SERVIZI_SUGGERITI } from "@/lib/studio/tipi";
 import { portfolio } from "@/data/portfolio";
 import { useStudio, type Modale } from "./StudioApp";
 import { apriInClaude } from "./Team";
+import { Microfono } from "./Dettatura";
+import { convocaRiunione } from "./riunione";
 
 /* Tutte le finestre dello Studio: cliente, servizio, fattura, campagna, lavoro, risultato, obiettivo. */
 
@@ -232,7 +234,8 @@ function ModuloCampagna({ m, chiudi }: { m: Extract<Modale, { tipo: "campagna" }
 /* ---------- Nuovo lavoro ---------- */
 
 function ModuloLavoro({ m, chiudi }: { m: Extract<Modale, { tipo: "lavoro" }>; chiudi: () => void }) {
-  const { dati, nuovoLavoro } = useStudio();
+  const { dati, nuovoLavoro, avvisa } = useStudio();
+  const avvisaVoce = (m: string) => avvisa(m, "errore");
   const { occupato, invia } = useInvio();
   const [brief, setBrief] = useState("");
   const [agente, setAgente] = useState(m.agente ?? "auto");
@@ -243,6 +246,7 @@ function ModuloLavoro({ m, chiudi }: { m: Extract<Modale, { tipo: "lavoro" }>; c
     <Finestra titolo="Nuovo lavoro" sotto={dati.ai ? "Scrivi cosa serve: l'agente parte subito e te lo riporta da guardare." : "Scrivi cosa serve: il lavoro va in coda all'agente giusto."} chiudi={chiudi} larga>
       <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => { if (await nuovoLavoro({ agente, clienteId: clienteId || null, brief, scadenza: scadenza || null })) chiudi(); }); }}>
         <label className="st-campo">Cosa serve<textarea data-primo value={brief} onChange={(e) => setBrief(e.target.value)} required rows={5} maxLength={6000} placeholder={scelto?.esempio ?? "Es. Reel per Bagnarino: perché lavorare in coworking invece che da casa."} /></label>
+        <Microfono testo={brief} setTesto={setBrief} onErrore={(m) => avvisaVoce(m)} grande />
         <div className="st-riga">
           <SceltaCliente valore={clienteId} cambia={setClienteId} facoltativo />
           <label className="st-campo">Per quando<small> facoltativo: te lo ricorda</small><input type="date" value={scadenza} min={dati.oggi} onChange={(e) => setScadenza(e.target.value)} /></label>
@@ -395,6 +399,85 @@ function ModuloTv({ chiudi }: { chiudi: () => void }) {
   );
 }
 
+/* ---------- Il tuo computer: riunione con il team ---------- */
+
+type Modo = "riunione" | "compito";
+
+/** La tua postazione: parli o scrivi una volta sola e arriva a tutto il team (o a chi scegli). */
+function ModuloComputer({ chiudi }: { chiudi: () => void }) {
+  const { dati, azione, avvisa, faiLavorare, vai, promemoria } = useStudio();
+  const { occupato, invia } = useInvio();
+  const [testo, setTesto] = useState("");
+  const [modo, setModo] = useState<Modo>("riunione");
+  const [scelti, setScelti] = useState<Set<string>>(() => new Set(AGENTI.map((a) => a.id)));
+  const [clienteId, setClienteId] = useState<number | "">("");
+  const tutti = scelti.size === AGENTI.length;
+  const cambia = (id: string) => setScelti((x) => { const n = new Set(x); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+  const reparto = (r: string) => setScelti(new Set(AGENTI.filter((a) => a.reparto === r).map((a) => a.id)));
+
+  const manda = () => invia(async () => {
+    const ids = AGENTI.filter((a) => scelti.has(a.id)).map((a) => a.id);
+    if (!testo.trim() || !ids.length) return;
+    if (modo === "riunione") {
+      // diventa una regola del cervello condiviso: la leggono tutti (o solo chi hai scelto) in ogni lavoro
+      if (tutti) { const r = await azione("regola.salva", { testo, agente: null }); if (!r.ok) return; }
+      else for (const id of ids) { const r = await azione("regola.salva", { testo, agente: id }); if (!r.ok) return; }
+      convocaRiunione(ids);
+      avvisa(tutti ? "Riunione: l'hai detto a tutto il team, se lo ricorderanno in ogni lavoro." : `Riunione con ${ids.length} persone: se lo ricorderanno in ogni lavoro.`);
+    } else {
+      const nuovi: number[] = [];
+      for (const id of ids) {
+        const r = await azione("lavoro.crea", { agente: id, clienteId: clienteId || null, brief: testo });
+        if (!r.ok) return;
+        if (r.nuovoId) nuovi.push(r.nuovoId);
+      }
+      convocaRiunione(ids);
+      avvisa(`${nuovi.length} lavori affidati: uno a testa. ${dati.ai ? "Si mettono al lavoro uno dopo l'altro." : "Sono in coda."}`);
+      // uno alla volta, per non intasare l'intelligenza artificiale
+      if (dati.ai) void (async () => { for (const n of nuovi) await faiLavorare(n); })();
+    }
+    chiudi();
+  });
+
+  return (
+    <Finestra titolo="Il tuo computer" sotto="Parla o scrivi una volta sola: arriva a tutto il team, che viene da te per la riunione." chiudi={chiudi} larga>
+      <div className="st-computer">
+        <nav className="st-computer-app" aria-label="Scorciatoie">
+          <button type="button" className="st-btn st-btn-mini" onClick={() => { chiudi(); vai("lavori"); }}>Lavori</button>
+          <button type="button" className="st-btn st-btn-mini" onClick={() => { chiudi(); vai("conti"); }}>Conti</button>
+          <span className="st-nota">{promemoria.length ? `${promemoria.length} promemoria per te qui sotto` : "Niente in sospeso"}</span>
+        </nav>
+        <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void manda(); }}>
+          <fieldset className="st-campo st-modo"><legend>Cosa vuoi fare</legend>
+            <button type="button" className="st-chip" aria-pressed={modo === "riunione"} onClick={() => setModo("riunione")}>Riunione<em>spieghi una cosa: diventa una regola che ricordano sempre</em></button>
+            <button type="button" className="st-chip" aria-pressed={modo === "compito"} onClick={() => setModo("compito")}>Compito per ognuno<em>ognuno ne fa un lavoro suo e te lo riporta</em></button>
+          </fieldset>
+          <label className="st-campo">{modo === "riunione" ? "Cosa vuoi dire al team" : "Cosa deve fare ognuno"}
+            <textarea data-primo value={testo} onChange={(e) => setTesto(e.target.value)} rows={4} maxLength={600 * (modo === "riunione" ? 1 : 10)}
+              placeholder={modo === "riunione" ? "Es. Da oggi in ogni caption mettiamo il prezzo nella prima riga." : "Es. Ognuno mi propone un'idea per la promo di Natale di Essenza d'Oriente."} />
+          </label>
+          <Microfono testo={testo} setTesto={setTesto} onErrore={(m) => avvisa(m, "errore")} grande />
+          {modo === "compito" ? <SceltaCliente valore={clienteId} cambia={setClienteId} facoltativo /> : null}
+          <fieldset className="st-campo st-squadra"><legend>Chi partecipa ({scelti.size})</legend>
+            <div className="st-chip-riga">
+              <button type="button" className="st-chip" aria-pressed={tutti} onClick={() => setScelti(new Set(tutti ? [] : AGENTI.map((a) => a.id)))}>{tutti ? "Togli tutti" : "Tutti"}</button>
+              {ZONE.filter((z) => AGENTI.some((a) => a.reparto === z.id)).map((z) => <button key={z.id} type="button" className="st-chip" onClick={() => reparto(z.id)}>Solo {z.nome}</button>)}
+            </div>
+            <div className="st-chip-riga">
+              {AGENTI.map((a) => <button key={a.id} type="button" className="st-chip" aria-pressed={scelti.has(a.id)} onClick={() => cambia(a.id)}><i style={{ background: a.felpa }} />{a.nome}</button>)}
+            </div>
+          </fieldset>
+          {modo === "compito" && scelti.size > 4 ? <p className="st-nota">Saranno {scelti.size} lavori separati, uno per persona.</p> : null}
+          <footer className="st-finestra-piede"><span />
+            <div><button type="button" className="st-btn st-btn-testo" onClick={chiudi}>Annulla</button>
+              <button className="st-btn st-btn-pieno" disabled={occupato || !testo.trim() || !scelti.size}>{occupato ? "Mando…" : modo === "riunione" ? "Fai la riunione" : `Manda a ${scelti.size}`}</button></div>
+          </footer>
+        </form>
+      </div>
+    </Finestra>
+  );
+}
+
 /* ---------- Cancella i dati di esempio ---------- */
 
 function ModuloSvuota({ chiudi }: { chiudi: () => void }) {
@@ -448,5 +531,6 @@ export function Moduli({ modale, chiudi }: { modale: Modale; chiudi: () => void 
     case "obiettivo": return <ModuloObiettivo chiudi={chiudi} />;
     case "tv": return <ModuloTv chiudi={chiudi} />;
     case "svuota": return <ModuloSvuota chiudi={chiudi} />;
+    case "computer": return <ModuloComputer chiudi={chiudi} />;
   }
 }
