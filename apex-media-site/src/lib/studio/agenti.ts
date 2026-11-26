@@ -297,6 +297,12 @@ export const POSTI_VISITA: Punto[] = [
   { x: 7.0, z: 5.6, rot: -Math.PI * 0.86, posa: "in_piedi", y: 0 },
 ];
 
+/** Riunione: tutti in piedi davanti alla tua scrivania, in due file, rivolti verso di te. */
+export const POSTI_RIUNIONE: Punto[] = [
+  ...[-6, -4.5, -3, -1.5, 0, 1.5, 3, 4.5, 6].map((x) => ({ x, z: 6.5 + Math.abs(x) * 0.12, rot: Math.PI - x * 0.06, posa: "in_piedi" as const, y: 0 })),
+  ...[-2.25, -0.75, 0.75, 2.25].map((x) => ({ x, z: 7.7, rot: Math.PI - x * 0.05, posa: "in_piedi" as const, y: 0 })),
+];
+
 /** Il posto di ognuno, come punto in cui sedersi. */
 export function postoScrivania(id: string): Punto {
   const a = AGENTE[id];

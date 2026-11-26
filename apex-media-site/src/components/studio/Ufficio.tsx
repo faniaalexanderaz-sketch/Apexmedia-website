@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { site } from "@/data/site";
 import { REGOLE_FISSE } from "@/lib/studio/regole";
-import { AGENTE, AGENTI, FUMATORI, POSTI_FUMO, POSTI_RELAX, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
+import { AGENTE, AGENTI, FUMATORI, POSTI_FUMO, POSTI_RELAX, POSTI_RIUNIONE, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import { dataBreve, daIncassare, euro, giorniTra, incassatoNelMese, iniziali, nomeMese, ricorrente, riepilogoCampagne, saluto, scaduta, servizioAttivoNelMese, somma, statoAgente, type StatoAgente } from "@/lib/studio/calcoli";
 import { visite } from "@/lib/studio/promemoria";
 import type { Lavoro } from "@/lib/studio/tipi";
@@ -15,6 +15,7 @@ import { Confine3D, webglDisponibile } from "@/components/three/Confine3D";
 import { ChatAgente, ElencoTeam, StrisciaTeam } from "./Team";
 import { Joystick } from "./Joystick";
 import { useStudio } from "./StudioApp";
+import { EVENTO_RIUNIONE, type Riunione } from "./riunione";
 import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
 
 /* =============================================================
@@ -74,6 +75,18 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   useEffect(() => { const t = setTimeout(() => setTreD(webglDisponibile()), 0); return () => clearTimeout(t); }, []);
   const giro = useGiro();
   const fumo = useFumo();
+  // riunione convocata dal tuo computer: chi partecipa viene da te per un minuto
+  const [riunione, setRiunione] = useState<Riunione | null>(null);
+  useEffect(() => {
+    const su = (e: Event) => { const r = (e as CustomEvent<Riunione>).detail; setRiunione(r); setSelezione(null); setZona("tu"); };
+    window.addEventListener(EVENTO_RIUNIONE, su);
+    return () => window.removeEventListener(EVENTO_RIUNIONE, su);
+  }, []);
+  useEffect(() => {
+    if (!riunione) return;
+    const t = setTimeout(() => setRiunione(null), Math.max(0, riunione.fino - Date.now()));
+    return () => clearTimeout(t);
+  }, [riunione]);
   const stretto = largo < 760;
   // elenco del team: aperto su schermi larghi, ridotto a icone su tablet, striscia di volti su telefono
   const team = stretto ? "striscia" : (teamChiuso ?? largo < 1100) ? "chiuso" : "aperto";
@@ -97,7 +110,9 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
       const v = daVisita.get(a.id);
       let meta: Punto = postoScrivania(a.id), umore: AgenteScena["umore"] = stato, tazza = false, sigaretta = false;
       const f = FUMATORI.indexOf(a.id);
-      if (v) { meta = v.posto; umore = "visita"; }
+      const r = riunione?.ids.indexOf(a.id) ?? -1;
+      if (r >= 0) meta = POSTI_RIUNIONE[r % POSTI_RIUNIONE.length];
+      else if (v) { meta = v.posto; umore = "visita"; }
       // chi fuma ed è libero, ogni minuto esce in giardino: cammina, fuma una decina di secondi, rientra
       else if (stato === "libero" && f >= 0 && (fumo + f * 4) % 12 < 5) { meta = POSTI_FUMO[f]; sigaretta = true; }
       else if (stato === "libero") {
@@ -131,7 +146,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
       cassa: { incassato: incassatoNelMese(dati.fatture, mese), obiettivo: dati.obiettivoMese, ricorrente: ricorrente(dati, mese), mese: nomeMese(mese, true) },
       visitatori: vis.map((p) => AGENTE[p.agente]?.nome ?? ""), alLavoro: conta("lavora"),
     };
-  }, [dati, mese, promemoria, giro, fumo]);
+  }, [dati, mese, promemoria, giro, fumo, riunione]);
 
   const scegli = (s: Selezione) => { setSelezione(s); if (s) setZona("vicino"); };
   const inVisita = useMemo(() => new Set(modello.agenti.filter((a) => a.fumetto).map((a) => a.id)), [modello.agenti]);
@@ -148,7 +163,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
         <Scena attivo={attivo} nome={site.founders[0].split(" ")[0]} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} ads={modello.ads} conteggi={modello.conteggi} regole={dati.regole.length} inAttesa={promemoria.length}
           zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli}
           onFumetto={(id) => { const p = promemoria.find((x) => x.id === id); if (p) void esegui(p); }}
-          tv={dati.tv} onTv={() => apri({ tipo: "tv" })} onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); if (dock === "chiuso") scriviDock("normale"); }} />
+          tv={dati.tv} onTv={() => apri({ tipo: "tv" })} onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); if (dock === "chiuso") scriviDock("normale"); apri({ tipo: "computer" }); }} />
       </Confine3D>
         ) : null}
       </div>

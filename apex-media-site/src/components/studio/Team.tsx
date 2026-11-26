@@ -6,6 +6,7 @@ import { dataBreve, nomeCliente, saluto, statoAgente, tempoFa, type StatoAgente 
 import { TITOLARE, richiestaCompleta } from "@/lib/studio/regole";
 import type { Dati, Lavoro } from "@/lib/studio/tipi";
 import { Avatar } from "./Lavori";
+import { Microfono } from "./Dettatura";
 import { useStudio } from "./StudioApp";
 
 /* =============================================================
@@ -243,6 +244,7 @@ export function ChatAgente({ id, chiudi }: { id: string; chiudi: () => void }) {
               <input type="date" value={scadenza} min={dati.oggi} onChange={(e) => setScadenza(e.target.value)} aria-label="Per quando (facoltativo)" title="Per quando (facoltativo)" />
             </>
           )}
+          <Microfono testo={testo} setTesto={setTesto} onErrore={(m) => avvisa(m, "errore")} />
           <button className="st-btn st-btn-pieno" disabled={mando || !testo.trim()}>{mando ? "Mando…" : correggi ? `Rimanda a ${a.nome}` : "Manda"}</button>
         </div>
       </form>

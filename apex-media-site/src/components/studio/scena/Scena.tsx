@@ -291,7 +291,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
 
       <TuaScrivania x={TUA[0]} z={TUA[1]} nome={p.nome} accesa={p.inAttesa > 0} font={font} onClick={p.onTuaScrivania} />
       <group position={[TUA[0] + 2.6, 0, TUA[1] - 0.2]}>
-        <Etichetta y={1.5}><Pillola stato="tu" nome="La tua scrivania" sotto={p.inAttesa ? `${p.inAttesa} ${p.inAttesa === 1 ? "promemoria" : "promemoria"}` : "niente in sospeso"} azione={p.inAttesa ? "Vedi" : null} onClick={p.onTuaScrivania} punto={p.inAttesa ? "#ffc93d" : "#2fd08a"} /></Etichetta>
+        <Etichetta y={1.5}><Pillola stato="tu" nome="Il tuo computer" sotto={p.inAttesa ? `riunione · ${p.inAttesa} promemoria` : "riunione con il team"} azione="Entra" onClick={p.onTuaScrivania} punto={p.inAttesa ? "#ffc93d" : "#2fd08a"} /></Etichetta>
       </group>
 
       <Cassa x={CASSA_X} dati={p.cassa} font={font} onClick={p.onCassa}>
