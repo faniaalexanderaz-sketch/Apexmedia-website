@@ -9,6 +9,7 @@ import { FONDO, LARGO, TERRAZZA } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
 import type { SchermoTv } from "@/lib/studio/tipi";
 import { C, GEO, MAT_INVISIBILE, MAT_VETRO, TelaViva, mat, matLed, matLucido, matLuce, matMetallo, matOttone, rett, tela, type Font } from "./base";
+import { disegnaGioco } from "./gioco";
 import { Computer, Mouse, Portatile, Quaderno, Tastiera, TelefonoBanco, Tazza } from "./Scrivanie";
 
 /* =============================================================
@@ -967,79 +968,7 @@ export function Pendenti({ punti }: { punti: [number, number][] }) {
 
 /* ---------- Angolo videogiochi ---------- */
 
-/** «Apex Drive»: gioco di guida originale in una città di mare al tramonto, neon, auto sportiva,
-   polizia che insegue a tratti, minimappa e tachimetro. Ogni tanto la schermata del titolo. */
-function disegnaGioco(c: CanvasRenderingContext2D, t: number) {
-  const w = 640, h = 360, oriz = 150;
-  const giro = t % 46;
-  // schermata del titolo per qualche secondo
-  if (giro < 3.2) {
-    const g = c.createLinearGradient(0, 0, w, h); g.addColorStop(0, "#12052b"); g.addColorStop(1, "#3b0a52"); c.fillStyle = g; c.fillRect(0, 0, w, h);
-    for (let i = 0; i < 14; i++) { c.fillStyle = i % 2 ? "rgba(255,62,165,0.18)" : "rgba(46,233,255,0.14)"; c.fillRect(0, 200 + i * 12, w, 3); }
-    c.textAlign = "center"; c.shadowColor = "#ff3ea5"; c.shadowBlur = 24; c.fillStyle = "#ffffff"; c.font = "900 italic 78px system-ui, sans-serif"; c.fillText("APEX", w / 2, 150);
-    c.shadowColor = "#2ee9ff"; c.fillStyle = "#2ee9ff"; c.font = "900 italic 54px system-ui, sans-serif"; c.fillText("DRIVE", w / 2, 210); c.shadowBlur = 0;
-    if (Math.floor(t * 2) % 2) { c.fillStyle = "#ffd36e"; c.font = "700 18px system-ui, sans-serif"; c.fillText("PREMI UN TASTO", w / 2, 290); }
-    c.textAlign = "left"; return;
-  }
-  const cielo = c.createLinearGradient(0, 0, 0, oriz);
-  cielo.addColorStop(0, "#1a0b3d"); cielo.addColorStop(0.5, "#c2186b"); cielo.addColorStop(1, "#ff9a5a");
-  c.fillStyle = cielo; c.fillRect(0, 0, w, oriz);
-  c.fillStyle = "#ffe29a"; c.beginPath(); c.arc(150, oriz - 12, 30, 0, 7); c.fill();
-  // mare a sinistra con il riflesso del sole
-  c.fillStyle = "#3a1c5c"; c.beginPath(); c.moveTo(0, oriz); c.lineTo(w / 2 - 20, oriz); c.lineTo(0, h); c.closePath(); c.fill();
-  for (let i = 0; i < 9; i++) { c.fillStyle = `rgba(255,190,120,${0.5 - i * 0.05})`; c.fillRect(150 - 22 + Math.sin(t * 3 + i) * 6 - i * 4, oriz + 4 + i * 9, 44 - i * 2, 3); }
-  // grattacieli con insegne al neon a destra
-  const off = (t * 14) % 70;
-  for (let i = -1; i < 7; i++) {
-    const bx = w / 2 + 40 + i * 70 - off, bh = 40 + ((i * 41 + 17) % 70);
-    c.fillStyle = "#2a1340"; c.fillRect(bx, oriz - bh, 58, bh);
-    c.fillStyle = (i + Math.floor(t)) % 3 ? "#ffd36e" : "#7ef3ff"; for (let k = 0; k < 3; k++) for (let r = 0; r < 3; r++) c.fillRect(bx + 8 + k * 16, oriz - bh + 10 + r * 12, 6, 5);
-    c.shadowBlur = 12; c.shadowColor = i % 2 ? "#ff3ea5" : "#2ee9ff"; c.fillStyle = c.shadowColor; c.fillRect(bx + 6, oriz - bh - 8, 46, 5); c.shadowBlur = 0;
-  }
-  // strada sul lungomare
-  c.fillStyle = "#211c2b"; c.beginPath(); c.moveTo(w / 2 - 16, oriz); c.lineTo(w / 2 + 16, oriz); c.lineTo(w * 0.98, h); c.lineTo(w * 0.1, h); c.closePath(); c.fill();
-  c.strokeStyle = "#ff3ea5"; c.lineWidth = 2; c.beginPath(); c.moveTo(w / 2 + 16, oriz); c.lineTo(w * 0.98, h); c.stroke();
-  c.strokeStyle = "#2ee9ff"; c.beginPath(); c.moveTo(w / 2 - 16, oriz); c.lineTo(w * 0.1, h); c.stroke();
-  for (let i = 0; i < 8; i++) { const f = ((i / 8) + t * 1.1) % 1, y = oriz + f * f * (h - oriz); c.fillStyle = "#f5f1dc"; c.fillRect(w / 2 + 10 - (1 + f * 7), y, 2 + f * 12, 4 + f * 28); }
-  // palme sul lungomare
-  for (let i = 0; i < 4; i++) {
-    const f = ((i / 4) + t * 0.6) % 1, y = oriz + f * f * (h - oriz), s = 0.25 + f * 1.5, x = w / 2 - 40 - f * f * 300;
-    c.strokeStyle = "#160d22"; c.lineWidth = 3 * s; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 6 * s, y - 70 * s); c.stroke();
-    c.fillStyle = "#160d22"; for (let k = 0; k < 5; k++) { const a = (k / 5) * Math.PI * 2; c.beginPath(); c.ellipse(x - 6 * s + Math.cos(a) * 16 * s, y - 70 * s + Math.sin(a) * 5 * s, 18 * s, 4 * s, a, 0, 7); c.fill(); }
-  }
-  // inseguimento: auto della polizia dietro, a tratti
-  const caccia = giro > 18 && giro < 34;
-  if (caccia) {
-    const px = w / 2 + 40 + Math.sin(t * 1.7) * 40, py = 250;
-    c.fillStyle = "#0e0f14"; c.fillRect(px - 26, py, 52, 22); c.fillStyle = "#e9ecf5"; c.fillRect(px - 22, py - 8, 44, 10);
-    const lampo = Math.floor(t * 8) % 2;
-    c.shadowBlur = 20; c.shadowColor = lampo ? "#ff2d4b" : "#3d7dff"; c.fillStyle = c.shadowColor; c.fillRect(px - 14, py - 13, 12, 5); c.shadowColor = lampo ? "#3d7dff" : "#ff2d4b"; c.fillStyle = c.shadowColor; c.fillRect(px + 2, py - 13, 12, 5); c.shadowBlur = 0;
-  }
-  // l'auto del giocatore
-  const sx = w / 2 + Math.sin(t * 1.3) * 30, sy = 292;
-  c.fillStyle = "rgba(0,0,0,0.4)"; c.beginPath(); c.ellipse(sx, sy + 40, 80, 10, 0, 0, 7); c.fill();
-  c.fillStyle = "#ff3ea5"; c.beginPath(); c.moveTo(sx - 72, sy + 34); c.lineTo(sx - 64, sy + 2); c.lineTo(sx - 40, sy - 24); c.lineTo(sx + 40, sy - 24); c.lineTo(sx + 64, sy + 2); c.lineTo(sx + 72, sy + 34); c.closePath(); c.fill();
-  c.fillStyle = "#14182a"; c.beginPath(); c.moveTo(sx - 34, sy - 20); c.lineTo(sx + 34, sy - 20); c.lineTo(sx + 48, sy); c.lineTo(sx - 48, sy); c.closePath(); c.fill();
-  c.shadowBlur = 14; c.shadowColor = "#ff2d4b"; c.fillStyle = "#ff2d4b"; c.fillRect(sx - 66, sy + 8, 32, 6); c.fillRect(sx + 34, sy + 8, 32, 6); c.shadowBlur = 0;
-  c.fillStyle = "#0b0b0f"; c.fillRect(sx - 74, sy + 30, 22, 14); c.fillRect(sx + 52, sy + 30, 22, 14);
-  c.fillStyle = "#ffffff"; c.font = "800 10px system-ui, sans-serif"; c.textAlign = "center"; c.fillText("APEX", sx, sy + 26); c.textAlign = "left";
-  // minimappa
-  c.save(); c.beginPath(); c.arc(62, h - 62, 46, 0, 7); c.clip();
-  c.fillStyle = "#1a1f2e"; c.fillRect(16, h - 108, 92, 92); c.fillStyle = "#24345a"; c.fillRect(16, h - 108, 34, 92);
-  c.strokeStyle = "#4a5470"; c.lineWidth = 6; for (let k = -2; k < 3; k++) { const yy = h - 62 + k * 22 + ((t * 20) % 22); c.beginPath(); c.moveTo(50, yy); c.lineTo(108, yy); c.stroke(); }
-  c.strokeStyle = "#ff3ea5"; c.lineWidth = 4; c.beginPath(); c.moveTo(62, h - 62); c.lineTo(84, h - 102); c.stroke();
-  if (caccia) { c.fillStyle = Math.floor(t * 8) % 2 ? "#ff2d4b" : "#3d7dff"; c.beginPath(); c.arc(64, h - 44, 5, 0, 7); c.fill(); }
-  c.restore();
-  c.strokeStyle = "rgba(255,255,255,0.85)"; c.lineWidth = 3; c.beginPath(); c.arc(62, h - 62, 46, 0, 7); c.stroke();
-  c.fillStyle = "#fff"; c.beginPath(); c.moveTo(62, h - 70); c.lineTo(56, h - 56); c.lineTo(68, h - 56); c.closePath(); c.fill();
-  // tachimetro e soldi
-  c.textAlign = "right"; c.fillStyle = "#ffffff"; c.font = "900 italic 46px system-ui, sans-serif"; c.fillText(String(Math.round((caccia ? 182 : 138) + Math.sin(t * 0.8) * 12)), w - 70, h - 26);
-  c.font = "700 16px system-ui, sans-serif"; c.fillText("km/h", w - 22, h - 28);
-  c.fillStyle = "#7dff9a"; c.font = "800 22px system-ui, sans-serif"; c.fillText(`$${(48250 + Math.floor(t * 37)).toLocaleString("it-IT")}`, w - 20, 34);
-  c.textAlign = "left"; c.fillStyle = "rgba(0,0,0,0.5)"; c.fillRect(18, 14, 300, 30);
-  c.fillStyle = caccia ? "#ff6b81" : "#ffd36e"; c.font = "700 15px system-ui, sans-serif";
-  c.fillText(caccia ? "SEMINA LA POLIZIA!" : "MISSIONE: consegna al porto prima di sera", 28, 34);
-}
+const _tv = new THREE.Vector3();
 
 /** Console moderna di design: torre bianca e nera con la luce blu, controller appoggiato. */
 function Console({ x, z }: { x: number; z: number }) {
@@ -1055,7 +984,8 @@ function Console({ x, z }: { x: number; z: number }) {
 
 /** TV grande su un mobile basso, console accesa e gioco che scorre: chi è sul divano gioca qui. */
 export function AngoloGiochi({ x, y, z, tv, onClick }: { x: number; y: number; z: number; tv: SchermoTv; onClick: () => void }) {
-  const viva = useMemo(() => new TelaViva(640, 360), []);
+  const telefono = useMemo(() => typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches, []);
+  const viva = useMemo(() => new TelaViva(640, 360, telefono ? 1 : 1.5), [telefono]);
   useEffect(() => () => viva.dispose(), [viva]);
   // la tua immagine o il tuo video, se li hai messi; altrimenti (o se non caricano) il gioco
   const [tuo, setTuo] = useState<{ chiave: string; t: THREE.Texture } | null>(null);
@@ -1074,7 +1004,13 @@ export function AngoloGiochi({ x, y, z, tv, onClick }: { x: number; y: number; z
     return () => { vivo = false; tex?.dispose(); if (video) { video.pause(); video.removeAttribute("src"); video.load(); } };
   }, [chiave, tv]);
   const mostra = tuo && tuo.chiave === chiave ? tuo.t : null;
-  useFrame(({ clock }) => { if (mostra) return; const t = clock.elapsedTime; viva.aggiorna(Math.floor(t * 20), (c) => disegnaGioco(c, t)); });
+  // il gioco si ridisegna solo quando la TV è abbastanza vicina da vederlo (sul telefono più piano)
+  useFrame(({ clock, camera }) => {
+    if (mostra) return;
+    if (viva.pronta && camera.position.distanceTo(_tv.set(x, 1.4, z)) > (telefono ? 16 : 26)) return;
+    const t = clock.elapsedTime;
+    viva.aggiorna(Math.floor(t * (telefono ? 10 : 18)), (c) => disegnaGioco(c, t));
+  });
   return (
     <group position={[x, y, z]} userData={{ dinamico: true }}>
       <Console x={0.82} z={0.02} />

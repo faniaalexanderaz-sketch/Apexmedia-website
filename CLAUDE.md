@@ -62,6 +62,15 @@ zoom con le dita. Si cambia stanza toccando le zone in basso (grandi e
 sopra la barra dell'iPhone, perché lo usa come web app); trascinando si gira
 solo lo sguardo a destra e sinistra, sul posto (`Regia` in `Scena.tsx`).
 
+Fluidità sul telefono: il livello di qualità si decide all'apertura e non
+cambia più. Non far dipendere luci, ombre, riflessi o materiali da qualcosa che
+cambia mentre gira (es. `PerformanceMonitor`): ogni cambio ricompila tutti i
+materiali e blocca il telefono per secondi. Quando i fotogrammi calano scende
+solo il "carico" (pixel ed effetti finali). `Preriscalda` compila in anticipo
+anche gli oggetti nascosti. Tele animate (schermi, TV, feed) si aggiornano solo
+da vicino. Il gioco della TV è in `scena/gioco.ts`, le luci arcobaleno in
+`scena/LedArcobaleno.tsx`.
+
 Come lavorare con il titolare:
 
 - Rispondi in italiano, diretto e pratico: non è uno sviluppatore e usa

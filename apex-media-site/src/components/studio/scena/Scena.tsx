@@ -14,6 +14,7 @@ import { AngoloFumatori, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTa
 import { GiardinoNuovo, Spa } from "./Esterni";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
+import { LedArcobaleno } from "./LedArcobaleno";
 import { precaricaPiante } from "./Piante3D";
 
 precaricaPiante();
@@ -185,7 +186,7 @@ function Etichetta({ y, children }: { y: number; children: React.ReactNode }) {
 
 /* ---------- Scena ---------- */
 
-function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
+function Ufficio3D(p: PropsScena & { livello: Livello; carico: Livello; ombre: number }) {
   const font = useFont();
   const perId = useMemo(() => Object.fromEntries(p.agenti.map((a) => [a.id, a])), [p.agenti]);
   // lo schermo si spegne se l'agente non è alla scrivania
@@ -342,14 +343,17 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
 
       </Statico>
 
+      <LedArcobaleno />
       <Regia zona={p.zona} selezione={p.selezione} agenti={p.agenti} clienti={p.clienti} coperto={p.coperto} />
-      {p.livello > 1 ? (
+      <Preriscalda />
+      {/* gli effetti finali seguono il carico del momento: toglierli non ricompila i materiali */}
+      {p.livello > 1 && p.carico > 1 ? (
         <EffectComposer multisampling={4}>
           <N8AO halfRes quality="performance" aoRadius={1.4} distanceFalloff={1} intensity={2.4} color="#2b2440" />
           <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.9} radius={0.7} />
         </EffectComposer>
-      ) : p.livello > 0 ? (
-        <EffectComposer multisampling={4}>
+      ) : p.livello > 0 && p.carico > 0 ? (
+        <EffectComposer multisampling={p.livello > 1 ? 4 : 0}>
           <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.9} radius={0.7} />
         </EffectComposer>
       ) : null}
@@ -358,9 +362,32 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
 }
 
 /* Qualità: 2 = massima (computer), 1 = alta (telefono), 0 = leggera.
-   Si parte dal massimo che il dispositivo regge; se i fotogrammi calano
-   davvero, la scena scende di un gradino da sola invece di scattare. */
+   Il livello si sceglie una volta all'apertura e non cambia più: luci, ombre e
+   riflessi diversi costringono la scheda grafica a ricostruire tutti i materiali,
+   e sul telefono questo bloccava la scena per qualche secondo. Se i fotogrammi
+   calano, scende solo il "carico": meno pixel e meno effetti finali. */
 type Livello = 0 | 1 | 2;
+
+/** Prepara in anticipo i materiali di tutto quello che c'è (anche nascosto: telefoni, costumi, oggetti in mano),
+    così non si compilano a metà animazione. Riparte quando finiscono di arrivare i modelli 3D. */
+function Preriscalda() {
+  const gl = useThree((s) => s.gl), scene = useThree((s) => s.scene), camera = useThree((s) => s.camera);
+  useEffect(() => {
+    let vivo = true;
+    const scalda = () => {
+      if (!vivo) return;
+      const nascosti: THREE.Object3D[] = [];
+      scene.traverse((o) => { if (!o.visible && !o.userData.fuso) { nascosti.push(o); o.visible = true; } });
+      try { gl.compile(scene, camera); } catch { /* niente: si compilerà al bisogno */ }
+      for (const o of nascosti) o.visible = false;
+    };
+    const t1 = setTimeout(scalda, 1500), t2 = setTimeout(scalda, 9000);
+    const m = THREE.DefaultLoadingManager, prima = m.onLoad;
+    m.onLoad = () => { prima?.(); setTimeout(scalda, 300); };
+    return () => { vivo = false; clearTimeout(t1); clearTimeout(t2); m.onLoad = prima; };
+  }, [gl, scene, camera]);
+  return null;
+}
 
 function livelloIniziale(): Livello {
   if (typeof window === "undefined") return 1;
@@ -385,9 +412,12 @@ function profonditaCorta(): boolean {
 export default function Scena(p: PropsScena) {
   const [inizio] = useState(livelloIniziale);
   const [fisso] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("alta") === "1");
-  const [livello, setLivello] = useState<Livello>(inizio);
+  const livello = inizio;
+  const [carico, setCarico] = useState<Livello>(inizio);
   const [profondita] = useState(() => typeof window !== "undefined" && profonditaCorta());
-  const ombre = inizio === 2 ? 4096 : inizio === 1 ? 2048 : 1536;
+  const ombre = inizio === 2 ? 4096 : inizio === 1 ? 1024 : 1024;
+  // telefono: al massimo 1,5 pixel per punto (gli schermi a 3x costano il quadruplo senza vedersi meglio)
+  const dpr: number | [number, number] = carico === 2 ? [1, 2] : carico === 1 ? (inizio === 1 ? [1, 1.5] : [1, 1.5]) : 1;
   const [persa, setPersa] = useState(false);
   if (persa) {
     return (
@@ -399,13 +429,13 @@ export default function Scena(p: PropsScena) {
     );
   }
   return (
-    <Canvas shadows frameloop={p.attivo ? "always" : "never"} dpr={livello > 0 ? [1, 2] : [1, 1.25]} camera={{ fov: 50, near: 0.6, far: 140, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.08 }}
+    <Canvas shadows frameloop={p.attivo ? "always" : "never"} dpr={dpr} camera={{ fov: 50, near: 0.6, far: 140, position: [0, 40, 34] }} gl={{ antialias: true, powerPreference: "high-performance", logarithmicDepthBuffer: profondita, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.08 }}
       onCreated={({ gl, scene }) => { if (process.env.NODE_ENV !== "production") Object.assign(window, { __studio: { gl, scene } }); gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setPersa(true); }); }}
       onPointerMissed={() => p.onSeleziona(null)} fallback={<p className="st-niente3d">Questo dispositivo non mostra il 3D. Usa le schede Lavori e Conti: funzionano uguale.</p>}>
       {/* con ?alta=1 la qualità resta al massimo anche se i fotogrammi calano */}
-      {!fisso ? <PerformanceMonitor flipflops={2} onDecline={() => setLivello((l) => (l > 0 ? ((l - 1) as Livello) : l))} onFallback={() => setLivello(0)} /> : null}
+      {!fisso ? <PerformanceMonitor bounds={(r) => (r > 90 ? [50, 90] : [24, 50])} flipflops={3} onDecline={() => setCarico((l) => (l > 0 ? ((l - 1) as Livello) : l))} onFallback={() => setCarico(0)} /> : null}
       {livello > 1 ? <SoftShadows size={22} samples={12} focus={0.5} /> : null}
-      <Ufficio3D {...p} livello={livello} ombre={ombre} />
+      <Ufficio3D {...p} livello={livello} carico={carico} ombre={ombre} />
     </Canvas>
   );
 }

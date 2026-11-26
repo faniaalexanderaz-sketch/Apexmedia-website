@@ -412,7 +412,7 @@ function ModuloTv({ chiudi }: { chiudi: () => void }) {
   return (
     <Finestra titolo="Cosa c'è sulla TV" sotto="La TV del relax, quella davanti al divano. Scegli tu cosa trasmette." chiudi={chiudi}>
       <div className="st-modulo st-tv">
-        <button type="button" className="st-btn" aria-pressed={dati.tv.tipo === "gioco"} disabled={occupato} onClick={() => void salva("gioco", undefined, "Sulla TV torna il gioco.")}>Il gioco «Apex Drive»</button>
+        <button type="button" className="st-btn" aria-pressed={dati.tv.tipo === "gioco"} disabled={occupato} onClick={() => void salva("gioco", undefined, "Sulla TV torna il gioco.")}>Il gioco «Apex City»</button>
         <label className="st-campo">Una tua immagine
           <input type="file" accept="image/jpeg,image/png,image/webp" disabled={occupato} onChange={(e) => { const f = e.target.files?.[0]; if (!f) return; void fotoPerTv(f).then((d) => salva("immagine", d, "Immagine sulla TV.")).catch((er: Error) => avvisa(er.message, "errore")); }} />
         </label>

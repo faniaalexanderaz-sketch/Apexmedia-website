@@ -187,7 +187,6 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
     const dt = Math.min(dtGrezzo, 0.05);
     const tempo = stato.clock.elapsedTime, t = tempo + fase * 1.7;
     s.iniziato = true;
-    aggiornaFeed(tempo);
 
     const cammina = s.via.length > 0;
     const att = meta.attivita;
@@ -340,6 +339,8 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
     maniche.current.forEach((x) => { if (x) x.visible = !spa; });
     bracciaNude.current.forEach((x) => { if (x) x.visible = spa; });
 
+    // il feed del telefono si ridisegna solo se qualcuno lo sta guardando
+    if (mostra === "telefono" || mostra === "tablet") aggiornaFeed(tempo);
     if (telefono.current) telefono.current.visible = mostra === "telefono";
     if (libro.current) libro.current.visible = mostra === "libro";
     if (joypad.current) joypad.current.visible = mostra === "joypad";
