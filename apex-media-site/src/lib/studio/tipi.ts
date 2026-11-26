@@ -27,6 +27,8 @@ export type Dati = {
   oggi: string; // YYYY-MM-DD, fuso Europe/Rome
   ora: number; // 0-23, per il saluto
   obiettivoMese: number;
+  /** cosa trasmette la TV del relax: il gioco, una tua immagine o un tuo video (link) */
+  tv: SchermoTv;
   clienti: Cliente[];
   servizi: Servizio[];
   fatture: Fattura[];
@@ -40,3 +42,5 @@ export type Risposta = { ok: true; dati: Dati; nuovoId?: number } | { ok: false;
 export const CANALI = ["Google Ads", "Meta Ads", "TikTok Ads", "Altro"] as const;
 export const COLORI_CLIENTE = ["#5b2eff", "#2f6bff", "#17b26a", "#ff8a3d", "#e5484d", "#0fb5ae", "#d6409f", "#8a6d1f"] as const;
 export const SERVIZI_SUGGERITI = ["Gestione social", "Google Ads", "Meta Ads", "Sito web", "Manutenzione sito", "Video e reel", "Shooting foto"] as const;
+
+export type SchermoTv = { tipo: "gioco" } | { tipo: "immagine"; versione: string } | { tipo: "video"; src: string };

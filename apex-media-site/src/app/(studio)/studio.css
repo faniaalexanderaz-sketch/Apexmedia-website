@@ -765,3 +765,6 @@ body:has(.st-strato:not([data-nascosto]) .st-ufficio) .st { position: fixed; ins
   .st-joy small { font-size: 9px; bottom: -15px; }
   .st-ufficio:has(.st-dock-pillola) .st-joy { bottom: 52px; }
 }
+
+.st-tv { display: grid; gap: 16px; }
+.st-tv > .st-btn[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--viola); }

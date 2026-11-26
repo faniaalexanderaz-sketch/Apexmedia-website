@@ -6,9 +6,10 @@ import { CameraControls, CameraControlsImpl, Environment, Html, Lightformer, Per
 import { Bloom, EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { AGENTE, AGENTI, FONDO, LARGO, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
+import type { SchermoTv } from "@/lib/studio/tipi";
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
 import type { Tono } from "@/lib/studio/promemoria";
-import { Cassa, Cervello, Pendenti, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
+import { AngoloGiochi, Cassa, Cervello, Pendenti, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
 import { AngoloFumatori, Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
@@ -50,6 +51,8 @@ export type PropsScena = {
   onCassa: () => void;
   onNuovoCliente: () => void;
   onTuaScrivania: () => void;
+  tv: SchermoTv;
+  onTv: () => void;
 };
 
 const CERVELLO: [number, number] = [-5.2, -12.4];
@@ -274,6 +277,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       </Cervello>
 
       <Relax />
+      <AngoloGiochi x={-17.6} y={0.7} z={1.95} tv={p.tv} onClick={p.onTv} />
 
       <TuaScrivania x={TUA[0]} z={TUA[1]} nome={p.nome} accesa={p.inAttesa > 0} font={font} onClick={p.onTuaScrivania} />
       <group position={[TUA[0] + 2.6, 0, TUA[1] - 0.2]}>

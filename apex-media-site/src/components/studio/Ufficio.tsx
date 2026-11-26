@@ -148,7 +148,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
         <Scena attivo={attivo} nome={site.founders[0].split(" ")[0]} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} ads={modello.ads} conteggi={modello.conteggi} regole={dati.regole.length} inAttesa={promemoria.length}
           zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli}
           onFumetto={(id) => { const p = promemoria.find((x) => x.id === id); if (p) void esegui(p); }}
-          onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); if (dock === "chiuso") scriviDock("normale"); }} />
+          tv={dati.tv} onTv={() => apri({ tipo: "tv" })} onCassa={() => vai("conti")} onNuovoCliente={() => apri({ tipo: "cliente" })} onTuaScrivania={() => { setSelezione(null); setZona("tu"); setElenco(true); if (dock === "chiuso") scriviDock("normale"); }} />
       </Confine3D>
         ) : null}
       </div>

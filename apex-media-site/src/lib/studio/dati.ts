@@ -3,7 +3,7 @@ import { db, modalitaDemo, schema } from "@/db";
 import { AGENTE, scegliAgente } from "./agenti";
 import { pianoDelMese } from "./piano";
 import { aggiungiGiorni, fineMese, mesePrima, servizioAttivoNelMese } from "./calcoli";
-import { CANALI, type Campagna, type Dati, type Ricorrenza, type StatoLavoro } from "./tipi";
+import { CANALI, type Campagna, type Dati, type Ricorrenza, type SchermoTv, type StatoLavoro } from "./tipi";
 
 /* =============================================================
    Dati dello Studio: lettura completa e tutte le modifiche.
@@ -84,7 +84,7 @@ export async function caricaDati(): Promise<Dati> {
   // un lavoro rimasto "in lavorazione" oltre 10 minuti (scheda chiusa, errore) torna in coda
   await d.update(S.studioLavori).set({ stato: "in_coda" }).where(and(eq(S.studioLavori.stato, "in_lavorazione"), lt(S.studioLavori.aggiornatoIl, new Date(Date.now() - 10 * 60_000))));
 
-  const [clienti, servizi, fatture, campagne, lavori, regole, obiettivo] = await Promise.all([
+  const [clienti, servizi, fatture, campagne, lavori, regole, obiettivo, tv] = await Promise.all([
     d.select().from(S.studioClienti).orderBy(asc(S.studioClienti.id)),
     d.select().from(S.studioServizi).orderBy(asc(S.studioServizi.id)),
     d.select().from(S.studioFatture).orderBy(desc(S.studioFatture.emessaIl), desc(S.studioFatture.id)),
@@ -92,6 +92,7 @@ export async function caricaDati(): Promise<Dati> {
     d.select().from(S.studioLavori).orderBy(desc(S.studioLavori.aggiornatoIl)).limit(300),
     d.select().from(S.studioRegole).orderBy(desc(S.studioRegole.id)),
     d.select().from(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "obiettivo_mese"))).limit(1),
+    d.select({ valore: S.settings.valore, quando: S.settings.aggiornatoIl }).from(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "tv"))).limit(1),
   ]);
 
   const manuali: Campagna[] = campagne.map((r) => ({ id: r.id, clienteId: r.clienteId, mese: r.mese, canale: r.canale, spesa: num(r.spesa), contatti: r.contatti, ricavo: r.ricavo === null ? null : num(r.ricavo) }));
@@ -102,6 +103,7 @@ export async function caricaDati(): Promise<Dati> {
     ai: Boolean(process.env.ANTHROPIC_API_KEY || process.env.GEMINI_API_KEY),
     oggi, ora,
     obiettivoMese: num(obiettivo[0]?.valore),
+    tv: leggiTv(tv[0]),
     clienti: clienti.map((c) => ({ id: c.id, nome: c.nome, settore: c.settore, colore: c.colore, sito: c.sito, attivo: c.attivo, note: c.note })),
     servizi: servizi.map((s) => ({ id: s.id, clienteId: s.clienteId, nome: s.nome, importo: num(s.importo), ricorrenza: s.ricorrenza as Ricorrenza, dal: s.dal, al: s.al })),
     fatture: fatture.map((f) => ({ id: f.id, clienteId: f.clienteId, servizioId: f.servizioId, mese: f.mese, descrizione: f.descrizione, importo: num(f.importo), emessaIl: f.emessaIl, scadenza: f.scadenza, pagataIl: f.pagataIl })),
@@ -316,6 +318,23 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
       await d.delete(S.studioRegole).where(eq(S.studioRegole.id, id(c.id)));
       return;
     }
+    case "tv.salva": {
+      const tipo = c.tipo_tv;
+      if (tipo === "gioco") { await d.delete(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "tv"))); return; }
+      let valore: string;
+      if (tipo === "immagine") {
+        const img = typeof c.dato === "string" ? c.dato : "";
+        if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(img)) throw new Errore("Immagine non valida: usa una foto JPG, PNG o WebP.");
+        if (img.length > 3_000_000) throw new Errore("Immagine troppo grande.");
+        valore = JSON.stringify({ tipo, dato: img });
+      } else if (tipo === "video") {
+        const url = typeof c.dato === "string" ? c.dato.trim() : "";
+        if (!/^https:\/\/\S+$/i.test(url) || url.length > 1000) throw new Errore("Serve un link che inizia con https://");
+        valore = JSON.stringify({ tipo, src: url });
+      } else throw new Errore("Scegli cosa mostrare sulla TV.");
+      await d.insert(S.settings).values({ sito: SITO_IMPOSTAZIONI, chiave: "tv", valore, aggiornatoIl: new Date() }).onConflictDoUpdate({ target: [S.settings.sito, S.settings.chiave], set: { valore, aggiornatoIl: new Date() } });
+      return;
+    }
     case "obiettivo.salva": {
       const valore = String(importo(c.valore, "Obiettivo", true));
       await d.insert(S.settings).values({ sito: SITO_IMPOSTAZIONI, chiave: "obiettivo_mese", valore, aggiornatoIl: new Date() }).onConflictDoUpdate({ target: [S.settings.sito, S.settings.chiave], set: { valore, aggiornatoIl: new Date() } });
@@ -324,4 +343,24 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
     default:
       throw new Errore("Azione sconosciuta.");
   }
+}
+
+/** La TV: nei dati va solo cosa mostrare; l'immagine vera la serve /api/studio/tv. */
+function leggiTv(r: { valore: string; quando: Date } | undefined): SchermoTv {
+  if (!r) return { tipo: "gioco" };
+  try {
+    const v = JSON.parse(r.valore) as { tipo?: string; src?: string };
+    if (v.tipo === "immagine") return { tipo: "immagine", versione: String(r.quando.getTime()) };
+    if (v.tipo === "video" && typeof v.src === "string") return { tipo: "video", src: v.src };
+  } catch { /* valore rovinato: si torna al gioco */ }
+  return { tipo: "gioco" };
+}
+
+/** L'immagine caricata per la TV, come data URL; null se non c'è. */
+export async function immagineTv(): Promise<string | null> {
+  await tabelle();
+  const d = await db();
+  const [r] = await d.select({ valore: S.settings.valore }).from(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "tv"))).limit(1);
+  if (!r) return null;
+  try { const v = JSON.parse(r.valore) as { tipo?: string; dato?: string }; return v.tipo === "immagine" && v.dato ? v.dato : null; } catch { return null; }
 }

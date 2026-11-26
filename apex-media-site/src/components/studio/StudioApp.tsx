@@ -26,6 +26,7 @@ export type Modale =
   | { tipo: "lavoro"; agente?: string; clienteId?: number }
   | { tipo: "risultato"; lavoroId: number }
   | { tipo: "obiettivo" }
+  | { tipo: "tv" }
   | { tipo: "svuota" };
 
 type Avviso = { testo: string; tono: "ok" | "errore" | "soldi" };

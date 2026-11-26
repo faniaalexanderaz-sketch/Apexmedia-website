@@ -354,6 +354,47 @@ function ModuloObiettivo({ chiudi }: { chiudi: () => void }) {
   );
 }
 
+/* ---------- La TV del relax ---------- */
+
+/** Riduce la foto a 1280×720 al massimo e la trasforma in JPEG leggero. */
+function fotoPerTv(file: File): Promise<string> {
+  return new Promise((ok, ko) => {
+    const img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 1280 / img.width, 720 / img.height);
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext("2d")?.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(img.src);
+      ok(c.toDataURL("image/jpeg", 0.85));
+    };
+    img.onerror = () => ko(new Error("Non riesco a leggere questa immagine."));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+function ModuloTv({ chiudi }: { chiudi: () => void }) {
+  const { dati, azione, avvisa } = useStudio();
+  const { occupato, invia } = useInvio();
+  const [link, setLink] = useState(dati.tv.tipo === "video" ? dati.tv.src : "");
+  const salva = (tipo_tv: string, dato?: string, testo?: string) => invia(async () => { const r = await azione("tv.salva", { tipo_tv, dato }); if (r.ok) { avvisa(testo ?? "TV aggiornata."); chiudi(); } });
+  return (
+    <Finestra titolo="Cosa c'è sulla TV" sotto="La TV del relax, quella davanti al divano. Scegli tu cosa trasmette." chiudi={chiudi}>
+      <div className="st-modulo st-tv">
+        <button type="button" className="st-btn" aria-pressed={dati.tv.tipo === "gioco"} disabled={occupato} onClick={() => void salva("gioco", undefined, "Sulla TV torna il gioco.")}>Il gioco «Apex Drive»</button>
+        <label className="st-campo">Una tua immagine
+          <input type="file" accept="image/jpeg,image/png,image/webp" disabled={occupato} onChange={(e) => { const f = e.target.files?.[0]; if (!f) return; void fotoPerTv(f).then((d) => salva("immagine", d, "Immagine sulla TV.")).catch((er: Error) => avvisa(er.message, "errore")); }} />
+        </label>
+        <form className="st-campo" onSubmit={(e) => { e.preventDefault(); void salva("video", link, "Video sulla TV."); }}>
+          Un tuo video (link diretto a un file .mp4)
+          <span className="st-scrivi-riga"><input value={link} onChange={(e) => setLink(e.target.value)} placeholder="https://…/video.mp4" inputMode="url" /><button className="st-btn st-btn-pieno" disabled={occupato || !link.trim()}>Metti</button></span>
+          <small className="st-nota">Serve il link al file, non a YouTube o Instagram: quelle pagine non si possono trasmettere dentro un altro sito. Se il video non parte, sulla TV resta il gioco.</small>
+        </form>
+      </div>
+    </Finestra>
+  );
+}
+
 /* ---------- Cancella i dati di esempio ---------- */
 
 function ModuloSvuota({ chiudi }: { chiudi: () => void }) {
@@ -361,7 +402,7 @@ function ModuloSvuota({ chiudi }: { chiudi: () => void }) {
   const { occupato, invia } = useInvio();
   const [conferma, setConferma] = useState("");
   return (
-    <Finestra titolo="Cancella i dati di esempio" sotto="Lo studio riparte vuoto: clienti, servizi, fatture, campagne, lavori e regole." chiudi={chiudi}>
+    <Finestra titolo="Cancella i dati di esempio" sotto="Lo studio riparte vuoto: clienti, servizi, fatture, campagne e lavori. Le regole del cervello restano." chiudi={chiudi}>
       <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => { const r = await azione("studio.svuota", { conferma }); if (r.ok) { avvisa("Studio vuoto: aggiungi il tuo primo cliente da Conti."); chiudi(); } }); }}>
         {dati.demo ? <p className="st-nota st-nota-avviso">Sei in modalità demo: senza database anche i dati che inserisci dopo spariscono al prossimo riavvio del server. Per tenerli collega il database su Vercel.</p> : null}
         <label className="st-campo">Scrivi SVUOTA per confermare<input data-primo value={conferma} onChange={(e) => setConferma(e.target.value.toUpperCase())} autoCapitalize="characters" autoComplete="off" /></label>
@@ -405,6 +446,7 @@ export function Moduli({ modale, chiudi }: { modale: Modale; chiudi: () => void 
     case "lavoro": return <ModuloLavoro m={modale} chiudi={chiudi} />;
     case "risultato": return <ModuloRisultato m={modale} chiudi={chiudi} />;
     case "obiettivo": return <ModuloObiettivo chiudi={chiudi} />;
+    case "tv": return <ModuloTv chiudi={chiudi} />;
     case "svuota": return <ModuloSvuota chiudi={chiudi} />;
   }
 }
