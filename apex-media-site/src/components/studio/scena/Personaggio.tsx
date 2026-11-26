@@ -1,10 +1,11 @@
 "use client";
 
+import { Oggetto3D } from "./Piante3D";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Capelli, Punto } from "@/lib/studio/agenti";
-import { C, GEO, MAT_INVISIBILE, mat, matLucido, matLuce, matMetallo, tela } from "./base";
+import { C, GEO, MAT_INVISIBILE, mat, matLucido, matLuce, matMetallo, tela, matLed } from "./base";
 
 /* =============================================================
    Un membro del team: testa grande, divisa Apex con il logo sulla
@@ -28,6 +29,8 @@ type Props = {
   extra?: "cuffie" | "microfono" | "occhiali";
   fase?: number;
   tazza?: boolean;
+  /** in pausa sigaretta nell'angolo fumatori */
+  fumo?: boolean;
   selezionato?: boolean;
   /** true per i clienti: niente logo Apex sulla schiena */
   ospite?: boolean;
@@ -119,7 +122,7 @@ function Gamba({ lato, rif, ginocchio }: { lato: number; rif: React.RefObject<TH
 
 const angolo = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 
-export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, capelli, coloreCapelli, extra, fase = 0, tazza, selezionato, ospite, scala = 1, onClick, children }: Props) {
+export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, capelli, coloreCapelli, extra, fase = 0, tazza, fumo, selezionato, ospite, scala = 1, onClick, children }: Props) {
   const radice = useRef<THREE.Group>(null);
   const corpo = useRef<THREE.Group>(null);
   const testa = useRef<THREE.Group>(null);
@@ -128,7 +131,11 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
   const kS = useRef<THREE.Group>(null), kD = useRef<THREE.Group>(null);
   const tablet = useRef<THREE.Mesh>(null);
   const anello = useRef<THREE.Mesh>(null);
+  const nuvola = useRef<THREE.Group>(null);
   const [sopra, setSopra] = useState(false);
+  // quattro sbuffi di fumo, ognuno con la sua trasparenza
+  const sbuffi = useMemo(() => (fumo ? [0, 1, 2, 3].map(() => new THREE.MeshBasicMaterial({ color: "#e9e9ee", transparent: true, opacity: 0, depthWrite: false })) : []), [fumo]);
+  useEffect(() => () => sbuffi.forEach((m) => m.dispose()), [sbuffi]);
 
   // stato del movimento, fuori da React: cambia a ogni fotogramma
   const st = useRef({ x: meta.x, z: meta.z, rot: meta.rot, y: meta.y, seduto: meta.posa === "seduto", via: [] as [number, number][], passo: 0, iniziato: false });
@@ -198,6 +205,10 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
       // tiene il tablet e ogni tanto saluta con l'altra mano
       const saluta = Math.sin(t * 0.9) > 0.55;
       aS = 1.0; aD = saluta ? 2.9 : 0.15; aDz = saluta ? 0.5 + Math.sin(t * 9) * 0.3 : 0; tY = Math.sin(t * 0.5) * 0.15; tX = -0.08;
+    } else if (!s.seduto && fumo) {
+      // ogni tanto porta la sigaretta alla bocca
+      const tiro = (t % 4.5) < 1.1;
+      aS = 0.15; aD = tiro ? 2.35 : 0.45; aDz = tiro ? -0.35 : 0; tY = Math.sin(t * 0.5) * 0.25; tX = tiro ? -0.05 : 0.04;
     } else if (!s.seduto) { aS = 0.12; aD = tazza ? 1.35 : 0.12; tY = Math.sin(t * 0.6) * 0.3; }
     else if (umore === "lavora") { aS = 1.12 + Math.sin(t * 15) * 0.07; aD = 1.12 + Math.sin(t * 15 + 2.1) * 0.07; tX = 0.1 + Math.sin(t * 1.8) * 0.03; tY = Math.sin(t * 0.7) * 0.06; cX = -0.12; }
     else if (umore === "attesa") { aS = 0.95; aD = 2.75; aDz = 0.6 + Math.sin(t * 5) * 0.25; tY = 0.75; tX = -0.1; }
@@ -209,6 +220,15 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
     verso(corpo.current, "x", cX, 4);
     if (corpo.current) corpo.current.position.y = Math.sin(t * 1.6) * 0.008;
     if (tablet.current) tablet.current.visible = umore === "visita" && !cammina;
+    if (nuvola.current) {
+      nuvola.current.visible = Boolean(fumo) && !cammina;
+      nuvola.current.children.forEach((o, k) => {
+        const f = (t * 0.45 + k / 4) % 1;
+        o.position.set(Math.sin(t + k) * 0.06 * f, 1.42 + f * 1.0, -0.34 - f * 0.2);
+        o.scale.setScalar(0.05 + f * 0.2);
+        sbuffi[k].opacity = 0.38 * (1 - f) * Math.min(1, f * 6);
+      });
+    }
   });
 
   const tocca = onClick ? {
@@ -258,6 +278,13 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
           <mesh geometry={GEO.braccio} material={tessuto} position={[0, -0.2, 0]} castShadow />
           <mesh geometry={GEO.sfera} material={mat(pelle, 0.6)} position={[0, -0.44, 0]} scale={0.15} />
           {tazza ? <mesh geometry={GEO.cil} material={mat(C.bianco, 0.3)} position={[0, -0.5, -0.07]} rotation={[-1.3, 0, 0]} scale={[0.13, 0.15, 0.13]} castShadow /> : null}
+          {fumo ? (
+            <group position={[0, -0.5, -0.09]} rotation={[-1.4, 0, 0]}>
+              <mesh geometry={GEO.cil} material={mat("#f6f4ee", 0.6)} scale={[0.028, 0.16, 0.028]} />
+              <mesh geometry={GEO.cil} material={mat("#d9a25a", 0.7)} position={[0, -0.06, 0]} scale={[0.03, 0.045, 0.03]} />
+              <mesh geometry={GEO.cil} material={matLed("#ff6a1f", 3)} position={[0, 0.085, 0]} scale={[0.03, 0.014, 0.03]} />
+            </group>
+          ) : null}
         </group>
 
         <group ref={testa} position={[0, 1.37, -0.02]}>
@@ -271,13 +298,19 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
           {extra ? <Accessorio tipo={extra} /> : null}
         </group>
       </group>
+      {fumo ? <group ref={nuvola}>{sbuffi.map((m, k) => <mesh key={k} geometry={GEO.sfera} material={m} />)}</group> : null}
       {children}
     </group>
   );
 }
 
 /** Sedia da ufficio: schienale imbottito, braccioli, base a stella cromata. `rot` come chi ci si siede. */
+/** Sedia da ufficio vera (modello 3D); quella disegnata resta come riserva mentre carica. */
 export function Sedia({ x, z, rot = 0, c = "#2a2d3a" }: { x: number; z: number; rot?: number; c?: string }) {
+  return <Oggetto3D file="modern_arm_chair_01" x={x} z={z} rot={rot + Math.PI} scala={1.08} riserva={<group position={[-x, 0, -z]}><SediaDisegnata x={x} z={z} rot={rot} c={c} /></group>} />;
+}
+
+function SediaDisegnata({ x, z, rot = 0, c = "#2a2d3a" }: { x: number; z: number; rot?: number; c?: string }) {
   const m = mat(c, 0.85), metallo = matMetallo("#b9bcc6");
   return (
     <group position={[x, 0, z]} rotation={[0, rot, 0]}>

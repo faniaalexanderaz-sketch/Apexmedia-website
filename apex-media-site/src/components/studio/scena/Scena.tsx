@@ -9,9 +9,10 @@ import { AGENTE, AGENTI, FONDO, LARGO, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrad
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
 import type { Tono } from "@/lib/studio/promemoria";
 import { Cassa, Cervello, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
-import { Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
+import { AngoloFumatori, Giardino, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
+import { comandi } from "./comandi";
 import { precaricaPiante } from "./Piante3D";
 
 precaricaPiante();
@@ -25,7 +26,7 @@ import { Personaggio, Sedia, type Umore } from "./Personaggio";
    ============================================================= */
 
 export type Fumetto = { id: string; frase: string; bottone: string; tono: Tono };
-export type AgenteScena = { id: string; stato: StatoAgente; titolo: string | null; meta: Punto; umore: Umore; tazza: boolean; fumetto: Fumetto | null };
+export type AgenteScena = { id: string; stato: StatoAgente; titolo: string | null; meta: Punto; umore: Umore; tazza: boolean; fumo?: boolean; fumetto: Fumetto | null };
 export type ClienteScena = { id: number; nome: string; colore: string; quota: number; scaduto: number; conti: ContiCliente };
 export type Selezione = { tipo: "agente"; id: string } | { tipo: "cervello" } | { tipo: "cliente"; id: number } | null;
 
@@ -76,9 +77,17 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
   const vista = useRef("");
 
   // da lontano le etichette mostrano solo il nome, da vicino anche cosa stanno facendo
-  useFrame(() => {
+  useFrame((_, dt) => {
     const c = ctrl.current;
     if (!c) return;
+    // joystick del telefono: sinistro sposta sul pavimento, destro gira la vista
+    const passo = Math.min(dt, 0.05);
+    if (comandi.mx || comandi.my) {
+      const v = (3 + c.distance * 0.45) * passo;
+      void c.truck(comandi.mx * v, 0, false);
+      void c.forward(-comandi.my * v, false);
+    }
+    if (comandi.vx || comandi.vy) void c.rotate(-comandi.vx * 1.8 * passo, -comandi.vy * 1.1 * passo, false);
     const v = c.distance < 34 ? "vicino" : "insieme";
     if (v !== vista.current) { vista.current = v; const box = gl.domElement.closest<HTMLElement>(".st-scena"); if (box) box.dataset.vista = v; }
   });
@@ -218,6 +227,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       <ScrittaPavimento x={10.0} z={1.2} nome="Tavolo social" sotto="Instagram, TikTok, Facebook" font={font} />
       <ScrittaPavimento x={-22.2} z={8.0} nome="Area relax" sotto="chi è libero si ferma qui" font={font} />
       <ScrittaPavimento x={10.4} z={8.0} nome="Giardino" sotto="ulivo e panchine" font={font} />
+      <ScrittaPavimento x={18.6} z={0.9} nome="Fumatori" sotto="pausa sigaretta" font={font} />
       <ScrittaPavimento x={-2.4} z={-8.6} nome="Regia" sotto="direzione, controllo, memoria" font={font} />
       <ScrittaPavimento x={12.6} z={-8.6} nome="Cassa" sotto="incassi, fatture, solleciti" font={font} />
 
@@ -230,6 +240,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
       <SalaStrategia posti={tavolo(["sofia", "marco", "elena", "davide"])} ads={p.ads} font={font} />
       <TavoloSocial posti={tavolo(["chiara", "simone", "alice"])} />
       <Giardino x={16} z={4.3} />
+      <AngoloFumatori />
 
       <StudioVideo x={3.6} z={-5.4} />
 
@@ -243,7 +254,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; ombre: number }) {
         const allaScrivania = Math.hypot(s.meta.x - a.posto[0], s.meta.z - a.posto[1]) < 0.1;
         const sfalsa = allaScrivania && AGENTI.filter((b) => b.posto[1] === a.posto[1]).findIndex((b) => b.id === a.id) % 2 === 1 ? 0.5 : 0;
         return (
-          <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} selezionato={scelto} scala={1.12} onClick={apri}>
+          <Personaggio key={a.id} meta={s.meta} instrada={instrada} umore={s.umore} divisa={a.id === "direttore" ? "#20232e" : "#5b2eff"} accento={a.felpa} pelle={a.pelle} capelli={a.capelli} coloreCapelli={a.coloreCapelli} extra={a.extra} fase={i} tazza={s.tazza} fumo={s.fumo} selezionato={scelto} scala={1.12} onClick={apri}>
             {s.fumetto ? (
               <Etichetta y={Math.abs(s.meta.x) < 3 ? 2.2 : Math.abs(s.meta.x) < 6 ? 3.3 : 2.5}><Nuvola nome={a.breve} f={s.fumetto} lato={s.meta.x < 0 ? "sinistra" : "destra"} onClick={() => p.onFumetto(s.fumetto!.id)} /></Etichetta>
             ) : (

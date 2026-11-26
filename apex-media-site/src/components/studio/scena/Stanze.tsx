@@ -4,9 +4,9 @@ import { Pianta3D } from "./Piante3D";
 import { useEffect, useMemo } from "react";
 import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
-import { SALA, TAVOLO_SALA, TAVOLO_SOCIAL } from "@/lib/studio/agenti";
+import { ANGOLO_FUMO, SALA, TAVOLO_SALA, TAVOLO_SOCIAL } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
-import { GEO, MAT_VETRO, mat, matLed, matLucido, matMarmo, matOttone, rett, schermo, tela, type Font } from "./base";
+import { GEO, MAT_VETRO, mat, matLed, matLucido, matMarmo, matMetallo, matOttone, rett, schermo, tela, type Font } from "./base";
 import { Monstera, Sansevieria, type DatiAds } from "./Arredi";
 
 /* =============================================================
@@ -282,6 +282,27 @@ export function Ulivo({ x, z, s = 1 }: { x: number; z: number; s?: number }) {
       <Cil p={[-0.25, 1.65, 0.05]} r={[0.2, 0, 0.6]} s={[0.12, 0.9, 0.12]} m={mat("#7b6a58", 0.95)} />
       <Cil p={[0.3, 1.7, -0.05]} r={[-0.2, 0, -0.55]} s={[0.11, 0.85, 0.11]} m={mat("#7b6a58", 0.95)} />
       {chioma.map((c, i) => <Sfera key={i} p={c.p} s={[c.s, c.s * 0.7, c.s]} m={mat(i % 2 ? "#8aa07a" : "#9db08d", 0.9)} />)}
+    </group>
+  );
+}
+
+/** Angolo fumatori: pedana in legno, posacenere a colonna in ottone, siepe e lampione basso. */
+export function AngoloFumatori() {
+  const [x, z] = ANGOLO_FUMO;
+  const legno = mat("#6b4a33", 0.7);
+  return (
+    <group position={[x, 0, z]}>
+      {Array.from({ length: 9 }, (_, i) => <Box key={i} p={[-1.1 + i * 0.27, 0.04, 0]} s={[0.24, 0.06, 2.5]} m={legno} />)}
+      <Box p={[0, 0.02, 0]} s={[2.5, 0.03, 2.55]} m={mat("#3b2a1f", 0.9)} ombra={false} />
+      {/* posacenere a colonna */}
+      <Cil p={[0, 0.5, 0]} s={[0.2, 0.9, 0.2]} m={matOttone()} />
+      <Cil p={[0, 0.97, 0]} s={[0.32, 0.05, 0.32]} m={mat("#2a2724", 0.5)} />
+      <Cil p={[0, 0.07, 0]} s={[0.38, 0.06, 0.38]} m={mat("#2a2724", 0.5)} />
+      {/* siepe bassa verso l'interno */}
+      {[-0.9, -0.3, 0.3, 0.9].map((dz, i) => <Sfera key={i} p={[-1.35, 0.32, dz]} s={[0.32, 0.36, 0.36]} m={mat(i % 2 ? "#2f6b43" : "#3d7d50", 0.85)} />)}
+      {/* lampioncino caldo */}
+      <Cil p={[0.95, 0.75, -0.95]} s={[0.05, 1.5, 0.05]} m={matMetallo("#2a2d38")} />
+      <Sfera p={[0.95, 1.55, -0.95]} s={0.14} m={matLed("#ffcf8a", 2.4)} ombra={false} />
     </group>
   );
 }

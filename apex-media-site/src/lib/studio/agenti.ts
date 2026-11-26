@@ -257,6 +257,16 @@ export const POSTI_RELAX: Punto[] = [
   { x: 18.6, z: 6.85, rot: Math.PI, posa: "seduto", y: -0.1 },
 ];
 
+/** Angolo fumatori nel giardino, accanto all'aiuola: chi fuma ci va ogni tanto quando è libero. */
+export const ANGOLO_FUMO: [number, number] = [21.4, 2.5];
+export const POSTI_FUMO: Punto[] = [
+  { x: 20.65, z: 2.5, rot: -Math.PI / 2, posa: "in_piedi", y: 0 },
+  { x: 21.4, z: 3.25, rot: 0, posa: "in_piedi", y: 0 },
+  { x: 22.05, z: 1.95, rot: Math.PI * 0.62, posa: "in_piedi", y: 0 },
+];
+/** I tre che fumano. */
+export const FUMATORI = ["davide", "matteo", "simone"];
+
 /** Dove si mettono gli agenti che vengono a dirti qualcosa: davanti alla tua scrivania, rivolti verso di te. */
 export const POSTI_VISITA: Punto[] = [
   { x: -1.4, z: 6.6, rot: Math.PI, posa: "in_piedi", y: 0 },

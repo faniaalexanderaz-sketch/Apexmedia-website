@@ -37,9 +37,10 @@ export async function faiLavorare(lavoroId: number): Promise<void> {
 
   // Parte stabile in testa (istruzioni dell'agente), parte variabile in coda: regole, cliente, richiesta.
   const system = [
+    `Ti chiami ${agente.nome}, ${agente.ruolo.toLowerCase()} di Apex Media.`,
     agente.istruzioni,
     regoleFisseTesto(),
-    "Scrivi in italiano. Consegna il lavoro finito, pronto da usare, senza premesse e senza chiedere conferme: se manca un'informazione fai l'ipotesi più ragionevole e dichiarala in una riga in fondo.",
+    "Scrivi in italiano. Dopo la riga d'apertura per il titolare, consegna il lavoro finito, pronto da usare, senza altre premesse e senza chiedere conferme: se manca un'informazione fai l'ipotesi più ragionevole e dichiarala in una riga in fondo.",
     regole.length ? "Regole aggiunte dal titolare, da rispettare sempre:\n" + regole.map((r) => `- ${r.testo}`).join("\n") : "",
   ].filter(Boolean).join("\n\n");
 

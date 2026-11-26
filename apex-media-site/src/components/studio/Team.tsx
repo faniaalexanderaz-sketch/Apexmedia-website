@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AGENTE, AGENTI } from "@/lib/studio/agenti";
-import { dataBreve, nomeCliente, statoAgente, tempoFa, type StatoAgente } from "@/lib/studio/calcoli";
-import { richiestaCompleta } from "@/lib/studio/regole";
+import { dataBreve, nomeCliente, saluto, statoAgente, tempoFa, type StatoAgente } from "@/lib/studio/calcoli";
+import { TITOLARE, richiestaCompleta } from "@/lib/studio/regole";
 import type { Dati, Lavoro } from "@/lib/studio/tipi";
 import { Avatar } from "./Lavori";
 import { useStudio } from "./StudioApp";
@@ -125,7 +125,7 @@ function Messaggio({ l, nome, onModifica }: { l: Lavoro; nome: string; onModific
         <div>
           {l.stato === "in_coda" ? (
             <>
-              <p>{ritardo ? `Sono in ritardo su «${l.titolo}»: era per il ${dataBreve(l.scadenza as string)}.` : `Ricevuto: «${l.titolo}». È in coda${l.scadenza ? `, lo consegno entro il ${dataBreve(l.scadenza)}` : ""}.`}</p>
+              <p>{ritardo ? `${TITOLARE}, sono in ritardo su «${l.titolo}»: era per il ${dataBreve(l.scadenza as string)}. Recupero subito.` : `Ok ${TITOLARE}, ci penso io: «${l.titolo}».${l.scadenza ? ` Te lo consegno entro il ${dataBreve(l.scadenza)}.` : " Te lo porto qui appena è pronto."}`}</p>
               {dati.ai ? <span className="st-msg-azioni"><button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => void faiLavorare(l.id)}>Fai partire</button></span>
                 : <small>Senza chiave: tocca «Fai in Claude», si apre Claude con tutto già scritto (è anche copiato). Poi torna qui e incolla la risposta.</small>}
               {!dati.ai ? <span className="st-msg-azioni"><button type="button" className="st-btn st-btn-pieno st-btn-mini" onClick={() => { apriInClaude(l, dati); avvisa("Richiesta copiata e aperta in Claude. Quando risponde, copia e incolla qui."); }}>Fai in Claude</button><button type="button" className="st-btn st-btn-mini" onClick={() => apri({ tipo: "risultato", lavoroId: l.id })}>Incolla risposta</button></span> : null}
@@ -216,7 +216,7 @@ export function ChatAgente({ id, chiudi }: { id: string; chiudi: () => void }) {
         <ul className="st-msgs">
           <li className="st-msg st-msg-suo">
             <Avatar agente={id} />
-            <div><p>Ciao, sono {a.nome}. {a.inBreve}</p><small>Scrivimi qui cosa ti serve: ogni messaggio diventa un lavoro e te lo riporto in questa chat.</small></div>
+            <div><p>{saluto(dati.ora)} {TITOLARE}! {a.nome !== a.breve ? `Sono ${a.nome}, ` : "Sono il "}{a.ruolo.toLowerCase()}. Cosa facciamo oggi?</p><small>{a.inBreve} Scrivimi qui: ogni messaggio diventa un lavoro e te lo riporto in questa chat.</small></div>
           </li>
           {lavori.map((l) => <Messaggio key={l.id} l={l} nome={a.nome} onModifica={(x) => { setCorreggi(x); setTesto(""); setTimeout(() => campo.current?.focus(), 0); }} />)}
         </ul>

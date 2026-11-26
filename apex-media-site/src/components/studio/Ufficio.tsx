@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { site } from "@/data/site";
 import { REGOLE_FISSE } from "@/lib/studio/regole";
-import { AGENTE, AGENTI, POSTI_RELAX, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
+import { AGENTE, AGENTI, FUMATORI, POSTI_FUMO, POSTI_RELAX, POSTI_VISITA, ZONE, postoScrivania, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import { dataBreve, daIncassare, euro, giorniTra, incassatoNelMese, iniziali, nomeMese, ricorrente, riepilogoCampagne, saluto, scaduta, servizioAttivoNelMese, somma, statoAgente, type StatoAgente } from "@/lib/studio/calcoli";
 import { visite } from "@/lib/studio/promemoria";
 import type { Lavoro } from "@/lib/studio/tipi";
@@ -13,6 +13,7 @@ import { ImportoModificabile } from "./Moduli";
 import { RigaPromemoria } from "./Notifiche";
 import { Confine3D, webglDisponibile } from "@/components/three/Confine3D";
 import { ChatAgente, ElencoTeam, StrisciaTeam } from "./Team";
+import { Joystick } from "./Joystick";
 import { useStudio } from "./StudioApp";
 import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
 
@@ -49,6 +50,13 @@ function useGiro(): number {
   return g;
 }
 
+/** Orologio della pausa sigaretta: scatta ogni 5 secondi. */
+function useFumo(): number {
+  const [g, setG] = useState(0);
+  useEffect(() => { const t = setInterval(() => setG((x) => x + 1), 5_000); return () => clearInterval(t); }, []);
+  return g;
+}
+
 export function Ufficio({ attivo }: { attivo: boolean }) {
   const { dati, apri, vai, promemoria, esegui } = useStudio();
   const [zona, setZona] = useState<ZonaId | "tutto" | "vicino">("vicino");
@@ -61,6 +69,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   const [treD, setTreD] = useState<boolean | null>(null);
   useEffect(() => { const t = setTimeout(() => setTreD(webglDisponibile()), 0); return () => clearTimeout(t); }, []);
   const giro = useGiro();
+  const fumo = useFumo();
   const stretto = largo < 760;
   // elenco del team: aperto su schermi larghi, ridotto a icone su tablet, striscia di volti su telefono
   const team = stretto ? "striscia" : (teamChiuso ?? largo < 1100) ? "chiuso" : "aperto";
@@ -82,13 +91,16 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
     const liberi = stati.filter((x) => x.stato === "libero" && x.a.id !== "direttore" && !daVisita.has(x.a.id)).map((x) => x.a.id);
     const agenti: AgenteScena[] = stati.map(({ a, stato, lavoro }) => {
       const v = daVisita.get(a.id);
-      let meta: Punto = postoScrivania(a.id), umore: AgenteScena["umore"] = stato, tazza = false;
+      let meta: Punto = postoScrivania(a.id), umore: AgenteScena["umore"] = stato, tazza = false, sigaretta = false;
+      const f = FUMATORI.indexOf(a.id);
       if (v) { meta = v.posto; umore = "visita"; }
+      // chi fuma ed è libero, ogni minuto esce in giardino: cammina, fuma una decina di secondi, rientra
+      else if (stato === "libero" && f >= 0 && (fumo + f * 4) % 12 < 5) { meta = POSTI_FUMO[f]; sigaretta = true; }
       else if (stato === "libero") {
         const k = liberi.indexOf(a.id);
         if (k >= 0 && k < POSTI_RELAX.length) { meta = POSTI_RELAX[(k + giro) % POSTI_RELAX.length]; tazza = meta.x < -20.5; }
       }
-      return { id: a.id, stato, titolo: lavoro?.titolo ?? null, meta, umore, tazza, fumetto: v ? { id: v.p.id, frase: v.p.frase, bottone: v.p.bottone, tono: v.p.tono } : null };
+      return { id: a.id, stato, titolo: lavoro?.titolo ?? null, meta, umore, tazza, fumo: sigaretta, fumetto: v ? { id: v.p.id, frase: v.p.frase, bottone: v.p.bottone, tono: v.p.tono } : null };
     });
     const attivi = dati.clienti.filter((c) => c.attivo);
     const clienti: ClienteScena[] = attivi.slice(0, MAX_REPARTI).map((c) => {
@@ -115,7 +127,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
       cassa: { incassato: incassatoNelMese(dati.fatture, mese), obiettivo: dati.obiettivoMese, ricorrente: ricorrente(dati, mese), mese: nomeMese(mese, true) },
       visitatori: vis.map((p) => AGENTE[p.agente]?.nome ?? ""), alLavoro: conta("lavora"),
     };
-  }, [dati, mese, promemoria, giro]);
+  }, [dati, mese, promemoria, giro, fumo]);
 
   const scegli = (s: Selezione) => { setSelezione(s); if (s) setZona("vicino"); };
   const inVisita = useMemo(() => new Set(modello.agenti.filter((a) => a.fumetto).map((a) => a.id)), [modello.agenti]);
@@ -148,6 +160,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
           testa={<div className="st-team-saluto"><h1>{saluto(dati.ora)}, {site.founders[0].split(" ")[0]}</h1><Riassunto visitatori={modello.visitatori} urgenti={daScadere} alLavoro={modello.alLavoro} /></div>} />
       )}
 
+      {treD ? <Joystick /> : null}
       <div className="st-zone" role="group" aria-label="Inquadra una zona">
         <button type="button" aria-pressed={zona === "vicino" && !selezione} onClick={() => { setZona("vicino"); setSelezione(null); }}>Studio</button>
         <button type="button" aria-pressed={zona === "tutto" && !selezione} onClick={() => { setZona("tutto"); setSelezione(null); }}>Tutto</button>

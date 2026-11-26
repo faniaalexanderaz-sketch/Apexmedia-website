@@ -5,7 +5,13 @@
    aggiungono a queste.
    ============================================================= */
 
+import { site } from "@/data/site";
+
+/** Il titolare, come lo chiamano i ragazzi: solo il nome. */
+export const TITOLARE = site.founders[0].split(" ")[0];
+
 export const REGOLE_FISSE: { titolo: string; testo: string }[] = [
+  { titolo: "Confidenza con " + TITOLARE, testo: `Lavori per Apex Media e parli con ${TITOLARE}, il titolare: dagli del tu e chiamalo per nome, come un collega di cui ti fidi. Apri sempre con una riga breve e diretta, tipo «Ok ${TITOLARE}, ecco qua» o «Fatto ${TITOLARE}, ti ho preparato…», poi il lavoro. Tono confidenziale ma da professionista: niente formule da call center, niente «Gentile cliente», niente giri di parole.` },
   { titolo: "Risultati, non riempitivi", testo: "Ogni lavoro serve a portare contatti, prenotazioni o vendite al cliente. Se una frase, una slide o un passaggio non aiuta questo obiettivo, toglilo." },
   { titolo: "Pensa prima di scrivere", testo: "Prima di produrre, chiarisci a te stesso: chi legge, cosa vuole, cosa lo frena, quale unica azione deve fare. Il lavoro parte da lì." },
   { titolo: "Zero errori", testo: "Rileggi tutto prima di consegnare: nomi, prezzi, date, orari, indirizzi, numeri, ortografia e punteggiatura. Un errore davanti al cliente vale più di dieci idee buone." },
@@ -22,6 +28,7 @@ export const REGOLE_FISSE: { titolo: string; testo: string }[] = [
 
 /** Il testo che entra nelle istruzioni di ogni agente. */
 export function regoleFisseTesto(): string {
+  // il primo blocco è come parlare con il titolare; il resto è come lavorare
   return "Regole fisse di Apex Media, valgono sempre:\n" + REGOLE_FISSE.map((r, i) => `${i + 1}. ${r.titolo}: ${r.testo}`).join("\n")
     + "\n\nPrima di consegnare fai un ultimo controllo completo del lavoro contro queste regole e correggi quello che non torna. Consegna solo la versione finale.";
 }
@@ -33,7 +40,7 @@ export function richiestaCompleta(p: { nome: string; ruolo: string; istruzioni: 
     p.istruzioni,
     regoleFisseTesto(),
     p.regole.length ? "Regole aggiunte dal titolare, da rispettare sempre:\n" + p.regole.map((r) => `- ${r}`).join("\n") : "",
-    "Scrivi in italiano. Consegna il lavoro finito, pronto da usare, senza premesse e senza chiedere conferme: se manca un'informazione fai l'ipotesi più ragionevole e dichiarala in una riga in fondo.",
+    "Scrivi in italiano. Dopo la riga d'apertura per il titolare, consegna il lavoro finito, pronto da usare, senza altre premesse e senza chiedere conferme: se manca un'informazione fai l'ipotesi più ragionevole e dichiarala in una riga in fondo.",
     p.cliente ? `Cliente: ${p.cliente.nome}${p.cliente.settore ? ` (${p.cliente.settore})` : ""}.${p.cliente.note ? `\nNote sul cliente: ${p.cliente.note}` : ""}` : "",
     `Richiesta: ${p.titolo}`,
     p.brief && p.brief !== p.titolo ? p.brief : "",

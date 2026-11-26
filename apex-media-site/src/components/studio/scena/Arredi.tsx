@@ -1,6 +1,6 @@
 "use client";
 
-import { Pianta3D } from "./Piante3D";
+import { Oggetto3D, Pianta3D } from "./Piante3D";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Line, MeshReflectorMaterial, RoundedBox } from "@react-three/drei";
@@ -234,6 +234,7 @@ export function Scrivania({ z, posti, led, larga }: { z: number; posti: PostoScr
           <RoundedBox args={[0.52, 0.025, 0.17]} radius={0.01} smoothness={2} position={[p.x - 0.06, 0.795, zc + 0.26]} material={mat("#f7f7f9", 0.5)} />
           <Box p={[p.x + 0.38, 0.795, zc + 0.27]} s={[0.07, 0.025, 0.11]} m={mat("#f7f7f9", 0.5)} ombra={false} />
           {i % 3 === 0 ? <Cil p={[p.x + 0.78, 0.84, zc + 0.12]} s={[0.1, 0.12, 0.1]} m={mat(p.accento, 0.4)} /> : null}
+          {i % 2 === 0 ? <Oggetto3D file="stationery_supplies" x={p.x - 0.95} y={0.785} z={zc - 0.3} scala={1.1} rot={0.3} /> : null}
           {i % 3 === 1 ? <Succulenta x={p.x - 0.82} y={0.785} z={zc - 0.05} /> : null}
           {i % 3 === 2 ? <Lampada x={p.x + 0.82} y={0.785} z={zc - 0.12} /> : null}
         </group>
@@ -243,6 +244,10 @@ export function Scrivania({ z, posti, led, larga }: { z: number; posti: PostoScr
 }
 
 function Lampada({ x, y, z }: { x: number; y: number; z: number }) {
+  return <Oggetto3D file="desk_lamp_arm_01" x={x} y={y} z={z} altezza={0.62} rot={-0.6} riserva={<group position={[-x, -y, -z]}><LampadaDisegnata x={x} y={y} z={z} /></group>} />;
+}
+
+function LampadaDisegnata({ x, y, z }: { x: number; y: number; z: number }) {
   return (
     <group position={[x, y, z]}>
       <Cil p={[0, 0.012, 0]} s={[0.16, 0.024, 0.16]} m={mat("#1e2029", 0.4)} />
@@ -550,6 +555,7 @@ export function Muro({ font, n }: { font: Font; n: Conteggi }) {
       <InsegnaApex font={font} />
       <SchermoGigante x={10.3} n={n} font={font} />
       <MensolaPothos x={21} y={3.6} />
+      <Oggetto3D file="wall_clock" x={-7.8} y={3.3} z={FRONTE_MURO + 0.06} scala={2.2} />
     </group>
   );
 }
@@ -697,20 +703,18 @@ export function Relax() {
     <group>
       <Tappeto x={-16.4} z={4.6} w={12.6} d={7.6} c="#e6e9fb" />
       <Tappeto x={-17.6} z={4.9} w={6.2} d={3.2} c="#d3d9f7" />
-      <Divano x={-17.6} z={3.0} c="#6c5ce7" />
+      <Oggetto3D file="sofa_03" x={-17.6} z={3.0} scala={1.2} riserva={<group position={[17.6, 0, -3.0]}><Divano x={-17.6} z={3.0} c="#6c5ce7" /></group>} />
+      <Oggetto3D file="modern_coffee_table_01" x={-17.6} z={4.55} rot={Math.PI / 2} scala={1.25} />
       {/* mobile basso dietro il divano, con libri e piante */}
       <group position={[-17.6, 0, 1.95]}>
         <RoundedBox args={[5.4, 0.7, 0.45]} radius={0.04} smoothness={2} position={[0, 0.35, 0]} material={mat("#f3eee6", 0.6)} castShadow receiveShadow />
         {[0, 1, 2, 3, 4, 5, 6].map((i) => <Box key={i} p={[-2.2 + i * 0.12, 0.88, 0]} s={[0.09, 0.32 + (i % 3) * 0.06, 0.3]} m={mat(["#5b2eff", "#ffd84d", "#2f6bff", "#f4f1ff", "#17b26a", "#ff8a3d", "#20232e"][i], 0.6)} />)}
-        <Succulenta x={1.2} y={0.7} z={0} />
-        <Succulenta x={2.1} y={0.7} z={0.05} />
+        <Oggetto3D file="marble_bust_01" x={1.25} y={0.7} z={0} scala={1.2} rot={0.4} />
+        <Oggetto3D file="brass_vase_02" x={2.15} y={0.7} z={0.02} scala={1.1} />
         <Lampada x={0.4} y={0.7} z={0} />
       </group>
       {/* poltrona */}
-      <group position={[-12.3, 0, 7.4]} rotation={[0, Math.PI, 0]}>
-        <RoundedBox args={[1.2, 0.4, 1.1]} radius={0.14} smoothness={3} position={[0, 0.3, 0]} material={mat("#ffb347", 0.95)} castShadow />
-        <RoundedBox args={[1.2, 0.8, 0.3]} radius={0.14} smoothness={3} position={[0, 0.65, 0.42]} material={mat("#ffb347", 0.95)} castShadow />
-      </group>
+      <Oggetto3D file="mid_century_lounge_chair" x={-12.3} z={7.4} rot={Math.PI} scala={1.1} />
       {/* bancone del caffè lungo il lato sinistro */}
       <group position={[-22.25, 0, 3.0]}>
         <RoundedBox args={[0.95, 0.95, 4.6]} radius={0.05} smoothness={2} position={[0, 0.47, 0]} material={mat("#f6f3ee", 0.6)} castShadow receiveShadow />
