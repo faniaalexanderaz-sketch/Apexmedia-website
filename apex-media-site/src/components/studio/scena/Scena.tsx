@@ -78,6 +78,9 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
   const gl = useThree((s) => s.gl);
   const prima = useRef(true);
   const vista = useRef("");
+  // persone e reparti si muovono di continuo: la telecamera li legge solo quando scegli tu dove andare
+  const ultimi = useRef({ agenti, clienti, alto: size.height });
+  useEffect(() => { ultimi.current = { agenti, clienti, alto: size.height }; });
 
   // da lontano le etichette mostrano solo il nome, da vicino anche cosa stanno facendo
   useFrame((_, dt) => {
@@ -95,7 +98,8 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     if (v !== vista.current) { vista.current = v; const box = gl.domElement.closest<HTMLElement>(".st-scena"); if (box) box.dataset.vista = v; }
   });
 
-  const mira = useMemo(() => {
+  const trovaMira = () => {
+    const { agenti, clienti } = ultimi.current;
     if (selezione?.tipo === "agente") { const a = agenti.find((x) => x.id === selezione.id); if (a) return { x: a.meta.x, z: a.meta.z - 0.4, ampiezza: 9, fondo: 6.5, y: 0.9 }; }
     if (selezione?.tipo === "cervello") return { x: CERVELLO[0], z: CERVELLO[1] + 0.8, ampiezza: 9, fondo: 6.5, y: 1.4 };
     if (selezione?.tipo === "cliente") { const i = clienti.findIndex((c) => c.id === selezione.id); if (i >= 0) { const [x, z] = postoReparto(i, clienti.length); return { x, z, ampiezza: 9.5, fondo: 7, y: 0.9 }; } }
@@ -104,19 +108,21 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     // vista d'ingresso: il cuore dell'ufficio da vicino, non tutta la pianta
     if (zona === "vicino") return size.width < 760 ? { x: 0, z: 1.6, ampiezza: 6, fondo: 4, y: 1.25, basso: true } : { x: 0, z: -1.2, ampiezza: 12, fondo: 7, y: 1.25, basso: true };
     return null;
-  }, [selezione, zona, agenti, clienti, size.width]);
+  };
 
   useEffect(() => {
     const c = ctrl.current;
     if (!c || size.width < 10) return;
+    const mira = trovaMira();
+    const size2 = { width: size.width, height: ultimi.current.alto };
     const stretto = size.width < 760;
-    const liberoW = Math.max(200, size.width - coperto.destra - coperto.sinistra), liberoH = Math.max(200, size.height - coperto.basso - coperto.alto);
-    const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size.height);
+    const liberoW = Math.max(200, size.width - coperto.destra - coperto.sinistra), liberoH = Math.max(200, size2.height - coperto.basso - coperto.alto);
+    const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size2.height);
     const elev = THREE.MathUtils.degToRad(mira && "basso" in mira ? 17 : mira ? 34 : 54);
     const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 12) : mira.ampiezza) : stretto ? 22 : LARGO + 2;
     const fondo = mira ? mira.fondo : stretto ? 18 : FONDO + 2;
     const distW = (ampiezza / 2 / tanH) * (size.width / liberoW);
-    const distD = ((fondo * Math.sin(elev) + 4.5 * Math.cos(elev)) / 2 / tanV) * (size.height / liberoH);
+    const distD = ((fondo * Math.sin(elev) + 4.5 * Math.cos(elev)) / 2 / tanV) * (size2.height / liberoH);
     const dist = Math.max(distW, distD, 4);
     const perPx = (2 * dist * tanH) / size.width;
     const tx = (mira?.x ?? 0) + ((coperto.destra - coperto.sinistra) / 2) * perPx;
@@ -126,7 +132,8 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     c.maxDistance = Math.max(dist * 1.15, (LARGO / 2 / tanH) * 1.3);
     void c.setLookAt(tx, ty + dist * Math.sin(elev), tz + dist * Math.cos(elev), tx, ty, tz, !prima.current);
     prima.current = false;
-  }, [mira, size.width, size.height, coperto.destra, coperto.sinistra, coperto.basso, coperto.alto, camera]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- la telecamera si muove solo quando scegli una zona o una persona
+  }, [selezione, zona, size.width, coperto.destra, coperto.sinistra, coperto.basso, coperto.alto, camera]);
 
   useEffect(() => {
     const c = ctrl.current;
