@@ -392,12 +392,12 @@ function fotoPerTv(file: File): Promise<string> {
   return new Promise((ok, ko) => {
     const img = new Image();
     img.onload = () => {
-      const k = Math.min(1, 1280 / img.width, 720 / img.height);
+      const k = Math.min(1, 1920 / img.width, 1080 / img.height);
       const c = document.createElement("canvas");
       c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
       c.getContext("2d")?.drawImage(img, 0, 0, c.width, c.height);
       URL.revokeObjectURL(img.src);
-      ok(c.toDataURL("image/jpeg", 0.85));
+      ok(c.toDataURL("image/jpeg", 0.9));
     };
     img.onerror = () => ko(new Error("Non riesco a leggere questa immagine."));
     img.src = URL.createObjectURL(file);

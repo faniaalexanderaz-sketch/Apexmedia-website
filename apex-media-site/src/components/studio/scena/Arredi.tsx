@@ -91,7 +91,8 @@ export function Pavimento({ riflessi = false }: { riflessi?: boolean }) {
   const marmo = useMarmo();
   const ombra = useMemo(() => tela(256, 256, (x, w, h) => {
     const g = x.createRadialGradient(w / 2, h / 2, w * 0.2, w / 2, h / 2, w / 2);
-    g.addColorStop(0, "rgba(40,44,70,0.32)"); g.addColorStop(0.75, "rgba(40,44,70,0.07)"); g.addColorStop(1, "rgba(40,44,70,0)");
+    // alone caldo sotto lo studio, che galleggia nel buio
+    g.addColorStop(0, "rgba(255,190,80,0.16)"); g.addColorStop(0.7, "rgba(255,170,60,0.05)"); g.addColorStop(1, "rgba(255,170,60,0)");
     x.fillStyle = g; x.fillRect(0, 0, w, h);
   }), []);
   useEffect(() => () => { ombra.dispose(); marmo.dispose(); }, [ombra, marmo]);
@@ -99,9 +100,14 @@ export function Pavimento({ riflessi = false }: { riflessi?: boolean }) {
   return (
     <group>
       <mesh geometry={GEO.piano} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.8, 1.5]} scale={[LARGO * 1.45, FONDO * 1.7, 1]}>
-        <meshBasicMaterial map={ombra} transparent depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial map={ombra} transparent depthWrite={false} toneMapped={false} blending={THREE.AdditiveBlending} />
       </mesh>
-      <RoundedBox args={[LARGO, 0.7, FONDO]} radius={0.3} smoothness={4} position={[0, -0.47, 0]} material={mat("#1a1a20", 0.6)} receiveShadow />
+      <RoundedBox args={[LARGO, 0.7, FONDO]} radius={0.3} smoothness={4} position={[0, -0.47, 0]} material={mat("#121216", 0.5, 0.2)} receiveShadow />
+      {/* LED gialli tutto attorno al bordo del pavimento */}
+      <Led da={[-LARGO / 2 + 0.3, FONDO / 2 + 0.01]} a={[LARGO / 2 - 0.3, FONDO / 2 + 0.01]} y={-0.16} c="#ffc23a" spessore={0.05} forza={2.8} />
+      <Led da={[-LARGO / 2 - 0.01, -FONDO / 2 + 0.3]} a={[-LARGO / 2 - 0.01, FONDO / 2 - 0.3]} y={-0.16} c="#ffc23a" spessore={0.05} forza={2.8} />
+      <Led da={[LARGO / 2 + 0.01, -FONDO / 2 + 0.3]} a={[LARGO / 2 + 0.01, FONDO / 2 - 0.3]} y={-0.16} c="#ffc23a" spessore={0.05} forza={2.8} />
+      <Led da={[-LARGO / 2 + 0.3, -FONDO / 2 - 0.01]} a={[LARGO / 2 - 0.3, -FONDO / 2 - 0.01]} y={-0.16} c="#ffc23a" spessore={0.05} forza={2.8} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
         <planeGeometry args={[LARGO - 0.4, FONDO - 0.4]} />
         {riflessi ? (
@@ -115,9 +121,12 @@ export function Pavimento({ riflessi = false }: { riflessi?: boolean }) {
       {/* a destra il bordo si apre sulla terrazza della spa */}
       {([[-1, -FONDO / 2, FONDO / 2], [1, -FONDO / 2, TERRAZZA.porta[0]], [1, TERRAZZA.porta[1], FONDO / 2]] as [number, number, number][]).map(([l, za, zb], i) => (
         <group key={i}>
-          <RoundedBox args={[0.36, 0.55, zb - za]} radius={0.12} smoothness={3} position={[l * (LARGO / 2 - 0.18), 0.27, (za + zb) / 2]} material={bordo} castShadow receiveShadow />
-          <Box p={[l * (LARGO / 2 - 0.37), 0.53, (za + zb) / 2 + 0.1]} s={[0.04, 0.04, zb - za - 0.6]} m={matOttone()} ombra={false} />
-          <Led da={[l * (LARGO / 2 - 0.37), za + 0.5]} a={[l * (LARGO / 2 - 0.37), zb - 0.4]} y={0.47} c="#ffcf7a" spessore={0.035} forza={2} />
+          {/* parete bassa scura a doghe, profilo in ottone e LED giallo in cima e alla base */}
+          <RoundedBox args={[0.36, 1.1, zb - za]} radius={0.1} smoothness={3} position={[l * (LARGO / 2 - 0.18), 0.55, (za + zb) / 2]} material={bordo} castShadow receiveShadow />
+          {Array.from({ length: Math.floor((zb - za - 0.6) / 0.5) }, (_, k) => <Box key={k} p={[l * (LARGO / 2 - 0.37), 0.55, za + 0.55 + k * 0.5]} s={[0.025, 0.95, 0.06]} m={mat("#3a2a20", 0.5)} ombra={false} />)}
+          <Box p={[l * (LARGO / 2 - 0.18), 1.11, (za + zb) / 2]} s={[0.4, 0.03, zb - za - 0.1]} m={matOttone()} ombra={false} />
+          <Led da={[l * (LARGO / 2 - 0.39), za + 0.3]} a={[l * (LARGO / 2 - 0.39), zb - 0.3]} y={1.06} c="#ffc23a" spessore={0.035} forza={2.8} />
+          <Led da={[l * (LARGO / 2 - 0.39), za + 0.3]} a={[l * (LARGO / 2 - 0.39), zb - 0.3]} y={0.05} c="#ffc23a" spessore={0.03} forza={2.4} />
         </group>
       ))}
       {/* muro di fondo con zoccolo e striscia viola in cima */}
@@ -994,7 +1003,7 @@ export function AngoloGiochi({ x, y, z, tv, onClick }: { x: number; y: number; z
     if (!chiave) return;
     let vivo = true, tex: THREE.Texture | null = null, video: HTMLVideoElement | null = null;
     if (tv.tipo === "immagine") {
-      new THREE.TextureLoader().load(`/api/studio/tv?v=${tv.versione}`, (t) => { t.colorSpace = THREE.SRGBColorSpace; tex = t; if (vivo) setTuo({ chiave, t }); else t.dispose(); }, undefined, () => null);
+      new THREE.TextureLoader().load(`/api/studio/tv?v=${tv.versione}`, (t) => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; tex = t; if (vivo) setTuo({ chiave, t }); else t.dispose(); }, undefined, () => null);
     } else if (tv.tipo === "video") {
       video = document.createElement("video");
       Object.assign(video, { src: tv.src, crossOrigin: "anonymous", muted: true, loop: true, playsInline: true });

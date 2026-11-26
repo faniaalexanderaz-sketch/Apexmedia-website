@@ -135,6 +135,7 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     // prima vola fino alla zona, poi il punto attorno a cui gira diventa la telecamera stessa:
     // trascinando col dito si gira la testa sul posto, non ci si sposta
     const k = 0.02 / dist;
+    void c.zoomTo(1, !prima.current);
     void c.setLookAt(cx, cy, cz, tx, ty, tz, !prima.current).then(() => {
       if (giro !== turno.current) return;
       void c.setLookAt(cx, cy, cz, cx + (tx - cx) * k, cy + (ty - cy) * k, cz + (tz - cz) * k, false);
@@ -149,13 +150,15 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const A = CameraControlsImpl.ACTION;
     // studio fermo: niente spostamenti né zoom; col dito (o il mouse) si gira solo lo sguardo a destra e sinistra.
     // Per cambiare stanza si toccano le zone in basso.
-    c.mouseButtons.left = A.ROTATE; c.mouseButtons.right = A.NONE; c.mouseButtons.middle = A.NONE; c.mouseButtons.wheel = A.NONE;
-    c.touches.one = A.TOUCH_ROTATE; c.touches.two = A.NONE; c.touches.three = A.NONE;
+    // zoom: due dita (o la rotellina) avvicinano la visuale senza spostarsi, come un binocolo
+    c.mouseButtons.left = A.ROTATE; c.mouseButtons.right = A.NONE; c.mouseButtons.middle = A.NONE; c.mouseButtons.wheel = A.ZOOM;
+    c.touches.one = A.TOUCH_ROTATE; c.touches.two = A.TOUCH_ZOOM; c.touches.three = A.NONE;
+    c.minZoom = 1; c.maxZoom = 5;
     c.azimuthRotateSpeed = 0.45; c.polarRotateSpeed = 0;
     if (process.env.NODE_ENV !== "production") Object.assign(window, { __camera: c });
   }, []);
 
-  return <CameraControls ref={ctrl} makeDefault smoothTime={0.5} draggingSmoothTime={0.15} />;
+  return <CameraControls ref={ctrl} makeDefault smoothTime={0.5} draggingSmoothTime={0.15} dollySpeed={0.45} />;
 }
 
 /* ---------- Etichette e fumetti ---------- */
@@ -201,7 +204,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; carico: Livello; ombre: n
 
   return (
     <>
-      <color attach="background" args={["#e9ebf1"]} />
+      <color attach="background" args={["#08080d"]} />
       <hemisphereLight args={["#ffffff", "#d9cbb3", 0.55]} />
       <directionalLight position={[-14, 30, 16]} intensity={2.4} color="#fff6ea" castShadow shadow-mapSize={[p.ombre, p.ombre]} shadow-bias={-0.0003} shadow-normalBias={0.04}>
         <orthographicCamera attach="shadow-camera" args={[-27, 27, 22, -22, 1, 90]} />
@@ -417,7 +420,8 @@ export default function Scena(p: PropsScena) {
   const [profondita] = useState(() => typeof window !== "undefined" && profonditaCorta());
   const ombre = inizio === 2 ? 4096 : inizio === 1 ? 1024 : 1024;
   // telefono: al massimo 1,5 pixel per punto (gli schermi a 3x costano il quadruplo senza vedersi meglio)
-  const dpr: number | [number, number] = carico === 2 ? [1, 2] : carico === 1 ? (inizio === 1 ? [1, 1.5] : [1, 1.5]) : 1;
+  // nitidezza: si parte al massimo (2 pixel per punto, anche sul telefono); se il telefono fatica scende a 1,5 e poi a 1
+  const dpr: number | [number, number] = carico >= inizio ? [1, 2] : carico === inizio - 1 ? [1, 1.5] : 1;
   const [persa, setPersa] = useState(false);
   if (persa) {
     return (

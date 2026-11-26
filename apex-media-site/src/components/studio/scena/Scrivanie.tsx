@@ -44,7 +44,7 @@ function tinte(accento: string) {
 }
 
 /** Più nitidi sul computer, più leggeri sul telefono. */
-const nitidezza = () => (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches ? 1 : 1.5);
+const nitidezza = () => (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches ? 1.5 : 2);
 
 const fermi = new Map<string, THREE.CanvasTexture>();
 /** Schermo fermo: sfondo col marchio per chi è libero, l'app attenuata per chi è in coda. */
@@ -70,7 +70,7 @@ export function useSchermo(tipo: string, stato: StatoAgente, accento: string, fa
   const vivo = stato === "lavora" || stato === "attesa";
   const viva = useMemo(() => (vivo ? new TelaViva(SW, SH, nitidezza()) : null), [vivo]);
   useEffect(() => () => viva?.dispose(), [viva]);
-  const telefono = useMemo(() => nitidezza() === 1, []);
+  const telefono = useMemo(() => nitidezza() < 2, []);
   useFrame(({ clock, camera }) => {
     if (!viva) return;
     if (dove && camera.position.distanceTo(_v.set(dove[0], 1, dove[1])) > (telefono ? 15 : 24) && viva.pronta) return;
