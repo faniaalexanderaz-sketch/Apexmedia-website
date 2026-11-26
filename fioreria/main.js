@@ -559,9 +559,12 @@
       ? '<span class="prod-mini-scorte"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 4 5.2 4 8.4A4 4 0 1 1 8 10.4C8 7.2 10 5 12 2Z"/></svg><span>' + opts.rimasti + ' rimasti</span></span>'
       : '';
 
+    /* nastrino rosso sui prodotti di Natale, solo durante la campagna (natale.js) */
+    var nataleHtml = (p.cat.indexOf('natale') !== -1 && document.documentElement.classList.contains('natale'))
+      ? '<span class="prod-mini-natale">Natale</span>' : '';
     return '' +
       '<span class="prod-mini-foto">' +
-        badgeHtml + scontoHtml +
+        badgeHtml + scontoHtml + nataleHtml +
         '<img src="' + p.foto + '" alt="" loading="lazy" width="700" height="560" onerror="this.classList.add(\'no-foto\')" />' +
       '</span>' +
       '<span class="prod-mini-corpo">' +

@@ -73,5 +73,8 @@
       h.appendChild(em);
       document.title = nomeCat + ' — Antica Fioreria del Centro';
     }
+    /* ogni categoria è una pagina a sé per Google: canonica con ?cat= */
+    var can = document.querySelector('link[rel="canonical"]');
+    if (can) can.setAttribute('href', 'https://anticafioreriadelcentro.it/collezione.html?cat=' + attiva);
   }
 })();

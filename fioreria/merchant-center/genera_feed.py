@@ -97,8 +97,18 @@ def righe():
             link += '&taglia=' + tid
         natale = 'natale' in p['cat']
         tipo = 'Decorazione artificiale' if p['slug'] in DECORAZIONI_NON_FLOREALI else 'Composizione floreale artificiale fatta a mano'
-        titolo = p['nome'] + ' — ' + tipo + (', idea regalo di Natale' if natale else '')
-        titolo = taglia_corta(titolo + ' | ' + p['desc'].rstrip('.'), 150)
+        if natale:
+            frase = p.get('seoNatale') or 'composizione floreale natalizia fatta a mano'
+            titolo = p['nome'] + ' — ' + frase[0].upper() + frase[1:]
+            if p['slug'] not in DECORAZIONI_NON_FLOREALI:
+                titolo += ', fiori artificiali'
+            if 'regalo' not in frase:
+                titolo += ', idea regalo di Natale'
+        else:
+            titolo = p['nome'] + ' — ' + tipo
+        completo = titolo + ' | ' + p['desc'].rstrip('.')
+        # la descrizione breve entra nel titolo solo se ci sta tutta (niente frasi tronche)
+        titolo = completo if len(completo) <= 150 else taglia_corta(titolo, 150)
         foto = [p['foto']] + [f for f in (p.get('galleria') or []) if f != p['foto']]
         foto_natale = 'foto/natale-' + p['slug'] + '.jpg'
         if os.path.exists(os.path.join(SITO, foto_natale)):
@@ -106,7 +116,7 @@ def righe():
         out.append({
             'id': p['slug'],
             'title': titolo,
-            'description': p['descLunga'] + (' Confezione regalo natalizia e biglietto scritto a mano in omaggio.' if natale else ''),
+            'description': p['descLunga'] + (' Composizione natalizia fatta a mano, perfetta come addobbo di Natale o idea regalo: confezione regalo natalizia e biglietto scritto a mano in omaggio.' if natale else ''),
             'link': link,
             'image_link': BASE + foto[0],
             'additional_image_link': ','.join(BASE + f for f in foto[1:10]),
@@ -117,7 +127,7 @@ def righe():
             'condition': 'new',
             'identifier_exists': 'no',
             'google_product_category': 'Casa e giardino > Decorazioni > Fiori artificiali',
-            'product_type': ('Regali di Natale > ' if natale else 'Decorazioni per la casa > ') + p['nome'],
+            'product_type': ('Addobbi natalizi > Composizioni floreali natalizie > ' if natale else 'Decorazioni per la casa > ') + p['nome'],
             'shipping': 'IT:::%d.00 EUR' % spedizione(p, tid, finale),
             'custom_label_0': 'natale' if natale else 'tutto-l-anno',
             'custom_label_1': 'sopra-99' if finale >= SOGLIA_SPEDIZIONE_GRATIS else 'sotto-99',

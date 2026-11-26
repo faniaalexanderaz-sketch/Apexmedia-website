@@ -3443,3 +3443,213 @@ html.natale .promo-bar {
 @media (prefers-reduced-motion: reduce) {
   .natale-card { transition: opacity .2s ease; transform: none; }
 }
+
+/* ---------- Natale: ghirlanda con luci sotto la nav ---------- */
+.ghirlanda {
+  position: absolute; left: 0; right: 0; top: 100%;
+  height: 40px;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity .35s ease, transform .45s var(--ease-out);
+  filter: drop-shadow(0 3px 3px rgba(20,40,28,.18));
+}
+.ghirlanda.ritirata { opacity: 0; transform: translate3d(0,-14px,0); }
+.ghirlanda svg { display: block; }
+.ghirlanda .gh-ramo { fill: none; stroke: #2E4B3A; stroke-width: 9; stroke-linecap: round; }
+.ghirlanda .gh-aghi { fill: none; stroke: #4E7A57; stroke-width: 12; stroke-dasharray: 1.4 3.2; stroke-linecap: round; }
+.ghirlanda .gh-aghi2 { fill: none; stroke: #1E3327; stroke-width: 6; stroke-dasharray: 1 4.6; stroke-dashoffset: 2; stroke-linecap: round; }
+.ghirlanda .gh-luce { animation: gh-brilla 2.4s ease-in-out infinite; }
+.ghirlanda .gh-l1 { animation-delay: -.8s; }
+.ghirlanda .gh-l2 { animation-delay: -1.6s; }
+@keyframes gh-brilla {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ghirlanda .gh-luce { animation: none; }
+}
+
+/* ---------- Natale: palline e stella in 3D nella hero ---------- */
+.nd-pallina {
+  position: absolute; top: 0;
+  transform-origin: 50% 0;
+  animation: nd-dondola 5.5s ease-in-out infinite;
+  animation-delay: var(--r, 0s);
+  scale: var(--s, 1);
+}
+.nd-filo {
+  display: block;
+  width: 1.5px; height: var(--filo, 50px);
+  margin: 0 auto;
+  background: linear-gradient(#C2A45C, #93762F);
+}
+.nd-gancio {
+  display: block;
+  width: 12px; height: 8px;
+  margin: 0 auto -2px;
+  border-radius: 3px 3px 1px 1px;
+  background: linear-gradient(90deg, #93762F, #F1E3BC 45%, #C2A45C 60%, #93762F);
+  position: relative; z-index: 1;
+}
+.nd-sfera {
+  position: relative;
+  display: block;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset -7px -9px 14px rgba(0,0,0,.35), 0 10px 18px rgba(36,53,43,.22);
+}
+.nd-rossa .nd-sfera { background: radial-gradient(circle at 34% 30%, #F08A86 0 6%, #C7383D 24%, #8E2226 62%, #5C1417 100%); }
+.nd-oro   .nd-sfera { background: radial-gradient(circle at 34% 30%, #FFF6D8 0 6%, #E2C57A 26%, #B08E40 62%, #6E5522 100%); }
+.nd-verde .nd-sfera { background: radial-gradient(circle at 34% 30%, #B9D9B6 0 6%, #4E8A5C 26%, #2E4B3A 62%, #16261C 100%); }
+/* fascia dorata che "gira" sulla sfera: dà l'idea della rotazione in 3D */
+.nd-riflesso {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 14px, rgba(241,227,188,.55) 14px 17px, transparent 17px 30px);
+  background-size: 60px 100%;
+  border-radius: 50%;
+  mask: radial-gradient(circle at 50% 50%, #000 58%, transparent 72%);
+  -webkit-mask: radial-gradient(circle at 50% 50%, #000 58%, transparent 72%);
+  animation: nd-gira 6s linear infinite;
+  opacity: .8;
+}
+@keyframes nd-dondola {
+  0%, 100% { transform: perspective(400px) rotateZ(-5deg) rotateX(8deg); }
+  50%      { transform: perspective(400px) rotateZ(5deg) rotateX(-8deg); }
+}
+@keyframes nd-gira {
+  from { background-position: 0 0; }
+  to   { background-position: 60px 0; }
+}
+.nd-stella3d {
+  position: absolute;
+  width: 40px; height: 40px;
+  perspective: 300px;
+  animation: nd-galleggia 6s ease-in-out infinite;
+}
+.nd-stella3d i {
+  position: absolute; inset: 0;
+  clip-path: polygon(50% 0, 61.8% 35.4%, 100% 38.2%, 69.1% 61.8%, 80.9% 100%, 50% 76.4%, 19.1% 100%, 30.9% 61.8%, 0 38.2%, 38.2% 35.4%);
+  background: linear-gradient(135deg, #FFF6D8, #E2C57A 35%, #B08E40 70%, #F1E3BC);
+  animation: nd-ruota 7s linear infinite;
+  backface-visibility: visible;
+}
+.nd-stella3d i + i {
+  background: linear-gradient(135deg, #B08E40, #6E5522);
+  transform: translateZ(-3px);
+  animation-name: nd-ruota-dietro;
+}
+@keyframes nd-ruota { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+@keyframes nd-ruota-dietro { from { transform: rotateY(0deg) translateZ(-3px); } to { transform: rotateY(360deg) translateZ(-3px); } }
+@keyframes nd-galleggia { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@media (max-width: 720px) {
+  .nd-pallina { scale: calc(var(--s, 1) * .62); }
+  .nd-pallina:nth-of-type(2), .nd-pallina:nth-of-type(3) { display: none; }
+  .nd-stella3d { width: 26px; height: 26px; left: 84% !important; top: 9% !important; }
+}
+.natale-deco.ferma .nd-pallina, .natale-deco.ferma .nd-riflesso,
+.natale-deco.ferma .nd-stella3d, .natale-deco.ferma .nd-stella3d i { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .nd-pallina, .nd-riflesso, .nd-stella3d, .nd-stella3d i { animation: none !important; }
+}
+
+/* ---------- Natale: nastro «È arrivato il Natale» nella hero ---------- */
+.hero-natale-nastro {
+  margin: 0 0 -4px;
+  position: relative;
+  display: inline-flex;
+}
+.hero-natale-nastro span {
+  position: relative;
+  display: inline-block;
+  padding: 8px 26px;
+  background: linear-gradient(180deg, #B8343A, var(--natale-rosso) 55%, var(--natale-rosso-scuro));
+  color: #FFF6E6;
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic; font-weight: 600;
+  font-size: 17px; letter-spacing: .01em;
+  border-top: 1.5px solid #E2C57A;
+  border-bottom: 1.5px solid #E2C57A;
+  box-shadow: 0 8px 18px rgba(122,31,35,.25);
+}
+.hero-natale-nastro::before, .hero-natale-nastro::after {
+  content: '';
+  position: absolute; top: 7px;
+  width: 22px; height: 100%;
+  background: var(--natale-rosso-scuro);
+  z-index: -1;
+}
+.hero-natale-nastro::before { left: -14px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 40% 50%); }
+.hero-natale-nastro::after  { right: -14px; clip-path: polygon(0 0, 100% 0, 60% 50%, 100% 100%, 0 100%); }
+.hero-natale-nastro.reveal { transform: none; }
+@media (max-width: 480px) { .hero-natale-nastro span { font-size: 15px; padding: 7px 20px; } }
+
+/* ---------- Natale: rosso, verde e oro anche nel resto del sito ---------- */
+/* fascia a righe rosso-oro-verde come un nastro, a chiudere hero e sezioni */
+html.natale .hero-split,
+html.natale .natale-sez {
+  border-bottom: 0;
+  background-image: repeating-linear-gradient(-45deg, var(--natale-rosso) 0 10px, #E2C57A 10px 14px, var(--bosco) 14px 24px, #E2C57A 24px 28px);
+  background-size: 100% 6px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+html.natale .natale-sez {
+  background-image:
+    repeating-linear-gradient(-45deg, var(--natale-rosso) 0 10px, #E2C57A 10px 14px, var(--bosco) 14px 24px, #E2C57A 24px 28px),
+    repeating-linear-gradient(-45deg, var(--natale-rosso) 0 10px, #E2C57A 10px 14px, var(--bosco) 14px 24px, #E2C57A 24px 28px),
+    radial-gradient(ellipse 60% 70% at 0% 0%, rgba(158,43,46,.08), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(194,164,92,.14), transparent 60%),
+    linear-gradient(var(--natale-panna), var(--natale-panna));
+  background-size: 100% 6px, 100% 6px, auto, auto, auto;
+  background-position: top, bottom, 0 0, 0 0, 0 0;
+  background-repeat: no-repeat;
+}
+html.natale .eyebrow { color: var(--natale-rosso); }
+html.natale .display em { color: var(--bosco); }
+html.natale .footer { border-top: 6px solid transparent; border-image: repeating-linear-gradient(-45deg, var(--natale-rosso) 0 10px, #E2C57A 10px 14px, var(--bosco) 14px 24px, #E2C57A 24px 28px) 6; }
+html.natale .btn-primary { border-color: rgba(226,197,122,.75); }
+
+.natale-intro {
+  max-width: 760px;
+  margin: 14px 0 0;
+  font-size: 15.5px; line-height: 1.6; color: var(--muted);
+}
+
+/* testo SEO in fondo alla collezione di Natale */
+.natale-seo {
+  max-width: 860px;
+  margin: 56px auto 0;
+  padding: 26px 0 0;
+  border-top: 1px solid rgba(194,164,92,.4);
+  color: var(--muted);
+  font-size: 15px; line-height: 1.65;
+}
+.natale-seo h2 {
+  margin: 18px 0 6px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22px; font-weight: 500; color: var(--ink);
+}
+.natale-seo p { margin: 0; }
+
+/* nastrino «Natale» sulle card */
+.prod-mini-natale {
+  position: absolute; top: 12px; right: -1px; z-index: 2;
+  padding: 4px 10px 4px 12px;
+  background: linear-gradient(180deg, #B8343A, var(--natale-rosso));
+  color: #FFF6E6;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  border-radius: 999px 0 0 999px;
+  border: 1px solid #E2C57A; border-right: 0;
+  box-shadow: 0 4px 10px rgba(122,31,35,.25);
+}
+.prod-mini-natale::before { content: '★ '; color: #E9D18A; }
+/* spazio per la ghirlanda sotto la nav nelle pagine interne */
+html.natale .shop-pagina > .section-head:first-child,
+html.natale .prodotto > .briciole { margin-top: 30px; }
+@media (max-width: 720px) {
+  .nd-pallina:nth-of-type(4) { left: 86% !important; }
+}
+@media (max-width: 720px) {
+  html.natale .shop-pagina > .section-head:first-child { margin-top: 52px; }
+}

@@ -15,6 +15,8 @@
    il prezzo barrato deve essere il più basso degli ultimi 30 giorni:
    usalo solo su prodotti rimasti a prezzo pieno per almeno 30 giorni.
    I Saldi Estivi sono stati tolti il 26/11/2026.
+   Campo opzionale "seoNatale": parole chiave per titolo della scheda e
+   feed Google dei prodotti di Natale (es. "centrotavola natalizio fatto a mano").
    ============================================================= */
 var AFC_TAGLIE = [
   { id: 'S',  nome: 'S',  fattore: 0.75, nota: 'Un pensiero: composizione raccolta' },
@@ -281,6 +283,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'bosco-di-rose',
+    seoNatale: 'centrotavola natalizio con rose rosse',
     nome: 'Bosco di Rose di Sapone',
     prezzo: 80,
     taglie: [
@@ -298,6 +301,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'trittico-di-rose',
+    seoNatale: 'addobbi natalizi con rose rosse',
     nome: 'Trittico di Rose',
     fragile: true,
     prezzo: 100,
@@ -312,6 +316,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'agrumi-oro',
+    seoNatale: 'centrotavola natalizio fatto a mano',
     nome: 'Agrumi d\'Oro',
     prezzo: 83,
     taglie: [
@@ -343,6 +348,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'mezzanotte-in-fiore',
+    seoNatale: 'centrotavola natalizio fatto a mano',
     nome: 'Mezzanotte in Fiore',
     fragile: true,
     prezzo: 82,
@@ -417,6 +423,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'bonsai-premium',
+    seoNatale: 'pino decorativo per le feste',
     nome: 'Pino Bonsai Premium',
     prezzo: 2176,
     tagliaUnica: true,
@@ -446,6 +453,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'zaffiro-lavanda',
+    seoNatale: 'centrotavola natalizio fatto a mano',
     nome: 'Zaffiro e Lavanda',
     prezzo: 79,
     taglie: [
@@ -478,6 +486,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'pinguino-panda',
+    seoNatale: 'oggettistica natalizia in ceramica',
     nome: 'Pinguino e Panda Platino',
     fragile: true,
     prezzo: 26,
@@ -542,6 +551,7 @@ var AFC_PRODOTTI = [
   /* ---------- rose di sapone / scatole regalo ---------- */
   {
     slug: 'scrigno-rose-sapone',
+    seoNatale: 'idea regalo di Natale con rose di sapone',
     nome: 'Scrigno di Rose di Sapone',
     taglie: [
       { id: 'M', nome: 'M', prezzo: 44, nota: 'Formato classico, unica taglia disponibile' }
@@ -576,6 +586,7 @@ var AFC_PRODOTTI = [
   /* ---------- ultimi arrivi ---------- */
   {
     slug: 'fiamma-tropicale',
+    seoNatale: 'pianta decorativa natalizia rossa',
     nome: 'Fiamma Tropicale',
     taglie: [
       { id: 'XL', nome: 'XL', prezzo: 159, nota: 'Pianta adulta, pezzo unico: unica taglia disponibile' }
@@ -609,6 +620,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'sonno-angelo',
+    seoNatale: 'decorazione natalizia con angioletto',
     nome: 'Il Sonno dell\'Angelo',
     prezzo: 58,
     tagliaUnica: true,
@@ -679,6 +691,7 @@ var AFC_PRODOTTI = [
   },
   {
     slug: 'regina-capo',
+    seoNatale: 'centrotavola natalizio fatto a mano',
     nome: 'La Regina del Capo',
     fragile: true,
     prezzo: 92,

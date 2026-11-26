@@ -96,6 +96,76 @@
     if (ridotto) deco.classList.add('ferma');
   })();
 
+  /* ---------- 2b) ghirlanda con luci sotto la barra di navigazione ----------
+     Disegnata in pixel veri (niente deformazioni), ridisegnata al resize.
+     Le luci brillano con opacity (nessun ricalcolo di pagina); con
+     "riduci movimento" restano accese e ferme. */
+  (function () {
+    var nav = document.querySelector('header.nav');
+    if (!nav) return;
+    var box = crea('div', 'ghirlanda');
+    box.setAttribute('aria-hidden', 'true');
+    nav.appendChild(box);
+    var NS = 'http://www.w3.org/2000/svg';
+    var COLORI = ['#C2A45C', '#9E2B2E', '#E9D18A', '#3F6449', '#B8343A'];
+
+    function disegna() {
+      var w = Math.max(320, Math.round(box.clientWidth || window.innerWidth));
+      var tel = w < 720;
+      var campata = tel ? 130 : 190;           // larghezza di ogni festone
+      var n = Math.max(2, Math.round(w / campata));
+      var passo = w / n, cala = tel ? 13 : 18, h = cala + 22;
+      var svg = '<svg xmlns="' + NS + '" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">';
+      var rami = '', luci = '', fiocchi = '';
+      for (var i = 0; i < n; i++) {
+        var x0 = i * passo, x1 = x0 + passo, xm = x0 + passo / 2;
+        var d = 'M' + x0.toFixed(1) + ' 3 Q' + xm.toFixed(1) + ' ' + (cala * 2 + 3) + ' ' + x1.toFixed(1) + ' 3';
+        rami += '<path d="' + d + '" class="gh-ramo"/><path d="' + d + '" class="gh-aghi"/><path d="' + d + '" class="gh-aghi2"/>';
+        // luci lungo la curva (bezier quadratica)
+        var k = tel ? 4 : 5;
+        for (var j = 1; j < k; j++) {
+          var t = j / k, y = (1 - t) * (1 - t) * 3 + 2 * (1 - t) * t * (cala * 2 + 3) + t * t * 3;
+          var x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * xm + t * t * x1;
+          var c = COLORI[(i * k + j) % COLORI.length];
+          luci += '<circle class="gh-luce gh-l' + ((i + j) % 3) + '" cx="' + x.toFixed(1) + '" cy="' + (y + 4).toFixed(1) + '" r="' + (tel ? 2.6 : 3.2) + '" fill="' + c + '"/>';
+        }
+        // bacche rosse a metà festone
+        var yb = cala + 3;
+        fiocchi += '<circle cx="' + (xm - 4) + '" cy="' + (yb + 3) + '" r="2.6" fill="#9E2B2E"/><circle cx="' + (xm + 1) + '" cy="' + (yb + 5) + '" r="2.4" fill="#B8343A"/><circle cx="' + (xm + 5) + '" cy="' + (yb + 2) + '" r="2.2" fill="#7A1F23"/>';
+        // fiocco dorato all'attacco
+        if (i > 0) fiocchi += '<g transform="translate(' + x0.toFixed(1) + ' 5)" class="gh-fiocco"><path d="M0 0 C-7 -6 -11 2 -3 3 Z M0 0 C7 -6 11 2 3 3 Z" fill="#C2A45C"/><path d="M-1 2 L-4 11 M1 2 L4 11" stroke="#9E2B2E" stroke-width="2" stroke-linecap="round"/><circle r="2.2" fill="#E9D18A"/></g>';
+      }
+      box.innerHTML = svg + rami + fiocchi + luci + '</svg>';
+      box.style.height = h + 'px';
+    }
+    disegna();
+    var timer;
+    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(disegna, 200); });
+    // si ritira quando si scorre la pagina, per non coprire foto e testi
+    var giu = false;
+    window.addEventListener('scroll', function () {
+      var ora = window.scrollY > 140;
+      if (ora !== giu) { giu = ora; box.classList.toggle('ritirata', ora); }
+    }, { passive: true });
+  })();
+
+  /* ---------- 2c) palline e stella in 3D nella hero ---------- */
+  (function () {
+    var deco = document.querySelector('.natale-deco');
+    if (!deco) return;
+    var palline = [
+      { x: 5, filo: 70, c: 'rossa', s: 1 }, { x: 13, filo: 34, c: 'oro', s: .78 },
+      { x: 87, filo: 46, c: 'verde', s: .9 }, { x: 95, filo: 86, c: 'rossa', s: .72 }
+    ];
+    var html = '';
+    palline.forEach(function (p, i) {
+      html += '<span class="nd-pallina nd-' + p.c + '" style="left:' + p.x + '%;--filo:' + p.filo + 'px;--s:' + p.s + ';--r:' + (-i * 1.3).toFixed(1) + 's">' +
+        '<i class="nd-filo"></i><i class="nd-gancio"></i><i class="nd-sfera"><i class="nd-riflesso"></i></i></span>';
+    });
+    html += '<span class="nd-stella3d" style="left:79%;top:16%"><i></i><i></i></span>';
+    deco.insertAdjacentHTML('beforeend', html);
+  })();
+
   /* ---------- 3) banner una volta per visita (home e collezione) ---------- */
   (function () {
     var pagina = location.pathname;
@@ -150,14 +220,44 @@
     box.innerHTML = '<ul class="natale-promesse">' + promesse() + '</ul>' +
       (inTempo ? '<p class="natale-fascia-cd">Ordina entro il 22 dicembre — <strong>' + quantoManca() + '</strong> · spedizione gratis sopra € 99</p>' : '');
     griglia.parentNode.insertBefore(box, griglia);
-    var eyebrow = document.querySelector('.shop-pagina .eyebrow');
-    if (eyebrow) eyebrow.textContent = 'Fatti a mano in bottega, dal 1953';
+    // SEO: dopo collezione.js, che imposta titolo e H1 generici della categoria
+    setTimeout(function () {
+      document.title = 'Composizioni floreali natalizie e addobbi di Natale fatti a mano — Antica Fioreria del Centro';
+      var meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute('content', 'Composizioni floreali natalizie, centrotavola di Natale e oggettistica natalizia fatti a mano ad Alessandria dal 1953. Confezione regalo e biglietto in omaggio, consegna entro Natale in tutta Italia.');
+      var eyebrow = document.querySelector('.shop-pagina .eyebrow');
+      if (eyebrow) eyebrow.textContent = 'È arrivato il Natale';
+      var h1 = document.querySelector('.shop-pagina .display');
+      if (h1) h1.innerHTML = 'Composizioni e addobbi <em>natalizi</em>';
+      var testo = crea('section', 'natale-seo');
+      testo.innerHTML =
+        '<h2>Composizioni floreali natalizie fatte a mano</h2>' +
+        '<p>Centrotavola natalizi con rose rosse, bacche, agrumi e cannella; composizioni in vetro, argento e cristallo; ' +
+        'oggettistica natalizia come angioletti e statuine. Ogni pezzo nasce a mano nella nostra bottega di Alessandria, ' +
+        'dal 1953, con fiori artificiali di alta gamma che sembrano veri e non appassiscono.</p>' +
+        '<h2>Addobbi di Natale e idee regalo che durano</h2>' +
+        '<p>Usali come addobbi natalizi per la tavola delle feste, il camino o l\'ingresso, oppure regalali: ' +
+        'ogni ordine parte in confezione regalo natalizia con biglietto scritto a mano, in omaggio. ' +
+        'Spedizione assicurata in tutta Italia, gratuita da € 99; per riceverli a Natale ordina entro il 22 dicembre.</p>';
+      var main = document.querySelector('.shop-pagina');
+      if (main) main.appendChild(testo);
+    }, 0);
   })();
 
   /* ---------- 5) scheda prodotto: promemoria regalo ---------- */
   (function () {
     var consegna = document.querySelector('.prodotto .pm-consegna');
     if (!consegna) return;
+    // SEO delle schede natalizie (dopo prodotto.js, che imposta titolo e descrizione)
+    var mP = location.search.match(/[?&]p=([a-z-]+)/);
+    var prodN = mP && typeof afcProdotto === 'function' ? afcProdotto(mP[1]) : null;
+    if (prodN && prodN.cat.indexOf('natale') !== -1) {
+      setTimeout(function () {
+        document.title = prodN.nome + ' — ' + (prodN.seoNatale || 'composizione floreale natalizia fatta a mano') + ' | Antica Fioreria del Centro';
+        var meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute('content', prodN.desc + ' Idea regalo di Natale fatta a mano: confezione regalo e biglietto in omaggio, consegna entro Natale.');
+      }, 0);
+    }
     var p = crea('p', 'pm-natale', ICONA_REGALO + '<span>' + (inTempo
       ? '<strong>Natale:</strong> confezione regalo e biglietto scritto a mano in omaggio · ordina entro il 22/12 per riceverlo a Natale'
       : '<strong>Natale:</strong> confezione regalo e biglietto scritto a mano in omaggio · ritiro in bottega ad Alessandria') + '</span>');
