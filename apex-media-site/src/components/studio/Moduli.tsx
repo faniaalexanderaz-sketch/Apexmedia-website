@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { AGENTE, AGENTI, ZONE, scegliAgente } from "@/lib/studio/agenti";
 import { regoleFisseTesto } from "@/lib/studio/regole";
 import { aggiungiGiorni, dataBreve, euro, nomeCliente, tempoFa } from "@/lib/studio/calcoli";
-import { CANALI, COLORI_CLIENTE, SERVIZI_SUGGERITI } from "@/lib/studio/tipi";
+import { CANALI, COLORI_CLIENTE, SERVIZI_SUGGERITI, type DatiFatturazione, type ModelloFattura } from "@/lib/studio/tipi";
 import { portfolio } from "@/data/portfolio";
 import { useStudio, type Modale } from "./StudioApp";
 import { apriInClaude } from "./Team";
@@ -80,6 +80,8 @@ function ModuloCliente({ m, chiudi }: { m: Extract<Modale, { tipo: "cliente" }>;
   const [sito, setSito] = useState(c?.sito ?? "");
   const [note, setNote] = useState(c?.note ?? "");
   const [attivo, setAttivo] = useState(c?.attivo ?? true);
+  const [fatt, setFatt] = useState<DatiFatturazione>(c?.fatturazione ?? {});
+  const campoF = (k: keyof DatiFatturazione) => ({ value: fatt[k] ?? "", onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFatt((x) => ({ ...x, [k]: e.target.value })) });
   const [servizio, setServizio] = useState("Gestione social");
   const [quota, setQuota] = useState("");
   // clienti del portfolio non ancora inseriti: un tocco e il nome è compilato
@@ -88,7 +90,7 @@ function ModuloCliente({ m, chiudi }: { m: Extract<Modale, { tipo: "cliente" }>;
   return (
     <Finestra titolo={c ? "Modifica cliente" : "Nuovo cliente"} sotto={c ? undefined : "Compare subito nella sala clienti dell'ufficio e nei conti."} chiudi={chiudi}>
       <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => {
-        const r = await azione("cliente.salva", { id: c?.id, nome, settore, colore, sito, note, attivo });
+        const r = await azione("cliente.salva", { id: c?.id, nome, settore, colore, sito, note, attivo, fatturazione: fatt });
         if (!r.ok) return;
         if (!c && quota.trim() && r.nuovoId) await azione("servizio.salva", { clienteId: r.nuovoId, nome: servizio, importo: quota, ricorrenza: "mensile", dal: dati.oggi });
         avvisa(c ? "Cliente aggiornato." : `${nome} è entrato in sala clienti.`);
@@ -113,6 +115,25 @@ function ModuloCliente({ m, chiudi }: { m: Extract<Modale, { tipo: "cliente" }>;
         <datalist id="st-servizi">{SERVIZI_SUGGERITI.map((s) => <option key={s} value={s} />)}</datalist>
         <label className="st-campo">Dominio del sito<small> facoltativo: se il sito manda i click al pannello, i numeri della campagna arrivano da soli</small><input value={sito} onChange={(e) => setSito(e.target.value)} maxLength={100} placeholder="essenzadoriente.it" inputMode="url" autoCapitalize="none" /></label>
         <label className="st-campo">Note per gli agenti<small> tono, obiettivo, cose da non dire</small><textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} maxLength={2000} /></label>
+        <details className="st-blocco-fattura" open={Boolean(c && !c.fatturazione.ragioneSociale)}>
+          <summary>Dati per la fattura<small> finiscono nel PDF che mandi al cliente</small></summary>
+          <label className="st-campo">Ragione sociale<input {...campoF("ragioneSociale")} maxLength={160} placeholder={nome || "Es. Bagnarino Coworking S.r.l."} /></label>
+          <div className="st-riga">
+            <label className="st-campo">Partita IVA<input {...campoF("piva")} maxLength={20} inputMode="numeric" /></label>
+            <label className="st-campo">Codice fiscale<input {...campoF("cf")} maxLength={20} autoCapitalize="characters" /></label>
+          </div>
+          <label className="st-campo">Indirizzo<input {...campoF("indirizzo")} maxLength={160} placeholder="Via Roma 1" /></label>
+          <div className="st-riga st-riga-3">
+            <label className="st-campo">CAP<input {...campoF("cap")} maxLength={10} inputMode="numeric" /></label>
+            <label className="st-campo">Città<input {...campoF("citta")} maxLength={80} placeholder="Alessandria" /></label>
+            <label className="st-campo">Provincia<input {...campoF("provincia")} maxLength={4} placeholder="AL" autoCapitalize="characters" /></label>
+          </div>
+          <div className="st-riga">
+            <label className="st-campo">Codice destinatario (SDI)<input {...campoF("sdi")} maxLength={10} autoCapitalize="characters" /></label>
+            <label className="st-campo">PEC<input {...campoF("pec")} maxLength={120} inputMode="email" autoCapitalize="none" /></label>
+          </div>
+          <label className="st-campo">Email a cui mandi la fattura<input {...campoF("email")} maxLength={120} inputMode="email" autoCapitalize="none" /></label>
+        </details>
         {c ? <label className="st-spunta"><input type="checkbox" checked={attivo} onChange={(e) => setAttivo(e.target.checked)} /> Cliente attivo<small> se lo togli resta in archivio e non conta nelle entrate ricorrenti</small></label> : null}
         <Piede occupato={occupato} salva={c ? "Salva" : "Aggiungi cliente"} chiudi={chiudi} elimina={c ? () => { if (window.confirm(`Eliminare ${c.nome} con tutti i suoi servizi, fatture e campagne? Non si può annullare.`)) void invia(async () => { const r = await azione("cliente.elimina", { id: c.id }); if (r.ok) { avvisa("Cliente eliminato."); chiudi(); } }); } : undefined} />
       </form>
@@ -169,10 +190,14 @@ function ModuloFattura({ m, chiudi }: { m: Extract<Modale, { tipo: "fattura" }>;
   const [scadenza, setScadenza] = useState(f?.scadenza ?? aggiungiGiorni(dati.oggi, 15));
   const [pagata, setPagata] = useState(Boolean(f?.pagataIl));
   const [pagataIl, setPagataIl] = useState(f?.pagataIl ?? dati.oggi);
+  const [numero, setNumero] = useState(f?.numero ?? "");
+  const pdf = useRef(false);
   return (
     <Finestra titolo={f ? "Modifica fattura" : "Nuova fattura"} chiudi={chiudi}>
-      <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => {
-        const r = await azione("fattura.salva", { id: f?.id, clienteId, descrizione, importo, emessaIl, scadenza, pagata, pagataIl });
+      <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); const vuoiPdf = pdf.current; pdf.current = false; const finestra = vuoiPdf ? apriFinestraPdf() : null; void invia(async () => {
+        const r = await azione("fattura.salva", { id: f?.id, clienteId, descrizione, importo, emessaIl, scadenza, pagata, pagataIl, numero });
+        if (!r.ok) { finestra?.close(); return; }
+        if (finestra) { mostraPdf(finestra, f?.id ?? r.nuovoId); chiudi(); return; }
         if (r.ok) { avvisa(pagata && !f?.pagataIl ? `+ ${euro(Number(importo.replace(",", ".")) || 0)} incassati da ${nomeCliente(r.dati.clienti, Number(clienteId))}` : f ? "Fattura aggiornata." : "Fattura aggiunta: è tra quelle da incassare.", pagata && !f?.pagataIl ? "soldi" : "ok"); chiudi(); }
       }); }}>
         <SceltaCliente valore={clienteId} cambia={setClienteId} />
@@ -184,6 +209,8 @@ function ModuloFattura({ m, chiudi }: { m: Extract<Modale, { tipo: "fattura" }>;
         <label className="st-campo">Scade il<input type="date" value={scadenza} onChange={(e) => setScadenza(e.target.value)} required /></label>
         <label className="st-spunta"><input type="checkbox" checked={pagata} onChange={(e) => setPagata(e.target.checked)} /> Già incassata</label>
         {pagata ? <label className="st-campo">Incassata il<input type="date" value={pagataIl} onChange={(e) => setPagataIl(e.target.value)} required /></label> : null}
+        {f ? <label className="st-campo">Numero<small> si mette da solo al primo PDF (es. 12/2026); cambialo solo se serve</small><input value={numero} onChange={(e) => setNumero(e.target.value)} maxLength={20} placeholder="automatico" /></label> : null}
+        <button className="st-btn st-btn-pdf" disabled={occupato} onClick={() => { pdf.current = true; }}>Salva e apri il PDF</button>
         <Piede occupato={occupato} salva={f ? "Salva" : "Aggiungi fattura"} chiudi={chiudi} elimina={f ? () => { if (window.confirm("Eliminare questa fattura?")) void invia(async () => { const r = await azione("fattura.elimina", { id: f.id }); if (r.ok) { avvisa("Fattura eliminata."); chiudi(); } }); } : undefined} />
       </form>
     </Finestra>
@@ -399,6 +426,65 @@ function ModuloTv({ chiudi }: { chiudi: () => void }) {
   );
 }
 
+/* ---------- PDF della fattura ---------- */
+
+/** Apre subito una scheda vuota (così il telefono non la blocca) e poi ci carica il PDF. */
+export function apriFinestraPdf(): Window | null {
+  const w = window.open("", "_blank");
+  if (w) w.document.write("<p style='font:16px system-ui;padding:24px'>Preparo la fattura…</p>");
+  return w;
+}
+export function mostraPdf(w: Window | null, id: number | undefined) {
+  if (!id) { w?.close(); return; }
+  const url = `/api/studio/fatture/${id}/pdf`;
+  if (w) w.location.href = url; else window.location.assign(new URL(url, window.location.origin).href);
+}
+
+function ModuloModelloFattura({ chiudi }: { chiudi: () => void }) {
+  const { dati, azione, avvisa } = useStudio();
+  const { occupato, invia } = useInvio();
+  const [m, setM] = useState<ModelloFattura>(dati.modelloFattura);
+  const campo = (k: keyof ModelloFattura) => ({ value: String(m[k] ?? ""), onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setM((x) => ({ ...x, [k]: e.target.value })) });
+  return (
+    <Finestra titolo="Il tuo modello di fattura" sotto="Lo compili una volta: ogni PDF esce con questi dati, il logo Apex e la data giusta." chiudi={chiudi} larga>
+      <form className="st-modulo" onSubmit={(e) => { e.preventDefault(); void invia(async () => { const r = await azione("fattura.modello", { modello: m }); if (r.ok) { avvisa("Modello della fattura salvato."); chiudi(); } }); }}>
+        <div className="st-riga">
+          <label className="st-campo">Nome in alto<input data-primo {...campo("intestazione")} maxLength={80} /></label>
+          <label className="st-campo">Titolare<small> nome e cognome o ragione sociale</small><input {...campo("titolare")} maxLength={120} /></label>
+        </div>
+        <label className="st-campo">Indirizzo completo<input {...campo("indirizzo")} maxLength={200} placeholder="Via …, 15121 Alessandria (AL)" /></label>
+        <div className="st-riga">
+          <label className="st-campo">Partita IVA<input {...campo("piva")} maxLength={20} inputMode="numeric" /></label>
+          <label className="st-campo">Codice fiscale<input {...campo("cf")} maxLength={20} autoCapitalize="characters" /></label>
+        </div>
+        <div className="st-riga st-riga-3">
+          <label className="st-campo">Email<input {...campo("email")} maxLength={120} inputMode="email" autoCapitalize="none" /></label>
+          <label className="st-campo">Telefono<input {...campo("telefono")} maxLength={40} inputMode="tel" /></label>
+          <label className="st-campo">Sito<input {...campo("sito")} maxLength={80} autoCapitalize="none" /></label>
+        </div>
+        <div className="st-riga">
+          <label className="st-campo">IBAN<input {...campo("iban")} maxLength={40} autoCapitalize="characters" /></label>
+          <label className="st-campo">Intestatario del conto<input {...campo("intestatarioConto")} maxLength={120} /></label>
+        </div>
+        <fieldset className="st-campo st-squadra"><legend>Regime fiscale</legend>
+          <div className="st-chip-riga">
+            <button type="button" className="st-chip" aria-pressed={m.regime === "forfettario"} onClick={() => setM((x) => ({ ...x, regime: "forfettario" }))}>Forfettario (senza IVA)</button>
+            <button type="button" className="st-chip" aria-pressed={m.regime === "ordinario"} onClick={() => setM((x) => ({ ...x, regime: "ordinario" }))}>Ordinario (con IVA)</button>
+          </div>
+        </fieldset>
+        <div className="st-riga">
+          {m.regime === "ordinario" ? <label className="st-campo">Aliquota IVA %<input inputMode="decimal" value={String(m.aliquota)} onChange={(e) => setM((x) => ({ ...x, aliquota: Number(e.target.value.replace(",", ".")) || 0 }))} /></label>
+            : <label className="st-spunta"><input type="checkbox" checked={m.bolloACliente} onChange={(e) => setM((x) => ({ ...x, bolloACliente: e.target.checked }))} /> Il bollo da 2 € lo paga il cliente<small> sopra 77,47 € si aggiunge da solo al totale</small></label>}
+          <label className="st-campo">Giorni per pagare<input inputMode="numeric" value={String(m.giorniScadenza)} onChange={(e) => setM((x) => ({ ...x, giorniScadenza: Number(e.target.value) || 0 }))} /></label>
+        </div>
+        <label className="st-campo">Nota in fondo<textarea {...campo("nota")} rows={2} maxLength={300} /></label>
+        <p className="st-nota">Il PDF è la copia di cortesia da mandare al cliente: la fattura valida per il Fisco resta quella elettronica che invii col tuo programma o il commercialista.</p>
+        <Piede occupato={occupato} salva="Salva il modello" chiudi={chiudi} />
+      </form>
+    </Finestra>
+  );
+}
+
 /* ---------- Il tuo computer: riunione con il team ---------- */
 
 type Modo = "riunione" | "compito";
@@ -532,5 +618,6 @@ export function Moduli({ modale, chiudi }: { modale: Modale; chiudi: () => void 
     case "tv": return <ModuloTv chiudi={chiudi} />;
     case "svuota": return <ModuloSvuota chiudi={chiudi} />;
     case "computer": return <ModuloComputer chiudi={chiudi} />;
+    case "modelloFattura": return <ModuloModelloFattura chiudi={chiudi} />;
   }
 }

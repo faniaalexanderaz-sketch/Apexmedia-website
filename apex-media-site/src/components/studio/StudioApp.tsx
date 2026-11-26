@@ -28,7 +28,8 @@ export type Modale =
   | { tipo: "obiettivo" }
   | { tipo: "tv" }
   | { tipo: "svuota" }
-  | { tipo: "computer" };
+  | { tipo: "computer" }
+  | { tipo: "modelloFattura" };
 
 type Avviso = { testo: string; tono: "ok" | "errore" | "soldi" };
 

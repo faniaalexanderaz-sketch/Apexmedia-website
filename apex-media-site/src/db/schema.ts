@@ -103,6 +103,7 @@ export const studioClienti = pgTable("studio_clienti", {
   sito: text("sito"), // dominio tracciato da /api/track, facoltativo
   attivo: boolean("attivo").notNull().default(true),
   note: text("note").notNull().default(""),
+  fatturazione: text("fatturazione").notNull().default("{}"), // dati per la fattura (JSON): ragione sociale, P.IVA, indirizzo…
 });
 
 export const studioServizi = pgTable(
@@ -133,6 +134,7 @@ export const studioFatture = pgTable(
     emessaIl: text("emessa_il").notNull(), // YYYY-MM-DD
     scadenza: text("scadenza").notNull(), // YYYY-MM-DD
     pagataIl: text("pagata_il"), // YYYY-MM-DD, null = da incassare
+    numero: text("numero"), // "12/2026": si assegna da solo al primo PDF
   },
   (t) => [index("studio_fatture_cliente_idx").on(t.clienteId), uniqueIndex("studio_fatture_servizio_mese_uq").on(t.servizioId, t.mese)],
 );

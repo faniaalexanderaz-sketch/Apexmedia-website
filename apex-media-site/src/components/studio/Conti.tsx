@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { daIncassare, dataBreve, euro, giorniTra, incassatoNelMese, incassatoNellAnno, iniziali, meseDi, nomeCliente, nomeMese, ricorrente, riepilogoCampagne, scaduta, servizioAttivoNelMese, somma, ultimiMesi } from "@/lib/studio/calcoli";
 import type { Cliente, Fattura } from "@/lib/studio/tipi";
-import { ImportoModificabile } from "./Moduli";
+import { ImportoModificabile, apriFinestraPdf, mostraPdf } from "./Moduli";
 import { useStudio } from "./StudioApp";
 
 /* =============================================================
@@ -154,6 +154,7 @@ export function Conti() {
         <div><h1>Conti</h1><p>{nomeMese(mese, true).replace(/^./, (l) => l.toUpperCase())} {anno}: quanto entra, cosa è entrato, cosa manca.</p></div>
         <div className="st-pagina-azioni">
           {calc.daGenerare > 0 ? <button type="button" className="st-btn" onClick={async () => { const r = await azione("fatture.genera", { mese }); if (r.ok) avvisa(calc.daGenerare === 1 ? "Creata la fattura del mese." : `Create ${calc.daGenerare} fatture del mese.`); }}>Crea le {calc.daGenerare === 1 ? "fattura" : `${calc.daGenerare} fatture`} di {nomeMese(mese, true)}</button> : null}
+          <button type="button" className="st-btn" onClick={() => apri({ tipo: "modelloFattura" })}>Modello fattura</button>
           <button type="button" className="st-btn" onClick={() => apri({ tipo: "fattura" })}>+ Fattura</button>
           <button type="button" className="st-btn st-btn-pieno" onClick={() => apri({ tipo: "cliente" })}>+ Cliente</button>
         </div>
@@ -197,7 +198,14 @@ export function Conti() {
         </div>
         {elenco.length === 0 ? <p className="st-carta st-vuoto-riga">{filtro === "aperte" ? "Niente da incassare." : "Nessuna fattura qui."}</p> : (
           <ul className="st-fatture">
-            {elenco.slice(0, 60).map((f) => <RigaFattura key={f.id} f={f} oggi={dati.oggi} cliente={dati.clienti.find((c) => c.id === f.clienteId)} incassa={() => incassa(f)} apri={() => apri({ tipo: "fattura", fattura: f })} annulla={async () => { await azione("fattura.paga", { id: f.id, pagata: false }); }} />)}
+            {elenco.slice(0, 60).map((f) => <RigaFattura key={f.id} f={f} oggi={dati.oggi} cliente={dati.clienti.find((c) => c.id === f.clienteId)} incassa={() => incassa(f)} apri={() => apri({ tipo: "fattura", fattura: f })} annulla={async () => { await azione("fattura.paga", { id: f.id, pagata: false }); }}
+              rinnova={async () => {
+                const w = apriFinestraPdf();
+                const r = await azione("fattura.rinnova", { id: f.id });
+                if (!r.ok) { w?.close(); return; }
+                avvisa(r.nuovoId === f.id ? "La fattura di questo mese c'era già: te la apro." : "Fattura rinnovata con la data di oggi.");
+                mostraPdf(w, r.nuovoId);
+              }} />)}
           </ul>
         )}
       </section>
@@ -205,7 +213,7 @@ export function Conti() {
   );
 }
 
-function RigaFattura({ f, oggi, cliente, incassa, apri, annulla }: { f: Fattura; oggi: string; cliente?: Cliente; incassa: () => void; apri: () => void; annulla: () => void }) {
+function RigaFattura({ f, oggi, cliente, incassa, apri, annulla, rinnova }: { f: Fattura; oggi: string; cliente?: Cliente; incassa: () => void; apri: () => void; annulla: () => void; rinnova: () => void }) {
   const ritardo = scaduta(f, oggi) ? giorniTra(f.scadenza, oggi) : 0;
   const mancano = !f.pagataIl && !ritardo ? giorniTra(oggi, f.scadenza) : 0;
   return (
@@ -214,6 +222,10 @@ function RigaFattura({ f, oggi, cliente, incassa, apri, annulla }: { f: Fattura;
       <button type="button" className="st-fattura-testo" onClick={apri}><b>{cliente?.nome ?? "Cliente eliminato"}</b><small>{f.descrizione}</small></button>
       <span className="st-fattura-stato">{f.pagataIl ? `incassata il ${dataBreve(f.pagataIl)}` : ritardo ? `scaduta da ${ritardo === 1 ? "1 giorno" : `${ritardo} giorni`}` : mancano === 0 ? "scade oggi" : `scade tra ${mancano === 1 ? "1 giorno" : `${mancano} giorni`}`}</span>
       <b className="st-fattura-importo">{euro(f.importo)}</b>
+      <span className="st-fattura-doc">
+        <a className="st-btn st-btn-mini" href={`/api/studio/fatture/${f.id}/pdf`} target="_blank" rel="noopener" title={f.numero ? `Fattura ${f.numero} in PDF` : "Apri il PDF (prende il numero da sola)"}>PDF</a>
+        <button type="button" className="st-btn st-btn-mini" onClick={rinnova} title="Rifà questa fattura con la data di oggi e ti dà il PDF">Rinnova</button>
+      </span>
       {f.pagataIl ? <button type="button" className="st-btn st-btn-testo st-btn-mini" onClick={annulla}>Annulla incasso</button> : <button type="button" className="st-btn st-btn-soldi st-btn-mini" onClick={incassa}>Segna incassata</button>}
     </li>
   );

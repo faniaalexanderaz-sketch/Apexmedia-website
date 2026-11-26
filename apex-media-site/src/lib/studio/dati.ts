@@ -3,7 +3,7 @@ import { db, modalitaDemo, schema } from "@/db";
 import { AGENTE, scegliAgente } from "./agenti";
 import { pianoDelMese } from "./piano";
 import { aggiungiGiorni, fineMese, mesePrima, servizioAttivoNelMese } from "./calcoli";
-import { CANALI, type Campagna, type Dati, type Ricorrenza, type SchermoTv, type StatoLavoro } from "./tipi";
+import { CANALI, MODELLO_VUOTO, type Campagna, type Dati, type DatiFatturazione, type Fattura, type ModelloFattura, type Ricorrenza, type SchermoTv, type StatoLavoro } from "./tipi";
 
 /* =============================================================
    Dati dello Studio: lettura completa e tutte le modifiche.
@@ -31,6 +31,8 @@ async function assicuraTabelle(): Promise<void> {
 async function aggiungiColonne(d: Awaited<ReturnType<typeof db>>): Promise<void> {
   await d.execute(sql.raw('ALTER TABLE "studio_lavori" ADD COLUMN IF NOT EXISTS "scadenza" text'));
   await d.execute(sql.raw('ALTER TABLE "studio_lavori" ADD COLUMN IF NOT EXISTS "chiave" text'));
+  await d.execute(sql.raw(`ALTER TABLE "studio_clienti" ADD COLUMN IF NOT EXISTS "fatturazione" text DEFAULT '{}' NOT NULL`));
+  await d.execute(sql.raw('ALTER TABLE "studio_fatture" ADD COLUMN IF NOT EXISTS "numero" text'));
 }
 function tabelle(): Promise<void> {
   if (!pronto) pronto = assicuraTabelle().catch((e) => { pronto = null; throw e; });
@@ -84,7 +86,7 @@ export async function caricaDati(): Promise<Dati> {
   // un lavoro rimasto "in lavorazione" oltre 10 minuti (scheda chiusa, errore) torna in coda
   await d.update(S.studioLavori).set({ stato: "in_coda" }).where(and(eq(S.studioLavori.stato, "in_lavorazione"), lt(S.studioLavori.aggiornatoIl, new Date(Date.now() - 10 * 60_000))));
 
-  const [clienti, servizi, fatture, campagne, lavori, regole, obiettivo, tv] = await Promise.all([
+  const [clienti, servizi, fatture, campagne, lavori, regole, obiettivo, tv, modello] = await Promise.all([
     d.select().from(S.studioClienti).orderBy(asc(S.studioClienti.id)),
     d.select().from(S.studioServizi).orderBy(asc(S.studioServizi.id)),
     d.select().from(S.studioFatture).orderBy(desc(S.studioFatture.emessaIl), desc(S.studioFatture.id)),
@@ -93,6 +95,7 @@ export async function caricaDati(): Promise<Dati> {
     d.select().from(S.studioRegole).orderBy(desc(S.studioRegole.id)),
     d.select().from(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "obiettivo_mese"))).limit(1),
     d.select({ valore: S.settings.valore, quando: S.settings.aggiornatoIl }).from(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "tv"))).limit(1),
+    leggiModello(),
   ]);
 
   const manuali: Campagna[] = campagne.map((r) => ({ id: r.id, clienteId: r.clienteId, mese: r.mese, canale: r.canale, spesa: num(r.spesa), contatti: r.contatti, ricavo: r.ricavo === null ? null : num(r.ricavo) }));
@@ -104,12 +107,46 @@ export async function caricaDati(): Promise<Dati> {
     oggi, ora,
     obiettivoMese: num(obiettivo[0]?.valore),
     tv: leggiTv(tv[0]),
-    clienti: clienti.map((c) => ({ id: c.id, nome: c.nome, settore: c.settore, colore: c.colore, sito: c.sito, attivo: c.attivo, note: c.note })),
+    modelloFattura: modello,
+    clienti: clienti.map((c) => ({ id: c.id, nome: c.nome, settore: c.settore, colore: c.colore, sito: c.sito, attivo: c.attivo, note: c.note, fatturazione: leggiJson<DatiFatturazione>(c.fatturazione, {}) })),
     servizi: servizi.map((s) => ({ id: s.id, clienteId: s.clienteId, nome: s.nome, importo: num(s.importo), ricorrenza: s.ricorrenza as Ricorrenza, dal: s.dal, al: s.al })),
-    fatture: fatture.map((f) => ({ id: f.id, clienteId: f.clienteId, servizioId: f.servizioId, mese: f.mese, descrizione: f.descrizione, importo: num(f.importo), emessaIl: f.emessaIl, scadenza: f.scadenza, pagataIl: f.pagataIl })),
+    fatture: fatture.map((f) => ({ id: f.id, clienteId: f.clienteId, servizioId: f.servizioId, mese: f.mese, descrizione: f.descrizione, importo: num(f.importo), emessaIl: f.emessaIl, scadenza: f.scadenza, pagataIl: f.pagataIl, numero: f.numero })),
     campagne: [...manuali, ...auto],
     lavori: lavori.map((l) => ({ id: l.id, agente: l.agente, clienteId: l.clienteId, titolo: l.titolo, brief: l.brief, stato: l.stato as StatoLavoro, risultato: l.risultato, revisione: l.revisione, scadenza: l.scadenza, creatoIl: l.creatoIl.toISOString(), aggiornatoIl: l.aggiornatoIl.toISOString() })),
     regole: regole.map((r) => ({ id: r.id, testo: r.testo, agente: r.agente, creatoIl: r.creatoIl.toISOString() })),
+  };
+}
+
+function leggiJson<T>(s: string | null | undefined, riserva: T): T {
+  try { const v = JSON.parse(s ?? ""); return v && typeof v === "object" ? (v as T) : riserva; } catch { return riserva; }
+}
+
+/** Il tuo modello di fattura (intestazione, regime, IBAN), salvato nelle impostazioni. */
+export async function leggiModello(): Promise<ModelloFattura> {
+  const d = await db();
+  const [r] = await d.select({ valore: S.settings.valore }).from(S.settings).where(and(eq(S.settings.sito, SITO_IMPOSTAZIONI), eq(S.settings.chiave, "fattura_modello"))).limit(1);
+  return { ...MODELLO_VUOTO, ...leggiJson<Partial<ModelloFattura>>(r?.valore, {}) };
+}
+
+/** Tutto quello che serve per stampare una fattura. Al primo PDF le dà il numero progressivo dell'anno. */
+export async function fatturaPerPdf(n: number): Promise<{ fattura: Fattura; cliente: { nome: string; fatturazione: DatiFatturazione }; modello: ModelloFattura } | null> {
+  await tabelle();
+  const d = await db();
+  const [f] = await d.select().from(S.studioFatture).where(eq(S.studioFatture.id, n)).limit(1);
+  if (!f) return null;
+  let numero = f.numero;
+  if (!numero) {
+    const anno = f.emessaIl.slice(0, 4);
+    const usati = await d.select({ numero: S.studioFatture.numero }).from(S.studioFatture).where(sql`${S.studioFatture.numero} like ${"%/" + anno}`);
+    const max = usati.reduce((m, r) => Math.max(m, parseInt(r.numero ?? "", 10) || 0), 0);
+    numero = `${max + 1}/${anno}`;
+    await d.update(S.studioFatture).set({ numero }).where(eq(S.studioFatture.id, n));
+  }
+  const [c] = await d.select().from(S.studioClienti).where(eq(S.studioClienti.id, f.clienteId)).limit(1);
+  return {
+    fattura: { id: f.id, clienteId: f.clienteId, servizioId: f.servizioId, mese: f.mese, descrizione: f.descrizione, importo: num(f.importo), emessaIl: f.emessaIl, scadenza: f.scadenza, pagataIl: f.pagataIl, numero },
+    cliente: { nome: c?.nome ?? "Cliente", fatturazione: leggiJson<DatiFatturazione>(c?.fatturazione, {}) },
+    modello: await leggiModello(),
   };
 }
 
@@ -144,6 +181,12 @@ function id(v: unknown, campo = "elemento"): number {
   if (!Number.isInteger(n) || n <= 0) throw new Errore(`Manca: ${campo}.`);
   return n;
 }
+/** Tiene solo i campi di testo previsti, puliti e corti. */
+function pulisciOggetto(o: Record<string, unknown>, campi: string[]): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const k of campi) if (typeof o[k] === "string") out[k] = (o[k] as string).trim().slice(0, 300);
+  return out;
+}
 async function clienteEsiste(n: number): Promise<number> {
   const [c] = await (await db()).select({ id: S.studioClienti.id }).from(S.studioClienti).where(eq(S.studioClienti.id, n)).limit(1);
   if (!c) throw new Errore("Cliente non trovato.");
@@ -167,6 +210,7 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
         sito: testo(c.sito, "sito", 100, false).toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "") || null,
         attivo: c.attivo !== false,
         note: testo(c.note, "note", 2000, false),
+        ...(c.fatturazione && typeof c.fatturazione === "object" ? { fatturazione: JSON.stringify(pulisciOggetto(c.fatturazione as Record<string, unknown>, ["ragioneSociale", "piva", "cf", "indirizzo", "cap", "citta", "provincia", "email", "pec", "sdi"])) } : {}),
       };
       if (c.id) { await d.update(S.studioClienti).set(v).where(eq(S.studioClienti.id, id(c.id))); return id(c.id); }
       const [r] = await d.insert(S.studioClienti).values(v).returning({ id: S.studioClienti.id });
@@ -228,10 +272,43 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
         emessaIl,
         scadenza: c.scadenza ? data(c.scadenza, "Scadenza") : aggiungiGiorni(emessaIl, 15),
         pagataIl: c.pagata === true ? (c.pagataIl ? data(c.pagataIl, "Data incasso") : oggi) : c.pagata === false ? null : undefined,
+        ...(typeof c.numero === "string" ? { numero: c.numero.trim().slice(0, 20) || null } : {}),
       };
       if (c.id) { await d.update(S.studioFatture).set(v).where(eq(S.studioFatture.id, id(c.id))); return id(c.id); }
       const [r] = await d.insert(S.studioFatture).values({ ...v, pagataIl: v.pagataIl ?? null }).returning({ id: S.studioFatture.id });
       return r.id;
+    }
+    case "fattura.rinnova": {
+      // stessa fattura (cliente, servizio, importo) con la data di oggi: per il rinnovo del mese
+      const [f] = await d.select().from(S.studioFatture).where(eq(S.studioFatture.id, id(c.id))).limit(1);
+      if (!f) throw new Errore("Fattura non trovata.");
+      const m = oggi.slice(0, 7);
+      if (f.servizioId) {
+        const [gia] = await d.select({ id: S.studioFatture.id }).from(S.studioFatture).where(and(eq(S.studioFatture.servizioId, f.servizioId), eq(S.studioFatture.mese, m))).limit(1);
+        if (gia) return gia.id;
+      }
+      const modello = await leggiModello();
+      // se la descrizione finiva con il mese ("Gestione social, 10/2026" o "…, ottobre 2026") lo porta a quello di oggi
+      const descr = f.descrizione.replace(/,?\s*((0?[1-9]|1[0-2])\/\d{4}|(gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)(\s+\d{4})?)\s*$/i, "").trim();
+      const nomeMese = `${m.slice(5)}/${m.slice(0, 4)}`;
+      const [r] = await d.insert(S.studioFatture).values({
+        clienteId: f.clienteId, servizioId: f.servizioId, mese: f.servizioId ? m : null, descrizione: `${descr}, ${nomeMese}`.slice(0, 160), importo: f.importo,
+        emessaIl: oggi, scadenza: aggiungiGiorni(oggi, modello.giorniScadenza || 15),
+      }).returning({ id: S.studioFatture.id });
+      return r.id;
+    }
+    case "fattura.modello": {
+      const m = c.modello && typeof c.modello === "object" ? (c.modello as Record<string, unknown>) : {};
+      const testi = pulisciOggetto(m, ["intestazione", "titolare", "indirizzo", "piva", "cf", "email", "telefono", "sito", "iban", "intestatarioConto", "nota"]);
+      const valore = JSON.stringify({
+        ...MODELLO_VUOTO, ...testi,
+        regime: m.regime === "ordinario" ? "ordinario" : "forfettario",
+        aliquota: Math.min(100, Math.max(0, Number(m.aliquota) || 22)),
+        bolloACliente: m.bolloACliente !== false,
+        giorniScadenza: Math.min(365, Math.max(0, Math.round(Number(m.giorniScadenza) || 15))),
+      });
+      await d.insert(S.settings).values({ sito: SITO_IMPOSTAZIONI, chiave: "fattura_modello", valore, aggiornatoIl: new Date() }).onConflictDoUpdate({ target: [S.settings.sito, S.settings.chiave], set: { valore, aggiornatoIl: new Date() } });
+      return;
     }
     case "fattura.paga": {
       await d.update(S.studioFatture).set({ pagataIl: c.pagata === false ? null : c.pagataIl ? data(c.pagataIl, "Data incasso") : oggi }).where(eq(S.studioFatture.id, id(c.id)));
@@ -289,7 +366,7 @@ export async function esegui(tipo: string, c: Corpo): Promise<number | undefined
       const m = c.mese ? mese(c.mese) : oggi.slice(0, 7);
       const [cl] = await d.select().from(S.studioClienti).where(eq(S.studioClienti.id, n)).limit(1);
       const servizi = (await d.select().from(S.studioServizi).where(eq(S.studioServizi.clienteId, n))).map((x) => ({ ...x, importo: num(x.importo), ricorrenza: x.ricorrenza as Ricorrenza }));
-      const piano = pianoDelMese({ ...cl, sito: cl.sito }, servizi, m, oggi);
+      const piano = pianoDelMese({ ...cl, sito: cl.sito, fatturazione: leggiJson<DatiFatturazione>(cl.fatturazione, {}) }, servizi, m, oggi);
       const creati = await d.insert(S.studioLavori).values(piano.map((p) => ({ agente: p.agente, clienteId: n, titolo: p.titolo, brief: p.brief, stato: "in_coda", scadenza: p.scadenza, chiave: p.chiave }))).onConflictDoNothing().returning({ id: S.studioLavori.id });
       return creati.length;
     }

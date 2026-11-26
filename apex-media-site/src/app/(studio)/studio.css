@@ -790,3 +790,18 @@ body:has(.st-strato:not([data-nascosto]) .st-ufficio) .st { position: fixed; ins
 .st .st-modo .st-chip { border-radius: 14px; }
 .st .st-modo .st-chip[aria-pressed="true"] em { color: rgba(255,255,255,.75); }
 .st-niente3d-bottoni { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+/* ---------- Fatture in PDF ---------- */
+.st-fattura { grid-template-columns: auto minmax(0, 1fr) auto auto auto auto; }
+.st-fattura-doc { display: inline-flex; gap: 6px; }
+.st .st-btn-pdf { justify-self: start; }
+.st-blocco-fattura { border: 1px solid var(--linea); border-radius: 14px; padding: 10px 14px; display: grid; gap: 10px; }
+.st-blocco-fattura[open] { padding-bottom: 14px; }
+.st-blocco-fattura summary { cursor: pointer; font-weight: 700; font-size: 13.5px; display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.st-blocco-fattura summary small { font-weight: 500; color: var(--tenue); }
+.st .st-riga-3 { grid-template-columns: 1fr 2fr 1fr; }
+@media (max-width: 760px) {
+  .st-fattura { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .st-fattura-doc { grid-column: 2; grid-row: 3; }
+  .st .st-riga-3 { grid-template-columns: 1fr 1fr; }
+}
