@@ -56,14 +56,14 @@ body {{ font-family:'Inter',sans-serif; color:var(--ink); font-size:9.4pt; line-
 .mossa li {{ display:flex; gap:2.5mm; align-items:flex-start; padding:1mm 0; }}
 .come {{ border:1px solid var(--line); border-radius:3mm; padding:5mm; font-size:9pt; color:var(--soft); margin-bottom:8mm; }}
 .come b {{ color:var(--ink); }}
-section {{ margin-bottom:7mm; }}
+section {{ margin-bottom:5mm; }}
 section header {{ display:flex; align-items:flex-end; gap:4mm; border-bottom:2px solid var(--ink); padding-bottom:2.5mm; margin-bottom:1mm; break-after:avoid; }}
 .sez {{ font-family:'Inter Display','Inter'; font-size:22pt; font-weight:700; color:var(--acc); line-height:1; }}
 section h2 {{ font-size:14pt; letter-spacing:-.01em; line-height:1.15; }}
 .sub {{ color:var(--soft); font-size:8.8pt; }}
 .cnt {{ margin-left:auto; font-size:7.8pt; color:var(--soft); white-space:nowrap; }}
 section ul {{ list-style:none; }}
-section li {{ display:flex; gap:3.5mm; padding:2.4mm 0; border-bottom:1px solid var(--line); break-inside:avoid; }}
+section li {{ display:flex; gap:3.5mm; padding:2mm 0; border-bottom:1px solid var(--line); break-inside:avoid; }}
 .box {{ flex:0 0 auto; width:4mm; height:4mm; border:1.3px solid var(--ink); border-radius:1mm; margin-top:.6mm; }}
 .box.sm {{ width:3.3mm; height:3.3mm; margin-top:.8mm; }}
 .num {{ font-size:7pt; color:var(--acc); font-weight:600; margin-right:2mm; letter-spacing:.05em; }}
@@ -78,14 +78,14 @@ section li p {{ color:var(--soft); margin-top:.6mm; }}
 <div class="cover">
  <div class="top">Checklist · Edizione novembre 2026</div>
  <h1>18 anni.<br><span>Le mosse</span><br>che contano.</h1>
- <p class="lead">Le cose semplici e importanti da fare a 18 anni: documenti, conto, risparmio, investimenti, bonus, patente, viaggi e voto.</p>
+ <p class="lead">Le cose che contano davvero quando compi 18 anni: documenti, soldi, investimenti, patente, lavoro e voto. Niente di superfluo.</p>
  <div class="stats"><div><b>{totale}</b>voci da spuntare</div><div><b>{len(SEZIONI)}</b>sezioni</div><div><b>4</b>passi per partire</div></div>
  <ul class="toc">{indice}</ul>
  <p class="nota">Informazioni aggiornate a novembre 2026. Bonus, importi e scadenze cambiano con le leggi di bilancio: prima di fare domanda controlla sempre il sito ufficiale.</p>
 </div>
 <div class="intro">
  <h2>Le prime mosse</h2>
- <p class="sub">Se vuoi partire subito, inizia da qui.</p>
+ <p class="sub">Le prime otto cose da fare, in questo ordine.</p>
  <div class="mosse">{mosse}</div>
  <div class="come"><b>Come usarla.</b> Spunta ogni voce quando l'hai fatta. Qui sotto trovi tutte le {totale} voci divise per argomento.</div>
 </div>
