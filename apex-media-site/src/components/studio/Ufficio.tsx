@@ -102,7 +102,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
       else if (stato === "libero" && f >= 0 && (fumo + f * 4) % 12 < 5) { meta = POSTI_FUMO[f]; sigaretta = true; }
       else if (stato === "libero") {
         const k = liberi.indexOf(a.id);
-        if (k >= 0 && k < POSTI_RELAX.length) { meta = POSTI_RELAX[(k + giro) % POSTI_RELAX.length]; tazza = meta.x < -20.5; }
+        if (k >= 0 && k < POSTI_RELAX.length) { meta = POSTI_RELAX[(k + giro) % POSTI_RELAX.length]; tazza = meta.attivita === "caffe"; }
       }
       return { id: a.id, stato, titolo: lavoro?.titolo ?? null, meta, umore, tazza, fumo: sigaretta, fumetto: v ? { id: v.p.id, frase: v.p.frase, bottone: v.p.bottone, tono: v.p.tono } : null };
     });

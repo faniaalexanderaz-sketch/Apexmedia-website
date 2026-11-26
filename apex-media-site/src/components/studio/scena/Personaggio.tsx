@@ -132,6 +132,7 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
   const tablet = useRef<THREE.Mesh>(null);
   const anello = useRef<THREE.Mesh>(null);
   const nuvola = useRef<THREE.Group>(null);
+  const oggetti = useRef<THREE.Group>(null);
   const [sopra, setSopra] = useState(false);
   // quattro sbuffi di fumo, ognuno con la sua trasparenza
   const sbuffi = useMemo(() => (fumo ? [0, 1, 2, 3].map(() => new THREE.MeshBasicMaterial({ color: "#e9e9ee", transparent: true, opacity: 0, depthWrite: false })) : []), [fumo]);
@@ -159,6 +160,8 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
     s.iniziato = true;
 
     const cammina = s.via.length > 0;
+    const att = meta.attivita;
+    if (oggetti.current) oggetti.current.visible = !cammina;
     if (cammina) {
       const [tx, tz] = s.via[0];
       const dx = tx - s.x, dz = tz - s.z, d = Math.hypot(dx, dz);
@@ -205,6 +208,19 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
       // tiene il tablet e ogni tanto saluta con l'altra mano
       const saluta = Math.sin(t * 0.9) > 0.55;
       aS = 1.0; aD = saluta ? 2.9 : 0.15; aDz = saluta ? 0.5 + Math.sin(t * 9) * 0.3 : 0; tY = Math.sin(t * 0.5) * 0.15; tX = -0.08;
+    } else if (!cammina && att === "gioca") {
+      // joypad in mano, pollici che premono, testa verso la TV
+      aS = 1.05 + Math.sin(t * 13) * 0.05; aD = 1.05 + Math.sin(t * 11 + 1) * 0.05; aDz = -0.25; tX = 0.12; tY = Math.sin(t * 0.8) * 0.08; cX = -0.08;
+    } else if (!cammina && (att === "pingpong-sx" || att === "pingpong-dx")) {
+      // colpisce quando la pallina arriva dalla sua parte
+      const fasePalla = (stato.clock.elapsedTime * 0.7) % 2;
+      const vicino = att === "pingpong-sx" ? Math.min(fasePalla, 2 - fasePalla) : Math.abs(fasePalla - 1);
+      const colpo = Math.max(0, 1 - vicino / 0.35);
+      aS = 0.35; aD = 0.7 + colpo * 1.1; aDz = -colpo * 0.6; tY = 0; tX = 0.05; cX = -0.05 - colpo * 0.08;
+    } else if (!cammina && att === "telefono") {
+      aS = 0.3; aD = 1.25; aDz = -0.3; tX = 0.32; tY = 0.1;
+    } else if (!cammina && att === "legge") {
+      aS = 1.0; aD = 1.0; aDz = 0; tX = 0.28; tY = Math.sin(t * 0.3) * 0.06;
     } else if (!s.seduto && fumo) {
       // ogni tanto porta la sigaretta alla bocca
       const tiro = (t % 4.5) < 1.1;
@@ -266,6 +282,24 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
             <meshStandardMaterial map={petto} transparent roughness={0.7} depthWrite={false} polygonOffset polygonOffsetFactor={-2} />
           </mesh>
         ) : null}
+        <group ref={oggetti}>
+          {meta.attivita === "gioca" ? (
+            <group position={[0, 0.74, -0.42]} rotation={[0.5, 0, 0]}>
+              <mesh geometry={GEO.box} material={matLucido("#1c1e26")} scale={[0.26, 0.05, 0.12]} />
+              <mesh geometry={GEO.sfera} material={matLucido("#1c1e26")} position={[-0.11, -0.01, 0.05]} scale={[0.07, 0.05, 0.08]} />
+              <mesh geometry={GEO.sfera} material={matLucido("#1c1e26")} position={[0.11, -0.01, 0.05]} scale={[0.07, 0.05, 0.08]} />
+              <mesh geometry={GEO.box} material={matLed("#4f7dff", 2)} position={[0, 0.03, -0.055]} scale={[0.1, 0.01, 0.01]} />
+            </group>
+          ) : null}
+          {meta.attivita === "telefono" ? <mesh geometry={GEO.box} material={matLed("#9fb4ff", 1.2)} position={[0.12, 0.98, -0.42]} rotation={[0.9, 0, 0]} scale={[0.1, 0.18, 0.012]} /> : null}
+          {meta.attivita === "legge" ? (
+            <group position={[0, 0.86, -0.42]} rotation={[0.85, 0, 0]}>
+              <mesh geometry={GEO.box} material={mat("#7a2e3a", 0.7)} position={[-0.08, 0, 0]} rotation={[0, 0.25, 0]} scale={[0.16, 0.22, 0.02]} />
+              <mesh geometry={GEO.box} material={mat("#7a2e3a", 0.7)} position={[0.08, 0, 0]} rotation={[0, -0.25, 0]} scale={[0.16, 0.22, 0.02]} />
+              <mesh geometry={GEO.box} material={mat("#f4efe2", 0.9)} position={[0, 0, -0.012]} scale={[0.3, 0.2, 0.01]} />
+            </group>
+          ) : null}
+        </group>
         {/* colletto bianco della divisa */}
         <mesh geometry={GEO.toro} material={mat("#f4f2ff", 0.7)} position={[0, 1.16, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.36, 0.36, 0.7]} />
 
@@ -278,6 +312,12 @@ export function Personaggio({ meta, instrada, umore, divisa, accento, pelle, cap
           <mesh geometry={GEO.braccio} material={tessuto} position={[0, -0.2, 0]} castShadow />
           <mesh geometry={GEO.sfera} material={mat(pelle, 0.6)} position={[0, -0.44, 0]} scale={0.15} />
           {tazza ? <mesh geometry={GEO.cil} material={mat(C.bianco, 0.3)} position={[0, -0.5, -0.07]} rotation={[-1.3, 0, 0]} scale={[0.13, 0.15, 0.13]} castShadow /> : null}
+          {meta.attivita === "pingpong-sx" || meta.attivita === "pingpong-dx" ? (
+            <group position={[0, -0.56, -0.05]} rotation={[-1.2, 0, 0]}>
+              <mesh geometry={GEO.cil} material={mat("#7a5236", 0.6)} scale={[0.04, 0.12, 0.04]} />
+              <mesh geometry={GEO.cil} material={mat("#d4302f", 0.6)} position={[0, 0.14, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.2, 0.02, 0.22]} />
+            </group>
+          ) : null}
           {fumo ? (
             <group position={[0, -0.5, -0.09]} rotation={[-1.4, 0, 0]}>
               <mesh geometry={GEO.cil} material={mat("#f6f4ee", 0.6)} scale={[0.028, 0.16, 0.028]} />

@@ -23,7 +23,7 @@ export const MODELLI_PIANTE = {
 export type TipoPianta = keyof typeof MODELLI_PIANTE;
 
 /** Arredi veri (stessa libreria, stesse regole): sedie, lampade, divano, poltrona, tavolino, oggetti. */
-export const MODELLI_ARREDI = ["modern_arm_chair_01", "desk_lamp_arm_01", "sofa_03", "mid_century_lounge_chair", "modern_coffee_table_01", "marble_bust_01", "wall_clock", "brass_vase_02", "stationery_supplies"] as const;
+export const MODELLI_ARREDI = ["modern_arm_chair_01", "desk_lamp_arm_01", "sofa_03", "mid_century_lounge_chair", "modern_coffee_table_01", "marble_bust_01", "wall_clock", "brass_vase_02", "stationery_supplies", "gaming_console"] as const;
 export type Arredo = (typeof MODELLI_ARREDI)[number];
 
 const url = (t: TipoPianta) => `/studio/3d/${MODELLI_PIANTE[t]}.glb`;

@@ -240,21 +240,24 @@ export const AGENTI: Agente[] = [
 
 export const AGENTE = Object.fromEntries(AGENTI.map((a) => [a.id, a])) as Record<string, Agente>;
 
-export type Punto = { x: number; z: number; rot: number; posa: "seduto" | "in_piedi"; y: number };
+export type Attivita = "gioca" | "pingpong-sx" | "pingpong-dx" | "caffe" | "telefono" | "legge";
+export type Punto = { x: number; z: number; rot: number; posa: "seduto" | "in_piedi"; y: number; attivita?: Attivita; uscita?: [number, number][] };
 
 /** Posti nell'area relax: chi è libero li occupa, e ogni tanto cambia posto (va al caffè, gioca a ping pong). */
 export const POSTI_RELAX: Punto[] = [
-  { x: -19.3, z: 3.55, rot: Math.PI, posa: "seduto", y: -0.1 },
-  { x: -17.6, z: 3.55, rot: Math.PI, posa: "seduto", y: -0.1 },
-  { x: -21.2, z: 1.6, rot: Math.PI / 2, posa: "in_piedi", y: 0 },
-  { x: -14.7, z: 5.3, rot: -Math.PI / 2, posa: "in_piedi", y: 0 },
-  { x: -9.9, z: 5.3, rot: Math.PI / 2, posa: "in_piedi", y: 0 },
-  { x: -15.9, z: 3.55, rot: Math.PI, posa: "seduto", y: -0.1 },
-  { x: -21.2, z: 3.1, rot: Math.PI / 2, posa: "in_piedi", y: 0 },
-  { x: -21.2, z: 4.6, rot: Math.PI / 2, posa: "in_piedi", y: 0 },
-  { x: -20.9, z: 7.1, rot: Math.PI * 0.75, posa: "seduto", y: -0.12 },
-  { x: 13.4, z: 6.85, rot: Math.PI, posa: "seduto", y: -0.1 },
-  { x: 18.6, z: 6.85, rot: Math.PI, posa: "seduto", y: -0.1 },
+  // divano: due giocano alla console davanti alla TV, uno guarda il telefono
+  { x: -18.6, z: 3.75, rot: 0, posa: "seduto", y: -0.1, attivita: "gioca", uscita: [[-18.6, 2.75], [-14.55, 2.75], [-14.55, 0.5]] },
+  { x: -17.2, z: 3.75, rot: 0, posa: "seduto", y: -0.1, attivita: "gioca", uscita: [[-17.2, 2.75], [-14.55, 2.75], [-14.55, 0.5]] },
+  { x: -21.2, z: 1.6, rot: Math.PI / 2, posa: "in_piedi", y: 0, attivita: "caffe" },
+  // ping pong, uno per lato
+  { x: -14.7, z: 5.3, rot: -Math.PI / 2, posa: "in_piedi", y: 0, attivita: "pingpong-sx" },
+  { x: -9.9, z: 5.3, rot: Math.PI / 2, posa: "in_piedi", y: 0, attivita: "pingpong-dx" },
+  { x: -16.0, z: 3.75, rot: 0, posa: "seduto", y: -0.1, attivita: "telefono", uscita: [[-16.0, 2.75], [-14.55, 2.75], [-14.55, 0.5]] },
+  { x: -21.2, z: 3.1, rot: Math.PI / 2, posa: "in_piedi", y: 0, attivita: "caffe" },
+  { x: -21.2, z: 4.6, rot: Math.PI / 2, posa: "in_piedi", y: 0, attivita: "caffe" },
+  { x: -20.9, z: 7.1, rot: Math.PI * 0.75, posa: "seduto", y: -0.12, attivita: "legge" },
+  { x: 13.4, z: 6.85, rot: Math.PI, posa: "seduto", y: -0.1, attivita: "telefono" },
+  { x: 18.6, z: 6.85, rot: Math.PI, posa: "seduto", y: -0.1, attivita: "legge" },
 ];
 
 /** Angolo fumatori nel giardino, accanto all'aiuola: chi fuma ci va ogni tanto quando è libero. */
@@ -290,7 +293,10 @@ function corridoio(z: number): number {
 /** Strada dal punto al suo corridoio: quella del posto, se è un posto con un'uscita sua, altrimenti dritti in avanti. */
 function uscita(p: { x: number; z: number }): [number, number][] {
   const posto = AGENTI.find((a) => a.uscita && Math.hypot(a.posto[0] - p.x, a.posto[1] - p.z) < 0.05);
-  return posto?.uscita ?? [[p.x, corridoio(p.z)]];
+  if (posto?.uscita) return posto.uscita;
+  // il divano sta tra il mobile della TV e il ping pong: si esce di lato
+  const relax = POSTI_RELAX.find((q) => q.uscita && Math.hypot(q.x - p.x, q.z - p.z) < 0.05);
+  return relax?.uscita ?? [[p.x, corridoio(p.z)]];
 }
 
 /** Percorso a piedi da un punto all'altro: esce nel corridoio, attraversa (dai passaggi se cambia corridoio), entra. */

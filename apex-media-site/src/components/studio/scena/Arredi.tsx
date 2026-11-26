@@ -703,16 +703,16 @@ export function Relax() {
     <group>
       <Tappeto x={-16.4} z={4.6} w={12.6} d={7.6} c="#e6e9fb" />
       <Tappeto x={-17.6} z={4.9} w={6.2} d={3.2} c="#d3d9f7" />
-      <Oggetto3D file="sofa_03" x={-17.6} z={3.0} scala={1.2} riserva={<group position={[17.6, 0, -3.0]}><Divano x={-17.6} z={3.0} c="#6c5ce7" /></group>} />
-      <Oggetto3D file="modern_coffee_table_01" x={-17.6} z={4.55} rot={Math.PI / 2} scala={1.25} />
+      {/* divano girato verso la TV: da dove guardi vedi le spalle di chi gioca e lo schermo */}
+      <Oggetto3D file="sofa_03" x={-17.6} z={3.85} rot={Math.PI} scala={1.2} riserva={<group position={[17.6, 0, -3.85]}><Divano x={-17.6} z={3.85} c="#6c5ce7" /></group>} />
       {/* mobile basso dietro il divano, con libri e piante */}
       <group position={[-17.6, 0, 1.95]}>
         <RoundedBox args={[5.4, 0.7, 0.45]} radius={0.04} smoothness={2} position={[0, 0.35, 0]} material={mat("#f3eee6", 0.6)} castShadow receiveShadow />
         {[0, 1, 2, 3, 4, 5, 6].map((i) => <Box key={i} p={[-2.2 + i * 0.12, 0.88, 0]} s={[0.09, 0.32 + (i % 3) * 0.06, 0.3]} m={mat(["#5b2eff", "#ffd84d", "#2f6bff", "#f4f1ff", "#17b26a", "#ff8a3d", "#20232e"][i], 0.6)} />)}
         <Oggetto3D file="marble_bust_01" x={1.25} y={0.7} z={0} scala={1.2} rot={0.4} />
         <Oggetto3D file="brass_vase_02" x={2.15} y={0.7} z={0.02} scala={1.1} />
-        <Lampada x={0.4} y={0.7} z={0} />
       </group>
+      <AngoloGiochi x={-17.6} y={0.7} z={1.95} />
       {/* poltrona */}
       <Oggetto3D file="mid_century_lounge_chair" x={-12.3} z={7.4} rot={Math.PI} scala={1.1} />
       {/* bancone del caffè lungo il lato sinistro */}
@@ -979,6 +979,75 @@ export function Pendenti({ punti }: { punti: [number, number][] }) {
           <mesh geometry={GEO.cil} material={alone} position={[0, 2.84, 0]} scale={[0.55, 0.01, 0.55]} />
         </group>
       ))}
+    </group>
+  );
+}
+
+/* ---------- Angolo videogiochi ---------- */
+
+/** Un fotogramma del gioco di guida in città al tramonto: strada, palme, auto, minimappa e tachimetro. */
+function disegnaGioco(c: CanvasRenderingContext2D, t: number) {
+  const w = 640, h = 360, oriz = 150;
+  const cielo = c.createLinearGradient(0, 0, 0, oriz);
+  cielo.addColorStop(0, "#2b1055"); cielo.addColorStop(0.55, "#d2386c"); cielo.addColorStop(1, "#ffb36b");
+  c.fillStyle = cielo; c.fillRect(0, 0, w, oriz);
+  c.fillStyle = "#ffe29a"; c.beginPath(); c.arc(w / 2 + 70, oriz - 18, 34, 0, 7); c.fill();
+  // città lontana
+  const off1 = (t * 12) % 80;
+  for (let i = -1; i < 10; i++) { const bx = i * 80 - off1, bh = 30 + ((i * 37 + 11) % 55); c.fillStyle = "#3a1d4f"; c.fillRect(bx, oriz - bh, 62, bh); c.fillStyle = "#ffd36e"; for (let k = 0; k < 4; k++) c.fillRect(bx + 8 + k * 13, oriz - bh + 10, 5, 4); }
+  // asfalto
+  c.fillStyle = "#2a2733"; c.fillRect(0, oriz, w, h - oriz);
+  c.fillStyle = "#3b3746"; c.beginPath(); c.moveTo(w / 2 - 18, oriz); c.lineTo(w / 2 + 18, oriz); c.lineTo(w * 0.95, h); c.lineTo(w * 0.05, h); c.closePath(); c.fill();
+  // strisce che corrono verso di noi
+  for (let i = 0; i < 8; i++) {
+    const f = ((i / 8) + t * 0.9) % 1, y = oriz + f * f * (h - oriz), larg = 2 + f * 10, alt = 4 + f * 26;
+    c.fillStyle = "#f5f1dc"; c.fillRect(w / 2 - larg / 2, y, larg, alt);
+  }
+  // palme ai lati
+  for (let i = 0; i < 4; i++) {
+    const f = ((i / 4) + t * 0.55) % 1, y = oriz + f * f * (h - oriz), s = 0.25 + f * 1.6;
+    for (const lato of [-1, 1]) {
+      const x = w / 2 + lato * (40 + f * f * 330);
+      c.strokeStyle = "#1d1426"; c.lineWidth = 3 * s; c.beginPath(); c.moveTo(x, y); c.lineTo(x + lato * 6 * s, y - 70 * s); c.stroke();
+      c.fillStyle = "#1d1426"; for (let k = 0; k < 5; k++) { const a = (k / 5) * Math.PI * 2; c.beginPath(); c.ellipse(x + lato * 6 * s + Math.cos(a) * 16 * s, y - 70 * s + Math.sin(a) * 5 * s, 18 * s, 4 * s, a, 0, 7); c.fill(); }
+    }
+  }
+  // l'auto del giocatore, vista da dietro
+  const sx = w / 2 + Math.sin(t * 1.3) * 26, sy = 292;
+  c.fillStyle = "rgba(0,0,0,0.35)"; c.beginPath(); c.ellipse(sx, sy + 40, 78, 10, 0, 0, 7); c.fill();
+  c.fillStyle = "#e8e6f0"; c.beginPath(); c.moveTo(sx - 70, sy + 34); c.lineTo(sx - 62, sy); c.lineTo(sx - 38, sy - 26); c.lineTo(sx + 38, sy - 26); c.lineTo(sx + 62, sy); c.lineTo(sx + 70, sy + 34); c.closePath(); c.fill();
+  c.fillStyle = "#1b2233"; c.beginPath(); c.moveTo(sx - 34, sy - 22); c.lineTo(sx + 34, sy - 22); c.lineTo(sx + 48, sy - 2); c.lineTo(sx - 48, sy - 2); c.closePath(); c.fill();
+  c.fillStyle = "#ff2d4b"; c.fillRect(sx - 64, sy + 8, 30, 7); c.fillRect(sx + 34, sy + 8, 30, 7);
+  c.fillStyle = "#111"; c.fillRect(sx - 72, sy + 30, 22, 14); c.fillRect(sx + 50, sy + 30, 22, 14);
+  // minimappa e tachimetro
+  c.save(); c.beginPath(); c.arc(62, h - 62, 46, 0, 7); c.clip();
+  c.fillStyle = "#1f2b28"; c.fillRect(16, h - 108, 92, 92);
+  c.strokeStyle = "#5c6a66"; c.lineWidth = 6; for (let k = -2; k < 3; k++) { c.beginPath(); c.moveTo(16, h - 62 + k * 22 + ((t * 20) % 22)); c.lineTo(108, h - 62 + k * 22 + ((t * 20) % 22)); c.stroke(); }
+  c.strokeStyle = "#b388ff"; c.lineWidth = 4; c.beginPath(); c.moveTo(62, h - 62); c.lineTo(80, h - 100); c.stroke();
+  c.restore();
+  c.strokeStyle = "rgba(255,255,255,0.8)"; c.lineWidth = 3; c.beginPath(); c.arc(62, h - 62, 46, 0, 7); c.stroke();
+  c.fillStyle = "#fff"; c.beginPath(); c.moveTo(62, h - 70); c.lineTo(56, h - 56); c.lineTo(68, h - 56); c.closePath(); c.fill();
+  c.textAlign = "right"; c.fillStyle = "#ffffff"; c.font = "800 44px system-ui, sans-serif"; c.fillText(String(Math.round(138 + Math.sin(t * 0.8) * 12)), w - 70, h - 26);
+  c.font = "700 16px system-ui, sans-serif"; c.fillText("km/h", w - 22, h - 28);
+  c.textAlign = "left"; c.fillStyle = "rgba(0,0,0,0.45)"; c.fillRect(18, 16, 250, 30);
+  c.fillStyle = "#ffd36e"; c.font = "700 15px system-ui, sans-serif"; c.fillText("MISSIONE: arriva al porto prima di sera", 28, 36);
+}
+
+/** TV grande su un mobile basso, console accesa e gioco che scorre: chi è sul divano gioca qui. */
+export function AngoloGiochi({ x, y, z }: { x: number; y: number; z: number }) {
+  const viva = useMemo(() => new TelaViva(640, 360), []);
+  useEffect(() => () => viva.dispose(), [viva]);
+  useFrame(({ clock }) => { const t = clock.elapsedTime; viva.aggiorna(Math.floor(t * 20), (c) => disegnaGioco(c, t)); });
+  return (
+    <group position={[x, y, z]} userData={{ dinamico: true }}>
+      <Oggetto3D file="gaming_console" x={0.75} y={0} z={0.06} scala={1.4} />
+      <Box p={[0, 0.02, 0]} s={[0.5, 0.04, 0.3]} m={matMetallo("#2a2d38")} />
+      <Box p={[0, 0.3, -0.04]} s={[0.06, 0.56, 0.05]} m={matMetallo("#2a2d38")} />
+      <group position={[0, 0.9, 0]}>
+        <mesh geometry={GEO.box} material={matLed("#7b5cff", 1.4)} position={[0, 0, -0.035]} scale={[2.34, 1.36, 0.01]} />
+        <RoundedBox args={[2.3, 1.32, 0.06]} radius={0.02} smoothness={2} material={matLucido("#0b0c11")} castShadow />
+        <mesh geometry={GEO.piano} position={[0, 0, 0.035]} scale={[2.22, 1.25, 1]}><meshBasicMaterial map={viva.t} toneMapped={false} /></mesh>
+      </group>
     </group>
   );
 }
