@@ -39,8 +39,11 @@ Dove sta cosa:
 - `src/components/studio/`: `StudioApp` (guscio, campanella), `Ufficio`
   (scena, promemoria, reparto cliente), `Team` (elenco a sinistra e chat),
   `Conti`, `Lavori`, `Moduli`, `scena/` (3D: `Scena`, `Arredi`, `Stanze`,
-  `Personaggio`, `base`, `Piante3D` per i modelli 3D, `Statico` che unisce gli
-  oggetti fermi), `Joystick` (telefono)
+  `Personaggio` e `corpo.ts` (persone: volto, mani, capelli, divisa, pose),
+  `Scrivanie` (computer, portatili, schermi vivi), `schermi.ts` (le app
+  disegnate sugli schermi), `Esterni` (giardino e spa), `base`, `Piante3D`
+  per i modelli 3D, `Statico` che unisce gli oggetti fermi), `Joystick`
+  (telefono)
 - modelli 3D: in `public/studio/3d/`, presi da Poly Haven (CC0) e compressi con
   `npx @gltf-transform/cli@4 optimize ... --compress meshopt --texture-compress webp --texture-size 512 --simplify`;
   mentre caricano si vede la versione disegnata, gli oggetti piccoli non fanno ombra
@@ -81,23 +84,14 @@ Come lavorare con il titolare:
 - Il controllo Netlify `dulcet-raindrop` fallisce da prima dello Studio: non
   blocca il merge.
 
-### Prossimi lavori sullo Studio (richiesti dal titolare)
+### Grafica dello Studio (fatto a novembre 2026)
 
-La grafica è ancora troppo indietro: va resa molto più moderna, definita e di
-alta qualità, sia su computer sia su telefono, senza renderla lenta sul telefono.
-
-1. Personaggi molto più realistici, rifatti nel codice: proporzioni da
-   adulti, volti con naso, occhi e bocca, capelli curati, mani, divise Apex
-   con pieghe e dettagli, donne e uomini diversi. Tenere tutte le animazioni,
-   attività e percorsi esistenti, rendendoli più fluidi.
-2. Scrivanie moderne con computer tutto-in-uno sottili e portatili in stile
-   Mac (senza loghi veri), tastiere, mouse, oggetti da lavoro.
-3. Schermi che funzionano davvero: contenuti animati, nitidi e leggibili
-   (caption che si scrivono, grafici delle campagne, montaggio, calendario).
-   I ragazzi ogni tanto prendono il telefono con lo schermo acceso.
-4. Giardino interno molto più bello: piante vere, prato, sentieri, panchine
-   di design, luci.
-5. Zona spa all'aperto accanto al giardino: jacuzzi con acqua animata e
-   bolle, lettini, asciugamani, luci calde. Chi è libero ogni tanto ci va,
-   si siede in acqua e poi torna.
-6. Materiali, luci e rifiniture di livello premium.
+Persone rifatte nel codice (`corpo.ts`: proporzioni da adulti, volto, mani,
+nove tagli di capelli uguali ai ritratti, divisa con zip e tasche; pose
+smorzate in `Personaggio.tsx`, telefono acceso ogni tanto), scrivanie con
+computer tutto-in-uno e portatili, schermi con app leggibili (`schermi.ts`),
+giardino con prato, albero e panchine, spa all'aperto sulla terrazza a destra
+(`Esterni.tsx`, posti in `POSTI_RELAX` con attività `spa` e `sole`). Per
+provare la qualità piena su un computer lento: `/studio?alta=1`. Sul telefono
+i materiali sono più semplici e gli schermi si aggiornano solo da vicino:
+tenerlo così.

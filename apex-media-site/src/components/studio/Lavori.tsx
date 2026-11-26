@@ -1,6 +1,6 @@
 "use client";
 
-import { AGENTE } from "@/lib/studio/agenti";
+import { AGENTE, TAGLIO, type Taglio } from "@/lib/studio/agenti";
 import { dataBreve, nomeCliente, tempoFa } from "@/lib/studio/calcoli";
 import type { Lavoro, StatoLavoro } from "@/lib/studio/tipi";
 import { useStudio } from "./StudioApp";
@@ -15,11 +15,6 @@ const COLONNE: { stato: StatoLavoro; nome: string; vuoto: string }[] = [
 ];
 
 /* Ritratti: ognuno ha la sua faccia, donne e uomini, capelli e accessori diversi. */
-type Taglio = "corti" | "rasati" | "ricci" | "ciuffo" | "lunghi" | "caschetto" | "chignon" | "coda" | "onde";
-const TAGLIO: Record<string, Taglio> = {
-  direttore: "rasati", revisore: "caschetto", sofia: "chignon", marco: "corti", giulia: "onde", luca: "ricci", chiara: "coda",
-  matteo: "ciuffo", davide: "corti", elena: "caschetto", simone: "ricci", alice: "lunghi", sara: "chignon",
-};
 
 function Capelli({ t, c }: { t: Taglio; c: string }) {
   switch (t) {
