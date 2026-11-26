@@ -72,7 +72,24 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   const largo = useLargo();
   // il 3D parte solo se il browser lo permette davvero; altrimenti resta tutto il resto dello Studio
   const [treD, setTreD] = useState<boolean | null>(null);
-  useEffect(() => { const t = setTimeout(() => setTreD(webglDisponibile()), 0); return () => clearTimeout(t); }, []);
+  // protezione dai crash: se l'ultima volta il 3D ha fatto chiudere la pagina, si riparte senza
+  const [crash, setCrash] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const prima = leggi3D();
+      if (prima === "prova" || prima === "spento") { setCrash(prima === "prova"); setTreD(false); return; }
+      const ok = webglDisponibile();
+      if (ok) scrivi3D("prova");
+      setTreD(ok);
+    }, 0);
+    return () => clearTimeout(t);
+  }, []);
+  // dopo 20 secondi senza problemi il 3D è considerato sicuro su questo browser
+  useEffect(() => {
+    if (!treD) return;
+    const t = setTimeout(() => scrivi3D("ok"), 20_000);
+    return () => clearTimeout(t);
+  }, [treD]);
   const giro = useGiro();
   const fumo = useFumo();
   // riunione convocata dal tuo computer: chi partecipa viene da te per un minuto
@@ -158,7 +175,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
   return (
     <div className="st-ufficio" data-pannello={pannelloAperto || undefined} data-team={team} style={{ "--team": `${larghezzaTeam}px` } as React.CSSProperties}>
       <div className="st-scena">
-        {treD === false ? <Senza3D /> : treD ? (
+        {treD === false ? <Senza3D crash={crash} /> : treD ? (
           <Confine3D alternativa={<Senza3D />}>
         <Scena attivo={attivo} nome={site.founders[0].split(" ")[0]} agenti={modello.agenti} clienti={modello.clienti} altriClienti={modello.altriClienti} cassa={modello.cassa} ads={modello.ads} conteggi={modello.conteggi} regole={dati.regole.length} inAttesa={promemoria.length}
           zona={zona} selezione={selezione} coperto={coperto} onSeleziona={scegli}
@@ -220,12 +237,33 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
 }
 
 /** Al posto dell'ufficio quando il browser non può mostrare il 3D. */
-function Senza3D() {
+const CHIAVE_3D = "apex-studio-3d";
+function leggi3D(): string | null { try { return localStorage.getItem(CHIAVE_3D); } catch { return null; } }
+function scrivi3D(v: string | null) { try { if (v === null) localStorage.removeItem(CHIAVE_3D); else localStorage.setItem(CHIAVE_3D, v); } catch { /* niente memoria: pazienza */ } }
+
+function Senza3D({ crash }: { crash?: boolean }) {
+  const spento = !crash && leggi3D() === "spento";
+  const riprova = (leggera: boolean) => { scrivi3D(null); window.location.replace(new URL(`/studio${leggera ? "?leggera=1" : ""}`, window.location.origin).href); };
   return (
     <div className="st-niente3d" role="status">
-      <p><b>La grafica 3D non è disponibile in questo browser adesso.</b></p>
-      <p>Team, chat, promemoria, Conti e Lavori funzionano lo stesso. Di solito il 3D torna chiudendo del tutto il browser (Cmd+Q) o riavviando il computer.</p>
-      <button type="button" className="st-btn st-btn-pieno" onClick={() => window.location.reload()}>Riprova</button>
+      {crash ? (
+        <>
+          <p><b>L&apos;ultima volta il 3D ha fatto chiudere la pagina su questo browser.</b></p>
+          <p>Per non buttarti fuori l&apos;ho tenuto spento. Team, chat, promemoria, Conti e Lavori funzionano lo stesso.</p>
+        </>
+      ) : spento ? (
+        <p><b>Hai spento il 3D su questo browser.</b> Team, chat, promemoria, Conti e Lavori funzionano lo stesso.</p>
+      ) : (
+        <>
+          <p><b>La grafica 3D non è disponibile in questo browser adesso.</b></p>
+          <p>Team, chat, promemoria, Conti e Lavori funzionano lo stesso. Di solito il 3D torna chiudendo del tutto il browser (Cmd+Q) o riavviando il computer.</p>
+        </>
+      )}
+      <div className="st-niente3d-bottoni">
+        <button type="button" className="st-btn st-btn-pieno" onClick={() => riprova(true)}>Prova il 3D leggero</button>
+        <button type="button" className="st-btn" onClick={() => riprova(false)}>Prova il 3D completo</button>
+        {!spento ? <button type="button" className="st-btn st-btn-testo" onClick={() => { scrivi3D("spento"); window.location.reload(); }}>Tienilo spento</button> : null}
+      </div>
     </div>
   );
 }
