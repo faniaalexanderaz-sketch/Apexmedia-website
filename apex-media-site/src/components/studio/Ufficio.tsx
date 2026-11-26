@@ -13,7 +13,6 @@ import { ImportoModificabile } from "./Moduli";
 import { RigaPromemoria } from "./Notifiche";
 import { Confine3D, webglDisponibile } from "@/components/three/Confine3D";
 import { ChatAgente, ElencoTeam, StrisciaTeam } from "./Team";
-import { Joystick } from "./Joystick";
 import { useStudio } from "./StudioApp";
 import { EVENTO_RIUNIONE, type Riunione } from "./riunione";
 import type { AgenteScena, ClienteScena, Selezione } from "./scena/Scena";
@@ -196,8 +195,7 @@ export function Ufficio({ attivo }: { attivo: boolean }) {
           testa={<div className="st-team-saluto"><h1>{saluto(dati.ora)}, {site.founders[0].split(" ")[0]}</h1><Riassunto visitatori={modello.visitatori} urgenti={daScadere} alLavoro={modello.alLavoro} /></div>} />
       )}
 
-      {treD ? <Joystick /> : null}
-      <div className="st-zone" role="group" aria-label="Inquadra una zona">
+      <div className="st-zone" role="group" aria-label="Inquadra una zona" onClick={(e) => (e.target as HTMLElement).closest("button")?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })}>
         <button type="button" aria-pressed={zona === "vicino" && !selezione} onClick={() => { setZona("vicino"); setSelezione(null); }}>Studio</button>
         <button type="button" aria-pressed={zona === "tutto" && !selezione} onClick={() => { setZona("tutto"); setSelezione(null); }}>Tutto</button>
         {ZONE.map((z) => <button key={z.id} type="button" aria-pressed={zona === z.id && !selezione} onClick={() => { setSelezione(null); setZona(z.id); }}>{z.nome}</button>)}

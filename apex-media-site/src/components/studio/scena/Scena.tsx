@@ -5,7 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { CameraControls, CameraControlsImpl, Environment, Html, Lightformer, PerformanceMonitor, SoftShadows } from "@react-three/drei";
 import { Bloom, EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
-import { AGENTE, AGENTI, FONDO, LARGO, TAGLIO, TERRAZZA, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
+import { AGENTE, AGENTI, FONDO, LARGO, TAGLIO, TAVOLO_SALA, TAVOLO_SOCIAL, ZONE, instrada, type Punto, type ZonaId } from "@/lib/studio/agenti";
 import type { SchermoTv } from "@/lib/studio/tipi";
 import { euro, type StatoAgente } from "@/lib/studio/calcoli";
 import type { Tono } from "@/lib/studio/promemoria";
@@ -14,7 +14,6 @@ import { AngoloFumatori, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTa
 import { GiardinoNuovo, Spa } from "./Esterni";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
-import { comandi } from "./comandi";
 import { precaricaPiante } from "./Piante3D";
 
 precaricaPiante();
@@ -78,36 +77,32 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const gl = useThree((s) => s.gl);
   const prima = useRef(true);
+  const turno = useRef(0);
+  const lontano = useRef(30);
   const vista = useRef("");
   // persone e reparti si muovono di continuo: la telecamera li legge solo quando scegli tu dove andare
   const ultimi = useRef({ agenti, clienti, alto: size.height });
   useEffect(() => { ultimi.current = { agenti, clienti, alto: size.height }; });
 
   // da lontano le etichette mostrano solo il nome, da vicino anche cosa stanno facendo
-  useFrame((_, dt) => {
+  useFrame(() => {
     const c = ctrl.current;
     if (!c) return;
-    // joystick del telefono: sinistro sposta sul pavimento, destro gira la vista
-    const passo = Math.min(dt, 0.05);
-    if (comandi.mx || comandi.my) {
-      const v = (3 + c.distance * 0.45) * passo;
-      void c.truck(comandi.mx * v, 0, false);
-      void c.forward(-comandi.my * v, false);
-    }
-    if (comandi.vx || comandi.vy) void c.rotate(-comandi.vx * 1.8 * passo, -comandi.vy * 1.1 * passo, false);
-    const v = c.distance < 34 ? "vicino" : "insieme";
+    // la telecamera ruota sul posto: conta quanto è lontana dalla zona che sta guardando
+    const v = lontano.current < 34 ? "vicino" : "insieme";
     if (v !== vista.current) { vista.current = v; const box = gl.domElement.closest<HTMLElement>(".st-scena"); if (box) box.dataset.vista = v; }
   });
 
+  // vista in prima persona: in piedi, poco sopra le teste, vicino a quello che guardi
   const trovaMira = () => {
     const { agenti, clienti } = ultimi.current;
-    if (selezione?.tipo === "agente") { const a = agenti.find((x) => x.id === selezione.id); if (a) return { x: a.meta.x, z: a.meta.z - 0.4, ampiezza: 9, fondo: 6.5, y: 0.9 }; }
-    if (selezione?.tipo === "cervello") return { x: CERVELLO[0], z: CERVELLO[1] + 0.8, ampiezza: 9, fondo: 6.5, y: 1.4 };
-    if (selezione?.tipo === "cliente") { const i = clienti.findIndex((c) => c.id === selezione.id); if (i >= 0) { const [x, z] = postoReparto(i, clienti.length); return { x, z, ampiezza: 9.5, fondo: 7, y: 0.9 }; } }
+    if (selezione?.tipo === "agente") { const a = agenti.find((x) => x.id === selezione.id); if (a) return { x: a.meta.x, z: a.meta.z - 0.3, ampiezza: 5.5, fondo: 3, y: 1.1, gradi: 13 }; }
+    if (selezione?.tipo === "cervello") return { x: CERVELLO[0], z: CERVELLO[1] + 0.8, ampiezza: 6.5, fondo: 3.5, y: 1.6, gradi: 13 };
+    if (selezione?.tipo === "cliente") { const i = clienti.findIndex((c) => c.id === selezione.id); if (i >= 0) { const [x, z] = postoReparto(i, clienti.length); return { x, z, ampiezza: 7, fondo: 4, y: 1.1, gradi: 14 }; } }
     const z = ZONE.find((q) => q.id === zona);
-    if (z) return { x: z.centro[0], z: z.centro[1], ampiezza: z.ampiezza, fondo: Math.min(14, z.ampiezza * 0.62), y: z.centro[1] < -9 ? 2 : 0.9 };
-    // vista d'ingresso: il cuore dell'ufficio da vicino, non tutta la pianta
-    if (zona === "vicino") return size.width < 760 ? { x: 0, z: 1.6, ampiezza: 6, fondo: 4, y: 1.25, basso: true } : { x: 0, z: -1.2, ampiezza: 12, fondo: 7, y: 1.25, basso: true };
+    if (z) return { x: z.centro[0], z: z.centro[1], ampiezza: z.ampiezza * 0.72, fondo: Math.min(8, z.ampiezza * 0.4), y: z.centro[1] < -9 ? 1.7 : 1.1, gradi: 16 };
+    // vista d'ingresso: il cuore dell'ufficio, ad altezza d'occhi
+    if (zona === "vicino") return size.width < 760 ? { x: 0, z: 2.2, ampiezza: 5, fondo: 3, y: 1.3, gradi: 12 } : { x: 0, z: -0.6, ampiezza: 9.5, fondo: 5, y: 1.3, gradi: 12 };
     return null;
   };
 
@@ -119,7 +114,7 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const stretto = size.width < 760;
     const liberoW = Math.max(200, size.width - coperto.destra - coperto.sinistra), liberoH = Math.max(200, size2.height - coperto.basso - coperto.alto);
     const tanV = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), tanH = tanV * (size.width / size2.height);
-    const elev = THREE.MathUtils.degToRad(mira && "basso" in mira ? 17 : mira ? 34 : 54);
+    const elev = THREE.MathUtils.degToRad(mira ? mira.gradi : 50);
     const ampiezza = mira ? (stretto ? Math.min(mira.ampiezza, 12) : mira.ampiezza) : stretto ? 22 : LARGO + 11;
     const fondo = mira ? mira.fondo : stretto ? 18 : FONDO + 2;
     const distW = (ampiezza / 2 / tanH) * (size.width / liberoW);
@@ -129,9 +124,20 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const tx = (mira?.x ?? (stretto ? 0 : 4.6)) + ((coperto.destra - coperto.sinistra) / 2) * perPx;
     const tz = (mira?.z ?? (stretto ? 0 : 0.4)) + (((coperto.basso - coperto.alto) / 2) * perPx) / Math.sin(elev);
     const ty = mira ? mira.y : 0.6;
-    c.minDistance = 2.2;
-    c.maxDistance = Math.max(dist * 1.15, ((LARGO + 11) / 2 / tanH) * 1.3);
-    void c.setLookAt(tx, ty + dist * Math.sin(elev), tz + dist * Math.cos(elev), tx, ty, tz, !prima.current);
+    // si guarda solo in orizzontale: l'inclinazione resta quella scelta per la zona
+    const polare = Math.PI / 2 - elev;
+    c.minPolarAngle = polare; c.maxPolarAngle = polare;
+    c.minDistance = 0; c.maxDistance = Infinity;
+    const cx = tx, cy = ty + dist * Math.sin(elev), cz = tz + dist * Math.cos(elev);
+    lontano.current = dist;
+    const giro = ++turno.current;
+    // prima vola fino alla zona, poi il punto attorno a cui gira diventa la telecamera stessa:
+    // trascinando col dito si gira la testa sul posto, non ci si sposta
+    const k = 0.02 / dist;
+    void c.setLookAt(cx, cy, cz, tx, ty, tz, !prima.current).then(() => {
+      if (giro !== turno.current) return;
+      void c.setLookAt(cx, cy, cz, cx + (tx - cx) * k, cy + (ty - cy) * k, cz + (tz - cz) * k, false);
+    });
     prima.current = false;
   // eslint-disable-next-line react-hooks/exhaustive-deps -- la telecamera si muove solo quando scegli una zona o una persona
   }, [selezione, zona, size.width, coperto.destra, coperto.sinistra, coperto.basso, coperto.alto, camera]);
@@ -140,16 +146,15 @@ function Regia({ zona, selezione, agenti, clienti, coperto }: Pick<PropsScena, "
     const c = ctrl.current;
     if (!c) return;
     const A = CameraControlsImpl.ACTION;
-    c.mouseButtons.left = A.TRUCK; c.mouseButtons.right = A.ROTATE; c.mouseButtons.middle = A.DOLLY; c.mouseButtons.wheel = A.DOLLY;
-    // come una mappa: un dito trascina l'ufficio (su, giù, destra, sinistra sul pavimento),
-    // due dita pizzicano per avvicinarsi e, ruotando, girano la vista
-    c.touches.one = A.TOUCH_TRUCK; c.touches.two = A.TOUCH_DOLLY_ROTATE; c.touches.three = A.TOUCH_ROTATE;
-    c.verticalDragToForward = true;
+    // studio fermo: niente spostamenti né zoom; col dito (o il mouse) si gira solo lo sguardo a destra e sinistra.
+    // Per cambiare stanza si toccano le zone in basso.
+    c.mouseButtons.left = A.ROTATE; c.mouseButtons.right = A.NONE; c.mouseButtons.middle = A.NONE; c.mouseButtons.wheel = A.NONE;
+    c.touches.one = A.TOUCH_ROTATE; c.touches.two = A.NONE; c.touches.three = A.NONE;
+    c.azimuthRotateSpeed = 0.45; c.polarRotateSpeed = 0;
     if (process.env.NODE_ENV !== "production") Object.assign(window, { __camera: c });
-    c.setBoundary(new THREE.Box3(new THREE.Vector3(-LARGO / 2, 0, -FONDO / 2 - 1), new THREE.Vector3(TERRAZZA.x1 + 0.5, 3, FONDO / 2 + 6)));
   }, []);
 
-  return <CameraControls ref={ctrl} makeDefault smoothTime={0.45} draggingSmoothTime={0.12} dollySpeed={0.6} truckSpeed={2.2} minPolarAngle={0.25} maxPolarAngle={1.42} dollyToCursor />;
+  return <CameraControls ref={ctrl} makeDefault smoothTime={0.5} draggingSmoothTime={0.15} />;
 }
 
 /* ---------- Etichette e fumetti ---------- */

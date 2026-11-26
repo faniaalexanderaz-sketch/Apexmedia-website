@@ -42,8 +42,7 @@ Dove sta cosa:
   `Personaggio` e `corpo.ts` (persone: volto, mani, capelli, divisa, pose),
   `Scrivanie` (computer, portatili, schermi vivi), `schermi.ts` (le app
   disegnate sugli schermi), `Esterni` (giardino e spa), `base`, `Piante3D`
-  per i modelli 3D, `Statico` che unisce gli oggetti fermi), `Joystick`
-  (telefono)
+  per i modelli 3D, `Statico` che unisce gli oggetti fermi)
 - modelli 3D: in `public/studio/3d/`, presi da Poly Haven (CC0) e compressi con
   `npx @gltf-transform/cli@4 optimize ... --compress meshopt --texture-compress webp --texture-size 512 --simplify`;
   mentre caricano si vede la versione disegnata, gli oggetti piccoli non fanno ombra
@@ -58,6 +57,10 @@ primo accesso: una colonna nuova va aggiunta anche in `aggiungiColonne` di
 
 La telecamera si muove da sola solo quando il titolare sceglie una zona o una
 persona: non agganciarla a dati che cambiano (agenti, fumo, giro del relax).
+Lo studio è fermo, in prima persona: niente joystick, niente spostamenti né
+zoom con le dita. Si cambia stanza toccando le zone in basso (grandi e
+sopra la barra dell'iPhone, perché lo usa come web app); trascinando si gira
+solo lo sguardo a destra e sinistra, sul posto (`Regia` in `Scena.tsx`).
 
 Come lavorare con il titolare:
 
