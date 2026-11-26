@@ -21,6 +21,28 @@ const ALLUMINIO = () => mat("#d4d6dc", 0.28, 0.85);
 const GRAFITE = () => mat("#55585f", 0.32, 0.8);
 const NERO_VETRO = () => matLucido("#07080b");
 
+/* ---------- Colori e marchio Apex ---------- */
+
+/** Il marchio Apex (le due vele) come forma piatta alta 1, centrata: va dove di solito sta il logo del computer. */
+let geoMarchio: THREE.ShapeGeometry | null = null;
+function marchioApex(): THREE.ShapeGeometry {
+  if (geoMarchio) return geoMarchio;
+  const forma = (p: [number, number][]) => { const s = new THREE.Shape(); s.moveTo(p[0][0], -p[0][1]); for (const q of p.slice(1)) s.lineTo(q[0], -q[1]); s.closePath(); return s; };
+  const g = new THREE.ShapeGeometry([
+    forma([[14, 0], [0, 26], [7.2, 26], [17.6, 6.6]]),
+    forma([[18.9, 9.2], [28, 26], [20.9, 26], [15.2, 15.6]]),
+    forma([[13.4, 14.2], [17.3, 21.4], [9.5, 21.4]]),
+  ]);
+  g.translate(-14, 13, 0); g.scale(1 / 26, 1 / 26, 1);
+  geoMarchio = g;
+  return g;
+}
+const mescola = (a: string, b: string, k: number) => "#" + new THREE.Color(a).lerp(new THREE.Color(b), k).getHexString();
+/** I colori del computer di ognuno, dal suo colore personale: retro e piede pieni, mento e tastiera pastello. */
+function tinte(accento: string) {
+  return { retro: mat(mescola(accento, "#ffffff", 0.18), 0.32, 0.55), mento: mat(mescola(accento, "#ffffff", 0.62), 0.3, 0.45), pastello: mat(mescola(accento, "#ffffff", 0.78), 0.32, 0.4), logo: mat(mescola(accento, "#000000", 0.25), 0.12, 0.9) };
+}
+
 /** Più nitidi sul computer, più leggeri sul telefono. */
 const nitidezza = () => (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches ? 1 : 1.5);
 
@@ -79,17 +101,17 @@ function texTasti(): THREE.CanvasTexture {
   return tasti;
 }
 
-export function Tastiera({ p, rot = 0 }: { p: V3; rot?: number }) {
+export function Tastiera({ p, rot = 0, accento }: { p: V3; rot?: number; accento?: string }) {
   return (
     <group position={p} rotation={[0, rot, 0]}>
-      <RoundedBox args={[0.42, 0.01, 0.13]} radius={0.004} smoothness={2} position={[0, 0.005, 0]} material={ALLUMINIO()} />
+      <RoundedBox args={[0.42, 0.01, 0.13]} radius={0.004} smoothness={2} position={[0, 0.005, 0]} material={accento ? tinte(accento).pastello : ALLUMINIO()} />
       <mesh position={[0, 0.0105, 0.004]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[0.405, 0.112]} /><meshStandardMaterial map={texTasti()} roughness={0.5} /></mesh>
     </group>
   );
 }
 
-export function Mouse({ p }: { p: V3 }) {
-  return <mesh geometry={GEO.sfera} material={mat("#f6f6f8", 0.25)} position={[p[0], p[1] + 0.008, p[2]]} scale={[0.034, 0.018, 0.058]} />;
+export function Mouse({ p, accento }: { p: V3; accento?: string }) {
+  return <mesh geometry={GEO.sfera} material={accento ? tinte(accento).pastello : mat("#f6f6f8", 0.25)} position={[p[0], p[1] + 0.008, p[2]]} scale={[0.034, 0.018, 0.058]} />;
 }
 
 /* ---------- Computer tutto-in-uno ---------- */
@@ -99,19 +121,25 @@ export function Computer({ x, y = 0.785, z, rot = 0, largo = 1.0, tipo, stato, a
   const map = useSchermo(tipo, stato, accento, fase, [x, z]);
   const wSchermo = largo - 0.03, hSchermo = (wSchermo * 9) / 16, mento = 0.075 * largo, alto = hSchermo + 0.03 + mento;
   const yc = 0.13 + alto / 2;
+  const t = tinte(accento);
   return (
     <group position={[x, y, z]} rotation={[0, rot, 0]}>
-      {/* piede: base sottile e braccio inclinato */}
-      <RoundedBox args={[0.24 * largo, 0.008, 0.19]} radius={0.004} smoothness={2} position={[0, 0.004, 0.02]} material={ALLUMINIO()} receiveShadow />
-      <mesh geometry={GEO.box} material={ALLUMINIO()} position={[0, 0.13, -0.045]} rotation={[0.2, 0, 0]} scale={[0.18 * largo, 0.27, 0.012]} castShadow />
-      {/* luce soffusa dietro, col colore di chi ci lavora */}
-      <mesh geometry={GEO.box} material={matLed(accento, stato === "libero" ? 0.35 : 0.9)} position={[0, yc, -0.022]} scale={[largo * 0.9, alto * 0.85, 0.004]} />
+      {/* piede colorato: base sottile e braccio inclinato */}
+      <RoundedBox args={[0.24 * largo, 0.008, 0.19]} radius={0.004} smoothness={2} position={[0, 0.004, 0.02]} material={t.retro} receiveShadow />
+      <mesh geometry={GEO.box} material={t.retro} position={[0, 0.13, -0.045]} rotation={[0.2, 0, 0]} scale={[0.18 * largo, 0.27, 0.012]} castShadow />
+      {/* luce soffusa dietro, col colore di chi ci lavora: una cornice sottile, così il marchio sul retro resta in vista */}
+      {[[0, alto / 2 - 0.01, largo * 0.96, 0.012], [0, -alto / 2 + 0.01, largo * 0.96, 0.012], [-largo / 2 + 0.01, 0, 0.012, alto * 0.94], [largo / 2 - 0.01, 0, 0.012, alto * 0.94]].map(([dx, dy, w, h], i) => (
+        <mesh key={i} geometry={GEO.box} material={matLed(accento, stato === "libero" ? 0.35 : 0.9)} position={[dx, yc + dy, -0.021]} rotation={[-0.06, 0, 0]} scale={[w, h, 0.004]} />
+      ))}
       <group position={[0, yc, -0.012]} rotation={[-0.06, 0, 0]}>
-        <RoundedBox args={[largo, alto, 0.012]} radius={0.006} smoothness={2} material={ALLUMINIO()} castShadow />
+        <RoundedBox args={[largo, alto, 0.012]} radius={0.006} smoothness={2} material={t.retro} castShadow />
+        {/* marchio Apex lucido sul retro, al centro */}
+        <mesh geometry={marchioApex()} material={t.logo} position={[0, 0.02, -0.0065]} rotation={[0, Math.PI, 0]} scale={0.16 * largo} />
         <mesh geometry={GEO.box} material={NERO_VETRO()} position={[0, mento / 2, 0.0062]} scale={[largo - 0.006, alto - mento - 0.004, 0.001]} />
         <mesh position={[0, mento / 2, 0.0072]}><planeGeometry args={[wSchermo, hSchermo]} /><meshBasicMaterial map={map} toneMapped={false} /></mesh>
-        <mesh geometry={GEO.box} material={mat("#e9eaee", 0.3, 0.6)} position={[0, -alto / 2 + mento / 2, 0.0064]} scale={[largo - 0.004, mento - 0.004, 0.001]} />
-        <mesh geometry={GEO.sfera} material={matLed(accento, 1.4)} position={[0, -alto / 2 + mento / 2, 0.0072]} scale={[0.008, 0.008, 0.002]} />
+        {/* mento pastello con il marchio piccolo */}
+        <mesh geometry={GEO.box} material={t.mento} position={[0, -alto / 2 + mento / 2, 0.0064]} scale={[largo - 0.004, mento - 0.004, 0.001]} />
+        <mesh geometry={marchioApex()} material={t.logo} position={[0, -alto / 2 + mento / 2, 0.0072]} scale={mento * 0.42} />
       </group>
     </group>
   );
@@ -130,6 +158,8 @@ export function Portatile({ x, y = 0.785, z, rot = 0, tipo, stato, accento, fase
       <mesh geometry={GEO.box} material={mat(grafite ? "#4d5057" : "#c9cbd1", 0.2, 0.7)} position={[0, 0.0122, 0.07]} scale={[0.11, 0.0008, 0.07]} />
       <group position={[0, 0.012, -0.115]} rotation={[-0.28, 0, 0]}>
         <RoundedBox args={[0.34, 0.225, 0.006]} radius={0.004} smoothness={2} position={[0, 0.1125, -0.003]} material={m} castShadow />
+        {/* marchio Apex luminoso sul coperchio */}
+        <mesh geometry={marchioApex()} material={matLed("#ffffff", 1.6)} position={[0, 0.118, -0.0063]} rotation={[0, Math.PI, 0]} scale={0.045} />
         <mesh geometry={GEO.box} material={NERO_VETRO()} position={[0, 0.1125, 0.0002]} scale={[0.334, 0.219, 0.001]} />
         <mesh position={[0, 0.116, 0.0012]}><planeGeometry args={[0.318, 0.179]} /><meshBasicMaterial map={map} toneMapped={false} /></mesh>
       </group>

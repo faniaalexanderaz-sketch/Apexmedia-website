@@ -213,8 +213,8 @@ export function Scrivania({ z, posti, led, larga }: { z: number; posti: PostoScr
                 <Portatile x={p.x - 0.88} z={zc + 0.02} rot={0.42} tipo={p.tipo === "timeline" ? "reel" : "calendario"} stato={p.stato} accento={p.accento} fase={f + 3} grafite={p.tipo === "timeline"} />
               </>
             ) : <Computer x={p.x} z={zc - 0.2} tipo={p.tipo} stato={p.stato} accento={p.accento} fase={f} />}
-            <Tastiera p={[p.x + (larga ? 0.12 : -0.02), 0.785, zc + 0.17]} />
-            <Mouse p={[p.x + (larga ? 0.5 : 0.33), 0.785, zc + 0.18]} />
+            <Tastiera p={[p.x + (larga ? 0.12 : -0.02), 0.785, zc + 0.17]} accento={p.accento} />
+            <Mouse p={[p.x + (larga ? 0.5 : 0.33), 0.785, zc + 0.18]} accento={p.accento} />
             {i % 2 === 0 ? <Tazza p={[p.x + 0.6, 0.785, zc + 0.08]} c={p.accento} /> : <Quaderno p={[p.x - 0.55, 0.785, zc + 0.12]} rot={0.25} c={i % 3 ? "#26324d" : "#6b2f3a"} />}
             {i % 3 !== 1 ? <TelefonoBanco p={[p.x - (larga ? 0.35 : 0.5), 0.785, zc + 0.24]} rot={-0.3} /> : null}
             {i % 2 === 0 && !larga ? <Oggetto3D file="stationery_supplies" x={p.x - 0.78} y={0.785} z={zc - 0.25} scala={1.0} rot={0.3} /> : null}
