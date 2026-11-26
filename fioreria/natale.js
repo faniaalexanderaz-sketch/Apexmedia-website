@@ -37,6 +37,13 @@
     return 'mancano ' + h + ' h ' + m + ' min';
   }
 
+  /* esegue fn quando anche gli script caricati dopo (collezione.js,
+     prodotto.js) hanno finito: a pagina pronta */
+  function dopoGliAltri(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else setTimeout(fn, 0);
+  }
+
   function crea(tag, cls, html) {
     var el = document.createElement(tag);
     if (cls) el.className = cls;
@@ -221,7 +228,7 @@
       (inTempo ? '<p class="natale-fascia-cd">Ordina entro il 22 dicembre — <strong>' + quantoManca() + '</strong> · spedizione gratis sopra € 99</p>' : '');
     griglia.parentNode.insertBefore(box, griglia);
     // SEO: dopo collezione.js, che imposta titolo e H1 generici della categoria
-    setTimeout(function () {
+    dopoGliAltri(function () {
       document.title = 'Composizioni floreali natalizie e addobbi di Natale fatti a mano — Antica Fioreria del Centro';
       var meta = document.querySelector('meta[name="description"]');
       if (meta) meta.setAttribute('content', 'Composizioni floreali natalizie, centrotavola di Natale e oggettistica natalizia fatti a mano ad Alessandria dal 1953. Confezione regalo e biglietto in omaggio, consegna entro Natale in tutta Italia.');
@@ -241,7 +248,7 @@
         'Spedizione assicurata in tutta Italia, gratuita da € 99; per riceverli a Natale ordina entro il 22 dicembre.</p>';
       var main = document.querySelector('.shop-pagina');
       if (main) main.appendChild(testo);
-    }, 0);
+    });
   })();
 
   /* ---------- 5) scheda prodotto: promemoria regalo ---------- */
@@ -252,11 +259,11 @@
     var mP = location.search.match(/[?&]p=([a-z-]+)/);
     var prodN = mP && typeof afcProdotto === 'function' ? afcProdotto(mP[1]) : null;
     if (prodN && prodN.cat.indexOf('natale') !== -1) {
-      setTimeout(function () {
+      dopoGliAltri(function () {
         document.title = prodN.nome + ' — ' + (prodN.seoNatale || 'composizione floreale natalizia fatta a mano') + ' | Antica Fioreria del Centro';
         var meta = document.querySelector('meta[name="description"]');
         if (meta) meta.setAttribute('content', prodN.desc + ' Idea regalo di Natale fatta a mano: confezione regalo e biglietto in omaggio, consegna entro Natale.');
-      }, 0);
+      });
     }
     var p = crea('p', 'pm-natale', ICONA_REGALO + '<span>' + (inTempo
       ? '<strong>Natale:</strong> confezione regalo e biglietto scritto a mano in omaggio · ordina entro il 22/12 per riceverlo a Natale'

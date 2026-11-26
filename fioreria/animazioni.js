@@ -176,6 +176,9 @@
 
   $$('main h1.display, main h2.display').forEach(function (el) {
     if (el.id === 'pNome' || el.classList.contains('hero-titolo')) return;
+    /* il titolo della categoria (collezione.html?cat=) lo scrive collezione.js
+       dopo: lo split, a fine animazione, rimetterebbe il testo generico */
+    if (/[?&]cat=/.test(location.search) && el.closest('.shop-pagina') && el.tagName === 'H1') return;
     animaTitolo(el);
   });
   $$('main .eyebrow').forEach(animaEyebrow);
