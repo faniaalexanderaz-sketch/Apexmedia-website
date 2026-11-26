@@ -55,5 +55,8 @@ Come lavorare con il titolare:
   Playwright (1440×900 e 390×844, `STUDIO_PASSWORD` di prova in locale),
   poi push diretto su `main` (il titolare non vuole PR: va pubblicato
   subito) e controllo che la versione nuova sia online.
+- Vercel (piano gratuito) fa al massimo 100 deploy al giorno: spingi solo
+  su `main`, non anche sul branch di lavoro (ogni push è un deploy), e
+  raggruppa le modifiche in pochi push.
 - Il controllo Netlify `dulcet-raindrop` fallisce da prima dello Studio: non
   blocca il merge.
