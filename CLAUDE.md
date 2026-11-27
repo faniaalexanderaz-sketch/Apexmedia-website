@@ -70,7 +70,9 @@ materiali e blocca il telefono per secondi. Quando i fotogrammi calano scende
 solo il "carico" (pixel ed effetti finali). `Preriscalda` compila in anticipo
 anche gli oggetti nascosti. Tele animate (schermi, TV, feed) si aggiornano solo
 da vicino. Il gioco della TV è in `scena/gioco.ts`, le luci arcobaleno in
-`scena/LedArcobaleno.tsx`.
+`scena/LedArcobaleno.tsx`, il mini cinema (a sinistra, porta sul corridoio
+centrale, poltrone rosse, console dal design originale, tablet) in
+`scena/Cinema.tsx` con le misure in `CINEMA` di `agenti.ts`.
 
 Come lavorare con il titolare:
 

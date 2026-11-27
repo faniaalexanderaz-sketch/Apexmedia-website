@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Line, MeshReflectorMaterial, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
-import { FONDO, LARGO, TERRAZZA } from "@/lib/studio/agenti";
+import { CINEMA, FONDO, LARGO, TERRAZZA } from "@/lib/studio/agenti";
 import type { StatoAgente } from "@/lib/studio/calcoli";
 import type { SchermoTv } from "@/lib/studio/tipi";
 import { C, GEO, MAT_INVISIBILE, MAT_VETRO, TelaViva, mat, matLed, matLucido, matLuce, matMetallo, matOttone, rett, tela, type Font } from "./base";
@@ -119,7 +119,7 @@ export function Pavimento({ riflessi = false }: { riflessi?: boolean }) {
       </mesh>
       {/* bordi bassi ai lati con la luce LED blu sul filo */}
       {/* a destra il bordo si apre sulla terrazza della spa */}
-      {([[-1, -FONDO / 2, FONDO / 2], [1, -FONDO / 2, TERRAZZA.porta[0]], [1, TERRAZZA.porta[1], FONDO / 2]] as [number, number, number][]).map(([l, za, zb], i) => (
+      {([[-1, -FONDO / 2, CINEMA.porta[0]], [-1, CINEMA.porta[1], FONDO / 2], [1, -FONDO / 2, TERRAZZA.porta[0]], [1, TERRAZZA.porta[1], FONDO / 2]] as [number, number, number][]).map(([l, za, zb], i) => (
         <group key={i}>
           {/* parete bassa scura a doghe, profilo in ottone e LED giallo in cima e alla base */}
           <RoundedBox args={[0.36, 1.1, zb - za]} radius={0.1} smoothness={3} position={[l * (LARGO / 2 - 0.18), 0.55, (za + zb) / 2]} material={bordo} castShadow receiveShadow />

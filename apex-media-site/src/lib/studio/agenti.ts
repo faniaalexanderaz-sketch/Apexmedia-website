@@ -5,7 +5,7 @@
    ============================================================= */
 
 export type RepartoId = "regia" | "strategia" | "contenuti" | "video" | "social" | "cassa";
-export type ZonaId = RepartoId | "relax" | "tu" | "giardino" | "spa" | "clienti";
+export type ZonaId = RepartoId | "relax" | "cinema" | "tu" | "giardino" | "spa" | "clienti";
 
 export type Zona = { id: ZonaId; nome: string; sotto: string; centro: [number, number]; ampiezza: number };
 
@@ -30,6 +30,7 @@ export const ZONE: Zona[] = [
   { id: "video", nome: "Studio video", sotto: "montaggio, riprese, sottotitoli", centro: [0.6, -3.8], ampiezza: 12 },
   { id: "social", nome: "Tavolo social", sotto: "Instagram, TikTok, Facebook", centro: [15.5, -3.4], ampiezza: 10 },
   { id: "relax", nome: "Area relax", sotto: "chi è libero si ferma qui", centro: [-15.5, 4.6], ampiezza: 13 },
+  { id: "cinema", nome: "Cinema", sotto: "film, partite e console", centro: [-27.4, 2.2], ampiezza: 11 },
   { id: "tu", nome: "La tua scrivania", sotto: "qui ti portano le cose da vedere", centro: [0, 5.2], ampiezza: 11 },
   { id: "giardino", nome: "Giardino", sotto: "prato, ulivo, panchine", centro: [16, 4.6], ampiezza: 11 },
   { id: "spa", nome: "Spa", sotto: "jacuzzi e lettini all'aperto", centro: [27.4, 2.2], ampiezza: 11 },
@@ -272,7 +273,13 @@ export const POSTI_RELAX: Punto[] = [
   { x: 27.4, z: -1.95, rot: Math.PI, posa: "seduto", y: -0.14, attivita: "sole" },
   { x: 28.35, z: 3.6, rot: Math.PI / 2, posa: "seduto", y: -1.11, attivita: "spa", uscita: [[29.45, 3.6], [29.45, 0.5]] },
   { x: 29.8, z: -1.95, rot: Math.PI, posa: "seduto", y: -0.14, attivita: "telefono" },
+  // mini cinema a sinistra: in poltrona a guardare lo schermo
+  { x: -26.6, z: 2.4, rot: Math.PI / 2, posa: "seduto", y: -0.02 },
+  { x: -27.9, z: 4.4, rot: Math.PI / 2, posa: "seduto", y: -0.02 },
+  { x: -25.3, z: 3.4, rot: Math.PI / 2, posa: "seduto", y: -0.02, attivita: "telefono" },
 ];
+/** Mini cinema oltre il lato sinistro dell'ufficio, con la porta sul corridoio centrale. */
+export const CINEMA = { x0: -32.2, x1: -23, z0: -3.8, z1: 7.8, porta: [-0.9, 1.9] as [number, number] } as const;
 /** Spa all'aperto, oltre il lato destro dell'ufficio: centro della jacuzzi e bordo della terrazza. */
 export const JACUZZI: [number, number] = [27.4, 3.6];
 export const TERRAZZA = { x0: 23, x1: 32.2, z0: -3.8, z1: 8.6, porta: [-0.9, 1.9] as [number, number] } as const;

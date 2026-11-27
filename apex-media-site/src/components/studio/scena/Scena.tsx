@@ -12,6 +12,7 @@ import type { Tono } from "@/lib/studio/promemoria";
 import { AngoloGiochi, Cassa, Cervello, Pendenti, Ficus, Monstera, Muro, Pavimento, Percorso, RepartoCliente, Relax, Sansevieria, Scrivania, ScrittaPavimento, StudioVideo, Tappeto, TuaScrivania, Vetro, type ContiCliente, type Conteggi, type DatiAds, type DatiCassa, type PostoScrivania } from "./Arredi";
 import { AngoloFumatori, Palma, SalaStrategia, TavoloSocial, Ulivo, type PostoTavolo } from "./Stanze";
 import { GiardinoNuovo, Spa } from "./Esterni";
+import { Cinema } from "./Cinema";
 import { useFont } from "./base";
 import { Statico } from "./Statico";
 import { LedArcobaleno } from "./LedArcobaleno";
@@ -248,6 +249,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; carico: Livello; ombre: n
       <ScrittaPavimento x={-22.2} z={8.0} nome="Area relax" sotto="chi è libero si ferma qui" font={font} />
       <ScrittaPavimento x={9.2} z={8.1} nome="Giardino" sotto="prato, fiori e panchine" font={font} />
       <ScrittaPavimento x={23.6} z={8.1} nome="Spa" sotto="jacuzzi e lettini" font={font} />
+      <ScrittaPavimento x={-31.6} z={-2.6} nome="Cinema" sotto="film, partite e console" font={font} />
       <ScrittaPavimento x={18.6} z={0.9} nome="Fumatori" sotto="pausa sigaretta" font={font} />
       <ScrittaPavimento x={-2.4} z={-8.6} nome="Regia" sotto="direzione, controllo, memoria" font={font} />
       <ScrittaPavimento x={12.6} z={-8.6} nome="Cassa" sotto="incassi, fatture, solleciti" font={font} />
@@ -262,6 +264,7 @@ function Ufficio3D(p: PropsScena & { livello: Livello; carico: Livello; ombre: n
       <TavoloSocial posti={tavolo(["chiara", "simone", "alice"])} />
       <GiardinoNuovo alta={p.livello > 1} />
       <Spa alta={p.livello > 1} />
+      <Cinema />
       <AngoloFumatori />
 
       <StudioVideo x={3.6} z={-5.4} />
