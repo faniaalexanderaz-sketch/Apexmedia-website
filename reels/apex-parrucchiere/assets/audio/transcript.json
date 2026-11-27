@@ -1,0 +1,914 @@
+[
+  {
+    "text": "Questo",
+    "start": 0.03,
+    "end": 0.46,
+    "id": "w0"
+  },
+  {
+    "text": "parrucchiere",
+    "start": 0.46,
+    "end": 1.32,
+    "id": "w1"
+  },
+  {
+    "text": "ha",
+    "start": 1.37,
+    "end": 1.46,
+    "id": "w2"
+  },
+  {
+    "text": "alzato",
+    "start": 1.52,
+    "end": 1.97,
+    "id": "w3"
+  },
+  {
+    "text": "i",
+    "start": 1.97,
+    "end": 2.03,
+    "id": "w4"
+  },
+  {
+    "text": "prezzi",
+    "start": 2.18,
+    "end": 2.47,
+    "id": "w5"
+  },
+  {
+    "text": "del",
+    "start": 2.52,
+    "end": 2.72,
+    "id": "w6"
+  },
+  {
+    "text": "40%",
+    "start": 2.72,
+    "end": 3.25,
+    "id": "w7"
+  },
+  {
+    "text": "e",
+    "start": 3.36,
+    "end": 3.43,
+    "id": "w8"
+  },
+  {
+    "text": "ha",
+    "start": 3.43,
+    "end": 3.58,
+    "id": "w9"
+  },
+  {
+    "text": "perso",
+    "start": 3.58,
+    "end": 3.94,
+    "id": "w10"
+  },
+  {
+    "text": "un",
+    "start": 4.02,
+    "end": 4.11,
+    "id": "w11"
+  },
+  {
+    "text": "cliente",
+    "start": 4.11,
+    "end": 4.65,
+    "id": "w12"
+  },
+  {
+    "text": "su",
+    "start": 4.65,
+    "end": 4.8,
+    "id": "w13"
+  },
+  {
+    "text": "5.",
+    "start": 4.8,
+    "end": 5.12,
+    "id": "w14"
+  },
+  {
+    "text": "Eppure",
+    "start": 5.15,
+    "end": 5.5,
+    "id": "w15"
+  },
+  {
+    "text": "adesso",
+    "start": 5.5,
+    "end": 5.89,
+    "id": "w16"
+  },
+  {
+    "text": "lavora",
+    "start": 5.89,
+    "end": 6.22,
+    "id": "w17"
+  },
+  {
+    "text": "di",
+    "start": 6.3,
+    "end": 6.4,
+    "id": "w18"
+  },
+  {
+    "text": "meno",
+    "start": 6.4,
+    "end": 6.66,
+    "id": "w19"
+  },
+  {
+    "text": "e",
+    "start": 6.66,
+    "end": 6.72,
+    "id": "w20"
+  },
+  {
+    "text": "guadagna",
+    "start": 6.72,
+    "end": 7.15,
+    "id": "w21"
+  },
+  {
+    "text": "di",
+    "start": 7.3,
+    "end": 7.37,
+    "id": "w22"
+  },
+  {
+    "text": "più.",
+    "start": 7.37,
+    "end": 7.84,
+    "id": "w23"
+  },
+  {
+    "text": "Resta",
+    "start": 7.87,
+    "end": 8.16,
+    "id": "w24"
+  },
+  {
+    "text": "fino",
+    "start": 8.16,
+    "end": 8.32,
+    "id": "w25"
+  },
+  {
+    "text": "alla",
+    "start": 8.44,
+    "end": 8.68,
+    "id": "w26"
+  },
+  {
+    "text": "fine",
+    "start": 8.68,
+    "end": 8.94,
+    "id": "w27"
+  },
+  {
+    "text": "perché",
+    "start": 8.94,
+    "end": 9.3,
+    "id": "w28"
+  },
+  {
+    "text": "questo",
+    "start": 9.36,
+    "end": 9.72,
+    "id": "w29"
+  },
+  {
+    "text": "vale",
+    "start": 9.72,
+    "end": 9.87,
+    "id": "w30"
+  },
+  {
+    "text": "per",
+    "start": 10.02,
+    "end": 10.17,
+    "id": "w31"
+  },
+  {
+    "text": "qualsiasi",
+    "start": 10.17,
+    "end": 10.74,
+    "id": "w32"
+  },
+  {
+    "text": "lavoro,",
+    "start": 10.74,
+    "end": 11.32,
+    "id": "w33"
+  },
+  {
+    "text": "anche",
+    "start": 11.32,
+    "end": 11.55,
+    "id": "w34"
+  },
+  {
+    "text": "il",
+    "start": 11.58,
+    "end": 11.65,
+    "id": "w35"
+  },
+  {
+    "text": "tuo.",
+    "start": 11.65,
+    "end": 11.96,
+    "id": "w36"
+  },
+  {
+    "text": "Facciamo",
+    "start": 11.99,
+    "end": 12.44,
+    "id": "w37"
+  },
+  {
+    "text": "i",
+    "start": 12.44,
+    "end": 12.56,
+    "id": "w38"
+  },
+  {
+    "text": "conti.",
+    "start": 12.56,
+    "end": 12.98,
+    "id": "w39"
+  },
+  {
+    "text": "Prima,",
+    "start": 12.98,
+    "end": 13.28,
+    "id": "w40"
+  },
+  {
+    "text": "200",
+    "start": 13.33,
+    "end": 13.94,
+    "id": "w41"
+  },
+  {
+    "text": "clienti",
+    "start": 13.94,
+    "end": 14.41,
+    "id": "w42"
+  },
+  {
+    "text": "al",
+    "start": 14.41,
+    "end": 14.54,
+    "id": "w43"
+  },
+  {
+    "text": "mese",
+    "start": 14.54,
+    "end": 14.83,
+    "id": "w44"
+  },
+  {
+    "text": "a",
+    "start": 14.83,
+    "end": 14.94,
+    "id": "w45"
+  },
+  {
+    "text": "25",
+    "start": 14.94,
+    "end": 15.59,
+    "id": "w46"
+  },
+  {
+    "text": "euro,",
+    "start": 15.59,
+    "end": 16.16,
+    "id": "w47"
+  },
+  {
+    "text": "5000",
+    "start": 16.16,
+    "end": 16.93,
+    "id": "w48"
+  },
+  {
+    "text": "euro.",
+    "start": 16.93,
+    "end": 17.2,
+    "id": "w49"
+  },
+  {
+    "text": "Sempre",
+    "start": 17.23,
+    "end": 17.6,
+    "id": "w50"
+  },
+  {
+    "text": "pieno,",
+    "start": 17.6,
+    "end": 18.04,
+    "id": "w51"
+  },
+  {
+    "text": "sempre",
+    "start": 18.12,
+    "end": 18.46,
+    "id": "w52"
+  },
+  {
+    "text": "di",
+    "start": 18.46,
+    "end": 18.59,
+    "id": "w53"
+  },
+  {
+    "text": "corsa,",
+    "start": 18.59,
+    "end": 19.04,
+    "id": "w54"
+  },
+  {
+    "text": "mai",
+    "start": 19.04,
+    "end": 19.23,
+    "id": "w55"
+  },
+  {
+    "text": "un",
+    "start": 19.23,
+    "end": 19.38,
+    "id": "w56"
+  },
+  {
+    "text": "giorno",
+    "start": 19.38,
+    "end": 19.77,
+    "id": "w57"
+  },
+  {
+    "text": "libero.",
+    "start": 19.77,
+    "end": 20.44,
+    "id": "w58"
+  },
+  {
+    "text": "Poi",
+    "start": 20.47,
+    "end": 20.69,
+    "id": "w59"
+  },
+  {
+    "text": "alza",
+    "start": 20.69,
+    "end": 20.92,
+    "id": "w60"
+  },
+  {
+    "text": "il",
+    "start": 21.04,
+    "end": 21.2,
+    "id": "w61"
+  },
+  {
+    "text": "taglio",
+    "start": 21.2,
+    "end": 21.7,
+    "id": "w62"
+  },
+  {
+    "text": "a",
+    "start": 21.7,
+    "end": 21.76,
+    "id": "w63"
+  },
+  {
+    "text": "35",
+    "start": 21.81,
+    "end": 22.29,
+    "id": "w64"
+  },
+  {
+    "text": "euro.",
+    "start": 22.29,
+    "end": 22.92,
+    "id": "w65"
+  },
+  {
+    "text": "Esì,",
+    "start": 22.92,
+    "end": 23.18,
+    "id": "w66"
+  },
+  {
+    "text": "40",
+    "start": 23.24,
+    "end": 23.5,
+    "id": "w67"
+  },
+  {
+    "text": "clienti",
+    "start": 23.62,
+    "end": 23.92,
+    "id": "w68"
+  },
+  {
+    "text": "se",
+    "start": 24.01,
+    "end": 24.08,
+    "id": "w69"
+  },
+  {
+    "text": "ne",
+    "start": 24.08,
+    "end": 24.2,
+    "id": "w70"
+  },
+  {
+    "text": "vanno.",
+    "start": 24.2,
+    "end": 24.7,
+    "id": "w71"
+  },
+  {
+    "text": "Ma",
+    "start": 24.75,
+    "end": 24.83,
+    "id": "w72"
+  },
+  {
+    "text": "guarda,",
+    "start": 24.92,
+    "end": 25.72,
+    "id": "w73"
+  },
+  {
+    "text": "160",
+    "start": 25.72,
+    "end": 26.61,
+    "id": "w74"
+  },
+  {
+    "text": "per",
+    "start": 26.62,
+    "end": 26.92,
+    "id": "w75"
+  },
+  {
+    "text": "35",
+    "start": 26.92,
+    "end": 27.46,
+    "id": "w76"
+  },
+  {
+    "text": "fa",
+    "start": 27.52,
+    "end": 27.72,
+    "id": "w77"
+  },
+  {
+    "text": "5600",
+    "start": 27.72,
+    "end": 28.92,
+    "id": "w78"
+  },
+  {
+    "text": "euro.",
+    "start": 28.92,
+    "end": 29.36,
+    "id": "w79"
+  },
+  {
+    "text": "600",
+    "start": 29.39,
+    "end": 29.84,
+    "id": "w80"
+  },
+  {
+    "text": "euro",
+    "start": 29.96,
+    "end": 30.21,
+    "id": "w81"
+  },
+  {
+    "text": "in",
+    "start": 30.28,
+    "end": 30.36,
+    "id": "w82"
+  },
+  {
+    "text": "più",
+    "start": 30.36,
+    "end": 30.54,
+    "id": "w83"
+  },
+  {
+    "text": "e",
+    "start": 30.56,
+    "end": 30.62,
+    "id": "w84"
+  },
+  {
+    "text": "40",
+    "start": 30.62,
+    "end": 31.02,
+    "id": "w85"
+  },
+  {
+    "text": "appuntamenti",
+    "start": 31.02,
+    "end": 31.81,
+    "id": "w86"
+  },
+  {
+    "text": "in",
+    "start": 31.81,
+    "end": 31.94,
+    "id": "w87"
+  },
+  {
+    "text": "meno.",
+    "start": 31.94,
+    "end": 32.42,
+    "id": "w88"
+  },
+  {
+    "text": "Circa",
+    "start": 32.51,
+    "end": 32.81,
+    "id": "w89"
+  },
+  {
+    "text": "30",
+    "start": 32.81,
+    "end": 33.21,
+    "id": "w90"
+  },
+  {
+    "text": "ore",
+    "start": 33.23,
+    "end": 33.42,
+    "id": "w91"
+  },
+  {
+    "text": "libere",
+    "start": 33.42,
+    "end": 33.8,
+    "id": "w92"
+  },
+  {
+    "text": "al",
+    "start": 33.85,
+    "end": 33.94,
+    "id": "w93"
+  },
+  {
+    "text": "mese.",
+    "start": 34,
+    "end": 34.48,
+    "id": "w94"
+  },
+  {
+    "text": "Chi",
+    "start": 34.51,
+    "end": 34.58,
+    "id": "w95"
+  },
+  {
+    "text": "se",
+    "start": 34.68,
+    "end": 34.73,
+    "id": "w96"
+  },
+  {
+    "text": "ne",
+    "start": 34.73,
+    "end": 34.83,
+    "id": "w97"
+  },
+  {
+    "text": "è",
+    "start": 34.83,
+    "end": 34.88,
+    "id": "w98"
+  },
+  {
+    "text": "andato?",
+    "start": 34.88,
+    "end": 35.32,
+    "id": "w99"
+  },
+  {
+    "text": "Quelli",
+    "start": 35.4,
+    "end": 35.58,
+    "id": "w100"
+  },
+  {
+    "text": "che",
+    "start": 35.68,
+    "end": 35.8,
+    "id": "w101"
+  },
+  {
+    "text": "sceglievano",
+    "start": 35.85,
+    "end": 36.37,
+    "id": "w102"
+  },
+  {
+    "text": "solo",
+    "start": 36.38,
+    "end": 36.51,
+    "id": "w103"
+  },
+  {
+    "text": "il",
+    "start": 36.66,
+    "end": 36.68,
+    "id": "w104"
+  },
+  {
+    "text": "prezzo.",
+    "start": 36.68,
+    "end": 37.2,
+    "id": "w105"
+  },
+  {
+    "text": "Chi",
+    "start": 37.23,
+    "end": 37.31,
+    "id": "w106"
+  },
+  {
+    "text": "è",
+    "start": 37.4,
+    "end": 37.41,
+    "id": "w107"
+  },
+  {
+    "text": "rimasto?",
+    "start": 37.41,
+    "end": 37.93,
+    "id": "w108"
+  },
+  {
+    "text": "Quelli",
+    "start": 37.93,
+    "end": 38.24,
+    "id": "w109"
+  },
+  {
+    "text": "che",
+    "start": 38.24,
+    "end": 38.38,
+    "id": "w110"
+  },
+  {
+    "text": "vengono",
+    "start": 38.4,
+    "end": 38.75,
+    "id": "w111"
+  },
+  {
+    "text": "per",
+    "start": 38.75,
+    "end": 38.87,
+    "id": "w112"
+  },
+  {
+    "text": "lui.",
+    "start": 38.94,
+    "end": 39.23,
+    "id": "w113"
+  },
+  {
+    "text": "Tu",
+    "start": 39.31,
+    "end": 39.38,
+    "id": "w114"
+  },
+  {
+    "text": "li",
+    "start": 39.48,
+    "end": 39.52,
+    "id": "w115"
+  },
+  {
+    "text": "alzeresti?",
+    "start": 39.52,
+    "end": 40.24,
+    "id": "w116"
+  },
+  {
+    "text": "Scrivi",
+    "start": 40.24,
+    "end": 40.74,
+    "id": "w117"
+  },
+  {
+    "text": "sì",
+    "start": 40.8,
+    "end": 40.95,
+    "id": "w118"
+  },
+  {
+    "text": "o",
+    "start": 41.02,
+    "end": 41.05,
+    "id": "w119"
+  },
+  {
+    "text": "no.",
+    "start": 41.05,
+    "end": 41.52,
+    "id": "w120"
+  },
+  {
+    "text": "La",
+    "start": 41.55,
+    "end": 41.62,
+    "id": "w121"
+  },
+  {
+    "text": "lezione.",
+    "start": 41.72,
+    "end": 42.28,
+    "id": "w122"
+  },
+  {
+    "text": "Se",
+    "start": 42.28,
+    "end": 42.36,
+    "id": "w123"
+  },
+  {
+    "text": "hai",
+    "start": 42.44,
+    "end": 42.58,
+    "id": "w124"
+  },
+  {
+    "text": "sempre",
+    "start": 42.58,
+    "end": 42.93,
+    "id": "w125"
+  },
+  {
+    "text": "l'agenda",
+    "start": 42.93,
+    "end": 43.38,
+    "id": "w126"
+  },
+  {
+    "text": "piena,",
+    "start": 43.38,
+    "end": 43.84,
+    "id": "w127"
+  },
+  {
+    "text": "non",
+    "start": 43.84,
+    "end": 44.07,
+    "id": "w128"
+  },
+  {
+    "text": "sei",
+    "start": 44.07,
+    "end": 44.26,
+    "id": "w129"
+  },
+  {
+    "text": "bravo.",
+    "start": 44.32,
+    "end": 44.92,
+    "id": "w130"
+  },
+  {
+    "text": "Sei",
+    "start": 44.92,
+    "end": 45.1,
+    "id": "w131"
+  },
+  {
+    "text": "troppo",
+    "start": 45.1,
+    "end": 45.46,
+    "id": "w132"
+  },
+  {
+    "text": "economico.",
+    "start": 45.46,
+    "end": 46.24,
+    "id": "w133"
+  },
+  {
+    "text": "Scrivi",
+    "start": 46.27,
+    "end": 46.67,
+    "id": "w134"
+  },
+  {
+    "text": "prezzi",
+    "start": 46.67,
+    "end": 47.08,
+    "id": "w135"
+  },
+  {
+    "text": "nei",
+    "start": 47.16,
+    "end": 47.32,
+    "id": "w136"
+  },
+  {
+    "text": "commenti",
+    "start": 47.32,
+    "end": 47.91,
+    "id": "w137"
+  },
+  {
+    "text": "e",
+    "start": 47.97,
+    "end": 48.03,
+    "id": "w138"
+  },
+  {
+    "text": "ti",
+    "start": 48.03,
+    "end": 48.17,
+    "id": "w139"
+  },
+  {
+    "text": "mando",
+    "start": 48.17,
+    "end": 48.53,
+    "id": "w140"
+  },
+  {
+    "text": "come",
+    "start": 48.53,
+    "end": 48.82,
+    "id": "w141"
+  },
+  {
+    "text": "alzarli",
+    "start": 48.82,
+    "end": 49.3,
+    "id": "w142"
+  },
+  {
+    "text": "senza",
+    "start": 49.39,
+    "end": 49.65,
+    "id": "w143"
+  },
+  {
+    "text": "perdere",
+    "start": 49.65,
+    "end": 50.05,
+    "id": "w144"
+  },
+  {
+    "text": "i",
+    "start": 50.05,
+    "end": 50.1,
+    "id": "w145"
+  },
+  {
+    "text": "clienti",
+    "start": 50.1,
+    "end": 50.5,
+    "id": "w146"
+  },
+  {
+    "text": "migliori.",
+    "start": 50.5,
+    "end": 51.2,
+    "id": "w147"
+  },
+  {
+    "text": "Epensa",
+    "start": 51.23,
+    "end": 51.57,
+    "id": "w148"
+  },
+  {
+    "text": "che",
+    "start": 51.57,
+    "end": 51.68,
+    "id": "w149"
+  },
+  {
+    "text": "questo",
+    "start": 51.8,
+    "end": 52.05,
+    "id": "w150"
+  },
+  {
+    "text": "parrucchiere...",
+    "start": 52.12,
+    "end": 52.92,
+    "id": "w151"
+  }
+]

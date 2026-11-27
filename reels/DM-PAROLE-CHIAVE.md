@@ -274,3 +274,37 @@ Il trucco di Just Do It: non parlare del prodotto, parla di chi lo usa.
    Funziona anche senza il tuo nome accanto? Un cliente lo ripeterebbe
    a un amico? Se sì, è quello giusto.
 ```
+
+---
+
+## PREZZI (video parrucchiere)
+
+**Messaggio breve**
+```text
+Ecco come alzare i prezzi senza perdere i clienti migliori 👇
+Prima di tutto fai i conti: quanti clienti puoi permetterti di perdere e guadagnare uguale?
+```
+
+**Contenuto: il metodo in 5 passi**
+```text
+1) FAI IL CONTO DEL PAREGGIO
+   Nuovo prezzo ÷ vecchio prezzo = quanto puoi perdere.
+   Da 25 € a 35 €: ti bastano 143 clienti su 200 per incassare uguale.
+   Puoi perderne fino a 57 e sei ancora in pari.
+
+2) ALZA SUI NUOVI, AVVISA I VECCHI
+   Nuovi clienti: prezzo nuovo da subito.
+   Clienti abituali: avviso un mese prima, con un messaggio personale.
+
+3) DAI UN MOTIVO VISIBILE
+   Un servizio in più (consulenza, trattamento, prodotto professionale),
+   un ambiente più curato, più tempo dedicato. Il cliente deve vedere la differenza.
+
+4) CREA UN'OPZIONE PIÙ CARA
+   Un servizio "premium" accanto a quello normale: fa sembrare giusto
+   il prezzo nuovo (effetto àncora) e una parte dei clienti lo sceglie.
+
+5) USA IL TEMPO LIBERATO
+   Le ore in più vanno su clienti migliori, servizi più cari o
+   sul riposo. Non riempirle di nuovo con clienti a prezzo basso.
+```

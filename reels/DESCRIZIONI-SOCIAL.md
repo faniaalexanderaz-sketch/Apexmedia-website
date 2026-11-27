@@ -2323,3 +2323,37 @@ Scrivi SLOGAN e ti mando come scrivere il tuo in tre parole.
 Fonti: Dan Wieden ha raccontato l'origine dello slogan in varie interviste (in alcune versioni la frase di Gilmore è "Let's do this"); lo spot del 1988 con Walt Stack, 80 anni; dati di vendita 1988–1998 riportati da Wikipedia (Nike, Inc.). Nessun logo Nike.
 #nike #justdoit #slogan #marketing #storytelling #branding #business #apexmedia
 ```
+
+---
+
+## 76. Il parrucchiere che ha alzato i prezzi e guadagna di più (parola PREZZI) · TRIPLO HOOK
+
+Hook a 3 tempi: contesto (parrucchiere, prezzi +40%), curiosità (perde 1 cliente su 5), ribaltamento (lavora meno e guadagna di più). Nero e oro, oggetti realistici (poltrona, forbici, phon, banconote, agenda) con riflessi e luce, conti animati con mazzette che crescono. 53 s, loop: "E pensa che questo parrucchiere..." riporta a "Questo parrucchiere ha alzato i prezzi". File: `apex-parrucchiere/renders/apex-parrucchiere-9x16.mp4`.
+
+**TikTok**
+```text
+Ha alzato i prezzi del 40%, ha perso 1 cliente su 5... e adesso lavora meno e guadagna di più. Tu li alzeresti? SÌ o NO. Scrivi PREZZI per sapere come farlo senza perdere i clienti migliori.
+#parrucchiere #prezzi #business #apexmedia
+```
+
+**Instagram**
+```text
+Questo parrucchiere ha alzato i prezzi del 40%. E ha perso un cliente su cinque. Eppure adesso lavora di meno e guadagna di più.
+
+Facciamo i conti.
+Prima: 200 clienti al mese a 25 € = 5.000 €. Sempre pieno, sempre di corsa, mai un giorno libero.
+Dopo: taglio a 35 €. 40 clienti se ne vanno. 160 × 35 = 5.600 €.
+
+600 € in più al mese. 40 appuntamenti in meno: circa 30 ore libere.
+
+Chi se n'è andato? Chi sceglieva solo il prezzo. Chi è rimasto? Chi viene per te.
+
+Tu li alzeresti? Scrivi SÌ o NO.
+
+La lezione: se hai sempre l'agenda piena, non sei bravo. Sei troppo economico.
+
+Scrivi PREZZI e ti mando come alzarli senza perdere i clienti migliori.
+
+I numeri sono un esempio di calcolo (45 minuti ad appuntamento), non i conti di un salone reale.
+#parrucchiere #prezzi #pricing #marketing #business #imprenditori #saloni #apexmedia
+```
