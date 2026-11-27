@@ -1,4 +1,4 @@
-/* Le risposte su prodotti e assicurazione vanno confermate dal titolare prima di andare online. */
+/* DA CONFERMARE CON IL TITOLARE: risposte su prodotti e assicurazione. */
 export const faq: { domanda: string; risposta: string }[] = [
   {
     domanda: "Quanto costa una pulizia?",
@@ -18,7 +18,7 @@ export const faq: { domanda: string; risposta: string }[] = [
   {
     domanda: "Che prodotti e macchinari usate?",
     risposta:
-      "Portiamo tutto noi. Per i pavimenti usiamo monospazzola e lavasciuga. Se hai superfici delicate come marmo o parquet, diccelo e scegliamo il prodotto adatto.",
+      "Portiamo tutto noi: macchine, attrezzi e prodotti. Per i pavimenti scegliamo il trattamento in base al materiale: marmo, cementine, cemento, cotto o parquet.",
   },
   {
     domanda: "Siete assicurati?",

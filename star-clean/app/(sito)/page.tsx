@@ -1,28 +1,21 @@
 import Link from "next/link";
+import { Comparsa } from "@/components/anim/Comparsa";
+import { IngressoHero } from "@/components/anim/IngressoHero";
 import { BloccoPreventivo } from "@/components/BloccoPreventivo";
 import { Casi } from "@/components/Casi";
+import { ComeLavoriamo } from "@/components/ComeLavoriamo";
+import { FasciaFiducia } from "@/components/FasciaFiducia";
 import { Faq } from "@/components/Faq";
 import { Foto, FotoHero } from "@/components/Foto";
+import { Icona } from "@/components/Icona";
+import { ChiusuraSezione, PulsanteChiama, PulsantePreventivo, PulsanteWhatsApp } from "@/components/Pulsanti";
+import { ZoneServite } from "@/components/ZoneServite";
 import { casi } from "@/content/casi";
 import { faq } from "@/content/faq";
 import { recensioni } from "@/content/recensioni";
 import { servizi } from "@/content/servizi";
-import { sito, urlSito } from "@/content/sito";
-
-const passi = [
-  {
-    titolo: "Ci scrivi o ci chiami",
-    testo: "Compili il modulo in un minuto oppure telefoni. Bastano il comune e i metri quadri.",
-  },
-  {
-    titolo: "Ricevi il prezzo in 24 ore",
-    testo: "Se il lavoro è chiaro ti mandiamo subito il preventivo. Se serve vedere gli spazi, fissiamo un sopralluogo.",
-  },
-  {
-    titolo: "Veniamo nel giorno concordato",
-    testo: "Arriviamo con macchinari e prodotti. A fine lavoro controlli il risultato insieme a noi.",
-  },
-];
+import { sito } from "@/content/sito";
+import { JsonLd, azienda, domande, grafo, servizio } from "@/lib/datiStrutturati";
 
 export default function Home() {
   // Online vanno solo recensioni vere. Quelle di esempio si vedono soltanto in demo.
@@ -31,195 +24,124 @@ export default function Home() {
   // Stessa regola per i prima/dopo: le coppie dimostrative si vedono solo in demo.
   const casiVisibili = casi.filter((c) => sito.demo || !c.esempio);
 
-  const datiStrutturati = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        name: sito.nome,
-        url: urlSito(),
-        areaServed: sito.zone.map((z) => ({ "@type": "City", name: z })),
-        ...(sito.telefono.segnaposto ? {} : { telephone: sito.telefono.href.replace("tel:", "") }),
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: faq.map((f) => ({
-          "@type": "Question",
-          name: f.domanda,
-          acceptedAnswer: { "@type": "Answer", text: f.risposta },
-        })),
-      },
-    ],
-  };
-
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datiStrutturati) }} />
+      <JsonLd dati={grafo(azienda(), ...servizi.map(servizio), domande(faq))} />
 
-      {/* HERO: testo a sinistra, foto reale a lato che scende sulla fascia successiva */}
-      <section className="bg-carta">
-        <div className="contenitore griglia gap-y-10 pt-10 lg:pt-24">
-          <div className="col-span-12 lg:col-span-7 lg:pb-24">
-            <h1 className="titolo-1 max-w-[15ch]">
-              Pulizie civili e industriali ad Alessandria. Preventivo in 24 ore.
-            </h1>
-            <p className="testo-2 misura mt-6 text-[1.125rem] lg:text-[1.25rem]">
-              Ci dici cosa c&apos;è da pulire e quanti metri sono. Entro 24 ore hai il prezzo scritto, senza impegno.
+      {/* HERO */}
+      <section className="from-cielo bg-linear-to-b to-white">
+        <div className="contenitore griglia gap-y-10 pt-8 pb-16 lg:pt-16 lg:pb-24">
+          <IngressoHero className="col-span-12 self-center lg:col-span-7">
+            <p className="occhiello bg-white" data-dopo>Ad Alessandria da {sito.anniAttivita} anni</p>
+            <h1 className="titolo-1 mt-6 max-w-[14ch]">Impresa di pulizie ad Alessandria. Preventivo scritto in 24&nbsp;ore.</h1>
+            <p className="sottotitolo misura mt-6" data-dopo>
+              Case, aziende, pavimenti, vetri e tapparelle. Ci dici cosa c&apos;è da pulire e quanti metri sono: entro{" "}
+              {sito.oreRisposta} ore hai il prezzo scritto, senza impegno.
             </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-              <Link href="/preventivo" className="btn btn-giallo">Richiedi preventivo</Link>
-              <p>
-                <span className="testo-2">oppure chiama </span>
-                <a href={sito.telefono.href} className="collegamento whitespace-nowrap">{sito.telefono.mostrato}</a>
-              </p>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center" data-dopo>
+              <PulsantePreventivo />
+              <PulsanteChiama />
             </div>
-          </div>
+            <div className="mt-4" data-dopo>
+              <PulsanteWhatsApp />
+            </div>
+          </IngressoHero>
           <div className="col-span-12 lg:col-span-5">
             {sito.fotoHero ? (
               <FotoHero
                 {...sito.fotoHero}
                 alt="Lucidatura di un pavimento in marmo con la monospazzola"
-                className="aspect-[3/2] lg:-mb-16 lg:aspect-auto lg:h-[calc(100%+64px)] lg:min-h-[520px]"
+                className="aspect-[3/2] lg:aspect-[4/5]"
               />
             ) : (
-              <Foto
-                alt=""
-                richiesta="Jonathan Germanò al lavoro con la lavasciuga, inquadratura verticale"
-                className="aspect-[3/2] lg:-mb-16 lg:aspect-auto lg:h-[calc(100%+64px)] lg:min-h-[520px]"
-              />
+              <Foto alt="" richiesta="Jonathan Germanò al lavoro, inquadratura verticale" className="aspect-[3/2] lg:aspect-[4/5]" subito />
             )}
           </div>
         </div>
       </section>
 
-      {/* FIDUCIA: chi siamo in due righe e tre dati veri */}
-      <section className="border-linea border-b py-10 lg:py-16">
-        <div className="contenitore griglia gap-y-10">
-          <p className="col-span-12 max-w-[24em] text-[1.25rem] leading-snug font-bold lg:col-span-6 lg:text-[1.5rem]">
-            Star Clean è il nuovo nome di un&apos;impresa di famiglia che pulisce ad Alessandria da 30 anni. Oggi la
-            guida {sito.titolare}.
-          </p>
-          <dl className="col-span-12 grid grid-cols-1 sm:grid-cols-3 lg:mt-6">
-            {[
-              ["30 anni", "di pulizie nella stessa famiglia"],
-              ["24 ore", "per avere il preventivo scritto"],
-              ["5 città", "e tutta la provincia di Alessandria"],
-            ].map(([cifra, etichetta], i) => (
-              <div key={cifra} className={`border-linea flex flex-col-reverse border-t py-6 sm:pr-6 ${i > 0 ? "sm:border-l sm:pl-6" : ""}`}>
-                <dt className="testo-2 mt-2 text-[0.9375rem] leading-snug">{etichetta}</dt>
-                <dd className="text-[2.5rem] leading-none font-extrabold tracking-[-0.03em] lg:text-[3.25rem]">{cifra}</dd>
-              </div>
-            ))}
-          </dl>
+      <div className="-mt-8 lg:-mt-12">
+        <FasciaFiducia />
+      </div>
+
+      {/* SERVIZI */}
+      <section className="sezione">
+        <div className="contenitore">
+          <div className="griglia items-end gap-y-6">
+            <div className="col-span-12 lg:col-span-7">
+              <p className="occhiello">Servizi</p>
+              <h2 className="titolo-2 mt-6 max-w-[16ch]">Cosa possiamo pulire per te.</h2>
+            </div>
+            <p className="sottotitolo col-span-12 lg:col-span-4 lg:col-start-9">
+              Cinque servizi, un solo numero. Scegli il tuo e chiedi il prezzo.
+            </p>
+          </div>
+
+          <Comparsa className="mt-12 lg:mt-16">
+            <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+              {servizi.map((s, i) => (
+                <li key={s.slug} data-comparsa className={i < 2 ? "lg:col-span-3" : "lg:col-span-2"}>
+                  <Link href={`/${s.slug}`} className="scheda scheda-viva group flex h-full flex-col p-6 lg:p-8">
+                    <span className="bollo group-hover:bg-blu transition-colors duration-300 group-hover:text-white">
+                      <Icona nome={s.icona} className="h-7 w-7" />
+                    </span>
+                    <h3 className={`mt-8 ${i < 2 ? "titolo-2 text-[clamp(1.75rem,1.4rem+1.4vw,2.5rem)]" : "titolo-3"}`}>{s.nome}</h3>
+                    <p className="testo-2 mt-3 max-w-[30em]">{s.riassunto}</p>
+                    <span className="text-blu mt-auto inline-flex items-center gap-2 pt-8 font-semibold">
+                      Vedi il servizio
+                      <Icona nome="freccia" className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Comparsa>
+          <ChiusuraSezione />
         </div>
       </section>
 
       {/* PRIMA E DOPO */}
       {casiVisibili.length > 0 && (
-        <section className="sezione bg-petrolio text-white">
+        <section className="sezione bg-blu-notte text-white">
           <div className="contenitore">
-            <p className="occhiello">Prima e dopo</p>
-            <h2 className="titolo-2 mt-6 mb-10 max-w-[18ch] lg:mb-16">Trascina la linea e guarda cosa cambia.</h2>
+            <p className="occhiello occhiello-chiaro">Prima e dopo</p>
+            <h2 className="titolo-2 mt-6 mb-10 max-w-[18ch] text-white lg:mb-16">Trascina la linea e guarda cosa cambia.</h2>
             <Casi casi={casiVisibili} />
+            <ChiusuraSezione chiaro />
           </div>
         </section>
       )}
 
-      {/* SERVIZI: tre blocchi alternati, proporzioni diverse */}
-      <section className="sezione">
-        <div className="contenitore">
-          <p className="occhiello">Servizi</p>
-          <h2 className="titolo-2 mt-6 max-w-[16ch]">Cosa possiamo pulire per te.</h2>
+      <ComeLavoriamo />
 
-          <div className="mt-10 space-y-16 lg:mt-16 lg:space-y-24">
-            {servizi.map((s, i) => {
-              const pari = i % 2 === 0;
-              // Il riquadro segue le proporzioni della foto: verticale più stretto, quadrata più larga.
-              const verticale = s.fotoFormato === "verticale";
-              const colonneFoto = verticale ? "lg:col-span-5" : "lg:col-span-6";
-              return (
-                <article key={s.slug} className="griglia items-center gap-y-6">
-                  <Foto
-                    src={s.foto}
-                    alt={s.fotoAlt}
-                    richiesta={s.fotoRichiesta}
-                    className={`col-span-12 aspect-square ${colonneFoto} ${verticale ? "lg:aspect-[4/5]" : ""} ${pari ? "" : verticale ? "lg:col-start-8 lg:row-start-1" : "lg:col-start-7 lg:row-start-1"}`}
-                    sizes="(min-width: 1024px) 600px, 100vw"
-                  />
-                  <div className={`col-span-12 lg:col-span-4 ${pari ? (verticale ? "lg:col-start-7" : "lg:col-start-8") : "lg:col-start-2 lg:row-start-1"}`}>
-                    <p className="text-turchese text-[0.9375rem] font-extrabold tabular-nums" aria-hidden>0{i + 1}</p>
-                    <h3 className="mt-2 text-[1.75rem] lg:text-[2.125rem]">{s.nome}</h3>
-                    <p className="testo-2 mt-4">{s.riassunto}</p>
-                    <p className="mt-6">
-                      <Link href={`/${s.slug}`} className="collegamento">Vedi {s.nome.toLowerCase()}</Link>
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* COME FUNZIONA */}
-      <section className="sezione bg-carta">
-        <div className="contenitore">
-          <div className="griglia items-end gap-y-10">
-            <div className="col-span-12 lg:col-span-6">
-              <p className="occhiello">Come funziona</p>
-              <h2 className="titolo-2 mt-6 max-w-[18ch]">Dal primo messaggio al lavoro finito, in tre passi.</h2>
-            </div>
-            {sito.fotoFurgone && (
-              <Foto
-                src={sito.fotoFurgone}
-                alt="Furgone Star Clean in una piazza di Alessandria"
-                richiesta="furgone Star Clean"
-                className="col-span-12 aspect-[3/2] lg:col-span-5 lg:col-start-8"
-                sizes="(min-width: 1024px) 500px, 100vw"
-              />
-            )}
-          </div>
-          <ol className="griglia mt-10 gap-y-0 lg:mt-16">
-            {passi.map((p, i) => (
-              <li key={p.titolo} className="border-petrolio col-span-12 border-t-2 py-6 lg:col-span-4 lg:pr-10">
-                <p className="text-[3.25rem] leading-none font-extrabold tracking-[-0.03em]" aria-hidden>{i + 1}</p>
-                <h3 className="titolo-3 mt-6">{p.titolo}</h3>
-                <p className="testo-2 mt-2">{p.testo}</p>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-10">
-            <Link href="/preventivo" className="btn btn-giallo">Inizia dal passo 1</Link>
-          </div>
-        </div>
-      </section>
+      <ZoneServite />
 
       {/* RECENSIONI: la sezione esiste solo se ci sono recensioni da mostrare */}
       {visibili.length > 0 && (
-        <section className="sezione">
+        <section className="sezione bg-cielo">
           <div className="contenitore">
-            <p className="occhiello">Recensioni</p>
+            <p className="occhiello bg-white">Recensioni</p>
             <h2 className="titolo-2 mt-6 max-w-[16ch]">Cosa dice chi ci ha chiamato.</h2>
             {soloEsempi && (
-              <p className="border-turchese testo-2 mt-6 max-w-[38em] border-l-2 pl-4 text-[0.9375rem]">
+              <p className="border-riflesso testo-2 mt-6 max-w-[38em] border-l-2 pl-4 text-[0.9375rem]">
                 Testi di esempio per la demo. Online compaiono solo le recensioni Google reali, con nome e data.
               </p>
             )}
-            <div className="griglia mt-10 gap-y-10 lg:mt-16">
-              <figure className="col-span-12 lg:col-span-7">
-                <blockquote className="text-[1.5rem] leading-[1.3] font-bold tracking-[-0.015em] lg:text-[2rem]">
+            <div className="griglia mt-10 gap-y-4 lg:mt-16">
+              <figure className="scheda col-span-12 p-8 lg:col-span-7 lg:p-12">
+                <blockquote className="font-titoli text-blu-notte text-[1.5rem] leading-[1.3] font-semibold tracking-[-0.015em] lg:text-[2rem]">
                   «{visibili[0].testo}»
                 </blockquote>
                 <figcaption className="testo-2 mt-6 text-[0.9375rem]">
-                  <strong className="text-petrolio">{visibili[0].nome}</strong>, {visibili[0].luogo}. {visibili[0].data}
+                  <strong className="text-blu-notte">{visibili[0].nome}</strong>, {visibili[0].luogo}. {visibili[0].data}
                 </figcaption>
               </figure>
-              <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+              <div className="col-span-12 grid gap-4 lg:col-span-5">
                 {visibili.slice(1).map((r) => (
-                  <figure key={r.nome} className="border-linea border-t py-6">
+                  <figure key={r.nome} className="scheda p-6">
                     <blockquote>«{r.testo}»</blockquote>
                     <figcaption className="testo-2 mt-4 text-[0.9375rem]">
-                      <strong className="text-petrolio">{r.nome}</strong>, {r.luogo}. {r.data}
+                      <strong className="text-blu-notte">{r.nome}</strong>, {r.luogo}. {r.data}
                     </figcaption>
                   </figure>
                 ))}
@@ -243,7 +165,7 @@ export default function Home() {
             </p>
           </div>
           <div className="col-span-12 lg:col-span-7 lg:col-start-6">
-            <Faq />
+            <Faq domande={faq} />
           </div>
         </div>
       </section>

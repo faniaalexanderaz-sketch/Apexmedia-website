@@ -12,18 +12,16 @@ export function Casi({ casi }: { casi: Caso[] }) {
   return (
     <div className="griglia gap-y-6">
       {casi.length > 1 && (
-        <ul className="border-linea-chiara col-span-12 -mx-4 flex snap-x scroll-px-4 overflow-x-auto px-4 lg:col-span-4 lg:mx-0 lg:block lg:overflow-visible lg:border-t lg:px-0">
+        <ul className="col-span-12 -mx-4 flex snap-x scroll-px-4 gap-2 overflow-x-auto px-4 pb-1 lg:col-span-4 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
           {casi.map((c, i) => (
-            <li key={c.id} className="border-linea-chiara shrink-0 snap-start lg:border-b">
+            <li key={c.id} className="shrink-0 snap-start">
               <button
                 type="button"
                 aria-pressed={i === attivo}
                 onClick={() => setAttivo(i)}
-                className={`group flex w-[240px] flex-col border-t-2 py-4 pr-6 text-left transition-colors lg:w-full lg:border-t-0 lg:border-l-2 lg:py-6 lg:pl-6 ${i === attivo ? "border-turchese" : "border-linea-chiara lg:border-transparent"}`}
+                className={`flex w-[230px] flex-col rounded-[20px] border px-5 py-4 text-left transition-colors duration-300 lg:w-full lg:px-6 lg:py-5 ${i === attivo ? "border-white/25 bg-white/10" : "border-transparent hover:bg-white/5"}`}
               >
-                <span className={`leading-snug font-bold ${i === attivo ? "text-white" : "text-white/60 group-hover:text-white"}`}>
-                  {c.ambiente}
-                </span>
+                <span className={`leading-snug font-semibold ${i === attivo ? "text-white" : "text-white/70"}`}>{c.ambiente}</span>
                 <span className="mt-1 text-[0.875rem] leading-snug text-white/60">{c.servizio}</span>
               </button>
             </li>
@@ -37,7 +35,7 @@ export function Casi({ casi }: { casi: Caso[] }) {
           <strong className="text-white">{caso.ambiente}.</strong> {caso.servizio}.
         </p>
         {caso.esempio && (
-          <p className="border-turchese mt-4 border-l-2 pl-4 text-[0.875rem] text-white/60">
+          <p className="border-riflesso mt-4 border-l-2 pl-4 text-[0.875rem] text-white/60">
             Immagini dimostrative per la demo. Online vanno le foto dei lavori fatti da Star Clean.
           </p>
         )}

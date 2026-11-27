@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS leads (
   id            BIGSERIAL PRIMARY KEY,
   creato_il     TIMESTAMPTZ NOT NULL DEFAULT now(),
   servizio      TEXT NOT NULL,
+  materiale     TEXT, -- solo trattamento pavimenti, facoltativo
   comune        TEXT NOT NULL,
   mq            TEXT NOT NULL,
   nome          TEXT NOT NULL,
@@ -16,3 +17,6 @@ CREATE TABLE IF NOT EXISTS leads (
   utm_term      TEXT,
   utm_content   TEXT
 );
+
+-- tabella creata prima della colonna materiale:
+ALTER TABLE leads ADD COLUMN IF NOT EXISTS materiale TEXT;

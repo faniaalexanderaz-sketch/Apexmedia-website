@@ -15,6 +15,8 @@ export const sito = {
   oreRisposta: 24,
 
   telefono: { mostrato: "349 308 7310", href: "tel:+393493087310", segnaposto: false },
+  // DA CONFERMARE CON IL TITOLARE: il numero WhatsApp è lo stesso del cellulare?
+  whatsapp: "393493087310",
 
   // DA COMPILARE con i dati reali. Vuoto = "da inserire" in demo, nascosto online.
   legale: {
@@ -32,6 +34,7 @@ export const sito = {
   fotoFurgone: "/foto/furgone.webp" as string | null,
 
   zone: ["Alessandria", "Valenza", "Casale Monferrato", "Tortona", "Novi Ligure"],
+  provincia: "Provincia di Alessandria",
 } as const;
 
 export function urlSito(): string {

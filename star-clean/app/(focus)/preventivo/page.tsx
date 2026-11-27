@@ -16,7 +16,7 @@ export default function Preventivo() {
         <p className="testo-2 misura mt-4">Tre domande, un minuto. Poi ti richiamiamo noi con il prezzo.</p>
         <p className="mt-6 hidden lg:block">
           <span className="testo-2 block text-[0.9375rem]">Preferisci parlarne a voce?</span>
-          <a href={sito.telefono.href} className="text-[1.75rem] font-extrabold">{sito.telefono.mostrato}</a>
+          <a href={sito.telefono.href} className="text-[1.75rem] font-bold">{sito.telefono.mostrato}</a>
         </p>
       </div>
       <div className="col-span-12 lg:col-span-6 lg:col-start-7">

@@ -1,7 +1,19 @@
 export const SERVIZI_FORM = [
-  { valore: "civili", nome: "Pulizie civili", riga: "Condominio, ufficio, studio, appartamento" },
-  { valore: "industriali", nome: "Pulizie industriali", riga: "Capannone, magazzino, officina" },
-  { valore: "pavimenti", nome: "Trattamento pavimenti", riga: "Monospazzola e lavasciuga" },
+  { valore: "civili", nome: "Pulizie civili", riga: "Casa o appartamento privato" },
+  { valore: "industriali", nome: "Pulizie industriali", riga: "Capannone, azienda, ufficio, fabbrica" },
+  { valore: "pavimenti", nome: "Trattamento pavimenti", riga: "Marmo, cementine, cemento, cotto, parquet" },
+  { valore: "vetri", nome: "Vetri e infissi", riga: "Anche vetrine di grandi dimensioni" },
+  { valore: "tapparelle", nome: "Tapparelle e persiane", riga: "Pulizia completa, dentro e fuori" },
+] as const;
+
+/** Solo per il trattamento pavimenti, facoltativo. Gli id coincidono con content/materiali.ts. */
+export const MATERIALI_FORM = [
+  { valore: "marmo", nome: "Marmo e graniglia" },
+  { valore: "cementine", nome: "Cementine" },
+  { valore: "cemento", nome: "Cemento" },
+  { valore: "cotto", nome: "Cotto" },
+  { valore: "parquet", nome: "Parquet" },
+  { valore: "non-so", nome: "Non lo so" },
 ] as const;
 
 export const COMUNI_FORM = [
@@ -25,6 +37,8 @@ export const CHIAVI_UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_term
 
 export type Lead = {
   servizio: (typeof SERVIZI_FORM)[number]["valore"];
+  /** solo per i pavimenti, facoltativo */
+  materiale: (typeof MATERIALI_FORM)[number]["valore"] | null;
   comune: string;
   mq: (typeof FASCE_MQ)[number];
   nome: string;
@@ -46,6 +60,9 @@ export function validaLead(dati: unknown): { ok: true; lead: Lead } | { ok: fals
 
   const servizio = SERVIZI_FORM.find((s) => s.valore === d.servizio)?.valore;
   if (!servizio) return { ok: false, errore: "Scegli il servizio." };
+
+  const materiale =
+    servizio === "pavimenti" ? (MATERIALI_FORM.find((m) => m.valore === d.materiale)?.valore ?? null) : null;
 
   const comune = testo(d.comune, 80);
   if (comune.length < 2) return { ok: false, errore: "Indica il comune." };
@@ -73,6 +90,6 @@ export function validaLead(dati: unknown): { ok: true; lead: Lead } | { ok: fals
 
   return {
     ok: true,
-    lead: { servizio, comune, mq, nome, telefono, email: email || null, pagina: testo(d.pagina, 200) || null, utm },
+    lead: { servizio, materiale, comune, mq, nome, telefono, email: email || null, pagina: testo(d.pagina, 200) || null, utm },
   };
 }

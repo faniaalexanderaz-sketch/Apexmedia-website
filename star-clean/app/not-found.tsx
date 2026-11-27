@@ -11,7 +11,7 @@ export default function NonTrovata() {
         Se cercavi un preventivo, sei a un passo. Altrimenti torna alla pagina iniziale.
       </p>
       <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-        <Link href="/preventivo" className="btn btn-giallo">Richiedi preventivo</Link>
+        <Link href="/preventivo" className="btn btn-accento">Richiedi preventivo</Link>
         <Link href="/" className="btn btn-linea">Torna alla home</Link>
       </div>
       <p className="mt-10">

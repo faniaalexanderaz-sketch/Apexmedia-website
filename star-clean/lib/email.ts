@@ -1,4 +1,4 @@
-import { SERVIZI_FORM, type Lead } from "./lead";
+import { MATERIALI_FORM, SERVIZI_FORM, type Lead } from "./lead";
 
 const chiave = process.env.RESEND_API_KEY;
 // OWNER_EMAIL ed EMAIL_FROM sono i nomi usati dal progetto Vercel già esistente: valgono come riserva.
@@ -18,6 +18,9 @@ export async function notificaLead(lead: Lead, id: number | null): Promise<void>
   const utm = Object.entries(lead.utm).map(([k, v]) => `${k}=${v}`).join(", ");
   const righe: [string, string][] = [
     ["Servizio", servizio],
+    ...(lead.materiale
+      ? ([["Pavimento", MATERIALI_FORM.find((m) => m.valore === lead.materiale)!.nome]] as [string, string][])
+      : []),
     ["Comune", lead.comune],
     ["Metri quadri", lead.mq],
     ["Nome", lead.nome],

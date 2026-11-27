@@ -18,6 +18,7 @@ export async function salvaLead(lead: Lead): Promise<number> {
       id            BIGSERIAL PRIMARY KEY,
       creato_il     TIMESTAMPTZ NOT NULL DEFAULT now(),
       servizio      TEXT NOT NULL,
+      materiale     TEXT,
       comune        TEXT NOT NULL,
       mq            TEXT NOT NULL,
       nome          TEXT NOT NULL,
@@ -29,13 +30,13 @@ export async function salvaLead(lead: Lead): Promise<number> {
       utm_campaign  TEXT,
       utm_term      TEXT,
       utm_content   TEXT
-    )`;
+    )`.then(() => sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS materiale TEXT`);
   await tabellaPronta;
 
   const righe = await sql`
-    INSERT INTO leads (servizio, comune, mq, nome, telefono, email, pagina,
+    INSERT INTO leads (servizio, materiale, comune, mq, nome, telefono, email, pagina,
                        utm_source, utm_medium, utm_campaign, utm_term, utm_content)
-    VALUES (${lead.servizio}, ${lead.comune}, ${lead.mq}, ${lead.nome}, ${lead.telefono}, ${lead.email}, ${lead.pagina},
+    VALUES (${lead.servizio}, ${lead.materiale}, ${lead.comune}, ${lead.mq}, ${lead.nome}, ${lead.telefono}, ${lead.email}, ${lead.pagina},
             ${lead.utm.utm_source ?? null}, ${lead.utm.utm_medium ?? null}, ${lead.utm.utm_campaign ?? null},
             ${lead.utm.utm_term ?? null}, ${lead.utm.utm_content ?? null})
     RETURNING id`;

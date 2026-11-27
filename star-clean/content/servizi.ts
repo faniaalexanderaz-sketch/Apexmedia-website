@@ -1,109 +1,164 @@
-export type SlugServizio = "pulizie-civili" | "pulizie-industriali" | "trattamento-pavimenti";
+import type { NomeIcona } from "@/components/Icona";
+
+export type SlugServizio =
+  | "pulizie-civili"
+  | "pulizie-industriali"
+  | "trattamento-pavimenti"
+  | "vetri-infissi"
+  | "tapparelle-persiane";
+
+/** valore salvato col lead */
+export type ChiaveServizio = "civili" | "industriali" | "pavimenti" | "vetri" | "tapparelle";
+
+export type Domanda = { domanda: string; risposta: string };
 
 export type Servizio = {
   slug: SlugServizio;
-  /** valore salvato col lead */
-  chiave: "civili" | "industriali" | "pavimenti";
+  chiave: ChiaveServizio;
   nome: string;
+  /** voce del menu */
   nomeBreve: string;
+  icona: NomeIcona;
   h1: string;
   metaTitolo: string;
   metaDescrizione: string;
   intro: string;
-  /** riga usata in home e nel passo 1 del form */
+  /** riga usata in home, nel menu e nel passo 1 del form */
   riassunto: string;
-  /** percorso in /public/foto, es. "/foto/civili.jpg". null = foto reale non ancora consegnata. */
+  /** percorso in /public/foto. null = foto reale non ancora consegnata. */
   foto: string | null;
-  /** proporzioni della foto: decide il taglio del riquadro in home e nella pagina servizio */
-  fotoFormato: "verticale" | "quadrata";
   fotoAlt: string;
   fotoRichiesta: string;
   problema: { titolo: string; testo: string[] };
   soluzione: { titolo: string; testo: string[] };
   incluso: { voce: string; dettaglio: string }[];
+  /** argomento principale messo in evidenza nella pagina (es. vetrine grandi) */
+  evidenza?: { occhiello: string; titolo: string; testo: string; punti: string[] };
+  /** messaggio già scritto per WhatsApp */
+  whatsapp: string;
+  faq: Domanda[];
 };
 
 /*
- * Nota: l'elenco "incluso" descrive lavori tipici del settore.
- * Va riletto e confermato da Jonathan Germanò prima di andare online.
+ * Servizi presi SOLO dal foglio del titolare:
+ * 1. pulizie civili (alloggi e case private)
+ * 2. pulizie industriali (capannoni, aziende, uffici, fabbriche)
+ * 3. trattamenti per pavimenti (dettaglio dei materiali in content/materiali.ts)
+ * 4. lavaggio infissi e vetri, incluse vetrine di grandi dimensioni
+ * 5. pulizia completa di tapparelle e persiane
+ * Non aggiungere lavorazioni che non sono sul foglio.
+ *
+ * Le FAQ sono DA CONFERMARE CON IL TITOLARE: le risposte evitano numeri e promesse
+ * finché Jonathan Germanò non le ha rilette.
  */
 export const servizi: Servizio[] = [
   {
     slug: "pulizie-civili",
     chiave: "civili",
     nome: "Pulizie civili",
-    nomeBreve: "Pulizie civili",
-    h1: "Pulizie civili ad Alessandria",
-    metaTitolo: "Pulizie civili ad Alessandria, preventivo in 24 ore",
+    nomeBreve: "Case",
+    icona: "casa",
+    h1: "Pulizie di case e appartamenti ad Alessandria",
+    metaTitolo: "Pulizie civili ad Alessandria: case e appartamenti, preventivo in 24 ore",
     metaDescrizione:
-      "Pulizia di condomini, uffici, studi e appartamenti ad Alessandria e provincia. Giorni fissi e preventivo scritto in 24 ore.",
+      "Pulizia di fondo di case e appartamenti privati ad Alessandria e provincia: cambio inquilino, prima o dopo un trasloco. Preventivo scritto in 24 ore.",
     intro:
-      "Condomini, uffici, studi e appartamenti puliti con la frequenza che scegli tu. Il preventivo arriva in 24 ore.",
-    riassunto:
-      "Condomini, uffici, studi e appartamenti. Passiamo una volta sola o tutte le settimane, decidi tu.",
-    foto: "/foto/civili.webp",
-    fotoFormato: "verticale",
-    fotoAlt: "Pulizia delle vetrate di un ufficio",
-    fotoRichiesta: "scala o androne di un condominio appena pulito",
+      "Pulizia di fondo della tua casa: quando cambia l'inquilino, prima di entrare o dopo un trasloco. Il preventivo scritto arriva in 24 ore.",
+    riassunto: "Case e appartamenti privati. Pulizia di fondo, cambio inquilino, trasloco.",
+    foto: null,
+    fotoAlt: "",
+    fotoRichiesta: "soggiorno di un appartamento appena pulito, luce naturale",
     problema: {
-      titolo: "Chi pulisce salta i turni e le scale restano sporche.",
+      titolo: "Devi consegnare o abitare una casa e non sai da dove cominciare.",
       testo: [
-        "Succede spesso. Le persone cambiano ogni mese, al telefono non risponde nessuno e i condòmini chiamano l'amministratore.",
-        "In ufficio va allo stesso modo. Passano di corsa e il lunedì trovi i cestini pieni.",
+        "Dopo un trasloco restano polvere, calcare e aloni in ogni stanza. Se l'appartamento è in affitto, il nuovo inquilino arriva tra pochi giorni.",
+        "Farlo da soli costa un fine settimana, e spesso il risultato non basta.",
       ],
     },
     soluzione: {
-      titolo: "Giorni fissi e un numero a cui risponde il titolare.",
+      titolo: "Veniamo nel giorno concordato e puliamo la casa da cima a fondo.",
       testo: [
-        "Star Clean è un'impresa di famiglia che pulisce ad Alessandria da 30 anni. Concordi giorni e orari con Jonathan Germanò e quelli restano.",
-        "Se qualcosa non va, chiami lui e si sistema.",
+        "Star Clean è un'impresa di famiglia che pulisce ad Alessandria da 30 anni. Fissi il giorno con Jonathan Germanò e trovi la casa pronta.",
+        "Se qualcosa non ti convince, chiami lui e si sistema.",
       ],
     },
+    // DA CONFERMARE CON IL TITOLARE: i condomini rientrano nelle pulizie civili o no?
+    // Per ora non compaiono: civili = solo case e appartamenti privati.
     incluso: [
-      { voce: "Scale, androni e pianerottoli", dettaglio: "Pavimenti lavati, corrimano, vetri del portone." },
-      { voce: "Uffici e studi", dettaglio: "Scrivanie, pavimenti, cestini e zone comuni." },
-      { voce: "Bagni", dettaglio: "Sanitari, specchi e pavimenti a ogni passaggio." },
-      { voce: "Vetri e infissi", dettaglio: "Vetrate interne ed esterne raggiungibili da terra." },
-      { voce: "Pulizie di fondo", dettaglio: "Dopo un trasloco, un cantiere o una lunga chiusura." },
+      { voce: "Pulizia di fondo", dettaglio: "Tutte le stanze, dai pavimenti al bagno e alla cucina." },
+      { voce: "Cambio inquilino", dettaglio: "Casa pronta da consegnare o da affittare di nuovo." },
+      { voce: "Prima o dopo un trasloco", dettaglio: "Casa vuota, prima che entrino i mobili o dopo che sono usciti." },
+      { voce: "Vetri e infissi di casa", dettaglio: "Se servono, li aggiungiamo allo stesso intervento." },
+      { voce: "Pavimenti da trattare", dettaglio: "Marmo, cotto o parquet: possiamo anche lucidarli." },
+    ],
+    whatsapp: "Ciao, vorrei un preventivo per la pulizia di una casa.",
+    faq: [
+      {
+        domanda: "Pulite anche la casa vuota dopo un trasloco?",
+        risposta: "Sì. Possiamo pulire la casa vuota, prima che entrino i mobili o dopo che sono usciti.",
+      },
+      {
+        domanda: "Devo essere a casa durante la pulizia?",
+        risposta: "Ne parliamo quando fissiamo il giorno. Ci accordiamo su come entrare e su quando ripassi a controllare.",
+      },
+      {
+        domanda: "Pulite anche le scale dei condomini?",
+        risposta: "Scrivici o chiamaci con l'indirizzo e i metri: ti diciamo subito se possiamo seguirlo.",
+      },
     ],
   },
   {
     slug: "pulizie-industriali",
     chiave: "industriali",
     nome: "Pulizie industriali",
-    nomeBreve: "Pulizie industriali",
+    nomeBreve: "Aziende",
+    icona: "fabbrica",
     h1: "Pulizie industriali ad Alessandria",
-    metaTitolo: "Pulizie industriali ad Alessandria, preventivo in 24 ore",
+    metaTitolo: "Pulizie industriali ad Alessandria: capannoni, fabbriche e uffici",
     metaDescrizione:
-      "Pulizia di capannoni, magazzini e officine in provincia di Alessandria con lavasciuga e monospazzola. Preventivo scritto in 24 ore.",
+      "Pulizia di capannoni, fabbriche, aziende e uffici in provincia di Alessandria, negli orari che non fermano il lavoro. Preventivo scritto in 24 ore.",
     intro:
-      "Capannoni, magazzini e officine. Puliamo pavimenti, aree di lavoro e spogliatoi negli orari in cui non ti blocchiamo.",
-    riassunto:
-      "Capannoni, magazzini e officine. Veniamo negli orari in cui il reparto è fermo.",
+      "Capannoni, fabbriche, aziende e uffici. Puliamo negli orari in cui non blocchiamo il lavoro.",
+    riassunto: "Capannoni, fabbriche, aziende e uffici, negli orari in cui siete fermi.",
     foto: "/foto/industriali.webp",
-    fotoFormato: "quadrata",
     fotoAlt: "Lavasciuga uomo a bordo al lavoro in un capannone",
     fotoRichiesta: "lavasciuga al lavoro in un capannone",
     problema: {
-      titolo: "Polvere e unto sul pavimento rallentano il lavoro.",
+      titolo: "Polvere e sporco rallentano il lavoro e fanno brutta figura.",
       testo: [
-        "In un capannone lo sporco si accumula in fretta. La polvere finisce sulla merce e le macchie d'olio fanno scivolare chi passa con il muletto.",
-        "Agli spogliatoi, di solito, non pensa nessuno.",
+        "In un capannone o in una fabbrica lo sporco si accumula in fretta: polvere sulla merce, macchie dove passano i muletti.",
+        "In ufficio i clienti notano subito vetri opachi e bagni trascurati.",
       ],
     },
     soluzione: {
-      titolo: "Entriamo con la lavasciuga e ti lasciamo il pavimento asciutto.",
+      titolo: "Giorni fissi, orari scelti da te e un titolare che risponde.",
       testo: [
-        "Usiamo macchine fatte per le grandi superfici. Puliamo in fretta e non restano zone bagnate dove si lavora.",
-        "Giorni e orari li scegli tu, anche a reparto fermo.",
+        "Usiamo macchine fatte per le grandi superfici e lasciamo il pavimento asciutto dove si lavora.",
+        "Concordi giorni e orari con Jonathan Germanò, anche a reparto fermo, e quelli restano.",
       ],
     },
+    // DA CONFERMARE CON IL TITOLARE: i condomini passano qui (insieme agli uffici) o non si fanno?
     incluso: [
-      { voce: "Pavimenti industriali", dettaglio: "Lavaggio con lavasciuga e sgrassaggio delle macchie." },
-      { voce: "Corsie e aree di lavoro", dettaglio: "Aspirazione di polveri e residui di lavorazione." },
-      { voce: "Uffici interni", dettaglio: "Scrivanie, pavimenti e cestini." },
-      { voce: "Spogliatoi e bagni", dettaglio: "Sanitari, docce, armadietti e pavimenti." },
-      { voce: "Pulizie straordinarie", dettaglio: "Prima di un'ispezione o dopo lavori in reparto." },
+      { voce: "Capannoni e magazzini", dettaglio: "Pavimenti lavati con macchine per grandi superfici." },
+      { voce: "Fabbriche e reparti", dettaglio: "Aree di lavoro pulite negli orari di fermo." },
+      { voce: "Uffici", dettaglio: "Scrivanie, pavimenti, bagni e zone comuni." },
+      { voce: "Sedi aziendali", dettaglio: "Ingressi, sale riunioni e spazi dove ricevi i clienti." },
+      { voce: "Una volta o con regolarità", dettaglio: "Ogni settimana, ogni mese o un intervento singolo." },
+    ],
+    whatsapp: "Ciao, vorrei un preventivo per le pulizie della mia azienda.",
+    faq: [
+      {
+        domanda: "Lavorate fuori dall'orario di lavoro?",
+        risposta: "Sì. Concordiamo giorni e orari per non fermare il reparto o l'ufficio.",
+      },
+      {
+        domanda: "Pulite anche gli uffici dentro l'azienda?",
+        risposta: "Sì, uffici e zone comuni rientrano nelle pulizie industriali, nello stesso preventivo.",
+      },
+      {
+        domanda: "Fate un sopralluogo prima del preventivo?",
+        risposta: "Per capannoni e fabbriche di solito sì: veniamo a vedere gli spazi e poi ti mandiamo il prezzo scritto.",
+      },
     ],
   },
   {
@@ -111,40 +166,171 @@ export const servizi: Servizio[] = [
     chiave: "pavimenti",
     nome: "Trattamento pavimenti",
     nomeBreve: "Pavimenti",
+    icona: "pavimento",
     h1: "Trattamento pavimenti ad Alessandria",
-    metaTitolo: "Trattamento pavimenti ad Alessandria con monospazzola e lavasciuga",
+    metaTitolo: "Trattamento pavimenti ad Alessandria: cristallizzazione marmo, cotto, parquet",
     metaDescrizione:
-      "Lavaggio di fondo dei pavimenti con monospazzola e lavasciuga ad Alessandria e provincia. Cemento, gres, marmo e linoleum. Preventivo in 24 ore.",
+      "Cristallizzazione di marmo e graniglia, cementine, vetrificazione del cemento, cotto e parquet ad Alessandria e provincia. Preventivo scritto in 24 ore.",
     intro:
-      "Con monospazzola e lavasciuga togliamo lo sporco entrato nel pavimento. Lavoriamo su cemento, gres, marmo e linoleum.",
-    riassunto:
-      "Monospazzola e lavasciuga tolgono lo sporco che lo straccio non toglie più.",
+      "Ogni pavimento ha il suo trattamento. Scegli il tuo materiale e ricevi il preventivo scritto in 24 ore.",
+    riassunto: "Marmo, graniglia, cementine, cemento, cotto e parquet: il trattamento giusto per ognuno.",
     foto: "/foto/pavimenti.webp",
-    fotoFormato: "verticale",
     fotoAlt: "Monospazzola su un pavimento in marmo lucidato",
     fotoRichiesta: "monospazzola su un pavimento, metà già trattata",
     problema: {
-      titolo: "Lavi tutti i giorni e il pavimento resta grigio.",
+      titolo: "Lavi tutti i giorni e il pavimento resta opaco.",
       testo: [
-        "Lo straccio sposta lo sporco, non lo toglie. Con il tempo si forma una patina che scurisce le fughe e spegne il colore.",
-        "Più lavi, più sembra opaco.",
+        "Lo straccio sposta lo sporco, non lo toglie. Col tempo il marmo perde lucentezza, il cotto si ingrigisce e il cemento fa polvere.",
+        "Più lavi, più sembra spento.",
       ],
     },
     soluzione: {
-      titolo: "La monospazzola stacca la patina, la lavasciuga la porta via.",
+      titolo: "Prima capiamo che pavimento hai, poi scegliamo il trattamento.",
       testo: [
-        "Prima sciogliamo lo sporco con il prodotto adatto al materiale. Poi passiamo la monospazzola, che lavora in profondità.",
-        "La lavasciuga aspira l'acqua sporca e il pavimento resta asciutto.",
+        "Cristallizzazione, vetrificazione, lavaggio a macchina o lucidatura: ogni materiale ha la sua lavorazione.",
+        "Non sai che pavimento hai? Mandaci una foto su WhatsApp e te lo diciamo noi.",
       ],
     },
     incluso: [
-      { voce: "Lavaggio di fondo", dettaglio: "Monospazzola con disco scelto in base al materiale." },
-      { voce: "Passaggio con lavasciuga", dettaglio: "Aspira l'acqua sporca mentre lava." },
-      { voce: "Fughe e angoli", dettaglio: "Rifiniti a mano dove la macchina non arriva." },
-      { voce: "Deceratura e nuova protezione", dettaglio: "Togliamo la cera vecchia e stendiamo quella nuova." },
-      { voce: "Prova su un punto nascosto", dettaglio: "Prima di partire verifichiamo il prodotto sul tuo pavimento." },
+      { voce: "Graniglia, marmettone e marmo", dettaglio: "Cristallizzazione." },
+      { voce: "Cementine", dettaglio: "Trattamento con acrilico metallizzato." },
+      // DA CONFERMARE CON IL TITOLARE: sul foglio è scritto "eposilici", qui inteso come resine epossidiche.
+      { voce: "Cemento", dettaglio: "Vetrificazione con resine epossidiche combinate." },
+      { voce: "Cotto", dettaglio: "Lavaggio a macchina e lucidatura." },
+      { voce: "Parquet", dettaglio: "Pulizia di base e lucidatura." },
+    ],
+    whatsapp: "Ciao, vorrei un preventivo per il trattamento di un pavimento.",
+    // DA CONFERMARE CON IL TITOLARE: tempi di asciugatura e durata di ogni trattamento.
+    faq: [
+      {
+        domanda: "Quanto dura la cristallizzazione?",
+        risposta:
+          "Dipende da quanto è calpestato il pavimento e da come viene lavato dopo. Te lo diciamo nel preventivo, con i consigli per farla durare.",
+      },
+      {
+        domanda: "Dopo quanto tempo si può camminare sul pavimento?",
+        risposta: "Cambia da un trattamento all'altro. Te lo diciamo prima di cominciare, così organizzi la giornata.",
+      },
+      {
+        domanda: "Non so che pavimento ho. Come faccio?",
+        risposta: "Nel modulo scegli «Non lo so», oppure mandaci una foto su WhatsApp: lo riconosciamo noi.",
+      },
+    ],
+  },
+  {
+    slug: "vetri-infissi",
+    chiave: "vetri",
+    nome: "Vetri e infissi",
+    nomeBreve: "Vetri",
+    icona: "finestra",
+    h1: "Pulizia vetrine, vetri e infissi ad Alessandria",
+    metaTitolo: "Pulizia vetrine e vetri ad Alessandria, anche di grandi dimensioni",
+    metaDescrizione:
+      "Lavaggio di vetrine di negozi e showroom anche di grandi dimensioni, vetrate e infissi ad Alessandria e provincia. Preventivo scritto in 24 ore.",
+    intro:
+      "Vetrine di negozi e showroom, anche di grandi dimensioni. Vetrate e infissi di case e uffici, senza aloni.",
+    riassunto: "Vetrine anche di grandi dimensioni, vetrate e infissi. Senza aloni.",
+    foto: "/foto/civili.webp",
+    fotoAlt: "Pulizia delle grandi vetrate di un ufficio con il tergivetro",
+    fotoRichiesta: "vetrina di un negozio durante il lavaggio",
+    problema: {
+      titolo: "Una vetrina opaca allontana i clienti prima che entrino.",
+      testo: [
+        "Smog, pioggia e impronte si vedono subito, soprattutto controluce. E una vetrina grande pulita male lascia righe e aloni.",
+        "Negli infissi lo sporco si ferma nelle guide e sui telai.",
+      ],
+    },
+    soluzione: {
+      titolo: "Vetri trasparenti e infissi puliti, telaio compreso.",
+      testo: [
+        "Laviamo vetrine e vetrate grandi con l'attrezzatura adatta e asciughiamo senza lasciare righe.",
+        "Puliamo anche telai, guide e davanzali, negli orari che vanno bene a te.",
+      ],
+    },
+    // DA CONFERMARE CON IL TITOLARE: altezza massima delle vetrine che puliamo (e se serve un'attrezzatura speciale oltre una certa altezza).
+    evidenza: {
+      occhiello: "Vetrine di grandi dimensioni",
+      titolo: "La vetrina è la prima cosa che vede il tuo cliente.",
+      testo: "Negozi, showroom e ingressi di aziende: puliamo anche le vetrine più grandi, dentro e fuori.",
+      punti: ["Vetrine di negozi e showroom", "Vetrate d'ingresso di aziende e uffici", "Passaggi regolari, così la vetrina è sempre in ordine"],
+    },
+    incluso: [
+      { voce: "Vetrine grandi", dettaglio: "Negozi e showroom, dentro e fuori." },
+      { voce: "Vetrate", dettaglio: "Ingressi e pareti vetrate di aziende e uffici." },
+      { voce: "Finestre e porte-finestre", dettaglio: "Vetri di case e uffici, su entrambi i lati." },
+      { voce: "Infissi", dettaglio: "Telai, guide e davanzali." },
+      { voce: "Una volta o con regolarità", dettaglio: "Un intervento singolo o passaggi fissi." },
+    ],
+    whatsapp: "Ciao, vorrei un preventivo per la pulizia di vetri e vetrine.",
+    faq: [
+      {
+        domanda: "Pulite vetrine alte?",
+        risposta:
+          "Sì, puliamo anche vetrine di grandi dimensioni. Dicci l'altezza al telefono o su WhatsApp e ti spieghiamo come interveniamo.",
+      },
+      {
+        domanda: "Pulite anche i telai e le guide?",
+        risposta: "Sì. Telai, guide e davanzali sono compresi nel lavaggio degli infissi.",
+      },
+      {
+        domanda: "Potete passare con regolarità per il mio negozio?",
+        risposta: "Sì, concordiamo la frequenza e l'orario. Nel preventivo trovi il prezzo per ogni passaggio.",
+      },
+    ],
+  },
+  {
+    slug: "tapparelle-persiane",
+    chiave: "tapparelle",
+    nome: "Tapparelle e persiane",
+    nomeBreve: "Tapparelle",
+    icona: "tapparella",
+    h1: "Pulizia di tapparelle e persiane ad Alessandria",
+    metaTitolo: "Pulizia tapparelle e persiane ad Alessandria, preventivo in 24 ore",
+    metaDescrizione:
+      "Pulizia completa di tapparelle e persiane, su entrambi i lati, ad Alessandria e provincia. Preventivo scritto in 24 ore.",
+    intro:
+      "Puliamo tapparelle e persiane su entrambi i lati, insieme alle guide. Il preventivo scritto arriva in 24 ore.",
+    riassunto: "Pulizia completa di tapparelle e persiane, dentro e fuori.",
+    foto: null,
+    fotoAlt: "",
+    fotoRichiesta: "tapparella o persiana durante la pulizia",
+    problema: {
+      titolo: "Le tapparelle sono la parte più sporca della casa, e nessuno le pulisce.",
+      testo: [
+        "Smog e polvere si attaccano alle stecche e finiscono sui vetri appena lavati.",
+        "Pulirle da soli è scomodo e, ai piani alti, pericoloso.",
+      ],
+    },
+    soluzione: {
+      titolo: "Una pulizia completa, dentro e fuori.",
+      testo: [
+        "Laviamo tapparelle e persiane su tutti e due i lati, comprese le guide.",
+        "Se vuoi, nello stesso giorno puliamo anche vetri e infissi.",
+      ],
+    },
+    incluso: [
+      { voce: "Tapparelle", dettaglio: "Stecche lavate su entrambi i lati." },
+      { voce: "Persiane", dettaglio: "Lamelle e telaio, da tutti e due i lati." },
+      { voce: "Guide", dettaglio: "Pulite insieme a stecche e lamelle." },
+      { voce: "Insieme ai vetri", dettaglio: "Un solo intervento per tapparelle, vetri e infissi." },
+    ],
+    whatsapp: "Ciao, vorrei un preventivo per la pulizia di tapparelle e persiane.",
+    faq: [
+      {
+        domanda: "Bisogna smontare le tapparelle?",
+        risposta: "Dipende dal tipo di tapparella. Te lo diciamo quando fissiamo l'intervento.",
+      },
+      {
+        domanda: "Si può fare insieme ai vetri?",
+        risposta: "Sì. Nello stesso intervento puliamo tapparelle, persiane, vetri e infissi.",
+      },
+      {
+        domanda: "Quanto tempo ci vuole?",
+        risposta: "Dipende da quante sono. Nel preventivo trovi anche la durata del lavoro.",
+      },
     ],
   },
 ];
 
 export const servizioDaSlug = (slug: SlugServizio) => servizi.find((s) => s.slug === slug)!;
+export const servizioDaChiave = (chiave: string) => servizi.find((s) => s.chiave === chiave);

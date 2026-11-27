@@ -25,9 +25,9 @@ export type Caso = {
 export const casi: Caso[] = [
   {
     id: "scale",
-    ambiente: "Scale condominiali in marmo",
-    servizio: "Pulizia e lucidatura",
-    chiavi: ["civili", "pavimenti"],
+    ambiente: "Scale in marmo",
+    servizio: "Cristallizzazione",
+    chiavi: ["pavimenti"],
     prima: "/foto/scale-prima.webp",
     dopo: "/foto/scale-dopo.webp",
     esempio: true,
@@ -35,7 +35,7 @@ export const casi: Caso[] = [
   {
     id: "cotto",
     ambiente: "Pavimento in cotto",
-    servizio: "Lavaggio di fondo e ceratura",
+    servizio: "Lavaggio a macchina e lucidatura",
     chiavi: ["pavimenti"],
     prima: "/foto/cotto-prima.webp",
     dopo: "/foto/cotto-dopo.webp",
@@ -43,9 +43,9 @@ export const casi: Caso[] = [
   },
   {
     id: "gres",
-    ambiente: "Pavimento in gres di un negozio",
-    servizio: "Lavaggio con lavasciuga",
-    chiavi: ["civili", "pavimenti"],
+    ambiente: "Pavimento di un negozio",
+    servizio: "Lavaggio a macchina",
+    chiavi: ["industriali"],
     prima: "/foto/gres-prima.webp",
     dopo: "/foto/gres-dopo.webp",
     esempio: true,

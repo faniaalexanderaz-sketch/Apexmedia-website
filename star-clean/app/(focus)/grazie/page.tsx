@@ -20,7 +20,7 @@ export default function Grazie() {
       </p>
       <div className="border-linea mt-10 max-w-[34em] border-t pt-6">
         <p className="testo-2">Hai fretta? Chiama adesso.</p>
-        <p className="mt-2 text-[2rem] leading-tight font-extrabold">
+        <p className="mt-2 text-[2rem] leading-tight font-bold">
           <a href={sito.telefono.href}>{sito.telefono.mostrato}</a>
         </p>
       </div>

@@ -20,7 +20,7 @@ export const recensioni: Recensione[] = [
     luogo: "Valenza",
     data: "ottobre 2026",
     testo:
-      "Amministro quattro condomini. Da quando passano loro, le telefonate per le scale sporche sono finite. Vengono sempre lo stesso giorno.",
+      "Ho un negozio in centro con due vetrine grandi. Le puliscono ogni settimana prima dell'apertura e non si vede mai un alone.",
     esempio: true,
   },
   {
@@ -36,7 +36,7 @@ export const recensioni: Recensione[] = [
     luogo: "Alessandria",
     data: "luglio 2026",
     testo:
-      "Ho scritto la sera, il giorno dopo avevo il preventivo. Il marmo dell'ingresso è tornato chiaro.",
+      "Ho scritto la sera, il giorno dopo avevo il preventivo. Dopo la cristallizzazione il marmo dell'ingresso è tornato lucido.",
     esempio: true,
   },
 ];
