@@ -53,35 +53,38 @@
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
 
-    .st.lux { background: radial-gradient(120% 75% at 50% 32%, #221d16 0%, #0d0c0b 55%, #070707 100%); color: #f5f5f7; }
-    .lux .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(227,194,122,0.22), rgba(227,194,122,0)); }
-    .lux .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(255,255,255,0.06), rgba(255,255,255,0)); }
-    .lux .mq { -webkit-text-stroke: 4px rgba(227,194,122,0.10); }
-    .ob { position: absolute; transform-style: preserve-3d; }
-    .ob img { display: block; width: 100%; filter: drop-shadow(0 60px 50px rgba(0,0,0,0.65)); }
-    .ob .sh { position: absolute; inset: 0; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; background: linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 58%); background-size: 300% 100%; background-position: 120% 0; mix-blend-mode: screen; }
-    .rf { position: absolute; transform: scaleY(-1); opacity: 0.16; -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); }
-    .rf img { display: block; width: 100%; }
-    .fl { position: absolute; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
-    .tag { position: absolute; padding: 34px 56px 34px 92px; border-radius: 26px 90px 90px 26px; background: linear-gradient(135deg, #f3dc9e, #c9a14f); color: #1a1408; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; box-shadow: 0 40px 70px -20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.6); white-space: nowrap; }
-    .tag::before { content: ""; position: absolute; left: 34px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #0d0c0b; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6); }
+    .st.cr { background: #f7f0e6; color: #1b1b1f; }
+    .cr .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,90,95,0.16), rgba(255,90,95,0)); }
+    .cr .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(46,196,182,0.18), rgba(46,196,182,0)); }
+    .cr .mq { -webkit-text-stroke: 4px rgba(27,27,31,0.06); }
+    .st.co { background: #ff5a5f; color: #fff; }
+    .co .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,190,11,0.35), rgba(255,190,11,0)); }
+    .co .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(27,27,31,0.18), rgba(27,27,31,0)); }
+    .co .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.18); }
+    .tag { position: absolute; padding: 30px 52px 30px 90px; border-radius: 26px 90px 90px 26px; background: #ffbe0b; color: #1b1b1f; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; border: 10px solid #1b1b1f; box-shadow: 14px 14px 0 #1b1b1f; white-space: nowrap; }
+    .tag::before { content: ""; position: absolute; left: 30px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #f7f0e6; border: 7px solid #1b1b1f; box-sizing: border-box; }
+    .nt { position: absolute; width: 330px; height: 170px; border-radius: 18px; background: #f4a261; border: 8px solid #1b1b1f; box-shadow: 10px 10px 0 #1b1b1f; box-sizing: border-box; }
+    .nt::before { content: ""; position: absolute; left: 18px; right: 18px; top: 18px; bottom: 18px; border-radius: 10px; border: 5px solid rgba(27,27,31,0.35); }
+    .nt b { position: absolute; left: 34px; top: 34px; font: 700 70px/1 "SF Pro Display"; color: #1b1b1f; }
+    .nt i { position: absolute; right: 44px; top: 40px; width: 80px; height: 80px; border-radius: 50%; background: #ffd6a5; border: 5px solid rgba(27,27,31,0.35); display: block; }
     .pp { position: absolute; width: 120px; height: 150px; }
-    .gd { color: #e3c27a; }
+    .cd { position: absolute; border-radius: 40px; background: #fff; border: 10px solid #1b1b1f; box-shadow: 16px 16px 0 #1b1b1f; box-sizing: border-box; }
+    .bt { position: absolute; height: 150px; border-radius: 75px; border: 10px solid #1b1b1f; box-shadow: 12px 12px 0 #1b1b1f; font: 800 66px/130px "SF Pro Display"; text-align: center; box-sizing: border-box; }
 
-    #root { background: #0a0a0a !important; }
+    #root { background: #f7f0e6 !important; }
 
   </style>
   <div id="root" data-composition-id="p09" data-width="1080" data-height="1920">
-    <div id="p09-st" class="st lux" data-layout-allow-overlap>
+    <div id="p09-st" class="st cr" data-layout-allow-overlap>
 <div id="p09-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="p09-bg" data-layout-allow-overlap><i></i><i></i></div><div class="mq" id="p09-mq" data-layout-allow-overlap>35 € · 35 € · 35 € · 35 € · 35 € · </div>
-      <div id="i-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#8e8e93;" data-layout-allow-overlap>poi alza il taglio a</div>
-      <div id="i-o" data-layout-allow-overlap style="position:absolute;left:330px;top:820px;width:420px;height:190px">
-        <div class="tag" id="i-t1" style="left:0;top:0;clip-path:inset(0 50% 0 0)">25 €</div>
-        <div class="tag" id="i-t2" style="left:0;top:0;clip-path:inset(0 0 0 50%)">25 €</div>
+      <div id="i-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 70px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#7a746b;" data-layout-allow-overlap>poi alza il taglio a</div>
+      <div id="i-o" data-layout-allow-overlap style="position:absolute;left:330px;top:840px;width:420px;height:190px">
+        <div class="tag" id="i-t1" style="left:0;top:0;clip-path:inset(-30px 50% -30px -30px)">25 €</div>
+        <div class="tag" id="i-t2" style="left:0;top:0;clip-path:inset(-30px -30px -30px 50%)">25 €</div>
       </div>
-      <div class="ob" id="i-sc" data-layout-allow-overlap style="left:380px;top:520px;width:420px"><img src="assets/img/scissors.png"><div class="sh" id="i-sc-sh" style="-webkit-mask-image:url(assets/img/scissors.png);mask-image:url(assets/img/scissors.png)"></div></div>
-      <div class="tag" id="i-n" style="left:300px;top:1120px;font-size:150px">35 €</div>
+      <svg viewBox="-260 -200 520 400" width="780" height="600" style="position:absolute;left:150px;top:420px" data-layout-allow-overlap><g id="i-sc" transform="rotate(90)"><g transform="translate(0 0) scale(1.6)"><g id="i-sa"><path d="M0 0 L150 -10 L156 0 L150 6 Z" fill="#e9ecef" stroke="#1b1b1f" stroke-width="5" stroke-linejoin="round"/><circle cx="-34" cy="0" r="22" fill="none" stroke="#ff5a5f" stroke-width="12"/></g><g id="i-sb" transform="scale(1,-1)"><path d="M0 0 L150 -10 L156 0 L150 6 Z" fill="#e9ecef" stroke="#1b1b1f" stroke-width="5" stroke-linejoin="round"/><circle cx="-34" cy="0" r="22" fill="none" stroke="#ff5a5f" stroke-width="12"/></g><circle cx="0" cy="0" r="7" fill="#1b1b1f"/></g></g></svg>
+      <div class="tag" id="i-n" style="left:290px;top:1160px;font-size:160px;background:#ff5a5f;color:#fff">35 €</div>
     </div>
     </div>
   </div>
@@ -160,13 +163,14 @@
     tl.fromTo("#p09-cam", { scale: 1.0, rotationY: -3.0, rotationX: 1.6 }, { scale: 1.07, rotationY: 3.0, rotationX: -1.0, duration: 2.45, ease: "sine.inOut" }, 0);
     tl.fromTo("#p09-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 2.45, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#p09-mq", { x: -1400 }, { x: 0, duration: 2.45, ease: "none" }, 0);
-    tl.fromTo("#i-sc", { x: 700, y: -300, rotation: 30 }, { x: 0, y: 0, rotation: 0, duration: 0.4, ease: "expo.out" }, 0.0);
-    tl.to("#i-sc", { y: 260, duration: 0.18, ease: "power3.in" }, 0.73 - 0.15);
-    tl.to("#i-t1", { x: -260, y: 500, rotation: -40, opacity: 0, duration: 0.5, ease: "power2.in" }, 0.73 + 0.05);
-    tl.to("#i-t2", { x: 260, y: 500, rotation: 40, opacity: 0, duration: 0.5, ease: "power2.in" }, 0.73 + 0.05);
-    tl.to("#i-sc", { x: 800, y: -200, rotation: -20, duration: 0.35, ease: "power2.in" }, 0.73 + 0.3);
-    tl.fromTo("#i-n", { y: -1600, rotation: 20 }, { y: 0, rotation: -5, duration: 0.45, ease: "back.out(1.4)" }, 1.34 - 0.4);
-    punch(tl, "#i-n", 1.34 + 0.1, 1.1);
+    tl.fromTo("#i-sc", { x: 600, y: -300, rotation: 140 }, { x: 0, y: 0, rotation: 90, duration: 0.4, ease: "back.out(1.4)", svgOrigin: "0 0" }, 0.0);
+    tl.fromTo("#i-sa", { rotation: -24 }, { rotation: 6, duration: 0.12, ease: "power3.in", svgOrigin: "0 0" }, 0.73 - 0.1);
+    tl.fromTo("#i-sb", { rotation: -24 }, { rotation: 6, duration: 0.12, ease: "power3.in", svgOrigin: "0 0" }, 0.73 - 0.1);
+    tl.to("#i-t1", { x: -300, y: 700, rotation: -50, duration: 0.6, ease: "power2.in" }, 0.73 + 0.05);
+    tl.to("#i-t2", { x: 300, y: 700, rotation: 50, duration: 0.6, ease: "power2.in" }, 0.73 + 0.05);
+    tl.to("#i-sc", { x: 900, y: -300, duration: 0.35, ease: "power2.in" }, 0.73 + 0.3);
+    tl.fromTo("#i-n", { y: -1700, rotation: 25 }, { y: 0, rotation: -5, duration: 0.5, ease: "back.out(1.5)" }, 1.34 - 0.45);
+    punch(tl, "#i-n", 1.34 + 0.1, 1.12);
     exit(tl, "#p09-st", "Z", 2.28);
     window.__timelines["p09"] = tl;
   </script>

@@ -53,32 +53,35 @@
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
 
-    .st.lux { background: radial-gradient(120% 75% at 50% 32%, #221d16 0%, #0d0c0b 55%, #070707 100%); color: #f5f5f7; }
-    .lux .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(227,194,122,0.22), rgba(227,194,122,0)); }
-    .lux .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(255,255,255,0.06), rgba(255,255,255,0)); }
-    .lux .mq { -webkit-text-stroke: 4px rgba(227,194,122,0.10); }
-    .ob { position: absolute; transform-style: preserve-3d; }
-    .ob img { display: block; width: 100%; filter: drop-shadow(0 60px 50px rgba(0,0,0,0.65)); }
-    .ob .sh { position: absolute; inset: 0; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; background: linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 58%); background-size: 300% 100%; background-position: 120% 0; mix-blend-mode: screen; }
-    .rf { position: absolute; transform: scaleY(-1); opacity: 0.16; -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); }
-    .rf img { display: block; width: 100%; }
-    .fl { position: absolute; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
-    .tag { position: absolute; padding: 34px 56px 34px 92px; border-radius: 26px 90px 90px 26px; background: linear-gradient(135deg, #f3dc9e, #c9a14f); color: #1a1408; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; box-shadow: 0 40px 70px -20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.6); white-space: nowrap; }
-    .tag::before { content: ""; position: absolute; left: 34px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #0d0c0b; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6); }
+    .st.cr { background: #f7f0e6; color: #1b1b1f; }
+    .cr .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,90,95,0.16), rgba(255,90,95,0)); }
+    .cr .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(46,196,182,0.18), rgba(46,196,182,0)); }
+    .cr .mq { -webkit-text-stroke: 4px rgba(27,27,31,0.06); }
+    .st.co { background: #ff5a5f; color: #fff; }
+    .co .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,190,11,0.35), rgba(255,190,11,0)); }
+    .co .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(27,27,31,0.18), rgba(27,27,31,0)); }
+    .co .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.18); }
+    .tag { position: absolute; padding: 30px 52px 30px 90px; border-radius: 26px 90px 90px 26px; background: #ffbe0b; color: #1b1b1f; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; border: 10px solid #1b1b1f; box-shadow: 14px 14px 0 #1b1b1f; white-space: nowrap; }
+    .tag::before { content: ""; position: absolute; left: 30px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #f7f0e6; border: 7px solid #1b1b1f; box-sizing: border-box; }
+    .nt { position: absolute; width: 330px; height: 170px; border-radius: 18px; background: #f4a261; border: 8px solid #1b1b1f; box-shadow: 10px 10px 0 #1b1b1f; box-sizing: border-box; }
+    .nt::before { content: ""; position: absolute; left: 18px; right: 18px; top: 18px; bottom: 18px; border-radius: 10px; border: 5px solid rgba(27,27,31,0.35); }
+    .nt b { position: absolute; left: 34px; top: 34px; font: 700 70px/1 "SF Pro Display"; color: #1b1b1f; }
+    .nt i { position: absolute; right: 44px; top: 40px; width: 80px; height: 80px; border-radius: 50%; background: #ffd6a5; border: 5px solid rgba(27,27,31,0.35); display: block; }
     .pp { position: absolute; width: 120px; height: 150px; }
-    .gd { color: #e3c27a; }
+    .cd { position: absolute; border-radius: 40px; background: #fff; border: 10px solid #1b1b1f; box-shadow: 16px 16px 0 #1b1b1f; box-sizing: border-box; }
+    .bt { position: absolute; height: 150px; border-radius: 75px; border: 10px solid #1b1b1f; box-shadow: 12px 12px 0 #1b1b1f; font: 800 66px/130px "SF Pro Display"; text-align: center; box-sizing: border-box; }
 
-    #root { background: #0a0a0a !important; }
+    #root { background: #ff5a5f !important; }
 
   </style>
   <div id="root" data-composition-id="p12" data-width="1080" data-height="1920">
-    <div id="p12-st" class="st lux" data-layout-allow-overlap>
+    <div id="p12-st" class="st co" data-layout-allow-overlap>
 <div id="p12-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="p12-bg" data-layout-allow-overlap><i></i><i></i></div><div class="mq" id="p12-mq" data-layout-allow-overlap>+600 € · +600 € · +600 € · +600 € · +600 € · </div>
-      <div id="l-n" style="position:absolute;left:0;right:0;top:380px;text-align:center;font:700 260px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#30d158;" data-layout-allow-overlap>+<span id="l-v">0</span> €</div>
-      <div id="l-a" style="position:absolute;left:0;right:0;top:660px;text-align:center;font:600 64px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#8e8e93;" data-layout-allow-overlap>in più, ogni mese</div>
-      <div class="ob" id="l-b0" data-layout-allow-overlap style="left:60px;top:860px;width:300px"><img src="assets/img/cash.png"></div><div class="ob" id="l-b1" data-layout-allow-overlap style="left:640px;top:900px;width:300px"><img src="assets/img/cash.png"></div><div class="ob" id="l-b2" data-layout-allow-overlap style="left:120px;top:1180px;width:300px"><img src="assets/img/cash.png"></div><div class="ob" id="l-b3" data-layout-allow-overlap style="left:700px;top:1220px;width:300px"><img src="assets/img/cash.png"></div><div class="ob" id="l-b4" data-layout-allow-overlap style="left:380px;top:1020px;width:300px"><img src="assets/img/cash.png"></div>
-      <div class="chip" id="l-c" style="left:240px;top:1500px;background:#1c1a16;color:#f5f5f7;font-size:56px;box-shadow:0 0 0 2px rgba(227,194,122,0.35)">−40 appuntamenti</div>
+      <div id="l-n" style="position:absolute;left:0;right:0;top:400px;text-align:center;font:700 260px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#fff;" data-layout-allow-overlap>+<span id="l-v">0</span> €</div>
+      <div id="l-a" style="position:absolute;left:0;right:0;top:680px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#1b1b1f;" data-layout-allow-overlap>in più, ogni mese</div>
+      <div class="nt" id="l-b0" data-layout-allow-overlap style="left:60px;top:880px;transform:rotate(0deg);z-index:0"><b>50</b><i></i></div><div class="nt" id="l-b1" data-layout-allow-overlap style="left:680px;top:920px;transform:rotate(0deg);z-index:0"><b>50</b><i></i></div><div class="nt" id="l-b2" data-layout-allow-overlap style="left:110px;top:1200px;transform:rotate(0deg);z-index:0"><b>50</b><i></i></div><div class="nt" id="l-b3" data-layout-allow-overlap style="left:700px;top:1240px;transform:rotate(0deg);z-index:0"><b>50</b><i></i></div><div class="nt" id="l-b4" data-layout-allow-overlap style="left:390px;top:1050px;transform:rotate(0deg);z-index:0"><b>50</b><i></i></div>
+      <div class="chip" id="l-c" style="left:230px;top:1520px;background:#fff;color:#1b1b1f;font-size:58px;border:6px solid #1b1b1f;box-shadow:8px 8px 0 #1b1b1f">−40 appuntamenti</div>
     </div>
     </div>
   </div>
@@ -158,8 +161,8 @@
     tl.fromTo("#p12-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 3.12, ease: "none", stagger: 0 }, 0);
     tl.fromTo("#p12-mq", { x: 0 }, { x: -1400, duration: 3.12, ease: "none" }, 0);
     count(tl, "#l-v", 0, 600, 0.0, 0.6, function (v) { return String(Math.round(v)); }, "power2.out");
-    punch(tl, "#l-n", 0.65, 1.12);
-    tl.fromTo("#l-b0, #l-b1, #l-b2, #l-b3, #l-b4", { y: 700, rotation: 0, scale: 0.4, opacity: 0 }, { y: 0, rotation: function (i) { return [-24, 18, -10, 26, 4][i]; }, scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.6)", stagger: 0.07 }, 0.1);
+    punch(tl, "#l-n", 0.65, 1.14);
+    tl.fromTo("#l-b0, #l-b1, #l-b2, #l-b3, #l-b4", { y: 800, rotation: 0, scale: 0.3 }, { y: 0, rotation: function (i) { return [-24, 18, -10, 26, 4][i]; }, scale: 1, duration: 0.5, ease: "back.out(1.8)", stagger: 0.07 }, 0.1);
     pop(tl, "#l-c", 1.23 - 0.2);
     exit(tl, "#p12-st", "U", 2.95);
     window.__timelines["p12"] = tl;

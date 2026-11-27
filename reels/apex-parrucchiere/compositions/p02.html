@@ -53,31 +53,34 @@
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
 
-    .st.lux { background: radial-gradient(120% 75% at 50% 32%, #221d16 0%, #0d0c0b 55%, #070707 100%); color: #f5f5f7; }
-    .lux .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(227,194,122,0.22), rgba(227,194,122,0)); }
-    .lux .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(255,255,255,0.06), rgba(255,255,255,0)); }
-    .lux .mq { -webkit-text-stroke: 4px rgba(227,194,122,0.10); }
-    .ob { position: absolute; transform-style: preserve-3d; }
-    .ob img { display: block; width: 100%; filter: drop-shadow(0 60px 50px rgba(0,0,0,0.65)); }
-    .ob .sh { position: absolute; inset: 0; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; background: linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 58%); background-size: 300% 100%; background-position: 120% 0; mix-blend-mode: screen; }
-    .rf { position: absolute; transform: scaleY(-1); opacity: 0.16; -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); }
-    .rf img { display: block; width: 100%; }
-    .fl { position: absolute; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
-    .tag { position: absolute; padding: 34px 56px 34px 92px; border-radius: 26px 90px 90px 26px; background: linear-gradient(135deg, #f3dc9e, #c9a14f); color: #1a1408; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; box-shadow: 0 40px 70px -20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.6); white-space: nowrap; }
-    .tag::before { content: ""; position: absolute; left: 34px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #0d0c0b; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6); }
+    .st.cr { background: #f7f0e6; color: #1b1b1f; }
+    .cr .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,90,95,0.16), rgba(255,90,95,0)); }
+    .cr .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(46,196,182,0.18), rgba(46,196,182,0)); }
+    .cr .mq { -webkit-text-stroke: 4px rgba(27,27,31,0.06); }
+    .st.co { background: #ff5a5f; color: #fff; }
+    .co .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,190,11,0.35), rgba(255,190,11,0)); }
+    .co .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(27,27,31,0.18), rgba(27,27,31,0)); }
+    .co .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.18); }
+    .tag { position: absolute; padding: 30px 52px 30px 90px; border-radius: 26px 90px 90px 26px; background: #ffbe0b; color: #1b1b1f; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; border: 10px solid #1b1b1f; box-shadow: 14px 14px 0 #1b1b1f; white-space: nowrap; }
+    .tag::before { content: ""; position: absolute; left: 30px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #f7f0e6; border: 7px solid #1b1b1f; box-sizing: border-box; }
+    .nt { position: absolute; width: 330px; height: 170px; border-radius: 18px; background: #f4a261; border: 8px solid #1b1b1f; box-shadow: 10px 10px 0 #1b1b1f; box-sizing: border-box; }
+    .nt::before { content: ""; position: absolute; left: 18px; right: 18px; top: 18px; bottom: 18px; border-radius: 10px; border: 5px solid rgba(27,27,31,0.35); }
+    .nt b { position: absolute; left: 34px; top: 34px; font: 700 70px/1 "SF Pro Display"; color: #1b1b1f; }
+    .nt i { position: absolute; right: 44px; top: 40px; width: 80px; height: 80px; border-radius: 50%; background: #ffd6a5; border: 5px solid rgba(27,27,31,0.35); display: block; }
     .pp { position: absolute; width: 120px; height: 150px; }
-    .gd { color: #e3c27a; }
+    .cd { position: absolute; border-radius: 40px; background: #fff; border: 10px solid #1b1b1f; box-shadow: 16px 16px 0 #1b1b1f; box-sizing: border-box; }
+    .bt { position: absolute; height: 150px; border-radius: 75px; border: 10px solid #1b1b1f; box-shadow: 12px 12px 0 #1b1b1f; font: 800 66px/130px "SF Pro Display"; text-align: center; box-sizing: border-box; }
 
-    #root { background: #0a0a0a !important; }
+    #root { background: #f7f0e6 !important; }
 
   </style>
   <div id="root" data-composition-id="p02" data-width="1080" data-height="1920">
-    <div id="p02-st" class="st lux" data-layout-allow-overlap>
+    <div id="p02-st" class="st cr" data-layout-allow-overlap>
 <div id="p02-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="p02-bg" data-layout-allow-overlap><i></i><i></i></div>
-      <div class="pp" id="b-p0" data-layout-allow-overlap style="left:130px;top:820px;transform:scale(1.05);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#f5f5f7"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#f5f5f7"/></svg></div><div class="pp" id="b-p1" data-layout-allow-overlap style="left:300px;top:820px;transform:scale(1.05);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#f5f5f7"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#f5f5f7"/></svg></div><div class="pp" id="b-p2" data-layout-allow-overlap style="left:470px;top:820px;transform:scale(1.05);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#f5f5f7"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#f5f5f7"/></svg></div><div class="pp" id="b-p3" data-layout-allow-overlap style="left:640px;top:820px;transform:scale(1.05);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#f5f5f7"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#f5f5f7"/></svg></div><div class="pp" id="b-p4" data-layout-allow-overlap style="left:810px;top:820px;transform:scale(1.05);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#f5f5f7"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#f5f5f7"/></svg></div>
-      <div id="b-n" style="position:absolute;left:0;right:0;top:360px;text-align:center;font:700 200px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#ff453a;" data-layout-allow-overlap>1 su 5</div>
-      <div id="b-a" style="position:absolute;left:0;right:0;top:590px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#8e8e93;" data-layout-allow-overlap>clienti persi</div>
+      <div class="pp" id="b-p0" data-layout-allow-overlap style="left:110px;top:860px;transform:scale(1.3);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#ff5a5f" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#f2c3a0" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#4a3426"/></svg></div><div class="pp" id="b-p1" data-layout-allow-overlap style="left:290px;top:860px;transform:scale(1.3);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#2ec4b6" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#c68b59" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#e9c46a"/></svg></div><div class="pp" id="b-p2" data-layout-allow-overlap style="left:470px;top:860px;transform:scale(1.3);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#ffbe0b" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#f2c3a0" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#1b1b1f"/></svg></div><div class="pp" id="b-p3" data-layout-allow-overlap style="left:650px;top:860px;transform:scale(1.3);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#2b2d42" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#c68b59" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#9c6644"/></svg></div><div class="pp" id="b-p4" data-layout-allow-overlap style="left:830px;top:860px;transform:scale(1.3);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#8338ec" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#f2c3a0" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#4a3426"/></svg></div>
+      <div id="b-n" style="position:absolute;left:0;right:0;top:380px;text-align:center;font:700 210px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#e63946;" data-layout-allow-overlap>1 su 5</div>
+      <div id="b-a" style="position:absolute;left:0;right:0;top:610px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#7a746b;" data-layout-allow-overlap>clienti persi</div>
     </div>
     </div>
   </div>
@@ -155,11 +158,11 @@
     enter(tl, "#p02-st", "W");
     tl.fromTo("#p02-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 1.57, ease: "sine.inOut" }, 0);
     tl.fromTo("#p02-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.57, ease: "none", stagger: 0 }, 0);
-    tl.fromTo("#b-p0, #b-p1, #b-p2, #b-p3, #b-p4", { scale: 0, opacity: 0 }, { scale: 1.05, opacity: 1, duration: 0.2, ease: "back.out(2)", stagger: 0.06 }, 0.0);
-    tl.to("#b-p4 path, #b-p4 circle", { fill: "#ff453a", duration: 0.12 }, 1.22 - 0.35);
-    tl.to("#b-p4", { x: 500, rotation: 18, opacity: 0, duration: 0.45, ease: "power3.in" }, 1.22 - 0.1);
-    tl.fromTo("#b-n", { scale: 1.6, opacity: 0, filter: "blur(14px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out" }, 1.22 - 0.35);
-    tl.fromTo("#b-a", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.22 - 0.2);
+    tl.fromTo("#b-p0, #b-p1, #b-p2, #b-p3, #b-p4", { scale: 0, y: 80 }, { scale: 1.3, y: 0, duration: 0.24, ease: "back.out(2.2)", stagger: 0.06 }, 0.0);
+    tl.to("#b-p4 .bd", { fill: "#e63946", duration: 0.1 }, 1.22 - 0.4);
+    tl.to("#b-p4", { x: 560, rotation: 14, duration: 0.5, ease: "power3.in" }, 1.22 - 0.15);
+    tl.fromTo("#b-n", { scale: 1.8, opacity: 0, rotation: -8 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.26, ease: "back.out(2)" }, 1.22 - 0.4);
+    tl.fromTo("#b-a", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.2 }, 1.22 - 0.2);
     exit(tl, "#p02-st", "U", 1.40);
     window.__timelines["p02"] = tl;
   </script>

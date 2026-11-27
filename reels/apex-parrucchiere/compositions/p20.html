@@ -53,31 +53,34 @@
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
 
-    .st.lux { background: radial-gradient(120% 75% at 50% 32%, #221d16 0%, #0d0c0b 55%, #070707 100%); color: #f5f5f7; }
-    .lux .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(227,194,122,0.22), rgba(227,194,122,0)); }
-    .lux .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(255,255,255,0.06), rgba(255,255,255,0)); }
-    .lux .mq { -webkit-text-stroke: 4px rgba(227,194,122,0.10); }
-    .ob { position: absolute; transform-style: preserve-3d; }
-    .ob img { display: block; width: 100%; filter: drop-shadow(0 60px 50px rgba(0,0,0,0.65)); }
-    .ob .sh { position: absolute; inset: 0; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; background: linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 58%); background-size: 300% 100%; background-position: 120% 0; mix-blend-mode: screen; }
-    .rf { position: absolute; transform: scaleY(-1); opacity: 0.16; -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); }
-    .rf img { display: block; width: 100%; }
-    .fl { position: absolute; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
-    .tag { position: absolute; padding: 34px 56px 34px 92px; border-radius: 26px 90px 90px 26px; background: linear-gradient(135deg, #f3dc9e, #c9a14f); color: #1a1408; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; box-shadow: 0 40px 70px -20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.6); white-space: nowrap; }
-    .tag::before { content: ""; position: absolute; left: 34px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #0d0c0b; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6); }
+    .st.cr { background: #f7f0e6; color: #1b1b1f; }
+    .cr .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,90,95,0.16), rgba(255,90,95,0)); }
+    .cr .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(46,196,182,0.18), rgba(46,196,182,0)); }
+    .cr .mq { -webkit-text-stroke: 4px rgba(27,27,31,0.06); }
+    .st.co { background: #ff5a5f; color: #fff; }
+    .co .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,190,11,0.35), rgba(255,190,11,0)); }
+    .co .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(27,27,31,0.18), rgba(27,27,31,0)); }
+    .co .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.18); }
+    .tag { position: absolute; padding: 30px 52px 30px 90px; border-radius: 26px 90px 90px 26px; background: #ffbe0b; color: #1b1b1f; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; border: 10px solid #1b1b1f; box-shadow: 14px 14px 0 #1b1b1f; white-space: nowrap; }
+    .tag::before { content: ""; position: absolute; left: 30px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #f7f0e6; border: 7px solid #1b1b1f; box-sizing: border-box; }
+    .nt { position: absolute; width: 330px; height: 170px; border-radius: 18px; background: #f4a261; border: 8px solid #1b1b1f; box-shadow: 10px 10px 0 #1b1b1f; box-sizing: border-box; }
+    .nt::before { content: ""; position: absolute; left: 18px; right: 18px; top: 18px; bottom: 18px; border-radius: 10px; border: 5px solid rgba(27,27,31,0.35); }
+    .nt b { position: absolute; left: 34px; top: 34px; font: 700 70px/1 "SF Pro Display"; color: #1b1b1f; }
+    .nt i { position: absolute; right: 44px; top: 40px; width: 80px; height: 80px; border-radius: 50%; background: #ffd6a5; border: 5px solid rgba(27,27,31,0.35); display: block; }
     .pp { position: absolute; width: 120px; height: 150px; }
-    .gd { color: #e3c27a; }
+    .cd { position: absolute; border-radius: 40px; background: #fff; border: 10px solid #1b1b1f; box-shadow: 16px 16px 0 #1b1b1f; box-sizing: border-box; }
+    .bt { position: absolute; height: 150px; border-radius: 75px; border: 10px solid #1b1b1f; box-shadow: 12px 12px 0 #1b1b1f; font: 800 66px/130px "SF Pro Display"; text-align: center; box-sizing: border-box; }
 
-    #root { background: #0a0a0a !important; }
+    #root { background: #f7f0e6 !important; }
 
   </style>
   <div id="root" data-composition-id="p20" data-width="1080" data-height="1920">
-    <div id="p20-st" class="st lux" data-layout-allow-overlap>
+    <div id="p20-st" class="st cr" data-layout-allow-overlap>
 <div id="p20-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="p20-bg" data-layout-allow-overlap><i></i><i></i></div>
-      <div id="u-a" style="position:absolute;left:0;right:0;top:330px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#8e8e93;" data-layout-allow-overlap>ti arriva in DM</div>
-      <div id="u-dm" style="position:absolute;left:90px;top:470px;width:900px;border-radius:52px;background:#1c1c1e;padding:40px 44px;box-shadow:0 40px 100px -30px rgba(0,0,0,0.5)" data-layout-allow-overlap><div style="display:flex;align-items:center;gap:22px"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1d1d1f,#4a4a4e);color:#fff;font:700 34px/80px 'SF Pro Display';text-align:center">A</div><div><div style="font:600 40px/1.1 'SF Pro Display';color:#fff">apexmedia</div><div style="font:500 30px/1.2 'SF Pro Display';color:#8e8e93">ti ha inviato un file</div></div></div><div id="u-doc" style="margin-top:34px;display:flex;align-items:center;gap:30px;padding:30px;border-radius:34px;background:rgba(127,127,127,0.14)"><div style="width:120px;height:150px;border-radius:18px;background:#c9a14f;position:relative"><i style="position:absolute;left:24px;right:24px;top:40px;height:8px;border-radius:4px;background:rgba(255,255,255,0.8)"></i><i style="position:absolute;left:24px;right:40px;top:64px;height:8px;border-radius:4px;background:rgba(255,255,255,0.6)"></i><i style="position:absolute;left:24px;right:30px;top:88px;height:8px;border-radius:4px;background:rgba(255,255,255,0.6)"></i></div><div><div style="font:700 54px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#fff">Come alzare i prezzi</div><div style="font:500 36px/1.3 'SF Pro Display';color:#8e8e93;margin-top:8px">senza perdere i clienti migliori</div></div></div></div>
-      <div class="ob" id="u-m0" data-layout-allow-overlap style="left:323px;top:1250px;width:420px;z-index:0"><img src="assets/img/cash.png"></div><div class="ob" id="u-m1" data-layout-allow-overlap style="left:337px;top:1130px;width:420px;z-index:1"><img src="assets/img/cash.png"></div><div class="ob" id="u-m2" data-layout-allow-overlap style="left:323px;top:1010px;width:420px;z-index:2"><img src="assets/img/cash.png"></div>
+      <div id="u-a" style="position:absolute;left:0;right:0;top:330px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#7a746b;" data-layout-allow-overlap>ti arriva in DM</div>
+      <div id="u-dm" style="position:absolute;left:90px;top:470px;width:900px;border-radius:52px;background:#fff;padding:40px 44px;box-shadow:0 40px 100px -30px rgba(0,0,0,0.5)" data-layout-allow-overlap><div style="display:flex;align-items:center;gap:22px"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1d1d1f,#4a4a4e);color:#fff;font:700 34px/80px 'SF Pro Display';text-align:center">A</div><div><div style="font:600 40px/1.1 'SF Pro Display';color:#1d1d1f">apexmedia</div><div style="font:500 30px/1.2 'SF Pro Display';color:#86868b">ti ha inviato un file</div></div></div><div id="u-doc" style="margin-top:34px;display:flex;align-items:center;gap:30px;padding:30px;border-radius:34px;background:rgba(127,127,127,0.14)"><div style="width:120px;height:150px;border-radius:18px;background:#ff5a5f;position:relative"><i style="position:absolute;left:24px;right:24px;top:40px;height:8px;border-radius:4px;background:rgba(255,255,255,0.8)"></i><i style="position:absolute;left:24px;right:40px;top:64px;height:8px;border-radius:4px;background:rgba(255,255,255,0.6)"></i><i style="position:absolute;left:24px;right:30px;top:88px;height:8px;border-radius:4px;background:rgba(255,255,255,0.6)"></i></div><div><div style="font:700 54px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#1d1d1f">Come alzare i prezzi</div><div style="font:500 36px/1.3 'SF Pro Display';color:#86868b;margin-top:8px">senza perdere i clienti migliori</div></div></div></div>
+      <div class="nt" id="u-m0" data-layout-allow-overlap style="left:367px;top:1500px;transform:rotate(-3deg);z-index:0"><b>50</b><i></i></div><div class="nt" id="u-m1" data-layout-allow-overlap style="left:383px;top:1454px;transform:rotate(2deg);z-index:1"><b>50</b><i></i></div><div class="nt" id="u-m2" data-layout-allow-overlap style="left:367px;top:1408px;transform:rotate(-1deg);z-index:2"><b>50</b><i></i></div><div class="nt" id="u-m3" data-layout-allow-overlap style="left:383px;top:1362px;transform:rotate(3deg);z-index:3"><b>50</b><i></i></div><div class="nt" id="u-m4" data-layout-allow-overlap style="left:367px;top:1316px;transform:rotate(-2deg);z-index:4"><b>50</b><i></i></div>
     </div>
     </div>
   </div>
@@ -155,9 +158,9 @@
     enter(tl, "#p20-st", "Z");
     tl.fromTo("#p20-cam", { scale: 1.06, rotationY: 2.6, rotationX: 1.0 }, { scale: 1.0, rotationY: -3.0, rotationX: -1.6, duration: 3.06, ease: "sine.inOut" }, 0);
     tl.fromTo("#p20-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 3.06, ease: "none", stagger: 0 }, 0);
-    tl.fromTo("#u-dm", { y: -900, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.3)" }, 0.0);
-    tl.fromTo("#u-doc", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, 0.45);
-    tl.fromTo("#u-m0, #u-m1, #u-m2", { y: -2600, rotation: -8 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.12 }, 1.0);
+    tl.fromTo("#u-dm", { y: -900, opacity: 0 }, { y: 0, opacity: 1, duration: 0.42, ease: "back.out(1.4)" }, 0.0);
+    tl.fromTo("#u-doc", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.4)" }, 0.45);
+    tl.fromTo("#u-m0, #u-m1, #u-m2, #u-m3, #u-m4", { y: -2400, rotation: -20 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.09 }, 1.0);
 
     exit(tl, "#p20-st", "R", 2.89);
     window.__timelines["p20"] = tl;

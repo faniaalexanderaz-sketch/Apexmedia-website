@@ -53,31 +53,34 @@
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
 
-    .st.lux { background: radial-gradient(120% 75% at 50% 32%, #221d16 0%, #0d0c0b 55%, #070707 100%); color: #f5f5f7; }
-    .lux .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(227,194,122,0.22), rgba(227,194,122,0)); }
-    .lux .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(255,255,255,0.06), rgba(255,255,255,0)); }
-    .lux .mq { -webkit-text-stroke: 4px rgba(227,194,122,0.10); }
-    .ob { position: absolute; transform-style: preserve-3d; }
-    .ob img { display: block; width: 100%; filter: drop-shadow(0 60px 50px rgba(0,0,0,0.65)); }
-    .ob .sh { position: absolute; inset: 0; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; background: linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 58%); background-size: 300% 100%; background-position: 120% 0; mix-blend-mode: screen; }
-    .rf { position: absolute; transform: scaleY(-1); opacity: 0.16; -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); }
-    .rf img { display: block; width: 100%; }
-    .fl { position: absolute; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
-    .tag { position: absolute; padding: 34px 56px 34px 92px; border-radius: 26px 90px 90px 26px; background: linear-gradient(135deg, #f3dc9e, #c9a14f); color: #1a1408; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; box-shadow: 0 40px 70px -20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.6); white-space: nowrap; }
-    .tag::before { content: ""; position: absolute; left: 34px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #0d0c0b; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6); }
+    .st.cr { background: #f7f0e6; color: #1b1b1f; }
+    .cr .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,90,95,0.16), rgba(255,90,95,0)); }
+    .cr .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(46,196,182,0.18), rgba(46,196,182,0)); }
+    .cr .mq { -webkit-text-stroke: 4px rgba(27,27,31,0.06); }
+    .st.co { background: #ff5a5f; color: #fff; }
+    .co .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,190,11,0.35), rgba(255,190,11,0)); }
+    .co .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(27,27,31,0.18), rgba(27,27,31,0)); }
+    .co .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.18); }
+    .tag { position: absolute; padding: 30px 52px 30px 90px; border-radius: 26px 90px 90px 26px; background: #ffbe0b; color: #1b1b1f; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; border: 10px solid #1b1b1f; box-shadow: 14px 14px 0 #1b1b1f; white-space: nowrap; }
+    .tag::before { content: ""; position: absolute; left: 30px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #f7f0e6; border: 7px solid #1b1b1f; box-sizing: border-box; }
+    .nt { position: absolute; width: 330px; height: 170px; border-radius: 18px; background: #f4a261; border: 8px solid #1b1b1f; box-shadow: 10px 10px 0 #1b1b1f; box-sizing: border-box; }
+    .nt::before { content: ""; position: absolute; left: 18px; right: 18px; top: 18px; bottom: 18px; border-radius: 10px; border: 5px solid rgba(27,27,31,0.35); }
+    .nt b { position: absolute; left: 34px; top: 34px; font: 700 70px/1 "SF Pro Display"; color: #1b1b1f; }
+    .nt i { position: absolute; right: 44px; top: 40px; width: 80px; height: 80px; border-radius: 50%; background: #ffd6a5; border: 5px solid rgba(27,27,31,0.35); display: block; }
     .pp { position: absolute; width: 120px; height: 150px; }
-    .gd { color: #e3c27a; }
+    .cd { position: absolute; border-radius: 40px; background: #fff; border: 10px solid #1b1b1f; box-shadow: 16px 16px 0 #1b1b1f; box-sizing: border-box; }
+    .bt { position: absolute; height: 150px; border-radius: 75px; border: 10px solid #1b1b1f; box-shadow: 12px 12px 0 #1b1b1f; font: 800 66px/130px "SF Pro Display"; text-align: center; box-sizing: border-box; }
 
-    #root { background: #0a0a0a !important; }
+    #root { background: #f7f0e6 !important; }
 
   </style>
   <div id="root" data-composition-id="p14" data-width="1080" data-height="1920">
-    <div id="p14-st" class="st lux" data-layout-allow-overlap>
+    <div id="p14-st" class="st cr" data-layout-allow-overlap>
 <div id="p14-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="p14-bg" data-layout-allow-overlap><i></i><i></i></div>
-      <div id="n-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 76px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#8e8e93;" data-layout-allow-overlap>chi se n’è andato?</div>
-      <div class="pp" id="n-p0" data-layout-allow-overlap style="left:170px;top:760px;transform:scale(1.6);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#6e6e73"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#6e6e73"/></svg></div><div class="chip" id="n-t0" style="left:150px;top:1040px;background:#ff453a;opacity:1">-20%</div><div class="pp" id="n-p1" data-layout-allow-overlap style="left:430px;top:760px;transform:scale(1.6);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#6e6e73"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#6e6e73"/></svg></div><div class="chip" id="n-t1" style="left:410px;top:1040px;background:#ff453a;opacity:1">-20%</div><div class="pp" id="n-p2" data-layout-allow-overlap style="left:690px;top:760px;transform:scale(1.6);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><circle cx="60" cy="38" r="30" fill="#6e6e73"/><path d="M8 150 Q8 82 60 82 Q112 82 112 150 Z" fill="#6e6e73"/></svg></div><div class="chip" id="n-t2" style="left:670px;top:1040px;background:#ff453a;opacity:1">-20%</div>
-      <div id="n-b" style="position:absolute;left:0;right:0;top:1260px;text-align:center;font:700 120px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#f5f5f7;" data-layout-allow-overlap>solo il <span style="color:{RED}">prezzo</span></div>
+      <div id="n-a" style="position:absolute;left:0;right:0;top:300px;text-align:center;font:600 80px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#1b1b1f;" data-layout-allow-overlap>chi se n’è andato?</div>
+      <div class="pp" id="n-p0" data-layout-allow-overlap style="left:150px;top:720px;transform:scale(1.8);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#2ec4b6" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#c68b59" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#e9c46a"/></svg></div><div class="chip" id="n-t0" style="left:140px;top:1040px;background:#e63946;opacity:1;border:6px solid #1b1b1f">-20%</div><div class="pp" id="n-p1" data-layout-allow-overlap style="left:430px;top:720px;transform:scale(1.8);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#ffbe0b" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#f2c3a0" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#1b1b1f"/></svg></div><div class="chip" id="n-t1" style="left:420px;top:1040px;background:#e63946;opacity:1;border:6px solid #1b1b1f">-20%</div><div class="pp" id="n-p2" data-layout-allow-overlap style="left:710px;top:720px;transform:scale(1.8);transform-origin:50% 100%"><svg viewBox="0 0 120 150" width="120" height="150"><path class="bd" d="M10 150 Q10 86 60 86 Q110 86 110 150 Z" fill="#2b2d42" stroke="#1b1b1f" stroke-width="7"/><circle class="fc" cx="60" cy="44" r="30" fill="#c68b59" stroke="#1b1b1f" stroke-width="7"/><path d="M30 40 Q34 10 60 12 Q88 12 90 40 Q74 26 60 28 Q44 28 30 40 Z" fill="#9c6644"/></svg></div><div class="chip" id="n-t2" style="left:700px;top:1040px;background:#e63946;opacity:1;border:6px solid #1b1b1f">-20%</div>
+      <div id="n-b" style="position:absolute;left:0;right:0;top:1260px;text-align:center;font:700 130px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#1b1b1f;" data-layout-allow-overlap>solo il <span style="color:{RED}">prezzo</span></div>
     </div>
     </div>
   </div>
@@ -155,9 +158,9 @@
     enter(tl, "#p14-st", "I");
     tl.fromTo("#p14-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 2.72, ease: "sine.inOut" }, 0);
     tl.fromTo("#p14-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 2.72, ease: "none", stagger: 0 }, 0);
-    tl.fromTo("#n-p0, #n-p1, #n-p2, #n-t0, #n-t1, #n-t2", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.22, stagger: 0.05 }, 0.1);
-    tl.fromTo("#n-b", { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.24 }, 2.17 - 0.8);
-    tl.to("#n-p0, #n-t0, #n-p1, #n-t1, #n-p2, #n-t2", { x: 1100, duration: 0.6, ease: "power3.in", stagger: 0.04 }, 2.17 - 0.05);
+    tl.fromTo("#n-p0, #n-p1, #n-p2, #n-t0, #n-t1, #n-t2", { y: 120, scale: 0.3 }, { y: 0, scale: function (i) { return i < 3 ? 1.8 : 1; }, duration: 0.26, ease: "back.out(2)", stagger: 0.05 }, 0.1);
+    tl.fromTo("#n-b", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.24, ease: "back.out(2)" }, 2.17 - 0.8);
+    tl.to("#n-p0, #n-t0, #n-p1, #n-t1, #n-p2, #n-t2", { x: 1200, duration: 0.6, ease: "power3.in", stagger: 0.04 }, 2.17 - 0.05);
     exit(tl, "#p14-st", "S", 2.55);
     window.__timelines["p14"] = tl;
   </script>

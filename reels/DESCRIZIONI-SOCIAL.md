@@ -2328,7 +2328,7 @@ Fonti: Dan Wieden ha raccontato l'origine dello slogan in varie interviste (in a
 
 ## 76. Il parrucchiere che ha alzato i prezzi e guadagna di più (parola PREZZI) · TRIPLO HOOK
 
-Hook a 3 tempi: contesto (parrucchiere, prezzi +40%), curiosità (perde 1 cliente su 5), ribaltamento (lavora meno e guadagna di più). Nero e oro, oggetti realistici (poltrona, forbici, phon, banconote, agenda) con riflessi e luce, conti animati con mazzette che crescono. 53 s, loop: "E pensa che questo parrucchiere..." riporta a "Questo parrucchiere ha alzato i prezzi". File: `apex-parrucchiere/renders/apex-parrucchiere-9x16.mp4`.
+Hook a 3 tempi: contesto (parrucchiere, prezzi +40%), curiosità (perde 1 cliente su 5), ribaltamento (lavora meno e guadagna di più). Motion graphics illustrata su fondo crema: dal primo fotogramma il parrucchiere taglia i capelli al cliente (forbici che scattano, ciocche che cadono), poi conti animati con banconote che piovono e si impilano. 53 s, loop: "E pensa che questo parrucchiere..." riporta a "Questo parrucchiere ha alzato i prezzi". File: `apex-parrucchiere/renders/apex-parrucchiere-9x16.mp4`.
 
 **TikTok**
 ```text

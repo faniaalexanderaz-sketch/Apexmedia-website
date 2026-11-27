@@ -53,33 +53,35 @@
     .duo-sh { position: absolute; left: 50%; top: 1037px; width: 1400px; height: 90px; margin-left: -700px; background: radial-gradient(closest-side, rgba(0,0,0,0.34), rgba(0,0,0,0)); transform-origin: 50% 50%; }
 
 
-    .st.lux { background: radial-gradient(120% 75% at 50% 32%, #221d16 0%, #0d0c0b 55%, #070707 100%); color: #f5f5f7; }
-    .lux .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(227,194,122,0.22), rgba(227,194,122,0)); }
-    .lux .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(255,255,255,0.06), rgba(255,255,255,0)); }
-    .lux .mq { -webkit-text-stroke: 4px rgba(227,194,122,0.10); }
-    .ob { position: absolute; transform-style: preserve-3d; }
-    .ob img { display: block; width: 100%; filter: drop-shadow(0 60px 50px rgba(0,0,0,0.65)); }
-    .ob .sh { position: absolute; inset: 0; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; background: linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 58%); background-size: 300% 100%; background-position: 120% 0; mix-blend-mode: screen; }
-    .rf { position: absolute; transform: scaleY(-1); opacity: 0.16; -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0) 40%); }
-    .rf img { display: block; width: 100%; }
-    .fl { position: absolute; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
-    .tag { position: absolute; padding: 34px 56px 34px 92px; border-radius: 26px 90px 90px 26px; background: linear-gradient(135deg, #f3dc9e, #c9a14f); color: #1a1408; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; box-shadow: 0 40px 70px -20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.6); white-space: nowrap; }
-    .tag::before { content: ""; position: absolute; left: 34px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #0d0c0b; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6); }
+    .st.cr { background: #f7f0e6; color: #1b1b1f; }
+    .cr .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,90,95,0.16), rgba(255,90,95,0)); }
+    .cr .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(46,196,182,0.18), rgba(46,196,182,0)); }
+    .cr .mq { -webkit-text-stroke: 4px rgba(27,27,31,0.06); }
+    .st.co { background: #ff5a5f; color: #fff; }
+    .co .bgfx i:nth-child(1) { background: radial-gradient(closest-side, rgba(255,190,11,0.35), rgba(255,190,11,0)); }
+    .co .bgfx i:nth-child(2) { background: radial-gradient(closest-side, rgba(27,27,31,0.18), rgba(27,27,31,0)); }
+    .co .mq { -webkit-text-stroke: 4px rgba(255,255,255,0.18); }
+    .tag { position: absolute; padding: 30px 52px 30px 90px; border-radius: 26px 90px 90px 26px; background: #ffbe0b; color: #1b1b1f; font: 700 120px/1 "SF Pro Display"; letter-spacing: -0.04em; border: 10px solid #1b1b1f; box-shadow: 14px 14px 0 #1b1b1f; white-space: nowrap; }
+    .tag::before { content: ""; position: absolute; left: 30px; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; background: #f7f0e6; border: 7px solid #1b1b1f; box-sizing: border-box; }
+    .nt { position: absolute; width: 330px; height: 170px; border-radius: 18px; background: #f4a261; border: 8px solid #1b1b1f; box-shadow: 10px 10px 0 #1b1b1f; box-sizing: border-box; }
+    .nt::before { content: ""; position: absolute; left: 18px; right: 18px; top: 18px; bottom: 18px; border-radius: 10px; border: 5px solid rgba(27,27,31,0.35); }
+    .nt b { position: absolute; left: 34px; top: 34px; font: 700 70px/1 "SF Pro Display"; color: #1b1b1f; }
+    .nt i { position: absolute; right: 44px; top: 40px; width: 80px; height: 80px; border-radius: 50%; background: #ffd6a5; border: 5px solid rgba(27,27,31,0.35); display: block; }
     .pp { position: absolute; width: 120px; height: 150px; }
-    .gd { color: #e3c27a; }
+    .cd { position: absolute; border-radius: 40px; background: #fff; border: 10px solid #1b1b1f; box-shadow: 16px 16px 0 #1b1b1f; box-sizing: border-box; }
+    .bt { position: absolute; height: 150px; border-radius: 75px; border: 10px solid #1b1b1f; box-shadow: 12px 12px 0 #1b1b1f; font: 800 66px/130px "SF Pro Display"; text-align: center; box-sizing: border-box; }
 
-    #root { background: #0a0a0a !important; }
+    #root { background: #f7f0e6 !important; }
 
   </style>
   <div id="root" data-composition-id="p11" data-width="1080" data-height="1920">
-    <div id="p11-st" class="st lux" data-layout-allow-overlap>
+    <div id="p11-st" class="st cr" data-layout-allow-overlap>
 <div id="p11-cam" class="cam" data-layout-allow-overlap>
       <div class="bgfx" id="p11-bg" data-layout-allow-overlap><i></i><i></i></div>
-      <div id="k-a" style="position:absolute;left:0;right:0;top:290px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#8e8e93;" data-layout-allow-overlap>ma guarda</div>
-      <div id="k-eq" data-layout-allow-overlap style="position:absolute;left:0;right:0;top:380px;text-align:center;font:700 120px/1 'SF Pro Display';letter-spacing:-0.04em;color:#f5f5f7"><span id="k-1">160</span> <span id="k-2" class="gd">× 35</span></div>
-      <div id="k-n" style="position:absolute;left:0;right:0;top:540px;text-align:center;font:700 200px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#e3c27a;" data-layout-allow-overlap><span id="k-v">0</span> €</div>
-      <div class="fl" data-layout-allow-overlap style="left:240px;top:1560px;width:600px"></div>
-      <div class="ob" id="k-m0" data-layout-allow-overlap style="left:323px;top:1280px;width:420px;z-index:0"><img src="assets/img/cash.png"></div><div class="ob" id="k-m1" data-layout-allow-overlap style="left:337px;top:1160px;width:420px;z-index:1"><img src="assets/img/cash.png"></div><div class="ob" id="k-m2" data-layout-allow-overlap style="left:323px;top:1040px;width:420px;z-index:2"><img src="assets/img/cash.png"></div><div class="ob" id="k-m3" data-layout-allow-overlap style="left:337px;top:920px;width:420px;z-index:3"><img src="assets/img/cash.png"></div><div class="ob" id="k-m4" data-layout-allow-overlap style="left:323px;top:800px;width:420px;z-index:4"><img src="assets/img/cash.png"></div>
+      <div id="k-a" style="position:absolute;left:0;right:0;top:290px;text-align:center;font:600 66px/1.1 'SF Pro Display';letter-spacing:-0.02em;color:#7a746b;" data-layout-allow-overlap>ma guarda</div>
+      <div id="k-eq" data-layout-allow-overlap style="position:absolute;left:0;right:0;top:380px;text-align:center;font:800 130px/1 'SF Pro Display';letter-spacing:-0.04em;color:#1b1b1f"><span id="k-1" style="display:inline-block">160</span> <span id="k-2" style="display:inline-block;color:#ff5a5f">× 35</span></div>
+      <div id="k-n" style="position:absolute;left:0;right:0;top:550px;text-align:center;font:700 210px/1.05 'SF Pro Display';letter-spacing:-0.045em;color:#2a9d55;" data-layout-allow-overlap><span id="k-v">0</span> €</div>
+      <div class="nt" id="k-m0" data-layout-allow-overlap style="left:367px;top:1520px;transform:rotate(-3deg);z-index:0"><b>50</b><i></i></div><div class="nt" id="k-m1" data-layout-allow-overlap style="left:383px;top:1476px;transform:rotate(2deg);z-index:1"><b>50</b><i></i></div><div class="nt" id="k-m2" data-layout-allow-overlap style="left:367px;top:1432px;transform:rotate(-1deg);z-index:2"><b>50</b><i></i></div><div class="nt" id="k-m3" data-layout-allow-overlap style="left:383px;top:1388px;transform:rotate(3deg);z-index:3"><b>50</b><i></i></div><div class="nt" id="k-m4" data-layout-allow-overlap style="left:367px;top:1344px;transform:rotate(-2deg);z-index:4"><b>50</b><i></i></div><div class="nt" id="k-m5" data-layout-allow-overlap style="left:383px;top:1300px;transform:rotate(1deg);z-index:5"><b>50</b><i></i></div><div class="nt" id="k-m6" data-layout-allow-overlap style="left:367px;top:1256px;transform:rotate(0deg);z-index:6"><b>50</b><i></i></div><div class="nt" id="k-m7" data-layout-allow-overlap style="left:383px;top:1212px;transform:rotate(-3deg);z-index:7"><b>50</b><i></i></div><div class="nt" id="k-m8" data-layout-allow-overlap style="left:367px;top:1168px;transform:rotate(2deg);z-index:8"><b>50</b><i></i></div>
     </div>
     </div>
   </div>
@@ -157,11 +159,11 @@
     enter(tl, "#p11-st", "R");
     tl.fromTo("#p11-cam", { scale: 1.0, rotationY: -2.2, rotationX: -1.6 }, { scale: 1.08, rotationY: 2.6, rotationX: 0.6, duration: 4.64, ease: "sine.inOut" }, 0);
     tl.fromTo("#p11-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 4.64, ease: "none", stagger: 0 }, 0);
-    tl.fromTo("#k-1", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.2 }, 0.97 - 0.15);
-    tl.fromTo("#k-2", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.2 }, 2.17 - 0.15);
+    tl.fromTo("#k-1", { opacity: 0, y: 80, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.24, ease: "back.out(2.4)" }, 0.97 - 0.15);
+    tl.fromTo("#k-2", { opacity: 0, y: 80, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.24, ease: "back.out(2.4)" }, 2.17 - 0.15);
     tl.fromTo("#k-n", { opacity: 0 }, { opacity: 1, duration: 0.1 }, 2.97 - 0.3);
     count(tl, "#k-v", 0, 5600, 2.97 - 0.3, 0.9, function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }, "power2.out");
-    tl.fromTo("#k-m0, #k-m1, #k-m2, #k-m3, #k-m4", { y: -2600, rotation: -8 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.12 }, 2.97 - 0.3);
+    tl.fromTo("#k-m0, #k-m1, #k-m2, #k-m3, #k-m4, #k-m5, #k-m6, #k-m7, #k-m8", { y: -2400, rotation: -20 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.07 }, 2.97 - 0.3);
 
     exit(tl, "#p11-st", "W", 4.47);
     window.__timelines["p11"] = tl;
