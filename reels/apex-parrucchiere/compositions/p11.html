@@ -161,7 +161,7 @@
     tl.fromTo("#k-2", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.2 }, 2.17 - 0.15);
     tl.fromTo("#k-n", { opacity: 0 }, { opacity: 1, duration: 0.1 }, 2.97 - 0.3);
     count(tl, "#k-v", 0, 5600, 2.97 - 0.3, 0.9, function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }, "power2.out");
-    tl.fromTo("#k-m0, #k-m1, #k-m2, #k-m3, #k-m4", { y: -1300, rotation: -8 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.12 }, 2.97 - 0.3);
+    tl.fromTo("#k-m0, #k-m1, #k-m2, #k-m3, #k-m4", { y: -2600, rotation: -8 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.12 }, 2.97 - 0.3);
 
     exit(tl, "#p11-st", "W", 4.47);
     window.__timelines["p11"] = tl;

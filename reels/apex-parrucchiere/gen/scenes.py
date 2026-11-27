@@ -48,7 +48,7 @@ def pile(p, n, left, top, w, dy):
     return ''.join(f'<div class="ob" id="{p}{k}" data-layout-allow-overlap style="left:{left + (k % 2) * 14 - 7}px;top:{top - k * dy}px;width:{w}px;z-index:{k}"><img src="assets/img/cash.png"></div>' for k in range(n))
 def pile_js(p, n, t, st=0.12):
     ids = ', '.join(f'#{p}{k}' for k in range(n))
-    return f'    tl.fromTo("{ids}", {{ y: -1300, rotation: -8 }}, {{ y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: {st} }}, {t});\n'
+    return f'    tl.fromTo("{ids}", {{ y: -2600, rotation: -8 }}, {{ y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: {st} }}, {t});\n'
 
 # ================================================================ TRIPLE HOOK
 HOOK = (f'<div class="fl" data-layout-allow-overlap style="left:190px;top:1500px;width:700px"></div>'
@@ -58,7 +58,7 @@ HOOK = (f'<div class="fl" data-layout-allow-overlap style="left:190px;top:1500px
 # 1. CONTEXT: "Questo parrucchiere ha alzato i prezzi del 40%."
 add('p01', 'start', 'perso', f'''      {HOOK.replace('@', 'a')}''', floatjs('a-ch', -10, 8, 20) + sheen('a-ch', 0.3) + '''    tl.fromTo("#a-n", { scale: 1.06 }, { scale: 1, duration: 0.5, ease: "expo.out" }, 0);
     punch(tl, "#a-n", «quaranta», 1.12);''', ground='lux', cam=False,
-    fx=[('whoosh', 'start', 0.0, 0.3), ('register', 'start', 0.05, 0.3), ('ding', 'quaranta', 0.0, 0.24)])
+    fx=[('whoosh', 'start', 0.0, 0.3), ('register', 'start', 0.05, 0.18), ('ding', 'quaranta', 0.0, 0.24)])
 
 # 2. CURIOSITY: "E ha perso un cliente su cinque." (five clients, one walks off)
 add('p02', 'perso', 'eppure', f'''      {''.join(person(f'b-p{k}', 130 + k * 170, 820, W, 1.05) for k in range(5))}
@@ -156,7 +156,7 @@ add('p09', 'poi', 'esi', f'''      {small('i-a', 'poi alza il taglio a', 300, 66
     tl.to("#i-sc", { x: 800, y: -200, rotation: -20, duration: 0.35, ease: "power2.in" }, «taglio» + 0.3);
     tl.fromTo("#i-n", { y: -1600, rotation: 20 }, { y: 0, rotation: -5, duration: 0.45, ease: "back.out(1.4)" }, «trentacinque» - 0.4);
     punch(tl, "#i-n", «trentacinque» + 0.1, 1.1);''', ground='lux', mq='35 €',
-    fx=[('whoosh-short', 'poi', 0.0, 0.2), ('snip', 'taglio', 0.0, 0.5), ('snip', 'taglio', 0.12, 0.4), ('tear', 'taglio', 0.05, 0.16), ('thud', 'trentacinque', 0.05, 0.28), ('ding', 'trentacinque', 0.12, 0.22)])
+    fx=[('whoosh-short', 'poi', 0.0, 0.2), ('snip', 'taglio', 0.0, 0.3), ('snip', 'taglio', 0.12, 0.25), ('tear', 'taglio', 0.05, 0.16), ('thud', 'trentacinque', 0.05, 0.28), ('ding', 'trentacinque', 0.12, 0.22)])
 
 # 10. "E sì, 40 clienti se ne vanno." (one client in five leaves the wall)
 GONE = [k for k in range(50) if k % 5 == 4]
@@ -179,7 +179,7 @@ add('p11', 'ma', 'seicento', f'''      {small('k-a', 'ma guarda', 290, 66, GREY)
     count(tl, "#k-v", 0, 5600, «cinquemilasei» - 0.3, 0.9, ''' + EUR + ''', "power2.out");
 ''' + pile_js('k-m', 5, '«cinquemilasei» - 0.3', 0.12), ground='lux',
     fx=[('key-press', 'centosessanta', -0.15, 0.24), ('key-press', 'trentacinque2', -0.15, 0.24), ('counter', 'cinquemilasei', -0.3, 0.24), ('flutter', 'cinquemilasei', 0.0, 0.26),
-        ('flutter', 'cinquemilasei', 0.3, 0.26), ('cash', 'cinquemilasei', 0.7, 0.32)])
+        ('flutter', 'cinquemilasei', 0.3, 0.26), ('cash', 'cinquemilasei', 0.7, 0.2)])
 
 # 12. "600 euro in più. E 40 appuntamenti in meno." (the gain, then the empty slots)
 add('p12', 'seicento', 'circa', f'''      {big('l-n', '+<span id="l-v">0</span> €', 380, 260, GRN)}
@@ -189,7 +189,7 @@ add('p12', 'seicento', 'circa', f'''      {big('l-n', '+<span id="l-v">0</span> 
     punch(tl, "#l-n", 0.65, 1.12);
     tl.fromTo("#l-b0, #l-b1, #l-b2, #l-b3, #l-b4", { y: 700, rotation: 0, scale: 0.4, opacity: 0 }, { y: 0, rotation: function (i) { return [-24, 18, -10, 26, 4][i]; }, scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.6)", stagger: 0.07 }, 0.1);
     pop(tl, "#l-c", «quaranta3» - 0.2);''', ground='lux', mq='+600 €',
-    fx=[('cash', 'seicento', 0.0, 0.32), ('sparkle', 'seicento', 0.2, 0.2), ('flutter', 'seicento', 0.15, 0.3), ('pop', 'quaranta3', -0.2, 0.22)])
+    fx=[('cash', 'seicento', 0.0, 0.2), ('sparkle', 'seicento', 0.2, 0.2), ('flutter', 'seicento', 0.15, 0.3), ('pop', 'quaranta3', -0.2, 0.22)])
 
 # 13. "Circa 30 ore libere al mese." (the clock spins back, 30 hours)
 add('p13', 'circa', 'chi', f'''      <svg viewBox="0 0 600 600" width="600" height="600" style="position:absolute;left:240px;top:330px" data-layout-allow-overlap>

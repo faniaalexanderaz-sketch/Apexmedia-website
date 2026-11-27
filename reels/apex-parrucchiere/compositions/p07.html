@@ -157,7 +157,7 @@
     tl.fromTo("#p07-cam", { scale: 1.0, rotationY: -2.2, rotationX: -1.6 }, { scale: 1.08, rotationY: 2.6, rotationX: 0.6, duration: 1.07, ease: "sine.inOut" }, 0);
     tl.fromTo("#p07-bg i", { x: 260, y: -180 }, { x: -260, y: 220, duration: 1.07, ease: "none", stagger: 0 }, 0);
     count(tl, "#g-v", 0, 5000, 0.0, 0.7, function (v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }, "power2.out");
-    tl.fromTo("#g-m0, #g-m1, #g-m2, #g-m3", { y: -1300, rotation: -8 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.1 }, 0.0);
+    tl.fromTo("#g-m0, #g-m1, #g-m2, #g-m3", { y: -2600, rotation: -8 }, { y: 0, rotation: 0, duration: 0.34, ease: "power3.in", stagger: 0.1 }, 0.0);
 
     exit(tl, "#p07-st", "K", 0.90);
     window.__timelines["p07"] = tl;
