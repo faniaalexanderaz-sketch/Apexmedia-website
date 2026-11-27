@@ -155,7 +155,7 @@
     enter(tl, "#p10-st", "Z");
     tl.fromTo("#p10-cam", { scale: 1.07, rotationY: 3.0, rotationX: -1.2 }, { scale: 1.0, rotationY: -2.2, rotationX: 1.6, duration: 1.83, ease: "sine.inOut" }, 0);
     tl.fromTo("#p10-bg i", { x: -260, y: 180 }, { x: 260, y: -220, duration: 1.83, ease: "none", stagger: 0 }, 0);
-    gsap.set(".pp[id^="j"]", { scale: 0.62 });
+    gsap.set(".pp[id^='j']", { scale: 0.62 });
     tl.to("#j4 path, #j4 circle, #j9 path, #j9 circle, #j14 path, #j14 circle, #j19 path, #j19 circle, #j24 path, #j24 circle, #j29 path, #j29 circle, #j34 path, #j34 circle, #j39 path, #j39 circle, #j44 path, #j44 circle, #j49 path, #j49 circle", { fill: "#ff453a", duration: 0.12, stagger: 0.02 }, 0.32 - 0.2);
     tl.to("#j4, #j9, #j14, #j19, #j24, #j29, #j34, #j39, #j44, #j49", { y: 900, rotation: 30, opacity: 0, duration: 0.5, ease: "power3.in", stagger: 0.04 }, 1.28 - 0.4);
     tl.fromTo("#j-n", { scale: 1.6, opacity: 0, filter: "blur(14px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out" }, 0.32 - 0.25);

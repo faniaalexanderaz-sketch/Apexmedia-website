@@ -112,7 +112,7 @@ add('p06', 'prima', 'cinquemila', f'''      {small('f-a', 'prima', 290, 64, GREY
       {big('f-n', '<span id="f-v">0</span> <span style="font-size:90px;color:{GREY}">clienti/mese</span>', 370, 190, W)}
       {grid('f')}
       <div class="tag" id="f-t" style="left:330px;top:1420px">25 €</div>''', '''    count(tl, "#f-v", 0, 200, 0.05, 1.0, function (v) { return String(Math.round(v)); }, "power2.out");
-    tl.fromTo(".pp[id^=\"f\"]", { scale: 0, opacity: 0 }, { scale: 0.62, opacity: 1, duration: 0.14, ease: "back.out(2)", stagger: 0.016 }, 0.05);
+    tl.fromTo(".pp[id^='f']", { scale: 0, opacity: 0 }, { scale: 0.62, opacity: 1, duration: 0.14, ease: "back.out(2)", stagger: 0.016 }, 0.05);
     tl.fromTo("#f-t", { y: -1500, rotation: -25 }, { y: 0, rotation: -6, duration: 0.45, ease: "back.out(1.3)" }, «venticinque» - 0.35);''', ground='lux',
     fx=[('counter', 'duecento', -0.4, 0.26), ('ding', 'venticinque', 0.05, 0.22)])
 
@@ -162,7 +162,7 @@ add('p09', 'poi', 'esi', f'''      {small('i-a', 'poi alza il taglio a', 300, 66
 GONE = [k for k in range(50) if k % 5 == 4]
 add('p10', 'esi', 'ma', f'''      {big('j-n', '−40', 330, 200, RED)}
       {small('j-a', 'clienti', 560, 64, GREY)}
-      {grid('j')}''', '''    gsap.set(".pp[id^=\"j\"]", { scale: 0.62 });
+      {grid('j')}''', '''    gsap.set(".pp[id^='j']", { scale: 0.62 });
     tl.to("''' + ', '.join(f'#j{k} path, #j{k} circle' for k in GONE) + '''", { fill: "#ff453a", duration: 0.12, stagger: 0.02 }, «quaranta2» - 0.2);
     tl.to("''' + ', '.join(f'#j{k}' for k in GONE) + '''", { y: 900, rotation: 30, opacity: 0, duration: 0.5, ease: "power3.in", stagger: 0.04 }, «vanno» - 0.4);
     tl.fromTo("#j-n", { scale: 1.6, opacity: 0, filter: "blur(14px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out" }, «quaranta2» - 0.25);''', ground='lux',
