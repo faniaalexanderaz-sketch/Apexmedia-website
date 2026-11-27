@@ -1,6 +1,6 @@
 export const SERVIZI_FORM = [
   { valore: "civili", nome: "Pulizie civili", riga: "Casa o appartamento privato" },
-  { valore: "industriali", nome: "Pulizie industriali", riga: "Capannone, azienda, ufficio, fabbrica" },
+  { valore: "industriali", nome: "Pulizie industriali", riga: "Capannone, azienda, ufficio, fabbrica, condominio" },
   { valore: "pavimenti", nome: "Trattamento pavimenti", riga: "Marmo, cementine, cemento, cotto, parquet" },
   { valore: "vetri", nome: "Vetri e infissi", riga: "Anche vetrine di grandi dimensioni" },
   { valore: "tapparelle", nome: "Tapparelle e persiane", riga: "Pulizia completa, dentro e fuori" },

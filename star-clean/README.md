@@ -48,14 +48,14 @@ Finché `demo: true` in `content/sito.ts` il sito non è indicizzabile e mostra 
 
 ## Da confermare con il titolare
 
-Nel codice sono segnati con `DA CONFERMARE CON IL TITOLARE`:
+Stato delle conferme (quelli ancora aperti sono segnati nel codice con `DA CONFERMARE CON IL TITOLARE`):
 
-- [ ] Resine **epossidiche** per la vetrificazione del cemento (sul foglio c'è scritto "eposilici")
-- [ ] Condomini: si fanno o no? Se sì, vanno nelle pulizie industriali (oggi non compaiono)
-- [ ] Altezza massima delle vetrine che si puliscono
-- [ ] Tempi di asciugatura e durata dei trattamenti dei pavimenti
-- [ ] Risposte delle FAQ di ogni servizio (`content/servizi.ts`) e generali (`content/faq.ts`)
-- [ ] Il numero WhatsApp è lo stesso del cellulare (`sito.whatsapp`)
+- [x] Resine epossidiche per il cemento (sul foglio "eposilici")
+- [x] Condomini: sì, nelle pulizie industriali
+- [x] Vetrine fino a 10 metri di altezza
+- [x] Tempi e durata dei trattamenti: indicati nel preventivo, cambiano da lavoro a lavoro
+- [x] WhatsApp: stesso numero del cellulare
+- [ ] Altre risposte delle FAQ di ogni servizio (`content/servizi.ts`) e generali, prodotti e assicurazione (`content/faq.ts`)
 - [ ] Foto vere per pulizie civili e tapparelle (oggi c'è un pannello "foto da inserire")
 
 ## Link per gli annunci

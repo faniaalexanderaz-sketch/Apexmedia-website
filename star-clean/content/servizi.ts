@@ -48,8 +48,10 @@ export type Servizio = {
  * 5. pulizia completa di tapparelle e persiane
  * Non aggiungere lavorazioni che non sono sul foglio.
  *
- * Le FAQ sono DA CONFERMARE CON IL TITOLARE: le risposte evitano numeri e promesse
- * finché Jonathan Germanò non le ha rilette.
+ * Confermato dal titolare (novembre 2026): resine epossidiche, condomini sì (nelle pulizie
+ * industriali), vetrine fino a 10 metri, tempi e durata dei trattamenti indicati nel preventivo
+ * perché cambiano da lavoro a lavoro.
+ * Le altre risposte delle FAQ restano da far rileggere a Jonathan Germanò.
  */
 export const servizi: Servizio[] = [
   {
@@ -82,8 +84,7 @@ export const servizi: Servizio[] = [
         "Se qualcosa non ti convince, chiami lui e si sistema.",
       ],
     },
-    // DA CONFERMARE CON IL TITOLARE: i condomini rientrano nelle pulizie civili o no?
-    // Per ora non compaiono: civili = solo case e appartamenti privati.
+    // Civili = solo case e appartamenti privati. I condomini stanno nelle pulizie industriali.
     incluso: [
       { voce: "Pulizia di fondo", dettaglio: "Tutte le stanze, dai pavimenti al bagno e alla cucina." },
       { voce: "Cambio inquilino", dettaglio: "Casa pronta da consegnare o da affittare di nuovo." },
@@ -103,7 +104,7 @@ export const servizi: Servizio[] = [
       },
       {
         domanda: "Pulite anche le scale dei condomini?",
-        risposta: "Scrivici o chiamaci con l'indirizzo e i metri: ti diciamo subito se possiamo seguirlo.",
+        risposta: "Sì. Scale, androni e parti comuni dei condomini li seguiamo con le pulizie industriali, a giorni fissi.",
       },
     ],
   },
@@ -114,12 +115,12 @@ export const servizi: Servizio[] = [
     nomeBreve: "Aziende",
     icona: "fabbrica",
     h1: "Pulizie industriali ad Alessandria",
-    metaTitolo: "Pulizie industriali ad Alessandria: capannoni, fabbriche e uffici",
+    metaTitolo: "Pulizie industriali ad Alessandria: capannoni, uffici e condomini",
     metaDescrizione:
-      "Pulizia di capannoni, fabbriche, aziende e uffici in provincia di Alessandria, negli orari che non fermano il lavoro. Preventivo scritto in 24 ore.",
+      "Pulizia di capannoni, fabbriche, aziende, uffici e condomini in provincia di Alessandria, negli orari che non fermano il lavoro. Preventivo scritto in 24 ore.",
     intro:
-      "Capannoni, fabbriche, aziende e uffici. Puliamo negli orari in cui non blocchiamo il lavoro.",
-    riassunto: "Capannoni, fabbriche, aziende e uffici, negli orari in cui siete fermi.",
+      "Capannoni, fabbriche, aziende, uffici e condomini. Puliamo negli orari in cui non blocchiamo il lavoro.",
+    riassunto: "Capannoni, fabbriche, aziende, uffici e condomini, negli orari in cui siete fermi.",
     foto: "/foto/industriali.webp",
     fotoAlt: "Lavasciuga uomo a bordo al lavoro in un capannone",
     fotoRichiesta: "lavasciuga al lavoro in un capannone",
@@ -137,12 +138,12 @@ export const servizi: Servizio[] = [
         "Concordi giorni e orari con Jonathan Germanò, anche a reparto fermo, e quelli restano.",
       ],
     },
-    // DA CONFERMARE CON IL TITOLARE: i condomini passano qui (insieme agli uffici) o non si fanno?
     incluso: [
       { voce: "Capannoni e magazzini", dettaglio: "Pavimenti lavati con macchine per grandi superfici." },
       { voce: "Fabbriche e reparti", dettaglio: "Aree di lavoro pulite negli orari di fermo." },
       { voce: "Uffici", dettaglio: "Scrivanie, pavimenti, bagni e zone comuni." },
       { voce: "Sedi aziendali", dettaglio: "Ingressi, sale riunioni e spazi dove ricevi i clienti." },
+      { voce: "Condomini", dettaglio: "Scale, androni, pianerottoli e parti comuni, a giorni fissi." },
       { voce: "Una volta o con regolarità", dettaglio: "Ogni settimana, ogni mese o un intervento singolo." },
     ],
     whatsapp: "Ciao, vorrei un preventivo per le pulizie della mia azienda.",
@@ -194,22 +195,21 @@ export const servizi: Servizio[] = [
     incluso: [
       { voce: "Graniglia, marmettone e marmo", dettaglio: "Cristallizzazione." },
       { voce: "Cementine", dettaglio: "Trattamento con acrilico metallizzato." },
-      // DA CONFERMARE CON IL TITOLARE: sul foglio è scritto "eposilici", qui inteso come resine epossidiche.
       { voce: "Cemento", dettaglio: "Vetrificazione con resine epossidiche combinate." },
       { voce: "Cotto", dettaglio: "Lavaggio a macchina e lucidatura." },
       { voce: "Parquet", dettaglio: "Pulizia di base e lucidatura." },
     ],
     whatsapp: "Ciao, vorrei un preventivo per il trattamento di un pavimento.",
-    // DA CONFERMARE CON IL TITOLARE: tempi di asciugatura e durata di ogni trattamento.
+    // Tempi e durata cambiano da lavoro a lavoro: si indicano nel preventivo (confermato dal titolare).
     faq: [
       {
         domanda: "Quanto dura la cristallizzazione?",
         risposta:
-          "Dipende da quanto è calpestato il pavimento e da come viene lavato dopo. Te lo diciamo nel preventivo, con i consigli per farla durare.",
+          "Dipende dal pavimento, da quanto è calpestato e da come viene lavato dopo. Te lo scriviamo nel preventivo, con i consigli per farla durare.",
       },
       {
         domanda: "Dopo quanto tempo si può camminare sul pavimento?",
-        risposta: "Cambia da un trattamento all'altro. Te lo diciamo prima di cominciare, così organizzi la giornata.",
+        risposta: "Ogni lavoro ha tempi diversi: li trovi scritti nel preventivo, così organizzi la giornata.",
       },
       {
         domanda: "Non so che pavimento ho. Come faccio?",
@@ -226,7 +226,7 @@ export const servizi: Servizio[] = [
     h1: "Pulizia vetrine, vetri e infissi ad Alessandria",
     metaTitolo: "Pulizia vetrine e vetri ad Alessandria, anche di grandi dimensioni",
     metaDescrizione:
-      "Lavaggio di vetrine di negozi e showroom anche di grandi dimensioni, vetrate e infissi ad Alessandria e provincia. Preventivo scritto in 24 ore.",
+      "Lavaggio di vetrine di negozi e showroom anche di grandi dimensioni, fino a 10 metri di altezza, vetrate e infissi ad Alessandria e provincia. Preventivo in 24 ore.",
     intro:
       "Vetrine di negozi e showroom, anche di grandi dimensioni. Vetrate e infissi di case e uffici, senza aloni.",
     riassunto: "Vetrine anche di grandi dimensioni, vetrate e infissi. Senza aloni.",
@@ -247,12 +247,12 @@ export const servizi: Servizio[] = [
         "Puliamo anche telai, guide e davanzali, negli orari che vanno bene a te.",
       ],
     },
-    // DA CONFERMARE CON IL TITOLARE: altezza massima delle vetrine che puliamo (e se serve un'attrezzatura speciale oltre una certa altezza).
+    // Altezza: tutte le vetrine fino a 10 metri (confermato dal titolare).
     evidenza: {
       occhiello: "Vetrine di grandi dimensioni",
       titolo: "La vetrina è la prima cosa che vede il tuo cliente.",
-      testo: "Negozi, showroom e ingressi di aziende: puliamo anche le vetrine più grandi, dentro e fuori.",
-      punti: ["Vetrine di negozi e showroom", "Vetrate d'ingresso di aziende e uffici", "Passaggi regolari, così la vetrina è sempre in ordine"],
+      testo: "Negozi, showroom e ingressi di aziende: puliamo anche le vetrine più grandi, fino a 10 metri di altezza, dentro e fuori.",
+      punti: ["Vetrine di negozi e showroom, fino a 10 metri", "Vetrate d'ingresso di aziende e uffici", "Passaggi regolari, così la vetrina è sempre in ordine"],
     },
     incluso: [
       { voce: "Vetrine grandi", dettaglio: "Negozi e showroom, dentro e fuori." },
@@ -266,7 +266,7 @@ export const servizi: Servizio[] = [
       {
         domanda: "Pulite vetrine alte?",
         risposta:
-          "Sì, puliamo anche vetrine di grandi dimensioni. Dicci l'altezza al telefono o su WhatsApp e ti spieghiamo come interveniamo.",
+          "Sì, puliamo vetrine di grandi dimensioni fino a 10 metri di altezza. Dicci quanto è alta la tua e la mettiamo nel preventivo.",
       },
       {
         domanda: "Pulite anche i telai e le guide?",

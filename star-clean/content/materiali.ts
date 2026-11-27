@@ -41,7 +41,7 @@ export const materiali: Materiale[] = [
     nome: "Cemento",
     breve: "Cemento",
     icona: "cemento",
-    // DA CONFERMARE CON IL TITOLARE: sul foglio è scritto "eposilici", qui inteso come resine epossidiche.
+    // Confermato dal titolare: resine epossidiche (sul foglio "eposilici"), lasciano uno strato lucido sul cemento.
     trattamento: "Vetrificazione con resine epossidiche",
     risultato: "Superficie compatta che non fa più polvere.",
     descrizione:

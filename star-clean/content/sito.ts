@@ -15,7 +15,7 @@ export const sito = {
   oreRisposta: 24,
 
   telefono: { mostrato: "349 308 7310", href: "tel:+393493087310", segnaposto: false },
-  // DA CONFERMARE CON IL TITOLARE: il numero WhatsApp è lo stesso del cellulare?
+  // WhatsApp: stesso numero del cellulare (confermato dal titolare)
   whatsapp: "393493087310",
 
   // DA COMPILARE con i dati reali. Vuoto = "da inserire" in demo, nascosto online.
