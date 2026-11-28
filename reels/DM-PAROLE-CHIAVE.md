@@ -308,3 +308,35 @@ Prima di tutto fai i conti: quanti clienti puoi permetterti di perdere e guadagn
    Le ore in più vanno su clienti migliori, servizi più cari o
    sul riposo. Non riempirle di nuovo con clienti a prezzo basso.
 ```
+
+---
+
+## MENÙ (video bar)
+
+**Messaggio breve**
+```text
+Ecco come tagliare il tuo menù senza perdere clienti 👇
+Il principio: meno scelta, decisioni più veloci, più vendite.
+```
+
+**Contenuto: il metodo in 5 passi**
+```text
+1) GUARDA I NUMERI DI 30 GIORNI
+   Dalla cassa: quante volte hai venduto ogni prodotto.
+   Di solito pochi prodotti fanno la maggior parte delle vendite.
+
+2) TOGLI QUELLO CHE NON SI VENDE
+   I prodotti in fondo alla classifica occupano spazio, ingredienti
+   e attenzione. Toglili dal menù (puoi farli ancora su richiesta).
+
+3) RAGGRUPPA E LIMITA
+   Poche categorie chiare (caffetteria, colazione, pranzo) e poche voci
+   per categoria. Se una categoria ha più di 6-7 voci, accorciala.
+
+4) SCEGLI TU PER IL CLIENTE
+   Metti in evidenza 2-3 proposte ("il più scelto", "consigliato").
+   Chi non sa cosa prendere, prende quello.
+
+5) PROVA PER UN MESE E CONFRONTA
+   Stesso periodo, prima e dopo: scontrino medio, tempo di attesa, sprechi.
+```

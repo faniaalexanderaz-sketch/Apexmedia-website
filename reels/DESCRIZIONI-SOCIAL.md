@@ -2357,3 +2357,35 @@ Scrivi PREZZI e ti mando come alzarli senza perdere i clienti migliori.
 I numeri sono un esempio di calcolo (45 minuti ad appuntamento), non i conti di un salone reale.
 #parrucchiere #prezzi #pricing #marketing #business #imprenditori #saloni #apexmedia
 ```
+
+---
+
+## 77. Il bar che ha tolto metà del menù e vende di più (parola MENÙ) · TRIPLO HOOK
+
+Hook a 3 tempi: contesto (bar, menù dimezzato), curiosità (meno scelta per i clienti), ribaltamento (vende di più e lavora meglio). Motion graphics illustrata: dal primo fotogramma zoom sul bar, metà del menù vola via dalla lavagna, il barista con la tazzina, vapore dalla macchina del caffè, impatto e suoni già a 0 secondi. Poi lo studio delle marmellate (24 contro 6, 3% contro 30%), 40 voci contro 12. 54 s, loop: "E pensa che questo bar..." riporta a "Questo bar ha tolto metà dei prodotti dal menù". File: `apex-bar-menu/renders/apex-bar-menu-9x16.mp4`.
+
+**TikTok**
+```text
+Questo bar ha tolto metà del menù... e adesso vende di più. Con 24 marmellate compra il 3%, con 6 il 30%. Quante voci hai nel tuo menù? Scrivi MENÙ per sapere come tagliarlo senza perdere clienti.
+#bar #ristorazione #marketing #apexmedia
+```
+
+**Instagram**
+```text
+Questo bar ha tolto metà dei prodotti dal menù. I clienti avevano meno scelta. Eppure adesso vende di più, e lavora meglio.
+
+Anno 2000. Due ricercatori americani, Sheena Iyengar e Mark Lepper, fanno un esperimento in un supermercato. Un banco con 24 marmellate e un banco con 6.
+Quello da 24 attira più gente, ma compra solo il 3% di chi si ferma.
+Quello da 6? Compra il 30%. Dieci volte di più.
+
+Troppa scelta blocca. E al bar succede uguale: davanti a 40 voci il cliente ci pensa, fa domande, e alla fine prende il solito. Con 12 voci sceglie in 3 secondi. La fila scorre, butti via meno roba, e restano solo i prodotti che vendono di più.
+
+Tu quante voci hai nel tuo menù? Scrivilo nei commenti.
+
+La lezione: se il cliente deve pensare troppo, non compra. Scegli tu per lui.
+
+Scrivi MENÙ e ti mando come tagliare il tuo menù senza perdere clienti.
+
+Fonte: Iyengar e Lepper, "When Choice is Demotivating", Journal of Personality and Social Psychology, 2000. Il bar e i numeri 40/12 sono un esempio.
+#bar #ristorazione #menu #marketing #psicologia #business #imprenditori #apexmedia
+```
